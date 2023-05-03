@@ -704,12 +704,12 @@ impl ::protobuf::reflect::ProtobufValue for SessionRequest {
 // @@protoc_insertion_point(message:mizer.Session)
 pub struct Session {
     // message fields
-    // @@protoc_insertion_point(field:mizer.Session.filePath)
-    pub filePath: ::std::option::Option<::std::string::String>,
+    // @@protoc_insertion_point(field:mizer.Session.file_path)
+    pub file_path: ::std::option::Option<::std::string::String>,
     // @@protoc_insertion_point(field:mizer.Session.devices)
     pub devices: ::std::vec::Vec<SessionDevice>,
-    // @@protoc_insertion_point(field:mizer.Session.projectHistory)
-    pub projectHistory: ::std::vec::Vec<::std::string::String>,
+    // @@protoc_insertion_point(field:mizer.Session.project_history)
+    pub project_history: ::std::vec::Vec<::std::string::String>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.Session.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -730,9 +730,9 @@ impl Session {
         let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
-            "filePath",
-            |m: &Session| { &m.filePath },
-            |m: &mut Session| { &mut m.filePath },
+            "file_path",
+            |m: &Session| { &m.file_path },
+            |m: &mut Session| { &mut m.file_path },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "devices",
@@ -740,9 +740,9 @@ impl Session {
             |m: &mut Session| { &mut m.devices },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
-            "projectHistory",
-            |m: &Session| { &m.projectHistory },
-            |m: &mut Session| { &mut m.projectHistory },
+            "project_history",
+            |m: &Session| { &m.project_history },
+            |m: &mut Session| { &mut m.project_history },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Session>(
             "Session",
@@ -763,13 +763,13 @@ impl ::protobuf::Message for Session {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.filePath = ::std::option::Option::Some(is.read_string()?);
+                    self.file_path = ::std::option::Option::Some(is.read_string()?);
                 },
                 18 => {
                     self.devices.push(is.read_message()?);
                 },
                 26 => {
-                    self.projectHistory.push(is.read_string()?);
+                    self.project_history.push(is.read_string()?);
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -783,14 +783,14 @@ impl ::protobuf::Message for Session {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if let Some(v) = self.filePath.as_ref() {
+        if let Some(v) = self.file_path.as_ref() {
             my_size += ::protobuf::rt::string_size(1, &v);
         }
         for value in &self.devices {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
-        for value in &self.projectHistory {
+        for value in &self.project_history {
             my_size += ::protobuf::rt::string_size(3, &value);
         };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -799,13 +799,13 @@ impl ::protobuf::Message for Session {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if let Some(v) = self.filePath.as_ref() {
+        if let Some(v) = self.file_path.as_ref() {
             os.write_string(1, v)?;
         }
         for v in &self.devices {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         };
-        for v in &self.projectHistory {
+        for v in &self.project_history {
             os.write_string(3, &v)?;
         };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -825,17 +825,17 @@ impl ::protobuf::Message for Session {
     }
 
     fn clear(&mut self) {
-        self.filePath = ::std::option::Option::None;
+        self.file_path = ::std::option::Option::None;
         self.devices.clear();
-        self.projectHistory.clear();
+        self.project_history.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static Session {
         static instance: Session = Session {
-            filePath: ::std::option::Option::None,
+            file_path: ::std::option::Option::None,
             devices: ::std::vec::Vec::new(),
-            projectHistory: ::std::vec::Vec::new(),
+            project_history: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1565,28 +1565,28 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"*\n\x14SavePr\
     ojectAsRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0f\
     ProjectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"\x8f\x01\n\x07Session\x12\
-    \x1f\n\x08filePath\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\
+    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"\x92\x01\n\x07Session\x12\
+    \x20\n\tfile_path\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\
     \x07devices\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\
-    \x12&\n\x0eprojectHistory\x18\x03\x20\x03(\tR\x0eprojectHistoryB\x0b\n\t\
-    _filePath\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04n\
-    ame\x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\
-    \x20\x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\
-    \x20\x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\
-    \x20\x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05dri\
-    ft\"\x14\n\x12LoadHistoryRequest\"M\n\x07History\x12(\n\x05items\x18\x01\
-    \x20\x03(\x0b2\x12.mizer.HistoryItemR\x05items\x12\x18\n\x07pointer\x18\
-    \x02\x20\x01(\x04R\x07pointer\"A\n\x0bHistoryItem\x12\x14\n\x05label\x18\
-    \x01\x20\x01(\tR\x05label\x12\x1c\n\ttimestamp\x18\x02\x20\x01(\x04R\tti\
-    mestamp2\xb8\x03\n\nSessionApi\x123\n\nGetSession\x12\x15.mizer.SessionR\
-    equest\x1a\x0e.mizer.Session\x128\n\x0bJoinSession\x12\x19.mizer.ClientA\
-    nnouncement\x1a\x0e.mizer.Session\x12;\n\nNewProject\x12\x15.mizer.Proje\
-    ctRequest\x1a\x16.mizer.ProjectResponse\x12@\n\x0bLoadProject\x12\x19.mi\
-    zer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\x12<\n\x0bSaveProje\
-    ct\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResponse\x12D\n\rSa\
-    veProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\x16.mizer.ProjectResp\
-    onse\x128\n\x0bLoadHistory\x12\x19.mizer.LoadHistoryRequest\x1a\x0e.mize\
-    r.Historyb\x06proto3\
+    \x12'\n\x0fproject_history\x18\x03\x20\x03(\tR\x0eprojectHistoryB\x0c\n\
+    \n_file_path\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\
+    \x03\x20\x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\
+    \x04\x20\x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\
+    \x01\x20\x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\
+    \x05drift\"\x14\n\x12LoadHistoryRequest\"M\n\x07History\x12(\n\x05items\
+    \x18\x01\x20\x03(\x0b2\x12.mizer.HistoryItemR\x05items\x12\x18\n\x07poin\
+    ter\x18\x02\x20\x01(\x04R\x07pointer\"A\n\x0bHistoryItem\x12\x14\n\x05la\
+    bel\x18\x01\x20\x01(\tR\x05label\x12\x1c\n\ttimestamp\x18\x02\x20\x01(\
+    \x04R\ttimestamp2\xb8\x03\n\nSessionApi\x123\n\nGetSession\x12\x15.mizer\
+    .SessionRequest\x1a\x0e.mizer.Session\x128\n\x0bJoinSession\x12\x19.mize\
+    r.ClientAnnouncement\x1a\x0e.mizer.Session\x12;\n\nNewProject\x12\x15.mi\
+    zer.ProjectRequest\x1a\x16.mizer.ProjectResponse\x12@\n\x0bLoadProject\
+    \x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\x12<\n\
+    \x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRespon\
+    se\x12D\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\x16.mize\
+    r.ProjectResponse\x128\n\x0bLoadHistory\x12\x19.mizer.LoadHistoryRequest\
+    \x1a\x0e.mizer.Historyb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

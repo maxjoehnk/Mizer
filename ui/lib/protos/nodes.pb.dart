@@ -18,7 +18,7 @@ export 'nodes.pbenum.dart';
 
 class AddNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
     ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
     ..hasRequiredFields = false
@@ -962,10 +962,10 @@ class Nodes extends $pb.GeneratedMessage {
 
 class NodeConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetNode', protoName: 'targetNode')
-    ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetPort', protoName: 'targetPort', subBuilder: Port.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNode', protoName: 'sourceNode')
-    ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePort', protoName: 'sourcePort', subBuilder: Port.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetNode')
+    ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetPort', subBuilder: Port.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNode')
+    ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePort', subBuilder: Port.create)
     ..e<ChannelProtocol>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
     ..hasRequiredFields = false
   ;
@@ -1069,12 +1069,12 @@ class NodeConnection extends $pb.GeneratedMessage {
 
 class Node extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..aOM<NodeDesigner>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
-    ..e<Node_NodePreviewType>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.History, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
+    ..e<Node_NodePreviewType>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.HISTORY, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
     ..aOM<NodeConfig>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: NodeConfig.create)
     ..hasRequiredFields = false
   ;
@@ -1322,67 +1322,67 @@ class NodeConfig extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71])
-    ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
-    ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
-    ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
-    ..aOM<ClockNodeConfig>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clockConfig', protoName: 'clockConfig', subBuilder: ClockNodeConfig.create)
-    ..aOM<FixtureNodeConfig>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureConfig', protoName: 'fixtureConfig', subBuilder: FixtureNodeConfig.create)
-    ..aOM<ButtonNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', protoName: 'buttonConfig', subBuilder: ButtonNodeConfig.create)
-    ..aOM<FaderNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', protoName: 'faderConfig', subBuilder: FaderNodeConfig.create)
-    ..aOM<IldaFileNodeConfig>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ildaFileConfig', protoName: 'ildaFileConfig', subBuilder: IldaFileNodeConfig.create)
-    ..aOM<LaserNodeConfig>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'laserConfig', protoName: 'laserConfig', subBuilder: LaserNodeConfig.create)
-    ..aOM<PixelPatternNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', protoName: 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
-    ..aOM<PixelDmxNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelDmxConfig', protoName: 'pixelDmxConfig', subBuilder: PixelDmxNodeConfig.create)
-    ..aOM<DmxOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutputConfig', protoName: 'dmxOutputConfig', subBuilder: DmxOutputNodeConfig.create)
-    ..aOM<MidiNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiNodeConfig.create)
-    ..aOM<MidiNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiNodeConfig.create)
-    ..aOM<OpcOutputNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', protoName: 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
-    ..aOM<OscNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscNodeConfig.create)
-    ..aOM<OscNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', protoName: 'oscOutputConfig', subBuilder: OscNodeConfig.create)
-    ..aOM<VideoColorBalanceNodeConfig>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoColorBalanceConfig', protoName: 'videoColorBalanceConfig', subBuilder: VideoColorBalanceNodeConfig.create)
-    ..aOM<VideoEffectNodeConfig>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoEffectConfig', protoName: 'videoEffectConfig', subBuilder: VideoEffectNodeConfig.create)
-    ..aOM<VideoFileNodeConfig>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', protoName: 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
-    ..aOM<VideoOutputNodeConfig>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoOutputConfig', protoName: 'videoOutputConfig', subBuilder: VideoOutputNodeConfig.create)
-    ..aOM<VideoTransformNodeConfig>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', protoName: 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
-    ..aOM<SelectNodeConfig>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selectConfig', protoName: 'selectConfig', subBuilder: SelectNodeConfig.create)
-    ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', protoName: 'mergeConfig', subBuilder: MergeNodeConfig.create)
-    ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', protoName: 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
-    ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', protoName: 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
-    ..aOM<ProgrammerNodeConfig>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerConfig', protoName: 'programmerConfig', subBuilder: ProgrammerNodeConfig.create)
-    ..aOM<GroupNodeConfig>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupConfig', protoName: 'groupConfig', subBuilder: GroupNodeConfig.create)
-    ..aOM<PresetNodeConfig>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetConfig', protoName: 'presetConfig', subBuilder: PresetNodeConfig.create)
-    ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', protoName: 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
-    ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
-    ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', protoName: 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
-    ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', protoName: 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
-    ..aOM<EncoderNodeConfig>(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encoderConfig', protoName: 'encoderConfig', subBuilder: EncoderNodeConfig.create)
-    ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', protoName: 'containerConfig', subBuilder: ContainerNodeConfig.create)
-    ..aOM<MathNodeConfig>(46, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mathConfig', protoName: 'mathConfig', subBuilder: MathNodeConfig.create)
-    ..aOM<MqttInputNodeConfig>(47, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttInputConfig', protoName: 'mqttInputConfig', subBuilder: MqttInputNodeConfig.create)
-    ..aOM<MqttOutputNodeConfig>(48, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttOutputConfig', protoName: 'mqttOutputConfig', subBuilder: MqttOutputNodeConfig.create)
-    ..aOM<NumberToDataNodeConfig>(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberToDataConfig', protoName: 'numberToDataConfig', subBuilder: NumberToDataNodeConfig.create)
-    ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
-    ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
-    ..aOM<ExtractNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'extractConfig', protoName: 'extractConfig', subBuilder: ExtractNodeConfig.create)
-    ..aOM<PlanScreenNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
-    ..aOM<DelayNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
-    ..aOM<RampNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
-    ..aOM<NoiseNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
-    ..aOM<LabelNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', protoName: 'labelConfig', subBuilder: LabelNodeConfig.create)
-    ..aOM<TransportNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', protoName: 'transportConfig', subBuilder: TransportNodeConfig.create)
-    ..aOM<G13InputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', protoName: 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
-    ..aOM<G13OutputNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
-    ..aOM<ConstantNumberNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', protoName: 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
-    ..aOM<ConditionalNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
-    ..aOM<TimecodeControlNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', protoName: 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
-    ..aOM<TimecodeOutputNodeConfig>(64, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', protoName: 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
-    ..aOM<AudioFileNodeConfig>(65, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioFileConfig', protoName: 'audioFileConfig', subBuilder: AudioFileNodeConfig.create)
-    ..aOM<AudioOutputNodeConfig>(66, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioOutputConfig', protoName: 'audioOutputConfig', subBuilder: AudioOutputNodeConfig.create)
-    ..aOM<AudioVolumeNodeConfig>(67, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioVolumeConfig', protoName: 'audioVolumeConfig', subBuilder: AudioVolumeNodeConfig.create)
-    ..aOM<AudioInputNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', protoName: 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
-    ..aOM<AudioMixNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', protoName: 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
-    ..aOM<AudioMeterNodeConfig>(70, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', protoName: 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
-    ..aOM<TemplateNodeConfig>(71, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'templateConfig', protoName: 'templateConfig', subBuilder: TemplateNodeConfig.create)
+    ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
+    ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
+    ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
+    ..aOM<ClockNodeConfig>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clockConfig', subBuilder: ClockNodeConfig.create)
+    ..aOM<FixtureNodeConfig>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureConfig', subBuilder: FixtureNodeConfig.create)
+    ..aOM<ButtonNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', subBuilder: ButtonNodeConfig.create)
+    ..aOM<FaderNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', subBuilder: FaderNodeConfig.create)
+    ..aOM<IldaFileNodeConfig>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ildaFileConfig', subBuilder: IldaFileNodeConfig.create)
+    ..aOM<LaserNodeConfig>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'laserConfig', subBuilder: LaserNodeConfig.create)
+    ..aOM<PixelPatternNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
+    ..aOM<PixelDmxNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelDmxConfig', subBuilder: PixelDmxNodeConfig.create)
+    ..aOM<DmxOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutputConfig', subBuilder: DmxOutputNodeConfig.create)
+    ..aOM<MidiNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', subBuilder: MidiNodeConfig.create)
+    ..aOM<MidiNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', subBuilder: MidiNodeConfig.create)
+    ..aOM<OpcOutputNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
+    ..aOM<OscNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', subBuilder: OscNodeConfig.create)
+    ..aOM<OscNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', subBuilder: OscNodeConfig.create)
+    ..aOM<VideoColorBalanceNodeConfig>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoColorBalanceConfig', subBuilder: VideoColorBalanceNodeConfig.create)
+    ..aOM<VideoEffectNodeConfig>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoEffectConfig', subBuilder: VideoEffectNodeConfig.create)
+    ..aOM<VideoFileNodeConfig>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
+    ..aOM<VideoOutputNodeConfig>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoOutputConfig', subBuilder: VideoOutputNodeConfig.create)
+    ..aOM<VideoTransformNodeConfig>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
+    ..aOM<SelectNodeConfig>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selectConfig', subBuilder: SelectNodeConfig.create)
+    ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', subBuilder: MergeNodeConfig.create)
+    ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
+    ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
+    ..aOM<ProgrammerNodeConfig>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerConfig', subBuilder: ProgrammerNodeConfig.create)
+    ..aOM<GroupNodeConfig>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupConfig', subBuilder: GroupNodeConfig.create)
+    ..aOM<PresetNodeConfig>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetConfig', subBuilder: PresetNodeConfig.create)
+    ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
+    ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
+    ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
+    ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
+    ..aOM<EncoderNodeConfig>(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encoderConfig', subBuilder: EncoderNodeConfig.create)
+    ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', subBuilder: ContainerNodeConfig.create)
+    ..aOM<MathNodeConfig>(46, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mathConfig', subBuilder: MathNodeConfig.create)
+    ..aOM<MqttInputNodeConfig>(47, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttInputConfig', subBuilder: MqttInputNodeConfig.create)
+    ..aOM<MqttOutputNodeConfig>(48, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttOutputConfig', subBuilder: MqttOutputNodeConfig.create)
+    ..aOM<NumberToDataNodeConfig>(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberToDataConfig', subBuilder: NumberToDataNodeConfig.create)
+    ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
+    ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', subBuilder: ValueNodeConfig.create)
+    ..aOM<ExtractNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'extractConfig', subBuilder: ExtractNodeConfig.create)
+    ..aOM<PlanScreenNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
+    ..aOM<DelayNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', subBuilder: DelayNodeConfig.create)
+    ..aOM<RampNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', subBuilder: RampNodeConfig.create)
+    ..aOM<NoiseNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', subBuilder: NoiseNodeConfig.create)
+    ..aOM<LabelNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', subBuilder: LabelNodeConfig.create)
+    ..aOM<TransportNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', subBuilder: TransportNodeConfig.create)
+    ..aOM<G13InputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
+    ..aOM<G13OutputNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
+    ..aOM<ConstantNumberNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
+    ..aOM<ConditionalNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
+    ..aOM<TimecodeControlNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
+    ..aOM<TimecodeOutputNodeConfig>(64, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
+    ..aOM<AudioFileNodeConfig>(65, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioFileConfig', subBuilder: AudioFileNodeConfig.create)
+    ..aOM<AudioOutputNodeConfig>(66, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioOutputConfig', subBuilder: AudioOutputNodeConfig.create)
+    ..aOM<AudioVolumeNodeConfig>(67, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioVolumeConfig', subBuilder: AudioVolumeNodeConfig.create)
+    ..aOM<AudioInputNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
+    ..aOM<AudioMixNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
+    ..aOM<AudioMeterNodeConfig>(70, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
+    ..aOM<TemplateNodeConfig>(71, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'templateConfig', subBuilder: TemplateNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -2334,7 +2334,7 @@ class NodeConfig extends $pb.GeneratedMessage {
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscillatorNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<OscillatorNodeConfig_OscillatorType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: OscillatorNodeConfig_OscillatorType.Square, valueOf: OscillatorNodeConfig_OscillatorType.valueOf, enumValues: OscillatorNodeConfig_OscillatorType.values)
+    ..e<OscillatorNodeConfig_OscillatorType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: OscillatorNodeConfig_OscillatorType.SQUARE, valueOf: OscillatorNodeConfig_OscillatorType.valueOf, enumValues: OscillatorNodeConfig_OscillatorType.values)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ratio', $pb.PbFieldType.OD)
     ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OD)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OD)
@@ -3140,7 +3140,7 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
 class GamepadNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GamepadNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId')
-    ..e<GamepadNodeConfig_Control>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: GamepadNodeConfig_Control.LeftStickX, valueOf: GamepadNodeConfig_Control.valueOf, enumValues: GamepadNodeConfig_Control.values)
+    ..e<GamepadNodeConfig_Control>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: GamepadNodeConfig_Control.LEFT_STICK_X, valueOf: GamepadNodeConfig_Control.valueOf, enumValues: GamepadNodeConfig_Control.values)
     ..hasRequiredFields = false
   ;
 
@@ -3200,7 +3200,7 @@ class GamepadNodeConfig extends $pb.GeneratedMessage {
 
 class PixelPatternNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PixelPatternNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<PixelPatternNodeConfig_Pattern>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pattern', $pb.PbFieldType.OE, defaultOrMaker: PixelPatternNodeConfig_Pattern.RgbIterate, valueOf: PixelPatternNodeConfig_Pattern.valueOf, enumValues: PixelPatternNodeConfig_Pattern.values)
+    ..e<PixelPatternNodeConfig_Pattern>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pattern', $pb.PbFieldType.OE, defaultOrMaker: PixelPatternNodeConfig_Pattern.RGB_ITERATE, valueOf: PixelPatternNodeConfig_Pattern.valueOf, enumValues: PixelPatternNodeConfig_Pattern.values)
     ..hasRequiredFields = false
   ;
 
@@ -3414,8 +3414,8 @@ class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..e<MidiNodeConfig_NoteBinding_MidiType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MidiNodeConfig_NoteBinding_MidiType.CC, valueOf: MidiNodeConfig_NoteBinding_MidiType.valueOf, enumValues: MidiNodeConfig_NoteBinding_MidiType.values)
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeFrom', $pb.PbFieldType.OU3, protoName: 'rangeFrom')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeTo', $pb.PbFieldType.OU3, protoName: 'rangeTo')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeFrom', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeTo', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -3588,8 +3588,8 @@ class MidiNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..oo(0, [2, 3])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'device')
-    ..aOM<MidiNodeConfig_NoteBinding>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteBinding', protoName: 'noteBinding', subBuilder: MidiNodeConfig_NoteBinding.create)
-    ..aOM<MidiNodeConfig_ControlBinding>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlBinding', protoName: 'controlBinding', subBuilder: MidiNodeConfig_ControlBinding.create)
+    ..aOM<MidiNodeConfig_NoteBinding>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteBinding', subBuilder: MidiNodeConfig_NoteBinding.create)
+    ..aOM<MidiNodeConfig_ControlBinding>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlBinding', subBuilder: MidiNodeConfig_ControlBinding.create)
     ..hasRequiredFields = false
   ;
 
@@ -3760,8 +3760,8 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connection')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..e<OscNodeConfig_ArgumentType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, protoName: 'argumentType', defaultOrMaker: OscNodeConfig_ArgumentType.Int, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'onlyEmitChanges', protoName: 'onlyEmitChanges')
+    ..e<OscNodeConfig_ArgumentType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, defaultOrMaker: OscNodeConfig_ArgumentType.INT, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'onlyEmitChanges')
     ..hasRequiredFields = false
   ;
 
@@ -4039,7 +4039,7 @@ class SelectNodeConfig extends $pb.GeneratedMessage {
 
 class MergeNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MergeNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<MergeNodeConfig_MergeMode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MergeNodeConfig_MergeMode.Latest, valueOf: MergeNodeConfig_MergeMode.valueOf, enumValues: MergeNodeConfig_MergeMode.values)
+    ..e<MergeNodeConfig_MergeMode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MergeNodeConfig_MergeMode.LATEST, valueOf: MergeNodeConfig_MergeMode.valueOf, enumValues: MergeNodeConfig_MergeMode.values)
     ..hasRequiredFields = false
   ;
 
@@ -4321,7 +4321,7 @@ class ContainerNodeConfig extends $pb.GeneratedMessage {
 
 class MathNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MathNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<MathNodeConfig_Mode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MathNodeConfig_Mode.Addition, valueOf: MathNodeConfig_Mode.valueOf, enumValues: MathNodeConfig_Mode.values)
+    ..e<MathNodeConfig_Mode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MathNodeConfig_Mode.ADDITION, valueOf: MathNodeConfig_Mode.valueOf, enumValues: MathNodeConfig_Mode.values)
     ..hasRequiredFields = false
   ;
 
@@ -5403,7 +5403,7 @@ class TimecodeOutputNodeConfig extends $pb.GeneratedMessage {
 class AudioFileNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioFileNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'file')
-    ..e<AudioFileNodeConfig_PlaybackMode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playbackMode', $pb.PbFieldType.OE, protoName: 'playbackMode', defaultOrMaker: AudioFileNodeConfig_PlaybackMode.ONE_SHOT, valueOf: AudioFileNodeConfig_PlaybackMode.valueOf, enumValues: AudioFileNodeConfig_PlaybackMode.values)
+    ..e<AudioFileNodeConfig_PlaybackMode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playbackMode', $pb.PbFieldType.OE, defaultOrMaker: AudioFileNodeConfig_PlaybackMode.ONE_SHOT, valueOf: AudioFileNodeConfig_PlaybackMode.valueOf, enumValues: AudioFileNodeConfig_PlaybackMode.values)
     ..hasRequiredFields = false
   ;
 

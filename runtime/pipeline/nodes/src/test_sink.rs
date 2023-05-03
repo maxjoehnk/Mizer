@@ -16,28 +16,13 @@ impl PartialEq for TestSink {
 impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "TestSink".into(),
+            name: stringify!(TestSink).into(),
             preview_type: PreviewType::None,
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        (port == "input").then(|| PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "input".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        )]
+        vec![input_port!("input", PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

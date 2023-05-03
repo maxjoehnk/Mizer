@@ -15,7 +15,8 @@ service EffectsApi {
   rpc DeleteEffectStep (DeleteEffectStepRequest) returns (Effect) {}
 }
 
-message GetEffectsRequest {}
+message GetEffectsRequest {
+}
 message AddEffectRequest {
   string name = 1;
 }

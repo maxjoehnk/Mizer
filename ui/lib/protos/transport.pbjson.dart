@@ -3,7 +3,7 @@
 //  source: transport.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -12,14 +12,14 @@ import 'dart:typed_data' as $typed_data;
 const TransportState$json = const {
   '1': 'TransportState',
   '2': const [
-    const {'1': 'Stopped', '2': 0},
-    const {'1': 'Paused', '2': 1},
-    const {'1': 'Playing', '2': 2},
+    const {'1': 'STOPPED', '2': 0},
+    const {'1': 'PAUSED', '2': 1},
+    const {'1': 'PLAYING', '2': 2},
   ],
 };
 
 /// Descriptor for `TransportState`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List transportStateDescriptor = $convert.base64Decode('Cg5UcmFuc3BvcnRTdGF0ZRILCgdTdG9wcGVkEAASCgoGUGF1c2VkEAESCwoHUGxheWluZxAC');
+final $typed_data.Uint8List transportStateDescriptor = $convert.base64Decode('Cg5UcmFuc3BvcnRTdGF0ZRILCgdTVE9QUEVEEAASCgoGUEFVU0VEEAESCwoHUExBWUlORxAC');
 @$core.Deprecated('Use subscribeTransportRequestDescriptor instead')
 const SubscribeTransportRequest$json = const {
   '1': 'SubscribeTransportRequest',

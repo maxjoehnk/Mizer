@@ -3,35 +3,24 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
+const VALUE_INPUT: &str = "value";
+const VALUE_OUTPUT: &str = "value";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct DataToNumberNode;
 
 impl PipelineNode for DataToNumberNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "DataToNumberNode".into(),
+            name: stringify!(DataToNumberNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(VALUE_INPUT, PortType::Data),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 
@@ -44,7 +33,7 @@ impl ProcessingNode for DataToNumberNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let data = context.read_port::<_, StructuredData>("value");
+        let data = context.read_port::<_, StructuredData>(VALUE_INPUT);
         let value = match data {
             Some(StructuredData::Float(value)) => Some(value),
             Some(StructuredData::Int(value)) => Some(value as f64),
@@ -52,7 +41,7 @@ impl ProcessingNode for DataToNumberNode {
         };
 
         if let Some(value) = value {
-            context.write_port("value", value);
+            context.write_port(VALUE_OUTPUT, value);
             context.push_history_value(value);
         }
 

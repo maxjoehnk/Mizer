@@ -1,5 +1,4 @@
-use std::collections::HashMap;
-
+use indexmap::IndexMap;
 use mizer_fixtures::definition::{
     ChannelResolution, ColorGroupBuilder, FixtureChannelDefinition, FixtureControls,
     FixtureDefinition, FixtureMode, SubFixtureControlChannel, SubFixtureDefinition,
@@ -32,7 +31,7 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                             .cloned()
                     })
                     .map(|c| (c.name.clone(), c))
-                    .collect::<HashMap<_, _>>();
+                    .collect::<IndexMap<_, _>>();
                 let sub_fixtures = mode
                     .pixels
                     .into_iter()

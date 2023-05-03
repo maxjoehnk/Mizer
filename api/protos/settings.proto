@@ -7,7 +7,8 @@ service SettingsApi {
   rpc SaveSettings (Settings) returns (Settings) {}
 }
 
-message RequestSettings {}
+message RequestSettings {
+}
 
 message Settings {
   Hotkeys hotkeys = 1;

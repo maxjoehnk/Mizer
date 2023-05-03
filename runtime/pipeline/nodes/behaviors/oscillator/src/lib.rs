@@ -9,19 +9,14 @@ const MIN_INPUT_PORT: &str = "min";
 const MAX_INPUT_PORT: &str = "max";
 const VALUE_OUTPUT_PORT: &str = "value";
 
-#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum OscillatorType {
     Square,
+    #[default]
     Sine,
     Saw,
     Triangle,
-}
-
-impl Default for OscillatorType {
-    fn default() -> Self {
-        OscillatorType::Sine
-    }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -68,45 +63,17 @@ fn default_max() -> f64 {
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OscillatorNode".into(),
+            name: stringify!(OscillatorNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                VALUE_OUTPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-            (
-                INTERVAL_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                MIN_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                MAX_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
+            output_port!(VALUE_OUTPUT_PORT, PortType::Single),
+            input_port!(INTERVAL_INPUT_PORT, PortType::Single),
+            input_port!(MIN_INPUT_PORT, PortType::Single),
+            input_port!(MAX_INPUT_PORT, PortType::Single),
         ]
     }
 
@@ -184,7 +151,7 @@ impl OscillatorContext {
     }
 
     fn tick(&self, beat: f64) -> f64 {
-        if self.interval == 0. {
+        if self.interval - f64::EPSILON <= 0. {
             return self.min;
         }
         match &self.oscillator_type {
@@ -335,6 +302,22 @@ mod tests {
         let node = OscillatorContext {
             oscillator_type: oscillator,
             interval: 0.,
+            ..Default::default()
+        };
+
+        let value = node.tick(1.);
+
+        assert_eq!(0., value);
+    }
+
+    #[test_case(OscillatorType::Sine)]
+    #[test_case(OscillatorType::Saw)]
+    #[test_case(OscillatorType::Triangle)]
+    #[test_case(OscillatorType::Square)]
+    fn oscillator_should_return_0_for_interval_below_0(oscillator: OscillatorType) {
+        let node = OscillatorContext {
+            oscillator_type: oscillator,
+            interval: -0.1,
             ..Default::default()
         };
 

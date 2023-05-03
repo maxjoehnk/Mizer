@@ -3,51 +3,28 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
+const HUE_INPUT: &str = "Hue";
+const SATURATION_INPUT: &str = "Saturation";
+const VALUE_INPUT: &str = "Value";
+const COLOR_OUTPUT: &str = "Color";
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct HsvColorNode;
 
 impl PipelineNode for HsvColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "HsvColorNode".into(),
+            name: stringify!(HsvColorNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "Hue".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Saturation".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Color".into(),
-                PortMetadata {
-                    port_type: PortType::Color,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(HUE_INPUT, PortType::Single),
+            input_port!(SATURATION_INPUT, PortType::Single),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(COLOR_OUTPUT, PortType::Color),
         ]
     }
 
@@ -60,9 +37,9 @@ impl ProcessingNode for HsvColorNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        let hue = context.read_port("Hue");
-        let saturation = context.read_port("Saturation");
-        let value = context.read_port("Value");
+        let hue = context.read_port(HUE_INPUT);
+        let saturation = context.read_port(SATURATION_INPUT);
+        let value = context.read_port(VALUE_INPUT);
 
         let hsv = match (hue, saturation, value) {
             (Some(hue), Some(saturation), Some(value)) => Some((hue, saturation, value)),
@@ -77,7 +54,7 @@ impl ProcessingNode for HsvColorNode {
 
         if let Some((hue, saturation, value)) = hsv {
             let rgb = hsv_to_rgb(hue * 360f64, saturation, value);
-            context.write_port("Color", Color::from(rgb));
+            context.write_port(COLOR_OUTPUT, Color::from(rgb));
         }
 
         Ok(())

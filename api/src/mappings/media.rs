@@ -34,8 +34,8 @@ impl From<MediaDocument> for MediaFile {
             name: media.name,
             metadata: MessageField::some(MediaMetadata {
                 tags: media.tags.into_iter().map(MediaTag::from).collect(),
-                fileSize: media.file_size,
-                sourcePath: media
+                file_size: media.file_size,
+                source_path: media
                     .source_path
                     .and_then(|path| path.to_str().map(|path| path.to_string()))
                     .unwrap_or_default(),
@@ -54,8 +54,8 @@ impl From<MediaDocument> for MediaFile {
                 artist: media.metadata.artist,
                 ..Default::default()
             }),
-            contentUrl: content_url,
-            thumbnailUrl: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
+            content_url,
+            thumbnail_url: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
             type_: EnumOrUnknown::new(media.media_type.into()),
             ..Default::default()
         }
@@ -120,8 +120,8 @@ impl From<AttachedMediaDocument> for MediaFile {
         MediaFile {
             id: document.id.to_string(),
             name: document.name,
-            contentUrl: format!("http://localhost:50050/media/{}.mp4", document.id),
-            thumbnailUrl: format!("http://localhost:50050/thumbnails/{}.png", document.id),
+            content_url: format!("http://localhost:50050/media/{}.mp4", document.id),
+            thumbnail_url: format!("http://localhost:50050/thumbnails/{}.png", document.id),
             ..Default::default()
         }
     }

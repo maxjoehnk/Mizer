@@ -8,5 +8,5 @@ edition = "2021"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../pipeline/node" }
-pinboard = "2.1"
+pinboard = "2.2"
 base64 = "0.21"

@@ -67,16 +67,11 @@ impl PipelineNode for PlanScreenNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            OUTPUT_PORT.into(),
-            PortMetadata {
-                port_type: PortType::Multi,
-                direction: PortDirection::Input,
-                dimensions: self
-                    .get_screen()
-                    .map(|screen| (screen.width as u64, screen.height as u64)),
-                ..Default::default()
-            },
+        vec![input_port!(
+            OUTPUT_PORT,
+            PortType::Multi,
+            dimensions: self.get_screen()
+                .map(|screen| (screen.width as u64, screen.height as u64))
         )]
     }
 

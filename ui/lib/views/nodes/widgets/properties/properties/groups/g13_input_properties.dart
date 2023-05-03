@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -45,7 +46,9 @@ class _G13InputPropertiesState extends State<G13InputProperties> {
       EnumField(
         label: "Key",
         initialValue: widget.config.key,
-        items: G13InputNodeConfig_Key.values.map((e) => SelectOption(value: e, label: e.name)).toList(),
+        items: G13InputNodeConfig_Key.values
+            .map((e) => SelectOption(value: e, label: e.name.toCapitalCase()))
+            .toList(),
         onUpdate: _updateKey,
       ),
     ]);

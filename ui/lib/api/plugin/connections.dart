@@ -2,10 +2,17 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
+import 'ffi/api.dart';
+import 'ffi/bindings.dart';
+import 'ffi/connections.dart';
+
 class ConnectionsPluginApi implements ConnectionsApi {
+  final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/connections");
   final EventChannel midiMonitorChannel = const EventChannel("mizer.live/connections/midi");
   final EventChannel oscMonitorChannel = const EventChannel("mizer.live/connections/osc");
+
+  ConnectionsPluginApi(this.bindings);
 
   @override
   Future<Connections> getConnections() async {
@@ -18,7 +25,8 @@ class ConnectionsPluginApi implements ConnectionsApi {
   Future<Map<int, List<int>>> monitorDmxConnection(String outputId) async {
     Map<dynamic, dynamic> response = await channel.invokeMethod("monitorDmx", outputId);
 
-    return response.map((dynamic key, dynamic value) => MapEntry(key as int, (value as List<dynamic>).map((dynamic e) => e as int).toList()));
+    return response.map((dynamic key, dynamic value) =>
+        MapEntry(key as int, (value as List<dynamic>).map((dynamic e) => e as int).toList()));
   }
 
   static List<int> _convertBuffer(List<Object> response) {
@@ -54,13 +62,15 @@ class ConnectionsPluginApi implements ConnectionsApi {
 
   @override
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
-    return midiMonitorChannel.receiveBroadcastStream(connectionId)
+    return midiMonitorChannel
+        .receiveBroadcastStream(connectionId)
         .map((buffer) => MonitorMidiResponse.fromBuffer(_convertBuffer(buffer)));
   }
 
   @override
   Stream<MonitorOscResponse> monitorOscConnection(String connectionId) {
-    return oscMonitorChannel.receiveBroadcastStream(connectionId)
+    return oscMonitorChannel
+        .receiveBroadcastStream(connectionId)
         .map((buffer) => MonitorOscResponse.fromBuffer(_convertBuffer(buffer)));
   }
 
@@ -72,5 +82,12 @@ class ConnectionsPluginApi implements ConnectionsApi {
   @override
   Future<void> configureConnection(ConfigureConnectionRequest request) async {
     await channel.invokeMethod("configureConnection", request.writeToBuffer());
+  }
+
+  @override
+  Future<GamepadStatePointer?> getGamepadPointer(String id) async {
+    int pointer = await channel.invokeMethod("getGamepadPointer", id);
+
+    return this.bindings.openGamepadRef(pointer);
   }
 }

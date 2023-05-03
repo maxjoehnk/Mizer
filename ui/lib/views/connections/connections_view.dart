@@ -5,6 +5,7 @@ import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/types/gamepad_connection.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -42,12 +43,10 @@ class _ConnectionsViewState extends State<ConnectionsView> {
               var connection = connections[index];
               return ContextMenu(
                 menu: Menu(items: [
-                  if (connection.canConfigure) MenuItem(
-                      label: "Configure".i18n,
-                      action: () => _onConfigure(connection)),
-                  if (connection.canDelete) MenuItem(
-                      label: "Delete".i18n,
-                      action: () => _onDelete(connection)),
+                  if (connection.canConfigure)
+                    MenuItem(label: "Configure".i18n, action: () => _onConfigure(connection)),
+                  if (connection.canDelete)
+                    MenuItem(label: "Delete".i18n, action: () => _onDelete(connection)),
                 ]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,21 +104,27 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       ];
     }
     if (connection.hasOsc()) {
-      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor".i18n, onClick: () => _showOscMonitor(context, connection))];
+      return [
+        MizerIconButton(
+            icon: MdiIcons.formatListBulleted,
+            label: "Monitor".i18n,
+            onClick: () => _showOscMonitor(context, connection))
+      ];
     }
     if (connection.hasMidi()) {
-      return [MizerIconButton(
-          icon: MdiIcons.formatListBulleted,
-          label: "Monitor".i18n,
-          onClick: () => _showMidiMonitor(context, connection))
+      return [
+        MizerIconButton(
+            icon: MdiIcons.formatListBulleted,
+            label: "Monitor".i18n,
+            onClick: () => _showMidiMonitor(context, connection))
       ];
     }
     return [];
   }
 
   Widget _buildConnection(Connection connection) {
-    if (connection.hasProDJLink()) {
-      return ProDJLinkConnectionView(device: connection.proDJLink);
+    if (connection.hasProDjLink()) {
+      return ProDJLinkConnectionView(device: connection.proDjLink);
     }
     if (connection.hasHelios()) {
       return HeliosConnectionView(device: connection.helios);
@@ -132,6 +137,9 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     }
     if (connection.hasMqtt()) {
       return MqttConnectionView(connection: connection.mqtt);
+    }
+    if (connection.hasGamepad()) {
+      return GamepadConnectionView(device: connection.gamepad);
     }
     return Container();
   }
@@ -210,8 +218,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   _onDelete(Connection connection) async {
     bool result = await showDialog(
         context: context,
-        builder: (BuildContext context) =>
-            AlertDialog(
+        builder: (BuildContext context) => AlertDialog(
               title: Text("Delete Connection".i18n),
               content: SingleChildScrollView(
                 child: Text("Delete Connection ${connection.name}?".i18n),
@@ -237,16 +244,19 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   _onConfigure(Connection connection) async {
     if (connection.hasDmx() && connection.dmx.hasArtnet()) {
       var value = await showDialog<ArtnetConfig>(
-          context: context, builder: (context) => ConfigureArtnetConnectionDialog(config: connection.dmx.artnet));
+          context: context,
+          builder: (context) => ConfigureArtnetConnectionDialog(config: connection.dmx.artnet));
       if (value == null) {
         return null;
       }
-      await api.configureConnection(ConfigureConnectionRequest(dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
+      await api.configureConnection(ConfigureConnectionRequest(
+          dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
       await _fetch();
     }
     if (connection.hasMqtt()) {
       var value = await showDialog<MqttConnection>(
-          context: context, builder: (context) => ConfigureMqttConnectionDialog(config: connection.mqtt));
+          context: context,
+          builder: (context) => ConfigureMqttConnectionDialog(config: connection.mqtt));
       if (value == null) {
         return null;
       }
@@ -256,7 +266,8 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     }
     if (connection.hasOsc()) {
       var value = await showDialog<OscConnection>(
-          context: context, builder: (context) => ConfigureOscConnectionDialog(config: connection.osc));
+          context: context,
+          builder: (context) => ConfigureOscConnectionDialog(config: connection.osc));
       if (value == null) {
         return null;
       }
@@ -281,7 +292,7 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasDmx()) {
       return _tag("DMX");
     }
-    if (connection.hasProDJLink()) {
+    if (connection.hasProDjLink()) {
       return _tag("ProDJLink");
     }
     if (connection.hasHelios()) {

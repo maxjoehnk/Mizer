@@ -50,8 +50,9 @@ class BaseNode extends StatelessWidget {
       Key? key,
       required bool selectedAdditionally}) {
     List<CustomNodeTab> tabs = [];
-    if (node.node.type == Node_NodeType.Container) {
-      tabs.add(CustomNodeTab(tab: NodeTab.ContainerEditor, icon: MdiIcons.pencil, builder: (model) => Container()));
+    if (node.node.type == Node_NodeType.CONTAINER) {
+      tabs.add(CustomNodeTab(
+          tab: NodeTab.ContainerEditor, icon: MdiIcons.pencil, builder: (model) => Container()));
     }
 
     return BaseNode(
@@ -81,21 +82,24 @@ class BaseNode extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Hide", action: () => _onHideNode(context)),
         MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
-        if (nodeModel.node.canRename) MenuItem(label: "Rename", action: () => _onRenameNode(context)),
-        if (nodeModel.node.canDuplicate) MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
-        if (nodeModel.node.canDelete) MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
+        if (nodeModel.node.canRename)
+          MenuItem(label: "Rename", action: () => _onRenameNode(context)),
+        if (nodeModel.node.canDuplicate)
+          MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
+        if (nodeModel.node.canDelete)
+          MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
       ]),
       child: Container(
         width: NODE_BASE_WIDTH,
         child: GestureDetector(
           onTap: () {
             if (RawKeyboard.instance.keysPressed.any((key) => [
-              LogicalKeyboardKey.shift,
-              LogicalKeyboardKey.shiftLeft,
-              LogicalKeyboardKey.shiftRight,
-            ].contains(key))) {
+                  LogicalKeyboardKey.shift,
+                  LogicalKeyboardKey.shiftLeft,
+                  LogicalKeyboardKey.shiftRight,
+                ].contains(key))) {
               this.onSelectAdditional();
-            }else {
+            } else {
               this.onSelect();
             }
           },
@@ -107,17 +111,19 @@ class BaseNode extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     NodeHeader(this.node.path, this.node.type, collapsed: collapsed),
-                    if (!collapsed) Stack(children: [
-                      _portsView(),
-                      if (selectedTab == NodeTab.Preview) _previewView(),
-                      if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
-                    ]),
-                    if (!collapsed) NodeFooter(
-                      node: node,
-                      tabs: tabs,
-                      selectedTab: selectedTab,
-                      onSelectTab: (tab) => nodeModel.selectTab(tab),
-                    )
+                    if (!collapsed)
+                      Stack(children: [
+                        _portsView(),
+                        if (selectedTab == NodeTab.Preview) _previewView(),
+                        if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
+                      ]),
+                    if (!collapsed)
+                      NodeFooter(
+                        node: node,
+                        tabs: tabs,
+                        selectedTab: selectedTab,
+                        onSelectTab: (tab) => nodeModel.selectTab(tab),
+                      )
                   ]),
             ),
             selected: selected,
@@ -151,12 +157,14 @@ class BaseNode extends StatelessWidget {
 
   Widget _containerEditor(BuildContext context) {
     // TODO: show preview of child nodes
-    return Center(child: Padding(
+    return Center(
+        child: Padding(
       padding: const EdgeInsets.all(32.0),
-      child: ElevatedButton(onPressed: () {
-        context.read<NodeEditorModel>().openContainer(nodeModel);
-      },
-      child: Text("Open")),
+      child: ElevatedButton(
+          onPressed: () {
+            context.read<NodeEditorModel>().openContainer(nodeModel);
+          },
+          child: Text("Open")),
     ));
   }
 
@@ -170,8 +178,7 @@ class BaseNode extends StatelessWidget {
 
   void _onRenameNode(BuildContext context) async {
     String? result = await showDialog(
-        context: context,
-        builder: (BuildContext context) => RenameNodeDialog(path: node.path));
+        context: context, builder: (BuildContext context) => RenameNodeDialog(path: node.path));
     if (result != null) {
       context.read<NodesBloc>().add(RenameNode(node.path, result));
     }
@@ -188,25 +195,25 @@ class BaseNode extends StatelessWidget {
 }
 
 const NON_DUPLICATABLE_NODE_TYPES = [
-  Node_NodeType.Programmer,
-  Node_NodeType.Transport,
-  Node_NodeType.Fixture,
-  Node_NodeType.Sequencer,
-  Node_NodeType.Group,
-  Node_NodeType.Container,
+  Node_NodeType.PROGRAMMER,
+  Node_NodeType.TRANSPORT,
+  Node_NodeType.FIXTURE,
+  Node_NodeType.SEQUENCER,
+  Node_NodeType.GROUP,
+  Node_NodeType.CONTAINER,
 ];
 
 const NON_RENAMEABLE_NODE_TYPES = [
-  Node_NodeType.Programmer,
-  Node_NodeType.Transport,
+  Node_NodeType.PROGRAMMER,
+  Node_NodeType.TRANSPORT,
 ];
 
 const UNDELETABLE_NODE_TYPES = [
-  Node_NodeType.Programmer,
-  Node_NodeType.Transport,
-  Node_NodeType.Fixture,
-  Node_NodeType.Sequencer,
-  Node_NodeType.Group,
+  Node_NodeType.PROGRAMMER,
+  Node_NodeType.TRANSPORT,
+  Node_NodeType.FIXTURE,
+  Node_NodeType.SEQUENCER,
+  Node_NodeType.GROUP,
 ];
 
 extension NodeOptionExtensions on Node {
@@ -244,22 +251,24 @@ class _RenameNodeDialogState extends State<RenameNodeDialog> {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-          title: "Node",
-          content: Column(children: [
-            TextField(
-              controller: _nameController,
-              autofocus: true,
-              decoration: InputDecoration(labelText: "Path".i18n),
-            )
-          ]),
-          actions: [
-            PopupAction(
-              "Cancel", () => Navigator.of(context).pop(),
-            ),
-            PopupAction(
-              "Rename", () => Navigator.of(context).pop(_nameController.text),
-            ),
-          ],
-        );
+      title: "Node",
+      content: Column(children: [
+        TextField(
+          controller: _nameController,
+          autofocus: true,
+          decoration: InputDecoration(labelText: "Path".i18n),
+        )
+      ]),
+      actions: [
+        PopupAction(
+          "Cancel",
+          () => Navigator.of(context).pop(),
+        ),
+        PopupAction(
+          "Rename",
+          () => Navigator.of(context).pop(_nameController.text),
+        ),
+      ],
+    );
   }
 }

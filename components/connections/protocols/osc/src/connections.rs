@@ -174,9 +174,9 @@ impl OscConnection {
 
 impl Drop for OscConnection {
     fn drop(&mut self) {
-        self.command_publisher
-            .send(OscClientCommand::Close)
-            .unwrap();
+        if let Err(err) = self.command_publisher.send(OscClientCommand::Close) {
+            log::error!("Unable to close osc client thread: {err:?}");
+        }
     }
 }
 

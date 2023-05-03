@@ -23,7 +23,7 @@ class PresetsView extends StatelessWidget {
                 (effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Color", children: [
-            ...state.presets.color.map((preset) => ColorButton(
+            ...state.presets.colors.map((preset) => ColorButton(
                 color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
                     (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
                 preset: preset)),

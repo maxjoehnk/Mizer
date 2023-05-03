@@ -38,6 +38,8 @@ pub struct Cue {
 pub struct CueEffect {
     pub fixtures: BackwardsCompatibleFixtureSelection,
     pub effect: u32,
+    #[serde(default)]
+    pub effect_offset: Option<SequencerTime>,
 }
 
 impl Cue {

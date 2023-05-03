@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -12,12 +12,12 @@ import 'dart:typed_data' as $typed_data;
 const MonitorDmxRequest$json = const {
   '1': 'MonitorDmxRequest',
   '2': const [
-    const {'1': 'outputId', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
+    const {'1': 'output_id', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
   ],
 };
 
 /// Descriptor for `MonitorDmxRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List monitorDmxRequestDescriptor = $convert.base64Decode('ChFNb25pdG9yRG14UmVxdWVzdBIaCghvdXRwdXRJZBgBIAEoCVIIb3V0cHV0SWQ=');
+final $typed_data.Uint8List monitorDmxRequestDescriptor = $convert.base64Decode('ChFNb25pdG9yRG14UmVxdWVzdBIbCglvdXRwdXRfaWQYASABKAlSCG91dHB1dElk');
 @$core.Deprecated('Use monitorDmxResponseDescriptor instead')
 const MonitorDmxResponse$json = const {
   '1': 'MonitorDmxResponse',
@@ -55,9 +55,9 @@ const MonitorMidiResponse$json = const {
   '2': const [
     const {'1': 'timestamp', '3': 2, '4': 1, '5': 4, '10': 'timestamp'},
     const {'1': 'cc', '3': 3, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'cc'},
-    const {'1': 'noteOff', '3': 4, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOff'},
-    const {'1': 'noteOn', '3': 5, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOn'},
-    const {'1': 'sysEx', '3': 6, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.SysEx', '9': 0, '10': 'sysEx'},
+    const {'1': 'note_off', '3': 4, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOff'},
+    const {'1': 'note_on', '3': 5, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOn'},
+    const {'1': 'sys_ex', '3': 6, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.SysEx', '9': 0, '10': 'sysEx'},
     const {'1': 'unknown', '3': 7, '4': 1, '5': 12, '9': 0, '10': 'unknown'},
   ],
   '3': const [MonitorMidiResponse_NoteMsg$json, MonitorMidiResponse_SysEx$json],
@@ -89,7 +89,7 @@ const MonitorMidiResponse_SysEx$json = const {
 };
 
 /// Descriptor for `MonitorMidiResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEjQKAmNjGAMgASgLMiIubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEj4KB25vdGVPZmYYBCABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIHbm90ZU9mZhI8CgZub3RlT24YBSABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIGbm90ZU9uEjgKBXN5c0V4GAYgASgLMiAubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24aTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YUIJCgdtZXNzYWdl');
+final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEjQKAmNjGAMgASgLMiIubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEj8KCG5vdGVfb2ZmGAQgASgLMiIubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSB25vdGVPZmYSPQoHbm90ZV9vbhgFIAEoCzIiLm1pemVyLk1vbml0b3JNaWRpUmVzcG9uc2UuTm90ZU1zZ0gAUgZub3RlT24SOQoGc3lzX2V4GAYgASgLMiAubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24aTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YUIJCgdtZXNzYWdl');
 @$core.Deprecated('Use monitorOscRequestDescriptor instead')
 const MonitorOscRequest$json = const {
   '1': 'MonitorOscRequest',
@@ -195,9 +195,9 @@ const Connection$json = const {
     const {'1': 'dmx', '3': 10, '4': 1, '5': 11, '6': '.mizer.DmxConnection', '9': 0, '10': 'dmx'},
     const {'1': 'midi', '3': 11, '4': 1, '5': 11, '6': '.mizer.MidiConnection', '9': 0, '10': 'midi'},
     const {'1': 'osc', '3': 12, '4': 1, '5': 11, '6': '.mizer.OscConnection', '9': 0, '10': 'osc'},
-    const {'1': 'proDJLink', '3': 13, '4': 1, '5': 11, '6': '.mizer.ProDjLinkConnection', '9': 0, '10': 'proDJLink'},
+    const {'1': 'pro_dj_link', '3': 13, '4': 1, '5': 11, '6': '.mizer.ProDjLinkConnection', '9': 0, '10': 'proDjLink'},
     const {'1': 'helios', '3': 14, '4': 1, '5': 11, '6': '.mizer.HeliosConnection', '9': 0, '10': 'helios'},
-    const {'1': 'etherDream', '3': 15, '4': 1, '5': 11, '6': '.mizer.EtherDreamConnection', '9': 0, '10': 'etherDream'},
+    const {'1': 'ether_dream', '3': 15, '4': 1, '5': 11, '6': '.mizer.EtherDreamConnection', '9': 0, '10': 'etherDream'},
     const {'1': 'gamepad', '3': 16, '4': 1, '5': 11, '6': '.mizer.GamepadConnection', '9': 0, '10': 'gamepad'},
     const {'1': 'mqtt', '3': 17, '4': 1, '5': 11, '6': '.mizer.MqttConnection', '9': 0, '10': 'mqtt'},
     const {'1': 'g13', '3': 18, '4': 1, '5': 11, '6': '.mizer.G13Connection', '9': 0, '10': 'g13'},
@@ -208,12 +208,12 @@ const Connection$json = const {
 };
 
 /// Descriptor for `Connection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSKwoEbXF0dBgRIAEoCzIVLm1pemVyLk1xdHRDb25uZWN0aW9uSABSBG1xdHQSKAoDZzEzGBIgASgLMhQubWl6ZXIuRzEzQ29ubmVjdGlvbkgAUgNnMTNCDAoKY29ubmVjdGlvbg==');
+final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSPAoLcHJvX2RqX2xpbmsYDSABKAsyGi5taXplci5Qcm9EakxpbmtDb25uZWN0aW9uSABSCXByb0RqTGluaxIxCgZoZWxpb3MYDiABKAsyFy5taXplci5IZWxpb3NDb25uZWN0aW9uSABSBmhlbGlvcxI+CgtldGhlcl9kcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSKwoEbXF0dBgRIAEoCzIVLm1pemVyLk1xdHRDb25uZWN0aW9uSABSBG1xdHQSKAoDZzEzGBIgASgLMhQubWl6ZXIuRzEzQ29ubmVjdGlvbkgAUgNnMTNCDAoKY29ubmVjdGlvbg==');
 @$core.Deprecated('Use dmxConnectionDescriptor instead')
 const DmxConnection$json = const {
   '1': 'DmxConnection',
   '2': const [
-    const {'1': 'outputId', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
+    const {'1': 'output_id', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
     const {'1': 'artnet', '3': 3, '4': 1, '5': 11, '6': '.mizer.ArtnetConfig', '9': 0, '10': 'artnet'},
     const {'1': 'sacn', '3': 4, '4': 1, '5': 11, '6': '.mizer.SacnConfig', '9': 0, '10': 'sacn'},
   ],
@@ -223,7 +223,7 @@ const DmxConnection$json = const {
 };
 
 /// Descriptor for `DmxConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dmxConnectionDescriptor = $convert.base64Decode('Cg1EbXhDb25uZWN0aW9uEhoKCG91dHB1dElkGAEgASgJUghvdXRwdXRJZBItCgZhcnRuZXQYAyABKAsyEy5taXplci5BcnRuZXRDb25maWdIAFIGYXJ0bmV0EicKBHNhY24YBCABKAsyES5taXplci5TYWNuQ29uZmlnSABSBHNhY25CCAoGY29uZmln');
+final $typed_data.Uint8List dmxConnectionDescriptor = $convert.base64Decode('Cg1EbXhDb25uZWN0aW9uEhsKCW91dHB1dF9pZBgBIAEoCVIIb3V0cHV0SWQSLQoGYXJ0bmV0GAMgASgLMhMubWl6ZXIuQXJ0bmV0Q29uZmlnSABSBmFydG5ldBInCgRzYWNuGAQgASgLMhEubWl6ZXIuU2FjbkNvbmZpZ0gAUgRzYWNuQggKBmNvbmZpZw==');
 @$core.Deprecated('Use heliosConnectionDescriptor instead')
 const HeliosConnection$json = const {
   '1': 'HeliosConnection',
@@ -342,18 +342,18 @@ const MidiDeviceProfile_Control$json = const {
 const MidiDeviceProfile_ControlType$json = const {
   '1': 'ControlType',
   '2': const [
-    const {'1': 'Note', '2': 0},
+    const {'1': 'NOTE', '2': 0},
     const {'1': 'CC', '2': 1},
   ],
 };
 
 /// Descriptor for `MidiDeviceProfile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode('ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgASgJUgxtYW51ZmFjdHVyZXISFAoFbW9kZWwYAyABKAlSBW1vZGVsEhsKBmxheW91dBgEIAEoCUgAUgZsYXlvdXSIAQESMwoFcGFnZXMYBSADKAsyHS5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5QYWdlUgVwYWdlcxqQAQoEUGFnZRISCgRuYW1lGAEgASgJUgRuYW1lEjYKBmdyb3VwcxgCIAMoCzIeLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkdyb3VwUgZncm91cHMSPAoIY29udHJvbHMYAyADKAsyIC5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5Db250cm9sUghjb250cm9scxpZCgVHcm91cBISCgRuYW1lGAEgASgJUgRuYW1lEjwKCGNvbnRyb2xzGAIgAygLMiAubWl6ZXIuTWlkaURldmljZVByb2ZpbGUuQ29udHJvbFIIY29udHJvbHMawwEKB0NvbnRyb2wSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGAoHY2hhbm5lbBgDIAEoDVIHY2hhbm5lbBISCgRub3RlGAQgASgNUgRub3RlEkcKDGNvbnRyb2xfdHlwZRgFIAEoDjIkLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkNvbnRyb2xUeXBlUgtjb250cm9sVHlwZRIdCgpoYXNfb3V0cHV0GAYgASgIUgloYXNPdXRwdXQiHwoLQ29udHJvbFR5cGUSCAoETm90ZRAAEgYKAkNDEAFCCQoHX2xheW91dA==');
+final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode('ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgASgJUgxtYW51ZmFjdHVyZXISFAoFbW9kZWwYAyABKAlSBW1vZGVsEhsKBmxheW91dBgEIAEoCUgAUgZsYXlvdXSIAQESMwoFcGFnZXMYBSADKAsyHS5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5QYWdlUgVwYWdlcxqQAQoEUGFnZRISCgRuYW1lGAEgASgJUgRuYW1lEjYKBmdyb3VwcxgCIAMoCzIeLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkdyb3VwUgZncm91cHMSPAoIY29udHJvbHMYAyADKAsyIC5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5Db250cm9sUghjb250cm9scxpZCgVHcm91cBISCgRuYW1lGAEgASgJUgRuYW1lEjwKCGNvbnRyb2xzGAIgAygLMiAubWl6ZXIuTWlkaURldmljZVByb2ZpbGUuQ29udHJvbFIIY29udHJvbHMawwEKB0NvbnRyb2wSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGAoHY2hhbm5lbBgDIAEoDVIHY2hhbm5lbBISCgRub3RlGAQgASgNUgRub3RlEkcKDGNvbnRyb2xfdHlwZRgFIAEoDjIkLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkNvbnRyb2xUeXBlUgtjb250cm9sVHlwZRIdCgpoYXNfb3V0cHV0GAYgASgIUgloYXNPdXRwdXQiHwoLQ29udHJvbFR5cGUSCAoETk9URRAAEgYKAkNDEAFCCQoHX2xheW91dA==');
 @$core.Deprecated('Use oscConnectionDescriptor instead')
 const OscConnection$json = const {
   '1': 'OscConnection',
   '2': const [
-    const {'1': 'connectionId', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
+    const {'1': 'connection_id', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
     const {'1': 'input_port', '3': 2, '4': 1, '5': 13, '10': 'inputPort'},
     const {'1': 'output_port', '3': 3, '4': 1, '5': 13, '10': 'outputPort'},
     const {'1': 'output_address', '3': 4, '4': 1, '5': 9, '10': 'outputAddress'},
@@ -361,20 +361,20 @@ const OscConnection$json = const {
 };
 
 /// Descriptor for `OscConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List oscConnectionDescriptor = $convert.base64Decode('Cg1Pc2NDb25uZWN0aW9uEiIKDGNvbm5lY3Rpb25JZBgBIAEoCVIMY29ubmVjdGlvbklkEh0KCmlucHV0X3BvcnQYAiABKA1SCWlucHV0UG9ydBIfCgtvdXRwdXRfcG9ydBgDIAEoDVIKb3V0cHV0UG9ydBIlCg5vdXRwdXRfYWRkcmVzcxgEIAEoCVINb3V0cHV0QWRkcmVzcw==');
+final $typed_data.Uint8List oscConnectionDescriptor = $convert.base64Decode('Cg1Pc2NDb25uZWN0aW9uEiMKDWNvbm5lY3Rpb25faWQYASABKAlSDGNvbm5lY3Rpb25JZBIdCgppbnB1dF9wb3J0GAIgASgNUglpbnB1dFBvcnQSHwoLb3V0cHV0X3BvcnQYAyABKA1SCm91dHB1dFBvcnQSJQoOb3V0cHV0X2FkZHJlc3MYBCABKAlSDW91dHB1dEFkZHJlc3M=');
 @$core.Deprecated('Use proDjLinkConnectionDescriptor instead')
 const ProDjLinkConnection$json = const {
   '1': 'ProDjLinkConnection',
   '2': const [
     const {'1': 'address', '3': 1, '4': 1, '5': 9, '10': 'address'},
     const {'1': 'model', '3': 2, '4': 1, '5': 9, '10': 'model'},
-    const {'1': 'playerNumber', '3': 3, '4': 1, '5': 13, '10': 'playerNumber'},
+    const {'1': 'player_number', '3': 3, '4': 1, '5': 13, '10': 'playerNumber'},
     const {'1': 'playback', '3': 5, '4': 1, '5': 11, '6': '.mizer.CdjPlayback', '10': 'playback'},
   ],
 };
 
 /// Descriptor for `ProDjLinkConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proDjLinkConnectionDescriptor = $convert.base64Decode('ChNQcm9EakxpbmtDb25uZWN0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3MSFAoFbW9kZWwYAiABKAlSBW1vZGVsEiIKDHBsYXllck51bWJlchgDIAEoDVIMcGxheWVyTnVtYmVyEi4KCHBsYXliYWNrGAUgASgLMhIubWl6ZXIuQ2RqUGxheWJhY2tSCHBsYXliYWNr');
+final $typed_data.Uint8List proDjLinkConnectionDescriptor = $convert.base64Decode('ChNQcm9EakxpbmtDb25uZWN0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3MSFAoFbW9kZWwYAiABKAlSBW1vZGVsEiMKDXBsYXllcl9udW1iZXIYAyABKA1SDHBsYXllck51bWJlchIuCghwbGF5YmFjaxgFIAEoCzISLm1pemVyLkNkalBsYXliYWNrUghwbGF5YmFjaw==');
 @$core.Deprecated('Use cdjPlaybackDescriptor instead')
 const CdjPlayback$json = const {
   '1': 'CdjPlayback',
@@ -402,20 +402,20 @@ const CdjPlayback_Track$json = const {
 const CdjPlayback_State$json = const {
   '1': 'State',
   '2': const [
-    const {'1': 'Loading', '2': 0},
-    const {'1': 'Playing', '2': 1},
-    const {'1': 'Cued', '2': 2},
-    const {'1': 'Cueing', '2': 3},
+    const {'1': 'LOADING', '2': 0},
+    const {'1': 'PLAYING', '2': 1},
+    const {'1': 'CUED', '2': 2},
+    const {'1': 'CUEING', '2': 3},
   ],
 };
 
 /// Descriptor for `CdjPlayback`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cdjPlaybackDescriptor = $convert.base64Decode('CgtDZGpQbGF5YmFjaxISCgRsaXZlGAEgASgIUgRsaXZlEhAKA2JwbRgCIAEoAVIDYnBtEhQKBWZyYW1lGAMgASgNUgVmcmFtZRI0CghwbGF5YmFjaxgEIAEoDjIYLm1pemVyLkNkalBsYXliYWNrLlN0YXRlUghwbGF5YmFjaxIuCgV0cmFjaxgFIAEoCzIYLm1pemVyLkNkalBsYXliYWNrLlRyYWNrUgV0cmFjaxo1CgVUcmFjaxIWCgZhcnRpc3QYASABKAlSBmFydGlzdBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUiNwoFU3RhdGUSCwoHTG9hZGluZxAAEgsKB1BsYXlpbmcQARIICgRDdWVkEAISCgoGQ3VlaW5nEAM=');
+final $typed_data.Uint8List cdjPlaybackDescriptor = $convert.base64Decode('CgtDZGpQbGF5YmFjaxISCgRsaXZlGAEgASgIUgRsaXZlEhAKA2JwbRgCIAEoAVIDYnBtEhQKBWZyYW1lGAMgASgNUgVmcmFtZRI0CghwbGF5YmFjaxgEIAEoDjIYLm1pemVyLkNkalBsYXliYWNrLlN0YXRlUghwbGF5YmFjaxIuCgV0cmFjaxgFIAEoCzIYLm1pemVyLkNkalBsYXliYWNrLlRyYWNrUgV0cmFjaxo1CgVUcmFjaxIWCgZhcnRpc3QYASABKAlSBmFydGlzdBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUiNwoFU3RhdGUSCwoHTE9BRElORxAAEgsKB1BMQVlJTkcQARIICgRDVUVEEAISCgoGQ1VFSU5HEAM=');
 @$core.Deprecated('Use mqttConnectionDescriptor instead')
 const MqttConnection$json = const {
   '1': 'MqttConnection',
   '2': const [
-    const {'1': 'connectionId', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
+    const {'1': 'connection_id', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
     const {'1': 'url', '3': 2, '4': 1, '5': 9, '10': 'url'},
     const {'1': 'username', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'username', '17': true},
     const {'1': 'password', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'password', '17': true},
@@ -427,7 +427,7 @@ const MqttConnection$json = const {
 };
 
 /// Descriptor for `MqttConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mqttConnectionDescriptor = $convert.base64Decode('Cg5NcXR0Q29ubmVjdGlvbhIiCgxjb25uZWN0aW9uSWQYASABKAlSDGNvbm5lY3Rpb25JZBIQCgN1cmwYAiABKAlSA3VybBIfCgh1c2VybmFtZRgDIAEoCUgAUgh1c2VybmFtZYgBARIfCghwYXNzd29yZBgEIAEoCUgBUghwYXNzd29yZIgBAUILCglfdXNlcm5hbWVCCwoJX3Bhc3N3b3Jk');
+final $typed_data.Uint8List mqttConnectionDescriptor = $convert.base64Decode('Cg5NcXR0Q29ubmVjdGlvbhIjCg1jb25uZWN0aW9uX2lkGAEgASgJUgxjb25uZWN0aW9uSWQSEAoDdXJsGAIgASgJUgN1cmwSHwoIdXNlcm5hbWUYAyABKAlIAFIIdXNlcm5hbWWIAQESHwoIcGFzc3dvcmQYBCABKAlIAVIIcGFzc3dvcmSIAQFCCwoJX3VzZXJuYW1lQgsKCV9wYXNzd29yZA==');
 @$core.Deprecated('Use configureConnectionRequestDescriptor instead')
 const ConfigureConnectionRequest$json = const {
   '1': 'ConfigureConnectionRequest',

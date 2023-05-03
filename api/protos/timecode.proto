@@ -11,7 +11,8 @@ service TimecodeApi {
   rpc DeleteTimecodeControl (DeleteTimecodeControlRequest) returns (NoContentResponse);
 }
 
-message NoContentResponse {}
+message NoContentResponse {
+}
 
 message AddTimecodeRequest {
   string name = 1;

@@ -20,7 +20,7 @@ class NodeModel extends ChangeNotifier {
   NodeModel({required this.key, required this.node}) {
     _applyOffset(node);
     _buildPorts();
-    if (node.type == Node_NodeType.Container) {
+    if (node.type == Node_NodeType.CONTAINER) {
       this.tab = NodeTab.ContainerEditor;
     }
   }

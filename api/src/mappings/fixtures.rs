@@ -76,16 +76,16 @@ impl From<mizer_fixtures::definition::ChannelResolution> for fixture_channel::Re
             }
             ChannelResolution::Fine(fine, coarse) => {
                 fixture_channel::Resolution::Fine(fixture_channel::FineResolution {
-                    fineChannel: fine.into(),
-                    coarseChannel: coarse.into(),
+                    fine_channel: fine.into(),
+                    coarse_channel: coarse.into(),
                     ..Default::default()
                 })
             }
             ChannelResolution::Finest(finest, fine, coarse) => {
                 fixture_channel::Resolution::Finest(fixture_channel::FinestResolution {
-                    finestChannel: finest.into(),
-                    fineChannel: fine.into(),
-                    coarseChannel: coarse.into(),
+                    finest_channel: finest.into(),
+                    fine_channel: fine.into(),
+                    coarse_channel: coarse.into(),
                     ..Default::default()
                 })
             }

@@ -1,14 +1,16 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' as io;
 
+import 'bindings.dart';
+import 'connections.dart';
+import 'history.dart';
+import 'layout.dart';
+import 'nodes.dart';
+import 'plans.dart';
 import 'preview.dart';
 import 'programmer.dart';
 import 'sequencer.dart';
-import 'bindings.dart';
 import 'transport.dart';
-import 'history.dart';
-import 'plans.dart';
-import 'layout.dart';
 
 extension DoubleArray on Array_f64 {
   List<double> toList() {
@@ -17,7 +19,9 @@ extension DoubleArray on Array_f64 {
 }
 
 FFIBindings openBindings() {
-  final _dylibName = io.Platform.isMacOS ? 'libmizer_ui_ffi.dylib' : (io.Platform.isWindows ? 'mizer_ui_ffi.dll' : 'libmizer_ui_ffi.so');
+  final _dylibName = io.Platform.isMacOS
+      ? 'libmizer_ui_ffi.dylib'
+      : (io.Platform.isWindows ? 'mizer_ui_ffi.dll' : 'libmizer_ui_ffi.so');
   final dylib = ffi.DynamicLibrary.open(_dylibName);
 
   return FFIBindings(dylib);
@@ -64,5 +68,17 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<LayoutRef>.fromAddress(pointerAddress);
 
     return LayoutsRefPointer(this, pointer);
+  }
+
+  GamepadStatePointer openGamepadRef(int pointerAddress) {
+    var pointer = ffi.Pointer<GamepadConnectionRef>.fromAddress(pointerAddress);
+
+    return GamepadStatePointer(this, pointer);
+  }
+
+  NodesPointer openNodesRef(int pointerAddress) {
+    var pointer = ffi.Pointer<NodesRef>.fromAddress(pointerAddress);
+
+    return NodesPointer(this, pointer);
   }
 }

@@ -89,6 +89,18 @@ class ProgrammerApiClient extends $grpc.Client {
       ($1.AssignFixtureSelectionToGroupRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $1.AssignFixturesToGroupResponse.fromBuffer(value));
+  static final _$writeEffectRate =
+      $grpc.ClientMethod<$1.WriteEffectRateRequest, $1.WriteEffectRateResponse>(
+          '/mizer.programmer.ProgrammerApi/WriteEffectRate',
+          ($1.WriteEffectRateRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $1.WriteEffectRateResponse.fromBuffer(value));
+  static final _$writeEffectOffset = $grpc.ClientMethod<
+          $1.WriteEffectOffsetRequest, $1.WriteEffectOffsetResponse>(
+      '/mizer.programmer.ProgrammerApi/WriteEffectOffset',
+      ($1.WriteEffectOffsetRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $1.WriteEffectOffsetResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -175,6 +187,18 @@ class ProgrammerApiClient extends $grpc.Client {
           {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$assignFixtureSelectionToGroup, request,
         options: options);
+  }
+
+  $grpc.ResponseFuture<$1.WriteEffectRateResponse> writeEffectRate(
+      $1.WriteEffectRateRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$writeEffectRate, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.WriteEffectOffsetResponse> writeEffectOffset(
+      $1.WriteEffectOffsetRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$writeEffectOffset, request, options: options);
   }
 }
 
@@ -294,6 +318,24 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.AssignFixtureSelectionToGroupRequest.fromBuffer(value),
         ($1.AssignFixturesToGroupResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.WriteEffectRateRequest,
+            $1.WriteEffectRateResponse>(
+        'WriteEffectRate',
+        writeEffectRate_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.WriteEffectRateRequest.fromBuffer(value),
+        ($1.WriteEffectRateResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.WriteEffectOffsetRequest,
+            $1.WriteEffectOffsetResponse>(
+        'WriteEffectOffset',
+        writeEffectOffset_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.WriteEffectOffsetRequest.fromBuffer(value),
+        ($1.WriteEffectOffsetResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer_Pre(
@@ -374,6 +416,18 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return assignFixtureSelectionToGroup(call, await request);
   }
 
+  $async.Future<$1.WriteEffectRateResponse> writeEffectRate_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.WriteEffectRateRequest> request) async {
+    return writeEffectRate(call, await request);
+  }
+
+  $async.Future<$1.WriteEffectOffsetResponse> writeEffectOffset_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.WriteEffectOffsetRequest> request) async {
+    return writeEffectOffset(call, await request);
+  }
+
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer(
       $grpc.ServiceCall call, $1.SubscribeProgrammerRequest request);
   $async.Future<$1.WriteControlResponse> writeControl(
@@ -402,4 +456,8 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.AssignFixturesToGroupRequest request);
   $async.Future<$1.AssignFixturesToGroupResponse> assignFixtureSelectionToGroup(
       $grpc.ServiceCall call, $1.AssignFixtureSelectionToGroupRequest request);
+  $async.Future<$1.WriteEffectRateResponse> writeEffectRate(
+      $grpc.ServiceCall call, $1.WriteEffectRateRequest request);
+  $async.Future<$1.WriteEffectOffsetResponse> writeEffectOffset(
+      $grpc.ServiceCall call, $1.WriteEffectOffsetRequest request);
 }

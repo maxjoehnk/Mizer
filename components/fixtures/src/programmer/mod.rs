@@ -35,11 +35,28 @@ pub struct Programmer {
     x: Option<usize>,
 }
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ProgrammedEffect {
     pub effect_id: u32,
     pub fixtures: FixtureSelection,
+    pub rate: f64,
+    pub offset: Option<f64>,
 }
+
+impl Hash for ProgrammedEffect {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.effect_id.hash(state);
+        self.fixtures.hash(state);
+    }
+}
+
+impl PartialEq for ProgrammedEffect {
+    fn eq(&self, other: &Self) -> bool {
+        self.effect_id == other.effect_id && self.fixtures == other.fixtures
+    }
+}
+
+impl Eq for ProgrammedEffect {}
 
 #[derive(Debug, Clone, Default)]
 pub struct ProgrammerState {
@@ -53,6 +70,7 @@ pub struct ProgrammerState {
     pub selection_block_size: Option<usize>,
     pub selection_wings: Option<usize>,
     pub selection_groups: Option<usize>,
+    pub effects: Vec<ProgrammedEffect>,
 }
 
 impl ProgrammerState {
@@ -440,7 +458,29 @@ impl Programmer {
         self.running_effects.push(ProgrammedEffect {
             effect_id,
             fixtures: self.active_selection.clone(),
+            rate: 1f64,
+            offset: None,
         });
+    }
+
+    pub fn write_rate(&mut self, effect_id: u32, effect_rate: f64) {
+        if let Some(effect) = self
+            .running_effects
+            .iter_mut()
+            .find(|e| e.effect_id == effect_id)
+        {
+            effect.rate = effect_rate;
+        }
+    }
+
+    pub fn write_offset(&mut self, effect_id: u32, effect_offset: Option<f64>) {
+        if let Some(effect) = self
+            .running_effects
+            .iter_mut()
+            .find(|e| e.effect_id == effect_id)
+        {
+            effect.offset = effect_offset;
+        }
     }
 
     pub fn write_control(&mut self, value: FixtureControlValue) {
@@ -575,6 +615,7 @@ impl Programmer {
             selection_block_size: self.active_selection.block_size,
             selection_groups: self.active_selection.groups,
             selection_wings: self.active_selection.wings,
+            effects: self.running_effects.clone(),
         };
         self.programmer_view.set(state.clone());
         log::trace!("sending programmer msg");

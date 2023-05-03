@@ -34,6 +34,7 @@ class ProgrammerStatePointer {
     var selection = _readGroupedFixtureSelection(state.selection);
     var channels = _readProgrammerChannel(state.channels);
     var activeGroups = _readGroupSelection(state.active_groups);
+    var effects = _readEffects(state.effects);
 
     return ProgrammerState(
       activeFixtures: activeFixtures,
@@ -45,6 +46,7 @@ class ProgrammerStatePointer {
       blockSize: state.block_size,
       groups: state.groups,
       wings: state.wings,
+      effects: effects,
     );
   }
 
@@ -100,6 +102,18 @@ class ProgrammerStatePointer {
         result.fader = channel.value.fader;
       }
       return result;
+    }).toList();
+  }
+
+  List<EffectProgrammerState> _readEffects(Array_FFIEffectProgrammerState result) {
+    var effects = new List.generate(result.len, (index) => result.array.elementAt(index).ref);
+
+    return effects.map((effect) {
+      return EffectProgrammerState(
+        effectId: effect.effect_id,
+        effectRate: effect.rate,
+        effectOffset: effect.has_offset == 1 ? effect.effect_offset : null,
+      );
     }).toList();
   }
 

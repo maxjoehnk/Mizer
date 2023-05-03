@@ -11,19 +11,21 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
+import 'dialogs/select_cue_dialog.dart';
 import 'dialogs/select_sequence_dialog.dart';
 import 'dialogs/store_mode_dialog.dart';
-import 'dialogs/select_cue_dialog.dart';
 import 'sheets/beam_sheet.dart';
 import 'sheets/channel_sheet.dart';
 import 'sheets/color_sheet.dart';
 import 'sheets/dimmer_sheet.dart';
+import 'sheets/effects_sheet.dart';
 import 'sheets/gobo_sheet.dart';
 import 'sheets/position_sheet.dart';
 
 class ProgrammerSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
   final List<ProgrammerChannel> channels;
+  final List<EffectProgrammerState> effects;
   final bool isEmpty;
   final ProgrammerApi api;
   final bool highlight;
@@ -31,6 +33,7 @@ class ProgrammerSheet extends StatefulWidget {
   const ProgrammerSheet(
       {required this.fixtures,
       required this.channels,
+      required this.effects,
       required this.api,
       required this.isEmpty,
       required this.highlight,
@@ -66,6 +69,10 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
         Tab(
             label: "Channels",
             child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(
+          label: "Effects",
+          child: EffectsSheet(effects: widget.effects),
+        )
       ], actions: [
         PanelAction(
             hotkeyId: "highlight",
@@ -84,8 +91,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
             onClick: () => _clear(),
             disabled: widget.isEmpty,
             menu: Menu(items: [
-              MenuItem(
-                  label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+              MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
             ])),
       ]),
     );
@@ -111,7 +117,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
       return;
     }
     int? cueId;
-    if (storeMode != StoreRequest_Mode.AddCue && sequence.cues.isNotEmpty) {
+    if (storeMode != StoreRequest_Mode.ADD_CUE && sequence.cues.isNotEmpty) {
       cueId = await _getCue(sequence, storeMode);
 
       if (cueId == null) {
@@ -124,7 +130,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
 
   _getStoreMode(Sequence sequence) async {
     if (sequence.cues.isEmpty) {
-      return StoreRequest_Mode.Overwrite;
+      return StoreRequest_Mode.OVERWRITE;
     }
 
     return await showDialog(context: context, builder: (context) => StoreModeDialog());

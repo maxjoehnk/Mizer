@@ -28,9 +28,9 @@ impl From<mizer_clock::Timecode> for Timecode {
 impl From<ClockState> for TransportState {
     fn from(state: ClockState) -> Self {
         match state {
-            ClockState::Playing => Self::Playing,
-            ClockState::Paused => Self::Paused,
-            ClockState::Stopped => Self::Stopped,
+            ClockState::Playing => Self::PLAYING,
+            ClockState::Paused => Self::PAUSED,
+            ClockState::Stopped => Self::STOPPED,
         }
     }
 }
@@ -38,9 +38,9 @@ impl From<ClockState> for TransportState {
 impl From<TransportState> for ClockState {
     fn from(state: TransportState) -> Self {
         match state {
-            TransportState::Playing => Self::Playing,
-            TransportState::Paused => Self::Paused,
-            TransportState::Stopped => Self::Stopped,
+            TransportState::PLAYING => Self::Playing,
+            TransportState::PAUSED => Self::Paused,
+            TransportState::STOPPED => Self::Stopped,
         }
     }
 }

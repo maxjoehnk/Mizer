@@ -77,6 +77,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                     .map(|req| self.update_cue_trigger_time(req));
                 resp.respond_result(result);
             }
+            "updateCueEffectOffsetTime" => {
+                let result = call
+                    .arguments()
+                    .map(|req| self.update_cue_effect_offset_time(req));
+                resp.respond_result(result);
+            }
             "updateCueName" => {
                 let result = call.arguments().map(|req| self.update_cue_name(req));
                 resp.respond_result(result);
@@ -165,6 +171,12 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     pub fn update_cue_trigger_time(&self, request: CueTriggerTimeRequest) -> Sequences {
         self.handler.update_cue_trigger_time(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_cue_effect_offset_time(&self, request: CueEffectOffsetTimeRequest) -> Sequences {
+        self.handler.update_cue_effect_offset_time(request);
 
         self.get_sequences()
     }

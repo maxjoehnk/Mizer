@@ -11,7 +11,13 @@ class FaderInput extends StatefulWidget {
   final Color? color;
   final bool highlight;
 
-  FaderInput({this.onValue, required this.value, this.label, this.color, this.gradient, this.highlight = false});
+  FaderInput(
+      {this.onValue,
+      required this.value,
+      this.label,
+      this.color,
+      this.gradient,
+      this.highlight = false});
 
   @override
   _FaderInputState createState() => _FaderInputState(value);
@@ -35,45 +41,50 @@ class _FaderInputState extends State<FaderInput> {
     double y = 1 - (this.value * 2);
     var percentage = (value * 100).toStringAsFixed(1);
     return LayoutBuilder(
-      builder: (context, constraints) =>
-          Listener(
-            onPointerSignal: (event) {
-              if (event is PointerScrollEvent) {
-                _onScroll(event.scrollDelta.direction);
-              }
-            },
-            child: GestureDetector(
-              onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
-              onTapDown: (update) => _onInput(constraints, update.localPosition),
-              child: Container(
-
-                decoration: ControlDecoration(gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (widget.label != null)
-                      Container(
-                          height: 32,
-                          color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
-                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                          child: Text(widget.label ?? "", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
-                    Expanded(
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: Align(
-                            alignment: AlignmentDirectional(0, y),
-                            child: Container(
-                                color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
-                                alignment: AlignmentDirectional.center,
-                                constraints: BoxConstraints.expand(height: 32),
-                                child: Text("$percentage%", textAlign: TextAlign.center))),
-                      ),
-                    ),
-                  ],
+      builder: (context, constraints) => Listener(
+        onPointerSignal: (event) {
+          if (event is PointerScrollEvent) {
+            _onScroll(event.scrollDelta.direction);
+          }
+        },
+        child: GestureDetector(
+          onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
+          onTapDown: (update) => _onInput(constraints, update.localPosition),
+          child: Container(
+            decoration: ControlDecoration(
+                gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.label != null)
+                  Container(
+                      height: 32,
+                      color: widget.highlight == true
+                          ? HIGHLIGHT_CONTROL_COLOR
+                          : DEFAULT_CONTROL_COLOR,
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                      child: Text(widget.label ?? "",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodySmall)),
+                Expanded(
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Align(
+                        alignment: AlignmentDirectional(0, y),
+                        child: Container(
+                            color: widget.highlight == true
+                                ? HIGHLIGHT_CONTROL_COLOR
+                                : DEFAULT_CONTROL_COLOR,
+                            alignment: AlignmentDirectional.center,
+                            constraints: BoxConstraints.expand(height: 32),
+                            child: Text("$percentage%", textAlign: TextAlign.center))),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 

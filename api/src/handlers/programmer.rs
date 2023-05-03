@@ -101,21 +101,21 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .into_iter()
                 .map(Preset::from)
                 .collect(),
-            shutter: self
+            shutters: self
                 .fixture_manager
                 .presets
                 .shutter_presets()
                 .into_iter()
                 .map(Preset::from)
                 .collect(),
-            color: self
+            colors: self
                 .fixture_manager
                 .presets
                 .color_presets()
                 .into_iter()
                 .map(Preset::from)
                 .collect(),
-            position: self
+            positions: self
                 .fixture_manager
                 .presets
                 .position_presets()
@@ -232,5 +232,19 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     pub fn shuffle(&self) {
         self.fixture_manager.get_programmer().shuffle();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn write_effect_rate(&self, request: WriteEffectRateRequest) {
+        self.fixture_manager
+            .get_programmer()
+            .write_rate(request.effect_id, request.effect_rate);
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn write_effect_offset(&self, request: WriteEffectOffsetRequest) {
+        self.fixture_manager
+            .get_programmer()
+            .write_offset(request.effect_id, request.effect_offset);
     }
 }

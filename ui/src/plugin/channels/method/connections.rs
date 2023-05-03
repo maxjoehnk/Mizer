@@ -1,10 +1,12 @@
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+use std::sync::Arc;
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::models::connections::*;
 use mizer_api::RuntimeApi;
+use mizer_ui_ffi::{FFIToPointer, GamepadConnectionRef};
 
 use crate::plugin::channels::MethodReplyExt;
 
@@ -98,6 +100,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "getGamepadPointer" => {
+                if let Value::String(name) = call.args {
+                    match self.get_gamepad_pointer(name) {
+                        Ok(ptr) => resp.send_ok(Value::I64(ptr)),
+                        Err(err) => resp.respond_error(err),
+                    }
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -132,5 +142,17 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
             request.output_port.try_into()?,
             request.input_port.try_into()?,
         )
+    }
+
+    fn get_gamepad_pointer(&self, id: String) -> anyhow::Result<i64> {
+        log::debug!("Acquiring state pointer for gamepad {id}");
+        let gamepad = self
+            .handler
+            .get_gamepad_ref(id.clone())?
+            .ok_or_else(|| anyhow::anyhow!("Unknown gamepad {id}"))?;
+        let gamepad = GamepadConnectionRef(gamepad);
+        let gamepad = Arc::new(gamepad);
+
+        Ok(gamepad.to_pointer() as i64)
     }
 }

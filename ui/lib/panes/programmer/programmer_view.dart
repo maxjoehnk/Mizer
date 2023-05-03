@@ -27,6 +27,7 @@ class _ProgrammerViewState extends State<ProgrammerView>
               .toList(),
           isEmpty: selectedIds.isEmpty && trackedIds.isEmpty,
           fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
+          effects: programmerState.effects,
           api: context.read());
     });
   }

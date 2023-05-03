@@ -16,7 +16,7 @@ message AddFixturesRequest {
 }
 
 message AddFixtureRequest {
-  string definitionId = 1;
+  string definition_id = 1;
   string mode = 2;
   uint32 id = 3;
   uint32 channel = 4;
@@ -24,14 +24,15 @@ message AddFixtureRequest {
   string name = 6;
 }
 
-message GetFixturesRequest {}
+message GetFixturesRequest {
+}
 
 message DeleteFixturesRequest {
-  repeated uint32 fixtureIds = 1;
+  repeated uint32 fixture_ids = 1;
 }
 
 message UpdateFixtureRequest {
-  uint32 fixtureId = 1;
+  uint32 fixture_id = 1;
   optional bool invert_pan = 2;
   optional bool invert_tilt = 3;
   optional bool reverse_pixel_order = 4;
@@ -161,7 +162,8 @@ message GenericChannel {
   string name = 2;
 }
 
-message GetFixtureDefinitionsRequest {}
+message GetFixtureDefinitionsRequest {
+}
 
 message FixtureDefinitions {
   repeated FixtureDefinition definitions = 1;
@@ -195,14 +197,14 @@ message FixtureChannel {
   }
 
   message FineResolution {
-    uint32 fineChannel = 1;
-    uint32 coarseChannel = 2;
+    uint32 fine_channel = 1;
+    uint32 coarse_channel = 2;
   }
 
   message FinestResolution {
-    uint32 finestChannel = 1;
-    uint32 fineChannel = 2;
-    uint32 coarseChannel = 3;
+    uint32 finest_channel = 1;
+    uint32 fine_channel = 2;
+    uint32 coarse_channel = 3;
   }
 }
 

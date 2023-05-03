@@ -27,22 +27,8 @@ impl PipelineNode for DelayNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                INPUT_VALUE_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                OUTPUT_VALUE_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(INPUT_VALUE_PORT, PortType::Single),
+            output_port!(OUTPUT_VALUE_PORT, PortType::Single),
         ]
     }
 

@@ -13,11 +13,7 @@ class CueList extends StatelessWidget {
   final Sequence sequence;
   final int? activeCue;
 
-  const CueList(
-      {required this.sequence,
-      this.activeCue,
-      Key? key})
-      : super(key: key);
+  const CueList({required this.sequence, this.activeCue, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +47,8 @@ class CueList extends StatelessWidget {
                   child: Center(child: Text(cue.trigger.toLabel())),
                   popup: PopupSelect(title: "Trigger", items: [
                     SelectItem(
-                        title: "Go", onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.GO)),
+                        title: "Go",
+                        onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.GO)),
                     SelectItem(
                         title: "Follow",
                         onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.FOLLOW)),
@@ -60,13 +57,19 @@ class CueList extends StatelessWidget {
                         onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.TIME)),
                   ])),
               PopupTableCell(
-                  popup: PopupDirectTimeInput(time: cue.trigger.time, onEnter: (value) => _updateCueTriggerTime(context, cue, value)),
+                  popup: PopupDirectTimeInput(
+                      time: cue.trigger.time,
+                      onEnter: (value) => _updateCueTriggerTime(context, cue, value)),
                   child: Text(cue.trigger.time.toDisplay())),
               PopupTableCell(
-                  popup: PopupTimeInput(timer: cue.cueTimings.fade, onEnter: (value) => _updateCueFade(context, cue, value)),
+                  popup: PopupTimeInput(
+                      timer: cue.cueTimings.fade,
+                      onEnter: (value) => _updateCueFade(context, cue, value)),
                   child: Text(cue.cueTimings.hasFade() ? cue.cueTimings.fade.toDisplay() : "")),
               PopupTableCell(
-                  popup: PopupTimeInput(timer: cue.cueTimings.delay, onEnter: (value) => _updateCueDelay(context, cue, value)),
+                  popup: PopupTimeInput(
+                      timer: cue.cueTimings.delay,
+                      onEnter: (value) => _updateCueDelay(context, cue, value)),
                   child: Text(cue.cueTimings.hasDelay() ? cue.cueTimings.delay.toDisplay() : "")),
               Text(cue.dimmerTimings.hasFade() ? cue.dimmerTimings.fade.toDisplay() : ""),
               Text(cue.dimmerTimings.hasDelay() ? cue.dimmerTimings.delay.toDisplay() : ""),
@@ -99,15 +102,11 @@ class CueList extends StatelessWidget {
   }
 
   void _updateCueFade(BuildContext context, Cue cue, CueTimer? value) {
-    context
-        .read<SequencerBloc>()
-        .add(UpdateCueFade(cue: cue.id, time: value));
+    context.read<SequencerBloc>().add(UpdateCueFade(cue: cue.id, time: value));
   }
 
   void _updateCueDelay(BuildContext context, Cue cue, CueTimer? value) {
-    context
-        .read<SequencerBloc>()
-        .add(UpdateCueDelay(cue: cue.id, time: value));
+    context.read<SequencerBloc>().add(UpdateCueDelay(cue: cue.id, time: value));
   }
 
   Widget _twoLineHeader(String line1, String line2) {

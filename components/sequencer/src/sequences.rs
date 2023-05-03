@@ -78,11 +78,15 @@ impl Sequence {
         for effect in &cue.effects {
             if let Some(id) = state.running_effects.get(effect) {
                 effect_engine.set_instance_rate(id, state.rate);
+                effect_engine.set_instance_offset(id, effect.effect_offset);
                 continue;
             }
-            if let Some(id) =
-                effect_engine.run_effect(effect.effect, effect.fixtures.deref().clone(), state.rate)
-            {
+            if let Some(id) = effect_engine.run_effect(
+                effect.effect,
+                effect.fixtures.deref().clone(),
+                state.rate,
+                effect.effect_offset,
+            ) {
                 state.running_effects.insert(effect.clone(), id);
             }
         }

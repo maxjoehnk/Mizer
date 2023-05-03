@@ -26,7 +26,7 @@ impl Default for ClockNode {
 impl PipelineNode for ClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ClockNode".into(),
+            name: stringify!(ClockNode).into(),
             preview_type: PreviewType::None,
         }
     }

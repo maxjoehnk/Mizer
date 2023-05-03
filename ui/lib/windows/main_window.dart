@@ -23,11 +23,13 @@ class MainWindowState extends WindowState {
   }
 
   @override
-  WindowSizingMode get windowSizingMode => WindowSizingMode.atLeastIntrinsicSize;
+  WindowSizingMode get windowSizingMode => WindowSizingMode.manual;
 
   @override
-  Future<void> initializeWindow(Size contentSize) {
-    window.setTitle("Mizer");
-    return super.initializeWindow(contentSize);
+  Future<void> initializeWindow(Size contentSize) async {
+    await window.setTitle("Mizer");
+    await window.setMaximized(true);
+    await window.setGeometry(Geometry(minContentSize: Size(800, 700), contentSize: contentSize));
+    await window.show();
   }
 }

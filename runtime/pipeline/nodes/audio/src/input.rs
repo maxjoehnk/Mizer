@@ -21,14 +21,7 @@ impl PipelineNode for AudioInputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            AUDIO_OUTPUT.into(),
-            PortMetadata {
-                direction: PortDirection::Output,
-                port_type: PortType::Multi,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(AUDIO_OUTPUT, PortType::Multi)]
     }
 
     fn node_type(&self) -> NodeType {

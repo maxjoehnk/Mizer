@@ -19,9 +19,12 @@ service ProgrammerApi {
   rpc AddGroup (AddGroupRequest) returns (Group) {}
   rpc AssignFixturesToGroup (AssignFixturesToGroupRequest) returns (AssignFixturesToGroupResponse) {}
   rpc AssignFixtureSelectionToGroup (AssignFixtureSelectionToGroupRequest) returns (AssignFixturesToGroupResponse) {}
+  rpc WriteEffectRate (WriteEffectRateRequest) returns (WriteEffectRateResponse) {}
+  rpc WriteEffectOffset (WriteEffectOffsetRequest) returns (WriteEffectOffsetResponse) {}
 }
 
-message SubscribeProgrammerRequest {}
+message SubscribeProgrammerRequest {
+}
 
 message ProgrammerState {
   repeated mizer.fixtures.FixtureId fixtures = 1;
@@ -33,6 +36,7 @@ message ProgrammerState {
   uint32 block_size = 7;
   uint32 groups = 8;
   uint32 wings = 9;
+  repeated EffectProgrammerState effects = 10;
 }
 
 message FixtureSelection {
@@ -53,15 +57,37 @@ message ProgrammerChannel {
   }
 
   enum ColorChannel {
-    Red = 0;
-    Green = 1;
-    Blue = 2;
+    RED = 0;
+    GREEN = 1;
+    BLUE = 2;
   }
 
   message GenericValue {
     string name = 1;
     double value = 2;
   }
+}
+
+message EffectProgrammerState {
+  uint32 effect_id = 1;
+  double effect_rate = 2;
+  optional double effect_offset = 3;
+}
+
+message WriteEffectRateRequest {
+  uint32 effect_id = 1;
+  double effect_rate = 2;
+}
+
+message WriteEffectRateResponse {
+}
+
+message WriteEffectOffsetRequest {
+  uint32 effect_id = 1;
+  optional double effect_offset = 2;
+}
+
+message WriteEffectOffsetResponse {
 }
 
 message WriteControlRequest {
@@ -78,28 +104,34 @@ message WriteControlRequest {
   }
 }
 
-message WriteControlResponse {}
+message WriteControlResponse {
+}
 
 message SelectFixturesRequest {
   repeated mizer.fixtures.FixtureId fixtures = 1;
 }
 
-message SelectFixturesResponse {}
+message SelectFixturesResponse {
+}
 
 message UnselectFixturesRequest {
   repeated mizer.fixtures.FixtureId fixtures = 1;
 }
 
-message UnselectFixturesResponse {}
+message UnselectFixturesResponse {
+}
 
-message ClearRequest {}
-message ClearResponse {}
+message ClearRequest {
+}
+message ClearResponse {
+}
 
 message HighlightRequest {
   bool highlight = 1;
 }
 
-message HighlightResponse {}
+message HighlightResponse {
+}
 
 message StoreRequest {
   uint32 sequence_id = 1;
@@ -107,32 +139,34 @@ message StoreRequest {
   optional uint32 cue_id = 3;
 
   enum Mode {
-    Overwrite = 0;
-    Merge = 1;
-    AddCue = 2;
+    OVERWRITE = 0;
+    MERGE = 1;
+    ADD_CUE = 2;
   }
 }
-message StoreResponse {}
+message StoreResponse {
+}
 
-message PresetsRequest {}
+message PresetsRequest {
+}
 
 message PresetId {
   uint32 id = 1;
   PresetType type = 2;
 
   enum PresetType {
-    Intensity = 0;
-    Shutter = 1;
-    Color = 2;
-    Position = 3;
+    INTENSITY = 0;
+    SHUTTER = 1;
+    COLOR = 2;
+    POSITION = 3;
   }
 }
 
 message Presets {
   repeated Preset intensities = 1;
-  repeated Preset shutter = 2;
-  repeated Preset color = 3;
-  repeated Preset position = 4;
+  repeated Preset shutters = 2;
+  repeated Preset colors = 3;
+  repeated Preset positions = 4;
 }
 
 message Preset {
@@ -159,7 +193,8 @@ message Preset {
 message CallPresetResponse {
 }
 
-message GroupsRequest {}
+message GroupsRequest {
+}
 message Groups {
   repeated Group groups = 1;
 }
@@ -173,7 +208,8 @@ message SelectGroupRequest {
   uint32 id = 1;
 }
 
-message SelectGroupResponse {}
+message SelectGroupResponse {
+}
 
 message AddGroupRequest {
   string name = 1;
@@ -188,4 +224,5 @@ message AssignFixtureSelectionToGroupRequest {
   uint32 id = 1;
 }
 
-message AssignFixturesToGroupResponse {}
+message AssignFixturesToGroupResponse {
+}

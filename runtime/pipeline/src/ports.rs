@@ -21,8 +21,8 @@ impl NodeSenders {
         self.0.insert(port_id, (tx, target_meta));
     }
 
-    pub fn get(&self, port: PortId) -> Option<&(Box<dyn Any>, PortMetadata)> {
-        self.0.get(&port)
+    pub fn get(&self, port: &PortId) -> Option<&(Box<dyn Any>, PortMetadata)> {
+        self.0.get(port)
     }
 }
 

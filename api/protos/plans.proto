@@ -14,7 +14,8 @@ service PlansApi {
   rpc AlignFixtures (AlignFixturesRequest) returns (Plans) {}
 }
 
-message PlansRequest {}
+message PlansRequest {
+}
 
 message AddPlanRequest {
   string name = 1;
@@ -43,8 +44,8 @@ message AlignFixturesRequest {
   uint32 column_gap = 5;
 
   enum AlignDirection {
-    LeftToRight = 0;
-    TopToBottom = 1;
+    LEFT_TO_RIGHT = 0;
+    TOP_TO_BOTTOM = 1;
   }
 }
 

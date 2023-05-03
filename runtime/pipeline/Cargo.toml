@@ -8,7 +8,7 @@ edition = "2021"
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.20"
-metrics = "0.20"
+metrics = "0.21"
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }
 mizer-project-files = { path = "../projects" }
@@ -24,7 +24,7 @@ flume = "0.10"
 ringbuffer = "0.13"
 downcast = "0.11"
 profiling = "1"
-pinboard = "2.1"
+pinboard = "2.2"
 tracing = "0.1"
 tracing-unwrap = "0.10"
 

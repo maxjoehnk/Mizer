@@ -34,31 +34,13 @@ impl ScriptingNode {}
 impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ScriptingNode".into(),
+            name: stringify!(ScriptingNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        match port.as_str() {
-            "value" => Some(PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            }),
-            _ => None,
-        }
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!("value", PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

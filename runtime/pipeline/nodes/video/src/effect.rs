@@ -6,7 +6,7 @@ use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum VideoEffectType {
     /// Mirror Effect
@@ -18,6 +18,7 @@ pub enum VideoEffectType {
     /// Light Tunnel Effect
     Tunnel,
     /// FishEye Effect
+    #[default]
     Fisheye,
     /// Twirl Effect
     Twirl,
@@ -47,12 +48,6 @@ pub enum VideoEffectType {
     Laplacian,
 }
 
-impl Default for VideoEffectType {
-    fn default() -> Self {
-        VideoEffectType::Fisheye
-    }
-}
-
 impl std::fmt::Display for VideoEffectType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let name = format!("{:?}", self).to_lowercase();
@@ -73,29 +68,15 @@ pub struct VideoEffectState {
 impl PipelineNode for VideoEffectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "VideoEffectNode".into(),
+            name: stringify!(VideoEffectNode).into(),
             preview_type: PreviewType::Texture,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "input".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "output".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!("input", PortType::Gstreamer),
+            output_port!("output", PortType::Gstreamer),
         ]
     }
 

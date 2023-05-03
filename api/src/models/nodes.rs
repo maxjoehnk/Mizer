@@ -108,7 +108,7 @@ impl ::protobuf::Message for AddNodeRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::Fader) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::FADER) {
             my_size += ::protobuf::rt::int32_size(1, self.type_.value());
         }
         if let Some(v) = self.position.as_ref() {
@@ -124,7 +124,7 @@ impl ::protobuf::Message for AddNodeRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::Fader) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::FADER) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
         }
         if let Some(v) = self.position.as_ref() {
@@ -150,7 +150,7 @@ impl ::protobuf::Message for AddNodeRequest {
     }
 
     fn clear(&mut self) {
-        self.type_ = ::protobuf::EnumOrUnknown::new(node::NodeType::Fader);
+        self.type_ = ::protobuf::EnumOrUnknown::new(node::NodeType::FADER);
         self.position.clear();
         self.parent = ::std::option::Option::None;
         self.special_fields.clear();
@@ -2539,14 +2539,14 @@ impl ::protobuf::reflect::ProtobufValue for Nodes {
 // @@protoc_insertion_point(message:mizer.nodes.NodeConnection)
 pub struct NodeConnection {
     // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.targetNode)
-    pub targetNode: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.targetPort)
-    pub targetPort: ::protobuf::MessageField<Port>,
-    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.sourceNode)
-    pub sourceNode: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.sourcePort)
-    pub sourcePort: ::protobuf::MessageField<Port>,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.target_node)
+    pub target_node: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.target_port)
+    pub target_port: ::protobuf::MessageField<Port>,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.source_node)
+    pub source_node: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.source_port)
+    pub source_port: ::protobuf::MessageField<Port>,
     // @@protoc_insertion_point(field:mizer.nodes.NodeConnection.protocol)
     pub protocol: ::protobuf::EnumOrUnknown<ChannelProtocol>,
     // special fields
@@ -2569,24 +2569,24 @@ impl NodeConnection {
         let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "targetNode",
-            |m: &NodeConnection| { &m.targetNode },
-            |m: &mut NodeConnection| { &mut m.targetNode },
+            "target_node",
+            |m: &NodeConnection| { &m.target_node },
+            |m: &mut NodeConnection| { &mut m.target_node },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, Port>(
-            "targetPort",
-            |m: &NodeConnection| { &m.targetPort },
-            |m: &mut NodeConnection| { &mut m.targetPort },
+            "target_port",
+            |m: &NodeConnection| { &m.target_port },
+            |m: &mut NodeConnection| { &mut m.target_port },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "sourceNode",
-            |m: &NodeConnection| { &m.sourceNode },
-            |m: &mut NodeConnection| { &mut m.sourceNode },
+            "source_node",
+            |m: &NodeConnection| { &m.source_node },
+            |m: &mut NodeConnection| { &mut m.source_node },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, Port>(
-            "sourcePort",
-            |m: &NodeConnection| { &m.sourcePort },
-            |m: &mut NodeConnection| { &mut m.sourcePort },
+            "source_port",
+            |m: &NodeConnection| { &m.source_port },
+            |m: &mut NodeConnection| { &mut m.source_port },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "protocol",
@@ -2612,16 +2612,16 @@ impl ::protobuf::Message for NodeConnection {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.targetNode = is.read_string()?;
+                    self.target_node = is.read_string()?;
                 },
                 18 => {
-                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.targetPort)?;
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.target_port)?;
                 },
                 26 => {
-                    self.sourceNode = is.read_string()?;
+                    self.source_node = is.read_string()?;
                 },
                 34 => {
-                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.sourcePort)?;
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.source_port)?;
                 },
                 40 => {
                     self.protocol = is.read_enum_or_unknown()?;
@@ -2638,17 +2638,17 @@ impl ::protobuf::Message for NodeConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.targetNode.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.targetNode);
+        if !self.target_node.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.target_node);
         }
-        if let Some(v) = self.targetPort.as_ref() {
+        if let Some(v) = self.target_port.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
-        if !self.sourceNode.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.sourceNode);
+        if !self.source_node.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.source_node);
         }
-        if let Some(v) = self.sourcePort.as_ref() {
+        if let Some(v) = self.source_port.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
@@ -2661,16 +2661,16 @@ impl ::protobuf::Message for NodeConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.targetNode.is_empty() {
-            os.write_string(1, &self.targetNode)?;
+        if !self.target_node.is_empty() {
+            os.write_string(1, &self.target_node)?;
         }
-        if let Some(v) = self.targetPort.as_ref() {
+        if let Some(v) = self.target_port.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         }
-        if !self.sourceNode.is_empty() {
-            os.write_string(3, &self.sourceNode)?;
+        if !self.source_node.is_empty() {
+            os.write_string(3, &self.source_node)?;
         }
-        if let Some(v) = self.sourcePort.as_ref() {
+        if let Some(v) = self.source_port.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
         }
         if self.protocol != ::protobuf::EnumOrUnknown::new(ChannelProtocol::SINGLE) {
@@ -2693,20 +2693,20 @@ impl ::protobuf::Message for NodeConnection {
     }
 
     fn clear(&mut self) {
-        self.targetNode.clear();
-        self.targetPort.clear();
-        self.sourceNode.clear();
-        self.sourcePort.clear();
+        self.target_node.clear();
+        self.target_port.clear();
+        self.source_node.clear();
+        self.source_port.clear();
         self.protocol = ::protobuf::EnumOrUnknown::new(ChannelProtocol::SINGLE);
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static NodeConnection {
         static instance: NodeConnection = NodeConnection {
-            targetNode: ::std::string::String::new(),
-            targetPort: ::protobuf::MessageField::none(),
-            sourceNode: ::std::string::String::new(),
-            sourcePort: ::protobuf::MessageField::none(),
+            target_node: ::std::string::String::new(),
+            target_port: ::protobuf::MessageField::none(),
+            source_node: ::std::string::String::new(),
+            source_port: ::protobuf::MessageField::none(),
             protocol: ::protobuf::EnumOrUnknown::from_i32(0),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -2854,7 +2854,7 @@ impl ::protobuf::Message for Node {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::Fader) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::FADER) {
             my_size += ::protobuf::rt::int32_size(1, self.type_.value());
         }
         if !self.path.is_empty() {
@@ -2872,7 +2872,7 @@ impl ::protobuf::Message for Node {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
-        if self.preview != ::protobuf::EnumOrUnknown::new(node::NodePreviewType::History) {
+        if self.preview != ::protobuf::EnumOrUnknown::new(node::NodePreviewType::HISTORY) {
             my_size += ::protobuf::rt::int32_size(6, self.preview.value());
         }
         if let Some(v) = self.config.as_ref() {
@@ -2885,7 +2885,7 @@ impl ::protobuf::Message for Node {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::Fader) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(node::NodeType::FADER) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
         }
         if !self.path.is_empty() {
@@ -2900,7 +2900,7 @@ impl ::protobuf::Message for Node {
         if let Some(v) = self.designer.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
         }
-        if self.preview != ::protobuf::EnumOrUnknown::new(node::NodePreviewType::History) {
+        if self.preview != ::protobuf::EnumOrUnknown::new(node::NodePreviewType::HISTORY) {
             os.write_enum(6, ::protobuf::EnumOrUnknown::value(&self.preview))?;
         }
         if let Some(v) = self.config.as_ref() {
@@ -2923,12 +2923,12 @@ impl ::protobuf::Message for Node {
     }
 
     fn clear(&mut self) {
-        self.type_ = ::protobuf::EnumOrUnknown::new(node::NodeType::Fader);
+        self.type_ = ::protobuf::EnumOrUnknown::new(node::NodeType::FADER);
         self.path.clear();
         self.inputs.clear();
         self.outputs.clear();
         self.designer.clear();
-        self.preview = ::protobuf::EnumOrUnknown::new(node::NodePreviewType::History);
+        self.preview = ::protobuf::EnumOrUnknown::new(node::NodePreviewType::HISTORY);
         self.config.clear();
         self.special_fields.clear();
     }
@@ -2970,128 +2970,128 @@ pub mod node {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.Node.NodeType)
     pub enum NodeType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Fader)
-        Fader = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Button)
-        Button = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Oscillator)
-        Oscillator = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Clock)
-        Clock = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Script)
-        Script = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Envelope)
-        Envelope = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Sequence)
-        Sequence = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Select)
-        Select = 7,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Merge)
-        Merge = 8,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Threshold)
-        Threshold = 9,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.DmxOutput)
-        DmxOutput = 10,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OscInput)
-        OscInput = 11,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OscOutput)
-        OscOutput = 12,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MidiInput)
-        MidiInput = 13,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MidiOutput)
-        MidiOutput = 14,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Sequencer)
-        Sequencer = 15,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Fixture)
-        Fixture = 16,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Programmer)
-        Programmer = 17,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Group)
-        Group = 18,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Preset)
-        Preset = 19,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VideoFile)
-        VideoFile = 20,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VideoOutput)
-        VideoOutput = 21,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VideoEffect)
-        VideoEffect = 22,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VideoColorBalance)
-        VideoColorBalance = 23,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VideoTransform)
-        VideoTransform = 24,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PixelToDmx)
-        PixelToDmx = 30,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PixelPattern)
-        PixelPattern = 31,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OpcOutput)
-        OpcOutput = 32,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Laser)
-        Laser = 40,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.IldaFile)
-        IldaFile = 41,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Gamepad)
-        Gamepad = 45,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ColorRgb)
-        ColorRgb = 50,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ColorHsv)
-        ColorHsv = 51,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Container)
-        Container = 100,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Encoder)
-        Encoder = 55,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Math)
-        Math = 56,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.DataToNumber)
-        DataToNumber = 57,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.NumberToData)
-        NumberToData = 58,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Value)
-        Value = 59,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Extract)
-        Extract = 60,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MqttInput)
-        MqttInput = 61,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MqttOutput)
-        MqttOutput = 62,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PlanScreen)
-        PlanScreen = 63,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Delay)
-        Delay = 64,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Ramp)
-        Ramp = 65,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Noise)
-        Noise = 66,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Label)
-        Label = 67,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Transport)
-        Transport = 68,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.G13Input)
-        G13Input = 69,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.G13Output)
-        G13Output = 70,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ConstantNumber)
-        ConstantNumber = 71,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Conditional)
-        Conditional = 72,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TimecodeControl)
-        TimecodeControl = 73,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TimecodeOutput)
-        TimecodeOutput = 74,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioFile)
-        AudioFile = 75,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioOutput)
-        AudioOutput = 76,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioVolume)
-        AudioVolume = 77,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioInput)
-        AudioInput = 78,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioMix)
-        AudioMix = 79,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AudioMeter)
-        AudioMeter = 80,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.Template)
-        Template = 81,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.FADER)
+        FADER = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.BUTTON)
+        BUTTON = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OSCILLATOR)
+        OSCILLATOR = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CLOCK)
+        CLOCK = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SCRIPT)
+        SCRIPT = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ENVELOPE)
+        ENVELOPE = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SEQUENCE)
+        SEQUENCE = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SELECT)
+        SELECT = 7,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MERGE)
+        MERGE = 8,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.THRESHOLD)
+        THRESHOLD = 9,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.DMX_OUTPUT)
+        DMX_OUTPUT = 10,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OSC_INPUT)
+        OSC_INPUT = 11,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OSC_OUTPUT)
+        OSC_OUTPUT = 12,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MIDI_INPUT)
+        MIDI_INPUT = 13,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MIDI_OUTPUT)
+        MIDI_OUTPUT = 14,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SEQUENCER)
+        SEQUENCER = 15,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.FIXTURE)
+        FIXTURE = 16,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PROGRAMMER)
+        PROGRAMMER = 17,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.GROUP)
+        GROUP = 18,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PRESET)
+        PRESET = 19,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_FILE)
+        VIDEO_FILE = 20,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_OUTPUT)
+        VIDEO_OUTPUT = 21,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_EFFECT)
+        VIDEO_EFFECT = 22,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_COLOR_BALANCE)
+        VIDEO_COLOR_BALANCE = 23,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_TRANSFORM)
+        VIDEO_TRANSFORM = 24,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PIXEL_TO_DMX)
+        PIXEL_TO_DMX = 30,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PIXEL_PATTERN)
+        PIXEL_PATTERN = 31,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.OPC_OUTPUT)
+        OPC_OUTPUT = 32,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.LASER)
+        LASER = 40,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ILDA_FILE)
+        ILDA_FILE = 41,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.GAMEPAD)
+        GAMEPAD = 45,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.COLOR_RGB)
+        COLOR_RGB = 50,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.COLOR_HSV)
+        COLOR_HSV = 51,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONTAINER)
+        CONTAINER = 100,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ENCODER)
+        ENCODER = 55,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MATH)
+        MATH = 56,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.DATA_TO_NUMBER)
+        DATA_TO_NUMBER = 57,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.NUMBER_TO_DATA)
+        NUMBER_TO_DATA = 58,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VALUE)
+        VALUE = 59,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.EXTRACT)
+        EXTRACT = 60,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MQTT_INPUT)
+        MQTT_INPUT = 61,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MQTT_OUTPUT)
+        MQTT_OUTPUT = 62,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.PLAN_SCREEN)
+        PLAN_SCREEN = 63,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.DELAY)
+        DELAY = 64,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.RAMP)
+        RAMP = 65,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.NOISE)
+        NOISE = 66,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.LABEL)
+        LABEL = 67,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TRANSPORT)
+        TRANSPORT = 68,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.G13INPUT)
+        G13INPUT = 69,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.G13OUTPUT)
+        G13OUTPUT = 70,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONSTANT_NUMBER)
+        CONSTANT_NUMBER = 71,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONDITIONAL)
+        CONDITIONAL = 72,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TIMECODE_CONTROL)
+        TIMECODE_CONTROL = 73,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TIMECODE_OUTPUT)
+        TIMECODE_OUTPUT = 74,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_FILE)
+        AUDIO_FILE = 75,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_OUTPUT)
+        AUDIO_OUTPUT = 76,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_VOLUME)
+        AUDIO_VOLUME = 77,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_INPUT)
+        AUDIO_INPUT = 78,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_MIX)
+        AUDIO_MIX = 79,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.AUDIO_METER)
+        AUDIO_METER = 80,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TEMPLATE)
+        TEMPLATE = 81,
     }
 
     impl ::protobuf::Enum for NodeType {
@@ -3103,133 +3103,133 @@ pub mod node {
 
         fn from_i32(value: i32) -> ::std::option::Option<NodeType> {
             match value {
-                0 => ::std::option::Option::Some(NodeType::Fader),
-                1 => ::std::option::Option::Some(NodeType::Button),
-                2 => ::std::option::Option::Some(NodeType::Oscillator),
-                3 => ::std::option::Option::Some(NodeType::Clock),
-                4 => ::std::option::Option::Some(NodeType::Script),
-                5 => ::std::option::Option::Some(NodeType::Envelope),
-                6 => ::std::option::Option::Some(NodeType::Sequence),
-                7 => ::std::option::Option::Some(NodeType::Select),
-                8 => ::std::option::Option::Some(NodeType::Merge),
-                9 => ::std::option::Option::Some(NodeType::Threshold),
-                10 => ::std::option::Option::Some(NodeType::DmxOutput),
-                11 => ::std::option::Option::Some(NodeType::OscInput),
-                12 => ::std::option::Option::Some(NodeType::OscOutput),
-                13 => ::std::option::Option::Some(NodeType::MidiInput),
-                14 => ::std::option::Option::Some(NodeType::MidiOutput),
-                15 => ::std::option::Option::Some(NodeType::Sequencer),
-                16 => ::std::option::Option::Some(NodeType::Fixture),
-                17 => ::std::option::Option::Some(NodeType::Programmer),
-                18 => ::std::option::Option::Some(NodeType::Group),
-                19 => ::std::option::Option::Some(NodeType::Preset),
-                20 => ::std::option::Option::Some(NodeType::VideoFile),
-                21 => ::std::option::Option::Some(NodeType::VideoOutput),
-                22 => ::std::option::Option::Some(NodeType::VideoEffect),
-                23 => ::std::option::Option::Some(NodeType::VideoColorBalance),
-                24 => ::std::option::Option::Some(NodeType::VideoTransform),
-                30 => ::std::option::Option::Some(NodeType::PixelToDmx),
-                31 => ::std::option::Option::Some(NodeType::PixelPattern),
-                32 => ::std::option::Option::Some(NodeType::OpcOutput),
-                40 => ::std::option::Option::Some(NodeType::Laser),
-                41 => ::std::option::Option::Some(NodeType::IldaFile),
-                45 => ::std::option::Option::Some(NodeType::Gamepad),
-                50 => ::std::option::Option::Some(NodeType::ColorRgb),
-                51 => ::std::option::Option::Some(NodeType::ColorHsv),
-                100 => ::std::option::Option::Some(NodeType::Container),
-                55 => ::std::option::Option::Some(NodeType::Encoder),
-                56 => ::std::option::Option::Some(NodeType::Math),
-                57 => ::std::option::Option::Some(NodeType::DataToNumber),
-                58 => ::std::option::Option::Some(NodeType::NumberToData),
-                59 => ::std::option::Option::Some(NodeType::Value),
-                60 => ::std::option::Option::Some(NodeType::Extract),
-                61 => ::std::option::Option::Some(NodeType::MqttInput),
-                62 => ::std::option::Option::Some(NodeType::MqttOutput),
-                63 => ::std::option::Option::Some(NodeType::PlanScreen),
-                64 => ::std::option::Option::Some(NodeType::Delay),
-                65 => ::std::option::Option::Some(NodeType::Ramp),
-                66 => ::std::option::Option::Some(NodeType::Noise),
-                67 => ::std::option::Option::Some(NodeType::Label),
-                68 => ::std::option::Option::Some(NodeType::Transport),
-                69 => ::std::option::Option::Some(NodeType::G13Input),
-                70 => ::std::option::Option::Some(NodeType::G13Output),
-                71 => ::std::option::Option::Some(NodeType::ConstantNumber),
-                72 => ::std::option::Option::Some(NodeType::Conditional),
-                73 => ::std::option::Option::Some(NodeType::TimecodeControl),
-                74 => ::std::option::Option::Some(NodeType::TimecodeOutput),
-                75 => ::std::option::Option::Some(NodeType::AudioFile),
-                76 => ::std::option::Option::Some(NodeType::AudioOutput),
-                77 => ::std::option::Option::Some(NodeType::AudioVolume),
-                78 => ::std::option::Option::Some(NodeType::AudioInput),
-                79 => ::std::option::Option::Some(NodeType::AudioMix),
-                80 => ::std::option::Option::Some(NodeType::AudioMeter),
-                81 => ::std::option::Option::Some(NodeType::Template),
+                0 => ::std::option::Option::Some(NodeType::FADER),
+                1 => ::std::option::Option::Some(NodeType::BUTTON),
+                2 => ::std::option::Option::Some(NodeType::OSCILLATOR),
+                3 => ::std::option::Option::Some(NodeType::CLOCK),
+                4 => ::std::option::Option::Some(NodeType::SCRIPT),
+                5 => ::std::option::Option::Some(NodeType::ENVELOPE),
+                6 => ::std::option::Option::Some(NodeType::SEQUENCE),
+                7 => ::std::option::Option::Some(NodeType::SELECT),
+                8 => ::std::option::Option::Some(NodeType::MERGE),
+                9 => ::std::option::Option::Some(NodeType::THRESHOLD),
+                10 => ::std::option::Option::Some(NodeType::DMX_OUTPUT),
+                11 => ::std::option::Option::Some(NodeType::OSC_INPUT),
+                12 => ::std::option::Option::Some(NodeType::OSC_OUTPUT),
+                13 => ::std::option::Option::Some(NodeType::MIDI_INPUT),
+                14 => ::std::option::Option::Some(NodeType::MIDI_OUTPUT),
+                15 => ::std::option::Option::Some(NodeType::SEQUENCER),
+                16 => ::std::option::Option::Some(NodeType::FIXTURE),
+                17 => ::std::option::Option::Some(NodeType::PROGRAMMER),
+                18 => ::std::option::Option::Some(NodeType::GROUP),
+                19 => ::std::option::Option::Some(NodeType::PRESET),
+                20 => ::std::option::Option::Some(NodeType::VIDEO_FILE),
+                21 => ::std::option::Option::Some(NodeType::VIDEO_OUTPUT),
+                22 => ::std::option::Option::Some(NodeType::VIDEO_EFFECT),
+                23 => ::std::option::Option::Some(NodeType::VIDEO_COLOR_BALANCE),
+                24 => ::std::option::Option::Some(NodeType::VIDEO_TRANSFORM),
+                30 => ::std::option::Option::Some(NodeType::PIXEL_TO_DMX),
+                31 => ::std::option::Option::Some(NodeType::PIXEL_PATTERN),
+                32 => ::std::option::Option::Some(NodeType::OPC_OUTPUT),
+                40 => ::std::option::Option::Some(NodeType::LASER),
+                41 => ::std::option::Option::Some(NodeType::ILDA_FILE),
+                45 => ::std::option::Option::Some(NodeType::GAMEPAD),
+                50 => ::std::option::Option::Some(NodeType::COLOR_RGB),
+                51 => ::std::option::Option::Some(NodeType::COLOR_HSV),
+                100 => ::std::option::Option::Some(NodeType::CONTAINER),
+                55 => ::std::option::Option::Some(NodeType::ENCODER),
+                56 => ::std::option::Option::Some(NodeType::MATH),
+                57 => ::std::option::Option::Some(NodeType::DATA_TO_NUMBER),
+                58 => ::std::option::Option::Some(NodeType::NUMBER_TO_DATA),
+                59 => ::std::option::Option::Some(NodeType::VALUE),
+                60 => ::std::option::Option::Some(NodeType::EXTRACT),
+                61 => ::std::option::Option::Some(NodeType::MQTT_INPUT),
+                62 => ::std::option::Option::Some(NodeType::MQTT_OUTPUT),
+                63 => ::std::option::Option::Some(NodeType::PLAN_SCREEN),
+                64 => ::std::option::Option::Some(NodeType::DELAY),
+                65 => ::std::option::Option::Some(NodeType::RAMP),
+                66 => ::std::option::Option::Some(NodeType::NOISE),
+                67 => ::std::option::Option::Some(NodeType::LABEL),
+                68 => ::std::option::Option::Some(NodeType::TRANSPORT),
+                69 => ::std::option::Option::Some(NodeType::G13INPUT),
+                70 => ::std::option::Option::Some(NodeType::G13OUTPUT),
+                71 => ::std::option::Option::Some(NodeType::CONSTANT_NUMBER),
+                72 => ::std::option::Option::Some(NodeType::CONDITIONAL),
+                73 => ::std::option::Option::Some(NodeType::TIMECODE_CONTROL),
+                74 => ::std::option::Option::Some(NodeType::TIMECODE_OUTPUT),
+                75 => ::std::option::Option::Some(NodeType::AUDIO_FILE),
+                76 => ::std::option::Option::Some(NodeType::AUDIO_OUTPUT),
+                77 => ::std::option::Option::Some(NodeType::AUDIO_VOLUME),
+                78 => ::std::option::Option::Some(NodeType::AUDIO_INPUT),
+                79 => ::std::option::Option::Some(NodeType::AUDIO_MIX),
+                80 => ::std::option::Option::Some(NodeType::AUDIO_METER),
+                81 => ::std::option::Option::Some(NodeType::TEMPLATE),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [NodeType] = &[
-            NodeType::Fader,
-            NodeType::Button,
-            NodeType::Oscillator,
-            NodeType::Clock,
-            NodeType::Script,
-            NodeType::Envelope,
-            NodeType::Sequence,
-            NodeType::Select,
-            NodeType::Merge,
-            NodeType::Threshold,
-            NodeType::DmxOutput,
-            NodeType::OscInput,
-            NodeType::OscOutput,
-            NodeType::MidiInput,
-            NodeType::MidiOutput,
-            NodeType::Sequencer,
-            NodeType::Fixture,
-            NodeType::Programmer,
-            NodeType::Group,
-            NodeType::Preset,
-            NodeType::VideoFile,
-            NodeType::VideoOutput,
-            NodeType::VideoEffect,
-            NodeType::VideoColorBalance,
-            NodeType::VideoTransform,
-            NodeType::PixelToDmx,
-            NodeType::PixelPattern,
-            NodeType::OpcOutput,
-            NodeType::Laser,
-            NodeType::IldaFile,
-            NodeType::Gamepad,
-            NodeType::ColorRgb,
-            NodeType::ColorHsv,
-            NodeType::Container,
-            NodeType::Encoder,
-            NodeType::Math,
-            NodeType::DataToNumber,
-            NodeType::NumberToData,
-            NodeType::Value,
-            NodeType::Extract,
-            NodeType::MqttInput,
-            NodeType::MqttOutput,
-            NodeType::PlanScreen,
-            NodeType::Delay,
-            NodeType::Ramp,
-            NodeType::Noise,
-            NodeType::Label,
-            NodeType::Transport,
-            NodeType::G13Input,
-            NodeType::G13Output,
-            NodeType::ConstantNumber,
-            NodeType::Conditional,
-            NodeType::TimecodeControl,
-            NodeType::TimecodeOutput,
-            NodeType::AudioFile,
-            NodeType::AudioOutput,
-            NodeType::AudioVolume,
-            NodeType::AudioInput,
-            NodeType::AudioMix,
-            NodeType::AudioMeter,
-            NodeType::Template,
+            NodeType::FADER,
+            NodeType::BUTTON,
+            NodeType::OSCILLATOR,
+            NodeType::CLOCK,
+            NodeType::SCRIPT,
+            NodeType::ENVELOPE,
+            NodeType::SEQUENCE,
+            NodeType::SELECT,
+            NodeType::MERGE,
+            NodeType::THRESHOLD,
+            NodeType::DMX_OUTPUT,
+            NodeType::OSC_INPUT,
+            NodeType::OSC_OUTPUT,
+            NodeType::MIDI_INPUT,
+            NodeType::MIDI_OUTPUT,
+            NodeType::SEQUENCER,
+            NodeType::FIXTURE,
+            NodeType::PROGRAMMER,
+            NodeType::GROUP,
+            NodeType::PRESET,
+            NodeType::VIDEO_FILE,
+            NodeType::VIDEO_OUTPUT,
+            NodeType::VIDEO_EFFECT,
+            NodeType::VIDEO_COLOR_BALANCE,
+            NodeType::VIDEO_TRANSFORM,
+            NodeType::PIXEL_TO_DMX,
+            NodeType::PIXEL_PATTERN,
+            NodeType::OPC_OUTPUT,
+            NodeType::LASER,
+            NodeType::ILDA_FILE,
+            NodeType::GAMEPAD,
+            NodeType::COLOR_RGB,
+            NodeType::COLOR_HSV,
+            NodeType::CONTAINER,
+            NodeType::ENCODER,
+            NodeType::MATH,
+            NodeType::DATA_TO_NUMBER,
+            NodeType::NUMBER_TO_DATA,
+            NodeType::VALUE,
+            NodeType::EXTRACT,
+            NodeType::MQTT_INPUT,
+            NodeType::MQTT_OUTPUT,
+            NodeType::PLAN_SCREEN,
+            NodeType::DELAY,
+            NodeType::RAMP,
+            NodeType::NOISE,
+            NodeType::LABEL,
+            NodeType::TRANSPORT,
+            NodeType::G13INPUT,
+            NodeType::G13OUTPUT,
+            NodeType::CONSTANT_NUMBER,
+            NodeType::CONDITIONAL,
+            NodeType::TIMECODE_CONTROL,
+            NodeType::TIMECODE_OUTPUT,
+            NodeType::AUDIO_FILE,
+            NodeType::AUDIO_OUTPUT,
+            NodeType::AUDIO_VOLUME,
+            NodeType::AUDIO_INPUT,
+            NodeType::AUDIO_MIX,
+            NodeType::AUDIO_METER,
+            NodeType::TEMPLATE,
         ];
     }
 
@@ -3241,67 +3241,67 @@ pub mod node {
 
         fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
             let index = match self {
-                NodeType::Fader => 0,
-                NodeType::Button => 1,
-                NodeType::Oscillator => 2,
-                NodeType::Clock => 3,
-                NodeType::Script => 4,
-                NodeType::Envelope => 5,
-                NodeType::Sequence => 6,
-                NodeType::Select => 7,
-                NodeType::Merge => 8,
-                NodeType::Threshold => 9,
-                NodeType::DmxOutput => 10,
-                NodeType::OscInput => 11,
-                NodeType::OscOutput => 12,
-                NodeType::MidiInput => 13,
-                NodeType::MidiOutput => 14,
-                NodeType::Sequencer => 15,
-                NodeType::Fixture => 16,
-                NodeType::Programmer => 17,
-                NodeType::Group => 18,
-                NodeType::Preset => 19,
-                NodeType::VideoFile => 20,
-                NodeType::VideoOutput => 21,
-                NodeType::VideoEffect => 22,
-                NodeType::VideoColorBalance => 23,
-                NodeType::VideoTransform => 24,
-                NodeType::PixelToDmx => 25,
-                NodeType::PixelPattern => 26,
-                NodeType::OpcOutput => 27,
-                NodeType::Laser => 28,
-                NodeType::IldaFile => 29,
-                NodeType::Gamepad => 30,
-                NodeType::ColorRgb => 31,
-                NodeType::ColorHsv => 32,
-                NodeType::Container => 33,
-                NodeType::Encoder => 34,
-                NodeType::Math => 35,
-                NodeType::DataToNumber => 36,
-                NodeType::NumberToData => 37,
-                NodeType::Value => 38,
-                NodeType::Extract => 39,
-                NodeType::MqttInput => 40,
-                NodeType::MqttOutput => 41,
-                NodeType::PlanScreen => 42,
-                NodeType::Delay => 43,
-                NodeType::Ramp => 44,
-                NodeType::Noise => 45,
-                NodeType::Label => 46,
-                NodeType::Transport => 47,
-                NodeType::G13Input => 48,
-                NodeType::G13Output => 49,
-                NodeType::ConstantNumber => 50,
-                NodeType::Conditional => 51,
-                NodeType::TimecodeControl => 52,
-                NodeType::TimecodeOutput => 53,
-                NodeType::AudioFile => 54,
-                NodeType::AudioOutput => 55,
-                NodeType::AudioVolume => 56,
-                NodeType::AudioInput => 57,
-                NodeType::AudioMix => 58,
-                NodeType::AudioMeter => 59,
-                NodeType::Template => 60,
+                NodeType::FADER => 0,
+                NodeType::BUTTON => 1,
+                NodeType::OSCILLATOR => 2,
+                NodeType::CLOCK => 3,
+                NodeType::SCRIPT => 4,
+                NodeType::ENVELOPE => 5,
+                NodeType::SEQUENCE => 6,
+                NodeType::SELECT => 7,
+                NodeType::MERGE => 8,
+                NodeType::THRESHOLD => 9,
+                NodeType::DMX_OUTPUT => 10,
+                NodeType::OSC_INPUT => 11,
+                NodeType::OSC_OUTPUT => 12,
+                NodeType::MIDI_INPUT => 13,
+                NodeType::MIDI_OUTPUT => 14,
+                NodeType::SEQUENCER => 15,
+                NodeType::FIXTURE => 16,
+                NodeType::PROGRAMMER => 17,
+                NodeType::GROUP => 18,
+                NodeType::PRESET => 19,
+                NodeType::VIDEO_FILE => 20,
+                NodeType::VIDEO_OUTPUT => 21,
+                NodeType::VIDEO_EFFECT => 22,
+                NodeType::VIDEO_COLOR_BALANCE => 23,
+                NodeType::VIDEO_TRANSFORM => 24,
+                NodeType::PIXEL_TO_DMX => 25,
+                NodeType::PIXEL_PATTERN => 26,
+                NodeType::OPC_OUTPUT => 27,
+                NodeType::LASER => 28,
+                NodeType::ILDA_FILE => 29,
+                NodeType::GAMEPAD => 30,
+                NodeType::COLOR_RGB => 31,
+                NodeType::COLOR_HSV => 32,
+                NodeType::CONTAINER => 33,
+                NodeType::ENCODER => 34,
+                NodeType::MATH => 35,
+                NodeType::DATA_TO_NUMBER => 36,
+                NodeType::NUMBER_TO_DATA => 37,
+                NodeType::VALUE => 38,
+                NodeType::EXTRACT => 39,
+                NodeType::MQTT_INPUT => 40,
+                NodeType::MQTT_OUTPUT => 41,
+                NodeType::PLAN_SCREEN => 42,
+                NodeType::DELAY => 43,
+                NodeType::RAMP => 44,
+                NodeType::NOISE => 45,
+                NodeType::LABEL => 46,
+                NodeType::TRANSPORT => 47,
+                NodeType::G13INPUT => 48,
+                NodeType::G13OUTPUT => 49,
+                NodeType::CONSTANT_NUMBER => 50,
+                NodeType::CONDITIONAL => 51,
+                NodeType::TIMECODE_CONTROL => 52,
+                NodeType::TIMECODE_OUTPUT => 53,
+                NodeType::AUDIO_FILE => 54,
+                NodeType::AUDIO_OUTPUT => 55,
+                NodeType::AUDIO_VOLUME => 56,
+                NodeType::AUDIO_INPUT => 57,
+                NodeType::AUDIO_MIX => 58,
+                NodeType::AUDIO_METER => 59,
+                NodeType::TEMPLATE => 60,
             };
             Self::enum_descriptor().value_by_index(index)
         }
@@ -3309,7 +3309,7 @@ pub mod node {
 
     impl ::std::default::Default for NodeType {
         fn default() -> Self {
-            NodeType::Fader
+            NodeType::FADER
         }
     }
 
@@ -3322,20 +3322,20 @@ pub mod node {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.Node.NodePreviewType)
     pub enum NodePreviewType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.History)
-        History = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.Waveform)
-        Waveform = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.Multiple)
-        Multiple = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.Texture)
-        Texture = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.Timecode)
-        Timecode = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.Data)
-        Data = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.None)
-        None = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.HISTORY)
+        HISTORY = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.WAVEFORM)
+        WAVEFORM = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.MULTIPLE)
+        MULTIPLE = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.TEXTURE)
+        TEXTURE = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.TIMECODE)
+        TIMECODE = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.DATA)
+        DATA = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodePreviewType.NONE)
+        NONE = 6,
     }
 
     impl ::protobuf::Enum for NodePreviewType {
@@ -3347,25 +3347,25 @@ pub mod node {
 
         fn from_i32(value: i32) -> ::std::option::Option<NodePreviewType> {
             match value {
-                0 => ::std::option::Option::Some(NodePreviewType::History),
-                1 => ::std::option::Option::Some(NodePreviewType::Waveform),
-                2 => ::std::option::Option::Some(NodePreviewType::Multiple),
-                3 => ::std::option::Option::Some(NodePreviewType::Texture),
-                4 => ::std::option::Option::Some(NodePreviewType::Timecode),
-                5 => ::std::option::Option::Some(NodePreviewType::Data),
-                6 => ::std::option::Option::Some(NodePreviewType::None),
+                0 => ::std::option::Option::Some(NodePreviewType::HISTORY),
+                1 => ::std::option::Option::Some(NodePreviewType::WAVEFORM),
+                2 => ::std::option::Option::Some(NodePreviewType::MULTIPLE),
+                3 => ::std::option::Option::Some(NodePreviewType::TEXTURE),
+                4 => ::std::option::Option::Some(NodePreviewType::TIMECODE),
+                5 => ::std::option::Option::Some(NodePreviewType::DATA),
+                6 => ::std::option::Option::Some(NodePreviewType::NONE),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [NodePreviewType] = &[
-            NodePreviewType::History,
-            NodePreviewType::Waveform,
-            NodePreviewType::Multiple,
-            NodePreviewType::Texture,
-            NodePreviewType::Timecode,
-            NodePreviewType::Data,
-            NodePreviewType::None,
+            NodePreviewType::HISTORY,
+            NodePreviewType::WAVEFORM,
+            NodePreviewType::MULTIPLE,
+            NodePreviewType::TEXTURE,
+            NodePreviewType::TIMECODE,
+            NodePreviewType::DATA,
+            NodePreviewType::NONE,
         ];
     }
 
@@ -3383,7 +3383,7 @@ pub mod node {
 
     impl ::std::default::Default for NodePreviewType {
         fn default() -> Self {
-            NodePreviewType::History
+            NodePreviewType::HISTORY
         }
     }
 
@@ -3415,20 +3415,20 @@ impl NodeConfig {
         ::std::default::Default::default()
     }
 
-    // .mizer.nodes.OscillatorNodeConfig oscillatorConfig = 10;
+    // .mizer.nodes.OscillatorNodeConfig oscillator_config = 10;
 
-    pub fn oscillatorConfig(&self) -> &OscillatorNodeConfig {
+    pub fn oscillator_config(&self) -> &OscillatorNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscillatorConfig(ref v)) => v,
             _ => <OscillatorNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_oscillatorConfig(&mut self) {
+    pub fn clear_oscillator_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_oscillatorConfig(&self) -> bool {
+    pub fn has_oscillator_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscillatorConfig(..)) => true,
             _ => false,
@@ -3436,12 +3436,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_oscillatorConfig(&mut self, v: OscillatorNodeConfig) {
+    pub fn set_oscillator_config(&mut self, v: OscillatorNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::OscillatorConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_oscillatorConfig(&mut self) -> &mut OscillatorNodeConfig {
+    pub fn mut_oscillator_config(&mut self) -> &mut OscillatorNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::OscillatorConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::OscillatorConfig(OscillatorNodeConfig::new()));
@@ -3453,8 +3453,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_oscillatorConfig(&mut self) -> OscillatorNodeConfig {
-        if self.has_oscillatorConfig() {
+    pub fn take_oscillator_config(&mut self) -> OscillatorNodeConfig {
+        if self.has_oscillator_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::OscillatorConfig(v)) => v,
                 _ => panic!(),
@@ -3464,20 +3464,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ScriptingNodeConfig scriptingConfig = 11;
+    // .mizer.nodes.ScriptingNodeConfig scripting_config = 11;
 
-    pub fn scriptingConfig(&self) -> &ScriptingNodeConfig {
+    pub fn scripting_config(&self) -> &ScriptingNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ScriptingConfig(ref v)) => v,
             _ => <ScriptingNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_scriptingConfig(&mut self) {
+    pub fn clear_scripting_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_scriptingConfig(&self) -> bool {
+    pub fn has_scripting_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ScriptingConfig(..)) => true,
             _ => false,
@@ -3485,12 +3485,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_scriptingConfig(&mut self, v: ScriptingNodeConfig) {
+    pub fn set_scripting_config(&mut self, v: ScriptingNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ScriptingConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_scriptingConfig(&mut self) -> &mut ScriptingNodeConfig {
+    pub fn mut_scripting_config(&mut self) -> &mut ScriptingNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ScriptingConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ScriptingConfig(ScriptingNodeConfig::new()));
@@ -3502,8 +3502,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_scriptingConfig(&mut self) -> ScriptingNodeConfig {
-        if self.has_scriptingConfig() {
+    pub fn take_scripting_config(&mut self) -> ScriptingNodeConfig {
+        if self.has_scripting_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ScriptingConfig(v)) => v,
                 _ => panic!(),
@@ -3513,20 +3513,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.SequenceNodeConfig sequenceConfig = 12;
+    // .mizer.nodes.SequenceNodeConfig sequence_config = 12;
 
-    pub fn sequenceConfig(&self) -> &SequenceNodeConfig {
+    pub fn sequence_config(&self) -> &SequenceNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SequenceConfig(ref v)) => v,
             _ => <SequenceNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_sequenceConfig(&mut self) {
+    pub fn clear_sequence_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_sequenceConfig(&self) -> bool {
+    pub fn has_sequence_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SequenceConfig(..)) => true,
             _ => false,
@@ -3534,12 +3534,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_sequenceConfig(&mut self, v: SequenceNodeConfig) {
+    pub fn set_sequence_config(&mut self, v: SequenceNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::SequenceConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_sequenceConfig(&mut self) -> &mut SequenceNodeConfig {
+    pub fn mut_sequence_config(&mut self) -> &mut SequenceNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::SequenceConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::SequenceConfig(SequenceNodeConfig::new()));
@@ -3551,8 +3551,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_sequenceConfig(&mut self) -> SequenceNodeConfig {
-        if self.has_sequenceConfig() {
+    pub fn take_sequence_config(&mut self) -> SequenceNodeConfig {
+        if self.has_sequence_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::SequenceConfig(v)) => v,
                 _ => panic!(),
@@ -3562,20 +3562,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ClockNodeConfig clockConfig = 13;
+    // .mizer.nodes.ClockNodeConfig clock_config = 13;
 
-    pub fn clockConfig(&self) -> &ClockNodeConfig {
+    pub fn clock_config(&self) -> &ClockNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ClockConfig(ref v)) => v,
             _ => <ClockNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_clockConfig(&mut self) {
+    pub fn clear_clock_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_clockConfig(&self) -> bool {
+    pub fn has_clock_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ClockConfig(..)) => true,
             _ => false,
@@ -3583,12 +3583,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_clockConfig(&mut self, v: ClockNodeConfig) {
+    pub fn set_clock_config(&mut self, v: ClockNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ClockConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_clockConfig(&mut self) -> &mut ClockNodeConfig {
+    pub fn mut_clock_config(&mut self) -> &mut ClockNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ClockConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ClockConfig(ClockNodeConfig::new()));
@@ -3600,8 +3600,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_clockConfig(&mut self) -> ClockNodeConfig {
-        if self.has_clockConfig() {
+    pub fn take_clock_config(&mut self) -> ClockNodeConfig {
+        if self.has_clock_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ClockConfig(v)) => v,
                 _ => panic!(),
@@ -3611,20 +3611,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.FixtureNodeConfig fixtureConfig = 14;
+    // .mizer.nodes.FixtureNodeConfig fixture_config = 14;
 
-    pub fn fixtureConfig(&self) -> &FixtureNodeConfig {
+    pub fn fixture_config(&self) -> &FixtureNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::FixtureConfig(ref v)) => v,
             _ => <FixtureNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_fixtureConfig(&mut self) {
+    pub fn clear_fixture_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_fixtureConfig(&self) -> bool {
+    pub fn has_fixture_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::FixtureConfig(..)) => true,
             _ => false,
@@ -3632,12 +3632,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_fixtureConfig(&mut self, v: FixtureNodeConfig) {
+    pub fn set_fixture_config(&mut self, v: FixtureNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::FixtureConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_fixtureConfig(&mut self) -> &mut FixtureNodeConfig {
+    pub fn mut_fixture_config(&mut self) -> &mut FixtureNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::FixtureConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::FixtureConfig(FixtureNodeConfig::new()));
@@ -3649,8 +3649,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_fixtureConfig(&mut self) -> FixtureNodeConfig {
-        if self.has_fixtureConfig() {
+    pub fn take_fixture_config(&mut self) -> FixtureNodeConfig {
+        if self.has_fixture_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::FixtureConfig(v)) => v,
                 _ => panic!(),
@@ -3660,20 +3660,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ButtonNodeConfig buttonConfig = 15;
+    // .mizer.nodes.ButtonNodeConfig button_config = 15;
 
-    pub fn buttonConfig(&self) -> &ButtonNodeConfig {
+    pub fn button_config(&self) -> &ButtonNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ButtonConfig(ref v)) => v,
             _ => <ButtonNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_buttonConfig(&mut self) {
+    pub fn clear_button_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_buttonConfig(&self) -> bool {
+    pub fn has_button_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ButtonConfig(..)) => true,
             _ => false,
@@ -3681,12 +3681,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_buttonConfig(&mut self, v: ButtonNodeConfig) {
+    pub fn set_button_config(&mut self, v: ButtonNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ButtonConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_buttonConfig(&mut self) -> &mut ButtonNodeConfig {
+    pub fn mut_button_config(&mut self) -> &mut ButtonNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ButtonConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ButtonConfig(ButtonNodeConfig::new()));
@@ -3698,8 +3698,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_buttonConfig(&mut self) -> ButtonNodeConfig {
-        if self.has_buttonConfig() {
+    pub fn take_button_config(&mut self) -> ButtonNodeConfig {
+        if self.has_button_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ButtonConfig(v)) => v,
                 _ => panic!(),
@@ -3709,20 +3709,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.FaderNodeConfig faderConfig = 16;
+    // .mizer.nodes.FaderNodeConfig fader_config = 16;
 
-    pub fn faderConfig(&self) -> &FaderNodeConfig {
+    pub fn fader_config(&self) -> &FaderNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::FaderConfig(ref v)) => v,
             _ => <FaderNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_faderConfig(&mut self) {
+    pub fn clear_fader_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_faderConfig(&self) -> bool {
+    pub fn has_fader_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::FaderConfig(..)) => true,
             _ => false,
@@ -3730,12 +3730,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_faderConfig(&mut self, v: FaderNodeConfig) {
+    pub fn set_fader_config(&mut self, v: FaderNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::FaderConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_faderConfig(&mut self) -> &mut FaderNodeConfig {
+    pub fn mut_fader_config(&mut self) -> &mut FaderNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::FaderConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::FaderConfig(FaderNodeConfig::new()));
@@ -3747,8 +3747,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_faderConfig(&mut self) -> FaderNodeConfig {
-        if self.has_faderConfig() {
+    pub fn take_fader_config(&mut self) -> FaderNodeConfig {
+        if self.has_fader_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::FaderConfig(v)) => v,
                 _ => panic!(),
@@ -3758,20 +3758,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.IldaFileNodeConfig ildaFileConfig = 17;
+    // .mizer.nodes.IldaFileNodeConfig ilda_file_config = 17;
 
-    pub fn ildaFileConfig(&self) -> &IldaFileNodeConfig {
+    pub fn ilda_file_config(&self) -> &IldaFileNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::IldaFileConfig(ref v)) => v,
             _ => <IldaFileNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_ildaFileConfig(&mut self) {
+    pub fn clear_ilda_file_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_ildaFileConfig(&self) -> bool {
+    pub fn has_ilda_file_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::IldaFileConfig(..)) => true,
             _ => false,
@@ -3779,12 +3779,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_ildaFileConfig(&mut self, v: IldaFileNodeConfig) {
+    pub fn set_ilda_file_config(&mut self, v: IldaFileNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::IldaFileConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_ildaFileConfig(&mut self) -> &mut IldaFileNodeConfig {
+    pub fn mut_ilda_file_config(&mut self) -> &mut IldaFileNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::IldaFileConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::IldaFileConfig(IldaFileNodeConfig::new()));
@@ -3796,8 +3796,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_ildaFileConfig(&mut self) -> IldaFileNodeConfig {
-        if self.has_ildaFileConfig() {
+    pub fn take_ilda_file_config(&mut self) -> IldaFileNodeConfig {
+        if self.has_ilda_file_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::IldaFileConfig(v)) => v,
                 _ => panic!(),
@@ -3807,20 +3807,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.LaserNodeConfig laserConfig = 18;
+    // .mizer.nodes.LaserNodeConfig laser_config = 18;
 
-    pub fn laserConfig(&self) -> &LaserNodeConfig {
+    pub fn laser_config(&self) -> &LaserNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::LaserConfig(ref v)) => v,
             _ => <LaserNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_laserConfig(&mut self) {
+    pub fn clear_laser_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_laserConfig(&self) -> bool {
+    pub fn has_laser_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::LaserConfig(..)) => true,
             _ => false,
@@ -3828,12 +3828,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_laserConfig(&mut self, v: LaserNodeConfig) {
+    pub fn set_laser_config(&mut self, v: LaserNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::LaserConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_laserConfig(&mut self) -> &mut LaserNodeConfig {
+    pub fn mut_laser_config(&mut self) -> &mut LaserNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::LaserConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::LaserConfig(LaserNodeConfig::new()));
@@ -3845,8 +3845,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_laserConfig(&mut self) -> LaserNodeConfig {
-        if self.has_laserConfig() {
+    pub fn take_laser_config(&mut self) -> LaserNodeConfig {
+        if self.has_laser_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::LaserConfig(v)) => v,
                 _ => panic!(),
@@ -3856,20 +3856,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.PixelPatternNodeConfig pixelPatternConfig = 19;
+    // .mizer.nodes.PixelPatternNodeConfig pixel_pattern_config = 19;
 
-    pub fn pixelPatternConfig(&self) -> &PixelPatternNodeConfig {
+    pub fn pixel_pattern_config(&self) -> &PixelPatternNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PixelPatternConfig(ref v)) => v,
             _ => <PixelPatternNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_pixelPatternConfig(&mut self) {
+    pub fn clear_pixel_pattern_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_pixelPatternConfig(&self) -> bool {
+    pub fn has_pixel_pattern_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PixelPatternConfig(..)) => true,
             _ => false,
@@ -3877,12 +3877,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_pixelPatternConfig(&mut self, v: PixelPatternNodeConfig) {
+    pub fn set_pixel_pattern_config(&mut self, v: PixelPatternNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::PixelPatternConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_pixelPatternConfig(&mut self) -> &mut PixelPatternNodeConfig {
+    pub fn mut_pixel_pattern_config(&mut self) -> &mut PixelPatternNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::PixelPatternConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::PixelPatternConfig(PixelPatternNodeConfig::new()));
@@ -3894,8 +3894,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_pixelPatternConfig(&mut self) -> PixelPatternNodeConfig {
-        if self.has_pixelPatternConfig() {
+    pub fn take_pixel_pattern_config(&mut self) -> PixelPatternNodeConfig {
+        if self.has_pixel_pattern_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::PixelPatternConfig(v)) => v,
                 _ => panic!(),
@@ -3905,20 +3905,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.PixelDmxNodeConfig pixelDmxConfig = 20;
+    // .mizer.nodes.PixelDmxNodeConfig pixel_dmx_config = 20;
 
-    pub fn pixelDmxConfig(&self) -> &PixelDmxNodeConfig {
+    pub fn pixel_dmx_config(&self) -> &PixelDmxNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PixelDmxConfig(ref v)) => v,
             _ => <PixelDmxNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_pixelDmxConfig(&mut self) {
+    pub fn clear_pixel_dmx_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_pixelDmxConfig(&self) -> bool {
+    pub fn has_pixel_dmx_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PixelDmxConfig(..)) => true,
             _ => false,
@@ -3926,12 +3926,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_pixelDmxConfig(&mut self, v: PixelDmxNodeConfig) {
+    pub fn set_pixel_dmx_config(&mut self, v: PixelDmxNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::PixelDmxConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_pixelDmxConfig(&mut self) -> &mut PixelDmxNodeConfig {
+    pub fn mut_pixel_dmx_config(&mut self) -> &mut PixelDmxNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::PixelDmxConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::PixelDmxConfig(PixelDmxNodeConfig::new()));
@@ -3943,8 +3943,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_pixelDmxConfig(&mut self) -> PixelDmxNodeConfig {
-        if self.has_pixelDmxConfig() {
+    pub fn take_pixel_dmx_config(&mut self) -> PixelDmxNodeConfig {
+        if self.has_pixel_dmx_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::PixelDmxConfig(v)) => v,
                 _ => panic!(),
@@ -3954,20 +3954,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.DmxOutputNodeConfig dmxOutputConfig = 21;
+    // .mizer.nodes.DmxOutputNodeConfig dmx_output_config = 21;
 
-    pub fn dmxOutputConfig(&self) -> &DmxOutputNodeConfig {
+    pub fn dmx_output_config(&self) -> &DmxOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DmxOutputConfig(ref v)) => v,
             _ => <DmxOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_dmxOutputConfig(&mut self) {
+    pub fn clear_dmx_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_dmxOutputConfig(&self) -> bool {
+    pub fn has_dmx_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DmxOutputConfig(..)) => true,
             _ => false,
@@ -3975,12 +3975,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_dmxOutputConfig(&mut self, v: DmxOutputNodeConfig) {
+    pub fn set_dmx_output_config(&mut self, v: DmxOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::DmxOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_dmxOutputConfig(&mut self) -> &mut DmxOutputNodeConfig {
+    pub fn mut_dmx_output_config(&mut self) -> &mut DmxOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::DmxOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::DmxOutputConfig(DmxOutputNodeConfig::new()));
@@ -3992,8 +3992,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_dmxOutputConfig(&mut self) -> DmxOutputNodeConfig {
-        if self.has_dmxOutputConfig() {
+    pub fn take_dmx_output_config(&mut self) -> DmxOutputNodeConfig {
+        if self.has_dmx_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::DmxOutputConfig(v)) => v,
                 _ => panic!(),
@@ -4003,20 +4003,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MidiNodeConfig midiInputConfig = 22;
+    // .mizer.nodes.MidiNodeConfig midi_input_config = 22;
 
-    pub fn midiInputConfig(&self) -> &MidiNodeConfig {
+    pub fn midi_input_config(&self) -> &MidiNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MidiInputConfig(ref v)) => v,
             _ => <MidiNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_midiInputConfig(&mut self) {
+    pub fn clear_midi_input_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_midiInputConfig(&self) -> bool {
+    pub fn has_midi_input_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MidiInputConfig(..)) => true,
             _ => false,
@@ -4024,12 +4024,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_midiInputConfig(&mut self, v: MidiNodeConfig) {
+    pub fn set_midi_input_config(&mut self, v: MidiNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MidiInputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_midiInputConfig(&mut self) -> &mut MidiNodeConfig {
+    pub fn mut_midi_input_config(&mut self) -> &mut MidiNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MidiInputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MidiInputConfig(MidiNodeConfig::new()));
@@ -4041,8 +4041,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_midiInputConfig(&mut self) -> MidiNodeConfig {
-        if self.has_midiInputConfig() {
+    pub fn take_midi_input_config(&mut self) -> MidiNodeConfig {
+        if self.has_midi_input_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MidiInputConfig(v)) => v,
                 _ => panic!(),
@@ -4052,20 +4052,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MidiNodeConfig midiOutputConfig = 23;
+    // .mizer.nodes.MidiNodeConfig midi_output_config = 23;
 
-    pub fn midiOutputConfig(&self) -> &MidiNodeConfig {
+    pub fn midi_output_config(&self) -> &MidiNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MidiOutputConfig(ref v)) => v,
             _ => <MidiNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_midiOutputConfig(&mut self) {
+    pub fn clear_midi_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_midiOutputConfig(&self) -> bool {
+    pub fn has_midi_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MidiOutputConfig(..)) => true,
             _ => false,
@@ -4073,12 +4073,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_midiOutputConfig(&mut self, v: MidiNodeConfig) {
+    pub fn set_midi_output_config(&mut self, v: MidiNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MidiOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_midiOutputConfig(&mut self) -> &mut MidiNodeConfig {
+    pub fn mut_midi_output_config(&mut self) -> &mut MidiNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MidiOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MidiOutputConfig(MidiNodeConfig::new()));
@@ -4090,8 +4090,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_midiOutputConfig(&mut self) -> MidiNodeConfig {
-        if self.has_midiOutputConfig() {
+    pub fn take_midi_output_config(&mut self) -> MidiNodeConfig {
+        if self.has_midi_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MidiOutputConfig(v)) => v,
                 _ => panic!(),
@@ -4101,20 +4101,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.OpcOutputNodeConfig opcOutputConfig = 24;
+    // .mizer.nodes.OpcOutputNodeConfig opc_output_config = 24;
 
-    pub fn opcOutputConfig(&self) -> &OpcOutputNodeConfig {
+    pub fn opc_output_config(&self) -> &OpcOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OpcOutputConfig(ref v)) => v,
             _ => <OpcOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_opcOutputConfig(&mut self) {
+    pub fn clear_opc_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_opcOutputConfig(&self) -> bool {
+    pub fn has_opc_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OpcOutputConfig(..)) => true,
             _ => false,
@@ -4122,12 +4122,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_opcOutputConfig(&mut self, v: OpcOutputNodeConfig) {
+    pub fn set_opc_output_config(&mut self, v: OpcOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::OpcOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_opcOutputConfig(&mut self) -> &mut OpcOutputNodeConfig {
+    pub fn mut_opc_output_config(&mut self) -> &mut OpcOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::OpcOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::OpcOutputConfig(OpcOutputNodeConfig::new()));
@@ -4139,8 +4139,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_opcOutputConfig(&mut self) -> OpcOutputNodeConfig {
-        if self.has_opcOutputConfig() {
+    pub fn take_opc_output_config(&mut self) -> OpcOutputNodeConfig {
+        if self.has_opc_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::OpcOutputConfig(v)) => v,
                 _ => panic!(),
@@ -4150,20 +4150,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.OscNodeConfig oscInputConfig = 25;
+    // .mizer.nodes.OscNodeConfig osc_input_config = 25;
 
-    pub fn oscInputConfig(&self) -> &OscNodeConfig {
+    pub fn osc_input_config(&self) -> &OscNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscInputConfig(ref v)) => v,
             _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_oscInputConfig(&mut self) {
+    pub fn clear_osc_input_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_oscInputConfig(&self) -> bool {
+    pub fn has_osc_input_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscInputConfig(..)) => true,
             _ => false,
@@ -4171,12 +4171,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_oscInputConfig(&mut self, v: OscNodeConfig) {
+    pub fn set_osc_input_config(&mut self, v: OscNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::OscInputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_oscInputConfig(&mut self) -> &mut OscNodeConfig {
+    pub fn mut_osc_input_config(&mut self) -> &mut OscNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::OscInputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::OscInputConfig(OscNodeConfig::new()));
@@ -4188,8 +4188,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_oscInputConfig(&mut self) -> OscNodeConfig {
-        if self.has_oscInputConfig() {
+    pub fn take_osc_input_config(&mut self) -> OscNodeConfig {
+        if self.has_osc_input_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::OscInputConfig(v)) => v,
                 _ => panic!(),
@@ -4199,20 +4199,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.OscNodeConfig oscOutputConfig = 26;
+    // .mizer.nodes.OscNodeConfig osc_output_config = 26;
 
-    pub fn oscOutputConfig(&self) -> &OscNodeConfig {
+    pub fn osc_output_config(&self) -> &OscNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscOutputConfig(ref v)) => v,
             _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_oscOutputConfig(&mut self) {
+    pub fn clear_osc_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_oscOutputConfig(&self) -> bool {
+    pub fn has_osc_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::OscOutputConfig(..)) => true,
             _ => false,
@@ -4220,12 +4220,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_oscOutputConfig(&mut self, v: OscNodeConfig) {
+    pub fn set_osc_output_config(&mut self, v: OscNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::OscOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_oscOutputConfig(&mut self) -> &mut OscNodeConfig {
+    pub fn mut_osc_output_config(&mut self) -> &mut OscNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::OscOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::OscOutputConfig(OscNodeConfig::new()));
@@ -4237,8 +4237,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_oscOutputConfig(&mut self) -> OscNodeConfig {
-        if self.has_oscOutputConfig() {
+    pub fn take_osc_output_config(&mut self) -> OscNodeConfig {
+        if self.has_osc_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::OscOutputConfig(v)) => v,
                 _ => panic!(),
@@ -4248,20 +4248,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
+    // .mizer.nodes.VideoColorBalanceNodeConfig video_color_balance_config = 27;
 
-    pub fn videoColorBalanceConfig(&self) -> &VideoColorBalanceNodeConfig {
+    pub fn video_color_balance_config(&self) -> &VideoColorBalanceNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(ref v)) => v,
             _ => <VideoColorBalanceNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_videoColorBalanceConfig(&mut self) {
+    pub fn clear_video_color_balance_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_videoColorBalanceConfig(&self) -> bool {
+    pub fn has_video_color_balance_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(..)) => true,
             _ => false,
@@ -4269,12 +4269,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_videoColorBalanceConfig(&mut self, v: VideoColorBalanceNodeConfig) {
+    pub fn set_video_color_balance_config(&mut self, v: VideoColorBalanceNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_videoColorBalanceConfig(&mut self) -> &mut VideoColorBalanceNodeConfig {
+    pub fn mut_video_color_balance_config(&mut self) -> &mut VideoColorBalanceNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(VideoColorBalanceNodeConfig::new()));
@@ -4286,8 +4286,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_videoColorBalanceConfig(&mut self) -> VideoColorBalanceNodeConfig {
-        if self.has_videoColorBalanceConfig() {
+    pub fn take_video_color_balance_config(&mut self) -> VideoColorBalanceNodeConfig {
+        if self.has_video_color_balance_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(v)) => v,
                 _ => panic!(),
@@ -4297,20 +4297,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.VideoEffectNodeConfig videoEffectConfig = 28;
+    // .mizer.nodes.VideoEffectNodeConfig video_effect_config = 28;
 
-    pub fn videoEffectConfig(&self) -> &VideoEffectNodeConfig {
+    pub fn video_effect_config(&self) -> &VideoEffectNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoEffectConfig(ref v)) => v,
             _ => <VideoEffectNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_videoEffectConfig(&mut self) {
+    pub fn clear_video_effect_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_videoEffectConfig(&self) -> bool {
+    pub fn has_video_effect_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoEffectConfig(..)) => true,
             _ => false,
@@ -4318,12 +4318,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_videoEffectConfig(&mut self, v: VideoEffectNodeConfig) {
+    pub fn set_video_effect_config(&mut self, v: VideoEffectNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::VideoEffectConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_videoEffectConfig(&mut self) -> &mut VideoEffectNodeConfig {
+    pub fn mut_video_effect_config(&mut self) -> &mut VideoEffectNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::VideoEffectConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::VideoEffectConfig(VideoEffectNodeConfig::new()));
@@ -4335,8 +4335,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_videoEffectConfig(&mut self) -> VideoEffectNodeConfig {
-        if self.has_videoEffectConfig() {
+    pub fn take_video_effect_config(&mut self) -> VideoEffectNodeConfig {
+        if self.has_video_effect_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::VideoEffectConfig(v)) => v,
                 _ => panic!(),
@@ -4346,20 +4346,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.VideoFileNodeConfig videoFileConfig = 29;
+    // .mizer.nodes.VideoFileNodeConfig video_file_config = 29;
 
-    pub fn videoFileConfig(&self) -> &VideoFileNodeConfig {
+    pub fn video_file_config(&self) -> &VideoFileNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoFileConfig(ref v)) => v,
             _ => <VideoFileNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_videoFileConfig(&mut self) {
+    pub fn clear_video_file_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_videoFileConfig(&self) -> bool {
+    pub fn has_video_file_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoFileConfig(..)) => true,
             _ => false,
@@ -4367,12 +4367,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_videoFileConfig(&mut self, v: VideoFileNodeConfig) {
+    pub fn set_video_file_config(&mut self, v: VideoFileNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::VideoFileConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_videoFileConfig(&mut self) -> &mut VideoFileNodeConfig {
+    pub fn mut_video_file_config(&mut self) -> &mut VideoFileNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::VideoFileConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::VideoFileConfig(VideoFileNodeConfig::new()));
@@ -4384,8 +4384,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_videoFileConfig(&mut self) -> VideoFileNodeConfig {
-        if self.has_videoFileConfig() {
+    pub fn take_video_file_config(&mut self) -> VideoFileNodeConfig {
+        if self.has_video_file_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::VideoFileConfig(v)) => v,
                 _ => panic!(),
@@ -4395,20 +4395,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.VideoOutputNodeConfig videoOutputConfig = 30;
+    // .mizer.nodes.VideoOutputNodeConfig video_output_config = 30;
 
-    pub fn videoOutputConfig(&self) -> &VideoOutputNodeConfig {
+    pub fn video_output_config(&self) -> &VideoOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoOutputConfig(ref v)) => v,
             _ => <VideoOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_videoOutputConfig(&mut self) {
+    pub fn clear_video_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_videoOutputConfig(&self) -> bool {
+    pub fn has_video_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoOutputConfig(..)) => true,
             _ => false,
@@ -4416,12 +4416,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_videoOutputConfig(&mut self, v: VideoOutputNodeConfig) {
+    pub fn set_video_output_config(&mut self, v: VideoOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::VideoOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_videoOutputConfig(&mut self) -> &mut VideoOutputNodeConfig {
+    pub fn mut_video_output_config(&mut self) -> &mut VideoOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::VideoOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::VideoOutputConfig(VideoOutputNodeConfig::new()));
@@ -4433,8 +4433,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_videoOutputConfig(&mut self) -> VideoOutputNodeConfig {
-        if self.has_videoOutputConfig() {
+    pub fn take_video_output_config(&mut self) -> VideoOutputNodeConfig {
+        if self.has_video_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::VideoOutputConfig(v)) => v,
                 _ => panic!(),
@@ -4444,20 +4444,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.VideoTransformNodeConfig videoTransformConfig = 31;
+    // .mizer.nodes.VideoTransformNodeConfig video_transform_config = 31;
 
-    pub fn videoTransformConfig(&self) -> &VideoTransformNodeConfig {
+    pub fn video_transform_config(&self) -> &VideoTransformNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoTransformConfig(ref v)) => v,
             _ => <VideoTransformNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_videoTransformConfig(&mut self) {
+    pub fn clear_video_transform_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_videoTransformConfig(&self) -> bool {
+    pub fn has_video_transform_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::VideoTransformConfig(..)) => true,
             _ => false,
@@ -4465,12 +4465,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_videoTransformConfig(&mut self, v: VideoTransformNodeConfig) {
+    pub fn set_video_transform_config(&mut self, v: VideoTransformNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::VideoTransformConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_videoTransformConfig(&mut self) -> &mut VideoTransformNodeConfig {
+    pub fn mut_video_transform_config(&mut self) -> &mut VideoTransformNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::VideoTransformConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::VideoTransformConfig(VideoTransformNodeConfig::new()));
@@ -4482,8 +4482,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_videoTransformConfig(&mut self) -> VideoTransformNodeConfig {
-        if self.has_videoTransformConfig() {
+    pub fn take_video_transform_config(&mut self) -> VideoTransformNodeConfig {
+        if self.has_video_transform_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::VideoTransformConfig(v)) => v,
                 _ => panic!(),
@@ -4493,20 +4493,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.SelectNodeConfig selectConfig = 32;
+    // .mizer.nodes.SelectNodeConfig select_config = 32;
 
-    pub fn selectConfig(&self) -> &SelectNodeConfig {
+    pub fn select_config(&self) -> &SelectNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SelectConfig(ref v)) => v,
             _ => <SelectNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_selectConfig(&mut self) {
+    pub fn clear_select_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_selectConfig(&self) -> bool {
+    pub fn has_select_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SelectConfig(..)) => true,
             _ => false,
@@ -4514,12 +4514,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_selectConfig(&mut self, v: SelectNodeConfig) {
+    pub fn set_select_config(&mut self, v: SelectNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::SelectConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_selectConfig(&mut self) -> &mut SelectNodeConfig {
+    pub fn mut_select_config(&mut self) -> &mut SelectNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::SelectConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::SelectConfig(SelectNodeConfig::new()));
@@ -4531,8 +4531,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_selectConfig(&mut self) -> SelectNodeConfig {
-        if self.has_selectConfig() {
+    pub fn take_select_config(&mut self) -> SelectNodeConfig {
+        if self.has_select_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::SelectConfig(v)) => v,
                 _ => panic!(),
@@ -4542,20 +4542,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MergeNodeConfig mergeConfig = 33;
+    // .mizer.nodes.MergeNodeConfig merge_config = 33;
 
-    pub fn mergeConfig(&self) -> &MergeNodeConfig {
+    pub fn merge_config(&self) -> &MergeNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MergeConfig(ref v)) => v,
             _ => <MergeNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_mergeConfig(&mut self) {
+    pub fn clear_merge_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_mergeConfig(&self) -> bool {
+    pub fn has_merge_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MergeConfig(..)) => true,
             _ => false,
@@ -4563,12 +4563,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_mergeConfig(&mut self, v: MergeNodeConfig) {
+    pub fn set_merge_config(&mut self, v: MergeNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MergeConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_mergeConfig(&mut self) -> &mut MergeNodeConfig {
+    pub fn mut_merge_config(&mut self) -> &mut MergeNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MergeConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MergeConfig(MergeNodeConfig::new()));
@@ -4580,8 +4580,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_mergeConfig(&mut self) -> MergeNodeConfig {
-        if self.has_mergeConfig() {
+    pub fn take_merge_config(&mut self) -> MergeNodeConfig {
+        if self.has_merge_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MergeConfig(v)) => v,
                 _ => panic!(),
@@ -4591,20 +4591,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.EnvelopeNodeConfig envelopeConfig = 34;
+    // .mizer.nodes.EnvelopeNodeConfig envelope_config = 34;
 
-    pub fn envelopeConfig(&self) -> &EnvelopeNodeConfig {
+    pub fn envelope_config(&self) -> &EnvelopeNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::EnvelopeConfig(ref v)) => v,
             _ => <EnvelopeNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_envelopeConfig(&mut self) {
+    pub fn clear_envelope_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_envelopeConfig(&self) -> bool {
+    pub fn has_envelope_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::EnvelopeConfig(..)) => true,
             _ => false,
@@ -4612,12 +4612,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_envelopeConfig(&mut self, v: EnvelopeNodeConfig) {
+    pub fn set_envelope_config(&mut self, v: EnvelopeNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::EnvelopeConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_envelopeConfig(&mut self) -> &mut EnvelopeNodeConfig {
+    pub fn mut_envelope_config(&mut self) -> &mut EnvelopeNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::EnvelopeConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::EnvelopeConfig(EnvelopeNodeConfig::new()));
@@ -4629,8 +4629,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_envelopeConfig(&mut self) -> EnvelopeNodeConfig {
-        if self.has_envelopeConfig() {
+    pub fn take_envelope_config(&mut self) -> EnvelopeNodeConfig {
+        if self.has_envelope_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::EnvelopeConfig(v)) => v,
                 _ => panic!(),
@@ -4640,20 +4640,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.SequencerNodeConfig sequencerConfig = 35;
+    // .mizer.nodes.SequencerNodeConfig sequencer_config = 35;
 
-    pub fn sequencerConfig(&self) -> &SequencerNodeConfig {
+    pub fn sequencer_config(&self) -> &SequencerNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SequencerConfig(ref v)) => v,
             _ => <SequencerNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_sequencerConfig(&mut self) {
+    pub fn clear_sequencer_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_sequencerConfig(&self) -> bool {
+    pub fn has_sequencer_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::SequencerConfig(..)) => true,
             _ => false,
@@ -4661,12 +4661,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_sequencerConfig(&mut self, v: SequencerNodeConfig) {
+    pub fn set_sequencer_config(&mut self, v: SequencerNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::SequencerConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_sequencerConfig(&mut self) -> &mut SequencerNodeConfig {
+    pub fn mut_sequencer_config(&mut self) -> &mut SequencerNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::SequencerConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::SequencerConfig(SequencerNodeConfig::new()));
@@ -4678,8 +4678,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_sequencerConfig(&mut self) -> SequencerNodeConfig {
-        if self.has_sequencerConfig() {
+    pub fn take_sequencer_config(&mut self) -> SequencerNodeConfig {
+        if self.has_sequencer_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::SequencerConfig(v)) => v,
                 _ => panic!(),
@@ -4689,20 +4689,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ProgrammerNodeConfig programmerConfig = 36;
+    // .mizer.nodes.ProgrammerNodeConfig programmer_config = 36;
 
-    pub fn programmerConfig(&self) -> &ProgrammerNodeConfig {
+    pub fn programmer_config(&self) -> &ProgrammerNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ProgrammerConfig(ref v)) => v,
             _ => <ProgrammerNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_programmerConfig(&mut self) {
+    pub fn clear_programmer_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_programmerConfig(&self) -> bool {
+    pub fn has_programmer_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ProgrammerConfig(..)) => true,
             _ => false,
@@ -4710,12 +4710,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_programmerConfig(&mut self, v: ProgrammerNodeConfig) {
+    pub fn set_programmer_config(&mut self, v: ProgrammerNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ProgrammerConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_programmerConfig(&mut self) -> &mut ProgrammerNodeConfig {
+    pub fn mut_programmer_config(&mut self) -> &mut ProgrammerNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ProgrammerConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ProgrammerConfig(ProgrammerNodeConfig::new()));
@@ -4727,8 +4727,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_programmerConfig(&mut self) -> ProgrammerNodeConfig {
-        if self.has_programmerConfig() {
+    pub fn take_programmer_config(&mut self) -> ProgrammerNodeConfig {
+        if self.has_programmer_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ProgrammerConfig(v)) => v,
                 _ => panic!(),
@@ -4738,20 +4738,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.GroupNodeConfig groupConfig = 37;
+    // .mizer.nodes.GroupNodeConfig group_config = 37;
 
-    pub fn groupConfig(&self) -> &GroupNodeConfig {
+    pub fn group_config(&self) -> &GroupNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::GroupConfig(ref v)) => v,
             _ => <GroupNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_groupConfig(&mut self) {
+    pub fn clear_group_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_groupConfig(&self) -> bool {
+    pub fn has_group_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::GroupConfig(..)) => true,
             _ => false,
@@ -4759,12 +4759,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_groupConfig(&mut self, v: GroupNodeConfig) {
+    pub fn set_group_config(&mut self, v: GroupNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::GroupConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_groupConfig(&mut self) -> &mut GroupNodeConfig {
+    pub fn mut_group_config(&mut self) -> &mut GroupNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::GroupConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::GroupConfig(GroupNodeConfig::new()));
@@ -4776,8 +4776,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_groupConfig(&mut self) -> GroupNodeConfig {
-        if self.has_groupConfig() {
+    pub fn take_group_config(&mut self) -> GroupNodeConfig {
+        if self.has_group_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::GroupConfig(v)) => v,
                 _ => panic!(),
@@ -4787,20 +4787,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.PresetNodeConfig presetConfig = 38;
+    // .mizer.nodes.PresetNodeConfig preset_config = 38;
 
-    pub fn presetConfig(&self) -> &PresetNodeConfig {
+    pub fn preset_config(&self) -> &PresetNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PresetConfig(ref v)) => v,
             _ => <PresetNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_presetConfig(&mut self) {
+    pub fn clear_preset_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_presetConfig(&self) -> bool {
+    pub fn has_preset_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PresetConfig(..)) => true,
             _ => false,
@@ -4808,12 +4808,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_presetConfig(&mut self, v: PresetNodeConfig) {
+    pub fn set_preset_config(&mut self, v: PresetNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::PresetConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_presetConfig(&mut self) -> &mut PresetNodeConfig {
+    pub fn mut_preset_config(&mut self) -> &mut PresetNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::PresetConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::PresetConfig(PresetNodeConfig::new()));
@@ -4825,8 +4825,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_presetConfig(&mut self) -> PresetNodeConfig {
-        if self.has_presetConfig() {
+    pub fn take_preset_config(&mut self) -> PresetNodeConfig {
+        if self.has_preset_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::PresetConfig(v)) => v,
                 _ => panic!(),
@@ -4836,20 +4836,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ColorRgbNodeConfig colorRgbConfig = 40;
+    // .mizer.nodes.ColorRgbNodeConfig color_rgb_config = 40;
 
-    pub fn colorRgbConfig(&self) -> &ColorRgbNodeConfig {
+    pub fn color_rgb_config(&self) -> &ColorRgbNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ColorRgbConfig(ref v)) => v,
             _ => <ColorRgbNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_colorRgbConfig(&mut self) {
+    pub fn clear_color_rgb_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_colorRgbConfig(&self) -> bool {
+    pub fn has_color_rgb_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ColorRgbConfig(..)) => true,
             _ => false,
@@ -4857,12 +4857,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_colorRgbConfig(&mut self, v: ColorRgbNodeConfig) {
+    pub fn set_color_rgb_config(&mut self, v: ColorRgbNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ColorRgbConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_colorRgbConfig(&mut self) -> &mut ColorRgbNodeConfig {
+    pub fn mut_color_rgb_config(&mut self) -> &mut ColorRgbNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ColorRgbConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ColorRgbConfig(ColorRgbNodeConfig::new()));
@@ -4874,8 +4874,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_colorRgbConfig(&mut self) -> ColorRgbNodeConfig {
-        if self.has_colorRgbConfig() {
+    pub fn take_color_rgb_config(&mut self) -> ColorRgbNodeConfig {
+        if self.has_color_rgb_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ColorRgbConfig(v)) => v,
                 _ => panic!(),
@@ -4885,20 +4885,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ColorHsvNodeConfig colorHsvConfig = 41;
+    // .mizer.nodes.ColorHsvNodeConfig color_hsv_config = 41;
 
-    pub fn colorHsvConfig(&self) -> &ColorHsvNodeConfig {
+    pub fn color_hsv_config(&self) -> &ColorHsvNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ColorHsvConfig(ref v)) => v,
             _ => <ColorHsvNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_colorHsvConfig(&mut self) {
+    pub fn clear_color_hsv_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_colorHsvConfig(&self) -> bool {
+    pub fn has_color_hsv_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ColorHsvConfig(..)) => true,
             _ => false,
@@ -4906,12 +4906,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_colorHsvConfig(&mut self, v: ColorHsvNodeConfig) {
+    pub fn set_color_hsv_config(&mut self, v: ColorHsvNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ColorHsvConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_colorHsvConfig(&mut self) -> &mut ColorHsvNodeConfig {
+    pub fn mut_color_hsv_config(&mut self) -> &mut ColorHsvNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ColorHsvConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ColorHsvConfig(ColorHsvNodeConfig::new()));
@@ -4923,8 +4923,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_colorHsvConfig(&mut self) -> ColorHsvNodeConfig {
-        if self.has_colorHsvConfig() {
+    pub fn take_color_hsv_config(&mut self) -> ColorHsvNodeConfig {
+        if self.has_color_hsv_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ColorHsvConfig(v)) => v,
                 _ => panic!(),
@@ -4934,20 +4934,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.GamepadNodeConfig gamepadNodeConfig = 42;
+    // .mizer.nodes.GamepadNodeConfig gamepad_node_config = 42;
 
-    pub fn gamepadNodeConfig(&self) -> &GamepadNodeConfig {
+    pub fn gamepad_node_config(&self) -> &GamepadNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(ref v)) => v,
             _ => <GamepadNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_gamepadNodeConfig(&mut self) {
+    pub fn clear_gamepad_node_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_gamepadNodeConfig(&self) -> bool {
+    pub fn has_gamepad_node_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(..)) => true,
             _ => false,
@@ -4955,12 +4955,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_gamepadNodeConfig(&mut self, v: GamepadNodeConfig) {
+    pub fn set_gamepad_node_config(&mut self, v: GamepadNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_gamepadNodeConfig(&mut self) -> &mut GamepadNodeConfig {
+    pub fn mut_gamepad_node_config(&mut self) -> &mut GamepadNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(GamepadNodeConfig::new()));
@@ -4972,8 +4972,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_gamepadNodeConfig(&mut self) -> GamepadNodeConfig {
-        if self.has_gamepadNodeConfig() {
+    pub fn take_gamepad_node_config(&mut self) -> GamepadNodeConfig {
+        if self.has_gamepad_node_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(v)) => v,
                 _ => panic!(),
@@ -4983,20 +4983,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ThresholdNodeConfig thresholdConfig = 43;
+    // .mizer.nodes.ThresholdNodeConfig threshold_config = 43;
 
-    pub fn thresholdConfig(&self) -> &ThresholdNodeConfig {
+    pub fn threshold_config(&self) -> &ThresholdNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ThresholdConfig(ref v)) => v,
             _ => <ThresholdNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_thresholdConfig(&mut self) {
+    pub fn clear_threshold_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_thresholdConfig(&self) -> bool {
+    pub fn has_threshold_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ThresholdConfig(..)) => true,
             _ => false,
@@ -5004,12 +5004,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_thresholdConfig(&mut self, v: ThresholdNodeConfig) {
+    pub fn set_threshold_config(&mut self, v: ThresholdNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ThresholdConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_thresholdConfig(&mut self) -> &mut ThresholdNodeConfig {
+    pub fn mut_threshold_config(&mut self) -> &mut ThresholdNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ThresholdConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ThresholdConfig(ThresholdNodeConfig::new()));
@@ -5021,8 +5021,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_thresholdConfig(&mut self) -> ThresholdNodeConfig {
-        if self.has_thresholdConfig() {
+    pub fn take_threshold_config(&mut self) -> ThresholdNodeConfig {
+        if self.has_threshold_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ThresholdConfig(v)) => v,
                 _ => panic!(),
@@ -5032,20 +5032,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.EncoderNodeConfig encoderConfig = 44;
+    // .mizer.nodes.EncoderNodeConfig encoder_config = 44;
 
-    pub fn encoderConfig(&self) -> &EncoderNodeConfig {
+    pub fn encoder_config(&self) -> &EncoderNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::EncoderConfig(ref v)) => v,
             _ => <EncoderNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_encoderConfig(&mut self) {
+    pub fn clear_encoder_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_encoderConfig(&self) -> bool {
+    pub fn has_encoder_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::EncoderConfig(..)) => true,
             _ => false,
@@ -5053,12 +5053,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_encoderConfig(&mut self, v: EncoderNodeConfig) {
+    pub fn set_encoder_config(&mut self, v: EncoderNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::EncoderConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_encoderConfig(&mut self) -> &mut EncoderNodeConfig {
+    pub fn mut_encoder_config(&mut self) -> &mut EncoderNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::EncoderConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::EncoderConfig(EncoderNodeConfig::new()));
@@ -5070,8 +5070,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_encoderConfig(&mut self) -> EncoderNodeConfig {
-        if self.has_encoderConfig() {
+    pub fn take_encoder_config(&mut self) -> EncoderNodeConfig {
+        if self.has_encoder_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::EncoderConfig(v)) => v,
                 _ => panic!(),
@@ -5081,20 +5081,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ContainerNodeConfig containerConfig = 45;
+    // .mizer.nodes.ContainerNodeConfig container_config = 45;
 
-    pub fn containerConfig(&self) -> &ContainerNodeConfig {
+    pub fn container_config(&self) -> &ContainerNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ContainerConfig(ref v)) => v,
             _ => <ContainerNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_containerConfig(&mut self) {
+    pub fn clear_container_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_containerConfig(&self) -> bool {
+    pub fn has_container_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ContainerConfig(..)) => true,
             _ => false,
@@ -5102,12 +5102,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_containerConfig(&mut self, v: ContainerNodeConfig) {
+    pub fn set_container_config(&mut self, v: ContainerNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ContainerConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_containerConfig(&mut self) -> &mut ContainerNodeConfig {
+    pub fn mut_container_config(&mut self) -> &mut ContainerNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ContainerConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ContainerConfig(ContainerNodeConfig::new()));
@@ -5119,8 +5119,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_containerConfig(&mut self) -> ContainerNodeConfig {
-        if self.has_containerConfig() {
+    pub fn take_container_config(&mut self) -> ContainerNodeConfig {
+        if self.has_container_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ContainerConfig(v)) => v,
                 _ => panic!(),
@@ -5130,20 +5130,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MathNodeConfig mathConfig = 46;
+    // .mizer.nodes.MathNodeConfig math_config = 46;
 
-    pub fn mathConfig(&self) -> &MathNodeConfig {
+    pub fn math_config(&self) -> &MathNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MathConfig(ref v)) => v,
             _ => <MathNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_mathConfig(&mut self) {
+    pub fn clear_math_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_mathConfig(&self) -> bool {
+    pub fn has_math_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MathConfig(..)) => true,
             _ => false,
@@ -5151,12 +5151,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_mathConfig(&mut self, v: MathNodeConfig) {
+    pub fn set_math_config(&mut self, v: MathNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MathConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_mathConfig(&mut self) -> &mut MathNodeConfig {
+    pub fn mut_math_config(&mut self) -> &mut MathNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MathConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MathConfig(MathNodeConfig::new()));
@@ -5168,8 +5168,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_mathConfig(&mut self) -> MathNodeConfig {
-        if self.has_mathConfig() {
+    pub fn take_math_config(&mut self) -> MathNodeConfig {
+        if self.has_math_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MathConfig(v)) => v,
                 _ => panic!(),
@@ -5179,20 +5179,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MqttInputNodeConfig mqttInputConfig = 47;
+    // .mizer.nodes.MqttInputNodeConfig mqtt_input_config = 47;
 
-    pub fn mqttInputConfig(&self) -> &MqttInputNodeConfig {
+    pub fn mqtt_input_config(&self) -> &MqttInputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MqttInputConfig(ref v)) => v,
             _ => <MqttInputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_mqttInputConfig(&mut self) {
+    pub fn clear_mqtt_input_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_mqttInputConfig(&self) -> bool {
+    pub fn has_mqtt_input_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MqttInputConfig(..)) => true,
             _ => false,
@@ -5200,12 +5200,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_mqttInputConfig(&mut self, v: MqttInputNodeConfig) {
+    pub fn set_mqtt_input_config(&mut self, v: MqttInputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MqttInputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_mqttInputConfig(&mut self) -> &mut MqttInputNodeConfig {
+    pub fn mut_mqtt_input_config(&mut self) -> &mut MqttInputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MqttInputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MqttInputConfig(MqttInputNodeConfig::new()));
@@ -5217,8 +5217,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_mqttInputConfig(&mut self) -> MqttInputNodeConfig {
-        if self.has_mqttInputConfig() {
+    pub fn take_mqtt_input_config(&mut self) -> MqttInputNodeConfig {
+        if self.has_mqtt_input_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MqttInputConfig(v)) => v,
                 _ => panic!(),
@@ -5228,20 +5228,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MqttOutputNodeConfig mqttOutputConfig = 48;
+    // .mizer.nodes.MqttOutputNodeConfig mqtt_output_config = 48;
 
-    pub fn mqttOutputConfig(&self) -> &MqttOutputNodeConfig {
+    pub fn mqtt_output_config(&self) -> &MqttOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MqttOutputConfig(ref v)) => v,
             _ => <MqttOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_mqttOutputConfig(&mut self) {
+    pub fn clear_mqtt_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_mqttOutputConfig(&self) -> bool {
+    pub fn has_mqtt_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::MqttOutputConfig(..)) => true,
             _ => false,
@@ -5249,12 +5249,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_mqttOutputConfig(&mut self, v: MqttOutputNodeConfig) {
+    pub fn set_mqtt_output_config(&mut self, v: MqttOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::MqttOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_mqttOutputConfig(&mut self) -> &mut MqttOutputNodeConfig {
+    pub fn mut_mqtt_output_config(&mut self) -> &mut MqttOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::MqttOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::MqttOutputConfig(MqttOutputNodeConfig::new()));
@@ -5266,8 +5266,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_mqttOutputConfig(&mut self) -> MqttOutputNodeConfig {
-        if self.has_mqttOutputConfig() {
+    pub fn take_mqtt_output_config(&mut self) -> MqttOutputNodeConfig {
+        if self.has_mqtt_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::MqttOutputConfig(v)) => v,
                 _ => panic!(),
@@ -5277,20 +5277,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.NumberToDataNodeConfig numberToDataConfig = 49;
+    // .mizer.nodes.NumberToDataNodeConfig number_to_data_config = 49;
 
-    pub fn numberToDataConfig(&self) -> &NumberToDataNodeConfig {
+    pub fn number_to_data_config(&self) -> &NumberToDataNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::NumberToDataConfig(ref v)) => v,
             _ => <NumberToDataNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_numberToDataConfig(&mut self) {
+    pub fn clear_number_to_data_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_numberToDataConfig(&self) -> bool {
+    pub fn has_number_to_data_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::NumberToDataConfig(..)) => true,
             _ => false,
@@ -5298,12 +5298,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_numberToDataConfig(&mut self, v: NumberToDataNodeConfig) {
+    pub fn set_number_to_data_config(&mut self, v: NumberToDataNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::NumberToDataConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_numberToDataConfig(&mut self) -> &mut NumberToDataNodeConfig {
+    pub fn mut_number_to_data_config(&mut self) -> &mut NumberToDataNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::NumberToDataConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::NumberToDataConfig(NumberToDataNodeConfig::new()));
@@ -5315,8 +5315,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_numberToDataConfig(&mut self) -> NumberToDataNodeConfig {
-        if self.has_numberToDataConfig() {
+    pub fn take_number_to_data_config(&mut self) -> NumberToDataNodeConfig {
+        if self.has_number_to_data_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::NumberToDataConfig(v)) => v,
                 _ => panic!(),
@@ -5326,20 +5326,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.DataToNumberNodeConfig dataToNumberConfig = 50;
+    // .mizer.nodes.DataToNumberNodeConfig data_to_number_config = 50;
 
-    pub fn dataToNumberConfig(&self) -> &DataToNumberNodeConfig {
+    pub fn data_to_number_config(&self) -> &DataToNumberNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DataToNumberConfig(ref v)) => v,
             _ => <DataToNumberNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_dataToNumberConfig(&mut self) {
+    pub fn clear_data_to_number_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_dataToNumberConfig(&self) -> bool {
+    pub fn has_data_to_number_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DataToNumberConfig(..)) => true,
             _ => false,
@@ -5347,12 +5347,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_dataToNumberConfig(&mut self, v: DataToNumberNodeConfig) {
+    pub fn set_data_to_number_config(&mut self, v: DataToNumberNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::DataToNumberConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_dataToNumberConfig(&mut self) -> &mut DataToNumberNodeConfig {
+    pub fn mut_data_to_number_config(&mut self) -> &mut DataToNumberNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::DataToNumberConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::DataToNumberConfig(DataToNumberNodeConfig::new()));
@@ -5364,8 +5364,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_dataToNumberConfig(&mut self) -> DataToNumberNodeConfig {
-        if self.has_dataToNumberConfig() {
+    pub fn take_data_to_number_config(&mut self) -> DataToNumberNodeConfig {
+        if self.has_data_to_number_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::DataToNumberConfig(v)) => v,
                 _ => panic!(),
@@ -5375,20 +5375,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ValueNodeConfig valueConfig = 51;
+    // .mizer.nodes.ValueNodeConfig value_config = 51;
 
-    pub fn valueConfig(&self) -> &ValueNodeConfig {
+    pub fn value_config(&self) -> &ValueNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ValueConfig(ref v)) => v,
             _ => <ValueNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_valueConfig(&mut self) {
+    pub fn clear_value_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_valueConfig(&self) -> bool {
+    pub fn has_value_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ValueConfig(..)) => true,
             _ => false,
@@ -5396,12 +5396,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_valueConfig(&mut self, v: ValueNodeConfig) {
+    pub fn set_value_config(&mut self, v: ValueNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ValueConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_valueConfig(&mut self) -> &mut ValueNodeConfig {
+    pub fn mut_value_config(&mut self) -> &mut ValueNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ValueConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ValueConfig(ValueNodeConfig::new()));
@@ -5413,8 +5413,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_valueConfig(&mut self) -> ValueNodeConfig {
-        if self.has_valueConfig() {
+    pub fn take_value_config(&mut self) -> ValueNodeConfig {
+        if self.has_value_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ValueConfig(v)) => v,
                 _ => panic!(),
@@ -5424,20 +5424,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ExtractNodeConfig extractConfig = 52;
+    // .mizer.nodes.ExtractNodeConfig extract_config = 52;
 
-    pub fn extractConfig(&self) -> &ExtractNodeConfig {
+    pub fn extract_config(&self) -> &ExtractNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ExtractConfig(ref v)) => v,
             _ => <ExtractNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_extractConfig(&mut self) {
+    pub fn clear_extract_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_extractConfig(&self) -> bool {
+    pub fn has_extract_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ExtractConfig(..)) => true,
             _ => false,
@@ -5445,12 +5445,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_extractConfig(&mut self, v: ExtractNodeConfig) {
+    pub fn set_extract_config(&mut self, v: ExtractNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ExtractConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_extractConfig(&mut self) -> &mut ExtractNodeConfig {
+    pub fn mut_extract_config(&mut self) -> &mut ExtractNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ExtractConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ExtractConfig(ExtractNodeConfig::new()));
@@ -5462,8 +5462,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_extractConfig(&mut self) -> ExtractNodeConfig {
-        if self.has_extractConfig() {
+    pub fn take_extract_config(&mut self) -> ExtractNodeConfig {
+        if self.has_extract_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ExtractConfig(v)) => v,
                 _ => panic!(),
@@ -5473,20 +5473,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.PlanScreenNodeConfig planScreenConfig = 53;
+    // .mizer.nodes.PlanScreenNodeConfig plan_screen_config = 53;
 
-    pub fn planScreenConfig(&self) -> &PlanScreenNodeConfig {
+    pub fn plan_screen_config(&self) -> &PlanScreenNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PlanScreenConfig(ref v)) => v,
             _ => <PlanScreenNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_planScreenConfig(&mut self) {
+    pub fn clear_plan_screen_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_planScreenConfig(&self) -> bool {
+    pub fn has_plan_screen_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::PlanScreenConfig(..)) => true,
             _ => false,
@@ -5494,12 +5494,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_planScreenConfig(&mut self, v: PlanScreenNodeConfig) {
+    pub fn set_plan_screen_config(&mut self, v: PlanScreenNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::PlanScreenConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_planScreenConfig(&mut self) -> &mut PlanScreenNodeConfig {
+    pub fn mut_plan_screen_config(&mut self) -> &mut PlanScreenNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::PlanScreenConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::PlanScreenConfig(PlanScreenNodeConfig::new()));
@@ -5511,8 +5511,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_planScreenConfig(&mut self) -> PlanScreenNodeConfig {
-        if self.has_planScreenConfig() {
+    pub fn take_plan_screen_config(&mut self) -> PlanScreenNodeConfig {
+        if self.has_plan_screen_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::PlanScreenConfig(v)) => v,
                 _ => panic!(),
@@ -5522,20 +5522,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.DelayNodeConfig delayConfig = 54;
+    // .mizer.nodes.DelayNodeConfig delay_config = 54;
 
-    pub fn delayConfig(&self) -> &DelayNodeConfig {
+    pub fn delay_config(&self) -> &DelayNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DelayConfig(ref v)) => v,
             _ => <DelayNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_delayConfig(&mut self) {
+    pub fn clear_delay_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_delayConfig(&self) -> bool {
+    pub fn has_delay_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::DelayConfig(..)) => true,
             _ => false,
@@ -5543,12 +5543,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_delayConfig(&mut self, v: DelayNodeConfig) {
+    pub fn set_delay_config(&mut self, v: DelayNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::DelayConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_delayConfig(&mut self) -> &mut DelayNodeConfig {
+    pub fn mut_delay_config(&mut self) -> &mut DelayNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::DelayConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::DelayConfig(DelayNodeConfig::new()));
@@ -5560,8 +5560,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_delayConfig(&mut self) -> DelayNodeConfig {
-        if self.has_delayConfig() {
+    pub fn take_delay_config(&mut self) -> DelayNodeConfig {
+        if self.has_delay_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::DelayConfig(v)) => v,
                 _ => panic!(),
@@ -5571,20 +5571,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.RampNodeConfig rampConfig = 55;
+    // .mizer.nodes.RampNodeConfig ramp_config = 55;
 
-    pub fn rampConfig(&self) -> &RampNodeConfig {
+    pub fn ramp_config(&self) -> &RampNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::RampConfig(ref v)) => v,
             _ => <RampNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_rampConfig(&mut self) {
+    pub fn clear_ramp_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_rampConfig(&self) -> bool {
+    pub fn has_ramp_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::RampConfig(..)) => true,
             _ => false,
@@ -5592,12 +5592,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_rampConfig(&mut self, v: RampNodeConfig) {
+    pub fn set_ramp_config(&mut self, v: RampNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::RampConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_rampConfig(&mut self) -> &mut RampNodeConfig {
+    pub fn mut_ramp_config(&mut self) -> &mut RampNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::RampConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::RampConfig(RampNodeConfig::new()));
@@ -5609,8 +5609,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_rampConfig(&mut self) -> RampNodeConfig {
-        if self.has_rampConfig() {
+    pub fn take_ramp_config(&mut self) -> RampNodeConfig {
+        if self.has_ramp_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::RampConfig(v)) => v,
                 _ => panic!(),
@@ -5620,20 +5620,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.NoiseNodeConfig noiseConfig = 56;
+    // .mizer.nodes.NoiseNodeConfig noise_config = 56;
 
-    pub fn noiseConfig(&self) -> &NoiseNodeConfig {
+    pub fn noise_config(&self) -> &NoiseNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::NoiseConfig(ref v)) => v,
             _ => <NoiseNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_noiseConfig(&mut self) {
+    pub fn clear_noise_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_noiseConfig(&self) -> bool {
+    pub fn has_noise_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::NoiseConfig(..)) => true,
             _ => false,
@@ -5641,12 +5641,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_noiseConfig(&mut self, v: NoiseNodeConfig) {
+    pub fn set_noise_config(&mut self, v: NoiseNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::NoiseConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_noiseConfig(&mut self) -> &mut NoiseNodeConfig {
+    pub fn mut_noise_config(&mut self) -> &mut NoiseNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::NoiseConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::NoiseConfig(NoiseNodeConfig::new()));
@@ -5658,8 +5658,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_noiseConfig(&mut self) -> NoiseNodeConfig {
-        if self.has_noiseConfig() {
+    pub fn take_noise_config(&mut self) -> NoiseNodeConfig {
+        if self.has_noise_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::NoiseConfig(v)) => v,
                 _ => panic!(),
@@ -5669,20 +5669,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.LabelNodeConfig labelConfig = 57;
+    // .mizer.nodes.LabelNodeConfig label_config = 57;
 
-    pub fn labelConfig(&self) -> &LabelNodeConfig {
+    pub fn label_config(&self) -> &LabelNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::LabelConfig(ref v)) => v,
             _ => <LabelNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_labelConfig(&mut self) {
+    pub fn clear_label_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_labelConfig(&self) -> bool {
+    pub fn has_label_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::LabelConfig(..)) => true,
             _ => false,
@@ -5690,12 +5690,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_labelConfig(&mut self, v: LabelNodeConfig) {
+    pub fn set_label_config(&mut self, v: LabelNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::LabelConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_labelConfig(&mut self) -> &mut LabelNodeConfig {
+    pub fn mut_label_config(&mut self) -> &mut LabelNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::LabelConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::LabelConfig(LabelNodeConfig::new()));
@@ -5707,8 +5707,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_labelConfig(&mut self) -> LabelNodeConfig {
-        if self.has_labelConfig() {
+    pub fn take_label_config(&mut self) -> LabelNodeConfig {
+        if self.has_label_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::LabelConfig(v)) => v,
                 _ => panic!(),
@@ -5718,20 +5718,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.TransportNodeConfig transportConfig = 58;
+    // .mizer.nodes.TransportNodeConfig transport_config = 58;
 
-    pub fn transportConfig(&self) -> &TransportNodeConfig {
+    pub fn transport_config(&self) -> &TransportNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TransportConfig(ref v)) => v,
             _ => <TransportNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_transportConfig(&mut self) {
+    pub fn clear_transport_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_transportConfig(&self) -> bool {
+    pub fn has_transport_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TransportConfig(..)) => true,
             _ => false,
@@ -5739,12 +5739,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_transportConfig(&mut self, v: TransportNodeConfig) {
+    pub fn set_transport_config(&mut self, v: TransportNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::TransportConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_transportConfig(&mut self) -> &mut TransportNodeConfig {
+    pub fn mut_transport_config(&mut self) -> &mut TransportNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::TransportConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::TransportConfig(TransportNodeConfig::new()));
@@ -5756,8 +5756,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_transportConfig(&mut self) -> TransportNodeConfig {
-        if self.has_transportConfig() {
+    pub fn take_transport_config(&mut self) -> TransportNodeConfig {
+        if self.has_transport_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::TransportConfig(v)) => v,
                 _ => panic!(),
@@ -5767,20 +5767,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.G13InputNodeConfig g13InputConfig = 59;
+    // .mizer.nodes.G13InputNodeConfig g13_input_config = 59;
 
-    pub fn g13InputConfig(&self) -> &G13InputNodeConfig {
+    pub fn g13_input_config(&self) -> &G13InputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::G13InputConfig(ref v)) => v,
             _ => <G13InputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_g13InputConfig(&mut self) {
+    pub fn clear_g13_input_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_g13InputConfig(&self) -> bool {
+    pub fn has_g13_input_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::G13InputConfig(..)) => true,
             _ => false,
@@ -5788,12 +5788,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_g13InputConfig(&mut self, v: G13InputNodeConfig) {
+    pub fn set_g13_input_config(&mut self, v: G13InputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::G13InputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_g13InputConfig(&mut self) -> &mut G13InputNodeConfig {
+    pub fn mut_g13_input_config(&mut self) -> &mut G13InputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::G13InputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::G13InputConfig(G13InputNodeConfig::new()));
@@ -5805,8 +5805,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_g13InputConfig(&mut self) -> G13InputNodeConfig {
-        if self.has_g13InputConfig() {
+    pub fn take_g13_input_config(&mut self) -> G13InputNodeConfig {
+        if self.has_g13_input_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::G13InputConfig(v)) => v,
                 _ => panic!(),
@@ -5816,20 +5816,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.G13OutputNodeConfig g13OutputConfig = 60;
+    // .mizer.nodes.G13OutputNodeConfig g13_output_config = 60;
 
-    pub fn g13OutputConfig(&self) -> &G13OutputNodeConfig {
+    pub fn g13_output_config(&self) -> &G13OutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::G13OutputConfig(ref v)) => v,
             _ => <G13OutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_g13OutputConfig(&mut self) {
+    pub fn clear_g13_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_g13OutputConfig(&self) -> bool {
+    pub fn has_g13_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::G13OutputConfig(..)) => true,
             _ => false,
@@ -5837,12 +5837,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_g13OutputConfig(&mut self, v: G13OutputNodeConfig) {
+    pub fn set_g13_output_config(&mut self, v: G13OutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::G13OutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_g13OutputConfig(&mut self) -> &mut G13OutputNodeConfig {
+    pub fn mut_g13_output_config(&mut self) -> &mut G13OutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::G13OutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::G13OutputConfig(G13OutputNodeConfig::new()));
@@ -5854,8 +5854,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_g13OutputConfig(&mut self) -> G13OutputNodeConfig {
-        if self.has_g13OutputConfig() {
+    pub fn take_g13_output_config(&mut self) -> G13OutputNodeConfig {
+        if self.has_g13_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::G13OutputConfig(v)) => v,
                 _ => panic!(),
@@ -5865,20 +5865,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ConstantNumberNodeConfig constantNumberConfig = 61;
+    // .mizer.nodes.ConstantNumberNodeConfig constant_number_config = 61;
 
-    pub fn constantNumberConfig(&self) -> &ConstantNumberNodeConfig {
+    pub fn constant_number_config(&self) -> &ConstantNumberNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(ref v)) => v,
             _ => <ConstantNumberNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_constantNumberConfig(&mut self) {
+    pub fn clear_constant_number_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_constantNumberConfig(&self) -> bool {
+    pub fn has_constant_number_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(..)) => true,
             _ => false,
@@ -5886,12 +5886,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_constantNumberConfig(&mut self, v: ConstantNumberNodeConfig) {
+    pub fn set_constant_number_config(&mut self, v: ConstantNumberNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_constantNumberConfig(&mut self) -> &mut ConstantNumberNodeConfig {
+    pub fn mut_constant_number_config(&mut self) -> &mut ConstantNumberNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(ConstantNumberNodeConfig::new()));
@@ -5903,8 +5903,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_constantNumberConfig(&mut self) -> ConstantNumberNodeConfig {
-        if self.has_constantNumberConfig() {
+    pub fn take_constant_number_config(&mut self) -> ConstantNumberNodeConfig {
+        if self.has_constant_number_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(v)) => v,
                 _ => panic!(),
@@ -5914,20 +5914,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ConditionalNodeConfig conditionalConfig = 62;
+    // .mizer.nodes.ConditionalNodeConfig conditional_config = 62;
 
-    pub fn conditionalConfig(&self) -> &ConditionalNodeConfig {
+    pub fn conditional_config(&self) -> &ConditionalNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ConditionalConfig(ref v)) => v,
             _ => <ConditionalNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_conditionalConfig(&mut self) {
+    pub fn clear_conditional_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_conditionalConfig(&self) -> bool {
+    pub fn has_conditional_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::ConditionalConfig(..)) => true,
             _ => false,
@@ -5935,12 +5935,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_conditionalConfig(&mut self, v: ConditionalNodeConfig) {
+    pub fn set_conditional_config(&mut self, v: ConditionalNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::ConditionalConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_conditionalConfig(&mut self) -> &mut ConditionalNodeConfig {
+    pub fn mut_conditional_config(&mut self) -> &mut ConditionalNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::ConditionalConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::ConditionalConfig(ConditionalNodeConfig::new()));
@@ -5952,8 +5952,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_conditionalConfig(&mut self) -> ConditionalNodeConfig {
-        if self.has_conditionalConfig() {
+    pub fn take_conditional_config(&mut self) -> ConditionalNodeConfig {
+        if self.has_conditional_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::ConditionalConfig(v)) => v,
                 _ => panic!(),
@@ -5963,20 +5963,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.TimecodeControlNodeConfig timecodeControlConfig = 63;
+    // .mizer.nodes.TimecodeControlNodeConfig timecode_control_config = 63;
 
-    pub fn timecodeControlConfig(&self) -> &TimecodeControlNodeConfig {
+    pub fn timecode_control_config(&self) -> &TimecodeControlNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(ref v)) => v,
             _ => <TimecodeControlNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_timecodeControlConfig(&mut self) {
+    pub fn clear_timecode_control_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_timecodeControlConfig(&self) -> bool {
+    pub fn has_timecode_control_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(..)) => true,
             _ => false,
@@ -5984,12 +5984,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_timecodeControlConfig(&mut self, v: TimecodeControlNodeConfig) {
+    pub fn set_timecode_control_config(&mut self, v: TimecodeControlNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_timecodeControlConfig(&mut self) -> &mut TimecodeControlNodeConfig {
+    pub fn mut_timecode_control_config(&mut self) -> &mut TimecodeControlNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(TimecodeControlNodeConfig::new()));
@@ -6001,8 +6001,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_timecodeControlConfig(&mut self) -> TimecodeControlNodeConfig {
-        if self.has_timecodeControlConfig() {
+    pub fn take_timecode_control_config(&mut self) -> TimecodeControlNodeConfig {
+        if self.has_timecode_control_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(v)) => v,
                 _ => panic!(),
@@ -6012,20 +6012,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.TimecodeOutputNodeConfig timecodeOutputConfig = 64;
+    // .mizer.nodes.TimecodeOutputNodeConfig timecode_output_config = 64;
 
-    pub fn timecodeOutputConfig(&self) -> &TimecodeOutputNodeConfig {
+    pub fn timecode_output_config(&self) -> &TimecodeOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(ref v)) => v,
             _ => <TimecodeOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_timecodeOutputConfig(&mut self) {
+    pub fn clear_timecode_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_timecodeOutputConfig(&self) -> bool {
+    pub fn has_timecode_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(..)) => true,
             _ => false,
@@ -6033,12 +6033,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_timecodeOutputConfig(&mut self, v: TimecodeOutputNodeConfig) {
+    pub fn set_timecode_output_config(&mut self, v: TimecodeOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_timecodeOutputConfig(&mut self) -> &mut TimecodeOutputNodeConfig {
+    pub fn mut_timecode_output_config(&mut self) -> &mut TimecodeOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(TimecodeOutputNodeConfig::new()));
@@ -6050,8 +6050,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_timecodeOutputConfig(&mut self) -> TimecodeOutputNodeConfig {
-        if self.has_timecodeOutputConfig() {
+    pub fn take_timecode_output_config(&mut self) -> TimecodeOutputNodeConfig {
+        if self.has_timecode_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(v)) => v,
                 _ => panic!(),
@@ -6061,20 +6061,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioFileNodeConfig audioFileConfig = 65;
+    // .mizer.nodes.AudioFileNodeConfig audio_file_config = 65;
 
-    pub fn audioFileConfig(&self) -> &AudioFileNodeConfig {
+    pub fn audio_file_config(&self) -> &AudioFileNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioFileConfig(ref v)) => v,
             _ => <AudioFileNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioFileConfig(&mut self) {
+    pub fn clear_audio_file_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioFileConfig(&self) -> bool {
+    pub fn has_audio_file_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioFileConfig(..)) => true,
             _ => false,
@@ -6082,12 +6082,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioFileConfig(&mut self, v: AudioFileNodeConfig) {
+    pub fn set_audio_file_config(&mut self, v: AudioFileNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioFileConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioFileConfig(&mut self) -> &mut AudioFileNodeConfig {
+    pub fn mut_audio_file_config(&mut self) -> &mut AudioFileNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioFileConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioFileConfig(AudioFileNodeConfig::new()));
@@ -6099,8 +6099,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioFileConfig(&mut self) -> AudioFileNodeConfig {
-        if self.has_audioFileConfig() {
+    pub fn take_audio_file_config(&mut self) -> AudioFileNodeConfig {
+        if self.has_audio_file_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioFileConfig(v)) => v,
                 _ => panic!(),
@@ -6110,20 +6110,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioOutputNodeConfig audioOutputConfig = 66;
+    // .mizer.nodes.AudioOutputNodeConfig audio_output_config = 66;
 
-    pub fn audioOutputConfig(&self) -> &AudioOutputNodeConfig {
+    pub fn audio_output_config(&self) -> &AudioOutputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioOutputConfig(ref v)) => v,
             _ => <AudioOutputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioOutputConfig(&mut self) {
+    pub fn clear_audio_output_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioOutputConfig(&self) -> bool {
+    pub fn has_audio_output_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioOutputConfig(..)) => true,
             _ => false,
@@ -6131,12 +6131,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioOutputConfig(&mut self, v: AudioOutputNodeConfig) {
+    pub fn set_audio_output_config(&mut self, v: AudioOutputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioOutputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioOutputConfig(&mut self) -> &mut AudioOutputNodeConfig {
+    pub fn mut_audio_output_config(&mut self) -> &mut AudioOutputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioOutputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioOutputConfig(AudioOutputNodeConfig::new()));
@@ -6148,8 +6148,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioOutputConfig(&mut self) -> AudioOutputNodeConfig {
-        if self.has_audioOutputConfig() {
+    pub fn take_audio_output_config(&mut self) -> AudioOutputNodeConfig {
+        if self.has_audio_output_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioOutputConfig(v)) => v,
                 _ => panic!(),
@@ -6159,20 +6159,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioVolumeNodeConfig audioVolumeConfig = 67;
+    // .mizer.nodes.AudioVolumeNodeConfig audio_volume_config = 67;
 
-    pub fn audioVolumeConfig(&self) -> &AudioVolumeNodeConfig {
+    pub fn audio_volume_config(&self) -> &AudioVolumeNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(ref v)) => v,
             _ => <AudioVolumeNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioVolumeConfig(&mut self) {
+    pub fn clear_audio_volume_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioVolumeConfig(&self) -> bool {
+    pub fn has_audio_volume_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(..)) => true,
             _ => false,
@@ -6180,12 +6180,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioVolumeConfig(&mut self, v: AudioVolumeNodeConfig) {
+    pub fn set_audio_volume_config(&mut self, v: AudioVolumeNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioVolumeConfig(&mut self) -> &mut AudioVolumeNodeConfig {
+    pub fn mut_audio_volume_config(&mut self) -> &mut AudioVolumeNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(AudioVolumeNodeConfig::new()));
@@ -6197,8 +6197,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioVolumeConfig(&mut self) -> AudioVolumeNodeConfig {
-        if self.has_audioVolumeConfig() {
+    pub fn take_audio_volume_config(&mut self) -> AudioVolumeNodeConfig {
+        if self.has_audio_volume_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(v)) => v,
                 _ => panic!(),
@@ -6208,20 +6208,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioInputNodeConfig audioInputConfig = 68;
+    // .mizer.nodes.AudioInputNodeConfig audio_input_config = 68;
 
-    pub fn audioInputConfig(&self) -> &AudioInputNodeConfig {
+    pub fn audio_input_config(&self) -> &AudioInputNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioInputConfig(ref v)) => v,
             _ => <AudioInputNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioInputConfig(&mut self) {
+    pub fn clear_audio_input_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioInputConfig(&self) -> bool {
+    pub fn has_audio_input_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioInputConfig(..)) => true,
             _ => false,
@@ -6229,12 +6229,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioInputConfig(&mut self, v: AudioInputNodeConfig) {
+    pub fn set_audio_input_config(&mut self, v: AudioInputNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioInputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioInputConfig(&mut self) -> &mut AudioInputNodeConfig {
+    pub fn mut_audio_input_config(&mut self) -> &mut AudioInputNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioInputConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioInputConfig(AudioInputNodeConfig::new()));
@@ -6246,8 +6246,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioInputConfig(&mut self) -> AudioInputNodeConfig {
-        if self.has_audioInputConfig() {
+    pub fn take_audio_input_config(&mut self) -> AudioInputNodeConfig {
+        if self.has_audio_input_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioInputConfig(v)) => v,
                 _ => panic!(),
@@ -6257,20 +6257,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioMixNodeConfig audioMixConfig = 69;
+    // .mizer.nodes.AudioMixNodeConfig audio_mix_config = 69;
 
-    pub fn audioMixConfig(&self) -> &AudioMixNodeConfig {
+    pub fn audio_mix_config(&self) -> &AudioMixNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioMixConfig(ref v)) => v,
             _ => <AudioMixNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioMixConfig(&mut self) {
+    pub fn clear_audio_mix_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioMixConfig(&self) -> bool {
+    pub fn has_audio_mix_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioMixConfig(..)) => true,
             _ => false,
@@ -6278,12 +6278,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioMixConfig(&mut self, v: AudioMixNodeConfig) {
+    pub fn set_audio_mix_config(&mut self, v: AudioMixNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioMixConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioMixConfig(&mut self) -> &mut AudioMixNodeConfig {
+    pub fn mut_audio_mix_config(&mut self) -> &mut AudioMixNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioMixConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioMixConfig(AudioMixNodeConfig::new()));
@@ -6295,8 +6295,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioMixConfig(&mut self) -> AudioMixNodeConfig {
-        if self.has_audioMixConfig() {
+    pub fn take_audio_mix_config(&mut self) -> AudioMixNodeConfig {
+        if self.has_audio_mix_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioMixConfig(v)) => v,
                 _ => panic!(),
@@ -6306,20 +6306,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.AudioMeterNodeConfig audioMeterConfig = 70;
+    // .mizer.nodes.AudioMeterNodeConfig audio_meter_config = 70;
 
-    pub fn audioMeterConfig(&self) -> &AudioMeterNodeConfig {
+    pub fn audio_meter_config(&self) -> &AudioMeterNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioMeterConfig(ref v)) => v,
             _ => <AudioMeterNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_audioMeterConfig(&mut self) {
+    pub fn clear_audio_meter_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_audioMeterConfig(&self) -> bool {
+    pub fn has_audio_meter_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::AudioMeterConfig(..)) => true,
             _ => false,
@@ -6327,12 +6327,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_audioMeterConfig(&mut self, v: AudioMeterNodeConfig) {
+    pub fn set_audio_meter_config(&mut self, v: AudioMeterNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::AudioMeterConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_audioMeterConfig(&mut self) -> &mut AudioMeterNodeConfig {
+    pub fn mut_audio_meter_config(&mut self) -> &mut AudioMeterNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::AudioMeterConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::AudioMeterConfig(AudioMeterNodeConfig::new()));
@@ -6344,8 +6344,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_audioMeterConfig(&mut self) -> AudioMeterNodeConfig {
-        if self.has_audioMeterConfig() {
+    pub fn take_audio_meter_config(&mut self) -> AudioMeterNodeConfig {
+        if self.has_audio_meter_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::AudioMeterConfig(v)) => v,
                 _ => panic!(),
@@ -6355,20 +6355,20 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.TemplateNodeConfig templateConfig = 71;
+    // .mizer.nodes.TemplateNodeConfig template_config = 71;
 
-    pub fn templateConfig(&self) -> &TemplateNodeConfig {
+    pub fn template_config(&self) -> &TemplateNodeConfig {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TemplateConfig(ref v)) => v,
             _ => <TemplateNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_templateConfig(&mut self) {
+    pub fn clear_template_config(&mut self) {
         self.type_ = ::std::option::Option::None;
     }
 
-    pub fn has_templateConfig(&self) -> bool {
+    pub fn has_template_config(&self) -> bool {
         match self.type_ {
             ::std::option::Option::Some(node_config::Type::TemplateConfig(..)) => true,
             _ => false,
@@ -6376,12 +6376,12 @@ impl NodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_templateConfig(&mut self, v: TemplateNodeConfig) {
+    pub fn set_template_config(&mut self, v: TemplateNodeConfig) {
         self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_templateConfig(&mut self) -> &mut TemplateNodeConfig {
+    pub fn mut_template_config(&mut self) -> &mut TemplateNodeConfig {
         if let ::std::option::Option::Some(node_config::Type::TemplateConfig(_)) = self.type_ {
         } else {
             self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(TemplateNodeConfig::new()));
@@ -6393,8 +6393,8 @@ impl NodeConfig {
     }
 
     // Take field
-    pub fn take_templateConfig(&mut self) -> TemplateNodeConfig {
-        if self.has_templateConfig() {
+    pub fn take_template_config(&mut self) -> TemplateNodeConfig {
+        if self.has_template_config() {
             match self.type_.take() {
                 ::std::option::Option::Some(node_config::Type::TemplateConfig(v)) => v,
                 _ => panic!(),
@@ -6408,431 +6408,431 @@ impl NodeConfig {
         let mut fields = ::std::vec::Vec::with_capacity(61);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscillatorNodeConfig>(
-            "oscillatorConfig",
-            NodeConfig::has_oscillatorConfig,
-            NodeConfig::oscillatorConfig,
-            NodeConfig::mut_oscillatorConfig,
-            NodeConfig::set_oscillatorConfig,
+            "oscillator_config",
+            NodeConfig::has_oscillator_config,
+            NodeConfig::oscillator_config,
+            NodeConfig::mut_oscillator_config,
+            NodeConfig::set_oscillator_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ScriptingNodeConfig>(
-            "scriptingConfig",
-            NodeConfig::has_scriptingConfig,
-            NodeConfig::scriptingConfig,
-            NodeConfig::mut_scriptingConfig,
-            NodeConfig::set_scriptingConfig,
+            "scripting_config",
+            NodeConfig::has_scripting_config,
+            NodeConfig::scripting_config,
+            NodeConfig::mut_scripting_config,
+            NodeConfig::set_scripting_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SequenceNodeConfig>(
-            "sequenceConfig",
-            NodeConfig::has_sequenceConfig,
-            NodeConfig::sequenceConfig,
-            NodeConfig::mut_sequenceConfig,
-            NodeConfig::set_sequenceConfig,
+            "sequence_config",
+            NodeConfig::has_sequence_config,
+            NodeConfig::sequence_config,
+            NodeConfig::mut_sequence_config,
+            NodeConfig::set_sequence_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ClockNodeConfig>(
-            "clockConfig",
-            NodeConfig::has_clockConfig,
-            NodeConfig::clockConfig,
-            NodeConfig::mut_clockConfig,
-            NodeConfig::set_clockConfig,
+            "clock_config",
+            NodeConfig::has_clock_config,
+            NodeConfig::clock_config,
+            NodeConfig::mut_clock_config,
+            NodeConfig::set_clock_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, FixtureNodeConfig>(
-            "fixtureConfig",
-            NodeConfig::has_fixtureConfig,
-            NodeConfig::fixtureConfig,
-            NodeConfig::mut_fixtureConfig,
-            NodeConfig::set_fixtureConfig,
+            "fixture_config",
+            NodeConfig::has_fixture_config,
+            NodeConfig::fixture_config,
+            NodeConfig::mut_fixture_config,
+            NodeConfig::set_fixture_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ButtonNodeConfig>(
-            "buttonConfig",
-            NodeConfig::has_buttonConfig,
-            NodeConfig::buttonConfig,
-            NodeConfig::mut_buttonConfig,
-            NodeConfig::set_buttonConfig,
+            "button_config",
+            NodeConfig::has_button_config,
+            NodeConfig::button_config,
+            NodeConfig::mut_button_config,
+            NodeConfig::set_button_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, FaderNodeConfig>(
-            "faderConfig",
-            NodeConfig::has_faderConfig,
-            NodeConfig::faderConfig,
-            NodeConfig::mut_faderConfig,
-            NodeConfig::set_faderConfig,
+            "fader_config",
+            NodeConfig::has_fader_config,
+            NodeConfig::fader_config,
+            NodeConfig::mut_fader_config,
+            NodeConfig::set_fader_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, IldaFileNodeConfig>(
-            "ildaFileConfig",
-            NodeConfig::has_ildaFileConfig,
-            NodeConfig::ildaFileConfig,
-            NodeConfig::mut_ildaFileConfig,
-            NodeConfig::set_ildaFileConfig,
+            "ilda_file_config",
+            NodeConfig::has_ilda_file_config,
+            NodeConfig::ilda_file_config,
+            NodeConfig::mut_ilda_file_config,
+            NodeConfig::set_ilda_file_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, LaserNodeConfig>(
-            "laserConfig",
-            NodeConfig::has_laserConfig,
-            NodeConfig::laserConfig,
-            NodeConfig::mut_laserConfig,
-            NodeConfig::set_laserConfig,
+            "laser_config",
+            NodeConfig::has_laser_config,
+            NodeConfig::laser_config,
+            NodeConfig::mut_laser_config,
+            NodeConfig::set_laser_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PixelPatternNodeConfig>(
-            "pixelPatternConfig",
-            NodeConfig::has_pixelPatternConfig,
-            NodeConfig::pixelPatternConfig,
-            NodeConfig::mut_pixelPatternConfig,
-            NodeConfig::set_pixelPatternConfig,
+            "pixel_pattern_config",
+            NodeConfig::has_pixel_pattern_config,
+            NodeConfig::pixel_pattern_config,
+            NodeConfig::mut_pixel_pattern_config,
+            NodeConfig::set_pixel_pattern_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PixelDmxNodeConfig>(
-            "pixelDmxConfig",
-            NodeConfig::has_pixelDmxConfig,
-            NodeConfig::pixelDmxConfig,
-            NodeConfig::mut_pixelDmxConfig,
-            NodeConfig::set_pixelDmxConfig,
+            "pixel_dmx_config",
+            NodeConfig::has_pixel_dmx_config,
+            NodeConfig::pixel_dmx_config,
+            NodeConfig::mut_pixel_dmx_config,
+            NodeConfig::set_pixel_dmx_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DmxOutputNodeConfig>(
-            "dmxOutputConfig",
-            NodeConfig::has_dmxOutputConfig,
-            NodeConfig::dmxOutputConfig,
-            NodeConfig::mut_dmxOutputConfig,
-            NodeConfig::set_dmxOutputConfig,
+            "dmx_output_config",
+            NodeConfig::has_dmx_output_config,
+            NodeConfig::dmx_output_config,
+            NodeConfig::mut_dmx_output_config,
+            NodeConfig::set_dmx_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MidiNodeConfig>(
-            "midiInputConfig",
-            NodeConfig::has_midiInputConfig,
-            NodeConfig::midiInputConfig,
-            NodeConfig::mut_midiInputConfig,
-            NodeConfig::set_midiInputConfig,
+            "midi_input_config",
+            NodeConfig::has_midi_input_config,
+            NodeConfig::midi_input_config,
+            NodeConfig::mut_midi_input_config,
+            NodeConfig::set_midi_input_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MidiNodeConfig>(
-            "midiOutputConfig",
-            NodeConfig::has_midiOutputConfig,
-            NodeConfig::midiOutputConfig,
-            NodeConfig::mut_midiOutputConfig,
-            NodeConfig::set_midiOutputConfig,
+            "midi_output_config",
+            NodeConfig::has_midi_output_config,
+            NodeConfig::midi_output_config,
+            NodeConfig::mut_midi_output_config,
+            NodeConfig::set_midi_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OpcOutputNodeConfig>(
-            "opcOutputConfig",
-            NodeConfig::has_opcOutputConfig,
-            NodeConfig::opcOutputConfig,
-            NodeConfig::mut_opcOutputConfig,
-            NodeConfig::set_opcOutputConfig,
+            "opc_output_config",
+            NodeConfig::has_opc_output_config,
+            NodeConfig::opc_output_config,
+            NodeConfig::mut_opc_output_config,
+            NodeConfig::set_opc_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscNodeConfig>(
-            "oscInputConfig",
-            NodeConfig::has_oscInputConfig,
-            NodeConfig::oscInputConfig,
-            NodeConfig::mut_oscInputConfig,
-            NodeConfig::set_oscInputConfig,
+            "osc_input_config",
+            NodeConfig::has_osc_input_config,
+            NodeConfig::osc_input_config,
+            NodeConfig::mut_osc_input_config,
+            NodeConfig::set_osc_input_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscNodeConfig>(
-            "oscOutputConfig",
-            NodeConfig::has_oscOutputConfig,
-            NodeConfig::oscOutputConfig,
-            NodeConfig::mut_oscOutputConfig,
-            NodeConfig::set_oscOutputConfig,
+            "osc_output_config",
+            NodeConfig::has_osc_output_config,
+            NodeConfig::osc_output_config,
+            NodeConfig::mut_osc_output_config,
+            NodeConfig::set_osc_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoColorBalanceNodeConfig>(
-            "videoColorBalanceConfig",
-            NodeConfig::has_videoColorBalanceConfig,
-            NodeConfig::videoColorBalanceConfig,
-            NodeConfig::mut_videoColorBalanceConfig,
-            NodeConfig::set_videoColorBalanceConfig,
+            "video_color_balance_config",
+            NodeConfig::has_video_color_balance_config,
+            NodeConfig::video_color_balance_config,
+            NodeConfig::mut_video_color_balance_config,
+            NodeConfig::set_video_color_balance_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoEffectNodeConfig>(
-            "videoEffectConfig",
-            NodeConfig::has_videoEffectConfig,
-            NodeConfig::videoEffectConfig,
-            NodeConfig::mut_videoEffectConfig,
-            NodeConfig::set_videoEffectConfig,
+            "video_effect_config",
+            NodeConfig::has_video_effect_config,
+            NodeConfig::video_effect_config,
+            NodeConfig::mut_video_effect_config,
+            NodeConfig::set_video_effect_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoFileNodeConfig>(
-            "videoFileConfig",
-            NodeConfig::has_videoFileConfig,
-            NodeConfig::videoFileConfig,
-            NodeConfig::mut_videoFileConfig,
-            NodeConfig::set_videoFileConfig,
+            "video_file_config",
+            NodeConfig::has_video_file_config,
+            NodeConfig::video_file_config,
+            NodeConfig::mut_video_file_config,
+            NodeConfig::set_video_file_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoOutputNodeConfig>(
-            "videoOutputConfig",
-            NodeConfig::has_videoOutputConfig,
-            NodeConfig::videoOutputConfig,
-            NodeConfig::mut_videoOutputConfig,
-            NodeConfig::set_videoOutputConfig,
+            "video_output_config",
+            NodeConfig::has_video_output_config,
+            NodeConfig::video_output_config,
+            NodeConfig::mut_video_output_config,
+            NodeConfig::set_video_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoTransformNodeConfig>(
-            "videoTransformConfig",
-            NodeConfig::has_videoTransformConfig,
-            NodeConfig::videoTransformConfig,
-            NodeConfig::mut_videoTransformConfig,
-            NodeConfig::set_videoTransformConfig,
+            "video_transform_config",
+            NodeConfig::has_video_transform_config,
+            NodeConfig::video_transform_config,
+            NodeConfig::mut_video_transform_config,
+            NodeConfig::set_video_transform_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SelectNodeConfig>(
-            "selectConfig",
-            NodeConfig::has_selectConfig,
-            NodeConfig::selectConfig,
-            NodeConfig::mut_selectConfig,
-            NodeConfig::set_selectConfig,
+            "select_config",
+            NodeConfig::has_select_config,
+            NodeConfig::select_config,
+            NodeConfig::mut_select_config,
+            NodeConfig::set_select_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MergeNodeConfig>(
-            "mergeConfig",
-            NodeConfig::has_mergeConfig,
-            NodeConfig::mergeConfig,
-            NodeConfig::mut_mergeConfig,
-            NodeConfig::set_mergeConfig,
+            "merge_config",
+            NodeConfig::has_merge_config,
+            NodeConfig::merge_config,
+            NodeConfig::mut_merge_config,
+            NodeConfig::set_merge_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, EnvelopeNodeConfig>(
-            "envelopeConfig",
-            NodeConfig::has_envelopeConfig,
-            NodeConfig::envelopeConfig,
-            NodeConfig::mut_envelopeConfig,
-            NodeConfig::set_envelopeConfig,
+            "envelope_config",
+            NodeConfig::has_envelope_config,
+            NodeConfig::envelope_config,
+            NodeConfig::mut_envelope_config,
+            NodeConfig::set_envelope_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SequencerNodeConfig>(
-            "sequencerConfig",
-            NodeConfig::has_sequencerConfig,
-            NodeConfig::sequencerConfig,
-            NodeConfig::mut_sequencerConfig,
-            NodeConfig::set_sequencerConfig,
+            "sequencer_config",
+            NodeConfig::has_sequencer_config,
+            NodeConfig::sequencer_config,
+            NodeConfig::mut_sequencer_config,
+            NodeConfig::set_sequencer_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ProgrammerNodeConfig>(
-            "programmerConfig",
-            NodeConfig::has_programmerConfig,
-            NodeConfig::programmerConfig,
-            NodeConfig::mut_programmerConfig,
-            NodeConfig::set_programmerConfig,
+            "programmer_config",
+            NodeConfig::has_programmer_config,
+            NodeConfig::programmer_config,
+            NodeConfig::mut_programmer_config,
+            NodeConfig::set_programmer_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, GroupNodeConfig>(
-            "groupConfig",
-            NodeConfig::has_groupConfig,
-            NodeConfig::groupConfig,
-            NodeConfig::mut_groupConfig,
-            NodeConfig::set_groupConfig,
+            "group_config",
+            NodeConfig::has_group_config,
+            NodeConfig::group_config,
+            NodeConfig::mut_group_config,
+            NodeConfig::set_group_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PresetNodeConfig>(
-            "presetConfig",
-            NodeConfig::has_presetConfig,
-            NodeConfig::presetConfig,
-            NodeConfig::mut_presetConfig,
-            NodeConfig::set_presetConfig,
+            "preset_config",
+            NodeConfig::has_preset_config,
+            NodeConfig::preset_config,
+            NodeConfig::mut_preset_config,
+            NodeConfig::set_preset_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorRgbNodeConfig>(
-            "colorRgbConfig",
-            NodeConfig::has_colorRgbConfig,
-            NodeConfig::colorRgbConfig,
-            NodeConfig::mut_colorRgbConfig,
-            NodeConfig::set_colorRgbConfig,
+            "color_rgb_config",
+            NodeConfig::has_color_rgb_config,
+            NodeConfig::color_rgb_config,
+            NodeConfig::mut_color_rgb_config,
+            NodeConfig::set_color_rgb_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorHsvNodeConfig>(
-            "colorHsvConfig",
-            NodeConfig::has_colorHsvConfig,
-            NodeConfig::colorHsvConfig,
-            NodeConfig::mut_colorHsvConfig,
-            NodeConfig::set_colorHsvConfig,
+            "color_hsv_config",
+            NodeConfig::has_color_hsv_config,
+            NodeConfig::color_hsv_config,
+            NodeConfig::mut_color_hsv_config,
+            NodeConfig::set_color_hsv_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, GamepadNodeConfig>(
-            "gamepadNodeConfig",
-            NodeConfig::has_gamepadNodeConfig,
-            NodeConfig::gamepadNodeConfig,
-            NodeConfig::mut_gamepadNodeConfig,
-            NodeConfig::set_gamepadNodeConfig,
+            "gamepad_node_config",
+            NodeConfig::has_gamepad_node_config,
+            NodeConfig::gamepad_node_config,
+            NodeConfig::mut_gamepad_node_config,
+            NodeConfig::set_gamepad_node_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ThresholdNodeConfig>(
-            "thresholdConfig",
-            NodeConfig::has_thresholdConfig,
-            NodeConfig::thresholdConfig,
-            NodeConfig::mut_thresholdConfig,
-            NodeConfig::set_thresholdConfig,
+            "threshold_config",
+            NodeConfig::has_threshold_config,
+            NodeConfig::threshold_config,
+            NodeConfig::mut_threshold_config,
+            NodeConfig::set_threshold_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, EncoderNodeConfig>(
-            "encoderConfig",
-            NodeConfig::has_encoderConfig,
-            NodeConfig::encoderConfig,
-            NodeConfig::mut_encoderConfig,
-            NodeConfig::set_encoderConfig,
+            "encoder_config",
+            NodeConfig::has_encoder_config,
+            NodeConfig::encoder_config,
+            NodeConfig::mut_encoder_config,
+            NodeConfig::set_encoder_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ContainerNodeConfig>(
-            "containerConfig",
-            NodeConfig::has_containerConfig,
-            NodeConfig::containerConfig,
-            NodeConfig::mut_containerConfig,
-            NodeConfig::set_containerConfig,
+            "container_config",
+            NodeConfig::has_container_config,
+            NodeConfig::container_config,
+            NodeConfig::mut_container_config,
+            NodeConfig::set_container_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MathNodeConfig>(
-            "mathConfig",
-            NodeConfig::has_mathConfig,
-            NodeConfig::mathConfig,
-            NodeConfig::mut_mathConfig,
-            NodeConfig::set_mathConfig,
+            "math_config",
+            NodeConfig::has_math_config,
+            NodeConfig::math_config,
+            NodeConfig::mut_math_config,
+            NodeConfig::set_math_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MqttInputNodeConfig>(
-            "mqttInputConfig",
-            NodeConfig::has_mqttInputConfig,
-            NodeConfig::mqttInputConfig,
-            NodeConfig::mut_mqttInputConfig,
-            NodeConfig::set_mqttInputConfig,
+            "mqtt_input_config",
+            NodeConfig::has_mqtt_input_config,
+            NodeConfig::mqtt_input_config,
+            NodeConfig::mut_mqtt_input_config,
+            NodeConfig::set_mqtt_input_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MqttOutputNodeConfig>(
-            "mqttOutputConfig",
-            NodeConfig::has_mqttOutputConfig,
-            NodeConfig::mqttOutputConfig,
-            NodeConfig::mut_mqttOutputConfig,
-            NodeConfig::set_mqttOutputConfig,
+            "mqtt_output_config",
+            NodeConfig::has_mqtt_output_config,
+            NodeConfig::mqtt_output_config,
+            NodeConfig::mut_mqtt_output_config,
+            NodeConfig::set_mqtt_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, NumberToDataNodeConfig>(
-            "numberToDataConfig",
-            NodeConfig::has_numberToDataConfig,
-            NodeConfig::numberToDataConfig,
-            NodeConfig::mut_numberToDataConfig,
-            NodeConfig::set_numberToDataConfig,
+            "number_to_data_config",
+            NodeConfig::has_number_to_data_config,
+            NodeConfig::number_to_data_config,
+            NodeConfig::mut_number_to_data_config,
+            NodeConfig::set_number_to_data_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DataToNumberNodeConfig>(
-            "dataToNumberConfig",
-            NodeConfig::has_dataToNumberConfig,
-            NodeConfig::dataToNumberConfig,
-            NodeConfig::mut_dataToNumberConfig,
-            NodeConfig::set_dataToNumberConfig,
+            "data_to_number_config",
+            NodeConfig::has_data_to_number_config,
+            NodeConfig::data_to_number_config,
+            NodeConfig::mut_data_to_number_config,
+            NodeConfig::set_data_to_number_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ValueNodeConfig>(
-            "valueConfig",
-            NodeConfig::has_valueConfig,
-            NodeConfig::valueConfig,
-            NodeConfig::mut_valueConfig,
-            NodeConfig::set_valueConfig,
+            "value_config",
+            NodeConfig::has_value_config,
+            NodeConfig::value_config,
+            NodeConfig::mut_value_config,
+            NodeConfig::set_value_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ExtractNodeConfig>(
-            "extractConfig",
-            NodeConfig::has_extractConfig,
-            NodeConfig::extractConfig,
-            NodeConfig::mut_extractConfig,
-            NodeConfig::set_extractConfig,
+            "extract_config",
+            NodeConfig::has_extract_config,
+            NodeConfig::extract_config,
+            NodeConfig::mut_extract_config,
+            NodeConfig::set_extract_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PlanScreenNodeConfig>(
-            "planScreenConfig",
-            NodeConfig::has_planScreenConfig,
-            NodeConfig::planScreenConfig,
-            NodeConfig::mut_planScreenConfig,
-            NodeConfig::set_planScreenConfig,
+            "plan_screen_config",
+            NodeConfig::has_plan_screen_config,
+            NodeConfig::plan_screen_config,
+            NodeConfig::mut_plan_screen_config,
+            NodeConfig::set_plan_screen_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DelayNodeConfig>(
-            "delayConfig",
-            NodeConfig::has_delayConfig,
-            NodeConfig::delayConfig,
-            NodeConfig::mut_delayConfig,
-            NodeConfig::set_delayConfig,
+            "delay_config",
+            NodeConfig::has_delay_config,
+            NodeConfig::delay_config,
+            NodeConfig::mut_delay_config,
+            NodeConfig::set_delay_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, RampNodeConfig>(
-            "rampConfig",
-            NodeConfig::has_rampConfig,
-            NodeConfig::rampConfig,
-            NodeConfig::mut_rampConfig,
-            NodeConfig::set_rampConfig,
+            "ramp_config",
+            NodeConfig::has_ramp_config,
+            NodeConfig::ramp_config,
+            NodeConfig::mut_ramp_config,
+            NodeConfig::set_ramp_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, NoiseNodeConfig>(
-            "noiseConfig",
-            NodeConfig::has_noiseConfig,
-            NodeConfig::noiseConfig,
-            NodeConfig::mut_noiseConfig,
-            NodeConfig::set_noiseConfig,
+            "noise_config",
+            NodeConfig::has_noise_config,
+            NodeConfig::noise_config,
+            NodeConfig::mut_noise_config,
+            NodeConfig::set_noise_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, LabelNodeConfig>(
-            "labelConfig",
-            NodeConfig::has_labelConfig,
-            NodeConfig::labelConfig,
-            NodeConfig::mut_labelConfig,
-            NodeConfig::set_labelConfig,
+            "label_config",
+            NodeConfig::has_label_config,
+            NodeConfig::label_config,
+            NodeConfig::mut_label_config,
+            NodeConfig::set_label_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TransportNodeConfig>(
-            "transportConfig",
-            NodeConfig::has_transportConfig,
-            NodeConfig::transportConfig,
-            NodeConfig::mut_transportConfig,
-            NodeConfig::set_transportConfig,
+            "transport_config",
+            NodeConfig::has_transport_config,
+            NodeConfig::transport_config,
+            NodeConfig::mut_transport_config,
+            NodeConfig::set_transport_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, G13InputNodeConfig>(
-            "g13InputConfig",
-            NodeConfig::has_g13InputConfig,
-            NodeConfig::g13InputConfig,
-            NodeConfig::mut_g13InputConfig,
-            NodeConfig::set_g13InputConfig,
+            "g13_input_config",
+            NodeConfig::has_g13_input_config,
+            NodeConfig::g13_input_config,
+            NodeConfig::mut_g13_input_config,
+            NodeConfig::set_g13_input_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, G13OutputNodeConfig>(
-            "g13OutputConfig",
-            NodeConfig::has_g13OutputConfig,
-            NodeConfig::g13OutputConfig,
-            NodeConfig::mut_g13OutputConfig,
-            NodeConfig::set_g13OutputConfig,
+            "g13_output_config",
+            NodeConfig::has_g13_output_config,
+            NodeConfig::g13_output_config,
+            NodeConfig::mut_g13_output_config,
+            NodeConfig::set_g13_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ConstantNumberNodeConfig>(
-            "constantNumberConfig",
-            NodeConfig::has_constantNumberConfig,
-            NodeConfig::constantNumberConfig,
-            NodeConfig::mut_constantNumberConfig,
-            NodeConfig::set_constantNumberConfig,
+            "constant_number_config",
+            NodeConfig::has_constant_number_config,
+            NodeConfig::constant_number_config,
+            NodeConfig::mut_constant_number_config,
+            NodeConfig::set_constant_number_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ConditionalNodeConfig>(
-            "conditionalConfig",
-            NodeConfig::has_conditionalConfig,
-            NodeConfig::conditionalConfig,
-            NodeConfig::mut_conditionalConfig,
-            NodeConfig::set_conditionalConfig,
+            "conditional_config",
+            NodeConfig::has_conditional_config,
+            NodeConfig::conditional_config,
+            NodeConfig::mut_conditional_config,
+            NodeConfig::set_conditional_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TimecodeControlNodeConfig>(
-            "timecodeControlConfig",
-            NodeConfig::has_timecodeControlConfig,
-            NodeConfig::timecodeControlConfig,
-            NodeConfig::mut_timecodeControlConfig,
-            NodeConfig::set_timecodeControlConfig,
+            "timecode_control_config",
+            NodeConfig::has_timecode_control_config,
+            NodeConfig::timecode_control_config,
+            NodeConfig::mut_timecode_control_config,
+            NodeConfig::set_timecode_control_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TimecodeOutputNodeConfig>(
-            "timecodeOutputConfig",
-            NodeConfig::has_timecodeOutputConfig,
-            NodeConfig::timecodeOutputConfig,
-            NodeConfig::mut_timecodeOutputConfig,
-            NodeConfig::set_timecodeOutputConfig,
+            "timecode_output_config",
+            NodeConfig::has_timecode_output_config,
+            NodeConfig::timecode_output_config,
+            NodeConfig::mut_timecode_output_config,
+            NodeConfig::set_timecode_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioFileNodeConfig>(
-            "audioFileConfig",
-            NodeConfig::has_audioFileConfig,
-            NodeConfig::audioFileConfig,
-            NodeConfig::mut_audioFileConfig,
-            NodeConfig::set_audioFileConfig,
+            "audio_file_config",
+            NodeConfig::has_audio_file_config,
+            NodeConfig::audio_file_config,
+            NodeConfig::mut_audio_file_config,
+            NodeConfig::set_audio_file_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioOutputNodeConfig>(
-            "audioOutputConfig",
-            NodeConfig::has_audioOutputConfig,
-            NodeConfig::audioOutputConfig,
-            NodeConfig::mut_audioOutputConfig,
-            NodeConfig::set_audioOutputConfig,
+            "audio_output_config",
+            NodeConfig::has_audio_output_config,
+            NodeConfig::audio_output_config,
+            NodeConfig::mut_audio_output_config,
+            NodeConfig::set_audio_output_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioVolumeNodeConfig>(
-            "audioVolumeConfig",
-            NodeConfig::has_audioVolumeConfig,
-            NodeConfig::audioVolumeConfig,
-            NodeConfig::mut_audioVolumeConfig,
-            NodeConfig::set_audioVolumeConfig,
+            "audio_volume_config",
+            NodeConfig::has_audio_volume_config,
+            NodeConfig::audio_volume_config,
+            NodeConfig::mut_audio_volume_config,
+            NodeConfig::set_audio_volume_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioInputNodeConfig>(
-            "audioInputConfig",
-            NodeConfig::has_audioInputConfig,
-            NodeConfig::audioInputConfig,
-            NodeConfig::mut_audioInputConfig,
-            NodeConfig::set_audioInputConfig,
+            "audio_input_config",
+            NodeConfig::has_audio_input_config,
+            NodeConfig::audio_input_config,
+            NodeConfig::mut_audio_input_config,
+            NodeConfig::set_audio_input_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioMixNodeConfig>(
-            "audioMixConfig",
-            NodeConfig::has_audioMixConfig,
-            NodeConfig::audioMixConfig,
-            NodeConfig::mut_audioMixConfig,
-            NodeConfig::set_audioMixConfig,
+            "audio_mix_config",
+            NodeConfig::has_audio_mix_config,
+            NodeConfig::audio_mix_config,
+            NodeConfig::mut_audio_mix_config,
+            NodeConfig::set_audio_mix_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioMeterNodeConfig>(
-            "audioMeterConfig",
-            NodeConfig::has_audioMeterConfig,
-            NodeConfig::audioMeterConfig,
-            NodeConfig::mut_audioMeterConfig,
-            NodeConfig::set_audioMeterConfig,
+            "audio_meter_config",
+            NodeConfig::has_audio_meter_config,
+            NodeConfig::audio_meter_config,
+            NodeConfig::mut_audio_meter_config,
+            NodeConfig::set_audio_meter_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TemplateNodeConfig>(
-            "templateConfig",
-            NodeConfig::has_templateConfig,
-            NodeConfig::templateConfig,
-            NodeConfig::mut_templateConfig,
-            NodeConfig::set_templateConfig,
+            "template_config",
+            NodeConfig::has_template_config,
+            NodeConfig::template_config,
+            NodeConfig::mut_template_config,
+            NodeConfig::set_template_config,
         ));
         oneofs.push(node_config::Type::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeConfig>(
@@ -7603,127 +7603,127 @@ pub mod node_config {
     #[non_exhaustive]
     // @@protoc_insertion_point(oneof:mizer.nodes.NodeConfig.type)
     pub enum Type {
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.oscillatorConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.oscillator_config)
         OscillatorConfig(super::OscillatorNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.scriptingConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.scripting_config)
         ScriptingConfig(super::ScriptingNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequenceConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequence_config)
         SequenceConfig(super::SequenceNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.clockConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.clock_config)
         ClockConfig(super::ClockNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.fixtureConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.fixture_config)
         FixtureConfig(super::FixtureNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.buttonConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.button_config)
         ButtonConfig(super::ButtonNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.faderConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.fader_config)
         FaderConfig(super::FaderNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.ildaFileConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.ilda_file_config)
         IldaFileConfig(super::IldaFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.laserConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.laser_config)
         LaserConfig(super::LaserNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixelPatternConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixel_pattern_config)
         PixelPatternConfig(super::PixelPatternNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixelDmxConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixel_dmx_config)
         PixelDmxConfig(super::PixelDmxNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.dmxOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.dmx_output_config)
         DmxOutputConfig(super::DmxOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midiInputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midi_input_config)
         MidiInputConfig(super::MidiNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midiOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midi_output_config)
         MidiOutputConfig(super::MidiNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.opcOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.opc_output_config)
         OpcOutputConfig(super::OpcOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.oscInputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.osc_input_config)
         OscInputConfig(super::OscNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.oscOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.osc_output_config)
         OscOutputConfig(super::OscNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.videoColorBalanceConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_color_balance_config)
         VideoColorBalanceConfig(super::VideoColorBalanceNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.videoEffectConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_effect_config)
         VideoEffectConfig(super::VideoEffectNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.videoFileConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_file_config)
         VideoFileConfig(super::VideoFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.videoOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_output_config)
         VideoOutputConfig(super::VideoOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.videoTransformConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_transform_config)
         VideoTransformConfig(super::VideoTransformNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.selectConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.select_config)
         SelectConfig(super::SelectNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mergeConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.merge_config)
         MergeConfig(super::MergeNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.envelopeConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.envelope_config)
         EnvelopeConfig(super::EnvelopeNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequencerConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequencer_config)
         SequencerConfig(super::SequencerNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.programmerConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.programmer_config)
         ProgrammerConfig(super::ProgrammerNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.groupConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.group_config)
         GroupConfig(super::GroupNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.presetConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.preset_config)
         PresetConfig(super::PresetNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.colorRgbConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_rgb_config)
         ColorRgbConfig(super::ColorRgbNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.colorHsvConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_hsv_config)
         ColorHsvConfig(super::ColorHsvNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.gamepadNodeConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.gamepad_node_config)
         GamepadNodeConfig(super::GamepadNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.thresholdConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.threshold_config)
         ThresholdConfig(super::ThresholdNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.encoderConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.encoder_config)
         EncoderConfig(super::EncoderNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.containerConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.container_config)
         ContainerConfig(super::ContainerNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mathConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.math_config)
         MathConfig(super::MathNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqttInputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqtt_input_config)
         MqttInputConfig(super::MqttInputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqttOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqtt_output_config)
         MqttOutputConfig(super::MqttOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.numberToDataConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.number_to_data_config)
         NumberToDataConfig(super::NumberToDataNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.dataToNumberConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.data_to_number_config)
         DataToNumberConfig(super::DataToNumberNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.valueConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.value_config)
         ValueConfig(super::ValueNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.extractConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.extract_config)
         ExtractConfig(super::ExtractNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.planScreenConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.plan_screen_config)
         PlanScreenConfig(super::PlanScreenNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.delayConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.delay_config)
         DelayConfig(super::DelayNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.rampConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.ramp_config)
         RampConfig(super::RampNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.noiseConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.noise_config)
         NoiseConfig(super::NoiseNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.labelConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.label_config)
         LabelConfig(super::LabelNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.transportConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.transport_config)
         TransportConfig(super::TransportNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13InputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13_input_config)
         G13InputConfig(super::G13InputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13OutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13_output_config)
         G13OutputConfig(super::G13OutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.constantNumberConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.constant_number_config)
         ConstantNumberConfig(super::ConstantNumberNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.conditionalConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.conditional_config)
         ConditionalConfig(super::ConditionalNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecodeControlConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecode_control_config)
         TimecodeControlConfig(super::TimecodeControlNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecodeOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecode_output_config)
         TimecodeOutputConfig(super::TimecodeOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioFileConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_file_config)
         AudioFileConfig(super::AudioFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioOutputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_output_config)
         AudioOutputConfig(super::AudioOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioVolumeConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_volume_config)
         AudioVolumeConfig(super::AudioVolumeNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioInputConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_input_config)
         AudioInputConfig(super::AudioInputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioMixConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_mix_config)
         AudioMixConfig(super::AudioMixNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audioMeterConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_meter_config)
         AudioMeterConfig(super::AudioMeterNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.templateConfig)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.template_config)
         TemplateConfig(super::TemplateNodeConfig),
     }
 
@@ -7857,7 +7857,7 @@ impl ::protobuf::Message for OscillatorNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::Square) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE) {
             my_size += ::protobuf::rt::int32_size(1, self.type_.value());
         }
         if self.ratio != 0. {
@@ -7881,7 +7881,7 @@ impl ::protobuf::Message for OscillatorNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::Square) {
+        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
         }
         if self.ratio != 0. {
@@ -7916,7 +7916,7 @@ impl ::protobuf::Message for OscillatorNodeConfig {
     }
 
     fn clear(&mut self) {
-        self.type_ = ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::Square);
+        self.type_ = ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE);
         self.ratio = 0.;
         self.max = 0.;
         self.min = 0.;
@@ -7961,14 +7961,14 @@ pub mod oscillator_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.OscillatorNodeConfig.OscillatorType)
     pub enum OscillatorType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.Square)
-        Square = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.Sine)
-        Sine = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.Saw)
-        Saw = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.Triangle)
-        Triangle = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SQUARE)
+        SQUARE = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SINE)
+        SINE = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SAW)
+        SAW = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.TRIANGLE)
+        TRIANGLE = 3,
     }
 
     impl ::protobuf::Enum for OscillatorType {
@@ -7980,19 +7980,19 @@ pub mod oscillator_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<OscillatorType> {
             match value {
-                0 => ::std::option::Option::Some(OscillatorType::Square),
-                1 => ::std::option::Option::Some(OscillatorType::Sine),
-                2 => ::std::option::Option::Some(OscillatorType::Saw),
-                3 => ::std::option::Option::Some(OscillatorType::Triangle),
+                0 => ::std::option::Option::Some(OscillatorType::SQUARE),
+                1 => ::std::option::Option::Some(OscillatorType::SINE),
+                2 => ::std::option::Option::Some(OscillatorType::SAW),
+                3 => ::std::option::Option::Some(OscillatorType::TRIANGLE),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [OscillatorType] = &[
-            OscillatorType::Square,
-            OscillatorType::Sine,
-            OscillatorType::Saw,
-            OscillatorType::Triangle,
+            OscillatorType::SQUARE,
+            OscillatorType::SINE,
+            OscillatorType::SAW,
+            OscillatorType::TRIANGLE,
         ];
     }
 
@@ -8010,7 +8010,7 @@ pub mod oscillator_node_config {
 
     impl ::std::default::Default for OscillatorType {
         fn default() -> Self {
-            OscillatorType::Square
+            OscillatorType::SQUARE
         }
     }
 
@@ -9862,7 +9862,7 @@ impl ::protobuf::Message for GamepadNodeConfig {
         if !self.device_id.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.device_id);
         }
-        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LeftStickX) {
+        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X) {
             my_size += ::protobuf::rt::int32_size(2, self.control.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -9874,7 +9874,7 @@ impl ::protobuf::Message for GamepadNodeConfig {
         if !self.device_id.is_empty() {
             os.write_string(1, &self.device_id)?;
         }
-        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LeftStickX) {
+        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.control))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -9895,7 +9895,7 @@ impl ::protobuf::Message for GamepadNodeConfig {
 
     fn clear(&mut self) {
         self.device_id.clear();
-        self.control = ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LeftStickX);
+        self.control = ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X);
         self.special_fields.clear();
     }
 
@@ -9931,46 +9931,48 @@ pub mod gamepad_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.GamepadNodeConfig.Control)
     pub enum Control {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LeftStickX)
-        LeftStickX = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LeftStickY)
-        LeftStickY = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RightStickX)
-        RightStickX = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RightStickY)
-        RightStickY = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LeftTrigger)
-        LeftTrigger = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RightTrigger)
-        RightTrigger = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LeftShoulder)
-        LeftShoulder = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RightShoulder)
-        RightShoulder = 7,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.South)
-        South = 8,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.East)
-        East = 9,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.North)
-        North = 10,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.West)
-        West = 11,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.Select)
-        Select = 12,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.Start)
-        Start = 13,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DpadUp)
-        DpadUp = 14,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DpadDown)
-        DpadDown = 15,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DpadLeft)
-        DpadLeft = 16,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DpadRight)
-        DpadRight = 17,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LeftStick)
-        LeftStick = 18,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RightStick)
-        RightStick = 19,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK_X)
+        LEFT_STICK_X = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK_Y)
+        LEFT_STICK_Y = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK_X)
+        RIGHT_STICK_X = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK_Y)
+        RIGHT_STICK_Y = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_TRIGGER)
+        LEFT_TRIGGER = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_TRIGGER)
+        RIGHT_TRIGGER = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_SHOULDER)
+        LEFT_SHOULDER = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_SHOULDER)
+        RIGHT_SHOULDER = 7,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.SOUTH)
+        SOUTH = 8,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.EAST)
+        EAST = 9,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.NORTH)
+        NORTH = 10,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.WEST)
+        WEST = 11,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.SELECT)
+        SELECT = 12,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.START)
+        START = 13,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.MODE)
+        MODE = 14,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_UP)
+        DPAD_UP = 15,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_DOWN)
+        DPAD_DOWN = 16,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_LEFT)
+        DPAD_LEFT = 17,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_RIGHT)
+        DPAD_RIGHT = 18,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK)
+        LEFT_STICK = 19,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK)
+        RIGHT_STICK = 20,
     }
 
     impl ::protobuf::Enum for Control {
@@ -9982,51 +9984,53 @@ pub mod gamepad_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<Control> {
             match value {
-                0 => ::std::option::Option::Some(Control::LeftStickX),
-                1 => ::std::option::Option::Some(Control::LeftStickY),
-                2 => ::std::option::Option::Some(Control::RightStickX),
-                3 => ::std::option::Option::Some(Control::RightStickY),
-                4 => ::std::option::Option::Some(Control::LeftTrigger),
-                5 => ::std::option::Option::Some(Control::RightTrigger),
-                6 => ::std::option::Option::Some(Control::LeftShoulder),
-                7 => ::std::option::Option::Some(Control::RightShoulder),
-                8 => ::std::option::Option::Some(Control::South),
-                9 => ::std::option::Option::Some(Control::East),
-                10 => ::std::option::Option::Some(Control::North),
-                11 => ::std::option::Option::Some(Control::West),
-                12 => ::std::option::Option::Some(Control::Select),
-                13 => ::std::option::Option::Some(Control::Start),
-                14 => ::std::option::Option::Some(Control::DpadUp),
-                15 => ::std::option::Option::Some(Control::DpadDown),
-                16 => ::std::option::Option::Some(Control::DpadLeft),
-                17 => ::std::option::Option::Some(Control::DpadRight),
-                18 => ::std::option::Option::Some(Control::LeftStick),
-                19 => ::std::option::Option::Some(Control::RightStick),
+                0 => ::std::option::Option::Some(Control::LEFT_STICK_X),
+                1 => ::std::option::Option::Some(Control::LEFT_STICK_Y),
+                2 => ::std::option::Option::Some(Control::RIGHT_STICK_X),
+                3 => ::std::option::Option::Some(Control::RIGHT_STICK_Y),
+                4 => ::std::option::Option::Some(Control::LEFT_TRIGGER),
+                5 => ::std::option::Option::Some(Control::RIGHT_TRIGGER),
+                6 => ::std::option::Option::Some(Control::LEFT_SHOULDER),
+                7 => ::std::option::Option::Some(Control::RIGHT_SHOULDER),
+                8 => ::std::option::Option::Some(Control::SOUTH),
+                9 => ::std::option::Option::Some(Control::EAST),
+                10 => ::std::option::Option::Some(Control::NORTH),
+                11 => ::std::option::Option::Some(Control::WEST),
+                12 => ::std::option::Option::Some(Control::SELECT),
+                13 => ::std::option::Option::Some(Control::START),
+                14 => ::std::option::Option::Some(Control::MODE),
+                15 => ::std::option::Option::Some(Control::DPAD_UP),
+                16 => ::std::option::Option::Some(Control::DPAD_DOWN),
+                17 => ::std::option::Option::Some(Control::DPAD_LEFT),
+                18 => ::std::option::Option::Some(Control::DPAD_RIGHT),
+                19 => ::std::option::Option::Some(Control::LEFT_STICK),
+                20 => ::std::option::Option::Some(Control::RIGHT_STICK),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [Control] = &[
-            Control::LeftStickX,
-            Control::LeftStickY,
-            Control::RightStickX,
-            Control::RightStickY,
-            Control::LeftTrigger,
-            Control::RightTrigger,
-            Control::LeftShoulder,
-            Control::RightShoulder,
-            Control::South,
-            Control::East,
-            Control::North,
-            Control::West,
-            Control::Select,
-            Control::Start,
-            Control::DpadUp,
-            Control::DpadDown,
-            Control::DpadLeft,
-            Control::DpadRight,
-            Control::LeftStick,
-            Control::RightStick,
+            Control::LEFT_STICK_X,
+            Control::LEFT_STICK_Y,
+            Control::RIGHT_STICK_X,
+            Control::RIGHT_STICK_Y,
+            Control::LEFT_TRIGGER,
+            Control::RIGHT_TRIGGER,
+            Control::LEFT_SHOULDER,
+            Control::RIGHT_SHOULDER,
+            Control::SOUTH,
+            Control::EAST,
+            Control::NORTH,
+            Control::WEST,
+            Control::SELECT,
+            Control::START,
+            Control::MODE,
+            Control::DPAD_UP,
+            Control::DPAD_DOWN,
+            Control::DPAD_LEFT,
+            Control::DPAD_RIGHT,
+            Control::LEFT_STICK,
+            Control::RIGHT_STICK,
         ];
     }
 
@@ -10044,7 +10048,7 @@ pub mod gamepad_node_config {
 
     impl ::std::default::Default for Control {
         fn default() -> Self {
-            Control::LeftStickX
+            Control::LEFT_STICK_X
         }
     }
 
@@ -10118,7 +10122,7 @@ impl ::protobuf::Message for PixelPatternNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RgbIterate) {
+        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE) {
             my_size += ::protobuf::rt::int32_size(1, self.pattern.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -10127,7 +10131,7 @@ impl ::protobuf::Message for PixelPatternNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RgbIterate) {
+        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.pattern))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -10147,7 +10151,7 @@ impl ::protobuf::Message for PixelPatternNodeConfig {
     }
 
     fn clear(&mut self) {
-        self.pattern = ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RgbIterate);
+        self.pattern = ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE);
         self.special_fields.clear();
     }
 
@@ -10182,10 +10186,10 @@ pub mod pixel_pattern_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.PixelPatternNodeConfig.Pattern)
     pub enum Pattern {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RgbIterate)
-        RgbIterate = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RgbSnake)
-        RgbSnake = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RGB_ITERATE)
+        RGB_ITERATE = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RGB_SNAKE)
+        RGB_SNAKE = 1,
     }
 
     impl ::protobuf::Enum for Pattern {
@@ -10197,15 +10201,15 @@ pub mod pixel_pattern_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<Pattern> {
             match value {
-                0 => ::std::option::Option::Some(Pattern::RgbIterate),
-                1 => ::std::option::Option::Some(Pattern::RgbSnake),
+                0 => ::std::option::Option::Some(Pattern::RGB_ITERATE),
+                1 => ::std::option::Option::Some(Pattern::RGB_SNAKE),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [Pattern] = &[
-            Pattern::RgbIterate,
-            Pattern::RgbSnake,
+            Pattern::RGB_ITERATE,
+            Pattern::RGB_SNAKE,
         ];
     }
 
@@ -10223,7 +10227,7 @@ pub mod pixel_pattern_node_config {
 
     impl ::std::default::Default for Pattern {
         fn default() -> Self {
-            Pattern::RgbIterate
+            Pattern::RGB_ITERATE
         }
     }
 
@@ -10592,20 +10596,20 @@ impl MidiNodeConfig {
         ::std::default::Default::default()
     }
 
-    // .mizer.nodes.MidiNodeConfig.NoteBinding noteBinding = 2;
+    // .mizer.nodes.MidiNodeConfig.NoteBinding note_binding = 2;
 
-    pub fn noteBinding(&self) -> &midi_node_config::NoteBinding {
+    pub fn note_binding(&self) -> &midi_node_config::NoteBinding {
         match self.binding {
             ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(ref v)) => v,
             _ => <midi_node_config::NoteBinding as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_noteBinding(&mut self) {
+    pub fn clear_note_binding(&mut self) {
         self.binding = ::std::option::Option::None;
     }
 
-    pub fn has_noteBinding(&self) -> bool {
+    pub fn has_note_binding(&self) -> bool {
         match self.binding {
             ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(..)) => true,
             _ => false,
@@ -10613,12 +10617,12 @@ impl MidiNodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_noteBinding(&mut self, v: midi_node_config::NoteBinding) {
+    pub fn set_note_binding(&mut self, v: midi_node_config::NoteBinding) {
         self.binding = ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_noteBinding(&mut self) -> &mut midi_node_config::NoteBinding {
+    pub fn mut_note_binding(&mut self) -> &mut midi_node_config::NoteBinding {
         if let ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(_)) = self.binding {
         } else {
             self.binding = ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(midi_node_config::NoteBinding::new()));
@@ -10630,8 +10634,8 @@ impl MidiNodeConfig {
     }
 
     // Take field
-    pub fn take_noteBinding(&mut self) -> midi_node_config::NoteBinding {
-        if self.has_noteBinding() {
+    pub fn take_note_binding(&mut self) -> midi_node_config::NoteBinding {
+        if self.has_note_binding() {
             match self.binding.take() {
                 ::std::option::Option::Some(midi_node_config::Binding::NoteBinding(v)) => v,
                 _ => panic!(),
@@ -10641,20 +10645,20 @@ impl MidiNodeConfig {
         }
     }
 
-    // .mizer.nodes.MidiNodeConfig.ControlBinding controlBinding = 3;
+    // .mizer.nodes.MidiNodeConfig.ControlBinding control_binding = 3;
 
-    pub fn controlBinding(&self) -> &midi_node_config::ControlBinding {
+    pub fn control_binding(&self) -> &midi_node_config::ControlBinding {
         match self.binding {
             ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(ref v)) => v,
             _ => <midi_node_config::ControlBinding as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_controlBinding(&mut self) {
+    pub fn clear_control_binding(&mut self) {
         self.binding = ::std::option::Option::None;
     }
 
-    pub fn has_controlBinding(&self) -> bool {
+    pub fn has_control_binding(&self) -> bool {
         match self.binding {
             ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(..)) => true,
             _ => false,
@@ -10662,12 +10666,12 @@ impl MidiNodeConfig {
     }
 
     // Param is passed by value, moved
-    pub fn set_controlBinding(&mut self, v: midi_node_config::ControlBinding) {
+    pub fn set_control_binding(&mut self, v: midi_node_config::ControlBinding) {
         self.binding = ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_controlBinding(&mut self) -> &mut midi_node_config::ControlBinding {
+    pub fn mut_control_binding(&mut self) -> &mut midi_node_config::ControlBinding {
         if let ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(_)) = self.binding {
         } else {
             self.binding = ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(midi_node_config::ControlBinding::new()));
@@ -10679,8 +10683,8 @@ impl MidiNodeConfig {
     }
 
     // Take field
-    pub fn take_controlBinding(&mut self) -> midi_node_config::ControlBinding {
-        if self.has_controlBinding() {
+    pub fn take_control_binding(&mut self) -> midi_node_config::ControlBinding {
+        if self.has_control_binding() {
             match self.binding.take() {
                 ::std::option::Option::Some(midi_node_config::Binding::ControlBinding(v)) => v,
                 _ => panic!(),
@@ -10699,18 +10703,18 @@ impl MidiNodeConfig {
             |m: &mut MidiNodeConfig| { &mut m.device },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, midi_node_config::NoteBinding>(
-            "noteBinding",
-            MidiNodeConfig::has_noteBinding,
-            MidiNodeConfig::noteBinding,
-            MidiNodeConfig::mut_noteBinding,
-            MidiNodeConfig::set_noteBinding,
+            "note_binding",
+            MidiNodeConfig::has_note_binding,
+            MidiNodeConfig::note_binding,
+            MidiNodeConfig::mut_note_binding,
+            MidiNodeConfig::set_note_binding,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, midi_node_config::ControlBinding>(
-            "controlBinding",
-            MidiNodeConfig::has_controlBinding,
-            MidiNodeConfig::controlBinding,
-            MidiNodeConfig::mut_controlBinding,
-            MidiNodeConfig::set_controlBinding,
+            "control_binding",
+            MidiNodeConfig::has_control_binding,
+            MidiNodeConfig::control_binding,
+            MidiNodeConfig::mut_control_binding,
+            MidiNodeConfig::set_control_binding,
         ));
         oneofs.push(midi_node_config::Binding::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MidiNodeConfig>(
@@ -10843,9 +10847,9 @@ pub mod midi_node_config {
     #[non_exhaustive]
     // @@protoc_insertion_point(oneof:mizer.nodes.MidiNodeConfig.binding)
     pub enum Binding {
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.MidiNodeConfig.noteBinding)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.MidiNodeConfig.note_binding)
         NoteBinding(NoteBinding),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.MidiNodeConfig.controlBinding)
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.MidiNodeConfig.control_binding)
         ControlBinding(ControlBinding),
     }
 
@@ -10874,10 +10878,10 @@ pub mod midi_node_config {
         pub type_: ::protobuf::EnumOrUnknown<note_binding::MidiType>,
         // @@protoc_insertion_point(field:mizer.nodes.MidiNodeConfig.NoteBinding.port)
         pub port: u32,
-        // @@protoc_insertion_point(field:mizer.nodes.MidiNodeConfig.NoteBinding.rangeFrom)
-        pub rangeFrom: u32,
-        // @@protoc_insertion_point(field:mizer.nodes.MidiNodeConfig.NoteBinding.rangeTo)
-        pub rangeTo: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.MidiNodeConfig.NoteBinding.range_from)
+        pub range_from: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.MidiNodeConfig.NoteBinding.range_to)
+        pub range_to: u32,
         // special fields
         // @@protoc_insertion_point(special_field:mizer.nodes.MidiNodeConfig.NoteBinding.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -10913,14 +10917,14 @@ pub mod midi_node_config {
                 |m: &mut NoteBinding| { &mut m.port },
             ));
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "rangeFrom",
-                |m: &NoteBinding| { &m.rangeFrom },
-                |m: &mut NoteBinding| { &mut m.rangeFrom },
+                "range_from",
+                |m: &NoteBinding| { &m.range_from },
+                |m: &mut NoteBinding| { &mut m.range_from },
             ));
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "rangeTo",
-                |m: &NoteBinding| { &m.rangeTo },
-                |m: &mut NoteBinding| { &mut m.rangeTo },
+                "range_to",
+                |m: &NoteBinding| { &m.range_to },
+                |m: &mut NoteBinding| { &mut m.range_to },
             ));
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NoteBinding>(
                 "MidiNodeConfig.NoteBinding",
@@ -10950,10 +10954,10 @@ pub mod midi_node_config {
                         self.port = is.read_uint32()?;
                     },
                     32 => {
-                        self.rangeFrom = is.read_uint32()?;
+                        self.range_from = is.read_uint32()?;
                     },
                     40 => {
-                        self.rangeTo = is.read_uint32()?;
+                        self.range_to = is.read_uint32()?;
                     },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -10976,11 +10980,11 @@ pub mod midi_node_config {
             if self.port != 0 {
                 my_size += ::protobuf::rt::uint32_size(3, self.port);
             }
-            if self.rangeFrom != 0 {
-                my_size += ::protobuf::rt::uint32_size(4, self.rangeFrom);
+            if self.range_from != 0 {
+                my_size += ::protobuf::rt::uint32_size(4, self.range_from);
             }
-            if self.rangeTo != 0 {
-                my_size += ::protobuf::rt::uint32_size(5, self.rangeTo);
+            if self.range_to != 0 {
+                my_size += ::protobuf::rt::uint32_size(5, self.range_to);
             }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
             self.special_fields.cached_size().set(my_size as u32);
@@ -10997,11 +11001,11 @@ pub mod midi_node_config {
             if self.port != 0 {
                 os.write_uint32(3, self.port)?;
             }
-            if self.rangeFrom != 0 {
-                os.write_uint32(4, self.rangeFrom)?;
+            if self.range_from != 0 {
+                os.write_uint32(4, self.range_from)?;
             }
-            if self.rangeTo != 0 {
-                os.write_uint32(5, self.rangeTo)?;
+            if self.range_to != 0 {
+                os.write_uint32(5, self.range_to)?;
             }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
@@ -11023,8 +11027,8 @@ pub mod midi_node_config {
             self.channel = 0;
             self.type_ = ::protobuf::EnumOrUnknown::new(note_binding::MidiType::CC);
             self.port = 0;
-            self.rangeFrom = 0;
-            self.rangeTo = 0;
+            self.range_from = 0;
+            self.range_to = 0;
             self.special_fields.clear();
         }
 
@@ -11033,8 +11037,8 @@ pub mod midi_node_config {
                 channel: 0,
                 type_: ::protobuf::EnumOrUnknown::from_i32(0),
                 port: 0,
-                rangeFrom: 0,
-                rangeTo: 0,
+                range_from: 0,
+                range_to: 0,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
@@ -11065,8 +11069,8 @@ pub mod midi_node_config {
         pub enum MidiType {
             // @@protoc_insertion_point(enum_value:mizer.nodes.MidiNodeConfig.NoteBinding.MidiType.CC)
             CC = 0,
-            // @@protoc_insertion_point(enum_value:mizer.nodes.MidiNodeConfig.NoteBinding.MidiType.Note)
-            Note = 1,
+            // @@protoc_insertion_point(enum_value:mizer.nodes.MidiNodeConfig.NoteBinding.MidiType.NOTE)
+            NOTE = 1,
         }
 
         impl ::protobuf::Enum for MidiType {
@@ -11079,14 +11083,14 @@ pub mod midi_node_config {
             fn from_i32(value: i32) -> ::std::option::Option<MidiType> {
                 match value {
                     0 => ::std::option::Option::Some(MidiType::CC),
-                    1 => ::std::option::Option::Some(MidiType::Note),
+                    1 => ::std::option::Option::Some(MidiType::NOTE),
                     _ => ::std::option::Option::None
                 }
             }
 
             const VALUES: &'static [MidiType] = &[
                 MidiType::CC,
-                MidiType::Note,
+                MidiType::NOTE,
             ];
         }
 
@@ -11440,10 +11444,10 @@ pub struct OscNodeConfig {
     pub connection: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.path)
     pub path: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.argumentType)
-    pub argumentType: ::protobuf::EnumOrUnknown<osc_node_config::ArgumentType>,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.onlyEmitChanges)
-    pub onlyEmitChanges: bool,
+    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.argument_type)
+    pub argument_type: ::protobuf::EnumOrUnknown<osc_node_config::ArgumentType>,
+    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.only_emit_changes)
+    pub only_emit_changes: bool,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.OscNodeConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -11474,14 +11478,14 @@ impl OscNodeConfig {
             |m: &mut OscNodeConfig| { &mut m.path },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "argumentType",
-            |m: &OscNodeConfig| { &m.argumentType },
-            |m: &mut OscNodeConfig| { &mut m.argumentType },
+            "argument_type",
+            |m: &OscNodeConfig| { &m.argument_type },
+            |m: &mut OscNodeConfig| { &mut m.argument_type },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "onlyEmitChanges",
-            |m: &OscNodeConfig| { &m.onlyEmitChanges },
-            |m: &mut OscNodeConfig| { &mut m.onlyEmitChanges },
+            "only_emit_changes",
+            |m: &OscNodeConfig| { &m.only_emit_changes },
+            |m: &mut OscNodeConfig| { &mut m.only_emit_changes },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OscNodeConfig>(
             "OscNodeConfig",
@@ -11508,10 +11512,10 @@ impl ::protobuf::Message for OscNodeConfig {
                     self.path = is.read_string()?;
                 },
                 24 => {
-                    self.argumentType = is.read_enum_or_unknown()?;
+                    self.argument_type = is.read_enum_or_unknown()?;
                 },
                 32 => {
-                    self.onlyEmitChanges = is.read_bool()?;
+                    self.only_emit_changes = is.read_bool()?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -11531,10 +11535,10 @@ impl ::protobuf::Message for OscNodeConfig {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.path);
         }
-        if self.argumentType != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int) {
-            my_size += ::protobuf::rt::int32_size(3, self.argumentType.value());
+        if self.argument_type != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT) {
+            my_size += ::protobuf::rt::int32_size(3, self.argument_type.value());
         }
-        if self.onlyEmitChanges != false {
+        if self.only_emit_changes != false {
             my_size += 1 + 1;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -11549,11 +11553,11 @@ impl ::protobuf::Message for OscNodeConfig {
         if !self.path.is_empty() {
             os.write_string(2, &self.path)?;
         }
-        if self.argumentType != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int) {
-            os.write_enum(3, ::protobuf::EnumOrUnknown::value(&self.argumentType))?;
+        if self.argument_type != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT) {
+            os.write_enum(3, ::protobuf::EnumOrUnknown::value(&self.argument_type))?;
         }
-        if self.onlyEmitChanges != false {
-            os.write_bool(4, self.onlyEmitChanges)?;
+        if self.only_emit_changes != false {
+            os.write_bool(4, self.only_emit_changes)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -11574,8 +11578,8 @@ impl ::protobuf::Message for OscNodeConfig {
     fn clear(&mut self) {
         self.connection.clear();
         self.path.clear();
-        self.argumentType = ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int);
-        self.onlyEmitChanges = false;
+        self.argument_type = ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT);
+        self.only_emit_changes = false;
         self.special_fields.clear();
     }
 
@@ -11583,8 +11587,8 @@ impl ::protobuf::Message for OscNodeConfig {
         static instance: OscNodeConfig = OscNodeConfig {
             connection: ::std::string::String::new(),
             path: ::std::string::String::new(),
-            argumentType: ::protobuf::EnumOrUnknown::from_i32(0),
-            onlyEmitChanges: false,
+            argument_type: ::protobuf::EnumOrUnknown::from_i32(0),
+            only_emit_changes: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -11613,18 +11617,18 @@ pub mod osc_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.OscNodeConfig.ArgumentType)
     pub enum ArgumentType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Int)
-        Int = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Float)
-        Float = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Long)
-        Long = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Double)
-        Double = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Bool)
-        Bool = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.Color)
-        Color = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.INT)
+        INT = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.FLOAT)
+        FLOAT = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.LONG)
+        LONG = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.DOUBLE)
+        DOUBLE = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.BOOL)
+        BOOL = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.COLOR)
+        COLOR = 5,
     }
 
     impl ::protobuf::Enum for ArgumentType {
@@ -11636,23 +11640,23 @@ pub mod osc_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<ArgumentType> {
             match value {
-                0 => ::std::option::Option::Some(ArgumentType::Int),
-                1 => ::std::option::Option::Some(ArgumentType::Float),
-                2 => ::std::option::Option::Some(ArgumentType::Long),
-                3 => ::std::option::Option::Some(ArgumentType::Double),
-                4 => ::std::option::Option::Some(ArgumentType::Bool),
-                5 => ::std::option::Option::Some(ArgumentType::Color),
+                0 => ::std::option::Option::Some(ArgumentType::INT),
+                1 => ::std::option::Option::Some(ArgumentType::FLOAT),
+                2 => ::std::option::Option::Some(ArgumentType::LONG),
+                3 => ::std::option::Option::Some(ArgumentType::DOUBLE),
+                4 => ::std::option::Option::Some(ArgumentType::BOOL),
+                5 => ::std::option::Option::Some(ArgumentType::COLOR),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [ArgumentType] = &[
-            ArgumentType::Int,
-            ArgumentType::Float,
-            ArgumentType::Long,
-            ArgumentType::Double,
-            ArgumentType::Bool,
-            ArgumentType::Color,
+            ArgumentType::INT,
+            ArgumentType::FLOAT,
+            ArgumentType::LONG,
+            ArgumentType::DOUBLE,
+            ArgumentType::BOOL,
+            ArgumentType::COLOR,
         ];
     }
 
@@ -11670,7 +11674,7 @@ pub mod osc_node_config {
 
     impl ::std::default::Default for ArgumentType {
         fn default() -> Self {
-            ArgumentType::Int
+            ArgumentType::INT
         }
     }
 
@@ -12381,7 +12385,7 @@ impl ::protobuf::Message for MergeNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::Latest) {
+        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST) {
             my_size += ::protobuf::rt::int32_size(1, self.mode.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -12390,7 +12394,7 @@ impl ::protobuf::Message for MergeNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::Latest) {
+        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.mode))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -12410,7 +12414,7 @@ impl ::protobuf::Message for MergeNodeConfig {
     }
 
     fn clear(&mut self) {
-        self.mode = ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::Latest);
+        self.mode = ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST);
         self.special_fields.clear();
     }
 
@@ -12445,12 +12449,12 @@ pub mod merge_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.MergeNodeConfig.MergeMode)
     pub enum MergeMode {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.Latest)
-        Latest = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.Highest)
-        Highest = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.Lowest)
-        Lowest = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.LATEST)
+        LATEST = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.HIGHEST)
+        HIGHEST = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.LOWEST)
+        LOWEST = 2,
     }
 
     impl ::protobuf::Enum for MergeMode {
@@ -12462,17 +12466,17 @@ pub mod merge_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<MergeMode> {
             match value {
-                0 => ::std::option::Option::Some(MergeMode::Latest),
-                1 => ::std::option::Option::Some(MergeMode::Highest),
-                2 => ::std::option::Option::Some(MergeMode::Lowest),
+                0 => ::std::option::Option::Some(MergeMode::LATEST),
+                1 => ::std::option::Option::Some(MergeMode::HIGHEST),
+                2 => ::std::option::Option::Some(MergeMode::LOWEST),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [MergeMode] = &[
-            MergeMode::Latest,
-            MergeMode::Highest,
-            MergeMode::Lowest,
+            MergeMode::LATEST,
+            MergeMode::HIGHEST,
+            MergeMode::LOWEST,
         ];
     }
 
@@ -12490,7 +12494,7 @@ pub mod merge_node_config {
 
     impl ::std::default::Default for MergeMode {
         fn default() -> Self {
-            MergeMode::Latest
+            MergeMode::LATEST
         }
     }
 
@@ -13191,7 +13195,7 @@ impl ::protobuf::Message for MathNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::Addition) {
+        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION) {
             my_size += ::protobuf::rt::int32_size(1, self.mode.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -13200,7 +13204,7 @@ impl ::protobuf::Message for MathNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::Addition) {
+        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.mode))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -13220,7 +13224,7 @@ impl ::protobuf::Message for MathNodeConfig {
     }
 
     fn clear(&mut self) {
-        self.mode = ::protobuf::EnumOrUnknown::new(math_node_config::Mode::Addition);
+        self.mode = ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION);
         self.special_fields.clear();
     }
 
@@ -13255,22 +13259,22 @@ pub mod math_node_config {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.nodes.MathNodeConfig.Mode)
     pub enum Mode {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Addition)
-        Addition = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Subtraction)
-        Subtraction = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Multiplication)
-        Multiplication = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Division)
-        Division = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Invert)
-        Invert = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Sine)
-        Sine = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Cosine)
-        Cosine = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Tangent)
-        Tangent = 7,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.ADDITION)
+        ADDITION = 0,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.SUBTRACTION)
+        SUBTRACTION = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.MULTIPLICATION)
+        MULTIPLICATION = 2,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.DIVISION)
+        DIVISION = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.INVERT)
+        INVERT = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.SINE)
+        SINE = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.COSINE)
+        COSINE = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.TANGENT)
+        TANGENT = 7,
     }
 
     impl ::protobuf::Enum for Mode {
@@ -13282,27 +13286,27 @@ pub mod math_node_config {
 
         fn from_i32(value: i32) -> ::std::option::Option<Mode> {
             match value {
-                0 => ::std::option::Option::Some(Mode::Addition),
-                1 => ::std::option::Option::Some(Mode::Subtraction),
-                2 => ::std::option::Option::Some(Mode::Multiplication),
-                3 => ::std::option::Option::Some(Mode::Division),
-                4 => ::std::option::Option::Some(Mode::Invert),
-                5 => ::std::option::Option::Some(Mode::Sine),
-                6 => ::std::option::Option::Some(Mode::Cosine),
-                7 => ::std::option::Option::Some(Mode::Tangent),
+                0 => ::std::option::Option::Some(Mode::ADDITION),
+                1 => ::std::option::Option::Some(Mode::SUBTRACTION),
+                2 => ::std::option::Option::Some(Mode::MULTIPLICATION),
+                3 => ::std::option::Option::Some(Mode::DIVISION),
+                4 => ::std::option::Option::Some(Mode::INVERT),
+                5 => ::std::option::Option::Some(Mode::SINE),
+                6 => ::std::option::Option::Some(Mode::COSINE),
+                7 => ::std::option::Option::Some(Mode::TANGENT),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [Mode] = &[
-            Mode::Addition,
-            Mode::Subtraction,
-            Mode::Multiplication,
-            Mode::Division,
-            Mode::Invert,
-            Mode::Sine,
-            Mode::Cosine,
-            Mode::Tangent,
+            Mode::ADDITION,
+            Mode::SUBTRACTION,
+            Mode::MULTIPLICATION,
+            Mode::DIVISION,
+            Mode::INVERT,
+            Mode::SINE,
+            Mode::COSINE,
+            Mode::TANGENT,
         ];
     }
 
@@ -13320,7 +13324,7 @@ pub mod math_node_config {
 
     impl ::std::default::Default for Mode {
         fn default() -> Self {
-            Mode::Addition
+            Mode::ADDITION
         }
     }
 
@@ -15371,16 +15375,16 @@ pub mod g13input_node_config {
         L3 = 28,
         // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.L4)
         L4 = 29,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JoystickX)
-        JoystickX = 30,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JoystickY)
-        JoystickY = 31,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.Joystick)
-        Joystick = 32,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.Left)
-        Left = 33,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.Down)
-        Down = 34,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK_X)
+        JOYSTICK_X = 30,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK_Y)
+        JOYSTICK_Y = 31,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK)
+        JOYSTICK = 32,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.LEFT)
+        LEFT = 33,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.DOWN)
+        DOWN = 34,
         // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.BD)
         BD = 35,
     }
@@ -15424,11 +15428,11 @@ pub mod g13input_node_config {
                 27 => ::std::option::Option::Some(Key::L2),
                 28 => ::std::option::Option::Some(Key::L3),
                 29 => ::std::option::Option::Some(Key::L4),
-                30 => ::std::option::Option::Some(Key::JoystickX),
-                31 => ::std::option::Option::Some(Key::JoystickY),
-                32 => ::std::option::Option::Some(Key::Joystick),
-                33 => ::std::option::Option::Some(Key::Left),
-                34 => ::std::option::Option::Some(Key::Down),
+                30 => ::std::option::Option::Some(Key::JOYSTICK_X),
+                31 => ::std::option::Option::Some(Key::JOYSTICK_Y),
+                32 => ::std::option::Option::Some(Key::JOYSTICK),
+                33 => ::std::option::Option::Some(Key::LEFT),
+                34 => ::std::option::Option::Some(Key::DOWN),
                 35 => ::std::option::Option::Some(Key::BD),
                 _ => ::std::option::Option::None
             }
@@ -15465,11 +15469,11 @@ pub mod g13input_node_config {
             Key::L2,
             Key::L3,
             Key::L4,
-            Key::JoystickX,
-            Key::JoystickY,
-            Key::Joystick,
-            Key::Left,
-            Key::Down,
+            Key::JOYSTICK_X,
+            Key::JOYSTICK_Y,
+            Key::JOYSTICK,
+            Key::LEFT,
+            Key::DOWN,
             Key::BD,
         ];
     }
@@ -16115,8 +16119,8 @@ pub struct AudioFileNodeConfig {
     // message fields
     // @@protoc_insertion_point(field:mizer.nodes.AudioFileNodeConfig.file)
     pub file: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.AudioFileNodeConfig.playbackMode)
-    pub playbackMode: ::protobuf::EnumOrUnknown<audio_file_node_config::PlaybackMode>,
+    // @@protoc_insertion_point(field:mizer.nodes.AudioFileNodeConfig.playback_mode)
+    pub playback_mode: ::protobuf::EnumOrUnknown<audio_file_node_config::PlaybackMode>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.AudioFileNodeConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -16142,9 +16146,9 @@ impl AudioFileNodeConfig {
             |m: &mut AudioFileNodeConfig| { &mut m.file },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "playbackMode",
-            |m: &AudioFileNodeConfig| { &m.playbackMode },
-            |m: &mut AudioFileNodeConfig| { &mut m.playbackMode },
+            "playback_mode",
+            |m: &AudioFileNodeConfig| { &m.playback_mode },
+            |m: &mut AudioFileNodeConfig| { &mut m.playback_mode },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioFileNodeConfig>(
             "AudioFileNodeConfig",
@@ -16168,7 +16172,7 @@ impl ::protobuf::Message for AudioFileNodeConfig {
                     self.file = is.read_string()?;
                 },
                 16 => {
-                    self.playbackMode = is.read_enum_or_unknown()?;
+                    self.playback_mode = is.read_enum_or_unknown()?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -16185,8 +16189,8 @@ impl ::protobuf::Message for AudioFileNodeConfig {
         if !self.file.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.file);
         }
-        if self.playbackMode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
-            my_size += ::protobuf::rt::int32_size(2, self.playbackMode.value());
+        if self.playback_mode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
+            my_size += ::protobuf::rt::int32_size(2, self.playback_mode.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -16197,8 +16201,8 @@ impl ::protobuf::Message for AudioFileNodeConfig {
         if !self.file.is_empty() {
             os.write_string(1, &self.file)?;
         }
-        if self.playbackMode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
-            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.playbackMode))?;
+        if self.playback_mode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
+            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.playback_mode))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -16218,14 +16222,14 @@ impl ::protobuf::Message for AudioFileNodeConfig {
 
     fn clear(&mut self) {
         self.file.clear();
-        self.playbackMode = ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT);
+        self.playback_mode = ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT);
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static AudioFileNodeConfig {
         static instance: AudioFileNodeConfig = AudioFileNodeConfig {
             file: ::std::string::String::new(),
-            playbackMode: ::protobuf::EnumOrUnknown::from_i32(0),
+            playback_mode: ::protobuf::EnumOrUnknown::from_i32(0),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -17414,296 +17418,299 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10HideNodeResponse\"\x99\x01\n\x05Nodes\x12'\n\x05nodes\x18\x01\x20\
     \x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\x127\n\x08channels\x18\x02\x20\
     \x03(\x0b2\x1b.mizer.nodes.NodeConnectionR\x08channels\x12.\n\tall_nodes\
-    \x18\x03\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x08allNodes\"\xf0\x01\n\x0e\
-    NodeConnection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x12\
-    1\n\ntargetPort\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntargetPort\
-    \x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x121\n\nsourcePor\
-    t\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\x128\n\x08prot\
-    ocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\
-    \"\xbf\n\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.\
-    Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12\
-    )\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.PortR\x06inputs\x12+\
-    \n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.PortR\x07outputs\x12\
-    5\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.nodes.NodeDesignerR\x08d\
-    esigner\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.mizer.nodes.Node.NodePr\
-    eviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\x01(\x0b2\x17.mizer.n\
-    odes.NodeConfigR\x06config\"\x8a\x07\n\x08NodeType\x12\t\n\x05Fader\x10\
-    \0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Cl\
-    ock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0c\n\x08Envelope\x10\x05\x12\
-    \x0c\n\x08Sequence\x10\x06\x12\n\n\x06Select\x10\x07\x12\t\n\x05Merge\
-    \x10\x08\x12\r\n\tThreshold\x10\t\x12\r\n\tDmxOutput\x10\n\x12\x0c\n\x08\
-    OscInput\x10\x0b\x12\r\n\tOscOutput\x10\x0c\x12\r\n\tMidiInput\x10\r\x12\
-    \x0e\n\nMidiOutput\x10\x0e\x12\r\n\tSequencer\x10\x0f\x12\x0b\n\x07Fixtu\
-    re\x10\x10\x12\x0e\n\nProgrammer\x10\x11\x12\t\n\x05Group\x10\x12\x12\n\
-    \n\x06Preset\x10\x13\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bVideoOutput\
-    \x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoColorBalance\
-    \x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelToDmx\x10\
-    \x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\x20\x12\t\
-    \n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\x12\x0b\n\x07Gamepad\x10-\
-    \x12\x0c\n\x08ColorRgb\x102\x12\x0c\n\x08ColorHsv\x103\x12\r\n\tContaine\
-    r\x10d\x12\x0b\n\x07Encoder\x107\x12\x08\n\x04Math\x108\x12\x10\n\x0cDat\
-    aToNumber\x109\x12\x10\n\x0cNumberToData\x10:\x12\t\n\x05Value\x10;\x12\
-    \x0b\n\x07Extract\x10<\x12\r\n\tMqttInput\x10=\x12\x0e\n\nMqttOutput\x10\
-    >\x12\x0e\n\nPlanScreen\x10?\x12\t\n\x05Delay\x10@\x12\x08\n\x04Ramp\x10\
-    A\x12\t\n\x05Noise\x10B\x12\t\n\x05Label\x10C\x12\r\n\tTransport\x10D\
-    \x12\x0c\n\x08G13Input\x10E\x12\r\n\tG13Output\x10F\x12\x12\n\x0eConstan\
-    tNumber\x10G\x12\x0f\n\x0bConditional\x10H\x12\x13\n\x0fTimecodeControl\
-    \x10I\x12\x12\n\x0eTimecodeOutput\x10J\x12\r\n\tAudioFile\x10K\x12\x0f\n\
-    \x0bAudioOutput\x10L\x12\x0f\n\x0bAudioVolume\x10M\x12\x0e\n\nAudioInput\
-    \x10N\x12\x0c\n\x08AudioMix\x10O\x12\x0e\n\nAudioMeter\x10P\x12\x0c\n\
-    \x08Template\x10Q\"i\n\x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\
-    \x0c\n\x08Waveform\x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Te\
-    xture\x10\x03\x12\x0c\n\x08Timecode\x10\x04\x12\x08\n\x04Data\x10\x05\
-    \x12\x08\n\x04None\x10\x06\"\xe6$\n\nNodeConfig\x12O\n\x10oscillatorConf\
-    ig\x18\n\x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillat\
-    orConfig\x12L\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes\
-    .ScriptingNodeConfigH\0R\x0fscriptingConfig\x12I\n\x0esequenceConfig\x18\
-    \x0c\x20\x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceCon\
-    fig\x12@\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeC\
-    onfigH\0R\x0bclockConfig\x12F\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x1e\
-    .mizer.nodes.FixtureNodeConfigH\0R\rfixtureConfig\x12C\n\x0cbuttonConfig\
-    \x18\x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbuttonCon\
-    fig\x12@\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.FaderNod\
-    eConfigH\0R\x0bfaderConfig\x12I\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b\
-    2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12@\n\x0blas\
-    erConfig\x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfigH\0R\x0bla\
-    serConfig\x12U\n\x12pixelPatternConfig\x18\x13\x20\x01(\x0b2#.mizer.node\
-    s.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12I\n\x0epixelDmxCon\
-    fig\x18\x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeConfigH\0R\x0epixe\
-    lDmxConfig\x12L\n\x0fdmxOutputConfig\x18\x15\x20\x01(\x0b2\x20.mizer.nod\
-    es.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12G\n\x0fmidiInputConfig\
-    \x18\x16\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x0fmidiInputCo\
-    nfig\x12I\n\x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.mizer.nodes.Mi\
-    diNodeConfigH\0R\x10midiOutputConfig\x12L\n\x0fopcOutputConfig\x18\x18\
-    \x20\x01(\x0b2\x20.mizer.nodes.OpcOutputNodeConfigH\0R\x0fopcOutputConfi\
-    g\x12D\n\x0eoscInputConfig\x18\x19\x20\x01(\x0b2\x1a.mizer.nodes.OscNode\
-    ConfigH\0R\x0eoscInputConfig\x12F\n\x0foscOutputConfig\x18\x1a\x20\x01(\
-    \x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0foscOutputConfig\x12d\n\x17vid\
-    eoColorBalanceConfig\x18\x1b\x20\x01(\x0b2(.mizer.nodes.VideoColorBalanc\
-    eNodeConfigH\0R\x17videoColorBalanceConfig\x12R\n\x11videoEffectConfig\
-    \x18\x1c\x20\x01(\x0b2\".mizer.nodes.VideoEffectNodeConfigH\0R\x11videoE\
-    ffectConfig\x12L\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x20.mizer.no\
-    des.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12R\n\x11videoOutputConf\
-    ig\x18\x1e\x20\x01(\x0b2\".mizer.nodes.VideoOutputNodeConfigH\0R\x11vide\
-    oOutputConfig\x12[\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2%.mize\
-    r.nodes.VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12C\n\x0cs\
-    electConfig\x18\x20\x20\x01(\x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\
-    \x0cselectConfig\x12@\n\x0bmergeConfig\x18!\x20\x01(\x0b2\x1c.mizer.node\
-    s.MergeNodeConfigH\0R\x0bmergeConfig\x12I\n\x0eenvelopeConfig\x18\"\x20\
-    \x01(\x0b2\x1f.mizer.nodes.EnvelopeNodeConfigH\0R\x0eenvelopeConfig\x12L\
-    \n\x0fsequencerConfig\x18#\x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeCo\
-    nfigH\0R\x0fsequencerConfig\x12O\n\x10programmerConfig\x18$\x20\x01(\x0b\
-    2!.mizer.nodes.ProgrammerNodeConfigH\0R\x10programmerConfig\x12@\n\x0bgr\
-    oupConfig\x18%\x20\x01(\x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgrou\
-    pConfig\x12C\n\x0cpresetConfig\x18&\x20\x01(\x0b2\x1d.mizer.nodes.Preset\
-    NodeConfigH\0R\x0cpresetConfig\x12I\n\x0ecolorRgbConfig\x18(\x20\x01(\
-    \x0b2\x1f.mizer.nodes.ColorRgbNodeConfigH\0R\x0ecolorRgbConfig\x12I\n\
-    \x0ecolorHsvConfig\x18)\x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfig\
-    H\0R\x0ecolorHsvConfig\x12N\n\x11gamepadNodeConfig\x18*\x20\x01(\x0b2\
-    \x1e.mizer.nodes.GamepadNodeConfigH\0R\x11gamepadNodeConfig\x12L\n\x0fth\
-    resholdConfig\x18+\x20\x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\
-    \x0fthresholdConfig\x12F\n\rencoderConfig\x18,\x20\x01(\x0b2\x1e.mizer.n\
-    odes.EncoderNodeConfigH\0R\rencoderConfig\x12L\n\x0fcontainerConfig\x18-\
-    \x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfi\
-    g\x12=\n\nmathConfig\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\
-    \0R\nmathConfig\x12L\n\x0fmqttInputConfig\x18/\x20\x01(\x0b2\x20.mizer.n\
-    odes.MqttInputNodeConfigH\0R\x0fmqttInputConfig\x12O\n\x10mqttOutputConf\
-    ig\x180\x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqttOutpu\
-    tConfig\x12U\n\x12numberToDataConfig\x181\x20\x01(\x0b2#.mizer.nodes.Num\
-    berToDataNodeConfigH\0R\x12numberToDataConfig\x12U\n\x12dataToNumberConf\
-    ig\x182\x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToN\
-    umberConfig\x12@\n\x0bvalueConfig\x183\x20\x01(\x0b2\x1c.mizer.nodes.Val\
-    ueNodeConfigH\0R\x0bvalueConfig\x12F\n\rextractConfig\x184\x20\x01(\x0b2\
-    \x1e.mizer.nodes.ExtractNodeConfigH\0R\rextractConfig\x12O\n\x10planScre\
-    enConfig\x185\x20\x01(\x0b2!.mizer.nodes.PlanScreenNodeConfigH\0R\x10pla\
-    nScreenConfig\x12@\n\x0bdelayConfig\x186\x20\x01(\x0b2\x1c.mizer.nodes.D\
-    elayNodeConfigH\0R\x0bdelayConfig\x12=\n\nrampConfig\x187\x20\x01(\x0b2\
-    \x1b.mizer.nodes.RampNodeConfigH\0R\nrampConfig\x12@\n\x0bnoiseConfig\
-    \x188\x20\x01(\x0b2\x1c.mizer.nodes.NoiseNodeConfigH\0R\x0bnoiseConfig\
-    \x12@\n\x0blabelConfig\x189\x20\x01(\x0b2\x1c.mizer.nodes.LabelNodeConfi\
-    gH\0R\x0blabelConfig\x12L\n\x0ftransportConfig\x18:\x20\x01(\x0b2\x20.mi\
-    zer.nodes.TransportNodeConfigH\0R\x0ftransportConfig\x12I\n\x0eg13InputC\
-    onfig\x18;\x20\x01(\x0b2\x1f.mizer.nodes.G13InputNodeConfigH\0R\x0eg13In\
-    putConfig\x12L\n\x0fg13OutputConfig\x18<\x20\x01(\x0b2\x20.mizer.nodes.G\
-    13OutputNodeConfigH\0R\x0fg13OutputConfig\x12[\n\x14constantNumberConfig\
-    \x18=\x20\x01(\x0b2%.mizer.nodes.ConstantNumberNodeConfigH\0R\x14constan\
-    tNumberConfig\x12R\n\x11conditionalConfig\x18>\x20\x01(\x0b2\".mizer.nod\
-    es.ConditionalNodeConfigH\0R\x11conditionalConfig\x12^\n\x15timecodeCont\
-    rolConfig\x18?\x20\x01(\x0b2&.mizer.nodes.TimecodeControlNodeConfigH\0R\
-    \x15timecodeControlConfig\x12[\n\x14timecodeOutputConfig\x18@\x20\x01(\
-    \x0b2%.mizer.nodes.TimecodeOutputNodeConfigH\0R\x14timecodeOutputConfig\
-    \x12L\n\x0faudioFileConfig\x18A\x20\x01(\x0b2\x20.mizer.nodes.AudioFileN\
-    odeConfigH\0R\x0faudioFileConfig\x12R\n\x11audioOutputConfig\x18B\x20\
-    \x01(\x0b2\".mizer.nodes.AudioOutputNodeConfigH\0R\x11audioOutputConfig\
-    \x12R\n\x11audioVolumeConfig\x18C\x20\x01(\x0b2\".mizer.nodes.AudioVolum\
-    eNodeConfigH\0R\x11audioVolumeConfig\x12O\n\x10audioInputConfig\x18D\x20\
-    \x01(\x0b2!.mizer.nodes.AudioInputNodeConfigH\0R\x10audioInputConfig\x12\
-    I\n\x0eaudioMixConfig\x18E\x20\x01(\x0b2\x1f.mizer.nodes.AudioMixNodeCon\
-    figH\0R\x0eaudioMixConfig\x12O\n\x10audioMeterConfig\x18F\x20\x01(\x0b2!\
-    .mizer.nodes.AudioMeterNodeConfigH\0R\x10audioMeterConfig\x12I\n\x0etemp\
-    lateConfig\x18G\x20\x01(\x0b2\x1f.mizer.nodes.TemplateNodeConfigH\0R\x0e\
-    templateConfigB\x06\n\x04type\"\x87\x02\n\x14OscillatorNodeConfig\x12D\n\
-    \x04type\x18\x01\x20\x01(\x0e20.mizer.nodes.OscillatorNodeConfig.Oscilla\
-    torTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\
-    \x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\
-    \x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\
-    \x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillato\
-    rType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Saw\
-    \x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\
-    \x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa6\x01\n\x12SequenceNo\
-    deConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b2,.mizer.nodes.SequenceNode\
-    Config.SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\
-    \x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
-    \x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"\x16\n\x14Pro\
-    grammerNodeConfig\",\n\x0fGroupNodeConfig\x12\x19\n\x08group_id\x18\x01\
-    \x20\x01(\rR\x07groupId\"K\n\x10PresetNodeConfig\x127\n\tpreset_id\x18\
-    \x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x08presetId\"v\n\x12En\
-    velopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\x01(\x01R\x06attack\x12\
-    \x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\x12\x18\n\x07sustain\x18\
-    \x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07release\x18\x04\x20\x01(\x01R\
-    \x07release\"'\n\x0fClockNodeConfig\x12\x14\n\x05speed\x18\x01\x20\x01(\
-    \x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\x1d\n\nfixture_id\x18\x01\
-    \x20\x01(\rR\tfixtureId\"6\n\x13SequencerNodeConfig\x12\x1f\n\x0bsequenc\
-    e_id\x18\x01\x20\x01(\rR\nsequenceId\"*\n\x10ButtonNodeConfig\x12\x16\n\
-    \x06toggle\x18\x01\x20\x01(\x08R\x06toggle\"\x11\n\x0fFaderNodeConfig\"(\
-    \n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\
-    .\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08devic\
-    eId\"\x9f\x03\n\x11GamepadNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\
-    \x01(\tR\x08deviceId\x12@\n\x07control\x18\x02\x20\x01(\x0e2&.mizer.node\
-    s.GamepadNodeConfig.ControlR\x07control\"\xaa\x02\n\x07Control\x12\x0e\n\
-    \nLeftStickX\x10\0\x12\x0e\n\nLeftStickY\x10\x01\x12\x0f\n\x0bRightStick\
-    X\x10\x02\x12\x0f\n\x0bRightStickY\x10\x03\x12\x0f\n\x0bLeftTrigger\x10\
-    \x04\x12\x10\n\x0cRightTrigger\x10\x05\x12\x10\n\x0cLeftShoulder\x10\x06\
-    \x12\x11\n\rRightShoulder\x10\x07\x12\t\n\x05South\x10\x08\x12\x08\n\x04\
-    East\x10\t\x12\t\n\x05North\x10\n\x12\x08\n\x04West\x10\x0b\x12\n\n\x06S\
-    elect\x10\x0c\x12\t\n\x05Start\x10\r\x12\n\n\x06DpadUp\x10\x0e\x12\x0c\n\
-    \x08DpadDown\x10\x0f\x12\x0c\n\x08DpadLeft\x10\x10\x12\r\n\tDpadRight\
-    \x10\x11\x12\r\n\tLeftStick\x10\x12\x12\x0e\n\nRightStick\x10\x13\"\x88\
-    \x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01(\x0e2\
-    +.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\"'\n\x07Pattern\
-    \x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\x10\x01\"\x81\x01\n\
-    \x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05width\
-    \x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0estart_uni\
-    verse\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\x18\x04\x20\
-    \x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\x12\x1b\n\x06output\x18\
-    \x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\x1a\n\x08universe\x18\x02\
-    \x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07cha\
-    nnelB\t\n\x07_output\"\xf0\x03\n\x0eMidiNodeConfig\x12\x16\n\x06device\
-    \x18\x01\x20\x01(\tR\x06device\x12K\n\x0bnoteBinding\x18\x02\x20\x01(\
-    \x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBinding\x12T\n\
-    \x0econtrolBinding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiNodeConfig.Con\
-    trolBindingH\0R\x0econtrolBinding\x1a\xd7\x01\n\x0bNoteBinding\x12\x18\n\
-    \x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04type\x18\x02\x20\
-    \x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTypeR\x04type\x12\
-    \x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1c\n\trangeFrom\x18\x04\
-    \x20\x01(\rR\trangeFrom\x12\x18\n\x07rangeTo\x18\x05\x20\x01(\rR\x07rang\
-    eTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\x04Note\x10\x01\
-    \x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\x01(\tR\x04page\
-    \x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\n\x07binding\"k\
-    \n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\
-    \x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\
-    \x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\
-    \x06height\"\x89\x02\n\rOscNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\
-    \x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12K\
-    \n\x0cargumentType\x18\x03\x20\x01(\x0e2'.mizer.nodes.OscNodeConfig.Argu\
-    mentTypeR\x0cargumentType\x12(\n\x0fonlyEmitChanges\x18\x04\x20\x01(\x08\
-    R\x0fonlyEmitChanges\"M\n\x0cArgumentType\x12\x07\n\x03Int\x10\0\x12\t\n\
-    \x05Float\x10\x01\x12\x08\n\x04Long\x10\x02\x12\n\n\x06Double\x10\x03\
-    \x12\x08\n\x04Bool\x10\x04\x12\t\n\x05Color\x10\x05\"\x1d\n\x1bVideoColo\
-    rBalanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNod\
-    eConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOu\
-    tputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNode\
-    Config\"\x7f\n\x0fMergeNodeConfig\x12:\n\x04mode\x18\x01\x20\x01(\x0e2&.\
-    mizer.nodes.MergeNodeConfig.MergeModeR\x04mode\"0\n\tMergeMode\x12\n\n\
-    \x06Latest\x10\0\x12\x0b\n\x07Highest\x10\x01\x12\n\n\x06Lowest\x10\x02\
-    \"\xb1\x01\n\x13ThresholdNodeConfig\x12'\n\x0flower_threshold\x18\x01\
-    \x20\x01(\x01R\x0elowerThreshold\x12'\n\x0fupper_threshold\x18\x02\x20\
-    \x01(\x01R\x0eupperThreshold\x12!\n\x0cactive_value\x18\x03\x20\x01(\x01\
-    R\x0bactiveValue\x12%\n\x0einactive_value\x18\x04\x20\x01(\x01R\rinactiv\
-    eValue\"0\n\x11EncoderNodeConfig\x12\x1b\n\thold_rate\x18\x01\x20\x01(\
-    \x01R\x08holdRate\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeC\
-    onfig\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\
-    \x11.mizer.nodes.NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeConfig\x124\n\x04\
-    mode\x18\x01\x20\x01(\x0e2\x20.mizer.nodes.MathNodeConfig.ModeR\x04mode\
-    \"v\n\x04Mode\x12\x0c\n\x08Addition\x10\0\x12\x0f\n\x0bSubtraction\x10\
-    \x01\x12\x12\n\x0eMultiplication\x10\x02\x12\x0c\n\x08Division\x10\x03\
-    \x12\n\n\x06Invert\x10\x04\x12\x08\n\x04Sine\x10\x05\x12\n\n\x06Cosine\
-    \x10\x06\x12\x0b\n\x07Tangent\x10\x07\"I\n\x13MqttInputNodeConfig\x12\
-    \x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\
-    \x02\x20\x01(\tR\x04path\"b\n\x14MqttOutputNodeConfig\x12\x1e\n\nconnect\
-    ion\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\t\
-    R\x04path\x12\x16\n\x06retain\x18\x03\x20\x01(\x08R\x06retain\"\x18\n\
-    \x16NumberToDataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\x0fVal\
-    ueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"'\n\x11Ext\
-    ractNodeConfig\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"0\n\x12Tem\
-    plateNodeConfig\x12\x1a\n\x08template\x18\x01\x20\x01(\tR\x08template\"L\
-    \n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06p\
-    lanId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDelay\
-    NodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\
-    \xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mize\
-    r.nodes.RampNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\
-    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\
-    \x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\
-    \x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\
-    \x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fad\
-    e\x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\x04tex\
-    t\x18\x01\x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"\xb5\x03\n\
-    \x12G13InputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08devic\
-    eId\x125\n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G13InputNodeConfig.\
-    KeyR\x03key\"\xca\x02\n\x03Key\x12\x06\n\x02G1\x10\0\x12\x06\n\x02G2\x10\
-    \x01\x12\x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\x12\x06\n\x02G5\x10\
-    \x04\x12\x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\x12\x06\n\x02G8\x10\
-    \x07\x12\x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\x12\x07\n\x03G11\x10\
-    \n\x12\x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\x0c\x12\x07\n\x03G14\
-    \x10\r\x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\x10\x0f\x12\x07\n\x03G1\
-    7\x10\x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03G19\x10\x12\x12\x07\n\
-    \x03G20\x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\x03G22\x10\x15\x12\
-    \x06\n\x02M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\n\x02M3\x10\x18\x12\
-    \x06\n\x02MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\n\x02L2\x10\x1b\x12\
-    \x06\n\x02L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\r\n\tJoystickX\x10\x1e\
-    \x12\r\n\tJoystickY\x10\x1f\x12\x0c\n\x08Joystick\x10\x20\x12\x08\n\x04L\
-    eft\x10!\x12\x08\n\x04Down\x10\"\x12\x06\n\x02BD\x10#\"2\n\x13G13OutputN\
-    odeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\"0\n\x18C\
-    onstantNumberNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05valu\
-    e\"5\n\x15ConditionalNodeConfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\
-    \x01R\tthreshold\"<\n\x19TimecodeControlNodeConfig\x12\x1f\n\x0btimecode\
-    _id\x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18TimecodeOutputNodeConfig\x12\
-    \x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\"\xb3\x01\n\x13AudioFi\
-    leNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\x12Q\n\x0cpla\
-    ybackMode\x18\x02\x20\x01(\x0e2-.mizer.nodes.AudioFileNodeConfig.Playbac\
-    kModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\x0c\n\x08ONE_SHOT\x10\0\
-    \x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\x10\x02\"\x17\n\x15AudioOu\
-    tputNodeConfig\"\x17\n\x15AudioVolumeNodeConfig\"\x16\n\x14AudioInputNod\
-    eConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\x14AudioMeterNodeConfig\"*\
-    \n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\
-    \x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\
-    \x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\
-    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\
-    \x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\
-    \tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.Cha\
-    nnelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\
-    \x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\
-    \n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
-    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
-    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
-    \n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\x08NodesApi\x129\n\
-    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
-    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
-    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
-    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
-    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProper\
-    ty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeC\
-    onfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\
-    \x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes\
-    .DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08Hide\
-    Node\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeRes\
-    ponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.miz\
-    er.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.Duplica\
-    teNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.\
-    nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nG\
-    roupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.Grou\
-    pNodesResponseb\x06proto3\
+    \x18\x03\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x08allNodes\"\xf4\x01\n\x0e\
+    NodeConnection\x12\x1f\n\x0btarget_node\x18\x01\x20\x01(\tR\ntargetNode\
+    \x122\n\x0btarget_port\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntarg\
+    etPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\x122\n\
+    \x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\
+    \x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
+    lR\x08protocol\"\xe1\n\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\
+    \x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\
+    \x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.\
+    PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.\
+    PortR\x07outputs\x125\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.node\
+    s.NodeDesignerR\x08designer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.miz\
+    er.nodes.Node.NodePreviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\
+    \x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\xac\x07\n\x08NodeType\
+    \x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\x01\x12\x0e\n\nOSCILLATOR\
+    \x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06SCRIPT\x10\x04\x12\x0c\n\
+    \x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\x06\x12\n\n\x06SELECT\x10\
+    \x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHOLD\x10\t\x12\x0e\n\nDMX_OU\
+    TPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\x0e\n\nOSC_OUTPUT\x10\x0c\x12\
+    \x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI_OUTPUT\x10\x0e\x12\r\n\tSEQUE\
+    NCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\x0e\n\nPROGRAMMER\x10\x11\
+    \x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\x10\x13\x12\x0e\n\nVIDEO_FIL\
+    E\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\x12\x10\n\x0cVIDEO_EFFECT\
+    \x10\x16\x12\x17\n\x13VIDEO_COLOR_BALANCE\x10\x17\x12\x13\n\x0fVIDEO_TRA\
+    NSFORM\x10\x18\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PATTER\
+    N\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\tI\
+    LDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\n\
+    \tCOLOR_HSV\x103\x12\r\n\tCONTAINER\x10d\x12\x0b\n\x07ENCODER\x107\x12\
+    \x08\n\x04MATH\x108\x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER\
+    _TO_DATA\x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\
+    \nMQTT_INPUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\
+    \x10?\x12\t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\
+    \x12\t\n\x05LABEL\x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10\
+    E\x12\r\n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\
+    \x0bCONDITIONAL\x10H\x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIM\
+    ECODE_OUTPUT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\
+    \x10L\x12\x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\
+    \n\tAUDIO_MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\
+    \x10Q\"i\n\x0fNodePreviewType\x12\x0b\n\x07HISTORY\x10\0\x12\x0c\n\x08WA\
+    VEFORM\x10\x01\x12\x0c\n\x08MULTIPLE\x10\x02\x12\x0b\n\x07TEXTURE\x10\
+    \x03\x12\x0c\n\x08TIMECODE\x10\x04\x12\x08\n\x04DATA\x10\x05\x12\x08\n\
+    \x04NONE\x10\x06\"\xc7%\n\nNodeConfig\x12P\n\x11oscillator_config\x18\n\
+    \x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillatorConfig\
+    \x12M\n\x10scripting_config\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes.Script\
+    ingNodeConfigH\0R\x0fscriptingConfig\x12J\n\x0fsequence_config\x18\x0c\
+    \x20\x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceConfig\
+    \x12A\n\x0cclock_config\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeCon\
+    figH\0R\x0bclockConfig\x12G\n\x0efixture_config\x18\x0e\x20\x01(\x0b2\
+    \x1e.mizer.nodes.FixtureNodeConfigH\0R\rfixtureConfig\x12D\n\rbutton_con\
+    fig\x18\x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbutton\
+    Config\x12A\n\x0cfader_config\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.Fade\
+    rNodeConfigH\0R\x0bfaderConfig\x12K\n\x10ilda_file_config\x18\x11\x20\
+    \x01(\x0b2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12A\
+    \n\x0claser_config\x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfig\
+    H\0R\x0blaserConfig\x12W\n\x14pixel_pattern_config\x18\x13\x20\x01(\x0b2\
+    #.mizer.nodes.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12K\n\
+    \x10pixel_dmx_config\x18\x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeC\
+    onfigH\0R\x0epixelDmxConfig\x12N\n\x11dmx_output_config\x18\x15\x20\x01(\
+    \x0b2\x20.mizer.nodes.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12I\n\
+    \x11midi_input_config\x18\x16\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConf\
+    igH\0R\x0fmidiInputConfig\x12K\n\x12midi_output_config\x18\x17\x20\x01(\
+    \x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x10midiOutputConfig\x12N\n\x11o\
+    pc_output_config\x18\x18\x20\x01(\x0b2\x20.mizer.nodes.OpcOutputNodeConf\
+    igH\0R\x0fopcOutputConfig\x12F\n\x10osc_input_config\x18\x19\x20\x01(\
+    \x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0eoscInputConfig\x12H\n\x11osc_\
+    output_config\x18\x1a\x20\x01(\x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\
+    \x0foscOutputConfig\x12g\n\x1avideo_color_balance_config\x18\x1b\x20\x01\
+    (\x0b2(.mizer.nodes.VideoColorBalanceNodeConfigH\0R\x17videoColorBalance\
+    Config\x12T\n\x13video_effect_config\x18\x1c\x20\x01(\x0b2\".mizer.nodes\
+    .VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12N\n\x11video_file_con\
+    fig\x18\x1d\x20\x01(\x0b2\x20.mizer.nodes.VideoFileNodeConfigH\0R\x0fvid\
+    eoFileConfig\x12T\n\x13video_output_config\x18\x1e\x20\x01(\x0b2\".mizer\
+    .nodes.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12]\n\x16video_tr\
+    ansform_config\x18\x1f\x20\x01(\x0b2%.mizer.nodes.VideoTransformNodeConf\
+    igH\0R\x14videoTransformConfig\x12D\n\rselect_config\x18\x20\x20\x01(\
+    \x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\x0cselectConfig\x12A\n\x0cmer\
+    ge_config\x18!\x20\x01(\x0b2\x1c.mizer.nodes.MergeNodeConfigH\0R\x0bmerg\
+    eConfig\x12J\n\x0fenvelope_config\x18\"\x20\x01(\x0b2\x1f.mizer.nodes.En\
+    velopeNodeConfigH\0R\x0eenvelopeConfig\x12M\n\x10sequencer_config\x18#\
+    \x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeConfigH\0R\x0fsequencerConfi\
+    g\x12P\n\x11programmer_config\x18$\x20\x01(\x0b2!.mizer.nodes.Programmer\
+    NodeConfigH\0R\x10programmerConfig\x12A\n\x0cgroup_config\x18%\x20\x01(\
+    \x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgroupConfig\x12D\n\rpreset_\
+    config\x18&\x20\x01(\x0b2\x1d.mizer.nodes.PresetNodeConfigH\0R\x0cpreset\
+    Config\x12K\n\x10color_rgb_config\x18(\x20\x01(\x0b2\x1f.mizer.nodes.Col\
+    orRgbNodeConfigH\0R\x0ecolorRgbConfig\x12K\n\x10color_hsv_config\x18)\
+    \x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfigH\0R\x0ecolorHsvConfig\
+    \x12P\n\x13gamepad_node_config\x18*\x20\x01(\x0b2\x1e.mizer.nodes.Gamepa\
+    dNodeConfigH\0R\x11gamepadNodeConfig\x12M\n\x10threshold_config\x18+\x20\
+    \x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\x0fthresholdConfig\
+    \x12G\n\x0eencoder_config\x18,\x20\x01(\x0b2\x1e.mizer.nodes.EncoderNode\
+    ConfigH\0R\rencoderConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\
+    \x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfig\x12>\n\x0bma\
+    th_config\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\0R\nmathCon\
+    fig\x12N\n\x11mqtt_input_config\x18/\x20\x01(\x0b2\x20.mizer.nodes.MqttI\
+    nputNodeConfigH\0R\x0fmqttInputConfig\x12Q\n\x12mqtt_output_config\x180\
+    \x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqttOutputConfig\
+    \x12X\n\x15number_to_data_config\x181\x20\x01(\x0b2#.mizer.nodes.NumberT\
+    oDataNodeConfigH\0R\x12numberToDataConfig\x12X\n\x15data_to_number_confi\
+    g\x182\x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToNu\
+    mberConfig\x12A\n\x0cvalue_config\x183\x20\x01(\x0b2\x1c.mizer.nodes.Val\
+    ueNodeConfigH\0R\x0bvalueConfig\x12G\n\x0eextract_config\x184\x20\x01(\
+    \x0b2\x1e.mizer.nodes.ExtractNodeConfigH\0R\rextractConfig\x12Q\n\x12pla\
+    n_screen_config\x185\x20\x01(\x0b2!.mizer.nodes.PlanScreenNodeConfigH\0R\
+    \x10planScreenConfig\x12A\n\x0cdelay_config\x186\x20\x01(\x0b2\x1c.mizer\
+    .nodes.DelayNodeConfigH\0R\x0bdelayConfig\x12>\n\x0bramp_config\x187\x20\
+    \x01(\x0b2\x1b.mizer.nodes.RampNodeConfigH\0R\nrampConfig\x12A\n\x0cnois\
+    e_config\x188\x20\x01(\x0b2\x1c.mizer.nodes.NoiseNodeConfigH\0R\x0bnoise\
+    Config\x12A\n\x0clabel_config\x189\x20\x01(\x0b2\x1c.mizer.nodes.LabelNo\
+    deConfigH\0R\x0blabelConfig\x12M\n\x10transport_config\x18:\x20\x01(\x0b\
+    2\x20.mizer.nodes.TransportNodeConfigH\0R\x0ftransportConfig\x12K\n\x10g\
+    13_input_config\x18;\x20\x01(\x0b2\x1f.mizer.nodes.G13InputNodeConfigH\0\
+    R\x0eg13InputConfig\x12N\n\x11g13_output_config\x18<\x20\x01(\x0b2\x20.m\
+    izer.nodes.G13OutputNodeConfigH\0R\x0fg13OutputConfig\x12]\n\x16constant\
+    _number_config\x18=\x20\x01(\x0b2%.mizer.nodes.ConstantNumberNodeConfigH\
+    \0R\x14constantNumberConfig\x12S\n\x12conditional_config\x18>\x20\x01(\
+    \x0b2\".mizer.nodes.ConditionalNodeConfigH\0R\x11conditionalConfig\x12`\
+    \n\x17timecode_control_config\x18?\x20\x01(\x0b2&.mizer.nodes.TimecodeCo\
+    ntrolNodeConfigH\0R\x15timecodeControlConfig\x12]\n\x16timecode_output_c\
+    onfig\x18@\x20\x01(\x0b2%.mizer.nodes.TimecodeOutputNodeConfigH\0R\x14ti\
+    mecodeOutputConfig\x12N\n\x11audio_file_config\x18A\x20\x01(\x0b2\x20.mi\
+    zer.nodes.AudioFileNodeConfigH\0R\x0faudioFileConfig\x12T\n\x13audio_out\
+    put_config\x18B\x20\x01(\x0b2\".mizer.nodes.AudioOutputNodeConfigH\0R\
+    \x11audioOutputConfig\x12T\n\x13audio_volume_config\x18C\x20\x01(\x0b2\"\
+    .mizer.nodes.AudioVolumeNodeConfigH\0R\x11audioVolumeConfig\x12Q\n\x12au\
+    dio_input_config\x18D\x20\x01(\x0b2!.mizer.nodes.AudioInputNodeConfigH\0\
+    R\x10audioInputConfig\x12K\n\x10audio_mix_config\x18E\x20\x01(\x0b2\x1f.\
+    mizer.nodes.AudioMixNodeConfigH\0R\x0eaudioMixConfig\x12Q\n\x12audio_met\
+    er_config\x18F\x20\x01(\x0b2!.mizer.nodes.AudioMeterNodeConfigH\0R\x10au\
+    dioMeterConfig\x12J\n\x0ftemplate_config\x18G\x20\x01(\x0b2\x1f.mizer.no\
+    des.TemplateNodeConfigH\0R\x0etemplateConfigB\x06\n\x04type\"\x87\x02\n\
+    \x14OscillatorNodeConfig\x12D\n\x04type\x18\x01\x20\x01(\x0e20.mizer.nod\
+    es.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\
+    \x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03ma\
+    x\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\
+    \x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\
+    \x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06SQUARE\x10\0\x12\x08\n\x04\
+    SINE\x10\x01\x12\x07\n\x03SAW\x10\x02\x12\x0c\n\x08TRIANGLE\x10\x03\"-\n\
+    \x13ScriptingNodeConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\x06scrip\
+    t\"\xa6\x01\n\x12SequenceNodeConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b\
+    2,.mizer.nodes.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\x0cSeque\
+    nceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05val\
+    ue\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08\
+    R\x04hold\"\x16\n\x14ProgrammerNodeConfig\",\n\x0fGroupNodeConfig\x12\
+    \x19\n\x08group_id\x18\x01\x20\x01(\rR\x07groupId\"K\n\x10PresetNodeConf\
+    ig\x127\n\tpreset_id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetId\
+    R\x08presetId\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\
+    \x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\
+    \x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07rele\
+    ase\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\x12\x14\n\
+    \x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\
+    \x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"6\n\x13SequencerNodeC\
+    onfig\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\"*\n\x10B\
+    uttonNodeConfig\x12\x16\n\x06toggle\x18\x01\x20\x01(\x08R\x06toggle\"\
+    \x11\n\x0fFaderNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\
+    \x18\x01\x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_i\
+    d\x18\x01\x20\x01(\tR\x08deviceId\"\xbb\x03\n\x11GamepadNodeConfig\x12\
+    \x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x12@\n\x07control\x18\
+    \x02\x20\x01(\x0e2&.mizer.nodes.GamepadNodeConfig.ControlR\x07control\"\
+    \xc6\x02\n\x07Control\x12\x10\n\x0cLEFT_STICK_X\x10\0\x12\x10\n\x0cLEFT_\
+    STICK_Y\x10\x01\x12\x11\n\rRIGHT_STICK_X\x10\x02\x12\x11\n\rRIGHT_STICK_\
+    Y\x10\x03\x12\x10\n\x0cLEFT_TRIGGER\x10\x04\x12\x11\n\rRIGHT_TRIGGER\x10\
+    \x05\x12\x11\n\rLEFT_SHOULDER\x10\x06\x12\x12\n\x0eRIGHT_SHOULDER\x10\
+    \x07\x12\t\n\x05SOUTH\x10\x08\x12\x08\n\x04EAST\x10\t\x12\t\n\x05NORTH\
+    \x10\n\x12\x08\n\x04WEST\x10\x0b\x12\n\n\x06SELECT\x10\x0c\x12\t\n\x05ST\
+    ART\x10\r\x12\x08\n\x04MODE\x10\x0e\x12\x0b\n\x07DPAD_UP\x10\x0f\x12\r\n\
+    \tDPAD_DOWN\x10\x10\x12\r\n\tDPAD_LEFT\x10\x11\x12\x0e\n\nDPAD_RIGHT\x10\
+    \x12\x12\x0e\n\nLEFT_STICK\x10\x13\x12\x0f\n\x0bRIGHT_STICK\x10\x14\"\
+    \x8a\x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01(\
+    \x0e2+.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\")\n\x07Pa\
+    ttern\x12\x0f\n\x0bRGB_ITERATE\x10\0\x12\r\n\tRGB_SNAKE\x10\x01\"\x81\
+    \x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\
+    \x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0e\
+    start_universe\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\
+    \x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\x12\x1b\n\x06\
+    output\x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\x1a\n\x08univers\
+    e\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\
+    \rR\x07channelB\t\n\x07_output\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\n\
+    \x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_binding\x18\x02\
+    \x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBindin\
+    g\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiNodeC\
+    onfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBinding\
+    \x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04type\x18\
+    \x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTypeR\x04\
+    type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nrange_from\
+    \x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\x05\x20\x01(\r\
+    R\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\x04NOTE\
+    \x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\x01(\tR\
+    \x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\n\x07bin\
+    ding\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\
+    \x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05widt\
+    h\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\
+    \x04R\x06height\"\x8c\x02\n\rOscNodeConfig\x12\x1e\n\nconnection\x18\x01\
+    \x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\
+    \x12L\n\rargument_type\x18\x03\x20\x01(\x0e2'.mizer.nodes.OscNodeConfig.\
+    ArgumentTypeR\x0cargumentType\x12*\n\x11only_emit_changes\x18\x04\x20\
+    \x01(\x08R\x0fonlyEmitChanges\"M\n\x0cArgumentType\x12\x07\n\x03INT\x10\
+    \0\x12\t\n\x05FLOAT\x10\x01\x12\x08\n\x04LONG\x10\x02\x12\n\n\x06DOUBLE\
+    \x10\x03\x12\x08\n\x04BOOL\x10\x04\x12\t\n\x05COLOR\x10\x05\"\x1d\n\x1bV\
+    ideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13Vide\
+    oFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\
+    \x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\
+    \x10SelectNodeConfig\"\x7f\n\x0fMergeNodeConfig\x12:\n\x04mode\x18\x01\
+    \x20\x01(\x0e2&.mizer.nodes.MergeNodeConfig.MergeModeR\x04mode\"0\n\tMer\
+    geMode\x12\n\n\x06LATEST\x10\0\x12\x0b\n\x07HIGHEST\x10\x01\x12\n\n\x06L\
+    OWEST\x10\x02\"\xb1\x01\n\x13ThresholdNodeConfig\x12'\n\x0flower_thresho\
+    ld\x18\x01\x20\x01(\x01R\x0elowerThreshold\x12'\n\x0fupper_threshold\x18\
+    \x02\x20\x01(\x01R\x0eupperThreshold\x12!\n\x0cactive_value\x18\x03\x20\
+    \x01(\x01R\x0bactiveValue\x12%\n\x0einactive_value\x18\x04\x20\x01(\x01R\
+    \rinactiveValue\"0\n\x11EncoderNodeConfig\x12\x1b\n\thold_rate\x18\x01\
+    \x20\x01(\x01R\x08holdRate\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12Colo\
+    rHsvNodeConfig\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\
+    \x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeConfig\
+    \x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.nodes.MathNodeConfig.Mod\
+    eR\x04mode\"v\n\x04Mode\x12\x0c\n\x08ADDITION\x10\0\x12\x0f\n\x0bSUBTRAC\
+    TION\x10\x01\x12\x12\n\x0eMULTIPLICATION\x10\x02\x12\x0c\n\x08DIVISION\
+    \x10\x03\x12\n\n\x06INVERT\x10\x04\x12\x08\n\x04SINE\x10\x05\x12\n\n\x06\
+    COSINE\x10\x06\x12\x0b\n\x07TANGENT\x10\x07\"I\n\x13MqttInputNodeConfig\
+    \x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\
+    \x18\x02\x20\x01(\tR\x04path\"b\n\x14MqttOutputNodeConfig\x12\x1e\n\ncon\
+    nection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
+    \x01(\tR\x04path\x12\x16\n\x06retain\x18\x03\x20\x01(\x08R\x06retain\"\
+    \x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\
+    \x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"'\n\
+    \x11ExtractNodeConfig\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"0\n\
+    \x12TemplateNodeConfig\x12\x1a\n\x08template\x18\x01\x20\x01(\tR\x08temp\
+    late\"L\n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\
+    \tR\x06planId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\
+    \x0fDelayNodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbuffer\
+    Size\"\xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2\
+    $.mizer.nodes.RampNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\
+    \x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\
+    \x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0\
+    b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\
+    \x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeC\
+    onfig\x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\
+    \x04fade\x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\
+    \x04text\x18\x01\x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"\
+    \xb7\x03\n\x12G13InputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\t\
+    R\x08deviceId\x125\n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G13InputN\
+    odeConfig.KeyR\x03key\"\xcc\x02\n\x03Key\x12\x06\n\x02G1\x10\0\x12\x06\n\
+    \x02G2\x10\x01\x12\x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\x12\x06\n\
+    \x02G5\x10\x04\x12\x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\x12\x06\n\
+    \x02G8\x10\x07\x12\x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\x12\x07\n\
+    \x03G11\x10\n\x12\x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\x0c\x12\x07\
+    \n\x03G14\x10\r\x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\x10\x0f\x12\
+    \x07\n\x03G17\x10\x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03G19\x10\x12\
+    \x12\x07\n\x03G20\x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\x03G22\x10\
+    \x15\x12\x06\n\x02M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\n\x02M3\x10\
+    \x18\x12\x06\n\x02MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\n\x02L2\x10\
+    \x1b\x12\x06\n\x02L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\x0e\n\nJOYSTICK\
+    _X\x10\x1e\x12\x0e\n\nJOYSTICK_Y\x10\x1f\x12\x0c\n\x08JOYSTICK\x10\x20\
+    \x12\x08\n\x04LEFT\x10!\x12\x08\n\x04DOWN\x10\"\x12\x06\n\x02BD\x10#\"2\
+    \n\x13G13OutputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08de\
+    viceId\"0\n\x18ConstantNumberNodeConfig\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value\"5\n\x15ConditionalNodeConfig\x12\x1c\n\tthreshold\
+    \x18\x01\x20\x01(\x01R\tthreshold\"<\n\x19TimecodeControlNodeConfig\x12\
+    \x1f\n\x0btimecode_id\x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18TimecodeOu\
+    tputNodeConfig\x12\x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\"\
+    \xb4\x01\n\x13AudioFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\
+    \x04file\x12R\n\rplayback_mode\x18\x02\x20\x01(\x0e2-.mizer.nodes.AudioF\
+    ileNodeConfig.PlaybackModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\x0c\
+    \n\x08ONE_SHOT\x10\0\x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\x10\
+    \x02\"\x17\n\x15AudioOutputNodeConfig\"\x17\n\x15AudioVolumeNodeConfig\"\
+    \x16\n\x14AudioInputNodeConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\x14\
+    AudioMeterNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01\
+    (\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesign\
+    er\x125\n\x08position\x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePosition\
+    R\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\
+    \n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04n\
+    ame\x18\x01\x20\x01(\tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\
+    \x1c.mizer.nodes.ChannelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\
+    \x03\x20\x01(\x08R\x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\x06\
+    SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\
+    \x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\
+    \x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERI\
+    AL\x10\x07\x12\x07\n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\
+    \x08NodesApi\x129\n\x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12\
+    .mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\
+    \x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConn\
+    ection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11WriteControlValue\
+    \x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\
+    \n\x12UpdateNodeProperty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.m\
+    izer.nodes.UpdateNodeConfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nod\
+    es.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNo\
+    de\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeR\
+    esponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.m\
+    izer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowN\
+    odeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\
+    \x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\n\
+    RenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.Ren\
+    ameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\
+    \x1a\x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

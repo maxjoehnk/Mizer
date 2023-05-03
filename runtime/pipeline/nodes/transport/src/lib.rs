@@ -25,62 +25,13 @@ impl PipelineNode for TransportNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                TAP_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                PLAY_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                PAUSE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                STOP_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                BPM_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                BPM_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-            (
-                PLAYING_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(TAP_INPUT, PortType::Single),
+            input_port!(PLAY_INPUT, PortType::Single),
+            input_port!(PAUSE_INPUT, PortType::Single),
+            input_port!(STOP_INPUT, PortType::Single),
+            input_port!(BPM_INPUT, PortType::Single),
+            output_port!(BPM_OUTPUT, PortType::Single),
+            output_port!(PLAYING_OUTPUT, PortType::Single),
         ]
     }
 

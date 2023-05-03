@@ -92,6 +92,18 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn update_cue_effect_offset_time(&self, request: CueEffectOffsetTimeRequest) {
+        self.runtime
+            .run_command(UpdateCueEffectOffsetCommand {
+                sequence_id: request.sequence,
+                cue_id: request.cue,
+                effect_id: request.effect,
+                time: request.time.map(SequencerTime::Beats),
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn update_cue_name(&self, request: CueNameRequest) {
         self.runtime
             .run_command(RenameCueCommand {
@@ -147,7 +159,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         self.runtime
             .run_command(UpdateSequenceWrapAroundCommand {
                 sequence_id: request.sequence,
-                wrap_around: request.wrapAround,
+                wrap_around: request.wrap_around,
             })
             .unwrap();
     }
@@ -157,7 +169,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         self.runtime
             .run_command(UpdateSequenceStopOnLastCueCommand {
                 sequence_id: request.sequence,
-                stop_on_last_cue: request.stopOnLastCue,
+                stop_on_last_cue: request.stop_on_last_cue,
             })
             .unwrap();
     }

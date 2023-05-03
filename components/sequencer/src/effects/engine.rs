@@ -1,6 +1,7 @@
 use super::Effect;
 use crate::effects::default_effects::CIRCLE;
 use crate::effects::instance::EffectInstance;
+use crate::SequencerTime;
 use dashmap::DashMap;
 use itertools::Itertools;
 use mizer_fixtures::manager::FixtureManager;
@@ -73,6 +74,13 @@ impl EffectEngine {
         }
     }
 
+    pub fn set_instance_offset(&self, id: &EffectInstanceId, offset: Option<SequencerTime>) {
+        let mut instances = self.instances.lock().unwrap();
+        if let Some(instance) = instances.get_mut(id) {
+            instance.fixture_offset = offset;
+        }
+    }
+
     pub(crate) fn run_programmer_effects(&self, programmer: &Programmer) {
         profiling::scope!("EffectEngine::run_programmer_effects");
         let mut effects = self.programmer_effects.lock().unwrap();
@@ -97,10 +105,22 @@ impl EffectEngine {
             effects.remove(&effect);
         }
         for effect in effects_to_be_started {
-            if let Some(instance_id) =
-                self.run_effect(effect.effect_id, effect.fixtures.clone(), 1f64)
-            {
+            if let Some(instance_id) = self.run_effect(
+                effect.effect_id,
+                effect.fixtures.clone(),
+                effect.rate,
+                effect.offset.map(SequencerTime::Beats),
+            ) {
                 effects.insert(effect, instance_id);
+            }
+        }
+        for active_effect in programmer.active_effects() {
+            if let Some(instance_id) = effects.get(active_effect) {
+                self.set_instance_rate(instance_id, active_effect.rate);
+                self.set_instance_offset(
+                    instance_id,
+                    active_effect.offset.map(SequencerTime::Beats),
+                );
             }
         }
     }
@@ -121,10 +141,11 @@ impl EffectEngine {
         effect: u32,
         fixtures: FixtureSelection,
         rate: f64,
+        fixture_offset: Option<SequencerTime>,
     ) -> Option<EffectInstanceId> {
         profiling::scope!("EffectEngine::run_effect");
         if let Some(effect) = self.effects.get(&effect) {
-            let instance = EffectInstance::new(&effect, fixtures, rate);
+            let instance = EffectInstance::new(&effect, fixtures, rate, fixture_offset);
             let id = EffectInstanceId::new();
             let mut instances = self.instances.lock().unwrap();
             instances.insert(id, instance);

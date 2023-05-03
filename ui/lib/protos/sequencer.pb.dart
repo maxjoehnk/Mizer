@@ -3,7 +3,7 @@
 //  source: sequencer.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -413,6 +413,95 @@ class CueTriggerTimeRequest extends $pb.GeneratedMessage {
   CueTime ensureTime() => $_ensure(2);
 }
 
+class CueEffectOffsetTimeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueEffectOffsetTimeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effect', $pb.PbFieldType.OU3)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CueEffectOffsetTimeRequest._() : super();
+  factory CueEffectOffsetTimeRequest({
+    $core.int? sequence,
+    $core.int? cue,
+    $core.int? effect,
+    $core.double? time,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (cue != null) {
+      _result.cue = cue;
+    }
+    if (effect != null) {
+      _result.effect = effect;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    return _result;
+  }
+  factory CueEffectOffsetTimeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueEffectOffsetTimeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueEffectOffsetTimeRequest clone() => CueEffectOffsetTimeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueEffectOffsetTimeRequest copyWith(void Function(CueEffectOffsetTimeRequest) updates) => super.copyWith((message) => updates(message as CueEffectOffsetTimeRequest)) as CueEffectOffsetTimeRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueEffectOffsetTimeRequest create() => CueEffectOffsetTimeRequest._();
+  CueEffectOffsetTimeRequest createEmptyInstance() => create();
+  static $pb.PbList<CueEffectOffsetTimeRequest> createRepeated() => $pb.PbList<CueEffectOffsetTimeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CueEffectOffsetTimeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueEffectOffsetTimeRequest>(create);
+  static CueEffectOffsetTimeRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get cue => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set cue($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCue() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get effect => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set effect($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEffect() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEffect() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get time => $_getN(3);
+  @$pb.TagNumber(4)
+  set time($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasTime() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTime() => clearField(4);
+}
+
 class CueNameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
@@ -659,7 +748,7 @@ class CueTimingRequest extends $pb.GeneratedMessage {
 class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceWrapAroundRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
     ..hasRequiredFields = false
   ;
 
@@ -720,7 +809,7 @@ class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
 class SequenceStopOnLastCueRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceStopOnLastCueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue', protoName: 'stopOnLastCue')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
     ..hasRequiredFields = false
   ;
 
@@ -915,8 +1004,8 @@ class Sequence extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
     ..pc<$0.FixtureId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
-    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue', protoName: 'stopOnLastCue')
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
     ..hasRequiredFields = false
   ;
 
@@ -1024,6 +1113,7 @@ class Cue extends $pb.GeneratedMessage {
     ..aOM<CueTimings>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dimmerTimings', subBuilder: CueTimings.create)
     ..aOM<CueTimings>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positionTimings', subBuilder: CueTimings.create)
     ..aOM<CueTimings>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorTimings', subBuilder: CueTimings.create)
+    ..pc<CueEffect>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: CueEffect.create)
     ..hasRequiredFields = false
   ;
 
@@ -1037,6 +1127,7 @@ class Cue extends $pb.GeneratedMessage {
     CueTimings? dimmerTimings,
     CueTimings? positionTimings,
     CueTimings? colorTimings,
+    $core.Iterable<CueEffect>? effects,
   }) {
     final _result = create();
     if (id != null) {
@@ -1062,6 +1153,9 @@ class Cue extends $pb.GeneratedMessage {
     }
     if (colorTimings != null) {
       _result.colorTimings = colorTimings;
+    }
+    if (effects != null) {
+      _result.effects.addAll(effects);
     }
     return _result;
   }
@@ -1161,6 +1255,92 @@ class Cue extends $pb.GeneratedMessage {
   void clearColorTimings() => clearField(8);
   @$pb.TagNumber(8)
   CueTimings ensureColorTimings() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  $core.List<CueEffect> get effects => $_getList(8);
+}
+
+class CueEffect extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueEffect', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectOffsets', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectRate', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CueEffect._() : super();
+  factory CueEffect({
+    $core.int? effectId,
+    $core.Iterable<$0.FixtureId>? fixtures,
+    $core.double? effectOffsets,
+    $core.double? effectRate,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    if (effectOffsets != null) {
+      _result.effectOffsets = effectOffsets;
+    }
+    if (effectRate != null) {
+      _result.effectRate = effectRate;
+    }
+    return _result;
+  }
+  factory CueEffect.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueEffect.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueEffect clone() => CueEffect()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueEffect copyWith(void Function(CueEffect) updates) => super.copyWith((message) => updates(message as CueEffect)) as CueEffect; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueEffect create() => CueEffect._();
+  CueEffect createEmptyInstance() => create();
+  static $pb.PbList<CueEffect> createRepeated() => $pb.PbList<CueEffect>();
+  @$core.pragma('dart2js:noInline')
+  static CueEffect getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueEffect>(create);
+  static CueEffect? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$0.FixtureId> get fixtures => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.double get effectOffsets => $_getN(2);
+  @$pb.TagNumber(3)
+  set effectOffsets($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEffectOffsets() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEffectOffsets() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get effectRate => $_getN(3);
+  @$pb.TagNumber(4)
+  set effectRate($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasEffectRate() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearEffectRate() => clearField(4);
 }
 
 class CueTimings extends $pb.GeneratedMessage {
@@ -1454,7 +1634,7 @@ class CueTimer extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimer', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..oo(0, [2, 3])
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasTimer', protoName: 'hasTimer')
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasTimer')
     ..aOM<CueTime>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'direct', subBuilder: CueTime.create)
     ..aOM<CueTimerRange>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'range', subBuilder: CueTimerRange.create)
     ..hasRequiredFields = false

@@ -36,13 +36,9 @@ impl PipelineNode for OscInputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
+        vec![output_port!(
             self.argument_type.get_port_id(),
-            PortMetadata {
-                port_type: self.argument_type.get_port_type(),
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
+            self.argument_type.get_port_type()
         )]
     }
 

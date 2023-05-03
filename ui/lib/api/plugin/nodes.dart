@@ -5,10 +5,11 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'ffi/api.dart';
 import 'ffi/bindings.dart';
 import 'ffi/history.dart';
+import 'ffi/nodes.dart';
 import 'ffi/preview.dart';
 
-export 'ffi/preview.dart' show NodePreviewPointer;
 export 'ffi/history.dart' show NodeHistoryPointer;
+export 'ffi/preview.dart' show NodePreviewPointer;
 
 class NodesPluginApi implements NodesApi {
   final FFIBindings bindings;
@@ -41,7 +42,8 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> writeControlValue({required String path, required String port, required double value}) {
+  Future<void> writeControlValue(
+      {required String path, required String port, required double value}) {
     return channel.invokeMethod(
         "writeControlValue", WriteControl(path: path, port: port, value: value).writeToBuffer());
   }
@@ -106,5 +108,12 @@ class NodesPluginApi implements NodesApi {
   Future<void> groupNodes(List<String> nodes, {String? parent}) async {
     var request = GroupNodesRequest(nodes: nodes, parent: parent);
     await channel.invokeMethod("groupNodes", request.writeToBuffer());
+  }
+
+  @override
+  Future<NodesPointer> getNodesPointer() async {
+    int pointer = await channel.invokeMethod("getMetadataPointer");
+
+    return this.bindings.openNodesRef(pointer);
   }
 }

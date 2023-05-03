@@ -29,8 +29,8 @@ const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 // @@protoc_insertion_point(message:mizer.MonitorDmxRequest)
 pub struct MonitorDmxRequest {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MonitorDmxRequest.outputId)
-    pub outputId: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.MonitorDmxRequest.output_id)
+    pub output_id: ::std::string::String,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.MonitorDmxRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -51,9 +51,9 @@ impl MonitorDmxRequest {
         let mut fields = ::std::vec::Vec::with_capacity(1);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "outputId",
-            |m: &MonitorDmxRequest| { &m.outputId },
-            |m: &mut MonitorDmxRequest| { &mut m.outputId },
+            "output_id",
+            |m: &MonitorDmxRequest| { &m.output_id },
+            |m: &mut MonitorDmxRequest| { &mut m.output_id },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MonitorDmxRequest>(
             "MonitorDmxRequest",
@@ -74,7 +74,7 @@ impl ::protobuf::Message for MonitorDmxRequest {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.outputId = is.read_string()?;
+                    self.output_id = is.read_string()?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -88,8 +88,8 @@ impl ::protobuf::Message for MonitorDmxRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.outputId.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.outputId);
+        if !self.output_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.output_id);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -97,8 +97,8 @@ impl ::protobuf::Message for MonitorDmxRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.outputId.is_empty() {
-            os.write_string(1, &self.outputId)?;
+        if !self.output_id.is_empty() {
+            os.write_string(1, &self.output_id)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -117,13 +117,13 @@ impl ::protobuf::Message for MonitorDmxRequest {
     }
 
     fn clear(&mut self) {
-        self.outputId.clear();
+        self.output_id.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static MonitorDmxRequest {
         static instance: MonitorDmxRequest = MonitorDmxRequest {
-            outputId: ::std::string::String::new(),
+            output_id: ::std::string::String::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -605,20 +605,20 @@ impl MonitorMidiResponse {
         }
     }
 
-    // .mizer.MonitorMidiResponse.NoteMsg noteOff = 4;
+    // .mizer.MonitorMidiResponse.NoteMsg note_off = 4;
 
-    pub fn noteOff(&self) -> &monitor_midi_response::NoteMsg {
+    pub fn note_off(&self) -> &monitor_midi_response::NoteMsg {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(ref v)) => v,
             _ => <monitor_midi_response::NoteMsg as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_noteOff(&mut self) {
+    pub fn clear_note_off(&mut self) {
         self.message = ::std::option::Option::None;
     }
 
-    pub fn has_noteOff(&self) -> bool {
+    pub fn has_note_off(&self) -> bool {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(..)) => true,
             _ => false,
@@ -626,12 +626,12 @@ impl MonitorMidiResponse {
     }
 
     // Param is passed by value, moved
-    pub fn set_noteOff(&mut self, v: monitor_midi_response::NoteMsg) {
+    pub fn set_note_off(&mut self, v: monitor_midi_response::NoteMsg) {
         self.message = ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_noteOff(&mut self) -> &mut monitor_midi_response::NoteMsg {
+    pub fn mut_note_off(&mut self) -> &mut monitor_midi_response::NoteMsg {
         if let ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(_)) = self.message {
         } else {
             self.message = ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(monitor_midi_response::NoteMsg::new()));
@@ -643,8 +643,8 @@ impl MonitorMidiResponse {
     }
 
     // Take field
-    pub fn take_noteOff(&mut self) -> monitor_midi_response::NoteMsg {
-        if self.has_noteOff() {
+    pub fn take_note_off(&mut self) -> monitor_midi_response::NoteMsg {
+        if self.has_note_off() {
             match self.message.take() {
                 ::std::option::Option::Some(monitor_midi_response::Message::NoteOff(v)) => v,
                 _ => panic!(),
@@ -654,20 +654,20 @@ impl MonitorMidiResponse {
         }
     }
 
-    // .mizer.MonitorMidiResponse.NoteMsg noteOn = 5;
+    // .mizer.MonitorMidiResponse.NoteMsg note_on = 5;
 
-    pub fn noteOn(&self) -> &monitor_midi_response::NoteMsg {
+    pub fn note_on(&self) -> &monitor_midi_response::NoteMsg {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(ref v)) => v,
             _ => <monitor_midi_response::NoteMsg as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_noteOn(&mut self) {
+    pub fn clear_note_on(&mut self) {
         self.message = ::std::option::Option::None;
     }
 
-    pub fn has_noteOn(&self) -> bool {
+    pub fn has_note_on(&self) -> bool {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(..)) => true,
             _ => false,
@@ -675,12 +675,12 @@ impl MonitorMidiResponse {
     }
 
     // Param is passed by value, moved
-    pub fn set_noteOn(&mut self, v: monitor_midi_response::NoteMsg) {
+    pub fn set_note_on(&mut self, v: monitor_midi_response::NoteMsg) {
         self.message = ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_noteOn(&mut self) -> &mut monitor_midi_response::NoteMsg {
+    pub fn mut_note_on(&mut self) -> &mut monitor_midi_response::NoteMsg {
         if let ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(_)) = self.message {
         } else {
             self.message = ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(monitor_midi_response::NoteMsg::new()));
@@ -692,8 +692,8 @@ impl MonitorMidiResponse {
     }
 
     // Take field
-    pub fn take_noteOn(&mut self) -> monitor_midi_response::NoteMsg {
-        if self.has_noteOn() {
+    pub fn take_note_on(&mut self) -> monitor_midi_response::NoteMsg {
+        if self.has_note_on() {
             match self.message.take() {
                 ::std::option::Option::Some(monitor_midi_response::Message::NoteOn(v)) => v,
                 _ => panic!(),
@@ -703,20 +703,20 @@ impl MonitorMidiResponse {
         }
     }
 
-    // .mizer.MonitorMidiResponse.SysEx sysEx = 6;
+    // .mizer.MonitorMidiResponse.SysEx sys_ex = 6;
 
-    pub fn sysEx(&self) -> &monitor_midi_response::SysEx {
+    pub fn sys_ex(&self) -> &monitor_midi_response::SysEx {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::SysEx(ref v)) => v,
             _ => <monitor_midi_response::SysEx as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_sysEx(&mut self) {
+    pub fn clear_sys_ex(&mut self) {
         self.message = ::std::option::Option::None;
     }
 
-    pub fn has_sysEx(&self) -> bool {
+    pub fn has_sys_ex(&self) -> bool {
         match self.message {
             ::std::option::Option::Some(monitor_midi_response::Message::SysEx(..)) => true,
             _ => false,
@@ -724,12 +724,12 @@ impl MonitorMidiResponse {
     }
 
     // Param is passed by value, moved
-    pub fn set_sysEx(&mut self, v: monitor_midi_response::SysEx) {
+    pub fn set_sys_ex(&mut self, v: monitor_midi_response::SysEx) {
         self.message = ::std::option::Option::Some(monitor_midi_response::Message::SysEx(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_sysEx(&mut self) -> &mut monitor_midi_response::SysEx {
+    pub fn mut_sys_ex(&mut self) -> &mut monitor_midi_response::SysEx {
         if let ::std::option::Option::Some(monitor_midi_response::Message::SysEx(_)) = self.message {
         } else {
             self.message = ::std::option::Option::Some(monitor_midi_response::Message::SysEx(monitor_midi_response::SysEx::new()));
@@ -741,8 +741,8 @@ impl MonitorMidiResponse {
     }
 
     // Take field
-    pub fn take_sysEx(&mut self) -> monitor_midi_response::SysEx {
-        if self.has_sysEx() {
+    pub fn take_sys_ex(&mut self) -> monitor_midi_response::SysEx {
+        if self.has_sys_ex() {
             match self.message.take() {
                 ::std::option::Option::Some(monitor_midi_response::Message::SysEx(v)) => v,
                 _ => panic!(),
@@ -817,25 +817,25 @@ impl MonitorMidiResponse {
             MonitorMidiResponse::set_cc,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, monitor_midi_response::NoteMsg>(
-            "noteOff",
-            MonitorMidiResponse::has_noteOff,
-            MonitorMidiResponse::noteOff,
-            MonitorMidiResponse::mut_noteOff,
-            MonitorMidiResponse::set_noteOff,
+            "note_off",
+            MonitorMidiResponse::has_note_off,
+            MonitorMidiResponse::note_off,
+            MonitorMidiResponse::mut_note_off,
+            MonitorMidiResponse::set_note_off,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, monitor_midi_response::NoteMsg>(
-            "noteOn",
-            MonitorMidiResponse::has_noteOn,
-            MonitorMidiResponse::noteOn,
-            MonitorMidiResponse::mut_noteOn,
-            MonitorMidiResponse::set_noteOn,
+            "note_on",
+            MonitorMidiResponse::has_note_on,
+            MonitorMidiResponse::note_on,
+            MonitorMidiResponse::mut_note_on,
+            MonitorMidiResponse::set_note_on,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, monitor_midi_response::SysEx>(
-            "sysEx",
-            MonitorMidiResponse::has_sysEx,
-            MonitorMidiResponse::sysEx,
-            MonitorMidiResponse::mut_sysEx,
-            MonitorMidiResponse::set_sysEx,
+            "sys_ex",
+            MonitorMidiResponse::has_sys_ex,
+            MonitorMidiResponse::sys_ex,
+            MonitorMidiResponse::mut_sys_ex,
+            MonitorMidiResponse::set_sys_ex,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_deref_has_get_set_simpler_accessor::<_, _>(
             "unknown",
@@ -1008,11 +1008,11 @@ pub mod monitor_midi_response {
     pub enum Message {
         // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.cc)
         Cc(NoteMsg),
-        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.noteOff)
+        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.note_off)
         NoteOff(NoteMsg),
-        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.noteOn)
+        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.note_on)
         NoteOn(NoteMsg),
-        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.sysEx)
+        // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.sys_ex)
         SysEx(SysEx),
         // @@protoc_insertion_point(oneof_field:mizer.MonitorMidiResponse.unknown)
         Unknown(::std::vec::Vec<u8>),
@@ -3050,48 +3050,48 @@ impl Connection {
         }
     }
 
-    // .mizer.ProDjLinkConnection proDJLink = 13;
+    // .mizer.ProDjLinkConnection pro_dj_link = 13;
 
-    pub fn proDJLink(&self) -> &ProDjLinkConnection {
+    pub fn pro_dj_link(&self) -> &ProDjLinkConnection {
         match self.connection {
-            ::std::option::Option::Some(connection::Connection::ProDJLink(ref v)) => v,
+            ::std::option::Option::Some(connection::Connection::ProDjLink(ref v)) => v,
             _ => <ProDjLinkConnection as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_proDJLink(&mut self) {
+    pub fn clear_pro_dj_link(&mut self) {
         self.connection = ::std::option::Option::None;
     }
 
-    pub fn has_proDJLink(&self) -> bool {
+    pub fn has_pro_dj_link(&self) -> bool {
         match self.connection {
-            ::std::option::Option::Some(connection::Connection::ProDJLink(..)) => true,
+            ::std::option::Option::Some(connection::Connection::ProDjLink(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_proDJLink(&mut self, v: ProDjLinkConnection) {
-        self.connection = ::std::option::Option::Some(connection::Connection::ProDJLink(v))
+    pub fn set_pro_dj_link(&mut self, v: ProDjLinkConnection) {
+        self.connection = ::std::option::Option::Some(connection::Connection::ProDjLink(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_proDJLink(&mut self) -> &mut ProDjLinkConnection {
-        if let ::std::option::Option::Some(connection::Connection::ProDJLink(_)) = self.connection {
+    pub fn mut_pro_dj_link(&mut self) -> &mut ProDjLinkConnection {
+        if let ::std::option::Option::Some(connection::Connection::ProDjLink(_)) = self.connection {
         } else {
-            self.connection = ::std::option::Option::Some(connection::Connection::ProDJLink(ProDjLinkConnection::new()));
+            self.connection = ::std::option::Option::Some(connection::Connection::ProDjLink(ProDjLinkConnection::new()));
         }
         match self.connection {
-            ::std::option::Option::Some(connection::Connection::ProDJLink(ref mut v)) => v,
+            ::std::option::Option::Some(connection::Connection::ProDjLink(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_proDJLink(&mut self) -> ProDjLinkConnection {
-        if self.has_proDJLink() {
+    pub fn take_pro_dj_link(&mut self) -> ProDjLinkConnection {
+        if self.has_pro_dj_link() {
             match self.connection.take() {
-                ::std::option::Option::Some(connection::Connection::ProDJLink(v)) => v,
+                ::std::option::Option::Some(connection::Connection::ProDjLink(v)) => v,
                 _ => panic!(),
             }
         } else {
@@ -3148,20 +3148,20 @@ impl Connection {
         }
     }
 
-    // .mizer.EtherDreamConnection etherDream = 15;
+    // .mizer.EtherDreamConnection ether_dream = 15;
 
-    pub fn etherDream(&self) -> &EtherDreamConnection {
+    pub fn ether_dream(&self) -> &EtherDreamConnection {
         match self.connection {
             ::std::option::Option::Some(connection::Connection::EtherDream(ref v)) => v,
             _ => <EtherDreamConnection as ::protobuf::Message>::default_instance(),
         }
     }
 
-    pub fn clear_etherDream(&mut self) {
+    pub fn clear_ether_dream(&mut self) {
         self.connection = ::std::option::Option::None;
     }
 
-    pub fn has_etherDream(&self) -> bool {
+    pub fn has_ether_dream(&self) -> bool {
         match self.connection {
             ::std::option::Option::Some(connection::Connection::EtherDream(..)) => true,
             _ => false,
@@ -3169,12 +3169,12 @@ impl Connection {
     }
 
     // Param is passed by value, moved
-    pub fn set_etherDream(&mut self, v: EtherDreamConnection) {
+    pub fn set_ether_dream(&mut self, v: EtherDreamConnection) {
         self.connection = ::std::option::Option::Some(connection::Connection::EtherDream(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_etherDream(&mut self) -> &mut EtherDreamConnection {
+    pub fn mut_ether_dream(&mut self) -> &mut EtherDreamConnection {
         if let ::std::option::Option::Some(connection::Connection::EtherDream(_)) = self.connection {
         } else {
             self.connection = ::std::option::Option::Some(connection::Connection::EtherDream(EtherDreamConnection::new()));
@@ -3186,8 +3186,8 @@ impl Connection {
     }
 
     // Take field
-    pub fn take_etherDream(&mut self) -> EtherDreamConnection {
-        if self.has_etherDream() {
+    pub fn take_ether_dream(&mut self) -> EtherDreamConnection {
+        if self.has_ether_dream() {
             match self.connection.take() {
                 ::std::option::Option::Some(connection::Connection::EtherDream(v)) => v,
                 _ => panic!(),
@@ -3374,11 +3374,11 @@ impl Connection {
             Connection::set_osc,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ProDjLinkConnection>(
-            "proDJLink",
-            Connection::has_proDJLink,
-            Connection::proDJLink,
-            Connection::mut_proDJLink,
-            Connection::set_proDJLink,
+            "pro_dj_link",
+            Connection::has_pro_dj_link,
+            Connection::pro_dj_link,
+            Connection::mut_pro_dj_link,
+            Connection::set_pro_dj_link,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, HeliosConnection>(
             "helios",
@@ -3388,11 +3388,11 @@ impl Connection {
             Connection::set_helios,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, EtherDreamConnection>(
-            "etherDream",
-            Connection::has_etherDream,
-            Connection::etherDream,
-            Connection::mut_etherDream,
-            Connection::set_etherDream,
+            "ether_dream",
+            Connection::has_ether_dream,
+            Connection::ether_dream,
+            Connection::mut_ether_dream,
+            Connection::set_ether_dream,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, GamepadConnection>(
             "gamepad",
@@ -3447,7 +3447,7 @@ impl ::protobuf::Message for Connection {
                     self.connection = ::std::option::Option::Some(connection::Connection::Osc(is.read_message()?));
                 },
                 106 => {
-                    self.connection = ::std::option::Option::Some(connection::Connection::ProDJLink(is.read_message()?));
+                    self.connection = ::std::option::Option::Some(connection::Connection::ProDjLink(is.read_message()?));
                 },
                 114 => {
                     self.connection = ::std::option::Option::Some(connection::Connection::Helios(is.read_message()?));
@@ -3493,7 +3493,7 @@ impl ::protobuf::Message for Connection {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
-                &connection::Connection::ProDJLink(ref v) => {
+                &connection::Connection::ProDjLink(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
@@ -3539,7 +3539,7 @@ impl ::protobuf::Message for Connection {
                 &connection::Connection::Osc(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
                 },
-                &connection::Connection::ProDJLink(ref v) => {
+                &connection::Connection::ProDjLink(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
                 },
                 &connection::Connection::Helios(ref v) => {
@@ -3629,11 +3629,11 @@ pub mod connection {
         Midi(super::MidiConnection),
         // @@protoc_insertion_point(oneof_field:mizer.Connection.osc)
         Osc(super::OscConnection),
-        // @@protoc_insertion_point(oneof_field:mizer.Connection.proDJLink)
-        ProDJLink(super::ProDjLinkConnection),
+        // @@protoc_insertion_point(oneof_field:mizer.Connection.pro_dj_link)
+        ProDjLink(super::ProDjLinkConnection),
         // @@protoc_insertion_point(oneof_field:mizer.Connection.helios)
         Helios(super::HeliosConnection),
-        // @@protoc_insertion_point(oneof_field:mizer.Connection.etherDream)
+        // @@protoc_insertion_point(oneof_field:mizer.Connection.ether_dream)
         EtherDream(super::EtherDreamConnection),
         // @@protoc_insertion_point(oneof_field:mizer.Connection.gamepad)
         Gamepad(super::GamepadConnection),
@@ -3664,8 +3664,8 @@ pub mod connection {
 // @@protoc_insertion_point(message:mizer.DmxConnection)
 pub struct DmxConnection {
     // message fields
-    // @@protoc_insertion_point(field:mizer.DmxConnection.outputId)
-    pub outputId: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.DmxConnection.output_id)
+    pub output_id: ::std::string::String,
     // message oneof groups
     pub config: ::std::option::Option<dmx_connection::Config>,
     // special fields
@@ -3786,9 +3786,9 @@ impl DmxConnection {
         let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "outputId",
-            |m: &DmxConnection| { &m.outputId },
-            |m: &mut DmxConnection| { &mut m.outputId },
+            "output_id",
+            |m: &DmxConnection| { &m.output_id },
+            |m: &mut DmxConnection| { &mut m.output_id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ArtnetConfig>(
             "artnet",
@@ -3824,7 +3824,7 @@ impl ::protobuf::Message for DmxConnection {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.outputId = is.read_string()?;
+                    self.output_id = is.read_string()?;
                 },
                 26 => {
                     self.config = ::std::option::Option::Some(dmx_connection::Config::Artnet(is.read_message()?));
@@ -3844,8 +3844,8 @@ impl ::protobuf::Message for DmxConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.outputId.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.outputId);
+        if !self.output_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.output_id);
         }
         if let ::std::option::Option::Some(ref v) = self.config {
             match v {
@@ -3865,8 +3865,8 @@ impl ::protobuf::Message for DmxConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.outputId.is_empty() {
-            os.write_string(1, &self.outputId)?;
+        if !self.output_id.is_empty() {
+            os.write_string(1, &self.output_id)?;
         }
         if let ::std::option::Option::Some(ref v) = self.config {
             match v {
@@ -3895,7 +3895,7 @@ impl ::protobuf::Message for DmxConnection {
     }
 
     fn clear(&mut self) {
-        self.outputId.clear();
+        self.output_id.clear();
         self.config = ::std::option::Option::None;
         self.config = ::std::option::Option::None;
         self.special_fields.clear();
@@ -3903,7 +3903,7 @@ impl ::protobuf::Message for DmxConnection {
 
     fn default_instance() -> &'static DmxConnection {
         static instance: DmxConnection = DmxConnection {
-            outputId: ::std::string::String::new(),
+            output_id: ::std::string::String::new(),
             config: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -5350,7 +5350,7 @@ pub mod midi_device_profile {
             if self.note != 0 {
                 my_size += ::protobuf::rt::uint32_size(4, self.note);
             }
-            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::Note) {
+            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::NOTE) {
                 my_size += ::protobuf::rt::int32_size(5, self.control_type.value());
             }
             if self.has_output != false {
@@ -5374,7 +5374,7 @@ pub mod midi_device_profile {
             if self.note != 0 {
                 os.write_uint32(4, self.note)?;
             }
-            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::Note) {
+            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::NOTE) {
                 os.write_enum(5, ::protobuf::EnumOrUnknown::value(&self.control_type))?;
             }
             if self.has_output != false {
@@ -5401,7 +5401,7 @@ pub mod midi_device_profile {
             self.name.clear();
             self.channel = 0;
             self.note = 0;
-            self.control_type = ::protobuf::EnumOrUnknown::new(ControlType::Note);
+            self.control_type = ::protobuf::EnumOrUnknown::new(ControlType::NOTE);
             self.has_output = false;
             self.special_fields.clear();
         }
@@ -5440,8 +5440,8 @@ pub mod midi_device_profile {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.MidiDeviceProfile.ControlType)
     pub enum ControlType {
-        // @@protoc_insertion_point(enum_value:mizer.MidiDeviceProfile.ControlType.Note)
-        Note = 0,
+        // @@protoc_insertion_point(enum_value:mizer.MidiDeviceProfile.ControlType.NOTE)
+        NOTE = 0,
         // @@protoc_insertion_point(enum_value:mizer.MidiDeviceProfile.ControlType.CC)
         CC = 1,
     }
@@ -5455,14 +5455,14 @@ pub mod midi_device_profile {
 
         fn from_i32(value: i32) -> ::std::option::Option<ControlType> {
             match value {
-                0 => ::std::option::Option::Some(ControlType::Note),
+                0 => ::std::option::Option::Some(ControlType::NOTE),
                 1 => ::std::option::Option::Some(ControlType::CC),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [ControlType] = &[
-            ControlType::Note,
+            ControlType::NOTE,
             ControlType::CC,
         ];
     }
@@ -5481,7 +5481,7 @@ pub mod midi_device_profile {
 
     impl ::std::default::Default for ControlType {
         fn default() -> Self {
-            ControlType::Note
+            ControlType::NOTE
         }
     }
 
@@ -5496,8 +5496,8 @@ pub mod midi_device_profile {
 // @@protoc_insertion_point(message:mizer.OscConnection)
 pub struct OscConnection {
     // message fields
-    // @@protoc_insertion_point(field:mizer.OscConnection.connectionId)
-    pub connectionId: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.OscConnection.connection_id)
+    pub connection_id: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.OscConnection.input_port)
     pub input_port: u32,
     // @@protoc_insertion_point(field:mizer.OscConnection.output_port)
@@ -5524,9 +5524,9 @@ impl OscConnection {
         let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "connectionId",
-            |m: &OscConnection| { &m.connectionId },
-            |m: &mut OscConnection| { &mut m.connectionId },
+            "connection_id",
+            |m: &OscConnection| { &m.connection_id },
+            |m: &mut OscConnection| { &mut m.connection_id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "input_port",
@@ -5562,7 +5562,7 @@ impl ::protobuf::Message for OscConnection {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.connectionId = is.read_string()?;
+                    self.connection_id = is.read_string()?;
                 },
                 16 => {
                     self.input_port = is.read_uint32()?;
@@ -5585,8 +5585,8 @@ impl ::protobuf::Message for OscConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.connectionId.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.connectionId);
+        if !self.connection_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.connection_id);
         }
         if self.input_port != 0 {
             my_size += ::protobuf::rt::uint32_size(2, self.input_port);
@@ -5603,8 +5603,8 @@ impl ::protobuf::Message for OscConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.connectionId.is_empty() {
-            os.write_string(1, &self.connectionId)?;
+        if !self.connection_id.is_empty() {
+            os.write_string(1, &self.connection_id)?;
         }
         if self.input_port != 0 {
             os.write_uint32(2, self.input_port)?;
@@ -5632,7 +5632,7 @@ impl ::protobuf::Message for OscConnection {
     }
 
     fn clear(&mut self) {
-        self.connectionId.clear();
+        self.connection_id.clear();
         self.input_port = 0;
         self.output_port = 0;
         self.output_address.clear();
@@ -5641,7 +5641,7 @@ impl ::protobuf::Message for OscConnection {
 
     fn default_instance() -> &'static OscConnection {
         static instance: OscConnection = OscConnection {
-            connectionId: ::std::string::String::new(),
+            connection_id: ::std::string::String::new(),
             input_port: 0,
             output_port: 0,
             output_address: ::std::string::String::new(),
@@ -5676,8 +5676,8 @@ pub struct ProDjLinkConnection {
     pub address: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.ProDjLinkConnection.model)
     pub model: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.ProDjLinkConnection.playerNumber)
-    pub playerNumber: u32,
+    // @@protoc_insertion_point(field:mizer.ProDjLinkConnection.player_number)
+    pub player_number: u32,
     // @@protoc_insertion_point(field:mizer.ProDjLinkConnection.playback)
     pub playback: ::protobuf::MessageField<CdjPlayback>,
     // special fields
@@ -5710,9 +5710,9 @@ impl ProDjLinkConnection {
             |m: &mut ProDjLinkConnection| { &mut m.model },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "playerNumber",
-            |m: &ProDjLinkConnection| { &m.playerNumber },
-            |m: &mut ProDjLinkConnection| { &mut m.playerNumber },
+            "player_number",
+            |m: &ProDjLinkConnection| { &m.player_number },
+            |m: &mut ProDjLinkConnection| { &mut m.player_number },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, CdjPlayback>(
             "playback",
@@ -5744,7 +5744,7 @@ impl ::protobuf::Message for ProDjLinkConnection {
                     self.model = is.read_string()?;
                 },
                 24 => {
-                    self.playerNumber = is.read_uint32()?;
+                    self.player_number = is.read_uint32()?;
                 },
                 42 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.playback)?;
@@ -5767,8 +5767,8 @@ impl ::protobuf::Message for ProDjLinkConnection {
         if !self.model.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.model);
         }
-        if self.playerNumber != 0 {
-            my_size += ::protobuf::rt::uint32_size(3, self.playerNumber);
+        if self.player_number != 0 {
+            my_size += ::protobuf::rt::uint32_size(3, self.player_number);
         }
         if let Some(v) = self.playback.as_ref() {
             let len = v.compute_size();
@@ -5786,8 +5786,8 @@ impl ::protobuf::Message for ProDjLinkConnection {
         if !self.model.is_empty() {
             os.write_string(2, &self.model)?;
         }
-        if self.playerNumber != 0 {
-            os.write_uint32(3, self.playerNumber)?;
+        if self.player_number != 0 {
+            os.write_uint32(3, self.player_number)?;
         }
         if let Some(v) = self.playback.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
@@ -5811,7 +5811,7 @@ impl ::protobuf::Message for ProDjLinkConnection {
     fn clear(&mut self) {
         self.address.clear();
         self.model.clear();
-        self.playerNumber = 0;
+        self.player_number = 0;
         self.playback.clear();
         self.special_fields.clear();
     }
@@ -5820,7 +5820,7 @@ impl ::protobuf::Message for ProDjLinkConnection {
         static instance: ProDjLinkConnection = ProDjLinkConnection {
             address: ::std::string::String::new(),
             model: ::std::string::String::new(),
-            playerNumber: 0,
+            player_number: 0,
             playback: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -5957,7 +5957,7 @@ impl ::protobuf::Message for CdjPlayback {
         if self.frame != 0 {
             my_size += ::protobuf::rt::uint32_size(3, self.frame);
         }
-        if self.playback != ::protobuf::EnumOrUnknown::new(cdj_playback::State::Loading) {
+        if self.playback != ::protobuf::EnumOrUnknown::new(cdj_playback::State::LOADING) {
             my_size += ::protobuf::rt::int32_size(4, self.playback.value());
         }
         if let Some(v) = self.track.as_ref() {
@@ -5979,7 +5979,7 @@ impl ::protobuf::Message for CdjPlayback {
         if self.frame != 0 {
             os.write_uint32(3, self.frame)?;
         }
-        if self.playback != ::protobuf::EnumOrUnknown::new(cdj_playback::State::Loading) {
+        if self.playback != ::protobuf::EnumOrUnknown::new(cdj_playback::State::LOADING) {
             os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.playback))?;
         }
         if let Some(v) = self.track.as_ref() {
@@ -6005,7 +6005,7 @@ impl ::protobuf::Message for CdjPlayback {
         self.live = false;
         self.bpm = 0.;
         self.frame = 0;
-        self.playback = ::protobuf::EnumOrUnknown::new(cdj_playback::State::Loading);
+        self.playback = ::protobuf::EnumOrUnknown::new(cdj_playback::State::LOADING);
         self.track.clear();
         self.special_fields.clear();
     }
@@ -6185,14 +6185,14 @@ pub mod cdj_playback {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.CdjPlayback.State)
     pub enum State {
-        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.Loading)
-        Loading = 0,
-        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.Playing)
-        Playing = 1,
-        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.Cued)
-        Cued = 2,
-        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.Cueing)
-        Cueing = 3,
+        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.LOADING)
+        LOADING = 0,
+        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.PLAYING)
+        PLAYING = 1,
+        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.CUED)
+        CUED = 2,
+        // @@protoc_insertion_point(enum_value:mizer.CdjPlayback.State.CUEING)
+        CUEING = 3,
     }
 
     impl ::protobuf::Enum for State {
@@ -6204,19 +6204,19 @@ pub mod cdj_playback {
 
         fn from_i32(value: i32) -> ::std::option::Option<State> {
             match value {
-                0 => ::std::option::Option::Some(State::Loading),
-                1 => ::std::option::Option::Some(State::Playing),
-                2 => ::std::option::Option::Some(State::Cued),
-                3 => ::std::option::Option::Some(State::Cueing),
+                0 => ::std::option::Option::Some(State::LOADING),
+                1 => ::std::option::Option::Some(State::PLAYING),
+                2 => ::std::option::Option::Some(State::CUED),
+                3 => ::std::option::Option::Some(State::CUEING),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [State] = &[
-            State::Loading,
-            State::Playing,
-            State::Cued,
-            State::Cueing,
+            State::LOADING,
+            State::PLAYING,
+            State::CUED,
+            State::CUEING,
         ];
     }
 
@@ -6234,7 +6234,7 @@ pub mod cdj_playback {
 
     impl ::std::default::Default for State {
         fn default() -> Self {
-            State::Loading
+            State::LOADING
         }
     }
 
@@ -6249,8 +6249,8 @@ pub mod cdj_playback {
 // @@protoc_insertion_point(message:mizer.MqttConnection)
 pub struct MqttConnection {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MqttConnection.connectionId)
-    pub connectionId: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.MqttConnection.connection_id)
+    pub connection_id: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.MqttConnection.url)
     pub url: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.MqttConnection.username)
@@ -6277,9 +6277,9 @@ impl MqttConnection {
         let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "connectionId",
-            |m: &MqttConnection| { &m.connectionId },
-            |m: &mut MqttConnection| { &mut m.connectionId },
+            "connection_id",
+            |m: &MqttConnection| { &m.connection_id },
+            |m: &mut MqttConnection| { &mut m.connection_id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "url",
@@ -6315,7 +6315,7 @@ impl ::protobuf::Message for MqttConnection {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.connectionId = is.read_string()?;
+                    self.connection_id = is.read_string()?;
                 },
                 18 => {
                     self.url = is.read_string()?;
@@ -6338,8 +6338,8 @@ impl ::protobuf::Message for MqttConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.connectionId.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.connectionId);
+        if !self.connection_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.connection_id);
         }
         if !self.url.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.url);
@@ -6356,8 +6356,8 @@ impl ::protobuf::Message for MqttConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.connectionId.is_empty() {
-            os.write_string(1, &self.connectionId)?;
+        if !self.connection_id.is_empty() {
+            os.write_string(1, &self.connection_id)?;
         }
         if !self.url.is_empty() {
             os.write_string(2, &self.url)?;
@@ -6385,7 +6385,7 @@ impl ::protobuf::Message for MqttConnection {
     }
 
     fn clear(&mut self) {
-        self.connectionId.clear();
+        self.connection_id.clear();
         self.url.clear();
         self.username = ::std::option::Option::None;
         self.password = ::std::option::Option::None;
@@ -6394,7 +6394,7 @@ impl ::protobuf::Message for MqttConnection {
 
     fn default_instance() -> &'static MqttConnection {
         static instance: MqttConnection = MqttConnection {
-            connectionId: ::std::string::String::new(),
+            connection_id: ::std::string::String::new(),
             url: ::std::string::String::new(),
             username: ::std::option::Option::None,
             password: ::std::option::Option::None,
@@ -6770,21 +6770,21 @@ pub mod configure_connection_request {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x11connections.proto\x12\x05mizer\"/\n\x11MonitorDmxRequest\x12\x1a\n\
-    \x08outputId\x18\x01\x20\x01(\tR\x08outputId\"M\n\x12MonitorDmxResponse\
+    \n\x11connections.proto\x12\x05mizer\"0\n\x11MonitorDmxRequest\x12\x1b\n\
+    \toutput_id\x18\x01\x20\x01(\tR\x08outputId\"M\n\x12MonitorDmxResponse\
     \x127\n\tuniverses\x18\x01\x20\x03(\x0b2\x19.mizer.MonitorDmxUniverseR\t\
     universes\"L\n\x12MonitorDmxUniverse\x12\x1a\n\x08universe\x18\x01\x20\
     \x01(\rR\x08universe\x12\x1a\n\x08channels\x18\x02\x20\x01(\x0cR\x08chan\
     nels\"(\n\x12MonitorMidiRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\"\xbd\x04\n\x13MonitorMidiResponse\x12\x1c\n\ttimestamp\x18\x02\
+    \x04name\"\xc0\x04\n\x13MonitorMidiResponse\x12\x1c\n\ttimestamp\x18\x02\
     \x20\x01(\x04R\ttimestamp\x124\n\x02cc\x18\x03\x20\x01(\x0b2\".mizer.Mon\
-    itorMidiResponse.NoteMsgH\0R\x02cc\x12>\n\x07noteOff\x18\x04\x20\x01(\
-    \x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x07noteOff\x12<\n\x06noteO\
-    n\x18\x05\x20\x01(\x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x06noteO\
-    n\x128\n\x05sysEx\x18\x06\x20\x01(\x0b2\x20.mizer.MonitorMidiResponse.Sy\
-    sExH\0R\x05sysEx\x12\x1a\n\x07unknown\x18\x07\x20\x01(\x0cH\0R\x07unknow\
-    n\x1aM\n\x07NoteMsg\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
-    \x12\x12\n\x04note\x18\x02\x20\x01(\rR\x04note\x12\x14\n\x05value\x18\
+    itorMidiResponse.NoteMsgH\0R\x02cc\x12?\n\x08note_off\x18\x04\x20\x01(\
+    \x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x07noteOff\x12=\n\x07note_\
+    on\x18\x05\x20\x01(\x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x06note\
+    On\x129\n\x06sys_ex\x18\x06\x20\x01(\x0b2\x20.mizer.MonitorMidiResponse.\
+    SysExH\0R\x05sysEx\x12\x1a\n\x07unknown\x18\x07\x20\x01(\x0cH\0R\x07unkn\
+    own\x1aM\n\x07NoteMsg\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channe\
+    l\x12\x12\n\x04note\x18\x02\x20\x01(\rR\x04note\x12\x14\n\x05value\x18\
     \x03\x20\x01(\rR\x05value\x1a\xa3\x01\n\x05SysEx\x12$\n\rmanufacturer1\
     \x18\x01\x20\x01(\rR\rmanufacturer1\x12$\n\rmanufacturer2\x18\x02\x20\
     \x01(\rR\rmanufacturer2\x12$\n\rmanufacturer3\x18\x03\x20\x01(\rR\rmanuf\
@@ -6807,28 +6807,28 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     R\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04por\
     t\x18\x03\x20\x01(\rR\x04port\"\x20\n\nSacnConfig\x12\x12\n\x04name\x18\
     \x01\x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\
-    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xea\x03\n\nCon\
+    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xed\x03\n\nCon\
     nection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\
     \n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\
     \x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\
-    \x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\n\tproDJL\
-    ink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tproDJLink\x12\
-    1\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnectionH\0R\x06he\
-    lios\x12=\n\netherDream\x18\x0f\x20\x01(\x0b2\x1b.mizer.EtherDreamConnec\
-    tionH\0R\netherDream\x124\n\x07gamepad\x18\x10\x20\x01(\x0b2\x18.mizer.G\
-    amepadConnectionH\0R\x07gamepad\x12+\n\x04mqtt\x18\x11\x20\x01(\x0b2\x15\
-    .mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03g13\x18\x12\x20\x01(\x0b2\
-    \x14.mizer.G13ConnectionH\0R\x03g13B\x0c\n\nconnection\"\x8d\x01\n\rDmxC\
-    onnection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\x12-\n\
-    \x06artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\x06artnet\
-    \x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\x04sacnB\
-    \x08\n\x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmware\"\
-    *\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
-    e\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1f\n\rG13Connection\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"O\n\x0eMidiConnection\x12*\n\
-    \x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
+    \x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12<\n\x0bpro_\
+    dj_link\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tproDjLink\
+    \x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnectionH\0R\
+    \x06helios\x12>\n\x0bether_dream\x18\x0f\x20\x01(\x0b2\x1b.mizer.EtherDr\
+    eamConnectionH\0R\netherDream\x124\n\x07gamepad\x18\x10\x20\x01(\x0b2\
+    \x18.mizer.GamepadConnectionH\0R\x07gamepad\x12+\n\x04mqtt\x18\x11\x20\
+    \x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03g13\x18\x12\
+    \x20\x01(\x0b2\x14.mizer.G13ConnectionH\0R\x03g13B\x0c\n\nconnection\"\
+    \x8e\x01\n\rDmxConnection\x12\x1b\n\toutput_id\x18\x01\x20\x01(\tR\x08ou\
+    tputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\
+    \x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\
+    \x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08fi\
+    rmware\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
+    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1f\n\rG13Connect\
+    ion\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"O\n\x0eMidiConnection\x12\
+    *\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
     \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
     \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\
     \x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
@@ -6846,43 +6846,43 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     el\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\
     \x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceP\
     rofile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01\
-    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\
-    \n\x02CC\x10\x01B\t\n\x07_layout\"\x9a\x01\n\rOscConnection\x12\"\n\x0cc\
-    onnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\
-    \x18\x02\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01\
-    (\rR\noutputPort\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAdd\
-    ress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\
-    \x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12\
-    \"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playb\
-    ack\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\
-    \x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\
-    \n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\
-    \x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.Cdj\
-    Playback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mi\
-    zer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\
-    \x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05tit\
-    le\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\
-    \x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x03\"\xa2\x01\n\x0eMqtt\
-    Connection\x12\"\n\x0cconnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\
-    \x12\x10\n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\
-    \x03\x20\x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\
-    \x04\x20\x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t\
-    _password\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\
-    \x01\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\
-    \x02\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\
-    \x18\x03\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06conf\
-    ig2\xf9\x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.G\
-    etConnectionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\
-    \x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0b\
-    MonitorMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiRe\
-    sponse\x12A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.\
-    MonitorOscResponse\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetCon\
-    fig\x1a\x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.\
-    SacnConfig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\
-    \x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\x12\
-    9\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Connectio\
-    ns\x12K\n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionRequest\
-    \x1a\x11.mizer.Connectionb\x06proto3\
+    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04NOTE\x10\0\x12\x06\
+    \n\x02CC\x10\x01B\t\n\x07_layout\"\x9b\x01\n\rOscConnection\x12#\n\rconn\
+    ection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\
+    \x02\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\
+    \noutputPort\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\
+    \"\x9a\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01\
+    (\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12#\n\r\
+    player_number\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\x18\
+    \x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdj\
+    Playback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bp\
+    m\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\
+    \x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback\
+    .StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjP\
+    layback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\
+    \x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\
+    \x05State\x12\x0b\n\x07LOADING\x10\0\x12\x0b\n\x07PLAYING\x10\x01\x12\
+    \x08\n\x04CUED\x10\x02\x12\n\n\x06CUEING\x10\x03\"\xa3\x01\n\x0eMqttConn\
+    ection\x12#\n\rconnection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x10\
+    \n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\x03\x20\
+    \x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\x04\x20\
+    \x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t_passwor\
+    d\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\
+    \x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\x20\
+    \x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\x03\
+    \x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06config2\xf9\
+    \x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.GetConne\
+    ctionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\x18.mizer\
+    .MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0bMonitorMid\
+    i\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\x12\
+    A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.MonitorOsc\
+    Response\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\
+    \x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.SacnCon\
+    fig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\x1f.mi\
+    zer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\x129\n\x10\
+    DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Connections\x12K\
+    \n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionRequest\x1a\x11.\
+    mizer.Connectionb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

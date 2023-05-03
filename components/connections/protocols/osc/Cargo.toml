@@ -13,5 +13,5 @@ mizer-message-bus = { path = "../../../../util/bus" }
 futures = "0.3"
 mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
-tokio = { version = "1.27", features = ["net", "rt"] }
+tokio = { version = "1.28", features = ["net", "rt"] }
 serde = { version = "1", features = ["derive"] }

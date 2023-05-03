@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
@@ -36,14 +37,14 @@ class _MergePropertiesState extends State<MergeProperties> {
           label: "Mode",
           initialValue: widget.config.mode.value,
           items: MergeNodeConfig_MergeMode.values
-              .map((e) => SelectOption(value: e.value, label: e.name))
+              .map((e) => SelectOption(value: e.value, label: e.name.toCapitalCase()))
               .toList(),
           onUpdate: _updateMode),
     ]);
   }
 
   void _updateMode(int type) {
-    log("_updateType $type", name: "OscillatorProperties");
+    log("_updateMode $type", name: "MergeProperties");
     setState(() {
       state.mode = MergeNodeConfig_MergeMode.valueOf(type)!;
       widget.onUpdate(state);

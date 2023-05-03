@@ -1,73 +1,16 @@
-use enum_iterator::{all, Sequence};
-use flume::{unbounded, Receiver, Sender};
-use futures::Stream;
-use gilrs::{GamepadId, Gilrs};
-use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::fmt::Formatter;
 use std::sync::Arc;
-use std::time::Duration;
 
-pub struct GamepadDiscoveryService {
-    gilrs: Gilrs,
-    connection_sender: Sender<GamepadRef>,
-    gamepad_states: HashMap<GamepadId, Arc<NonEmptyPinboard<GamepadState>>>,
-}
+use enum_iterator::{all, Sequence};
+use gilrs::GamepadId;
+use pinboard::NonEmptyPinboard;
 
-impl GamepadDiscoveryService {
-    fn run(mut self) {
-        for (id, gamepad) in self.gilrs.gamepads() {
-            let state = GamepadState::new(&gamepad);
-            let state = Arc::new(NonEmptyPinboard::new(state));
-            self.gamepad_states.insert(id, state.clone());
-            let gamepad = GamepadRef::new(id, gamepad, state);
-            self.connection_sender.send(gamepad).unwrap();
-        }
-        loop {
-            while let Some(event) = self.gilrs.next_event() {
-                log::trace!("{:?}", event);
-                if let Some(gamepad_state) = self.gamepad_states.get(&event.id) {
-                    let mut state = gamepad_state.read();
-                    state.update(&self.gilrs.gamepad(event.id));
-                    gamepad_state.set(state);
-                }
-            }
-            std::thread::sleep(Duration::from_millis(50));
-        }
-    }
-}
+pub use crate::discovery::GamepadDiscovery;
 
-pub struct GamepadDiscovery {
-    connections: Receiver<GamepadRef>,
-}
+mod discovery;
 
-impl GamepadDiscovery {
-    // As this will spawn a background thread initializing a new instance of this struct should be explicit.
-    #[allow(clippy::new_without_default)]
-    pub fn new() -> Self {
-        let (sender, receiver) = unbounded();
-        std::thread::spawn(move || {
-            let service = GamepadDiscoveryService {
-                gilrs: Gilrs::new()
-                    .map_err(|err| anyhow::anyhow!("Can't create Gamepad context {:?}", err))
-                    .unwrap(),
-                connection_sender: sender,
-                gamepad_states: Default::default(),
-            };
-            service.run();
-        });
-
-        GamepadDiscovery {
-            connections: receiver,
-        }
-    }
-
-    pub fn into_stream(self) -> impl Stream<Item = GamepadRef> {
-        self.connections.into_stream()
-    }
-}
-
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct GamepadRef {
     id: GamepadId,
     name: String,
@@ -106,6 +49,7 @@ pub struct GamepadState {
     state: gilrs::ev::state::GamepadState,
     button_codes: HashMap<Button, gilrs::ev::Code>,
     axis_codes: HashMap<Axis, gilrs::ev::Code>,
+    connected: bool,
 }
 
 impl GamepadState {
@@ -137,11 +81,13 @@ impl GamepadState {
             state,
             button_codes,
             axis_codes,
+            connected: true,
         }
     }
 
     fn update(&mut self, gamepad: &gilrs::Gamepad<'_>) {
         self.state = gamepad.state().clone();
+        self.connected = gamepad.is_connected();
     }
 
     pub fn buttons(&self) -> Vec<Button> {
@@ -153,12 +99,18 @@ impl GamepadState {
     }
 
     pub fn is_button_pressed(&self, button: Button) -> Option<bool> {
+        if !self.connected {
+            return Some(false);
+        }
         self.button_codes
             .get(&button)
             .map(|code| self.state.is_pressed(*code))
     }
 
     pub fn axis_value(&self, axis: Axis) -> Option<f64> {
+        if !self.connected {
+            return Some(Default::default());
+        }
         self.axis_codes
             .get(&axis)
             .map(|code| self.state.value(*code) as f64)
@@ -192,6 +144,7 @@ pub enum Button {
     West,
     Select,
     Start,
+    Mode,
     DPadUp,
     DPadRight,
     DPadDown,
@@ -213,6 +166,7 @@ impl From<Button> for gilrs::Button {
             Button::West => Self::West,
             Button::Select => Self::Select,
             Button::Start => Self::Start,
+            Button::Mode => Self::Mode,
             Button::DPadUp => Self::DPadUp,
             Button::DPadRight => Self::DPadRight,
             Button::DPadDown => Self::DPadDown,

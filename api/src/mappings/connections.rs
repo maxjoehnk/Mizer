@@ -20,7 +20,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 ..Default::default()
             }),
             Dmx(view) => Self::Dmx(DmxConnection {
-                outputId: view.output_id.clone(),
+                output_id: view.output_id.clone(),
                 config: Some(match view.config {
                     mizer_connections::DmxConfig::Artnet { host, port } => {
                         dmx_connection::Config::Artnet(ArtnetConfig {
@@ -54,14 +54,14 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 ..Default::default()
             }),
             Mqtt(mqtt) => Self::Mqtt(MqttConnection {
-                connectionId: mqtt.connection_id,
+                connection_id: mqtt.connection_id,
                 url: mqtt.url,
                 username: mqtt.username,
                 password: mqtt.password,
                 ..Default::default()
             }),
             Osc(osc) => Self::Osc(OscConnection {
-                connectionId: osc.connection_id,
+                connection_id: osc.connection_id,
                 output_address: osc.output_host,
                 output_port: osc.output_port as u32,
                 input_port: osc.input_port as u32,
@@ -160,7 +160,7 @@ impl From<mizer_connections::midi_device_profile::ControlType>
 
         match control_type {
             ControlChange => Self::CC,
-            Note => Self::Note,
+            Note => Self::NOTE,
         }
     }
 }

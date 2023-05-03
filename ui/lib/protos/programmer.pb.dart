@@ -56,6 +56,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
     ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockSize', $pb.PbFieldType.OU3)
     ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
+    ..pc<EffectProgrammerState>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: EffectProgrammerState.create)
     ..hasRequiredFields = false
   ;
 
@@ -70,6 +71,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
     $core.int? blockSize,
     $core.int? groups,
     $core.int? wings,
+    $core.Iterable<EffectProgrammerState>? effects,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -98,6 +100,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     }
     if (wings != null) {
       _result.wings = wings;
+    }
+    if (effects != null) {
+      _result.effects.addAll(effects);
     }
     return _result;
   }
@@ -180,6 +185,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.bool hasWings() => $_has(8);
   @$pb.TagNumber(9)
   void clearWings() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.List<EffectProgrammerState> get effects => $_getList(9);
 }
 
 class FixtureSelection_GroupedFixtureList extends $pb.GeneratedMessage {
@@ -441,6 +449,261 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
   void clearGeneric() => clearField(5);
   @$pb.TagNumber(5)
   ProgrammerChannel_GenericValue ensureGeneric() => $_ensure(4);
+}
+
+class EffectProgrammerState extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EffectProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectRate', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectOffset', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  EffectProgrammerState._() : super();
+  factory EffectProgrammerState({
+    $core.int? effectId,
+    $core.double? effectRate,
+    $core.double? effectOffset,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (effectRate != null) {
+      _result.effectRate = effectRate;
+    }
+    if (effectOffset != null) {
+      _result.effectOffset = effectOffset;
+    }
+    return _result;
+  }
+  factory EffectProgrammerState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EffectProgrammerState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EffectProgrammerState clone() => EffectProgrammerState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EffectProgrammerState copyWith(void Function(EffectProgrammerState) updates) => super.copyWith((message) => updates(message as EffectProgrammerState)) as EffectProgrammerState; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EffectProgrammerState create() => EffectProgrammerState._();
+  EffectProgrammerState createEmptyInstance() => create();
+  static $pb.PbList<EffectProgrammerState> createRepeated() => $pb.PbList<EffectProgrammerState>();
+  @$core.pragma('dart2js:noInline')
+  static EffectProgrammerState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EffectProgrammerState>(create);
+  static EffectProgrammerState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get effectRate => $_getN(1);
+  @$pb.TagNumber(2)
+  set effectRate($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEffectRate() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEffectRate() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get effectOffset => $_getN(2);
+  @$pb.TagNumber(3)
+  set effectOffset($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasEffectOffset() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearEffectOffset() => clearField(3);
+}
+
+class WriteEffectRateRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectRateRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectRate', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  WriteEffectRateRequest._() : super();
+  factory WriteEffectRateRequest({
+    $core.int? effectId,
+    $core.double? effectRate,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (effectRate != null) {
+      _result.effectRate = effectRate;
+    }
+    return _result;
+  }
+  factory WriteEffectRateRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteEffectRateRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteEffectRateRequest clone() => WriteEffectRateRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteEffectRateRequest copyWith(void Function(WriteEffectRateRequest) updates) => super.copyWith((message) => updates(message as WriteEffectRateRequest)) as WriteEffectRateRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectRateRequest create() => WriteEffectRateRequest._();
+  WriteEffectRateRequest createEmptyInstance() => create();
+  static $pb.PbList<WriteEffectRateRequest> createRepeated() => $pb.PbList<WriteEffectRateRequest>();
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectRateRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectRateRequest>(create);
+  static WriteEffectRateRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get effectRate => $_getN(1);
+  @$pb.TagNumber(2)
+  set effectRate($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEffectRate() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEffectRate() => clearField(2);
+}
+
+class WriteEffectRateResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectRateResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  WriteEffectRateResponse._() : super();
+  factory WriteEffectRateResponse() => create();
+  factory WriteEffectRateResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteEffectRateResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteEffectRateResponse clone() => WriteEffectRateResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteEffectRateResponse copyWith(void Function(WriteEffectRateResponse) updates) => super.copyWith((message) => updates(message as WriteEffectRateResponse)) as WriteEffectRateResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectRateResponse create() => WriteEffectRateResponse._();
+  WriteEffectRateResponse createEmptyInstance() => create();
+  static $pb.PbList<WriteEffectRateResponse> createRepeated() => $pb.PbList<WriteEffectRateResponse>();
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectRateResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectRateResponse>(create);
+  static WriteEffectRateResponse? _defaultInstance;
+}
+
+class WriteEffectOffsetRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectOffsetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectOffset', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  WriteEffectOffsetRequest._() : super();
+  factory WriteEffectOffsetRequest({
+    $core.int? effectId,
+    $core.double? effectOffset,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (effectOffset != null) {
+      _result.effectOffset = effectOffset;
+    }
+    return _result;
+  }
+  factory WriteEffectOffsetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteEffectOffsetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteEffectOffsetRequest clone() => WriteEffectOffsetRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteEffectOffsetRequest copyWith(void Function(WriteEffectOffsetRequest) updates) => super.copyWith((message) => updates(message as WriteEffectOffsetRequest)) as WriteEffectOffsetRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectOffsetRequest create() => WriteEffectOffsetRequest._();
+  WriteEffectOffsetRequest createEmptyInstance() => create();
+  static $pb.PbList<WriteEffectOffsetRequest> createRepeated() => $pb.PbList<WriteEffectOffsetRequest>();
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectOffsetRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectOffsetRequest>(create);
+  static WriteEffectOffsetRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get effectOffset => $_getN(1);
+  @$pb.TagNumber(2)
+  set effectOffset($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEffectOffset() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEffectOffset() => clearField(2);
+}
+
+class WriteEffectOffsetResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectOffsetResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  WriteEffectOffsetResponse._() : super();
+  factory WriteEffectOffsetResponse() => create();
+  factory WriteEffectOffsetResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteEffectOffsetResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteEffectOffsetResponse clone() => WriteEffectOffsetResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteEffectOffsetResponse copyWith(void Function(WriteEffectOffsetResponse) updates) => super.copyWith((message) => updates(message as WriteEffectOffsetResponse)) as WriteEffectOffsetResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectOffsetResponse create() => WriteEffectOffsetResponse._();
+  WriteEffectOffsetResponse createEmptyInstance() => create();
+  static $pb.PbList<WriteEffectOffsetResponse> createRepeated() => $pb.PbList<WriteEffectOffsetResponse>();
+  @$core.pragma('dart2js:noInline')
+  static WriteEffectOffsetResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectOffsetResponse>(create);
+  static WriteEffectOffsetResponse? _defaultInstance;
 }
 
 class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
@@ -920,7 +1183,7 @@ class HighlightResponse extends $pb.GeneratedMessage {
 class StoreRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
-    ..e<StoreRequest_Mode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storeMode', $pb.PbFieldType.OE, defaultOrMaker: StoreRequest_Mode.Overwrite, valueOf: StoreRequest_Mode.valueOf, enumValues: StoreRequest_Mode.values)
+    ..e<StoreRequest_Mode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storeMode', $pb.PbFieldType.OE, defaultOrMaker: StoreRequest_Mode.OVERWRITE, valueOf: StoreRequest_Mode.valueOf, enumValues: StoreRequest_Mode.values)
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
@@ -1053,7 +1316,7 @@ class PresetsRequest extends $pb.GeneratedMessage {
 class PresetId extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
-    ..e<PresetId_PresetType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PresetId_PresetType.Intensity, valueOf: PresetId_PresetType.valueOf, enumValues: PresetId_PresetType.values)
+    ..e<PresetId_PresetType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PresetId_PresetType.INTENSITY, valueOf: PresetId_PresetType.valueOf, enumValues: PresetId_PresetType.values)
     ..hasRequiredFields = false
   ;
 
@@ -1114,31 +1377,31 @@ class PresetId extends $pb.GeneratedMessage {
 class Presets extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Presets', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<Preset>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'intensities', $pb.PbFieldType.PM, subBuilder: Preset.create)
-    ..pc<Preset>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shutter', $pb.PbFieldType.PM, subBuilder: Preset.create)
-    ..pc<Preset>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', $pb.PbFieldType.PM, subBuilder: Preset.create)
-    ..pc<Preset>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shutters', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colors', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positions', $pb.PbFieldType.PM, subBuilder: Preset.create)
     ..hasRequiredFields = false
   ;
 
   Presets._() : super();
   factory Presets({
     $core.Iterable<Preset>? intensities,
-    $core.Iterable<Preset>? shutter,
-    $core.Iterable<Preset>? color,
-    $core.Iterable<Preset>? position,
+    $core.Iterable<Preset>? shutters,
+    $core.Iterable<Preset>? colors,
+    $core.Iterable<Preset>? positions,
   }) {
     final _result = create();
     if (intensities != null) {
       _result.intensities.addAll(intensities);
     }
-    if (shutter != null) {
-      _result.shutter.addAll(shutter);
+    if (shutters != null) {
+      _result.shutters.addAll(shutters);
     }
-    if (color != null) {
-      _result.color.addAll(color);
+    if (colors != null) {
+      _result.colors.addAll(colors);
     }
-    if (position != null) {
-      _result.position.addAll(position);
+    if (positions != null) {
+      _result.positions.addAll(positions);
     }
     return _result;
   }
@@ -1167,13 +1430,13 @@ class Presets extends $pb.GeneratedMessage {
   $core.List<Preset> get intensities => $_getList(0);
 
   @$pb.TagNumber(2)
-  $core.List<Preset> get shutter => $_getList(1);
+  $core.List<Preset> get shutters => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.List<Preset> get color => $_getList(2);
+  $core.List<Preset> get colors => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<Preset> get position => $_getList(3);
+  $core.List<Preset> get positions => $_getList(3);
 }
 
 class Preset_Color extends $pb.GeneratedMessage {

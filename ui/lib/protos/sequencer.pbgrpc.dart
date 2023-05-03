@@ -3,7 +3,7 @@
 //  source: sequencer.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:async' as $async;
 
@@ -53,6 +53,11 @@ class SequencerApiClient extends $grpc.Client {
       $grpc.ClientMethod<$1.CueTriggerTimeRequest, $1.Sequences>(
           '/mizer.sequencer.SequencerApi/UpdateCueTriggerTime',
           ($1.CueTriggerTimeRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$updateCueEffectOffsetTime =
+      $grpc.ClientMethod<$1.CueEffectOffsetTimeRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateCueEffectOffsetTime',
+          ($1.CueEffectOffsetTimeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
   static final _$updateCueName =
       $grpc.ClientMethod<$1.CueNameRequest, $1.Sequences>(
@@ -139,6 +144,13 @@ class SequencerApiClient extends $grpc.Client {
       $1.CueTriggerTimeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateCueTriggerTime, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateCueEffectOffsetTime(
+      $1.CueEffectOffsetTimeRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateCueEffectOffsetTime, request,
+        options: options);
   }
 
   $grpc.ResponseFuture<$1.Sequences> updateCueName($1.CueNameRequest request,
@@ -250,6 +262,14 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.CueTriggerTimeRequest.fromBuffer(value),
         ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CueEffectOffsetTimeRequest, $1.Sequences>(
+        'UpdateCueEffectOffsetTime',
+        updateCueEffectOffsetTime_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.CueEffectOffsetTimeRequest.fromBuffer(value),
+        ($1.Sequences value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.CueNameRequest, $1.Sequences>(
         'UpdateCueName',
         updateCueName_Pre,
@@ -344,6 +364,12 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
     return updateCueTriggerTime(call, await request);
   }
 
+  $async.Future<$1.Sequences> updateCueEffectOffsetTime_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.CueEffectOffsetTimeRequest> request) async {
+    return updateCueEffectOffsetTime(call, await request);
+  }
+
   $async.Future<$1.Sequences> updateCueName_Pre(
       $grpc.ServiceCall call, $async.Future<$1.CueNameRequest> request) async {
     return updateCueName(call, await request);
@@ -397,6 +423,8 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.CueTriggerRequest request);
   $async.Future<$1.Sequences> updateCueTriggerTime(
       $grpc.ServiceCall call, $1.CueTriggerTimeRequest request);
+  $async.Future<$1.Sequences> updateCueEffectOffsetTime(
+      $grpc.ServiceCall call, $1.CueEffectOffsetTimeRequest request);
   $async.Future<$1.Sequences> updateCueName(
       $grpc.ServiceCall call, $1.CueNameRequest request);
   $async.Future<$1.Sequences> updateCueValue(

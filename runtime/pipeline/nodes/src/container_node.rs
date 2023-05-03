@@ -11,7 +11,7 @@ pub struct ContainerNode {
 impl PipelineNode for ContainerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ContainerNode".into(),
+            name: stringify!(ContainerNode).into(),
             preview_type: PreviewType::None,
         }
     }

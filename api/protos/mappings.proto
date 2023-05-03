@@ -8,7 +8,8 @@ service MappingsApi {
   rpc AddMapping (MappingRequest) returns (MappingResult) {}
 }
 
-message MappingResult {}
+message MappingResult {
+}
 
 message MappingRequest {
   oneof binding {
@@ -40,5 +41,7 @@ message LayoutControlAction {
   string control_node = 1;
 }
 
-message ProgrammerHighlightAction {}
-message ProgrammerClearAction {}
+message ProgrammerHighlightAction {
+}
+message ProgrammerClearAction {
+}

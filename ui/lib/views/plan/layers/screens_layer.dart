@@ -10,8 +10,7 @@ class PlansScreenLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomMultiChildLayout(
-        delegate: PlanScreensLayoutDelegate(plan), children: _screens);
+    return CustomMultiChildLayout(delegate: PlanScreensLayoutDelegate(plan), children: _screens);
   }
 
   List<Widget> get _screens {
@@ -41,7 +40,7 @@ class PlanScreensLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     for (var screen in plan.screens) {
-      var screenId = screen.id;
+      var screenId = "screen-${screen.id}";
       var size = Size(screen.width * fieldSize, screen.height * fieldSize);
       layoutChild(screenId, BoxConstraints.tight(size));
       var offset = _convertScreenToScreenPosition(screen);

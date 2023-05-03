@@ -73,14 +73,14 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return Container();
     }
 
-    var supportsMappings = node?.type == Node_NodeType.Button || node?.type == Node_NodeType.Fader;
+    var supportsMappings = node?.type == Node_NodeType.BUTTON || node?.type == Node_NodeType.FADER;
     return ContextMenu(
       menu: Menu(items: [
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
         MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
         MenuItem(label: "Move".i18n, action: () => widget.onMove()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
-        if (node?.type == Node_NodeType.Sequencer)
+        if (node?.type == Node_NodeType.SEQUENCER)
           MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),
         if (supportsMappings) MenuDivider(),
         if (supportsMappings)
@@ -96,16 +96,16 @@ class _LayoutControlViewState extends State<LayoutControlView> {
   }
 
   Widget? _getControl(Node? node, NodesApi apiClient) {
-    if (node?.type == Node_NodeType.Fader) {
+    if (node?.type == Node_NodeType.FADER) {
       return FaderControl(pointer: widget.pointer, control: widget.control, color: _color);
-    } else if (node?.type == Node_NodeType.Button) {
+    } else if (node?.type == Node_NodeType.BUTTON) {
       return ButtonControl(
         pointer: widget.pointer,
         control: widget.control,
         color: _color,
         image: _image,
       );
-    } else if (node?.type == Node_NodeType.Sequencer) {
+    } else if (node?.type == Node_NodeType.SEQUENCER) {
       return SequencerControl(
         label: widget.control.label,
         color: _color,
@@ -114,9 +114,9 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         size: widget.control.size,
         behavior: widget.control.behavior.sequencer,
       );
-    } else if (node?.type == Node_NodeType.Label) {
+    } else if (node?.type == Node_NodeType.LABEL) {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
-    } else if (node?.type == Node_NodeType.Group) {
+    } else if (node?.type == Node_NodeType.GROUP) {
       return GroupControl(
         label: widget.control.label,
         color: _color,

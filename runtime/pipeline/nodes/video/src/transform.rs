@@ -16,54 +16,29 @@ pub struct VideoTransformState {
 impl PipelineNode for VideoTransformNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "VideoTransformNode".into(),
+            name: stringify!(VideoTransformNode).into(),
             preview_type: PreviewType::Texture,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "input".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "output".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-            control_port("rotate-x"),
-            control_port("rotate-y"),
-            control_port("rotate-z"),
-            control_port("translate-x"),
-            control_port("translate-y"),
-            control_port("translate-z"),
-            control_port("scale-x"),
-            control_port("scale-y"),
+            input_port!("input", PortType::Gstreamer),
+            output_port!("output", PortType::Gstreamer),
+            input_port!("rotate-x", PortType::Single),
+            input_port!("rotate-y", PortType::Single),
+            input_port!("rotate-z", PortType::Single),
+            input_port!("translate-x", PortType::Single),
+            input_port!("translate-y", PortType::Single),
+            input_port!("translate-z", PortType::Single),
+            input_port!("scale-x", PortType::Single),
+            input_port!("scale-y", PortType::Single),
         ]
     }
 
     fn node_type(&self) -> NodeType {
         NodeType::VideoTransform
     }
-}
-
-fn control_port<T: Into<PortId>>(port: T) -> (PortId, PortMetadata) {
-    (
-        port.into(),
-        PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Input,
-            ..Default::default()
-        },
-    )
 }
 
 impl ProcessingNode for VideoTransformNode {

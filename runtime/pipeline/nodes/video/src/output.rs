@@ -26,20 +26,13 @@ impl VideoOutputState {
 impl PipelineNode for VideoOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "VideoOutputNode".into(),
+            name: stringify!(VideoOutputNode).into(),
             preview_type: PreviewType::Texture,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "input".into(),
-            PortMetadata {
-                port_type: PortType::Gstreamer,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        )]
+        vec![input_port!("input", PortType::Gstreamer)]
     }
 
     fn node_type(&self) -> NodeType {

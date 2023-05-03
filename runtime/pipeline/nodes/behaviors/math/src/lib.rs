@@ -1,7 +1,4 @@
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use serde::{Deserialize, Serialize};
 use std::f64::consts::PI;
 
@@ -46,40 +43,12 @@ impl PipelineNode for MathNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        let mut ports = vec![(
-            VALUE_OUTPUT.into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )];
+        let mut ports = vec![output_port!(VALUE_OUTPUT, PortType::Single)];
         if self.mode.single_parameter() {
-            ports.push((
-                VALUE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ));
+            ports.push(input_port!(VALUE_INPUT, PortType::Single));
         } else {
-            ports.push((
-                LHS_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ));
-            ports.push((
-                RHS_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ));
+            ports.push(input_port!(LHS_INPUT, PortType::Single));
+            ports.push(input_port!(RHS_INPUT, PortType::Single));
         }
 
         ports

@@ -73,6 +73,16 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
+  Future<Sequences> updateCueEffectOffsetTime(
+      int sequence, int cue, int effect, double? time) async {
+    var request =
+        CueEffectOffsetTimeRequest(sequence: sequence, cue: cue, effect: effect, time: time);
+    var response = await channel.invokeMethod("updateCueEffectOffsetTime", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
   Future<SequencerPointer?> getSequencerPointer() async {
     int pointer = await channel.invokeMethod("getSequencerPointer");
 
@@ -88,8 +98,10 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
-  Future<Sequences> updateCueValue(int sequenceId, int cueId, int controlIndex, CueValue value) async {
-    var request = CueValueRequest(sequenceId: sequenceId, cueId: cueId, controlIndex: controlIndex, value: value);
+  Future<Sequences> updateCueValue(
+      int sequenceId, int cueId, int controlIndex, CueValue value) async {
+    var request = CueValueRequest(
+        sequenceId: sequenceId, cueId: cueId, controlIndex: controlIndex, value: value);
     var response = await channel.invokeMethod("updateCueValue", request.writeToBuffer());
 
     return Sequences.fromBuffer(_convertBuffer(response));
@@ -130,7 +142,8 @@ class SequencerPluginApi implements SequencerApi {
   @override
   Future<Sequences> updateStopOnLastCue(int sequence, bool stopOnLastCue) async {
     var request = SequenceStopOnLastCueRequest(sequence: sequence, stopOnLastCue: stopOnLastCue);
-    var response = await channel.invokeMethod("updateSequenceStopOnLastCue", request.writeToBuffer());
+    var response =
+        await channel.invokeMethod("updateSequenceStopOnLastCue", request.writeToBuffer());
 
     return Sequences.fromBuffer(_convertBuffer(response));
   }

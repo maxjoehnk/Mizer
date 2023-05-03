@@ -9,7 +9,7 @@ anyhow = "1"
 egui = "0.21"
 egui-winit = "0.21"
 egui-wgpu = { version = "0.21", features = ["winit"] }
-egui_dock = "0.4"
+egui_dock = "0.5"
 winit = "0.28"
 image = "0.24"
 log = "0.4"

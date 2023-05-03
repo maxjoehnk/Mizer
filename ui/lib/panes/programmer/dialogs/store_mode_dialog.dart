@@ -12,9 +12,9 @@ class StoreModeDialog extends StatelessWidget {
       title: "Store",
       content: Text("Please choose store mode"),
       actions: [
-        PopupAction("Overwrite", () => _close(context, StoreRequest_Mode.Overwrite)),
-        PopupAction("Merge", () => _close(context, StoreRequest_Mode.Merge)),
-        PopupAction("Create new Cue", () => _close(context, StoreRequest_Mode.AddCue)),
+        PopupAction("Overwrite", () => _close(context, StoreRequest_Mode.OVERWRITE)),
+        PopupAction("Merge", () => _close(context, StoreRequest_Mode.MERGE)),
+        PopupAction("Create new Cue", () => _close(context, StoreRequest_Mode.ADD_CUE)),
         PopupAction("Cancel", () => Navigator.of(context).pop()),
       ],
     );

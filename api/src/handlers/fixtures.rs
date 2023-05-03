@@ -96,7 +96,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn add_fixtures(&self, add_fixtures: AddFixturesRequest) {
         let request = add_fixtures.request.unwrap();
         let cmd = PatchFixturesCommand {
-            definition_id: request.definitionId,
+            definition_id: request.definition_id,
             mode: request.mode,
             start_id: request.id,
             start_channel: request.channel,
@@ -118,7 +118,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     pub fn update_fixture(&self, request: UpdateFixtureRequest) -> anyhow::Result<()> {
         let cmd = UpdateFixtureCommand {
-            fixture_id: request.fixtureId,
+            fixture_id: request.fixture_id,
             invert_pan: request.invert_pan,
             invert_tilt: request.invert_tilt,
             reverse_pixel_order: request.reverse_pixel_order,

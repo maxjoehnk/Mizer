@@ -2,10 +2,7 @@ use crate::fixture_ports::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::GroupId;
 use mizer_node::edge::Edge;
-use mizer_node::{
-    Injector, NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId,
-    PortMetadata, PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
 const CALL_PORT: &str = "Call";
@@ -57,22 +54,8 @@ impl PipelineNode for GroupNode {
         fixture_channels
             .into_iter()
             .chain(vec![
-                (
-                    CALL_PORT.into(),
-                    PortMetadata {
-                        port_type: PortType::Single,
-                        direction: PortDirection::Input,
-                        ..Default::default()
-                    },
-                ),
-                (
-                    ACTIVE_PORT.into(),
-                    PortMetadata {
-                        port_type: PortType::Single,
-                        direction: PortDirection::Output,
-                        ..Default::default()
-                    },
-                ),
+                input_port!(CALL_PORT, PortType::Single),
+                output_port!(ACTIVE_PORT, PortType::Single),
             ])
             .collect()
     }

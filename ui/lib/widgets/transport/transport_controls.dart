@@ -20,7 +20,11 @@ class TransportControls extends StatefulWidget {
   final Function() toggleProgrammer;
   final Function() toggleSelection;
 
-  TransportControls({ required this.showProgrammer, required this.toggleProgrammer, required this.showSelection, required this.toggleSelection });
+  TransportControls(
+      {required this.showProgrammer,
+      required this.toggleProgrammer,
+      required this.showSelection,
+      required this.toggleSelection});
 
   @override
   State<TransportControls> createState() => _TransportControlsState();
@@ -48,7 +52,8 @@ class _TransportControlsState extends State<TransportControls> {
             padding: const EdgeInsets.all(8.0),
             child: RepaintBoundary(child: TimeControl(context.read(), transportStream)),
           ),
-          RepaintBoundary(child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
+          RepaintBoundary(
+              child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Hoverable(
@@ -60,21 +65,28 @@ class _TransportControlsState extends State<TransportControls> {
                   child: Center(child: Text("Tap"))),
             ),
           ),
-          RepaintBoundary(child: TransportControl(transportStream.map((event) => event.state).distinct())),
+          RepaintBoundary(
+              child: TransportControl(transportStream.map((event) => event.state).distinct())),
           Spacer(),
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: MizerButton(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Selection"),
-            ), active: widget.showSelection, onClick: widget.toggleSelection),
+            child: MizerButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Selection"),
+                ),
+                active: widget.showSelection,
+                onClick: widget.toggleSelection),
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
-            child: MizerButton(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Programmer"),
-            ), active: widget.showProgrammer, onClick: widget.toggleProgrammer),
+            child: MizerButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Programmer"),
+                ),
+                active: widget.showProgrammer,
+                onClick: widget.toggleProgrammer),
           )
         ]));
   }
@@ -233,26 +245,26 @@ class TransportControl extends StatelessWidget {
     var api = context.read<TransportApi>();
     return StreamBuilder(
         stream: state,
-        initialData: TransportState.Playing,
+        initialData: TransportState.PLAYING,
         builder: (context, snapshot) => Row(children: [
-          Container(
-              margin: const EdgeInsets.only(left: 4),
-              color: snapshot.data == TransportState.Stopped ? Colors.deepOrange : null,
-              child: IconButton(
-                  onPressed: () => api.setState(TransportState.Stopped),
-                  icon: Icon(Icons.stop))),
-          Container(
-              margin: const EdgeInsets.only(left: 4),
-              color: snapshot.data == TransportState.Paused ? Colors.deepOrange : null,
-              child: IconButton(
-                  onPressed: () => api.setState(TransportState.Paused),
-                  icon: Icon(Icons.pause))),
-          Container(
-              margin: const EdgeInsets.only(left: 4),
-              color: snapshot.data == TransportState.Playing ? Colors.deepOrange : null,
-              child: IconButton(
-                  onPressed: () => api.setState(TransportState.Playing),
-                  icon: Icon(Icons.play_arrow))),
-        ]));
+              Container(
+                  margin: const EdgeInsets.only(left: 4),
+                  color: snapshot.data == TransportState.STOPPED ? Colors.deepOrange : null,
+                  child: IconButton(
+                      onPressed: () => api.setState(TransportState.STOPPED),
+                      icon: Icon(Icons.stop))),
+              Container(
+                  margin: const EdgeInsets.only(left: 4),
+                  color: snapshot.data == TransportState.PAUSED ? Colors.deepOrange : null,
+                  child: IconButton(
+                      onPressed: () => api.setState(TransportState.PAUSED),
+                      icon: Icon(Icons.pause))),
+              Container(
+                  margin: const EdgeInsets.only(left: 4),
+                  color: snapshot.data == TransportState.PLAYING ? Colors.deepOrange : null,
+                  child: IconButton(
+                      onPressed: () => api.setState(TransportState.PLAYING),
+                      icon: Icon(Icons.play_arrow))),
+            ]));
   }
 }

@@ -17,22 +17,8 @@ impl PipelineNode for AudioMeterNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                VOLUME_OUTPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                AUDIO_INPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Multi,
-                    ..Default::default()
-                },
-            ),
+            output_port!(VOLUME_OUTPUT, PortType::Single),
+            input_port!(AUDIO_INPUT, PortType::Multi),
         ]
     }
 

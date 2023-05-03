@@ -144,17 +144,17 @@ class PresetButton extends StatelessWidget {
     if (group != null) {
       return "G${group!.id}";
     }
-    if (preset!.id.type == PresetId_PresetType.Color) {
+    if (preset!.id.type == PresetId_PresetType.COLOR) {
       return "C${preset!.id.id}";
     }
-    if (preset!.id.type == PresetId_PresetType.Intensity) {
+    if (preset!.id.type == PresetId_PresetType.INTENSITY) {
       // Panel is actually called Dimmer
       return "D${preset!.id.id}";
     }
-    if (preset!.id.type == PresetId_PresetType.Shutter) {
+    if (preset!.id.type == PresetId_PresetType.SHUTTER) {
       return "S${preset!.id.id}";
     }
-    if (preset!.id.type == PresetId_PresetType.Position) {
+    if (preset!.id.type == PresetId_PresetType.POSITION) {
       return "P${preset!.id.id}";
     }
     return "Missing Implementation for PresetButton Id";

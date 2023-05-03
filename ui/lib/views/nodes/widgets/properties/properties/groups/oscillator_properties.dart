@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
@@ -37,7 +38,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
           label: "Type",
           initialValue: widget.config.type.value,
           items: OscillatorNodeConfig_OscillatorType.values
-              .map((e) => SelectOption(value: e.value, label: e.name))
+              .map((e) => SelectOption(value: e.value, label: e.name.toCapitalCase()))
               .toList(),
           onUpdate: _updateType),
       NumberField(

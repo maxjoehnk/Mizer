@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -45,7 +46,9 @@ class _GamepadPropertiesState extends State<GamepadProperties> {
       EnumField(
         label: "Control",
         initialValue: widget.config.control,
-        items: GamepadNodeConfig_Control.values.map((e) => SelectOption(value: e, label: e.name)).toList(),
+        items: GamepadNodeConfig_Control.values
+            .map((e) => SelectOption(value: e, label: e.name.toCapitalCase()))
+            .toList(),
         onUpdate: _updateControl,
       ),
     ]);
@@ -73,7 +76,8 @@ class _GamepadPropertiesState extends State<GamepadProperties> {
     var connectionsApi = context.read<ConnectionsApi>();
     var connections = await connectionsApi.getConnections();
     this.setState(() {
-      this.gamepads = connections.connections.where((connection) => connection.hasGamepad()).toList();
+      this.gamepads =
+          connections.connections.where((connection) => connection.hasGamepad()).toList();
     });
   }
 

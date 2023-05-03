@@ -4,7 +4,10 @@ import 'package:mizer/extensions/number_extensions.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/widgets/popup/popup_direct_time_input.dart';
 import 'package:mizer/widgets/table/table.dart';
+import 'package:provider/provider.dart';
 
 const LABELS = {
   CueControl_Type.INTENSITY: 'Dimmer',
@@ -45,34 +48,50 @@ class _TrackSheetState extends State<TrackSheet> {
     for (var i = 1; i <= _controls.length; i++) {
       columnWidths[i] = FixedColumnWidth(100);
     }
+    for (var i = 1; i <= _effectIds.length; i++) {
+      columnWidths[_controls.length + i] = FixedColumnWidth(100);
+    }
     return Scrollbar(
       controller: _horizontalScroll,
       thumbVisibility: true,
       child: SingleChildScrollView(
         controller: _horizontalScroll,
         scrollDirection: Axis.horizontal,
-        child: MizerTable(columnWidths: columnWidths, columns: [
-          Text("Cue"),
-          ..._controls.map((c) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
-        ], rows: _buildRows(context)),
+        child: MizerTable(
+            columnWidths: columnWidths,
+            columns: [
+              Text("Cue"),
+              ..._controls.map((c) => Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
+              ..._effectIds.map((c) => Column(
+                  mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets")])),
+            ],
+            rows: _buildRows(context)),
       ),
     );
   }
 
   Iterable<FixtureControl> get _controls {
-    var controls = widget.sequence.cues.expand((e) => e.controls).map((control) => control.type).toSet();
+    var controls =
+        widget.sequence.cues.expand((e) => e.controls).map((control) => control.type).toSet();
 
     return widget.sequence.fixtures
         .expand((f) => controls.map((c) => FixtureControl(f, c)))
         .sorted((lhs, rhs) {
-          var fixtureId = lhs.fixtureId.compareTo(rhs.fixtureId);
-          if (fixtureId != 0) {
-            return fixtureId;
-          }
-          return lhs.control.value - rhs.control.value;
-        });
+      var fixtureId = lhs.fixtureId.compareTo(rhs.fixtureId);
+      if (fixtureId != 0) {
+        return fixtureId;
+      }
+      return lhs.control.value - rhs.control.value;
+    });
+  }
+
+  Iterable<int> get _effectIds {
+    var effectIds = widget.sequence.cues.expand((e) => e.effects).map((e) => e.effectId).toSet();
+    effectIds.sorted((lhs, rhs) => lhs - rhs);
+
+    return effectIds;
   }
 
   List<MizerTableRow> _buildRows(BuildContext context) {
@@ -81,13 +100,33 @@ class _TrackSheetState extends State<TrackSheet> {
         Text(cue.id.toString()),
         ..._controls.map((c) => Center(
             child: Text(cue.controls
-                    .firstWhereOrNull((element) => element.type == c.control &&
+                    .firstWhereOrNull((element) =>
+                        element.type == c.control &&
                         element.fixtures.firstWhereOrNull((f) => f == c.fixtureId) != null)
                     ?.value
                     .toDisplay() ??
-                "")))
+                ""))),
+        ..._effectIds.map((effectId) {
+          var effect = cue.effects.firstWhereOrNull((e) => e.effectId == effectId);
+          if (effect == null) {
+            return Container();
+          }
+
+          return PopupTableCell(
+              popup: PopupDirectTimeInput(
+                  allowSeconds: false,
+                  time: effect.hasEffectOffsets() ? CueTime(beats: effect.effectOffsets) : null,
+                  onEnter: (value) => _updateCueEffectOffsetTime(
+                      context, cue, effect, value?.hasBeats() == true ? value!.beats : null)),
+              child: Text(effect.hasEffectOffsets() ? "${effect.effectOffsets} Beats" : ""));
+        })
       ], highlight: widget.activeCue == cue.id);
     }).toList();
+  }
+
+  void _updateCueEffectOffsetTime(BuildContext context, Cue cue, CueEffect effect, double? value) {
+    context.read<SequencerBloc>().add(UpdateCueEffectOffsetTime(
+        sequence: widget.sequence.id, cue: cue.id, effect: effect.effectId, time: value));
   }
 }
 

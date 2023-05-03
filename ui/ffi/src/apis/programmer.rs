@@ -1,6 +1,8 @@
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::programmer::{ProgrammerChannel, ProgrammerState, ProgrammerView};
+use mizer_fixtures::programmer::{
+    ProgrammedEffect, ProgrammerChannel, ProgrammerState, ProgrammerView,
+};
 use mizer_fixtures::FixtureId;
 use parking_lot::Mutex;
 use std::collections::HashMap;
@@ -67,6 +69,7 @@ pub struct FFIProgrammerState {
     pub fixtures: Array<FFIFixtureId>,
     pub selection: Array<Array<FFIFixtureId>>,
     pub channels: Array<FFIProgrammerChannel>,
+    pub effects: Array<FFIEffectProgrammerState>,
     pub highlight: u8,
     pub block_size: u32,
     pub groups: u32,
@@ -116,6 +119,11 @@ impl FFIProgrammerState {
             block_size: state.selection_block_size.unwrap_or_default() as u32,
             groups: state.selection_groups.unwrap_or_default() as u32,
             wings: state.selection_wings.unwrap_or_default() as u32,
+            effects: state
+                .effects
+                .into_iter()
+                .map(FFIEffectProgrammerState::from)
+                .collect(),
         }
     }
 }
@@ -267,4 +275,23 @@ pub enum FFIFixtureFaderControl {
     Frost = 10,
     Gobo = 11,
     Generic = 12,
+}
+
+#[repr(C)]
+pub struct FFIEffectProgrammerState {
+    pub effect_id: u32,
+    pub rate: f64,
+    pub has_offset: u8,
+    pub effect_offset: f64,
+}
+
+impl From<ProgrammedEffect> for FFIEffectProgrammerState {
+    fn from(effect: ProgrammedEffect) -> Self {
+        Self {
+            effect_id: effect.effect_id,
+            rate: effect.rate,
+            has_offset: effect.offset.is_some().into(),
+            effect_offset: effect.offset.unwrap_or_default(),
+        }
+    }
 }

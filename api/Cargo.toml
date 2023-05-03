@@ -16,6 +16,7 @@ mizer-fixtures = { path = "../components/fixtures" }
 mizer-plan = { path = "../components/plan" }
 mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }
+mizer-gamepads = { path = "../components/connections/devices/gamepads" }
 mizer-node = { path = "../runtime/pipeline/node" }
 mizer-nodes = { path = "../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../runtime" }
@@ -32,8 +33,8 @@ mizer-util = { path = "../util" }
 flume = "0.10"
 futures = "0.3"
 profiling = "1.0"
-pinboard = "2.1"
-regex = "1.7"
+pinboard = "2.2"
+regex = "1.8"
 lazy_static = "1.4"
 tracing = "0.1"
 

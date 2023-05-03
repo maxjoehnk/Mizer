@@ -1,3 +1,4 @@
+use mizer_api::GamepadRef;
 use std::collections::HashMap;
 
 use mizer_clock::ClockState;
@@ -6,6 +7,7 @@ use mizer_message_bus::Subscriber;
 use mizer_node::{NodePath, NodePreviewRef, PortId};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
+use mizer_runtime::NodeMetadataRef;
 use mizer_session::SessionState;
 use mizer_settings::FixtureLibraryPaths;
 
@@ -14,6 +16,7 @@ pub enum ApiCommand {
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
     ReadFaderValue(NodePath, flume::Sender<anyhow::Result<f64>>),
     GetNodePreviewRef(NodePath, flume::Sender<Option<NodePreviewRef>>),
+    GetNodeMetadataRef(flume::Sender<NodeMetadataRef>),
     SetClockState(ClockState),
     SetBpm(f64),
     GetConnections(flume::Sender<Vec<Connection>>),
@@ -27,6 +30,7 @@ pub enum ApiCommand {
         String,
         flume::Sender<anyhow::Result<Subscriber<OscMessage>>>,
     ),
+    GetGamepadRef(String, flume::Sender<Option<GamepadRef>>),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

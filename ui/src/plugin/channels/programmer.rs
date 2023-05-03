@@ -158,6 +158,20 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
 
                 reply.send_ok(Value::Null)
             }
+            "writeEffectRate" => match call
+                .arguments()
+                .map(|req| self.handler.write_effect_rate(req))
+            {
+                Ok(()) => reply.send_ok(Value::Null),
+                Err(err) => reply.respond_error(err),
+            },
+            "writeEffectOffset" => match call
+                .arguments()
+                .map(|req| self.handler.write_effect_offset(req))
+            {
+                Ok(()) => reply.send_ok(Value::Null),
+                Err(err) => reply.respond_error(err),
+            },
             _ => reply.not_implemented(),
         }
     }

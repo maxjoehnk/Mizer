@@ -15,7 +15,7 @@ abstract class ProgrammerApi {
 
   Future<void> highlight(bool highlight);
 
-  Future<void> store(int sequenceId, StoreRequest_Mode storeMode, { int? cueId });
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode, {int? cueId});
 
   Stream<ProgrammerState> observe();
 
@@ -45,4 +45,7 @@ abstract class ProgrammerApi {
   Future<void> prev();
   Future<void> set();
   Future<void> shuffle();
+
+  Future<void> writeEffectRate(int effectId, double effectRate);
+  Future<void> writeEffectOffset(int effectId, double? effectOffset);
 }

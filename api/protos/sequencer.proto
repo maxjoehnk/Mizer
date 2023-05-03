@@ -13,6 +13,7 @@ service SequencerApi {
   rpc SequenceStop (SequenceStopRequest) returns (EmptyResponse) {}
   rpc UpdateCueTrigger (CueTriggerRequest) returns (Sequences) {}
   rpc UpdateCueTriggerTime (CueTriggerTimeRequest) returns (Sequences) {}
+  rpc UpdateCueEffectOffsetTime (CueEffectOffsetTimeRequest) returns (Sequences) {}
   rpc UpdateCueName (CueNameRequest) returns (Sequences) {}
   rpc UpdateCueValue (CueValueRequest) returns (Sequences) {}
   rpc UpdateCueFadeTime (CueTimingRequest) returns (Sequences) {}
@@ -22,7 +23,8 @@ service SequencerApi {
   rpc UpdateSequenceName (CueNameRequest) returns (Sequences) {}
 }
 
-message GetSequencesRequest {}
+message GetSequencesRequest {
+}
 
 message GetSequenceRequest {
   uint32 sequence = 1;
@@ -55,6 +57,13 @@ message CueTriggerTimeRequest {
   CueTime time = 3;
 }
 
+message CueEffectOffsetTimeRequest {
+  uint32 sequence = 1;
+  uint32 cue = 2;
+  uint32 effect = 3;
+  optional double time = 4;
+}
+
 message CueNameRequest {
   uint32 sequence = 1;
   uint32 cue = 2;
@@ -76,12 +85,12 @@ message CueTimingRequest {
 
 message SequenceWrapAroundRequest {
   uint32 sequence = 1;
-  bool wrapAround = 2;
+  bool wrap_around = 2;
 }
 
 message SequenceStopOnLastCueRequest {
   uint32 sequence = 1;
-  bool stopOnLastCue = 2;
+  bool stop_on_last_cue = 2;
 }
 
 message SequenceNameRequest {
@@ -89,7 +98,8 @@ message SequenceNameRequest {
   string name = 2;
 }
 
-message EmptyResponse {}
+message EmptyResponse {
+}
 
 message Sequences {
   repeated Sequence sequences = 1;
@@ -100,8 +110,8 @@ message Sequence {
   string name = 2;
   repeated Cue cues = 3;
   repeated mizer.fixtures.FixtureId fixtures = 4;
-  bool wrapAround = 5;
-  bool stopOnLastCue = 6;
+  bool wrap_around = 5;
+  bool stop_on_last_cue = 6;
 }
 
 message Cue {
@@ -113,6 +123,14 @@ message Cue {
   CueTimings dimmer_timings = 6;
   CueTimings position_timings = 7;
   CueTimings color_timings = 8;
+  repeated CueEffect effects = 9;
+}
+
+message CueEffect {
+  uint32 effect_id = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 2;
+  optional double effect_offsets = 3;
+  optional double effect_rate = 4;
 }
 
 message CueTimings {
@@ -167,7 +185,7 @@ message CueValue {
 }
 
 message CueTimer {
-  bool hasTimer = 1;
+  bool has_timer = 1;
   oneof timer {
     CueTime direct = 2;
     CueTimerRange range = 3;

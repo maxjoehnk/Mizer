@@ -1,10 +1,7 @@
 use rand::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use mizer_util::LerpExt;
 
 const VALUE_OUTPUT: &str = "Value";
@@ -33,14 +30,7 @@ impl PipelineNode for NoiseNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            VALUE_OUTPUT.into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

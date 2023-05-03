@@ -16,29 +16,19 @@ pub struct VideoColorBalanceState {
 impl PipelineNode for VideoColorBalanceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "VideoColorBalanceNode".into(),
+            name: stringify!(VideoColorBalanceNode).into(),
             preview_type: PreviewType::Texture,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "input".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "output".into(),
-                PortMetadata {
-                    port_type: PortType::Gstreamer,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!("input", PortType::Gstreamer),
+            output_port!("output", PortType::Gstreamer),
+            input_port!("brightness", PortType::Single),
+            input_port!("contrast", PortType::Single),
+            input_port!("hue", PortType::Single),
+            input_port!("saturation", PortType::Single),
         ]
     }
 

@@ -1476,7 +1476,7 @@ impl ::protobuf::Message for AddControlRequest {
         if !self.layout_id.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.layout_id);
         }
-        if self.node_type != ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::Fader) {
+        if self.node_type != ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::FADER) {
             my_size += ::protobuf::rt::int32_size(2, self.node_type.value());
         }
         if let Some(v) = self.position.as_ref() {
@@ -1492,7 +1492,7 @@ impl ::protobuf::Message for AddControlRequest {
         if !self.layout_id.is_empty() {
             os.write_string(1, &self.layout_id)?;
         }
-        if self.node_type != ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::Fader) {
+        if self.node_type != ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::FADER) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.node_type))?;
         }
         if let Some(v) = self.position.as_ref() {
@@ -1516,7 +1516,7 @@ impl ::protobuf::Message for AddControlRequest {
 
     fn clear(&mut self) {
         self.layout_id.clear();
-        self.node_type = ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::Fader);
+        self.node_type = ::protobuf::EnumOrUnknown::new(super::nodes::node::NodeType::FADER);
         self.position.clear();
         self.special_fields.clear();
     }
@@ -2472,12 +2472,12 @@ impl ::protobuf::reflect::ProtobufValue for ControlSize {
 // @@protoc_insertion_point(message:mizer.ControlDecorations)
 pub struct ControlDecorations {
     // message fields
-    // @@protoc_insertion_point(field:mizer.ControlDecorations.hasColor)
-    pub hasColor: bool,
+    // @@protoc_insertion_point(field:mizer.ControlDecorations.has_color)
+    pub has_color: bool,
     // @@protoc_insertion_point(field:mizer.ControlDecorations.color)
     pub color: ::protobuf::MessageField<Color>,
-    // @@protoc_insertion_point(field:mizer.ControlDecorations.hasImage)
-    pub hasImage: bool,
+    // @@protoc_insertion_point(field:mizer.ControlDecorations.has_image)
+    pub has_image: bool,
     // @@protoc_insertion_point(field:mizer.ControlDecorations.image)
     pub image: ::std::vec::Vec<u8>,
     // special fields
@@ -2500,9 +2500,9 @@ impl ControlDecorations {
         let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "hasColor",
-            |m: &ControlDecorations| { &m.hasColor },
-            |m: &mut ControlDecorations| { &mut m.hasColor },
+            "has_color",
+            |m: &ControlDecorations| { &m.has_color },
+            |m: &mut ControlDecorations| { &mut m.has_color },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, Color>(
             "color",
@@ -2510,9 +2510,9 @@ impl ControlDecorations {
             |m: &mut ControlDecorations| { &mut m.color },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "hasImage",
-            |m: &ControlDecorations| { &m.hasImage },
-            |m: &mut ControlDecorations| { &mut m.hasImage },
+            "has_image",
+            |m: &ControlDecorations| { &m.has_image },
+            |m: &mut ControlDecorations| { &mut m.has_image },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "image",
@@ -2538,13 +2538,13 @@ impl ::protobuf::Message for ControlDecorations {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 8 => {
-                    self.hasColor = is.read_bool()?;
+                    self.has_color = is.read_bool()?;
                 },
                 18 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.color)?;
                 },
                 24 => {
-                    self.hasImage = is.read_bool()?;
+                    self.has_image = is.read_bool()?;
                 },
                 34 => {
                     self.image = is.read_bytes()?;
@@ -2561,14 +2561,14 @@ impl ::protobuf::Message for ControlDecorations {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.hasColor != false {
+        if self.has_color != false {
             my_size += 1 + 1;
         }
         if let Some(v) = self.color.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
-        if self.hasImage != false {
+        if self.has_image != false {
             my_size += 1 + 1;
         }
         if !self.image.is_empty() {
@@ -2580,14 +2580,14 @@ impl ::protobuf::Message for ControlDecorations {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.hasColor != false {
-            os.write_bool(1, self.hasColor)?;
+        if self.has_color != false {
+            os.write_bool(1, self.has_color)?;
         }
         if let Some(v) = self.color.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         }
-        if self.hasImage != false {
-            os.write_bool(3, self.hasImage)?;
+        if self.has_image != false {
+            os.write_bool(3, self.has_image)?;
         }
         if !self.image.is_empty() {
             os.write_bytes(4, &self.image)?;
@@ -2609,18 +2609,18 @@ impl ::protobuf::Message for ControlDecorations {
     }
 
     fn clear(&mut self) {
-        self.hasColor = false;
+        self.has_color = false;
         self.color.clear();
-        self.hasImage = false;
+        self.has_image = false;
         self.image.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static ControlDecorations {
         static instance: ControlDecorations = ControlDecorations {
-            hasColor: false,
+            has_color: false,
             color: ::protobuf::MessageField::none(),
-            hasImage: false,
+            has_image: false,
             image: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
@@ -3388,9 +3388,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0fControlPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\
     \x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\
     \x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04\
-    R\x06height\"\x86\x01\n\x12ControlDecorations\x12\x1a\n\x08hasColor\x18\
+    R\x06height\"\x88\x01\n\x12ControlDecorations\x12\x1b\n\thas_color\x18\
     \x01\x20\x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\
-    \x0c.mizer.ColorR\x05color\x12\x1a\n\x08hasImage\x18\x03\x20\x01(\x08R\
+    \x0c.mizer.ColorR\x05color\x12\x1b\n\thas_image\x18\x03\x20\x01(\x08R\
     \x08hasImage\x12\x14\n\x05image\x18\x04\x20\x01(\x0cR\x05image\"C\n\x05C\
     olor\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\
     \x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\

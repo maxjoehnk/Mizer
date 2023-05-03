@@ -1,7 +1,6 @@
-use crate::models::fixtures::FixtureId;
-use mizer_sequencer::SequencerValue;
 use protobuf::{EnumOrUnknown, MessageField};
 
+use crate::models::fixtures::FixtureId;
 use crate::models::sequencer::*;
 
 impl From<mizer_sequencer::Sequence> for Sequence {
@@ -11,8 +10,8 @@ impl From<mizer_sequencer::Sequence> for Sequence {
             name: sequence.name,
             cues: sequence.cues.into_iter().map(Cue::from).collect(),
             fixtures: sequence.fixtures.into_iter().map(FixtureId::from).collect(),
-            wrapAround: sequence.wrap_around,
-            stopOnLastCue: sequence.stop_on_last_cue,
+            wrap_around: sequence.wrap_around,
+            stop_on_last_cue: sequence.stop_on_last_cue,
             ..Default::default()
         }
     }
@@ -28,9 +27,8 @@ impl From<mizer_sequencer::Cue> for Cue {
                 time: cue.trigger_time.map(|time| time.into()).into(),
                 ..Default::default()
             }),
-            // field_loop: matches!(cue.loop_mode, mizer_sequencer::LoopMode::JumpTo(_)),
             controls: cue.controls.into_iter().map(CueControl::from).collect(),
-            // effects: cue.effects.into_iter().map(CueEffect::from).collect(),
+            effects: cue.effects.into_iter().map(CueEffect::from).collect(),
             cue_timings: MessageField::some(CueTimings {
                 fade: MessageField::some(CueTimer::from(cue.cue_fade)),
                 delay: MessageField::some(CueTimer::from(cue.cue_delay)),
@@ -88,6 +86,7 @@ impl From<mizer_sequencer::CueControl> for CueControl {
 
 impl From<mizer_sequencer::SequencerValue<f64>> for CueValue {
     fn from(value: mizer_sequencer::SequencerValue<f64>) -> Self {
+        use mizer_sequencer::SequencerValue;
         match value {
             SequencerValue::Direct(value) => CueValue {
                 value: Some(cue_value::Value::Direct(value)),
@@ -107,6 +106,7 @@ impl From<mizer_sequencer::SequencerValue<f64>> for CueValue {
 
 impl From<CueValue> for mizer_sequencer::SequencerValue<f64> {
     fn from(value: CueValue) -> Self {
+        use mizer_sequencer::SequencerValue;
         match value.value.unwrap() {
             cue_value::Value::Direct(value) => SequencerValue::Direct(value),
             cue_value::Value::Range(range) => SequencerValue::Range((range.from, range.to)),
@@ -114,17 +114,19 @@ impl From<CueValue> for mizer_sequencer::SequencerValue<f64> {
     }
 }
 
-impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
-    fn from(value: Option<SequencerValue<mizer_sequencer::SequencerTime>>) -> Self {
-        use mizer_sequencer::SequencerTime;
+impl From<Option<mizer_sequencer::SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
+    fn from(
+        value: Option<mizer_sequencer::SequencerValue<mizer_sequencer::SequencerTime>>,
+    ) -> Self {
+        use mizer_sequencer::{SequencerTime, SequencerValue};
         match value {
             None => CueTimer {
-                hasTimer: false,
+                has_timer: false,
                 timer: None,
                 ..Default::default()
             },
             Some(SequencerValue::Direct(SequencerTime::Seconds(value))) => CueTimer {
-                hasTimer: true,
+                has_timer: true,
                 timer: Some(cue_timer::Timer::Direct(CueTime {
                     time: Some(cue_time::Time::Seconds(value)),
                     ..Default::default()
@@ -132,7 +134,7 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
                 ..Default::default()
             },
             Some(SequencerValue::Direct(SequencerTime::Beats(value))) => CueTimer {
-                hasTimer: true,
+                has_timer: true,
                 timer: Some(cue_timer::Timer::Direct(CueTime {
                     time: Some(cue_time::Time::Beats(value)),
                     ..Default::default()
@@ -143,7 +145,7 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
                 SequencerTime::Seconds(from),
                 SequencerTime::Seconds(to),
             ))) => CueTimer {
-                hasTimer: true,
+                has_timer: true,
                 timer: Some(cue_timer::Timer::Range(CueTimerRange {
                     from: MessageField::some(CueTime {
                         time: Some(cue_time::Time::Seconds(from)),
@@ -159,7 +161,7 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
             },
             Some(SequencerValue::Range((SequencerTime::Beats(from), SequencerTime::Beats(to)))) => {
                 CueTimer {
-                    hasTimer: true,
+                    has_timer: true,
                     timer: Some(cue_timer::Timer::Range(CueTimerRange {
                         from: MessageField::some(CueTime {
                             time: Some(cue_time::Time::Beats(from)),
@@ -179,8 +181,9 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
     }
 }
 
-impl From<CueTimer> for Option<SequencerValue<mizer_sequencer::SequencerTime>> {
+impl From<CueTimer> for Option<mizer_sequencer::SequencerValue<mizer_sequencer::SequencerTime>> {
     fn from(timer: CueTimer) -> Self {
+        use mizer_sequencer::SequencerValue;
         match timer.timer {
             None => None,
             Some(cue_timer::Timer::Direct(time)) => Some(SequencerValue::Direct(time.into())),
@@ -237,6 +240,23 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type
             ColorMixer(ColorChannel::Blue) => Self::COLOR_BLUE,
             ColorWheel => Self::COLOR_WHEEL,
             Generic(_) => Self::GENERIC,
+        }
+    }
+}
+
+impl From<mizer_sequencer::CueEffect> for CueEffect {
+    fn from(effect: mizer_sequencer::CueEffect) -> Self {
+        use mizer_sequencer::SequencerTime;
+        Self {
+            effect_id: effect.effect,
+            effect_offsets: effect.effect_offset.and_then(|time| {
+                if let SequencerTime::Beats(value) = time {
+                    Some(value)
+                } else {
+                    None
+                }
+            }),
+            ..Default::default()
         }
     }
 }

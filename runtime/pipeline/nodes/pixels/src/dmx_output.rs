@@ -32,20 +32,14 @@ const INPUT_PORT: &str = "input";
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "PixelDmxNode".into(),
+            name: stringify!(PixelDmxNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            INPUT_PORT.into(),
-            PortMetadata {
-                port_type: PortType::Multi,
-                direction: PortDirection::Input,
-                dimensions: Some((self.width, self.height)),
-                ..Default::default()
-            },
+        vec![input_port!(
+            INPUT_PORT, PortType::Multi, dimensions: (self.width, self.height)
         )]
     }
 

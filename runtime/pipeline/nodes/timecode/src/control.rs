@@ -1,10 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::edge::Edge;
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use mizer_timecode::{TimecodeId, TimecodeManager};
 
 const TIMECODE_INPUT: &str = "Clock";
@@ -25,22 +22,8 @@ impl PipelineNode for TimecodeControlNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                TIMECODE_INPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Clock,
-                    ..Default::default()
-                },
-            ),
-            (
-                PLAYBACK_INPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
+            input_port!(TIMECODE_INPUT, PortType::Clock),
+            input_port!(PLAYBACK_INPUT, PortType::Single),
         ]
     }
 

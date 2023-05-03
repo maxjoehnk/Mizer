@@ -30,7 +30,8 @@ message DuplicateNodeRequest {
   optional string parent = 2;
 }
 
-message NodesRequest {}
+message NodesRequest {
+}
 
 message WriteControl {
   string path = 1;
@@ -38,21 +39,24 @@ message WriteControl {
   double value = 3;
 }
 
-message WriteResponse {}
+message WriteResponse {
+}
 
 message UpdateNodeConfigRequest {
   string path = 1;
   NodeConfig config = 2;
 }
 
-message UpdateNodeConfigResponse {}
+message UpdateNodeConfigResponse {
+}
 
 message MoveNodeRequest {
   string path = 1;
   NodePosition position = 2;
 }
 
-message MoveNodeResponse {}
+message MoveNodeResponse {
+}
 
 message ShowNodeRequest {
   string path = 1;
@@ -60,33 +64,38 @@ message ShowNodeRequest {
   optional string parent = 3;
 }
 
-message ShowNodeResponse {}
+message ShowNodeResponse {
+}
 
 message RenameNodeRequest {
   string path = 1;
   string new_name = 2;
 }
 
-message RenameNodeResponse {}
+message RenameNodeResponse {
+}
 
 message GroupNodesRequest {
   repeated string nodes = 1;
   optional string parent = 2;
 }
 
-message GroupNodesResponse {}
+message GroupNodesResponse {
+}
 
 message DeleteNodeRequest {
   string path = 1;
 }
 
-message DeleteNodeResponse {}
+message DeleteNodeResponse {
+}
 
 message HideNodeRequest {
   string path = 1;
 }
 
-message HideNodeResponse {}
+message HideNodeResponse {
+}
 
 message Nodes {
   repeated Node nodes = 1;
@@ -96,87 +105,87 @@ message Nodes {
 }
 
 message NodeConnection {
-  string targetNode = 1;
-  Port targetPort = 2;
-  string sourceNode = 3;
-  Port sourcePort = 4;
+  string target_node = 1;
+  Port target_port = 2;
+  string source_node = 3;
+  Port source_port = 4;
   ChannelProtocol protocol = 5;
 }
 
 message Node {
   enum NodeType {
-    Fader = 0;
-    Button = 1;
-    Oscillator = 2;
-    Clock = 3;
-    Script = 4;
-    Envelope = 5;
-    Sequence = 6;
-    Select = 7;
-    Merge = 8;
-    Threshold = 9;
-//    DmxInput = 10;
-    DmxOutput = 10;
-    OscInput = 11;
-    OscOutput = 12;
-    MidiInput = 13;
-    MidiOutput = 14;
-    Sequencer = 15;
-    Fixture = 16;
-    Programmer = 17;
-    Group = 18;
-    Preset = 19;
-    VideoFile = 20;
-    VideoOutput = 21;
-    VideoEffect = 22;
-    VideoColorBalance = 23;
-    VideoTransform = 24;
-    PixelToDmx = 30;
-    PixelPattern = 31;
-    OpcOutput = 32;
-    Laser = 40;
-    IldaFile = 41;
-    Gamepad = 45;
-    ColorRgb = 50;
-    ColorHsv = 51;
-    Container = 100;
-    Encoder = 55;
-    Math = 56;
-    DataToNumber = 57;
-    NumberToData = 58;
-    Value = 59;
-    Extract = 60;
-    MqttInput = 61;
-    MqttOutput = 62;
-    PlanScreen = 63;
-    Delay = 64;
-    Ramp = 65;
-    Noise = 66;
-    Label = 67;
-    Transport = 68;
-    G13Input = 69;
-    G13Output = 70;
-    ConstantNumber = 71;
-    Conditional = 72;
-    TimecodeControl = 73;
-    TimecodeOutput = 74;
-    AudioFile = 75;
-    AudioOutput = 76;
-    AudioVolume = 77;
-    AudioInput = 78;
-    AudioMix = 79;
-    AudioMeter = 80;
-    Template = 81;
+    FADER = 0;
+    BUTTON = 1;
+    OSCILLATOR = 2;
+    CLOCK = 3;
+    SCRIPT = 4;
+    ENVELOPE = 5;
+    SEQUENCE = 6;
+    SELECT = 7;
+    MERGE = 8;
+    THRESHOLD = 9;
+    //    DmxInput = 10;
+    DMX_OUTPUT = 10;
+    OSC_INPUT = 11;
+    OSC_OUTPUT = 12;
+    MIDI_INPUT = 13;
+    MIDI_OUTPUT = 14;
+    SEQUENCER = 15;
+    FIXTURE = 16;
+    PROGRAMMER = 17;
+    GROUP = 18;
+    PRESET = 19;
+    VIDEO_FILE = 20;
+    VIDEO_OUTPUT = 21;
+    VIDEO_EFFECT = 22;
+    VIDEO_COLOR_BALANCE = 23;
+    VIDEO_TRANSFORM = 24;
+    PIXEL_TO_DMX = 30;
+    PIXEL_PATTERN = 31;
+    OPC_OUTPUT = 32;
+    LASER = 40;
+    ILDA_FILE = 41;
+    GAMEPAD = 45;
+    COLOR_RGB = 50;
+    COLOR_HSV = 51;
+    CONTAINER = 100;
+    ENCODER = 55;
+    MATH = 56;
+    DATA_TO_NUMBER = 57;
+    NUMBER_TO_DATA = 58;
+    VALUE = 59;
+    EXTRACT = 60;
+    MQTT_INPUT = 61;
+    MQTT_OUTPUT = 62;
+    PLAN_SCREEN = 63;
+    DELAY = 64;
+    RAMP = 65;
+    NOISE = 66;
+    LABEL = 67;
+    TRANSPORT = 68;
+    G13INPUT = 69;
+    G13OUTPUT = 70;
+    CONSTANT_NUMBER = 71;
+    CONDITIONAL = 72;
+    TIMECODE_CONTROL = 73;
+    TIMECODE_OUTPUT = 74;
+    AUDIO_FILE = 75;
+    AUDIO_OUTPUT = 76;
+    AUDIO_VOLUME = 77;
+    AUDIO_INPUT = 78;
+    AUDIO_MIX = 79;
+    AUDIO_METER = 80;
+    TEMPLATE = 81;
   }
 
   enum NodePreviewType {
-    History = 0;
-    Waveform = 1;
-    Multiple = 2;
-    Texture = 3;
-    Timecode = 4;
-    Data = 5;
-    None = 6;
+    HISTORY = 0;
+    WAVEFORM = 1;
+    MULTIPLE = 2;
+    TEXTURE = 3;
+    TIMECODE = 4;
+    DATA = 5;
+    NONE = 6;
   }
 
   NodeType type = 1;
@@ -190,76 +199,76 @@ message Node {
 
 message NodeConfig {
   oneof type {
-    OscillatorNodeConfig oscillatorConfig = 10;
-    ScriptingNodeConfig scriptingConfig = 11;
-    SequenceNodeConfig sequenceConfig = 12;
-    ClockNodeConfig clockConfig = 13;
-    FixtureNodeConfig fixtureConfig = 14;
-    ButtonNodeConfig buttonConfig = 15;
-    FaderNodeConfig faderConfig = 16;
-    IldaFileNodeConfig ildaFileConfig = 17;
-    LaserNodeConfig laserConfig = 18;
-    PixelPatternNodeConfig pixelPatternConfig = 19;
-    PixelDmxNodeConfig pixelDmxConfig = 20;
-    DmxOutputNodeConfig dmxOutputConfig = 21;
-    MidiNodeConfig midiInputConfig = 22;
-    MidiNodeConfig midiOutputConfig = 23;
-    OpcOutputNodeConfig opcOutputConfig = 24;
-    OscNodeConfig oscInputConfig = 25;
-    OscNodeConfig oscOutputConfig = 26;
-    VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
-    VideoEffectNodeConfig videoEffectConfig = 28;
-    VideoFileNodeConfig videoFileConfig = 29;
-    VideoOutputNodeConfig videoOutputConfig = 30;
-    VideoTransformNodeConfig videoTransformConfig = 31;
-    SelectNodeConfig selectConfig = 32;
-    MergeNodeConfig mergeConfig = 33;
-    EnvelopeNodeConfig envelopeConfig = 34;
-    SequencerNodeConfig sequencerConfig = 35;
-    ProgrammerNodeConfig programmerConfig = 36;
-    GroupNodeConfig groupConfig = 37;
-    PresetNodeConfig presetConfig = 38;
-    ColorRgbNodeConfig colorRgbConfig = 40;
-    ColorHsvNodeConfig colorHsvConfig = 41;
-    GamepadNodeConfig gamepadNodeConfig = 42;
-    ThresholdNodeConfig thresholdConfig = 43;
-    EncoderNodeConfig encoderConfig = 44;
-    ContainerNodeConfig containerConfig = 45;
-    MathNodeConfig mathConfig = 46;
-    MqttInputNodeConfig mqttInputConfig = 47;
-    MqttOutputNodeConfig mqttOutputConfig = 48;
-    NumberToDataNodeConfig numberToDataConfig = 49;
-    DataToNumberNodeConfig dataToNumberConfig = 50;
-    ValueNodeConfig valueConfig = 51;
-    ExtractNodeConfig extractConfig = 52;
-    PlanScreenNodeConfig planScreenConfig = 53;
-    DelayNodeConfig delayConfig = 54;
-    RampNodeConfig rampConfig = 55;
-    NoiseNodeConfig noiseConfig = 56;
-    LabelNodeConfig labelConfig = 57;
-    TransportNodeConfig transportConfig = 58;
-    G13InputNodeConfig g13InputConfig = 59;
-    G13OutputNodeConfig g13OutputConfig = 60;
-    ConstantNumberNodeConfig constantNumberConfig = 61;
-    ConditionalNodeConfig conditionalConfig = 62;
-    TimecodeControlNodeConfig timecodeControlConfig = 63;
-    TimecodeOutputNodeConfig timecodeOutputConfig = 64;
-    AudioFileNodeConfig audioFileConfig = 65;
-    AudioOutputNodeConfig audioOutputConfig = 66;
-    AudioVolumeNodeConfig audioVolumeConfig = 67;
-    AudioInputNodeConfig audioInputConfig = 68;
-    AudioMixNodeConfig audioMixConfig = 69;
-    AudioMeterNodeConfig audioMeterConfig = 70;
-    TemplateNodeConfig templateConfig = 71;
+    OscillatorNodeConfig oscillator_config = 10;
+    ScriptingNodeConfig scripting_config = 11;
+    SequenceNodeConfig sequence_config = 12;
+    ClockNodeConfig clock_config = 13;
+    FixtureNodeConfig fixture_config = 14;
+    ButtonNodeConfig button_config = 15;
+    FaderNodeConfig fader_config = 16;
+    IldaFileNodeConfig ilda_file_config = 17;
+    LaserNodeConfig laser_config = 18;
+    PixelPatternNodeConfig pixel_pattern_config = 19;
+    PixelDmxNodeConfig pixel_dmx_config = 20;
+    DmxOutputNodeConfig dmx_output_config = 21;
+    MidiNodeConfig midi_input_config = 22;
+    MidiNodeConfig midi_output_config = 23;
+    OpcOutputNodeConfig opc_output_config = 24;
+    OscNodeConfig osc_input_config = 25;
+    OscNodeConfig osc_output_config = 26;
+    VideoColorBalanceNodeConfig video_color_balance_config = 27;
+    VideoEffectNodeConfig video_effect_config = 28;
+    VideoFileNodeConfig video_file_config = 29;
+    VideoOutputNodeConfig video_output_config = 30;
+    VideoTransformNodeConfig video_transform_config = 31;
+    SelectNodeConfig select_config = 32;
+    MergeNodeConfig merge_config = 33;
+    EnvelopeNodeConfig envelope_config = 34;
+    SequencerNodeConfig sequencer_config = 35;
+    ProgrammerNodeConfig programmer_config = 36;
+    GroupNodeConfig group_config = 37;
+    PresetNodeConfig preset_config = 38;
+    ColorRgbNodeConfig color_rgb_config = 40;
+    ColorHsvNodeConfig color_hsv_config = 41;
+    GamepadNodeConfig gamepad_node_config = 42;
+    ThresholdNodeConfig threshold_config = 43;
+    EncoderNodeConfig encoder_config = 44;
+    ContainerNodeConfig container_config = 45;
+    MathNodeConfig math_config = 46;
+    MqttInputNodeConfig mqtt_input_config = 47;
+    MqttOutputNodeConfig mqtt_output_config = 48;
+    NumberToDataNodeConfig number_to_data_config = 49;
+    DataToNumberNodeConfig data_to_number_config = 50;
+    ValueNodeConfig value_config = 51;
+    ExtractNodeConfig extract_config = 52;
+    PlanScreenNodeConfig plan_screen_config = 53;
+    DelayNodeConfig delay_config = 54;
+    RampNodeConfig ramp_config = 55;
+    NoiseNodeConfig noise_config = 56;
+    LabelNodeConfig label_config = 57;
+    TransportNodeConfig transport_config = 58;
+    G13InputNodeConfig g13_input_config = 59;
+    G13OutputNodeConfig g13_output_config = 60;
+    ConstantNumberNodeConfig constant_number_config = 61;
+    ConditionalNodeConfig conditional_config = 62;
+    TimecodeControlNodeConfig timecode_control_config = 63;
+    TimecodeOutputNodeConfig timecode_output_config = 64;
+    AudioFileNodeConfig audio_file_config = 65;
+    AudioOutputNodeConfig audio_output_config = 66;
+    AudioVolumeNodeConfig audio_volume_config = 67;
+    AudioInputNodeConfig audio_input_config = 68;
+    AudioMixNodeConfig audio_mix_config = 69;
+    AudioMeterNodeConfig audio_meter_config = 70;
+    TemplateNodeConfig template_config = 71;
   }
 }
 
 message OscillatorNodeConfig {
   enum OscillatorType {
-    Square = 0;
-    Sine = 1;
-    Saw = 2;
-    Triangle = 3;
+    SQUARE = 0;
+    SINE = 1;
+    SAW = 2;
+    TRIANGLE = 3;
   }
   OscillatorType type = 1;
   double ratio = 2;
@@ -283,7 +292,8 @@ message SequenceNodeConfig {
   }
 }
 
-message ProgrammerNodeConfig {}
+message ProgrammerNodeConfig {
+}
 message GroupNodeConfig {
   uint32 group_id = 1;
 }
@@ -313,7 +323,8 @@ message SequencerNodeConfig {
 message ButtonNodeConfig {
   bool toggle = 1;
 }
-message FaderNodeConfig {}
+message FaderNodeConfig {
+}
 
 message IldaFileNodeConfig {
   string file = 1;
@@ -328,33 +339,34 @@ message GamepadNodeConfig {
   Control control = 2;
 
   enum Control {
-      LeftStickX = 0;
-      LeftStickY = 1;
-      RightStickX = 2;
-      RightStickY = 3;
-      LeftTrigger = 4;
-      RightTrigger = 5;
-      LeftShoulder = 6;
-      RightShoulder = 7;
-      South = 8;
-      East = 9;
-      North = 10;
-      West = 11;
-      Select = 12;
-      Start = 13;
-      DpadUp = 14;
-      DpadDown = 15;
-      DpadLeft = 16;
-      DpadRight = 17;
-      LeftStick = 18;
-      RightStick = 19;
+    LEFT_STICK_X = 0;
+    LEFT_STICK_Y = 1;
+    RIGHT_STICK_X = 2;
+    RIGHT_STICK_Y = 3;
+    LEFT_TRIGGER = 4;
+    RIGHT_TRIGGER = 5;
+    LEFT_SHOULDER = 6;
+    RIGHT_SHOULDER = 7;
+    SOUTH = 8;
+    EAST = 9;
+    NORTH = 10;
+    WEST = 11;
+    SELECT = 12;
+    START = 13;
+    MODE = 14;
+    DPAD_UP = 15;
+    DPAD_DOWN = 16;
+    DPAD_LEFT = 17;
+    DPAD_RIGHT = 18;
+    LEFT_STICK = 19;
+    RIGHT_STICK = 20;
   }
 }
 
 message PixelPatternNodeConfig {
   enum Pattern {
-    RgbIterate = 0;
-    RgbSnake = 1;
+    RGB_ITERATE = 0;
+    RGB_SNAKE = 1;
   }
 
   Pattern pattern = 1;
@@ -376,20 +388,20 @@ message DmxOutputNodeConfig {
 message MidiNodeConfig {
   string device = 1;
   oneof binding {
-    NoteBinding noteBinding = 2;
-    ControlBinding controlBinding = 3;
+    NoteBinding note_binding = 2;
+    ControlBinding control_binding = 3;
   }
 
   message NoteBinding {
     uint32 channel = 1;
     MidiType type = 2;
     uint32 port = 3;
-    uint32 rangeFrom = 4;
-    uint32 rangeTo = 5;
+    uint32 range_from = 4;
+    uint32 range_to = 5;
 
     enum MidiType {
       CC = 0;
-      Note = 1;
+      NOTE = 1;
     }
   }
 
@@ -409,36 +421,41 @@ message OpcOutputNodeConfig {
 message OscNodeConfig {
   string connection = 1;
   string path = 2;
-  ArgumentType argumentType = 3;
-  bool onlyEmitChanges = 4;
+  ArgumentType argument_type = 3;
+  bool only_emit_changes = 4;
 
   enum ArgumentType {
-    Int = 0;
-    Float = 1;
-    Long = 2;
-    Double = 3;
-    Bool = 4;
-    Color = 5;
+    INT = 0;
+    FLOAT = 1;
+    LONG = 2;
+    DOUBLE = 3;
+    BOOL = 4;
+    COLOR = 5;
   }
 }
 
 
-message VideoColorBalanceNodeConfig {}
-message VideoEffectNodeConfig {}
+message VideoColorBalanceNodeConfig {
+}
+message VideoEffectNodeConfig {
+}
 message VideoFileNodeConfig {
   string file = 1;
 }
-message VideoOutputNodeConfig {}
-message VideoTransformNodeConfig {}
+message VideoOutputNodeConfig {
+}
+message VideoTransformNodeConfig {
+}
 
-message SelectNodeConfig {}
+message SelectNodeConfig {
+}
 message MergeNodeConfig {
   MergeMode mode = 1;
 
   enum MergeMode {
-    Latest = 0;
-    Highest = 1;
-    Lowest = 2;
+    LATEST = 0;
+    HIGHEST = 1;
+    LOWEST = 2;
   }
 }
 message ThresholdNodeConfig {
@@ -452,8 +469,10 @@ message EncoderNodeConfig {
   double hold_rate = 1;
 }
 
-message ColorRgbNodeConfig {}
-message ColorHsvNodeConfig {}
+message ColorRgbNodeConfig {
+}
+message ColorHsvNodeConfig {
+}
 
 message ContainerNodeConfig {
   repeated Node nodes = 1;
@@ -463,14 +482,14 @@ message MathNodeConfig {
   Mode mode = 1;
 
   enum Mode {
-    Addition = 0;
-    Subtraction = 1;
-    Multiplication = 2;
-    Division = 3;
-    Invert = 4;
-    Sine = 5;
-    Cosine = 6;
-    Tangent = 7;
+    ADDITION = 0;
+    SUBTRACTION = 1;
+    MULTIPLICATION = 2;
+    DIVISION = 3;
+    INVERT = 4;
+    SINE = 5;
+    COSINE = 6;
+    TANGENT = 7;
   }
 }
 
@@ -485,8 +504,10 @@ message MqttOutputNodeConfig {
   bool retain = 3;
 }
 
-message NumberToDataNodeConfig {}
-message DataToNumberNodeConfig {}
+message NumberToDataNodeConfig {
+}
+message DataToNumberNodeConfig {
+}
 
 message ValueNodeConfig {
   string value = 1;
@@ -539,42 +560,42 @@ message G13InputNodeConfig {
   Key key = 2;
 
   enum Key {
-      G1 = 0;
-      G2 = 1;
-      G3 = 2;
-      G4 = 3;
-      G5 = 4;
-      G6 = 5;
-      G7 = 6;
-      G8 = 7;
-      G9 = 8;
-      G10 = 9;
-      G11 = 10;
-      G12 = 11;
-      G13 = 12;
-      G14 = 13;
-      G15 = 14;
-      G16 = 15;
-      G17 = 16;
-      G18 = 17;
-      G19 = 18;
-      G20 = 19;
-      G21 = 20;
-      G22 = 21;
-      M1 = 22;
-      M2 = 23;
-      M3 = 24;
-      MR = 25;
-      L1 = 26;
-      L2 = 27;
-      L3 = 28;
-      L4 = 29;
-      JoystickX = 30;
-      JoystickY = 31;
-      Joystick = 32;
-      Left = 33;
-      Down = 34;
-      BD = 35;
+    G1 = 0;
+    G2 = 1;
+    G3 = 2;
+    G4 = 3;
+    G5 = 4;
+    G6 = 5;
+    G7 = 6;
+    G8 = 7;
+    G9 = 8;
+    G10 = 9;
+    G11 = 10;
+    G12 = 11;
+    G13 = 12;
+    G14 = 13;
+    G15 = 14;
+    G16 = 15;
+    G17 = 16;
+    G18 = 17;
+    G19 = 18;
+    G20 = 19;
+    G21 = 20;
+    G22 = 21;
+    M1 = 22;
+    M2 = 23;
+    M3 = 24;
+    MR = 25;
+    L1 = 26;
+    L2 = 27;
+    L3 = 28;
+    L4 = 29;
+    JOYSTICK_X = 30;
+    JOYSTICK_Y = 31;
+    JOYSTICK = 32;
+    LEFT = 33;
+    DOWN = 34;
+    BD = 35;
   }
 }
 
@@ -600,7 +621,7 @@ message TimecodeOutputNodeConfig {
 
 message AudioFileNodeConfig {
   string file = 1;
-  PlaybackMode playbackMode = 2;
+  PlaybackMode playback_mode = 2;
 
   enum PlaybackMode {
     ONE_SHOT = 0;
@@ -609,11 +630,16 @@ message AudioFileNodeConfig {
   }
 }
 
-message AudioOutputNodeConfig {}
-message AudioVolumeNodeConfig {}
-message AudioInputNodeConfig {}
-message AudioMixNodeConfig {}
-message AudioMeterNodeConfig {}
+message AudioOutputNodeConfig {
+}
+message AudioVolumeNodeConfig {
+}
+message AudioInputNodeConfig {
+}
+message AudioMixNodeConfig {
+}
+message AudioMeterNodeConfig {
+}
 
 message NodePosition {
   double x = 1;
@@ -627,17 +653,17 @@ message NodeDesigner {
 }
 
 enum ChannelProtocol {
-    SINGLE = 0;
-    MULTI = 1;
-    COLOR = 9;
-    TEXTURE = 2;
-    VECTOR = 3;
-    LASER = 4;
-    POLY = 5;
-    DATA = 6;
-    MATERIAL = 7;
-    GST = 8;
-    CLOCK = 10;
+  SINGLE = 0;
+  MULTI = 1;
+  COLOR = 9;
+  TEXTURE = 2;
+  VECTOR = 3;
+  LASER = 4;
+  POLY = 5;
+  DATA = 6;
+  MATERIAL = 7;
+  GST = 8;
+  CLOCK = 10;
 }
 
 message Port {

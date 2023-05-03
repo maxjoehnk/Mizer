@@ -174,7 +174,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
   final TextEditingController rowGapController = TextEditingController(text: "0");
   final TextEditingController columnGapController = TextEditingController(text: "0");
 
-  AlignFixturesRequest_AlignDirection direction = AlignFixturesRequest_AlignDirection.LeftToRight;
+  AlignFixturesRequest_AlignDirection direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT;
 
   @override
   Widget build(BuildContext context) {
@@ -188,14 +188,14 @@ class _AlignToolbarState extends State<AlignToolbar> {
                 icon: MdiIcons.alignHorizontalLeft,
                 label: "Left to Right",
                 onClick: () =>
-                    setState(() => direction = AlignFixturesRequest_AlignDirection.LeftToRight))),
+                    setState(() => direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT))),
         SizedBox(
             width: 48,
             child: MizerIconButton(
                 icon: MdiIcons.alignVerticalTop,
                 label: "Top to Bottom",
                 onClick: () =>
-                    setState(() => direction = AlignFixturesRequest_AlignDirection.TopToBottom))),
+                    setState(() => direction = AlignFixturesRequest_AlignDirection.TOP_TO_BOTTOM))),
         SizedBox(
           width: 200,
           child: TextFormField(

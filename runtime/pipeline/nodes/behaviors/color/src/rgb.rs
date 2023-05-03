@@ -2,51 +2,28 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
+const RED_INPUT: &str = "Red";
+const GREEN_INPUT: &str = "Green";
+const BLUE_INPUT: &str = "Blue";
+const COLOR_OUTPUT: &str = "Color";
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct RgbColorNode;
 
 impl PipelineNode for RgbColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "RgbColorNode".into(),
+            name: stringify!(RgbColorNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "Red".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Green".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Blue".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Color".into(),
-                PortMetadata {
-                    port_type: PortType::Color,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(RED_INPUT, PortType::Single),
+            input_port!(GREEN_INPUT, PortType::Single),
+            input_port!(BLUE_INPUT, PortType::Single),
+            output_port!(COLOR_OUTPUT, PortType::Color),
         ]
     }
 
@@ -59,9 +36,9 @@ impl ProcessingNode for RgbColorNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        let red = context.read_port("Red");
-        let green = context.read_port("Green");
-        let blue = context.read_port("Blue");
+        let red = context.read_port(RED_INPUT);
+        let green = context.read_port(GREEN_INPUT);
+        let blue = context.read_port(BLUE_INPUT);
 
         let rgb = match (red, green, blue) {
             (Some(red), Some(green), Some(blue)) => Some((red, green, blue)),
@@ -75,7 +52,7 @@ impl ProcessingNode for RgbColorNode {
         };
 
         if let Some(rgb) = rgb {
-            context.write_port("Color", Color::from(rgb));
+            context.write_port(COLOR_OUTPUT, Color::from(rgb));
         }
 
         Ok(())

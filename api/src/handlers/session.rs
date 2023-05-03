@@ -20,8 +20,8 @@ impl<R: RuntimeApi> SessionHandler<R> {
             .observe_session()?
             .into_stream()
             .map(|state| Session {
-                filePath: state.project_path,
-                projectHistory: state.project_history,
+                file_path: state.project_path,
+                project_history: state.project_history,
                 devices: vec![SessionDevice {
                     name: "max-arch".into(),
                     ping: 0f64,

@@ -211,7 +211,7 @@ impl ::protobuf::Message for Transport {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::Stopped) {
+        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::STOPPED) {
             my_size += ::protobuf::rt::int32_size(1, self.state.value());
         }
         if self.speed != 0. {
@@ -227,7 +227,7 @@ impl ::protobuf::Message for Transport {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::Stopped) {
+        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::STOPPED) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.state))?;
         }
         if self.speed != 0. {
@@ -253,7 +253,7 @@ impl ::protobuf::Message for Transport {
     }
 
     fn clear(&mut self) {
-        self.state = ::protobuf::EnumOrUnknown::new(TransportState::Stopped);
+        self.state = ::protobuf::EnumOrUnknown::new(TransportState::STOPPED);
         self.speed = 0.;
         self.timecode.clear();
         self.special_fields.clear();
@@ -526,7 +526,7 @@ impl ::protobuf::Message for SetTransportRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::Stopped) {
+        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::STOPPED) {
             my_size += ::protobuf::rt::int32_size(1, self.state.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -535,7 +535,7 @@ impl ::protobuf::Message for SetTransportRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::Stopped) {
+        if self.state != ::protobuf::EnumOrUnknown::new(TransportState::STOPPED) {
             os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.state))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -555,7 +555,7 @@ impl ::protobuf::Message for SetTransportRequest {
     }
 
     fn clear(&mut self) {
-        self.state = ::protobuf::EnumOrUnknown::new(TransportState::Stopped);
+        self.state = ::protobuf::EnumOrUnknown::new(TransportState::STOPPED);
         self.special_fields.clear();
     }
 
@@ -710,12 +710,12 @@ impl ::protobuf::reflect::ProtobufValue for SetBpmRequest {
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
 // @@protoc_insertion_point(enum:mizer.TransportState)
 pub enum TransportState {
-    // @@protoc_insertion_point(enum_value:mizer.TransportState.Stopped)
-    Stopped = 0,
-    // @@protoc_insertion_point(enum_value:mizer.TransportState.Paused)
-    Paused = 1,
-    // @@protoc_insertion_point(enum_value:mizer.TransportState.Playing)
-    Playing = 2,
+    // @@protoc_insertion_point(enum_value:mizer.TransportState.STOPPED)
+    STOPPED = 0,
+    // @@protoc_insertion_point(enum_value:mizer.TransportState.PAUSED)
+    PAUSED = 1,
+    // @@protoc_insertion_point(enum_value:mizer.TransportState.PLAYING)
+    PLAYING = 2,
 }
 
 impl ::protobuf::Enum for TransportState {
@@ -727,17 +727,17 @@ impl ::protobuf::Enum for TransportState {
 
     fn from_i32(value: i32) -> ::std::option::Option<TransportState> {
         match value {
-            0 => ::std::option::Option::Some(TransportState::Stopped),
-            1 => ::std::option::Option::Some(TransportState::Paused),
-            2 => ::std::option::Option::Some(TransportState::Playing),
+            0 => ::std::option::Option::Some(TransportState::STOPPED),
+            1 => ::std::option::Option::Some(TransportState::PAUSED),
+            2 => ::std::option::Option::Some(TransportState::PLAYING),
             _ => ::std::option::Option::None
         }
     }
 
     const VALUES: &'static [TransportState] = &[
-        TransportState::Stopped,
-        TransportState::Paused,
-        TransportState::Playing,
+        TransportState::STOPPED,
+        TransportState::PAUSED,
+        TransportState::PLAYING,
     ];
 }
 
@@ -755,7 +755,7 @@ impl ::protobuf::EnumFull for TransportState {
 
 impl ::std::default::Default for TransportState {
     fn default() -> Self {
-        TransportState::Stopped
+        TransportState::STOPPED
     }
 }
 
@@ -776,7 +776,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04R\x05hours\"B\n\x13SetTransportRequest\x12+\n\x05state\x18\x01\x20\
     \x01(\x0e2\x15.mizer.TransportStateR\x05state\"!\n\rSetBpmRequest\x12\
     \x10\n\x03bpm\x18\x01\x20\x01(\x01R\x03bpm*6\n\x0eTransportState\x12\x0b\
-    \n\x07Stopped\x10\0\x12\n\n\x06Paused\x10\x01\x12\x0b\n\x07Playing\x10\
+    \n\x07STOPPED\x10\0\x12\n\n\x06PAUSED\x10\x01\x12\x0b\n\x07PLAYING\x10\
     \x022\xc4\x01\n\x0cTransportApi\x12H\n\x12SubscribeTransport\x12\x20.miz\
     er.SubscribeTransportRequest\x1a\x10.mizer.Transport\x128\n\x08SetState\
     \x12\x1a.mizer.SetTransportRequest\x1a\x10.mizer.Transport\x120\n\x06Set\

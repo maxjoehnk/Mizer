@@ -43,130 +43,130 @@ class ChannelProtocol extends $pb.ProtobufEnum {
 }
 
 class Node_NodeType extends $pb.ProtobufEnum {
-  static const Node_NodeType Fader = Node_NodeType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fader');
-  static const Node_NodeType Button = Node_NodeType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Button');
-  static const Node_NodeType Oscillator = Node_NodeType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Oscillator');
-  static const Node_NodeType Clock = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clock');
-  static const Node_NodeType Script = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Script');
-  static const Node_NodeType Envelope = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Envelope');
-  static const Node_NodeType Sequence = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
-  static const Node_NodeType Select = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
-  static const Node_NodeType Merge = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
-  static const Node_NodeType Threshold = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Threshold');
-  static const Node_NodeType DmxOutput = Node_NodeType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
-  static const Node_NodeType OscInput = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
-  static const Node_NodeType OscOutput = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
-  static const Node_NodeType MidiInput = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiInput');
-  static const Node_NodeType MidiOutput = Node_NodeType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiOutput');
-  static const Node_NodeType Sequencer = Node_NodeType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequencer');
-  static const Node_NodeType Fixture = Node_NodeType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
-  static const Node_NodeType Programmer = Node_NodeType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Programmer');
-  static const Node_NodeType Group = Node_NodeType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Group');
-  static const Node_NodeType Preset = Node_NodeType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Preset');
-  static const Node_NodeType VideoFile = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoFile');
-  static const Node_NodeType VideoOutput = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoOutput');
-  static const Node_NodeType VideoEffect = Node_NodeType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoEffect');
-  static const Node_NodeType VideoColorBalance = Node_NodeType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoColorBalance');
-  static const Node_NodeType VideoTransform = Node_NodeType._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoTransform');
-  static const Node_NodeType PixelToDmx = Node_NodeType._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PixelToDmx');
-  static const Node_NodeType PixelPattern = Node_NodeType._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PixelPattern');
-  static const Node_NodeType OpcOutput = Node_NodeType._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OpcOutput');
-  static const Node_NodeType Laser = Node_NodeType._(40, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Laser');
-  static const Node_NodeType IldaFile = Node_NodeType._(41, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IldaFile');
-  static const Node_NodeType Gamepad = Node_NodeType._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Gamepad');
-  static const Node_NodeType ColorRgb = Node_NodeType._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorRgb');
-  static const Node_NodeType ColorHsv = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorHsv');
-  static const Node_NodeType Container = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Container');
-  static const Node_NodeType Encoder = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Encoder');
-  static const Node_NodeType Math = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Math');
-  static const Node_NodeType DataToNumber = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DataToNumber');
-  static const Node_NodeType NumberToData = Node_NodeType._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NumberToData');
-  static const Node_NodeType Value = Node_NodeType._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Value');
-  static const Node_NodeType Extract = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Extract');
-  static const Node_NodeType MqttInput = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttInput');
-  static const Node_NodeType MqttOutput = Node_NodeType._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttOutput');
-  static const Node_NodeType PlanScreen = Node_NodeType._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PlanScreen');
-  static const Node_NodeType Delay = Node_NodeType._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Delay');
-  static const Node_NodeType Ramp = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ramp');
-  static const Node_NodeType Noise = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Noise');
-  static const Node_NodeType Label = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Label');
-  static const Node_NodeType Transport = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
-  static const Node_NodeType G13Input = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Input');
-  static const Node_NodeType G13Output = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
-  static const Node_NodeType ConstantNumber = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ConstantNumber');
-  static const Node_NodeType Conditional = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Conditional');
-  static const Node_NodeType TimecodeControl = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeControl');
-  static const Node_NodeType TimecodeOutput = Node_NodeType._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeOutput');
-  static const Node_NodeType AudioFile = Node_NodeType._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioFile');
-  static const Node_NodeType AudioOutput = Node_NodeType._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioOutput');
-  static const Node_NodeType AudioVolume = Node_NodeType._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioVolume');
-  static const Node_NodeType AudioInput = Node_NodeType._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioInput');
-  static const Node_NodeType AudioMix = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMix');
-  static const Node_NodeType AudioMeter = Node_NodeType._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMeter');
-  static const Node_NodeType Template = Node_NodeType._(81, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Template');
+  static const Node_NodeType FADER = Node_NodeType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FADER');
+  static const Node_NodeType BUTTON = Node_NodeType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BUTTON');
+  static const Node_NodeType OSCILLATOR = Node_NodeType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OSCILLATOR');
+  static const Node_NodeType CLOCK = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLOCK');
+  static const Node_NodeType SCRIPT = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SCRIPT');
+  static const Node_NodeType ENVELOPE = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ENVELOPE');
+  static const Node_NodeType SEQUENCE = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SEQUENCE');
+  static const Node_NodeType SELECT = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SELECT');
+  static const Node_NodeType MERGE = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MERGE');
+  static const Node_NodeType THRESHOLD = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'THRESHOLD');
+  static const Node_NodeType DMX_OUTPUT = Node_NodeType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DMX_OUTPUT');
+  static const Node_NodeType OSC_INPUT = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OSC_INPUT');
+  static const Node_NodeType OSC_OUTPUT = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OSC_OUTPUT');
+  static const Node_NodeType MIDI_INPUT = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MIDI_INPUT');
+  static const Node_NodeType MIDI_OUTPUT = Node_NodeType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MIDI_OUTPUT');
+  static const Node_NodeType SEQUENCER = Node_NodeType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SEQUENCER');
+  static const Node_NodeType FIXTURE = Node_NodeType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FIXTURE');
+  static const Node_NodeType PROGRAMMER = Node_NodeType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PROGRAMMER');
+  static const Node_NodeType GROUP = Node_NodeType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GROUP');
+  static const Node_NodeType PRESET = Node_NodeType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRESET');
+  static const Node_NodeType VIDEO_FILE = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_FILE');
+  static const Node_NodeType VIDEO_OUTPUT = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_OUTPUT');
+  static const Node_NodeType VIDEO_EFFECT = Node_NodeType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_EFFECT');
+  static const Node_NodeType VIDEO_COLOR_BALANCE = Node_NodeType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_COLOR_BALANCE');
+  static const Node_NodeType VIDEO_TRANSFORM = Node_NodeType._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_TRANSFORM');
+  static const Node_NodeType PIXEL_TO_DMX = Node_NodeType._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PIXEL_TO_DMX');
+  static const Node_NodeType PIXEL_PATTERN = Node_NodeType._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PIXEL_PATTERN');
+  static const Node_NodeType OPC_OUTPUT = Node_NodeType._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OPC_OUTPUT');
+  static const Node_NodeType LASER = Node_NodeType._(40, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LASER');
+  static const Node_NodeType ILDA_FILE = Node_NodeType._(41, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ILDA_FILE');
+  static const Node_NodeType GAMEPAD = Node_NodeType._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GAMEPAD');
+  static const Node_NodeType COLOR_RGB = Node_NodeType._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RGB');
+  static const Node_NodeType COLOR_HSV = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_HSV');
+  static const Node_NodeType CONTAINER = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTAINER');
+  static const Node_NodeType ENCODER = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ENCODER');
+  static const Node_NodeType MATH = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MATH');
+  static const Node_NodeType DATA_TO_NUMBER = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA_TO_NUMBER');
+  static const Node_NodeType NUMBER_TO_DATA = Node_NodeType._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NUMBER_TO_DATA');
+  static const Node_NodeType VALUE = Node_NodeType._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VALUE');
+  static const Node_NodeType EXTRACT = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'EXTRACT');
+  static const Node_NodeType MQTT_INPUT = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MQTT_INPUT');
+  static const Node_NodeType MQTT_OUTPUT = Node_NodeType._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MQTT_OUTPUT');
+  static const Node_NodeType PLAN_SCREEN = Node_NodeType._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PLAN_SCREEN');
+  static const Node_NodeType DELAY = Node_NodeType._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DELAY');
+  static const Node_NodeType RAMP = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RAMP');
+  static const Node_NodeType NOISE = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOISE');
+  static const Node_NodeType LABEL = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LABEL');
+  static const Node_NodeType TRANSPORT = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRANSPORT');
+  static const Node_NodeType G13INPUT = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13INPUT');
+  static const Node_NodeType G13OUTPUT = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13OUTPUT');
+  static const Node_NodeType CONSTANT_NUMBER = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONSTANT_NUMBER');
+  static const Node_NodeType CONDITIONAL = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONDITIONAL');
+  static const Node_NodeType TIMECODE_CONTROL = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE_CONTROL');
+  static const Node_NodeType TIMECODE_OUTPUT = Node_NodeType._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE_OUTPUT');
+  static const Node_NodeType AUDIO_FILE = Node_NodeType._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_FILE');
+  static const Node_NodeType AUDIO_OUTPUT = Node_NodeType._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_OUTPUT');
+  static const Node_NodeType AUDIO_VOLUME = Node_NodeType._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_VOLUME');
+  static const Node_NodeType AUDIO_INPUT = Node_NodeType._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_INPUT');
+  static const Node_NodeType AUDIO_MIX = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_MIX');
+  static const Node_NodeType AUDIO_METER = Node_NodeType._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_METER');
+  static const Node_NodeType TEMPLATE = Node_NodeType._(81, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEMPLATE');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
-    Fader,
-    Button,
-    Oscillator,
-    Clock,
-    Script,
-    Envelope,
-    Sequence,
-    Select,
-    Merge,
-    Threshold,
-    DmxOutput,
-    OscInput,
-    OscOutput,
-    MidiInput,
-    MidiOutput,
-    Sequencer,
-    Fixture,
-    Programmer,
-    Group,
-    Preset,
-    VideoFile,
-    VideoOutput,
-    VideoEffect,
-    VideoColorBalance,
-    VideoTransform,
-    PixelToDmx,
-    PixelPattern,
-    OpcOutput,
-    Laser,
-    IldaFile,
-    Gamepad,
-    ColorRgb,
-    ColorHsv,
-    Container,
-    Encoder,
-    Math,
-    DataToNumber,
-    NumberToData,
-    Value,
-    Extract,
-    MqttInput,
-    MqttOutput,
-    PlanScreen,
-    Delay,
-    Ramp,
-    Noise,
-    Label,
-    Transport,
-    G13Input,
-    G13Output,
-    ConstantNumber,
-    Conditional,
-    TimecodeControl,
-    TimecodeOutput,
-    AudioFile,
-    AudioOutput,
-    AudioVolume,
-    AudioInput,
-    AudioMix,
-    AudioMeter,
-    Template,
+    FADER,
+    BUTTON,
+    OSCILLATOR,
+    CLOCK,
+    SCRIPT,
+    ENVELOPE,
+    SEQUENCE,
+    SELECT,
+    MERGE,
+    THRESHOLD,
+    DMX_OUTPUT,
+    OSC_INPUT,
+    OSC_OUTPUT,
+    MIDI_INPUT,
+    MIDI_OUTPUT,
+    SEQUENCER,
+    FIXTURE,
+    PROGRAMMER,
+    GROUP,
+    PRESET,
+    VIDEO_FILE,
+    VIDEO_OUTPUT,
+    VIDEO_EFFECT,
+    VIDEO_COLOR_BALANCE,
+    VIDEO_TRANSFORM,
+    PIXEL_TO_DMX,
+    PIXEL_PATTERN,
+    OPC_OUTPUT,
+    LASER,
+    ILDA_FILE,
+    GAMEPAD,
+    COLOR_RGB,
+    COLOR_HSV,
+    CONTAINER,
+    ENCODER,
+    MATH,
+    DATA_TO_NUMBER,
+    NUMBER_TO_DATA,
+    VALUE,
+    EXTRACT,
+    MQTT_INPUT,
+    MQTT_OUTPUT,
+    PLAN_SCREEN,
+    DELAY,
+    RAMP,
+    NOISE,
+    LABEL,
+    TRANSPORT,
+    G13INPUT,
+    G13OUTPUT,
+    CONSTANT_NUMBER,
+    CONDITIONAL,
+    TIMECODE_CONTROL,
+    TIMECODE_OUTPUT,
+    AUDIO_FILE,
+    AUDIO_OUTPUT,
+    AUDIO_VOLUME,
+    AUDIO_INPUT,
+    AUDIO_MIX,
+    AUDIO_METER,
+    TEMPLATE,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -176,22 +176,22 @@ class Node_NodeType extends $pb.ProtobufEnum {
 }
 
 class Node_NodePreviewType extends $pb.ProtobufEnum {
-  static const Node_NodePreviewType History = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'History');
-  static const Node_NodePreviewType Waveform = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Waveform');
-  static const Node_NodePreviewType Multiple = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiple');
-  static const Node_NodePreviewType Texture = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Texture');
-  static const Node_NodePreviewType Timecode = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Timecode');
-  static const Node_NodePreviewType Data = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Data');
-  static const Node_NodePreviewType None = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
+  static const Node_NodePreviewType HISTORY = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HISTORY');
+  static const Node_NodePreviewType WAVEFORM = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WAVEFORM');
+  static const Node_NodePreviewType MULTIPLE = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTIPLE');
+  static const Node_NodePreviewType TEXTURE = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXTURE');
+  static const Node_NodePreviewType TIMECODE = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+  static const Node_NodePreviewType DATA = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
+  static const Node_NodePreviewType NONE = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
 
   static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
-    History,
-    Waveform,
-    Multiple,
-    Texture,
-    Timecode,
-    Data,
-    None,
+    HISTORY,
+    WAVEFORM,
+    MULTIPLE,
+    TEXTURE,
+    TIMECODE,
+    DATA,
+    NONE,
   ];
 
   static final $core.Map<$core.int, Node_NodePreviewType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -201,16 +201,16 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
 }
 
 class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
-  static const OscillatorNodeConfig_OscillatorType Square = OscillatorNodeConfig_OscillatorType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Square');
-  static const OscillatorNodeConfig_OscillatorType Sine = OscillatorNodeConfig_OscillatorType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sine');
-  static const OscillatorNodeConfig_OscillatorType Saw = OscillatorNodeConfig_OscillatorType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Saw');
-  static const OscillatorNodeConfig_OscillatorType Triangle = OscillatorNodeConfig_OscillatorType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Triangle');
+  static const OscillatorNodeConfig_OscillatorType SQUARE = OscillatorNodeConfig_OscillatorType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SQUARE');
+  static const OscillatorNodeConfig_OscillatorType SINE = OscillatorNodeConfig_OscillatorType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SINE');
+  static const OscillatorNodeConfig_OscillatorType SAW = OscillatorNodeConfig_OscillatorType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SAW');
+  static const OscillatorNodeConfig_OscillatorType TRIANGLE = OscillatorNodeConfig_OscillatorType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TRIANGLE');
 
   static const $core.List<OscillatorNodeConfig_OscillatorType> values = <OscillatorNodeConfig_OscillatorType> [
-    Square,
-    Sine,
-    Saw,
-    Triangle,
+    SQUARE,
+    SINE,
+    SAW,
+    TRIANGLE,
   ];
 
   static final $core.Map<$core.int, OscillatorNodeConfig_OscillatorType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -220,48 +220,50 @@ class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
 }
 
 class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
-  static const GamepadNodeConfig_Control LeftStickX = GamepadNodeConfig_Control._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStickX');
-  static const GamepadNodeConfig_Control LeftStickY = GamepadNodeConfig_Control._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStickY');
-  static const GamepadNodeConfig_Control RightStickX = GamepadNodeConfig_Control._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStickX');
-  static const GamepadNodeConfig_Control RightStickY = GamepadNodeConfig_Control._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStickY');
-  static const GamepadNodeConfig_Control LeftTrigger = GamepadNodeConfig_Control._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftTrigger');
-  static const GamepadNodeConfig_Control RightTrigger = GamepadNodeConfig_Control._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightTrigger');
-  static const GamepadNodeConfig_Control LeftShoulder = GamepadNodeConfig_Control._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftShoulder');
-  static const GamepadNodeConfig_Control RightShoulder = GamepadNodeConfig_Control._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightShoulder');
-  static const GamepadNodeConfig_Control South = GamepadNodeConfig_Control._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'South');
-  static const GamepadNodeConfig_Control East = GamepadNodeConfig_Control._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'East');
-  static const GamepadNodeConfig_Control North = GamepadNodeConfig_Control._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'North');
-  static const GamepadNodeConfig_Control West = GamepadNodeConfig_Control._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'West');
-  static const GamepadNodeConfig_Control Select = GamepadNodeConfig_Control._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
-  static const GamepadNodeConfig_Control Start = GamepadNodeConfig_Control._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Start');
-  static const GamepadNodeConfig_Control DpadUp = GamepadNodeConfig_Control._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadUp');
-  static const GamepadNodeConfig_Control DpadDown = GamepadNodeConfig_Control._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadDown');
-  static const GamepadNodeConfig_Control DpadLeft = GamepadNodeConfig_Control._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadLeft');
-  static const GamepadNodeConfig_Control DpadRight = GamepadNodeConfig_Control._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadRight');
-  static const GamepadNodeConfig_Control LeftStick = GamepadNodeConfig_Control._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStick');
-  static const GamepadNodeConfig_Control RightStick = GamepadNodeConfig_Control._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStick');
+  static const GamepadNodeConfig_Control LEFT_STICK_X = GamepadNodeConfig_Control._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_STICK_X');
+  static const GamepadNodeConfig_Control LEFT_STICK_Y = GamepadNodeConfig_Control._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_STICK_Y');
+  static const GamepadNodeConfig_Control RIGHT_STICK_X = GamepadNodeConfig_Control._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_STICK_X');
+  static const GamepadNodeConfig_Control RIGHT_STICK_Y = GamepadNodeConfig_Control._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_STICK_Y');
+  static const GamepadNodeConfig_Control LEFT_TRIGGER = GamepadNodeConfig_Control._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_TRIGGER');
+  static const GamepadNodeConfig_Control RIGHT_TRIGGER = GamepadNodeConfig_Control._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_TRIGGER');
+  static const GamepadNodeConfig_Control LEFT_SHOULDER = GamepadNodeConfig_Control._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_SHOULDER');
+  static const GamepadNodeConfig_Control RIGHT_SHOULDER = GamepadNodeConfig_Control._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_SHOULDER');
+  static const GamepadNodeConfig_Control SOUTH = GamepadNodeConfig_Control._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SOUTH');
+  static const GamepadNodeConfig_Control EAST = GamepadNodeConfig_Control._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'EAST');
+  static const GamepadNodeConfig_Control NORTH = GamepadNodeConfig_Control._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NORTH');
+  static const GamepadNodeConfig_Control WEST = GamepadNodeConfig_Control._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WEST');
+  static const GamepadNodeConfig_Control SELECT = GamepadNodeConfig_Control._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SELECT');
+  static const GamepadNodeConfig_Control START = GamepadNodeConfig_Control._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'START');
+  static const GamepadNodeConfig_Control MODE = GamepadNodeConfig_Control._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MODE');
+  static const GamepadNodeConfig_Control DPAD_UP = GamepadNodeConfig_Control._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_UP');
+  static const GamepadNodeConfig_Control DPAD_DOWN = GamepadNodeConfig_Control._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_DOWN');
+  static const GamepadNodeConfig_Control DPAD_LEFT = GamepadNodeConfig_Control._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_LEFT');
+  static const GamepadNodeConfig_Control DPAD_RIGHT = GamepadNodeConfig_Control._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_RIGHT');
+  static const GamepadNodeConfig_Control LEFT_STICK = GamepadNodeConfig_Control._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_STICK');
+  static const GamepadNodeConfig_Control RIGHT_STICK = GamepadNodeConfig_Control._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_STICK');
 
   static const $core.List<GamepadNodeConfig_Control> values = <GamepadNodeConfig_Control> [
-    LeftStickX,
-    LeftStickY,
-    RightStickX,
-    RightStickY,
-    LeftTrigger,
-    RightTrigger,
-    LeftShoulder,
-    RightShoulder,
-    South,
-    East,
-    North,
-    West,
-    Select,
-    Start,
-    DpadUp,
-    DpadDown,
-    DpadLeft,
-    DpadRight,
-    LeftStick,
-    RightStick,
+    LEFT_STICK_X,
+    LEFT_STICK_Y,
+    RIGHT_STICK_X,
+    RIGHT_STICK_Y,
+    LEFT_TRIGGER,
+    RIGHT_TRIGGER,
+    LEFT_SHOULDER,
+    RIGHT_SHOULDER,
+    SOUTH,
+    EAST,
+    NORTH,
+    WEST,
+    SELECT,
+    START,
+    MODE,
+    DPAD_UP,
+    DPAD_DOWN,
+    DPAD_LEFT,
+    DPAD_RIGHT,
+    LEFT_STICK,
+    RIGHT_STICK,
   ];
 
   static final $core.Map<$core.int, GamepadNodeConfig_Control> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -271,12 +273,12 @@ class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
 }
 
 class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
-  static const PixelPatternNodeConfig_Pattern RgbIterate = PixelPatternNodeConfig_Pattern._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbIterate');
-  static const PixelPatternNodeConfig_Pattern RgbSnake = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbSnake');
+  static const PixelPatternNodeConfig_Pattern RGB_ITERATE = PixelPatternNodeConfig_Pattern._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RGB_ITERATE');
+  static const PixelPatternNodeConfig_Pattern RGB_SNAKE = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RGB_SNAKE');
 
   static const $core.List<PixelPatternNodeConfig_Pattern> values = <PixelPatternNodeConfig_Pattern> [
-    RgbIterate,
-    RgbSnake,
+    RGB_ITERATE,
+    RGB_SNAKE,
   ];
 
   static final $core.Map<$core.int, PixelPatternNodeConfig_Pattern> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -287,11 +289,11 @@ class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
 
 class MidiNodeConfig_NoteBinding_MidiType extends $pb.ProtobufEnum {
   static const MidiNodeConfig_NoteBinding_MidiType CC = MidiNodeConfig_NoteBinding_MidiType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
-  static const MidiNodeConfig_NoteBinding_MidiType Note = MidiNodeConfig_NoteBinding_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Note');
+  static const MidiNodeConfig_NoteBinding_MidiType NOTE = MidiNodeConfig_NoteBinding_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOTE');
 
   static const $core.List<MidiNodeConfig_NoteBinding_MidiType> values = <MidiNodeConfig_NoteBinding_MidiType> [
     CC,
-    Note,
+    NOTE,
   ];
 
   static final $core.Map<$core.int, MidiNodeConfig_NoteBinding_MidiType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -301,20 +303,20 @@ class MidiNodeConfig_NoteBinding_MidiType extends $pb.ProtobufEnum {
 }
 
 class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {
-  static const OscNodeConfig_ArgumentType Int = OscNodeConfig_ArgumentType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Int');
-  static const OscNodeConfig_ArgumentType Float = OscNodeConfig_ArgumentType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Float');
-  static const OscNodeConfig_ArgumentType Long = OscNodeConfig_ArgumentType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Long');
-  static const OscNodeConfig_ArgumentType Double = OscNodeConfig_ArgumentType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Double');
-  static const OscNodeConfig_ArgumentType Bool = OscNodeConfig_ArgumentType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Bool');
-  static const OscNodeConfig_ArgumentType Color = OscNodeConfig_ArgumentType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Color');
+  static const OscNodeConfig_ArgumentType INT = OscNodeConfig_ArgumentType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INT');
+  static const OscNodeConfig_ArgumentType FLOAT = OscNodeConfig_ArgumentType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FLOAT');
+  static const OscNodeConfig_ArgumentType LONG = OscNodeConfig_ArgumentType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LONG');
+  static const OscNodeConfig_ArgumentType DOUBLE = OscNodeConfig_ArgumentType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DOUBLE');
+  static const OscNodeConfig_ArgumentType BOOL = OscNodeConfig_ArgumentType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BOOL');
+  static const OscNodeConfig_ArgumentType COLOR = OscNodeConfig_ArgumentType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
 
   static const $core.List<OscNodeConfig_ArgumentType> values = <OscNodeConfig_ArgumentType> [
-    Int,
-    Float,
-    Long,
-    Double,
-    Bool,
-    Color,
+    INT,
+    FLOAT,
+    LONG,
+    DOUBLE,
+    BOOL,
+    COLOR,
   ];
 
   static final $core.Map<$core.int, OscNodeConfig_ArgumentType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -324,14 +326,14 @@ class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {
 }
 
 class MergeNodeConfig_MergeMode extends $pb.ProtobufEnum {
-  static const MergeNodeConfig_MergeMode Latest = MergeNodeConfig_MergeMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Latest');
-  static const MergeNodeConfig_MergeMode Highest = MergeNodeConfig_MergeMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Highest');
-  static const MergeNodeConfig_MergeMode Lowest = MergeNodeConfig_MergeMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lowest');
+  static const MergeNodeConfig_MergeMode LATEST = MergeNodeConfig_MergeMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LATEST');
+  static const MergeNodeConfig_MergeMode HIGHEST = MergeNodeConfig_MergeMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HIGHEST');
+  static const MergeNodeConfig_MergeMode LOWEST = MergeNodeConfig_MergeMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOWEST');
 
   static const $core.List<MergeNodeConfig_MergeMode> values = <MergeNodeConfig_MergeMode> [
-    Latest,
-    Highest,
-    Lowest,
+    LATEST,
+    HIGHEST,
+    LOWEST,
   ];
 
   static final $core.Map<$core.int, MergeNodeConfig_MergeMode> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -341,24 +343,24 @@ class MergeNodeConfig_MergeMode extends $pb.ProtobufEnum {
 }
 
 class MathNodeConfig_Mode extends $pb.ProtobufEnum {
-  static const MathNodeConfig_Mode Addition = MathNodeConfig_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Addition');
-  static const MathNodeConfig_Mode Subtraction = MathNodeConfig_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Subtraction');
-  static const MathNodeConfig_Mode Multiplication = MathNodeConfig_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiplication');
-  static const MathNodeConfig_Mode Division = MathNodeConfig_Mode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Division');
-  static const MathNodeConfig_Mode Invert = MathNodeConfig_Mode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Invert');
-  static const MathNodeConfig_Mode Sine = MathNodeConfig_Mode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sine');
-  static const MathNodeConfig_Mode Cosine = MathNodeConfig_Mode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Cosine');
-  static const MathNodeConfig_Mode Tangent = MathNodeConfig_Mode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Tangent');
+  static const MathNodeConfig_Mode ADDITION = MathNodeConfig_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADDITION');
+  static const MathNodeConfig_Mode SUBTRACTION = MathNodeConfig_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SUBTRACTION');
+  static const MathNodeConfig_Mode MULTIPLICATION = MathNodeConfig_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTIPLICATION');
+  static const MathNodeConfig_Mode DIVISION = MathNodeConfig_Mode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DIVISION');
+  static const MathNodeConfig_Mode INVERT = MathNodeConfig_Mode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INVERT');
+  static const MathNodeConfig_Mode SINE = MathNodeConfig_Mode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SINE');
+  static const MathNodeConfig_Mode COSINE = MathNodeConfig_Mode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COSINE');
+  static const MathNodeConfig_Mode TANGENT = MathNodeConfig_Mode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TANGENT');
 
   static const $core.List<MathNodeConfig_Mode> values = <MathNodeConfig_Mode> [
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Invert,
-    Sine,
-    Cosine,
-    Tangent,
+    ADDITION,
+    SUBTRACTION,
+    MULTIPLICATION,
+    DIVISION,
+    INVERT,
+    SINE,
+    COSINE,
+    TANGENT,
   ];
 
   static final $core.Map<$core.int, MathNodeConfig_Mode> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -398,11 +400,11 @@ class G13InputNodeConfig_Key extends $pb.ProtobufEnum {
   static const G13InputNodeConfig_Key L2 = G13InputNodeConfig_Key._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L2');
   static const G13InputNodeConfig_Key L3 = G13InputNodeConfig_Key._(28, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L3');
   static const G13InputNodeConfig_Key L4 = G13InputNodeConfig_Key._(29, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L4');
-  static const G13InputNodeConfig_Key JoystickX = G13InputNodeConfig_Key._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JoystickX');
-  static const G13InputNodeConfig_Key JoystickY = G13InputNodeConfig_Key._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JoystickY');
-  static const G13InputNodeConfig_Key Joystick = G13InputNodeConfig_Key._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Joystick');
-  static const G13InputNodeConfig_Key Left = G13InputNodeConfig_Key._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Left');
-  static const G13InputNodeConfig_Key Down = G13InputNodeConfig_Key._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Down');
+  static const G13InputNodeConfig_Key JOYSTICK_X = G13InputNodeConfig_Key._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JOYSTICK_X');
+  static const G13InputNodeConfig_Key JOYSTICK_Y = G13InputNodeConfig_Key._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JOYSTICK_Y');
+  static const G13InputNodeConfig_Key JOYSTICK = G13InputNodeConfig_Key._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JOYSTICK');
+  static const G13InputNodeConfig_Key LEFT = G13InputNodeConfig_Key._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT');
+  static const G13InputNodeConfig_Key DOWN = G13InputNodeConfig_Key._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DOWN');
   static const G13InputNodeConfig_Key BD = G13InputNodeConfig_Key._(35, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BD');
 
   static const $core.List<G13InputNodeConfig_Key> values = <G13InputNodeConfig_Key> [
@@ -436,11 +438,11 @@ class G13InputNodeConfig_Key extends $pb.ProtobufEnum {
     L2,
     L3,
     L4,
-    JoystickX,
-    JoystickY,
-    Joystick,
-    Left,
-    Down,
+    JOYSTICK_X,
+    JOYSTICK_Y,
+    JOYSTICK,
+    LEFT,
+    DOWN,
     BD,
   ];
 

@@ -3,35 +3,24 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
+const VALUE_INPUT: &str = "value";
+const VALUE_OUTPUT: &str = "value";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct NumberToDataNode;
 
 impl PipelineNode for NumberToDataNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "NumberToDataNode".into(),
+            name: stringify!(NumberToDataNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!("value", PortType::Single),
+            output_port!("value", PortType::Data),
         ]
     }
 

@@ -8,7 +8,8 @@ service TransportApi {
   rpc SetBpm (SetBpmRequest) returns (Transport) {}
 }
 
-message SubscribeTransportRequest {}
+message SubscribeTransportRequest {
+}
 
 message Transport {
   TransportState state = 1;
@@ -32,7 +33,7 @@ message SetBpmRequest {
 }
 
 enum TransportState {
-  Stopped = 0;
-  Paused = 1;
-  Playing = 2;
+  STOPPED = 0;
+  PAUSED = 1;
+  PLAYING = 2;
 }

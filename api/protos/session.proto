@@ -12,25 +12,29 @@ service SessionApi {
   rpc LoadHistory (LoadHistoryRequest) returns (stream History) {}
 }
 
-message ProjectRequest {}
+message ProjectRequest {
+}
 message LoadProjectRequest {
   string path = 1;
 }
 message SaveProjectAsRequest {
   string path = 1;
 }
-message ProjectResponse {}
+message ProjectResponse {
+}
 
 message ClientAnnouncement {
   string name = 1;
 }
 
-message SessionRequest {}
+message SessionRequest {
+}
 
 message Session {
-  optional string filePath = 1;
+  optional string file_path = 1;
   repeated SessionDevice devices = 2;
-  repeated string projectHistory = 3;
+  // protolint:disable:next REPEATED_FIELD_NAMES_PLURALIZED
+  repeated string project_history = 3;
 }
 
 message SessionDevice {
@@ -45,7 +49,8 @@ message DeviceClock {
   double drift = 2;
 }
 
-message LoadHistoryRequest {}
+message LoadHistoryRequest {
+}
 message History {
   repeated HistoryItem items = 1;
   uint64 pointer = 2;

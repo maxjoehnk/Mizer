@@ -34,7 +34,7 @@ impl FixtureLibraryProvider for GdtfProvider {
     fn load(&mut self) -> anyhow::Result<()> {
         log::info!("Loading GDTF fixture library...");
         if let Some(path) = find_path(&self.file_path) {
-            let files = std::fs::read_dir(&path)?;
+            let files = std::fs::read_dir(path)?;
             let definitions = files
                 .par_bridge()
                 .map(|file| {

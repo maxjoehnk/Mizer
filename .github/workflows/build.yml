@@ -57,9 +57,9 @@ jobs:
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip
           unzip protoc-3.17.3-linux-x86_64.zip
-          mkdir -p "$HOME/.local/bin"
-          cp bin/protoc "$HOME/.local/bin/"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          mkdir -p "${HOME}/.local/bin"
+          cp bin/protoc "${HOME}/.local/bin/"
+          echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
@@ -72,17 +72,17 @@ jobs:
         run: |
           git clone https://github.com/ffmpeg/ffmpeg --depth 1 --single-branch --branch release/6.0
           cd ffmpeg
-          PKG_CONFIG_PATH="$(HOME)/ffmpeg_build/lib/pkgconfig" ./configure \
+          PKG_CONFIG_PATH="${HOME}/ffmpeg_build/lib/pkgconfig" ./configure \
             --disable-decoder=exr,phm \
             --pkg-config-flags="--static" \
-            --extra-cflags="-I$(HOME)/ffmpeg_build/include" \
-            --extra-ldflags="-L$(HOME)/ffmpeg_build/lib" \
+            --extra-cflags="-I${HOME}/ffmpeg_build/include" \
+            --extra-ldflags="-L${HOME}/ffmpeg_build/lib" \
             --extra-libs="-lpthread -lm" \
             --ld="g++" \
-            --prefix=$(HOME)/ffmpeg_build
+            --prefix=${HOME}/ffmpeg_build
           make -j$(nproc)
           make install
-          rm -rf /ffmpeg
+          rm -rf ${HOME}/ffmpeg
 
       - name: Build Headless
         run: |

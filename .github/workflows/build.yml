@@ -69,7 +69,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-
+      - uses: Swatinem/rust-cache@v2
       - name: Build ffmpeg
         run: |
           git clone https://github.com/ffmpeg/ffmpeg --depth 1 --single-branch --branch release/6.0

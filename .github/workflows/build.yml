@@ -136,20 +136,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y flatpak flatpak-builder
           flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Fetch artifact
         uses: actions/download-artifact@v3
         with:
           name: linux-full
-      - run: ls -R
-      - uses: actions/checkout@v3
-        with:
-          submodules: recursive
-      - run: ls -R
       - name: Bundle
         run: make mizer.flatpak
       - uses: actions/upload-artifact@v2
         with:
-          name: Flatpak (standalone job)
+          name: Flatpak
           path: mizer.flatpak
           if-no-files-found: error
 

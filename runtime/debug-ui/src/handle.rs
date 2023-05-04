@@ -1,18 +1,28 @@
+#[cfg(feature = "compile")]
 use egui::{
     CentralPanel, CollapsingHeader, ColorImage, Response, ScrollArea, TextureHandle, Ui, WidgetText,
 };
+#[cfg(feature = "compile")]
 use egui_dock::TabViewer;
-use std::collections::hash_map::DefaultHasher;
+#[cfg(feature = "compile")]
 use std::collections::HashMap;
-use std::hash::{Hash, Hasher};
 
+#[cfg(feature = "compile")]
 pub type TextureMap = HashMap<u64, TextureHandle>;
 
+#[cfg(not(feature = "compile"))]
+pub type TextureMap = ();
+
 pub struct DebugUiRenderHandle<'a> {
+    #[cfg(feature = "compile")]
     context: &'a egui::Context,
+    #[cfg(feature = "compile")]
     textures: &'a mut TextureMap,
+    #[cfg(not(feature = "compile"))]
+    _lifetime: std::marker::PhantomData<&'a ()>,
 }
 
+#[cfg(feature = "compile")]
 impl<'a> DebugUiRenderHandle<'a> {
     pub(crate) fn new(
         context: &'a egui::Context,
@@ -32,14 +42,19 @@ impl<'a> DebugUiRenderHandle<'a> {
 }
 
 pub struct DebugUiDrawHandle<'a> {
+    #[cfg(feature = "compile")]
     ui: &'a mut Ui,
+    #[cfg(not(feature = "compile"))]
+    _lifetime: std::marker::PhantomData<&'a ()>,
 }
 
 impl<'a> DebugUiDrawHandle<'a> {
+    #[cfg(feature = "compile")]
     pub(crate) fn new(ui: &'a mut Ui) -> Self {
         Self { ui }
     }
 
+    #[cfg(feature = "compile")]
     pub fn horizontal(&mut self, cb: impl FnOnce(&mut DebugUiDrawHandle)) {
         self.ui.horizontal(|ui| {
             let mut handle = DebugUiDrawHandle::new(ui);
@@ -48,21 +63,39 @@ impl<'a> DebugUiDrawHandle<'a> {
         });
     }
 
+    #[cfg(not(feature = "compile"))]
+    pub fn horizontal(&mut self, _cb: impl FnOnce(&mut DebugUiDrawHandle)) {}
+
+    #[cfg(feature = "compile")]
     pub fn button(&mut self, text: impl Into<String>) -> DebugUiResponse {
         let text = text.into();
         self.ui.button(text).into()
     }
 
+    #[cfg(not(feature = "compile"))]
+    pub fn button(&mut self, text: impl Into<String>) -> DebugUiResponse {
+        DebugUiResponse
+    }
+
+    #[cfg(feature = "compile")]
     pub fn heading(&mut self, text: impl Into<String>) {
         let text = text.into();
         self.ui.heading(text);
     }
 
+    #[cfg(not(feature = "compile"))]
+    pub fn heading(&mut self, _text: impl Into<String>) {}
+
+    #[cfg(feature = "compile")]
     pub fn label(&mut self, text: impl Into<String>) {
         let text = text.into();
         self.ui.label(text);
     }
 
+    #[cfg(not(feature = "compile"))]
+    pub fn label(&mut self, _text: impl Into<String>) {}
+
+    #[cfg(feature = "compile")]
     pub fn collapsing_header(
         &mut self,
         title: impl Into<String>,
@@ -76,6 +109,15 @@ impl<'a> DebugUiDrawHandle<'a> {
         });
     }
 
+    #[cfg(not(feature = "compile"))]
+    pub fn collapsing_header(
+        &mut self,
+        _title: impl Into<String>,
+        _add_content: impl FnOnce(&mut DebugUiDrawHandle),
+    ) {
+    }
+
+    #[cfg(feature = "compile")]
     pub fn columns(&mut self, count: usize, add_contents: impl FnOnce(&mut [DebugUiDrawHandle])) {
         self.ui.columns(count, |columns| {
             let mut cols = columns
@@ -87,7 +129,20 @@ impl<'a> DebugUiDrawHandle<'a> {
         });
     }
 
-    pub fn image<I: Hash>(&mut self, image_id: I, data: &[u8], textures: &mut TextureMap) {
+    #[cfg(not(feature = "compile"))]
+    pub fn columns(&mut self, _count: usize, _add_contents: impl FnOnce(&mut [DebugUiDrawHandle])) {
+    }
+
+    #[cfg(feature = "compile")]
+    pub fn image<I: std::hash::Hash>(
+        &mut self,
+        image_id: I,
+        data: &[u8],
+        textures: &mut TextureMap,
+    ) {
+        use std::collections::hash_map::DefaultHasher;
+        use std::hash::{Hash, Hasher};
+
         let mut hasher = DefaultHasher::new();
         image_id.hash(&mut hasher);
         let hash = hasher.finish();
@@ -111,8 +166,13 @@ impl<'a> DebugUiDrawHandle<'a> {
     }
 }
 
+#[cfg(feature = "compile")]
 pub struct DebugUiResponse(Response);
 
+#[cfg(not(feature = "compile"))]
+pub struct DebugUiResponse;
+
+#[cfg(feature = "compile")]
 impl From<Response> for DebugUiResponse {
     fn from(response: Response) -> Self {
         Self(response)
@@ -121,13 +181,21 @@ impl From<Response> for DebugUiResponse {
 
 impl DebugUiResponse {
     #[inline]
+    #[cfg(feature = "compile")]
     pub fn clicked(&self) -> bool {
         self.0.clicked()
+    }
+
+    #[inline]
+    #[cfg(not(feature = "compile"))]
+    pub fn clicked(&self) -> bool {
+        false
     }
 }
 
 struct DebugUiTabs {}
 
+#[cfg(feature = "compile")]
 impl TabViewer for DebugUiTabs {
     type Tab = String;
 

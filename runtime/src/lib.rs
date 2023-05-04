@@ -12,6 +12,7 @@ pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
 mod api;
 pub mod commands;
 mod coordinator;
+#[cfg(feature = "debug-ui")]
 mod debug_ui;
 mod node_metadata;
 pub mod pipeline_access;

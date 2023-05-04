@@ -6,6 +6,7 @@ use pinboard::NonEmptyPinboard;
 
 use itertools::Itertools;
 use mizer_clock::{Clock, ClockSnapshot, SystemClock};
+#[cfg(feature = "debug-ui")]
 use mizer_debug_ui::DebugUi;
 use mizer_execution_planner::*;
 use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
@@ -35,6 +36,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
+    #[cfg(feature = "debug-ui")]
     ui: Option<DebugUi>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
 }
@@ -64,6 +66,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
             layout_fader_view: Default::default(),
+            #[cfg(feature = "debug-ui")]
             ui: debug_ui.then(DebugUi::new).and_then(|ui| match ui {
                 Ok(ui) => Some(ui),
                 Err(err) => {
@@ -303,6 +306,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
+        #[cfg(feature = "debug-ui")]
         if let Some(ui) = self.ui.as_mut() {
             log::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();

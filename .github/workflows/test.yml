@@ -127,10 +127,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features
+      - uses: taiki-e/install-action@nextest
       - name: Tests
         uses: actions-rs/cargo@v1
         with:
-          command: test
+          command: nextest run
           args: --workspace
   test-android:
     runs-on: ubuntu-latest

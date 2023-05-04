@@ -122,10 +122,7 @@ jobs:
           args: --all-features
       - uses: taiki-e/install-action@nextest
       - name: Tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: nextest run
-          args: --workspace
+        run: make test
   test-android:
     runs-on: ubuntu-latest
     if: false

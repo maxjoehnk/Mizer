@@ -158,7 +158,7 @@ mod tests {
         let msg = "Test".to_string();
         let bus = MessageBus::new();
         let subscriber = bus.subscribe();
-        bus.send(msg.clone());
+        bus.send(msg);
         subscriber.read();
 
         let result = subscriber.read();

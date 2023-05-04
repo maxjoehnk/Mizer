@@ -68,7 +68,7 @@ impl Sequence {
         let cue = self.current_cue(state);
         cue.update_state(self, state, clock, frame);
         for control in &cue.controls {
-            for (fixture_id, value) in control.values(self, cue, state) {
+            for (fixture_id, value) in control.values(cue, state) {
                 if let Some(value) = value {
                     fixture_controller.write(fixture_id, control.control.clone(), value);
                     state.set_fixture_value(fixture_id, control.control.clone(), value);

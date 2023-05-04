@@ -478,12 +478,7 @@ mod tests {
             target_port: port_id.clone(),
             local: true,
         };
-        register_receiver(
-            &mut worker,
-            dest_path.clone(),
-            port_id.clone(),
-            dest.clone(),
-        );
+        register_receiver(&mut worker, dest_path.clone(), port_id.clone(), dest);
 
         worker.connect_nodes(link, source, dest)?;
 
@@ -530,8 +525,8 @@ mod tests {
             target_port: port_id.clone(),
             local: true,
         };
-        register_receiver(&mut worker, dest1.clone(), port_id.clone(), dest.clone());
-        register_receiver(&mut worker, dest2.clone(), port_id.clone(), dest.clone());
+        register_receiver(&mut worker, dest1.clone(), port_id.clone(), dest);
+        register_receiver(&mut worker, dest2.clone(), port_id.clone(), dest);
 
         worker.connect_nodes(link1, source, dest)?;
         worker.connect_nodes(link2, source, dest)?;

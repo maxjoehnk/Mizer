@@ -42,16 +42,16 @@ impl ProcessingNode for VideoColorBalanceNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(brightness) = context.read_port::<_, f64>("brightness") {
-            state.node.set_property("brightness", &brightness);
+            state.node.set_property("brightness", brightness);
         }
         if let Some(contrast) = context.read_port::<_, f64>("contrast") {
-            state.node.set_property("contrast", &contrast);
+            state.node.set_property("contrast", contrast);
         }
         if let Some(hue) = context.read_port::<_, f64>("hue") {
-            state.node.set_property("hue", &hue);
+            state.node.set_property("hue", hue);
         }
         if let Some(saturation) = context.read_port::<_, f64>("saturation") {
-            state.node.set_property("saturation", &saturation);
+            state.node.set_property("saturation", saturation);
         }
         Ok(())
     }

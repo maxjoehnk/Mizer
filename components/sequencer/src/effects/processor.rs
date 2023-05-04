@@ -45,13 +45,11 @@ impl Processor for EffectsProcessor {
                             .iter()
                             .filter(|(_, instance)| instance.effect_id == effect.id);
 
-                        for (id, instance) in instances {
+                        for (_id, instance) in instances {
                             ui.columns(2, |columns| {
                                 columns[0].label("Rate");
                                 columns[1].label(instance.rate.to_string());
                             });
-
-                            for fixture_group in instance.fixtures.get_fixtures() {}
                         }
                     });
                 });

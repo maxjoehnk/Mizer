@@ -7,7 +7,7 @@ use mizer_protocol_osc::OscConnectionManager;
 use crate::{ConnectionConfig, ConnectionTypes, Project, ProjectManagerMut};
 
 impl ProjectManagerMut for DmxConnectionManager {
-    fn new(&mut self) {
+    fn new_project(&mut self) {
         self.add_output("dmx-0".into(), SacnOutput::new());
     }
 
@@ -93,7 +93,7 @@ impl ProjectManagerMut for OscConnectionManager {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),
                 name: Default::default(),
-                config: ConnectionTypes::Osc(connection.address.clone()),
+                config: ConnectionTypes::Osc(connection.address),
             });
         }
     }

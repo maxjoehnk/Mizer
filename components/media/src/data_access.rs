@@ -1,7 +1,9 @@
+use std::path::PathBuf;
+
+use sled::Mode;
+
 use crate::documents::*;
 use crate::TagCreateModel;
-use sled::Mode;
-use std::path::{Path, PathBuf};
 
 #[derive(Clone)]
 pub struct DataAccess {

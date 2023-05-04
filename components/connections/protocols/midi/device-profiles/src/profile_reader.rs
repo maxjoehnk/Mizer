@@ -48,7 +48,7 @@ fn generate_output_script(profile: &mut DeviceProfile, path: &Path) -> anyhow::R
 fn read_layout(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
     if let Some(filename) = profile.layout_file.as_ref() {
         let layout_path = path.join(filename);
-        let layout = std::fs::read_to_string(&layout_path)?;
+        let layout = std::fs::read_to_string(layout_path)?;
         profile.layout = Some(layout);
     }
 

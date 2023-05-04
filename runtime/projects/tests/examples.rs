@@ -26,5 +26,5 @@ fn test_load_project(project: &str) {
         project
     );
 
-    let _ = Project::load_file(&path).unwrap();
+    let _ = Project::load_file(path).unwrap();
 }

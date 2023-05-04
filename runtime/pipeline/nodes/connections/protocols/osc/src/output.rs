@@ -54,7 +54,7 @@ impl PipelineNode for OscOutputNode {
 impl ProcessingNode for OscOutputNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let connection_manager = context.inject::<OscConnectionManager>();
         if connection_manager.is_none() {
             anyhow::bail!("Missing osc module");

@@ -154,7 +154,7 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn mul_add(self, a: Self, b: Self) -> Self {
+    fn mul_add(self, _a: Self, _b: Self) -> Self {
         unimplemented!()
     }
 
@@ -162,11 +162,11 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn powi(self, n: i32) -> Self {
+    fn powi(self, _n: i32) -> Self {
         unimplemented!()
     }
 
-    fn powf(self, n: Self) -> Self {
+    fn powf(self, _n: Self) -> Self {
         unimplemented!()
     }
 
@@ -186,7 +186,7 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn log(self, base: Self) -> Self {
+    fn log(self, _base: Self) -> Self {
         unimplemented!()
     }
 
@@ -198,15 +198,15 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn max(self, other: Self) -> Self {
+    fn max(self, _other: Self) -> Self {
         unimplemented!()
     }
 
-    fn min(self, other: Self) -> Self {
+    fn min(self, _other: Self) -> Self {
         unimplemented!()
     }
 
-    fn abs_sub(self, other: Self) -> Self {
+    fn abs_sub(self, _other: Self) -> Self {
         unimplemented!()
     }
 
@@ -214,7 +214,7 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn hypot(self, other: Self) -> Self {
+    fn hypot(self, _other: Self) -> Self {
         unimplemented!()
     }
 
@@ -242,7 +242,7 @@ impl num_traits::float::Float for SequencerValue<f64> {
         unimplemented!()
     }
 
-    fn atan2(self, other: Self) -> Self {
+    fn atan2(self, _other: Self) -> Self {
         unimplemented!()
     }
 
@@ -313,7 +313,7 @@ impl num_traits::NumCast for SequencerValue<f64> {
 impl Num for SequencerValue<f64> {
     type FromStrRadixErr = ();
 
-    fn from_str_radix(str: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> {
+    fn from_str_radix(_str: &str, _radix: u32) -> Result<Self, Self::FromStrRadixErr> {
         unimplemented!()
     }
 }

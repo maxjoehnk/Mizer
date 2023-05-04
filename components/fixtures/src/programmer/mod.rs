@@ -517,7 +517,6 @@ impl Programmer {
             .flat_map(|(fixtures, channels)| {
                 channels
                     .fader_controls()
-                    .into_iter()
                     .map(|(control, value)| ProgrammerControl {
                         fixtures: fixtures.clone(),
                         control,
@@ -1045,8 +1044,7 @@ mod tests {
 
     fn get_state(programmer: &mut Programmer) -> ProgrammerState {
         programmer.emit_state(Vec::<&Group>::new());
-        let state = programmer.view().read();
 
-        state
+        programmer.view().read()
     }
 }

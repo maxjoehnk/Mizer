@@ -11,7 +11,6 @@ use symphonia::core::formats::{FormatOptions, FormatReader};
 use symphonia::core::io::{MediaSourceStream, ReadOnlySource};
 use symphonia::core::meta::MetadataOptions;
 use symphonia::core::probe::Hint;
-use symphonia::core::units::{TimeBase, TimeStamp};
 
 use crate::file_storage::FileStorage;
 use crate::media_handlers::image_handler::parse_image_content_type;
@@ -31,7 +30,7 @@ impl MediaHandler for AudioHandler {
         &self,
         file: P,
         storage: &FileStorage,
-        content_type: &str,
+        _content_type: &str,
     ) -> anyhow::Result<()> {
         let target = storage.get_thumbnail_path(&file);
         let tag = Tag::read_from_path(file).context("Unable to read id3 tag")?;
@@ -52,7 +51,7 @@ impl MediaHandler for AudioHandler {
     fn read_metadata<P: AsRef<Path>>(
         &self,
         file: P,
-        content_type: &str,
+        _content_type: &str,
     ) -> anyhow::Result<MediaMetadata> {
         let mut metadata = self.read_tag_metadata(&file).unwrap_or_default();
         metadata.duration = self.read_duration(&file)?.or(metadata.duration);

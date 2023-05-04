@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_devices::DeviceManager;
-use mizer_g13::Keys;
+
 use mizer_node::*;
 
 const KEY_COLOR: &str = "Key Color";

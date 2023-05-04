@@ -106,7 +106,7 @@ pub struct NodeDesigner {
     pub hidden: bool,
 }
 
-#[allow(clippy::derive_hash_xor_eq)]
+#[allow(clippy::derived_hash_with_manual_eq)]
 impl Hash for NodeDesigner {
     fn hash<H: Hasher>(&self, state: &mut H) {
         state.write(format!("{:?}", self).as_bytes());
@@ -119,7 +119,7 @@ pub struct NodePosition {
     pub y: f64,
 }
 
-#[allow(clippy::derive_hash_xor_eq)]
+#[allow(clippy::derived_hash_with_manual_eq)]
 impl Hash for NodePosition {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.x.to_bits().hash(state);

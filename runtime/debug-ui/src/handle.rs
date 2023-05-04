@@ -80,7 +80,7 @@ impl<'a> DebugUiDrawHandle<'a> {
         self.ui.columns(count, |columns| {
             let mut cols = columns
                 .iter_mut()
-                .map(|ui| DebugUiDrawHandle::new(ui))
+                .map(DebugUiDrawHandle::new)
                 .collect::<Vec<_>>();
 
             add_contents(&mut cols);
@@ -91,7 +91,7 @@ impl<'a> DebugUiDrawHandle<'a> {
         let mut hasher = DefaultHasher::new();
         image_id.hash(&mut hasher);
         let hash = hasher.finish();
-        if !textures.contains_key(&hash) {
+        if let std::collections::hash_map::Entry::Vacant(e) = textures.entry(hash) {
             if let Ok(image) = image::load_from_memory(data) {
                 let size = [image.width() as _, image.height() as _];
                 let image_buffer = image.to_rgba8();
@@ -102,7 +102,7 @@ impl<'a> DebugUiDrawHandle<'a> {
                         .ctx()
                         .load_texture(format!("image-{hash}"), image, Default::default());
 
-                textures.insert(hash, handle);
+                e.insert(handle);
             }
         }
         if let Some(texture) = textures.get(&hash) {
@@ -131,7 +131,7 @@ struct DebugUiTabs {}
 impl TabViewer for DebugUiTabs {
     type Tab = String;
 
-    fn ui(&mut self, ui: &mut Ui, tab: &mut Self::Tab) {}
+    fn ui(&mut self, _ui: &mut Ui, _tab: &mut Self::Tab) {}
 
     fn title(&mut self, tab: &mut Self::Tab) -> WidgetText {
         (&*tab).into()

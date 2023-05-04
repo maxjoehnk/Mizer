@@ -30,7 +30,7 @@ impl PipelineNode for AudioMixNode {
 impl ProcessingNode for AudioMixNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let ports = context.read_changed_ports::<_, Vec<f64>>(AUDIO_INPUT);
 
         let ports = ports.into_iter().flatten().collect::<Vec<_>>();
@@ -54,5 +54,5 @@ impl ProcessingNode for AudioMixNode {
         Default::default()
     }
 
-    fn update(&mut self, config: &Self) {}
+    fn update(&mut self, _config: &Self) {}
 }

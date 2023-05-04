@@ -269,9 +269,10 @@ impl PartialOrd for Cue {
     }
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub enum CueTrigger {
     /// Requires manual go action to trigger
+    #[default]
     Go,
     /// Automatically triggers when the previous cue finishes
     Follow,
@@ -279,12 +280,6 @@ pub enum CueTrigger {
     Time,
     Beats,
     Timecode,
-}
-
-impl Default for CueTrigger {
-    fn default() -> Self {
-        CueTrigger::Go
-    }
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
@@ -307,12 +302,7 @@ impl CueControl {
         }
     }
 
-    pub(crate) fn values(
-        &self,
-        sequence: &Sequence,
-        cue: &Cue,
-        state: &SequenceState,
-    ) -> Vec<(FixtureId, Option<f64>)> {
+    pub(crate) fn values(&self, cue: &Cue, state: &SequenceState) -> Vec<(FixtureId, Option<f64>)> {
         profiling::scope!("CueControl::values");
         let mut values = HashMap::new();
         for fixture in self.fixtures.get_fixtures().iter().flatten() {
@@ -321,7 +311,7 @@ impl CueControl {
 
         self.fill_values(state, &mut values);
         self.delay_values(cue, state, &mut values);
-        self.fade_values(sequence, cue, state, &mut values);
+        self.fade_values(cue, state, &mut values);
 
         values.into_iter().collect()
     }
@@ -402,7 +392,6 @@ impl CueControl {
 
     pub(crate) fn fade_values(
         &self,
-        sequence: &Sequence,
         cue: &Cue,
         sequence_state: &SequenceState,
         values: &mut HashMap<FixtureId, Option<f64>>,

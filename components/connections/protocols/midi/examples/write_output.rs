@@ -21,7 +21,7 @@ pub fn main() -> anyhow::Result<()> {
     write_prompt();
     for line in reader.lock().lines() {
         let line = line?;
-        let parts = line.split(" ").collect::<Vec<_>>();
+        let parts = line.split(' ').collect::<Vec<_>>();
         match parts.as_slice() {
             ["note", channel, note, value] => {
                 let channel = u8::from_str(channel)?;
@@ -47,7 +47,7 @@ pub fn main() -> anyhow::Result<()> {
                 let manu3 = u8::from_str(manu3)?;
                 let model = u8::from_str(model)?;
                 let data = data
-                    .into_iter()
+                    .iter()
                     .map(|d| u8::from_str(d))
                     .collect::<Result<Vec<_>, ParseIntError>>()?;
 

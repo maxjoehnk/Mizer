@@ -30,11 +30,11 @@ impl NodeContext for NodeContextMock {
         self.clock_fn.call()
     }
 
-    fn write_clock_tempo(&self, speed: f64) {
+    fn write_clock_tempo(&self, _speed: f64) {
         todo!()
     }
 
-    fn write_clock_state(&self, state: ClockState) {
+    fn write_clock_state(&self, _state: ClockState) {
         todo!()
     }
 
@@ -88,7 +88,7 @@ impl PreviewContext for NodeContextMock {
         self.history.borrow_mut().push(value);
     }
 
-    fn write_data_preview(&self, data: StructuredData) {
+    fn write_data_preview(&self, _data: StructuredData) {
         todo!()
     }
 }

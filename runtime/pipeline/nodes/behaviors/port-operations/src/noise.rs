@@ -42,7 +42,7 @@ impl ProcessingNode for NoiseNode {
     type State = NoiseNodeState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let value = state.next(&self);
+        let value = state.next(self);
         context.push_history_value(value);
         context.write_port(VALUE_OUTPUT, value);
 

@@ -36,7 +36,7 @@ where
             } else if p == OsStr::new("..") {
                 file_path.pop();
             } else {
-                file_path.push(&p);
+                file_path.push(p);
             }
         }
 

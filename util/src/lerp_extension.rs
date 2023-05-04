@@ -53,9 +53,9 @@ impl LerpExt<f64> for u64 {
 
 impl LerpExt<u8> for f64 {
     fn linear_extrapolate(self, from: (f64, f64), to: (u8, u8)) -> u8 {
-        let value = self as f64;
-        let min = from.0 as f64;
-        let max = from.1 as f64;
+        let value = self;
+        let min = from.0;
+        let max = from.1;
 
         let result: f64 = value.linear_extrapolate((min, max), (to.0 as f64, to.1 as f64));
         result as u8

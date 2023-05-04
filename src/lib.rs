@@ -138,20 +138,20 @@ impl Mizer {
         self.close_project();
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
-        fixture_manager.new();
+        fixture_manager.new_project();
         let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
-        effects_engine.new();
+        effects_engine.new_project();
         let sequencer = injector.get::<Sequencer>().unwrap();
-        sequencer.new();
+        sequencer.new_project();
         let timecode_manager = injector.get::<TimecodeManager>().unwrap();
-        timecode_manager.new();
+        timecode_manager.new_project();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-        dmx_manager.new();
+        dmx_manager.new_project();
         let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
-        mqtt_manager.new();
+        mqtt_manager.new_project();
         let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
-        osc_manager.new();
-        self.runtime.new();
+        osc_manager.new_project();
+        self.runtime.new_project();
         self.send_session_update();
     }
 

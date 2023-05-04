@@ -323,7 +323,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 }
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
-    fn new(&mut self) {
+    fn new_project(&mut self) {
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
         let programmer_path = pipeline_access
             .handle_add_node(NodeType::Programmer, NodeDesigner::default(), None)

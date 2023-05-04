@@ -34,7 +34,7 @@ impl ImportPaths {
         paths.clear();
     }
 
-    pub fn set_paths(&self, mut paths: Vec<PathBuf>) {
+    pub fn set_paths(&self, paths: Vec<PathBuf>) {
         let mut handle = self
             .0
             .write()

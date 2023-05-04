@@ -30,7 +30,7 @@ impl PipelineNode for AudioMeterNode {
 impl ProcessingNode for AudioMeterNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(buffer) = context.read_port::<_, Vec<f64>>(AUDIO_INPUT) {
             let volume = rms(buffer);
             context.write_port(VOLUME_OUTPUT, volume);
@@ -44,7 +44,7 @@ impl ProcessingNode for AudioMeterNode {
         Default::default()
     }
 
-    fn update(&mut self, config: &Self) {}
+    fn update(&mut self, _config: &Self) {}
 }
 
 fn rms(buffer: Vec<f64>) -> f64 {

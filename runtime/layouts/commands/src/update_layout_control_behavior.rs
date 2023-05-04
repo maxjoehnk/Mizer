@@ -1,6 +1,6 @@
 use crate::get_control;
 use mizer_commander::{Command, Ref};
-use mizer_layouts::{ControlBehavior, ControlDecorations, LayoutStorage};
+use mizer_layouts::{ControlBehavior, LayoutStorage};
 use serde::{Deserialize, Serialize};
 use std::hash::Hash;
 

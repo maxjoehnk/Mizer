@@ -405,7 +405,7 @@ fn map_channels(
                 .get(&channel)
                 .map(|c| &c.fine_channel_aliases[..]);
             match fine_channels {
-                Some(&[ref fine]) => {
+                Some([fine]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     if let Some(fine_channel) = fine_channel {
                         FixtureChannelDefinition {
@@ -419,7 +419,7 @@ fn map_channels(
                         }
                     }
                 }
-                Some(&[ref fine, ref finest]) => {
+                Some([fine, finest]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     let finest_channel = channels_2.iter().position(|c| c == finest);
                     if let Some(fine_channel) = fine_channel {

@@ -134,5 +134,5 @@ impl ProcessingNode for PlanScreenNode {
         Default::default()
     }
 
-    fn update(&mut self, config: &Self) {}
+    fn update(&mut self, _config: &Self) {}
 }

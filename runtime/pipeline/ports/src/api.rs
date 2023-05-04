@@ -51,11 +51,12 @@ impl AsRef<str> for PortId {
     }
 }
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Default, Clone, Copy, Hash, PartialEq, Eq, Deserialize, Serialize)]
 pub enum PortType {
     /// Single float value
     ///
     /// e.g. Control signals
+    #[default]
     Single,
     /// Multiple float values
     ///
@@ -89,12 +90,6 @@ pub enum PortType {
     Gstreamer,
     /// Time signal measured in frames
     Clock,
-}
-
-impl Default for PortType {
-    fn default() -> Self {
-        PortType::Single
-    }
 }
 
 pub trait NodePortReceiver<'a, Item>
@@ -148,7 +143,7 @@ impl From<(f64, f64, f64)> for Color {
     }
 }
 
-#[allow(clippy::derive_hash_xor_eq)]
+#[allow(clippy::derived_hash_with_manual_eq)]
 impl Hash for Color {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.red.to_bits().hash(state);

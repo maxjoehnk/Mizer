@@ -29,7 +29,7 @@ impl PipelineNode for ConstantNumberNode {
 impl ProcessingNode for ConstantNumberNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let value = self.value;
 
         context.write_port(VALUE_PORT, value);

@@ -143,7 +143,6 @@ impl From<SequencerControlBehavior> for mizer_layouts::SequencerControlBehavior 
     fn from(value: SequencerControlBehavior) -> Self {
         Self {
             click_behavior: value.click_behavior.unwrap().into(),
-            ..Default::default()
         }
     }
 }

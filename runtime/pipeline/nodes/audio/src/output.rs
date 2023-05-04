@@ -1,7 +1,7 @@
 use anyhow::Context;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Device, SampleFormat, SampleRate, Stream};
-use rb::{Producer, RbConsumer, RbProducer, SpscRb, RB};
+use rb::{RbConsumer, RbProducer, SpscRb, RB};
 use serde::{Deserialize, Serialize};
 
 use crate::{BUFFER_SIZE, SAMPLE_RATE};
@@ -49,7 +49,7 @@ impl ProcessingNode for AudioOutputNode {
         Default::default()
     }
 
-    fn update(&mut self, config: &Self) {}
+    fn update(&mut self, _config: &Self) {}
 }
 
 pub struct AudioOutputNodeState {

@@ -459,7 +459,7 @@ mod tests {
                     1,
                     "",
                     vec![CueControl {
-                        control: control.clone(),
+                        control,
                         value: value.into(),
                         fixtures: fixture_ids.into(),
                     }],
@@ -578,7 +578,7 @@ mod tests {
                     1,
                     "",
                     vec![CueControl {
-                        control: control.clone(),
+                        control,
                         value: value.into(),
                         fixtures: vec![fixture_id].into(),
                     }],
@@ -733,7 +733,7 @@ mod tests {
             .once()
             .with(
                 predicate::eq(FixtureId::Fixture(1)),
-                predicate::eq(control.clone()),
+                predicate::eq(control),
                 predicate::eq(0f64),
             )
             .return_const(());

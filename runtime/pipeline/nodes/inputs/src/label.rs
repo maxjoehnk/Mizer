@@ -2,8 +2,6 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-const VALUE_INPUT: &str = "Value";
-
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LabelNode {
     #[serde(default)]
@@ -38,7 +36,7 @@ impl ProcessingNode for LabelNode {
         self.text = config.text.clone();
     }
 
-    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, _state: &Self::State) {
         ui.collapsing_header("Config", |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Text");

@@ -54,7 +54,7 @@ fn parse_property_access(input: &str) -> IResult<&str, PropertyAccess> {
 }
 
 fn parse_identifier(input: &str) -> IResult<&str, &str> {
-    map(pair(alpha1, alphanumeric0), |(lhs, rhs)| lhs)(input)
+    map(pair(alpha1, alphanumeric0), |(lhs, _)| lhs)(input)
 }
 
 fn parse_float(input: &str) -> IResult<&str, Literal> {

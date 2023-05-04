@@ -150,7 +150,7 @@ impl ApiHandler {
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetGamepadRef(id, sender) => {
-                let gamepad_ref = self.get_gamepad(&mizer, id);
+                let gamepad_ref = self.get_gamepad(mizer, id);
                 if let Err(err) = sender.send(gamepad_ref) {
                     log::error!("Unable to respond to ApiCommand::GetGamepadRef: {err:?}");
                 }

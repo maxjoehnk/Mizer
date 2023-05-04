@@ -75,7 +75,7 @@ impl Processor for FixtureProcessor {
                         columns[0].label("Channel");
                         columns[1].label(fixture.channel.to_string());
                     });
-                    ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |ui| {});
+                    ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |_ui| {});
                     ui.collapsing_header("Configuration", |ui| {
                         ui.columns(2, |columns| {
                             columns[0].label("Invert Pan");

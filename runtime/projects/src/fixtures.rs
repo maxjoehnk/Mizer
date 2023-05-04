@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::ops::Deref;
 
 impl ProjectManager for FixtureManager {
-    fn new(&self) {
+    fn new_project(&self) {
         self.presets.load_defaults();
     }
 

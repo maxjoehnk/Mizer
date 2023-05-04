@@ -32,7 +32,7 @@ impl PipelineNode for AudioVolumeNode {
 impl ProcessingNode for AudioVolumeNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(volume) = context.read_port::<_, f64>(VOLUME_INPUT) {
             if let Some(buffer) = context.read_port::<_, Vec<f64>>(AUDIO_INPUT) {
                 let output: Vec<f64> = buffer.into_iter().map(|f| f * volume).collect();
@@ -47,5 +47,5 @@ impl ProcessingNode for AudioVolumeNode {
         Default::default()
     }
 
-    fn update(&mut self, config: &Self) {}
+    fn update(&mut self, _config: &Self) {}
 }

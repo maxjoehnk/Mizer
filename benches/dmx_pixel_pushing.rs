@@ -31,7 +31,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
 }
 
 fn build_runtime(dimensions: &(i64, i64)) -> DefaultRuntime {
-    let mut runtime = DefaultRuntime::new();
+    let mut runtime = DefaultRuntime::new(false);
     let project = Project::load(&project_config(dimensions)).unwrap();
     DmxModule.register(&mut runtime).unwrap();
     runtime.load(&project).unwrap();

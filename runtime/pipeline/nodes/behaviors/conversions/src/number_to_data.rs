@@ -19,8 +19,8 @@ impl PipelineNode for NumberToDataNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("value", PortType::Single),
-            output_port!("value", PortType::Data),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Data),
         ]
     }
 
@@ -33,10 +33,10 @@ impl ProcessingNode for NumberToDataNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let value = context.read_port::<_, f64>("value");
+        let value = context.read_port::<_, f64>(VALUE_INPUT);
 
         if let Some(value) = value {
-            context.write_port("value", StructuredData::Float(value));
+            context.write_port(VALUE_OUTPUT, StructuredData::Float(value));
             context.push_history_value(value);
         }
 

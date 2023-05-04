@@ -29,7 +29,7 @@ impl FileStorage {
 
     pub fn store_temp_file(&self, id: Uuid, buffer: &[u8]) -> anyhow::Result<()> {
         let file_path = self.get_temp_file_path(id);
-        let mut file = fs::File::create(&file_path)?;
+        let mut file = fs::File::create(file_path)?;
 
         file.write_all(buffer)?;
 

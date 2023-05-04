@@ -143,7 +143,7 @@ impl Default for EffectControlPoint {
     }
 }
 
-#[allow(clippy::derive_hash_xor_eq)]
+#[allow(clippy::derived_hash_with_manual_eq)]
 impl Hash for EffectControlPoint {
     fn hash<H: Hasher>(&self, state: &mut H) {
         match self {
@@ -187,7 +187,7 @@ mod tests {
             name: Default::default(),
             channels: vec![(&EffectChannelTemplate::new(
                 FixtureFaderControl::Intensity,
-                [EffectStep::new(0.), EffectStep::new(1.)],
+                [EffectStep::new(start), EffectStep::new(end)],
             ))
                 .into()],
         };
@@ -213,7 +213,7 @@ mod tests {
             name: Default::default(),
             channels: vec![(&EffectChannelTemplate::new(
                 FixtureFaderControl::Intensity,
-                [EffectStep::new(0.), EffectStep::range(end)],
+                [EffectStep::new(start), EffectStep::range(end)],
             ))
                 .into()],
         };

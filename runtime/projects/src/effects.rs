@@ -2,7 +2,7 @@ use crate::{Project, ProjectManagerMut};
 use mizer_sequencer::EffectEngine;
 
 impl ProjectManagerMut for EffectEngine {
-    fn new(&mut self) {
+    fn new_project(&mut self) {
         log::debug!("new effect engine");
         self.load_defaults();
     }

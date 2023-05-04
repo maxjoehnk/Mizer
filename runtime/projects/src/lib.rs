@@ -98,14 +98,14 @@ impl Project {
 }
 
 pub trait ProjectManagerMut {
-    fn new(&mut self) {}
+    fn new_project(&mut self) {}
     fn load(&mut self, project: &Project) -> anyhow::Result<()>;
     fn save(&self, project: &mut Project);
     fn clear(&mut self);
 }
 
 pub trait ProjectManager {
-    fn new(&self) {}
+    fn new_project(&self) {}
     fn load(&self, project: &Project) -> anyhow::Result<()>;
     fn save(&self, project: &mut Project);
     fn clear(&self);

@@ -30,15 +30,15 @@ pub trait MediaHandler {
 
     fn read_metadata<P: AsRef<Path>>(
         &self,
-        file: P,
-        content_type: &str,
+        _file: P,
+        _content_type: &str,
     ) -> anyhow::Result<MediaMetadata> {
         Ok(Default::default())
     }
 
     fn process_file<P: AsRef<Path>>(&self, file: P, storage: &FileStorage) -> anyhow::Result<()> {
         let target = storage.get_media_path(&file);
-        std::fs::copy(file, &target)?;
+        std::fs::copy(file, target)?;
 
         Ok(())
     }

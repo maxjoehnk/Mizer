@@ -185,7 +185,7 @@ mod test {
 
     #[test]
     fn deserialize_note_off_ch1_0_0() {
-        let data: &[u8] = &vec![128, 0, 0];
+        let data: &[u8] = &[128, 0, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -204,7 +204,7 @@ mod test {
 
     #[test]
     fn deserialize_note_off_ch2_127_127() {
-        let data: &[u8] = &vec![129, 127, 127];
+        let data: &[u8] = &[129, 127, 127];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -223,7 +223,7 @@ mod test {
 
     #[test]
     fn deserialize_note_off_ch3_0_0() {
-        let data: &[u8] = &vec![130, 0, 0];
+        let data: &[u8] = &[130, 0, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -232,7 +232,7 @@ mod test {
 
     #[test]
     fn deserialize_note_on_ch1_0_0() {
-        let data: &[u8] = &vec![144, 0, 0];
+        let data: &[u8] = &[144, 0, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -241,7 +241,7 @@ mod test {
 
     #[test]
     fn deserialize_note_on_ch2_127_127() {
-        let data: &[u8] = &vec![145, 127, 127];
+        let data: &[u8] = &[145, 127, 127];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -250,7 +250,7 @@ mod test {
 
     #[test]
     fn deserialize_note_on_ch3_0_0() {
-        let data: &[u8] = &vec![146, 0, 0];
+        let data: &[u8] = &[146, 0, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -259,7 +259,7 @@ mod test {
 
     #[test]
     fn deserialize_cc_ch1_0_0() {
-        let data: &[u8] = &vec![176, 0, 0];
+        let data: &[u8] = &[176, 0, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -268,7 +268,7 @@ mod test {
 
     #[test]
     fn deserialize_cc_ch1_0_127() {
-        let data: &[u8] = &vec![176, 0, 127];
+        let data: &[u8] = &[176, 0, 127];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -277,7 +277,7 @@ mod test {
 
     #[test]
     fn deserialize_cc_ch2_127_0() {
-        let data: &[u8] = &vec![177, 127, 0];
+        let data: &[u8] = &[177, 127, 0];
 
         let msg = MidiMessage::try_from(data).unwrap();
 
@@ -286,7 +286,7 @@ mod test {
 
     #[test]
     fn deserialize_sysex() {
-        let data: &[u8] = &vec![240, 0, 32, 41, 2, 10, 119, 2, 247];
+        let data: &[u8] = &[240, 0, 32, 41, 2, 10, 119, 2, 247];
 
         let msg = MidiMessage::try_from(data).unwrap();
 

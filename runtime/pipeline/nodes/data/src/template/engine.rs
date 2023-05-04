@@ -64,7 +64,7 @@ impl TemplateEngine {
 }
 
 impl Operator {
-    fn evaluate(&self, lhs: StructuredData, rhs: StructuredData, values: &StructuredData) -> bool {
+    fn evaluate(&self, lhs: StructuredData, rhs: StructuredData, _values: &StructuredData) -> bool {
         use StructuredData::*;
 
         match (self, lhs, rhs) {

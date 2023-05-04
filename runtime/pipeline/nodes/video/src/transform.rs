@@ -80,7 +80,7 @@ impl VideoTransformState {
         property: &str,
     ) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>(port) {
-            self.node.set_property(property, &(value as f32));
+            self.node.set_property(property, value as f32);
         }
         Ok(())
     }

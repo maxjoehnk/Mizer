@@ -20,7 +20,7 @@ finish-args:
   # TODO: reduce as much as possible
   - --device=all
   # Audio Access
-  #- --socket=pulseaudio
+  - --socket=pulseaudio
   # mDNS Support
   - --system-talk-name=org.freedesktop.Avahi
 modules:

@@ -109,17 +109,6 @@ jobs:
           cp bin/protoc "$HOME/.local/bin/"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - uses: nschloe/action-cached-lfs-checkout@v1
-# LFS Files are not checked out as we've reached the free tier quota for the lfs support of github
-#      - name: Create LFS file list
-#        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-#      - name: Restore LFS cache
-#        uses: actions/cache@v2
-#        id: lfs-cache
-#        with:
-#          path: .git/lfs
-#          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}-v1
-#      - name: Git LFS Pull
-#        run: git lfs pull
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

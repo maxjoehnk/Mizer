@@ -23,8 +23,7 @@ pub fn load_profiles<P: AsRef<Path>>(path: P) -> anyhow::Result<Vec<DeviceProfil
         log::trace!("{:?}", profiles);
 
         Ok(profiles)
-    }else {
+    } else {
         Ok(Default::default())
-
     }
 }

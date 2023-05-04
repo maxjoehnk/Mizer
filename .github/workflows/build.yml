@@ -126,7 +126,7 @@ jobs:
           path: mizer.flatpak
           if-no-files-found: error
 
-  build-flatpak:
+  bundle-flatpak:
     runs-on: ubuntu-latest
     needs:
       - build-linux
@@ -140,9 +140,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: linux-full
-      - uses: actions/checkout@v2
-      - name: Flatpak
-        run: make flatpak
+      - run: ls -R
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - run: ls -R
       - name: Bundle
         run: make mizer.flatpak
       - uses: actions/upload-artifact@v2

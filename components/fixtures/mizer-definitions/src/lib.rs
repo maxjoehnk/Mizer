@@ -7,6 +7,7 @@ use rayon::prelude::*;
 
 use mizer_fixtures::definition::FixtureDefinition;
 use mizer_fixtures::library::FixtureLibraryProvider;
+use mizer_util::find_path;
 
 use crate::conversion::map_fixture_definition;
 pub use crate::definition::MizerFixtureDefinition;
@@ -32,49 +33,48 @@ impl MizerDefinitionsProvider {
 impl FixtureLibraryProvider for MizerDefinitionsProvider {
     fn load(&mut self) -> anyhow::Result<()> {
         log::info!("Loading Mizer fixture library...");
-        if !Path::new(&self.file_path).exists() {
-            return Ok(());
-        }
-        let files = std::fs::read_dir(&self.file_path)?;
-        let definitions = files
-            .par_bridge()
-            .filter_map(|file| file.ok())
-            .filter(|file| file.metadata().is_ok())
-            .filter(|file| file.metadata().unwrap().is_file())
-            .filter(|file| {
-                file.file_name()
-                    .to_string_lossy()
-                    .to_string()
-                    .ends_with(".toml")
-            })
-            .filter_map(|file| {
-                let path = file.path();
-                log::trace!(
-                    "Loading Mizer Fixture from '{:?}'...",
-                    path.file_name().unwrap()
-                );
-                match read_definition(&path) {
-                    Ok(definition) => Some((
-                        format!(
-                            "{}:{}",
-                            definition.metadata.manufacturer, definition.metadata.name
-                        ),
-                        definition,
-                    )),
-                    Err(err) => {
-                        log::error!(
-                            "Could not load Mizer Fixture from '{:?}': {:?}",
-                            path.file_name().unwrap(),
-                            err
-                        );
-                        None
+        if let Some(path) = find_path(&self.file_path) {
+            let files = std::fs::read_dir(path)?;
+            let definitions = files
+                .par_bridge()
+                .filter_map(|file| file.ok())
+                .filter(|file| file.metadata().is_ok())
+                .filter(|file| file.metadata().unwrap().is_file())
+                .filter(|file| {
+                    file.file_name()
+                        .to_string_lossy()
+                        .to_string()
+                        .ends_with(".toml")
+                })
+                .filter_map(|file| {
+                    let path = file.path();
+                    log::trace!(
+                        "Loading Mizer Fixture from '{:?}'...",
+                        path.file_name().unwrap()
+                    );
+                    match read_definition(&path) {
+                        Ok(definition) => Some((
+                            format!(
+                                "{}:{}",
+                                definition.metadata.manufacturer, definition.metadata.name
+                            ),
+                            definition,
+                        )),
+                        Err(err) => {
+                            log::error!(
+                                "Could not load Mizer Fixture from '{:?}': {:?}",
+                                path.file_name().unwrap(),
+                                err
+                            );
+                            None
+                        }
                     }
-                }
-            })
-            .collect::<HashMap<_, _>>();
+                })
+                .collect::<HashMap<_, _>>();
 
-        log::info!("Loaded {} Mizer Fixture Definitions", definitions.len());
-        self.definitions = definitions;
+            log::info!("Loaded {} Mizer Fixture Definitions", definitions.len());
+            self.definitions = definitions;
+        }
 
         Ok(())
     }

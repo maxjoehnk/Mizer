@@ -100,14 +100,7 @@ jobs:
             libvorbis-dev \
             libwavpack-dev \
             libzimg-dev
-
-      - name: Install Protoc 3.17.3
-        run: |
-          curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip
-          unzip protoc-3.17.3-linux-x86_64.zip
-          mkdir -p "$HOME/.local/bin"
-          cp bin/protoc "$HOME/.local/bin/"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - uses: taiki-e/install-action@protoc
       - uses: nschloe/action-cached-lfs-checkout@v1
       - uses: actions-rs/toolchain@v1
         with:

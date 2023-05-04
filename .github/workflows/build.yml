@@ -23,15 +23,12 @@ jobs:
             libunwind-dev \
             curl \
             lld \
-            ffmpeg \
-            libavcodec-dev \
-            libavdevice-dev \
-            libavfilter-dev \
-            libavformat-dev \
-            libavutil-dev \
-            libpostproc-dev \
-            libswresample-dev \
-            libswscale-dev \
+            zip \
+            unzip \
+            autoconf \
+            automake \
+            build-essential \
+            cmake \
             libass-dev \
             libfreetype6-dev \
             libgnutls28-dev \
@@ -43,94 +40,106 @@ jobs:
             libxcb1-dev \
             libxcb-shm0-dev \
             libxcb-xfixes0-dev \
+            pkg-config \
+            texinfo \
+            wget \
+            yasm \
             zlib1g-dev \
+            nasm \
             libx264-dev \
             libx265-dev \
             libnuma-dev \
             libvpx-dev \
             libmp3lame-dev \
-            libopus-dev \
-            libraw1394-dev \
-            libdc1394-dev \
-            libavc1394-dev \
-            libiec61883-dev \
-            libjack-dev \
-            libfaad-dev \
-            libgsm1-dev \
-            libzmq3-dev \
-            libssh-dev \
-            libbluray-dev \
-            libopenmpt-dev \
-            ocl-icd-opencl-dev \
-            libogg-dev \
-            libspeex-dev \
-            libtheora-dev \
-            flite1-dev \
-            libchromaprint-dev \
-            libopenal-dev \
-            libcdio-dev \
-            libcaca-dev \
-            libpocketsphinx-dev \
-            libsphinxbase-dev \
-            libbs2b-dev \
-            liblilv-dev \
-            libsratom-dev \
-            libsord-dev \
-            libserd-dev \
-            librubberband-dev \
-            libsamplerate0-dev \
-            libmysofa-dev \
-            libvidstab-dev \
-            libgme-dev \
-            librabbitmq-dev \
-            libdav1d-dev \
-            libzvbi-dev \
-            libsnappy-dev \
-            libaom-dev \
-            libcodec2-dev \
-            libshine-dev \
-            libtwolame-dev \
-            libwebp-dev \
-            libxvidcore-dev \
-            libsoxr-dev \
-            libcdio-paranoia-dev \
-            libcdio-cdda-dev \
-            libsrt-gnutls-dev \
-            libmfx-dev \
-            libvorbis-dev \
-            libwavpack-dev \
-            libzimg-dev
+            libopus-dev
 
       - name: Install Protoc 3.17.3
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip
           unzip protoc-3.17.3-linux-x86_64.zip
-          mkdir -p "$HOME/.local/bin"
-          cp bin/protoc "$HOME/.local/bin/"
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          mkdir -p "${HOME}/.local/bin"
+          cp bin/protoc "${HOME}/.local/bin/"
+          echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+
+      - name: Build ffmpeg
+        run: |
+          git clone https://github.com/ffmpeg/ffmpeg --depth 1 --single-branch --branch release/6.0
+          cd ffmpeg
+          PKG_CONFIG_PATH="${HOME}/ffmpeg_build/lib/pkgconfig" ./configure \
+            --disable-decoder=exr,phm \
+            --pkg-config-flags="--static" \
+            --extra-cflags="-I${HOME}/ffmpeg_build/include" \
+            --extra-ldflags="-L${HOME}/ffmpeg_build/lib" \
+            --extra-libs="-lpthread -lm" \
+            --ld="g++" \
+            --prefix=${HOME}/ffmpeg_build
+          make -j$(nproc)
+          make install
+          rm -rf ${HOME}/ffmpeg
+
       - name: Build Headless
-        run: make build-headless
+        run: |
+          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
+          make build-headless
       - uses: actions/upload-artifact@v3
         with:
           name: linux-headless
           path: target/release/mizer
           if-no-files-found: error
       - name: Build
-        run: make build-release
+        run: |
+          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
+          make build-release
       - name: Package
-        run: make package
+        run: |
+          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
+          make mizer.zip
       - uses: actions/upload-artifact@v3
         with:
           name: linux-full
-          path: artifact
+          path: mizer.zip
           if-no-files-found: error
+
+  bundle-flatpak:
+    runs-on: ubuntu-latest
+    needs:
+      - build-linux
+    steps:
+      - name: Install flatpak
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-full
+      - name: Bundle
+        run: make mizer.flatpak
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Flatpak
+          path: mizer.flatpak
+          if-no-files-found: error
+
   build-macos:
     runs-on: macos-latest
     steps:
@@ -147,7 +156,7 @@ jobs:
         run: make build-release
         continue-on-error: true
       - name: Package
-        run: make package
+        run: make artifact
         continue-on-error: true
       - uses: actions/upload-artifact@v3
         with:

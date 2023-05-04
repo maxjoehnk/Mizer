@@ -12,6 +12,7 @@ use crate::conversion::map_fixture_definition;
 use crate::resource_reader::ResourceReader;
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
+use mizer_util::find_path;
 
 mod conversion;
 mod definition;
@@ -35,51 +36,50 @@ impl QlcPlusProvider {
 impl FixtureLibraryProvider for QlcPlusProvider {
     fn load(&mut self) -> anyhow::Result<()> {
         log::info!("Loading QLC+ fixture library...");
-        if !Path::new(&self.file_path).exists() {
-            return Ok(());
-        }
-        let files = std::fs::read_dir(Path::new(&self.file_path).join("fixtures"))?;
-        let definitions = files
-            .par_bridge()
-            .filter_map(|file| file.ok())
-            .filter(|file| file.metadata().is_ok())
-            .filter(|file| file.metadata().unwrap().is_dir())
-            .filter_map(|file| std::fs::read_dir(file.path()).ok())
-            .flat_map(|file| file.par_bridge())
-            .filter_map(|file: std::io::Result<DirEntry>| file.ok())
-            .filter(|file| file.metadata().is_ok())
-            .filter(|file| file.metadata().unwrap().is_file())
-            .filter(|file| {
-                file.file_name()
-                    .to_string_lossy()
-                    .to_string()
-                    .ends_with(".qxf")
-            })
-            .filter_map(|file| {
-                let path = file.path();
-                log::trace!(
-                    "Loading QLC+ Fixture from '{:?}'...",
-                    path.file_name().unwrap()
-                );
-                match read_definition(&path) {
-                    Ok(definition) => Some((
-                        format!("{}:{}", definition.manufacturer, definition.model),
-                        definition,
-                    )),
-                    Err(err) => {
-                        log::error!(
-                            "Could not load QLC+ Fixture from '{:?}': {:?}",
-                            path.file_name().unwrap(),
-                            err
-                        );
-                        None
+        if let Some(path) = find_path(&self.file_path) {
+            let files = std::fs::read_dir(path.join("fixtures"))?;
+            let definitions = files
+                .par_bridge()
+                .filter_map(|file| file.ok())
+                .filter(|file| file.metadata().is_ok())
+                .filter(|file| file.metadata().unwrap().is_dir())
+                .filter_map(|file| std::fs::read_dir(file.path()).ok())
+                .flat_map(|file| file.par_bridge())
+                .filter_map(|file: std::io::Result<DirEntry>| file.ok())
+                .filter(|file| file.metadata().is_ok())
+                .filter(|file| file.metadata().unwrap().is_file())
+                .filter(|file| {
+                    file.file_name()
+                        .to_string_lossy()
+                        .to_string()
+                        .ends_with(".qxf")
+                })
+                .filter_map(|file| {
+                    let path = file.path();
+                    log::trace!(
+                        "Loading QLC+ Fixture from '{:?}'...",
+                        path.file_name().unwrap()
+                    );
+                    match read_definition(&path) {
+                        Ok(definition) => Some((
+                            format!("{}:{}", definition.manufacturer, definition.model),
+                            definition,
+                        )),
+                        Err(err) => {
+                            log::error!(
+                                "Could not load QLC+ Fixture from '{:?}': {:?}",
+                                path.file_name().unwrap(),
+                                err
+                            );
+                            None
+                        }
                     }
-                }
-            })
-            .collect::<HashMap<_, _>>();
+                })
+                .collect::<HashMap<_, _>>();
 
-        log::info!("Loaded {} QLC+ Fixture Definitions", definitions.len());
-        self.definitions = definitions;
+            log::info!("Loaded {} QLC+ Fixture Definitions", definitions.len());
+            self.definitions = definitions;
+        }
 
         Ok(())
     }

@@ -11,3 +11,4 @@ serde = { version = "1", features = ["derive"] }
 serde_yaml = "0.8"
 rhai = { version = "1.13", features = ["sync"] }
 mizer-midi-messages = { path = "../messages" }
+mizer-util = { path = "../../../../../util" }

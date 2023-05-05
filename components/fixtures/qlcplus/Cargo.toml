@@ -13,7 +13,7 @@ rayon = "1.7"
 strong-xml = "0.6"
 custom_derive = "0.1"
 enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch = "feature/better-error-reporting" }
-htmlentity = "1.2"
+htmlentity = "1.3"
 cached = { version = "0.43", default-features = false, features = ["proc_macro"] }
 
 [build-dependencies]

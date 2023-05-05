@@ -314,7 +314,8 @@ impl FromStr for HtmlEntityString {
     type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let string = htmlentity::entity::decode(s).into_iter().collect();
+        use htmlentity::entity::ICodedDataTrait;
+        let string = htmlentity::entity::decode(s.as_bytes()).to_string()?;
 
         Ok(Self(string))
     }

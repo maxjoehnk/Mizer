@@ -21,7 +21,7 @@ use test_case::test_case;
 #[test_case("video"; "video")]
 fn test_load_project(project: &str) {
     let path = format!(
-        "{}/../../examples/{}.yml",
+        "{}/../../../examples/{}.yml",
         env!("CARGO_MANIFEST_DIR"),
         project
     );

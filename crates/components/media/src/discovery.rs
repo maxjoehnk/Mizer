@@ -115,7 +115,13 @@ mod tests {
     #[test_case("examples/media/video/file_example_WMV_1920_9_3MB.wmv")]
     fn scan_should_list_example_files(expected: &str) {
         let path = env!("CARGO_MANIFEST_DIR");
-        let workspace_path = Path::new(path).parent().unwrap().parent().unwrap();
+        let workspace_path = Path::new(path)
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap();
         let expected = workspace_path.join(expected);
         let walker = MediaWalker::new(workspace_path.join("examples/media"));
 

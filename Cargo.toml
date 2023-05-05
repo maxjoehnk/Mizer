@@ -1,81 +1,81 @@
 [workspace]
 members = [
-    "api",
-    "components/connections",
-    "components/connections/devices",
-    "components/connections/devices/g13",
-    "components/connections/devices/gamepads",
-    "components/connections/protocols/dmx",
-    "components/connections/protocols/laser",
-    "components/connections/protocols/midi",
-    "components/connections/protocols/midi/device-profiles",
-    "components/connections/protocols/midi/messages",
-    "components/connections/protocols/mqtt",
-    "components/connections/protocols/osc",
-    "components/fixtures",
-    "components/fixtures/commands",
-    "components/fixtures/gdtf",
-    "components/fixtures/mizer-definitions",
-    "components/fixtures/open-fixture-library",
-    "components/fixtures/qlcplus",
-    "components/plan",
-    "components/media",
-    "components/sequencer",
-    "components/sequencer/commands",
-    "components/timecode",
-    "runtime",
-    "runtime/clock",
-    "runtime/commander",
-    "runtime/commander/executor",
-    "runtime/debug-ui",
-    "runtime/execution-planner",
-    "runtime/injector",
-    "runtime/layouts",
-    "runtime/layouts/commands",
-    "runtime/module",
-    "runtime/session",
-    "runtime/pipeline",
-    "runtime/pipeline/node",
-    "runtime/pipeline/nodes",
-    "runtime/pipeline/nodes/audio",
-    "runtime/pipeline/nodes/behaviors/color",
-    "runtime/pipeline/nodes/behaviors/constants",
-    "runtime/pipeline/nodes/behaviors/conversions",
-    "runtime/pipeline/nodes/behaviors/envelope",
-    "runtime/pipeline/nodes/behaviors/math",
-    "runtime/pipeline/nodes/behaviors/oscillator",
-    "runtime/pipeline/nodes/behaviors/port-operations",
-    "runtime/pipeline/nodes/behaviors/scripting",
-    "runtime/pipeline/nodes/behaviors/sequence",
-    "runtime/pipeline/nodes/behaviors/timing",
-    "runtime/pipeline/nodes/clock",
-    "runtime/pipeline/nodes/fixture",
-    "runtime/pipeline/nodes/sequencer",
-    "runtime/pipeline/nodes/inputs",
-    "runtime/pipeline/nodes/connections/g13",
-    "runtime/pipeline/nodes/connections/gamepad",
-    "runtime/pipeline/nodes/connections/laser",
-    "runtime/pipeline/nodes/connections/protocols/dmx",
-    "runtime/pipeline/nodes/connections/protocols/midi",
-    "runtime/pipeline/nodes/connections/protocols/mqtt",
-    "runtime/pipeline/nodes/connections/protocols/opc",
-    "runtime/pipeline/nodes/connections/protocols/osc",
-    "runtime/pipeline/nodes/data",
-    "runtime/pipeline/nodes/pixels",
-    "runtime/pipeline/nodes/plan",
-    "runtime/pipeline/nodes/timecode",
-    "runtime/pipeline/nodes/transport",
-    "runtime/pipeline/nodes/video",
-    "runtime/pipeline/ports",
-    "runtime/pipeline/templates",
-    "runtime/processing",
-    "runtime/projects",
-    "runtime/settings",
-    "ui",
-    "ui/ffi",
-    "util",
-    "util/bus",
-    "util/package"
+    "crates/api",
+    "crates/components/connections",
+    "crates/components/connections/devices",
+    "crates/components/connections/devices/g13",
+    "crates/components/connections/devices/gamepads",
+    "crates/components/connections/protocols/dmx",
+    "crates/components/connections/protocols/laser",
+    "crates/components/connections/protocols/midi",
+    "crates/components/connections/protocols/midi/device-profiles",
+    "crates/components/connections/protocols/midi/messages",
+    "crates/components/connections/protocols/mqtt",
+    "crates/components/connections/protocols/osc",
+    "crates/components/fixtures",
+    "crates/components/fixtures/commands",
+    "crates/components/fixtures/gdtf",
+    "crates/components/fixtures/mizer-definitions",
+    "crates/components/fixtures/open-fixture-library",
+    "crates/components/fixtures/qlcplus",
+    "crates/components/plan",
+    "crates/components/media",
+    "crates/components/sequencer",
+    "crates/components/sequencer/commands",
+    "crates/components/timecode",
+    "crates/runtime",
+    "crates/runtime/clock",
+    "crates/runtime/commander",
+    "crates/runtime/commander/executor",
+    "crates/runtime/debug-ui",
+    "crates/runtime/execution-planner",
+    "crates/runtime/injector",
+    "crates/runtime/layouts",
+    "crates/runtime/layouts/commands",
+    "crates/runtime/module",
+    "crates/runtime/session",
+    "crates/runtime/pipeline",
+    "crates/runtime/pipeline/node",
+    "crates/runtime/pipeline/nodes",
+    "crates/runtime/pipeline/nodes/audio",
+    "crates/runtime/pipeline/nodes/behaviors/color",
+    "crates/runtime/pipeline/nodes/behaviors/constants",
+    "crates/runtime/pipeline/nodes/behaviors/conversions",
+    "crates/runtime/pipeline/nodes/behaviors/envelope",
+    "crates/runtime/pipeline/nodes/behaviors/math",
+    "crates/runtime/pipeline/nodes/behaviors/oscillator",
+    "crates/runtime/pipeline/nodes/behaviors/port-operations",
+    "crates/runtime/pipeline/nodes/behaviors/scripting",
+    "crates/runtime/pipeline/nodes/behaviors/sequence",
+    "crates/runtime/pipeline/nodes/behaviors/timing",
+    "crates/runtime/pipeline/nodes/clock",
+    "crates/runtime/pipeline/nodes/fixture",
+    "crates/runtime/pipeline/nodes/sequencer",
+    "crates/runtime/pipeline/nodes/inputs",
+    "crates/runtime/pipeline/nodes/connections/g13",
+    "crates/runtime/pipeline/nodes/connections/gamepad",
+    "crates/runtime/pipeline/nodes/connections/laser",
+    "crates/runtime/pipeline/nodes/connections/protocols/dmx",
+    "crates/runtime/pipeline/nodes/connections/protocols/midi",
+    "crates/runtime/pipeline/nodes/connections/protocols/mqtt",
+    "crates/runtime/pipeline/nodes/connections/protocols/opc",
+    "crates/runtime/pipeline/nodes/connections/protocols/osc",
+    "crates/runtime/pipeline/nodes/data",
+    "crates/runtime/pipeline/nodes/pixels",
+    "crates/runtime/pipeline/nodes/plan",
+    "crates/runtime/pipeline/nodes/timecode",
+    "crates/runtime/pipeline/nodes/transport",
+    "crates/runtime/pipeline/nodes/video",
+    "crates/runtime/pipeline/ports",
+    "crates/runtime/pipeline/templates",
+    "crates/runtime/processing",
+    "crates/runtime/projects",
+    "crates/runtime/settings",
+    "crates/ui",
+    "crates/ui/ffi",
+    "crates/util",
+    "crates/util/bus",
+    "crates/util/package"
 ]
 
 [lib]
@@ -113,38 +113,38 @@ anyhow = "1"
 gstreamer = "0.20"
 structopt = "0.3"
 metrics = "0.21"
-mizer-media = { path = "components/media" }
-mizer-project-files = { path = "runtime/projects" }
-mizer-fixtures = { path = "components/fixtures" }
-mizer-gdtf-provider = { path = "components/fixtures/gdtf" }
-mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
-mizer-qlcplus-provider = { path = "components/fixtures/qlcplus" }
-mizer-fixture-definition-provider = { path = "components/fixtures/mizer-definitions" }
-mizer-plan = { path = "components/plan" }
-mizer-pipeline = { path = "runtime/pipeline" }
-mizer-api = { path = "api" }
-mizer-session = { path = "runtime/session" }
-mizer-connections = { path = "components/connections" }
-mizer-devices = { path = "components/connections/devices" }
-mizer-sequencer = { path = "components/sequencer" }
-mizer-timecode = { path = "components/timecode" }
-mizer-runtime = { path = "runtime" }
-mizer-execution-planner = { path = "runtime/execution-planner" }
-mizer-node = { path = "runtime/pipeline/node" }
-mizer-nodes = { path = "runtime/pipeline/nodes" }
-mizer-layouts = { path = "runtime/layouts" }
-mizer-clock = { path = "runtime/clock" }
-mizer-protocol-dmx = { path = "components/connections/protocols/dmx" }
-mizer-protocol-midi = { path = "components/connections/protocols/midi" }
-mizer-protocol-mqtt = { path = "components/connections/protocols/mqtt" }
-mizer-protocol-osc = { path = "components/connections/protocols/osc" }
-mizer-processing = { path = "runtime/processing" }
-mizer-module = { path = "runtime/module" }
-mizer-ui = { path = "ui", optional = true }
-mizer-util = { path = "util" }
-mizer-message-bus = { path = "util/bus" }
-mizer-settings = { path = "runtime/settings" }
-mizer-command-executor = { path = "runtime/commander/executor" }
+mizer-media = { path = "crates/components/media" }
+mizer-project-files = { path = "crates/runtime/projects" }
+mizer-fixtures = { path = "crates/components/fixtures" }
+mizer-gdtf-provider = { path = "crates/components/fixtures/gdtf" }
+mizer-open-fixture-library-provider = { path = "crates/components/fixtures/open-fixture-library" }
+mizer-qlcplus-provider = { path = "crates/components/fixtures/qlcplus" }
+mizer-fixture-definition-provider = { path = "crates/components/fixtures/mizer-definitions" }
+mizer-plan = { path = "crates/components/plan" }
+mizer-pipeline = { path = "crates/runtime/pipeline" }
+mizer-api = { path = "crates/api" }
+mizer-session = { path = "crates/runtime/session" }
+mizer-connections = { path = "crates/components/connections" }
+mizer-devices = { path = "crates/components/connections/devices" }
+mizer-sequencer = { path = "crates/components/sequencer" }
+mizer-timecode = { path = "crates/components/timecode" }
+mizer-runtime = { path = "crates/runtime" }
+mizer-execution-planner = { path = "crates/runtime/execution-planner" }
+mizer-node = { path = "crates/runtime/pipeline/node" }
+mizer-nodes = { path = "crates/runtime/pipeline/nodes" }
+mizer-layouts = { path = "crates/runtime/layouts" }
+mizer-clock = { path = "crates/runtime/clock" }
+mizer-protocol-dmx = { path = "crates/components/connections/protocols/dmx" }
+mizer-protocol-midi = { path = "crates/components/connections/protocols/midi" }
+mizer-protocol-mqtt = { path = "crates/components/connections/protocols/mqtt" }
+mizer-protocol-osc = { path = "crates/components/connections/protocols/osc" }
+mizer-processing = { path = "crates/runtime/processing" }
+mizer-module = { path = "crates/runtime/module" }
+mizer-ui = { path = "crates/ui", optional = true }
+mizer-util = { path = "crates/util" }
+mizer-message-bus = { path = "crates/util/bus" }
+mizer-settings = { path = "crates/runtime/settings" }
+mizer-command-executor = { path = "crates/runtime/commander/executor" }
 tokio = { version = "1.28", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"

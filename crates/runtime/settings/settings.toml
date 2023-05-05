@@ -2,13 +2,13 @@
 language = "en"
 
 [paths]
-midi_device_profiles = "components/connections/protocols/midi/device-profiles/profiles"
+midi_device_profiles = "crates/components/connections/protocols/midi/device-profiles/profiles"
 
 [paths.fixture_libraries]
-open_fixture_library = "components/fixtures/open-fixture-library/.fixtures"
-qlcplus = "components/fixtures/qlcplus/.fixtures"
-gdtf = "components/fixtures/gdtf/.fixtures"
-mizer = "components/fixtures/mizer-definitions/.fixtures"
+open_fixture_library = "crates/components/fixtures/open-fixture-library/.fixtures"
+qlcplus = "crates/components/fixtures/qlcplus/.fixtures"
+gdtf = "crates/components/fixtures/gdtf/.fixtures"
+mizer = "crates/components/fixtures/mizer-definitions/.fixtures"
 
 [hotkeys.global]
 layout_view = "f1"

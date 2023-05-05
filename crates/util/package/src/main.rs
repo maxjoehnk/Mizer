@@ -13,16 +13,19 @@ fn main() -> anyhow::Result<()> {
     #[cfg(feature = "ui")]
     artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
     artifact.link_source(
-        "components/fixtures/open-fixture-library/.fixtures",
+        "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",
     )?;
-    artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
     artifact.link_source(
-        "components/fixtures/mizer-definitions/.fixtures",
+        "crates/components/fixtures/qlcplus/.fixtures",
+        "fixtures/qlcplus",
+    )?;
+    artifact.link_source(
+        "crates/components/fixtures/mizer-definitions/.fixtures",
         "fixtures/mizer",
     )?;
     artifact.link_source(
-        "components/connections/protocols/midi/device-profiles/profiles",
+        "crates/components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
     )?;
     artifact.copy_settings("settings.toml", |settings| {
@@ -45,19 +48,19 @@ fn main() -> anyhow::Result<()> {
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
     artifact.link_source(
-        "components/fixtures/open-fixture-library/.fixtures",
+        "crates/components/fixtures/open-fixture-library/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/open-fixture-library",
     )?;
     artifact.link_source(
-        "components/fixtures/qlcplus/.fixtures",
+        "crates/components/fixtures/qlcplus/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/qlcplus",
     )?;
     artifact.link_source(
-        "components/fixtures/mizer-definitions/.fixtures",
+        "crates/components/fixtures/mizer-definitions/.fixtures",
         "fixtures/mizer",
     )?;
     artifact.link_source(
-        "components/connections/protocols/midi/device-profiles/profiles",
+        "crates/components/connections/protocols/midi/device-profiles/profiles",
         "Mizer.app/Contents/Resources/device-profiles/midi",
     )?;
     artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {

@@ -12,11 +12,11 @@ build-headless:
 	cargo build --release --no-default-features
 
 build:
-	cd ui && make
+	cd crates/ui && make
 	cargo build -p mizer
 
 build-release:
-	cd ui && make release
+	cd crates/ui && make release
 	cargo build --no-default-features --features ui --release -p mizer
 
 run: build

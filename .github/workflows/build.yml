@@ -79,30 +79,21 @@ jobs:
           make -j$(nproc)
           make install
           rm -rf ${HOME}/ffmpeg
+          echo "FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib" >> "$GITHUB_ENV"
+          echo "FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include" >> "$GITHUB_ENV"
+          echo "FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig" >> "$GITHUB_ENV"
 
       - name: Build Headless
-        run: |
-          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
-          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
-          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
-          make build-headless
+        run: make build-headless
       - uses: actions/upload-artifact@v3
         with:
           name: linux-headless
           path: target/release/mizer
           if-no-files-found: error
       - name: Build
-        run: |
-          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
-          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
-          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
-          make build-release
+        run: make build-release
       - name: Package
-        run: |
-          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
-          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
-          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
-          make mizer.zip
+        run: make mizer.zip
       - uses: actions/upload-artifact@v3
         with:
           name: linux-full

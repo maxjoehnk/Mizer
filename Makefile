@@ -17,7 +17,7 @@ build:
 
 build-release:
 	cd ui && make release
-	cargo build ---no-default-features --features ui --release -p mizer
+	cargo build --no-default-features --features ui --release -p mizer
 
 run: build
 	target/debug/mizer

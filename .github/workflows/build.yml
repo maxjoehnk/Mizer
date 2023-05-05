@@ -119,7 +119,7 @@ jobs:
           name: linux-full
       - name: Bundle
         run: make mizer.flatpak
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Flatpak
           path: mizer.flatpak

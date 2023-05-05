@@ -108,7 +108,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - uses: Swatinem/rust-cache@v1
+      - uses: Swatinem/rust-cache@v2
       - name: Remove linked flutter libs from cache
         run: rm -rf target/debug/lib
       - name: Generate FFI bindings

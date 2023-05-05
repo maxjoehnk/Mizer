@@ -612,9 +612,9 @@ dependencies = [
 
 [[package]]
 name = "bezier-rs"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4836612ec60fcf1fd769c9b4f6fe2c6247726c4a76e35256d825fcdf24c45ad0"
+checksum = "d6228d36f205328c4633194f55592b4bee584f4e1651b41210485c07e89bc85b"
 dependencies = [
  "glam",
 ]

@@ -51,20 +51,25 @@ pub trait MediaHandler {
     ) -> anyhow::Result<(MediaType, MediaMetadata)> {
         let file_path = file_path.as_ref();
         let thumbnail_path = storage.get_thumbnail_path(file_path);
-        if !thumbnail_path.exists() {
+        let thumbnail_path = if !thumbnail_path.exists() {
             if let Err(err) = self
                 .generate_thumbnail(file_path, storage, content_type)
                 .context("Generating Thumbnail")
             {
                 log::warn!("Unable to generate thumbnail for {file_path:?}: {err:?}");
+                None
+            } else {
+                Some(thumbnail_path)
             }
-        }
+        } else {
+            Some(thumbnail_path)
+        };
         let media_path = storage.get_media_path(file_path);
         if !media_path.exists() {
             self.process_file(file_path, storage)
                 .context("Processing media file")?;
         }
-        let metadata = match self
+        let mut metadata = match self
             .read_metadata(file_path, content_type)
             .context("Reading metadata")
         {
@@ -75,6 +80,7 @@ pub trait MediaHandler {
                 Default::default()
             }
         };
+        metadata.thumbnail_path = thumbnail_path;
 
         Ok((Self::MEDIA_TYPE, metadata))
     }

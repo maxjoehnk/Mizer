@@ -36,8 +36,7 @@ message MediaFile {
   string name = 2;
   MediaType type = 3;
   MediaMetadata metadata = 4;
-  string thumbnail_url = 5;
-  string content_url = 6;
+  optional string thumbnail_path = 5;
 }
 
 message MediaMetadata {

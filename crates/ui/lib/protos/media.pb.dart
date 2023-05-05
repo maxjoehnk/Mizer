@@ -268,8 +268,7 @@ class MediaFile extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<MediaType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
     ..aOM<MediaMetadata>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata', subBuilder: MediaMetadata.create)
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailUrl')
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contentUrl')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailPath')
     ..hasRequiredFields = false
   ;
 
@@ -279,8 +278,7 @@ class MediaFile extends $pb.GeneratedMessage {
     $core.String? name,
     MediaType? type,
     MediaMetadata? metadata,
-    $core.String? thumbnailUrl,
-    $core.String? contentUrl,
+    $core.String? thumbnailPath,
   }) {
     final _result = create();
     if (id != null) {
@@ -295,11 +293,8 @@ class MediaFile extends $pb.GeneratedMessage {
     if (metadata != null) {
       _result.metadata = metadata;
     }
-    if (thumbnailUrl != null) {
-      _result.thumbnailUrl = thumbnailUrl;
-    }
-    if (contentUrl != null) {
-      _result.contentUrl = contentUrl;
+    if (thumbnailPath != null) {
+      _result.thumbnailPath = thumbnailPath;
     }
     return _result;
   }
@@ -363,22 +358,13 @@ class MediaFile extends $pb.GeneratedMessage {
   MediaMetadata ensureMetadata() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $core.String get thumbnailUrl => $_getSZ(4);
+  $core.String get thumbnailPath => $_getSZ(4);
   @$pb.TagNumber(5)
-  set thumbnailUrl($core.String v) { $_setString(4, v); }
+  set thumbnailPath($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasThumbnailUrl() => $_has(4);
+  $core.bool hasThumbnailPath() => $_has(4);
   @$pb.TagNumber(5)
-  void clearThumbnailUrl() => clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.String get contentUrl => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set contentUrl($core.String v) { $_setString(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasContentUrl() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearContentUrl() => clearField(6);
+  void clearThumbnailPath() => clearField(5);
 }
 
 class MediaMetadata_Dimensions extends $pb.GeneratedMessage {

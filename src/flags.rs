@@ -19,8 +19,6 @@ pub struct Flags {
     /// Join an existing session or start a new session
     #[structopt(long)]
     pub join: bool,
-    #[structopt(long)]
-    pub disable_media_api: bool,
     #[cfg(feature = "ui")]
     #[structopt(long)]
     pub headless: bool,

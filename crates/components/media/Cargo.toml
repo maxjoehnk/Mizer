@@ -6,7 +6,6 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-async-trait = "0.1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -15,18 +14,14 @@ id3 = "1.7"
 infer = "0.13"
 image = "0.24"
 futures = "0.3"
-flume = "0.10"
-async-std = "1.12"
-tide = { version = "0.16", default-features = false, features = ["h1-server", "logger"] }
-multer = "2.1"
+tokio = { version = "1.28", features = ["fs"] }
 async-walkdir = "0.2"
 resvg = "0.32"
 usvg = "0.32"
-urlencoding = "2.1"
 tiny-skia = "0.9"
-sled = "0.34"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 rsmpeg = { version = "0.14.1+ffmpeg.6.0", features = ["link_system_ffmpeg"] }
+dashmap = "5.4"
 
 [dev-dependencies]
 test-case = "3.1"

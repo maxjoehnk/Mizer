@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use protobuf::{EnumOrUnknown, MessageField};
 
 use mizer_media::documents::{AttachedMediaDocument, AttachedTag, MediaDocument, TagDocument};
@@ -25,10 +23,6 @@ impl From<TagDocument> for MediaTag {
 
 impl From<MediaDocument> for MediaFile {
     fn from(media: MediaDocument) -> Self {
-        let thumbnail_path = Path::new(&media.filename).with_extension("png");
-        let thumbnail_path = thumbnail_path.as_os_str().to_str().unwrap();
-        let content_url = format!("http://localhost:50050/media/{}", media.filename);
-
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
@@ -54,8 +48,10 @@ impl From<MediaDocument> for MediaFile {
                 artist: media.metadata.artist,
                 ..Default::default()
             }),
-            content_url,
-            thumbnail_url: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
+            thumbnail_path: media
+                .metadata
+                .thumbnail_path
+                .and_then(|path| path.as_os_str().to_str().map(|path| path.to_string())),
             type_: EnumOrUnknown::new(media.media_type.into()),
             ..Default::default()
         }
@@ -120,8 +116,6 @@ impl From<AttachedMediaDocument> for MediaFile {
         MediaFile {
             id: document.id.to_string(),
             name: document.name,
-            content_url: format!("http://localhost:50050/media/{}.mp4", document.id),
-            thumbnail_url: format!("http://localhost:50050/thumbnails/{}.png", document.id),
             ..Default::default()
         }
     }

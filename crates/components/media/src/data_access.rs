@@ -1,42 +1,27 @@
+use dashmap::DashMap;
 use std::path::PathBuf;
-
-use sled::Mode;
+use std::sync::Arc;
 
 use crate::documents::*;
 use crate::TagCreateModel;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct DataAccess {
-    db: sled::Db,
-    tags: sled::Tree,
-    media: sled::Tree,
+    tags: Arc<DashMap<uuid::Uuid, TagDocument>>,
+    media: Arc<DashMap<uuid::Uuid, MediaDocument>>,
 }
 
 impl DataAccess {
     pub fn new() -> anyhow::Result<Self> {
-        let db = sled::Config::new()
-            .create_new(true)
-            .temporary(true)
-            .mode(Mode::HighThroughput)
-            .open()?;
-        let tags = db.open_tree("tags")?;
-        let media = db.open_tree("media")?;
-
-        Ok(DataAccess { db, tags, media })
+        Ok(DataAccess::default())
     }
 
     pub fn list_media(&self) -> anyhow::Result<Vec<MediaDocument>> {
         let media = self
             .media
             .iter()
-            .values()
-            .map(|value| {
-                let value = value?;
-                let doc = serde_json::from_slice(&value)?;
-
-                Ok(doc)
-            })
-            .collect::<anyhow::Result<Vec<_>>>()?;
+            .map(|entry| entry.value().clone())
+            .collect();
 
         Ok(media)
     }
@@ -45,14 +30,8 @@ impl DataAccess {
         let tags = self
             .tags
             .iter()
-            .values()
-            .map(|value| {
-                let value = value?;
-                let doc = serde_json::from_slice(&value)?;
-
-                Ok(doc)
-            })
-            .collect::<anyhow::Result<Vec<_>>>()?;
+            .map(|entry| entry.value().clone())
+            .collect();
 
         Ok(tags)
     }
@@ -60,9 +39,7 @@ impl DataAccess {
     pub fn add_tag<D: Into<TagCreateModel>>(&self, document: D) -> anyhow::Result<TagDocument> {
         let tag_document = document.into();
         let tag_document: TagDocument = tag_document.into();
-        let id = tag_document.id.as_bytes();
-        let value = serde_json::to_vec(&tag_document)?;
-        self.tags.insert(id, value)?;
+        self.tags.insert(tag_document.id, tag_document.clone());
 
         Ok(tag_document)
     }
@@ -77,9 +54,7 @@ impl DataAccess {
 
     pub fn import_tags(&self, tags: Vec<TagDocument>) -> anyhow::Result<()> {
         for tag in tags {
-            let id = tag.id.as_bytes();
-            let value = serde_json::to_vec(&tag)?;
-            self.tags.insert(id, value)?;
+            self.tags.insert(tag.id, tag);
         }
 
         Ok(())
@@ -87,17 +62,15 @@ impl DataAccess {
 
     pub fn import_media(&self, medias: Vec<MediaDocument>) -> anyhow::Result<()> {
         for media in medias {
-            let id = media.id.as_bytes();
-            let value = serde_json::to_vec(&media)?;
-            self.media.insert(id, value)?;
+            self.media.insert(media.id, media);
         }
 
         Ok(())
     }
 
     pub fn clear(&self) -> anyhow::Result<()> {
-        self.media.clear()?;
-        self.tags.clear()?;
+        self.media.clear();
+        self.tags.clear();
 
         Ok(())
     }
@@ -112,9 +85,7 @@ impl DataAccess {
     }
 
     fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {
-        let id = document.id.as_bytes();
-        let value = serde_json::to_vec(&document)?;
-        self.media.insert(id, value)?;
+        self.media.insert(document.id, document.clone());
 
         Ok(())
     }
@@ -124,7 +95,6 @@ impl DataAccess {
         let ids = document.tags.iter().map(|t| t.id);
 
         for id in ids {
-            let id = id.as_bytes();
             self.update_tag_document(id, attached_media.clone())?;
         }
 
@@ -133,24 +103,13 @@ impl DataAccess {
 
     fn update_tag_document(
         &self,
-        id: &[u8],
+        id: uuid::Uuid,
         document: AttachedMediaDocument,
     ) -> anyhow::Result<()> {
-        self.tags.update_and_fetch(id, move |tags| {
-            let document = document.clone();
-            if let Some(tags) = tags {
-                let tags = serde_json::from_slice::<TagDocument>(tags);
-                if let Ok(mut tags) = tags {
-                    tags.media.push(document);
+        if let Some(mut tag) = self.tags.get_mut(&id) {
+            tag.media.push(document);
+        }
 
-                    serde_json::to_vec(&tags).ok()
-                } else {
-                    None
-                }
-            } else {
-                None
-            }
-        })?;
         Ok(())
     }
 }

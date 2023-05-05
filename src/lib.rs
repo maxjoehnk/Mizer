@@ -82,7 +82,6 @@ pub fn build_runtime(
         timecode_manager,
     );
 
-    setup_media_api(handle, &flags, media_server.clone()).context("Failed to setup media api")?;
     let project_file = flags.file.clone();
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
@@ -378,17 +377,6 @@ fn start_media_discovery(
     for path in media_paths {
         let media_discovery = MediaDiscovery::new(media_server_api.clone(), path);
         handle.spawn(async move { media_discovery.discover().await });
-    }
-    Ok(())
-}
-
-fn setup_media_api(
-    handle: tokio::runtime::Handle,
-    flags: &Flags,
-    media_server_api: MediaServer,
-) -> anyhow::Result<()> {
-    if !flags.disable_media_api {
-        handle.spawn(mizer_media::http_api::start(media_server_api));
     }
     Ok(())
 }

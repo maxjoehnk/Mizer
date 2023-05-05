@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/number_extensions.dart';
@@ -76,6 +78,8 @@ class MediaThumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
-        child: Image.network(this.file.thumbnailUrl, fit: BoxFit.cover, width: thumbnailWidth));
+        child: file.hasThumbnailPath()
+            ? Image.file(File(file.thumbnailPath), fit: BoxFit.cover, width: thumbnailWidth)
+            : Container());
   }
 }

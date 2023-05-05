@@ -13,7 +13,6 @@ mod data_access;
 mod discovery;
 pub mod documents;
 mod file_storage;
-pub mod http_api;
 mod import_handler;
 pub mod media_handlers;
 
@@ -65,10 +64,6 @@ impl MediaServer {
             db,
             import_paths,
         })
-    }
-
-    pub(crate) fn get_temp_path(&self) -> PathBuf {
-        self.storage.create_temp_file()
     }
 
     pub fn set_import_paths(&self, paths: Vec<PathBuf>) {

@@ -751,10 +751,8 @@ pub struct MediaFile {
     pub type_: ::protobuf::EnumOrUnknown<MediaType>,
     // @@protoc_insertion_point(field:mizer.MediaFile.metadata)
     pub metadata: ::protobuf::MessageField<MediaMetadata>,
-    // @@protoc_insertion_point(field:mizer.MediaFile.thumbnail_url)
-    pub thumbnail_url: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.MediaFile.content_url)
-    pub content_url: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.MediaFile.thumbnail_path)
+    pub thumbnail_path: ::std::option::Option<::std::string::String>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.MediaFile.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -772,7 +770,7 @@ impl MediaFile {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "id",
@@ -794,15 +792,10 @@ impl MediaFile {
             |m: &MediaFile| { &m.metadata },
             |m: &mut MediaFile| { &mut m.metadata },
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "thumbnail_url",
-            |m: &MediaFile| { &m.thumbnail_url },
-            |m: &mut MediaFile| { &mut m.thumbnail_url },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "content_url",
-            |m: &MediaFile| { &m.content_url },
-            |m: &mut MediaFile| { &mut m.content_url },
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "thumbnail_path",
+            |m: &MediaFile| { &m.thumbnail_path },
+            |m: &mut MediaFile| { &mut m.thumbnail_path },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MediaFile>(
             "MediaFile",
@@ -835,10 +828,7 @@ impl ::protobuf::Message for MediaFile {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.metadata)?;
                 },
                 42 => {
-                    self.thumbnail_url = is.read_string()?;
-                },
-                50 => {
-                    self.content_url = is.read_string()?;
+                    self.thumbnail_path = ::std::option::Option::Some(is.read_string()?);
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -865,11 +855,8 @@ impl ::protobuf::Message for MediaFile {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
-        if !self.thumbnail_url.is_empty() {
-            my_size += ::protobuf::rt::string_size(5, &self.thumbnail_url);
-        }
-        if !self.content_url.is_empty() {
-            my_size += ::protobuf::rt::string_size(6, &self.content_url);
+        if let Some(v) = self.thumbnail_path.as_ref() {
+            my_size += ::protobuf::rt::string_size(5, &v);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -889,11 +876,8 @@ impl ::protobuf::Message for MediaFile {
         if let Some(v) = self.metadata.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
         }
-        if !self.thumbnail_url.is_empty() {
-            os.write_string(5, &self.thumbnail_url)?;
-        }
-        if !self.content_url.is_empty() {
-            os.write_string(6, &self.content_url)?;
+        if let Some(v) = self.thumbnail_path.as_ref() {
+            os.write_string(5, v)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -916,8 +900,7 @@ impl ::protobuf::Message for MediaFile {
         self.name.clear();
         self.type_ = ::protobuf::EnumOrUnknown::new(MediaType::IMAGE);
         self.metadata.clear();
-        self.thumbnail_url.clear();
-        self.content_url.clear();
+        self.thumbnail_path = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -927,8 +910,7 @@ impl ::protobuf::Message for MediaFile {
             name: ::std::string::String::new(),
             type_: ::protobuf::EnumOrUnknown::from_i32(0),
             metadata: ::protobuf::MessageField::none(),
-            thumbnail_url: ::std::string::String::new(),
-            content_url: ::std::string::String::new(),
+            thumbnail_path: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1679,32 +1661,31 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     MediaTagR\x04tags\".\n\x08MediaTag\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
     \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"4\n\nMediaFiles\
     \x12&\n\x05files\x18\x01\x20\x03(\x0b2\x10.mizer.MediaFileR\x05files\"\
-    \xcd\x01\n\tMediaFile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
+    \xc6\x01\n\tMediaFile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
     \n\x04name\x18\x02\x20\x01(\tR\x04name\x12$\n\x04type\x18\x03\x20\x01(\
     \x0e2\x10.mizer.MediaTypeR\x04type\x120\n\x08metadata\x18\x04\x20\x01(\
-    \x0b2\x14.mizer.MediaMetadataR\x08metadata\x12#\n\rthumbnail_url\x18\x05\
-    \x20\x01(\tR\x0cthumbnailUrl\x12\x1f\n\x0bcontent_url\x18\x06\x20\x01(\t\
-    R\ncontentUrl\"\xaf\x03\n\rMediaMetadata\x12\x1f\n\x0bsource_path\x18\
-    \x01\x20\x01(\tR\nsourcePath\x12\x1b\n\tfile_size\x18\x02\x20\x01(\x04R\
-    \x08fileSize\x12#\n\x04tags\x18\x03\x20\x03(\x0b2\x0f.mizer.MediaTagR\
-    \x04tags\x12D\n\ndimensions\x18\x04\x20\x01(\x0b2\x1f.mizer.MediaMetadat\
-    a.DimensionsH\0R\ndimensions\x88\x01\x01\x12\x1f\n\x08duration\x18\x05\
-    \x20\x01(\x04H\x01R\x08duration\x88\x01\x01\x12!\n\tframerate\x18\x06\
-    \x20\x01(\x01H\x02R\tframerate\x88\x01\x01\x12\x19\n\x05album\x18\x07\
-    \x20\x01(\tH\x03R\x05album\x88\x01\x01\x12\x1b\n\x06artist\x18\x08\x20\
-    \x01(\tH\x04R\x06artist\x88\x01\x01\x1a:\n\nDimensions\x12\x14\n\x05widt\
-    h\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\
-    \x04R\x06heightB\r\n\x0b_dimensionsB\x0b\n\t_durationB\x0c\n\n_framerate\
-    B\x08\n\x06_albumB\t\n\x07_artist\"A\n\x11GroupedMediaFiles\x12,\n\x04ta\
-    gs\x18\x01\x20\x03(\x0b2\x18.mizer.MediaTagWithFilesR\x04tags\"^\n\x11Me\
-    diaTagWithFiles\x12!\n\x03tag\x18\x01\x20\x01(\x0b2\x0f.mizer.MediaTagR\
-    \x03tag\x12&\n\x05files\x18\x02\x20\x03(\x0b2\x10.mizer.MediaFileR\x05fi\
-    les*8\n\tMediaType\x12\t\n\x05IMAGE\x10\0\x12\t\n\x05AUDIO\x10\x01\x12\t\
-    \n\x05VIDEO\x10\x02\x12\n\n\x06VECTOR\x10\x032\xb9\x01\n\x08MediaApi\x12\
-    3\n\tCreateTag\x12\x15.mizer.CreateMediaTag\x1a\x0f.mizer.MediaTag\x12A\
-    \n\x10GetTagsWithMedia\x12\x13.mizer.GetMediaTags\x1a\x18.mizer.GroupedM\
-    ediaFiles\x125\n\x08GetMedia\x12\x16.mizer.GetMediaRequest\x1a\x11.mizer\
-    .MediaFilesb\x06proto3\
+    \x0b2\x14.mizer.MediaMetadataR\x08metadata\x12*\n\x0ethumbnail_path\x18\
+    \x05\x20\x01(\tH\0R\rthumbnailPath\x88\x01\x01B\x11\n\x0f_thumbnail_path\
+    \"\xaf\x03\n\rMediaMetadata\x12\x1f\n\x0bsource_path\x18\x01\x20\x01(\tR\
+    \nsourcePath\x12\x1b\n\tfile_size\x18\x02\x20\x01(\x04R\x08fileSize\x12#\
+    \n\x04tags\x18\x03\x20\x03(\x0b2\x0f.mizer.MediaTagR\x04tags\x12D\n\ndim\
+    ensions\x18\x04\x20\x01(\x0b2\x1f.mizer.MediaMetadata.DimensionsH\0R\ndi\
+    mensions\x88\x01\x01\x12\x1f\n\x08duration\x18\x05\x20\x01(\x04H\x01R\
+    \x08duration\x88\x01\x01\x12!\n\tframerate\x18\x06\x20\x01(\x01H\x02R\tf\
+    ramerate\x88\x01\x01\x12\x19\n\x05album\x18\x07\x20\x01(\tH\x03R\x05albu\
+    m\x88\x01\x01\x12\x1b\n\x06artist\x18\x08\x20\x01(\tH\x04R\x06artist\x88\
+    \x01\x01\x1a:\n\nDimensions\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05\
+    width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06heightB\r\n\x0b_dimen\
+    sionsB\x0b\n\t_durationB\x0c\n\n_framerateB\x08\n\x06_albumB\t\n\x07_art\
+    ist\"A\n\x11GroupedMediaFiles\x12,\n\x04tags\x18\x01\x20\x03(\x0b2\x18.m\
+    izer.MediaTagWithFilesR\x04tags\"^\n\x11MediaTagWithFiles\x12!\n\x03tag\
+    \x18\x01\x20\x01(\x0b2\x0f.mizer.MediaTagR\x03tag\x12&\n\x05files\x18\
+    \x02\x20\x03(\x0b2\x10.mizer.MediaFileR\x05files*8\n\tMediaType\x12\t\n\
+    \x05IMAGE\x10\0\x12\t\n\x05AUDIO\x10\x01\x12\t\n\x05VIDEO\x10\x02\x12\n\
+    \n\x06VECTOR\x10\x032\xb9\x01\n\x08MediaApi\x123\n\tCreateTag\x12\x15.mi\
+    zer.CreateMediaTag\x1a\x0f.mizer.MediaTag\x12A\n\x10GetTagsWithMedia\x12\
+    \x13.mizer.GetMediaTags\x1a\x18.mizer.GroupedMediaFiles\x125\n\x08GetMed\
+    ia\x12\x16.mizer.GetMediaRequest\x1a\x11.mizer.MediaFilesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

@@ -19,6 +19,7 @@ pub struct MediaDocument {
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaMetadata {
+    pub thumbnail_path: Option<PathBuf>,
     pub dimensions: Option<(u64, u64)>,
     /// Playback length in seconds
     pub duration: Option<u64>,

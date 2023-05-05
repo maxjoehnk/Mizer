@@ -1,6 +1,9 @@
 use mizer_node::{PortId, PortType};
 use serde::{Deserialize, Serialize};
 
+const NUMBER_PORT: &str = "Number";
+const COLOR_PORT: &str = "Color";
+
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub enum OscArgumentType {
@@ -15,12 +18,8 @@ pub enum OscArgumentType {
 impl OscArgumentType {
     pub(crate) fn get_port_id(&self) -> PortId {
         match self {
-            Self::Int => "number".into(),
-            Self::Float => "number".into(),
-            Self::Long => "number".into(),
-            Self::Double => "number".into(),
-            Self::Bool => "number".into(),
-            Self::Color => "color".into(),
+            Self::Int | Self::Float | Self::Long | Self::Double | Self::Bool => NUMBER_PORT.into(),
+            Self::Color => COLOR_PORT.into(),
         }
     }
 

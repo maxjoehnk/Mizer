@@ -1,8 +1,8 @@
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
-const INPUT_PORT: &str = "input";
-const OUTPUT_PORT: &str = "output";
+const INPUT_PORT: &str = "Inputs";
+const OUTPUT_PORT: &str = "Output";
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MergeNode {
@@ -49,11 +49,11 @@ impl ProcessingNode for MergeNode {
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let value: Option<f64> = match self.mode {
             MergeMode::Latest => {
-                let ports = context.read_changed_ports::<_, f64>("input");
+                let ports = context.read_changed_ports::<_, f64>(INPUT_PORT);
                 ports.into_iter().flatten().last()
             }
             MergeMode::Lowest | MergeMode::Highest => {
-                let ports = context.read_ports::<_, f64>("input");
+                let ports = context.read_ports::<_, f64>(INPUT_PORT);
                 let ports_with_value = ports.into_iter().flatten();
 
                 if self.mode == MergeMode::Highest {
@@ -64,7 +64,7 @@ impl ProcessingNode for MergeNode {
             }
         };
         if let Some(value) = value {
-            context.write_port("output", value);
+            context.write_port(OUTPUT_PORT, value);
             context.push_history_value(value);
         }
 

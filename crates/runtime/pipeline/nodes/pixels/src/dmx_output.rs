@@ -27,7 +27,7 @@ impl Default for PixelDmxNode {
     }
 }
 
-const INPUT_PORT: &str = "input";
+const INPUT_PORT: &str = "Input";
 
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {

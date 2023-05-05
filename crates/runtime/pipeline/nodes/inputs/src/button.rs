@@ -3,6 +3,9 @@ use serde::{Deserialize, Serialize};
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
+const INPUT_PORT: &str = "Input";
+const OUTPUT_PORT: &str = "Output";
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ButtonNode {
     #[serde(default)]
@@ -19,8 +22,8 @@ impl PipelineNode for ButtonNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("value", PortType::Single),
-            output_port!("value", PortType::Single),
+            input_port!(INPUT_PORT, PortType::Single),
+            output_port!(OUTPUT_PORT, PortType::Single),
         ]
     }
 
@@ -37,7 +40,7 @@ impl ProcessingNode for ButtonNode {
         context: &impl NodeContext,
         (state, edge): &mut Self::State,
     ) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port::<_, f64>("value") {
+        if let Some(value) = context.read_port::<_, f64>(INPUT_PORT) {
             if self.toggle {
                 if let Some(true) = edge.update(value) {
                     *state = !*state;
@@ -47,7 +50,7 @@ impl ProcessingNode for ButtonNode {
             }
         }
         let output_value = if *state { 1f64 } else { 0f64 };
-        context.write_port("value", output_value);
+        context.write_port(OUTPUT_PORT, output_value);
         context.push_history_value(output_value);
 
         Ok(())

@@ -38,7 +38,7 @@ impl ProcessingNode for TestSink {
             let mut frames = self.frames.lock().unwrap();
             frames.push(value);
         } else {
-            println!("got no port");
+            println!("got no value in input port");
         }
 
         Ok(())

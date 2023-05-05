@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-const VALUE_OUTPUT: &str = "value";
+const VALUE_OUTPUT: &str = "Output";
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct SequenceStep {
@@ -80,7 +80,7 @@ impl ProcessingNode for SequenceNode {
         state.tick(frame);
         let value = state.get_frame(&self.steps);
 
-        context.write_port("value", value);
+        context.write_port(VALUE_OUTPUT, value);
         context.push_history_value(value);
 
         Ok(())

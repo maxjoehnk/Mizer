@@ -5,6 +5,8 @@ use mizer_util::LerpExt;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
 
+const OUTPUT_PORT: &str = "Output";
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiInputNode {
     pub device: String,
@@ -62,7 +64,7 @@ impl PipelineNode for MidiInputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!("value", PortType::Single)]
+        vec![output_port!(OUTPUT_PORT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -141,7 +143,7 @@ impl ProcessingNode for MidiInputNode {
                     }
                 }
                 if let Some(value) = result_value {
-                    context.write_port::<_, f64>("value", value);
+                    context.write_port::<_, f64>(OUTPUT_PORT, value);
                     context.push_history_value(value);
                 }
             }

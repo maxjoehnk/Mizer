@@ -14,14 +14,6 @@ impl PipelineNode for TestSink {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        (port == "input").then(|| PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
             "input".into(),
@@ -34,7 +26,7 @@ impl PipelineNode for TestSink {
     }
 
     fn node_type(&self) -> NodeType {
-        unimplemented!()
+        NodeType::TestSink
     }
 }
 

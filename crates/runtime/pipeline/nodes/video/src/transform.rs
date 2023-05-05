@@ -23,16 +23,16 @@ impl PipelineNode for VideoTransformNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("input", PortType::Gstreamer),
-            output_port!("output", PortType::Gstreamer),
-            input_port!("rotate-x", PortType::Single),
-            input_port!("rotate-y", PortType::Single),
-            input_port!("rotate-z", PortType::Single),
-            input_port!("translate-x", PortType::Single),
-            input_port!("translate-y", PortType::Single),
-            input_port!("translate-z", PortType::Single),
-            input_port!("scale-x", PortType::Single),
-            input_port!("scale-y", PortType::Single),
+            input_port!("Input", PortType::Gstreamer),
+            output_port!("Output", PortType::Gstreamer),
+            input_port!("Rotate X", PortType::Single),
+            input_port!("Rotate Y", PortType::Single),
+            input_port!("Rotate Z", PortType::Single),
+            input_port!("Translate X", PortType::Single),
+            input_port!("Translate Y", PortType::Single),
+            input_port!("Translate Z", PortType::Single),
+            input_port!("Scale X", PortType::Single),
+            input_port!("Scale Y", PortType::Single),
         ]
     }
 
@@ -45,14 +45,14 @@ impl ProcessingNode for VideoTransformNode {
     type State = VideoTransformState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        state.forward_port(context, "rotate-x", "rotation-x")?;
-        state.forward_port(context, "rotate-y", "rotation-y")?;
-        state.forward_port(context, "rotate-z", "rotation-z")?;
-        state.forward_port(context, "translate-x", "translation-x")?;
-        state.forward_port(context, "translate-y", "translation-y")?;
-        state.forward_port(context, "translate-z", "translation-z")?;
-        state.forward_port(context, "scale-x", "scale-x")?;
-        state.forward_port(context, "scale-y", "scale-y")?;
+        state.forward_port(context, "Rotate X", "rotation-x")?;
+        state.forward_port(context, "Rotate Y", "rotation-y")?;
+        state.forward_port(context, "Rotate Z", "rotation-z")?;
+        state.forward_port(context, "Translate X", "translation-x")?;
+        state.forward_port(context, "Translate Y", "translation-y")?;
+        state.forward_port(context, "Translate Z", "translation-z")?;
+        state.forward_port(context, "Scale X", "scale-x")?;
+        state.forward_port(context, "Scale Y", "scale-y")?;
 
         Ok(())
     }

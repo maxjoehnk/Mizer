@@ -3,8 +3,8 @@ use std::collections::VecDeque;
 
 use mizer_node::*;
 
-const INPUT_VALUE_PORT: &str = "value";
-const OUTPUT_VALUE_PORT: &str = "value";
+const INPUT_VALUE_PORT: &str = "Input";
+const OUTPUT_VALUE_PORT: &str = "Output";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct DelayNode {
@@ -50,7 +50,7 @@ impl ProcessingNode for DelayNode {
 
         let value = state.last_value();
 
-        context.write_port("value", value);
+        context.write_port(OUTPUT_VALUE_PORT, value);
         context.push_history_value(value);
 
         Ok(())

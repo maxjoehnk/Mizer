@@ -3,6 +3,8 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 
+const INPUT_PORT: &str = "Input";
+
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
@@ -34,7 +36,7 @@ impl PipelineNode for DmxOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!("value", PortType::Single)]
+        vec![input_port!(INPUT_PORT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -46,7 +48,7 @@ impl ProcessingNode for DmxOutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let value = context.read_port::<_, f64>("value");
+        let value = context.read_port::<_, f64>(INPUT_PORT);
         let dmx_connections = context.inject::<DmxConnectionManager>();
         if dmx_connections.is_none() {
             anyhow::bail!("Missing dmx module");

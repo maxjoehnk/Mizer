@@ -16,6 +16,7 @@ fn main() {
         NodeType::Oscillator,
         None,
         sink.clone(),
+        "Value",
     );
 
     run_for_one_second(runtime);

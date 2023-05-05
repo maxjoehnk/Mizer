@@ -1,8 +1,8 @@
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
-const VALUE_INPUT: &str = "value";
-const VALUE_OUTPUT: &str = "value";
+const VALUE_INPUT: &str = "Input";
+const VALUE_OUTPUT: &str = "Output";
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ThresholdNode {

@@ -8,7 +8,7 @@ use mizer_node::*;
 
 use crate::protocol::SetColors;
 
-const PIXELS_INPUT: &str = "pixels";
+const PIXELS_INPUT: &str = "Pixels";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OpcOutputNode {

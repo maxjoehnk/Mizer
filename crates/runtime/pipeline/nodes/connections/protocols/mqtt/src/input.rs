@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_protocol_mqtt::{MqttConnectionManager, MqttSubscription};
 
-const VALUE_PORT: &str = "value";
+const VALUE_PORT: &str = "Output";
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct MqttInputNode {

@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
-const VALUE_INPUT: &str = "value";
-const VALUE_OUTPUT: &str = "value";
+const VALUE_INPUT: &str = "Input";
+const VALUE_OUTPUT: &str = "Output";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct DataToNumberNode;

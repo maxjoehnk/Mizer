@@ -2,8 +2,11 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
+const INPUT_PORT: &str = "Input";
+const OUTPUT_PORT: &str = "Output";
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
-pub struct FaderNode {}
+pub struct FaderNode;
 
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
@@ -15,8 +18,8 @@ impl PipelineNode for FaderNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("value", PortType::Single),
-            output_port!("value", PortType::Single),
+            input_port!(INPUT_PORT, PortType::Single),
+            output_port!(OUTPUT_PORT, PortType::Single),
         ]
     }
 
@@ -29,10 +32,10 @@ impl ProcessingNode for FaderNode {
     type State = f64;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port_changes::<_, f64>("value") {
+        if let Some(value) = context.read_port_changes::<_, f64>(INPUT_PORT) {
             *state = value;
         }
-        context.write_port("value", *state);
+        context.write_port(OUTPUT_PORT, *state);
         context.push_history_value(*state);
 
         Ok(())

@@ -3,13 +3,19 @@ use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
 pub use mizer_nodes::test_sink::TestSink;
 use mizer_nodes::Node;
-use mizer_ports::PortType;
+use mizer_ports::{PortId, PortType};
 use mizer_processing::Injector;
 use mizer_runtime::commands::{AddLinkCommand, AddNodeCommand};
 use mizer_runtime::pipeline_access::PipelineAccess;
 pub use mizer_util::clock::*;
 
-pub fn add_node(injector: &mut Injector, node_type: NodeType, node: Option<Node>, sink: TestSink) {
+pub fn add_node(
+    injector: &mut Injector,
+    node_type: NodeType,
+    node: Option<Node>,
+    sink: TestSink,
+    source_port: impl Into<PortId>,
+) {
     let deps = <AddNodeCommand as Command<'_>>::Dependencies::extract(injector);
     let oscillator_add_node = AddNodeCommand {
         node_type,
@@ -33,7 +39,7 @@ pub fn add_node(injector: &mut Injector, node_type: NodeType, node: Option<Node>
     let add_link_command = AddLinkCommand {
         link: NodeLink {
             source: oscillator_node.path,
-            source_port: "value".into(),
+            source_port: source_port.into(),
             target: output_path,
             target_port: "input".into(),
             local: false,

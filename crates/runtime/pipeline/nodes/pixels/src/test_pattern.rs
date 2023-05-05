@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
+const OUTPUT_PORT: &str = "Output";
+
 #[derive(Debug, Default, Copy, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Pattern {
@@ -46,7 +48,7 @@ impl PipelineNode for PixelPatternGeneratorNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!("output", PortType::Multi)]
+        vec![output_port!(OUTPUT_PORT, PortType::Multi)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -58,7 +60,7 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     type State = PixelPatternGeneratorState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some((width, height)) = context.output_port("output").and_then(|port| port.dimensions) else {
+        let Some((width, height)) = context.output_port(OUTPUT_PORT).and_then(|port| port.dimensions) else {
             return Ok(());
         };
 
@@ -82,7 +84,7 @@ impl ProcessingNode for PixelPatternGeneratorNode {
             .iter()
             .flat_map(|(r, g, b)| vec![*r, *g, *b])
             .collect();
-        context.write_port::<_, Vec<f64>>("output", data);
+        context.write_port::<_, Vec<f64>>(OUTPUT_PORT, data);
 
         Ok(())
     }

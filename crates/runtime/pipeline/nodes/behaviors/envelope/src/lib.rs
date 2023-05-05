@@ -3,8 +3,8 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
-const VALUE_INPUT: &str = "value";
-const VALUE_OUTPUT: &str = "value";
+const VALUE_INPUT: &str = "Input";
+const VALUE_OUTPUT: &str = "Output";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct EnvelopeNode {
@@ -191,11 +191,11 @@ mod tests {
         let mut state = node.create_state();
         let mut context = NodeContextMock::new();
         context.when_clock().returns(ClockFrame::default());
-        context.when_read_port("value").returns(Some(value));
+        context.when_read_port(VALUE_INPUT).returns(Some(value));
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", value);
+        context.expect_write_port(VALUE_OUTPUT, value);
         Ok(())
     }
 
@@ -222,11 +222,11 @@ mod tests {
             delta: frame,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(input));
+        context.when_read_port(VALUE_INPUT).returns(Some(input));
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", expected);
+        context.expect_write_port(VALUE_OUTPUT, expected);
         Ok(())
     }
 
@@ -245,11 +245,11 @@ mod tests {
             delta: 0.5,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(1.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(1.0));
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", 0.5);
+        context.expect_write_port(VALUE_OUTPUT, 0.5);
         Ok(())
     }
 
@@ -268,19 +268,19 @@ mod tests {
             delta: 0.5,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(0.5));
+        context.when_read_port(VALUE_INPUT).returns(Some(0.5));
         node.process(&context, &mut state)?;
         context.when_clock().returns(ClockFrame {
             frame: 1.0,
             delta: 0.5,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(1.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(1.0));
 
         node.process(&context, &mut state)?;
 
         // TODO: this should probably be 0.75 as it should start at the previous value which was 0.25
-        context.expect_write_port("value", 0.5);
+        context.expect_write_port(VALUE_OUTPUT, 0.5);
         Ok(())
     }
 
@@ -300,9 +300,9 @@ mod tests {
             delta: 0.0,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(1.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(1.0));
         node.process(&context, &mut state)?;
-        context.when_read_port("value").returns(Some(0.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(0.0));
         context.when_clock().returns(ClockFrame {
             frame,
             delta: frame,
@@ -311,7 +311,7 @@ mod tests {
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", expected);
+        context.expect_write_port(VALUE_OUTPUT, expected);
         Ok(())
     }
 
@@ -339,7 +339,7 @@ mod tests {
             delta: 0.0,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(1.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(1.0));
         node.process(&context, &mut state)?;
         context.when_clock().returns(ClockFrame {
             frame,
@@ -349,7 +349,7 @@ mod tests {
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", expected);
+        context.expect_write_port(VALUE_OUTPUT, expected);
         Ok(())
     }
 
@@ -369,7 +369,7 @@ mod tests {
             delta: 0.0,
             ..ClockFrame::default()
         });
-        context.when_read_port("value").returns(Some(1.0));
+        context.when_read_port(VALUE_INPUT).returns(Some(1.0));
         node.process(&context, &mut state)?;
         context.when_clock().returns(ClockFrame {
             frame: 1.0,
@@ -379,7 +379,7 @@ mod tests {
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("value", expected);
+        context.expect_write_port(VALUE_OUTPUT, expected);
         Ok(())
     }
 }

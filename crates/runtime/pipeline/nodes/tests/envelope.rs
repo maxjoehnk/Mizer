@@ -11,7 +11,12 @@ fn envelope() -> anyhow::Result<()> {
         sustain: 0.5,
     };
 
-    node_grapher::graph_node_with_inputs(node, "envelope", |i| if i > 180 { 0. } else { 1. })
+    node_grapher::graph_node_with_inputs(
+        node,
+        "envelope",
+        "Input",
+        |i| if i > 180 { 0. } else { 1. },
+    )
 }
 
 #[test]
@@ -23,7 +28,7 @@ fn envelope_with_value_changes() -> anyhow::Result<()> {
         sustain: 0.5,
     };
 
-    node_grapher::graph_node_with_inputs(node, "envelope_with_value_changes", |i| {
+    node_grapher::graph_node_with_inputs(node, "envelope_with_value_changes", "Input", |i| {
         if i <= 60 {
             0.25
         } else if i <= 120 {

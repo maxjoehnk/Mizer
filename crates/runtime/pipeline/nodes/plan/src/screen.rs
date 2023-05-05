@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_plan::{Plan, PlanScreen, PlanStorage, ScreenId};
 
-const OUTPUT_PORT: &str = "output";
+const INPUT_PORT: &str = "Input";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlanScreenNode {
@@ -68,7 +68,7 @@ impl PipelineNode for PlanScreenNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
-            OUTPUT_PORT,
+            INPUT_PORT,
             PortType::Multi,
             dimensions: self.get_screen()
                 .map(|screen| (screen.width as u64, screen.height as u64))
@@ -88,7 +88,7 @@ impl ProcessingNode for PlanScreenNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let Some(pixels) = context.read_port::<_, Vec<f64>>(OUTPUT_PORT) else {
+        let Some(pixels) = context.read_port::<_, Vec<f64>>(INPUT_PORT) else {
             return Ok(())
         };
         let Some(manager) = context.inject::<FixtureManager>() else {

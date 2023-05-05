@@ -5,6 +5,8 @@ use serde::{Deserialize, Serialize};
 use std::convert::TryInto;
 use std::ops::DerefMut;
 
+const INPUT_PORT: &str = "Input";
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiOutputNode {
     pub device: String,
@@ -62,7 +64,7 @@ impl PipelineNode for MidiOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!("value", PortType::Single)]
+        vec![input_port!(INPUT_PORT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -76,7 +78,7 @@ impl ProcessingNode for MidiOutputNode {
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let connection_manager = context.inject::<MidiConnectionManager>().unwrap();
         if let Some(mut device) = connection_manager.request_device(&self.device)? {
-            if let Some(value) = context.read_port_changes::<_, f64>("value") {
+            if let Some(value) = context.read_port_changes::<_, f64>(INPUT_PORT) {
                 context.push_history_value(value);
                 let device: &mut MidiDevice = device.deref_mut();
                 let msg = match &self.config {

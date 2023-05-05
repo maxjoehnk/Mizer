@@ -13,25 +13,26 @@ pub fn graph_node_with_frames<P: ProcessingNode>(
     name: &str,
     frames: usize,
 ) -> anyhow::Result<()> {
-    graph_node_internal(node, name, |_| 0., frames)
+    graph_node_internal(node, name, None, frames)
 }
 
 pub fn graph_node<P: ProcessingNode>(node: P, name: &str) -> anyhow::Result<()> {
-    graph_node_with_inputs(node, name, |_| 0.)
+    graph_node_internal(node, name, None, FRAMES)
 }
 
-pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64>(
+pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64 + 'static>(
     node: P,
     name: &str,
+    port: &str,
     input: I,
 ) -> anyhow::Result<()> {
-    graph_node_internal(node, name, input, FRAMES)
+    graph_node_internal(node, name, Some((port, Box::new(input))), FRAMES)
 }
 
-fn graph_node_internal<P: ProcessingNode, I: Fn(usize) -> f64>(
+fn graph_node_internal<P: ProcessingNode>(
     node: P,
     name: &str,
-    input: I,
+    input: Option<(&str, Box<dyn Fn(usize) -> f64>)>,
     frames: usize,
 ) -> anyhow::Result<()> {
     let mut context = NodeContextMock::new();
@@ -43,7 +44,9 @@ fn graph_node_internal<P: ProcessingNode, I: Fn(usize) -> f64>(
         let frame = clock.tick();
         history_ticks.push(frame.frame);
         context.when_clock().returns(frame);
-        context.when_read_port("value").returns(Some(input(i)));
+        if let Some((port, input)) = &input {
+            context.when_read_port(*port).returns(Some(input(i)));
+        }
 
         node.process(&context, &mut state)?;
     }

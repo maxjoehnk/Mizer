@@ -5,6 +5,8 @@ use mizer_devices::DeviceManager;
 pub use mizer_node::*;
 use mizer_protocol_laser::{Laser, LaserFrame};
 
+const INPUT_PORT: &str = "Frames";
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LaserNode {
     #[serde(rename = "device")]
@@ -26,7 +28,7 @@ impl PipelineNode for LaserNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!("input", PortType::Laser)]
+        vec![input_port!(INPUT_PORT, PortType::Laser)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -38,7 +40,7 @@ impl ProcessingNode for LaserNode {
     type State = LaserState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(frames) = context.read_port::<_, Vec<LaserFrame>>("input") {
+        if let Some(frames) = context.read_port::<_, Vec<LaserFrame>>(INPUT_PORT) {
             log::trace!("LaserNode got frames: {:?}", frames);
             state.frames = frames;
             state.current_frame = 0;

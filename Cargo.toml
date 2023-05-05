@@ -23,6 +23,7 @@ members = [
     "crates/components/sequencer",
     "crates/components/sequencer/commands",
     "crates/components/timecode",
+    "crates/projects",
     "crates/runtime",
     "crates/runtime/clock",
     "crates/runtime/commander",
@@ -69,7 +70,6 @@ members = [
     "crates/runtime/pipeline/ports",
     "crates/runtime/pipeline/templates",
     "crates/runtime/processing",
-    "crates/runtime/projects",
     "crates/runtime/settings",
     "crates/ui",
     "crates/ui/ffi",
@@ -114,7 +114,7 @@ gstreamer = "0.20"
 structopt = "0.3"
 metrics = "0.21"
 mizer-media = { path = "crates/components/media" }
-mizer-project-files = { path = "crates/runtime/projects" }
+mizer-project-files = { path = "crates/projects" }
 mizer-fixtures = { path = "crates/components/fixtures" }
 mizer-gdtf-provider = { path = "crates/components/fixtures/gdtf" }
 mizer-open-fixture-library-provider = { path = "crates/components/fixtures/open-fixture-library" }

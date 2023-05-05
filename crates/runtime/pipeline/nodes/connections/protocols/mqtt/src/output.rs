@@ -4,6 +4,8 @@ use mizer_node::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_util::StructuredData;
 
+const VALUE_PORT: &str = "Input";
+
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct MqttOutputNode {
     pub path: String,
@@ -31,7 +33,7 @@ impl PipelineNode for MqttOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!("value", PortType::Data)]
+        vec![input_port!(VALUE_PORT, PortType::Data)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -43,7 +45,7 @@ impl ProcessingNode for MqttOutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let value = context.read_port_changes::<_, StructuredData>("value");
+        let value = context.read_port_changes::<_, StructuredData>(VALUE_PORT);
         let connection_manager = context.inject::<MqttConnectionManager>();
         if connection_manager.is_none() {
             anyhow::bail!("Missing mqtt module");

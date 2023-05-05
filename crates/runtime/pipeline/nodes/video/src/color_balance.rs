@@ -6,6 +6,13 @@ use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
+const INPUT_PORT: &str = "input";
+const OUTPUT_PORT: &str = "output";
+const BRIGHTNESS_PORT: &str = "brightness";
+const CONTRAST_PORT: &str = "contrast";
+const HUE_PORT: &str = "hue";
+const SATURATION_PORT: &str = "saturation";
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoColorBalanceNode;
 
@@ -23,12 +30,12 @@ impl PipelineNode for VideoColorBalanceNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("input", PortType::Gstreamer),
-            output_port!("output", PortType::Gstreamer),
-            input_port!("brightness", PortType::Single),
-            input_port!("contrast", PortType::Single),
-            input_port!("hue", PortType::Single),
-            input_port!("saturation", PortType::Single),
+            input_port!(INPUT_PORT, PortType::Gstreamer),
+            output_port!(OUTPUT_PORT, PortType::Gstreamer),
+            input_port!(BRIGHTNESS_PORT, PortType::Single),
+            input_port!(CONTRAST_PORT, PortType::Single),
+            input_port!(HUE_PORT, PortType::Single),
+            input_port!(SATURATION_PORT, PortType::Single),
         ]
     }
 
@@ -41,16 +48,16 @@ impl ProcessingNode for VideoColorBalanceNode {
     type State = VideoColorBalanceState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(brightness) = context.read_port::<_, f64>("brightness") {
+        if let Some(brightness) = context.read_port::<_, f64>(BRIGHTNESS_PORT) {
             state.node.set_property("brightness", brightness);
         }
-        if let Some(contrast) = context.read_port::<_, f64>("contrast") {
+        if let Some(contrast) = context.read_port::<_, f64>(CONTRAST_PORT) {
             state.node.set_property("contrast", contrast);
         }
-        if let Some(hue) = context.read_port::<_, f64>("hue") {
+        if let Some(hue) = context.read_port::<_, f64>(HUE_PORT) {
             state.node.set_property("hue", hue);
         }
-        if let Some(saturation) = context.read_port::<_, f64>("saturation") {
+        if let Some(saturation) = context.read_port::<_, f64>(SATURATION_PORT) {
             state.node.set_property("saturation", saturation);
         }
         Ok(())

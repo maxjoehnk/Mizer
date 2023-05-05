@@ -4,6 +4,8 @@ use mizer_node::*;
 use mizer_protocol_laser::ilda::IldaMediaReader;
 use mizer_protocol_laser::LaserFrame;
 
+const OUTPUT_PORT: &str = "Frames";
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct IldaFileNode {
     pub file: String,
@@ -23,7 +25,7 @@ impl PipelineNode for IldaFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!("frames", PortType::Laser)]
+        vec![output_port!(OUTPUT_PORT, PortType::Laser)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -43,7 +45,7 @@ impl ProcessingNode for IldaFileNode {
         }
         if let Some(frames) = &state.frames {
             // TODO: only write when new frames arrive or when a new listener is attached
-            context.write_port("frames", frames.clone());
+            context.write_port(OUTPUT_PORT, frames.clone());
         }
         Ok(())
     }

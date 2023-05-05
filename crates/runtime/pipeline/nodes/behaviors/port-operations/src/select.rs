@@ -1,9 +1,9 @@
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
-const CHANNEL_PORT: &str = "channel";
-const INPUT_PORT: &str = "input";
-const OUTPUT_PORT: &str = "output";
+const CHANNEL_PORT: &str = "Channel";
+const INPUT_PORT: &str = "Inputs";
+const OUTPUT_PORT: &str = "Output";
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct SelectNode {}

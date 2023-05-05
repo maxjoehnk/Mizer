@@ -6,6 +6,8 @@ use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
+const OUTPUT_PORT: &str = "Output";
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoFileNode {
     pub file: String,
@@ -27,7 +29,7 @@ impl PipelineNode for VideoFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!("output", PortType::Gstreamer)]
+        vec![output_port!(OUTPUT_PORT, PortType::Gstreamer)]
     }
 
     fn node_type(&self) -> NodeType {

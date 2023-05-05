@@ -166,9 +166,9 @@ mod tests {
         pipeline_access
             .add_link(NodeLink {
                 source: path1.clone(),
-                source_port: "value".into(),
+                source_port: "Output".into(),
                 target: path2,
-                target_port: "value".into(),
+                target_port: "Input".into(),
                 port_type: PortType::Single,
                 local: true,
             })

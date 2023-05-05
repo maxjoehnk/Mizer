@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::fixtures::PresetsStore;
 use crate::media::Media;
+use crate::versioning::{migrate, Migrations};
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
@@ -26,6 +27,7 @@ pub mod history;
 mod media;
 mod sequencer;
 mod timecode;
+mod versioning;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -38,6 +40,8 @@ lazy_static! {
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
+    #[serde(default)]
+    pub version: usize,
     #[serde(default)]
     pub nodes: Vec<Node>,
     #[serde(default)]
@@ -72,18 +76,23 @@ pub struct Timecodes {
 
 impl Project {
     pub fn new() -> Self {
-        Self::default()
+        let mut project = Self::default();
+        project.version = Migrations::latest_version();
+
+        project
     }
 
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
         let file = File::open(path)?;
-        let project: Project = serde_yaml::from_reader(file)?;
+        let mut project: Project = serde_yaml::from_reader(file)?;
+        migrate(&mut project)?;
 
         Ok(project)
     }
 
     pub fn load(content: &str) -> anyhow::Result<Project> {
-        let project = serde_yaml::from_str(content)?;
+        let mut project = serde_yaml::from_str(content)?;
+        migrate(&mut project)?;
 
         Ok(project)
     }
@@ -273,7 +282,7 @@ mod tests {
               width: 25
               height: 50
         channels:
-          - output@/pixel-pattern-0 -> pixels@/opc-output-0
+          - Output@/pixel-pattern-0 -> Pixels@/opc-output-0
         "#;
 
         let result = Project::load(content)?;
@@ -307,9 +316,9 @@ mod tests {
             result.channels[0],
             Channel {
                 from_path: "/pixel-pattern-0".into(),
-                from_channel: "output".into(),
+                from_channel: "Output".into(),
                 to_path: "/opc-output-0".into(),
-                to_channel: "pixels".into()
+                to_channel: "Pixels".into()
             }
         );
         Ok(())
@@ -320,7 +329,7 @@ mod tests {
         let content = r#"
         nodes: []
         channels:
-          - Output@/pixel-pattern-0 -> pixels@/opc-output-0
+          - Output@/pixel-pattern-0 -> Pixels@/opc-output-0
         "#;
 
         let result = Project::load(content)?;
@@ -331,7 +340,7 @@ mod tests {
                 from_path: "/pixel-pattern-0".into(),
                 from_channel: "Output".into(),
                 to_path: "/opc-output-0".into(),
-                to_channel: "pixels".into()
+                to_channel: "Pixels".into()
             }
         );
         Ok(())

@@ -11,7 +11,7 @@ gstreamer = "0.20"
 metrics = "0.21"
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }
-mizer-project-files = { path = "../projects" }
+mizer-project-files = { path = "../../projects" }
 mizer-devices = { path = "../../components/connections/devices" }
 mizer-node = { path = "node" }
 mizer-video-nodes = { path = "nodes/video" }

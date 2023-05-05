@@ -4,10 +4,10 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-const INTERVAL_INPUT_PORT: &str = "interval";
-const MIN_INPUT_PORT: &str = "min";
-const MAX_INPUT_PORT: &str = "max";
-const VALUE_OUTPUT_PORT: &str = "value";
+const INTERVAL_INPUT_PORT: &str = "Interval";
+const MIN_INPUT_PORT: &str = "Min";
+const MAX_INPUT_PORT: &str = "Max";
+const VALUE_OUTPUT_PORT: &str = "Value";
 
 #[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
@@ -89,7 +89,7 @@ impl ProcessingNode for OscillatorNode {
         let clock = context.clock();
         let oscillator = OscillatorContext::read(self, context);
         let value = oscillator.tick(clock.frame);
-        context.write_port("value", value);
+        context.write_port(VALUE_OUTPUT_PORT, value);
         context.push_history_value(value);
         Ok(())
     }

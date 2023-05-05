@@ -8,3 +8,4 @@ mod connections;
 mod device;
 mod device_provider;
 mod module;
+mod processor;

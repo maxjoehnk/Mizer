@@ -18,3 +18,4 @@ mizer-midi-messages = { path = "messages" }
 regex = "1.8"
 lazy_static = "1.4"
 profiling = "1"
+tracing = "0.1"

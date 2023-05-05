@@ -1,4 +1,4 @@
-use bezier_rs::{ComputeType, ManipulatorGroup, Subpath};
+use bezier_rs::{Identifier, ManipulatorGroup, Subpath, SubpathTValue};
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq)]
@@ -16,23 +16,33 @@ pub struct Spline {
     pub steps: Vec<SplineStep>,
 }
 
+#[derive(Clone, Copy, Hash, PartialEq, Eq)]
+struct SplineStepId(uuid::Uuid);
+impl Identifier for SplineStepId {
+    fn new() -> Self {
+        Self(uuid::Uuid::new_v4())
+    }
+}
+
 impl Spline {
     // TODO: keep in range [0..=1]
     pub fn sample(&self, x: f64, max: f64) -> f64 {
         let value = (x / max).clamp(0., 1.);
-        let path = Subpath::new(
+        let path = Subpath::<SplineStepId>::new(
             self.steps
                 .iter()
-                .map(|step| ManipulatorGroup {
-                    anchor: (step.x / max, step.y).into(),
-                    in_handle: Some((step.c0a / max, step.c0b).into()),
-                    out_handle: Some((step.c1a / max, step.c1b).into()),
+                .map(|step| {
+                    ManipulatorGroup::new(
+                        (step.x / max, step.y).into(),
+                        Some((step.c0a / max, step.c0b).into()),
+                        Some((step.c1a / max, step.c1b).into()),
+                    )
                 })
                 .collect(),
             false,
         );
 
-        let point = path.evaluate(ComputeType::Parametric(value));
+        let point = path.evaluate(SubpathTValue::GlobalParametric(value));
 
         point.y
     }

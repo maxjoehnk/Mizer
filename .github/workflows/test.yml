@@ -110,7 +110,7 @@ jobs:
           channel: stable
       - uses: Swatinem/rust-cache@v1
       - name: Remove linked flutter libs from cache
-        run: rm -r target/debug/lib
+        run: rm -rf target/debug/lib
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: ui

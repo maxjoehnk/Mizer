@@ -47,7 +47,7 @@ jobs:
           channel: stable
       - name: Get flutter deps
         run: flutter pub get
-        working-directory: ui
+        working-directory: crates/ui
 
       ################################
       # Run Linter against code base #

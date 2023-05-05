@@ -113,10 +113,10 @@ jobs:
         run: rm -rf target/debug/lib
       - name: Generate FFI bindings
         run: make generate_bindings
-        working-directory: ui
+        working-directory: crates/ui
       - name: Generate protobuf code
         run: make proto
-        working-directory: ui
+        working-directory: crates/ui
       - name: Clippy Checks
         uses: actions-rs/clippy-check@v1
         with:
@@ -148,9 +148,9 @@ jobs:
           channel: stable
       - name: Generate FFI bindings
         run: make generate_bindings
-        working-directory: ui
+        working-directory: crates/ui
       - name: Generate protobuf code
         run: make proto
-        working-directory: ui
+        working-directory: crates/ui
       - run: flutter test
-        working-directory: ui
+        working-directory: crates/ui

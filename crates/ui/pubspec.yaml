@@ -60,6 +60,11 @@ ffigen:
       - 'ffi.h'
 
 flutter_icons:
-  image_path: ../assets/logo@512.png
+  image_path: ../../assets/logo@512.png
   android: true
   ios: true
+  windows:
+    generate: true
+    icon_size: 256
+  macos:
+    generate: true

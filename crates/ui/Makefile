@@ -43,3 +43,6 @@ widgetbook:
 
 i18n:
 	flutter pub run i18n_extension:getstrings
+
+icons:
+	flutter pub run flutter_launcher_icons

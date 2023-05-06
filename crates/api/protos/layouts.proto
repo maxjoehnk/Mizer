@@ -12,6 +12,7 @@ service LayoutsApi {
 
   rpc RenameControl(RenameControlRequest) returns (LayoutResponse) {}
   rpc MoveControl(MoveControlRequest) returns (LayoutResponse) {}
+  rpc ResizeControl(ResizeControlRequest) returns (LayoutResponse) {}
   rpc UpdateControlDecoration(UpdateControlDecorationRequest) returns (LayoutResponse) {}
   rpc UpdateControlBehavior(UpdateControlBehaviorRequest) returns (LayoutResponse) {}
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
@@ -50,6 +51,12 @@ message MoveControlRequest {
   string layout_id = 1;
   string control_id = 2;
   ControlPosition position = 3;
+}
+
+message ResizeControlRequest {
+  string layout_id = 1;
+  string control_id = 2;
+  ControlSize size = 3;
 }
 
 message UpdateControlDecorationRequest {

@@ -33,8 +33,10 @@ class LayoutControlView extends StatefulWidget {
   final String layoutId;
   final Map<int, SequenceState> sequencerState;
   final void Function() onMove;
+  final void Function() onResize;
 
-  LayoutControlView(this.pointer, this.layoutId, this.control, this.sequencerState, this.onMove);
+  LayoutControlView(this.pointer, this.layoutId, this.control, this.sequencerState,
+      {required this.onMove, required this.onResize});
 
   @override
   State<LayoutControlView> createState() => _LayoutControlViewState();
@@ -79,6 +81,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
         MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
         MenuItem(label: "Move".i18n, action: () => widget.onMove()),
+        MenuItem(label: "Resize".i18n, action: () => widget.onResize()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
         if (node?.type == Node_NodeType.SEQUENCER)
           MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),

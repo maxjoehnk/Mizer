@@ -6,6 +6,7 @@ import 'package:mizer/protos/nodes.pbenum.dart';
 
 import 'ffi/api.dart';
 import 'ffi/bindings.dart';
+
 export 'ffi/layout.dart' show LayoutsRefPointer;
 
 class LayoutsPluginApi implements LayoutsApi {
@@ -60,6 +61,12 @@ class LayoutsPluginApi implements LayoutsApi {
   }
 
   @override
+  Future<void> resizeControl(String layoutId, String id, ControlSize size) async {
+    var request = ResizeControlRequest(layoutId: layoutId, controlId: id, size: size);
+    await channel.invokeMethod("resizeControl", request.writeToBuffer());
+  }
+
+  @override
   Future<void> renameControl(String layoutId, String id, String name) async {
     var request = RenameControlRequest(layoutId: layoutId, controlId: id, name: name);
     await channel.invokeMethod("renameControl", request.writeToBuffer());
@@ -78,14 +85,17 @@ class LayoutsPluginApi implements LayoutsApi {
   }
 
   @override
-  Future<void> updateControlDecoration(String layoutId, String id, ControlDecorations decoration) async {
-    var request = UpdateControlDecorationRequest(layoutId: layoutId, controlId: id, decorations: decoration);
+  Future<void> updateControlDecoration(
+      String layoutId, String id, ControlDecorations decoration) async {
+    var request =
+        UpdateControlDecorationRequest(layoutId: layoutId, controlId: id, decorations: decoration);
     await channel.invokeMethod("updateControlDecoration", request.writeToBuffer());
   }
 
   @override
   Future<void> updateControlBehavior(String layoutId, String id, ControlBehavior behavior) async {
-    var request = UpdateControlBehaviorRequest(layoutId: layoutId, controlId: id, behavior: behavior);
+    var request =
+        UpdateControlBehaviorRequest(layoutId: layoutId, controlId: id, behavior: behavior);
     await channel.invokeMethod("updateControlBehavior", request.writeToBuffer());
   }
 

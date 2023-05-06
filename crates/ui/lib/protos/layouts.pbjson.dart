@@ -77,6 +77,18 @@ const MoveControlRequest$json = const {
 
 /// Descriptor for `MoveControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveControlRequestDescriptor = $convert.base64Decode('ChJNb3ZlQ29udHJvbFJlcXVlc3QSGwoJbGF5b3V0X2lkGAEgASgJUghsYXlvdXRJZBIdCgpjb250cm9sX2lkGAIgASgJUgljb250cm9sSWQSMgoIcG9zaXRpb24YAyABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9u');
+@$core.Deprecated('Use resizeControlRequestDescriptor instead')
+const ResizeControlRequest$json = const {
+  '1': 'ResizeControlRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'control_id', '3': 2, '4': 1, '5': 9, '10': 'controlId'},
+    const {'1': 'size', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlSize', '10': 'size'},
+  ],
+};
+
+/// Descriptor for `ResizeControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resizeControlRequestDescriptor = $convert.base64Decode('ChRSZXNpemVDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEh0KCmNvbnRyb2xfaWQYAiABKAlSCWNvbnRyb2xJZBImCgRzaXplGAMgASgLMhIubWl6ZXIuQ29udHJvbFNpemVSBHNpemU=');
 @$core.Deprecated('Use updateControlDecorationRequestDescriptor instead')
 const UpdateControlDecorationRequest$json = const {
   '1': 'UpdateControlDecorationRequest',

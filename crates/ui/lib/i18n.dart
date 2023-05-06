@@ -6,8 +6,7 @@ class MizerI18n {
 
   static Future<void> loadTranslations() async {
     Translations.recordMissingTranslations = false;
-    translations +=
-    await GettextImporter().fromAssetDirectory("assets/locales");
+    translations += await GettextImporter().fromAssetDirectory("assets/locales");
   }
 }
 

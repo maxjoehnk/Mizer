@@ -5,6 +5,7 @@ pub use move_layout_control::*;
 pub use remove_layout::*;
 pub use rename_layout::*;
 pub use rename_layout_control::*;
+pub use resize_layout_control::*;
 pub use update_layout_control_behavior::*;
 pub use update_layout_control_decorations::*;
 
@@ -17,6 +18,7 @@ mod move_layout_control;
 mod remove_layout;
 mod rename_layout;
 mod rename_layout_control;
+mod resize_layout_control;
 mod update_layout_control_behavior;
 mod update_layout_control_decorations;
 

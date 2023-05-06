@@ -44,7 +44,7 @@ msgstr "Einstellungen"
 msgid "Exit"
 msgstr "Beenden"
 
-#: lib/views/layout/control.dart:52
+#: lib/views/layout/control.dart:82
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -68,7 +68,7 @@ msgstr "Neues Fenster"
 msgid "Smart Window"
 msgstr "Smart Fenster"
 
-#: lib/menu.dart:128
+#: lib/menu.dart:125
 msgid "Projects"
 msgstr "Projekte"
 
@@ -80,7 +80,7 @@ msgstr "Effekte"
 msgid "Add Effect"
 msgstr "Neuer Effekt"
 
-#: lib/views/layout/control.dart:54
+#: lib/views/layout/control.dart:85
 msgid "Delete"
 msgstr "Löschen"
 
@@ -100,33 +100,33 @@ msgstr "Bewegung"
 msgid "Connections"
 msgstr "Verbindungen"
 
-#: lib/views/connections/connections_view.dart:46
+#: lib/views/connections/connections_view.dart:47
 msgid "Configure"
 msgstr "Konfigurieren"
 
-#: lib/views/connections/connections_view.dart:73
+#: lib/views/connections/connections_view.dart:72
 msgid "Add sACN"
 msgstr "sACN hinzufügen"
 
-#: lib/views/connections/connections_view.dart:74
+#: lib/views/connections/connections_view.dart:73
 msgid "Add Artnet"
 msgstr "Artnet hinzufügen"
 
-#: lib/views/connections/connections_view.dart:75
+#: lib/views/connections/connections_view.dart:74
 msgid "Add MQTT"
 msgstr "MQTT hinzufügen"
 
-#: lib/views/connections/connections_view.dart:76
+#: lib/views/connections/connections_view.dart:75
 #, fuzzy
 #| msgid "Add sACN"
 msgid "Add OSC"
 msgstr "sACN hinzufügen"
 
-#: lib/views/connections/connections_view.dart:113
+#: lib/views/connections/connections_view.dart:118
 msgid "Monitor"
 msgstr "Monitor"
 
-#: lib/views/connections/connections_view.dart:215
+#: lib/views/connections/connections_view.dart:222
 msgid "Delete Connection"
 msgstr "Verbindung löschen"
 
@@ -222,7 +222,7 @@ msgstr "Speichern"
 msgid "Osc Messages"
 msgstr "OSC Nachrichten"
 
-#: lib/views/nodes/widgets/node/base_node.dart:252
+#: lib/views/nodes/widgets/node/base_node.dart:259
 msgid "Path"
 msgstr "Pfad"
 
@@ -280,23 +280,23 @@ msgstr "Port ist ein Pflichtfeld"
 msgid "Port"
 msgstr "Port"
 
-#: lib/views/connections/types/prodjlink_connection.dart:93
+#: lib/views/connections/types/prodjlink_connection.dart:92
 msgid "Playing"
 msgstr "Spielt"
 
-#: lib/views/connections/types/prodjlink_connection.dart:94
+#: lib/views/connections/types/prodjlink_connection.dart:93
 msgid "Cued"
 msgstr "Gecued"
 
-#: lib/views/connections/types/prodjlink_connection.dart:95
+#: lib/views/connections/types/prodjlink_connection.dart:94
 msgid "Cueing"
 msgstr "Cued"
 
-#: lib/views/connections/types/prodjlink_connection.dart:96
+#: lib/views/connections/types/prodjlink_connection.dart:95
 msgid "Loading"
 msgstr "Lädt"
 
-#: lib/views/connections/types/prodjlink_connection.dart:205
+#: lib/views/connections/types/prodjlink_connection.dart:204
 msgid "BPM"
 msgstr "BPM"
 
@@ -316,25 +316,29 @@ msgstr "Dateipfade"
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
-#: lib/views/preferences/file_paths.dart:19
+#: lib/views/preferences/file_paths.dart:20
 msgid "Midi Device Profiles"
 msgstr "Midi Geräte Profile"
 
-#: lib/views/preferences/file_paths.dart:27
+#: lib/views/preferences/file_paths.dart:30
 msgid "Fixture Libraries"
 msgstr "Fixture Bibliotheken"
 
-#: lib/views/preferences/file_paths.dart:28
+#: lib/views/preferences/file_paths.dart:32
 msgid "Open Fixture Library"
 msgstr "Open Fixture Library"
 
-#: lib/views/preferences/file_paths.dart:36
+#: lib/views/preferences/file_paths.dart:43
 msgid "QLC+"
 msgstr "QLC+"
 
-#: lib/views/preferences/file_paths.dart:44
+#: lib/views/preferences/file_paths.dart:54
 msgid "GDTF"
 msgstr "GDTF"
+
+#: lib/views/preferences/file_paths.dart:65
+msgid "Mizer"
+msgstr ""
 
 #: lib/views/preferences/general.dart:18
 msgid "Language"
@@ -368,19 +372,19 @@ msgstr "Patch"
 msgid "Sequencer"
 msgstr "Sequenzen"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:191
+#: lib/views/plan/layers/drag_selection_layer.dart:201
 msgid "Bottom to Top"
 msgstr "Unten nach Oben"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:191
+#: lib/views/plan/layers/drag_selection_layer.dart:201
 msgid "Top to Bottom"
 msgstr "Oben nach Unten"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:192
+#: lib/views/plan/layers/drag_selection_layer.dart:203
 msgid "Right to Left"
 msgstr "Rechts nach Links"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:192
+#: lib/views/plan/layers/drag_selection_layer.dart:203
 msgid "Left to Right"
 msgstr "Links nach Rechts"
 
@@ -438,11 +442,11 @@ msgstr "Ausklappen"
 msgid "Fixtures"
 msgstr "Fixture"
 
-#: lib/views/fixtures/fixtures_view.dart:96
+#: lib/views/fixtures/fixtures_view.dart:73
 msgid "Select All"
 msgstr "Alle auswählen"
 
-#: lib/views/fixtures/fixtures_view.dart:102
+#: lib/views/fixtures/fixtures_view.dart:79
 msgid "Clear"
 msgstr "Leeren"
 
@@ -450,50 +454,54 @@ msgstr "Leeren"
 msgid "Layout"
 msgstr "Layout"
 
-#: lib/views/layout/control.dart:51
+#: lib/views/layout/control.dart:81
 msgid "Rename"
 msgstr "Umbenennen"
 
-#: lib/views/layout/layout_view.dart:122
+#: lib/views/layout/layout_view.dart:126
 msgid "Delete Layout"
 msgstr "Layout löschen"
 
-#: lib/views/layout/layout_view.dart:163
-msgid "Rename Layout"
-msgstr "Layout umbenennen"
-
-#: lib/views/layout/layout_view.dart:163
-msgid "Add Layout"
-msgstr "Layout hinzufügen"
-
-#: lib/views/layout/layout_view.dart:167
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: lib/views/layout/add_control_popup.dart:44
+#: lib/views/layout/add_control_popup.dart:62
 msgid "New"
 msgstr "Neu"
 
-#: lib/views/layout/add_control_popup.dart:45
+#: lib/views/layout/add_control_popup.dart:63
 msgid "Button"
 msgstr "Button"
 
-#: lib/views/layout/add_control_popup.dart:46
+#: lib/views/layout/add_control_popup.dart:64
 msgid "Fader"
 msgstr "Fader"
 
-#: lib/views/layout/add_control_popup.dart:47
+#: lib/views/layout/add_control_popup.dart:65
 msgid "Label"
 msgstr ""
 
 # Bessere Alternative zum Namen Steuerfläche finden
-#: lib/views/layout/add_control_popup.dart:51
+#: lib/views/layout/add_control_popup.dart:69
 msgid "Control Nodes"
 msgstr "Steuerflächen Nodes"
 
-#: lib/views/layout/add_control_popup.dart:55
+#: lib/views/layout/add_control_popup.dart:73
 msgid "Sequences"
 msgstr "Sequenzen"
+
+#: lib/views/layout/add_control_popup.dart:77
+msgid "Groups"
+msgstr "Gruppen"
+
+#: lib/views/layout/dialogs/name_layout_dialog.dart:15
+msgid "Rename Layout"
+msgstr "Layout umbenennen"
+
+#: lib/views/layout/dialogs/name_layout_dialog.dart:15
+msgid "Add Layout"
+msgstr "Layout hinzufügen"
+
+#: lib/views/layout/dialogs/name_layout_dialog.dart:19
+msgid "Add"
+msgstr "Hinzufügen"
 
 #: lib/views/layout/dialogs/rename_control_dialog.dart:15
 #, fuzzy
@@ -514,19 +522,27 @@ msgstr "Steuerfläche konfigurieren"
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: lib/views/layout/dialogs/edit_control_dialog.dart:35
+#: lib/views/layout/dialogs/edit_control_dialog.dart:37
 msgid "Color"
 msgstr "Farbe"
 
-#: lib/views/layout/control.dart:53
+#: lib/views/layout/dialogs/edit_control_dialog.dart:59
+msgid "Image"
+msgstr "Bild"
+
+#: lib/views/layout/control.dart:83
 msgid "Move"
 msgstr "Bewegen"
 
-#: lib/views/layout/control.dart:56
+#: lib/views/layout/control.dart:84
+msgid "Resize"
+msgstr "Größe ändern"
+
+#: lib/views/layout/control.dart:87
 msgid "Behavior"
 msgstr "Verhalten"
 
-#: lib/views/layout/control.dart:59
+#: lib/views/layout/control.dart:90
 msgid "Mappings"
 msgstr "Mappings"
 

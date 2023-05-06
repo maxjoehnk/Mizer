@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/extensions/layout_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
@@ -29,6 +31,7 @@ import 'dialogs/name_layout_dialog.dart';
 
 const double MULTIPLIER = 75;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
+const String ResizingNodeIndicatorLayoutId = "ResizingNodeIndicator";
 
 class LayoutViewWrapper extends StatefulWidget {
   @override
@@ -164,6 +167,8 @@ class ControlLayout extends StatefulWidget {
 class _ControlLayoutState extends State<ControlLayout> {
   LayoutControl? _movingNode;
   Offset? _movingNodePosition;
+  LayoutControl? _resizingNode;
+  Size? _resizingNodeSize;
 
   @override
   Widget build(BuildContext context) {
@@ -177,15 +182,11 @@ class _ControlLayoutState extends State<ControlLayout> {
               child: Listener(
                 behavior: HitTestBehavior.translucent,
                 onPointerHover: (event) {
-                  if (_movingNode == null) {
-                    return;
-                  }
-                  setState(() {
-                    _movingNodePosition = event.localPosition;
-                  });
+                  _moveNode(event);
+                  _resizeNode(event);
                 },
                 onPointerDown: (e) {
-                  if (_movingNode == null) {
+                  if (_movingNode == null && _resizingNode == null) {
                     return;
                   }
                   _placeNode();
@@ -221,8 +222,11 @@ class _ControlLayoutState extends State<ControlLayout> {
                         pointer: widget.pointer,
                         layout: widget.layout,
                         startMove: _startMove,
+                        startResize: _startResize,
                         movingNode: _movingNode,
-                        movingNodePosition: _movingNodePosition),
+                        movingNodePosition: _movingNodePosition,
+                        resizingNode: _resizingNode,
+                        resizingNodeSize: _resizingNodeSize),
                   ],
                 ),
               ),
@@ -241,34 +245,79 @@ class _ControlLayoutState extends State<ControlLayout> {
     });
   }
 
+  _moveNode(PointerHoverEvent event) {
+    if (_movingNode == null) {
+      return;
+    }
+    setState(() {
+      _movingNodePosition = event.localPosition;
+    });
+  }
+
+  _startResize(LayoutControl control) {
+    setState(() {
+      _resizingNode = control;
+      _resizingNodeSize =
+          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER;
+    });
+  }
+
+  _resizeNode(PointerHoverEvent event) {
+    if (_resizingNode == null) {
+      return;
+    }
+    var corner =
+        Offset(_resizingNode!.position.x.toDouble(), _resizingNode!.position.y.toDouble()) *
+            MULTIPLIER;
+    setState(() {
+      _resizingNodeSize = Rect.fromPoints(corner, event.localPosition).size;
+    });
+  }
+
   _placeNode() {
     LayoutsBloc bloc = context.read();
-    int x = (_movingNodePosition!.dx / MULTIPLIER).floor().clamp(0, 100);
-    int y = (_movingNodePosition!.dy / MULTIPLIER).floor().clamp(0, 100);
-    var position = ControlPosition(x: Int64(x), y: Int64(y));
-    bloc.add(
-        MoveControl(layoutId: widget.layout.id, controlId: _movingNode!.node, position: position));
+    if (_movingNode != null) {
+      var position = screenToLayoutPosition(_movingNodePosition!).toControlPosition();
+      bloc.add(MoveControl(
+          layoutId: widget.layout.id, controlId: _movingNode!.node, position: position));
 
-    setState(() {
-      _movingNode = null;
-      _movingNodePosition = null;
-    });
+      setState(() {
+        _movingNode = null;
+        _movingNodePosition = null;
+      });
+    }
+    if (_resizingNode != null) {
+      var size = screenToLayoutSize(_resizingNodeSize!).toControlSize();
+      bloc.add(
+          ResizeControl(layoutId: widget.layout.id, controlId: _resizingNode!.node, size: size));
+
+      setState(() {
+        _resizingNode = null;
+        _resizingNodeSize = null;
+      });
+    }
   }
 }
 
 class _ControlsContainer extends StatelessWidget {
   final LayoutsRefPointer pointer;
   final Layout layout;
+  final Function(LayoutControl) startMove;
   final LayoutControl? movingNode;
   final Offset? movingNodePosition;
-  final Function(LayoutControl) startMove;
+  final Function(LayoutControl) startResize;
+  final LayoutControl? resizingNode;
+  final Size? resizingNodeSize;
 
   const _ControlsContainer(
       {required this.pointer,
       required this.layout,
       required this.startMove,
+      required this.startResize,
       this.movingNode,
       this.movingNodePosition,
+      this.resizingNode,
+      this.resizingNodeSize,
       Key? key})
       : super(key: key);
 
@@ -276,7 +325,8 @@ class _ControlsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SequencerStateFetcher(builder: (context, sequencerState) {
       return CustomMultiChildLayout(
-          delegate: ControlsLayoutDelegate(layout, movingNode?.node, movingNodePosition),
+          delegate: ControlsLayoutDelegate(
+              layout, movingNode?.node, movingNodePosition, resizingNode?.node, resizingNodeSize),
           children: [
             if (movingNode != null)
               LayoutId(
@@ -295,8 +345,29 @@ class _ControlsContainer extends StatelessWidget {
                   ))),
             ...layout.controls.map((c) => LayoutId(
                 id: c.node,
-                child:
-                    LayoutControlView(pointer, layout.id, c, sequencerState, () => startMove(c)))),
+                child: LayoutControlView(
+                  pointer,
+                  layout.id,
+                  c,
+                  sequencerState,
+                  onMove: () => startMove(c),
+                  onResize: () => startResize(c),
+                ))),
+            if (resizingNode != null)
+              LayoutId(
+                  id: ResizingNodeIndicatorLayoutId,
+                  child: Container(
+                      decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.deepOrange.withAlpha(128),
+                        width: 4,
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: Colors.deepOrange.shade100.withAlpha(10),
+                  ))),
           ]);
     });
   }
@@ -306,8 +377,11 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   final Layout layout;
   final String? movingNode;
   final Offset? movingNodePosition;
+  final String? resizingNode;
+  final Size? resizingNodeSize;
 
-  ControlsLayoutDelegate(this.layout, this.movingNode, this.movingNodePosition);
+  ControlsLayoutDelegate(this.layout, this.movingNode, this.movingNodePosition, this.resizingNode,
+      this.resizingNodeSize);
 
   @override
   void performLayout(Size size) {
@@ -321,10 +395,13 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       positionChild(control.node, controlOffset);
       if (movingNode != null && movingNode == control.node) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
-        double x = (movingNodePosition!.dx / MULTIPLIER).floor().clamp(0, 100).toDouble();
-        double y = (movingNodePosition!.dy / MULTIPLIER).floor().clamp(0, 100).toDouble();
-        var position = Offset(x, y) * MULTIPLIER;
-        positionChild(MovingNodeIndicatorLayoutId, position);
+        positionChild(
+            MovingNodeIndicatorLayoutId, screenToLayoutPosition(movingNodePosition!) * MULTIPLIER);
+      }
+      if (resizingNode != null && resizingNode == control.node) {
+        layoutChild(ResizingNodeIndicatorLayoutId,
+            BoxConstraints.tight(screenToLayoutSize(resizingNodeSize!) * MULTIPLIER));
+        positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }
   }
@@ -333,8 +410,24 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   bool shouldRelayout(covariant ControlsLayoutDelegate oldDelegate) {
     return oldDelegate.movingNodePosition != movingNodePosition ||
         oldDelegate.movingNode != movingNode ||
-        oldDelegate.layout != layout;
+        oldDelegate.layout != layout ||
+        oldDelegate.resizingNodeSize != resizingNodeSize ||
+        oldDelegate.resizingNode != resizingNode;
   }
+}
+
+Offset screenToLayoutPosition(Offset offset) {
+  double x = (offset.dx / MULTIPLIER).round().clamp(0, 100).toDouble();
+  double y = (offset.dy / MULTIPLIER).round().clamp(0, 100).toDouble();
+
+  return Offset(x, y);
+}
+
+Size screenToLayoutSize(Size size) {
+  double width = (size.width / MULTIPLIER).round().clamp(1, 100).toDouble();
+  double height = (size.height / MULTIPLIER).round().clamp(1, 100).toDouble();
+
+  return Size(width, height);
 }
 
 class SequencerStateFetcher extends StatefulWidget {

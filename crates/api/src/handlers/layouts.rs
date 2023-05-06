@@ -83,6 +83,24 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn resize_control(&self, layout_id: String, control_id: String, size: ControlSize) {
+        let size = size.into();
+        log::debug!(
+            "Moving control {} in layout {} to {:?}",
+            control_id,
+            layout_id,
+            size
+        );
+        self.runtime
+            .run_command(ResizeLayoutControlCommand {
+                layout_id,
+                control_id,
+                size,
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn update_control_decorations(
         &self,
         layout_id: String,

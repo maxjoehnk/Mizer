@@ -13,6 +13,7 @@ abstract class LayoutsApi {
   Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position);
   Future<void> renameControl(String layoutId, String id, String name);
   Future<void> moveControl(String layoutId, String id, ControlPosition position);
+  Future<void> resizeControl(String layoutId, String id, ControlSize size);
   Future<void> updateControlDecoration(String layoutId, String id, ControlDecorations decoration);
   Future<void> updateControlBehavior(String layoutId, String id, ControlBehavior behavior);
   Future<void> deleteControl(String layoutId, String id);

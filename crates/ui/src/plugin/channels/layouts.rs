@@ -61,6 +61,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "resizeControl" => {
+                if let Err(err) = call.arguments().map(|req| self.resize_control(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "renameControl" => {
                 if let Err(err) = call.arguments().map(|req| self.rename_control(req)) {
                     resp.respond_error(err);
@@ -152,6 +159,11 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     fn move_control(&self, req: MoveControlRequest) {
         self.handler
             .move_control(req.layout_id, req.control_id, req.position.unwrap());
+    }
+
+    fn resize_control(&self, req: ResizeControlRequest) {
+        self.handler
+            .resize_control(req.layout_id, req.control_id, req.size.unwrap());
     }
 
     fn rename_control(&self, req: RenameControlRequest) {

@@ -933,6 +933,165 @@ impl ::protobuf::reflect::ProtobufValue for MoveControlRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.ResizeControlRequest)
+pub struct ResizeControlRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.ResizeControlRequest.layout_id)
+    pub layout_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.ResizeControlRequest.control_id)
+    pub control_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.ResizeControlRequest.size)
+    pub size: ::protobuf::MessageField<ControlSize>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.ResizeControlRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ResizeControlRequest {
+    fn default() -> &'a ResizeControlRequest {
+        <ResizeControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ResizeControlRequest {
+    pub fn new() -> ResizeControlRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "layout_id",
+            |m: &ResizeControlRequest| { &m.layout_id },
+            |m: &mut ResizeControlRequest| { &mut m.layout_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "control_id",
+            |m: &ResizeControlRequest| { &m.control_id },
+            |m: &mut ResizeControlRequest| { &mut m.control_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ControlSize>(
+            "size",
+            |m: &ResizeControlRequest| { &m.size },
+            |m: &mut ResizeControlRequest| { &mut m.size },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResizeControlRequest>(
+            "ResizeControlRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ResizeControlRequest {
+    const NAME: &'static str = "ResizeControlRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.layout_id = is.read_string()?;
+                },
+                18 => {
+                    self.control_id = is.read_string()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.size)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if !self.control_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.control_id);
+        }
+        if let Some(v) = self.size.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if !self.control_id.is_empty() {
+            os.write_string(2, &self.control_id)?;
+        }
+        if let Some(v) = self.size.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ResizeControlRequest {
+        ResizeControlRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.control_id.clear();
+        self.size.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ResizeControlRequest {
+        static instance: ResizeControlRequest = ResizeControlRequest {
+            layout_id: ::std::string::String::new(),
+            control_id: ::std::string::String::new(),
+            size: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ResizeControlRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ResizeControlRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ResizeControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ResizeControlRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.UpdateControlDecorationRequest)
 pub struct UpdateControlDecorationRequest {
     // message fields
@@ -3360,57 +3519,61 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     d\x12\x12\n\x04name\x18\x03\x20\x01(\tR\x04name\"\x84\x01\n\x12MoveContr\
     olRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\
     \ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x122\n\x08position\x18\x03\
-    \x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"\x99\x01\n\x1eUpd\
-    ateControlDecorationRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08\
-    layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12;\n\x0b\
-    decorations\x18\x03\x20\x01(\x0b2\x19.mizer.ControlDecorationsR\x0bdecor\
-    ations\"\x8e\x01\n\x1cUpdateControlBehaviorRequest\x12\x1b\n\tlayout_id\
-    \x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\
-    \tR\tcontrolId\x122\n\x08behavior\x18\x03\x20\x01(\x0b2\x16.mizer.Contro\
-    lBehaviorR\x08behavior\"R\n\x14RemoveControlRequest\x12\x1b\n\tlayout_id\
-    \x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\
-    \tR\tcontrolId\"\x9d\x01\n\x11AddControlRequest\x12\x1b\n\tlayout_id\x18\
-    \x01\x20\x01(\tR\x08layoutId\x127\n\tnode_type\x18\x02\x20\x01(\x0e2\x1a\
-    .mizer.nodes.Node.NodeTypeR\x08nodeType\x122\n\x08position\x18\x03\x20\
-    \x01(\x0b2\x16.mizer.ControlPositionR\x08position\"\x80\x01\n\x19AddExis\
-    tingControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\
-    \x12\x12\n\x04node\x18\x02\x20\x01(\tR\x04node\x122\n\x08position\x18\
-    \x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"2\n\x07Layout\
-    s\x12'\n\x07layouts\x18\x01\x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\
-    \n\x06Layout\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x120\n\x08control\
-    s\x18\x02\x20\x03(\x0b2\x14.mizer.LayoutControlR\x08controls\"\x84\x02\n\
-    \rLayoutControl\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\x122\n\x08\
-    position\x18\x02\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\
-    \x12&\n\x04size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04size\x12\
-    \x14\n\x05label\x18\x04\x20\x01(\tR\x05label\x129\n\ndecoration\x18\x05\
-    \x20\x01(\x0b2\x19.mizer.ControlDecorationsR\ndecoration\x122\n\x08behav\
-    ior\x18\x06\x20\x01(\x0b2\x16.mizer.ControlBehaviorR\x08behavior\"-\n\
-    \x0fControlPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\
-    \x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\
-    \x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04\
-    R\x06height\"\x88\x01\n\x12ControlDecorations\x12\x1b\n\thas_color\x18\
-    \x01\x20\x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\
-    \x0c.mizer.ColorR\x05color\x12\x1b\n\thas_image\x18\x03\x20\x01(\x08R\
-    \x08hasImage\x12\x14\n\x05image\x18\x04\x20\x01(\x0cR\x05image\"C\n\x05C\
-    olor\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\
-    \x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\
-    \x04blue\"P\n\x0fControlBehavior\x12=\n\tsequencer\x18\x01\x20\x01(\x0b2\
-    \x1f.mizer.SequencerControlBehaviorR\tsequencer\"\x9d\x01\n\x18Sequencer\
-    ControlBehavior\x12T\n\x0eclick_behavior\x18\x01\x20\x01(\x0e2-.mizer.Se\
-    quencerControlBehavior.ClickBehaviorR\rclickBehavior\"+\n\rClickBehavior\
-    \x12\x0e\n\nGO_FORWARD\x10\0\x12\n\n\x06TOGGLE\x10\x01\"+\n\x15ReadFader\
-    ValueRequest\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\"*\n\x12Fader\
-    ValueResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value2\xc4\x06\
-    \n\nLayoutsApi\x126\n\nGetLayouts\x12\x18.mizer.GetLayoutsRequest\x1a\
-    \x0e.mizer.Layouts\x124\n\tAddLayout\x12\x17.mizer.AddLayoutRequest\x1a\
-    \x0e.mizer.Layouts\x12:\n\x0cRemoveLayout\x12\x1a.mizer.RemoveLayoutRequ\
-    est\x1a\x0e.mizer.Layouts\x12:\n\x0cRenameLayout\x12\x1a.mizer.RenameLay\
-    outRequest\x1a\x0e.mizer.Layouts\x12C\n\rRenameControl\x12\x1b.mizer.Ren\
-    ameControlRequest\x1a\x15.mizer.LayoutResponse\x12?\n\x0bMoveControl\x12\
-    \x19.mizer.MoveControlRequest\x1a\x15.mizer.LayoutResponse\x12W\n\x17Upd\
-    ateControlDecoration\x12%.mizer.UpdateControlDecorationRequest\x1a\x15.m\
-    izer.LayoutResponse\x12S\n\x15UpdateControlBehavior\x12#.mizer.UpdateCon\
-    trolBehaviorRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rRemoveControl\
+    \x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"z\n\x14ResizeCont\
+    rolRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\
+    \n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12&\n\x04size\x18\x03\x20\
+    \x01(\x0b2\x12.mizer.ControlSizeR\x04size\"\x99\x01\n\x1eUpdateControlDe\
+    corationRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\
+    \x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12;\n\x0bdecorations\
+    \x18\x03\x20\x01(\x0b2\x19.mizer.ControlDecorationsR\x0bdecorations\"\
+    \x8e\x01\n\x1cUpdateControlBehaviorRequest\x12\x1b\n\tlayout_id\x18\x01\
+    \x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcont\
+    rolId\x122\n\x08behavior\x18\x03\x20\x01(\x0b2\x16.mizer.ControlBehavior\
+    R\x08behavior\"R\n\x14RemoveControlRequest\x12\x1b\n\tlayout_id\x18\x01\
+    \x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcont\
+    rolId\"\x9d\x01\n\x11AddControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\
+    \x01(\tR\x08layoutId\x127\n\tnode_type\x18\x02\x20\x01(\x0e2\x1a.mizer.n\
+    odes.Node.NodeTypeR\x08nodeType\x122\n\x08position\x18\x03\x20\x01(\x0b2\
+    \x16.mizer.ControlPositionR\x08position\"\x80\x01\n\x19AddExistingContro\
+    lRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x12\n\
+    \x04node\x18\x02\x20\x01(\tR\x04node\x122\n\x08position\x18\x03\x20\x01(\
+    \x0b2\x16.mizer.ControlPositionR\x08position\"2\n\x07Layouts\x12'\n\x07l\
+    ayouts\x18\x01\x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\n\x06Layout\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x120\n\x08controls\x18\x02\
+    \x20\x03(\x0b2\x14.mizer.LayoutControlR\x08controls\"\x84\x02\n\rLayoutC\
+    ontrol\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\x122\n\x08position\
+    \x18\x02\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\x12&\n\x04\
+    size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04size\x12\x14\n\x05l\
+    abel\x18\x04\x20\x01(\tR\x05label\x129\n\ndecoration\x18\x05\x20\x01(\
+    \x0b2\x19.mizer.ControlDecorationsR\ndecoration\x122\n\x08behavior\x18\
+    \x06\x20\x01(\x0b2\x16.mizer.ControlBehaviorR\x08behavior\"-\n\x0fContro\
+    lPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\x01y\x18\
+    \x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\x18\x01\
+    \x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06hei\
+    ght\"\x88\x01\n\x12ControlDecorations\x12\x1b\n\thas_color\x18\x01\x20\
+    \x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\x0c.mizer.\
+    ColorR\x05color\x12\x1b\n\thas_image\x18\x03\x20\x01(\x08R\x08hasImage\
+    \x12\x14\n\x05image\x18\x04\x20\x01(\x0cR\x05image\"C\n\x05Color\x12\x10\
+    \n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\
+    \x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"P\n\
+    \x0fControlBehavior\x12=\n\tsequencer\x18\x01\x20\x01(\x0b2\x1f.mizer.Se\
+    quencerControlBehaviorR\tsequencer\"\x9d\x01\n\x18SequencerControlBehavi\
+    or\x12T\n\x0eclick_behavior\x18\x01\x20\x01(\x0e2-.mizer.SequencerContro\
+    lBehavior.ClickBehaviorR\rclickBehavior\"+\n\rClickBehavior\x12\x0e\n\nG\
+    O_FORWARD\x10\0\x12\n\n\x06TOGGLE\x10\x01\"+\n\x15ReadFaderValueRequest\
+    \x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\"*\n\x12FaderValueRespons\
+    e\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value2\x89\x07\n\nLayoutsA\
+    pi\x126\n\nGetLayouts\x12\x18.mizer.GetLayoutsRequest\x1a\x0e.mizer.Layo\
+    uts\x124\n\tAddLayout\x12\x17.mizer.AddLayoutRequest\x1a\x0e.mizer.Layou\
+    ts\x12:\n\x0cRemoveLayout\x12\x1a.mizer.RemoveLayoutRequest\x1a\x0e.mize\
+    r.Layouts\x12:\n\x0cRenameLayout\x12\x1a.mizer.RenameLayoutRequest\x1a\
+    \x0e.mizer.Layouts\x12C\n\rRenameControl\x12\x1b.mizer.RenameControlRequ\
+    est\x1a\x15.mizer.LayoutResponse\x12?\n\x0bMoveControl\x12\x19.mizer.Mov\
+    eControlRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rResizeControl\x12\
+    \x1b.mizer.ResizeControlRequest\x1a\x15.mizer.LayoutResponse\x12W\n\x17U\
+    pdateControlDecoration\x12%.mizer.UpdateControlDecorationRequest\x1a\x15\
+    .mizer.LayoutResponse\x12S\n\x15UpdateControlBehavior\x12#.mizer.UpdateC\
+    ontrolBehaviorRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rRemoveControl\
     \x12\x1b.mizer.RemoveControlRequest\x1a\x15.mizer.LayoutResponse\x12=\n\
     \nAddControl\x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutRespons\
     e\x12M\n\x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\
@@ -3434,7 +3597,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::nodes::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(23);
+            let mut messages = ::std::vec::Vec::with_capacity(24);
             messages.push(LayoutResponse::generated_message_descriptor_data());
             messages.push(GetLayoutsRequest::generated_message_descriptor_data());
             messages.push(AddLayoutRequest::generated_message_descriptor_data());
@@ -3442,6 +3605,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(RenameLayoutRequest::generated_message_descriptor_data());
             messages.push(RenameControlRequest::generated_message_descriptor_data());
             messages.push(MoveControlRequest::generated_message_descriptor_data());
+            messages.push(ResizeControlRequest::generated_message_descriptor_data());
             messages.push(UpdateControlDecorationRequest::generated_message_descriptor_data());
             messages.push(UpdateControlBehaviorRequest::generated_message_descriptor_data());
             messages.push(RemoveControlRequest::generated_message_descriptor_data());

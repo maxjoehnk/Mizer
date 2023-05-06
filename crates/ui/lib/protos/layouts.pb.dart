@@ -380,6 +380,83 @@ class MoveControlRequest extends $pb.GeneratedMessage {
   ControlPosition ensurePosition() => $_ensure(2);
 }
 
+class ResizeControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResizeControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlSize>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', subBuilder: ControlSize.create)
+    ..hasRequiredFields = false
+  ;
+
+  ResizeControlRequest._() : super();
+  factory ResizeControlRequest({
+    $core.String? layoutId,
+    $core.String? controlId,
+    ControlSize? size,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (controlId != null) {
+      _result.controlId = controlId;
+    }
+    if (size != null) {
+      _result.size = size;
+    }
+    return _result;
+  }
+  factory ResizeControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ResizeControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ResizeControlRequest clone() => ResizeControlRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ResizeControlRequest copyWith(void Function(ResizeControlRequest) updates) => super.copyWith((message) => updates(message as ResizeControlRequest)) as ResizeControlRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ResizeControlRequest create() => ResizeControlRequest._();
+  ResizeControlRequest createEmptyInstance() => create();
+  static $pb.PbList<ResizeControlRequest> createRepeated() => $pb.PbList<ResizeControlRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ResizeControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResizeControlRequest>(create);
+  static ResizeControlRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get controlId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set controlId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControlId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControlId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  ControlSize get size => $_getN(2);
+  @$pb.TagNumber(3)
+  set size(ControlSize v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSize() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSize() => clearField(3);
+  @$pb.TagNumber(3)
+  ControlSize ensureSize() => $_ensure(2);
+}
+
 class UpdateControlDecorationRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateControlDecorationRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')

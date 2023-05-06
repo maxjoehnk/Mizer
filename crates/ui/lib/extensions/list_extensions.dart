@@ -13,3 +13,11 @@ extension ListExtensions<T> on List<T> {
     });
   }
 }
+
+extension IterableExtensions<T> on Iterable<T> {
+  Iterable<T> distinct() {
+    final ids = Set();
+
+    return this.where((x) => ids.add(x));
+  }
+}

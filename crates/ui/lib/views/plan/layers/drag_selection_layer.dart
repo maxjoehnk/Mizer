@@ -1,8 +1,8 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
@@ -34,20 +34,15 @@ class DragSelectionLayer extends StatelessWidget {
 
   void _onSelection(BuildContext context, Rect rect) {
     rect = MatrixUtils.inverseTransformRect(transformation, rect);
-    var positions = this.plan.positions
-        .where((fixture) {
-          var fixturePosition = _convertToScreenPosition(fixture);
-          var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
-          var fixtureRect = Rect.fromPoints(fixturePosition, fixtureEnd);
+    var positions = this.plan.positions.where((fixture) {
+      var fixturePosition = _convertToScreenPosition(fixture);
+      var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
+      var fixtureRect = Rect.fromPoints(fixturePosition, fixtureEnd);
 
-          return fixtureRect.overlaps(rect);
-        })
-        .toList();
+      return fixtureRect.overlaps(rect);
+    }).toList();
     selectionState!.reorderFixtures(positions);
-    List<FixtureId> selection = positions
-        .map((fixture) => fixture.id)
-        .toSet()
-        .toList();
+    List<FixtureId> selection = positions.map((fixture) => fixture.id).distinct().toList();
 
     ProgrammerApi programmerApi = context.read();
     programmerApi.selectFixtures(selection);
@@ -158,19 +153,31 @@ class SelectionState {
     }
     if (direction!.primaryAxis == Axis.horizontal) {
       _reorderHorizontal(positions);
+    } else {
       _reorderVertical(positions);
-    }else {
-      _reorderVertical(positions);
-      _reorderHorizontal(positions);
     }
   }
 
   void _reorderHorizontal(List<FixturePosition> positions) {
-    positions.sortByCompare<int>((f) => f.x, (a, b) => direction!.horizontal == AxisDirection.right ? b - a : a - b);
+    positions.sort((a, b) {
+      var verticalOrder = direction!.vertical == AxisDirection.up ? b.y - a.y : a.y - b.y;
+      if (verticalOrder != 0) {
+        return verticalOrder;
+      }
+
+      return direction!.horizontal == AxisDirection.right ? b.x - a.x : a.x - b.x;
+    });
   }
 
   void _reorderVertical(List<FixturePosition> positions) {
-    positions.sortByCompare<int>((f) => f.y, (a, b) => direction!.vertical == AxisDirection.up ? b - a : a - b);
+    positions.sort((a, b) {
+      var horizontalOrder = direction!.horizontal == AxisDirection.right ? b.x - a.x : a.x - b.x;
+      if (horizontalOrder != 0) {
+        return horizontalOrder;
+      }
+
+      return direction!.vertical == AxisDirection.up ? b.y - a.y : a.y - b.y;
+    });
   }
 }
 
@@ -179,7 +186,9 @@ class SelectionDirection {
   AxisDirection vertical;
   AxisDirection horizontal;
 
-  SelectionDirection(this.primaryAxis) : vertical = AxisDirection.up, horizontal = AxisDirection.right;
+  SelectionDirection(this.primaryAxis)
+      : vertical = AxisDirection.up,
+        horizontal = AxisDirection.right;
 
   update(Offset offset) {
     vertical = offset.dy > 0 ? AxisDirection.up : AxisDirection.down;
@@ -188,10 +197,14 @@ class SelectionDirection {
 
   @override
   String toString() {
-    String verticalName = vertical == AxisDirection.up ? "Bottom to Top".i18n : "Top to Bottom".i18n;
-    String horizontalName = horizontal == AxisDirection.right ? "Right to Left".i18n : "Left to Right".i18n;
+    String verticalName =
+        vertical == AxisDirection.up ? "Bottom to Top".i18n : "Top to Bottom".i18n;
+    String horizontalName =
+        horizontal == AxisDirection.right ? "Right to Left".i18n : "Left to Right".i18n;
 
-    return primaryAxis == Axis.vertical ? "$verticalName -> $horizontalName" : "$horizontalName -> $verticalName";
+    return primaryAxis == Axis.vertical
+        ? "$verticalName -> $horizontalName"
+        : "$horizontalName -> $verticalName";
   }
 }
 

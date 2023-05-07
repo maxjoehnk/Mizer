@@ -43,6 +43,7 @@ pub fn discover_sessions() -> anyhow::Result<()> {
             let event_loop = browser.browse_services().unwrap();
             loop {
                 event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
+                thread::sleep(Duration::from_secs(POLL_TIMEOUT));
             }
         })?;
 

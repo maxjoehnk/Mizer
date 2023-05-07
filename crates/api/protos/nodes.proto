@@ -366,7 +366,7 @@ message GamepadNodeConfig {
 message PixelPatternNodeConfig {
   enum Pattern {
     RGB_ITERATE = 0;
-    RGB_SNAKE = 1;
+    SWIRL = 1;
   }
 
   Pattern pattern = 1;

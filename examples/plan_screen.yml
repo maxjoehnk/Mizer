@@ -1,29 +1,20 @@
 ---
+version: 1
 nodes:
-  - path: /fixture-8
+  - path: /fixture-2
     type: fixture
     config:
-      fixture: 9
+      fixture: 3
     designer:
       position:
         x: 0.0
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /fixture-0
+  - path: /fixture-3
     type: fixture
     config:
-      fixture: 1
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /fixture-10
-    type: fixture
-    config:
-      fixture: 11
+      fixture: 4
     designer:
       position:
         x: 0.0
@@ -40,30 +31,39 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /fixture-7
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.25333333333333335
+        y: 1.72
+      scale: 0.0
+      hidden: false
+  - path: /fixture-0
     type: fixture
     config:
-      fixture: 8
+      fixture: 1
     designer:
       position:
         x: 0.0
         y: 0.0
       scale: 0.0
       hidden: true
+  - path: /pixel-pattern-0
+    type: pixel-pattern
+    config:
+      pattern: swirl
+    designer:
+      position:
+        x: 8.587454416655504
+        y: 2.0071323053915444
+      scale: 1.0
+      hidden: false
   - path: /fixture-6
     type: fixture
     config:
       fixture: 7
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /fixture-2
-    type: fixture
-    config:
-      fixture: 3
     designer:
       position:
         x: 0.0
@@ -81,49 +81,30 @@ nodes:
         y: 1.96
       scale: 0.0
       hidden: false
-  - path: /pixel-pattern-0
-    type: pixel-pattern
-    config:
-      pattern: rgb-iterate
-    designer:
-      position:
-        x: 8.587454416655504
-        y: 2.0071323053915444
-      scale: 1.0
-      hidden: false
-  - path: /fixture-11
-    type: fixture
-    config:
-      fixture: 12
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /programmer-0
-    type: programmer
-    config: ~
-    designer:
-      position:
-        x: 0.25333333333333335
-        y: 1.72
-      scale: 0.0
-      hidden: false
-  - path: /fixture-9
-    type: fixture
-    config:
-      fixture: 10
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
   - path: /fixture-4
     type: fixture
     config:
       fixture: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-7
+    type: fixture
+    config:
+      fixture: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-11
+    type: fixture
+    config:
+      fixture: 12
     designer:
       position:
         x: 0.0
@@ -140,10 +121,30 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /fixture-3
+  - path: /fixture-8
     type: fixture
     config:
-      fixture: 4
+      fixture: 9
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-9
+    type: fixture
+    config:
+      fixture: 10
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-10
+    type: fixture
+    config:
+      fixture: 11
     designer:
       position:
         x: 0.0
@@ -151,8 +152,11 @@ nodes:
       scale: 0.0
       hidden: true
 channels:
-  - output@/pixel-pattern-0 -> output@/plan-screen-1
-media: []
+  - Output@/pixel-pattern-0 -> Input@/plan-screen-1
+media:
+  import_paths: []
+  files: []
+  tags: []
 layouts:
   Default: []
 connections:
@@ -160,46 +164,6 @@ connections:
     name: sACN (mizer)
     type: sacn
 fixtures:
-  - id: 3
-    name: LED Pixel Bar 12 RGBW 3
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 97
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-  - id: 7
-    name: LED Pixel Bar 12 RGBW 1
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 1
-    universe: 2
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-  - id: 2
-    name: LED Pixel Bar 12 RGBW 2
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 49
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-  - id: 4
-    name: LED Pixel Bar 12 RGBW 4
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 145
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
   - id: 9
     name: LED Pixel Bar 12 RGBW 3
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
@@ -210,26 +174,7 @@ fixtures:
     configuration:
       invert_pan: false
       invert_tilt: false
-  - id: 6
-    name: LED Pixel Bar 12 RGBW 6
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 241
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-  - id: 5
-    name: LED Pixel Bar 12 RGBW 5
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 193
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
+      reverse_pixel_order: false
   - id: 12
     name: LED Pixel Bar 12 RGBW 6
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
@@ -240,6 +185,29 @@ fixtures:
     configuration:
       invert_pan: false
       invert_tilt: false
+      reverse_pixel_order: false
+  - id: 3
+    name: LED Pixel Bar 12 RGBW 3
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 97
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 5
+    name: LED Pixel Bar 12 RGBW 5
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 193
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
   - id: 10
     name: LED Pixel Bar 12 RGBW 4
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
@@ -250,16 +218,18 @@ fixtures:
     configuration:
       invert_pan: false
       invert_tilt: false
-  - id: 8
+      reverse_pixel_order: false
+  - id: 2
     name: LED Pixel Bar 12 RGBW 2
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
     channel: 49
-    universe: 2
+    universe: 1
     mode: 48 Channel
     output: ~
     configuration:
       invert_pan: false
       invert_tilt: false
+      reverse_pixel_order: false
   - id: 1
     name: LED Pixel Bar 12 RGBW 1
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
@@ -270,6 +240,29 @@ fixtures:
     configuration:
       invert_pan: false
       invert_tilt: false
+      reverse_pixel_order: false
+  - id: 8
+    name: LED Pixel Bar 12 RGBW 2
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 49
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 7
+    name: LED Pixel Bar 12 RGBW 1
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 1
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
   - id: 11
     name: LED Pixel Bar 12 RGBW 5
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
@@ -280,56 +273,55 @@ fixtures:
     configuration:
       invert_pan: false
       invert_tilt: false
+      reverse_pixel_order: false
+  - id: 6
+    name: LED Pixel Bar 12 RGBW 6
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 241
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 4
+    name: LED Pixel Bar 12 RGBW 4
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 145
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
 groups: []
 presets:
   intensity:
-    - id: 3
-      label: 50%
-      value: 0.5
     - id: 4
       label: 75%
       value: 0.75
-    - id: 5
-      label: 100%
-      value: 1.0
+    - id: 3
+      label: 50%
+      value: 0.5
     - id: 1
       label: 0%
       value: 0.0
     - id: 2
       label: 25%
       value: 0.25
+    - id: 5
+      label: 100%
+      value: 1.0
   shutter: []
   color:
-    - id: 7
-      label: Turquoise
-      value:
-        - 0.0
-        - 1.0
-        - 1.0
-    - id: 6
-      label: Purple
-      value:
-        - 1.0
-        - 0.0
-        - 1.0
     - id: 5
       label: Yellow
       value:
         - 1.0
         - 1.0
         - 0.0
-    - id: 3
-      label: Green
-      value:
-        - 0.0
-        - 1.0
-        - 0.0
-    - id: 1
-      label: White
-      value:
-        - 1.0
-        - 1.0
-        - 1.0
     - id: 4
       label: Blue
       value:
@@ -342,6 +334,30 @@ presets:
         - 1.0
         - 0.0
         - 0.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
   position: []
 sequences: []
 effects:
@@ -420,724 +436,1015 @@ plans:
           - 1
         x: 0
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 2
         x: 1
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 3
         x: 2
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 4
         x: 3
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 5
         x: 4
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 6
         x: 5
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 7
         x: 6
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 8
         x: 7
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 9
         x: 8
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 10
         x: 9
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 11
         x: 10
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 1
           - 12
         x: 11
         y: 0
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 1
         x: 0
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 2
         x: 1
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 3
         x: 2
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 4
         x: 3
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 5
         x: 4
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 6
         x: 5
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 7
         x: 6
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 8
         x: 7
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 9
         x: 8
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 10
         x: 9
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 11
         x: 10
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 2
           - 12
         x: 11
         y: 1
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 1
         x: 0
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 2
         x: 1
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 3
         x: 2
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 4
         x: 3
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 5
         x: 4
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 6
         x: 5
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 7
         x: 6
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 8
         x: 7
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 9
         x: 8
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 10
         x: 9
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 11
         x: 10
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 3
           - 12
         x: 11
         y: 2
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 1
         x: 0
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 2
         x: 1
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 3
         x: 2
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 4
         x: 3
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 5
         x: 4
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 6
         x: 5
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 7
         x: 6
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 8
         x: 7
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 9
         x: 8
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 10
         x: 9
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 11
         x: 10
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 4
           - 12
         x: 11
         y: 3
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 1
         x: 0
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 2
         x: 1
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 3
         x: 2
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 4
         x: 3
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 5
         x: 4
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 6
         x: 5
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 7
         x: 6
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 8
         x: 7
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 9
         x: 8
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 10
         x: 9
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 11
         x: 10
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 5
           - 12
         x: 11
         y: 4
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 1
         x: 0
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 2
         x: 1
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 3
         x: 2
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 4
         x: 3
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 5
         x: 4
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 6
         x: 5
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 7
         x: 6
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 8
         x: 7
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 9
         x: 8
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 10
         x: 9
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 11
         x: 10
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 6
           - 12
         x: 11
         y: 5
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 1
         x: 0
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 2
         x: 1
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 3
         x: 2
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 4
         x: 3
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 5
         x: 4
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 6
         x: 5
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 7
         x: 6
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 8
         x: 7
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 9
         x: 8
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 10
         x: 9
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 11
         x: 10
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 7
           - 12
         x: 11
         y: 6
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 1
         x: 0
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 2
         x: 1
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 3
         x: 2
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 4
         x: 3
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 5
         x: 4
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 6
         x: 5
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 7
         x: 6
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 8
         x: 7
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 9
         x: 8
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 10
         x: 9
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 11
         x: 10
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 8
           - 12
         x: 11
         y: 7
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 1
         x: 0
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 2
         x: 1
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 3
         x: 2
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 4
         x: 3
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 5
         x: 4
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 6
         x: 5
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 7
         x: 6
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 8
         x: 7
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 9
         x: 8
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 10
         x: 9
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 11
         x: 10
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 9
           - 12
         x: 11
         y: 8
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 1
         x: 0
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 2
         x: 1
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 3
         x: 2
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 4
         x: 3
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 5
         x: 4
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 6
         x: 5
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 7
         x: 6
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 8
         x: 7
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 9
         x: 8
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 10
         x: 9
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 11
         x: 10
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 10
           - 12
         x: 11
         y: 9
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 1
         x: 0
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 2
         x: 1
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 3
         x: 2
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 4
         x: 3
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 5
         x: 4
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 6
         x: 5
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 7
         x: 6
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 8
         x: 7
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 9
         x: 8
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 10
         x: 9
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 11
         x: 10
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 11
           - 12
         x: 11
         y: 10
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 1
         x: 0
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 2
         x: 1
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 3
         x: 2
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 4
         x: 3
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 5
         x: 4
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 6
         x: 5
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 7
         x: 6
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 8
         x: 7
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 9
         x: 8
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 10
         x: 9
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 11
         x: 10
         y: 11
+        width: 1
+        height: 1
       - fixture:
           - 12
           - 12
         x: 11
         y: 11
+        width: 1
+        height: 1
     screens:
       - id: 1
         x: 0
         y: 0
         width: 12
         height: 12
+timecodes:
+  timecodes: []
+  controls: []

@@ -274,11 +274,11 @@ class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
 
 class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   static const PixelPatternNodeConfig_Pattern RGB_ITERATE = PixelPatternNodeConfig_Pattern._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RGB_ITERATE');
-  static const PixelPatternNodeConfig_Pattern RGB_SNAKE = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RGB_SNAKE');
+  static const PixelPatternNodeConfig_Pattern SWIRL = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SWIRL');
 
   static const $core.List<PixelPatternNodeConfig_Pattern> values = <PixelPatternNodeConfig_Pattern> [
     RGB_ITERATE,
-    RGB_SNAKE,
+    SWIRL,
   ];
 
   static final $core.Map<$core.int, PixelPatternNodeConfig_Pattern> _byValue = $pb.ProtobufEnum.initByValue(values);

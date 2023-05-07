@@ -4394,6 +4394,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mizer-util",
  "serde",
+ "test-case",
 ]
 
 [[package]]

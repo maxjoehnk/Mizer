@@ -127,7 +127,10 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn rgb(red: f64, green: f64, blue: f64) -> Self {
+    pub const WHITE: Self = Self::rgb(1f64, 1f64, 1f64);
+    pub const BLACK: Self = Self::rgb(0f64, 0f64, 0f64);
+
+    pub const fn rgb(red: f64, green: f64, blue: f64) -> Self {
         Self {
             red,
             green,
@@ -140,6 +143,12 @@ impl Color {
 impl From<(f64, f64, f64)> for Color {
     fn from((r, g, b): (f64, f64, f64)) -> Self {
         Self::rgb(r, g, b)
+    }
+}
+
+impl From<Color> for (f64, f64, f64) {
+    fn from(color: Color) -> Self {
+        (color.red, color.green, color.blue)
     }
 }
 

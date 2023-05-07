@@ -751,7 +751,7 @@ impl From<mizer_nodes::Pattern> for pixel_pattern_node_config::Pattern {
 
         match pattern {
             RgbIterate => Self::RGB_ITERATE,
-            RgbSnake => Self::RGB_SNAKE,
+            Swirl => Self::SWIRL,
         }
     }
 }
@@ -762,7 +762,7 @@ impl From<pixel_pattern_node_config::Pattern> for mizer_nodes::Pattern {
 
         match pattern {
             RGB_ITERATE => Self::RgbIterate,
-            RGB_SNAKE => Self::RgbSnake,
+            SWIRL => Self::Swirl,
         }
     }
 }

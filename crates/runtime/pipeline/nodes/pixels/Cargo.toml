@@ -11,3 +11,4 @@ log = "0.4"
 serde = { version = "1", features = ["derive"] }
 mizer-protocol-dmx = { path = "../../../../components/connections/protocols/dmx" }
 mizer-util = { path = "../../../../util" }
+test-case = "3.1"

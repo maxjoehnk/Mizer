@@ -631,12 +631,12 @@ const PixelPatternNodeConfig_Pattern$json = const {
   '1': 'Pattern',
   '2': const [
     const {'1': 'RGB_ITERATE', '2': 0},
-    const {'1': 'RGB_SNAKE', '2': 1},
+    const {'1': 'SWIRL', '2': 1},
   ],
 };
 
 /// Descriptor for `PixelPatternNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pixelPatternNodeConfigDescriptor = $convert.base64Decode('ChZQaXhlbFBhdHRlcm5Ob2RlQ29uZmlnEkUKB3BhdHRlcm4YASABKA4yKy5taXplci5ub2Rlcy5QaXhlbFBhdHRlcm5Ob2RlQ29uZmlnLlBhdHRlcm5SB3BhdHRlcm4iKQoHUGF0dGVybhIPCgtSR0JfSVRFUkFURRAAEg0KCVJHQl9TTkFLRRAB');
+final $typed_data.Uint8List pixelPatternNodeConfigDescriptor = $convert.base64Decode('ChZQaXhlbFBhdHRlcm5Ob2RlQ29uZmlnEkUKB3BhdHRlcm4YASABKA4yKy5taXplci5ub2Rlcy5QaXhlbFBhdHRlcm5Ob2RlQ29uZmlnLlBhdHRlcm5SB3BhdHRlcm4iJQoHUGF0dGVybhIPCgtSR0JfSVRFUkFURRAAEgkKBVNXSVJMEAE=');
 @$core.Deprecated('Use pixelDmxNodeConfigDescriptor instead')
 const PixelDmxNodeConfig$json = const {
   '1': 'PixelDmxNodeConfig',

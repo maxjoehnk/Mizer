@@ -10188,8 +10188,8 @@ pub mod pixel_pattern_node_config {
     pub enum Pattern {
         // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RGB_ITERATE)
         RGB_ITERATE = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RGB_SNAKE)
-        RGB_SNAKE = 1,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.SWIRL)
+        SWIRL = 1,
     }
 
     impl ::protobuf::Enum for Pattern {
@@ -10202,14 +10202,14 @@ pub mod pixel_pattern_node_config {
         fn from_i32(value: i32) -> ::std::option::Option<Pattern> {
             match value {
                 0 => ::std::option::Option::Some(Pattern::RGB_ITERATE),
-                1 => ::std::option::Option::Some(Pattern::RGB_SNAKE),
+                1 => ::std::option::Option::Some(Pattern::SWIRL),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [Pattern] = &[
             Pattern::RGB_ITERATE,
-            Pattern::RGB_SNAKE,
+            Pattern::SWIRL,
         ];
     }
 
@@ -17586,20 +17586,20 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ART\x10\r\x12\x08\n\x04MODE\x10\x0e\x12\x0b\n\x07DPAD_UP\x10\x0f\x12\r\n\
     \tDPAD_DOWN\x10\x10\x12\r\n\tDPAD_LEFT\x10\x11\x12\x0e\n\nDPAD_RIGHT\x10\
     \x12\x12\x0e\n\nLEFT_STICK\x10\x13\x12\x0f\n\x0bRIGHT_STICK\x10\x14\"\
-    \x8a\x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01(\
-    \x0e2+.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\")\n\x07Pa\
-    ttern\x12\x0f\n\x0bRGB_ITERATE\x10\0\x12\r\n\tRGB_SNAKE\x10\x01\"\x81\
-    \x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\
-    \x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0e\
-    start_universe\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\
-    \x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\x12\x1b\n\x06\
-    output\x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\x1a\n\x08univers\
-    e\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\
-    \rR\x07channelB\t\n\x07_output\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\n\
-    \x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_binding\x18\x02\
-    \x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBindin\
-    g\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiNodeC\
-    onfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBinding\
+    \x86\x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01(\
+    \x0e2+.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\"%\n\x07Pa\
+    ttern\x12\x0f\n\x0bRGB_ITERATE\x10\0\x12\t\n\x05SWIRL\x10\x01\"\x81\x01\
+    \n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05wid\
+    th\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0estart_u\
+    niverse\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\x18\x04\
+    \x20\x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\x12\x1b\n\x06output\
+    \x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\x1a\n\x08universe\x18\
+    \x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\
+    \x07channelB\t\n\x07_output\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\n\x06d\
+    evice\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_binding\x18\x02\x20\
+    \x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBinding\
+    \x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiNodeCo\
+    nfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBinding\
     \x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04type\x18\
     \x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTypeR\x04\
     type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nrange_from\

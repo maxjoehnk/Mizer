@@ -28,4 +28,4 @@ nodes:
         y: 0
       scale: 1
 channels:
-  - output@/pixel-pattern-0 -> pixels@/opc-output-0
+  - Output@/pixel-pattern-0 -> pixels@/opc-output-0

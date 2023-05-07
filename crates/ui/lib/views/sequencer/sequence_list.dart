@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -41,12 +42,7 @@ class SequenceList extends StatelessWidget {
         childAspectRatio: 1,
       ),
       children: sequences
-          .where((s) {
-            if (searchQuery == null) {
-              return true;
-            }
-            return s.name.contains(searchQuery!);
-          })
+          .search([(s) => s.name], searchQuery)
           .map((sequence) => _sequenceRow(context, sequence))
           .toList(),
     );

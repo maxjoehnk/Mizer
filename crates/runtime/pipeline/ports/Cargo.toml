@@ -9,6 +9,7 @@ anyhow = "1"
 crossbeam = "0.8"
 serde = { version = "1", features = ["derive"] }
 bincode = "1.3"
+mizer-util = { path = "../../../util" }
 
 [dev-dependencies]
 criterion = "0.4"

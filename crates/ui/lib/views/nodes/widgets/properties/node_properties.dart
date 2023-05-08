@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/groups/color_constant_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/node_properties.dart';
 
 import 'properties/groups/button_properties.dart';
@@ -241,6 +242,14 @@ class NodePropertiesPane extends StatelessWidget {
               path: node.path,
               config: NodeConfig(
                 pixelPatternConfig: config,
+              )))));
+    }
+    if (node.config.hasColorConstantConfig()) {
+      widgets.add(ColorConstantProperties(node.config.colorConstantConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path,
+              config: NodeConfig(
+                colorConstantConfig: config,
               )))));
     }
     return widgets;

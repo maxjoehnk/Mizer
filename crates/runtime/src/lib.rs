@@ -66,6 +66,10 @@ pub trait NodeDowncast {
                 Node::VideoTransform(self.downcast_node(node_type).unwrap())
             }
             NodeType::Gamepad => Node::Gamepad(self.downcast_node(node_type).unwrap()),
+            NodeType::ColorConstant => Node::ColorConstant(self.downcast_node(node_type).unwrap()),
+            NodeType::ColorBrightness => {
+                Node::ColorBrightness(self.downcast_node(node_type).unwrap())
+            }
             NodeType::ColorHsv => Node::ColorHsv(self.downcast_node(node_type).unwrap()),
             NodeType::ColorRgb => Node::ColorRgb(self.downcast_node(node_type).unwrap()),
             NodeType::Container => Node::Container(self.downcast_node(node_type).unwrap()),

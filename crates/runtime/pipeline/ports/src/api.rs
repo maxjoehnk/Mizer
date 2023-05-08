@@ -1,8 +1,9 @@
+use mizer_util::hsv_to_rgb;
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::{Hash, Hasher};
-use std::ops::Deref;
+use std::ops::{Deref, Mul};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[repr(transparent)]
@@ -138,6 +139,12 @@ impl Color {
             alpha: 1f64,
         }
     }
+
+    pub fn hsv(hue: f64, saturation: f64, value: f64) -> Self {
+        let (red, green, blue) = hsv_to_rgb(hue, saturation, value);
+
+        Self::rgb(red, green, blue)
+    }
 }
 
 impl From<(f64, f64, f64)> for Color {
@@ -149,6 +156,19 @@ impl From<(f64, f64, f64)> for Color {
 impl From<Color> for (f64, f64, f64) {
     fn from(color: Color) -> Self {
         (color.red, color.green, color.blue)
+    }
+}
+
+impl Mul<f64> for Color {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self::Output {
+        Self {
+            red: self.red * rhs,
+            green: self.green * rhs,
+            blue: self.blue * rhs,
+            alpha: self.alpha,
+        }
     }
 }
 

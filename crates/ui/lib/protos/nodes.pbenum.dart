@@ -76,7 +76,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType GAMEPAD = Node_NodeType._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GAMEPAD');
   static const Node_NodeType COLOR_RGB = Node_NodeType._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RGB');
   static const Node_NodeType COLOR_HSV = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_HSV');
-  static const Node_NodeType CONTAINER = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTAINER');
+  static const Node_NodeType COLOR_CONSTANT = Node_NodeType._(52, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_CONSTANT');
+  static const Node_NodeType COLOR_BRIGHTNESS = Node_NodeType._(53, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_BRIGHTNESS');
   static const Node_NodeType ENCODER = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ENCODER');
   static const Node_NodeType MATH = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MATH');
   static const Node_NodeType DATA_TO_NUMBER = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA_TO_NUMBER');
@@ -104,6 +105,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType AUDIO_MIX = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_MIX');
   static const Node_NodeType AUDIO_METER = Node_NodeType._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_METER');
   static const Node_NodeType TEMPLATE = Node_NodeType._(81, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEMPLATE');
+  static const Node_NodeType CONTAINER = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTAINER');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     FADER,
@@ -139,7 +141,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     GAMEPAD,
     COLOR_RGB,
     COLOR_HSV,
-    CONTAINER,
+    COLOR_CONSTANT,
+    COLOR_BRIGHTNESS,
     ENCODER,
     MATH,
     DATA_TO_NUMBER,
@@ -167,6 +170,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     AUDIO_MIX,
     AUDIO_METER,
     TEMPLATE,
+    CONTAINER,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

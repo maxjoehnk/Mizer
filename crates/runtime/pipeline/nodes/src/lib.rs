@@ -6,7 +6,7 @@ pub use mizer_audio_nodes::{
     PlaybackMode,
 };
 pub use mizer_clock_nodes::ClockNode;
-pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
+pub use mizer_color_nodes::{ColorBrightnessNode, ConstantColorNode, HsvColorNode, RgbColorNode};
 pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{DataToNumberNode, NumberToDataNode};
 pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode};
@@ -134,6 +134,8 @@ node_impl! {
     VideoEffect(VideoEffectNode),
     VideoTransform(VideoTransformNode),
     Gamepad(GamepadNode),
+    ColorConstant(ConstantColorNode),
+    ColorBrightness(ColorBrightnessNode),
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
     Container(ContainerNode),

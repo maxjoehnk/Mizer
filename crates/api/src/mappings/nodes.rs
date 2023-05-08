@@ -43,6 +43,8 @@ impl From<mizer_nodes::Node> for node_config::Type {
             VideoOutput(output) => Self::VideoOutputConfig(output.into()),
             VideoEffect(effect) => Self::VideoEffectConfig(effect.into()),
             VideoTransform(transform) => Self::VideoTransformConfig(transform.into()),
+            ColorConstant(node) => Self::ColorConstantConfig(node.into()),
+            ColorBrightness(node) => Self::ColorBrightnessConfig(node.into()),
             ColorRgb(node) => Self::ColorRgbConfig(node.into()),
             ColorHsv(node) => Self::ColorHsvConfig(node.into()),
             Gamepad(node) => Self::GamepadNodeConfig(node.into()),
@@ -118,6 +120,8 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::VideoTransformConfig(transform) => {
                 Self::VideoTransform(transform.into())
             }
+            node_config::Type::ColorConstantConfig(node) => Self::ColorConstant(node.into()),
+            node_config::Type::ColorBrightnessConfig(node) => Self::ColorBrightness(node.into()),
             node_config::Type::ColorRgbConfig(node) => Self::ColorRgb(node.into()),
             node_config::Type::ColorHsvConfig(node) => Self::ColorHsv(node.into()),
             node_config::Type::GamepadNodeConfig(node) => Self::Gamepad(node.into()),
@@ -1046,6 +1050,74 @@ impl From<ColorRgbNodeConfig> for mizer_nodes::RgbColorNode {
     }
 }
 
+impl From<mizer_nodes::ConstantColorNode> for ColorConstantNodeConfig {
+    fn from(node: mizer_nodes::ConstantColorNode) -> Self {
+        match node {
+            mizer_nodes::ConstantColorNode::Rgb { red, green, blue } => Self {
+                color: Some(color_constant_node_config::Color::Rgb(
+                    color_constant_node_config::RgbColor {
+                        red,
+                        green,
+                        blue,
+                        ..Default::default()
+                    },
+                )),
+                ..Default::default()
+            },
+            mizer_nodes::ConstantColorNode::Hsv {
+                hue,
+                saturation,
+                value,
+            } => Self {
+                color: Some(color_constant_node_config::Color::Hsv(
+                    color_constant_node_config::HsvColor {
+                        hue,
+                        saturation,
+                        value,
+                        ..Default::default()
+                    },
+                )),
+                ..Default::default()
+            },
+        }
+    }
+}
+
+impl From<ColorConstantNodeConfig> for mizer_nodes::ConstantColorNode {
+    fn from(config: ColorConstantNodeConfig) -> Self {
+        match config.color.unwrap() {
+            color_constant_node_config::Color::Rgb(color_constant_node_config::RgbColor {
+                red,
+                green,
+                blue,
+                ..
+            }) => Self::Rgb { red, green, blue },
+            color_constant_node_config::Color::Hsv(color_constant_node_config::HsvColor {
+                hue,
+                saturation,
+                value,
+                ..
+            }) => Self::Hsv {
+                hue,
+                saturation,
+                value,
+            },
+        }
+    }
+}
+
+impl From<mizer_nodes::ColorBrightnessNode> for ColorBrightnessNodeConfig {
+    fn from(_: mizer_nodes::ColorBrightnessNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<ColorBrightnessNodeConfig> for mizer_nodes::ColorBrightnessNode {
+    fn from(_: ColorBrightnessNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
 impl From<mizer_nodes::ContainerNode> for ContainerNodeConfig {
     fn from(_: mizer_nodes::ContainerNode) -> Self {
         // This is just a fallback to avoid crashing when
@@ -1717,6 +1789,8 @@ impl From<NodeType> for node::NodeType {
             NodeType::MidiOutput => node::NodeType::MIDI_OUTPUT,
             NodeType::Laser => node::NodeType::LASER,
             NodeType::IldaFile => node::NodeType::ILDA_FILE,
+            NodeType::ColorConstant => node::NodeType::COLOR_CONSTANT,
+            NodeType::ColorBrightness => node::NodeType::COLOR_BRIGHTNESS,
             NodeType::ColorHsv => node::NodeType::COLOR_HSV,
             NodeType::ColorRgb => node::NodeType::COLOR_RGB,
             NodeType::Gamepad => node::NodeType::GAMEPAD,
@@ -1786,6 +1860,8 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::MIDI_OUTPUT => NodeType::MidiOutput,
             node::NodeType::LASER => NodeType::Laser,
             node::NodeType::ILDA_FILE => NodeType::IldaFile,
+            node::NodeType::COLOR_CONSTANT => NodeType::ColorConstant,
+            node::NodeType::COLOR_BRIGHTNESS => NodeType::ColorBrightness,
             node::NodeType::COLOR_HSV => NodeType::ColorHsv,
             node::NodeType::COLOR_RGB => NodeType::ColorRgb,
             node::NodeType::GAMEPAD => NodeType::Gamepad,

@@ -102,6 +102,8 @@ impl PipelineAccess {
             VideoOutput(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
+            ColorConstant(node) => self.add_node(path, node),
+            ColorBrightness(node) => self.add_node(path, node),
             ColorHsv(node) => self.add_node(path, node),
             ColorRgb(node) => self.add_node(path, node),
             Gamepad(node) => self.add_node(path, node),

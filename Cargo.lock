@@ -4450,6 +4450,7 @@ dependencies = [
  "bincode",
  "criterion",
  "crossbeam",
+ "mizer-util",
  "serde",
 ]
 

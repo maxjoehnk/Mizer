@@ -3036,8 +3036,10 @@ pub mod node {
         COLOR_RGB = 50,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.COLOR_HSV)
         COLOR_HSV = 51,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONTAINER)
-        CONTAINER = 100,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.COLOR_CONSTANT)
+        COLOR_CONSTANT = 52,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.COLOR_BRIGHTNESS)
+        COLOR_BRIGHTNESS = 53,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ENCODER)
         ENCODER = 55,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MATH)
@@ -3092,6 +3094,8 @@ pub mod node {
         AUDIO_METER = 80,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TEMPLATE)
         TEMPLATE = 81,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONTAINER)
+        CONTAINER = 100,
     }
 
     impl ::protobuf::Enum for NodeType {
@@ -3136,7 +3140,8 @@ pub mod node {
                 45 => ::std::option::Option::Some(NodeType::GAMEPAD),
                 50 => ::std::option::Option::Some(NodeType::COLOR_RGB),
                 51 => ::std::option::Option::Some(NodeType::COLOR_HSV),
-                100 => ::std::option::Option::Some(NodeType::CONTAINER),
+                52 => ::std::option::Option::Some(NodeType::COLOR_CONSTANT),
+                53 => ::std::option::Option::Some(NodeType::COLOR_BRIGHTNESS),
                 55 => ::std::option::Option::Some(NodeType::ENCODER),
                 56 => ::std::option::Option::Some(NodeType::MATH),
                 57 => ::std::option::Option::Some(NodeType::DATA_TO_NUMBER),
@@ -3164,6 +3169,7 @@ pub mod node {
                 79 => ::std::option::Option::Some(NodeType::AUDIO_MIX),
                 80 => ::std::option::Option::Some(NodeType::AUDIO_METER),
                 81 => ::std::option::Option::Some(NodeType::TEMPLATE),
+                100 => ::std::option::Option::Some(NodeType::CONTAINER),
                 _ => ::std::option::Option::None
             }
         }
@@ -3202,7 +3208,8 @@ pub mod node {
             NodeType::GAMEPAD,
             NodeType::COLOR_RGB,
             NodeType::COLOR_HSV,
-            NodeType::CONTAINER,
+            NodeType::COLOR_CONSTANT,
+            NodeType::COLOR_BRIGHTNESS,
             NodeType::ENCODER,
             NodeType::MATH,
             NodeType::DATA_TO_NUMBER,
@@ -3230,6 +3237,7 @@ pub mod node {
             NodeType::AUDIO_MIX,
             NodeType::AUDIO_METER,
             NodeType::TEMPLATE,
+            NodeType::CONTAINER,
         ];
     }
 
@@ -3274,34 +3282,36 @@ pub mod node {
                 NodeType::GAMEPAD => 30,
                 NodeType::COLOR_RGB => 31,
                 NodeType::COLOR_HSV => 32,
-                NodeType::CONTAINER => 33,
-                NodeType::ENCODER => 34,
-                NodeType::MATH => 35,
-                NodeType::DATA_TO_NUMBER => 36,
-                NodeType::NUMBER_TO_DATA => 37,
-                NodeType::VALUE => 38,
-                NodeType::EXTRACT => 39,
-                NodeType::MQTT_INPUT => 40,
-                NodeType::MQTT_OUTPUT => 41,
-                NodeType::PLAN_SCREEN => 42,
-                NodeType::DELAY => 43,
-                NodeType::RAMP => 44,
-                NodeType::NOISE => 45,
-                NodeType::LABEL => 46,
-                NodeType::TRANSPORT => 47,
-                NodeType::G13INPUT => 48,
-                NodeType::G13OUTPUT => 49,
-                NodeType::CONSTANT_NUMBER => 50,
-                NodeType::CONDITIONAL => 51,
-                NodeType::TIMECODE_CONTROL => 52,
-                NodeType::TIMECODE_OUTPUT => 53,
-                NodeType::AUDIO_FILE => 54,
-                NodeType::AUDIO_OUTPUT => 55,
-                NodeType::AUDIO_VOLUME => 56,
-                NodeType::AUDIO_INPUT => 57,
-                NodeType::AUDIO_MIX => 58,
-                NodeType::AUDIO_METER => 59,
-                NodeType::TEMPLATE => 60,
+                NodeType::COLOR_CONSTANT => 33,
+                NodeType::COLOR_BRIGHTNESS => 34,
+                NodeType::ENCODER => 35,
+                NodeType::MATH => 36,
+                NodeType::DATA_TO_NUMBER => 37,
+                NodeType::NUMBER_TO_DATA => 38,
+                NodeType::VALUE => 39,
+                NodeType::EXTRACT => 40,
+                NodeType::MQTT_INPUT => 41,
+                NodeType::MQTT_OUTPUT => 42,
+                NodeType::PLAN_SCREEN => 43,
+                NodeType::DELAY => 44,
+                NodeType::RAMP => 45,
+                NodeType::NOISE => 46,
+                NodeType::LABEL => 47,
+                NodeType::TRANSPORT => 48,
+                NodeType::G13INPUT => 49,
+                NodeType::G13OUTPUT => 50,
+                NodeType::CONSTANT_NUMBER => 51,
+                NodeType::CONDITIONAL => 52,
+                NodeType::TIMECODE_CONTROL => 53,
+                NodeType::TIMECODE_OUTPUT => 54,
+                NodeType::AUDIO_FILE => 55,
+                NodeType::AUDIO_OUTPUT => 56,
+                NodeType::AUDIO_VOLUME => 57,
+                NodeType::AUDIO_INPUT => 58,
+                NodeType::AUDIO_MIX => 59,
+                NodeType::AUDIO_METER => 60,
+                NodeType::TEMPLATE => 61,
+                NodeType::CONTAINER => 62,
             };
             Self::enum_descriptor().value_by_index(index)
         }
@@ -6404,8 +6414,106 @@ impl NodeConfig {
         }
     }
 
+    // .mizer.nodes.ColorConstantNodeConfig color_constant_config = 72;
+
+    pub fn color_constant_config(&self) -> &ColorConstantNodeConfig {
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ref v)) => v,
+            _ => <ColorConstantNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_color_constant_config(&mut self) {
+        self.type_ = ::std::option::Option::None;
+    }
+
+    pub fn has_color_constant_config(&self) -> bool {
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color_constant_config(&mut self, v: ColorConstantNodeConfig) {
+        self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color_constant_config(&mut self) -> &mut ColorConstantNodeConfig {
+        if let ::std::option::Option::Some(node_config::Type::ColorConstantConfig(_)) = self.type_ {
+        } else {
+            self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ColorConstantNodeConfig::new()));
+        }
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_color_constant_config(&mut self) -> ColorConstantNodeConfig {
+        if self.has_color_constant_config() {
+            match self.type_.take() {
+                ::std::option::Option::Some(node_config::Type::ColorConstantConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ColorConstantNodeConfig::new()
+        }
+    }
+
+    // .mizer.nodes.ColorBrightnessNodeConfig color_brightness_config = 73;
+
+    pub fn color_brightness_config(&self) -> &ColorBrightnessNodeConfig {
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ref v)) => v,
+            _ => <ColorBrightnessNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_color_brightness_config(&mut self) {
+        self.type_ = ::std::option::Option::None;
+    }
+
+    pub fn has_color_brightness_config(&self) -> bool {
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color_brightness_config(&mut self, v: ColorBrightnessNodeConfig) {
+        self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color_brightness_config(&mut self) -> &mut ColorBrightnessNodeConfig {
+        if let ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(_)) = self.type_ {
+        } else {
+            self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ColorBrightnessNodeConfig::new()));
+        }
+        match self.type_ {
+            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_color_brightness_config(&mut self) -> ColorBrightnessNodeConfig {
+        if self.has_color_brightness_config() {
+            match self.type_.take() {
+                ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ColorBrightnessNodeConfig::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(61);
+        let mut fields = ::std::vec::Vec::with_capacity(63);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscillatorNodeConfig>(
             "oscillator_config",
@@ -6834,6 +6942,20 @@ impl NodeConfig {
             NodeConfig::mut_template_config,
             NodeConfig::set_template_config,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorConstantNodeConfig>(
+            "color_constant_config",
+            NodeConfig::has_color_constant_config,
+            NodeConfig::color_constant_config,
+            NodeConfig::mut_color_constant_config,
+            NodeConfig::set_color_constant_config,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorBrightnessNodeConfig>(
+            "color_brightness_config",
+            NodeConfig::has_color_brightness_config,
+            NodeConfig::color_brightness_config,
+            NodeConfig::mut_color_brightness_config,
+            NodeConfig::set_color_brightness_config,
+        ));
         oneofs.push(node_config::Type::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeConfig>(
             "NodeConfig",
@@ -7035,6 +7157,12 @@ impl ::protobuf::Message for NodeConfig {
                 },
                 570 => {
                     self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(is.read_message()?));
+                },
+                578 => {
+                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(is.read_message()?));
+                },
+                586 => {
+                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -7294,6 +7422,14 @@ impl ::protobuf::Message for NodeConfig {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &node_config::Type::ColorConstantConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_config::Type::ColorBrightnessConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -7487,6 +7623,12 @@ impl ::protobuf::Message for NodeConfig {
                 &node_config::Type::TemplateConfig(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(71, v, os)?;
                 },
+                &node_config::Type::ColorConstantConfig(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(72, v, os)?;
+                },
+                &node_config::Type::ColorBrightnessConfig(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(73, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -7506,6 +7648,8 @@ impl ::protobuf::Message for NodeConfig {
     }
 
     fn clear(&mut self) {
+        self.type_ = ::std::option::Option::None;
+        self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
@@ -7725,6 +7869,10 @@ pub mod node_config {
         AudioMeterConfig(super::AudioMeterNodeConfig),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.template_config)
         TemplateConfig(super::TemplateNodeConfig),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_constant_config)
+        ColorConstantConfig(super::ColorConstantNodeConfig),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_brightness_config)
+        ColorBrightnessConfig(super::ColorBrightnessNodeConfig),
     }
 
     impl ::protobuf::Oneof for Type {
@@ -13028,6 +13176,703 @@ impl ::protobuf::reflect::ProtobufValue for ColorHsvNodeConfig {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig)
+pub struct ColorConstantNodeConfig {
+    // message oneof groups
+    pub color: ::std::option::Option<color_constant_node_config::Color>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ColorConstantNodeConfig {
+    fn default() -> &'a ColorConstantNodeConfig {
+        <ColorConstantNodeConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ColorConstantNodeConfig {
+    pub fn new() -> ColorConstantNodeConfig {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.nodes.ColorConstantNodeConfig.RgbColor rgb = 1;
+
+    pub fn rgb(&self) -> &color_constant_node_config::RgbColor {
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(ref v)) => v,
+            _ => <color_constant_node_config::RgbColor as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_rgb(&mut self) {
+        self.color = ::std::option::Option::None;
+    }
+
+    pub fn has_rgb(&self) -> bool {
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rgb(&mut self, v: color_constant_node_config::RgbColor) {
+        self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_rgb(&mut self) -> &mut color_constant_node_config::RgbColor {
+        if let ::std::option::Option::Some(color_constant_node_config::Color::Rgb(_)) = self.color {
+        } else {
+            self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(color_constant_node_config::RgbColor::new()));
+        }
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_rgb(&mut self) -> color_constant_node_config::RgbColor {
+        if self.has_rgb() {
+            match self.color.take() {
+                ::std::option::Option::Some(color_constant_node_config::Color::Rgb(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            color_constant_node_config::RgbColor::new()
+        }
+    }
+
+    // .mizer.nodes.ColorConstantNodeConfig.HsvColor hsv = 2;
+
+    pub fn hsv(&self) -> &color_constant_node_config::HsvColor {
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(ref v)) => v,
+            _ => <color_constant_node_config::HsvColor as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_hsv(&mut self) {
+        self.color = ::std::option::Option::None;
+    }
+
+    pub fn has_hsv(&self) -> bool {
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_hsv(&mut self, v: color_constant_node_config::HsvColor) {
+        self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_hsv(&mut self) -> &mut color_constant_node_config::HsvColor {
+        if let ::std::option::Option::Some(color_constant_node_config::Color::Hsv(_)) = self.color {
+        } else {
+            self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(color_constant_node_config::HsvColor::new()));
+        }
+        match self.color {
+            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_hsv(&mut self) -> color_constant_node_config::HsvColor {
+        if self.has_hsv() {
+            match self.color.take() {
+                ::std::option::Option::Some(color_constant_node_config::Color::Hsv(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            color_constant_node_config::HsvColor::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, color_constant_node_config::RgbColor>(
+            "rgb",
+            ColorConstantNodeConfig::has_rgb,
+            ColorConstantNodeConfig::rgb,
+            ColorConstantNodeConfig::mut_rgb,
+            ColorConstantNodeConfig::set_rgb,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, color_constant_node_config::HsvColor>(
+            "hsv",
+            ColorConstantNodeConfig::has_hsv,
+            ColorConstantNodeConfig::hsv,
+            ColorConstantNodeConfig::mut_hsv,
+            ColorConstantNodeConfig::set_hsv,
+        ));
+        oneofs.push(color_constant_node_config::Color::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorConstantNodeConfig>(
+            "ColorConstantNodeConfig",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ColorConstantNodeConfig {
+    const NAME: &'static str = "ColorConstantNodeConfig";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(is.read_message()?));
+                },
+                18 => {
+                    self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.color {
+            match v {
+                &color_constant_node_config::Color::Rgb(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &color_constant_node_config::Color::Hsv(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let ::std::option::Option::Some(ref v) = self.color {
+            match v {
+                &color_constant_node_config::Color::Rgb(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+                &color_constant_node_config::Color::Hsv(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ColorConstantNodeConfig {
+        ColorConstantNodeConfig::new()
+    }
+
+    fn clear(&mut self) {
+        self.color = ::std::option::Option::None;
+        self.color = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ColorConstantNodeConfig {
+        static instance: ColorConstantNodeConfig = ColorConstantNodeConfig {
+            color: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ColorConstantNodeConfig {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ColorConstantNodeConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ColorConstantNodeConfig {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `ColorConstantNodeConfig`
+pub mod color_constant_node_config {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:mizer.nodes.ColorConstantNodeConfig.color)
+    pub enum Color {
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.ColorConstantNodeConfig.rgb)
+        Rgb(RgbColor),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.ColorConstantNodeConfig.hsv)
+        Hsv(HsvColor),
+    }
+
+    impl ::protobuf::Oneof for Color {
+    }
+
+    impl ::protobuf::OneofFull for Color {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::ColorConstantNodeConfig as ::protobuf::MessageFull>::descriptor().oneof_by_name("color").unwrap()).clone()
+        }
+    }
+
+    impl Color {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Color>("color")
+        }
+    }
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig.RgbColor)
+    pub struct RgbColor {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.red)
+        pub red: f64,
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.green)
+        pub green: f64,
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.blue)
+        pub blue: f64,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.RgbColor.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a RgbColor {
+        fn default() -> &'a RgbColor {
+            <RgbColor as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl RgbColor {
+        pub fn new() -> RgbColor {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(3);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "red",
+                |m: &RgbColor| { &m.red },
+                |m: &mut RgbColor| { &mut m.red },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "green",
+                |m: &RgbColor| { &m.green },
+                |m: &mut RgbColor| { &mut m.green },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "blue",
+                |m: &RgbColor| { &m.blue },
+                |m: &mut RgbColor| { &mut m.blue },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RgbColor>(
+                "ColorConstantNodeConfig.RgbColor",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for RgbColor {
+        const NAME: &'static str = "RgbColor";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    9 => {
+                        self.red = is.read_double()?;
+                    },
+                    17 => {
+                        self.green = is.read_double()?;
+                    },
+                    25 => {
+                        self.blue = is.read_double()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.red != 0. {
+                my_size += 1 + 8;
+            }
+            if self.green != 0. {
+                my_size += 1 + 8;
+            }
+            if self.blue != 0. {
+                my_size += 1 + 8;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.red != 0. {
+                os.write_double(1, self.red)?;
+            }
+            if self.green != 0. {
+                os.write_double(2, self.green)?;
+            }
+            if self.blue != 0. {
+                os.write_double(3, self.blue)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> RgbColor {
+            RgbColor::new()
+        }
+
+        fn clear(&mut self) {
+            self.red = 0.;
+            self.green = 0.;
+            self.blue = 0.;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static RgbColor {
+            static instance: RgbColor = RgbColor {
+                red: 0.,
+                green: 0.,
+                blue: 0.,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for RgbColor {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig.RgbColor").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for RgbColor {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for RgbColor {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig.HsvColor)
+    pub struct HsvColor {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.hue)
+        pub hue: f64,
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.saturation)
+        pub saturation: f64,
+        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.value)
+        pub value: f64,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.HsvColor.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a HsvColor {
+        fn default() -> &'a HsvColor {
+            <HsvColor as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl HsvColor {
+        pub fn new() -> HsvColor {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(3);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "hue",
+                |m: &HsvColor| { &m.hue },
+                |m: &mut HsvColor| { &mut m.hue },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "saturation",
+                |m: &HsvColor| { &m.saturation },
+                |m: &mut HsvColor| { &mut m.saturation },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &HsvColor| { &m.value },
+                |m: &mut HsvColor| { &mut m.value },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<HsvColor>(
+                "ColorConstantNodeConfig.HsvColor",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for HsvColor {
+        const NAME: &'static str = "HsvColor";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    9 => {
+                        self.hue = is.read_double()?;
+                    },
+                    17 => {
+                        self.saturation = is.read_double()?;
+                    },
+                    25 => {
+                        self.value = is.read_double()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.hue != 0. {
+                my_size += 1 + 8;
+            }
+            if self.saturation != 0. {
+                my_size += 1 + 8;
+            }
+            if self.value != 0. {
+                my_size += 1 + 8;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.hue != 0. {
+                os.write_double(1, self.hue)?;
+            }
+            if self.saturation != 0. {
+                os.write_double(2, self.saturation)?;
+            }
+            if self.value != 0. {
+                os.write_double(3, self.value)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> HsvColor {
+            HsvColor::new()
+        }
+
+        fn clear(&mut self) {
+            self.hue = 0.;
+            self.saturation = 0.;
+            self.value = 0.;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static HsvColor {
+            static instance: HsvColor = HsvColor {
+                hue: 0.,
+                saturation: 0.,
+                value: 0.,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for HsvColor {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig.HsvColor").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for HsvColor {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for HsvColor {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.nodes.ColorBrightnessNodeConfig)
+pub struct ColorBrightnessNodeConfig {
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.nodes.ColorBrightnessNodeConfig.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ColorBrightnessNodeConfig {
+    fn default() -> &'a ColorBrightnessNodeConfig {
+        <ColorBrightnessNodeConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ColorBrightnessNodeConfig {
+    pub fn new() -> ColorBrightnessNodeConfig {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorBrightnessNodeConfig>(
+            "ColorBrightnessNodeConfig",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ColorBrightnessNodeConfig {
+    const NAME: &'static str = "ColorBrightnessNodeConfig";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ColorBrightnessNodeConfig {
+        ColorBrightnessNodeConfig::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ColorBrightnessNodeConfig {
+        static instance: ColorBrightnessNodeConfig = ColorBrightnessNodeConfig {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ColorBrightnessNodeConfig {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorBrightnessNodeConfig").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ColorBrightnessNodeConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ColorBrightnessNodeConfig {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.ContainerNodeConfig)
 pub struct ContainerNodeConfig {
     // message fields
@@ -17442,14 +18287,14 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     etPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\x122\n\
     \x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\
     \x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
-    lR\x08protocol\"\xe1\n\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\
+    lR\x08protocol\"\x8b\x0b\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\
     \x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\
     \x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.\
     PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.\
     PortR\x07outputs\x125\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.node\
     s.NodeDesignerR\x08designer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.miz\
     er.nodes.Node.NodePreviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\
-    \x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\xac\x07\n\x08NodeType\
+    \x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\xd6\x07\n\x08NodeType\
     \x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\x01\x12\x0e\n\nOSCILLATOR\
     \x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06SCRIPT\x10\x04\x12\x0c\n\
     \x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\x06\x12\n\n\x06SELECT\x10\
@@ -17463,150 +18308,154 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     NSFORM\x10\x18\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PATTER\
     N\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\tI\
     LDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\n\
-    \tCOLOR_HSV\x103\x12\r\n\tCONTAINER\x10d\x12\x0b\n\x07ENCODER\x107\x12\
-    \x08\n\x04MATH\x108\x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER\
-    _TO_DATA\x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\
-    \nMQTT_INPUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\
-    \x10?\x12\t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\
-    \x12\t\n\x05LABEL\x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10\
-    E\x12\r\n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\
-    \x0bCONDITIONAL\x10H\x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIM\
-    ECODE_OUTPUT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\
-    \x10L\x12\x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\
-    \n\tAUDIO_MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\
-    \x10Q\"i\n\x0fNodePreviewType\x12\x0b\n\x07HISTORY\x10\0\x12\x0c\n\x08WA\
-    VEFORM\x10\x01\x12\x0c\n\x08MULTIPLE\x10\x02\x12\x0b\n\x07TEXTURE\x10\
-    \x03\x12\x0c\n\x08TIMECODE\x10\x04\x12\x08\n\x04DATA\x10\x05\x12\x08\n\
-    \x04NONE\x10\x06\"\xc7%\n\nNodeConfig\x12P\n\x11oscillator_config\x18\n\
-    \x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillatorConfig\
-    \x12M\n\x10scripting_config\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes.Script\
-    ingNodeConfigH\0R\x0fscriptingConfig\x12J\n\x0fsequence_config\x18\x0c\
-    \x20\x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceConfig\
-    \x12A\n\x0cclock_config\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeCon\
-    figH\0R\x0bclockConfig\x12G\n\x0efixture_config\x18\x0e\x20\x01(\x0b2\
-    \x1e.mizer.nodes.FixtureNodeConfigH\0R\rfixtureConfig\x12D\n\rbutton_con\
-    fig\x18\x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbutton\
-    Config\x12A\n\x0cfader_config\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.Fade\
-    rNodeConfigH\0R\x0bfaderConfig\x12K\n\x10ilda_file_config\x18\x11\x20\
-    \x01(\x0b2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12A\
-    \n\x0claser_config\x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfig\
-    H\0R\x0blaserConfig\x12W\n\x14pixel_pattern_config\x18\x13\x20\x01(\x0b2\
-    #.mizer.nodes.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12K\n\
-    \x10pixel_dmx_config\x18\x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeC\
-    onfigH\0R\x0epixelDmxConfig\x12N\n\x11dmx_output_config\x18\x15\x20\x01(\
-    \x0b2\x20.mizer.nodes.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12I\n\
-    \x11midi_input_config\x18\x16\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConf\
-    igH\0R\x0fmidiInputConfig\x12K\n\x12midi_output_config\x18\x17\x20\x01(\
-    \x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x10midiOutputConfig\x12N\n\x11o\
-    pc_output_config\x18\x18\x20\x01(\x0b2\x20.mizer.nodes.OpcOutputNodeConf\
-    igH\0R\x0fopcOutputConfig\x12F\n\x10osc_input_config\x18\x19\x20\x01(\
-    \x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0eoscInputConfig\x12H\n\x11osc_\
-    output_config\x18\x1a\x20\x01(\x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\
-    \x0foscOutputConfig\x12g\n\x1avideo_color_balance_config\x18\x1b\x20\x01\
-    (\x0b2(.mizer.nodes.VideoColorBalanceNodeConfigH\0R\x17videoColorBalance\
-    Config\x12T\n\x13video_effect_config\x18\x1c\x20\x01(\x0b2\".mizer.nodes\
-    .VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12N\n\x11video_file_con\
-    fig\x18\x1d\x20\x01(\x0b2\x20.mizer.nodes.VideoFileNodeConfigH\0R\x0fvid\
-    eoFileConfig\x12T\n\x13video_output_config\x18\x1e\x20\x01(\x0b2\".mizer\
-    .nodes.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12]\n\x16video_tr\
-    ansform_config\x18\x1f\x20\x01(\x0b2%.mizer.nodes.VideoTransformNodeConf\
-    igH\0R\x14videoTransformConfig\x12D\n\rselect_config\x18\x20\x20\x01(\
-    \x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\x0cselectConfig\x12A\n\x0cmer\
-    ge_config\x18!\x20\x01(\x0b2\x1c.mizer.nodes.MergeNodeConfigH\0R\x0bmerg\
-    eConfig\x12J\n\x0fenvelope_config\x18\"\x20\x01(\x0b2\x1f.mizer.nodes.En\
-    velopeNodeConfigH\0R\x0eenvelopeConfig\x12M\n\x10sequencer_config\x18#\
-    \x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeConfigH\0R\x0fsequencerConfi\
-    g\x12P\n\x11programmer_config\x18$\x20\x01(\x0b2!.mizer.nodes.Programmer\
-    NodeConfigH\0R\x10programmerConfig\x12A\n\x0cgroup_config\x18%\x20\x01(\
-    \x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgroupConfig\x12D\n\rpreset_\
-    config\x18&\x20\x01(\x0b2\x1d.mizer.nodes.PresetNodeConfigH\0R\x0cpreset\
-    Config\x12K\n\x10color_rgb_config\x18(\x20\x01(\x0b2\x1f.mizer.nodes.Col\
-    orRgbNodeConfigH\0R\x0ecolorRgbConfig\x12K\n\x10color_hsv_config\x18)\
-    \x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfigH\0R\x0ecolorHsvConfig\
-    \x12P\n\x13gamepad_node_config\x18*\x20\x01(\x0b2\x1e.mizer.nodes.Gamepa\
-    dNodeConfigH\0R\x11gamepadNodeConfig\x12M\n\x10threshold_config\x18+\x20\
-    \x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\x0fthresholdConfig\
-    \x12G\n\x0eencoder_config\x18,\x20\x01(\x0b2\x1e.mizer.nodes.EncoderNode\
-    ConfigH\0R\rencoderConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\
-    \x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfig\x12>\n\x0bma\
-    th_config\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\0R\nmathCon\
-    fig\x12N\n\x11mqtt_input_config\x18/\x20\x01(\x0b2\x20.mizer.nodes.MqttI\
-    nputNodeConfigH\0R\x0fmqttInputConfig\x12Q\n\x12mqtt_output_config\x180\
-    \x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqttOutputConfig\
-    \x12X\n\x15number_to_data_config\x181\x20\x01(\x0b2#.mizer.nodes.NumberT\
-    oDataNodeConfigH\0R\x12numberToDataConfig\x12X\n\x15data_to_number_confi\
-    g\x182\x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToNu\
-    mberConfig\x12A\n\x0cvalue_config\x183\x20\x01(\x0b2\x1c.mizer.nodes.Val\
-    ueNodeConfigH\0R\x0bvalueConfig\x12G\n\x0eextract_config\x184\x20\x01(\
-    \x0b2\x1e.mizer.nodes.ExtractNodeConfigH\0R\rextractConfig\x12Q\n\x12pla\
-    n_screen_config\x185\x20\x01(\x0b2!.mizer.nodes.PlanScreenNodeConfigH\0R\
-    \x10planScreenConfig\x12A\n\x0cdelay_config\x186\x20\x01(\x0b2\x1c.mizer\
-    .nodes.DelayNodeConfigH\0R\x0bdelayConfig\x12>\n\x0bramp_config\x187\x20\
-    \x01(\x0b2\x1b.mizer.nodes.RampNodeConfigH\0R\nrampConfig\x12A\n\x0cnois\
-    e_config\x188\x20\x01(\x0b2\x1c.mizer.nodes.NoiseNodeConfigH\0R\x0bnoise\
-    Config\x12A\n\x0clabel_config\x189\x20\x01(\x0b2\x1c.mizer.nodes.LabelNo\
-    deConfigH\0R\x0blabelConfig\x12M\n\x10transport_config\x18:\x20\x01(\x0b\
-    2\x20.mizer.nodes.TransportNodeConfigH\0R\x0ftransportConfig\x12K\n\x10g\
-    13_input_config\x18;\x20\x01(\x0b2\x1f.mizer.nodes.G13InputNodeConfigH\0\
-    R\x0eg13InputConfig\x12N\n\x11g13_output_config\x18<\x20\x01(\x0b2\x20.m\
-    izer.nodes.G13OutputNodeConfigH\0R\x0fg13OutputConfig\x12]\n\x16constant\
-    _number_config\x18=\x20\x01(\x0b2%.mizer.nodes.ConstantNumberNodeConfigH\
-    \0R\x14constantNumberConfig\x12S\n\x12conditional_config\x18>\x20\x01(\
-    \x0b2\".mizer.nodes.ConditionalNodeConfigH\0R\x11conditionalConfig\x12`\
-    \n\x17timecode_control_config\x18?\x20\x01(\x0b2&.mizer.nodes.TimecodeCo\
-    ntrolNodeConfigH\0R\x15timecodeControlConfig\x12]\n\x16timecode_output_c\
-    onfig\x18@\x20\x01(\x0b2%.mizer.nodes.TimecodeOutputNodeConfigH\0R\x14ti\
-    mecodeOutputConfig\x12N\n\x11audio_file_config\x18A\x20\x01(\x0b2\x20.mi\
-    zer.nodes.AudioFileNodeConfigH\0R\x0faudioFileConfig\x12T\n\x13audio_out\
-    put_config\x18B\x20\x01(\x0b2\".mizer.nodes.AudioOutputNodeConfigH\0R\
-    \x11audioOutputConfig\x12T\n\x13audio_volume_config\x18C\x20\x01(\x0b2\"\
-    .mizer.nodes.AudioVolumeNodeConfigH\0R\x11audioVolumeConfig\x12Q\n\x12au\
-    dio_input_config\x18D\x20\x01(\x0b2!.mizer.nodes.AudioInputNodeConfigH\0\
-    R\x10audioInputConfig\x12K\n\x10audio_mix_config\x18E\x20\x01(\x0b2\x1f.\
-    mizer.nodes.AudioMixNodeConfigH\0R\x0eaudioMixConfig\x12Q\n\x12audio_met\
-    er_config\x18F\x20\x01(\x0b2!.mizer.nodes.AudioMeterNodeConfigH\0R\x10au\
-    dioMeterConfig\x12J\n\x0ftemplate_config\x18G\x20\x01(\x0b2\x1f.mizer.no\
-    des.TemplateNodeConfigH\0R\x0etemplateConfigB\x06\n\x04type\"\x87\x02\n\
-    \x14OscillatorNodeConfig\x12D\n\x04type\x18\x01\x20\x01(\x0e20.mizer.nod\
-    es.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\
-    \x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03ma\
-    x\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\
-    \x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\
-    \x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06SQUARE\x10\0\x12\x08\n\x04\
-    SINE\x10\x01\x12\x07\n\x03SAW\x10\x02\x12\x0c\n\x08TRIANGLE\x10\x03\"-\n\
-    \x13ScriptingNodeConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\x06scrip\
-    t\"\xa6\x01\n\x12SequenceNodeConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b\
-    2,.mizer.nodes.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\x0cSeque\
-    nceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05val\
-    ue\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08\
-    R\x04hold\"\x16\n\x14ProgrammerNodeConfig\",\n\x0fGroupNodeConfig\x12\
-    \x19\n\x08group_id\x18\x01\x20\x01(\rR\x07groupId\"K\n\x10PresetNodeConf\
-    ig\x127\n\tpreset_id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetId\
-    R\x08presetId\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\
-    \x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\
-    \x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07rele\
-    ase\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\x12\x14\n\
-    \x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\
-    \x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"6\n\x13SequencerNodeC\
-    onfig\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\"*\n\x10B\
-    uttonNodeConfig\x12\x16\n\x06toggle\x18\x01\x20\x01(\x08R\x06toggle\"\
-    \x11\n\x0fFaderNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\
-    \x18\x01\x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_i\
-    d\x18\x01\x20\x01(\tR\x08deviceId\"\xbb\x03\n\x11GamepadNodeConfig\x12\
-    \x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x12@\n\x07control\x18\
-    \x02\x20\x01(\x0e2&.mizer.nodes.GamepadNodeConfig.ControlR\x07control\"\
-    \xc6\x02\n\x07Control\x12\x10\n\x0cLEFT_STICK_X\x10\0\x12\x10\n\x0cLEFT_\
-    STICK_Y\x10\x01\x12\x11\n\rRIGHT_STICK_X\x10\x02\x12\x11\n\rRIGHT_STICK_\
-    Y\x10\x03\x12\x10\n\x0cLEFT_TRIGGER\x10\x04\x12\x11\n\rRIGHT_TRIGGER\x10\
-    \x05\x12\x11\n\rLEFT_SHOULDER\x10\x06\x12\x12\n\x0eRIGHT_SHOULDER\x10\
-    \x07\x12\t\n\x05SOUTH\x10\x08\x12\x08\n\x04EAST\x10\t\x12\t\n\x05NORTH\
-    \x10\n\x12\x08\n\x04WEST\x10\x0b\x12\n\n\x06SELECT\x10\x0c\x12\t\n\x05ST\
-    ART\x10\r\x12\x08\n\x04MODE\x10\x0e\x12\x0b\n\x07DPAD_UP\x10\x0f\x12\r\n\
-    \tDPAD_DOWN\x10\x10\x12\r\n\tDPAD_LEFT\x10\x11\x12\x0e\n\nDPAD_RIGHT\x10\
-    \x12\x12\x0e\n\nLEFT_STICK\x10\x13\x12\x0f\n\x0bRIGHT_STICK\x10\x14\"\
-    \x86\x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01(\
-    \x0e2+.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\"%\n\x07Pa\
-    ttern\x12\x0f\n\x0bRGB_ITERATE\x10\0\x12\t\n\x05SWIRL\x10\x01\"\x81\x01\
+    \tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_BRI\
+    GHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\n\
+    \x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VALU\
+    E\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\
+    \x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\
+    \x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\
+    \r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\
+    \x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\
+    \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
+    \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
+    ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
+    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\
+    \"i\n\x0fNodePreviewType\x12\x0b\n\x07HISTORY\x10\0\x12\x0c\n\x08WAVEFOR\
+    M\x10\x01\x12\x0c\n\x08MULTIPLE\x10\x02\x12\x0b\n\x07TEXTURE\x10\x03\x12\
+    \x0c\n\x08TIMECODE\x10\x04\x12\x08\n\x04DATA\x10\x05\x12\x08\n\x04NONE\
+    \x10\x06\"\x85'\n\nNodeConfig\x12P\n\x11oscillator_config\x18\n\x20\x01(\
+    \x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillatorConfig\x12M\n\
+    \x10scripting_config\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes.ScriptingNode\
+    ConfigH\0R\x0fscriptingConfig\x12J\n\x0fsequence_config\x18\x0c\x20\x01(\
+    \x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceConfig\x12A\n\
+    \x0cclock_config\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeConfigH\0R\
+    \x0bclockConfig\x12G\n\x0efixture_config\x18\x0e\x20\x01(\x0b2\x1e.mizer\
+    .nodes.FixtureNodeConfigH\0R\rfixtureConfig\x12D\n\rbutton_config\x18\
+    \x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbuttonConfig\
+    \x12A\n\x0cfader_config\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.FaderNodeC\
+    onfigH\0R\x0bfaderConfig\x12K\n\x10ilda_file_config\x18\x11\x20\x01(\x0b\
+    2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12A\n\x0clas\
+    er_config\x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfigH\0R\x0bl\
+    aserConfig\x12W\n\x14pixel_pattern_config\x18\x13\x20\x01(\x0b2#.mizer.n\
+    odes.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12K\n\x10pixel_dm\
+    x_config\x18\x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeConfigH\0R\
+    \x0epixelDmxConfig\x12N\n\x11dmx_output_config\x18\x15\x20\x01(\x0b2\x20\
+    .mizer.nodes.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12I\n\x11midi_i\
+    nput_config\x18\x16\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x0f\
+    midiInputConfig\x12K\n\x12midi_output_config\x18\x17\x20\x01(\x0b2\x1b.m\
+    izer.nodes.MidiNodeConfigH\0R\x10midiOutputConfig\x12N\n\x11opc_output_c\
+    onfig\x18\x18\x20\x01(\x0b2\x20.mizer.nodes.OpcOutputNodeConfigH\0R\x0fo\
+    pcOutputConfig\x12F\n\x10osc_input_config\x18\x19\x20\x01(\x0b2\x1a.mize\
+    r.nodes.OscNodeConfigH\0R\x0eoscInputConfig\x12H\n\x11osc_output_config\
+    \x18\x1a\x20\x01(\x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0foscOutputCon\
+    fig\x12g\n\x1avideo_color_balance_config\x18\x1b\x20\x01(\x0b2(.mizer.no\
+    des.VideoColorBalanceNodeConfigH\0R\x17videoColorBalanceConfig\x12T\n\
+    \x13video_effect_config\x18\x1c\x20\x01(\x0b2\".mizer.nodes.VideoEffectN\
+    odeConfigH\0R\x11videoEffectConfig\x12N\n\x11video_file_config\x18\x1d\
+    \x20\x01(\x0b2\x20.mizer.nodes.VideoFileNodeConfigH\0R\x0fvideoFileConfi\
+    g\x12T\n\x13video_output_config\x18\x1e\x20\x01(\x0b2\".mizer.nodes.Vide\
+    oOutputNodeConfigH\0R\x11videoOutputConfig\x12]\n\x16video_transform_con\
+    fig\x18\x1f\x20\x01(\x0b2%.mizer.nodes.VideoTransformNodeConfigH\0R\x14v\
+    ideoTransformConfig\x12D\n\rselect_config\x18\x20\x20\x01(\x0b2\x1d.mize\
+    r.nodes.SelectNodeConfigH\0R\x0cselectConfig\x12A\n\x0cmerge_config\x18!\
+    \x20\x01(\x0b2\x1c.mizer.nodes.MergeNodeConfigH\0R\x0bmergeConfig\x12J\n\
+    \x0fenvelope_config\x18\"\x20\x01(\x0b2\x1f.mizer.nodes.EnvelopeNodeConf\
+    igH\0R\x0eenvelopeConfig\x12M\n\x10sequencer_config\x18#\x20\x01(\x0b2\
+    \x20.mizer.nodes.SequencerNodeConfigH\0R\x0fsequencerConfig\x12P\n\x11pr\
+    ogrammer_config\x18$\x20\x01(\x0b2!.mizer.nodes.ProgrammerNodeConfigH\0R\
+    \x10programmerConfig\x12A\n\x0cgroup_config\x18%\x20\x01(\x0b2\x1c.mizer\
+    .nodes.GroupNodeConfigH\0R\x0bgroupConfig\x12D\n\rpreset_config\x18&\x20\
+    \x01(\x0b2\x1d.mizer.nodes.PresetNodeConfigH\0R\x0cpresetConfig\x12K\n\
+    \x10color_rgb_config\x18(\x20\x01(\x0b2\x1f.mizer.nodes.ColorRgbNodeConf\
+    igH\0R\x0ecolorRgbConfig\x12K\n\x10color_hsv_config\x18)\x20\x01(\x0b2\
+    \x1f.mizer.nodes.ColorHsvNodeConfigH\0R\x0ecolorHsvConfig\x12P\n\x13game\
+    pad_node_config\x18*\x20\x01(\x0b2\x1e.mizer.nodes.GamepadNodeConfigH\0R\
+    \x11gamepadNodeConfig\x12M\n\x10threshold_config\x18+\x20\x01(\x0b2\x20.\
+    mizer.nodes.ThresholdNodeConfigH\0R\x0fthresholdConfig\x12G\n\x0eencoder\
+    _config\x18,\x20\x01(\x0b2\x1e.mizer.nodes.EncoderNodeConfigH\0R\rencode\
+    rConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.Co\
+    ntainerNodeConfigH\0R\x0fcontainerConfig\x12>\n\x0bmath_config\x18.\x20\
+    \x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\0R\nmathConfig\x12N\n\x11mqtt\
+    _input_config\x18/\x20\x01(\x0b2\x20.mizer.nodes.MqttInputNodeConfigH\0R\
+    \x0fmqttInputConfig\x12Q\n\x12mqtt_output_config\x180\x20\x01(\x0b2!.miz\
+    er.nodes.MqttOutputNodeConfigH\0R\x10mqttOutputConfig\x12X\n\x15number_t\
+    o_data_config\x181\x20\x01(\x0b2#.mizer.nodes.NumberToDataNodeConfigH\0R\
+    \x12numberToDataConfig\x12X\n\x15data_to_number_config\x182\x20\x01(\x0b\
+    2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToNumberConfig\x12A\n\
+    \x0cvalue_config\x183\x20\x01(\x0b2\x1c.mizer.nodes.ValueNodeConfigH\0R\
+    \x0bvalueConfig\x12G\n\x0eextract_config\x184\x20\x01(\x0b2\x1e.mizer.no\
+    des.ExtractNodeConfigH\0R\rextractConfig\x12Q\n\x12plan_screen_config\
+    \x185\x20\x01(\x0b2!.mizer.nodes.PlanScreenNodeConfigH\0R\x10planScreenC\
+    onfig\x12A\n\x0cdelay_config\x186\x20\x01(\x0b2\x1c.mizer.nodes.DelayNod\
+    eConfigH\0R\x0bdelayConfig\x12>\n\x0bramp_config\x187\x20\x01(\x0b2\x1b.\
+    mizer.nodes.RampNodeConfigH\0R\nrampConfig\x12A\n\x0cnoise_config\x188\
+    \x20\x01(\x0b2\x1c.mizer.nodes.NoiseNodeConfigH\0R\x0bnoiseConfig\x12A\n\
+    \x0clabel_config\x189\x20\x01(\x0b2\x1c.mizer.nodes.LabelNodeConfigH\0R\
+    \x0blabelConfig\x12M\n\x10transport_config\x18:\x20\x01(\x0b2\x20.mizer.\
+    nodes.TransportNodeConfigH\0R\x0ftransportConfig\x12K\n\x10g13_input_con\
+    fig\x18;\x20\x01(\x0b2\x1f.mizer.nodes.G13InputNodeConfigH\0R\x0eg13Inpu\
+    tConfig\x12N\n\x11g13_output_config\x18<\x20\x01(\x0b2\x20.mizer.nodes.G\
+    13OutputNodeConfigH\0R\x0fg13OutputConfig\x12]\n\x16constant_number_conf\
+    ig\x18=\x20\x01(\x0b2%.mizer.nodes.ConstantNumberNodeConfigH\0R\x14const\
+    antNumberConfig\x12S\n\x12conditional_config\x18>\x20\x01(\x0b2\".mizer.\
+    nodes.ConditionalNodeConfigH\0R\x11conditionalConfig\x12`\n\x17timecode_\
+    control_config\x18?\x20\x01(\x0b2&.mizer.nodes.TimecodeControlNodeConfig\
+    H\0R\x15timecodeControlConfig\x12]\n\x16timecode_output_config\x18@\x20\
+    \x01(\x0b2%.mizer.nodes.TimecodeOutputNodeConfigH\0R\x14timecodeOutputCo\
+    nfig\x12N\n\x11audio_file_config\x18A\x20\x01(\x0b2\x20.mizer.nodes.Audi\
+    oFileNodeConfigH\0R\x0faudioFileConfig\x12T\n\x13audio_output_config\x18\
+    B\x20\x01(\x0b2\".mizer.nodes.AudioOutputNodeConfigH\0R\x11audioOutputCo\
+    nfig\x12T\n\x13audio_volume_config\x18C\x20\x01(\x0b2\".mizer.nodes.Audi\
+    oVolumeNodeConfigH\0R\x11audioVolumeConfig\x12Q\n\x12audio_input_config\
+    \x18D\x20\x01(\x0b2!.mizer.nodes.AudioInputNodeConfigH\0R\x10audioInputC\
+    onfig\x12K\n\x10audio_mix_config\x18E\x20\x01(\x0b2\x1f.mizer.nodes.Audi\
+    oMixNodeConfigH\0R\x0eaudioMixConfig\x12Q\n\x12audio_meter_config\x18F\
+    \x20\x01(\x0b2!.mizer.nodes.AudioMeterNodeConfigH\0R\x10audioMeterConfig\
+    \x12J\n\x0ftemplate_config\x18G\x20\x01(\x0b2\x1f.mizer.nodes.TemplateNo\
+    deConfigH\0R\x0etemplateConfig\x12Z\n\x15color_constant_config\x18H\x20\
+    \x01(\x0b2$.mizer.nodes.ColorConstantNodeConfigH\0R\x13colorConstantConf\
+    ig\x12`\n\x17color_brightness_config\x18I\x20\x01(\x0b2&.mizer.nodes.Col\
+    orBrightnessNodeConfigH\0R\x15colorBrightnessConfigB\x06\n\x04type\"\x87\
+    \x02\n\x14OscillatorNodeConfig\x12D\n\x04type\x18\x01\x20\x01(\x0e20.miz\
+    er.nodes.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\
+    \x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\
+    \x03max\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offse\
+    t\x18\x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\
+    \x08R\x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06SQUARE\x10\0\x12\x08\
+    \n\x04SINE\x10\x01\x12\x07\n\x03SAW\x10\x02\x12\x0c\n\x08TRIANGLE\x10\
+    \x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\
+    \x06script\"\xa6\x01\n\x12SequenceNodeConfig\x12B\n\x05steps\x18\x01\x20\
+    \x03(\x0b2,.mizer.nodes.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\
+    \x0cSequenceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\
+    \n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\
+    \x01(\x08R\x04hold\"\x16\n\x14ProgrammerNodeConfig\",\n\x0fGroupNodeConf\
+    ig\x12\x19\n\x08group_id\x18\x01\x20\x01(\rR\x07groupId\"K\n\x10PresetNo\
+    deConfig\x127\n\tpreset_id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.Pr\
+    esetIdR\x08presetId\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\
+    \x01\x20\x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\
+    \x05decay\x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\
+    \n\x07release\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\
+    \x12\x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeCo\
+    nfig\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"6\n\x13Sequen\
+    cerNodeConfig\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\"\
+    *\n\x10ButtonNodeConfig\x12\x16\n\x06toggle\x18\x01\x20\x01(\x08R\x06tog\
+    gle\"\x11\n\x0fFaderNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04f\
+    ile\x18\x01\x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevic\
+    e_id\x18\x01\x20\x01(\tR\x08deviceId\"\xbb\x03\n\x11GamepadNodeConfig\
+    \x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x12@\n\x07control\
+    \x18\x02\x20\x01(\x0e2&.mizer.nodes.GamepadNodeConfig.ControlR\x07contro\
+    l\"\xc6\x02\n\x07Control\x12\x10\n\x0cLEFT_STICK_X\x10\0\x12\x10\n\x0cLE\
+    FT_STICK_Y\x10\x01\x12\x11\n\rRIGHT_STICK_X\x10\x02\x12\x11\n\rRIGHT_STI\
+    CK_Y\x10\x03\x12\x10\n\x0cLEFT_TRIGGER\x10\x04\x12\x11\n\rRIGHT_TRIGGER\
+    \x10\x05\x12\x11\n\rLEFT_SHOULDER\x10\x06\x12\x12\n\x0eRIGHT_SHOULDER\
+    \x10\x07\x12\t\n\x05SOUTH\x10\x08\x12\x08\n\x04EAST\x10\t\x12\t\n\x05NOR\
+    TH\x10\n\x12\x08\n\x04WEST\x10\x0b\x12\n\n\x06SELECT\x10\x0c\x12\t\n\x05\
+    START\x10\r\x12\x08\n\x04MODE\x10\x0e\x12\x0b\n\x07DPAD_UP\x10\x0f\x12\r\
+    \n\tDPAD_DOWN\x10\x10\x12\r\n\tDPAD_LEFT\x10\x11\x12\x0e\n\nDPAD_RIGHT\
+    \x10\x12\x12\x0e\n\nLEFT_STICK\x10\x13\x12\x0f\n\x0bRIGHT_STICK\x10\x14\
+    \"\x86\x01\n\x16PixelPatternNodeConfig\x12E\n\x07pattern\x18\x01\x20\x01\
+    (\x0e2+.mizer.nodes.PixelPatternNodeConfig.PatternR\x07pattern\"%\n\x07P\
+    attern\x12\x0f\n\x0bRGB_ITERATE\x10\0\x12\t\n\x05SWIRL\x10\x01\"\x81\x01\
     \n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05wid\
     th\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0estart_u\
     niverse\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\x18\x04\
@@ -17647,89 +18496,97 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\x01R\x0bactiveValue\x12%\n\x0einactive_value\x18\x04\x20\x01(\x01R\
     \rinactiveValue\"D\n\x11EncoderNodeConfig\x12\x1b\n\thold_rate\x18\x01\
     \x20\x01(\x01R\x08holdRate\x12\x12\n\x04hold\x18\x02\x20\x01(\x08R\x04ho\
-    ld\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\">\n\x13C\
-    ontainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes\
-    .NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeConfig\x124\n\x04mode\x18\x01\x20\
-    \x01(\x0e2\x20.mizer.nodes.MathNodeConfig.ModeR\x04mode\"v\n\x04Mode\x12\
-    \x0c\n\x08ADDITION\x10\0\x12\x0f\n\x0bSUBTRACTION\x10\x01\x12\x12\n\x0eM\
-    ULTIPLICATION\x10\x02\x12\x0c\n\x08DIVISION\x10\x03\x12\n\n\x06INVERT\
-    \x10\x04\x12\x08\n\x04SINE\x10\x05\x12\n\n\x06COSINE\x10\x06\x12\x0b\n\
-    \x07TANGENT\x10\x07\"I\n\x13MqttInputNodeConfig\x12\x1e\n\nconnection\
-    \x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\
-    \x04path\"b\n\x14MqttOutputNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\
-    \x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12\
-    \x16\n\x06retain\x18\x03\x20\x01(\x08R\x06retain\"\x18\n\x16NumberToData\
-    NodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\x0fValueNodeConfig\x12\
-    \x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"'\n\x11ExtractNodeConfig\
-    \x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"0\n\x12TemplateNodeConfi\
-    g\x12\x1a\n\x08template\x18\x01\x20\x01(\tR\x08template\"L\n\x14PlanScre\
-    enNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x1b\
-    \n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDelayNodeConfig\
-    \x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\xbc\x01\n\
-    \x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mizer.nodes.Ra\
-    mpNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\x01x\x18\
-    \x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\
-    \x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\
-    \x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\
-    \n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\x12\x1b\n\
-    \ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fade\x18\x02\
-    \x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\x04text\x18\x01\
-    \x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"\xb7\x03\n\x12G13In\
-    putNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x125\
-    \n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G13InputNodeConfig.KeyR\x03\
-    key\"\xcc\x02\n\x03Key\x12\x06\n\x02G1\x10\0\x12\x06\n\x02G2\x10\x01\x12\
-    \x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\x12\x06\n\x02G5\x10\x04\x12\
-    \x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\x12\x06\n\x02G8\x10\x07\x12\
-    \x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\x12\x07\n\x03G11\x10\n\x12\
-    \x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\x0c\x12\x07\n\x03G14\x10\r\
-    \x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\x10\x0f\x12\x07\n\x03G17\x10\
-    \x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03G19\x10\x12\x12\x07\n\x03G20\
-    \x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\x03G22\x10\x15\x12\x06\n\x02\
-    M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\n\x02M3\x10\x18\x12\x06\n\x02\
-    MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\n\x02L2\x10\x1b\x12\x06\n\x02\
-    L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\x0e\n\nJOYSTICK_X\x10\x1e\x12\x0e\
-    \n\nJOYSTICK_Y\x10\x1f\x12\x0c\n\x08JOYSTICK\x10\x20\x12\x08\n\x04LEFT\
-    \x10!\x12\x08\n\x04DOWN\x10\"\x12\x06\n\x02BD\x10#\"2\n\x13G13OutputNode\
-    Config\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\"0\n\x18Cons\
-    tantNumberNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"\
-    5\n\x15ConditionalNodeConfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\x01R\
-    \tthreshold\"<\n\x19TimecodeControlNodeConfig\x12\x1f\n\x0btimecode_id\
-    \x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18TimecodeOutputNodeConfig\x12\
-    \x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\"\xb4\x01\n\x13AudioFi\
-    leNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\x12R\n\rplayb\
-    ack_mode\x18\x02\x20\x01(\x0e2-.mizer.nodes.AudioFileNodeConfig.Playback\
-    ModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\x0c\n\x08ONE_SHOT\x10\0\
-    \x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\x10\x02\"\x17\n\x15AudioOu\
-    tputNodeConfig\"\x17\n\x15AudioVolumeNodeConfig\"\x16\n\x14AudioInputNod\
-    eConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\x14AudioMeterNodeConfig\"*\
-    \n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\
-    \x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\
-    \x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\
-    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\
-    \x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\
-    \tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.Cha\
-    nnelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\
-    \x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\
-    \n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
-    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
-    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
-    \n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\x08NodesApi\x129\n\
-    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
-    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
-    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
-    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
-    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProper\
-    ty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeC\
-    onfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\
-    \x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes\
-    .DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08Hide\
-    Node\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeRes\
-    ponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.miz\
-    er.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.Duplica\
-    teNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.\
-    nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nG\
-    roupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.Grou\
-    pNodesResponseb\x06proto3\
+    ld\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\"\xc4\x02\
+    \n\x17ColorConstantNodeConfig\x12A\n\x03rgb\x18\x01\x20\x01(\x0b2-.mizer\
+    .nodes.ColorConstantNodeConfig.RgbColorH\0R\x03rgb\x12A\n\x03hsv\x18\x02\
+    \x20\x01(\x0b2-.mizer.nodes.ColorConstantNodeConfig.HsvColorH\0R\x03hsv\
+    \x1aF\n\x08RgbColor\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\
+    \x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\
+    \x20\x01(\x01R\x04blue\x1aR\n\x08HsvColor\x12\x10\n\x03hue\x18\x01\x20\
+    \x01(\x01R\x03hue\x12\x1e\n\nsaturation\x18\x02\x20\x01(\x01R\nsaturatio\
+    n\x12\x14\n\x05value\x18\x03\x20\x01(\x01R\x05valueB\x07\n\x05color\"\
+    \x1b\n\x19ColorBrightnessNodeConfig\">\n\x13ContainerNodeConfig\x12'\n\
+    \x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"\xbe\x01\
+    \n\x0eMathNodeConfig\x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.node\
+    s.MathNodeConfig.ModeR\x04mode\"v\n\x04Mode\x12\x0c\n\x08ADDITION\x10\0\
+    \x12\x0f\n\x0bSUBTRACTION\x10\x01\x12\x12\n\x0eMULTIPLICATION\x10\x02\
+    \x12\x0c\n\x08DIVISION\x10\x03\x12\n\n\x06INVERT\x10\x04\x12\x08\n\x04SI\
+    NE\x10\x05\x12\n\n\x06COSINE\x10\x06\x12\x0b\n\x07TANGENT\x10\x07\"I\n\
+    \x13MqttInputNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconne\
+    ction\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\"b\n\x14MqttOutputNo\
+    deConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\
+    \x04path\x18\x02\x20\x01(\tR\x04path\x12\x16\n\x06retain\x18\x03\x20\x01\
+    (\x08R\x06retain\"\x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumb\
+    erNodeConfig\"'\n\x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \tR\x05value\"'\n\x11ExtractNodeConfig\x12\x12\n\x04path\x18\x01\x20\x01\
+    (\tR\x04path\"0\n\x12TemplateNodeConfig\x12\x1a\n\x08template\x18\x01\
+    \x20\x01(\tR\x08template\"L\n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_\
+    id\x18\x01\x20\x01(\tR\x06planId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\r\
+    R\x08screenId\"2\n\x0fDelayNodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\
+    \x20\x01(\rR\nbufferSize\"\xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\
+    \x18\x01\x20\x03(\x0b2$.mizer.nodes.RampNodeConfig.RampStepR\x05steps\
+    \x1an\n\x08RampStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\
+    \x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\
+    \x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\
+    \x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03\
+    c1b\"B\n\x0fNoiseNodeConfig\x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\
+    \x08tickRate\x12\x12\n\x04fade\x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLab\
+    elNodeConfig\x12\x12\n\x04text\x18\x01\x20\x01(\tR\x04text\"\x15\n\x13Tr\
+    ansportNodeConfig\"\xb7\x03\n\x12G13InputNodeConfig\x12\x1b\n\tdevice_id\
+    \x18\x01\x20\x01(\tR\x08deviceId\x125\n\x03key\x18\x02\x20\x01(\x0e2#.mi\
+    zer.nodes.G13InputNodeConfig.KeyR\x03key\"\xcc\x02\n\x03Key\x12\x06\n\
+    \x02G1\x10\0\x12\x06\n\x02G2\x10\x01\x12\x06\n\x02G3\x10\x02\x12\x06\n\
+    \x02G4\x10\x03\x12\x06\n\x02G5\x10\x04\x12\x06\n\x02G6\x10\x05\x12\x06\n\
+    \x02G7\x10\x06\x12\x06\n\x02G8\x10\x07\x12\x06\n\x02G9\x10\x08\x12\x07\n\
+    \x03G10\x10\t\x12\x07\n\x03G11\x10\n\x12\x07\n\x03G12\x10\x0b\x12\x07\n\
+    \x03G13\x10\x0c\x12\x07\n\x03G14\x10\r\x12\x07\n\x03G15\x10\x0e\x12\x07\
+    \n\x03G16\x10\x0f\x12\x07\n\x03G17\x10\x10\x12\x07\n\x03G18\x10\x11\x12\
+    \x07\n\x03G19\x10\x12\x12\x07\n\x03G20\x10\x13\x12\x07\n\x03G21\x10\x14\
+    \x12\x07\n\x03G22\x10\x15\x12\x06\n\x02M1\x10\x16\x12\x06\n\x02M2\x10\
+    \x17\x12\x06\n\x02M3\x10\x18\x12\x06\n\x02MR\x10\x19\x12\x06\n\x02L1\x10\
+    \x1a\x12\x06\n\x02L2\x10\x1b\x12\x06\n\x02L3\x10\x1c\x12\x06\n\x02L4\x10\
+    \x1d\x12\x0e\n\nJOYSTICK_X\x10\x1e\x12\x0e\n\nJOYSTICK_Y\x10\x1f\x12\x0c\
+    \n\x08JOYSTICK\x10\x20\x12\x08\n\x04LEFT\x10!\x12\x08\n\x04DOWN\x10\"\
+    \x12\x06\n\x02BD\x10#\"2\n\x13G13OutputNodeConfig\x12\x1b\n\tdevice_id\
+    \x18\x01\x20\x01(\tR\x08deviceId\"0\n\x18ConstantNumberNodeConfig\x12\
+    \x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"5\n\x15ConditionalNodeCo\
+    nfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\x01R\tthreshold\"<\n\x19Timec\
+    odeControlNodeConfig\x12\x1f\n\x0btimecode_id\x18\x01\x20\x01(\rR\ntimec\
+    odeId\"9\n\x18TimecodeOutputNodeConfig\x12\x1d\n\ncontrol_id\x18\x01\x20\
+    \x01(\rR\tcontrolId\"\xb4\x01\n\x13AudioFileNodeConfig\x12\x12\n\x04file\
+    \x18\x01\x20\x01(\tR\x04file\x12R\n\rplayback_mode\x18\x02\x20\x01(\x0e2\
+    -.mizer.nodes.AudioFileNodeConfig.PlaybackModeR\x0cplaybackMode\"5\n\x0c\
+    PlaybackMode\x12\x0c\n\x08ONE_SHOT\x10\0\x12\x08\n\x04LOOP\x10\x01\x12\r\
+    \n\tPING_PONG\x10\x02\"\x17\n\x15AudioOutputNodeConfig\"\x17\n\x15AudioV\
+    olumeNodeConfig\"\x16\n\x14AudioInputNodeConfig\"\x14\n\x12AudioMixNodeC\
+    onfig\"\x16\n\x14AudioMeterNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01\
+    x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"\
+    s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\x0b2\x19.mizer.n\
+    odes.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
+    \x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"p\n\x04Po\
+    rt\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x128\n\x08protocol\x18\
+    \x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\x12\x1a\
+    \n\x08multiple\x18\x03\x20\x01(\x08R\x08multiple*\x8d\x01\n\x0fChannelPr\
+    otocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\
+    \x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\
+    \x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\
+    \x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x08\x12\t\n\x05CLOCK\
+    \x10\n2\x83\x07\n\x08NodesApi\x129\n\x08GetNodes\x12\x19.mizer.nodes.Nod\
+    esRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.node\
+    s.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mize\
+    r.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11Writ\
+    eControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.Write\
+    Response\x12a\n\x12UpdateNodeProperty\x12$.mizer.nodes.UpdateNodeConfigR\
+    equest\x1a%.mizer.nodes.UpdateNodeConfigResponse\x12G\n\x08MoveNode\x12\
+    \x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\
+    \x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.\
+    nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNode\
+    Request\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.\
+    mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\
+    \rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.node\
+    s.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.\
+    mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.Gr\
+    oupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -17748,7 +18605,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::programmer::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(89);
+            let mut messages = ::std::vec::Vec::with_capacity(93);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());
             messages.push(NodesRequest::generated_message_descriptor_data());
@@ -17804,6 +18661,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(EncoderNodeConfig::generated_message_descriptor_data());
             messages.push(ColorRgbNodeConfig::generated_message_descriptor_data());
             messages.push(ColorHsvNodeConfig::generated_message_descriptor_data());
+            messages.push(ColorConstantNodeConfig::generated_message_descriptor_data());
+            messages.push(ColorBrightnessNodeConfig::generated_message_descriptor_data());
             messages.push(ContainerNodeConfig::generated_message_descriptor_data());
             messages.push(MathNodeConfig::generated_message_descriptor_data());
             messages.push(MqttInputNodeConfig::generated_message_descriptor_data());
@@ -17837,6 +18696,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(sequence_node_config::SequenceStep::generated_message_descriptor_data());
             messages.push(midi_node_config::NoteBinding::generated_message_descriptor_data());
             messages.push(midi_node_config::ControlBinding::generated_message_descriptor_data());
+            messages.push(color_constant_node_config::RgbColor::generated_message_descriptor_data());
+            messages.push(color_constant_node_config::HsvColor::generated_message_descriptor_data());
             messages.push(ramp_node_config::RampStep::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(12);
             enums.push(ChannelProtocol::generated_enum_descriptor_data());

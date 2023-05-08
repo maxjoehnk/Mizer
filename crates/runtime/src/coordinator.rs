@@ -481,6 +481,8 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::VideoOutput(node) => pipeline.register_node(path, &node),
         Node::VideoEffect(node) => pipeline.register_node(path, &node),
         Node::VideoTransform(node) => pipeline.register_node(path, &node),
+        Node::ColorConstant(node) => pipeline.register_node(path, &node),
+        Node::ColorBrightness(node) => pipeline.register_node(path, &node),
         Node::ColorRgb(node) => pipeline.register_node(path, &node),
         Node::ColorHsv(node) => pipeline.register_node(path, &node),
         Node::Gamepad(node) => pipeline.register_node(path, &node),

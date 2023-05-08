@@ -65,6 +65,8 @@ node_type_name! {
         Threshold,
         Ramp,
         Encoder,
+        ColorConstant,
+        ColorBrightness,
         ColorRgb,
         ColorHsv,
         Container,

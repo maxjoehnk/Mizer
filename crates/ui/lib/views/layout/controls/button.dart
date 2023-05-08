@@ -57,7 +57,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
       image: widget.image,
       pressed: value,
       onValue: (value) =>
-          apiClient.writeControlValue(path: widget.control.node, port: "value", value: value),
+          apiClient.writeControlValue(path: widget.control.node, port: "Input", value: value),
     );
   }
 }

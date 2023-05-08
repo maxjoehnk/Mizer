@@ -1,6 +1,5 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
@@ -12,7 +11,8 @@ class FaderControl extends StatefulWidget {
   final LayoutControl control;
   final Color? color;
 
-  const FaderControl({required this.pointer, required this.control, required this.color, Key? key}) : super(key: key);
+  const FaderControl({required this.pointer, required this.control, required this.color, Key? key})
+      : super(key: key);
 
   @override
   _FaderControlState createState() => _FaderControlState();
@@ -50,7 +50,7 @@ class _FaderControlState extends State<FaderControl> with SingleTickerProviderSt
       color: widget.color,
       value: value,
       onValue: (value) =>
-          apiClient.writeControlValue(path: widget.control.node, port: "value", value: value),
+          apiClient.writeControlValue(path: widget.control.node, port: "Input", value: value),
     );
   }
 }

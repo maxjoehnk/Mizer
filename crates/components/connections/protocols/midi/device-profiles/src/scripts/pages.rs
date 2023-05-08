@@ -1,9 +1,8 @@
 use crate::profile::{Control, ControlBuilder, Group, Page};
-use crate::scripts::ScriptError;
 use rhai::{Array, Engine};
 use std::path::PathBuf;
 
-pub fn get_pages(script: impl Into<PathBuf>) -> Result<Vec<Page>, ScriptError> {
+pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
     let mut engine = Engine::new();
 
     engine
@@ -39,6 +38,7 @@ pub fn get_pages(script: impl Into<PathBuf>) -> Result<Vec<Page>, ScriptError> {
         .register_type::<ControlBuilder>()
         .register_fn("note", |c: ControlBuilder, note: i64| c.note(note as u8))
         .register_fn("cc", |c: ControlBuilder, note: i64| c.cc(note as u8))
+        .register_fn("rgb", ControlBuilder::rgb)
         .register_fn("channel", |c: ControlBuilder, channel: i64| {
             c.channel(channel as u8)
         })

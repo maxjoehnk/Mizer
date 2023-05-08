@@ -4,3 +4,4 @@ name: FL Studio Fire
 keyword: FL STUDIO FIRE
 scripts:
   pages: pages.rhai
+  outputs: outputs.rhai

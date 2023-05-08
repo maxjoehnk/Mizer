@@ -8,14 +8,22 @@ fn generate_page() {
 
 fn add_buttons(page) {
     let pads = create_group("Pads");
+    let pad_index = 0;
     for row_index in range(0, 4) {
         for column_index in range(0, 16) {
             let button_base = 54 + row_index * 16;
             let button_note = button_base + column_index;
 
-            let button_id = "button-" + button_note;
+            let button_id = "pad-" + pad_index;
             let button_name = "Pad " + (row_index + 1) + "-" + (column_index + 1);
-            pads += control(button_name).id(button_id).input().note(button_note).range(0, 127);
+            pads += control(button_name)
+                .id(button_id)
+                .input()
+                .note(button_note)
+                .range(0, 127)
+                .output()
+                .rgb("write_rgb");
+            pad_index += 1;
         }
     }
     let mutes = create_group("Mutes");

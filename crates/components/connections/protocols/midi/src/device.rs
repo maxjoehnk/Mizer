@@ -81,7 +81,7 @@ pub trait MidiControl {
 
 impl MidiControl for Control {
     fn receive_value(&self, msg: MidiMessage) -> Option<f64> {
-        match (msg, self.input) {
+        match (msg, &self.input) {
             (
                 MidiMessage::ControlChange(channel, port, value),
                 Some(DeviceControl::MidiCC(MidiDeviceControl {
@@ -90,8 +90,8 @@ impl MidiControl for Control {
                     range,
                     ..
                 })),
-            ) if note == port && channel == note_channel => {
-                Some(value.linear_extrapolate(range, (0., 1.)))
+            ) if port == *note && channel == *note_channel => {
+                Some(value.linear_extrapolate(*range, (0., 1.)))
             }
             (
                 MidiMessage::NoteOn(channel, port, value),
@@ -101,8 +101,8 @@ impl MidiControl for Control {
                     range,
                     ..
                 })),
-            ) if port == note && channel == note_channel => {
-                Some(value.linear_extrapolate(range, (0., 1.)))
+            ) if port == *note && channel == *note_channel => {
+                Some(value.linear_extrapolate(*range, (0., 1.)))
             }
             (
                 MidiMessage::NoteOff(channel, port, _),
@@ -111,7 +111,7 @@ impl MidiControl for Control {
                     channel: note_channel,
                     ..
                 })),
-            ) if port == note && channel == note_channel => Some(0f64),
+            ) if port == *note && channel == *note_channel => Some(0f64),
             _ => None,
         }
     }

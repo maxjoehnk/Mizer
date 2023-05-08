@@ -1,6 +1,7 @@
 use crate::profile::DeviceProfile;
 use crate::scripts::outputs::parse_outputs_ast;
 use crate::scripts::pages::get_pages;
+use anyhow::Context;
 use std::fs;
 use std::path::Path;
 
@@ -39,7 +40,10 @@ fn generate_output_script(profile: &mut DeviceProfile, path: &Path) -> anyhow::R
         .as_ref()
         .and_then(|scripts| scripts.outputs.as_ref())
     {
-        profile.output_script = Some(parse_outputs_ast(path.join(script_name))?);
+        let script = parse_outputs_ast(&profile.engine, path.join(script_name)).context(
+            format!("Compiling output script for profile {}", profile.name),
+        )?;
+        profile.output_script = Some(script);
     }
 
     Ok(())

@@ -1,5 +1,5 @@
-use crate::scripts::outputs::OutputScript;
-use mizer_midi_messages::Channel;
+use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
+use mizer_midi_messages::{Channel, MidiMessage};
 use serde::{Deserialize, Serialize};
 use std::convert::TryInto;
 
@@ -19,6 +19,8 @@ pub struct DeviceProfile {
     pub(crate) layout_file: Option<String>,
     #[serde(skip)]
     pub layout: Option<String>,
+    #[serde(default, skip)]
+    pub(crate) engine: OutputEngine,
 }
 
 impl DeviceProfile {
@@ -26,10 +28,22 @@ impl DeviceProfile {
         name.contains(&self.keyword)
     }
 
-    pub fn get_control(&self, page: &str, control: &str) -> Option<Control> {
+    pub fn get_control(&self, page: &str, control: &str) -> Option<&Control> {
         let page = self.pages.iter().find(|p| p.name == page);
 
-        page.and_then(|page| page.all_controls().find(|c| c.id == control).cloned())
+        page.and_then(|page| page.all_controls().find(|c| c.id == control))
+    }
+
+    pub fn write_rgb(&self, control: &Control, color: (f64, f64, f64)) -> Option<MidiMessage> {
+        let script = self.output_script.as_ref()?;
+
+        match script.write_rgb(&self.engine, control, Color(color)) {
+            Ok(msg) => Some(msg),
+            Err(err) => {
+                log::error!("Unable to write rgb to control {control:?}: {err:?}");
+                None
+            }
+        }
     }
 }
 
@@ -111,10 +125,11 @@ pub struct Control {
     pub output: Option<DeviceControl>,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub enum DeviceControl {
     MidiNote(MidiDeviceControl),
     MidiCC(MidiDeviceControl),
+    RGBSysEx(String),
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize)]
@@ -208,14 +223,20 @@ pub struct ControlBuilder {
     pub control_type: ControlType,
 }
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub enum ControlType {
     #[default]
     Note,
     ControlChange,
+    Rgb(String),
 }
 
 impl ControlBuilder {
+    pub fn rgb(mut self, name: String) -> Self {
+        self.control_type = ControlType::Rgb(name);
+        self
+    }
+
     pub fn note(mut self, note: u8) -> Self {
         self.note = note;
         self.control_type = ControlType::Note;
@@ -239,15 +260,19 @@ impl ControlBuilder {
     }
 
     pub fn build(mut self) -> Control {
-        let control = MidiDeviceControl {
-            note: self.note,
-            range: self.range,
-            channel: self.channel,
-        };
-        let control = if self.control_type == ControlType::Note {
-            DeviceControl::MidiNote(control)
+        let control = if let ControlType::Rgb(name) = self.control_type {
+            DeviceControl::RGBSysEx(name)
         } else {
-            DeviceControl::MidiCC(control)
+            let control = MidiDeviceControl {
+                note: self.note,
+                range: self.range,
+                channel: self.channel,
+            };
+            if self.control_type == ControlType::Note {
+                DeviceControl::MidiNote(control)
+            } else {
+                DeviceControl::MidiCC(control)
+            }
         };
         if self.input {
             self.control.input = Some(control);

@@ -4,4 +4,3 @@ name: Launch Control
 keyword: Launch Control
 scripts:
   pages: pages.rhai
-  outputs: outputs.rhai

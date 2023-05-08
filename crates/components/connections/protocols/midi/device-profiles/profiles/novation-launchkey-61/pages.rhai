@@ -24,10 +24,12 @@ fn generate_pads() {
 
             let button_id = "button-" + button_base;
             let button_name = "Pad " + (row_index + 1) + "-" + (column_index + 1);
-            pads += note(button_name, button_note)
+            pads += control(button_name)
+                .id(button_id)
+                .input()
+                .note(button_note)
                 .channel(10)
                 .range(0, 127)
-                .id(button_id)
                 .output();
         }
     }
@@ -42,9 +44,11 @@ fn generate_keys() {
 
         let button_id = "key-" + button_note;
         let button_name = "Key " + (index + 1);
-        pads += note(button_name, button_note)
-            .range(0, 127)
-            .id(button_id);
+        pads += control(button_name)
+            .id(button_id)
+            .input()
+            .note(button_note)
+            .range(0, 127);
     }
 
     pads
@@ -63,7 +67,7 @@ fn generate_controls() {
 }
 
 fn generate_control(name, note) {
-    let control = cc(name, note).range(0, 127);
+    let control = control(name).input().cc(note).range(0, 127);
 
     control
 }
@@ -71,10 +75,10 @@ fn generate_control(name, note) {
 fn add_faders() {
     let group = create_group("Faders");
     for fader_index in range(0, 8) {
-        group += cc("Fader " + (fader_index + 1), 41 + fader_index).range(0, 127);
+        group += control("Fader " + (fader_index + 1)).input().cc(41 + fader_index).range(0, 127);
     }
 
-    group += cc("Master", 7).range(0, 127);
+    group += control("Master").input().cc(7).range(0, 127);
 
     group
 }
@@ -82,7 +86,7 @@ fn add_faders() {
 fn add_knobs() {
     let group = create_group("Knobs");
     for fader_index in range(0, 8) {
-        group += cc("Knob " + (fader_index + 1), 21 + fader_index).range(0, 127);
+        group += control("Knob " + (fader_index + 1)).input().cc(21 + fader_index).range(0, 127);
     }
 
     group

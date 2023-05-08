@@ -5233,12 +5233,8 @@ pub mod midi_device_profile {
         pub id: ::std::string::String,
         // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.name)
         pub name: ::std::string::String,
-        // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.channel)
-        pub channel: u32,
-        // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.note)
-        pub note: u32,
-        // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.control_type)
-        pub control_type: ::protobuf::EnumOrUnknown<ControlType>,
+        // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.has_input)
+        pub has_input: bool,
         // @@protoc_insertion_point(field:mizer.MidiDeviceProfile.Control.has_output)
         pub has_output: bool,
         // special fields
@@ -5258,7 +5254,7 @@ pub mod midi_device_profile {
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(6);
+            let mut fields = ::std::vec::Vec::with_capacity(4);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "id",
@@ -5271,19 +5267,9 @@ pub mod midi_device_profile {
                 |m: &mut Control| { &mut m.name },
             ));
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "channel",
-                |m: &Control| { &m.channel },
-                |m: &mut Control| { &mut m.channel },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "note",
-                |m: &Control| { &m.note },
-                |m: &mut Control| { &mut m.note },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "control_type",
-                |m: &Control| { &m.control_type },
-                |m: &mut Control| { &mut m.control_type },
+                "has_input",
+                |m: &Control| { &m.has_input },
+                |m: &mut Control| { &mut m.has_input },
             ));
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "has_output",
@@ -5315,15 +5301,9 @@ pub mod midi_device_profile {
                         self.name = is.read_string()?;
                     },
                     24 => {
-                        self.channel = is.read_uint32()?;
+                        self.has_input = is.read_bool()?;
                     },
                     32 => {
-                        self.note = is.read_uint32()?;
-                    },
-                    40 => {
-                        self.control_type = is.read_enum_or_unknown()?;
-                    },
-                    48 => {
                         self.has_output = is.read_bool()?;
                     },
                     tag => {
@@ -5344,14 +5324,8 @@ pub mod midi_device_profile {
             if !self.name.is_empty() {
                 my_size += ::protobuf::rt::string_size(2, &self.name);
             }
-            if self.channel != 0 {
-                my_size += ::protobuf::rt::uint32_size(3, self.channel);
-            }
-            if self.note != 0 {
-                my_size += ::protobuf::rt::uint32_size(4, self.note);
-            }
-            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::NOTE) {
-                my_size += ::protobuf::rt::int32_size(5, self.control_type.value());
+            if self.has_input != false {
+                my_size += 1 + 1;
             }
             if self.has_output != false {
                 my_size += 1 + 1;
@@ -5368,17 +5342,11 @@ pub mod midi_device_profile {
             if !self.name.is_empty() {
                 os.write_string(2, &self.name)?;
             }
-            if self.channel != 0 {
-                os.write_uint32(3, self.channel)?;
-            }
-            if self.note != 0 {
-                os.write_uint32(4, self.note)?;
-            }
-            if self.control_type != ::protobuf::EnumOrUnknown::new(ControlType::NOTE) {
-                os.write_enum(5, ::protobuf::EnumOrUnknown::value(&self.control_type))?;
+            if self.has_input != false {
+                os.write_bool(3, self.has_input)?;
             }
             if self.has_output != false {
-                os.write_bool(6, self.has_output)?;
+                os.write_bool(4, self.has_output)?;
             }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
@@ -5399,9 +5367,7 @@ pub mod midi_device_profile {
         fn clear(&mut self) {
             self.id.clear();
             self.name.clear();
-            self.channel = 0;
-            self.note = 0;
-            self.control_type = ::protobuf::EnumOrUnknown::new(ControlType::NOTE);
+            self.has_input = false;
             self.has_output = false;
             self.special_fields.clear();
         }
@@ -5410,9 +5376,7 @@ pub mod midi_device_profile {
             static instance: Control = Control {
                 id: ::std::string::String::new(),
                 name: ::std::string::String::new(),
-                channel: 0,
-                note: 0,
-                control_type: ::protobuf::EnumOrUnknown::from_i32(0),
+                has_input: false,
                 has_output: false,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
@@ -5435,60 +5399,6 @@ pub mod midi_device_profile {
 
     impl ::protobuf::reflect::ProtobufValue for Control {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-    }
-
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.MidiDeviceProfile.ControlType)
-    pub enum ControlType {
-        // @@protoc_insertion_point(enum_value:mizer.MidiDeviceProfile.ControlType.NOTE)
-        NOTE = 0,
-        // @@protoc_insertion_point(enum_value:mizer.MidiDeviceProfile.ControlType.CC)
-        CC = 1,
-    }
-
-    impl ::protobuf::Enum for ControlType {
-        const NAME: &'static str = "ControlType";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<ControlType> {
-            match value {
-                0 => ::std::option::Option::Some(ControlType::NOTE),
-                1 => ::std::option::Option::Some(ControlType::CC),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [ControlType] = &[
-            ControlType::NOTE,
-            ControlType::CC,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for ControlType {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("MidiDeviceProfile.ControlType").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for ControlType {
-        fn default() -> Self {
-            ControlType::NOTE
-        }
-    }
-
-    impl ControlType {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ControlType>("MidiDeviceProfile.ControlType")
-        }
     }
 }
 
@@ -6830,8 +6740,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ion\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"O\n\x0eMidiConnection\x12\
     *\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
     \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
-    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\
-    \x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x93\
+    \x04\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
     \x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\
     \x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\
     \x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\
@@ -6841,13 +6751,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08control\
     s\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\
     \x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\
-    \x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\t\
-    R\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07chann\
-    el\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\
-    \x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceP\
-    rofile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01\
-    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04NOTE\x10\0\x12\x06\
-    \n\x02CC\x10\x01B\t\n\x07_layout\"\x9b\x01\n\rOscConnection\x12#\n\rconn\
+    \x08controls\x1ai\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x1b\n\thas_input\x18\
+    \x03\x20\x01(\x08R\x08hasInput\x12\x1d\n\nhas_output\x18\x04\x20\x01(\
+    \x08R\thasOutputB\t\n\x07_layout\"\x9b\x01\n\rOscConnection\x12#\n\rconn\
     ection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\
     \x02\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\
     \noutputPort\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\
@@ -6935,8 +6842,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(midi_device_profile::Group::generated_message_descriptor_data());
             messages.push(midi_device_profile::Control::generated_message_descriptor_data());
             messages.push(cdj_playback::Track::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(2);
-            enums.push(midi_device_profile::ControlType::generated_enum_descriptor_data());
+            let mut enums = ::std::vec::Vec::with_capacity(1);
             enums.push(cdj_playback::State::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),

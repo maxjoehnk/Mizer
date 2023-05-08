@@ -2,7 +2,9 @@ use derive_more::From;
 use mizer_devices::*;
 
 pub mod midi_device_profile {
-    pub use mizer_protocol_midi::{Control, ControlType, DeviceProfile, Group, Page};
+    pub use mizer_protocol_midi::{
+        Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
+    };
 }
 
 pub use mizer_protocol_midi::{MidiEvent, MidiMessage};

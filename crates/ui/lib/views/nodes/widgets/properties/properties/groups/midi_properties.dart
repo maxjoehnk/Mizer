@@ -17,8 +17,9 @@ import '../property_group.dart';
 class MidiProperties extends StatefulWidget {
   final MidiNodeConfig config;
   final Function(MidiNodeConfig) onUpdate;
+  final bool isInput;
 
-  MidiProperties(this.config, {required this.onUpdate});
+  MidiProperties(this.config, {required this.isInput, required this.onUpdate});
 
   @override
   _MidiPropertiesState createState() => _MidiPropertiesState(config);
@@ -148,13 +149,17 @@ class _MidiPropertiesState extends State<MidiProperties> {
 
   List<SelectGroup<String>> get _groups {
     return page?.groups
+            .where((group) => getControls(group.controls).isNotEmpty)
             .map((group) => SelectGroup(group.name, getControls(group.controls)))
             .toList() ??
         [];
   }
 
   List<SelectOption<String>> getControls(List<MidiDeviceProfile_Control> controls) {
-    return controls.map((control) => SelectOption(value: control.id, label: control.name)).toList();
+    return controls
+        .where((control) => widget.isInput ? control.hasInput : control.hasOutput)
+        .map((control) => SelectOption(value: control.id, label: control.name))
+        .toList();
   }
 
   @override

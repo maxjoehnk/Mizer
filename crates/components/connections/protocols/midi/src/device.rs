@@ -3,7 +3,9 @@ use std::convert::TryFrom;
 use midir::{MidiInput, MidiInputConnection, MidiOutput, MidiOutputConnection};
 
 use mizer_message_bus::{MessageBus, Subscriber};
-pub use mizer_midi_device_profiles::{Control, ControlType, DeviceProfile, Group, Page};
+pub use mizer_midi_device_profiles::{
+    Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
+};
 use mizer_util::LerpExt;
 
 use crate::device_provider::MidiDeviceIdentifier;
@@ -79,42 +81,62 @@ pub trait MidiControl {
 
 impl MidiControl for Control {
     fn receive_value(&self, msg: MidiMessage) -> Option<f64> {
-        match (msg, self.control_type) {
-            (MidiMessage::ControlChange(channel, port, value), ControlType::ControlChange)
-                if port == self.note && channel == self.channel =>
-            {
-                Some(value.linear_extrapolate(self.range, (0., 1.)))
+        match (msg, self.input) {
+            (
+                MidiMessage::ControlChange(channel, port, value),
+                Some(DeviceControl::MidiCC(MidiDeviceControl {
+                    note,
+                    channel: note_channel,
+                    range,
+                    ..
+                })),
+            ) if note == port && channel == note_channel => {
+                Some(value.linear_extrapolate(range, (0., 1.)))
             }
-            (MidiMessage::NoteOn(channel, port, value), ControlType::Note)
-                if port == self.note && channel == self.channel =>
-            {
-                Some(value.linear_extrapolate(self.range, (0., 1.)))
+            (
+                MidiMessage::NoteOn(channel, port, value),
+                Some(DeviceControl::MidiNote(MidiDeviceControl {
+                    note,
+                    channel: note_channel,
+                    range,
+                    ..
+                })),
+            ) if port == note && channel == note_channel => {
+                Some(value.linear_extrapolate(range, (0., 1.)))
             }
-            (MidiMessage::NoteOff(channel, port, _), ControlType::Note)
-                if port == self.note && channel == self.channel =>
-            {
-                Some(0f64)
-            }
+            (
+                MidiMessage::NoteOff(channel, port, _),
+                Some(DeviceControl::MidiNote(MidiDeviceControl {
+                    note,
+                    channel: note_channel,
+                    ..
+                })),
+            ) if port == note && channel == note_channel => Some(0f64),
             _ => None,
         }
     }
 
     fn send_value(&self, value: f64) -> Option<MidiMessage> {
-        if !self.has_output {
-            return None;
-        }
-
-        match self.control_type {
-            ControlType::ControlChange => Some(MidiMessage::ControlChange(
-                self.channel,
-                self.note,
-                value.linear_extrapolate((0f64, 1f64), self.output_range),
+        match self.output {
+            Some(DeviceControl::MidiNote(MidiDeviceControl {
+                channel,
+                note,
+                range,
+            })) => Some(MidiMessage::NoteOn(
+                channel,
+                note,
+                value.linear_extrapolate((0f64, 1f64), range),
             )),
-            ControlType::Note => Some(MidiMessage::NoteOn(
-                self.channel,
-                self.note,
-                value.linear_extrapolate((0f64, 1f64), self.output_range),
+            Some(DeviceControl::MidiCC(MidiDeviceControl {
+                channel,
+                note,
+                range,
+            })) => Some(MidiMessage::ControlChange(
+                channel,
+                note,
+                value.linear_extrapolate((0f64, 1f64), range),
             )),
+            _ => None,
         }
     }
 }

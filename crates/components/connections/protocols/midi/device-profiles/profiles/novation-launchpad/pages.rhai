@@ -22,11 +22,13 @@ fn generate_pads() {
 
             let button_id = "button-" + button_note;
             let button_name = "Pad " + (row_index + 1) + "-" + (column_index + 1);
-            pads += note(button_name, button_note)
-                .range(0, 127)
+            pads += control(button_name)
                 .id(button_id)
+                .input()
+                .note(button_note)
+                .range(0, 127)
                 .output()
-                .output_range(0, 60);
+                .range(0, 60);
         }
     }
 
@@ -41,11 +43,13 @@ fn generate_play_buttons() {
 
         let button_id = "button-" + button_note;
         let button_name = "Button " + (row_index + 1);
-        buttons += note(button_name, button_note)
-            .range(0, 127)
+        buttons += control(button_name)
             .id(button_id)
+            .input()
+            .note(button_note)
+            .range(0, 127)
             .output()
-            .output_range(0, 60);
+            .range(0, 60);
     }
 
     buttons
@@ -66,7 +70,7 @@ fn generate_controls() {
 }
 
 fn generate_control(name, note) {
-    let control = cc(name, note).range(0, 127);
+    let control = control(name).input().cc(note).range(0, 127);
 
     control
 }

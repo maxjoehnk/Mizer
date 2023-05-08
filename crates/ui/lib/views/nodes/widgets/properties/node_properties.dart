@@ -98,11 +98,13 @@ class NodePropertiesPane extends StatelessWidget {
     }
     if (node.config.hasMidiInputConfig()) {
       widgets.add(MidiProperties(node.config.midiInputConfig,
+          isInput: true,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(midiInputConfig: config)))));
     }
     if (node.config.hasMidiOutputConfig()) {
       widgets.add(MidiProperties(node.config.midiOutputConfig,
+          isInput: false,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(midiOutputConfig: config)))));
     }

@@ -1,4 +1,4 @@
-use crate::profile::{Control, Group, Page};
+use crate::profile::{Control, ControlBuilder, Group, Page};
 use crate::scripts::ScriptError;
 use rhai::{Array, Engine};
 use std::path::PathBuf;
@@ -15,24 +15,38 @@ pub fn get_pages(script: impl Into<PathBuf>) -> Result<Vec<Page>, ScriptError> {
         .register_fn("+=", Page::add_group)
         .register_fn("add", Page::add_control)
         .register_fn("+=", Page::add_control)
+        .register_fn("add", |page: &mut Page, cb: ControlBuilder| {
+            page.add_control(cb.build())
+        })
+        .register_fn("+=", |page: &mut Page, cb: ControlBuilder| {
+            page.add_control(cb.build())
+        })
         .register_type::<Group>()
         .register_fn("create_group", Group::new)
         .register_fn("add", Group::add_control)
         .register_fn("+=", Group::add_control)
+        .register_fn("add", |group: &mut Group, cb: ControlBuilder| {
+            group.add_control(cb.build())
+        })
+        .register_fn("+=", |group: &mut Group, cb: ControlBuilder| {
+            group.add_control(cb.build())
+        })
         .register_type::<Control>()
-        .register_fn("note", |name, note: i64| Control::note(name, note as u8))
-        .register_fn("cc", |name, note: i64| Control::cc(name, note as u8))
-        .register_fn("channel", |c: Control, channel: i64| {
-            Control::channel(c, channel as u8)
-        })
-        .register_fn("range", |c: Control, from: i64, to: i64| {
-            Control::range(c, from as u8, to as u8)
-        })
-        .register_fn("output_range", |c: Control, from: i64, to: i64| {
-            Control::output_range(c, from as u8, to as u8)
-        })
+        .register_fn("control", Control::new)
         .register_fn("id", Control::id)
-        .register_fn("output", Control::output);
+        .register_fn("input", Control::input)
+        .register_fn("output", Control::output)
+        .register_type::<ControlBuilder>()
+        .register_fn("note", |c: ControlBuilder, note: i64| c.note(note as u8))
+        .register_fn("cc", |c: ControlBuilder, note: i64| c.cc(note as u8))
+        .register_fn("channel", |c: ControlBuilder, channel: i64| {
+            c.channel(channel as u8)
+        })
+        .register_fn("range", |c: ControlBuilder, from: i64, to: i64| {
+            c.range(from as u8, to as u8)
+        })
+        .register_fn("output", |c: ControlBuilder| c.build().output())
+        .register_fn("input", |c: ControlBuilder| c.build().input());
 
     let ast = engine.compile_file(script.into())?;
     let pages: Array = engine.eval_ast(&ast)?;

@@ -1,5 +1,4 @@
 use crate::models::connections::*;
-use protobuf::EnumOrUnknown;
 
 impl From<mizer_connections::Connection> for Connection {
     fn from(connection: mizer_connections::Connection) -> Self {
@@ -143,24 +142,9 @@ impl From<mizer_connections::midi_device_profile::Control> for midi_device_profi
         Self {
             name: control.name,
             id: control.id,
-            channel: control.channel as u32,
-            note: control.note as u32,
-            control_type: EnumOrUnknown::new(control.control_type.into()),
-            has_output: control.has_output,
+            has_input: control.input.is_some(),
+            has_output: control.output.is_some(),
             ..Default::default()
-        }
-    }
-}
-
-impl From<mizer_connections::midi_device_profile::ControlType>
-    for midi_device_profile::ControlType
-{
-    fn from(control_type: mizer_connections::midi_device_profile::ControlType) -> Self {
-        use mizer_connections::midi_device_profile::ControlType::*;
-
-        match control_type {
-            ControlChange => Self::CC,
-            Note => Self::NOTE,
         }
     }
 }

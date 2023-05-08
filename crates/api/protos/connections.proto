@@ -176,15 +176,8 @@ message MidiDeviceProfile {
   message Control {
     string id = 1;
     string name = 2;
-    uint32 channel = 3;
-    uint32 note = 4;
-    ControlType control_type = 5;
-    bool has_output = 6;
-  }
-
-  enum ControlType {
-    NOTE = 0;
-    CC = 1;
+    bool has_input = 3;
+    bool has_output = 4;
   }
 }
 

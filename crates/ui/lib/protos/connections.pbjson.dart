@@ -300,7 +300,6 @@ const MidiDeviceProfile$json = const {
     const {'1': 'pages', '3': 5, '4': 3, '5': 11, '6': '.mizer.MidiDeviceProfile.Page', '10': 'pages'},
   ],
   '3': const [MidiDeviceProfile_Page$json, MidiDeviceProfile_Group$json, MidiDeviceProfile_Control$json],
-  '4': const [MidiDeviceProfile_ControlType$json],
   '8': const [
     const {'1': '_layout'},
   ],
@@ -331,24 +330,13 @@ const MidiDeviceProfile_Control$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'channel', '3': 3, '4': 1, '5': 13, '10': 'channel'},
-    const {'1': 'note', '3': 4, '4': 1, '5': 13, '10': 'note'},
-    const {'1': 'control_type', '3': 5, '4': 1, '5': 14, '6': '.mizer.MidiDeviceProfile.ControlType', '10': 'controlType'},
-    const {'1': 'has_output', '3': 6, '4': 1, '5': 8, '10': 'hasOutput'},
-  ],
-};
-
-@$core.Deprecated('Use midiDeviceProfileDescriptor instead')
-const MidiDeviceProfile_ControlType$json = const {
-  '1': 'ControlType',
-  '2': const [
-    const {'1': 'NOTE', '2': 0},
-    const {'1': 'CC', '2': 1},
+    const {'1': 'has_input', '3': 3, '4': 1, '5': 8, '10': 'hasInput'},
+    const {'1': 'has_output', '3': 4, '4': 1, '5': 8, '10': 'hasOutput'},
   ],
 };
 
 /// Descriptor for `MidiDeviceProfile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode('ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgASgJUgxtYW51ZmFjdHVyZXISFAoFbW9kZWwYAyABKAlSBW1vZGVsEhsKBmxheW91dBgEIAEoCUgAUgZsYXlvdXSIAQESMwoFcGFnZXMYBSADKAsyHS5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5QYWdlUgVwYWdlcxqQAQoEUGFnZRISCgRuYW1lGAEgASgJUgRuYW1lEjYKBmdyb3VwcxgCIAMoCzIeLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkdyb3VwUgZncm91cHMSPAoIY29udHJvbHMYAyADKAsyIC5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5Db250cm9sUghjb250cm9scxpZCgVHcm91cBISCgRuYW1lGAEgASgJUgRuYW1lEjwKCGNvbnRyb2xzGAIgAygLMiAubWl6ZXIuTWlkaURldmljZVByb2ZpbGUuQ29udHJvbFIIY29udHJvbHMawwEKB0NvbnRyb2wSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGAoHY2hhbm5lbBgDIAEoDVIHY2hhbm5lbBISCgRub3RlGAQgASgNUgRub3RlEkcKDGNvbnRyb2xfdHlwZRgFIAEoDjIkLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkNvbnRyb2xUeXBlUgtjb250cm9sVHlwZRIdCgpoYXNfb3V0cHV0GAYgASgIUgloYXNPdXRwdXQiHwoLQ29udHJvbFR5cGUSCAoETk9URRAAEgYKAkNDEAFCCQoHX2xheW91dA==');
+final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode('ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgASgJUgxtYW51ZmFjdHVyZXISFAoFbW9kZWwYAyABKAlSBW1vZGVsEhsKBmxheW91dBgEIAEoCUgAUgZsYXlvdXSIAQESMwoFcGFnZXMYBSADKAsyHS5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5QYWdlUgVwYWdlcxqQAQoEUGFnZRISCgRuYW1lGAEgASgJUgRuYW1lEjYKBmdyb3VwcxgCIAMoCzIeLm1pemVyLk1pZGlEZXZpY2VQcm9maWxlLkdyb3VwUgZncm91cHMSPAoIY29udHJvbHMYAyADKAsyIC5taXplci5NaWRpRGV2aWNlUHJvZmlsZS5Db250cm9sUghjb250cm9scxpZCgVHcm91cBISCgRuYW1lGAEgASgJUgRuYW1lEjwKCGNvbnRyb2xzGAIgAygLMiAubWl6ZXIuTWlkaURldmljZVByb2ZpbGUuQ29udHJvbFIIY29udHJvbHMaaQoHQ29udHJvbBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIbCgloYXNfaW5wdXQYAyABKAhSCGhhc0lucHV0Eh0KCmhhc19vdXRwdXQYBCABKAhSCWhhc091dHB1dEIJCgdfbGF5b3V0');
 @$core.Deprecated('Use oscConnectionDescriptor instead')
 const OscConnection$json = const {
   '1': 'OscConnection',

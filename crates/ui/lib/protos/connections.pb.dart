@@ -1842,10 +1842,8 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Control', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'note', $pb.PbFieldType.OU3)
-    ..e<MidiDeviceProfile_ControlType>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: MidiDeviceProfile_ControlType.NOTE, valueOf: MidiDeviceProfile_ControlType.valueOf, enumValues: MidiDeviceProfile_ControlType.values)
-    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasOutput')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasInput')
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasOutput')
     ..hasRequiredFields = false
   ;
 
@@ -1853,9 +1851,7 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
   factory MidiDeviceProfile_Control({
     $core.String? id,
     $core.String? name,
-    $core.int? channel,
-    $core.int? note,
-    MidiDeviceProfile_ControlType? controlType,
+    $core.bool? hasInput,
     $core.bool? hasOutput,
   }) {
     final _result = create();
@@ -1865,14 +1861,8 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
     if (name != null) {
       _result.name = name;
     }
-    if (channel != null) {
-      _result.channel = channel;
-    }
-    if (note != null) {
-      _result.note = note;
-    }
-    if (controlType != null) {
-      _result.controlType = controlType;
+    if (hasInput != null) {
+      _result.hasInput = hasInput;
     }
     if (hasOutput != null) {
       _result.hasOutput = hasOutput;
@@ -1919,40 +1909,22 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get channel => $_getIZ(2);
+  $core.bool get hasInput => $_getBF(2);
   @$pb.TagNumber(3)
-  set channel($core.int v) { $_setUnsignedInt32(2, v); }
+  set hasInput($core.bool v) { $_setBool(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasChannel() => $_has(2);
+  $core.bool hasHasInput() => $_has(2);
   @$pb.TagNumber(3)
-  void clearChannel() => clearField(3);
+  void clearHasInput() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get note => $_getIZ(3);
+  $core.bool get hasOutput => $_getBF(3);
   @$pb.TagNumber(4)
-  set note($core.int v) { $_setUnsignedInt32(3, v); }
+  set hasOutput($core.bool v) { $_setBool(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasNote() => $_has(3);
+  $core.bool hasHasOutput() => $_has(3);
   @$pb.TagNumber(4)
-  void clearNote() => clearField(4);
-
-  @$pb.TagNumber(5)
-  MidiDeviceProfile_ControlType get controlType => $_getN(4);
-  @$pb.TagNumber(5)
-  set controlType(MidiDeviceProfile_ControlType v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasControlType() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearControlType() => clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.bool get hasOutput => $_getBF(5);
-  @$pb.TagNumber(6)
-  set hasOutput($core.bool v) { $_setBool(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasHasOutput() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearHasOutput() => clearField(6);
+  void clearHasOutput() => clearField(4);
 }
 
 class MidiDeviceProfile extends $pb.GeneratedMessage {

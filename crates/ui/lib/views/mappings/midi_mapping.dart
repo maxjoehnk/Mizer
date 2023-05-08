@@ -31,7 +31,7 @@ class _MidiMappingDialogState extends State<MidiMappingDialog> {
     return ActionDialog(
         title: widget.title,
         content: Column(children: [
-          MidiProperties(config, onUpdate: (c) => setState(() => config = c)),
+          MidiProperties(config, isInput: true, onUpdate: (c) => setState(() => config = c)),
         ]),
         actions: [
           PopupAction("Cancel", () => Navigator.of(context).pop()),

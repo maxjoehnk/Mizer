@@ -107,47 +107,125 @@ impl Group {
 pub struct Control {
     pub id: String,
     pub name: String,
-    pub channel: Channel,
-    pub note: u8,
-    pub control_type: ControlType,
-    pub range: (u8, u8),
-    pub has_output: bool,
-    pub output_range: (u8, u8),
+    pub input: Option<DeviceControl>,
+    pub output: Option<DeviceControl>,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
-pub enum ControlType {
-    #[serde(rename = "note")]
-    Note,
-    #[serde(rename = "cc")]
-    ControlChange,
+#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+pub enum DeviceControl {
+    MidiNote(MidiDeviceControl),
+    MidiCC(MidiDeviceControl),
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+pub struct MidiDeviceControl {
+    pub channel: Channel,
+    pub note: u8,
+    pub range: (u8, u8),
 }
 
 impl Control {
-    pub fn note(name: String, note: u8) -> Self {
-        Control {
+    pub fn new(name: String) -> Self {
+        Self {
             id: to_id(&name),
             name,
-            channel: Default::default(),
-            note,
-            control_type: ControlType::Note,
-            has_output: false,
-            range: (0, 255),
-            output_range: (0, 255),
+            input: None,
+            output: None,
         }
     }
 
-    pub fn cc(name: String, note: u8) -> Self {
-        Control {
-            id: to_id(&name),
-            name,
-            channel: Default::default(),
-            note,
-            control_type: ControlType::ControlChange,
-            has_output: false,
-            range: (0, 255),
-            output_range: (0, 255),
+    pub fn id(mut self, id: String) -> Self {
+        self.id = id;
+        self
+    }
+
+    pub fn input(self) -> ControlBuilder {
+        match self.output {
+            Some(DeviceControl::MidiNote(control)) => ControlBuilder {
+                control: self,
+                input: true,
+                control_type: ControlType::Note,
+                channel: control.channel,
+                note: control.note,
+                range: control.range,
+            },
+            Some(DeviceControl::MidiCC(control)) => ControlBuilder {
+                control: self,
+                input: true,
+                control_type: ControlType::ControlChange,
+                channel: control.channel,
+                note: control.note,
+                range: control.range,
+            },
+            _ => ControlBuilder {
+                control: self,
+                input: true,
+                channel: Default::default(),
+                note: Default::default(),
+                range: (0, 255),
+                control_type: Default::default(),
+            },
         }
+    }
+
+    pub fn output(self) -> ControlBuilder {
+        match self.input {
+            Some(DeviceControl::MidiNote(control)) => ControlBuilder {
+                control: self,
+                input: false,
+                control_type: ControlType::Note,
+                channel: control.channel,
+                note: control.note,
+                range: control.range,
+            },
+            Some(DeviceControl::MidiCC(control)) => ControlBuilder {
+                control: self,
+                input: false,
+                control_type: ControlType::ControlChange,
+                channel: control.channel,
+                note: control.note,
+                range: control.range,
+            },
+            _ => ControlBuilder {
+                control: self,
+                input: false,
+                channel: Default::default(),
+                note: Default::default(),
+                range: (0, 255),
+                control_type: Default::default(),
+            },
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct ControlBuilder {
+    input: bool,
+    control: Control,
+    pub channel: Channel,
+    pub note: u8,
+    pub range: (u8, u8),
+    pub control_type: ControlType,
+}
+
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub enum ControlType {
+    #[default]
+    Note,
+    ControlChange,
+}
+
+impl ControlBuilder {
+    pub fn note(mut self, note: u8) -> Self {
+        self.note = note;
+        self.control_type = ControlType::Note;
+        self
+    }
+
+    pub fn cc(mut self, note: u8) -> Self {
+        self.note = note;
+        self.control_type = ControlType::ControlChange;
+        self
     }
 
     pub fn channel(mut self, channel: u8) -> Self {
@@ -160,19 +238,24 @@ impl Control {
         self
     }
 
-    pub fn id(mut self, id: String) -> Self {
-        self.id = id;
-        self
-    }
+    pub fn build(mut self) -> Control {
+        let control = MidiDeviceControl {
+            note: self.note,
+            range: self.range,
+            channel: self.channel,
+        };
+        let control = if self.control_type == ControlType::Note {
+            DeviceControl::MidiNote(control)
+        } else {
+            DeviceControl::MidiCC(control)
+        };
+        if self.input {
+            self.control.input = Some(control);
+        } else {
+            self.control.output = Some(control);
+        }
 
-    pub fn output(mut self) -> Self {
-        self.has_output = true;
-        self
-    }
-
-    pub fn output_range(mut self, from: u8, to: u8) -> Self {
-        self.output_range = (from, to);
-        self
+        self.control
     }
 }
 

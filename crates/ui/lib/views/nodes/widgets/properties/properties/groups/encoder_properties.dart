@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
+import '../fields/checkbox_field.dart';
 import '../fields/number_field.dart';
 import '../property_group.dart';
 
@@ -40,6 +41,11 @@ class _EncoderPropertiesState extends State<EncoderProperties> {
         step: 0.01,
         fractions: true,
       ),
+      CheckboxField(
+        label: "Hold",
+        value: widget.config.hold,
+        onUpdate: _updateHold,
+      )
     ]);
   }
 
@@ -47,6 +53,14 @@ class _EncoderPropertiesState extends State<EncoderProperties> {
     log("_updateHoldRate $rate", name: "EncoderProperties");
     setState(() {
       state.holdRate = rate.toDouble();
+      widget.onUpdate(state);
+    });
+  }
+
+  void _updateHold(bool hold) {
+    log("_updateHold $hold", name: "EncoderProperties");
+    setState(() {
+      state.hold = hold;
       widget.onUpdate(state);
     });
   }

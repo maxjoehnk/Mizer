@@ -467,6 +467,7 @@ message ThresholdNodeConfig {
 
 message EncoderNodeConfig {
   double hold_rate = 1;
+  bool hold = 2;
 }
 
 message ColorRgbNodeConfig {

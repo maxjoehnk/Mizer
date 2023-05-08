@@ -4176,16 +4176,21 @@ class ThresholdNodeConfig extends $pb.GeneratedMessage {
 class EncoderNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EncoderNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'holdRate', $pb.PbFieldType.OD)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hold')
     ..hasRequiredFields = false
   ;
 
   EncoderNodeConfig._() : super();
   factory EncoderNodeConfig({
     $core.double? holdRate,
+    $core.bool? hold,
   }) {
     final _result = create();
     if (holdRate != null) {
       _result.holdRate = holdRate;
+    }
+    if (hold != null) {
+      _result.hold = hold;
     }
     return _result;
   }
@@ -4218,6 +4223,15 @@ class EncoderNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasHoldRate() => $_has(0);
   @$pb.TagNumber(1)
   void clearHoldRate() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get hold => $_getBF(1);
+  @$pb.TagNumber(2)
+  set hold($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHold() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHold() => clearField(2);
 }
 
 class ColorRgbNodeConfig extends $pb.GeneratedMessage {

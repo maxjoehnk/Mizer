@@ -1007,6 +1007,7 @@ impl From<mizer_nodes::EncoderNode> for EncoderNodeConfig {
     fn from(node: mizer_nodes::EncoderNode) -> Self {
         Self {
             hold_rate: node.hold_rate,
+            hold: node.hold,
             ..Default::default()
         }
     }
@@ -1016,6 +1017,7 @@ impl From<EncoderNodeConfig> for mizer_nodes::EncoderNode {
     fn from(config: EncoderNodeConfig) -> Self {
         Self {
             hold_rate: config.hold_rate,
+            hold: config.hold,
         }
     }
 }

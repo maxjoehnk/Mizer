@@ -38,7 +38,7 @@ macro_rules! migrations {
         pub(super) trait ObjectSafeProjectMigration {
             fn version(&self) -> usize;
 
-            fn migrate(&self, project: &mut crate::Project) -> anyhow::Result<()>;
+            fn migrate(&self, project: &mut $crate::Project) -> anyhow::Result<()>;
         }
     }
 }

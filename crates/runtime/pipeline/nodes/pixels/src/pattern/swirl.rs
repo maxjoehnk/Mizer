@@ -1,7 +1,7 @@
 use super::PatternImpl;
 use crate::pattern::PixelGrid;
 use mizer_node::Color;
-use std::ops::{ControlFlow, Range, RangeBounds, RangeInclusive};
+use std::ops::{ControlFlow, RangeInclusive};
 
 #[derive(Default)]
 pub struct SwirlPattern {

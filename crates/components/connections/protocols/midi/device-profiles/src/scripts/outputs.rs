@@ -3,8 +3,8 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use anyhow::Context;
-use log::warn;
-use rhai::{Array, Blob, Engine, ImmutableString, Scope, AST};
+
+use rhai::{Blob, Engine, ImmutableString, Scope, AST};
 
 use mizer_midi_messages::MidiMessage;
 

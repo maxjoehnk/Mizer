@@ -9,7 +9,6 @@ use mizer_nodes::*;
 use mizer_pipeline::ProcessingNodeExt;
 
 use crate::pipeline_access::PipelineAccess;
-use crate::NodeDowncast;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateNodeCommand {

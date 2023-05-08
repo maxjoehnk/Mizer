@@ -3,8 +3,8 @@ use crate::models::nodes::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_node::{NodePath, NodePreviewRef, NodeType};
-use mizer_nodes::ContainerNode;
-use mizer_runtime::{NodeDowncast, NodeMetadataRef};
+use mizer_nodes::{ContainerNode, NodeDowncast};
+use mizer_runtime::NodeMetadataRef;
 use protobuf::{EnumOrUnknown, MessageField};
 
 #[derive(Clone)]

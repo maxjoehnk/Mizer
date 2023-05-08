@@ -2,6 +2,7 @@ use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::ops::Deref;
 use std::sync::Arc;
 
 use downcast::*;
@@ -9,6 +10,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_clock::{Clock, ClockFrame};
 use mizer_node::*;
+use mizer_nodes::NodeDowncast;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
 use mizer_processing::{DebugUiDrawHandle, Injector};
@@ -50,6 +52,17 @@ where
 
     fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode {
         self
+    }
+}
+
+impl NodeDowncast for Box<dyn ProcessingNodeExt> {
+    fn node_type(&self) -> NodeType {
+        let node: &dyn ProcessingNodeExt = self.deref();
+        PipelineNode::node_type(node)
+    }
+
+    fn downcast_node<T: Clone + 'static>(&self, _: NodeType) -> Option<T> {
+        self.downcast_ref().ok().cloned()
     }
 }
 

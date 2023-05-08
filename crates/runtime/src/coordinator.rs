@@ -21,7 +21,7 @@ use tracing_unwrap::ResultExt;
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
-use crate::{LayoutsView, NodeDowncast, NodeMetadataRef};
+use crate::{LayoutsView, NodeMetadataRef};
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,

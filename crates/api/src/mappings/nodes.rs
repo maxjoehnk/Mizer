@@ -1,7 +1,7 @@
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
-use mizer_nodes::{MidiInputConfig, MidiOutputConfig, OscArgumentType};
+use mizer_nodes::{MidiInputConfig, MidiOutputConfig, NodeDowncast, OscArgumentType};
 use mizer_runtime::commands::StaticNodeDescriptor;
-use mizer_runtime::{NodeDescriptor, NodeDowncast};
+use mizer_runtime::NodeDescriptor;
 use protobuf::{EnumOrUnknown, MessageField};
 use std::path::Path;
 

@@ -1,10 +1,11 @@
 use dashmap::mapref::one::Ref;
 
-use crate::{LayoutsView, NodeDowncast};
+use crate::LayoutsView;
 use dashmap::DashMap;
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
+use mizer_nodes::NodeDowncast;
 use mizer_plan::Plan;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;

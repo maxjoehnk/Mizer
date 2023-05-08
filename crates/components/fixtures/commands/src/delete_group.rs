@@ -3,10 +3,10 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
 use mizer_fixtures::GroupId;
 use mizer_layouts::LayoutStorage;
-use mizer_nodes::Node;
+use mizer_nodes::{Node, NodeDowncast};
 use mizer_runtime::commands::DeleteNodeCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::{ExecutionPlanner, NodeDowncast};
+use mizer_runtime::ExecutionPlanner;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]

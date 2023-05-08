@@ -1,11 +1,10 @@
 use super::StaticNodeDescriptor;
 use crate::commands::{add_path_to_container, assert_valid_parent, remove_path_from_container};
 use crate::pipeline_access::PipelineAccess;
-use crate::NodeDowncast;
 use mizer_commander::{Command, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
-use mizer_nodes::Node;
+use mizer_nodes::{Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 

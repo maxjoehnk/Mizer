@@ -4258,6 +4258,7 @@ name = "mizer-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dashmap",
  "derive_more",
  "insta",
  "log",
@@ -4370,6 +4371,7 @@ dependencies = [
  "mizer-devices",
  "mizer-fixtures",
  "mizer-node",
+ "mizer-nodes",
  "mizer-ports",
  "mizer-processing",
  "mizer-project-files",

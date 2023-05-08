@@ -1,9 +1,9 @@
 use mizer_commander::{sub_command, Command, Ref, RefMut};
 use mizer_layouts::LayoutStorage;
-use mizer_nodes::Node;
+use mizer_nodes::{Node, NodeDowncast};
 use mizer_runtime::commands::DeleteNodeCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::{ExecutionPlanner, NodeDowncast};
+use mizer_runtime::ExecutionPlanner;
 use mizer_sequencer::{Sequence, Sequencer};
 use serde::{Deserialize, Serialize};
 

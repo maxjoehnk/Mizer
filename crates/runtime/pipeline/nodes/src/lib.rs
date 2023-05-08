@@ -42,6 +42,7 @@ pub use mizer_video_nodes::{
 use serde::{Deserialize, Serialize};
 
 mod container_node;
+mod downcast;
 #[doc(hidden)]
 pub mod test_sink;
 
@@ -97,6 +98,21 @@ macro_rules! node_impl {
                 }
             }
         }
+
+        pub trait NodeDowncast {
+            fn node_type(&self) -> NodeType;
+
+            fn downcast(&self) -> Node {
+                let node_type = self.node_type();
+                match node_type {
+                    $(NodeType::$node_type => Node::$node_type(self.downcast_node(node_type).unwrap()),)*
+                    NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
+                }
+            }
+
+            fn downcast_node<T: Clone + 'static>(&self, node_type: NodeType) -> Option<T>;
+        }
+
     };
 }
 

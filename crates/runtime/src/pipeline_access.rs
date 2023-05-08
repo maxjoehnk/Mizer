@@ -5,8 +5,6 @@ use std::sync::Arc;
 use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
-use crate::NodeDowncast;
-
 use mizer_node::*;
 use mizer_nodes::*;
 use mizer_pipeline::*;

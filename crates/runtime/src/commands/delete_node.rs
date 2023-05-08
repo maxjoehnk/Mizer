@@ -1,11 +1,10 @@
 use crate::commands::UpdateNodeCommand;
 use crate::pipeline_access::PipelineAccess;
-use crate::NodeDowncast;
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_layouts::{ControlConfig, LayoutStorage};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
-use mizer_nodes::{ContainerNode, Node};
+use mizer_nodes::{ContainerNode, Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::hash::Hash;

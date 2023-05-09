@@ -16,24 +16,13 @@ const double INNER_RADIUS = 2;
 
 const double DOT_SIZE = 16;
 
-List<Color> _TYPE_COLORS = [
-  Colors.green, // Standard
-  Colors.orange, // Connections
-  Colors.grey.shade700, // Conversions
-  Colors.blue, // Controls
-  Colors.green, // Data
-  Colors.green, // Audio
-  Colors.red, // Video
-  Colors.purple, // Laser
-  Colors.red, // Pixel
-];
-
 const _GENERATED_TYPES = [
   Node_NodeType.PROGRAMMER,
   Node_NodeType.TRANSPORT,
   Node_NodeType.SEQUENCER,
   Node_NodeType.FIXTURE,
   Node_NodeType.GROUP,
+  Node_NodeType.PRESET,
 ];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
@@ -63,13 +52,11 @@ Color getColorForType(Node_NodeType type) {
   if (_GENERATED_TYPES.contains(type)) {
     return Colors.blueGrey;
   }
-  var category =
-      NODES.firstWhereOrNull((category) => category.items.any((item) => item.value == type));
+  var category = NODES.firstWhereOrNull((category) => category.nodes.contains(type));
   if (category == null) {
     log("no color for node type ${type.name}");
     return Colors.green;
   }
-  var index = NODES.indexOf(category);
 
-  return _TYPE_COLORS[index];
+  return category.color;
 }

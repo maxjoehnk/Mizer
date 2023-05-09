@@ -80,7 +80,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                         Navigator.of(context).push(MizerPopupRoute(
                             position: event.globalPosition,
                             child: PopupMenu<Node_NodeType>(
-                                categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
+                                categories: NODES.map((node) => node.category).toList(),
+                                onSelect: (nodeType) => _addNode(model, nodeType))));
                         setState(() {
                           addMenuPosition = event.localPosition;
                         });
@@ -98,10 +99,12 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                             Transform(
                                 transform: model.transformationController.value,
                                 child: IgnorePointer(child: GraphPaintLayer(model: model))),
-                            DragSelectionLayer(nodes: model.nodes,
+                            DragSelectionLayer(
+                                nodes: model.nodes,
                                 transformation: model.transformationController.value,
                                 selectionState: _selectionState,
-                                onUpdateSelection: (selection) => setState(() => _selectionState = selection)),
+                                onUpdateSelection: (selection) =>
+                                    setState(() => _selectionState = selection)),
                             CanvasDropLayer(),
                             NodesTarget(),
                             if (_selectionState != null) SelectionIndicator(_selectionState!),
@@ -114,25 +117,33 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       left: 0,
                       height: PathBreadcrumbHeight,
                       child: Container(
-                        color: Colors.grey.shade800,
-                          child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                MizerButton(child: Padding(
+                          color: Colors.grey.shade800,
+                          child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                            MizerButton(
+                                child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Text("/"),
-                                ), onClick: () => model.closeContainer()),
-                                ...model.path.map((p) => Center(child: Text(p)))
-                              ]
-                          )
-                      )
-                  )
+                                ),
+                                onClick: () => model.closeContainer()),
+                            ...model.path.map((p) => Center(child: Text(p)))
+                          ])))
                 ],
               ),
               actions: [
-                PanelAction(label: "Group Nodes".i18n, onClick: () => _groupNodes(context), hotkeyId: "group_nodes"),
-                PanelAction(label: "Delete Node".i18n, disabled: model.selectedNode == null || !model.selectedNode!.node.canDelete, onClick: () => _deleteNode(context), hotkeyId: "delete_node"),
-                PanelAction(label: "Duplicate Node".i18n, disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate, onClick: () => _duplicateNode(context), hotkeyId: "duplicate_node"),
+                PanelAction(
+                    label: "Group Nodes".i18n,
+                    onClick: () => _groupNodes(context),
+                    hotkeyId: "group_nodes"),
+                PanelAction(
+                    label: "Delete Node".i18n,
+                    disabled: model.selectedNode == null || !model.selectedNode!.node.canDelete,
+                    onClick: () => _deleteNode(context),
+                    hotkeyId: "delete_node"),
+                PanelAction(
+                    label: "Duplicate Node".i18n,
+                    disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate,
+                    onClick: () => _duplicateNode(context),
+                    hotkeyId: "duplicate_node"),
               ],
             ),
           ),
@@ -154,14 +165,17 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   }
 
   void _deleteNode(BuildContext context) {
-    if (widget.nodeEditorModel.selectedNode != null && widget.nodeEditorModel.selectedNode!.node.canDelete) {
+    if (widget.nodeEditorModel.selectedNode != null &&
+        widget.nodeEditorModel.selectedNode!.node.canDelete) {
       context.read<NodesBloc>().add(DeleteNode(widget.nodeEditorModel.selectedNode!.node.path));
     }
   }
 
   void _duplicateNode(BuildContext context) {
-    if (widget.nodeEditorModel.selectedNode != null && widget.nodeEditorModel.selectedNode!.node.canDuplicate) {
-      context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path, parent: widget.nodeEditorModel.parent?.node.path));
+    if (widget.nodeEditorModel.selectedNode != null &&
+        widget.nodeEditorModel.selectedNode!.node.canDuplicate) {
+      context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path,
+          parent: widget.nodeEditorModel.parent?.node.path));
     }
   }
 
@@ -206,7 +220,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
     var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
-    context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position, parent: model.parent?.node.path));
+    context
+        .read<NodesBloc>()
+        .add(AddNode(nodeType: nodeType, position: position, parent: model.parent?.node.path));
     setState(() {
       addMenuPosition = null;
     });

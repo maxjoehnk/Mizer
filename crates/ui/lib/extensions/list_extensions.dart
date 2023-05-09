@@ -2,6 +2,14 @@ extension ListExtensions<T> on List<T> {
   int get lastIndex {
     return length - 1;
   }
+}
+
+extension IterableExtensions<T> on Iterable<T> {
+  Iterable<T> distinct() {
+    final ids = Set();
+
+    return this.where((x) => ids.add(x));
+  }
 
   Iterable<T> search(List<String? Function(T)> fields, String? query) {
     query = query?.toLowerCase();
@@ -11,13 +19,5 @@ extension ListExtensions<T> on List<T> {
       }
       return fields.any((field) => field(element)?.toLowerCase().contains(query!) ?? false);
     });
-  }
-}
-
-extension IterableExtensions<T> on Iterable<T> {
-  Iterable<T> distinct() {
-    final ids = Set();
-
-    return this.where((x) => ids.add(x));
   }
 }

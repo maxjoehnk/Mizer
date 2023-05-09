@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 
@@ -67,8 +68,8 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.AUDIO_METER: "Audio Meter",
 };
 
-final List<PopupCategory<Node_NodeType>> NODES = [
-  buildCategory("Standard", [
+final List<NodeCategory> NODES = [
+  NodeCategory("Standard", Colors.green, [
     Node_NodeType.CONTAINER,
     Node_NodeType.CLOCK,
     Node_NodeType.SCRIPT,
@@ -80,10 +81,6 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.ENCODER,
     Node_NodeType.ENVELOPE,
     Node_NodeType.MATH,
-    Node_NodeType.COLOR_CONSTANT,
-    Node_NodeType.COLOR_BRIGHTNESS,
-    Node_NodeType.COLOR_RGB,
-    Node_NodeType.COLOR_HSV,
     Node_NodeType.DELAY,
     Node_NodeType.RAMP,
     Node_NodeType.NOISE,
@@ -92,7 +89,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.TIMECODE_CONTROL,
     Node_NodeType.TIMECODE_OUTPUT,
   ]),
-  buildCategory("Connections", [
+  NodeCategory("Connections", Colors.orange, [
     Node_NodeType.DMX_OUTPUT,
     Node_NodeType.MIDI_INPUT,
     Node_NodeType.MIDI_OUTPUT,
@@ -104,22 +101,28 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.G13INPUT,
     Node_NodeType.G13OUTPUT,
   ]),
-  buildCategory("Conversions", [
+  NodeCategory("Conversions", Colors.grey.shade700, [
     Node_NodeType.NUMBER_TO_DATA,
     Node_NodeType.DATA_TO_NUMBER,
   ]),
-  buildCategory("Controls", [
+  NodeCategory("Controls", Colors.blue, [
     Node_NodeType.FADER,
     Node_NodeType.BUTTON,
     Node_NodeType.LABEL,
     // Node_NodeType.ColorPicker,
   ]),
-  buildCategory("Data", [
+  NodeCategory("Data", Colors.green, [
     Node_NodeType.VALUE,
     Node_NodeType.EXTRACT,
     Node_NodeType.TEMPLATE,
   ]),
-  buildCategory("Audio", [
+  NodeCategory("Color", Colors.green, [
+    Node_NodeType.COLOR_CONSTANT,
+    Node_NodeType.COLOR_BRIGHTNESS,
+    Node_NodeType.COLOR_RGB,
+    Node_NodeType.COLOR_HSV,
+  ]),
+  NodeCategory("Audio", Colors.green, [
     Node_NodeType.AUDIO_FILE,
     Node_NodeType.AUDIO_INPUT,
     Node_NodeType.AUDIO_OUTPUT,
@@ -127,25 +130,33 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.AUDIO_MIX,
     Node_NodeType.AUDIO_METER,
   ]),
-  buildCategory("Video", [
+  NodeCategory("Video", Colors.red, [
     Node_NodeType.VIDEO_FILE,
     Node_NodeType.VIDEO_EFFECT,
     Node_NodeType.VIDEO_OUTPUT,
     Node_NodeType.VIDEO_COLOR_BALANCE,
     Node_NodeType.VIDEO_TRANSFORM,
   ]),
-  buildCategory("Laser", [
+  NodeCategory("Laser", Colors.purple, [
     Node_NodeType.ILDA_FILE,
     Node_NodeType.LASER,
   ]),
-  buildCategory("Pixel", [
+  NodeCategory("Pixel", Colors.red, [
     Node_NodeType.PIXEL_PATTERN,
     Node_NodeType.PIXEL_TO_DMX,
     Node_NodeType.OPC_OUTPUT,
   ])
 ];
 
-PopupCategory<Node_NodeType> buildCategory(String label, List<Node_NodeType> nodeTypes) {
-  return PopupCategory(
-      label: label, items: nodeTypes.map((e) => PopupItem(e, NODE_LABELS[e]!)).toList());
+class NodeCategory {
+  final String label;
+  final Color color;
+  final List<Node_NodeType> nodes;
+
+  NodeCategory(this.label, this.color, this.nodes);
+
+  PopupCategory<Node_NodeType> get category {
+    return PopupCategory(
+        label: label, items: nodes.map((e) => PopupItem(e, NODE_LABELS[e]!)).toList());
+  }
 }

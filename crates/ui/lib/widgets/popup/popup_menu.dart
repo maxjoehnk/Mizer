@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 const MAX_ROWS = 10;
 const double COLUMN_WIDTH = 175;
@@ -31,87 +33,103 @@ class PopupMenu<T> extends StatefulWidget {
 
 class _PopupMenuState<T> extends State<PopupMenu<T>> {
   PopupCategory<T> selected;
+  TextEditingController _searchController = TextEditingController();
 
-  _PopupMenuState(this.selected);
+  _PopupMenuState(this.selected) {
+    _searchController.addListener(() => setState(() {}));
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("Text: ${_searchController.text}");
     return FocusScope(
       debugLabel: "PopupMenu",
       autofocus: true,
       child: Container(
+          constraints: BoxConstraints(maxHeight: 300, maxWidth: 300),
           decoration: BoxDecoration(
               color: Colors.grey.shade800,
               borderRadius: BorderRadius.all(Radius.circular(2)),
               boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-                children: widget.categories
-                    .map((c) => MizerButton(
-                        active: c == selected,
-                        onClick: () => setState(() => selected = c),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Text(c.label),
-                        )))
-                    .toList()),
-            Table(
-              defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH),
-              children: mapNodeEntries(selected.items),
-            )
-          ])),
+          child: Column(
+            children: [
+              Container(
+                height: 40,
+                child: TextField(
+                  controller: _searchController,
+                  autofocus: true,
+                ),
+              ),
+              Expanded(
+                child: _searchController.text.isEmpty
+                    ? categoryView()
+                    : searchView(_searchController.text),
+              ),
+            ],
+          )),
     );
   }
 
-  List<TableRow> mapNodeEntries(List<PopupItem<T>> items) {
-    List<Widget> widgets = buildWidgets(items);
-    List<List<Widget>> columns = buildColumns(widgets);
-    List<TableRow> rows = [];
-    int rowIndex = 0;
-
-    for (var _ in columns[0]) {
-      var row = TableRow(
-          children: columns.map((column) {
-        if (rowIndex >= column.length) {
-          return Container();
-        }
-        return column[rowIndex];
-      }).toList());
-      rows.add(row);
-      rowIndex++;
-    }
-
-    return rows;
+  Widget categoryView() {
+    return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SingleChildScrollView(
+            child: Column(
+                children: widget.categories
+                    .map((c) => Hoverable(
+                        builder: (bool hovered) {
+                          var active = c == selected;
+                          return Container(
+                              width: 140,
+                              padding: const EdgeInsets.all(4),
+                              color: hovered ? Colors.white24 : (active ? Colors.white10 : null),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(child: Text(c.label)),
+                                  Icon(Icons.arrow_right, size: 12),
+                                ],
+                              ));
+                        },
+                        onTap: () => setState(() => selected = c)))
+                    .toList()),
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: buildWidgets(selected.items),
+              ),
+            ),
+          )
+        ]);
   }
 
-  List<List<Widget>> buildColumns(List<Widget> widgets) {
-    List<List<Widget>> columns = [];
-    var i = 0;
-    List<Widget> column = [];
-    for (var widget in widgets) {
-      column.add(widget);
-      i++;
-      if (i % MAX_ROWS == 0) {
-        columns.add(column);
-        column = [];
-      }
-    }
-    if (column.length > 0) {
-      columns.add(column);
-    }
-
-    return columns;
+  Widget searchView(String text) {
+    var items =
+        widget.categories.map((e) => e.items).flattened.search([(item) => item.label], text);
+    return Container(
+      constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 300),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: buildWidgets(items),
+        ),
+      ),
+    );
   }
 
-  List<Widget> buildWidgets(List<PopupItem<T>> items) {
-    List<Widget> widgets = [];
-    for (var item in items) {
-      widgets.add(PopupItemButton(item.label, onTap: () {
-        widget.onSelect(item.value);
-        Navigator.pop(context);
-      }));
-    }
-    return widgets;
+  List<Widget> buildWidgets(Iterable<PopupItem<T>> items) {
+    return items
+        .sortedBy((item) => item.label)
+        .map((item) => PopupItemButton(item.label, onTap: () {
+              widget.onSelect(item.value);
+              Navigator.pop(context);
+            }))
+        .toList();
   }
 }
 
@@ -140,7 +158,8 @@ class _PopupItemButtonState extends State<PopupItemButton> {
         onFocusChange: (hasFocus) => setState(() => focus = hasFocus),
         child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
-            decoration: BoxDecoration(color: (hover || focus) ? Colors.black12 : Colors.transparent),
+            decoration:
+                BoxDecoration(color: (hover || focus) ? Colors.black12 : Colors.transparent),
             height: ROW_HEIGHT,
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: Text(this.widget.text)));

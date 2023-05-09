@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
+use mizer_ports::Color;
 use mizer_util::StructuredData;
 use pinboard::NonEmptyPinboard;
 
@@ -15,6 +16,7 @@ pub enum PreviewType {
     Multiple,
     Timecode,
     Data,
+    Color,
     #[default]
     None,
 }
@@ -22,11 +24,13 @@ pub enum PreviewType {
 pub trait PreviewContext {
     fn push_history_value(&self, value: f64);
     fn write_data_preview(&self, data: StructuredData);
+    fn write_color_preview(&self, data: Color);
 }
 
 pub enum NodePreviewRef {
     History(Arc<NonEmptyPinboard<Vec<f64>>>),
     Data(Arc<NonEmptyPinboard<Option<StructuredData>>>),
+    Color(Arc<NonEmptyPinboard<Option<Color>>>),
 }
 
 impl NodePreviewRef {
@@ -40,6 +44,14 @@ impl NodePreviewRef {
 
     pub fn read_data(&self) -> Option<StructuredData> {
         if let Self::Data(pinboard) = self {
+            pinboard.read()
+        } else {
+            None
+        }
+    }
+
+    pub fn read_color(&self) -> Option<Color> {
+        if let Self::Color(pinboard) = self {
             pinboard.read()
         } else {
             None

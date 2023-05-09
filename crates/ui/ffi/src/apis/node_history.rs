@@ -1,3 +1,4 @@
+use crate::apis::programmer::FFIColorValue;
 use crate::apis::transport::Timecode;
 use crate::pointer_inventory::PointerInventory;
 use crate::types::{drop_pointer, Array, FFIFromPointer};
@@ -163,6 +164,21 @@ pub extern "C" fn read_node_data_preview(ptr: *const NodeHistory) -> FFIStructur
     std::mem::forget(ffi);
 
     data
+}
+
+#[no_mangle]
+pub extern "C" fn read_node_color_preview(ptr: *const NodeHistory) -> FFIColorValue {
+    let ffi = Arc::from_pointer(ptr);
+
+    let data = ffi.preview_ref.read_color().unwrap_or_default();
+
+    std::mem::forget(ffi);
+
+    FFIColorValue {
+        red: data.red,
+        green: data.green,
+        blue: data.blue,
+    }
 }
 
 #[no_mangle]

@@ -13,7 +13,7 @@ impl PipelineNode for ColorBrightnessNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: stringify!(ColorBrightnessNode).into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Color,
         }
     }
 
@@ -36,6 +36,7 @@ impl ProcessingNode for ColorBrightnessNode {
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(value) = Self::calculate(context) {
             context.write_port(COLOR_OUTPUT, value);
+            context.write_color_preview(value);
         }
 
         Ok(())

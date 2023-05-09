@@ -181,13 +181,14 @@ message Node {
   }
 
   enum NodePreviewType {
-    HISTORY = 0;
-    WAVEFORM = 1;
-    MULTIPLE = 2;
-    TEXTURE = 3;
-    TIMECODE = 4;
-    DATA = 5;
-    NONE = 6;
+    NONE = 0;
+    HISTORY = 1;
+    WAVEFORM = 2;
+    MULTIPLE = 3;
+    TEXTURE = 4;
+    TIMECODE = 5;
+    DATA = 6;
+    COLOR = 7;
   }
 
   NodeType type = 1;

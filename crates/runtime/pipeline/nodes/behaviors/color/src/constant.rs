@@ -32,7 +32,7 @@ impl PipelineNode for ConstantColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: stringify!(ConstantColorNode).into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Color,
         }
     }
 
@@ -59,6 +59,7 @@ impl ProcessingNode for ConstantColorNode {
         };
 
         context.write_port(COLOR_OUTPUT, value);
+        context.write_color_preview(value);
 
         Ok(())
     }

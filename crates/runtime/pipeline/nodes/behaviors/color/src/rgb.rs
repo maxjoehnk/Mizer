@@ -14,7 +14,7 @@ impl PipelineNode for RgbColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: stringify!(RgbColorNode).into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Color,
         }
     }
 
@@ -52,7 +52,9 @@ impl ProcessingNode for RgbColorNode {
         };
 
         if let Some(rgb) = rgb {
-            context.write_port(COLOR_OUTPUT, Color::from(rgb));
+            let color = Color::from(rgb);
+            context.write_color_preview(color);
+            context.write_port(COLOR_OUTPUT, color);
         }
 
         Ok(())

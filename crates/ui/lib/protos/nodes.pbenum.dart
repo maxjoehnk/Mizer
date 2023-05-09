@@ -180,22 +180,24 @@ class Node_NodeType extends $pb.ProtobufEnum {
 }
 
 class Node_NodePreviewType extends $pb.ProtobufEnum {
-  static const Node_NodePreviewType HISTORY = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HISTORY');
-  static const Node_NodePreviewType WAVEFORM = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WAVEFORM');
-  static const Node_NodePreviewType MULTIPLE = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTIPLE');
-  static const Node_NodePreviewType TEXTURE = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXTURE');
-  static const Node_NodePreviewType TIMECODE = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
-  static const Node_NodePreviewType DATA = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
-  static const Node_NodePreviewType NONE = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
+  static const Node_NodePreviewType NONE = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
+  static const Node_NodePreviewType HISTORY = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HISTORY');
+  static const Node_NodePreviewType WAVEFORM = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WAVEFORM');
+  static const Node_NodePreviewType MULTIPLE = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTIPLE');
+  static const Node_NodePreviewType TEXTURE = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXTURE');
+  static const Node_NodePreviewType TIMECODE = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+  static const Node_NodePreviewType DATA = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
+  static const Node_NodePreviewType COLOR = Node_NodePreviewType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
 
   static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
+    NONE,
     HISTORY,
     WAVEFORM,
     MULTIPLE,
     TEXTURE,
     TIMECODE,
     DATA,
-    NONE,
+    COLOR,
   ];
 
   static final $core.Map<$core.int, Node_NodePreviewType> _byValue = $pb.ProtobufEnum.initByValue(values);

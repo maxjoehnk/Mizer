@@ -50,6 +50,7 @@ pub enum NodePreviewState {
         Arc<NonEmptyPinboard<Vec<f64>>>,
     ),
     Data(Arc<NonEmptyPinboard<Option<StructuredData>>>),
+    Color(Arc<NonEmptyPinboard<Option<Color>>>),
     None,
 }
 
@@ -64,6 +65,12 @@ impl NodePreviewState {
     fn push_data_value(&mut self, value: StructuredData) {
         if let Self::Data(snapshot) = self {
             snapshot.set(Some(value));
+        }
+    }
+
+    fn push_color_value(&mut self, color: Color) {
+        if let Self::Color(snapshot) = self {
+            snapshot.set(Some(color));
         }
     }
 }
@@ -194,5 +201,10 @@ impl<'a> PreviewContext for PipelineContext<'a> {
     fn write_data_preview(&self, data: StructuredData) {
         profiling::scope!("PipelineContext::write_data_preview");
         self.preview.borrow_mut().push_data_value(data);
+    }
+
+    fn write_color_preview(&self, data: Color) {
+        profiling::scope!("PipelineContext::write_color_preview");
+        self.preview.borrow_mut().push_color_value(data);
     }
 }

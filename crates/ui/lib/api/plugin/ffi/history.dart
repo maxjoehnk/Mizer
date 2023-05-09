@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:mizer/widgets/inputs/color.dart';
 
 import 'api.dart';
 import 'bindings.dart';
@@ -53,6 +54,12 @@ class NodeHistoryPointer {
       return StructuredData(object: object);
     }
     throw new Exception("Invalid FFI StructuredDataType: ${data.type}");
+  }
+
+  ColorValue? readColor() {
+    var result = this._bindings.read_node_color_preview(_ptr);
+
+    return ColorValue(red: result.red, green: result.green, blue: result.blue);
   }
 
   void dispose() {

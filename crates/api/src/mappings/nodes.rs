@@ -2060,6 +2060,7 @@ impl From<PreviewType> for node::NodePreviewType {
             PreviewType::Texture => node::NodePreviewType::TEXTURE,
             PreviewType::Timecode => node::NodePreviewType::TIMECODE,
             PreviewType::Data => node::NodePreviewType::DATA,
+            PreviewType::Color => node::NodePreviewType::COLOR,
             PreviewType::None => node::NodePreviewType::NONE,
         }
     }

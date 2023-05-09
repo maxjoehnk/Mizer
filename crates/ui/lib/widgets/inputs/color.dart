@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:mizer/widgets/tabs.dart';
 
@@ -147,8 +146,10 @@ class HSBInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       ColorFader(label: "H", gradient: hueGradient(), value: 0),
-      ColorFader(label: "S", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
-      ColorFader(label: "B", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
+      ColorFader(
+          label: "S", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
+      ColorFader(
+          label: "B", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
     ]);
   }
 }

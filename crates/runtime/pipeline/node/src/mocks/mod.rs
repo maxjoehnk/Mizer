@@ -3,7 +3,7 @@ use self::read_port::ReadPortFunction;
 use self::write_port::WritePortFunction;
 use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
 use mizer_clock::ClockState;
-use mizer_ports::PortValue;
+use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use std::cell::RefCell;
 
@@ -89,6 +89,10 @@ impl PreviewContext for NodeContextMock {
     }
 
     fn write_data_preview(&self, _data: StructuredData) {
+        todo!()
+    }
+
+    fn write_color_preview(&self, _color: Color) {
         todo!()
     }
 }

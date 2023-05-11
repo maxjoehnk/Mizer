@@ -141,7 +141,7 @@ impl<'a> DebugUiDrawHandle<'a> {
         textures: &mut TextureMap,
     ) {
         use std::collections::hash_map::DefaultHasher;
-        use std::hash::{Hash, Hasher};
+        use std::hash::Hasher;
 
         let mut hasher = DefaultHasher::new();
         image_id.hash(&mut hasher);

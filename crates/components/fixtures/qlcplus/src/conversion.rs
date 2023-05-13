@@ -36,7 +36,7 @@ pub fn map_fixture_definition(
 
                         FixtureChannelDefinition {
                             name: channel.name.to_string(),
-                            resolution: ChannelResolution::Coarse(mode_channel.number as u8),
+                            resolution: ChannelResolution::Coarse(mode_channel.number),
                         }
                     })
                     .collect();

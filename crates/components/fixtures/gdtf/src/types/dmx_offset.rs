@@ -3,7 +3,7 @@ use std::num::ParseIntError;
 use std::str::FromStr;
 
 #[derive(Debug, Clone)]
-pub struct DmxChannelOffset(Option<Vec<u8>>);
+pub struct DmxChannelOffset(Option<Vec<u16>>);
 
 impl DmxChannelOffset {
     pub fn is_virtual(&self) -> bool {
@@ -23,11 +23,12 @@ impl FromStr for DmxChannelOffset {
             .map(|offset_str| {
                 let offset = u16::from_str(offset_str)?;
                 let offset = offset - 1;
-                if offset > u8::MAX as u16 {
+                if offset > 511 {
                     // Parse again so we throw the proper error
-                    u8::from_str(offset_str)
+                    u8::from_str(offset_str)?;
+                    Ok(0)
                 } else {
-                    Ok(offset as u8)
+                    Ok(offset)
                 }
             })
             .collect::<Result<Vec<_>, Self::Err>>();

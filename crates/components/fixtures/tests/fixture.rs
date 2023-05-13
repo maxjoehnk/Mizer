@@ -150,7 +150,7 @@ fn write_fader_control_should_delegate_to_sub_fixtures(
 
 #[test_case(2)]
 #[test_case(5)]
-fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u8) {
+fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u16) {
     let controls = create_controls(
         FixtureControlChannel::Delegate,
         FixtureFaderControl::Intensity,
@@ -185,7 +185,7 @@ fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u8) {
 #[test_case(2, (1f64, 1f64, 1f64), (255, 255, 255))]
 #[test_case(5, (1f64, 0f64, 0f64), (255, 0, 0))]
 fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
-    count: u8,
+    count: u16,
     value: (f64, f64, f64),
     expected: (u8, u8, u8),
 ) {

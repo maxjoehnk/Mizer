@@ -75,7 +75,7 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                     .enumerate()
                     .map(|(i, (name, _))| FixtureChannelDefinition {
                         name,
-                        resolution: ChannelResolution::Coarse(i as u8),
+                        resolution: ChannelResolution::Coarse(i as u16),
                     })
                     .collect();
 

@@ -98,14 +98,14 @@ pub struct ModeType {
 #[xml(tag = "Head")]
 pub struct HeadType {
     #[xml(flatten_text = "Channel")]
-    pub channels: Vec<u64>,
+    pub channels: Vec<u16>,
 }
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "Channel")]
 pub struct ModeChannelType {
     #[xml(attr = "Number")]
-    pub number: u64,
+    pub number: u16,
     #[xml(default, attr = "ActsOn")]
     pub acts_on: Option<u64>,
     #[xml(text)]

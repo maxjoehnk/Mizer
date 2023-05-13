@@ -781,15 +781,15 @@ pub enum ChannelResolution {
     /// 8 Bit
     ///
     /// coarse
-    Coarse(u8),
+    Coarse(u16),
     /// 16 Bit
     ///
     /// coarse, fine
-    Fine(u8, u8),
+    Fine(u16, u16),
     /// 24 Bit
     ///
     /// coarse, fine, finest
-    Finest(u8, u8, u8),
+    Finest(u16, u16, u16),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]

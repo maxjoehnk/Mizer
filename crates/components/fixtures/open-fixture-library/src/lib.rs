@@ -14,6 +14,8 @@ const COLOR_BLUE: &str = "#0000ff";
 const COLOR_WHITE: &str = "#ffffff";
 const COLOR_AMBER: &str = "#ffbf00";
 
+const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
+
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
     file_path: String,
@@ -199,7 +201,7 @@ pub struct SingleCapabilityChannel {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MultiCapabilityChannel {
-    pub dmx_range: (u8, u8),
+    pub dmx_range: (u16, u16),
     #[serde(flatten)]
     pub capability: Capability,
 }
@@ -281,7 +283,7 @@ pub enum WheelSlot {
         #[serde(rename = "slotNumber")]
         slot_number: f32,
         #[serde(rename = "dmxRange")]
-        dmx_range: (u8, u8),
+        dmx_range: (u16, u16),
     },
     Range {
         #[serde(rename = "slotNumberStart")]
@@ -410,12 +412,12 @@ fn map_channels(
                     if let Some(fine_channel) = fine_channel {
                         FixtureChannelDefinition {
                             name: channel,
-                            resolution: ChannelResolution::Fine(i as u8, fine_channel as u8),
+                            resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
                         }
                     } else {
                         FixtureChannelDefinition {
                             name: channel,
-                            resolution: ChannelResolution::Coarse(i as u8),
+                            resolution: ChannelResolution::Coarse(i as u16),
                         }
                     }
                 }
@@ -427,27 +429,27 @@ fn map_channels(
                             FixtureChannelDefinition {
                                 name: channel,
                                 resolution: ChannelResolution::Finest(
-                                    i as u8,
-                                    fine_channel as u8,
-                                    finest_channel as u8,
+                                    i as u16,
+                                    fine_channel as u16,
+                                    finest_channel as u16,
                                 ),
                             }
                         } else {
                             FixtureChannelDefinition {
                                 name: channel,
-                                resolution: ChannelResolution::Fine(i as u8, fine_channel as u8),
+                                resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
                             }
                         }
                     } else {
                         FixtureChannelDefinition {
                             name: channel,
-                            resolution: ChannelResolution::Coarse(i as u8),
+                            resolution: ChannelResolution::Coarse(i as u16),
                         }
                     }
                 }
                 _ => FixtureChannelDefinition {
                     name: channel,
-                    resolution: ChannelResolution::Coarse(i as u8),
+                    resolution: ChannelResolution::Coarse(i as u16),
                 },
             }
         })
@@ -572,7 +574,7 @@ fn group_controls(
                         gobos: used_slots
                             .filter_map(|(slot_index, dmx_range)| {
                                 let value =
-                                    dmx_range.0.linear_extrapolate((u8::MIN, u8::MAX), (0., 1.));
+                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
                                 if let WheelSlotDefinition::Gobo { name, resource } =
                                     &wheel.slots[(*slot_index as usize) - 1]
                                 {
@@ -603,7 +605,7 @@ fn group_controls(
                         colors: used_slots
                             .filter_map(|(slot_index, dmx_range)| {
                                 let value =
-                                    dmx_range.0.linear_extrapolate((u8::MIN, u8::MAX), (0., 1.));
+                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
                                 if let WheelSlotDefinition::Color { name, colors } =
                                     &wheel.slots[(*slot_index as usize) - 1]
                                 {

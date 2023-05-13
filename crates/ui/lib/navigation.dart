@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide View;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
@@ -7,21 +8,20 @@ import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/history/history_view.dart';
-import 'package:mizer/views/plan/plan_view.dart';
-import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/patch/fixture_patch.dart';
-import 'package:mizer/views/timecode/timecode_view.dart';
-import 'package:mizer/widgets/transport/transport_controls.dart';
+import 'package:mizer/views/plan/plan_view.dart';
+import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
-import 'package:mizer/extensions/string_extensions.dart';
+import 'package:mizer/views/timecode/timecode_view.dart';
+import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
 
-import 'panes/programmer/programmer_view.dart';
 import 'actions/actions.dart';
+import 'panes/programmer/programmer_view.dart';
 import 'panes/selection/selection_pane.dart';
 
 const double SHEET_SIZE = 320;
@@ -39,8 +39,7 @@ List<Route> routes = [
   Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures'.i18n, View.Programmer),
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets'.i18n, View.Presets),
   Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects),
-  Route(
-      () => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
+  Route(() => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
   Route(() => Container(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
   Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
@@ -68,29 +67,31 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: HotkeyConfiguration(
-            hotkeySelector: (hotkeys) => hotkeys.global,
-            hotkeyMap: _getShortcuts(routes),
-            child: ApplicationMenu(
-                child: Row(
-                  children: [
-                    NavigationBar(
-                      selectedIndex: _selectedIndex,
-                      onSelect: this._selectView,
-                      routes: routes,
-                    ),
-                    Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SafeArea(
-                                child: Container(
-                                    child: RepaintBoundary(child: _currentWidget),
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration()),
-                              ),
-                            ),
-                            if (_showSelection) SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
-                            if (_showProgrammer) SizedBox(height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+      hotkeySelector: (hotkeys) => hotkeys.global,
+      hotkeyMap: _getShortcuts(routes),
+      child: ApplicationMenu(
+        child: Row(
+          children: [
+            NavigationBar(
+              selectedIndex: _selectedIndex,
+              onSelect: this._selectView,
+              routes: routes,
+            ),
+            Expanded(
+                child: Column(
+              children: [
+                Expanded(
+                  child: SafeArea(
+                    child: Container(
+                        child: RepaintBoundary(child: _currentWidget),
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration()),
+                  ),
+                ),
+                if (_showSelection)
+                  SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
+                if (_showProgrammer)
+                  SizedBox(height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
                 RepaintBoundary(
                     child: TransportControls(
                         showProgrammer: _showProgrammer,
@@ -104,12 +105,12 @@ class _HomeState extends State<Home> {
                               _showProgrammer = false;
                             })))
               ],
-                        ))
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
-            ),
-        ));
+            ))
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+      ),
+    ));
   }
 
   void _updateWidget() {
@@ -159,8 +160,8 @@ class NavigationBar extends StatelessWidget {
         child: ListView(
             children: this
                 .routes
-                .mapEnumerated((route, i) =>
-                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
+                .mapEnumerated((route, i) => NavigationItem(
+                    route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
                 .toList()));
   }
 }
@@ -190,7 +191,7 @@ class _NavigationItemState extends State<NavigationItem> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
-    var color = this.widget.selected ? theme.accentColor : theme.hintColor;
+    var color = this.widget.selected ? theme.colorScheme.secondary : theme.hintColor;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -220,7 +221,11 @@ class _NavigationItemState extends State<NavigationItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
               ),
-              if (hotkeyLabel != null) Align(alignment: Alignment.topRight, child: Text(hotkeyLabel!.toCapitalCase(), style: textTheme.caption!.copyWith(fontSize: 9))),
+              if (hotkeyLabel != null)
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Text(hotkeyLabel!.toCapitalCase(),
+                        style: textTheme.caption!.copyWith(fontSize: 9))),
             ],
           ),
         ),

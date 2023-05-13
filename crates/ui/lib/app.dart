@@ -29,7 +29,6 @@ class MizerApp extends StatelessWidget {
     return theme.copyWith(
         colorScheme: theme.colorScheme
             .copyWith(primary: Colors.blueGrey, secondary: Colors.deepOrangeAccent),
-        primaryColor: Colors.blueGrey,
-        accentColor: Colors.deepOrangeAccent);
+        primaryColor: Colors.blueGrey);
   }
 }

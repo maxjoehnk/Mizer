@@ -92,7 +92,5 @@ impl PreviewContext for NodeContextMock {
         todo!()
     }
 
-    fn write_color_preview(&self, _color: Color) {
-        todo!()
-    }
+    fn write_color_preview(&self, _color: Color) {}
 }

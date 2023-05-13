@@ -85,13 +85,13 @@ mod tests {
         let mut state = node.create_state();
         let mut context = NodeContextMock::new();
         context.when_clock().returns(ClockFrame::default());
-        context.when_read_port("Red").returns(Some(red));
-        context.when_read_port("Green").returns(Some(green));
-        context.when_read_port("Blue").returns(Some(blue));
+        context.when_read_port(RED_INPUT).returns(Some(red));
+        context.when_read_port(GREEN_INPUT).returns(Some(green));
+        context.when_read_port(BLUE_INPUT).returns(Some(blue));
 
         node.process(&context, &mut state)?;
 
-        context.expect_write_port("Color", Color::rgb(red, green, blue));
+        context.expect_write_port(COLOR_OUTPUT, Color::rgb(red, green, blue));
         Ok(())
     }
 }

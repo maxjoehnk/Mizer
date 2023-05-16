@@ -25,6 +25,7 @@ class BaseNode extends StatelessWidget {
   final bool selected;
   final bool selectedAdditionally;
   final bool collapsed;
+  final bool connected;
   final Function() onSelect;
   final Function() onSelectAdditional;
   late List<CustomNodeTab> tabs;
@@ -35,6 +36,7 @@ class BaseNode extends StatelessWidget {
       required this.onSelect,
       required this.onSelectAdditional,
       this.collapsed = false,
+      this.connected = false,
       List<CustomNodeTab>? tabs,
       Key? key,
       required this.selectedAdditionally})
@@ -45,6 +47,7 @@ class BaseNode extends StatelessWidget {
   factory BaseNode.fromNode(NodeModel node,
       {required Function() onSelect,
       required Function() onSelectAdditional,
+      bool connected = false,
       bool selected = false,
       bool collapsed = false,
       Key? key,
@@ -62,6 +65,7 @@ class BaseNode extends StatelessWidget {
       onSelectAdditional: onSelectAdditional,
       selected: selected,
       selectedAdditionally: selectedAdditionally,
+      connected: connected,
       collapsed: collapsed,
       key: key,
       tabs: tabs,
@@ -128,6 +132,7 @@ class BaseNode extends StatelessWidget {
             ),
             selected: selected,
             selectedAdditionally: selectedAdditionally,
+            connected: connected,
           ),
         ),
       ),

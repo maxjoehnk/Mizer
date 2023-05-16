@@ -12,7 +12,7 @@ class NodeControl extends StatefulWidget {
   final NodeModel nodeModel;
   final bool collapsed;
 
-  NodeControl(this.nodeModel, { this.collapsed = false });
+  NodeControl(this.nodeModel, {this.collapsed = false});
 
   @override
   _NodeControlState createState() => _NodeControlState();
@@ -57,6 +57,7 @@ class _NodeControlState extends State<NodeControl> {
           key: widget.nodeModel.key,
           selected: model.selectedNode == widget.nodeModel,
           selectedAdditionally: model.otherSelectedNodes.contains(widget.nodeModel),
+          connected: model.connectedToSelectedNodes.contains(widget.nodeModel),
           collapsed: widget.collapsed,
           onSelect: () => model.selectNode(widget.nodeModel),
           onSelectAdditional: () => model.selectAdditionalNodes([widget.nodeModel]));

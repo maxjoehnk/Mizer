@@ -99,7 +99,9 @@ class GraphLinePainter extends CustomPainter {
                   element.path == channel.sourceNode && element.port == channel.sourcePort.name)
               ?.pushedValue ??
           false;
-      drawConnection(canvas, fromPort.offset, toPort.offset, channel.protocol, active: active);
+
+      drawConnection(canvas, fromPort.offset, toPort.offset, channel.protocol,
+          active: active, highlight: _isHighlighted(channel));
     }
     if (model.connecting != null) {
       var fromPort = model.getPortModel(model.connecting!.node, model.connecting!.port, false);
@@ -119,13 +121,25 @@ class GraphLinePainter extends CustomPainter {
   }
 
   void drawConnection(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol,
-      {bool hit = false, bool active = true}) {
+      {bool hit = false, bool active = true, bool highlight = false}) {
     var paint = active ? activePainter : painter;
     paint.color = hit ? Colors.white : getColorForProtocol(protocol).shade800;
+    if (highlight) {
+      paint.color = Colors.blueGrey;
+    }
     Path path = new Path()
       ..moveTo(from.dx, from.dy)
       ..cubicTo(from.dx + 0.6 * (to.dx - from.dx), from.dy, to.dx + 0.6 * (from.dx - to.dx), to.dy,
           to.dx, to.dy);
     canvas.drawPath(path, paint);
+  }
+
+  bool _isHighlighted(NodeConnection channel) {
+    var sourceNode = model.nodes.firstWhereOrNull((n) => n.node.path == channel.sourceNode);
+    var targetNode = model.nodes.firstWhereOrNull((n) => n.node.path == channel.targetNode);
+
+    return (model.connectedToSelectedNodes.contains(sourceNode) &&
+            model.selectedNode == targetNode) ||
+        (model.connectedToSelectedNodes.contains(targetNode) && model.selectedNode == sourceNode);
   }
 }

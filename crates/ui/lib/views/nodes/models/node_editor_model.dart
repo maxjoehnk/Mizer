@@ -14,6 +14,7 @@ class NodeEditorModel extends ChangeNotifier {
   late TransformationController transformationController;
   NodeModel? selectedNode;
   List<NodeModel> otherSelectedNodes = [];
+  List<NodeModel> connectedToSelectedNodes = [];
   NewConnectionModel? connecting;
 
   NodeModel? parent;
@@ -37,33 +38,34 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   List<NodeConnection> get channels {
-    return this._channels
-        .where((channel) => nodes.any((node) => channel.sourceNode == node.node.path || channel.targetNode == node.node.path))
+    return this
+        ._channels
+        .where((channel) => nodes.any(
+            (node) => channel.sourceNode == node.node.path || channel.targetNode == node.node.path))
         .toList();
   }
 
   /// Rebuild the node and port states
   void refresh(Nodes nodes) {
     this._disposeOldNodes();
-    this.rootNodes = nodes.nodes
-        .map(this._createModel)
-        .map((nodeModel) {
-          nodeModel.addListener(this.update);
-          return nodeModel;
-        })
-        .toList();
+    this.rootNodes = nodes.nodes.map(this._createModel).map((nodeModel) {
+      nodeModel.addListener(this.update);
+      return nodeModel;
+    }).toList();
     this.rootNodes.sortBy((element) => element.node.path);
     this._channels = nodes.channels;
-    var parent = this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
+    var parent =
+        this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
     if (parent != null) {
       this.parent = parent;
-      List<NodeModel> nodeModels = parent.node.config.containerConfig.nodes.map(_createModel).toList();
+      List<NodeModel> nodeModels =
+          parent.node.config.containerConfig.nodes.map(_createModel).toList();
       this.currentNodes = nodeModels;
     }
     this.updateNodes();
     this.update();
   }
-  
+
   NodeModel _createModel(Node node) {
     var previousNode = this.nodes.firstWhereOrNull((element) => element.node.path == node.path);
     if (previousNode != null) {
@@ -105,6 +107,17 @@ class NodeEditorModel extends ChangeNotifier {
   selectNode(NodeModel nodeModel) {
     this.selectedNode = nodeModel;
     this.otherSelectedNodes.clear();
+    this.connectedToSelectedNodes = this
+        .channels
+        .where((channel) =>
+            channel.sourceNode == nodeModel.node.path || channel.targetNode == nodeModel.node.path)
+        .map((channel) {
+      var path =
+          channel.sourceNode == nodeModel.node.path ? channel.targetNode : channel.sourceNode;
+
+      return this.nodes.firstWhere((n) => n.node.path == path);
+    }).toList();
+
     this.update();
   }
 
@@ -132,7 +145,8 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   openContainer(NodeModel nodeModel) {
-    List<NodeModel> nodeModels = nodeModel.node.config.containerConfig.nodes.map(_createModel).toList();
+    List<NodeModel> nodeModels =
+        nodeModel.node.config.containerConfig.nodes.map(_createModel).toList();
     this.currentNodes = nodeModels;
     this.parent = nodeModel;
     this.path = [nodeModel.node.path.substring(1)];
@@ -171,7 +185,8 @@ class NewConnectionModel {
     RenderBox targetBox = key.currentContext!.findRenderObject() as RenderBox;
     this.offset = targetBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
     double BUBBLE_DISTANCE = 32;
-    var connectionBubble = Rect.fromCenter(center: this.offset, width: BUBBLE_DISTANCE, height: BUBBLE_DISTANCE);
+    var connectionBubble =
+        Rect.fromCenter(center: this.offset, width: BUBBLE_DISTANCE, height: BUBBLE_DISTANCE);
     this.target = allPorts
         .where((target) => target.port.port.protocol == port.protocol)
         .firstWhereOrNull((target) => connectionBubble.contains(target.port.offset));
@@ -184,6 +199,6 @@ class NewConnectionModel {
 class PortTarget {
   final Node node;
   final PortModel port;
-  
+
   PortTarget(this.node, this.port);
 }

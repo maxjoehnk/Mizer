@@ -6,8 +6,13 @@ class NodeContainer extends StatelessWidget {
   final Widget? child;
   final bool selected;
   final bool selectedAdditionally;
+  final bool connected;
 
-  NodeContainer({this.child, this.selected = false, this.selectedAdditionally = false});
+  NodeContainer(
+      {this.child,
+      this.selected = false,
+      this.selectedAdditionally = false,
+      this.connected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +45,24 @@ class NodeContainer extends StatelessWidget {
       return BorderSide(
         color: Colors.white,
         style: BorderStyle.solid,
-        width: 2,
+        width: 4,
       );
     }
     if (selectedAdditionally) {
       return BorderSide(
         color: Colors.deepOrange,
         style: BorderStyle.solid,
-        width: 2,
+        width: 4,
+      );
+    }
+    if (connected) {
+      return BorderSide(
+        color: Colors.blueGrey,
+        style: BorderStyle.solid,
+        width: 4,
       );
     }
 
-    return BorderSide(style: BorderStyle.none, width: 2);
+    return BorderSide(style: BorderStyle.none, width: 4);
   }
 }

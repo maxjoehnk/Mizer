@@ -41,7 +41,6 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    print("Text: ${_searchController.text}");
     return FocusScope(
       debugLabel: "PopupMenu",
       autofocus: true,

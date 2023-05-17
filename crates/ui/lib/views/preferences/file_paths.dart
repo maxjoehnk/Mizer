@@ -103,7 +103,6 @@ class _PathSettingState extends State<PathSetting> {
   @override
   void didUpdateWidget(PathSetting oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("${oldWidget.value} ${widget.value} ${oldWidget.value == widget.value}");
     if (oldWidget.value == widget.value || widget.value == controller.text) {
       return;
     }

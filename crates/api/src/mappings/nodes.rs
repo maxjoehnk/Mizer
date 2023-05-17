@@ -389,14 +389,19 @@ impl From<GroupNodeConfig> for mizer_nodes::GroupNode {
 }
 
 impl From<mizer_nodes::PresetNode> for PresetNodeConfig {
-    fn from(_: mizer_nodes::PresetNode) -> Self {
-        Default::default()
+    fn from(node: mizer_nodes::PresetNode) -> Self {
+        Self {
+            preset_id: MessageField::some(node.id.into()),
+            ..Default::default()
+        }
     }
 }
 
 impl From<PresetNodeConfig> for mizer_nodes::PresetNode {
-    fn from(_: PresetNodeConfig) -> Self {
-        Default::default()
+    fn from(config: PresetNodeConfig) -> Self {
+        Self {
+            id: config.preset_id.unwrap().into(),
+        }
     }
 }
 

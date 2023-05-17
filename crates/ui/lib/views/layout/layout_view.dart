@@ -210,6 +210,7 @@ class _ControlLayoutState extends State<ControlLayout> {
                                 }).toList(),
                                 sequences: sequences.sequences,
                                 groups: presets.groups,
+                                presets: presets.presets,
                                 onCreateControl: (nodeType) => bloc.add(AddControl(
                                     layoutId: widget.layout.id,
                                     nodeType: nodeType,

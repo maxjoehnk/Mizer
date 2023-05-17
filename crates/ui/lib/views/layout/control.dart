@@ -21,6 +21,7 @@ import 'controls/button.dart';
 import 'controls/fader.dart';
 import 'controls/group.dart';
 import 'controls/label.dart';
+import 'controls/preset.dart';
 import 'controls/sequencer.dart';
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
@@ -121,6 +122,13 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == Node_NodeType.GROUP) {
       return GroupControl(
+        label: widget.control.label,
+        color: _color,
+        node: node!,
+        size: widget.control.size,
+      );
+    } else if (node?.type == Node_NodeType.PRESET) {
+      return PresetControl(
         label: widget.control.label,
         color: _color,
         node: node!,

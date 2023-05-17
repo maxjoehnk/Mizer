@@ -19,10 +19,18 @@ class GroupNode {
   GroupNode(this.group, this.node);
 }
 
+class PresetNode {
+  final Preset preset;
+  final Node node;
+
+  PresetNode(this.preset, this.node);
+}
+
 class AddControlPopup extends StatelessWidget {
   final List<Node> nodes;
   final List<Sequence> sequences;
   final List<Group> groups;
+  final Presets presets;
   final Function(Node_NodeType) onCreateControl;
   final Function(Node) onAddControlForExisting;
 
@@ -30,6 +38,7 @@ class AddControlPopup extends StatelessWidget {
       {required this.nodes,
       required this.sequences,
       required this.groups,
+      required this.presets,
       Key? key,
       required this.onCreateControl,
       required this.onAddControlForExisting})
@@ -56,6 +65,10 @@ class AddControlPopup extends StatelessWidget {
 
       return GroupNode(group, node);
     }).toList();
+    var colorNodes = _getPresets(presets.colors);
+    var intensityNodes = _getPresets(presets.intensities);
+    var positionNodes = _getPresets(presets.positions);
+    var shutterNodes = _getPresets(presets.shutters);
 
     return PopupMenu<dynamic>(
         categories: [
@@ -76,6 +89,22 @@ class AddControlPopup extends StatelessWidget {
             PopupCategory(
                 label: "Groups".i18n,
                 items: groupNodes.map((e) => PopupItem(e.node, e.group.name)).toList()),
+          if (colorNodes.isNotEmpty)
+            PopupCategory(
+                label: "Colors".i18n,
+                items: colorNodes.map((e) => PopupItem(e.node, e.preset.label)).toList()),
+          if (intensityNodes.isNotEmpty)
+            PopupCategory(
+                label: "Intensities".i18n,
+                items: intensityNodes.map((e) => PopupItem(e.node, e.preset.label)).toList()),
+          if (shutterNodes.isNotEmpty)
+            PopupCategory(
+                label: "Shutters".i18n,
+                items: shutterNodes.map((e) => PopupItem(e.node, e.preset.label)).toList()),
+          if (positionNodes.isNotEmpty)
+            PopupCategory(
+                label: "Positions".i18n,
+                items: colorNodes.map((e) => PopupItem(e.node, e.preset.label)).toList()),
         ],
         onSelect: (value) {
           if (value is Node_NodeType) {
@@ -84,6 +113,17 @@ class AddControlPopup extends StatelessWidget {
             this.onAddControlForExisting(value);
           }
         });
+  }
+
+  List<PresetNode> _getPresets(List<Preset> presets) {
+    return nodes
+        .where((node) => node.type == Node_NodeType.PRESET)
+        .where((node) => presets.any((p) => p.id == node.config.presetConfig.presetId))
+        .map((node) {
+      var preset = presets.firstWhere((p) => p.id == node.config.presetConfig.presetId);
+
+      return PresetNode(preset, node);
+    }).toList();
   }
 }
 

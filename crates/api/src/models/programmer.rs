@@ -5620,6 +5620,146 @@ impl ::protobuf::reflect::ProtobufValue for AddGroupRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.RenameGroupRequest)
+pub struct RenameGroupRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.programmer.RenameGroupRequest.id)
+    pub id: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.RenameGroupRequest.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.RenameGroupRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RenameGroupRequest {
+    fn default() -> &'a RenameGroupRequest {
+        <RenameGroupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RenameGroupRequest {
+    pub fn new() -> RenameGroupRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &RenameGroupRequest| { &m.id },
+            |m: &mut RenameGroupRequest| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &RenameGroupRequest| { &m.name },
+            |m: &mut RenameGroupRequest| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RenameGroupRequest>(
+            "RenameGroupRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RenameGroupRequest {
+    const NAME: &'static str = "RenameGroupRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.id = is.read_uint32()?;
+                },
+                18 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.id);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RenameGroupRequest {
+        RenameGroupRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.id = 0;
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RenameGroupRequest {
+        static instance: RenameGroupRequest = RenameGroupRequest {
+            id: 0,
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RenameGroupRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RenameGroupRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RenameGroupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RenameGroupRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.programmer.AssignFixturesToGroupRequest)
 pub struct AssignFixturesToGroupRequest {
     // message fields
@@ -6064,35 +6204,38 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupRequest\
     \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupRespons\
     e\"%\n\x0fAddGroupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \"e\n\x1cAssignFixturesToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\r\
-    R\x02id\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.Fixt\
-    ureIdR\x08fixtures\"6\n$AssignFixtureSelectionToGroupRequest\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\rR\x02id\"\x1f\n\x1dAssignFixturesToGroupRespons\
-    e2\xf4\x0b\n\rProgrammerApi\x12h\n\x15SubscribeToProgrammer\x12,.mizer.p\
-    rogrammer.SubscribeProgrammerRequest\x1a!.mizer.programmer.ProgrammerSta\
-    te\x12]\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRequest\x1a&\
-    .mizer.programmer.WriteControlResponse\x12c\n\x0eSelectFixtures\x12'.miz\
-    er.programmer.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixtures\
-    Response\x12i\n\x10UnselectFixtures\x12).mizer.programmer.UnselectFixtur\
-    esRequest\x1a*.mizer.programmer.UnselectFixturesResponse\x12H\n\x05Clear\
-    \x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRes\
-    ponse\x12T\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#.miz\
-    er.programmer.HighlightResponse\x12H\n\x05Store\x12\x1e.mizer.programmer\
-    .StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\x12I\n\nGetPresets\
-    \x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mizer.programmer.Preset\
-    s\x12N\n\nCallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.mizer.progra\
-    mmer.CallPresetResponse\x12F\n\tGetGroups\x12\x1f.mizer.programmer.Group\
-    sRequest\x1a\x18.mizer.programmer.Groups\x12Z\n\x0bSelectGroup\x12$.mize\
-    r.programmer.SelectGroupRequest\x1a%.mizer.programmer.SelectGroupRespons\
-    e\x12F\n\x08AddGroup\x12!.mizer.programmer.AddGroupRequest\x1a\x17.mizer\
-    .programmer.Group\x12x\n\x15AssignFixturesToGroup\x12..mizer.programmer.\
-    AssignFixturesToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroup\
-    Response\x12\x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.mizer.progr\
-    ammer.AssignFixtureSelectionToGroupRequest\x1a/.mizer.programmer.AssignF\
-    ixturesToGroupResponse\x12f\n\x0fWriteEffectRate\x12(.mizer.programmer.W\
-    riteEffectRateRequest\x1a).mizer.programmer.WriteEffectRateResponse\x12l\
-    \n\x11WriteEffectOffset\x12*.mizer.programmer.WriteEffectOffsetRequest\
-    \x1a+.mizer.programmer.WriteEffectOffsetResponseb\x06proto3\
+    \"8\n\x12RenameGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToG\
+    roupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\
+    \x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$As\
+    signFixtureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
+    \x02id\"\x1f\n\x1dAssignFixturesToGroupResponse2\xc2\x0c\n\rProgrammerAp\
+    i\x12h\n\x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgram\
+    merRequest\x1a!.mizer.programmer.ProgrammerState\x12]\n\x0cWriteControl\
+    \x12%.mizer.programmer.WriteControlRequest\x1a&.mizer.programmer.WriteCo\
+    ntrolResponse\x12c\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixtu\
+    resRequest\x1a(.mizer.programmer.SelectFixturesResponse\x12i\n\x10Unsele\
+    ctFixtures\x12).mizer.programmer.UnselectFixturesRequest\x1a*.mizer.prog\
+    rammer.UnselectFixturesResponse\x12H\n\x05Clear\x12\x1e.mizer.programmer\
+    .ClearRequest\x1a\x1f.mizer.programmer.ClearResponse\x12T\n\tHighlight\
+    \x12\".mizer.programmer.HighlightRequest\x1a#.mizer.programmer.Highlight\
+    Response\x12H\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.m\
+    izer.programmer.StoreResponse\x12I\n\nGetPresets\x12\x20.mizer.programme\
+    r.PresetsRequest\x1a\x19.mizer.programmer.Presets\x12N\n\nCallPreset\x12\
+    \x1a.mizer.programmer.PresetId\x1a$.mizer.programmer.CallPresetResponse\
+    \x12F\n\tGetGroups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.\
+    programmer.Groups\x12Z\n\x0bSelectGroup\x12$.mizer.programmer.SelectGrou\
+    pRequest\x1a%.mizer.programmer.SelectGroupResponse\x12F\n\x08AddGroup\
+    \x12!.mizer.programmer.AddGroupRequest\x1a\x17.mizer.programmer.Group\
+    \x12L\n\x0bRenameGroup\x12$.mizer.programmer.RenameGroupRequest\x1a\x17.\
+    mizer.programmer.Group\x12x\n\x15AssignFixturesToGroup\x12..mizer.progra\
+    mmer.AssignFixturesToGroupRequest\x1a/.mizer.programmer.AssignFixturesTo\
+    GroupResponse\x12\x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.mizer.\
+    programmer.AssignFixtureSelectionToGroupRequest\x1a/.mizer.programmer.As\
+    signFixturesToGroupResponse\x12f\n\x0fWriteEffectRate\x12(.mizer.program\
+    mer.WriteEffectRateRequest\x1a).mizer.programmer.WriteEffectRateResponse\
+    \x12l\n\x11WriteEffectOffset\x12*.mizer.programmer.WriteEffectOffsetRequ\
+    est\x1a+.mizer.programmer.WriteEffectOffsetResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -6111,7 +6254,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(40);
+            let mut messages = ::std::vec::Vec::with_capacity(41);
             messages.push(SubscribeProgrammerRequest::generated_message_descriptor_data());
             messages.push(ProgrammerState::generated_message_descriptor_data());
             messages.push(FixtureSelection::generated_message_descriptor_data());
@@ -6144,6 +6287,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(SelectGroupRequest::generated_message_descriptor_data());
             messages.push(SelectGroupResponse::generated_message_descriptor_data());
             messages.push(AddGroupRequest::generated_message_descriptor_data());
+            messages.push(RenameGroupRequest::generated_message_descriptor_data());
             messages.push(AssignFixturesToGroupRequest::generated_message_descriptor_data());
             messages.push(AssignFixtureSelectionToGroupRequest::generated_message_descriptor_data());
             messages.push(AssignFixturesToGroupResponse::generated_message_descriptor_data());

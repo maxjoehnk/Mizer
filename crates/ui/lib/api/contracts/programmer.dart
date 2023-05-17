@@ -31,6 +31,9 @@ abstract class ProgrammerApi {
 
   Future<Group> addGroup(String name);
 
+  Future<void> deleteGroup(int id);
+  Future<void> renameGroup(int id, String name);
+
   Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group);
 
   Future<void> assignFixtureSelectionToGroup(Group group);

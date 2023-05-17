@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class GroupNameDialog extends StatefulWidget {
-  const GroupNameDialog({Key? key}) : super(key: key);
+  String? name;
+
+  GroupNameDialog({this.name, Key? key}) : super(key: key);
 
   @override
   State<GroupNameDialog> createState() => _GroupNameDialogState();
@@ -10,6 +12,12 @@ class GroupNameDialog extends StatefulWidget {
 
 class _GroupNameDialogState extends State<GroupNameDialog> {
   final TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.name ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class _GroupNameDialogState extends State<GroupNameDialog> {
     );
   }
 
-  void _close(BuildContext context, { String? name }) {
+  void _close(BuildContext context, {String? name}) {
     Navigator.of(context).pop(name);
   }
 }

@@ -76,6 +76,11 @@ class ProgrammerApiClient extends $grpc.Client {
       '/mizer.programmer.ProgrammerApi/AddGroup',
       ($1.AddGroupRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.Group.fromBuffer(value));
+  static final _$renameGroup =
+      $grpc.ClientMethod<$1.RenameGroupRequest, $1.Group>(
+          '/mizer.programmer.ProgrammerApi/RenameGroup',
+          ($1.RenameGroupRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Group.fromBuffer(value));
   static final _$assignFixturesToGroup = $grpc.ClientMethod<
           $1.AssignFixturesToGroupRequest, $1.AssignFixturesToGroupResponse>(
       '/mizer.programmer.ProgrammerApi/AssignFixturesToGroup',
@@ -173,6 +178,11 @@ class ProgrammerApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Group> addGroup($1.AddGroupRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addGroup, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Group> renameGroup($1.RenameGroupRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$renameGroup, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.AssignFixturesToGroupResponse> assignFixturesToGroup(
@@ -300,6 +310,14 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.AddGroupRequest.fromBuffer(value),
         ($1.Group value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.RenameGroupRequest, $1.Group>(
+        'RenameGroup',
+        renameGroup_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.RenameGroupRequest.fromBuffer(value),
+        ($1.Group value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.AssignFixturesToGroupRequest,
             $1.AssignFixturesToGroupResponse>(
         'AssignFixturesToGroup',
@@ -402,6 +420,11 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return addGroup(call, await request);
   }
 
+  $async.Future<$1.Group> renameGroup_Pre($grpc.ServiceCall call,
+      $async.Future<$1.RenameGroupRequest> request) async {
+    return renameGroup(call, await request);
+  }
+
   $async.Future<$1.AssignFixturesToGroupResponse> assignFixturesToGroup_Pre(
       $grpc.ServiceCall call,
       $async.Future<$1.AssignFixturesToGroupRequest> request) async {
@@ -452,6 +475,8 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.SelectGroupRequest request);
   $async.Future<$1.Group> addGroup(
       $grpc.ServiceCall call, $1.AddGroupRequest request);
+  $async.Future<$1.Group> renameGroup(
+      $grpc.ServiceCall call, $1.RenameGroupRequest request);
   $async.Future<$1.AssignFixturesToGroupResponse> assignFixturesToGroup(
       $grpc.ServiceCall call, $1.AssignFixturesToGroupRequest request);
   $async.Future<$1.AssignFixturesToGroupResponse> assignFixtureSelectionToGroup(

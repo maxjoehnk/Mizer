@@ -20,6 +20,19 @@ class AddGroup extends PresetsEvent {
   AddGroup(this.group);
 }
 
+class DeleteGroup extends PresetsEvent {
+  final int groupId;
+
+  DeleteGroup(this.groupId);
+}
+
+class RenameGroup extends PresetsEvent {
+  final int groupId;
+  final String name;
+
+  RenameGroup(this.groupId, this.name);
+}
+
 class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
   final ProgrammerApi api;
 
@@ -36,6 +49,14 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
         presets: state.presets,
         groups: [...state.groups, event.group],
       ));
+    });
+    on<DeleteGroup>((event, emit) async {
+      await this.api.deleteGroup(event.groupId);
+      this.add(FetchPresets());
+    });
+    on<RenameGroup>((event, emit) async {
+      await this.api.renameGroup(event.groupId, event.name);
+      this.add(FetchPresets());
     });
     this.add(FetchPresets());
   }

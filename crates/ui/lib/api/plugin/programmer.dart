@@ -99,6 +99,17 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
+  Future<void> deleteGroup(int id) async {
+    await channel.invokeMethod("deleteGroup", id);
+  }
+
+  @override
+  Future<void> renameGroup(int id, String name) async {
+    var req = RenameGroupRequest(id: id, name: name);
+    await channel.invokeMethod("renameGroup", req.writeToBuffer());
+  }
+
+  @override
   Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group) async {
     var request = AssignFixturesToGroupRequest(id: group.id, fixtures: fixtures);
     await channel.invokeMethod("assignFixturesToGroup", request.writeToBuffer());

@@ -3,8 +3,12 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
+import 'package:mizer/platform/contracts/menu.dart';
+import 'package:mizer/state/presets_bloc.dart';
+import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
+import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
 class EffectButton extends StatelessWidget {
@@ -37,15 +41,36 @@ class _GroupButtonState extends State<GroupButton>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   @override
   Widget build(BuildContext context) {
-    return PresetButton(
-      child: Container(
-        width: 48,
-        height: 48,
-        child: Center(child: Icon(MdiIcons.spotlightBeam)),
+    return ContextMenu(
+      menu: Menu(items: [
+        MenuItem(label: "Rename", action: () => _renameGroup()),
+        MenuItem(label: "Delete", action: () => _deleteGroup()),
+      ]),
+      child: PresetButton(
+        child: Container(
+          width: 48,
+          height: 48,
+          child: Center(child: Icon(MdiIcons.spotlightBeam)),
+        ),
+        group: widget.group,
+        active: programmerState.activeGroups.contains(widget.group.id),
       ),
-      group: widget.group,
-      active: programmerState.activeGroups.contains(widget.group.id),
     );
+  }
+
+  void _renameGroup() async {
+    var name = await showDialog(
+        context: context, builder: (context) => GroupNameDialog(name: widget.group.name));
+    if (name == null) {
+      return;
+    }
+    PresetsBloc state = context.read();
+    state.add(RenameGroup(widget.group.id, name));
+  }
+
+  void _deleteGroup() {
+    PresetsBloc state = context.read();
+    state.add(DeleteGroup(widget.group.id));
   }
 }
 

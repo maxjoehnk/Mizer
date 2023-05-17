@@ -17,6 +17,7 @@ service ProgrammerApi {
   rpc GetGroups (GroupsRequest) returns (Groups) {}
   rpc SelectGroup (SelectGroupRequest) returns (SelectGroupResponse) {}
   rpc AddGroup (AddGroupRequest) returns (Group) {}
+  rpc RenameGroup (RenameGroupRequest) returns (Group) {}
   rpc AssignFixturesToGroup (AssignFixturesToGroupRequest) returns (AssignFixturesToGroupResponse) {}
   rpc AssignFixtureSelectionToGroup (AssignFixtureSelectionToGroupRequest) returns (AssignFixturesToGroupResponse) {}
   rpc WriteEffectRate (WriteEffectRateRequest) returns (WriteEffectRateResponse) {}
@@ -213,6 +214,11 @@ message SelectGroupResponse {
 
 message AddGroupRequest {
   string name = 1;
+}
+
+message RenameGroupRequest {
+  uint32 id = 1;
+  string name = 2;
 }
 
 message AssignFixturesToGroupRequest {

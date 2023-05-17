@@ -100,6 +100,19 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.respond_msg(group);
                 }
             }
+            "deleteGroup" => {
+                if let Value::I64(id) = call.args {
+                    self.handler.delete_group(id as u32);
+                    reply.send_ok(Value::Null);
+                }
+            }
+            "renameGroup" => match call
+                .arguments::<RenameGroupRequest>()
+                .map(|req| self.handler.rename_group(req.id, req.name))
+            {
+                Ok(()) => reply.send_ok(Value::Null),
+                Err(err) => reply.respond_error(err),
+            },
             "assignFixturesToGroup" => match call
                 .arguments()
                 .map(|req| self.assign_fixtures_to_group(req))

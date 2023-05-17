@@ -419,6 +419,17 @@ const AddGroupRequest$json = const {
 
 /// Descriptor for `AddGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addGroupRequestDescriptor = $convert.base64Decode('Cg9BZGRHcm91cFJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use renameGroupRequestDescriptor instead')
+const RenameGroupRequest$json = const {
+  '1': 'RenameGroupRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `RenameGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List renameGroupRequestDescriptor = $convert.base64Decode('ChJSZW5hbWVHcm91cFJlcXVlc3QSDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWU=');
 @$core.Deprecated('Use assignFixturesToGroupRequestDescriptor instead')
 const AssignFixturesToGroupRequest$json = const {
   '1': 'AssignFixturesToGroupRequest',

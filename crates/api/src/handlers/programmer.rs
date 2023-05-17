@@ -161,6 +161,23 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn delete_group(&self, id: u32) {
+        self.runtime
+            .run_command(DeleteGroupCommand { id: id.into() })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn rename_group(&self, id: u32, name: String) {
+        self.runtime
+            .run_command(RenameGroupCommand {
+                id: id.into(),
+                name,
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
         let group_id = GroupId(group_id);
         let fixture_ids = fixture_ids

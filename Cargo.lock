@@ -4620,6 +4620,7 @@ dependencies = [
  "mizer-commander",
  "mizer-debug-ui",
  "mizer-execution-planner",
+ "mizer-fixtures",
  "mizer-layouts",
  "mizer-module",
  "mizer-node",

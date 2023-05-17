@@ -18,6 +18,7 @@ mizer-clock = { path = "clock" }
 mizer-debug-ui = { path = "debug-ui", optional = true }
 mizer-node = { path = "pipeline/node" }
 mizer-nodes = { path = "pipeline/nodes" }
+mizer-fixtures = { path = "../components/fixtures" }
 mizer-pipeline = { path = "pipeline" }
 mizer-session = { path = "session" }
 mizer-execution-planner = { path = "execution-planner" }

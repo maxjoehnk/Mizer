@@ -9,6 +9,8 @@ use mizer_clock::{Clock, ClockSnapshot, SystemClock};
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui::DebugUi;
 use mizer_execution_planner::*;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::programmer::PresetId;
 use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
 use mizer_module::Runtime;
 use mizer_node::*;
@@ -262,6 +264,37 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
         self.layout_fader_view.write_label_values(label_values);
     }
+
+    fn get_preset_ids(&self) -> Vec<PresetId> {
+        let fixture_manager = self.injector.get::<FixtureManager>().unwrap();
+        fixture_manager
+            .presets
+            .color_presets()
+            .into_iter()
+            .map(|(id, _)| id)
+            .chain(
+                fixture_manager
+                    .presets
+                    .intensity_presets()
+                    .into_iter()
+                    .map(|(id, _)| id),
+            )
+            .chain(
+                fixture_manager
+                    .presets
+                    .shutter_presets()
+                    .into_iter()
+                    .map(|(id, _)| id),
+            )
+            .chain(
+                fixture_manager
+                    .presets
+                    .position_presets()
+                    .into_iter()
+                    .map(|(id, _)| id),
+            )
+            .collect()
+    }
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
@@ -328,22 +361,38 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new_project(&mut self) {
+        let preset_ids = self.get_preset_ids();
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
+        let mut paths = Vec::new();
         let programmer_path = pipeline_access
             .handle_add_node(NodeType::Programmer, NodeDesigner::default(), None)
             .unwrap();
+        paths.push(programmer_path);
         let transport_path = pipeline_access
             .handle_add_node(NodeType::Transport, NodeDesigner::default(), None)
             .unwrap();
+        paths.push(transport_path);
+        for preset_id in preset_ids {
+            let path = pipeline_access
+                .handle_add_node(
+                    NodeType::Preset,
+                    NodeDesigner {
+                        hidden: true,
+                        ..Default::default()
+                    },
+                    Some(Node::Preset(PresetNode { id: preset_id })),
+                )
+                .unwrap();
+            paths.push(path);
+        }
+
         let executor = self.injector.get_mut::<ExecutionPlanner>().unwrap();
-        executor.add_node(ExecutionNode {
-            path: programmer_path,
-            attached_executor: None,
-        });
-        executor.add_node(ExecutionNode {
-            path: transport_path,
-            attached_executor: None,
-        });
+        for path in paths {
+            executor.add_node(ExecutionNode {
+                path,
+                attached_executor: None,
+            });
+        }
         self.force_plan();
     }
 

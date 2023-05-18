@@ -40,7 +40,7 @@ dev_dependencies:
   test: ^1.17.0
   mockito: ^5.3.2
   bloc_test: ^9.1.0
-  ffigen: ^7.2.4
+  ffigen: ^8.0.0
   widgetbook: ^2.0.9
   flutter_launcher_icons: ^0.13.0
 

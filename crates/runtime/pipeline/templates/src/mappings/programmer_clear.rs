@@ -7,6 +7,6 @@ pub fn create_programmer_clear_mapping(midi_input: MidiInputNode) -> NodeTemplat
             "programmer" => NodeRequest::Existing("/programmer-0".into()),
             "midi" => NodeRequest::New(Node::MidiInput(midi_input))
         },
-        links: vec![link_template!("midi", "value" => "programmer", "Clear")],
+        links: vec![link_template!("midi", "Output" => "programmer", "Clear")],
     }
 }

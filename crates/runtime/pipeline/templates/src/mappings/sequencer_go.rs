@@ -9,6 +9,6 @@ pub fn create_sequencer_go_mapping(sequence_id: u32, midi_input: MidiInputNode) 
             })),
             "midi" => NodeRequest::New(Node::MidiInput(midi_input))
         },
-        links: vec![link_template!("midi", "value" => "sequence", "Go+")],
+        links: vec![link_template!("midi", "Output" => "sequence", "Go+")],
     }
 }

@@ -7,6 +7,6 @@ pub fn create_programmer_highlight_mapping(midi_input: MidiInputNode) -> NodeTem
             "programmer" => NodeRequest::Existing("/programmer-0".into()),
             "midi" => NodeRequest::New(Node::MidiInput(midi_input))
         },
-        links: vec![link_template!("midi", "value" => "programmer", "Highlight")],
+        links: vec![link_template!("midi", "Output" => "programmer", "Highlight")],
     }
 }

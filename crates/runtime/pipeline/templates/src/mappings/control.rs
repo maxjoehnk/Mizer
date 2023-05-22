@@ -8,6 +8,6 @@ pub fn create_control_mapping(control: NodePath, midi_input: MidiInputNode) -> N
             "control" => NodeRequest::Existing(control),
             "midi" => NodeRequest::New(Node::MidiInput(midi_input))
         },
-        links: vec![link_template!("midi", "value" => "control", "value")],
+        links: vec![link_template!("midi", "Output" => "control", "Input")],
     }
 }

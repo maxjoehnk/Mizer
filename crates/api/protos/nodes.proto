@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package mizer.nodes;
 
-import "programmer.proto";
-
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}
   rpc AddNode (AddNodeRequest) returns (Node) {}
@@ -200,9 +198,6 @@ message Node {
 
 message NodeConfig {
   oneof type {
-    SequencerNodeConfig sequencer_config = 35;
-    GroupNodeConfig group_config = 37;
-    PresetNodeConfig preset_config = 38;
     ContainerNodeConfig container_config = 45;
   }
 }
@@ -302,18 +297,6 @@ message NodeSetting {
       double c1b = 6;
     }
   }
-}
-
-message GroupNodeConfig {
-  uint32 group_id = 1;
-}
-
-message PresetNodeConfig {
-  mizer.programmer.PresetId preset_id = 1;
-}
-
-message SequencerNodeConfig {
-  uint32 sequence_id = 1;
 }
 
 message MidiNodeConfig {

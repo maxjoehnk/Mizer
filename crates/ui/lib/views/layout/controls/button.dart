@@ -32,7 +32,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
   void initState() {
     super.initState();
     this.ticker = this.createTicker((elapsed) async {
-      var v = widget.pointer.readButtonValue(widget.control.node);
+      var v = widget.pointer.readButtonValue(widget.control.node.path);
       if (!this.mounted) {
         return;
       }
@@ -57,7 +57,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
       image: widget.image,
       pressed: value,
       onValue: (value) =>
-          apiClient.writeControlValue(path: widget.control.node, port: "Input", value: value),
+          apiClient.writeControlValue(path: widget.control.node.path, port: "Input", value: value),
     );
   }
 }

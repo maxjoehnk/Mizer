@@ -9,7 +9,7 @@ pub use resize_layout_control::*;
 pub use update_layout_control_behavior::*;
 pub use update_layout_control_decorations::*;
 
-use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
+use mizer_layouts::{ControlConfig, ControlId, Layout, LayoutStorage};
 
 mod add_layout;
 mod add_layout_control;
@@ -48,13 +48,13 @@ pub(crate) fn get_layout<'a>(
 pub(crate) fn get_control<'a>(
     layouts: &'a mut [Layout],
     layout_id: &str,
-    control_id: &str,
+    control_id: ControlId,
 ) -> anyhow::Result<&'a mut ControlConfig> {
     let layout = get_layout(layouts, layout_id)?;
     layout
         .controls
         .iter_mut()
-        .find(|c| c.node == control_id)
+        .find(|c| c.id == control_id)
         .ok_or_else(|| {
             anyhow::anyhow!(
                 "Control {} does not exist in layout {}",

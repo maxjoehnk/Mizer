@@ -83,17 +83,6 @@ const WriteResponse$json = const {
 
 /// Descriptor for `WriteResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List writeResponseDescriptor = $convert.base64Decode('Cg1Xcml0ZVJlc3BvbnNl');
-@$core.Deprecated('Use updateNodeConfigRequestDescriptor instead')
-const UpdateNodeConfigRequest$json = const {
-  '1': 'UpdateNodeConfigRequest',
-  '2': const [
-    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
-    const {'1': 'config', '3': 2, '4': 1, '5': 11, '6': '.mizer.nodes.NodeConfig', '10': 'config'},
-  ],
-};
-
-/// Descriptor for `UpdateNodeConfigRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateNodeConfigRequestDescriptor = $convert.base64Decode('ChdVcGRhdGVOb2RlQ29uZmlnUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEi8KBmNvbmZpZxgCIAEoCzIXLm1pemVyLm5vZGVzLk5vZGVDb25maWdSBmNvbmZpZw==');
 @$core.Deprecated('Use updateNodeSettingRequestDescriptor instead')
 const UpdateNodeSettingRequest$json = const {
   '1': 'UpdateNodeSettingRequest',
@@ -105,13 +94,6 @@ const UpdateNodeSettingRequest$json = const {
 
 /// Descriptor for `UpdateNodeSettingRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List updateNodeSettingRequestDescriptor = $convert.base64Decode('ChhVcGRhdGVOb2RlU2V0dGluZ1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIyCgdzZXR0aW5nGAIgASgLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSB3NldHRpbmc=');
-@$core.Deprecated('Use updateNodeConfigResponseDescriptor instead')
-const UpdateNodeConfigResponse$json = const {
-  '1': 'UpdateNodeConfigResponse',
-};
-
-/// Descriptor for `UpdateNodeConfigResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateNodeConfigResponseDescriptor = $convert.base64Decode('ChhVcGRhdGVOb2RlQ29uZmlnUmVzcG9uc2U=');
 @$core.Deprecated('Use moveNodeRequestDescriptor instead')
 const MoveNodeRequest$json = const {
   '1': 'MoveNodeRequest',
@@ -358,9 +340,6 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode('CgROb2RlEi4K
 const NodeConfig$json = const {
   '1': 'NodeConfig',
   '2': const [
-    const {'1': 'sequencer_config', '3': 35, '4': 1, '5': 11, '6': '.mizer.nodes.SequencerNodeConfig', '9': 0, '10': 'sequencerConfig'},
-    const {'1': 'group_config', '3': 37, '4': 1, '5': 11, '6': '.mizer.nodes.GroupNodeConfig', '9': 0, '10': 'groupConfig'},
-    const {'1': 'preset_config', '3': 38, '4': 1, '5': 11, '6': '.mizer.nodes.PresetNodeConfig', '9': 0, '10': 'presetConfig'},
     const {'1': 'container_config', '3': 45, '4': 1, '5': 11, '6': '.mizer.nodes.ContainerNodeConfig', '9': 0, '10': 'containerConfig'},
   ],
   '8': const [
@@ -369,7 +348,7 @@ const NodeConfig$json = const {
 };
 
 /// Descriptor for `NodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode('CgpOb2RlQ29uZmlnEk0KEHNlcXVlbmNlcl9jb25maWcYIyABKAsyIC5taXplci5ub2Rlcy5TZXF1ZW5jZXJOb2RlQ29uZmlnSABSD3NlcXVlbmNlckNvbmZpZxJBCgxncm91cF9jb25maWcYJSABKAsyHC5taXplci5ub2Rlcy5Hcm91cE5vZGVDb25maWdIAFILZ3JvdXBDb25maWcSRAoNcHJlc2V0X2NvbmZpZxgmIAEoCzIdLm1pemVyLm5vZGVzLlByZXNldE5vZGVDb25maWdIAFIMcHJlc2V0Q29uZmlnEk0KEGNvbnRhaW5lcl9jb25maWcYLSABKAsyIC5taXplci5ub2Rlcy5Db250YWluZXJOb2RlQ29uZmlnSABSD2NvbnRhaW5lckNvbmZpZ0IGCgR0eXBl');
+final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode('CgpOb2RlQ29uZmlnEk0KEGNvbnRhaW5lcl9jb25maWcYLSABKAsyIC5taXplci5ub2Rlcy5Db250YWluZXJOb2RlQ29uZmlnSABSD2NvbnRhaW5lckNvbmZpZ0IGCgR0eXBl');
 @$core.Deprecated('Use nodeSettingDescriptor instead')
 const NodeSetting$json = const {
   '1': 'NodeSetting',
@@ -545,36 +524,6 @@ const NodeSetting_SplineValue_SplineStep$json = const {
 
 /// Descriptor for `NodeSetting`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodeSettingDescriptor = $convert.base64Decode('CgtOb2RlU2V0dGluZxIUCgVsYWJlbBgBIAEoCVIFbGFiZWwSIAoLZGVzY3JpcHRpb24YAiABKAlSC2Rlc2NyaXB0aW9uEhoKCGRpc2FibGVkGAMgASgIUghkaXNhYmxlZBI4CgR0ZXh0GAQgASgLMiIubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuVGV4dFZhbHVlSABSBHRleHQSOwoFZmxvYXQYBSABKAsyIy5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5GbG9hdFZhbHVlSABSBWZsb2F0EjUKA2ludBgGIAEoCzIhLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLkludFZhbHVlSABSA2ludBI4CgRib29sGAcgASgLMiIubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuQm9vbFZhbHVlSABSBGJvb2wSPgoGc2VsZWN0GAggASgLMiQubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFsdWVIAFIGc2VsZWN0EjgKBGVudW0YCSABKAsyIi5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5FbnVtVmFsdWVIAFIEZW51bRIyCgJpZBgKIAEoCzIgLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLklkVmFsdWVIAFICaWQSPgoGc3BsaW5lGAsgASgLMiQubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuU3BsaW5lVmFsdWVIAFIGc3BsaW5lGj8KCVRleHRWYWx1ZRIUCgV2YWx1ZRgBIAEoCVIFdmFsdWUSHAoJbXVsdGlsaW5lGAIgASgIUgltdWx0aWxpbmUaugEKCkZsb2F0VmFsdWUSFAoFdmFsdWUYASABKAFSBXZhbHVlEhUKA21pbhgCIAEoAUgAUgNtaW6IAQESHgoIbWluX2hpbnQYAyABKAFIAVIHbWluSGludIgBARIVCgNtYXgYBCABKAFIAlIDbWF4iAEBEh4KCG1heF9oaW50GAUgASgBSANSB21heEhpbnSIAQFCBgoEX21pbkILCglfbWluX2hpbnRCBgoEX21heEILCglfbWF4X2hpbnQauAEKCEludFZhbHVlEhQKBXZhbHVlGAEgASgNUgV2YWx1ZRIVCgNtaW4YAiABKA1IAFIDbWluiAEBEh4KCG1pbl9oaW50GAMgASgNSAFSB21pbkhpbnSIAQESFQoDbWF4GAQgASgNSAJSA21heIgBARIeCghtYXhfaGludBgFIAEoDUgDUgdtYXhIaW50iAEBQgYKBF9taW5CCwoJX21pbl9oaW50QgYKBF9tYXhCCwoJX21heF9oaW50GiEKCUJvb2xWYWx1ZRIUCgV2YWx1ZRgBIAEoCFIFdmFsdWUaZwoLU2VsZWN0VmFsdWUSFAoFdmFsdWUYASABKAlSBXZhbHVlEkIKCHZhcmlhbnRzGAIgAygLMiYubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudFIIdmFyaWFudHMazAIKDVNlbGVjdFZhcmlhbnQSSgoFZ3JvdXAYASABKAsyMi5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5TZWxlY3RWYXJpYW50LlNlbGVjdEdyb3VwSABSBWdyb3VwEkcKBGl0ZW0YAiABKAsyMS5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5TZWxlY3RWYXJpYW50LlNlbGVjdEl0ZW1IAFIEaXRlbRphCgtTZWxlY3RHcm91cBIUCgVsYWJlbBgBIAEoCVIFbGFiZWwSPAoFaXRlbXMYAiADKAsyJi5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5TZWxlY3RWYXJpYW50UgVpdGVtcxo4CgpTZWxlY3RJdGVtEhQKBXZhbHVlGAEgASgJUgV2YWx1ZRIUCgVsYWJlbBgCIAEoCVIFbGFiZWxCCQoHdmFyaWFudBpjCglFbnVtVmFsdWUSFAoFdmFsdWUYASABKA1SBXZhbHVlEkAKCHZhcmlhbnRzGAIgAygLMiQubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuRW51bVZhcmlhbnRSCHZhcmlhbnRzGjkKC0VudW1WYXJpYW50EhQKBXZhbHVlGAEgASgNUgV2YWx1ZRIUCgVsYWJlbBgCIAEoCVIFbGFiZWwaXwoHSWRWYWx1ZRIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUSPgoIdmFyaWFudHMYAiADKAsyIi5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5JZFZhcmlhbnRSCHZhcmlhbnRzGjcKCUlkVmFyaWFudBIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUSFAoFbGFiZWwYAiABKAlSBWxhYmVsGsYBCgtTcGxpbmVWYWx1ZRJFCgVzdGVwcxgBIAMoCzIvLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLlNwbGluZVZhbHVlLlNwbGluZVN0ZXBSBXN0ZXBzGnAKClNwbGluZVN0ZXASDAoBeBgBIAEoAVIBeBIMCgF5GAIgASgBUgF5EhAKA2MwYRgDIAEoAVIDYzBhEhAKA2MwYhgEIAEoAVIDYzBiEhAKA2MxYRgFIAEoAVIDYzFhEhAKA2MxYhgGIAEoAVIDYzFiQgcKBXZhbHVl');
-@$core.Deprecated('Use groupNodeConfigDescriptor instead')
-const GroupNodeConfig$json = const {
-  '1': 'GroupNodeConfig',
-  '2': const [
-    const {'1': 'group_id', '3': 1, '4': 1, '5': 13, '10': 'groupId'},
-  ],
-};
-
-/// Descriptor for `GroupNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List groupNodeConfigDescriptor = $convert.base64Decode('Cg9Hcm91cE5vZGVDb25maWcSGQoIZ3JvdXBfaWQYASABKA1SB2dyb3VwSWQ=');
-@$core.Deprecated('Use presetNodeConfigDescriptor instead')
-const PresetNodeConfig$json = const {
-  '1': 'PresetNodeConfig',
-  '2': const [
-    const {'1': 'preset_id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'presetId'},
-  ],
-};
-
-/// Descriptor for `PresetNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetNodeConfigDescriptor = $convert.base64Decode('ChBQcmVzZXROb2RlQ29uZmlnEjcKCXByZXNldF9pZBgBIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElk');
-@$core.Deprecated('Use sequencerNodeConfigDescriptor instead')
-const SequencerNodeConfig$json = const {
-  '1': 'SequencerNodeConfig',
-  '2': const [
-    const {'1': 'sequence_id', '3': 1, '4': 1, '5': 13, '10': 'sequenceId'},
-  ],
-};
-
-/// Descriptor for `SequencerNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sequencerNodeConfigDescriptor = $convert.base64Decode('ChNTZXF1ZW5jZXJOb2RlQ29uZmlnEh8KC3NlcXVlbmNlX2lkGAEgASgNUgpzZXF1ZW5jZUlk');
 @$core.Deprecated('Use midiNodeConfigDescriptor instead')
 const MidiNodeConfig$json = const {
   '1': 'MidiNodeConfig',

@@ -11,7 +11,7 @@ use mizer_debug_ui::DebugUi;
 use mizer_execution_planner::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
-use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
+use mizer_layouts::{ControlConfig, ControlType, Layout, LayoutStorage};
 use mizer_module::Runtime;
 use mizer_node::*;
 use mizer_nodes::*;
@@ -214,7 +214,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let nodes = layouts
             .into_iter()
             .flat_map(|layout| layout.controls)
-            .map(|control| control.node)
+            .filter_map(|control| match control.control_type {
+                ControlType::Node { path: node } => Some(node),
+                _ => None,
+            })
             .sorted()
             .dedup()
             .collect::<Vec<_>>();

@@ -202,21 +202,34 @@ class _ControlLayoutState extends State<ControlLayout> {
                         Navigator.of(context).push(MizerPopupRoute(
                             position: details.globalPosition,
                             child: AddControlPopup(
-                                nodes: nodes.allNodes.where((node) {
-                                  var control = widget.layout.controls
-                                      .firstWhereOrNull((c) => c.node == node.path);
+                              nodes: nodes.allNodes.where((node) {
+                                var control = widget.layout.controls
+                                    .firstWhereOrNull((c) => c.node.path == node.path);
 
-                                  return control == null;
-                                }).toList(),
-                                sequences: sequences.sequences,
-                                groups: presets.groups,
-                                presets: presets.presets,
-                                onCreateControl: (nodeType) => bloc.add(AddControl(
-                                    layoutId: widget.layout.id,
-                                    nodeType: nodeType,
-                                    position: position)),
-                                onAddControlForExisting: (node) => bloc.add(AddExistingControl(
-                                    layoutId: widget.layout.id, node: node, position: position)))));
+                                return control == null;
+                              }).toList(),
+                              sequences: sequences.sequences,
+                              groups: presets.groups,
+                              presets: presets.presets,
+                              onCreateControl: (nodeType) => bloc.add(AddControl(
+                                  layoutId: widget.layout.id,
+                                  nodeType: nodeType,
+                                  position: position)),
+                              onAddControlForExisting: (node) => bloc.add(AddExistingControl(
+                                  layoutId: widget.layout.id, node: node, position: position)),
+                              onCreateGroupControl: (group) => bloc.add(AddExistingControl.group(
+                                  layoutId: widget.layout.id, groupId: group, position: position)),
+                              onCreatePresetControl: (presetId) => bloc.add(
+                                  AddExistingControl.preset(
+                                      layoutId: widget.layout.id,
+                                      presetId: presetId,
+                                      position: position)),
+                              onCreateSequenceControl: (sequenceId) => bloc.add(
+                                  AddExistingControl.sequence(
+                                      layoutId: widget.layout.id,
+                                      sequenceId: sequenceId,
+                                      position: position)),
+                            )));
                       },
                     ),
                     _ControlsContainer(
@@ -279,8 +292,8 @@ class _ControlLayoutState extends State<ControlLayout> {
     LayoutsBloc bloc = context.read();
     if (_movingNode != null) {
       var position = screenToLayoutPosition(_movingNodePosition!).toControlPosition();
-      bloc.add(MoveControl(
-          layoutId: widget.layout.id, controlId: _movingNode!.node, position: position));
+      bloc.add(
+          MoveControl(layoutId: widget.layout.id, controlId: _movingNode!.id, position: position));
 
       setState(() {
         _movingNode = null;
@@ -289,8 +302,7 @@ class _ControlLayoutState extends State<ControlLayout> {
     }
     if (_resizingNode != null) {
       var size = screenToLayoutSize(_resizingNodeSize!).toControlSize();
-      bloc.add(
-          ResizeControl(layoutId: widget.layout.id, controlId: _resizingNode!.node, size: size));
+      bloc.add(ResizeControl(layoutId: widget.layout.id, controlId: _resizingNode!.id, size: size));
 
       setState(() {
         _resizingNode = null;
@@ -327,7 +339,7 @@ class _ControlsContainer extends StatelessWidget {
     return SequencerStateFetcher(builder: (context, sequencerState) {
       return CustomMultiChildLayout(
           delegate: ControlsLayoutDelegate(
-              layout, movingNode?.node, movingNodePosition, resizingNode?.node, resizingNodeSize),
+              layout, movingNode?.id, movingNodePosition, resizingNode?.id, resizingNodeSize),
           children: [
             if (movingNode != null)
               LayoutId(
@@ -345,7 +357,7 @@ class _ControlsContainer extends StatelessWidget {
                     color: Colors.deepOrange.shade100.withAlpha(10),
                   ))),
             ...layout.controls.map((c) => LayoutId(
-                id: c.node,
+                id: c.id,
                 child: LayoutControlView(
                   pointer,
                   layout.id,
@@ -376,32 +388,32 @@ class _ControlsContainer extends StatelessWidget {
 
 class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   final Layout layout;
-  final String? movingNode;
-  final Offset? movingNodePosition;
-  final String? resizingNode;
-  final Size? resizingNodeSize;
+  final String? movingControlId;
+  final Offset? movingControlPosition;
+  final String? resizingControlId;
+  final Size? resizingControlSize;
 
-  ControlsLayoutDelegate(this.layout, this.movingNode, this.movingNodePosition, this.resizingNode,
-      this.resizingNodeSize);
+  ControlsLayoutDelegate(this.layout, this.movingControlId, this.movingControlPosition,
+      this.resizingControlId, this.resizingControlSize);
 
   @override
   void performLayout(Size size) {
     for (var control in layout.controls) {
       var controlSize =
           Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER;
-      layoutChild(control.node, BoxConstraints.tight(controlSize));
-      var controlOffset = movingNode == control.node
-          ? movingNodePosition!
+      layoutChild(control.id, BoxConstraints.tight(controlSize));
+      var controlOffset = movingControlId == control.id
+          ? movingControlPosition!
           : Offset(control.position.x.toDouble(), control.position.y.toDouble()) * MULTIPLIER;
-      positionChild(control.node, controlOffset);
-      if (movingNode != null && movingNode == control.node) {
+      positionChild(control.id, controlOffset);
+      if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
-        positionChild(
-            MovingNodeIndicatorLayoutId, screenToLayoutPosition(movingNodePosition!) * MULTIPLIER);
+        positionChild(MovingNodeIndicatorLayoutId,
+            screenToLayoutPosition(movingControlPosition!) * MULTIPLIER);
       }
-      if (resizingNode != null && resizingNode == control.node) {
+      if (resizingControlId != null && resizingControlId == control.id) {
         layoutChild(ResizingNodeIndicatorLayoutId,
-            BoxConstraints.tight(screenToLayoutSize(resizingNodeSize!) * MULTIPLIER));
+            BoxConstraints.tight(screenToLayoutSize(resizingControlSize!) * MULTIPLIER));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }
@@ -409,11 +421,11 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant ControlsLayoutDelegate oldDelegate) {
-    return oldDelegate.movingNodePosition != movingNodePosition ||
-        oldDelegate.movingNode != movingNode ||
+    return oldDelegate.movingControlPosition != movingControlPosition ||
+        oldDelegate.movingControlId != movingControlId ||
         oldDelegate.layout != layout ||
-        oldDelegate.resizingNodeSize != resizingNodeSize ||
-        oldDelegate.resizingNode != resizingNode;
+        oldDelegate.resizingControlSize != resizingControlSize ||
+        oldDelegate.resizingControlId != resizingControlId;
   }
 }
 

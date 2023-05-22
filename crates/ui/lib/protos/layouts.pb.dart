@@ -10,6 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'programmer.pb.dart' as $1;
+
 import 'nodes.pbenum.dart' as $2;
 import 'layouts.pbenum.dart';
 
@@ -826,6 +828,239 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
   ControlPosition ensurePosition() => $_ensure(2);
 }
 
+class AddSequenceControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddSequenceControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddSequenceControlRequest._() : super();
+  factory AddSequenceControlRequest({
+    $core.String? layoutId,
+    $core.int? sequenceId,
+    ControlPosition? position,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
+  factory AddSequenceControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddSequenceControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddSequenceControlRequest clone() => AddSequenceControlRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddSequenceControlRequest copyWith(void Function(AddSequenceControlRequest) updates) => super.copyWith((message) => updates(message as AddSequenceControlRequest)) as AddSequenceControlRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddSequenceControlRequest create() => AddSequenceControlRequest._();
+  AddSequenceControlRequest createEmptyInstance() => create();
+  static $pb.PbList<AddSequenceControlRequest> createRepeated() => $pb.PbList<AddSequenceControlRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddSequenceControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddSequenceControlRequest>(create);
+  static AddSequenceControlRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get sequenceId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set sequenceId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSequenceId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSequenceId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  ControlPosition get position => $_getN(2);
+  @$pb.TagNumber(3)
+  set position(ControlPosition v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPosition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPosition() => clearField(3);
+  @$pb.TagNumber(3)
+  ControlPosition ensurePosition() => $_ensure(2);
+}
+
+class AddGroupControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddGroupControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddGroupControlRequest._() : super();
+  factory AddGroupControlRequest({
+    $core.String? layoutId,
+    $core.int? groupId,
+    ControlPosition? position,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (groupId != null) {
+      _result.groupId = groupId;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
+  factory AddGroupControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddGroupControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddGroupControlRequest clone() => AddGroupControlRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddGroupControlRequest copyWith(void Function(AddGroupControlRequest) updates) => super.copyWith((message) => updates(message as AddGroupControlRequest)) as AddGroupControlRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddGroupControlRequest create() => AddGroupControlRequest._();
+  AddGroupControlRequest createEmptyInstance() => create();
+  static $pb.PbList<AddGroupControlRequest> createRepeated() => $pb.PbList<AddGroupControlRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddGroupControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddGroupControlRequest>(create);
+  static AddGroupControlRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get groupId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set groupId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGroupId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGroupId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  ControlPosition get position => $_getN(2);
+  @$pb.TagNumber(3)
+  set position(ControlPosition v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPosition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPosition() => clearField(3);
+  @$pb.TagNumber(3)
+  ControlPosition ensurePosition() => $_ensure(2);
+}
+
+class AddPresetControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddPresetControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOM<$1.PresetId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddPresetControlRequest._() : super();
+  factory AddPresetControlRequest({
+    $core.String? layoutId,
+    $1.PresetId? presetId,
+    ControlPosition? position,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (presetId != null) {
+      _result.presetId = presetId;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
+  factory AddPresetControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddPresetControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddPresetControlRequest clone() => AddPresetControlRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddPresetControlRequest copyWith(void Function(AddPresetControlRequest) updates) => super.copyWith((message) => updates(message as AddPresetControlRequest)) as AddPresetControlRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddPresetControlRequest create() => AddPresetControlRequest._();
+  AddPresetControlRequest createEmptyInstance() => create();
+  static $pb.PbList<AddPresetControlRequest> createRepeated() => $pb.PbList<AddPresetControlRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddPresetControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddPresetControlRequest>(create);
+  static AddPresetControlRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $1.PresetId get presetId => $_getN(1);
+  @$pb.TagNumber(2)
+  set presetId($1.PresetId v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPresetId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPresetId() => clearField(2);
+  @$pb.TagNumber(2)
+  $1.PresetId ensurePresetId() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  ControlPosition get position => $_getN(2);
+  @$pb.TagNumber(3)
+  set position(ControlPosition v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPosition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPosition() => clearField(3);
+  @$pb.TagNumber(3)
+  ControlPosition ensurePosition() => $_ensure(2);
+}
+
 class Layouts extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layouts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<Layout>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)
@@ -922,29 +1157,243 @@ class Layout extends $pb.GeneratedMessage {
   $core.List<LayoutControl> get controls => $_getList(1);
 }
 
+class LayoutControl_NodeControlType extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.NodeControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  LayoutControl_NodeControlType._() : super();
+  factory LayoutControl_NodeControlType({
+    $core.String? path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory LayoutControl_NodeControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_NodeControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LayoutControl_NodeControlType clone() => LayoutControl_NodeControlType()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LayoutControl_NodeControlType copyWith(void Function(LayoutControl_NodeControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_NodeControlType)) as LayoutControl_NodeControlType; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_NodeControlType create() => LayoutControl_NodeControlType._();
+  LayoutControl_NodeControlType createEmptyInstance() => create();
+  static $pb.PbList<LayoutControl_NodeControlType> createRepeated() => $pb.PbList<LayoutControl_NodeControlType>();
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_NodeControlType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl_NodeControlType>(create);
+  static LayoutControl_NodeControlType? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+}
+
+class LayoutControl_SequencerControlType extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.SequencerControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  LayoutControl_SequencerControlType._() : super();
+  factory LayoutControl_SequencerControlType({
+    $core.int? sequenceId,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    return _result;
+  }
+  factory LayoutControl_SequencerControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_SequencerControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LayoutControl_SequencerControlType clone() => LayoutControl_SequencerControlType()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LayoutControl_SequencerControlType copyWith(void Function(LayoutControl_SequencerControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_SequencerControlType)) as LayoutControl_SequencerControlType; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_SequencerControlType create() => LayoutControl_SequencerControlType._();
+  LayoutControl_SequencerControlType createEmptyInstance() => create();
+  static $pb.PbList<LayoutControl_SequencerControlType> createRepeated() => $pb.PbList<LayoutControl_SequencerControlType>();
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_SequencerControlType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl_SequencerControlType>(create);
+  static LayoutControl_SequencerControlType? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequenceId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequenceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequenceId() => clearField(1);
+}
+
+class LayoutControl_GroupControlType extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.GroupControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  LayoutControl_GroupControlType._() : super();
+  factory LayoutControl_GroupControlType({
+    $core.int? groupId,
+  }) {
+    final _result = create();
+    if (groupId != null) {
+      _result.groupId = groupId;
+    }
+    return _result;
+  }
+  factory LayoutControl_GroupControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_GroupControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LayoutControl_GroupControlType clone() => LayoutControl_GroupControlType()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LayoutControl_GroupControlType copyWith(void Function(LayoutControl_GroupControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_GroupControlType)) as LayoutControl_GroupControlType; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_GroupControlType create() => LayoutControl_GroupControlType._();
+  LayoutControl_GroupControlType createEmptyInstance() => create();
+  static $pb.PbList<LayoutControl_GroupControlType> createRepeated() => $pb.PbList<LayoutControl_GroupControlType>();
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_GroupControlType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl_GroupControlType>(create);
+  static LayoutControl_GroupControlType? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get groupId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set groupId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGroupId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGroupId() => clearField(1);
+}
+
+class LayoutControl_PresetControlType extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.PresetControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOM<$1.PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
+    ..hasRequiredFields = false
+  ;
+
+  LayoutControl_PresetControlType._() : super();
+  factory LayoutControl_PresetControlType({
+    $1.PresetId? presetId,
+  }) {
+    final _result = create();
+    if (presetId != null) {
+      _result.presetId = presetId;
+    }
+    return _result;
+  }
+  factory LayoutControl_PresetControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_PresetControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LayoutControl_PresetControlType clone() => LayoutControl_PresetControlType()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LayoutControl_PresetControlType copyWith(void Function(LayoutControl_PresetControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_PresetControlType)) as LayoutControl_PresetControlType; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_PresetControlType create() => LayoutControl_PresetControlType._();
+  LayoutControl_PresetControlType createEmptyInstance() => create();
+  static $pb.PbList<LayoutControl_PresetControlType> createRepeated() => $pb.PbList<LayoutControl_PresetControlType>();
+  @$core.pragma('dart2js:noInline')
+  static LayoutControl_PresetControlType getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl_PresetControlType>(create);
+  static LayoutControl_PresetControlType? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.PresetId get presetId => $_getN(0);
+  @$pb.TagNumber(1)
+  set presetId($1.PresetId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPresetId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPresetId() => clearField(1);
+  @$pb.TagNumber(1)
+  $1.PresetId ensurePresetId() => $_ensure(0);
+}
+
+enum LayoutControl_ControlType {
+  node, 
+  sequencer, 
+  group, 
+  preset, 
+  notSet
+}
+
 class LayoutControl extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, LayoutControl_ControlType> _LayoutControl_ControlTypeByTag = {
+    7 : LayoutControl_ControlType.node,
+    8 : LayoutControl_ControlType.sequencer,
+    9 : LayoutControl_ControlType.group,
+    10 : LayoutControl_ControlType.preset,
+    0 : LayoutControl_ControlType.notSet
+  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node')
+    ..oo(0, [7, 8, 9, 10])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOM<ControlPosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
     ..aOM<ControlSize>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', subBuilder: ControlSize.create)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
     ..aOM<ControlDecorations>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decoration', subBuilder: ControlDecorations.create)
     ..aOM<ControlBehavior>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'behavior', subBuilder: ControlBehavior.create)
+    ..aOM<LayoutControl_NodeControlType>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node', subBuilder: LayoutControl_NodeControlType.create)
+    ..aOM<LayoutControl_SequencerControlType>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', subBuilder: LayoutControl_SequencerControlType.create)
+    ..aOM<LayoutControl_GroupControlType>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group', subBuilder: LayoutControl_GroupControlType.create)
+    ..aOM<LayoutControl_PresetControlType>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preset', subBuilder: LayoutControl_PresetControlType.create)
     ..hasRequiredFields = false
   ;
 
   LayoutControl._() : super();
   factory LayoutControl({
-    $core.String? node,
+    $core.String? id,
     ControlPosition? position,
     ControlSize? size,
     $core.String? label,
     ControlDecorations? decoration,
     ControlBehavior? behavior,
+    LayoutControl_NodeControlType? node,
+    LayoutControl_SequencerControlType? sequencer,
+    LayoutControl_GroupControlType? group,
+    LayoutControl_PresetControlType? preset,
   }) {
     final _result = create();
-    if (node != null) {
-      _result.node = node;
+    if (id != null) {
+      _result.id = id;
     }
     if (position != null) {
       _result.position = position;
@@ -960,6 +1409,18 @@ class LayoutControl extends $pb.GeneratedMessage {
     }
     if (behavior != null) {
       _result.behavior = behavior;
+    }
+    if (node != null) {
+      _result.node = node;
+    }
+    if (sequencer != null) {
+      _result.sequencer = sequencer;
+    }
+    if (group != null) {
+      _result.group = group;
+    }
+    if (preset != null) {
+      _result.preset = preset;
     }
     return _result;
   }
@@ -984,14 +1445,17 @@ class LayoutControl extends $pb.GeneratedMessage {
   static LayoutControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl>(create);
   static LayoutControl? _defaultInstance;
 
+  LayoutControl_ControlType whichControlType() => _LayoutControl_ControlTypeByTag[$_whichOneof(0)]!;
+  void clearControlType() => clearField($_whichOneof(0));
+
   @$pb.TagNumber(1)
-  $core.String get node => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set node($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasNode() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearNode() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
   ControlPosition get position => $_getN(1);
@@ -1045,6 +1509,50 @@ class LayoutControl extends $pb.GeneratedMessage {
   void clearBehavior() => clearField(6);
   @$pb.TagNumber(6)
   ControlBehavior ensureBehavior() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  LayoutControl_NodeControlType get node => $_getN(6);
+  @$pb.TagNumber(7)
+  set node(LayoutControl_NodeControlType v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasNode() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearNode() => clearField(7);
+  @$pb.TagNumber(7)
+  LayoutControl_NodeControlType ensureNode() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  LayoutControl_SequencerControlType get sequencer => $_getN(7);
+  @$pb.TagNumber(8)
+  set sequencer(LayoutControl_SequencerControlType v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasSequencer() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearSequencer() => clearField(8);
+  @$pb.TagNumber(8)
+  LayoutControl_SequencerControlType ensureSequencer() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  LayoutControl_GroupControlType get group => $_getN(8);
+  @$pb.TagNumber(9)
+  set group(LayoutControl_GroupControlType v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasGroup() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearGroup() => clearField(9);
+  @$pb.TagNumber(9)
+  LayoutControl_GroupControlType ensureGroup() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  LayoutControl_PresetControlType get preset => $_getN(9);
+  @$pb.TagNumber(10)
+  set preset(LayoutControl_PresetControlType v) { setField(10, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasPreset() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearPreset() => clearField(10);
+  @$pb.TagNumber(10)
+  LayoutControl_PresetControlType ensurePreset() => $_ensure(9);
 }
 
 class ControlPosition extends $pb.GeneratedMessage {

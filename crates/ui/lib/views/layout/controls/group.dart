@@ -3,18 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/protos/layouts.pb.dart' show ControlSize;
-import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 
 class GroupControl extends StatefulWidget {
   final String? label;
   final Color? color;
-  final Node node;
+  final int groupId;
   final ControlSize size;
 
   const GroupControl(
-      {required this.label, this.color, required this.node, required this.size, Key? key})
+      {required this.label, this.color, required this.groupId, required this.size, Key? key})
       : super(key: key);
 
   @override
@@ -44,7 +43,7 @@ class _GroupControlState extends State<GroupControl>
   }
 
   int get _groupId {
-    return widget.node.config.groupConfig.groupId;
+    return widget.groupId;
   }
 
   _callGroup() {

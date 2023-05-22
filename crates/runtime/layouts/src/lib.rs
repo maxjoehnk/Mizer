@@ -1,8 +1,12 @@
 use base64::Engine;
+use mizer_fixtures::programmer::PresetId;
+use mizer_fixtures::GroupId;
 use mizer_node::{Color, NodePath};
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 use std::sync::Arc;
+use uuid::Uuid;
 
 pub type LayoutStorage = Arc<NonEmptyPinboard<Vec<Layout>>>;
 
@@ -12,17 +16,67 @@ pub struct Layout {
     pub controls: Vec<ControlConfig>,
 }
 
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ControlId(Uuid);
+
+impl TryFrom<String> for ControlId {
+    type Error = uuid::Error;
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        Uuid::try_from(value.as_str()).map(Self)
+    }
+}
+
+impl Display for ControlId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl Default for ControlId {
+    fn default() -> Self {
+        Self(Uuid::new_v4())
+    }
+}
+
+impl ControlId {
+    pub fn new() -> Self {
+        Self::default()
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ControlConfig {
     #[serde(default)]
+    pub id: ControlId,
+    #[serde(default)]
     pub label: Option<String>,
-    pub node: NodePath,
+    #[serde(flatten)]
+    pub control_type: ControlType,
     pub position: ControlPosition,
     pub size: ControlSize,
     #[serde(default)]
     pub decoration: ControlDecorations,
     #[serde(default)]
     pub behavior: ControlBehavior,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[serde(untagged)]
+pub enum ControlType {
+    Node {
+        #[serde(alias = "node")]
+        path: NodePath,
+    },
+    Sequencer {
+        sequence_id: u32,
+    },
+    Group {
+        group_id: GroupId,
+    },
+    Preset {
+        preset_id: PresetId,
+    },
 }
 
 #[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]

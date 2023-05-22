@@ -8,8 +8,9 @@ mod migration;
 mod migrations;
 
 migrations! {
-    RenamePortsMigration,
-    ReworkMidiConfigMigration,
+    RenamePorts,
+    ReworkMidiConfig,
+    ReworkLayoutControlsToNotUseNodes,
 }
 
 impl Migrations {

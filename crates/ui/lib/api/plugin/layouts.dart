@@ -3,6 +3,7 @@ import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pbenum.dart';
+import 'package:mizer/protos/programmer.pb.dart';
 
 import 'ffi/api.dart';
 import 'ffi/bindings.dart';
@@ -82,6 +83,28 @@ class LayoutsPluginApi implements LayoutsApi {
   Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position) async {
     var request = AddExistingControlRequest(layoutId: layoutId, node: nodeId, position: position);
     await channel.invokeMethod("addExistingControl", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addControlForGroup(String layoutId, int groupId, ControlPosition position) async {
+    var request = AddGroupControlRequest(layoutId: layoutId, groupId: groupId, position: position);
+    await channel.invokeMethod("addGroupControl", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addControlForPreset(
+      String layoutId, PresetId presetId, ControlPosition position) async {
+    var request =
+        AddPresetControlRequest(layoutId: layoutId, presetId: presetId, position: position);
+    await channel.invokeMethod("addPresetControl", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addControlForSequence(
+      String layoutId, int sequenceId, ControlPosition position) async {
+    var request =
+        AddSequenceControlRequest(layoutId: layoutId, sequenceId: sequenceId, position: position);
+    await channel.invokeMethod("addSequenceControl", request.writeToBuffer());
   }
 
   @override

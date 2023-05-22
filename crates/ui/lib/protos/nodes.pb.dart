@@ -9,8 +9,6 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'programmer.pb.dart' as $1;
-
 import 'nodes.pbenum.dart';
 
 export 'nodes.pbenum.dart';
@@ -286,69 +284,6 @@ class WriteResponse extends $pb.GeneratedMessage {
   static WriteResponse? _defaultInstance;
 }
 
-class UpdateNodeConfigRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateNodeConfigRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOM<NodeConfig>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: NodeConfig.create)
-    ..hasRequiredFields = false
-  ;
-
-  UpdateNodeConfigRequest._() : super();
-  factory UpdateNodeConfigRequest({
-    $core.String? path,
-    NodeConfig? config,
-  }) {
-    final _result = create();
-    if (path != null) {
-      _result.path = path;
-    }
-    if (config != null) {
-      _result.config = config;
-    }
-    return _result;
-  }
-  factory UpdateNodeConfigRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UpdateNodeConfigRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  UpdateNodeConfigRequest clone() => UpdateNodeConfigRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  UpdateNodeConfigRequest copyWith(void Function(UpdateNodeConfigRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigRequest)) as UpdateNodeConfigRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static UpdateNodeConfigRequest create() => UpdateNodeConfigRequest._();
-  UpdateNodeConfigRequest createEmptyInstance() => create();
-  static $pb.PbList<UpdateNodeConfigRequest> createRepeated() => $pb.PbList<UpdateNodeConfigRequest>();
-  @$core.pragma('dart2js:noInline')
-  static UpdateNodeConfigRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateNodeConfigRequest>(create);
-  static UpdateNodeConfigRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get path => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set path($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPath() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPath() => clearField(1);
-
-  @$pb.TagNumber(2)
-  NodeConfig get config => $_getN(1);
-  @$pb.TagNumber(2)
-  set config(NodeConfig v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasConfig() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearConfig() => clearField(2);
-  @$pb.TagNumber(2)
-  NodeConfig ensureConfig() => $_ensure(1);
-}
-
 class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateNodeSettingRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -410,35 +345,6 @@ class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
   void clearSetting() => clearField(2);
   @$pb.TagNumber(2)
   NodeSetting ensureSetting() => $_ensure(1);
-}
-
-class UpdateNodeConfigResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateNodeConfigResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  UpdateNodeConfigResponse._() : super();
-  factory UpdateNodeConfigResponse() => create();
-  factory UpdateNodeConfigResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UpdateNodeConfigResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  UpdateNodeConfigResponse clone() => UpdateNodeConfigResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  UpdateNodeConfigResponse copyWith(void Function(UpdateNodeConfigResponse) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigResponse)) as UpdateNodeConfigResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static UpdateNodeConfigResponse create() => UpdateNodeConfigResponse._();
-  UpdateNodeConfigResponse createEmptyInstance() => create();
-  static $pb.PbList<UpdateNodeConfigResponse> createRepeated() => $pb.PbList<UpdateNodeConfigResponse>();
-  @$core.pragma('dart2js:noInline')
-  static UpdateNodeConfigResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateNodeConfigResponse>(create);
-  static UpdateNodeConfigResponse? _defaultInstance;
 }
 
 class MoveNodeRequest extends $pb.GeneratedMessage {
@@ -1261,47 +1167,26 @@ class Node extends $pb.GeneratedMessage {
 }
 
 enum NodeConfig_Type {
-  sequencerConfig, 
-  groupConfig, 
-  presetConfig, 
   containerConfig, 
   notSet
 }
 
 class NodeConfig extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, NodeConfig_Type> _NodeConfig_TypeByTag = {
-    35 : NodeConfig_Type.sequencerConfig,
-    37 : NodeConfig_Type.groupConfig,
-    38 : NodeConfig_Type.presetConfig,
     45 : NodeConfig_Type.containerConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [35, 37, 38, 45])
-    ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
-    ..aOM<GroupNodeConfig>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupConfig', subBuilder: GroupNodeConfig.create)
-    ..aOM<PresetNodeConfig>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetConfig', subBuilder: PresetNodeConfig.create)
+    ..oo(0, [45])
     ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', subBuilder: ContainerNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
   NodeConfig._() : super();
   factory NodeConfig({
-    SequencerNodeConfig? sequencerConfig,
-    GroupNodeConfig? groupConfig,
-    PresetNodeConfig? presetConfig,
     ContainerNodeConfig? containerConfig,
   }) {
     final _result = create();
-    if (sequencerConfig != null) {
-      _result.sequencerConfig = sequencerConfig;
-    }
-    if (groupConfig != null) {
-      _result.groupConfig = groupConfig;
-    }
-    if (presetConfig != null) {
-      _result.presetConfig = presetConfig;
-    }
     if (containerConfig != null) {
       _result.containerConfig = containerConfig;
     }
@@ -1331,49 +1216,16 @@ class NodeConfig extends $pb.GeneratedMessage {
   NodeConfig_Type whichType() => _NodeConfig_TypeByTag[$_whichOneof(0)]!;
   void clearType() => clearField($_whichOneof(0));
 
-  @$pb.TagNumber(35)
-  SequencerNodeConfig get sequencerConfig => $_getN(0);
-  @$pb.TagNumber(35)
-  set sequencerConfig(SequencerNodeConfig v) { setField(35, v); }
-  @$pb.TagNumber(35)
-  $core.bool hasSequencerConfig() => $_has(0);
-  @$pb.TagNumber(35)
-  void clearSequencerConfig() => clearField(35);
-  @$pb.TagNumber(35)
-  SequencerNodeConfig ensureSequencerConfig() => $_ensure(0);
-
-  @$pb.TagNumber(37)
-  GroupNodeConfig get groupConfig => $_getN(1);
-  @$pb.TagNumber(37)
-  set groupConfig(GroupNodeConfig v) { setField(37, v); }
-  @$pb.TagNumber(37)
-  $core.bool hasGroupConfig() => $_has(1);
-  @$pb.TagNumber(37)
-  void clearGroupConfig() => clearField(37);
-  @$pb.TagNumber(37)
-  GroupNodeConfig ensureGroupConfig() => $_ensure(1);
-
-  @$pb.TagNumber(38)
-  PresetNodeConfig get presetConfig => $_getN(2);
-  @$pb.TagNumber(38)
-  set presetConfig(PresetNodeConfig v) { setField(38, v); }
-  @$pb.TagNumber(38)
-  $core.bool hasPresetConfig() => $_has(2);
-  @$pb.TagNumber(38)
-  void clearPresetConfig() => clearField(38);
-  @$pb.TagNumber(38)
-  PresetNodeConfig ensurePresetConfig() => $_ensure(2);
-
   @$pb.TagNumber(45)
-  ContainerNodeConfig get containerConfig => $_getN(3);
+  ContainerNodeConfig get containerConfig => $_getN(0);
   @$pb.TagNumber(45)
   set containerConfig(ContainerNodeConfig v) { setField(45, v); }
   @$pb.TagNumber(45)
-  $core.bool hasContainerConfig() => $_has(3);
+  $core.bool hasContainerConfig() => $_has(0);
   @$pb.TagNumber(45)
   void clearContainerConfig() => clearField(45);
   @$pb.TagNumber(45)
-  ContainerNodeConfig ensureContainerConfig() => $_ensure(3);
+  ContainerNodeConfig ensureContainerConfig() => $_ensure(0);
 }
 
 class NodeSetting_TextValue extends $pb.GeneratedMessage {
@@ -2559,149 +2411,6 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearSpline() => clearField(11);
   @$pb.TagNumber(11)
   NodeSetting_SplineValue ensureSpline() => $_ensure(10);
-}
-
-class GroupNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  GroupNodeConfig._() : super();
-  factory GroupNodeConfig({
-    $core.int? groupId,
-  }) {
-    final _result = create();
-    if (groupId != null) {
-      _result.groupId = groupId;
-    }
-    return _result;
-  }
-  factory GroupNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GroupNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GroupNodeConfig clone() => GroupNodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GroupNodeConfig copyWith(void Function(GroupNodeConfig) updates) => super.copyWith((message) => updates(message as GroupNodeConfig)) as GroupNodeConfig; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GroupNodeConfig create() => GroupNodeConfig._();
-  GroupNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<GroupNodeConfig> createRepeated() => $pb.PbList<GroupNodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static GroupNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupNodeConfig>(create);
-  static GroupNodeConfig? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get groupId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set groupId($core.int v) { $_setUnsignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasGroupId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearGroupId() => clearField(1);
-}
-
-class PresetNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOM<$1.PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
-    ..hasRequiredFields = false
-  ;
-
-  PresetNodeConfig._() : super();
-  factory PresetNodeConfig({
-    $1.PresetId? presetId,
-  }) {
-    final _result = create();
-    if (presetId != null) {
-      _result.presetId = presetId;
-    }
-    return _result;
-  }
-  factory PresetNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PresetNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  PresetNodeConfig clone() => PresetNodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PresetNodeConfig copyWith(void Function(PresetNodeConfig) updates) => super.copyWith((message) => updates(message as PresetNodeConfig)) as PresetNodeConfig; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static PresetNodeConfig create() => PresetNodeConfig._();
-  PresetNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<PresetNodeConfig> createRepeated() => $pb.PbList<PresetNodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static PresetNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PresetNodeConfig>(create);
-  static PresetNodeConfig? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $1.PresetId get presetId => $_getN(0);
-  @$pb.TagNumber(1)
-  set presetId($1.PresetId v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPresetId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPresetId() => clearField(1);
-  @$pb.TagNumber(1)
-  $1.PresetId ensurePresetId() => $_ensure(0);
-}
-
-class SequencerNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequencerNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  SequencerNodeConfig._() : super();
-  factory SequencerNodeConfig({
-    $core.int? sequenceId,
-  }) {
-    final _result = create();
-    if (sequenceId != null) {
-      _result.sequenceId = sequenceId;
-    }
-    return _result;
-  }
-  factory SequencerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SequencerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SequencerNodeConfig clone() => SequencerNodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SequencerNodeConfig copyWith(void Function(SequencerNodeConfig) updates) => super.copyWith((message) => updates(message as SequencerNodeConfig)) as SequencerNodeConfig; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static SequencerNodeConfig create() => SequencerNodeConfig._();
-  SequencerNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<SequencerNodeConfig> createRepeated() => $pb.PbList<SequencerNodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static SequencerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequencerNodeConfig>(create);
-  static SequencerNodeConfig? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.int get sequenceId => $_getIZ(0);
-  @$pb.TagNumber(1)
-  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSequenceId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSequenceId() => clearField(1);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

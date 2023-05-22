@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/layouts.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
@@ -85,9 +86,38 @@ class AddControl implements LayoutsEvent {
 class AddExistingControl implements LayoutsEvent {
   final String layoutId;
   final ControlPosition position;
-  final Node node;
+  final Node? node;
+  final int? groupId;
+  final int? sequenceId;
+  final PresetId? presetId;
 
-  AddExistingControl({required this.layoutId, required this.node, required this.position});
+  AddExistingControl(
+      {required this.layoutId,
+      this.node,
+      this.groupId,
+      this.presetId,
+      this.sequenceId,
+      required this.position});
+
+  factory AddExistingControl.node(
+      {required String layoutId, required Node node, required ControlPosition position}) {
+    return AddExistingControl(layoutId: layoutId, node: node, position: position);
+  }
+
+  factory AddExistingControl.sequence(
+      {required String layoutId, required int sequenceId, required ControlPosition position}) {
+    return AddExistingControl(layoutId: layoutId, sequenceId: sequenceId, position: position);
+  }
+
+  factory AddExistingControl.group(
+      {required String layoutId, required int groupId, required ControlPosition position}) {
+    return AddExistingControl(layoutId: layoutId, groupId: groupId, position: position);
+  }
+
+  factory AddExistingControl.preset(
+      {required String layoutId, required PresetId presetId, required ControlPosition position}) {
+    return AddExistingControl(layoutId: layoutId, presetId: presetId, position: position);
+  }
 }
 
 class SelectLayoutTab implements LayoutsEvent {
@@ -154,7 +184,18 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
       emit(state.copyWith(layouts: layouts.layouts));
     });
     on<AddExistingControl>((event, emit) async {
-      await api.addControlForNode(event.layoutId, event.node.path, event.position);
+      if (event.node != null) {
+        await api.addControlForNode(event.layoutId, event.node!.path, event.position);
+      }
+      if (event.sequenceId != null) {
+        await api.addControlForSequence(event.layoutId, event.sequenceId!, event.position);
+      }
+      if (event.groupId != null) {
+        await api.addControlForGroup(event.layoutId, event.groupId!, event.position);
+      }
+      if (event.presetId != null) {
+        await api.addControlForPreset(event.layoutId, event.presetId!, event.position);
+      }
       var layouts = await api.getLayouts();
       emit(state.copyWith(layouts: layouts.layouts));
     });

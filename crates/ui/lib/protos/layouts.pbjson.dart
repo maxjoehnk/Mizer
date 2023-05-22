@@ -148,6 +148,42 @@ const AddExistingControlRequest$json = const {
 
 /// Descriptor for `AddExistingControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addExistingControlRequestDescriptor = $convert.base64Decode('ChlBZGRFeGlzdGluZ0NvbnRyb2xSZXF1ZXN0EhsKCWxheW91dF9pZBgBIAEoCVIIbGF5b3V0SWQSEgoEbm9kZRgCIAEoCVIEbm9kZRIyCghwb3NpdGlvbhgDIAEoCzIWLm1pemVyLkNvbnRyb2xQb3NpdGlvblIIcG9zaXRpb24=');
+@$core.Deprecated('Use addSequenceControlRequestDescriptor instead')
+const AddSequenceControlRequest$json = const {
+  '1': 'AddSequenceControlRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'sequence_id', '3': 2, '4': 1, '5': 13, '10': 'sequenceId'},
+    const {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `AddSequenceControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addSequenceControlRequestDescriptor = $convert.base64Decode('ChlBZGRTZXF1ZW5jZUNvbnRyb2xSZXF1ZXN0EhsKCWxheW91dF9pZBgBIAEoCVIIbGF5b3V0SWQSHwoLc2VxdWVuY2VfaWQYAiABKA1SCnNlcXVlbmNlSWQSMgoIcG9zaXRpb24YAyABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9u');
+@$core.Deprecated('Use addGroupControlRequestDescriptor instead')
+const AddGroupControlRequest$json = const {
+  '1': 'AddGroupControlRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'group_id', '3': 2, '4': 1, '5': 13, '10': 'groupId'},
+    const {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `AddGroupControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addGroupControlRequestDescriptor = $convert.base64Decode('ChZBZGRHcm91cENvbnRyb2xSZXF1ZXN0EhsKCWxheW91dF9pZBgBIAEoCVIIbGF5b3V0SWQSGQoIZ3JvdXBfaWQYAiABKA1SB2dyb3VwSWQSMgoIcG9zaXRpb24YAyABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9u');
+@$core.Deprecated('Use addPresetControlRequestDescriptor instead')
+const AddPresetControlRequest$json = const {
+  '1': 'AddPresetControlRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'preset_id', '3': 2, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'presetId'},
+    const {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `AddPresetControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addPresetControlRequestDescriptor = $convert.base64Decode('ChdBZGRQcmVzZXRDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEjcKCXByZXNldF9pZBgCIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElkEjIKCHBvc2l0aW9uGAMgASgLMhYubWl6ZXIuQ29udHJvbFBvc2l0aW9uUghwb3NpdGlvbg==');
 @$core.Deprecated('Use layoutsDescriptor instead')
 const Layouts$json = const {
   '1': 'Layouts',
@@ -173,17 +209,57 @@ final $typed_data.Uint8List layoutDescriptor = $convert.base64Decode('CgZMYXlvdX
 const LayoutControl$json = const {
   '1': 'LayoutControl',
   '2': const [
-    const {'1': 'node', '3': 1, '4': 1, '5': 9, '10': 'node'},
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
     const {'1': 'size', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlSize', '10': 'size'},
     const {'1': 'label', '3': 4, '4': 1, '5': 9, '10': 'label'},
     const {'1': 'decoration', '3': 5, '4': 1, '5': 11, '6': '.mizer.ControlDecorations', '10': 'decoration'},
     const {'1': 'behavior', '3': 6, '4': 1, '5': 11, '6': '.mizer.ControlBehavior', '10': 'behavior'},
+    const {'1': 'node', '3': 7, '4': 1, '5': 11, '6': '.mizer.LayoutControl.NodeControlType', '9': 0, '10': 'node'},
+    const {'1': 'sequencer', '3': 8, '4': 1, '5': 11, '6': '.mizer.LayoutControl.SequencerControlType', '9': 0, '10': 'sequencer'},
+    const {'1': 'group', '3': 9, '4': 1, '5': 11, '6': '.mizer.LayoutControl.GroupControlType', '9': 0, '10': 'group'},
+    const {'1': 'preset', '3': 10, '4': 1, '5': 11, '6': '.mizer.LayoutControl.PresetControlType', '9': 0, '10': 'preset'},
+  ],
+  '3': const [LayoutControl_NodeControlType$json, LayoutControl_SequencerControlType$json, LayoutControl_GroupControlType$json, LayoutControl_PresetControlType$json],
+  '8': const [
+    const {'1': 'control_type'},
+  ],
+};
+
+@$core.Deprecated('Use layoutControlDescriptor instead')
+const LayoutControl_NodeControlType$json = const {
+  '1': 'NodeControlType',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+@$core.Deprecated('Use layoutControlDescriptor instead')
+const LayoutControl_SequencerControlType$json = const {
+  '1': 'SequencerControlType',
+  '2': const [
+    const {'1': 'sequence_id', '3': 1, '4': 1, '5': 13, '10': 'sequenceId'},
+  ],
+};
+
+@$core.Deprecated('Use layoutControlDescriptor instead')
+const LayoutControl_GroupControlType$json = const {
+  '1': 'GroupControlType',
+  '2': const [
+    const {'1': 'group_id', '3': 1, '4': 1, '5': 13, '10': 'groupId'},
+  ],
+};
+
+@$core.Deprecated('Use layoutControlDescriptor instead')
+const LayoutControl_PresetControlType$json = const {
+  '1': 'PresetControlType',
+  '2': const [
+    const {'1': 'preset_id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'presetId'},
   ],
 };
 
 /// Descriptor for `LayoutControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEhIKBG5vZGUYASABKAlSBG5vZGUSMgoIcG9zaXRpb24YAiABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9uEiYKBHNpemUYAyABKAsyEi5taXplci5Db250cm9sU2l6ZVIEc2l6ZRIUCgVsYWJlbBgEIAEoCVIFbGFiZWwSOQoKZGVjb3JhdGlvbhgFIAEoCzIZLm1pemVyLkNvbnRyb2xEZWNvcmF0aW9uc1IKZGVjb3JhdGlvbhIyCghiZWhhdmlvchgGIAEoCzIWLm1pemVyLkNvbnRyb2xCZWhhdmlvclIIYmVoYXZpb3I=');
+final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEg4KAmlkGAEgASgJUgJpZBIyCghwb3NpdGlvbhgCIAEoCzIWLm1pemVyLkNvbnRyb2xQb3NpdGlvblIIcG9zaXRpb24SJgoEc2l6ZRgDIAEoCzISLm1pemVyLkNvbnRyb2xTaXplUgRzaXplEhQKBWxhYmVsGAQgASgJUgVsYWJlbBI5CgpkZWNvcmF0aW9uGAUgASgLMhkubWl6ZXIuQ29udHJvbERlY29yYXRpb25zUgpkZWNvcmF0aW9uEjIKCGJlaGF2aW9yGAYgASgLMhYubWl6ZXIuQ29udHJvbEJlaGF2aW9yUghiZWhhdmlvchI6CgRub2RlGAcgASgLMiQubWl6ZXIuTGF5b3V0Q29udHJvbC5Ob2RlQ29udHJvbFR5cGVIAFIEbm9kZRJJCglzZXF1ZW5jZXIYCCABKAsyKS5taXplci5MYXlvdXRDb250cm9sLlNlcXVlbmNlckNvbnRyb2xUeXBlSABSCXNlcXVlbmNlchI9CgVncm91cBgJIAEoCzIlLm1pemVyLkxheW91dENvbnRyb2wuR3JvdXBDb250cm9sVHlwZUgAUgVncm91cBJACgZwcmVzZXQYCiABKAsyJi5taXplci5MYXlvdXRDb250cm9sLlByZXNldENvbnRyb2xUeXBlSABSBnByZXNldBolCg9Ob2RlQ29udHJvbFR5cGUSEgoEcGF0aBgBIAEoCVIEcGF0aBo3ChRTZXF1ZW5jZXJDb250cm9sVHlwZRIfCgtzZXF1ZW5jZV9pZBgBIAEoDVIKc2VxdWVuY2VJZBotChBHcm91cENvbnRyb2xUeXBlEhkKCGdyb3VwX2lkGAEgASgNUgdncm91cElkGkwKEVByZXNldENvbnRyb2xUeXBlEjcKCXByZXNldF9pZBgBIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElkQg4KDGNvbnRyb2xfdHlwZQ==');
 @$core.Deprecated('Use controlPositionDescriptor instead')
 const ControlPosition$json = const {
   '1': 'ControlPosition',

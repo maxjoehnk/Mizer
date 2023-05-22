@@ -3,6 +3,7 @@ syntax = "proto3";
 package mizer;
 
 import "nodes.proto";
+import "programmer.proto";
 
 service LayoutsApi {
   rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
@@ -18,6 +19,9 @@ service LayoutsApi {
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
   rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
   rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
+  rpc AddSequenceControl (AddSequenceControlRequest) returns (LayoutResponse) {}
+  rpc AddGroupControl (AddGroupControlRequest) returns (LayoutResponse) {}
+  rpc AddPresetControl (AddPresetControlRequest) returns (LayoutResponse) {}
 
   rpc ReadFaderValue (ReadFaderValueRequest) returns (FaderValueResponse) {}
 }
@@ -88,6 +92,24 @@ message AddExistingControlRequest {
   ControlPosition position = 3;
 }
 
+message AddSequenceControlRequest {
+  string layout_id = 1;
+  uint32 sequence_id = 2;
+  ControlPosition position = 3;
+}
+
+message AddGroupControlRequest {
+  string layout_id = 1;
+  uint32 group_id = 2;
+  ControlPosition position = 3;
+}
+
+message AddPresetControlRequest {
+  string layout_id = 1;
+  mizer.programmer.PresetId preset_id = 2;
+  ControlPosition position = 3;
+}
+
 message Layouts {
   repeated Layout layouts = 1;
 }
@@ -98,12 +120,34 @@ message Layout {
 }
 
 message LayoutControl {
-  string node = 1;
+  string id = 1;
   ControlPosition position = 2;
   ControlSize size = 3;
   string label = 4;
   ControlDecorations decoration = 5;
   ControlBehavior behavior = 6;
+  oneof control_type {
+    NodeControlType node = 7;
+    SequencerControlType sequencer = 8;
+    GroupControlType group = 9;
+    PresetControlType preset = 10;
+  }
+
+  message NodeControlType {
+    string path = 1;
+  }
+
+  message SequencerControlType {
+    uint32 sequence_id = 1;
+  }
+
+  message GroupControlType {
+    uint32 group_id = 1;
+  }
+
+  message PresetControlType {
+    mizer.programmer.PresetId preset_id = 1;
+  }
 }
 
 message ControlPosition {

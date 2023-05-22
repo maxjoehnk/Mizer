@@ -2,15 +2,15 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
-import 'package:mizer/protos/layouts.pb.dart' show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
-import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/protos/layouts.pb.dart'
+    show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:provider/provider.dart';
 
 class SequencerControl extends StatelessWidget {
   final String label;
   final Color? color;
-  final Node node;
+  final int sequenceId;
   final Map<int, SequenceState> state;
   final ControlSize size;
   final SequencerControlBehavior behavior;
@@ -18,7 +18,7 @@ class SequencerControl extends StatelessWidget {
   const SequencerControl(
       {required this.label,
       this.color,
-      required this.node,
+      required this.sequenceId,
       required this.state,
       required this.size,
       required this.behavior,
@@ -31,12 +31,11 @@ class SequencerControl extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
 
     return FutureBuilder<Sequence>(
-        future: sequencerApi.getSequence(node.config.sequencerConfig.sequenceId),
+        future: sequencerApi.getSequence(sequenceId),
         builder: (context, state) {
           return Container(
-            decoration: ControlDecoration(
-                color: color,
-                highlight: this.state[node.config.sequencerConfig.sequenceId]?.active ?? false),
+            decoration:
+                ControlDecoration(color: color, highlight: this.state[sequenceId]?.active ?? false),
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
@@ -57,15 +56,15 @@ class SequencerControl extends StatelessWidget {
   }
 
   void _sequenceToggle(SequencerApi sequencerApi) {
-    if (this.state[node.config.sequencerConfig.sequenceId]?.active ?? false) {
-      sequencerApi.sequenceStop(node.config.sequencerConfig.sequenceId);
-    }else {
-      sequencerApi.sequenceGoForward(node.config.sequencerConfig.sequenceId);
+    if (this.state[sequenceId]?.active ?? false) {
+      sequencerApi.sequenceStop(sequenceId);
+    } else {
+      sequencerApi.sequenceGoForward(sequenceId);
     }
   }
 
   void _sequenceGo(SequencerApi sequencerApi) {
-    sequencerApi.sequenceGoForward(node.config.sequencerConfig.sequenceId);
+    sequencerApi.sequenceGoForward(sequenceId);
   }
 
   Widget _cueView(Sequence sequence, TextTheme textTheme) {
@@ -98,7 +97,7 @@ class SequencerControl extends StatelessWidget {
     var cueList;
     if (sequence.wrapAround) {
       cueList = [...sequence.cues, ...sequence.cues];
-    }else {
+    } else {
       cueList = sequence.cues;
     }
     var nextCues =

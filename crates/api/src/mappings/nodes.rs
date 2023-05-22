@@ -13,9 +13,6 @@ impl TryFrom<mizer_nodes::Node> for node_config::Type {
     fn try_from(node: mizer_nodes::Node) -> Result<Self, Self::Error> {
         use mizer_nodes::Node::*;
         match node {
-            Group(group) => Ok(Self::GroupConfig(group.into())),
-            Preset(preset) => Ok(Self::PresetConfig(preset.into())),
-            Sequencer(sequencer) => Ok(Self::SequencerConfig(sequencer.into())),
             Container(node) => Ok(Self::ContainerConfig(node.into())),
             _ => Err(()),
         }
@@ -25,9 +22,6 @@ impl TryFrom<mizer_nodes::Node> for node_config::Type {
 impl From<node_config::Type> for mizer_nodes::Node {
     fn from(node_config: node_config::Type) -> Self {
         match node_config {
-            node_config::Type::GroupConfig(group) => Self::Group(group.into()),
-            node_config::Type::PresetConfig(preset) => Self::Preset(preset.into()),
-            node_config::Type::SequencerConfig(sequencer) => Self::Sequencer(sequencer.into()),
             node_config::Type::ContainerConfig(node) => Self::Container(node.into()),
         }
     }
@@ -39,58 +33,6 @@ impl From<mizer_nodes::Node> for NodeConfig {
         NodeConfig {
             type_: config,
             ..Default::default()
-        }
-    }
-}
-
-impl From<mizer_nodes::GroupNode> for GroupNodeConfig {
-    fn from(node: mizer_nodes::GroupNode) -> Self {
-        Self {
-            group_id: node.id.into(),
-            ..Default::default()
-        }
-    }
-}
-
-impl From<GroupNodeConfig> for mizer_nodes::GroupNode {
-    fn from(node: GroupNodeConfig) -> Self {
-        Self {
-            id: node.group_id.into(),
-            ..Default::default()
-        }
-    }
-}
-
-impl From<mizer_nodes::PresetNode> for PresetNodeConfig {
-    fn from(node: mizer_nodes::PresetNode) -> Self {
-        Self {
-            preset_id: MessageField::some(node.id.into()),
-            ..Default::default()
-        }
-    }
-}
-
-impl From<PresetNodeConfig> for mizer_nodes::PresetNode {
-    fn from(config: PresetNodeConfig) -> Self {
-        Self {
-            id: config.preset_id.unwrap().into(),
-        }
-    }
-}
-
-impl From<mizer_nodes::SequencerNode> for SequencerNodeConfig {
-    fn from(node: mizer_nodes::SequencerNode) -> Self {
-        Self {
-            sequence_id: node.sequence_id,
-            ..Default::default()
-        }
-    }
-}
-
-impl From<SequencerNodeConfig> for mizer_nodes::SequencerNode {
-    fn from(node: SequencerNodeConfig) -> Self {
-        Self {
-            sequence_id: node.sequence_id,
         }
     }
 }

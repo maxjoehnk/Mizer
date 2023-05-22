@@ -1,38 +1,49 @@
 use crate::update_layout;
 use mizer_commander::{Command, Ref};
-use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, LayoutStorage};
-use mizer_node::{NodePath, NodeType};
+use mizer_layouts::{
+    ControlConfig, ControlId, ControlPosition, ControlSize, ControlType, LayoutStorage,
+};
+use mizer_node::NodeType;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Hash)]
 pub struct AddLayoutControlCommand {
     pub layout_id: String,
-    pub path: NodePath,
+    pub control_type: ControlType,
     pub position: ControlPosition,
 }
 
 impl<'a> Command<'a> for AddLayoutControlCommand {
     type Dependencies = (Ref<LayoutStorage>, Ref<PipelineAccess>);
-    type State = ();
+    type State = ControlId;
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Add control '{}' to Layout '{}'", self.path, self.layout_id)
+        format!(
+            "Add control '{:?}' to Layout '{}'",
+            self.control_type, self.layout_id
+        )
     }
 
     fn apply(
         &self,
         (layout_storage, pipeline_access): (&LayoutStorage, &PipelineAccess),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let node = pipeline_access
-            .nodes_view
-            .get(&self.path)
-            .ok_or_else(|| anyhow::anyhow!("Unknown node {}", self.path))?;
-        let size = get_default_size_for_node_type(node.node_type());
+        let size = if let ControlType::Node { path: node } = &self.control_type {
+            let node = pipeline_access
+                .nodes_view
+                .get(node)
+                .ok_or_else(|| anyhow::anyhow!("Unknown node {node}"))?;
+            get_default_size_for_node_type(node.node_type())
+        } else {
+            ControlSize::default()
+        };
+        let control_id = ControlId::new();
         update_layout(layout_storage, &self.layout_id, |layout| {
             layout.controls.push(ControlConfig {
-                node: self.path.clone(),
+                id: control_id,
+                control_type: self.control_type.clone(),
                 label: None,
                 position: self.position,
                 size,
@@ -43,16 +54,16 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
             Ok(())
         })?;
 
-        Ok(((), ()))
+        Ok(((), control_id))
     }
 
     fn revert(
         &self,
         (layout_storage, _): (&LayoutStorage, &PipelineAccess),
-        _: Self::State,
+        control_id: Self::State,
     ) -> anyhow::Result<()> {
         update_layout(layout_storage, &self.layout_id, |layout| {
-            layout.controls.retain(|control| control.node != self.path);
+            layout.controls.retain(|control| control.id != control_id);
 
             Ok(())
         })?;
@@ -68,10 +79,6 @@ fn get_default_size_for_node_type(node_type: NodeType) -> ControlSize {
             width: 1,
         },
         NodeType::Button => ControlSize {
-            height: 1,
-            width: 1,
-        },
-        NodeType::Sequencer => ControlSize {
             height: 1,
             width: 1,
         },

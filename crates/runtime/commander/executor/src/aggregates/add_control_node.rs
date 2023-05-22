@@ -1,6 +1,6 @@
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_layout_commands::AddLayoutControlCommand;
-use mizer_layouts::{ControlPosition, LayoutStorage};
+use mizer_layouts::{ControlPosition, ControlType, LayoutStorage};
 use mizer_node::NodeType;
 use mizer_runtime::commands::AddNodeCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
@@ -24,6 +24,7 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
         AddNodeCommand,
         <AddNodeCommand as Command<'a>>::State,
         AddLayoutControlCommand,
+        <AddLayoutControlCommand as Command<'a>>::State,
     );
     type Result = ();
 
@@ -51,12 +52,23 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
         let (descriptor, state) = add_node_command.apply((pipeline_access, planner))?;
         let add_control_command = AddLayoutControlCommand {
             layout_id: self.layout_id.clone(),
-            path: descriptor.path,
+            control_type: ControlType::Node {
+                path: descriptor.path,
+            },
             position: self.position,
         };
-        add_control_command.apply((layout_storage, pipeline_access))?;
+        let (_, add_control_state) =
+            add_control_command.apply((layout_storage, pipeline_access))?;
 
-        Ok(((), (add_node_command, state, add_control_command)))
+        Ok((
+            (),
+            (
+                add_node_command,
+                state,
+                add_control_command,
+                add_control_state,
+            ),
+        ))
     }
 
     fn revert(
@@ -66,9 +78,10 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
             &LayoutStorage,
             &mut ExecutionPlanner,
         ),
-        (add_node_command, add_node_state, add_layout_control_command): Self::State,
+        (add_node_command, add_node_state, add_layout_control_command, add_layout_control_state): Self::State,
     ) -> anyhow::Result<()> {
-        add_layout_control_command.revert((layout_storage, pipeline_access), ())?;
+        add_layout_control_command
+            .revert((layout_storage, pipeline_access), add_layout_control_state)?;
         add_node_command.revert((pipeline_access, planner), add_node_state)?;
 
         Ok(())

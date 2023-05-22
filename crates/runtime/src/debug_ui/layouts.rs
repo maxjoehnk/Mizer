@@ -11,7 +11,7 @@ pub(super) fn layouts_debug_ui(
         for layout in layouts {
             ui.collapsing_header(layout.id, |ui| {
                 for control in layout.controls {
-                    ui.collapsing_header(control.node.to_string(), |ui| {
+                    ui.collapsing_header(control.id.to_string(), |ui| {
                         ui.columns(2, |columns| {
                             columns[0].label("Label");
                             columns[1].label(control.label.unwrap_or_default());

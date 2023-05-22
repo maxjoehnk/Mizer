@@ -9,7 +9,8 @@ class LabelControl extends StatefulWidget {
   final LayoutControl control;
   final Color? color;
 
-  const LabelControl({required this.pointer, required this.control, required this.color, Key? key}) : super(key: key);
+  const LabelControl({required this.pointer, required this.control, required this.color, Key? key})
+      : super(key: key);
 
   @override
   _LabelControlState createState() => _LabelControlState();
@@ -23,7 +24,7 @@ class _LabelControlState extends State<LabelControl> with SingleTickerProviderSt
   void initState() {
     super.initState();
     this.ticker = this.createTicker((elapsed) async {
-      var v = widget.pointer.readLabelValue(widget.control.node);
+      var v = widget.pointer.readLabelValue(widget.control.node.path);
       if (!this.mounted) {
         return;
       }
@@ -41,8 +42,7 @@ class _LabelControlState extends State<LabelControl> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Center(child: Text(value)),
-      decoration: ControlDecoration(color: widget.color ?? Colors.grey.shade900)
-    );
+        child: Center(child: Text(value)),
+        decoration: ControlDecoration(color: widget.color ?? Colors.grey.shade900));
   }
 }

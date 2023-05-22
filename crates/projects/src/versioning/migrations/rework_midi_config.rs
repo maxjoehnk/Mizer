@@ -5,9 +5,9 @@ use serde_yaml::Value;
 use crate::versioning::migrations::ProjectFileMigration;
 
 #[derive(Clone, Copy)]
-pub struct ReworkMidiConfigMigration;
+pub struct ReworkMidiConfig;
 
-impl ProjectFileMigration for ReworkMidiConfigMigration {
+impl ProjectFileMigration for ReworkMidiConfig {
     const VERSION: usize = 2;
 
     fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {

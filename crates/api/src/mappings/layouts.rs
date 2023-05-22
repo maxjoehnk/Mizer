@@ -19,13 +19,39 @@ impl From<mizer_layouts::Layout> for Layout {
 impl From<mizer_layouts::ControlConfig> for LayoutControl {
     fn from(config: mizer_layouts::ControlConfig) -> Self {
         Self {
-            node: config.node.0,
+            id: config.id.to_string(),
+            control_type: Some(config.control_type.into()),
             label: config.label.unwrap_or_default(),
             position: MessageField::some(config.position.into()),
             size: MessageField::some(config.size.into()),
             decoration: MessageField::some(config.decoration.into()),
             behavior: MessageField::some(config.behavior.into()),
             ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_layouts::ControlType> for layout_control::Control_type {
+    fn from(value: mizer_layouts::ControlType) -> Self {
+        use mizer_layouts::ControlType::*;
+
+        match value {
+            Group { group_id } => Self::Group(layout_control::GroupControlType {
+                group_id: group_id.into(),
+                ..Default::default()
+            }),
+            Node { path: node } => Self::Node(layout_control::NodeControlType {
+                path: node.into(),
+                ..Default::default()
+            }),
+            Preset { preset_id } => Self::Preset(layout_control::PresetControlType {
+                preset_id: MessageField::some(preset_id.into()),
+                ..Default::default()
+            }),
+            Sequencer { sequence_id } => Self::Sequencer(layout_control::SequencerControlType {
+                sequence_id,
+                ..Default::default()
+            }),
         }
     }
 }

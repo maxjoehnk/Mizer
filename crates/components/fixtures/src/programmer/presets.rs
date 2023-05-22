@@ -101,7 +101,7 @@ pub struct Preset<TValue> {
     pub value: TValue,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub enum PresetId {
     Intensity(u32),
     Shutter(u32),

@@ -1,13 +1,12 @@
 use crate::{get_layout, update_layout};
 use mizer_commander::{Command, Ref};
-use mizer_layouts::{ControlConfig, LayoutStorage};
-use mizer_node::NodePath;
+use mizer_layouts::{ControlConfig, ControlId, LayoutStorage};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Hash)]
 pub struct DeleteLayoutControlCommand {
     pub layout_id: String,
-    pub control_id: NodePath,
+    pub control_id: ControlId,
 }
 
 impl<'a> Command<'a> for DeleteLayoutControlCommand {
@@ -28,7 +27,7 @@ impl<'a> Command<'a> for DeleteLayoutControlCommand {
         let control_index = layout
             .controls
             .iter()
-            .position(|c| c.node == self.control_id)
+            .position(|c| c.id == self.control_id)
             .ok_or_else(|| anyhow::anyhow!(""))?;
         let control = layout.controls.remove(control_index);
         layout_storage.set(layouts);

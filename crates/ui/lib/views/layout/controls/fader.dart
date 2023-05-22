@@ -26,7 +26,7 @@ class _FaderControlState extends State<FaderControl> with SingleTickerProviderSt
   void initState() {
     super.initState();
     this.ticker = this.createTicker((elapsed) async {
-      var v = widget.pointer.readFaderValue(widget.control.node);
+      var v = widget.pointer.readFaderValue(widget.control.node.path);
       if (!this.mounted) {
         return;
       }
@@ -50,7 +50,7 @@ class _FaderControlState extends State<FaderControl> with SingleTickerProviderSt
       color: widget.color,
       value: value,
       onValue: (value) =>
-          apiClient.writeControlValue(path: widget.control.node, port: "Input", value: value),
+          apiClient.writeControlValue(path: widget.control.node.path, port: "Input", value: value),
     );
   }
 }

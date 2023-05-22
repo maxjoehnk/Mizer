@@ -1868,6 +1868,484 @@ impl ::protobuf::reflect::ProtobufValue for AddExistingControlRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.AddSequenceControlRequest)
+pub struct AddSequenceControlRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.AddSequenceControlRequest.layout_id)
+    pub layout_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.AddSequenceControlRequest.sequence_id)
+    pub sequence_id: u32,
+    // @@protoc_insertion_point(field:mizer.AddSequenceControlRequest.position)
+    pub position: ::protobuf::MessageField<ControlPosition>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.AddSequenceControlRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AddSequenceControlRequest {
+    fn default() -> &'a AddSequenceControlRequest {
+        <AddSequenceControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddSequenceControlRequest {
+    pub fn new() -> AddSequenceControlRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "layout_id",
+            |m: &AddSequenceControlRequest| { &m.layout_id },
+            |m: &mut AddSequenceControlRequest| { &mut m.layout_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "sequence_id",
+            |m: &AddSequenceControlRequest| { &m.sequence_id },
+            |m: &mut AddSequenceControlRequest| { &mut m.sequence_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ControlPosition>(
+            "position",
+            |m: &AddSequenceControlRequest| { &m.position },
+            |m: &mut AddSequenceControlRequest| { &mut m.position },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddSequenceControlRequest>(
+            "AddSequenceControlRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AddSequenceControlRequest {
+    const NAME: &'static str = "AddSequenceControlRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.layout_id = is.read_string()?;
+                },
+                16 => {
+                    self.sequence_id = is.read_uint32()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.position)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if self.sequence_id != 0 {
+            my_size += ::protobuf::rt::uint32_size(2, self.sequence_id);
+        }
+        if let Some(v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if self.sequence_id != 0 {
+            os.write_uint32(2, self.sequence_id)?;
+        }
+        if let Some(v) = self.position.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AddSequenceControlRequest {
+        AddSequenceControlRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.sequence_id = 0;
+        self.position.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AddSequenceControlRequest {
+        static instance: AddSequenceControlRequest = AddSequenceControlRequest {
+            layout_id: ::std::string::String::new(),
+            sequence_id: 0,
+            position: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AddSequenceControlRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AddSequenceControlRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AddSequenceControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddSequenceControlRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.AddGroupControlRequest)
+pub struct AddGroupControlRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.AddGroupControlRequest.layout_id)
+    pub layout_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.AddGroupControlRequest.group_id)
+    pub group_id: u32,
+    // @@protoc_insertion_point(field:mizer.AddGroupControlRequest.position)
+    pub position: ::protobuf::MessageField<ControlPosition>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.AddGroupControlRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AddGroupControlRequest {
+    fn default() -> &'a AddGroupControlRequest {
+        <AddGroupControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddGroupControlRequest {
+    pub fn new() -> AddGroupControlRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "layout_id",
+            |m: &AddGroupControlRequest| { &m.layout_id },
+            |m: &mut AddGroupControlRequest| { &mut m.layout_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "group_id",
+            |m: &AddGroupControlRequest| { &m.group_id },
+            |m: &mut AddGroupControlRequest| { &mut m.group_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ControlPosition>(
+            "position",
+            |m: &AddGroupControlRequest| { &m.position },
+            |m: &mut AddGroupControlRequest| { &mut m.position },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddGroupControlRequest>(
+            "AddGroupControlRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AddGroupControlRequest {
+    const NAME: &'static str = "AddGroupControlRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.layout_id = is.read_string()?;
+                },
+                16 => {
+                    self.group_id = is.read_uint32()?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.position)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if self.group_id != 0 {
+            my_size += ::protobuf::rt::uint32_size(2, self.group_id);
+        }
+        if let Some(v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if self.group_id != 0 {
+            os.write_uint32(2, self.group_id)?;
+        }
+        if let Some(v) = self.position.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AddGroupControlRequest {
+        AddGroupControlRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.group_id = 0;
+        self.position.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AddGroupControlRequest {
+        static instance: AddGroupControlRequest = AddGroupControlRequest {
+            layout_id: ::std::string::String::new(),
+            group_id: 0,
+            position: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AddGroupControlRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AddGroupControlRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AddGroupControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddGroupControlRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.AddPresetControlRequest)
+pub struct AddPresetControlRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.AddPresetControlRequest.layout_id)
+    pub layout_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.AddPresetControlRequest.preset_id)
+    pub preset_id: ::protobuf::MessageField<super::programmer::PresetId>,
+    // @@protoc_insertion_point(field:mizer.AddPresetControlRequest.position)
+    pub position: ::protobuf::MessageField<ControlPosition>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.AddPresetControlRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AddPresetControlRequest {
+    fn default() -> &'a AddPresetControlRequest {
+        <AddPresetControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddPresetControlRequest {
+    pub fn new() -> AddPresetControlRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "layout_id",
+            |m: &AddPresetControlRequest| { &m.layout_id },
+            |m: &mut AddPresetControlRequest| { &mut m.layout_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::programmer::PresetId>(
+            "preset_id",
+            |m: &AddPresetControlRequest| { &m.preset_id },
+            |m: &mut AddPresetControlRequest| { &mut m.preset_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ControlPosition>(
+            "position",
+            |m: &AddPresetControlRequest| { &m.position },
+            |m: &mut AddPresetControlRequest| { &mut m.position },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddPresetControlRequest>(
+            "AddPresetControlRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AddPresetControlRequest {
+    const NAME: &'static str = "AddPresetControlRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.layout_id = is.read_string()?;
+                },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.preset_id)?;
+                },
+                26 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.position)?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if let Some(v) = self.preset_id.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if let Some(v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if let Some(v) = self.preset_id.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if let Some(v) = self.position.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AddPresetControlRequest {
+        AddPresetControlRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.preset_id.clear();
+        self.position.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AddPresetControlRequest {
+        static instance: AddPresetControlRequest = AddPresetControlRequest {
+            layout_id: ::std::string::String::new(),
+            preset_id: ::protobuf::MessageField::none(),
+            position: ::protobuf::MessageField::none(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AddPresetControlRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AddPresetControlRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AddPresetControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddPresetControlRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.Layouts)
 pub struct Layouts {
     // message fields
@@ -2135,8 +2613,8 @@ impl ::protobuf::reflect::ProtobufValue for Layout {
 // @@protoc_insertion_point(message:mizer.LayoutControl)
 pub struct LayoutControl {
     // message fields
-    // @@protoc_insertion_point(field:mizer.LayoutControl.node)
-    pub node: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.LayoutControl.id)
+    pub id: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.LayoutControl.position)
     pub position: ::protobuf::MessageField<ControlPosition>,
     // @@protoc_insertion_point(field:mizer.LayoutControl.size)
@@ -2147,6 +2625,8 @@ pub struct LayoutControl {
     pub decoration: ::protobuf::MessageField<ControlDecorations>,
     // @@protoc_insertion_point(field:mizer.LayoutControl.behavior)
     pub behavior: ::protobuf::MessageField<ControlBehavior>,
+    // message oneof groups
+    pub control_type: ::std::option::Option<layout_control::Control_type>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.LayoutControl.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2163,13 +2643,209 @@ impl LayoutControl {
         ::std::default::Default::default()
     }
 
+    // .mizer.LayoutControl.NodeControlType node = 7;
+
+    pub fn node(&self) -> &layout_control::NodeControlType {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Node(ref v)) => v,
+            _ => <layout_control::NodeControlType as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_node(&mut self) {
+        self.control_type = ::std::option::Option::None;
+    }
+
+    pub fn has_node(&self) -> bool {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Node(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node(&mut self, v: layout_control::NodeControlType) {
+        self.control_type = ::std::option::Option::Some(layout_control::Control_type::Node(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_node(&mut self) -> &mut layout_control::NodeControlType {
+        if let ::std::option::Option::Some(layout_control::Control_type::Node(_)) = self.control_type {
+        } else {
+            self.control_type = ::std::option::Option::Some(layout_control::Control_type::Node(layout_control::NodeControlType::new()));
+        }
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Node(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_node(&mut self) -> layout_control::NodeControlType {
+        if self.has_node() {
+            match self.control_type.take() {
+                ::std::option::Option::Some(layout_control::Control_type::Node(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            layout_control::NodeControlType::new()
+        }
+    }
+
+    // .mizer.LayoutControl.SequencerControlType sequencer = 8;
+
+    pub fn sequencer(&self) -> &layout_control::SequencerControlType {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Sequencer(ref v)) => v,
+            _ => <layout_control::SequencerControlType as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_sequencer(&mut self) {
+        self.control_type = ::std::option::Option::None;
+    }
+
+    pub fn has_sequencer(&self) -> bool {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Sequencer(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequencer(&mut self, v: layout_control::SequencerControlType) {
+        self.control_type = ::std::option::Option::Some(layout_control::Control_type::Sequencer(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_sequencer(&mut self) -> &mut layout_control::SequencerControlType {
+        if let ::std::option::Option::Some(layout_control::Control_type::Sequencer(_)) = self.control_type {
+        } else {
+            self.control_type = ::std::option::Option::Some(layout_control::Control_type::Sequencer(layout_control::SequencerControlType::new()));
+        }
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Sequencer(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_sequencer(&mut self) -> layout_control::SequencerControlType {
+        if self.has_sequencer() {
+            match self.control_type.take() {
+                ::std::option::Option::Some(layout_control::Control_type::Sequencer(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            layout_control::SequencerControlType::new()
+        }
+    }
+
+    // .mizer.LayoutControl.GroupControlType group = 9;
+
+    pub fn group(&self) -> &layout_control::GroupControlType {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Group(ref v)) => v,
+            _ => <layout_control::GroupControlType as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_group(&mut self) {
+        self.control_type = ::std::option::Option::None;
+    }
+
+    pub fn has_group(&self) -> bool {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Group(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_group(&mut self, v: layout_control::GroupControlType) {
+        self.control_type = ::std::option::Option::Some(layout_control::Control_type::Group(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_group(&mut self) -> &mut layout_control::GroupControlType {
+        if let ::std::option::Option::Some(layout_control::Control_type::Group(_)) = self.control_type {
+        } else {
+            self.control_type = ::std::option::Option::Some(layout_control::Control_type::Group(layout_control::GroupControlType::new()));
+        }
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Group(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_group(&mut self) -> layout_control::GroupControlType {
+        if self.has_group() {
+            match self.control_type.take() {
+                ::std::option::Option::Some(layout_control::Control_type::Group(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            layout_control::GroupControlType::new()
+        }
+    }
+
+    // .mizer.LayoutControl.PresetControlType preset = 10;
+
+    pub fn preset(&self) -> &layout_control::PresetControlType {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Preset(ref v)) => v,
+            _ => <layout_control::PresetControlType as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_preset(&mut self) {
+        self.control_type = ::std::option::Option::None;
+    }
+
+    pub fn has_preset(&self) -> bool {
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Preset(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_preset(&mut self, v: layout_control::PresetControlType) {
+        self.control_type = ::std::option::Option::Some(layout_control::Control_type::Preset(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_preset(&mut self) -> &mut layout_control::PresetControlType {
+        if let ::std::option::Option::Some(layout_control::Control_type::Preset(_)) = self.control_type {
+        } else {
+            self.control_type = ::std::option::Option::Some(layout_control::Control_type::Preset(layout_control::PresetControlType::new()));
+        }
+        match self.control_type {
+            ::std::option::Option::Some(layout_control::Control_type::Preset(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_preset(&mut self) -> layout_control::PresetControlType {
+        if self.has_preset() {
+            match self.control_type.take() {
+                ::std::option::Option::Some(layout_control::Control_type::Preset(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            layout_control::PresetControlType::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(10);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "node",
-            |m: &LayoutControl| { &m.node },
-            |m: &mut LayoutControl| { &mut m.node },
+            "id",
+            |m: &LayoutControl| { &m.id },
+            |m: &mut LayoutControl| { &mut m.id },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, ControlPosition>(
             "position",
@@ -2196,6 +2872,35 @@ impl LayoutControl {
             |m: &LayoutControl| { &m.behavior },
             |m: &mut LayoutControl| { &mut m.behavior },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, layout_control::NodeControlType>(
+            "node",
+            LayoutControl::has_node,
+            LayoutControl::node,
+            LayoutControl::mut_node,
+            LayoutControl::set_node,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, layout_control::SequencerControlType>(
+            "sequencer",
+            LayoutControl::has_sequencer,
+            LayoutControl::sequencer,
+            LayoutControl::mut_sequencer,
+            LayoutControl::set_sequencer,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, layout_control::GroupControlType>(
+            "group",
+            LayoutControl::has_group,
+            LayoutControl::group,
+            LayoutControl::mut_group,
+            LayoutControl::set_group,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, layout_control::PresetControlType>(
+            "preset",
+            LayoutControl::has_preset,
+            LayoutControl::preset,
+            LayoutControl::mut_preset,
+            LayoutControl::set_preset,
+        ));
+        oneofs.push(layout_control::Control_type::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LayoutControl>(
             "LayoutControl",
             fields,
@@ -2215,7 +2920,7 @@ impl ::protobuf::Message for LayoutControl {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.node = is.read_string()?;
+                    self.id = is.read_string()?;
                 },
                 18 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.position)?;
@@ -2232,6 +2937,18 @@ impl ::protobuf::Message for LayoutControl {
                 50 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.behavior)?;
                 },
+                58 => {
+                    self.control_type = ::std::option::Option::Some(layout_control::Control_type::Node(is.read_message()?));
+                },
+                66 => {
+                    self.control_type = ::std::option::Option::Some(layout_control::Control_type::Sequencer(is.read_message()?));
+                },
+                74 => {
+                    self.control_type = ::std::option::Option::Some(layout_control::Control_type::Group(is.read_message()?));
+                },
+                82 => {
+                    self.control_type = ::std::option::Option::Some(layout_control::Control_type::Preset(is.read_message()?));
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2244,8 +2961,8 @@ impl ::protobuf::Message for LayoutControl {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.node.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.node);
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
         }
         if let Some(v) = self.position.as_ref() {
             let len = v.compute_size();
@@ -2266,14 +2983,34 @@ impl ::protobuf::Message for LayoutControl {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let ::std::option::Option::Some(ref v) = self.control_type {
+            match v {
+                &layout_control::Control_type::Node(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &layout_control::Control_type::Sequencer(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &layout_control::Control_type::Group(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &layout_control::Control_type::Preset(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.node.is_empty() {
-            os.write_string(1, &self.node)?;
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
         }
         if let Some(v) = self.position.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
@@ -2289,6 +3026,22 @@ impl ::protobuf::Message for LayoutControl {
         }
         if let Some(v) = self.behavior.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.control_type {
+            match v {
+                &layout_control::Control_type::Node(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+                },
+                &layout_control::Control_type::Sequencer(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+                },
+                &layout_control::Control_type::Group(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+                },
+                &layout_control::Control_type::Preset(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2307,23 +3060,28 @@ impl ::protobuf::Message for LayoutControl {
     }
 
     fn clear(&mut self) {
-        self.node.clear();
+        self.id.clear();
         self.position.clear();
         self.size.clear();
         self.label.clear();
         self.decoration.clear();
         self.behavior.clear();
+        self.control_type = ::std::option::Option::None;
+        self.control_type = ::std::option::Option::None;
+        self.control_type = ::std::option::Option::None;
+        self.control_type = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static LayoutControl {
         static instance: LayoutControl = LayoutControl {
-            node: ::std::string::String::new(),
+            id: ::std::string::String::new(),
             position: ::protobuf::MessageField::none(),
             size: ::protobuf::MessageField::none(),
             label: ::std::string::String::new(),
             decoration: ::protobuf::MessageField::none(),
             behavior: ::protobuf::MessageField::none(),
+            control_type: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -2345,6 +3103,528 @@ impl ::std::fmt::Display for LayoutControl {
 
 impl ::protobuf::reflect::ProtobufValue for LayoutControl {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `LayoutControl`
+pub mod layout_control {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:mizer.LayoutControl.control_type)
+    pub enum Control_type {
+        // @@protoc_insertion_point(oneof_field:mizer.LayoutControl.node)
+        Node(NodeControlType),
+        // @@protoc_insertion_point(oneof_field:mizer.LayoutControl.sequencer)
+        Sequencer(SequencerControlType),
+        // @@protoc_insertion_point(oneof_field:mizer.LayoutControl.group)
+        Group(GroupControlType),
+        // @@protoc_insertion_point(oneof_field:mizer.LayoutControl.preset)
+        Preset(PresetControlType),
+    }
+
+    impl ::protobuf::Oneof for Control_type {
+    }
+
+    impl ::protobuf::OneofFull for Control_type {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::LayoutControl as ::protobuf::MessageFull>::descriptor().oneof_by_name("control_type").unwrap()).clone()
+        }
+    }
+
+    impl Control_type {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Control_type>("control_type")
+        }
+    }
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.LayoutControl.NodeControlType)
+    pub struct NodeControlType {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.LayoutControl.NodeControlType.path)
+        pub path: ::std::string::String,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.LayoutControl.NodeControlType.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a NodeControlType {
+        fn default() -> &'a NodeControlType {
+            <NodeControlType as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl NodeControlType {
+        pub fn new() -> NodeControlType {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "path",
+                |m: &NodeControlType| { &m.path },
+                |m: &mut NodeControlType| { &mut m.path },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeControlType>(
+                "LayoutControl.NodeControlType",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for NodeControlType {
+        const NAME: &'static str = "NodeControlType";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.path = is.read_string()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.path.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.path);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.path.is_empty() {
+                os.write_string(1, &self.path)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> NodeControlType {
+            NodeControlType::new()
+        }
+
+        fn clear(&mut self) {
+            self.path.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static NodeControlType {
+            static instance: NodeControlType = NodeControlType {
+                path: ::std::string::String::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for NodeControlType {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("LayoutControl.NodeControlType").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for NodeControlType {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for NodeControlType {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.LayoutControl.SequencerControlType)
+    pub struct SequencerControlType {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.LayoutControl.SequencerControlType.sequence_id)
+        pub sequence_id: u32,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.LayoutControl.SequencerControlType.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a SequencerControlType {
+        fn default() -> &'a SequencerControlType {
+            <SequencerControlType as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl SequencerControlType {
+        pub fn new() -> SequencerControlType {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "sequence_id",
+                |m: &SequencerControlType| { &m.sequence_id },
+                |m: &mut SequencerControlType| { &mut m.sequence_id },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SequencerControlType>(
+                "LayoutControl.SequencerControlType",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for SequencerControlType {
+        const NAME: &'static str = "SequencerControlType";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.sequence_id = is.read_uint32()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.sequence_id != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.sequence_id);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.sequence_id != 0 {
+                os.write_uint32(1, self.sequence_id)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> SequencerControlType {
+            SequencerControlType::new()
+        }
+
+        fn clear(&mut self) {
+            self.sequence_id = 0;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static SequencerControlType {
+            static instance: SequencerControlType = SequencerControlType {
+                sequence_id: 0,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for SequencerControlType {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("LayoutControl.SequencerControlType").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for SequencerControlType {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for SequencerControlType {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.LayoutControl.GroupControlType)
+    pub struct GroupControlType {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.LayoutControl.GroupControlType.group_id)
+        pub group_id: u32,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.LayoutControl.GroupControlType.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a GroupControlType {
+        fn default() -> &'a GroupControlType {
+            <GroupControlType as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl GroupControlType {
+        pub fn new() -> GroupControlType {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "group_id",
+                |m: &GroupControlType| { &m.group_id },
+                |m: &mut GroupControlType| { &mut m.group_id },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GroupControlType>(
+                "LayoutControl.GroupControlType",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for GroupControlType {
+        const NAME: &'static str = "GroupControlType";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.group_id = is.read_uint32()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.group_id != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.group_id);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.group_id != 0 {
+                os.write_uint32(1, self.group_id)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> GroupControlType {
+            GroupControlType::new()
+        }
+
+        fn clear(&mut self) {
+            self.group_id = 0;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static GroupControlType {
+            static instance: GroupControlType = GroupControlType {
+                group_id: 0,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for GroupControlType {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("LayoutControl.GroupControlType").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for GroupControlType {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for GroupControlType {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.LayoutControl.PresetControlType)
+    pub struct PresetControlType {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.LayoutControl.PresetControlType.preset_id)
+        pub preset_id: ::protobuf::MessageField<super::super::programmer::PresetId>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.LayoutControl.PresetControlType.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a PresetControlType {
+        fn default() -> &'a PresetControlType {
+            <PresetControlType as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl PresetControlType {
+        pub fn new() -> PresetControlType {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::super::programmer::PresetId>(
+                "preset_id",
+                |m: &PresetControlType| { &m.preset_id },
+                |m: &mut PresetControlType| { &mut m.preset_id },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PresetControlType>(
+                "LayoutControl.PresetControlType",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for PresetControlType {
+        const NAME: &'static str = "PresetControlType";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        ::protobuf::rt::read_singular_message_into_field(is, &mut self.preset_id)?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let Some(v) = self.preset_id.as_ref() {
+                let len = v.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let Some(v) = self.preset_id.as_ref() {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> PresetControlType {
+            PresetControlType::new()
+        }
+
+        fn clear(&mut self) {
+            self.preset_id.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static PresetControlType {
+            static instance: PresetControlType = PresetControlType {
+                preset_id: ::protobuf::MessageField::none(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for PresetControlType {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("LayoutControl.PresetControlType").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for PresetControlType {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for PresetControlType {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -3509,76 +4789,101 @@ impl ::protobuf::reflect::ProtobufValue for FaderValueResponse {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rlayouts.proto\x12\x05mizer\x1a\x0bnodes.proto\"\x10\n\x0eLayoutRespo\
-    nse\"\x13\n\x11GetLayoutsRequest\"&\n\x10AddLayoutRequest\x12\x12\n\x04n\
-    ame\x18\x01\x20\x01(\tR\x04name\"%\n\x13RemoveLayoutRequest\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\"9\n\x13RenameLayoutRequest\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\"f\n\x14RenameControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\
+    \n\rlayouts.proto\x12\x05mizer\x1a\x0bnodes.proto\x1a\x10programmer.prot\
+    o\"\x10\n\x0eLayoutResponse\"\x13\n\x11GetLayoutsRequest\"&\n\x10AddLayo\
+    utRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"%\n\x13RemoveLa\
+    youtRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"9\n\x13RenameLayo\
+    utRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\"f\n\x14RenameControlRequest\x12\x1b\n\tlay\
+    out_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\
+    \x01(\tR\tcontrolId\x12\x12\n\x04name\x18\x03\x20\x01(\tR\x04name\"\x84\
+    \x01\n\x12MoveControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\
+    \x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x122\n\
+    \x08position\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08positio\
+    n\"z\n\x14ResizeControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\
+    \x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12&\n\
+    \x04size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04size\"\x99\x01\
+    \n\x1eUpdateControlDecorationRequest\x12\x1b\n\tlayout_id\x18\x01\x20\
     \x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolI\
-    d\x12\x12\n\x04name\x18\x03\x20\x01(\tR\x04name\"\x84\x01\n\x12MoveContr\
-    olRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\
-    \ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x122\n\x08position\x18\x03\
-    \x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"z\n\x14ResizeCont\
-    rolRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\
-    \n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12&\n\x04size\x18\x03\x20\
-    \x01(\x0b2\x12.mizer.ControlSizeR\x04size\"\x99\x01\n\x1eUpdateControlDe\
-    corationRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\
-    \x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12;\n\x0bdecorations\
-    \x18\x03\x20\x01(\x0b2\x19.mizer.ControlDecorationsR\x0bdecorations\"\
-    \x8e\x01\n\x1cUpdateControlBehaviorRequest\x12\x1b\n\tlayout_id\x18\x01\
-    \x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcont\
-    rolId\x122\n\x08behavior\x18\x03\x20\x01(\x0b2\x16.mizer.ControlBehavior\
-    R\x08behavior\"R\n\x14RemoveControlRequest\x12\x1b\n\tlayout_id\x18\x01\
-    \x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcont\
-    rolId\"\x9d\x01\n\x11AddControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\
-    \x01(\tR\x08layoutId\x127\n\tnode_type\x18\x02\x20\x01(\x0e2\x1a.mizer.n\
-    odes.Node.NodeTypeR\x08nodeType\x122\n\x08position\x18\x03\x20\x01(\x0b2\
-    \x16.mizer.ControlPositionR\x08position\"\x80\x01\n\x19AddExistingContro\
-    lRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x12\n\
-    \x04node\x18\x02\x20\x01(\tR\x04node\x122\n\x08position\x18\x03\x20\x01(\
-    \x0b2\x16.mizer.ControlPositionR\x08position\"2\n\x07Layouts\x12'\n\x07l\
-    ayouts\x18\x01\x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\n\x06Layout\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x120\n\x08controls\x18\x02\
-    \x20\x03(\x0b2\x14.mizer.LayoutControlR\x08controls\"\x84\x02\n\rLayoutC\
-    ontrol\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\x122\n\x08position\
-    \x18\x02\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\x12&\n\x04\
-    size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04size\x12\x14\n\x05l\
-    abel\x18\x04\x20\x01(\tR\x05label\x129\n\ndecoration\x18\x05\x20\x01(\
-    \x0b2\x19.mizer.ControlDecorationsR\ndecoration\x122\n\x08behavior\x18\
-    \x06\x20\x01(\x0b2\x16.mizer.ControlBehaviorR\x08behavior\"-\n\x0fContro\
-    lPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\x01y\x18\
-    \x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\x18\x01\
-    \x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06hei\
-    ght\"\x88\x01\n\x12ControlDecorations\x12\x1b\n\thas_color\x18\x01\x20\
-    \x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\x0c.mizer.\
-    ColorR\x05color\x12\x1b\n\thas_image\x18\x03\x20\x01(\x08R\x08hasImage\
-    \x12\x14\n\x05image\x18\x04\x20\x01(\x0cR\x05image\"C\n\x05Color\x12\x10\
-    \n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\
-    \x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"P\n\
-    \x0fControlBehavior\x12=\n\tsequencer\x18\x01\x20\x01(\x0b2\x1f.mizer.Se\
-    quencerControlBehaviorR\tsequencer\"\x9d\x01\n\x18SequencerControlBehavi\
-    or\x12T\n\x0eclick_behavior\x18\x01\x20\x01(\x0e2-.mizer.SequencerContro\
-    lBehavior.ClickBehaviorR\rclickBehavior\"+\n\rClickBehavior\x12\x0e\n\nG\
-    O_FORWARD\x10\0\x12\n\n\x06TOGGLE\x10\x01\"+\n\x15ReadFaderValueRequest\
-    \x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\"*\n\x12FaderValueRespons\
-    e\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value2\x89\x07\n\nLayoutsA\
-    pi\x126\n\nGetLayouts\x12\x18.mizer.GetLayoutsRequest\x1a\x0e.mizer.Layo\
-    uts\x124\n\tAddLayout\x12\x17.mizer.AddLayoutRequest\x1a\x0e.mizer.Layou\
-    ts\x12:\n\x0cRemoveLayout\x12\x1a.mizer.RemoveLayoutRequest\x1a\x0e.mize\
-    r.Layouts\x12:\n\x0cRenameLayout\x12\x1a.mizer.RenameLayoutRequest\x1a\
-    \x0e.mizer.Layouts\x12C\n\rRenameControl\x12\x1b.mizer.RenameControlRequ\
-    est\x1a\x15.mizer.LayoutResponse\x12?\n\x0bMoveControl\x12\x19.mizer.Mov\
-    eControlRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rResizeControl\x12\
-    \x1b.mizer.ResizeControlRequest\x1a\x15.mizer.LayoutResponse\x12W\n\x17U\
-    pdateControlDecoration\x12%.mizer.UpdateControlDecorationRequest\x1a\x15\
-    .mizer.LayoutResponse\x12S\n\x15UpdateControlBehavior\x12#.mizer.UpdateC\
-    ontrolBehaviorRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rRemoveControl\
-    \x12\x1b.mizer.RemoveControlRequest\x1a\x15.mizer.LayoutResponse\x12=\n\
-    \nAddControl\x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutRespons\
-    e\x12M\n\x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\
-    \x1a\x15.mizer.LayoutResponse\x12I\n\x0eReadFaderValue\x12\x1c.mizer.Rea\
-    dFaderValueRequest\x1a\x19.mizer.FaderValueResponseb\x06proto3\
+    d\x12;\n\x0bdecorations\x18\x03\x20\x01(\x0b2\x19.mizer.ControlDecoratio\
+    nsR\x0bdecorations\"\x8e\x01\n\x1cUpdateControlBehaviorRequest\x12\x1b\n\
+    \tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\
+    \x02\x20\x01(\tR\tcontrolId\x122\n\x08behavior\x18\x03\x20\x01(\x0b2\x16\
+    .mizer.ControlBehaviorR\x08behavior\"R\n\x14RemoveControlRequest\x12\x1b\
+    \n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\
+    \x02\x20\x01(\tR\tcontrolId\"\x9d\x01\n\x11AddControlRequest\x12\x1b\n\t\
+    layout_id\x18\x01\x20\x01(\tR\x08layoutId\x127\n\tnode_type\x18\x02\x20\
+    \x01(\x0e2\x1a.mizer.nodes.Node.NodeTypeR\x08nodeType\x122\n\x08position\
+    \x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"\x80\x01\
+    \n\x19AddExistingControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\
+    \x08layoutId\x12\x12\n\x04node\x18\x02\x20\x01(\tR\x04node\x122\n\x08pos\
+    ition\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"\x8d\
+    \x01\n\x19AddSequenceControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01\
+    (\tR\x08layoutId\x12\x1f\n\x0bsequence_id\x18\x02\x20\x01(\rR\nsequenceI\
+    d\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\
+    \x08position\"\x84\x01\n\x16AddGroupControlRequest\x12\x1b\n\tlayout_id\
+    \x18\x01\x20\x01(\tR\x08layoutId\x12\x19\n\x08group_id\x18\x02\x20\x01(\
+    \rR\x07groupId\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.Contro\
+    lPositionR\x08position\"\xa3\x01\n\x17AddPresetControlRequest\x12\x1b\n\
+    \tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x127\n\tpreset_id\x18\x02\
+    \x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x08presetId\x122\n\x08posi\
+    tion\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"2\n\
+    \x07Layouts\x12'\n\x07layouts\x18\x01\x20\x03(\x0b2\r.mizer.LayoutR\x07l\
+    ayouts\"J\n\x06Layout\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x120\n\
+    \x08controls\x18\x02\x20\x03(\x0b2\x14.mizer.LayoutControlR\x08controls\
+    \"\xf5\x05\n\rLayoutControl\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x122\n\x08position\x18\x02\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08\
+    position\x12&\n\x04size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04\
+    size\x12\x14\n\x05label\x18\x04\x20\x01(\tR\x05label\x129\n\ndecoration\
+    \x18\x05\x20\x01(\x0b2\x19.mizer.ControlDecorationsR\ndecoration\x122\n\
+    \x08behavior\x18\x06\x20\x01(\x0b2\x16.mizer.ControlBehaviorR\x08behavio\
+    r\x12:\n\x04node\x18\x07\x20\x01(\x0b2$.mizer.LayoutControl.NodeControlT\
+    ypeH\0R\x04node\x12I\n\tsequencer\x18\x08\x20\x01(\x0b2).mizer.LayoutCon\
+    trol.SequencerControlTypeH\0R\tsequencer\x12=\n\x05group\x18\t\x20\x01(\
+    \x0b2%.mizer.LayoutControl.GroupControlTypeH\0R\x05group\x12@\n\x06prese\
+    t\x18\n\x20\x01(\x0b2&.mizer.LayoutControl.PresetControlTypeH\0R\x06pres\
+    et\x1a%\n\x0fNodeControlType\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04pa\
+    th\x1a7\n\x14SequencerControlType\x12\x1f\n\x0bsequence_id\x18\x01\x20\
+    \x01(\rR\nsequenceId\x1a-\n\x10GroupControlType\x12\x19\n\x08group_id\
+    \x18\x01\x20\x01(\rR\x07groupId\x1aL\n\x11PresetControlType\x127\n\tpres\
+    et_id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x08presetIdB\
+    \x0e\n\x0ccontrol_type\"-\n\x0fControlPosition\x12\x0c\n\x01x\x18\x01\
+    \x20\x01(\x04R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bCo\
+    ntrolSize\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\
+    \x06height\x18\x02\x20\x01(\x04R\x06height\"\x88\x01\n\x12ControlDecorat\
+    ions\x12\x1b\n\thas_color\x18\x01\x20\x01(\x08R\x08hasColor\x12\"\n\x05c\
+    olor\x18\x02\x20\x01(\x0b2\x0c.mizer.ColorR\x05color\x12\x1b\n\thas_imag\
+    e\x18\x03\x20\x01(\x08R\x08hasImage\x12\x14\n\x05image\x18\x04\x20\x01(\
+    \x0cR\x05image\"C\n\x05Color\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03r\
+    ed\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\
+    \x18\x03\x20\x01(\x01R\x04blue\"P\n\x0fControlBehavior\x12=\n\tsequencer\
+    \x18\x01\x20\x01(\x0b2\x1f.mizer.SequencerControlBehaviorR\tsequencer\"\
+    \x9d\x01\n\x18SequencerControlBehavior\x12T\n\x0eclick_behavior\x18\x01\
+    \x20\x01(\x0e2-.mizer.SequencerControlBehavior.ClickBehaviorR\rclickBeha\
+    vior\"+\n\rClickBehavior\x12\x0e\n\nGO_FORWARD\x10\0\x12\n\n\x06TOGGLE\
+    \x10\x01\"+\n\x15ReadFaderValueRequest\x12\x12\n\x04node\x18\x01\x20\x01\
+    (\tR\x04node\"*\n\x12FaderValueResponse\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value2\xec\x08\n\nLayoutsApi\x126\n\nGetLayouts\x12\x18.mi\
+    zer.GetLayoutsRequest\x1a\x0e.mizer.Layouts\x124\n\tAddLayout\x12\x17.mi\
+    zer.AddLayoutRequest\x1a\x0e.mizer.Layouts\x12:\n\x0cRemoveLayout\x12\
+    \x1a.mizer.RemoveLayoutRequest\x1a\x0e.mizer.Layouts\x12:\n\x0cRenameLay\
+    out\x12\x1a.mizer.RenameLayoutRequest\x1a\x0e.mizer.Layouts\x12C\n\rRena\
+    meControl\x12\x1b.mizer.RenameControlRequest\x1a\x15.mizer.LayoutRespons\
+    e\x12?\n\x0bMoveControl\x12\x19.mizer.MoveControlRequest\x1a\x15.mizer.L\
+    ayoutResponse\x12C\n\rResizeControl\x12\x1b.mizer.ResizeControlRequest\
+    \x1a\x15.mizer.LayoutResponse\x12W\n\x17UpdateControlDecoration\x12%.miz\
+    er.UpdateControlDecorationRequest\x1a\x15.mizer.LayoutResponse\x12S\n\
+    \x15UpdateControlBehavior\x12#.mizer.UpdateControlBehaviorRequest\x1a\
+    \x15.mizer.LayoutResponse\x12C\n\rRemoveControl\x12\x1b.mizer.RemoveCont\
+    rolRequest\x1a\x15.mizer.LayoutResponse\x12=\n\nAddControl\x12\x18.mizer\
+    .AddControlRequest\x1a\x15.mizer.LayoutResponse\x12M\n\x12AddExistingCon\
+    trol\x12\x20.mizer.AddExistingControlRequest\x1a\x15.mizer.LayoutRespons\
+    e\x12M\n\x12AddSequenceControl\x12\x20.mizer.AddSequenceControlRequest\
+    \x1a\x15.mizer.LayoutResponse\x12G\n\x0fAddGroupControl\x12\x1d.mizer.Ad\
+    dGroupControlRequest\x1a\x15.mizer.LayoutResponse\x12I\n\x10AddPresetCon\
+    trol\x12\x1e.mizer.AddPresetControlRequest\x1a\x15.mizer.LayoutResponse\
+    \x12I\n\x0eReadFaderValue\x12\x1c.mizer.ReadFaderValueRequest\x1a\x19.mi\
+    zer.FaderValueResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -3595,9 +4900,10 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(1);
+            let mut deps = ::std::vec::Vec::with_capacity(2);
             deps.push(super::nodes::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(24);
+            deps.push(super::programmer::file_descriptor().clone());
+            let mut messages = ::std::vec::Vec::with_capacity(31);
             messages.push(LayoutResponse::generated_message_descriptor_data());
             messages.push(GetLayoutsRequest::generated_message_descriptor_data());
             messages.push(AddLayoutRequest::generated_message_descriptor_data());
@@ -3611,6 +4917,9 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(RemoveControlRequest::generated_message_descriptor_data());
             messages.push(AddControlRequest::generated_message_descriptor_data());
             messages.push(AddExistingControlRequest::generated_message_descriptor_data());
+            messages.push(AddSequenceControlRequest::generated_message_descriptor_data());
+            messages.push(AddGroupControlRequest::generated_message_descriptor_data());
+            messages.push(AddPresetControlRequest::generated_message_descriptor_data());
             messages.push(Layouts::generated_message_descriptor_data());
             messages.push(Layout::generated_message_descriptor_data());
             messages.push(LayoutControl::generated_message_descriptor_data());
@@ -3622,6 +4931,10 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(SequencerControlBehavior::generated_message_descriptor_data());
             messages.push(ReadFaderValueRequest::generated_message_descriptor_data());
             messages.push(FaderValueResponse::generated_message_descriptor_data());
+            messages.push(layout_control::NodeControlType::generated_message_descriptor_data());
+            messages.push(layout_control::SequencerControlType::generated_message_descriptor_data());
+            messages.push(layout_control::GroupControlType::generated_message_descriptor_data());
+            messages.push(layout_control::PresetControlType::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(1);
             enums.push(sequencer_control_behavior::ClickBehavior::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(

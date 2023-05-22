@@ -1,7 +1,7 @@
 use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
-use mizer_layouts::{ControlConfig, LayoutStorage};
+use mizer_layouts::{ControlConfig, ControlType, LayoutStorage};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
@@ -49,11 +49,10 @@ impl<'a> Command<'a> for DeleteNodeCommand {
         let mut layouts = layout_storage.read();
         let mut controls = HashMap::new();
         for layout in &mut layouts {
-            let (matching, non_matching) = layout
-                .controls
-                .clone()
-                .into_iter()
-                .partition(|control| control.node == self.path);
+            let (matching, non_matching) =
+                layout.controls.clone().into_iter().partition(|control| {
+                    matches!(&control.control_type, ControlType::Node { path } if path == &self.path)
+                });
             layout.controls = non_matching;
             controls.insert(layout.id.clone(), matching);
         }
@@ -133,7 +132,8 @@ mod tests {
     use mizer_commander::Command;
     use mizer_execution_planner::ExecutionPlanner;
     use mizer_layouts::{
-        ControlConfig, ControlDecorations, ControlPosition, ControlSize, Layout, LayoutStorage,
+        ControlConfig, ControlDecorations, ControlPosition, ControlSize, ControlType, Layout,
+        LayoutStorage,
     };
     use mizer_node::*;
     use mizer_nodes::FaderNode;
@@ -191,7 +191,8 @@ mod tests {
         layouts.push(Layout {
             id: "".into(),
             controls: vec![ControlConfig {
-                node: path.clone(),
+                id: Default::default(),
+                control_type: ControlType::Node { path: path.clone() },
                 position: ControlPosition::default(),
                 label: None,
                 decoration: ControlDecorations::default(),

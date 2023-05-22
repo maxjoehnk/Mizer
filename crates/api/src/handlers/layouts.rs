@@ -1,7 +1,9 @@
 use crate::models::layouts::*;
 use crate::models::nodes::node;
+use crate::models::programmer::PresetId;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
+use mizer_layouts::ControlType;
 use mizer_node::NodePath;
 use mizer_runtime::LayoutsView;
 
@@ -59,7 +61,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(DeleteLayoutControlCommand {
                 layout_id,
-                control_id: control_id.into(),
+                control_id: control_id.try_into().unwrap(),
             })
             .unwrap();
     }
@@ -76,7 +78,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(MoveLayoutControlCommand {
                 layout_id,
-                control_id,
+                control_id: control_id.try_into().unwrap(),
                 position,
             })
             .unwrap();
@@ -94,7 +96,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(ResizeLayoutControlCommand {
                 layout_id,
-                control_id,
+                control_id: control_id.try_into().unwrap(),
                 size,
             })
             .unwrap();
@@ -117,7 +119,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(UpdateLayoutControlDecorationsCommand {
                 layout_id,
-                control_id,
+                control_id: control_id.try_into().unwrap(),
                 decorations,
             })
             .unwrap();
@@ -140,7 +142,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(UpdateLayoutControlBehaviorCommand {
                 layout_id,
-                control_id,
+                control_id: control_id.try_into().unwrap(),
                 behavior,
             })
             .unwrap();
@@ -158,7 +160,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.runtime
             .run_command(RenameLayoutControlCommand {
                 layout_id,
-                control_id,
+                control_id: control_id.try_into().unwrap(),
                 name,
             })
             .unwrap();
@@ -189,7 +191,59 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlCommand {
             layout_id,
-            path: node_path,
+            control_type: ControlType::Node { path: node_path },
+            position: position.into(),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn add_control_for_sequence(
+        &self,
+        layout_id: String,
+        sequence_id: u32,
+        position: ControlPosition,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddLayoutControlCommand {
+            layout_id,
+            control_type: ControlType::Sequencer { sequence_id },
+            position: position.into(),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn add_control_for_group(
+        &self,
+        layout_id: String,
+        group_id: u32,
+        position: ControlPosition,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddLayoutControlCommand {
+            layout_id,
+            control_type: ControlType::Group {
+                group_id: group_id.into(),
+            },
+            position: position.into(),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn add_control_for_preset(
+        &self,
+        layout_id: String,
+        preset_id: PresetId,
+        position: ControlPosition,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddLayoutControlCommand {
+            layout_id,
+            control_type: ControlType::Preset {
+                preset_id: preset_id.into(),
+            },
             position: position.into(),
         })?;
 

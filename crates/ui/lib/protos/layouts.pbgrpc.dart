@@ -74,6 +74,21 @@ class LayoutsApiClient extends $grpc.Client {
           '/mizer.LayoutsApi/AddExistingControl',
           ($3.AddExistingControlRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $3.LayoutResponse.fromBuffer(value));
+  static final _$addSequenceControl =
+      $grpc.ClientMethod<$3.AddSequenceControlRequest, $3.LayoutResponse>(
+          '/mizer.LayoutsApi/AddSequenceControl',
+          ($3.AddSequenceControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $3.LayoutResponse.fromBuffer(value));
+  static final _$addGroupControl =
+      $grpc.ClientMethod<$3.AddGroupControlRequest, $3.LayoutResponse>(
+          '/mizer.LayoutsApi/AddGroupControl',
+          ($3.AddGroupControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $3.LayoutResponse.fromBuffer(value));
+  static final _$addPresetControl =
+      $grpc.ClientMethod<$3.AddPresetControlRequest, $3.LayoutResponse>(
+          '/mizer.LayoutsApi/AddPresetControl',
+          ($3.AddPresetControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $3.LayoutResponse.fromBuffer(value));
   static final _$readFaderValue =
       $grpc.ClientMethod<$3.ReadFaderValueRequest, $3.FaderValueResponse>(
           '/mizer.LayoutsApi/ReadFaderValue',
@@ -153,6 +168,24 @@ class LayoutsApiClient extends $grpc.Client {
       $3.AddExistingControlRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addExistingControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$3.LayoutResponse> addSequenceControl(
+      $3.AddSequenceControlRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addSequenceControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$3.LayoutResponse> addGroupControl(
+      $3.AddGroupControlRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addGroupControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$3.LayoutResponse> addPresetControl(
+      $3.AddPresetControlRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addPresetControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$3.FaderValueResponse> readFaderValue(
@@ -263,6 +296,33 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
                 $3.AddExistingControlRequest.fromBuffer(value),
             ($3.LayoutResponse value) => value.writeToBuffer()));
     $addMethod(
+        $grpc.ServiceMethod<$3.AddSequenceControlRequest, $3.LayoutResponse>(
+            'AddSequenceControl',
+            addSequenceControl_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $3.AddSequenceControlRequest.fromBuffer(value),
+            ($3.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$3.AddGroupControlRequest, $3.LayoutResponse>(
+            'AddGroupControl',
+            addGroupControl_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $3.AddGroupControlRequest.fromBuffer(value),
+            ($3.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$3.AddPresetControlRequest, $3.LayoutResponse>(
+            'AddPresetControl',
+            addPresetControl_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $3.AddPresetControlRequest.fromBuffer(value),
+            ($3.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod(
         $grpc.ServiceMethod<$3.ReadFaderValueRequest, $3.FaderValueResponse>(
             'ReadFaderValue',
             readFaderValue_Pre,
@@ -336,6 +396,22 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
     return addExistingControl(call, await request);
   }
 
+  $async.Future<$3.LayoutResponse> addSequenceControl_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$3.AddSequenceControlRequest> request) async {
+    return addSequenceControl(call, await request);
+  }
+
+  $async.Future<$3.LayoutResponse> addGroupControl_Pre($grpc.ServiceCall call,
+      $async.Future<$3.AddGroupControlRequest> request) async {
+    return addGroupControl(call, await request);
+  }
+
+  $async.Future<$3.LayoutResponse> addPresetControl_Pre($grpc.ServiceCall call,
+      $async.Future<$3.AddPresetControlRequest> request) async {
+    return addPresetControl(call, await request);
+  }
+
   $async.Future<$3.FaderValueResponse> readFaderValue_Pre(
       $grpc.ServiceCall call,
       $async.Future<$3.ReadFaderValueRequest> request) async {
@@ -366,6 +442,12 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $3.AddControlRequest request);
   $async.Future<$3.LayoutResponse> addExistingControl(
       $grpc.ServiceCall call, $3.AddExistingControlRequest request);
+  $async.Future<$3.LayoutResponse> addSequenceControl(
+      $grpc.ServiceCall call, $3.AddSequenceControlRequest request);
+  $async.Future<$3.LayoutResponse> addGroupControl(
+      $grpc.ServiceCall call, $3.AddGroupControlRequest request);
+  $async.Future<$3.LayoutResponse> addPresetControl(
+      $grpc.ServiceCall call, $3.AddPresetControlRequest request);
   $async.Future<$3.FaderValueResponse> readFaderValue(
       $grpc.ServiceCall call, $3.ReadFaderValueRequest request);
 }

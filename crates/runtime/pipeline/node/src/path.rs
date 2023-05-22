@@ -19,6 +19,12 @@ impl From<String> for NodePath {
     }
 }
 
+impl From<NodePath> for String {
+    fn from(path: NodePath) -> Self {
+        path.0
+    }
+}
+
 impl From<&str> for NodePath {
     fn from(path: &str) -> Self {
         Self(path.to_string())

@@ -68,7 +68,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
   Widget build(BuildContext context) {
     NodesBloc nodes = context.watch();
     NodesApi nodesApi = context.read();
-    Node? node = nodes.getNodeByPath(this.widget.control.node);
+    Node? node =
+        this.widget.control.hasNode() ? nodes.getNodeByPath(this.widget.control.node.path) : null;
 
     var control = _getControl(node, nodesApi);
 
@@ -84,7 +85,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         MenuItem(label: "Move".i18n, action: () => widget.onMove()),
         MenuItem(label: "Resize".i18n, action: () => widget.onResize()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
-        if (node?.type == Node_NodeType.SEQUENCER)
+        if (widget.control.hasSequencer())
           MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),
         if (supportsMappings) MenuDivider(),
         if (supportsMappings)
@@ -100,6 +101,32 @@ class _LayoutControlViewState extends State<LayoutControlView> {
   }
 
   Widget? _getControl(Node? node, NodesApi apiClient) {
+    if (widget.control.hasSequencer()) {
+      return SequencerControl(
+        label: widget.control.label,
+        color: _color,
+        sequenceId: widget.control.sequencer.sequenceId,
+        state: widget.sequencerState,
+        size: widget.control.size,
+        behavior: widget.control.behavior.sequencer,
+      );
+    }
+    if (widget.control.hasGroup()) {
+      return GroupControl(
+        label: widget.control.label,
+        color: _color,
+        groupId: widget.control.group.groupId,
+        size: widget.control.size,
+      );
+    }
+    if (widget.control.hasPreset()) {
+      return PresetControl(
+        label: widget.control.label,
+        color: _color,
+        presetId: widget.control.preset.presetId,
+        size: widget.control.size,
+      );
+    }
     if (node?.type == Node_NodeType.FADER) {
       return FaderControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == Node_NodeType.BUTTON) {
@@ -109,31 +136,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         color: _color,
         image: _image,
       );
-    } else if (node?.type == Node_NodeType.SEQUENCER) {
-      return SequencerControl(
-        label: widget.control.label,
-        color: _color,
-        node: node!,
-        state: widget.sequencerState,
-        size: widget.control.size,
-        behavior: widget.control.behavior.sequencer,
-      );
     } else if (node?.type == Node_NodeType.LABEL) {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
-    } else if (node?.type == Node_NodeType.GROUP) {
-      return GroupControl(
-        label: widget.control.label,
-        color: _color,
-        node: node!,
-        size: widget.control.size,
-      );
-    } else if (node?.type == Node_NodeType.PRESET) {
-      return PresetControl(
-        label: widget.control.label,
-        color: _color,
-        node: node!,
-        size: widget.control.size,
-      );
     }
     return null;
   }
@@ -144,7 +148,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         context: context, builder: (context) => EditControlDialog(control: widget.control));
     if (result != null) {
       bloc.add(UpdateControlDecoration(
-          layoutId: widget.layoutId, controlId: widget.control.node, decorations: result));
+          layoutId: widget.layoutId, controlId: widget.control.node.path, decorations: result));
     }
   }
 
@@ -154,7 +158,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         context: context, builder: (context) => RenameControlDialog(name: widget.control.label));
     if (result != null) {
       bloc.add(
-          RenameControl(layoutId: widget.layoutId, controlId: widget.control.node, name: result));
+          RenameControl(layoutId: widget.layoutId, controlId: widget.control.id, name: result));
     }
   }
 
@@ -164,7 +168,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         context: context,
         builder: (BuildContext context) => DeleteControlDialog(control: widget.control));
     if (result) {
-      bloc.add(DeleteControl(layoutId: widget.layoutId, controlId: widget.control.node));
+      bloc.add(DeleteControl(layoutId: widget.layoutId, controlId: widget.control.id));
     }
   }
 
@@ -176,7 +180,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
 
   _addMappingForControl(BuildContext context) async {
     var request = MappingRequest(
-      layoutControl: LayoutControlAction(controlNode: widget.control.node),
+      layoutControl: LayoutControlAction(controlNode: widget.control.node.path),
     );
     await addMidiMapping(
         context,
@@ -192,7 +196,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
     if (result != null) {
       bloc.add(UpdateControlBehavior(
           layoutId: widget.layoutId,
-          controlId: widget.control.node,
+          controlId: widget.control.id,
           behavior: ControlBehavior(sequencer: result)));
     }
   }

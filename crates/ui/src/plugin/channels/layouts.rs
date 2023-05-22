@@ -109,6 +109,30 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addSequenceControl" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.add_control_for_sequence(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "addGroupControl" => {
+                if let Err(err) = call.arguments().map(|req| self.add_control_for_group(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "addPresetControl" => {
+                if let Err(err) = call.arguments().map(|req| self.add_control_for_preset(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "readFaderValue" => {
                 if let Value::String(node_path) = call.args {
                     if let Some(value) = self.handler.read_fader_value(node_path.into()) {
@@ -192,6 +216,24 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     fn add_control_for_node(&self, req: AddExistingControlRequest) -> anyhow::Result<()> {
         self.handler
             .add_control_for_node(req.layout_id, req.node.into(), req.position.unwrap())
+    }
+
+    fn add_control_for_sequence(&self, req: AddSequenceControlRequest) -> anyhow::Result<()> {
+        self.handler
+            .add_control_for_sequence(req.layout_id, req.sequence_id, req.position.unwrap())
+    }
+
+    fn add_control_for_group(&self, req: AddGroupControlRequest) -> anyhow::Result<()> {
+        self.handler
+            .add_control_for_group(req.layout_id, req.group_id, req.position.unwrap())
+    }
+
+    fn add_control_for_preset(&self, req: AddPresetControlRequest) -> anyhow::Result<()> {
+        self.handler.add_control_for_preset(
+            req.layout_id,
+            req.preset_id.unwrap(),
+            req.position.unwrap(),
+        )
     }
 
     fn get_layouts_pointer(&self) -> anyhow::Result<i64> {

@@ -6,9 +6,9 @@ use serde::{Deserialize, Serialize};
 use serde_yaml::Value;
 
 #[derive(Clone, Copy)]
-pub struct RenamePortsMigration;
+pub struct RenamePorts;
 
-impl ProjectFileMigration for RenamePortsMigration {
+impl ProjectFileMigration for RenamePorts {
     const VERSION: usize = 1;
 
     fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {

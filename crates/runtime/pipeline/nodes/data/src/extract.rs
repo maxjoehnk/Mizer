@@ -6,9 +6,23 @@ use mizer_util::StructuredData;
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
 
+const PATH_SETTING: &str = "Path";
+
 #[derive(Default, Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ExtractNode {
     pub path: String,
+}
+
+impl ConfigurableNode for ExtractNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(PATH_SETTING, &self.path)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, PATH_SETTING, self.path);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for ExtractNode {
@@ -47,9 +61,5 @@ impl ProcessingNode for ExtractNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.path = config.path.clone();
     }
 }

@@ -1,5 +1,6 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::{NodesHandler, TimecodeHandler};
+use mizer_api::models::nodes::node::NodeType;
 use mizer_api::models::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview, NodesRef};
@@ -73,8 +74,8 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 Ok(pointer) => resp.send_ok(Value::I64(pointer)),
                 Err(err) => resp.respond_error(err),
             },
-            "updateNodeProperty" => match call.arguments() {
-                Ok(args) => match self.handler.update_node_property(args) {
+            "updateNodeSetting" => match call.arguments() {
+                Ok(args) => match self.handler.update_node_setting(args) {
                     Ok(()) => resp.send_ok(Value::Null),
                     Err(err) => resp.respond_error(err),
                 },
@@ -194,12 +195,12 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
 
     fn get_preview_pointer(&self, path: String) -> Option<i64> {
         let node = self.handler.get_node(path)?;
-        if let node_config::Type::TimecodeControlConfig(config) =
-            node.config.into_option().and_then(|c| c.type_)?
-        {
-            let timecode = self
-                .timecode_handler
-                .get_timecode_state_ref(config.timecode_id)?;
+        if node.type_.unwrap() == NodeType::TIMECODE_CONTROL {
+            let timecode_id = node
+                .settings
+                .into_iter()
+                .find_map(|setting| setting.has_id().then(|| setting.id().value));
+            let timecode = self.timecode_handler.get_timecode_state_ref(timecode_id?)?;
             let preview = NodePreview { timecode };
             let preview = Arc::new(preview);
 

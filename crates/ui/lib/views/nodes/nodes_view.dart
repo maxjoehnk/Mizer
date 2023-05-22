@@ -19,7 +19,7 @@ import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
-import 'widgets/properties/node_properties.dart';
+import 'widgets/properties/properties_pane.dart';
 
 const double PathBreadcrumbHeight = 32;
 
@@ -55,7 +55,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       afterLayout(context);
     });
 
@@ -156,7 +156,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     flex: 2,
                     child: Panel(
                         label: NODE_LABELS[model.selectedNode!.node.type] ?? "",
-                        child: NodePropertiesPane(node: model.selectedNode!.node))),
+                        child: NodePropertiesPane(
+                            node: model.selectedNode!.node, onUpdate: _refresh))),
             ]),
           )
         ],
@@ -194,8 +195,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addObserver(this);
       afterLayout(context);
     });
     super.initState();
@@ -203,7 +204,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -226,5 +227,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     setState(() {
       addMenuPosition = null;
     });
+  }
+
+  void _refresh() {
+    context.read<NodesBloc>().add(FetchNodes());
   }
 }

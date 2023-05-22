@@ -53,8 +53,8 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> updateNodeConfig(UpdateNodeConfigRequest request) {
-    return channel.invokeMethod("updateNodeProperty", request.writeToBuffer());
+  Future<void> updateNodeSetting(UpdateNodeSettingRequest request) {
+    return channel.invokeMethod("updateNodeSetting", request.writeToBuffer());
   }
 
   @override

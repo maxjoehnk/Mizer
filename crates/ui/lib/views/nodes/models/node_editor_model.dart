@@ -64,6 +64,8 @@ class NodeEditorModel extends ChangeNotifier {
     }
     this.updateNodes();
     this.update();
+    this.selectedNode =
+        this.nodes.firstWhereOrNull((element) => element.node.path == this.selectedNode?.node.path);
   }
 
   NodeModel _createModel(Node node) {

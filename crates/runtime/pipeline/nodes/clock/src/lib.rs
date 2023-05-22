@@ -3,6 +3,8 @@ use serde::{Deserialize, Serialize};
 use mizer_clock::*;
 use mizer_node::*;
 
+const BPM_SETTING: &str = "BPM";
+
 #[derive(Clone, Deserialize, Serialize, PartialEq)]
 pub struct ClockNode {
     /// BPM
@@ -20,6 +22,18 @@ impl std::fmt::Debug for ClockNode {
 impl Default for ClockNode {
     fn default() -> Self {
         ClockNode { speed: 90. }
+    }
+}
+
+impl ConfigurableNode for ClockNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(BPM_SETTING, self.speed).min(1.).max_hint(200.)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, BPM_SETTING, self.speed);
+
+        update_fallback!(setting)
     }
 }
 
@@ -51,10 +65,6 @@ impl ProcessingNode for ClockNode {
         *clock.speed_mut() = self.speed;
 
         clock
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.speed = config.speed;
     }
 
     fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {

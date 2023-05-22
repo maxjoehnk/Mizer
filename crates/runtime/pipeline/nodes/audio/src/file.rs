@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
@@ -5,6 +6,8 @@ use std::thread;
 use std::thread::JoinHandle;
 
 use anyhow::Context;
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 use symphonia::core::audio::SampleBuffer;
 use symphonia::core::codecs::{Decoder, CODEC_TYPE_NULL};
@@ -25,18 +28,54 @@ const TIMECODE_INPUT: &str = "Timecode";
 const TIMECODE_OUTPUT: &str = "Timecode";
 const AUDIO_OUTPUT: &str = "Stereo";
 
+const PLAYBACK_MODE_SETTING: &str = "Playback Mode";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct AudioFileNode {
     pub path: PathBuf,
     pub playback_mode: PlaybackMode,
 }
 
-#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
 pub enum PlaybackMode {
     #[default]
     OneShot,
     Loop,
     PingPong,
+}
+
+impl Display for PlaybackMode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::OneShot => write!(f, "One Shot"),
+            Self::Loop => write!(f, "Loop"),
+            Self::PingPong => write!(f, "Ping Pong"),
+        }
+    }
+}
+
+impl ConfigurableNode for AudioFileNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(enum PLAYBACK_MODE_SETTING, self.playback_mode)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, PLAYBACK_MODE_SETTING, self.playback_mode);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for AudioFileNode {
@@ -108,10 +147,6 @@ impl ProcessingNode for AudioFileNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.path = config.path.clone();
     }
 }
 

@@ -8,6 +8,8 @@ const AUDIO_OUTPUT: &str = "Stereo";
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct AudioVolumeNode;
 
+impl ConfigurableNode for AudioVolumeNode {}
+
 impl PipelineNode for AudioVolumeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -46,6 +48,4 @@ impl ProcessingNode for AudioVolumeNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }

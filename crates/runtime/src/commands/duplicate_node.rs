@@ -57,6 +57,7 @@ impl<'a> Command<'a> for DuplicateNodeCommand {
             designer,
             details,
             ports,
+            settings: pipeline.get_settings(&self.path).unwrap_or_default(),
             config: node.downcast(),
         };
 

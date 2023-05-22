@@ -4,9 +4,23 @@ use mizer_node::*;
 
 const VALUE_PORT: &str = "Value";
 
+const VALUE_SETTING: &str = "Value";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ConstantNumberNode {
     pub value: f64,
+}
+
+impl ConfigurableNode for ConstantNumberNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(VALUE_SETTING, self.value)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, VALUE_SETTING, self.value);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for ConstantNumberNode {
@@ -40,9 +54,5 @@ impl ProcessingNode for ConstantNumberNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.value = config.value;
     }
 }

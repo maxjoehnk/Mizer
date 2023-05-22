@@ -4,6 +4,11 @@ use serde::{Deserialize, Serialize};
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
 
+const LOWER_THRESHOLD_SETTING: &str = "Lower Threshold";
+const UPPER_THRESHOLD_SETTING: &str = "Upper Threshold";
+const INACTIVE_VALUE_SETTING: &str = "Inactive Value";
+const ACTIVE_VALUE_SETTING: &str = "Active Value";
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ThresholdNode {
     #[serde(alias = "threshold")]
@@ -27,6 +32,34 @@ impl Default for ThresholdNode {
             active_value: 1.,
             inactive_value: 0.,
         }
+    }
+}
+
+impl ConfigurableNode for ThresholdNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(LOWER_THRESHOLD_SETTING, self.lower_threshold)
+                .min_hint(0.)
+                .max_hint(1.),
+            setting!(UPPER_THRESHOLD_SETTING, self.upper_threshold)
+                .min_hint(0.)
+                .max_hint(1.),
+            setting!(INACTIVE_VALUE_SETTING, self.inactive_value)
+                .min_hint(0.)
+                .max_hint(1.),
+            setting!(ACTIVE_VALUE_SETTING, self.active_value)
+                .min_hint(0.)
+                .max_hint(1.),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, LOWER_THRESHOLD_SETTING, self.lower_threshold);
+        update!(float setting, UPPER_THRESHOLD_SETTING, self.upper_threshold);
+        update!(float setting, INACTIVE_VALUE_SETTING, self.inactive_value);
+        update!(float setting, ACTIVE_VALUE_SETTING, self.active_value);
+
+        update_fallback!(setting)
     }
 }
 
@@ -69,12 +102,5 @@ impl ProcessingNode for ThresholdNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.lower_threshold = config.lower_threshold;
-        self.upper_threshold = config.upper_threshold;
-        self.active_value = config.active_value;
-        self.inactive_value = config.inactive_value;
     }
 }

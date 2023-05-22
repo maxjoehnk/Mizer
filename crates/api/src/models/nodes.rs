@@ -689,26 +689,26 @@ impl ::protobuf::reflect::ProtobufValue for WriteResponse {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.UpdateNodeConfigRequest)
-pub struct UpdateNodeConfigRequest {
+// @@protoc_insertion_point(message:mizer.nodes.UpdateNodeSettingRequest)
+pub struct UpdateNodeSettingRequest {
     // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.UpdateNodeConfigRequest.path)
+    // @@protoc_insertion_point(field:mizer.nodes.UpdateNodeSettingRequest.path)
     pub path: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.UpdateNodeConfigRequest.config)
-    pub config: ::protobuf::MessageField<NodeConfig>,
+    // @@protoc_insertion_point(field:mizer.nodes.UpdateNodeSettingRequest.setting)
+    pub setting: ::protobuf::MessageField<NodeSetting>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.UpdateNodeConfigRequest.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.nodes.UpdateNodeSettingRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
-impl<'a> ::std::default::Default for &'a UpdateNodeConfigRequest {
-    fn default() -> &'a UpdateNodeConfigRequest {
-        <UpdateNodeConfigRequest as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a UpdateNodeSettingRequest {
+    fn default() -> &'a UpdateNodeSettingRequest {
+        <UpdateNodeSettingRequest as ::protobuf::Message>::default_instance()
     }
 }
 
-impl UpdateNodeConfigRequest {
-    pub fn new() -> UpdateNodeConfigRequest {
+impl UpdateNodeSettingRequest {
+    pub fn new() -> UpdateNodeSettingRequest {
         ::std::default::Default::default()
     }
 
@@ -717,24 +717,24 @@ impl UpdateNodeConfigRequest {
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "path",
-            |m: &UpdateNodeConfigRequest| { &m.path },
-            |m: &mut UpdateNodeConfigRequest| { &mut m.path },
+            |m: &UpdateNodeSettingRequest| { &m.path },
+            |m: &mut UpdateNodeSettingRequest| { &mut m.path },
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, NodeConfig>(
-            "config",
-            |m: &UpdateNodeConfigRequest| { &m.config },
-            |m: &mut UpdateNodeConfigRequest| { &mut m.config },
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, NodeSetting>(
+            "setting",
+            |m: &UpdateNodeSettingRequest| { &m.setting },
+            |m: &mut UpdateNodeSettingRequest| { &mut m.setting },
         ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateNodeConfigRequest>(
-            "UpdateNodeConfigRequest",
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateNodeSettingRequest>(
+            "UpdateNodeSettingRequest",
             fields,
             oneofs,
         )
     }
 }
 
-impl ::protobuf::Message for UpdateNodeConfigRequest {
-    const NAME: &'static str = "UpdateNodeConfigRequest";
+impl ::protobuf::Message for UpdateNodeSettingRequest {
+    const NAME: &'static str = "UpdateNodeSettingRequest";
 
     fn is_initialized(&self) -> bool {
         true
@@ -747,7 +747,7 @@ impl ::protobuf::Message for UpdateNodeConfigRequest {
                     self.path = is.read_string()?;
                 },
                 18 => {
-                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.config)?;
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.setting)?;
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -764,7 +764,7 @@ impl ::protobuf::Message for UpdateNodeConfigRequest {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.path);
         }
-        if let Some(v) = self.config.as_ref() {
+        if let Some(v) = self.setting.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
@@ -777,7 +777,7 @@ impl ::protobuf::Message for UpdateNodeConfigRequest {
         if !self.path.is_empty() {
             os.write_string(1, &self.path)?;
         }
-        if let Some(v) = self.config.as_ref() {
+        if let Some(v) = self.setting.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -792,143 +792,40 @@ impl ::protobuf::Message for UpdateNodeConfigRequest {
         &mut self.special_fields
     }
 
-    fn new() -> UpdateNodeConfigRequest {
-        UpdateNodeConfigRequest::new()
+    fn new() -> UpdateNodeSettingRequest {
+        UpdateNodeSettingRequest::new()
     }
 
     fn clear(&mut self) {
         self.path.clear();
-        self.config.clear();
+        self.setting.clear();
         self.special_fields.clear();
     }
 
-    fn default_instance() -> &'static UpdateNodeConfigRequest {
-        static instance: UpdateNodeConfigRequest = UpdateNodeConfigRequest {
+    fn default_instance() -> &'static UpdateNodeSettingRequest {
+        static instance: UpdateNodeSettingRequest = UpdateNodeSettingRequest {
             path: ::std::string::String::new(),
-            config: ::protobuf::MessageField::none(),
+            setting: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
     }
 }
 
-impl ::protobuf::MessageFull for UpdateNodeConfigRequest {
+impl ::protobuf::MessageFull for UpdateNodeSettingRequest {
     fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateNodeConfigRequest").unwrap()).clone()
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateNodeSettingRequest").unwrap()).clone()
     }
 }
 
-impl ::std::fmt::Display for UpdateNodeConfigRequest {
+impl ::std::fmt::Display for UpdateNodeSettingRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for UpdateNodeConfigRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.UpdateNodeConfigResponse)
-pub struct UpdateNodeConfigResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.UpdateNodeConfigResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a UpdateNodeConfigResponse {
-    fn default() -> &'a UpdateNodeConfigResponse {
-        <UpdateNodeConfigResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl UpdateNodeConfigResponse {
-    pub fn new() -> UpdateNodeConfigResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateNodeConfigResponse>(
-            "UpdateNodeConfigResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for UpdateNodeConfigResponse {
-    const NAME: &'static str = "UpdateNodeConfigResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> UpdateNodeConfigResponse {
-        UpdateNodeConfigResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static UpdateNodeConfigResponse {
-        static instance: UpdateNodeConfigResponse = UpdateNodeConfigResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for UpdateNodeConfigResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("UpdateNodeConfigResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for UpdateNodeConfigResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for UpdateNodeConfigResponse {
+impl ::protobuf::reflect::ProtobufValue for UpdateNodeSettingRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -2749,6 +2646,8 @@ pub struct Node {
     pub preview: ::protobuf::EnumOrUnknown<node::NodePreviewType>,
     // @@protoc_insertion_point(field:mizer.nodes.Node.config)
     pub config: ::protobuf::MessageField<NodeConfig>,
+    // @@protoc_insertion_point(field:mizer.nodes.Node.settings)
+    pub settings: ::std::vec::Vec<NodeSetting>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.Node.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2766,7 +2665,7 @@ impl Node {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut fields = ::std::vec::Vec::with_capacity(8);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "type",
@@ -2802,6 +2701,11 @@ impl Node {
             "config",
             |m: &Node| { &m.config },
             |m: &mut Node| { &mut m.config },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "settings",
+            |m: &Node| { &m.settings },
+            |m: &mut Node| { &mut m.settings },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Node>(
             "Node",
@@ -2842,6 +2746,9 @@ impl ::protobuf::Message for Node {
                 58 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.config)?;
                 },
+                66 => {
+                    self.settings.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2879,6 +2786,10 @@ impl ::protobuf::Message for Node {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        for value in &self.settings {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -2906,6 +2817,9 @@ impl ::protobuf::Message for Node {
         if let Some(v) = self.config.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
         }
+        for v in &self.settings {
+            ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+        };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -2930,6 +2844,7 @@ impl ::protobuf::Message for Node {
         self.designer.clear();
         self.preview = ::protobuf::EnumOrUnknown::new(node::NodePreviewType::NONE);
         self.config.clear();
+        self.settings.clear();
         self.special_fields.clear();
     }
 
@@ -2942,6 +2857,7 @@ impl ::protobuf::Message for Node {
             designer: ::protobuf::MessageField::none(),
             preview: ::protobuf::EnumOrUnknown::from_i32(0),
             config: ::protobuf::MessageField::none(),
+            settings: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -3429,1231 +3345,6 @@ impl NodeConfig {
         ::std::default::Default::default()
     }
 
-    // .mizer.nodes.OscillatorNodeConfig oscillator_config = 10;
-
-    pub fn oscillator_config(&self) -> &OscillatorNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscillatorConfig(ref v)) => v,
-            _ => <OscillatorNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_oscillator_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_oscillator_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscillatorConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_oscillator_config(&mut self, v: OscillatorNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::OscillatorConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_oscillator_config(&mut self) -> &mut OscillatorNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::OscillatorConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::OscillatorConfig(OscillatorNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscillatorConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_oscillator_config(&mut self) -> OscillatorNodeConfig {
-        if self.has_oscillator_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::OscillatorConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscillatorNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ScriptingNodeConfig scripting_config = 11;
-
-    pub fn scripting_config(&self) -> &ScriptingNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ScriptingConfig(ref v)) => v,
-            _ => <ScriptingNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_scripting_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_scripting_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ScriptingConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_scripting_config(&mut self, v: ScriptingNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ScriptingConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_scripting_config(&mut self) -> &mut ScriptingNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ScriptingConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ScriptingConfig(ScriptingNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ScriptingConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_scripting_config(&mut self) -> ScriptingNodeConfig {
-        if self.has_scripting_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ScriptingConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ScriptingNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.SequenceNodeConfig sequence_config = 12;
-
-    pub fn sequence_config(&self) -> &SequenceNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SequenceConfig(ref v)) => v,
-            _ => <SequenceNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_sequence_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_sequence_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SequenceConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sequence_config(&mut self, v: SequenceNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::SequenceConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_sequence_config(&mut self) -> &mut SequenceNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::SequenceConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::SequenceConfig(SequenceNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SequenceConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_sequence_config(&mut self) -> SequenceNodeConfig {
-        if self.has_sequence_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::SequenceConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            SequenceNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ClockNodeConfig clock_config = 13;
-
-    pub fn clock_config(&self) -> &ClockNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ClockConfig(ref v)) => v,
-            _ => <ClockNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_clock_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_clock_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ClockConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_clock_config(&mut self, v: ClockNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ClockConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_clock_config(&mut self) -> &mut ClockNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ClockConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ClockConfig(ClockNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ClockConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_clock_config(&mut self) -> ClockNodeConfig {
-        if self.has_clock_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ClockConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ClockNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.FixtureNodeConfig fixture_config = 14;
-
-    pub fn fixture_config(&self) -> &FixtureNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FixtureConfig(ref v)) => v,
-            _ => <FixtureNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_fixture_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_fixture_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FixtureConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_fixture_config(&mut self, v: FixtureNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::FixtureConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_fixture_config(&mut self) -> &mut FixtureNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::FixtureConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::FixtureConfig(FixtureNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FixtureConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_fixture_config(&mut self) -> FixtureNodeConfig {
-        if self.has_fixture_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::FixtureConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            FixtureNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ButtonNodeConfig button_config = 15;
-
-    pub fn button_config(&self) -> &ButtonNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ButtonConfig(ref v)) => v,
-            _ => <ButtonNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_button_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_button_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ButtonConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_button_config(&mut self, v: ButtonNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ButtonConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_button_config(&mut self) -> &mut ButtonNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ButtonConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ButtonConfig(ButtonNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ButtonConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_button_config(&mut self) -> ButtonNodeConfig {
-        if self.has_button_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ButtonConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ButtonNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.FaderNodeConfig fader_config = 16;
-
-    pub fn fader_config(&self) -> &FaderNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FaderConfig(ref v)) => v,
-            _ => <FaderNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_fader_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_fader_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FaderConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_fader_config(&mut self, v: FaderNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::FaderConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_fader_config(&mut self) -> &mut FaderNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::FaderConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::FaderConfig(FaderNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::FaderConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_fader_config(&mut self) -> FaderNodeConfig {
-        if self.has_fader_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::FaderConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            FaderNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.IldaFileNodeConfig ilda_file_config = 17;
-
-    pub fn ilda_file_config(&self) -> &IldaFileNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::IldaFileConfig(ref v)) => v,
-            _ => <IldaFileNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_ilda_file_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_ilda_file_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::IldaFileConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_ilda_file_config(&mut self, v: IldaFileNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::IldaFileConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_ilda_file_config(&mut self) -> &mut IldaFileNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::IldaFileConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::IldaFileConfig(IldaFileNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::IldaFileConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_ilda_file_config(&mut self) -> IldaFileNodeConfig {
-        if self.has_ilda_file_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::IldaFileConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            IldaFileNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.LaserNodeConfig laser_config = 18;
-
-    pub fn laser_config(&self) -> &LaserNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LaserConfig(ref v)) => v,
-            _ => <LaserNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_laser_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_laser_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LaserConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_laser_config(&mut self, v: LaserNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::LaserConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_laser_config(&mut self) -> &mut LaserNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::LaserConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::LaserConfig(LaserNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LaserConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_laser_config(&mut self) -> LaserNodeConfig {
-        if self.has_laser_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::LaserConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            LaserNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.PixelPatternNodeConfig pixel_pattern_config = 19;
-
-    pub fn pixel_pattern_config(&self) -> &PixelPatternNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelPatternConfig(ref v)) => v,
-            _ => <PixelPatternNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_pixel_pattern_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_pixel_pattern_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelPatternConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_pixel_pattern_config(&mut self, v: PixelPatternNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::PixelPatternConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_pixel_pattern_config(&mut self) -> &mut PixelPatternNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::PixelPatternConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::PixelPatternConfig(PixelPatternNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelPatternConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_pixel_pattern_config(&mut self) -> PixelPatternNodeConfig {
-        if self.has_pixel_pattern_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::PixelPatternConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            PixelPatternNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.PixelDmxNodeConfig pixel_dmx_config = 20;
-
-    pub fn pixel_dmx_config(&self) -> &PixelDmxNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelDmxConfig(ref v)) => v,
-            _ => <PixelDmxNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_pixel_dmx_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_pixel_dmx_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelDmxConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_pixel_dmx_config(&mut self, v: PixelDmxNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::PixelDmxConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_pixel_dmx_config(&mut self) -> &mut PixelDmxNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::PixelDmxConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::PixelDmxConfig(PixelDmxNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PixelDmxConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_pixel_dmx_config(&mut self) -> PixelDmxNodeConfig {
-        if self.has_pixel_dmx_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::PixelDmxConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            PixelDmxNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.DmxOutputNodeConfig dmx_output_config = 21;
-
-    pub fn dmx_output_config(&self) -> &DmxOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DmxOutputConfig(ref v)) => v,
-            _ => <DmxOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_dmx_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_dmx_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DmxOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_dmx_output_config(&mut self, v: DmxOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::DmxOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_dmx_output_config(&mut self) -> &mut DmxOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::DmxOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::DmxOutputConfig(DmxOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DmxOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_dmx_output_config(&mut self) -> DmxOutputNodeConfig {
-        if self.has_dmx_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::DmxOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            DmxOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.MidiNodeConfig midi_input_config = 22;
-
-    pub fn midi_input_config(&self) -> &MidiNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiInputConfig(ref v)) => v,
-            _ => <MidiNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_midi_input_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_midi_input_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_midi_input_config(&mut self, v: MidiNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MidiInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_midi_input_config(&mut self) -> &mut MidiNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MidiInputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MidiInputConfig(MidiNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_midi_input_config(&mut self) -> MidiNodeConfig {
-        if self.has_midi_input_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MidiInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MidiNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.MidiNodeConfig midi_output_config = 23;
-
-    pub fn midi_output_config(&self) -> &MidiNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiOutputConfig(ref v)) => v,
-            _ => <MidiNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_midi_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_midi_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_midi_output_config(&mut self, v: MidiNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MidiOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_midi_output_config(&mut self) -> &mut MidiNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MidiOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MidiOutputConfig(MidiNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MidiOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_midi_output_config(&mut self) -> MidiNodeConfig {
-        if self.has_midi_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MidiOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MidiNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.OpcOutputNodeConfig opc_output_config = 24;
-
-    pub fn opc_output_config(&self) -> &OpcOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OpcOutputConfig(ref v)) => v,
-            _ => <OpcOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_opc_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_opc_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OpcOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_opc_output_config(&mut self, v: OpcOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::OpcOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_opc_output_config(&mut self) -> &mut OpcOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::OpcOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::OpcOutputConfig(OpcOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OpcOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_opc_output_config(&mut self) -> OpcOutputNodeConfig {
-        if self.has_opc_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::OpcOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OpcOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.OscNodeConfig osc_input_config = 25;
-
-    pub fn osc_input_config(&self) -> &OscNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscInputConfig(ref v)) => v,
-            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_osc_input_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_osc_input_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_osc_input_config(&mut self, v: OscNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::OscInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_osc_input_config(&mut self) -> &mut OscNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::OscInputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::OscInputConfig(OscNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_osc_input_config(&mut self) -> OscNodeConfig {
-        if self.has_osc_input_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::OscInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.OscNodeConfig osc_output_config = 26;
-
-    pub fn osc_output_config(&self) -> &OscNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscOutputConfig(ref v)) => v,
-            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_osc_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_osc_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_osc_output_config(&mut self, v: OscNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::OscOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_osc_output_config(&mut self) -> &mut OscNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::OscOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::OscOutputConfig(OscNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::OscOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_osc_output_config(&mut self) -> OscNodeConfig {
-        if self.has_osc_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::OscOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.VideoColorBalanceNodeConfig video_color_balance_config = 27;
-
-    pub fn video_color_balance_config(&self) -> &VideoColorBalanceNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(ref v)) => v,
-            _ => <VideoColorBalanceNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_video_color_balance_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_video_color_balance_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video_color_balance_config(&mut self, v: VideoColorBalanceNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_video_color_balance_config(&mut self) -> &mut VideoColorBalanceNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(VideoColorBalanceNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_video_color_balance_config(&mut self) -> VideoColorBalanceNodeConfig {
-        if self.has_video_color_balance_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoColorBalanceNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.VideoEffectNodeConfig video_effect_config = 28;
-
-    pub fn video_effect_config(&self) -> &VideoEffectNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoEffectConfig(ref v)) => v,
-            _ => <VideoEffectNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_video_effect_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_video_effect_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoEffectConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video_effect_config(&mut self, v: VideoEffectNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::VideoEffectConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_video_effect_config(&mut self) -> &mut VideoEffectNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::VideoEffectConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::VideoEffectConfig(VideoEffectNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoEffectConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_video_effect_config(&mut self) -> VideoEffectNodeConfig {
-        if self.has_video_effect_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::VideoEffectConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoEffectNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.VideoFileNodeConfig video_file_config = 29;
-
-    pub fn video_file_config(&self) -> &VideoFileNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoFileConfig(ref v)) => v,
-            _ => <VideoFileNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_video_file_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_video_file_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoFileConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video_file_config(&mut self, v: VideoFileNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::VideoFileConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_video_file_config(&mut self) -> &mut VideoFileNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::VideoFileConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::VideoFileConfig(VideoFileNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoFileConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_video_file_config(&mut self) -> VideoFileNodeConfig {
-        if self.has_video_file_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::VideoFileConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoFileNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.VideoOutputNodeConfig video_output_config = 30;
-
-    pub fn video_output_config(&self) -> &VideoOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoOutputConfig(ref v)) => v,
-            _ => <VideoOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_video_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_video_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video_output_config(&mut self, v: VideoOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::VideoOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_video_output_config(&mut self) -> &mut VideoOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::VideoOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::VideoOutputConfig(VideoOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_video_output_config(&mut self) -> VideoOutputNodeConfig {
-        if self.has_video_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::VideoOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.VideoTransformNodeConfig video_transform_config = 31;
-
-    pub fn video_transform_config(&self) -> &VideoTransformNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoTransformConfig(ref v)) => v,
-            _ => <VideoTransformNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_video_transform_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_video_transform_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoTransformConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_video_transform_config(&mut self, v: VideoTransformNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::VideoTransformConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_video_transform_config(&mut self) -> &mut VideoTransformNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::VideoTransformConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::VideoTransformConfig(VideoTransformNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::VideoTransformConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_video_transform_config(&mut self) -> VideoTransformNodeConfig {
-        if self.has_video_transform_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::VideoTransformConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoTransformNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.SelectNodeConfig select_config = 32;
-
-    pub fn select_config(&self) -> &SelectNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SelectConfig(ref v)) => v,
-            _ => <SelectNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_select_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_select_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SelectConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_select_config(&mut self, v: SelectNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::SelectConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_select_config(&mut self) -> &mut SelectNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::SelectConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::SelectConfig(SelectNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::SelectConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_select_config(&mut self) -> SelectNodeConfig {
-        if self.has_select_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::SelectConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            SelectNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.MergeNodeConfig merge_config = 33;
-
-    pub fn merge_config(&self) -> &MergeNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MergeConfig(ref v)) => v,
-            _ => <MergeNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_merge_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_merge_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MergeConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_merge_config(&mut self, v: MergeNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MergeConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_merge_config(&mut self) -> &mut MergeNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MergeConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MergeConfig(MergeNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MergeConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_merge_config(&mut self) -> MergeNodeConfig {
-        if self.has_merge_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MergeConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MergeNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.EnvelopeNodeConfig envelope_config = 34;
-
-    pub fn envelope_config(&self) -> &EnvelopeNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EnvelopeConfig(ref v)) => v,
-            _ => <EnvelopeNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_envelope_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_envelope_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EnvelopeConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_envelope_config(&mut self, v: EnvelopeNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::EnvelopeConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_envelope_config(&mut self) -> &mut EnvelopeNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::EnvelopeConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::EnvelopeConfig(EnvelopeNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EnvelopeConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_envelope_config(&mut self) -> EnvelopeNodeConfig {
-        if self.has_envelope_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::EnvelopeConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            EnvelopeNodeConfig::new()
-        }
-    }
-
     // .mizer.nodes.SequencerNodeConfig sequencer_config = 35;
 
     pub fn sequencer_config(&self) -> &SequencerNodeConfig {
@@ -4700,55 +3391,6 @@ impl NodeConfig {
             }
         } else {
             SequencerNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ProgrammerNodeConfig programmer_config = 36;
-
-    pub fn programmer_config(&self) -> &ProgrammerNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ProgrammerConfig(ref v)) => v,
-            _ => <ProgrammerNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_programmer_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_programmer_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ProgrammerConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_programmer_config(&mut self, v: ProgrammerNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ProgrammerConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_programmer_config(&mut self) -> &mut ProgrammerNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ProgrammerConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ProgrammerConfig(ProgrammerNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ProgrammerConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_programmer_config(&mut self) -> ProgrammerNodeConfig {
-        if self.has_programmer_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ProgrammerConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ProgrammerNodeConfig::new()
         }
     }
 
@@ -4850,251 +3492,6 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.ColorRgbNodeConfig color_rgb_config = 40;
-
-    pub fn color_rgb_config(&self) -> &ColorRgbNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorRgbConfig(ref v)) => v,
-            _ => <ColorRgbNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_color_rgb_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_color_rgb_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorRgbConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_color_rgb_config(&mut self, v: ColorRgbNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ColorRgbConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_color_rgb_config(&mut self) -> &mut ColorRgbNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ColorRgbConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ColorRgbConfig(ColorRgbNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorRgbConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_color_rgb_config(&mut self) -> ColorRgbNodeConfig {
-        if self.has_color_rgb_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ColorRgbConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ColorRgbNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ColorHsvNodeConfig color_hsv_config = 41;
-
-    pub fn color_hsv_config(&self) -> &ColorHsvNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorHsvConfig(ref v)) => v,
-            _ => <ColorHsvNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_color_hsv_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_color_hsv_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorHsvConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_color_hsv_config(&mut self, v: ColorHsvNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ColorHsvConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_color_hsv_config(&mut self) -> &mut ColorHsvNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ColorHsvConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ColorHsvConfig(ColorHsvNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorHsvConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_color_hsv_config(&mut self) -> ColorHsvNodeConfig {
-        if self.has_color_hsv_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ColorHsvConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ColorHsvNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.GamepadNodeConfig gamepad_node_config = 42;
-
-    pub fn gamepad_node_config(&self) -> &GamepadNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(ref v)) => v,
-            _ => <GamepadNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_gamepad_node_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_gamepad_node_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_gamepad_node_config(&mut self, v: GamepadNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_gamepad_node_config(&mut self) -> &mut GamepadNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(GamepadNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_gamepad_node_config(&mut self) -> GamepadNodeConfig {
-        if self.has_gamepad_node_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GamepadNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ThresholdNodeConfig threshold_config = 43;
-
-    pub fn threshold_config(&self) -> &ThresholdNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ThresholdConfig(ref v)) => v,
-            _ => <ThresholdNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_threshold_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_threshold_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ThresholdConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_threshold_config(&mut self, v: ThresholdNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ThresholdConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_threshold_config(&mut self) -> &mut ThresholdNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ThresholdConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ThresholdConfig(ThresholdNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ThresholdConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_threshold_config(&mut self) -> ThresholdNodeConfig {
-        if self.has_threshold_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ThresholdConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ThresholdNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.EncoderNodeConfig encoder_config = 44;
-
-    pub fn encoder_config(&self) -> &EncoderNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EncoderConfig(ref v)) => v,
-            _ => <EncoderNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_encoder_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_encoder_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EncoderConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_encoder_config(&mut self, v: EncoderNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::EncoderConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_encoder_config(&mut self) -> &mut EncoderNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::EncoderConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::EncoderConfig(EncoderNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::EncoderConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_encoder_config(&mut self) -> EncoderNodeConfig {
-        if self.has_encoder_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::EncoderConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            EncoderNodeConfig::new()
-        }
-    }
-
     // .mizer.nodes.ContainerNodeConfig container_config = 45;
 
     pub fn container_config(&self) -> &ContainerNodeConfig {
@@ -5144,1569 +3541,15 @@ impl NodeConfig {
         }
     }
 
-    // .mizer.nodes.MathNodeConfig math_config = 46;
-
-    pub fn math_config(&self) -> &MathNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MathConfig(ref v)) => v,
-            _ => <MathNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_math_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_math_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MathConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_math_config(&mut self, v: MathNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MathConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_math_config(&mut self) -> &mut MathNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MathConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MathConfig(MathNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MathConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_math_config(&mut self) -> MathNodeConfig {
-        if self.has_math_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MathConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MathNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.MqttInputNodeConfig mqtt_input_config = 47;
-
-    pub fn mqtt_input_config(&self) -> &MqttInputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttInputConfig(ref v)) => v,
-            _ => <MqttInputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_mqtt_input_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_mqtt_input_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_mqtt_input_config(&mut self, v: MqttInputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MqttInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_mqtt_input_config(&mut self) -> &mut MqttInputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MqttInputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MqttInputConfig(MqttInputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_mqtt_input_config(&mut self) -> MqttInputNodeConfig {
-        if self.has_mqtt_input_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MqttInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MqttInputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.MqttOutputNodeConfig mqtt_output_config = 48;
-
-    pub fn mqtt_output_config(&self) -> &MqttOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttOutputConfig(ref v)) => v,
-            _ => <MqttOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_mqtt_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_mqtt_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_mqtt_output_config(&mut self, v: MqttOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::MqttOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_mqtt_output_config(&mut self) -> &mut MqttOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::MqttOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::MqttOutputConfig(MqttOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::MqttOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_mqtt_output_config(&mut self) -> MqttOutputNodeConfig {
-        if self.has_mqtt_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::MqttOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MqttOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.NumberToDataNodeConfig number_to_data_config = 49;
-
-    pub fn number_to_data_config(&self) -> &NumberToDataNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NumberToDataConfig(ref v)) => v,
-            _ => <NumberToDataNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_number_to_data_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_number_to_data_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NumberToDataConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_number_to_data_config(&mut self, v: NumberToDataNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::NumberToDataConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_number_to_data_config(&mut self) -> &mut NumberToDataNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::NumberToDataConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::NumberToDataConfig(NumberToDataNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NumberToDataConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_number_to_data_config(&mut self) -> NumberToDataNodeConfig {
-        if self.has_number_to_data_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::NumberToDataConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            NumberToDataNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.DataToNumberNodeConfig data_to_number_config = 50;
-
-    pub fn data_to_number_config(&self) -> &DataToNumberNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DataToNumberConfig(ref v)) => v,
-            _ => <DataToNumberNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_data_to_number_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_data_to_number_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DataToNumberConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_data_to_number_config(&mut self, v: DataToNumberNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::DataToNumberConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_data_to_number_config(&mut self) -> &mut DataToNumberNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::DataToNumberConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::DataToNumberConfig(DataToNumberNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DataToNumberConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_data_to_number_config(&mut self) -> DataToNumberNodeConfig {
-        if self.has_data_to_number_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::DataToNumberConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            DataToNumberNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ValueNodeConfig value_config = 51;
-
-    pub fn value_config(&self) -> &ValueNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ValueConfig(ref v)) => v,
-            _ => <ValueNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_value_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_value_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ValueConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_value_config(&mut self, v: ValueNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ValueConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_value_config(&mut self) -> &mut ValueNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ValueConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ValueConfig(ValueNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ValueConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_value_config(&mut self) -> ValueNodeConfig {
-        if self.has_value_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ValueConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ValueNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ExtractNodeConfig extract_config = 52;
-
-    pub fn extract_config(&self) -> &ExtractNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ExtractConfig(ref v)) => v,
-            _ => <ExtractNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_extract_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_extract_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ExtractConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_extract_config(&mut self, v: ExtractNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ExtractConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_extract_config(&mut self) -> &mut ExtractNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ExtractConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ExtractConfig(ExtractNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ExtractConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_extract_config(&mut self) -> ExtractNodeConfig {
-        if self.has_extract_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ExtractConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ExtractNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.PlanScreenNodeConfig plan_screen_config = 53;
-
-    pub fn plan_screen_config(&self) -> &PlanScreenNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PlanScreenConfig(ref v)) => v,
-            _ => <PlanScreenNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_plan_screen_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_plan_screen_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PlanScreenConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_plan_screen_config(&mut self, v: PlanScreenNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::PlanScreenConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_plan_screen_config(&mut self) -> &mut PlanScreenNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::PlanScreenConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::PlanScreenConfig(PlanScreenNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::PlanScreenConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_plan_screen_config(&mut self) -> PlanScreenNodeConfig {
-        if self.has_plan_screen_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::PlanScreenConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            PlanScreenNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.DelayNodeConfig delay_config = 54;
-
-    pub fn delay_config(&self) -> &DelayNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DelayConfig(ref v)) => v,
-            _ => <DelayNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_delay_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_delay_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DelayConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_delay_config(&mut self, v: DelayNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::DelayConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_delay_config(&mut self) -> &mut DelayNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::DelayConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::DelayConfig(DelayNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::DelayConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_delay_config(&mut self) -> DelayNodeConfig {
-        if self.has_delay_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::DelayConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            DelayNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.RampNodeConfig ramp_config = 55;
-
-    pub fn ramp_config(&self) -> &RampNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::RampConfig(ref v)) => v,
-            _ => <RampNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_ramp_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_ramp_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::RampConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_ramp_config(&mut self, v: RampNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::RampConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_ramp_config(&mut self) -> &mut RampNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::RampConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::RampConfig(RampNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::RampConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_ramp_config(&mut self) -> RampNodeConfig {
-        if self.has_ramp_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::RampConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            RampNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.NoiseNodeConfig noise_config = 56;
-
-    pub fn noise_config(&self) -> &NoiseNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NoiseConfig(ref v)) => v,
-            _ => <NoiseNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_noise_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_noise_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NoiseConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_noise_config(&mut self, v: NoiseNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::NoiseConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_noise_config(&mut self) -> &mut NoiseNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::NoiseConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::NoiseConfig(NoiseNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::NoiseConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_noise_config(&mut self) -> NoiseNodeConfig {
-        if self.has_noise_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::NoiseConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            NoiseNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.LabelNodeConfig label_config = 57;
-
-    pub fn label_config(&self) -> &LabelNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LabelConfig(ref v)) => v,
-            _ => <LabelNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_label_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_label_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LabelConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_label_config(&mut self, v: LabelNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::LabelConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_label_config(&mut self) -> &mut LabelNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::LabelConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::LabelConfig(LabelNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::LabelConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_label_config(&mut self) -> LabelNodeConfig {
-        if self.has_label_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::LabelConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            LabelNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.TransportNodeConfig transport_config = 58;
-
-    pub fn transport_config(&self) -> &TransportNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TransportConfig(ref v)) => v,
-            _ => <TransportNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_transport_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_transport_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TransportConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_transport_config(&mut self, v: TransportNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::TransportConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_transport_config(&mut self) -> &mut TransportNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::TransportConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::TransportConfig(TransportNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TransportConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_transport_config(&mut self) -> TransportNodeConfig {
-        if self.has_transport_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::TransportConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            TransportNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.G13InputNodeConfig g13_input_config = 59;
-
-    pub fn g13_input_config(&self) -> &G13InputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13InputConfig(ref v)) => v,
-            _ => <G13InputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_g13_input_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_g13_input_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13InputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_g13_input_config(&mut self, v: G13InputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::G13InputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_g13_input_config(&mut self) -> &mut G13InputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::G13InputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::G13InputConfig(G13InputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13InputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_g13_input_config(&mut self) -> G13InputNodeConfig {
-        if self.has_g13_input_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::G13InputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            G13InputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.G13OutputNodeConfig g13_output_config = 60;
-
-    pub fn g13_output_config(&self) -> &G13OutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13OutputConfig(ref v)) => v,
-            _ => <G13OutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_g13_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_g13_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13OutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_g13_output_config(&mut self, v: G13OutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::G13OutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_g13_output_config(&mut self) -> &mut G13OutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::G13OutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::G13OutputConfig(G13OutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::G13OutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_g13_output_config(&mut self) -> G13OutputNodeConfig {
-        if self.has_g13_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::G13OutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            G13OutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ConstantNumberNodeConfig constant_number_config = 61;
-
-    pub fn constant_number_config(&self) -> &ConstantNumberNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(ref v)) => v,
-            _ => <ConstantNumberNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_constant_number_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_constant_number_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_constant_number_config(&mut self, v: ConstantNumberNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_constant_number_config(&mut self) -> &mut ConstantNumberNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(ConstantNumberNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_constant_number_config(&mut self) -> ConstantNumberNodeConfig {
-        if self.has_constant_number_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ConstantNumberNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ConditionalNodeConfig conditional_config = 62;
-
-    pub fn conditional_config(&self) -> &ConditionalNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConditionalConfig(ref v)) => v,
-            _ => <ConditionalNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_conditional_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_conditional_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConditionalConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_conditional_config(&mut self, v: ConditionalNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ConditionalConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_conditional_config(&mut self) -> &mut ConditionalNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ConditionalConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ConditionalConfig(ConditionalNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ConditionalConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_conditional_config(&mut self) -> ConditionalNodeConfig {
-        if self.has_conditional_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ConditionalConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ConditionalNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.TimecodeControlNodeConfig timecode_control_config = 63;
-
-    pub fn timecode_control_config(&self) -> &TimecodeControlNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(ref v)) => v,
-            _ => <TimecodeControlNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_timecode_control_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_timecode_control_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_timecode_control_config(&mut self, v: TimecodeControlNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_timecode_control_config(&mut self) -> &mut TimecodeControlNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(TimecodeControlNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_timecode_control_config(&mut self) -> TimecodeControlNodeConfig {
-        if self.has_timecode_control_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            TimecodeControlNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.TimecodeOutputNodeConfig timecode_output_config = 64;
-
-    pub fn timecode_output_config(&self) -> &TimecodeOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(ref v)) => v,
-            _ => <TimecodeOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_timecode_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_timecode_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_timecode_output_config(&mut self, v: TimecodeOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_timecode_output_config(&mut self) -> &mut TimecodeOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(TimecodeOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_timecode_output_config(&mut self) -> TimecodeOutputNodeConfig {
-        if self.has_timecode_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            TimecodeOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioFileNodeConfig audio_file_config = 65;
-
-    pub fn audio_file_config(&self) -> &AudioFileNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioFileConfig(ref v)) => v,
-            _ => <AudioFileNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_file_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_file_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioFileConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_file_config(&mut self, v: AudioFileNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioFileConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_file_config(&mut self) -> &mut AudioFileNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioFileConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioFileConfig(AudioFileNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioFileConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_file_config(&mut self) -> AudioFileNodeConfig {
-        if self.has_audio_file_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioFileConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioFileNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioOutputNodeConfig audio_output_config = 66;
-
-    pub fn audio_output_config(&self) -> &AudioOutputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioOutputConfig(ref v)) => v,
-            _ => <AudioOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_output_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_output_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_output_config(&mut self, v: AudioOutputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_output_config(&mut self) -> &mut AudioOutputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioOutputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioOutputConfig(AudioOutputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_output_config(&mut self) -> AudioOutputNodeConfig {
-        if self.has_audio_output_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioVolumeNodeConfig audio_volume_config = 67;
-
-    pub fn audio_volume_config(&self) -> &AudioVolumeNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(ref v)) => v,
-            _ => <AudioVolumeNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_volume_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_volume_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_volume_config(&mut self, v: AudioVolumeNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_volume_config(&mut self) -> &mut AudioVolumeNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(AudioVolumeNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_volume_config(&mut self) -> AudioVolumeNodeConfig {
-        if self.has_audio_volume_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioVolumeNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioInputNodeConfig audio_input_config = 68;
-
-    pub fn audio_input_config(&self) -> &AudioInputNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioInputConfig(ref v)) => v,
-            _ => <AudioInputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_input_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_input_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_input_config(&mut self, v: AudioInputNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_input_config(&mut self) -> &mut AudioInputNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioInputConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioInputConfig(AudioInputNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_input_config(&mut self) -> AudioInputNodeConfig {
-        if self.has_audio_input_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioInputNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioMixNodeConfig audio_mix_config = 69;
-
-    pub fn audio_mix_config(&self) -> &AudioMixNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMixConfig(ref v)) => v,
-            _ => <AudioMixNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_mix_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_mix_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMixConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_mix_config(&mut self, v: AudioMixNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioMixConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_mix_config(&mut self) -> &mut AudioMixNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioMixConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioMixConfig(AudioMixNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMixConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_mix_config(&mut self) -> AudioMixNodeConfig {
-        if self.has_audio_mix_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioMixConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioMixNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.AudioMeterNodeConfig audio_meter_config = 70;
-
-    pub fn audio_meter_config(&self) -> &AudioMeterNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMeterConfig(ref v)) => v,
-            _ => <AudioMeterNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_audio_meter_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_audio_meter_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMeterConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_audio_meter_config(&mut self, v: AudioMeterNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::AudioMeterConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_audio_meter_config(&mut self) -> &mut AudioMeterNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::AudioMeterConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::AudioMeterConfig(AudioMeterNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::AudioMeterConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_audio_meter_config(&mut self) -> AudioMeterNodeConfig {
-        if self.has_audio_meter_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::AudioMeterConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AudioMeterNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.TemplateNodeConfig template_config = 71;
-
-    pub fn template_config(&self) -> &TemplateNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TemplateConfig(ref v)) => v,
-            _ => <TemplateNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_template_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_template_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TemplateConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_template_config(&mut self, v: TemplateNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_template_config(&mut self) -> &mut TemplateNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::TemplateConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(TemplateNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::TemplateConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_template_config(&mut self) -> TemplateNodeConfig {
-        if self.has_template_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::TemplateConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            TemplateNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ColorConstantNodeConfig color_constant_config = 72;
-
-    pub fn color_constant_config(&self) -> &ColorConstantNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ref v)) => v,
-            _ => <ColorConstantNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_color_constant_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_color_constant_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_color_constant_config(&mut self, v: ColorConstantNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_color_constant_config(&mut self) -> &mut ColorConstantNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ColorConstantConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ColorConstantNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorConstantConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_color_constant_config(&mut self) -> ColorConstantNodeConfig {
-        if self.has_color_constant_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ColorConstantConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ColorConstantNodeConfig::new()
-        }
-    }
-
-    // .mizer.nodes.ColorBrightnessNodeConfig color_brightness_config = 73;
-
-    pub fn color_brightness_config(&self) -> &ColorBrightnessNodeConfig {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ref v)) => v,
-            _ => <ColorBrightnessNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_color_brightness_config(&mut self) {
-        self.type_ = ::std::option::Option::None;
-    }
-
-    pub fn has_color_brightness_config(&self) -> bool {
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_color_brightness_config(&mut self, v: ColorBrightnessNodeConfig) {
-        self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_color_brightness_config(&mut self) -> &mut ColorBrightnessNodeConfig {
-        if let ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(_)) = self.type_ {
-        } else {
-            self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ColorBrightnessNodeConfig::new()));
-        }
-        match self.type_ {
-            ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_color_brightness_config(&mut self) -> ColorBrightnessNodeConfig {
-        if self.has_color_brightness_config() {
-            match self.type_.take() {
-                ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ColorBrightnessNodeConfig::new()
-        }
-    }
-
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(63);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscillatorNodeConfig>(
-            "oscillator_config",
-            NodeConfig::has_oscillator_config,
-            NodeConfig::oscillator_config,
-            NodeConfig::mut_oscillator_config,
-            NodeConfig::set_oscillator_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ScriptingNodeConfig>(
-            "scripting_config",
-            NodeConfig::has_scripting_config,
-            NodeConfig::scripting_config,
-            NodeConfig::mut_scripting_config,
-            NodeConfig::set_scripting_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SequenceNodeConfig>(
-            "sequence_config",
-            NodeConfig::has_sequence_config,
-            NodeConfig::sequence_config,
-            NodeConfig::mut_sequence_config,
-            NodeConfig::set_sequence_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ClockNodeConfig>(
-            "clock_config",
-            NodeConfig::has_clock_config,
-            NodeConfig::clock_config,
-            NodeConfig::mut_clock_config,
-            NodeConfig::set_clock_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, FixtureNodeConfig>(
-            "fixture_config",
-            NodeConfig::has_fixture_config,
-            NodeConfig::fixture_config,
-            NodeConfig::mut_fixture_config,
-            NodeConfig::set_fixture_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ButtonNodeConfig>(
-            "button_config",
-            NodeConfig::has_button_config,
-            NodeConfig::button_config,
-            NodeConfig::mut_button_config,
-            NodeConfig::set_button_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, FaderNodeConfig>(
-            "fader_config",
-            NodeConfig::has_fader_config,
-            NodeConfig::fader_config,
-            NodeConfig::mut_fader_config,
-            NodeConfig::set_fader_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, IldaFileNodeConfig>(
-            "ilda_file_config",
-            NodeConfig::has_ilda_file_config,
-            NodeConfig::ilda_file_config,
-            NodeConfig::mut_ilda_file_config,
-            NodeConfig::set_ilda_file_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, LaserNodeConfig>(
-            "laser_config",
-            NodeConfig::has_laser_config,
-            NodeConfig::laser_config,
-            NodeConfig::mut_laser_config,
-            NodeConfig::set_laser_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PixelPatternNodeConfig>(
-            "pixel_pattern_config",
-            NodeConfig::has_pixel_pattern_config,
-            NodeConfig::pixel_pattern_config,
-            NodeConfig::mut_pixel_pattern_config,
-            NodeConfig::set_pixel_pattern_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PixelDmxNodeConfig>(
-            "pixel_dmx_config",
-            NodeConfig::has_pixel_dmx_config,
-            NodeConfig::pixel_dmx_config,
-            NodeConfig::mut_pixel_dmx_config,
-            NodeConfig::set_pixel_dmx_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DmxOutputNodeConfig>(
-            "dmx_output_config",
-            NodeConfig::has_dmx_output_config,
-            NodeConfig::dmx_output_config,
-            NodeConfig::mut_dmx_output_config,
-            NodeConfig::set_dmx_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MidiNodeConfig>(
-            "midi_input_config",
-            NodeConfig::has_midi_input_config,
-            NodeConfig::midi_input_config,
-            NodeConfig::mut_midi_input_config,
-            NodeConfig::set_midi_input_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MidiNodeConfig>(
-            "midi_output_config",
-            NodeConfig::has_midi_output_config,
-            NodeConfig::midi_output_config,
-            NodeConfig::mut_midi_output_config,
-            NodeConfig::set_midi_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OpcOutputNodeConfig>(
-            "opc_output_config",
-            NodeConfig::has_opc_output_config,
-            NodeConfig::opc_output_config,
-            NodeConfig::mut_opc_output_config,
-            NodeConfig::set_opc_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscNodeConfig>(
-            "osc_input_config",
-            NodeConfig::has_osc_input_config,
-            NodeConfig::osc_input_config,
-            NodeConfig::mut_osc_input_config,
-            NodeConfig::set_osc_input_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscNodeConfig>(
-            "osc_output_config",
-            NodeConfig::has_osc_output_config,
-            NodeConfig::osc_output_config,
-            NodeConfig::mut_osc_output_config,
-            NodeConfig::set_osc_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoColorBalanceNodeConfig>(
-            "video_color_balance_config",
-            NodeConfig::has_video_color_balance_config,
-            NodeConfig::video_color_balance_config,
-            NodeConfig::mut_video_color_balance_config,
-            NodeConfig::set_video_color_balance_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoEffectNodeConfig>(
-            "video_effect_config",
-            NodeConfig::has_video_effect_config,
-            NodeConfig::video_effect_config,
-            NodeConfig::mut_video_effect_config,
-            NodeConfig::set_video_effect_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoFileNodeConfig>(
-            "video_file_config",
-            NodeConfig::has_video_file_config,
-            NodeConfig::video_file_config,
-            NodeConfig::mut_video_file_config,
-            NodeConfig::set_video_file_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoOutputNodeConfig>(
-            "video_output_config",
-            NodeConfig::has_video_output_config,
-            NodeConfig::video_output_config,
-            NodeConfig::mut_video_output_config,
-            NodeConfig::set_video_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, VideoTransformNodeConfig>(
-            "video_transform_config",
-            NodeConfig::has_video_transform_config,
-            NodeConfig::video_transform_config,
-            NodeConfig::mut_video_transform_config,
-            NodeConfig::set_video_transform_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SelectNodeConfig>(
-            "select_config",
-            NodeConfig::has_select_config,
-            NodeConfig::select_config,
-            NodeConfig::mut_select_config,
-            NodeConfig::set_select_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MergeNodeConfig>(
-            "merge_config",
-            NodeConfig::has_merge_config,
-            NodeConfig::merge_config,
-            NodeConfig::mut_merge_config,
-            NodeConfig::set_merge_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, EnvelopeNodeConfig>(
-            "envelope_config",
-            NodeConfig::has_envelope_config,
-            NodeConfig::envelope_config,
-            NodeConfig::mut_envelope_config,
-            NodeConfig::set_envelope_config,
-        ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, SequencerNodeConfig>(
             "sequencer_config",
             NodeConfig::has_sequencer_config,
             NodeConfig::sequencer_config,
             NodeConfig::mut_sequencer_config,
             NodeConfig::set_sequencer_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ProgrammerNodeConfig>(
-            "programmer_config",
-            NodeConfig::has_programmer_config,
-            NodeConfig::programmer_config,
-            NodeConfig::mut_programmer_config,
-            NodeConfig::set_programmer_config,
         ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, GroupNodeConfig>(
             "group_config",
@@ -6722,243 +3565,12 @@ impl NodeConfig {
             NodeConfig::mut_preset_config,
             NodeConfig::set_preset_config,
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorRgbNodeConfig>(
-            "color_rgb_config",
-            NodeConfig::has_color_rgb_config,
-            NodeConfig::color_rgb_config,
-            NodeConfig::mut_color_rgb_config,
-            NodeConfig::set_color_rgb_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorHsvNodeConfig>(
-            "color_hsv_config",
-            NodeConfig::has_color_hsv_config,
-            NodeConfig::color_hsv_config,
-            NodeConfig::mut_color_hsv_config,
-            NodeConfig::set_color_hsv_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, GamepadNodeConfig>(
-            "gamepad_node_config",
-            NodeConfig::has_gamepad_node_config,
-            NodeConfig::gamepad_node_config,
-            NodeConfig::mut_gamepad_node_config,
-            NodeConfig::set_gamepad_node_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ThresholdNodeConfig>(
-            "threshold_config",
-            NodeConfig::has_threshold_config,
-            NodeConfig::threshold_config,
-            NodeConfig::mut_threshold_config,
-            NodeConfig::set_threshold_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, EncoderNodeConfig>(
-            "encoder_config",
-            NodeConfig::has_encoder_config,
-            NodeConfig::encoder_config,
-            NodeConfig::mut_encoder_config,
-            NodeConfig::set_encoder_config,
-        ));
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ContainerNodeConfig>(
             "container_config",
             NodeConfig::has_container_config,
             NodeConfig::container_config,
             NodeConfig::mut_container_config,
             NodeConfig::set_container_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MathNodeConfig>(
-            "math_config",
-            NodeConfig::has_math_config,
-            NodeConfig::math_config,
-            NodeConfig::mut_math_config,
-            NodeConfig::set_math_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MqttInputNodeConfig>(
-            "mqtt_input_config",
-            NodeConfig::has_mqtt_input_config,
-            NodeConfig::mqtt_input_config,
-            NodeConfig::mut_mqtt_input_config,
-            NodeConfig::set_mqtt_input_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, MqttOutputNodeConfig>(
-            "mqtt_output_config",
-            NodeConfig::has_mqtt_output_config,
-            NodeConfig::mqtt_output_config,
-            NodeConfig::mut_mqtt_output_config,
-            NodeConfig::set_mqtt_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, NumberToDataNodeConfig>(
-            "number_to_data_config",
-            NodeConfig::has_number_to_data_config,
-            NodeConfig::number_to_data_config,
-            NodeConfig::mut_number_to_data_config,
-            NodeConfig::set_number_to_data_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DataToNumberNodeConfig>(
-            "data_to_number_config",
-            NodeConfig::has_data_to_number_config,
-            NodeConfig::data_to_number_config,
-            NodeConfig::mut_data_to_number_config,
-            NodeConfig::set_data_to_number_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ValueNodeConfig>(
-            "value_config",
-            NodeConfig::has_value_config,
-            NodeConfig::value_config,
-            NodeConfig::mut_value_config,
-            NodeConfig::set_value_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ExtractNodeConfig>(
-            "extract_config",
-            NodeConfig::has_extract_config,
-            NodeConfig::extract_config,
-            NodeConfig::mut_extract_config,
-            NodeConfig::set_extract_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PlanScreenNodeConfig>(
-            "plan_screen_config",
-            NodeConfig::has_plan_screen_config,
-            NodeConfig::plan_screen_config,
-            NodeConfig::mut_plan_screen_config,
-            NodeConfig::set_plan_screen_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DelayNodeConfig>(
-            "delay_config",
-            NodeConfig::has_delay_config,
-            NodeConfig::delay_config,
-            NodeConfig::mut_delay_config,
-            NodeConfig::set_delay_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, RampNodeConfig>(
-            "ramp_config",
-            NodeConfig::has_ramp_config,
-            NodeConfig::ramp_config,
-            NodeConfig::mut_ramp_config,
-            NodeConfig::set_ramp_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, NoiseNodeConfig>(
-            "noise_config",
-            NodeConfig::has_noise_config,
-            NodeConfig::noise_config,
-            NodeConfig::mut_noise_config,
-            NodeConfig::set_noise_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, LabelNodeConfig>(
-            "label_config",
-            NodeConfig::has_label_config,
-            NodeConfig::label_config,
-            NodeConfig::mut_label_config,
-            NodeConfig::set_label_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TransportNodeConfig>(
-            "transport_config",
-            NodeConfig::has_transport_config,
-            NodeConfig::transport_config,
-            NodeConfig::mut_transport_config,
-            NodeConfig::set_transport_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, G13InputNodeConfig>(
-            "g13_input_config",
-            NodeConfig::has_g13_input_config,
-            NodeConfig::g13_input_config,
-            NodeConfig::mut_g13_input_config,
-            NodeConfig::set_g13_input_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, G13OutputNodeConfig>(
-            "g13_output_config",
-            NodeConfig::has_g13_output_config,
-            NodeConfig::g13_output_config,
-            NodeConfig::mut_g13_output_config,
-            NodeConfig::set_g13_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ConstantNumberNodeConfig>(
-            "constant_number_config",
-            NodeConfig::has_constant_number_config,
-            NodeConfig::constant_number_config,
-            NodeConfig::mut_constant_number_config,
-            NodeConfig::set_constant_number_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ConditionalNodeConfig>(
-            "conditional_config",
-            NodeConfig::has_conditional_config,
-            NodeConfig::conditional_config,
-            NodeConfig::mut_conditional_config,
-            NodeConfig::set_conditional_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TimecodeControlNodeConfig>(
-            "timecode_control_config",
-            NodeConfig::has_timecode_control_config,
-            NodeConfig::timecode_control_config,
-            NodeConfig::mut_timecode_control_config,
-            NodeConfig::set_timecode_control_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TimecodeOutputNodeConfig>(
-            "timecode_output_config",
-            NodeConfig::has_timecode_output_config,
-            NodeConfig::timecode_output_config,
-            NodeConfig::mut_timecode_output_config,
-            NodeConfig::set_timecode_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioFileNodeConfig>(
-            "audio_file_config",
-            NodeConfig::has_audio_file_config,
-            NodeConfig::audio_file_config,
-            NodeConfig::mut_audio_file_config,
-            NodeConfig::set_audio_file_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioOutputNodeConfig>(
-            "audio_output_config",
-            NodeConfig::has_audio_output_config,
-            NodeConfig::audio_output_config,
-            NodeConfig::mut_audio_output_config,
-            NodeConfig::set_audio_output_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioVolumeNodeConfig>(
-            "audio_volume_config",
-            NodeConfig::has_audio_volume_config,
-            NodeConfig::audio_volume_config,
-            NodeConfig::mut_audio_volume_config,
-            NodeConfig::set_audio_volume_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioInputNodeConfig>(
-            "audio_input_config",
-            NodeConfig::has_audio_input_config,
-            NodeConfig::audio_input_config,
-            NodeConfig::mut_audio_input_config,
-            NodeConfig::set_audio_input_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioMixNodeConfig>(
-            "audio_mix_config",
-            NodeConfig::has_audio_mix_config,
-            NodeConfig::audio_mix_config,
-            NodeConfig::mut_audio_mix_config,
-            NodeConfig::set_audio_mix_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, AudioMeterNodeConfig>(
-            "audio_meter_config",
-            NodeConfig::has_audio_meter_config,
-            NodeConfig::audio_meter_config,
-            NodeConfig::mut_audio_meter_config,
-            NodeConfig::set_audio_meter_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, TemplateNodeConfig>(
-            "template_config",
-            NodeConfig::has_template_config,
-            NodeConfig::template_config,
-            NodeConfig::mut_template_config,
-            NodeConfig::set_template_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorConstantNodeConfig>(
-            "color_constant_config",
-            NodeConfig::has_color_constant_config,
-            NodeConfig::color_constant_config,
-            NodeConfig::mut_color_constant_config,
-            NodeConfig::set_color_constant_config,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, ColorBrightnessNodeConfig>(
-            "color_brightness_config",
-            NodeConfig::has_color_brightness_config,
-            NodeConfig::color_brightness_config,
-            NodeConfig::mut_color_brightness_config,
-            NodeConfig::set_color_brightness_config,
         ));
         oneofs.push(node_config::Type::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeConfig>(
@@ -6979,86 +3591,8 @@ impl ::protobuf::Message for NodeConfig {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
-                82 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::OscillatorConfig(is.read_message()?));
-                },
-                90 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ScriptingConfig(is.read_message()?));
-                },
-                98 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::SequenceConfig(is.read_message()?));
-                },
-                106 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ClockConfig(is.read_message()?));
-                },
-                114 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::FixtureConfig(is.read_message()?));
-                },
-                122 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ButtonConfig(is.read_message()?));
-                },
-                130 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::FaderConfig(is.read_message()?));
-                },
-                138 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::IldaFileConfig(is.read_message()?));
-                },
-                146 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::LaserConfig(is.read_message()?));
-                },
-                154 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::PixelPatternConfig(is.read_message()?));
-                },
-                162 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::PixelDmxConfig(is.read_message()?));
-                },
-                170 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::DmxOutputConfig(is.read_message()?));
-                },
-                178 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MidiInputConfig(is.read_message()?));
-                },
-                186 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MidiOutputConfig(is.read_message()?));
-                },
-                194 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::OpcOutputConfig(is.read_message()?));
-                },
-                202 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::OscInputConfig(is.read_message()?));
-                },
-                210 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::OscOutputConfig(is.read_message()?));
-                },
-                218 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::VideoColorBalanceConfig(is.read_message()?));
-                },
-                226 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::VideoEffectConfig(is.read_message()?));
-                },
-                234 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::VideoFileConfig(is.read_message()?));
-                },
-                242 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::VideoOutputConfig(is.read_message()?));
-                },
-                250 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::VideoTransformConfig(is.read_message()?));
-                },
-                258 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::SelectConfig(is.read_message()?));
-                },
-                266 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MergeConfig(is.read_message()?));
-                },
-                274 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::EnvelopeConfig(is.read_message()?));
-                },
                 282 => {
                     self.type_ = ::std::option::Option::Some(node_config::Type::SequencerConfig(is.read_message()?));
-                },
-                290 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ProgrammerConfig(is.read_message()?));
                 },
                 298 => {
                     self.type_ = ::std::option::Option::Some(node_config::Type::GroupConfig(is.read_message()?));
@@ -7066,107 +3600,8 @@ impl ::protobuf::Message for NodeConfig {
                 306 => {
                     self.type_ = ::std::option::Option::Some(node_config::Type::PresetConfig(is.read_message()?));
                 },
-                322 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorRgbConfig(is.read_message()?));
-                },
-                330 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorHsvConfig(is.read_message()?));
-                },
-                338 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::GamepadNodeConfig(is.read_message()?));
-                },
-                346 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ThresholdConfig(is.read_message()?));
-                },
-                354 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::EncoderConfig(is.read_message()?));
-                },
                 362 => {
                     self.type_ = ::std::option::Option::Some(node_config::Type::ContainerConfig(is.read_message()?));
-                },
-                370 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MathConfig(is.read_message()?));
-                },
-                378 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MqttInputConfig(is.read_message()?));
-                },
-                386 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::MqttOutputConfig(is.read_message()?));
-                },
-                394 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::NumberToDataConfig(is.read_message()?));
-                },
-                402 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::DataToNumberConfig(is.read_message()?));
-                },
-                410 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ValueConfig(is.read_message()?));
-                },
-                418 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ExtractConfig(is.read_message()?));
-                },
-                426 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::PlanScreenConfig(is.read_message()?));
-                },
-                434 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::DelayConfig(is.read_message()?));
-                },
-                442 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::RampConfig(is.read_message()?));
-                },
-                450 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::NoiseConfig(is.read_message()?));
-                },
-                458 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::LabelConfig(is.read_message()?));
-                },
-                466 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::TransportConfig(is.read_message()?));
-                },
-                474 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::G13InputConfig(is.read_message()?));
-                },
-                482 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::G13OutputConfig(is.read_message()?));
-                },
-                490 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ConstantNumberConfig(is.read_message()?));
-                },
-                498 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ConditionalConfig(is.read_message()?));
-                },
-                506 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeControlConfig(is.read_message()?));
-                },
-                514 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::TimecodeOutputConfig(is.read_message()?));
-                },
-                522 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioFileConfig(is.read_message()?));
-                },
-                530 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioOutputConfig(is.read_message()?));
-                },
-                538 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioVolumeConfig(is.read_message()?));
-                },
-                546 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioInputConfig(is.read_message()?));
-                },
-                554 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioMixConfig(is.read_message()?));
-                },
-                562 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::AudioMeterConfig(is.read_message()?));
-                },
-                570 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::TemplateConfig(is.read_message()?));
-                },
-                578 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorConstantConfig(is.read_message()?));
-                },
-                586 => {
-                    self.type_ = ::std::option::Option::Some(node_config::Type::ColorBrightnessConfig(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -7182,111 +3617,7 @@ impl ::protobuf::Message for NodeConfig {
         let mut my_size = 0;
         if let ::std::option::Option::Some(ref v) = self.type_ {
             match v {
-                &node_config::Type::OscillatorConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ScriptingConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::SequenceConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ClockConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::FixtureConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ButtonConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::FaderConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::IldaFileConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::LaserConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::PixelPatternConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::PixelDmxConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::DmxOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MidiInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MidiOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::OpcOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::OscInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::OscOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::VideoColorBalanceConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::VideoEffectConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::VideoFileConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::VideoOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::VideoTransformConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::SelectConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MergeConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::EnvelopeConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
                 &node_config::Type::SequencerConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ProgrammerConfig(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
@@ -7298,139 +3629,7 @@ impl ::protobuf::Message for NodeConfig {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
-                &node_config::Type::ColorRgbConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ColorHsvConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::GamepadNodeConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ThresholdConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::EncoderConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
                 &node_config::Type::ContainerConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MathConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MqttInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::MqttOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::NumberToDataConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::DataToNumberConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ValueConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ExtractConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::PlanScreenConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::DelayConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::RampConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::NoiseConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::LabelConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::TransportConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::G13InputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::G13OutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ConstantNumberConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ConditionalConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::TimecodeControlConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::TimecodeOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioFileConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioVolumeConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioMixConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::AudioMeterConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::TemplateConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ColorConstantConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &node_config::Type::ColorBrightnessConfig(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
@@ -7444,86 +3643,8 @@ impl ::protobuf::Message for NodeConfig {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
         if let ::std::option::Option::Some(ref v) = self.type_ {
             match v {
-                &node_config::Type::OscillatorConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
-                },
-                &node_config::Type::ScriptingConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
-                },
-                &node_config::Type::SequenceConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
-                },
-                &node_config::Type::ClockConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
-                },
-                &node_config::Type::FixtureConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(14, v, os)?;
-                },
-                &node_config::Type::ButtonConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(15, v, os)?;
-                },
-                &node_config::Type::FaderConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(16, v, os)?;
-                },
-                &node_config::Type::IldaFileConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(17, v, os)?;
-                },
-                &node_config::Type::LaserConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(18, v, os)?;
-                },
-                &node_config::Type::PixelPatternConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(19, v, os)?;
-                },
-                &node_config::Type::PixelDmxConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(20, v, os)?;
-                },
-                &node_config::Type::DmxOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(21, v, os)?;
-                },
-                &node_config::Type::MidiInputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(22, v, os)?;
-                },
-                &node_config::Type::MidiOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(23, v, os)?;
-                },
-                &node_config::Type::OpcOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(24, v, os)?;
-                },
-                &node_config::Type::OscInputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(25, v, os)?;
-                },
-                &node_config::Type::OscOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(26, v, os)?;
-                },
-                &node_config::Type::VideoColorBalanceConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(27, v, os)?;
-                },
-                &node_config::Type::VideoEffectConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(28, v, os)?;
-                },
-                &node_config::Type::VideoFileConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(29, v, os)?;
-                },
-                &node_config::Type::VideoOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(30, v, os)?;
-                },
-                &node_config::Type::VideoTransformConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(31, v, os)?;
-                },
-                &node_config::Type::SelectConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(32, v, os)?;
-                },
-                &node_config::Type::MergeConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(33, v, os)?;
-                },
-                &node_config::Type::EnvelopeConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(34, v, os)?;
-                },
                 &node_config::Type::SequencerConfig(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(35, v, os)?;
-                },
-                &node_config::Type::ProgrammerConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(36, v, os)?;
                 },
                 &node_config::Type::GroupConfig(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(37, v, os)?;
@@ -7531,107 +3652,8 @@ impl ::protobuf::Message for NodeConfig {
                 &node_config::Type::PresetConfig(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(38, v, os)?;
                 },
-                &node_config::Type::ColorRgbConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(40, v, os)?;
-                },
-                &node_config::Type::ColorHsvConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(41, v, os)?;
-                },
-                &node_config::Type::GamepadNodeConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(42, v, os)?;
-                },
-                &node_config::Type::ThresholdConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(43, v, os)?;
-                },
-                &node_config::Type::EncoderConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(44, v, os)?;
-                },
                 &node_config::Type::ContainerConfig(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(45, v, os)?;
-                },
-                &node_config::Type::MathConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(46, v, os)?;
-                },
-                &node_config::Type::MqttInputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(47, v, os)?;
-                },
-                &node_config::Type::MqttOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(48, v, os)?;
-                },
-                &node_config::Type::NumberToDataConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(49, v, os)?;
-                },
-                &node_config::Type::DataToNumberConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(50, v, os)?;
-                },
-                &node_config::Type::ValueConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(51, v, os)?;
-                },
-                &node_config::Type::ExtractConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(52, v, os)?;
-                },
-                &node_config::Type::PlanScreenConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(53, v, os)?;
-                },
-                &node_config::Type::DelayConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(54, v, os)?;
-                },
-                &node_config::Type::RampConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(55, v, os)?;
-                },
-                &node_config::Type::NoiseConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(56, v, os)?;
-                },
-                &node_config::Type::LabelConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(57, v, os)?;
-                },
-                &node_config::Type::TransportConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(58, v, os)?;
-                },
-                &node_config::Type::G13InputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(59, v, os)?;
-                },
-                &node_config::Type::G13OutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(60, v, os)?;
-                },
-                &node_config::Type::ConstantNumberConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(61, v, os)?;
-                },
-                &node_config::Type::ConditionalConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(62, v, os)?;
-                },
-                &node_config::Type::TimecodeControlConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(63, v, os)?;
-                },
-                &node_config::Type::TimecodeOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(64, v, os)?;
-                },
-                &node_config::Type::AudioFileConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(65, v, os)?;
-                },
-                &node_config::Type::AudioOutputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(66, v, os)?;
-                },
-                &node_config::Type::AudioVolumeConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(67, v, os)?;
-                },
-                &node_config::Type::AudioInputConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(68, v, os)?;
-                },
-                &node_config::Type::AudioMixConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(69, v, os)?;
-                },
-                &node_config::Type::AudioMeterConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(70, v, os)?;
-                },
-                &node_config::Type::TemplateConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(71, v, os)?;
-                },
-                &node_config::Type::ColorConstantConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(72, v, os)?;
-                },
-                &node_config::Type::ColorBrightnessConfig(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(73, v, os)?;
                 },
             };
         }
@@ -7652,65 +3674,6 @@ impl ::protobuf::Message for NodeConfig {
     }
 
     fn clear(&mut self) {
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
-        self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
         self.type_ = ::std::option::Option::None;
@@ -7751,132 +3714,14 @@ pub mod node_config {
     #[non_exhaustive]
     // @@protoc_insertion_point(oneof:mizer.nodes.NodeConfig.type)
     pub enum Type {
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.oscillator_config)
-        OscillatorConfig(super::OscillatorNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.scripting_config)
-        ScriptingConfig(super::ScriptingNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequence_config)
-        SequenceConfig(super::SequenceNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.clock_config)
-        ClockConfig(super::ClockNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.fixture_config)
-        FixtureConfig(super::FixtureNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.button_config)
-        ButtonConfig(super::ButtonNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.fader_config)
-        FaderConfig(super::FaderNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.ilda_file_config)
-        IldaFileConfig(super::IldaFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.laser_config)
-        LaserConfig(super::LaserNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixel_pattern_config)
-        PixelPatternConfig(super::PixelPatternNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.pixel_dmx_config)
-        PixelDmxConfig(super::PixelDmxNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.dmx_output_config)
-        DmxOutputConfig(super::DmxOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midi_input_config)
-        MidiInputConfig(super::MidiNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.midi_output_config)
-        MidiOutputConfig(super::MidiNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.opc_output_config)
-        OpcOutputConfig(super::OpcOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.osc_input_config)
-        OscInputConfig(super::OscNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.osc_output_config)
-        OscOutputConfig(super::OscNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_color_balance_config)
-        VideoColorBalanceConfig(super::VideoColorBalanceNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_effect_config)
-        VideoEffectConfig(super::VideoEffectNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_file_config)
-        VideoFileConfig(super::VideoFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_output_config)
-        VideoOutputConfig(super::VideoOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.video_transform_config)
-        VideoTransformConfig(super::VideoTransformNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.select_config)
-        SelectConfig(super::SelectNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.merge_config)
-        MergeConfig(super::MergeNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.envelope_config)
-        EnvelopeConfig(super::EnvelopeNodeConfig),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.sequencer_config)
         SequencerConfig(super::SequencerNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.programmer_config)
-        ProgrammerConfig(super::ProgrammerNodeConfig),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.group_config)
         GroupConfig(super::GroupNodeConfig),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.preset_config)
         PresetConfig(super::PresetNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_rgb_config)
-        ColorRgbConfig(super::ColorRgbNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_hsv_config)
-        ColorHsvConfig(super::ColorHsvNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.gamepad_node_config)
-        GamepadNodeConfig(super::GamepadNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.threshold_config)
-        ThresholdConfig(super::ThresholdNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.encoder_config)
-        EncoderConfig(super::EncoderNodeConfig),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.container_config)
         ContainerConfig(super::ContainerNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.math_config)
-        MathConfig(super::MathNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqtt_input_config)
-        MqttInputConfig(super::MqttInputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.mqtt_output_config)
-        MqttOutputConfig(super::MqttOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.number_to_data_config)
-        NumberToDataConfig(super::NumberToDataNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.data_to_number_config)
-        DataToNumberConfig(super::DataToNumberNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.value_config)
-        ValueConfig(super::ValueNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.extract_config)
-        ExtractConfig(super::ExtractNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.plan_screen_config)
-        PlanScreenConfig(super::PlanScreenNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.delay_config)
-        DelayConfig(super::DelayNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.ramp_config)
-        RampConfig(super::RampNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.noise_config)
-        NoiseConfig(super::NoiseNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.label_config)
-        LabelConfig(super::LabelNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.transport_config)
-        TransportConfig(super::TransportNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13_input_config)
-        G13InputConfig(super::G13InputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.g13_output_config)
-        G13OutputConfig(super::G13OutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.constant_number_config)
-        ConstantNumberConfig(super::ConstantNumberNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.conditional_config)
-        ConditionalConfig(super::ConditionalNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecode_control_config)
-        TimecodeControlConfig(super::TimecodeControlNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.timecode_output_config)
-        TimecodeOutputConfig(super::TimecodeOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_file_config)
-        AudioFileConfig(super::AudioFileNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_output_config)
-        AudioOutputConfig(super::AudioOutputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_volume_config)
-        AudioVolumeConfig(super::AudioVolumeNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_input_config)
-        AudioInputConfig(super::AudioInputNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_mix_config)
-        AudioMixConfig(super::AudioMixNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.audio_meter_config)
-        AudioMeterConfig(super::AudioMeterNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.template_config)
-        TemplateConfig(super::TemplateNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_constant_config)
-        ColorConstantConfig(super::ColorConstantNodeConfig),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeConfig.color_brightness_config)
-        ColorBrightnessConfig(super::ColorBrightnessNodeConfig),
     }
 
     impl ::protobuf::Oneof for Type {
@@ -7897,80 +3742,510 @@ pub mod node_config {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.OscillatorNodeConfig)
-pub struct OscillatorNodeConfig {
+// @@protoc_insertion_point(message:mizer.nodes.NodeSetting)
+pub struct NodeSetting {
     // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.type)
-    pub type_: ::protobuf::EnumOrUnknown<oscillator_node_config::OscillatorType>,
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.ratio)
-    pub ratio: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.max)
-    pub max: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.min)
-    pub min: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.offset)
-    pub offset: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.OscillatorNodeConfig.reverse)
-    pub reverse: bool,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.label)
+    pub label: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.description)
+    pub description: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.disabled)
+    pub disabled: bool,
+    // message oneof groups
+    pub value: ::std::option::Option<node_setting::Value>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.OscillatorNodeConfig.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
-impl<'a> ::std::default::Default for &'a OscillatorNodeConfig {
-    fn default() -> &'a OscillatorNodeConfig {
-        <OscillatorNodeConfig as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a NodeSetting {
+    fn default() -> &'a NodeSetting {
+        <NodeSetting as ::protobuf::Message>::default_instance()
     }
 }
 
-impl OscillatorNodeConfig {
-    pub fn new() -> OscillatorNodeConfig {
+impl NodeSetting {
+    pub fn new() -> NodeSetting {
         ::std::default::Default::default()
     }
 
+    // .mizer.nodes.NodeSetting.TextValue text = 4;
+
+    pub fn text(&self) -> &node_setting::TextValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Text(ref v)) => v,
+            _ => <node_setting::TextValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_text(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_text(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Text(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_text(&mut self, v: node_setting::TextValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Text(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_text(&mut self) -> &mut node_setting::TextValue {
+        if let ::std::option::Option::Some(node_setting::Value::Text(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Text(node_setting::TextValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Text(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_text(&mut self) -> node_setting::TextValue {
+        if self.has_text() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Text(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::TextValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.FloatValue float = 5;
+
+    pub fn float(&self) -> &node_setting::FloatValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Float(ref v)) => v,
+            _ => <node_setting::FloatValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_float(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_float(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Float(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_float(&mut self, v: node_setting::FloatValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Float(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_float(&mut self) -> &mut node_setting::FloatValue {
+        if let ::std::option::Option::Some(node_setting::Value::Float(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Float(node_setting::FloatValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Float(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_float(&mut self) -> node_setting::FloatValue {
+        if self.has_float() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Float(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::FloatValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.IntValue int = 6;
+
+    pub fn int(&self) -> &node_setting::IntValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Int(ref v)) => v,
+            _ => <node_setting::IntValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_int(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_int(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Int(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_int(&mut self, v: node_setting::IntValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Int(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_int(&mut self) -> &mut node_setting::IntValue {
+        if let ::std::option::Option::Some(node_setting::Value::Int(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Int(node_setting::IntValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Int(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_int(&mut self) -> node_setting::IntValue {
+        if self.has_int() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Int(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::IntValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.BoolValue bool = 7;
+
+    pub fn bool(&self) -> &node_setting::BoolValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Bool(ref v)) => v,
+            _ => <node_setting::BoolValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_bool(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_bool(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Bool(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_bool(&mut self, v: node_setting::BoolValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Bool(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_bool(&mut self) -> &mut node_setting::BoolValue {
+        if let ::std::option::Option::Some(node_setting::Value::Bool(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Bool(node_setting::BoolValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Bool(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_bool(&mut self) -> node_setting::BoolValue {
+        if self.has_bool() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Bool(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::BoolValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.SelectValue select = 8;
+
+    pub fn select(&self) -> &node_setting::SelectValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Select(ref v)) => v,
+            _ => <node_setting::SelectValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_select(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_select(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Select(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_select(&mut self, v: node_setting::SelectValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Select(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_select(&mut self) -> &mut node_setting::SelectValue {
+        if let ::std::option::Option::Some(node_setting::Value::Select(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Select(node_setting::SelectValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Select(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_select(&mut self) -> node_setting::SelectValue {
+        if self.has_select() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Select(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::SelectValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.EnumValue enum = 9;
+
+    pub fn enum_(&self) -> &node_setting::EnumValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Enum(ref v)) => v,
+            _ => <node_setting::EnumValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_enum_(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_enum(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Enum(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_enum(&mut self, v: node_setting::EnumValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Enum(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_enum(&mut self) -> &mut node_setting::EnumValue {
+        if let ::std::option::Option::Some(node_setting::Value::Enum(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Enum(node_setting::EnumValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Enum(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_enum_(&mut self) -> node_setting::EnumValue {
+        if self.has_enum() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Enum(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::EnumValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.IdValue id = 10;
+
+    pub fn id(&self) -> &node_setting::IdValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Id(ref v)) => v,
+            _ => <node_setting::IdValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_id(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_id(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Id(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: node_setting::IdValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Id(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_id(&mut self) -> &mut node_setting::IdValue {
+        if let ::std::option::Option::Some(node_setting::Value::Id(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Id(node_setting::IdValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Id(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> node_setting::IdValue {
+        if self.has_id() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Id(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::IdValue::new()
+        }
+    }
+
+    // .mizer.nodes.NodeSetting.SplineValue spline = 11;
+
+    pub fn spline(&self) -> &node_setting::SplineValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Spline(ref v)) => v,
+            _ => <node_setting::SplineValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_spline(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_spline(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Spline(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_spline(&mut self, v: node_setting::SplineValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Spline(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_spline(&mut self) -> &mut node_setting::SplineValue {
+        if let ::std::option::Option::Some(node_setting::Value::Spline(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Spline(node_setting::SplineValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Spline(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_spline(&mut self) -> node_setting::SplineValue {
+        if self.has_spline() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Spline(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::SplineValue::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(11);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "type",
-            |m: &OscillatorNodeConfig| { &m.type_ },
-            |m: &mut OscillatorNodeConfig| { &mut m.type_ },
+            "label",
+            |m: &NodeSetting| { &m.label },
+            |m: &mut NodeSetting| { &mut m.label },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "ratio",
-            |m: &OscillatorNodeConfig| { &m.ratio },
-            |m: &mut OscillatorNodeConfig| { &mut m.ratio },
+            "description",
+            |m: &NodeSetting| { &m.description },
+            |m: &mut NodeSetting| { &mut m.description },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "max",
-            |m: &OscillatorNodeConfig| { &m.max },
-            |m: &mut OscillatorNodeConfig| { &mut m.max },
+            "disabled",
+            |m: &NodeSetting| { &m.disabled },
+            |m: &mut NodeSetting| { &mut m.disabled },
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "min",
-            |m: &OscillatorNodeConfig| { &m.min },
-            |m: &mut OscillatorNodeConfig| { &mut m.min },
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::TextValue>(
+            "text",
+            NodeSetting::has_text,
+            NodeSetting::text,
+            NodeSetting::mut_text,
+            NodeSetting::set_text,
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "offset",
-            |m: &OscillatorNodeConfig| { &m.offset },
-            |m: &mut OscillatorNodeConfig| { &mut m.offset },
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::FloatValue>(
+            "float",
+            NodeSetting::has_float,
+            NodeSetting::float,
+            NodeSetting::mut_float,
+            NodeSetting::set_float,
         ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "reverse",
-            |m: &OscillatorNodeConfig| { &m.reverse },
-            |m: &mut OscillatorNodeConfig| { &mut m.reverse },
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::IntValue>(
+            "int",
+            NodeSetting::has_int,
+            NodeSetting::int,
+            NodeSetting::mut_int,
+            NodeSetting::set_int,
         ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OscillatorNodeConfig>(
-            "OscillatorNodeConfig",
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::BoolValue>(
+            "bool",
+            NodeSetting::has_bool,
+            NodeSetting::bool,
+            NodeSetting::mut_bool,
+            NodeSetting::set_bool,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::SelectValue>(
+            "select",
+            NodeSetting::has_select,
+            NodeSetting::select,
+            NodeSetting::mut_select,
+            NodeSetting::set_select,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::EnumValue>(
+            "enum",
+            NodeSetting::has_enum,
+            NodeSetting::enum_,
+            NodeSetting::mut_enum,
+            NodeSetting::set_enum,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::IdValue>(
+            "id",
+            NodeSetting::has_id,
+            NodeSetting::id,
+            NodeSetting::mut_id,
+            NodeSetting::set_id,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::SplineValue>(
+            "spline",
+            NodeSetting::has_spline,
+            NodeSetting::spline,
+            NodeSetting::mut_spline,
+            NodeSetting::set_spline,
+        ));
+        oneofs.push(node_setting::Value::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeSetting>(
+            "NodeSetting",
             fields,
             oneofs,
         )
     }
 }
 
-impl ::protobuf::Message for OscillatorNodeConfig {
-    const NAME: &'static str = "OscillatorNodeConfig";
+impl ::protobuf::Message for NodeSetting {
+    const NAME: &'static str = "NodeSetting";
 
     fn is_initialized(&self) -> bool {
         true
@@ -7979,23 +4254,38 @@ impl ::protobuf::Message for OscillatorNodeConfig {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
-                8 => {
-                    self.type_ = is.read_enum_or_unknown()?;
+                10 => {
+                    self.label = is.read_string()?;
                 },
-                17 => {
-                    self.ratio = is.read_double()?;
+                18 => {
+                    self.description = is.read_string()?;
                 },
-                25 => {
-                    self.max = is.read_double()?;
+                24 => {
+                    self.disabled = is.read_bool()?;
                 },
-                33 => {
-                    self.min = is.read_double()?;
+                34 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Text(is.read_message()?));
                 },
-                41 => {
-                    self.offset = is.read_double()?;
+                42 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Float(is.read_message()?));
                 },
-                48 => {
-                    self.reverse = is.read_bool()?;
+                50 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Int(is.read_message()?));
+                },
+                58 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Bool(is.read_message()?));
+                },
+                66 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Select(is.read_message()?));
+                },
+                74 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Enum(is.read_message()?));
+                },
+                82 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Id(is.read_message()?));
+                },
+                90 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Spline(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -8009,368 +4299,94 @@ impl ::protobuf::Message for OscillatorNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE) {
-            my_size += ::protobuf::rt::int32_size(1, self.type_.value());
+        if !self.label.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.label);
         }
-        if self.ratio != 0. {
-            my_size += 1 + 8;
+        if !self.description.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.description);
         }
-        if self.max != 0. {
-            my_size += 1 + 8;
-        }
-        if self.min != 0. {
-            my_size += 1 + 8;
-        }
-        if self.offset != 0. {
-            my_size += 1 + 8;
-        }
-        if self.reverse != false {
+        if self.disabled != false {
             my_size += 1 + 1;
         }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.type_ != ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE) {
-            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
-        }
-        if self.ratio != 0. {
-            os.write_double(2, self.ratio)?;
-        }
-        if self.max != 0. {
-            os.write_double(3, self.max)?;
-        }
-        if self.min != 0. {
-            os.write_double(4, self.min)?;
-        }
-        if self.offset != 0. {
-            os.write_double(5, self.offset)?;
-        }
-        if self.reverse != false {
-            os.write_bool(6, self.reverse)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> OscillatorNodeConfig {
-        OscillatorNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.type_ = ::protobuf::EnumOrUnknown::new(oscillator_node_config::OscillatorType::SQUARE);
-        self.ratio = 0.;
-        self.max = 0.;
-        self.min = 0.;
-        self.offset = 0.;
-        self.reverse = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static OscillatorNodeConfig {
-        static instance: OscillatorNodeConfig = OscillatorNodeConfig {
-            type_: ::protobuf::EnumOrUnknown::from_i32(0),
-            ratio: 0.,
-            max: 0.,
-            min: 0.,
-            offset: 0.,
-            reverse: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for OscillatorNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("OscillatorNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for OscillatorNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for OscillatorNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `OscillatorNodeConfig`
-pub mod oscillator_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.OscillatorNodeConfig.OscillatorType)
-    pub enum OscillatorType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SQUARE)
-        SQUARE = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SINE)
-        SINE = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.SAW)
-        SAW = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscillatorNodeConfig.OscillatorType.TRIANGLE)
-        TRIANGLE = 3,
-    }
-
-    impl ::protobuf::Enum for OscillatorType {
-        const NAME: &'static str = "OscillatorType";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<OscillatorType> {
-            match value {
-                0 => ::std::option::Option::Some(OscillatorType::SQUARE),
-                1 => ::std::option::Option::Some(OscillatorType::SINE),
-                2 => ::std::option::Option::Some(OscillatorType::SAW),
-                3 => ::std::option::Option::Some(OscillatorType::TRIANGLE),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [OscillatorType] = &[
-            OscillatorType::SQUARE,
-            OscillatorType::SINE,
-            OscillatorType::SAW,
-            OscillatorType::TRIANGLE,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for OscillatorType {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("OscillatorNodeConfig.OscillatorType").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for OscillatorType {
-        fn default() -> Self {
-            OscillatorType::SQUARE
-        }
-    }
-
-    impl OscillatorType {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<OscillatorType>("OscillatorNodeConfig.OscillatorType")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ScriptingNodeConfig)
-pub struct ScriptingNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ScriptingNodeConfig.script)
-    pub script: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ScriptingNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ScriptingNodeConfig {
-    fn default() -> &'a ScriptingNodeConfig {
-        <ScriptingNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ScriptingNodeConfig {
-    pub fn new() -> ScriptingNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "script",
-            |m: &ScriptingNodeConfig| { &m.script },
-            |m: &mut ScriptingNodeConfig| { &mut m.script },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ScriptingNodeConfig>(
-            "ScriptingNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ScriptingNodeConfig {
-    const NAME: &'static str = "ScriptingNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.script = is.read_string()?;
+        if let ::std::option::Option::Some(ref v) = self.value {
+            match v {
+                &node_setting::Value::Text(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                &node_setting::Value::Float(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Int(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Bool(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Select(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Enum(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Id(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &node_setting::Value::Spline(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
             };
         }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.script.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.script);
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.script.is_empty() {
-            os.write_string(1, &self.script)?;
+        if !self.label.is_empty() {
+            os.write_string(1, &self.label)?;
         }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ScriptingNodeConfig {
-        ScriptingNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.script.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ScriptingNodeConfig {
-        static instance: ScriptingNodeConfig = ScriptingNodeConfig {
-            script: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ScriptingNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ScriptingNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ScriptingNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ScriptingNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.SequenceNodeConfig)
-pub struct SequenceNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.SequenceNodeConfig.steps)
-    pub steps: ::std::vec::Vec<sequence_node_config::SequenceStep>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.SequenceNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a SequenceNodeConfig {
-    fn default() -> &'a SequenceNodeConfig {
-        <SequenceNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl SequenceNodeConfig {
-    pub fn new() -> SequenceNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
-            "steps",
-            |m: &SequenceNodeConfig| { &m.steps },
-            |m: &mut SequenceNodeConfig| { &mut m.steps },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SequenceNodeConfig>(
-            "SequenceNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for SequenceNodeConfig {
-    const NAME: &'static str = "SequenceNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.steps.push(is.read_message()?);
+        if !self.description.is_empty() {
+            os.write_string(2, &self.description)?;
+        }
+        if self.disabled != false {
+            os.write_bool(3, self.disabled)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.value {
+            match v {
+                &node_setting::Value::Text(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
                 },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                &node_setting::Value::Float(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+                },
+                &node_setting::Value::Int(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+                },
+                &node_setting::Value::Bool(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+                },
+                &node_setting::Value::Select(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
+                },
+                &node_setting::Value::Enum(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+                },
+                &node_setting::Value::Id(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
+                },
+                &node_setting::Value::Spline(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
                 },
             };
         }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        for value in &self.steps {
-            let len = value.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-        };
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        for v in &self.steps {
-            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
-        };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -8383,97 +4399,141 @@ impl ::protobuf::Message for SequenceNodeConfig {
         &mut self.special_fields
     }
 
-    fn new() -> SequenceNodeConfig {
-        SequenceNodeConfig::new()
+    fn new() -> NodeSetting {
+        NodeSetting::new()
     }
 
     fn clear(&mut self) {
-        self.steps.clear();
+        self.label.clear();
+        self.description.clear();
+        self.disabled = false;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
-    fn default_instance() -> &'static SequenceNodeConfig {
-        static instance: SequenceNodeConfig = SequenceNodeConfig {
-            steps: ::std::vec::Vec::new(),
+    fn default_instance() -> &'static NodeSetting {
+        static instance: NodeSetting = NodeSetting {
+            label: ::std::string::String::new(),
+            description: ::std::string::String::new(),
+            disabled: false,
+            value: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
     }
 }
 
-impl ::protobuf::MessageFull for SequenceNodeConfig {
+impl ::protobuf::MessageFull for NodeSetting {
     fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("SequenceNodeConfig").unwrap()).clone()
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("NodeSetting").unwrap()).clone()
     }
 }
 
-impl ::std::fmt::Display for SequenceNodeConfig {
+impl ::std::fmt::Display for NodeSetting {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for SequenceNodeConfig {
+impl ::protobuf::reflect::ProtobufValue for NodeSetting {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
-/// Nested message and enums of message `SequenceNodeConfig`
-pub mod sequence_node_config {
+/// Nested message and enums of message `NodeSetting`
+pub mod node_setting {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:mizer.nodes.NodeSetting.value)
+    pub enum Value {
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.text)
+        Text(TextValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.float)
+        Float(FloatValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.int)
+        Int(IntValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.bool)
+        Bool(BoolValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.select)
+        Select(SelectValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.enum)
+        Enum(EnumValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.id)
+        Id(IdValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.spline)
+        Spline(SplineValue),
+    }
+
+    impl ::protobuf::Oneof for Value {
+    }
+
+    impl ::protobuf::OneofFull for Value {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::NodeSetting as ::protobuf::MessageFull>::descriptor().oneof_by_name("value").unwrap()).clone()
+        }
+    }
+
+    impl Value {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Value>("value")
+        }
+    }
     #[derive(PartialEq,Clone,Default,Debug)]
-    // @@protoc_insertion_point(message:mizer.nodes.SequenceNodeConfig.SequenceStep)
-    pub struct SequenceStep {
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.TextValue)
+    pub struct TextValue {
         // message fields
-        // @@protoc_insertion_point(field:mizer.nodes.SequenceNodeConfig.SequenceStep.tick)
-        pub tick: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.SequenceNodeConfig.SequenceStep.value)
-        pub value: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.SequenceNodeConfig.SequenceStep.hold)
-        pub hold: bool,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.TextValue.value)
+        pub value: ::std::string::String,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.TextValue.multiline)
+        pub multiline: bool,
         // special fields
-        // @@protoc_insertion_point(special_field:mizer.nodes.SequenceNodeConfig.SequenceStep.special_fields)
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.TextValue.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
     }
 
-    impl<'a> ::std::default::Default for &'a SequenceStep {
-        fn default() -> &'a SequenceStep {
-            <SequenceStep as ::protobuf::Message>::default_instance()
+    impl<'a> ::std::default::Default for &'a TextValue {
+        fn default() -> &'a TextValue {
+            <TextValue as ::protobuf::Message>::default_instance()
         }
     }
 
-    impl SequenceStep {
-        pub fn new() -> SequenceStep {
+    impl TextValue {
+        pub fn new() -> TextValue {
             ::std::default::Default::default()
         }
 
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(3);
+            let mut fields = ::std::vec::Vec::with_capacity(2);
             let mut oneofs = ::std::vec::Vec::with_capacity(0);
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "tick",
-                |m: &SequenceStep| { &m.tick },
-                |m: &mut SequenceStep| { &mut m.tick },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
                 "value",
-                |m: &SequenceStep| { &m.value },
-                |m: &mut SequenceStep| { &mut m.value },
+                |m: &TextValue| { &m.value },
+                |m: &mut TextValue| { &mut m.value },
             ));
             fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "hold",
-                |m: &SequenceStep| { &m.hold },
-                |m: &mut SequenceStep| { &mut m.hold },
+                "multiline",
+                |m: &TextValue| { &m.multiline },
+                |m: &mut TextValue| { &mut m.multiline },
             ));
-            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SequenceStep>(
-                "SequenceNodeConfig.SequenceStep",
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TextValue>(
+                "NodeSetting.TextValue",
                 fields,
                 oneofs,
             )
         }
     }
 
-    impl ::protobuf::Message for SequenceStep {
-        const NAME: &'static str = "SequenceStep";
+    impl ::protobuf::Message for TextValue {
+        const NAME: &'static str = "TextValue";
 
         fn is_initialized(&self) -> bool {
             true
@@ -8482,14 +4542,11 @@ pub mod sequence_node_config {
         fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
             while let Some(tag) = is.read_raw_tag_or_eof()? {
                 match tag {
-                    9 => {
-                        self.tick = is.read_double()?;
+                    10 => {
+                        self.value = is.read_string()?;
                     },
-                    17 => {
-                        self.value = is.read_double()?;
-                    },
-                    24 => {
-                        self.hold = is.read_bool()?;
+                    16 => {
+                        self.multiline = is.read_bool()?;
                     },
                     tag => {
                         ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -8503,13 +4560,10 @@ pub mod sequence_node_config {
         #[allow(unused_variables)]
         fn compute_size(&self) -> u64 {
             let mut my_size = 0;
-            if self.tick != 0. {
-                my_size += 1 + 8;
+            if !self.value.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.value);
             }
-            if self.value != 0. {
-                my_size += 1 + 8;
-            }
-            if self.hold != false {
+            if self.multiline != false {
                 my_size += 1 + 1;
             }
             my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -8518,14 +4572,11 @@ pub mod sequence_node_config {
         }
 
         fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-            if self.tick != 0. {
-                os.write_double(1, self.tick)?;
+            if !self.value.is_empty() {
+                os.write_string(1, &self.value)?;
             }
-            if self.value != 0. {
-                os.write_double(2, self.value)?;
-            }
-            if self.hold != false {
-                os.write_bool(3, self.hold)?;
+            if self.multiline != false {
+                os.write_bool(2, self.multiline)?;
             }
             os.write_unknown_fields(self.special_fields.unknown_fields())?;
             ::std::result::Result::Ok(())
@@ -8539,147 +4590,2152 @@ pub mod sequence_node_config {
             &mut self.special_fields
         }
 
-        fn new() -> SequenceStep {
-            SequenceStep::new()
+        fn new() -> TextValue {
+            TextValue::new()
         }
 
         fn clear(&mut self) {
-            self.tick = 0.;
-            self.value = 0.;
-            self.hold = false;
+            self.value.clear();
+            self.multiline = false;
             self.special_fields.clear();
         }
 
-        fn default_instance() -> &'static SequenceStep {
-            static instance: SequenceStep = SequenceStep {
-                tick: 0.,
-                value: 0.,
-                hold: false,
+        fn default_instance() -> &'static TextValue {
+            static instance: TextValue = TextValue {
+                value: ::std::string::String::new(),
+                multiline: false,
                 special_fields: ::protobuf::SpecialFields::new(),
             };
             &instance
         }
     }
 
-    impl ::protobuf::MessageFull for SequenceStep {
+    impl ::protobuf::MessageFull for TextValue {
         fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
             static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("SequenceNodeConfig.SequenceStep").unwrap()).clone()
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.TextValue").unwrap()).clone()
         }
     }
 
-    impl ::std::fmt::Display for SequenceStep {
+    impl ::std::fmt::Display for TextValue {
         fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
             ::protobuf::text_format::fmt(self, f)
         }
     }
 
-    impl ::protobuf::reflect::ProtobufValue for SequenceStep {
+    impl ::protobuf::reflect::ProtobufValue for TextValue {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
-}
 
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ProgrammerNodeConfig)
-pub struct ProgrammerNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ProgrammerNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ProgrammerNodeConfig {
-    fn default() -> &'a ProgrammerNodeConfig {
-        <ProgrammerNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ProgrammerNodeConfig {
-    pub fn new() -> ProgrammerNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProgrammerNodeConfig>(
-            "ProgrammerNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ProgrammerNodeConfig {
-    const NAME: &'static str = "ProgrammerNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.FloatValue)
+    pub struct FloatValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.FloatValue.value)
+        pub value: f64,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.FloatValue.min)
+        pub min: ::std::option::Option<f64>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.FloatValue.min_hint)
+        pub min_hint: ::std::option::Option<f64>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.FloatValue.max)
+        pub max: ::std::option::Option<f64>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.FloatValue.max_hint)
+        pub max_hint: ::std::option::Option<f64>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.FloatValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
     }
 
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
+    impl<'a> ::std::default::Default for &'a FloatValue {
+        fn default() -> &'a FloatValue {
+            <FloatValue as ::protobuf::Message>::default_instance()
         }
-        ::std::result::Result::Ok(())
     }
 
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
+    impl FloatValue {
+        pub fn new() -> FloatValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(5);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &FloatValue| { &m.value },
+                |m: &mut FloatValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min",
+                |m: &FloatValue| { &m.min },
+                |m: &mut FloatValue| { &mut m.min },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min_hint",
+                |m: &FloatValue| { &m.min_hint },
+                |m: &mut FloatValue| { &mut m.min_hint },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max",
+                |m: &FloatValue| { &m.max },
+                |m: &mut FloatValue| { &mut m.max },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max_hint",
+                |m: &FloatValue| { &m.max_hint },
+                |m: &mut FloatValue| { &mut m.max_hint },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FloatValue>(
+                "NodeSetting.FloatValue",
+                fields,
+                oneofs,
+            )
+        }
     }
 
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
+    impl ::protobuf::Message for FloatValue {
+        const NAME: &'static str = "FloatValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    9 => {
+                        self.value = is.read_double()?;
+                    },
+                    17 => {
+                        self.min = ::std::option::Option::Some(is.read_double()?);
+                    },
+                    25 => {
+                        self.min_hint = ::std::option::Option::Some(is.read_double()?);
+                    },
+                    33 => {
+                        self.max = ::std::option::Option::Some(is.read_double()?);
+                    },
+                    41 => {
+                        self.max_hint = ::std::option::Option::Some(is.read_double()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0. {
+                my_size += 1 + 8;
+            }
+            if let Some(v) = self.min {
+                my_size += 1 + 8;
+            }
+            if let Some(v) = self.min_hint {
+                my_size += 1 + 8;
+            }
+            if let Some(v) = self.max {
+                my_size += 1 + 8;
+            }
+            if let Some(v) = self.max_hint {
+                my_size += 1 + 8;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0. {
+                os.write_double(1, self.value)?;
+            }
+            if let Some(v) = self.min {
+                os.write_double(2, v)?;
+            }
+            if let Some(v) = self.min_hint {
+                os.write_double(3, v)?;
+            }
+            if let Some(v) = self.max {
+                os.write_double(4, v)?;
+            }
+            if let Some(v) = self.max_hint {
+                os.write_double(5, v)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> FloatValue {
+            FloatValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0.;
+            self.min = ::std::option::Option::None;
+            self.min_hint = ::std::option::Option::None;
+            self.max = ::std::option::Option::None;
+            self.max_hint = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static FloatValue {
+            static instance: FloatValue = FloatValue {
+                value: 0.,
+                min: ::std::option::Option::None,
+                min_hint: ::std::option::Option::None,
+                max: ::std::option::Option::None,
+                max_hint: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
     }
 
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
+    impl ::protobuf::MessageFull for FloatValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.FloatValue").unwrap()).clone()
+        }
     }
 
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
+    impl ::std::fmt::Display for FloatValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
     }
 
-    fn new() -> ProgrammerNodeConfig {
-        ProgrammerNodeConfig::new()
+    impl ::protobuf::reflect::ProtobufValue for FloatValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
-    fn clear(&mut self) {
-        self.special_fields.clear();
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.IntValue)
+    pub struct IntValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.min)
+        pub min: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.min_hint)
+        pub min_hint: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.max)
+        pub max: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.max_hint)
+        pub max_hint: ::std::option::Option<u32>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.IntValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
     }
 
-    fn default_instance() -> &'static ProgrammerNodeConfig {
-        static instance: ProgrammerNodeConfig = ProgrammerNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
+    impl<'a> ::std::default::Default for &'a IntValue {
+        fn default() -> &'a IntValue {
+            <IntValue as ::protobuf::Message>::default_instance()
+        }
     }
-}
 
-impl ::protobuf::MessageFull for ProgrammerNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProgrammerNodeConfig").unwrap()).clone()
+    impl IntValue {
+        pub fn new() -> IntValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(5);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &IntValue| { &m.value },
+                |m: &mut IntValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min",
+                |m: &IntValue| { &m.min },
+                |m: &mut IntValue| { &mut m.min },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min_hint",
+                |m: &IntValue| { &m.min_hint },
+                |m: &mut IntValue| { &mut m.min_hint },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max",
+                |m: &IntValue| { &m.max },
+                |m: &mut IntValue| { &mut m.max },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max_hint",
+                |m: &IntValue| { &m.max_hint },
+                |m: &mut IntValue| { &mut m.max_hint },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IntValue>(
+                "NodeSetting.IntValue",
+                fields,
+                oneofs,
+            )
+        }
     }
-}
 
-impl ::std::fmt::Display for ProgrammerNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
+    impl ::protobuf::Message for IntValue {
+        const NAME: &'static str = "IntValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_uint32()?;
+                    },
+                    16 => {
+                        self.min = ::std::option::Option::Some(is.read_uint32()?);
+                    },
+                    24 => {
+                        self.min_hint = ::std::option::Option::Some(is.read_uint32()?);
+                    },
+                    32 => {
+                        self.max = ::std::option::Option::Some(is.read_uint32()?);
+                    },
+                    40 => {
+                        self.max_hint = ::std::option::Option::Some(is.read_uint32()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.value);
+            }
+            if let Some(v) = self.min {
+                my_size += ::protobuf::rt::uint32_size(2, v);
+            }
+            if let Some(v) = self.min_hint {
+                my_size += ::protobuf::rt::uint32_size(3, v);
+            }
+            if let Some(v) = self.max {
+                my_size += ::protobuf::rt::uint32_size(4, v);
+            }
+            if let Some(v) = self.max_hint {
+                my_size += ::protobuf::rt::uint32_size(5, v);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_uint32(1, self.value)?;
+            }
+            if let Some(v) = self.min {
+                os.write_uint32(2, v)?;
+            }
+            if let Some(v) = self.min_hint {
+                os.write_uint32(3, v)?;
+            }
+            if let Some(v) = self.max {
+                os.write_uint32(4, v)?;
+            }
+            if let Some(v) = self.max_hint {
+                os.write_uint32(5, v)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> IntValue {
+            IntValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.min = ::std::option::Option::None;
+            self.min_hint = ::std::option::Option::None;
+            self.max = ::std::option::Option::None;
+            self.max_hint = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static IntValue {
+            static instance: IntValue = IntValue {
+                value: 0,
+                min: ::std::option::Option::None,
+                min_hint: ::std::option::Option::None,
+                max: ::std::option::Option::None,
+                max_hint: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
     }
-}
 
-impl ::protobuf::reflect::ProtobufValue for ProgrammerNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    impl ::protobuf::MessageFull for IntValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.IntValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for IntValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for IntValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.BoolValue)
+    pub struct BoolValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.BoolValue.value)
+        pub value: bool,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.BoolValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a BoolValue {
+        fn default() -> &'a BoolValue {
+            <BoolValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl BoolValue {
+        pub fn new() -> BoolValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &BoolValue| { &m.value },
+                |m: &mut BoolValue| { &mut m.value },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<BoolValue>(
+                "NodeSetting.BoolValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for BoolValue {
+        const NAME: &'static str = "BoolValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_bool()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != false {
+                my_size += 1 + 1;
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != false {
+                os.write_bool(1, self.value)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> BoolValue {
+            BoolValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = false;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static BoolValue {
+            static instance: BoolValue = BoolValue {
+                value: false,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for BoolValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.BoolValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for BoolValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for BoolValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SelectValue)
+    pub struct SelectValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectValue.value)
+        pub value: ::std::string::String,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectValue.variants)
+        pub variants: ::std::vec::Vec<SelectVariant>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SelectValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a SelectValue {
+        fn default() -> &'a SelectValue {
+            <SelectValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl SelectValue {
+        pub fn new() -> SelectValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &SelectValue| { &m.value },
+                |m: &mut SelectValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "variants",
+                |m: &SelectValue| { &m.variants },
+                |m: &mut SelectValue| { &mut m.variants },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SelectValue>(
+                "NodeSetting.SelectValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for SelectValue {
+        const NAME: &'static str = "SelectValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.value = is.read_string()?;
+                    },
+                    18 => {
+                        self.variants.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if !self.value.is_empty() {
+                my_size += ::protobuf::rt::string_size(1, &self.value);
+            }
+            for value in &self.variants {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if !self.value.is_empty() {
+                os.write_string(1, &self.value)?;
+            }
+            for v in &self.variants {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> SelectValue {
+            SelectValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value.clear();
+            self.variants.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static SelectValue {
+            static instance: SelectValue = SelectValue {
+                value: ::std::string::String::new(),
+                variants: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for SelectValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.SelectValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for SelectValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for SelectValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SelectVariant)
+    pub struct SelectVariant {
+        // message oneof groups
+        pub variant: ::std::option::Option<select_variant::Variant>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SelectVariant.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a SelectVariant {
+        fn default() -> &'a SelectVariant {
+            <SelectVariant as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl SelectVariant {
+        pub fn new() -> SelectVariant {
+            ::std::default::Default::default()
+        }
+
+        // .mizer.nodes.NodeSetting.SelectVariant.SelectGroup group = 1;
+
+        pub fn group(&self) -> &select_variant::SelectGroup {
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Group(ref v)) => v,
+                _ => <select_variant::SelectGroup as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_group(&mut self) {
+            self.variant = ::std::option::Option::None;
+        }
+
+        pub fn has_group(&self) -> bool {
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Group(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_group(&mut self, v: select_variant::SelectGroup) {
+            self.variant = ::std::option::Option::Some(select_variant::Variant::Group(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_group(&mut self) -> &mut select_variant::SelectGroup {
+            if let ::std::option::Option::Some(select_variant::Variant::Group(_)) = self.variant {
+            } else {
+                self.variant = ::std::option::Option::Some(select_variant::Variant::Group(select_variant::SelectGroup::new()));
+            }
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Group(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_group(&mut self) -> select_variant::SelectGroup {
+            if self.has_group() {
+                match self.variant.take() {
+                    ::std::option::Option::Some(select_variant::Variant::Group(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                select_variant::SelectGroup::new()
+            }
+        }
+
+        // .mizer.nodes.NodeSetting.SelectVariant.SelectItem item = 2;
+
+        pub fn item(&self) -> &select_variant::SelectItem {
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Item(ref v)) => v,
+                _ => <select_variant::SelectItem as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_item(&mut self) {
+            self.variant = ::std::option::Option::None;
+        }
+
+        pub fn has_item(&self) -> bool {
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Item(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_item(&mut self, v: select_variant::SelectItem) {
+            self.variant = ::std::option::Option::Some(select_variant::Variant::Item(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_item(&mut self) -> &mut select_variant::SelectItem {
+            if let ::std::option::Option::Some(select_variant::Variant::Item(_)) = self.variant {
+            } else {
+                self.variant = ::std::option::Option::Some(select_variant::Variant::Item(select_variant::SelectItem::new()));
+            }
+            match self.variant {
+                ::std::option::Option::Some(select_variant::Variant::Item(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_item(&mut self) -> select_variant::SelectItem {
+            if self.has_item() {
+                match self.variant.take() {
+                    ::std::option::Option::Some(select_variant::Variant::Item(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                select_variant::SelectItem::new()
+            }
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(1);
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, select_variant::SelectGroup>(
+                "group",
+                SelectVariant::has_group,
+                SelectVariant::group,
+                SelectVariant::mut_group,
+                SelectVariant::set_group,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, select_variant::SelectItem>(
+                "item",
+                SelectVariant::has_item,
+                SelectVariant::item,
+                SelectVariant::mut_item,
+                SelectVariant::set_item,
+            ));
+            oneofs.push(select_variant::Variant::generated_oneof_descriptor_data());
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SelectVariant>(
+                "NodeSetting.SelectVariant",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for SelectVariant {
+        const NAME: &'static str = "SelectVariant";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.variant = ::std::option::Option::Some(select_variant::Variant::Group(is.read_message()?));
+                    },
+                    18 => {
+                        self.variant = ::std::option::Option::Some(select_variant::Variant::Item(is.read_message()?));
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let ::std::option::Option::Some(ref v) = self.variant {
+                match v {
+                    &select_variant::Variant::Group(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                    &select_variant::Variant::Item(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                };
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let ::std::option::Option::Some(ref v) = self.variant {
+                match v {
+                    &select_variant::Variant::Group(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                    },
+                    &select_variant::Variant::Item(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                    },
+                };
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> SelectVariant {
+            SelectVariant::new()
+        }
+
+        fn clear(&mut self) {
+            self.variant = ::std::option::Option::None;
+            self.variant = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static SelectVariant {
+            static instance: SelectVariant = SelectVariant {
+                variant: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for SelectVariant {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.SelectVariant").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for SelectVariant {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for SelectVariant {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `SelectVariant`
+    pub mod select_variant {
+
+        #[derive(Clone,PartialEq,Debug)]
+        #[non_exhaustive]
+        // @@protoc_insertion_point(oneof:mizer.nodes.NodeSetting.SelectVariant.variant)
+        pub enum Variant {
+            // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.SelectVariant.group)
+            Group(SelectGroup),
+            // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.SelectVariant.item)
+            Item(SelectItem),
+        }
+
+        impl ::protobuf::Oneof for Variant {
+        }
+
+        impl ::protobuf::OneofFull for Variant {
+            fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| <super::SelectVariant as ::protobuf::MessageFull>::descriptor().oneof_by_name("variant").unwrap()).clone()
+            }
+        }
+
+        impl Variant {
+            pub(in super::super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+                ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Variant>("variant")
+            }
+        }
+        #[derive(PartialEq,Clone,Default,Debug)]
+        // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SelectVariant.SelectGroup)
+        pub struct SelectGroup {
+            // message fields
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectVariant.SelectGroup.label)
+            pub label: ::std::string::String,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectVariant.SelectGroup.items)
+            pub items: ::std::vec::Vec<super::SelectVariant>,
+            // special fields
+            // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SelectVariant.SelectGroup.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a SelectGroup {
+            fn default() -> &'a SelectGroup {
+                <SelectGroup as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl SelectGroup {
+            pub fn new() -> SelectGroup {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(2);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "label",
+                    |m: &SelectGroup| { &m.label },
+                    |m: &mut SelectGroup| { &mut m.label },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                    "items",
+                    |m: &SelectGroup| { &m.items },
+                    |m: &mut SelectGroup| { &mut m.items },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SelectGroup>(
+                    "NodeSetting.SelectVariant.SelectGroup",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for SelectGroup {
+            const NAME: &'static str = "SelectGroup";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        10 => {
+                            self.label = is.read_string()?;
+                        },
+                        18 => {
+                            self.items.push(is.read_message()?);
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                if !self.label.is_empty() {
+                    my_size += ::protobuf::rt::string_size(1, &self.label);
+                }
+                for value in &self.items {
+                    let len = value.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                };
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                if !self.label.is_empty() {
+                    os.write_string(1, &self.label)?;
+                }
+                for v in &self.items {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                };
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> SelectGroup {
+                SelectGroup::new()
+            }
+
+            fn clear(&mut self) {
+                self.label.clear();
+                self.items.clear();
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static SelectGroup {
+                static instance: SelectGroup = SelectGroup {
+                    label: ::std::string::String::new(),
+                    items: ::std::vec::Vec::new(),
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for SelectGroup {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("NodeSetting.SelectVariant.SelectGroup").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for SelectGroup {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for SelectGroup {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+
+        #[derive(PartialEq,Clone,Default,Debug)]
+        // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SelectVariant.SelectItem)
+        pub struct SelectItem {
+            // message fields
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectVariant.SelectItem.value)
+            pub value: ::std::string::String,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SelectVariant.SelectItem.label)
+            pub label: ::std::string::String,
+            // special fields
+            // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SelectVariant.SelectItem.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a SelectItem {
+            fn default() -> &'a SelectItem {
+                <SelectItem as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl SelectItem {
+            pub fn new() -> SelectItem {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(2);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "value",
+                    |m: &SelectItem| { &m.value },
+                    |m: &mut SelectItem| { &mut m.value },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "label",
+                    |m: &SelectItem| { &m.label },
+                    |m: &mut SelectItem| { &mut m.label },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SelectItem>(
+                    "NodeSetting.SelectVariant.SelectItem",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for SelectItem {
+            const NAME: &'static str = "SelectItem";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        10 => {
+                            self.value = is.read_string()?;
+                        },
+                        18 => {
+                            self.label = is.read_string()?;
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                if !self.value.is_empty() {
+                    my_size += ::protobuf::rt::string_size(1, &self.value);
+                }
+                if !self.label.is_empty() {
+                    my_size += ::protobuf::rt::string_size(2, &self.label);
+                }
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                if !self.value.is_empty() {
+                    os.write_string(1, &self.value)?;
+                }
+                if !self.label.is_empty() {
+                    os.write_string(2, &self.label)?;
+                }
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> SelectItem {
+                SelectItem::new()
+            }
+
+            fn clear(&mut self) {
+                self.value.clear();
+                self.label.clear();
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static SelectItem {
+                static instance: SelectItem = SelectItem {
+                    value: ::std::string::String::new(),
+                    label: ::std::string::String::new(),
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for SelectItem {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("NodeSetting.SelectVariant.SelectItem").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for SelectItem {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for SelectItem {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.EnumValue)
+    pub struct EnumValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.EnumValue.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.EnumValue.variants)
+        pub variants: ::std::vec::Vec<EnumVariant>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.EnumValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a EnumValue {
+        fn default() -> &'a EnumValue {
+            <EnumValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl EnumValue {
+        pub fn new() -> EnumValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &EnumValue| { &m.value },
+                |m: &mut EnumValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "variants",
+                |m: &EnumValue| { &m.variants },
+                |m: &mut EnumValue| { &mut m.variants },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EnumValue>(
+                "NodeSetting.EnumValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for EnumValue {
+        const NAME: &'static str = "EnumValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_uint32()?;
+                    },
+                    18 => {
+                        self.variants.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.value);
+            }
+            for value in &self.variants {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_uint32(1, self.value)?;
+            }
+            for v in &self.variants {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> EnumValue {
+            EnumValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.variants.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static EnumValue {
+            static instance: EnumValue = EnumValue {
+                value: 0,
+                variants: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for EnumValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.EnumValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for EnumValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for EnumValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.EnumVariant)
+    pub struct EnumVariant {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.EnumVariant.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.EnumVariant.label)
+        pub label: ::std::string::String,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.EnumVariant.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a EnumVariant {
+        fn default() -> &'a EnumVariant {
+            <EnumVariant as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl EnumVariant {
+        pub fn new() -> EnumVariant {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &EnumVariant| { &m.value },
+                |m: &mut EnumVariant| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "label",
+                |m: &EnumVariant| { &m.label },
+                |m: &mut EnumVariant| { &mut m.label },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EnumVariant>(
+                "NodeSetting.EnumVariant",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for EnumVariant {
+        const NAME: &'static str = "EnumVariant";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_uint32()?;
+                    },
+                    18 => {
+                        self.label = is.read_string()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.value);
+            }
+            if !self.label.is_empty() {
+                my_size += ::protobuf::rt::string_size(2, &self.label);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_uint32(1, self.value)?;
+            }
+            if !self.label.is_empty() {
+                os.write_string(2, &self.label)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> EnumVariant {
+            EnumVariant::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.label.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static EnumVariant {
+            static instance: EnumVariant = EnumVariant {
+                value: 0,
+                label: ::std::string::String::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for EnumVariant {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.EnumVariant").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for EnumVariant {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for EnumVariant {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.IdValue)
+    pub struct IdValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IdValue.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IdValue.variants)
+        pub variants: ::std::vec::Vec<IdVariant>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.IdValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a IdValue {
+        fn default() -> &'a IdValue {
+            <IdValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl IdValue {
+        pub fn new() -> IdValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &IdValue| { &m.value },
+                |m: &mut IdValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "variants",
+                |m: &IdValue| { &m.variants },
+                |m: &mut IdValue| { &mut m.variants },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IdValue>(
+                "NodeSetting.IdValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for IdValue {
+        const NAME: &'static str = "IdValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_uint32()?;
+                    },
+                    18 => {
+                        self.variants.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.value);
+            }
+            for value in &self.variants {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_uint32(1, self.value)?;
+            }
+            for v in &self.variants {
+                ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> IdValue {
+            IdValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.variants.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static IdValue {
+            static instance: IdValue = IdValue {
+                value: 0,
+                variants: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for IdValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.IdValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for IdValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for IdValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.IdVariant)
+    pub struct IdVariant {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IdVariant.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IdVariant.label)
+        pub label: ::std::string::String,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.IdVariant.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a IdVariant {
+        fn default() -> &'a IdVariant {
+            <IdVariant as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl IdVariant {
+        pub fn new() -> IdVariant {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &IdVariant| { &m.value },
+                |m: &mut IdVariant| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "label",
+                |m: &IdVariant| { &m.label },
+                |m: &mut IdVariant| { &mut m.label },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IdVariant>(
+                "NodeSetting.IdVariant",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for IdVariant {
+        const NAME: &'static str = "IdVariant";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_uint32()?;
+                    },
+                    18 => {
+                        self.label = is.read_string()?;
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::uint32_size(1, self.value);
+            }
+            if !self.label.is_empty() {
+                my_size += ::protobuf::rt::string_size(2, &self.label);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_uint32(1, self.value)?;
+            }
+            if !self.label.is_empty() {
+                os.write_string(2, &self.label)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> IdVariant {
+            IdVariant::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.label.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static IdVariant {
+            static instance: IdVariant = IdVariant {
+                value: 0,
+                label: ::std::string::String::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for IdVariant {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.IdVariant").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for IdVariant {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for IdVariant {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SplineValue)
+    pub struct SplineValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.steps)
+        pub steps: ::std::vec::Vec<spline_value::SplineStep>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SplineValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a SplineValue {
+        fn default() -> &'a SplineValue {
+            <SplineValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl SplineValue {
+        pub fn new() -> SplineValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "steps",
+                |m: &SplineValue| { &m.steps },
+                |m: &mut SplineValue| { &mut m.steps },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SplineValue>(
+                "NodeSetting.SplineValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for SplineValue {
+        const NAME: &'static str = "SplineValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.steps.push(is.read_message()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            for value in &self.steps {
+                let len = value.compute_size();
+                my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+            };
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.steps {
+                ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> SplineValue {
+            SplineValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.steps.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static SplineValue {
+            static instance: SplineValue = SplineValue {
+                steps: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for SplineValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.SplineValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for SplineValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for SplineValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `SplineValue`
+    pub mod spline_value {
+        #[derive(PartialEq,Clone,Default,Debug)]
+        // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.SplineValue.SplineStep)
+        pub struct SplineStep {
+            // message fields
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.x)
+            pub x: f64,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.y)
+            pub y: f64,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.c0a)
+            pub c0a: f64,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.c0b)
+            pub c0b: f64,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.c1a)
+            pub c1a: f64,
+            // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.SplineValue.SplineStep.c1b)
+            pub c1b: f64,
+            // special fields
+            // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.SplineValue.SplineStep.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a SplineStep {
+            fn default() -> &'a SplineStep {
+                <SplineStep as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl SplineStep {
+            pub fn new() -> SplineStep {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(6);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "x",
+                    |m: &SplineStep| { &m.x },
+                    |m: &mut SplineStep| { &mut m.x },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "y",
+                    |m: &SplineStep| { &m.y },
+                    |m: &mut SplineStep| { &mut m.y },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "c0a",
+                    |m: &SplineStep| { &m.c0a },
+                    |m: &mut SplineStep| { &mut m.c0a },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "c0b",
+                    |m: &SplineStep| { &m.c0b },
+                    |m: &mut SplineStep| { &mut m.c0b },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "c1a",
+                    |m: &SplineStep| { &m.c1a },
+                    |m: &mut SplineStep| { &mut m.c1a },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "c1b",
+                    |m: &SplineStep| { &m.c1b },
+                    |m: &mut SplineStep| { &mut m.c1b },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SplineStep>(
+                    "NodeSetting.SplineValue.SplineStep",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for SplineStep {
+            const NAME: &'static str = "SplineStep";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        9 => {
+                            self.x = is.read_double()?;
+                        },
+                        17 => {
+                            self.y = is.read_double()?;
+                        },
+                        25 => {
+                            self.c0a = is.read_double()?;
+                        },
+                        33 => {
+                            self.c0b = is.read_double()?;
+                        },
+                        41 => {
+                            self.c1a = is.read_double()?;
+                        },
+                        49 => {
+                            self.c1b = is.read_double()?;
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                if self.x != 0. {
+                    my_size += 1 + 8;
+                }
+                if self.y != 0. {
+                    my_size += 1 + 8;
+                }
+                if self.c0a != 0. {
+                    my_size += 1 + 8;
+                }
+                if self.c0b != 0. {
+                    my_size += 1 + 8;
+                }
+                if self.c1a != 0. {
+                    my_size += 1 + 8;
+                }
+                if self.c1b != 0. {
+                    my_size += 1 + 8;
+                }
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                if self.x != 0. {
+                    os.write_double(1, self.x)?;
+                }
+                if self.y != 0. {
+                    os.write_double(2, self.y)?;
+                }
+                if self.c0a != 0. {
+                    os.write_double(3, self.c0a)?;
+                }
+                if self.c0b != 0. {
+                    os.write_double(4, self.c0b)?;
+                }
+                if self.c1a != 0. {
+                    os.write_double(5, self.c1a)?;
+                }
+                if self.c1b != 0. {
+                    os.write_double(6, self.c1b)?;
+                }
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> SplineStep {
+                SplineStep::new()
+            }
+
+            fn clear(&mut self) {
+                self.x = 0.;
+                self.y = 0.;
+                self.c0a = 0.;
+                self.c0b = 0.;
+                self.c1a = 0.;
+                self.c1b = 0.;
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static SplineStep {
+                static instance: SplineStep = SplineStep {
+                    x: 0.,
+                    y: 0.,
+                    c0a: 0.,
+                    c0b: 0.,
+                    c1a: 0.,
+                    c1b: 0.,
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for SplineStep {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("NodeSetting.SplineValue.SplineStep").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for SplineStep {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for SplineStep {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -8928,426 +6984,6 @@ impl ::protobuf::reflect::ProtobufValue for PresetNodeConfig {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.EnvelopeNodeConfig)
-pub struct EnvelopeNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.EnvelopeNodeConfig.attack)
-    pub attack: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.EnvelopeNodeConfig.decay)
-    pub decay: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.EnvelopeNodeConfig.sustain)
-    pub sustain: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.EnvelopeNodeConfig.release)
-    pub release: f64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.EnvelopeNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a EnvelopeNodeConfig {
-    fn default() -> &'a EnvelopeNodeConfig {
-        <EnvelopeNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl EnvelopeNodeConfig {
-    pub fn new() -> EnvelopeNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "attack",
-            |m: &EnvelopeNodeConfig| { &m.attack },
-            |m: &mut EnvelopeNodeConfig| { &mut m.attack },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "decay",
-            |m: &EnvelopeNodeConfig| { &m.decay },
-            |m: &mut EnvelopeNodeConfig| { &mut m.decay },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "sustain",
-            |m: &EnvelopeNodeConfig| { &m.sustain },
-            |m: &mut EnvelopeNodeConfig| { &mut m.sustain },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "release",
-            |m: &EnvelopeNodeConfig| { &m.release },
-            |m: &mut EnvelopeNodeConfig| { &mut m.release },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EnvelopeNodeConfig>(
-            "EnvelopeNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for EnvelopeNodeConfig {
-    const NAME: &'static str = "EnvelopeNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.attack = is.read_double()?;
-                },
-                17 => {
-                    self.decay = is.read_double()?;
-                },
-                25 => {
-                    self.sustain = is.read_double()?;
-                },
-                33 => {
-                    self.release = is.read_double()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.attack != 0. {
-            my_size += 1 + 8;
-        }
-        if self.decay != 0. {
-            my_size += 1 + 8;
-        }
-        if self.sustain != 0. {
-            my_size += 1 + 8;
-        }
-        if self.release != 0. {
-            my_size += 1 + 8;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.attack != 0. {
-            os.write_double(1, self.attack)?;
-        }
-        if self.decay != 0. {
-            os.write_double(2, self.decay)?;
-        }
-        if self.sustain != 0. {
-            os.write_double(3, self.sustain)?;
-        }
-        if self.release != 0. {
-            os.write_double(4, self.release)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> EnvelopeNodeConfig {
-        EnvelopeNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.attack = 0.;
-        self.decay = 0.;
-        self.sustain = 0.;
-        self.release = 0.;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static EnvelopeNodeConfig {
-        static instance: EnvelopeNodeConfig = EnvelopeNodeConfig {
-            attack: 0.,
-            decay: 0.,
-            sustain: 0.,
-            release: 0.,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for EnvelopeNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("EnvelopeNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for EnvelopeNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for EnvelopeNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ClockNodeConfig)
-pub struct ClockNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ClockNodeConfig.speed)
-    pub speed: f64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ClockNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ClockNodeConfig {
-    fn default() -> &'a ClockNodeConfig {
-        <ClockNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ClockNodeConfig {
-    pub fn new() -> ClockNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "speed",
-            |m: &ClockNodeConfig| { &m.speed },
-            |m: &mut ClockNodeConfig| { &mut m.speed },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ClockNodeConfig>(
-            "ClockNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ClockNodeConfig {
-    const NAME: &'static str = "ClockNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.speed = is.read_double()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.speed != 0. {
-            my_size += 1 + 8;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.speed != 0. {
-            os.write_double(1, self.speed)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ClockNodeConfig {
-        ClockNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.speed = 0.;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ClockNodeConfig {
-        static instance: ClockNodeConfig = ClockNodeConfig {
-            speed: 0.,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ClockNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ClockNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ClockNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ClockNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.FixtureNodeConfig)
-pub struct FixtureNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.FixtureNodeConfig.fixture_id)
-    pub fixture_id: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.FixtureNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a FixtureNodeConfig {
-    fn default() -> &'a FixtureNodeConfig {
-        <FixtureNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl FixtureNodeConfig {
-    pub fn new() -> FixtureNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "fixture_id",
-            |m: &FixtureNodeConfig| { &m.fixture_id },
-            |m: &mut FixtureNodeConfig| { &mut m.fixture_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FixtureNodeConfig>(
-            "FixtureNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for FixtureNodeConfig {
-    const NAME: &'static str = "FixtureNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.fixture_id = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.fixture_id != 0 {
-            my_size += ::protobuf::rt::uint32_size(1, self.fixture_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.fixture_id != 0 {
-            os.write_uint32(1, self.fixture_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> FixtureNodeConfig {
-        FixtureNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.fixture_id = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static FixtureNodeConfig {
-        static instance: FixtureNodeConfig = FixtureNodeConfig {
-            fixture_id: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for FixtureNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("FixtureNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for FixtureNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for FixtureNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.SequencerNodeConfig)
 pub struct SequencerNodeConfig {
     // message fields
@@ -9466,1261 +7102,6 @@ impl ::std::fmt::Display for SequencerNodeConfig {
 }
 
 impl ::protobuf::reflect::ProtobufValue for SequencerNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ButtonNodeConfig)
-pub struct ButtonNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ButtonNodeConfig.toggle)
-    pub toggle: bool,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ButtonNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ButtonNodeConfig {
-    fn default() -> &'a ButtonNodeConfig {
-        <ButtonNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ButtonNodeConfig {
-    pub fn new() -> ButtonNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "toggle",
-            |m: &ButtonNodeConfig| { &m.toggle },
-            |m: &mut ButtonNodeConfig| { &mut m.toggle },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ButtonNodeConfig>(
-            "ButtonNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ButtonNodeConfig {
-    const NAME: &'static str = "ButtonNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.toggle = is.read_bool()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.toggle != false {
-            my_size += 1 + 1;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.toggle != false {
-            os.write_bool(1, self.toggle)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ButtonNodeConfig {
-        ButtonNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.toggle = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ButtonNodeConfig {
-        static instance: ButtonNodeConfig = ButtonNodeConfig {
-            toggle: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ButtonNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ButtonNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ButtonNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ButtonNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.FaderNodeConfig)
-pub struct FaderNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.FaderNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a FaderNodeConfig {
-    fn default() -> &'a FaderNodeConfig {
-        <FaderNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl FaderNodeConfig {
-    pub fn new() -> FaderNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FaderNodeConfig>(
-            "FaderNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for FaderNodeConfig {
-    const NAME: &'static str = "FaderNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> FaderNodeConfig {
-        FaderNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static FaderNodeConfig {
-        static instance: FaderNodeConfig = FaderNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for FaderNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("FaderNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for FaderNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for FaderNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.IldaFileNodeConfig)
-pub struct IldaFileNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.IldaFileNodeConfig.file)
-    pub file: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.IldaFileNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a IldaFileNodeConfig {
-    fn default() -> &'a IldaFileNodeConfig {
-        <IldaFileNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl IldaFileNodeConfig {
-    pub fn new() -> IldaFileNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "file",
-            |m: &IldaFileNodeConfig| { &m.file },
-            |m: &mut IldaFileNodeConfig| { &mut m.file },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<IldaFileNodeConfig>(
-            "IldaFileNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for IldaFileNodeConfig {
-    const NAME: &'static str = "IldaFileNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.file = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.file.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.file);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.file.is_empty() {
-            os.write_string(1, &self.file)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> IldaFileNodeConfig {
-        IldaFileNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.file.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static IldaFileNodeConfig {
-        static instance: IldaFileNodeConfig = IldaFileNodeConfig {
-            file: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for IldaFileNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("IldaFileNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for IldaFileNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for IldaFileNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.LaserNodeConfig)
-pub struct LaserNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.LaserNodeConfig.device_id)
-    pub device_id: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.LaserNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a LaserNodeConfig {
-    fn default() -> &'a LaserNodeConfig {
-        <LaserNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl LaserNodeConfig {
-    pub fn new() -> LaserNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "device_id",
-            |m: &LaserNodeConfig| { &m.device_id },
-            |m: &mut LaserNodeConfig| { &mut m.device_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LaserNodeConfig>(
-            "LaserNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for LaserNodeConfig {
-    const NAME: &'static str = "LaserNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.device_id = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.device_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.device_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.device_id.is_empty() {
-            os.write_string(1, &self.device_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> LaserNodeConfig {
-        LaserNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.device_id.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static LaserNodeConfig {
-        static instance: LaserNodeConfig = LaserNodeConfig {
-            device_id: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for LaserNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("LaserNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for LaserNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for LaserNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.GamepadNodeConfig)
-pub struct GamepadNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.GamepadNodeConfig.device_id)
-    pub device_id: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.GamepadNodeConfig.control)
-    pub control: ::protobuf::EnumOrUnknown<gamepad_node_config::Control>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.GamepadNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a GamepadNodeConfig {
-    fn default() -> &'a GamepadNodeConfig {
-        <GamepadNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl GamepadNodeConfig {
-    pub fn new() -> GamepadNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "device_id",
-            |m: &GamepadNodeConfig| { &m.device_id },
-            |m: &mut GamepadNodeConfig| { &mut m.device_id },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "control",
-            |m: &GamepadNodeConfig| { &m.control },
-            |m: &mut GamepadNodeConfig| { &mut m.control },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GamepadNodeConfig>(
-            "GamepadNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for GamepadNodeConfig {
-    const NAME: &'static str = "GamepadNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.device_id = is.read_string()?;
-                },
-                16 => {
-                    self.control = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.device_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.device_id);
-        }
-        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X) {
-            my_size += ::protobuf::rt::int32_size(2, self.control.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.device_id.is_empty() {
-            os.write_string(1, &self.device_id)?;
-        }
-        if self.control != ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X) {
-            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.control))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> GamepadNodeConfig {
-        GamepadNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.device_id.clear();
-        self.control = ::protobuf::EnumOrUnknown::new(gamepad_node_config::Control::LEFT_STICK_X);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static GamepadNodeConfig {
-        static instance: GamepadNodeConfig = GamepadNodeConfig {
-            device_id: ::std::string::String::new(),
-            control: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for GamepadNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("GamepadNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for GamepadNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for GamepadNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `GamepadNodeConfig`
-pub mod gamepad_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.GamepadNodeConfig.Control)
-    pub enum Control {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK_X)
-        LEFT_STICK_X = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK_Y)
-        LEFT_STICK_Y = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK_X)
-        RIGHT_STICK_X = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK_Y)
-        RIGHT_STICK_Y = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_TRIGGER)
-        LEFT_TRIGGER = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_TRIGGER)
-        RIGHT_TRIGGER = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_SHOULDER)
-        LEFT_SHOULDER = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_SHOULDER)
-        RIGHT_SHOULDER = 7,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.SOUTH)
-        SOUTH = 8,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.EAST)
-        EAST = 9,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.NORTH)
-        NORTH = 10,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.WEST)
-        WEST = 11,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.SELECT)
-        SELECT = 12,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.START)
-        START = 13,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.MODE)
-        MODE = 14,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_UP)
-        DPAD_UP = 15,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_DOWN)
-        DPAD_DOWN = 16,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_LEFT)
-        DPAD_LEFT = 17,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.DPAD_RIGHT)
-        DPAD_RIGHT = 18,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.LEFT_STICK)
-        LEFT_STICK = 19,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.GamepadNodeConfig.Control.RIGHT_STICK)
-        RIGHT_STICK = 20,
-    }
-
-    impl ::protobuf::Enum for Control {
-        const NAME: &'static str = "Control";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<Control> {
-            match value {
-                0 => ::std::option::Option::Some(Control::LEFT_STICK_X),
-                1 => ::std::option::Option::Some(Control::LEFT_STICK_Y),
-                2 => ::std::option::Option::Some(Control::RIGHT_STICK_X),
-                3 => ::std::option::Option::Some(Control::RIGHT_STICK_Y),
-                4 => ::std::option::Option::Some(Control::LEFT_TRIGGER),
-                5 => ::std::option::Option::Some(Control::RIGHT_TRIGGER),
-                6 => ::std::option::Option::Some(Control::LEFT_SHOULDER),
-                7 => ::std::option::Option::Some(Control::RIGHT_SHOULDER),
-                8 => ::std::option::Option::Some(Control::SOUTH),
-                9 => ::std::option::Option::Some(Control::EAST),
-                10 => ::std::option::Option::Some(Control::NORTH),
-                11 => ::std::option::Option::Some(Control::WEST),
-                12 => ::std::option::Option::Some(Control::SELECT),
-                13 => ::std::option::Option::Some(Control::START),
-                14 => ::std::option::Option::Some(Control::MODE),
-                15 => ::std::option::Option::Some(Control::DPAD_UP),
-                16 => ::std::option::Option::Some(Control::DPAD_DOWN),
-                17 => ::std::option::Option::Some(Control::DPAD_LEFT),
-                18 => ::std::option::Option::Some(Control::DPAD_RIGHT),
-                19 => ::std::option::Option::Some(Control::LEFT_STICK),
-                20 => ::std::option::Option::Some(Control::RIGHT_STICK),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [Control] = &[
-            Control::LEFT_STICK_X,
-            Control::LEFT_STICK_Y,
-            Control::RIGHT_STICK_X,
-            Control::RIGHT_STICK_Y,
-            Control::LEFT_TRIGGER,
-            Control::RIGHT_TRIGGER,
-            Control::LEFT_SHOULDER,
-            Control::RIGHT_SHOULDER,
-            Control::SOUTH,
-            Control::EAST,
-            Control::NORTH,
-            Control::WEST,
-            Control::SELECT,
-            Control::START,
-            Control::MODE,
-            Control::DPAD_UP,
-            Control::DPAD_DOWN,
-            Control::DPAD_LEFT,
-            Control::DPAD_RIGHT,
-            Control::LEFT_STICK,
-            Control::RIGHT_STICK,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for Control {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("GamepadNodeConfig.Control").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for Control {
-        fn default() -> Self {
-            Control::LEFT_STICK_X
-        }
-    }
-
-    impl Control {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Control>("GamepadNodeConfig.Control")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.PixelPatternNodeConfig)
-pub struct PixelPatternNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.PixelPatternNodeConfig.pattern)
-    pub pattern: ::protobuf::EnumOrUnknown<pixel_pattern_node_config::Pattern>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.PixelPatternNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a PixelPatternNodeConfig {
-    fn default() -> &'a PixelPatternNodeConfig {
-        <PixelPatternNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl PixelPatternNodeConfig {
-    pub fn new() -> PixelPatternNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "pattern",
-            |m: &PixelPatternNodeConfig| { &m.pattern },
-            |m: &mut PixelPatternNodeConfig| { &mut m.pattern },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PixelPatternNodeConfig>(
-            "PixelPatternNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for PixelPatternNodeConfig {
-    const NAME: &'static str = "PixelPatternNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.pattern = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE) {
-            my_size += ::protobuf::rt::int32_size(1, self.pattern.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.pattern != ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE) {
-            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.pattern))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> PixelPatternNodeConfig {
-        PixelPatternNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.pattern = ::protobuf::EnumOrUnknown::new(pixel_pattern_node_config::Pattern::RGB_ITERATE);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static PixelPatternNodeConfig {
-        static instance: PixelPatternNodeConfig = PixelPatternNodeConfig {
-            pattern: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for PixelPatternNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("PixelPatternNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for PixelPatternNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for PixelPatternNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `PixelPatternNodeConfig`
-pub mod pixel_pattern_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.PixelPatternNodeConfig.Pattern)
-    pub enum Pattern {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.RGB_ITERATE)
-        RGB_ITERATE = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.PixelPatternNodeConfig.Pattern.SWIRL)
-        SWIRL = 1,
-    }
-
-    impl ::protobuf::Enum for Pattern {
-        const NAME: &'static str = "Pattern";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<Pattern> {
-            match value {
-                0 => ::std::option::Option::Some(Pattern::RGB_ITERATE),
-                1 => ::std::option::Option::Some(Pattern::SWIRL),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [Pattern] = &[
-            Pattern::RGB_ITERATE,
-            Pattern::SWIRL,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for Pattern {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("PixelPatternNodeConfig.Pattern").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for Pattern {
-        fn default() -> Self {
-            Pattern::RGB_ITERATE
-        }
-    }
-
-    impl Pattern {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Pattern>("PixelPatternNodeConfig.Pattern")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.PixelDmxNodeConfig)
-pub struct PixelDmxNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.PixelDmxNodeConfig.width)
-    pub width: u64,
-    // @@protoc_insertion_point(field:mizer.nodes.PixelDmxNodeConfig.height)
-    pub height: u64,
-    // @@protoc_insertion_point(field:mizer.nodes.PixelDmxNodeConfig.start_universe)
-    pub start_universe: u32,
-    // @@protoc_insertion_point(field:mizer.nodes.PixelDmxNodeConfig.output)
-    pub output: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.PixelDmxNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a PixelDmxNodeConfig {
-    fn default() -> &'a PixelDmxNodeConfig {
-        <PixelDmxNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl PixelDmxNodeConfig {
-    pub fn new() -> PixelDmxNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "width",
-            |m: &PixelDmxNodeConfig| { &m.width },
-            |m: &mut PixelDmxNodeConfig| { &mut m.width },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "height",
-            |m: &PixelDmxNodeConfig| { &m.height },
-            |m: &mut PixelDmxNodeConfig| { &mut m.height },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "start_universe",
-            |m: &PixelDmxNodeConfig| { &m.start_universe },
-            |m: &mut PixelDmxNodeConfig| { &mut m.start_universe },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "output",
-            |m: &PixelDmxNodeConfig| { &m.output },
-            |m: &mut PixelDmxNodeConfig| { &mut m.output },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PixelDmxNodeConfig>(
-            "PixelDmxNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for PixelDmxNodeConfig {
-    const NAME: &'static str = "PixelDmxNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.width = is.read_uint64()?;
-                },
-                16 => {
-                    self.height = is.read_uint64()?;
-                },
-                24 => {
-                    self.start_universe = is.read_uint32()?;
-                },
-                34 => {
-                    self.output = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.width != 0 {
-            my_size += ::protobuf::rt::uint64_size(1, self.width);
-        }
-        if self.height != 0 {
-            my_size += ::protobuf::rt::uint64_size(2, self.height);
-        }
-        if self.start_universe != 0 {
-            my_size += ::protobuf::rt::uint32_size(3, self.start_universe);
-        }
-        if !self.output.is_empty() {
-            my_size += ::protobuf::rt::string_size(4, &self.output);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.width != 0 {
-            os.write_uint64(1, self.width)?;
-        }
-        if self.height != 0 {
-            os.write_uint64(2, self.height)?;
-        }
-        if self.start_universe != 0 {
-            os.write_uint32(3, self.start_universe)?;
-        }
-        if !self.output.is_empty() {
-            os.write_string(4, &self.output)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> PixelDmxNodeConfig {
-        PixelDmxNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.width = 0;
-        self.height = 0;
-        self.start_universe = 0;
-        self.output.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static PixelDmxNodeConfig {
-        static instance: PixelDmxNodeConfig = PixelDmxNodeConfig {
-            width: 0,
-            height: 0,
-            start_universe: 0,
-            output: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for PixelDmxNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("PixelDmxNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for PixelDmxNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for PixelDmxNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.DmxOutputNodeConfig)
-pub struct DmxOutputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.DmxOutputNodeConfig.output)
-    pub output: ::std::option::Option<::std::string::String>,
-    // @@protoc_insertion_point(field:mizer.nodes.DmxOutputNodeConfig.universe)
-    pub universe: u32,
-    // @@protoc_insertion_point(field:mizer.nodes.DmxOutputNodeConfig.channel)
-    pub channel: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.DmxOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a DmxOutputNodeConfig {
-    fn default() -> &'a DmxOutputNodeConfig {
-        <DmxOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl DmxOutputNodeConfig {
-    pub fn new() -> DmxOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
-            "output",
-            |m: &DmxOutputNodeConfig| { &m.output },
-            |m: &mut DmxOutputNodeConfig| { &mut m.output },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "universe",
-            |m: &DmxOutputNodeConfig| { &m.universe },
-            |m: &mut DmxOutputNodeConfig| { &mut m.universe },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "channel",
-            |m: &DmxOutputNodeConfig| { &m.channel },
-            |m: &mut DmxOutputNodeConfig| { &mut m.channel },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DmxOutputNodeConfig>(
-            "DmxOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for DmxOutputNodeConfig {
-    const NAME: &'static str = "DmxOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.output = ::std::option::Option::Some(is.read_string()?);
-                },
-                16 => {
-                    self.universe = is.read_uint32()?;
-                },
-                24 => {
-                    self.channel = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if let Some(v) = self.output.as_ref() {
-            my_size += ::protobuf::rt::string_size(1, &v);
-        }
-        if self.universe != 0 {
-            my_size += ::protobuf::rt::uint32_size(2, self.universe);
-        }
-        if self.channel != 0 {
-            my_size += ::protobuf::rt::uint32_size(3, self.channel);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if let Some(v) = self.output.as_ref() {
-            os.write_string(1, v)?;
-        }
-        if self.universe != 0 {
-            os.write_uint32(2, self.universe)?;
-        }
-        if self.channel != 0 {
-            os.write_uint32(3, self.channel)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> DmxOutputNodeConfig {
-        DmxOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.output = ::std::option::Option::None;
-        self.universe = 0;
-        self.channel = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static DmxOutputNodeConfig {
-        static instance: DmxOutputNodeConfig = DmxOutputNodeConfig {
-            output: ::std::option::Option::None,
-            universe: 0,
-            channel: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for DmxOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("DmxOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for DmxOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for DmxOutputNodeConfig {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -11413,2470 +7794,6 @@ pub mod midi_node_config {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.OpcOutputNodeConfig)
-pub struct OpcOutputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.OpcOutputNodeConfig.host)
-    pub host: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.OpcOutputNodeConfig.port)
-    pub port: u32,
-    // @@protoc_insertion_point(field:mizer.nodes.OpcOutputNodeConfig.width)
-    pub width: u64,
-    // @@protoc_insertion_point(field:mizer.nodes.OpcOutputNodeConfig.height)
-    pub height: u64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.OpcOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a OpcOutputNodeConfig {
-    fn default() -> &'a OpcOutputNodeConfig {
-        <OpcOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl OpcOutputNodeConfig {
-    pub fn new() -> OpcOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "host",
-            |m: &OpcOutputNodeConfig| { &m.host },
-            |m: &mut OpcOutputNodeConfig| { &mut m.host },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "port",
-            |m: &OpcOutputNodeConfig| { &m.port },
-            |m: &mut OpcOutputNodeConfig| { &mut m.port },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "width",
-            |m: &OpcOutputNodeConfig| { &m.width },
-            |m: &mut OpcOutputNodeConfig| { &mut m.width },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "height",
-            |m: &OpcOutputNodeConfig| { &m.height },
-            |m: &mut OpcOutputNodeConfig| { &mut m.height },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OpcOutputNodeConfig>(
-            "OpcOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for OpcOutputNodeConfig {
-    const NAME: &'static str = "OpcOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.host = is.read_string()?;
-                },
-                16 => {
-                    self.port = is.read_uint32()?;
-                },
-                24 => {
-                    self.width = is.read_uint64()?;
-                },
-                32 => {
-                    self.height = is.read_uint64()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.host.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.host);
-        }
-        if self.port != 0 {
-            my_size += ::protobuf::rt::uint32_size(2, self.port);
-        }
-        if self.width != 0 {
-            my_size += ::protobuf::rt::uint64_size(3, self.width);
-        }
-        if self.height != 0 {
-            my_size += ::protobuf::rt::uint64_size(4, self.height);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.host.is_empty() {
-            os.write_string(1, &self.host)?;
-        }
-        if self.port != 0 {
-            os.write_uint32(2, self.port)?;
-        }
-        if self.width != 0 {
-            os.write_uint64(3, self.width)?;
-        }
-        if self.height != 0 {
-            os.write_uint64(4, self.height)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> OpcOutputNodeConfig {
-        OpcOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.host.clear();
-        self.port = 0;
-        self.width = 0;
-        self.height = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static OpcOutputNodeConfig {
-        static instance: OpcOutputNodeConfig = OpcOutputNodeConfig {
-            host: ::std::string::String::new(),
-            port: 0,
-            width: 0,
-            height: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for OpcOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("OpcOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for OpcOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for OpcOutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.OscNodeConfig)
-pub struct OscNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.connection)
-    pub connection: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.path)
-    pub path: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.argument_type)
-    pub argument_type: ::protobuf::EnumOrUnknown<osc_node_config::ArgumentType>,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.only_emit_changes)
-    pub only_emit_changes: bool,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.OscNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a OscNodeConfig {
-    fn default() -> &'a OscNodeConfig {
-        <OscNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl OscNodeConfig {
-    pub fn new() -> OscNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "connection",
-            |m: &OscNodeConfig| { &m.connection },
-            |m: &mut OscNodeConfig| { &mut m.connection },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "path",
-            |m: &OscNodeConfig| { &m.path },
-            |m: &mut OscNodeConfig| { &mut m.path },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "argument_type",
-            |m: &OscNodeConfig| { &m.argument_type },
-            |m: &mut OscNodeConfig| { &mut m.argument_type },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "only_emit_changes",
-            |m: &OscNodeConfig| { &m.only_emit_changes },
-            |m: &mut OscNodeConfig| { &mut m.only_emit_changes },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OscNodeConfig>(
-            "OscNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for OscNodeConfig {
-    const NAME: &'static str = "OscNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.connection = is.read_string()?;
-                },
-                18 => {
-                    self.path = is.read_string()?;
-                },
-                24 => {
-                    self.argument_type = is.read_enum_or_unknown()?;
-                },
-                32 => {
-                    self.only_emit_changes = is.read_bool()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.connection.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.connection);
-        }
-        if !self.path.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.path);
-        }
-        if self.argument_type != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT) {
-            my_size += ::protobuf::rt::int32_size(3, self.argument_type.value());
-        }
-        if self.only_emit_changes != false {
-            my_size += 1 + 1;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.connection.is_empty() {
-            os.write_string(1, &self.connection)?;
-        }
-        if !self.path.is_empty() {
-            os.write_string(2, &self.path)?;
-        }
-        if self.argument_type != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT) {
-            os.write_enum(3, ::protobuf::EnumOrUnknown::value(&self.argument_type))?;
-        }
-        if self.only_emit_changes != false {
-            os.write_bool(4, self.only_emit_changes)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> OscNodeConfig {
-        OscNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.connection.clear();
-        self.path.clear();
-        self.argument_type = ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::INT);
-        self.only_emit_changes = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static OscNodeConfig {
-        static instance: OscNodeConfig = OscNodeConfig {
-            connection: ::std::string::String::new(),
-            path: ::std::string::String::new(),
-            argument_type: ::protobuf::EnumOrUnknown::from_i32(0),
-            only_emit_changes: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for OscNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("OscNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for OscNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for OscNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `OscNodeConfig`
-pub mod osc_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.OscNodeConfig.ArgumentType)
-    pub enum ArgumentType {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.INT)
-        INT = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.FLOAT)
-        FLOAT = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.LONG)
-        LONG = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.DOUBLE)
-        DOUBLE = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.BOOL)
-        BOOL = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.OscNodeConfig.ArgumentType.COLOR)
-        COLOR = 5,
-    }
-
-    impl ::protobuf::Enum for ArgumentType {
-        const NAME: &'static str = "ArgumentType";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<ArgumentType> {
-            match value {
-                0 => ::std::option::Option::Some(ArgumentType::INT),
-                1 => ::std::option::Option::Some(ArgumentType::FLOAT),
-                2 => ::std::option::Option::Some(ArgumentType::LONG),
-                3 => ::std::option::Option::Some(ArgumentType::DOUBLE),
-                4 => ::std::option::Option::Some(ArgumentType::BOOL),
-                5 => ::std::option::Option::Some(ArgumentType::COLOR),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [ArgumentType] = &[
-            ArgumentType::INT,
-            ArgumentType::FLOAT,
-            ArgumentType::LONG,
-            ArgumentType::DOUBLE,
-            ArgumentType::BOOL,
-            ArgumentType::COLOR,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for ArgumentType {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("OscNodeConfig.ArgumentType").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for ArgumentType {
-        fn default() -> Self {
-            ArgumentType::INT
-        }
-    }
-
-    impl ArgumentType {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ArgumentType>("OscNodeConfig.ArgumentType")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.VideoColorBalanceNodeConfig)
-pub struct VideoColorBalanceNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.VideoColorBalanceNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a VideoColorBalanceNodeConfig {
-    fn default() -> &'a VideoColorBalanceNodeConfig {
-        <VideoColorBalanceNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl VideoColorBalanceNodeConfig {
-    pub fn new() -> VideoColorBalanceNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VideoColorBalanceNodeConfig>(
-            "VideoColorBalanceNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for VideoColorBalanceNodeConfig {
-    const NAME: &'static str = "VideoColorBalanceNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> VideoColorBalanceNodeConfig {
-        VideoColorBalanceNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static VideoColorBalanceNodeConfig {
-        static instance: VideoColorBalanceNodeConfig = VideoColorBalanceNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for VideoColorBalanceNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("VideoColorBalanceNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for VideoColorBalanceNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for VideoColorBalanceNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.VideoEffectNodeConfig)
-pub struct VideoEffectNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.VideoEffectNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a VideoEffectNodeConfig {
-    fn default() -> &'a VideoEffectNodeConfig {
-        <VideoEffectNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl VideoEffectNodeConfig {
-    pub fn new() -> VideoEffectNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VideoEffectNodeConfig>(
-            "VideoEffectNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for VideoEffectNodeConfig {
-    const NAME: &'static str = "VideoEffectNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> VideoEffectNodeConfig {
-        VideoEffectNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static VideoEffectNodeConfig {
-        static instance: VideoEffectNodeConfig = VideoEffectNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for VideoEffectNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("VideoEffectNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for VideoEffectNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for VideoEffectNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.VideoFileNodeConfig)
-pub struct VideoFileNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.VideoFileNodeConfig.file)
-    pub file: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.VideoFileNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a VideoFileNodeConfig {
-    fn default() -> &'a VideoFileNodeConfig {
-        <VideoFileNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl VideoFileNodeConfig {
-    pub fn new() -> VideoFileNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "file",
-            |m: &VideoFileNodeConfig| { &m.file },
-            |m: &mut VideoFileNodeConfig| { &mut m.file },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VideoFileNodeConfig>(
-            "VideoFileNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for VideoFileNodeConfig {
-    const NAME: &'static str = "VideoFileNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.file = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.file.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.file);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.file.is_empty() {
-            os.write_string(1, &self.file)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> VideoFileNodeConfig {
-        VideoFileNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.file.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static VideoFileNodeConfig {
-        static instance: VideoFileNodeConfig = VideoFileNodeConfig {
-            file: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for VideoFileNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("VideoFileNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for VideoFileNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for VideoFileNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.VideoOutputNodeConfig)
-pub struct VideoOutputNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.VideoOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a VideoOutputNodeConfig {
-    fn default() -> &'a VideoOutputNodeConfig {
-        <VideoOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl VideoOutputNodeConfig {
-    pub fn new() -> VideoOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VideoOutputNodeConfig>(
-            "VideoOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for VideoOutputNodeConfig {
-    const NAME: &'static str = "VideoOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> VideoOutputNodeConfig {
-        VideoOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static VideoOutputNodeConfig {
-        static instance: VideoOutputNodeConfig = VideoOutputNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for VideoOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("VideoOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for VideoOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for VideoOutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.VideoTransformNodeConfig)
-pub struct VideoTransformNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.VideoTransformNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a VideoTransformNodeConfig {
-    fn default() -> &'a VideoTransformNodeConfig {
-        <VideoTransformNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl VideoTransformNodeConfig {
-    pub fn new() -> VideoTransformNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<VideoTransformNodeConfig>(
-            "VideoTransformNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for VideoTransformNodeConfig {
-    const NAME: &'static str = "VideoTransformNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> VideoTransformNodeConfig {
-        VideoTransformNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static VideoTransformNodeConfig {
-        static instance: VideoTransformNodeConfig = VideoTransformNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for VideoTransformNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("VideoTransformNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for VideoTransformNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for VideoTransformNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.SelectNodeConfig)
-pub struct SelectNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.SelectNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a SelectNodeConfig {
-    fn default() -> &'a SelectNodeConfig {
-        <SelectNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl SelectNodeConfig {
-    pub fn new() -> SelectNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SelectNodeConfig>(
-            "SelectNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for SelectNodeConfig {
-    const NAME: &'static str = "SelectNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> SelectNodeConfig {
-        SelectNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static SelectNodeConfig {
-        static instance: SelectNodeConfig = SelectNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for SelectNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("SelectNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for SelectNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for SelectNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.MergeNodeConfig)
-pub struct MergeNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.MergeNodeConfig.mode)
-    pub mode: ::protobuf::EnumOrUnknown<merge_node_config::MergeMode>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.MergeNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MergeNodeConfig {
-    fn default() -> &'a MergeNodeConfig {
-        <MergeNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MergeNodeConfig {
-    pub fn new() -> MergeNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "mode",
-            |m: &MergeNodeConfig| { &m.mode },
-            |m: &mut MergeNodeConfig| { &mut m.mode },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MergeNodeConfig>(
-            "MergeNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MergeNodeConfig {
-    const NAME: &'static str = "MergeNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.mode = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST) {
-            my_size += ::protobuf::rt::int32_size(1, self.mode.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.mode != ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST) {
-            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.mode))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MergeNodeConfig {
-        MergeNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.mode = ::protobuf::EnumOrUnknown::new(merge_node_config::MergeMode::LATEST);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MergeNodeConfig {
-        static instance: MergeNodeConfig = MergeNodeConfig {
-            mode: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MergeNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MergeNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MergeNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MergeNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `MergeNodeConfig`
-pub mod merge_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.MergeNodeConfig.MergeMode)
-    pub enum MergeMode {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.LATEST)
-        LATEST = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.HIGHEST)
-        HIGHEST = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MergeNodeConfig.MergeMode.LOWEST)
-        LOWEST = 2,
-    }
-
-    impl ::protobuf::Enum for MergeMode {
-        const NAME: &'static str = "MergeMode";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<MergeMode> {
-            match value {
-                0 => ::std::option::Option::Some(MergeMode::LATEST),
-                1 => ::std::option::Option::Some(MergeMode::HIGHEST),
-                2 => ::std::option::Option::Some(MergeMode::LOWEST),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [MergeMode] = &[
-            MergeMode::LATEST,
-            MergeMode::HIGHEST,
-            MergeMode::LOWEST,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for MergeMode {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("MergeNodeConfig.MergeMode").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for MergeMode {
-        fn default() -> Self {
-            MergeMode::LATEST
-        }
-    }
-
-    impl MergeMode {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<MergeMode>("MergeNodeConfig.MergeMode")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ThresholdNodeConfig)
-pub struct ThresholdNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ThresholdNodeConfig.lower_threshold)
-    pub lower_threshold: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.ThresholdNodeConfig.upper_threshold)
-    pub upper_threshold: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.ThresholdNodeConfig.active_value)
-    pub active_value: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.ThresholdNodeConfig.inactive_value)
-    pub inactive_value: f64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ThresholdNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ThresholdNodeConfig {
-    fn default() -> &'a ThresholdNodeConfig {
-        <ThresholdNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ThresholdNodeConfig {
-    pub fn new() -> ThresholdNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "lower_threshold",
-            |m: &ThresholdNodeConfig| { &m.lower_threshold },
-            |m: &mut ThresholdNodeConfig| { &mut m.lower_threshold },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "upper_threshold",
-            |m: &ThresholdNodeConfig| { &m.upper_threshold },
-            |m: &mut ThresholdNodeConfig| { &mut m.upper_threshold },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "active_value",
-            |m: &ThresholdNodeConfig| { &m.active_value },
-            |m: &mut ThresholdNodeConfig| { &mut m.active_value },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "inactive_value",
-            |m: &ThresholdNodeConfig| { &m.inactive_value },
-            |m: &mut ThresholdNodeConfig| { &mut m.inactive_value },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ThresholdNodeConfig>(
-            "ThresholdNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ThresholdNodeConfig {
-    const NAME: &'static str = "ThresholdNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.lower_threshold = is.read_double()?;
-                },
-                17 => {
-                    self.upper_threshold = is.read_double()?;
-                },
-                25 => {
-                    self.active_value = is.read_double()?;
-                },
-                33 => {
-                    self.inactive_value = is.read_double()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.lower_threshold != 0. {
-            my_size += 1 + 8;
-        }
-        if self.upper_threshold != 0. {
-            my_size += 1 + 8;
-        }
-        if self.active_value != 0. {
-            my_size += 1 + 8;
-        }
-        if self.inactive_value != 0. {
-            my_size += 1 + 8;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.lower_threshold != 0. {
-            os.write_double(1, self.lower_threshold)?;
-        }
-        if self.upper_threshold != 0. {
-            os.write_double(2, self.upper_threshold)?;
-        }
-        if self.active_value != 0. {
-            os.write_double(3, self.active_value)?;
-        }
-        if self.inactive_value != 0. {
-            os.write_double(4, self.inactive_value)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ThresholdNodeConfig {
-        ThresholdNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.lower_threshold = 0.;
-        self.upper_threshold = 0.;
-        self.active_value = 0.;
-        self.inactive_value = 0.;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ThresholdNodeConfig {
-        static instance: ThresholdNodeConfig = ThresholdNodeConfig {
-            lower_threshold: 0.,
-            upper_threshold: 0.,
-            active_value: 0.,
-            inactive_value: 0.,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ThresholdNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ThresholdNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ThresholdNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ThresholdNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.EncoderNodeConfig)
-pub struct EncoderNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.EncoderNodeConfig.hold_rate)
-    pub hold_rate: f64,
-    // @@protoc_insertion_point(field:mizer.nodes.EncoderNodeConfig.hold)
-    pub hold: bool,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.EncoderNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a EncoderNodeConfig {
-    fn default() -> &'a EncoderNodeConfig {
-        <EncoderNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl EncoderNodeConfig {
-    pub fn new() -> EncoderNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "hold_rate",
-            |m: &EncoderNodeConfig| { &m.hold_rate },
-            |m: &mut EncoderNodeConfig| { &mut m.hold_rate },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "hold",
-            |m: &EncoderNodeConfig| { &m.hold },
-            |m: &mut EncoderNodeConfig| { &mut m.hold },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EncoderNodeConfig>(
-            "EncoderNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for EncoderNodeConfig {
-    const NAME: &'static str = "EncoderNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.hold_rate = is.read_double()?;
-                },
-                16 => {
-                    self.hold = is.read_bool()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.hold_rate != 0. {
-            my_size += 1 + 8;
-        }
-        if self.hold != false {
-            my_size += 1 + 1;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.hold_rate != 0. {
-            os.write_double(1, self.hold_rate)?;
-        }
-        if self.hold != false {
-            os.write_bool(2, self.hold)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> EncoderNodeConfig {
-        EncoderNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.hold_rate = 0.;
-        self.hold = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static EncoderNodeConfig {
-        static instance: EncoderNodeConfig = EncoderNodeConfig {
-            hold_rate: 0.,
-            hold: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for EncoderNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("EncoderNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for EncoderNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for EncoderNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ColorRgbNodeConfig)
-pub struct ColorRgbNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ColorRgbNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ColorRgbNodeConfig {
-    fn default() -> &'a ColorRgbNodeConfig {
-        <ColorRgbNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ColorRgbNodeConfig {
-    pub fn new() -> ColorRgbNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorRgbNodeConfig>(
-            "ColorRgbNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ColorRgbNodeConfig {
-    const NAME: &'static str = "ColorRgbNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ColorRgbNodeConfig {
-        ColorRgbNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ColorRgbNodeConfig {
-        static instance: ColorRgbNodeConfig = ColorRgbNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ColorRgbNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorRgbNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ColorRgbNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ColorRgbNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ColorHsvNodeConfig)
-pub struct ColorHsvNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ColorHsvNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ColorHsvNodeConfig {
-    fn default() -> &'a ColorHsvNodeConfig {
-        <ColorHsvNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ColorHsvNodeConfig {
-    pub fn new() -> ColorHsvNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorHsvNodeConfig>(
-            "ColorHsvNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ColorHsvNodeConfig {
-    const NAME: &'static str = "ColorHsvNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ColorHsvNodeConfig {
-        ColorHsvNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ColorHsvNodeConfig {
-        static instance: ColorHsvNodeConfig = ColorHsvNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ColorHsvNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorHsvNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ColorHsvNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ColorHsvNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig)
-pub struct ColorConstantNodeConfig {
-    // message oneof groups
-    pub color: ::std::option::Option<color_constant_node_config::Color>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ColorConstantNodeConfig {
-    fn default() -> &'a ColorConstantNodeConfig {
-        <ColorConstantNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ColorConstantNodeConfig {
-    pub fn new() -> ColorConstantNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    // .mizer.nodes.ColorConstantNodeConfig.RgbColor rgb = 1;
-
-    pub fn rgb(&self) -> &color_constant_node_config::RgbColor {
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(ref v)) => v,
-            _ => <color_constant_node_config::RgbColor as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_rgb(&mut self) {
-        self.color = ::std::option::Option::None;
-    }
-
-    pub fn has_rgb(&self) -> bool {
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_rgb(&mut self, v: color_constant_node_config::RgbColor) {
-        self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_rgb(&mut self) -> &mut color_constant_node_config::RgbColor {
-        if let ::std::option::Option::Some(color_constant_node_config::Color::Rgb(_)) = self.color {
-        } else {
-            self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(color_constant_node_config::RgbColor::new()));
-        }
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Rgb(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_rgb(&mut self) -> color_constant_node_config::RgbColor {
-        if self.has_rgb() {
-            match self.color.take() {
-                ::std::option::Option::Some(color_constant_node_config::Color::Rgb(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            color_constant_node_config::RgbColor::new()
-        }
-    }
-
-    // .mizer.nodes.ColorConstantNodeConfig.HsvColor hsv = 2;
-
-    pub fn hsv(&self) -> &color_constant_node_config::HsvColor {
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(ref v)) => v,
-            _ => <color_constant_node_config::HsvColor as ::protobuf::Message>::default_instance(),
-        }
-    }
-
-    pub fn clear_hsv(&mut self) {
-        self.color = ::std::option::Option::None;
-    }
-
-    pub fn has_hsv(&self) -> bool {
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_hsv(&mut self, v: color_constant_node_config::HsvColor) {
-        self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_hsv(&mut self) -> &mut color_constant_node_config::HsvColor {
-        if let ::std::option::Option::Some(color_constant_node_config::Color::Hsv(_)) = self.color {
-        } else {
-            self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(color_constant_node_config::HsvColor::new()));
-        }
-        match self.color {
-            ::std::option::Option::Some(color_constant_node_config::Color::Hsv(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_hsv(&mut self) -> color_constant_node_config::HsvColor {
-        if self.has_hsv() {
-            match self.color.take() {
-                ::std::option::Option::Some(color_constant_node_config::Color::Hsv(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            color_constant_node_config::HsvColor::new()
-        }
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(1);
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, color_constant_node_config::RgbColor>(
-            "rgb",
-            ColorConstantNodeConfig::has_rgb,
-            ColorConstantNodeConfig::rgb,
-            ColorConstantNodeConfig::mut_rgb,
-            ColorConstantNodeConfig::set_rgb,
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, color_constant_node_config::HsvColor>(
-            "hsv",
-            ColorConstantNodeConfig::has_hsv,
-            ColorConstantNodeConfig::hsv,
-            ColorConstantNodeConfig::mut_hsv,
-            ColorConstantNodeConfig::set_hsv,
-        ));
-        oneofs.push(color_constant_node_config::Color::generated_oneof_descriptor_data());
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorConstantNodeConfig>(
-            "ColorConstantNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ColorConstantNodeConfig {
-    const NAME: &'static str = "ColorConstantNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.color = ::std::option::Option::Some(color_constant_node_config::Color::Rgb(is.read_message()?));
-                },
-                18 => {
-                    self.color = ::std::option::Option::Some(color_constant_node_config::Color::Hsv(is.read_message()?));
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if let ::std::option::Option::Some(ref v) = self.color {
-            match v {
-                &color_constant_node_config::Color::Rgb(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-                &color_constant_node_config::Color::Hsv(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-                },
-            };
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if let ::std::option::Option::Some(ref v) = self.color {
-            match v {
-                &color_constant_node_config::Color::Rgb(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
-                },
-                &color_constant_node_config::Color::Hsv(ref v) => {
-                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
-                },
-            };
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ColorConstantNodeConfig {
-        ColorConstantNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.color = ::std::option::Option::None;
-        self.color = ::std::option::Option::None;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ColorConstantNodeConfig {
-        static instance: ColorConstantNodeConfig = ColorConstantNodeConfig {
-            color: ::std::option::Option::None,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ColorConstantNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ColorConstantNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ColorConstantNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `ColorConstantNodeConfig`
-pub mod color_constant_node_config {
-
-    #[derive(Clone,PartialEq,Debug)]
-    #[non_exhaustive]
-    // @@protoc_insertion_point(oneof:mizer.nodes.ColorConstantNodeConfig.color)
-    pub enum Color {
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.ColorConstantNodeConfig.rgb)
-        Rgb(RgbColor),
-        // @@protoc_insertion_point(oneof_field:mizer.nodes.ColorConstantNodeConfig.hsv)
-        Hsv(HsvColor),
-    }
-
-    impl ::protobuf::Oneof for Color {
-    }
-
-    impl ::protobuf::OneofFull for Color {
-        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| <super::ColorConstantNodeConfig as ::protobuf::MessageFull>::descriptor().oneof_by_name("color").unwrap()).clone()
-        }
-    }
-
-    impl Color {
-        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
-            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Color>("color")
-        }
-    }
-    #[derive(PartialEq,Clone,Default,Debug)]
-    // @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig.RgbColor)
-    pub struct RgbColor {
-        // message fields
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.red)
-        pub red: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.green)
-        pub green: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.RgbColor.blue)
-        pub blue: f64,
-        // special fields
-        // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.RgbColor.special_fields)
-        pub special_fields: ::protobuf::SpecialFields,
-    }
-
-    impl<'a> ::std::default::Default for &'a RgbColor {
-        fn default() -> &'a RgbColor {
-            <RgbColor as ::protobuf::Message>::default_instance()
-        }
-    }
-
-    impl RgbColor {
-        pub fn new() -> RgbColor {
-            ::std::default::Default::default()
-        }
-
-        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(3);
-            let mut oneofs = ::std::vec::Vec::with_capacity(0);
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "red",
-                |m: &RgbColor| { &m.red },
-                |m: &mut RgbColor| { &mut m.red },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "green",
-                |m: &RgbColor| { &m.green },
-                |m: &mut RgbColor| { &mut m.green },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "blue",
-                |m: &RgbColor| { &m.blue },
-                |m: &mut RgbColor| { &mut m.blue },
-            ));
-            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RgbColor>(
-                "ColorConstantNodeConfig.RgbColor",
-                fields,
-                oneofs,
-            )
-        }
-    }
-
-    impl ::protobuf::Message for RgbColor {
-        const NAME: &'static str = "RgbColor";
-
-        fn is_initialized(&self) -> bool {
-            true
-        }
-
-        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-            while let Some(tag) = is.read_raw_tag_or_eof()? {
-                match tag {
-                    9 => {
-                        self.red = is.read_double()?;
-                    },
-                    17 => {
-                        self.green = is.read_double()?;
-                    },
-                    25 => {
-                        self.blue = is.read_double()?;
-                    },
-                    tag => {
-                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                    },
-                };
-            }
-            ::std::result::Result::Ok(())
-        }
-
-        // Compute sizes of nested messages
-        #[allow(unused_variables)]
-        fn compute_size(&self) -> u64 {
-            let mut my_size = 0;
-            if self.red != 0. {
-                my_size += 1 + 8;
-            }
-            if self.green != 0. {
-                my_size += 1 + 8;
-            }
-            if self.blue != 0. {
-                my_size += 1 + 8;
-            }
-            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-            self.special_fields.cached_size().set(my_size as u32);
-            my_size
-        }
-
-        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-            if self.red != 0. {
-                os.write_double(1, self.red)?;
-            }
-            if self.green != 0. {
-                os.write_double(2, self.green)?;
-            }
-            if self.blue != 0. {
-                os.write_double(3, self.blue)?;
-            }
-            os.write_unknown_fields(self.special_fields.unknown_fields())?;
-            ::std::result::Result::Ok(())
-        }
-
-        fn special_fields(&self) -> &::protobuf::SpecialFields {
-            &self.special_fields
-        }
-
-        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-            &mut self.special_fields
-        }
-
-        fn new() -> RgbColor {
-            RgbColor::new()
-        }
-
-        fn clear(&mut self) {
-            self.red = 0.;
-            self.green = 0.;
-            self.blue = 0.;
-            self.special_fields.clear();
-        }
-
-        fn default_instance() -> &'static RgbColor {
-            static instance: RgbColor = RgbColor {
-                red: 0.,
-                green: 0.,
-                blue: 0.,
-                special_fields: ::protobuf::SpecialFields::new(),
-            };
-            &instance
-        }
-    }
-
-    impl ::protobuf::MessageFull for RgbColor {
-        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig.RgbColor").unwrap()).clone()
-        }
-    }
-
-    impl ::std::fmt::Display for RgbColor {
-        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-            ::protobuf::text_format::fmt(self, f)
-        }
-    }
-
-    impl ::protobuf::reflect::ProtobufValue for RgbColor {
-        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-    }
-
-    #[derive(PartialEq,Clone,Default,Debug)]
-    // @@protoc_insertion_point(message:mizer.nodes.ColorConstantNodeConfig.HsvColor)
-    pub struct HsvColor {
-        // message fields
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.hue)
-        pub hue: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.saturation)
-        pub saturation: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.ColorConstantNodeConfig.HsvColor.value)
-        pub value: f64,
-        // special fields
-        // @@protoc_insertion_point(special_field:mizer.nodes.ColorConstantNodeConfig.HsvColor.special_fields)
-        pub special_fields: ::protobuf::SpecialFields,
-    }
-
-    impl<'a> ::std::default::Default for &'a HsvColor {
-        fn default() -> &'a HsvColor {
-            <HsvColor as ::protobuf::Message>::default_instance()
-        }
-    }
-
-    impl HsvColor {
-        pub fn new() -> HsvColor {
-            ::std::default::Default::default()
-        }
-
-        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(3);
-            let mut oneofs = ::std::vec::Vec::with_capacity(0);
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "hue",
-                |m: &HsvColor| { &m.hue },
-                |m: &mut HsvColor| { &mut m.hue },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "saturation",
-                |m: &HsvColor| { &m.saturation },
-                |m: &mut HsvColor| { &mut m.saturation },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "value",
-                |m: &HsvColor| { &m.value },
-                |m: &mut HsvColor| { &mut m.value },
-            ));
-            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<HsvColor>(
-                "ColorConstantNodeConfig.HsvColor",
-                fields,
-                oneofs,
-            )
-        }
-    }
-
-    impl ::protobuf::Message for HsvColor {
-        const NAME: &'static str = "HsvColor";
-
-        fn is_initialized(&self) -> bool {
-            true
-        }
-
-        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-            while let Some(tag) = is.read_raw_tag_or_eof()? {
-                match tag {
-                    9 => {
-                        self.hue = is.read_double()?;
-                    },
-                    17 => {
-                        self.saturation = is.read_double()?;
-                    },
-                    25 => {
-                        self.value = is.read_double()?;
-                    },
-                    tag => {
-                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                    },
-                };
-            }
-            ::std::result::Result::Ok(())
-        }
-
-        // Compute sizes of nested messages
-        #[allow(unused_variables)]
-        fn compute_size(&self) -> u64 {
-            let mut my_size = 0;
-            if self.hue != 0. {
-                my_size += 1 + 8;
-            }
-            if self.saturation != 0. {
-                my_size += 1 + 8;
-            }
-            if self.value != 0. {
-                my_size += 1 + 8;
-            }
-            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-            self.special_fields.cached_size().set(my_size as u32);
-            my_size
-        }
-
-        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-            if self.hue != 0. {
-                os.write_double(1, self.hue)?;
-            }
-            if self.saturation != 0. {
-                os.write_double(2, self.saturation)?;
-            }
-            if self.value != 0. {
-                os.write_double(3, self.value)?;
-            }
-            os.write_unknown_fields(self.special_fields.unknown_fields())?;
-            ::std::result::Result::Ok(())
-        }
-
-        fn special_fields(&self) -> &::protobuf::SpecialFields {
-            &self.special_fields
-        }
-
-        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-            &mut self.special_fields
-        }
-
-        fn new() -> HsvColor {
-            HsvColor::new()
-        }
-
-        fn clear(&mut self) {
-            self.hue = 0.;
-            self.saturation = 0.;
-            self.value = 0.;
-            self.special_fields.clear();
-        }
-
-        fn default_instance() -> &'static HsvColor {
-            static instance: HsvColor = HsvColor {
-                hue: 0.,
-                saturation: 0.,
-                value: 0.,
-                special_fields: ::protobuf::SpecialFields::new(),
-            };
-            &instance
-        }
-    }
-
-    impl ::protobuf::MessageFull for HsvColor {
-        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("ColorConstantNodeConfig.HsvColor").unwrap()).clone()
-        }
-    }
-
-    impl ::std::fmt::Display for HsvColor {
-        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-            ::protobuf::text_format::fmt(self, f)
-        }
-    }
-
-    impl ::protobuf::reflect::ProtobufValue for HsvColor {
-        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ColorBrightnessNodeConfig)
-pub struct ColorBrightnessNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ColorBrightnessNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ColorBrightnessNodeConfig {
-    fn default() -> &'a ColorBrightnessNodeConfig {
-        <ColorBrightnessNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ColorBrightnessNodeConfig {
-    pub fn new() -> ColorBrightnessNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ColorBrightnessNodeConfig>(
-            "ColorBrightnessNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ColorBrightnessNodeConfig {
-    const NAME: &'static str = "ColorBrightnessNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ColorBrightnessNodeConfig {
-        ColorBrightnessNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ColorBrightnessNodeConfig {
-        static instance: ColorBrightnessNodeConfig = ColorBrightnessNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ColorBrightnessNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ColorBrightnessNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ColorBrightnessNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ColorBrightnessNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.ContainerNodeConfig)
 pub struct ContainerNodeConfig {
     // message fields
@@ -13996,3703 +7913,6 @@ impl ::std::fmt::Display for ContainerNodeConfig {
 }
 
 impl ::protobuf::reflect::ProtobufValue for ContainerNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.MathNodeConfig)
-pub struct MathNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.MathNodeConfig.mode)
-    pub mode: ::protobuf::EnumOrUnknown<math_node_config::Mode>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.MathNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MathNodeConfig {
-    fn default() -> &'a MathNodeConfig {
-        <MathNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MathNodeConfig {
-    pub fn new() -> MathNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "mode",
-            |m: &MathNodeConfig| { &m.mode },
-            |m: &mut MathNodeConfig| { &mut m.mode },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MathNodeConfig>(
-            "MathNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MathNodeConfig {
-    const NAME: &'static str = "MathNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.mode = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION) {
-            my_size += ::protobuf::rt::int32_size(1, self.mode.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.mode != ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION) {
-            os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.mode))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MathNodeConfig {
-        MathNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.mode = ::protobuf::EnumOrUnknown::new(math_node_config::Mode::ADDITION);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MathNodeConfig {
-        static instance: MathNodeConfig = MathNodeConfig {
-            mode: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MathNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MathNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MathNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MathNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `MathNodeConfig`
-pub mod math_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.MathNodeConfig.Mode)
-    pub enum Mode {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.ADDITION)
-        ADDITION = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.SUBTRACTION)
-        SUBTRACTION = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.MULTIPLICATION)
-        MULTIPLICATION = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.DIVISION)
-        DIVISION = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.INVERT)
-        INVERT = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.SINE)
-        SINE = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.COSINE)
-        COSINE = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.TANGENT)
-        TANGENT = 7,
-    }
-
-    impl ::protobuf::Enum for Mode {
-        const NAME: &'static str = "Mode";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<Mode> {
-            match value {
-                0 => ::std::option::Option::Some(Mode::ADDITION),
-                1 => ::std::option::Option::Some(Mode::SUBTRACTION),
-                2 => ::std::option::Option::Some(Mode::MULTIPLICATION),
-                3 => ::std::option::Option::Some(Mode::DIVISION),
-                4 => ::std::option::Option::Some(Mode::INVERT),
-                5 => ::std::option::Option::Some(Mode::SINE),
-                6 => ::std::option::Option::Some(Mode::COSINE),
-                7 => ::std::option::Option::Some(Mode::TANGENT),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [Mode] = &[
-            Mode::ADDITION,
-            Mode::SUBTRACTION,
-            Mode::MULTIPLICATION,
-            Mode::DIVISION,
-            Mode::INVERT,
-            Mode::SINE,
-            Mode::COSINE,
-            Mode::TANGENT,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for Mode {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("MathNodeConfig.Mode").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for Mode {
-        fn default() -> Self {
-            Mode::ADDITION
-        }
-    }
-
-    impl Mode {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Mode>("MathNodeConfig.Mode")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.MqttInputNodeConfig)
-pub struct MqttInputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.MqttInputNodeConfig.connection)
-    pub connection: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.MqttInputNodeConfig.path)
-    pub path: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.MqttInputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MqttInputNodeConfig {
-    fn default() -> &'a MqttInputNodeConfig {
-        <MqttInputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MqttInputNodeConfig {
-    pub fn new() -> MqttInputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "connection",
-            |m: &MqttInputNodeConfig| { &m.connection },
-            |m: &mut MqttInputNodeConfig| { &mut m.connection },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "path",
-            |m: &MqttInputNodeConfig| { &m.path },
-            |m: &mut MqttInputNodeConfig| { &mut m.path },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MqttInputNodeConfig>(
-            "MqttInputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MqttInputNodeConfig {
-    const NAME: &'static str = "MqttInputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.connection = is.read_string()?;
-                },
-                18 => {
-                    self.path = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.connection.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.connection);
-        }
-        if !self.path.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.path);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.connection.is_empty() {
-            os.write_string(1, &self.connection)?;
-        }
-        if !self.path.is_empty() {
-            os.write_string(2, &self.path)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MqttInputNodeConfig {
-        MqttInputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.connection.clear();
-        self.path.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MqttInputNodeConfig {
-        static instance: MqttInputNodeConfig = MqttInputNodeConfig {
-            connection: ::std::string::String::new(),
-            path: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MqttInputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MqttInputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MqttInputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MqttInputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.MqttOutputNodeConfig)
-pub struct MqttOutputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.MqttOutputNodeConfig.connection)
-    pub connection: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.MqttOutputNodeConfig.path)
-    pub path: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.MqttOutputNodeConfig.retain)
-    pub retain: bool,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.MqttOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MqttOutputNodeConfig {
-    fn default() -> &'a MqttOutputNodeConfig {
-        <MqttOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MqttOutputNodeConfig {
-    pub fn new() -> MqttOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "connection",
-            |m: &MqttOutputNodeConfig| { &m.connection },
-            |m: &mut MqttOutputNodeConfig| { &mut m.connection },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "path",
-            |m: &MqttOutputNodeConfig| { &m.path },
-            |m: &mut MqttOutputNodeConfig| { &mut m.path },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "retain",
-            |m: &MqttOutputNodeConfig| { &m.retain },
-            |m: &mut MqttOutputNodeConfig| { &mut m.retain },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MqttOutputNodeConfig>(
-            "MqttOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MqttOutputNodeConfig {
-    const NAME: &'static str = "MqttOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.connection = is.read_string()?;
-                },
-                18 => {
-                    self.path = is.read_string()?;
-                },
-                24 => {
-                    self.retain = is.read_bool()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.connection.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.connection);
-        }
-        if !self.path.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.path);
-        }
-        if self.retain != false {
-            my_size += 1 + 1;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.connection.is_empty() {
-            os.write_string(1, &self.connection)?;
-        }
-        if !self.path.is_empty() {
-            os.write_string(2, &self.path)?;
-        }
-        if self.retain != false {
-            os.write_bool(3, self.retain)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MqttOutputNodeConfig {
-        MqttOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.connection.clear();
-        self.path.clear();
-        self.retain = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MqttOutputNodeConfig {
-        static instance: MqttOutputNodeConfig = MqttOutputNodeConfig {
-            connection: ::std::string::String::new(),
-            path: ::std::string::String::new(),
-            retain: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MqttOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MqttOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MqttOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MqttOutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.NumberToDataNodeConfig)
-pub struct NumberToDataNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.NumberToDataNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a NumberToDataNodeConfig {
-    fn default() -> &'a NumberToDataNodeConfig {
-        <NumberToDataNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl NumberToDataNodeConfig {
-    pub fn new() -> NumberToDataNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NumberToDataNodeConfig>(
-            "NumberToDataNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for NumberToDataNodeConfig {
-    const NAME: &'static str = "NumberToDataNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> NumberToDataNodeConfig {
-        NumberToDataNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static NumberToDataNodeConfig {
-        static instance: NumberToDataNodeConfig = NumberToDataNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for NumberToDataNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("NumberToDataNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for NumberToDataNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for NumberToDataNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.DataToNumberNodeConfig)
-pub struct DataToNumberNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.DataToNumberNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a DataToNumberNodeConfig {
-    fn default() -> &'a DataToNumberNodeConfig {
-        <DataToNumberNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl DataToNumberNodeConfig {
-    pub fn new() -> DataToNumberNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DataToNumberNodeConfig>(
-            "DataToNumberNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for DataToNumberNodeConfig {
-    const NAME: &'static str = "DataToNumberNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> DataToNumberNodeConfig {
-        DataToNumberNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static DataToNumberNodeConfig {
-        static instance: DataToNumberNodeConfig = DataToNumberNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for DataToNumberNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("DataToNumberNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for DataToNumberNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for DataToNumberNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ValueNodeConfig)
-pub struct ValueNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ValueNodeConfig.value)
-    pub value: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ValueNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ValueNodeConfig {
-    fn default() -> &'a ValueNodeConfig {
-        <ValueNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ValueNodeConfig {
-    pub fn new() -> ValueNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "value",
-            |m: &ValueNodeConfig| { &m.value },
-            |m: &mut ValueNodeConfig| { &mut m.value },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ValueNodeConfig>(
-            "ValueNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ValueNodeConfig {
-    const NAME: &'static str = "ValueNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.value = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.value.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.value);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.value.is_empty() {
-            os.write_string(1, &self.value)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ValueNodeConfig {
-        ValueNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.value.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ValueNodeConfig {
-        static instance: ValueNodeConfig = ValueNodeConfig {
-            value: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ValueNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ValueNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ValueNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ValueNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ExtractNodeConfig)
-pub struct ExtractNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ExtractNodeConfig.path)
-    pub path: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ExtractNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ExtractNodeConfig {
-    fn default() -> &'a ExtractNodeConfig {
-        <ExtractNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ExtractNodeConfig {
-    pub fn new() -> ExtractNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "path",
-            |m: &ExtractNodeConfig| { &m.path },
-            |m: &mut ExtractNodeConfig| { &mut m.path },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ExtractNodeConfig>(
-            "ExtractNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ExtractNodeConfig {
-    const NAME: &'static str = "ExtractNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.path = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.path.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.path);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.path.is_empty() {
-            os.write_string(1, &self.path)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ExtractNodeConfig {
-        ExtractNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.path.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ExtractNodeConfig {
-        static instance: ExtractNodeConfig = ExtractNodeConfig {
-            path: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ExtractNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ExtractNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ExtractNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ExtractNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.TemplateNodeConfig)
-pub struct TemplateNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.TemplateNodeConfig.template)
-    pub template: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.TemplateNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a TemplateNodeConfig {
-    fn default() -> &'a TemplateNodeConfig {
-        <TemplateNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl TemplateNodeConfig {
-    pub fn new() -> TemplateNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "template",
-            |m: &TemplateNodeConfig| { &m.template },
-            |m: &mut TemplateNodeConfig| { &mut m.template },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TemplateNodeConfig>(
-            "TemplateNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for TemplateNodeConfig {
-    const NAME: &'static str = "TemplateNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.template = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.template.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.template);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.template.is_empty() {
-            os.write_string(1, &self.template)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> TemplateNodeConfig {
-        TemplateNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.template.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static TemplateNodeConfig {
-        static instance: TemplateNodeConfig = TemplateNodeConfig {
-            template: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for TemplateNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("TemplateNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for TemplateNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for TemplateNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.PlanScreenNodeConfig)
-pub struct PlanScreenNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.PlanScreenNodeConfig.plan_id)
-    pub plan_id: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.PlanScreenNodeConfig.screen_id)
-    pub screen_id: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.PlanScreenNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a PlanScreenNodeConfig {
-    fn default() -> &'a PlanScreenNodeConfig {
-        <PlanScreenNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl PlanScreenNodeConfig {
-    pub fn new() -> PlanScreenNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "plan_id",
-            |m: &PlanScreenNodeConfig| { &m.plan_id },
-            |m: &mut PlanScreenNodeConfig| { &mut m.plan_id },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "screen_id",
-            |m: &PlanScreenNodeConfig| { &m.screen_id },
-            |m: &mut PlanScreenNodeConfig| { &mut m.screen_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PlanScreenNodeConfig>(
-            "PlanScreenNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for PlanScreenNodeConfig {
-    const NAME: &'static str = "PlanScreenNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.plan_id = is.read_string()?;
-                },
-                16 => {
-                    self.screen_id = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.plan_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
-        }
-        if self.screen_id != 0 {
-            my_size += ::protobuf::rt::uint32_size(2, self.screen_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.plan_id.is_empty() {
-            os.write_string(1, &self.plan_id)?;
-        }
-        if self.screen_id != 0 {
-            os.write_uint32(2, self.screen_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> PlanScreenNodeConfig {
-        PlanScreenNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.plan_id.clear();
-        self.screen_id = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static PlanScreenNodeConfig {
-        static instance: PlanScreenNodeConfig = PlanScreenNodeConfig {
-            plan_id: ::std::string::String::new(),
-            screen_id: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for PlanScreenNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("PlanScreenNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for PlanScreenNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for PlanScreenNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.DelayNodeConfig)
-pub struct DelayNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.DelayNodeConfig.buffer_size)
-    pub buffer_size: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.DelayNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a DelayNodeConfig {
-    fn default() -> &'a DelayNodeConfig {
-        <DelayNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl DelayNodeConfig {
-    pub fn new() -> DelayNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "buffer_size",
-            |m: &DelayNodeConfig| { &m.buffer_size },
-            |m: &mut DelayNodeConfig| { &mut m.buffer_size },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DelayNodeConfig>(
-            "DelayNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for DelayNodeConfig {
-    const NAME: &'static str = "DelayNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.buffer_size = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.buffer_size != 0 {
-            my_size += ::protobuf::rt::uint32_size(1, self.buffer_size);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.buffer_size != 0 {
-            os.write_uint32(1, self.buffer_size)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> DelayNodeConfig {
-        DelayNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.buffer_size = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static DelayNodeConfig {
-        static instance: DelayNodeConfig = DelayNodeConfig {
-            buffer_size: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for DelayNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("DelayNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for DelayNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for DelayNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.RampNodeConfig)
-pub struct RampNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.steps)
-    pub steps: ::std::vec::Vec<ramp_node_config::RampStep>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.RampNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a RampNodeConfig {
-    fn default() -> &'a RampNodeConfig {
-        <RampNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl RampNodeConfig {
-    pub fn new() -> RampNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
-            "steps",
-            |m: &RampNodeConfig| { &m.steps },
-            |m: &mut RampNodeConfig| { &mut m.steps },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RampNodeConfig>(
-            "RampNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for RampNodeConfig {
-    const NAME: &'static str = "RampNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.steps.push(is.read_message()?);
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        for value in &self.steps {
-            let len = value.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
-        };
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        for v in &self.steps {
-            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
-        };
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> RampNodeConfig {
-        RampNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.steps.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static RampNodeConfig {
-        static instance: RampNodeConfig = RampNodeConfig {
-            steps: ::std::vec::Vec::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for RampNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("RampNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for RampNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for RampNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `RampNodeConfig`
-pub mod ramp_node_config {
-    #[derive(PartialEq,Clone,Default,Debug)]
-    // @@protoc_insertion_point(message:mizer.nodes.RampNodeConfig.RampStep)
-    pub struct RampStep {
-        // message fields
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.x)
-        pub x: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.y)
-        pub y: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.c0a)
-        pub c0a: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.c0b)
-        pub c0b: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.c1a)
-        pub c1a: f64,
-        // @@protoc_insertion_point(field:mizer.nodes.RampNodeConfig.RampStep.c1b)
-        pub c1b: f64,
-        // special fields
-        // @@protoc_insertion_point(special_field:mizer.nodes.RampNodeConfig.RampStep.special_fields)
-        pub special_fields: ::protobuf::SpecialFields,
-    }
-
-    impl<'a> ::std::default::Default for &'a RampStep {
-        fn default() -> &'a RampStep {
-            <RampStep as ::protobuf::Message>::default_instance()
-        }
-    }
-
-    impl RampStep {
-        pub fn new() -> RampStep {
-            ::std::default::Default::default()
-        }
-
-        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-            let mut fields = ::std::vec::Vec::with_capacity(6);
-            let mut oneofs = ::std::vec::Vec::with_capacity(0);
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "x",
-                |m: &RampStep| { &m.x },
-                |m: &mut RampStep| { &mut m.x },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "y",
-                |m: &RampStep| { &m.y },
-                |m: &mut RampStep| { &mut m.y },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "c0a",
-                |m: &RampStep| { &m.c0a },
-                |m: &mut RampStep| { &mut m.c0a },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "c0b",
-                |m: &RampStep| { &m.c0b },
-                |m: &mut RampStep| { &mut m.c0b },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "c1a",
-                |m: &RampStep| { &m.c1a },
-                |m: &mut RampStep| { &mut m.c1a },
-            ));
-            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-                "c1b",
-                |m: &RampStep| { &m.c1b },
-                |m: &mut RampStep| { &mut m.c1b },
-            ));
-            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RampStep>(
-                "RampNodeConfig.RampStep",
-                fields,
-                oneofs,
-            )
-        }
-    }
-
-    impl ::protobuf::Message for RampStep {
-        const NAME: &'static str = "RampStep";
-
-        fn is_initialized(&self) -> bool {
-            true
-        }
-
-        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-            while let Some(tag) = is.read_raw_tag_or_eof()? {
-                match tag {
-                    9 => {
-                        self.x = is.read_double()?;
-                    },
-                    17 => {
-                        self.y = is.read_double()?;
-                    },
-                    25 => {
-                        self.c0a = is.read_double()?;
-                    },
-                    33 => {
-                        self.c0b = is.read_double()?;
-                    },
-                    41 => {
-                        self.c1a = is.read_double()?;
-                    },
-                    49 => {
-                        self.c1b = is.read_double()?;
-                    },
-                    tag => {
-                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                    },
-                };
-            }
-            ::std::result::Result::Ok(())
-        }
-
-        // Compute sizes of nested messages
-        #[allow(unused_variables)]
-        fn compute_size(&self) -> u64 {
-            let mut my_size = 0;
-            if self.x != 0. {
-                my_size += 1 + 8;
-            }
-            if self.y != 0. {
-                my_size += 1 + 8;
-            }
-            if self.c0a != 0. {
-                my_size += 1 + 8;
-            }
-            if self.c0b != 0. {
-                my_size += 1 + 8;
-            }
-            if self.c1a != 0. {
-                my_size += 1 + 8;
-            }
-            if self.c1b != 0. {
-                my_size += 1 + 8;
-            }
-            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-            self.special_fields.cached_size().set(my_size as u32);
-            my_size
-        }
-
-        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-            if self.x != 0. {
-                os.write_double(1, self.x)?;
-            }
-            if self.y != 0. {
-                os.write_double(2, self.y)?;
-            }
-            if self.c0a != 0. {
-                os.write_double(3, self.c0a)?;
-            }
-            if self.c0b != 0. {
-                os.write_double(4, self.c0b)?;
-            }
-            if self.c1a != 0. {
-                os.write_double(5, self.c1a)?;
-            }
-            if self.c1b != 0. {
-                os.write_double(6, self.c1b)?;
-            }
-            os.write_unknown_fields(self.special_fields.unknown_fields())?;
-            ::std::result::Result::Ok(())
-        }
-
-        fn special_fields(&self) -> &::protobuf::SpecialFields {
-            &self.special_fields
-        }
-
-        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-            &mut self.special_fields
-        }
-
-        fn new() -> RampStep {
-            RampStep::new()
-        }
-
-        fn clear(&mut self) {
-            self.x = 0.;
-            self.y = 0.;
-            self.c0a = 0.;
-            self.c0b = 0.;
-            self.c1a = 0.;
-            self.c1b = 0.;
-            self.special_fields.clear();
-        }
-
-        fn default_instance() -> &'static RampStep {
-            static instance: RampStep = RampStep {
-                x: 0.,
-                y: 0.,
-                c0a: 0.,
-                c0b: 0.,
-                c1a: 0.,
-                c1b: 0.,
-                special_fields: ::protobuf::SpecialFields::new(),
-            };
-            &instance
-        }
-    }
-
-    impl ::protobuf::MessageFull for RampStep {
-        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("RampNodeConfig.RampStep").unwrap()).clone()
-        }
-    }
-
-    impl ::std::fmt::Display for RampStep {
-        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-            ::protobuf::text_format::fmt(self, f)
-        }
-    }
-
-    impl ::protobuf::reflect::ProtobufValue for RampStep {
-        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.NoiseNodeConfig)
-pub struct NoiseNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.NoiseNodeConfig.tick_rate)
-    pub tick_rate: u64,
-    // @@protoc_insertion_point(field:mizer.nodes.NoiseNodeConfig.fade)
-    pub fade: bool,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.NoiseNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a NoiseNodeConfig {
-    fn default() -> &'a NoiseNodeConfig {
-        <NoiseNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl NoiseNodeConfig {
-    pub fn new() -> NoiseNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "tick_rate",
-            |m: &NoiseNodeConfig| { &m.tick_rate },
-            |m: &mut NoiseNodeConfig| { &mut m.tick_rate },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "fade",
-            |m: &NoiseNodeConfig| { &m.fade },
-            |m: &mut NoiseNodeConfig| { &mut m.fade },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NoiseNodeConfig>(
-            "NoiseNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for NoiseNodeConfig {
-    const NAME: &'static str = "NoiseNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.tick_rate = is.read_uint64()?;
-                },
-                16 => {
-                    self.fade = is.read_bool()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.tick_rate != 0 {
-            my_size += ::protobuf::rt::uint64_size(1, self.tick_rate);
-        }
-        if self.fade != false {
-            my_size += 1 + 1;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.tick_rate != 0 {
-            os.write_uint64(1, self.tick_rate)?;
-        }
-        if self.fade != false {
-            os.write_bool(2, self.fade)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> NoiseNodeConfig {
-        NoiseNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.tick_rate = 0;
-        self.fade = false;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static NoiseNodeConfig {
-        static instance: NoiseNodeConfig = NoiseNodeConfig {
-            tick_rate: 0,
-            fade: false,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for NoiseNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("NoiseNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for NoiseNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for NoiseNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.LabelNodeConfig)
-pub struct LabelNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.LabelNodeConfig.text)
-    pub text: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.LabelNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a LabelNodeConfig {
-    fn default() -> &'a LabelNodeConfig {
-        <LabelNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl LabelNodeConfig {
-    pub fn new() -> LabelNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "text",
-            |m: &LabelNodeConfig| { &m.text },
-            |m: &mut LabelNodeConfig| { &mut m.text },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LabelNodeConfig>(
-            "LabelNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for LabelNodeConfig {
-    const NAME: &'static str = "LabelNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.text = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.text.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.text);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.text.is_empty() {
-            os.write_string(1, &self.text)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> LabelNodeConfig {
-        LabelNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.text.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static LabelNodeConfig {
-        static instance: LabelNodeConfig = LabelNodeConfig {
-            text: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for LabelNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("LabelNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for LabelNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for LabelNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.TransportNodeConfig)
-pub struct TransportNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.TransportNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a TransportNodeConfig {
-    fn default() -> &'a TransportNodeConfig {
-        <TransportNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl TransportNodeConfig {
-    pub fn new() -> TransportNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TransportNodeConfig>(
-            "TransportNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for TransportNodeConfig {
-    const NAME: &'static str = "TransportNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> TransportNodeConfig {
-        TransportNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static TransportNodeConfig {
-        static instance: TransportNodeConfig = TransportNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for TransportNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("TransportNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for TransportNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for TransportNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.G13InputNodeConfig)
-pub struct G13InputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.G13InputNodeConfig.device_id)
-    pub device_id: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.G13InputNodeConfig.key)
-    pub key: ::protobuf::EnumOrUnknown<g13input_node_config::Key>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.G13InputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a G13InputNodeConfig {
-    fn default() -> &'a G13InputNodeConfig {
-        <G13InputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl G13InputNodeConfig {
-    pub fn new() -> G13InputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "device_id",
-            |m: &G13InputNodeConfig| { &m.device_id },
-            |m: &mut G13InputNodeConfig| { &mut m.device_id },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "key",
-            |m: &G13InputNodeConfig| { &m.key },
-            |m: &mut G13InputNodeConfig| { &mut m.key },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<G13InputNodeConfig>(
-            "G13InputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for G13InputNodeConfig {
-    const NAME: &'static str = "G13InputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.device_id = is.read_string()?;
-                },
-                16 => {
-                    self.key = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.device_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.device_id);
-        }
-        if self.key != ::protobuf::EnumOrUnknown::new(g13input_node_config::Key::G1) {
-            my_size += ::protobuf::rt::int32_size(2, self.key.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.device_id.is_empty() {
-            os.write_string(1, &self.device_id)?;
-        }
-        if self.key != ::protobuf::EnumOrUnknown::new(g13input_node_config::Key::G1) {
-            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.key))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> G13InputNodeConfig {
-        G13InputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.device_id.clear();
-        self.key = ::protobuf::EnumOrUnknown::new(g13input_node_config::Key::G1);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static G13InputNodeConfig {
-        static instance: G13InputNodeConfig = G13InputNodeConfig {
-            device_id: ::std::string::String::new(),
-            key: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for G13InputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("G13InputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for G13InputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for G13InputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `G13InputNodeConfig`
-pub mod g13input_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.G13InputNodeConfig.Key)
-    pub enum Key {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G1)
-        G1 = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G2)
-        G2 = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G3)
-        G3 = 2,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G4)
-        G4 = 3,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G5)
-        G5 = 4,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G6)
-        G6 = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G7)
-        G7 = 6,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G8)
-        G8 = 7,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G9)
-        G9 = 8,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G10)
-        G10 = 9,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G11)
-        G11 = 10,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G12)
-        G12 = 11,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G13)
-        G13 = 12,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G14)
-        G14 = 13,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G15)
-        G15 = 14,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G16)
-        G16 = 15,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G17)
-        G17 = 16,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G18)
-        G18 = 17,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G19)
-        G19 = 18,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G20)
-        G20 = 19,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G21)
-        G21 = 20,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.G22)
-        G22 = 21,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.M1)
-        M1 = 22,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.M2)
-        M2 = 23,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.M3)
-        M3 = 24,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.MR)
-        MR = 25,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.L1)
-        L1 = 26,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.L2)
-        L2 = 27,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.L3)
-        L3 = 28,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.L4)
-        L4 = 29,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK_X)
-        JOYSTICK_X = 30,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK_Y)
-        JOYSTICK_Y = 31,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.JOYSTICK)
-        JOYSTICK = 32,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.LEFT)
-        LEFT = 33,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.DOWN)
-        DOWN = 34,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.G13InputNodeConfig.Key.BD)
-        BD = 35,
-    }
-
-    impl ::protobuf::Enum for Key {
-        const NAME: &'static str = "Key";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<Key> {
-            match value {
-                0 => ::std::option::Option::Some(Key::G1),
-                1 => ::std::option::Option::Some(Key::G2),
-                2 => ::std::option::Option::Some(Key::G3),
-                3 => ::std::option::Option::Some(Key::G4),
-                4 => ::std::option::Option::Some(Key::G5),
-                5 => ::std::option::Option::Some(Key::G6),
-                6 => ::std::option::Option::Some(Key::G7),
-                7 => ::std::option::Option::Some(Key::G8),
-                8 => ::std::option::Option::Some(Key::G9),
-                9 => ::std::option::Option::Some(Key::G10),
-                10 => ::std::option::Option::Some(Key::G11),
-                11 => ::std::option::Option::Some(Key::G12),
-                12 => ::std::option::Option::Some(Key::G13),
-                13 => ::std::option::Option::Some(Key::G14),
-                14 => ::std::option::Option::Some(Key::G15),
-                15 => ::std::option::Option::Some(Key::G16),
-                16 => ::std::option::Option::Some(Key::G17),
-                17 => ::std::option::Option::Some(Key::G18),
-                18 => ::std::option::Option::Some(Key::G19),
-                19 => ::std::option::Option::Some(Key::G20),
-                20 => ::std::option::Option::Some(Key::G21),
-                21 => ::std::option::Option::Some(Key::G22),
-                22 => ::std::option::Option::Some(Key::M1),
-                23 => ::std::option::Option::Some(Key::M2),
-                24 => ::std::option::Option::Some(Key::M3),
-                25 => ::std::option::Option::Some(Key::MR),
-                26 => ::std::option::Option::Some(Key::L1),
-                27 => ::std::option::Option::Some(Key::L2),
-                28 => ::std::option::Option::Some(Key::L3),
-                29 => ::std::option::Option::Some(Key::L4),
-                30 => ::std::option::Option::Some(Key::JOYSTICK_X),
-                31 => ::std::option::Option::Some(Key::JOYSTICK_Y),
-                32 => ::std::option::Option::Some(Key::JOYSTICK),
-                33 => ::std::option::Option::Some(Key::LEFT),
-                34 => ::std::option::Option::Some(Key::DOWN),
-                35 => ::std::option::Option::Some(Key::BD),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [Key] = &[
-            Key::G1,
-            Key::G2,
-            Key::G3,
-            Key::G4,
-            Key::G5,
-            Key::G6,
-            Key::G7,
-            Key::G8,
-            Key::G9,
-            Key::G10,
-            Key::G11,
-            Key::G12,
-            Key::G13,
-            Key::G14,
-            Key::G15,
-            Key::G16,
-            Key::G17,
-            Key::G18,
-            Key::G19,
-            Key::G20,
-            Key::G21,
-            Key::G22,
-            Key::M1,
-            Key::M2,
-            Key::M3,
-            Key::MR,
-            Key::L1,
-            Key::L2,
-            Key::L3,
-            Key::L4,
-            Key::JOYSTICK_X,
-            Key::JOYSTICK_Y,
-            Key::JOYSTICK,
-            Key::LEFT,
-            Key::DOWN,
-            Key::BD,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for Key {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("G13InputNodeConfig.Key").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for Key {
-        fn default() -> Self {
-            Key::G1
-        }
-    }
-
-    impl Key {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<Key>("G13InputNodeConfig.Key")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.G13OutputNodeConfig)
-pub struct G13OutputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.G13OutputNodeConfig.device_id)
-    pub device_id: ::std::string::String,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.G13OutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a G13OutputNodeConfig {
-    fn default() -> &'a G13OutputNodeConfig {
-        <G13OutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl G13OutputNodeConfig {
-    pub fn new() -> G13OutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "device_id",
-            |m: &G13OutputNodeConfig| { &m.device_id },
-            |m: &mut G13OutputNodeConfig| { &mut m.device_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<G13OutputNodeConfig>(
-            "G13OutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for G13OutputNodeConfig {
-    const NAME: &'static str = "G13OutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.device_id = is.read_string()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.device_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.device_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.device_id.is_empty() {
-            os.write_string(1, &self.device_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> G13OutputNodeConfig {
-        G13OutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.device_id.clear();
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static G13OutputNodeConfig {
-        static instance: G13OutputNodeConfig = G13OutputNodeConfig {
-            device_id: ::std::string::String::new(),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for G13OutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("G13OutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for G13OutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for G13OutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ConstantNumberNodeConfig)
-pub struct ConstantNumberNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ConstantNumberNodeConfig.value)
-    pub value: f64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ConstantNumberNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ConstantNumberNodeConfig {
-    fn default() -> &'a ConstantNumberNodeConfig {
-        <ConstantNumberNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ConstantNumberNodeConfig {
-    pub fn new() -> ConstantNumberNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "value",
-            |m: &ConstantNumberNodeConfig| { &m.value },
-            |m: &mut ConstantNumberNodeConfig| { &mut m.value },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ConstantNumberNodeConfig>(
-            "ConstantNumberNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ConstantNumberNodeConfig {
-    const NAME: &'static str = "ConstantNumberNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.value = is.read_double()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.value != 0. {
-            my_size += 1 + 8;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.value != 0. {
-            os.write_double(1, self.value)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ConstantNumberNodeConfig {
-        ConstantNumberNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.value = 0.;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ConstantNumberNodeConfig {
-        static instance: ConstantNumberNodeConfig = ConstantNumberNodeConfig {
-            value: 0.,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ConstantNumberNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ConstantNumberNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ConstantNumberNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ConstantNumberNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ConditionalNodeConfig)
-pub struct ConditionalNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.ConditionalNodeConfig.threshold)
-    pub threshold: f64,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ConditionalNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ConditionalNodeConfig {
-    fn default() -> &'a ConditionalNodeConfig {
-        <ConditionalNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ConditionalNodeConfig {
-    pub fn new() -> ConditionalNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "threshold",
-            |m: &ConditionalNodeConfig| { &m.threshold },
-            |m: &mut ConditionalNodeConfig| { &mut m.threshold },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ConditionalNodeConfig>(
-            "ConditionalNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ConditionalNodeConfig {
-    const NAME: &'static str = "ConditionalNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                9 => {
-                    self.threshold = is.read_double()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.threshold != 0. {
-            my_size += 1 + 8;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.threshold != 0. {
-            os.write_double(1, self.threshold)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ConditionalNodeConfig {
-        ConditionalNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.threshold = 0.;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ConditionalNodeConfig {
-        static instance: ConditionalNodeConfig = ConditionalNodeConfig {
-            threshold: 0.,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ConditionalNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ConditionalNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ConditionalNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ConditionalNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.TimecodeControlNodeConfig)
-pub struct TimecodeControlNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.TimecodeControlNodeConfig.timecode_id)
-    pub timecode_id: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.TimecodeControlNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a TimecodeControlNodeConfig {
-    fn default() -> &'a TimecodeControlNodeConfig {
-        <TimecodeControlNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl TimecodeControlNodeConfig {
-    pub fn new() -> TimecodeControlNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "timecode_id",
-            |m: &TimecodeControlNodeConfig| { &m.timecode_id },
-            |m: &mut TimecodeControlNodeConfig| { &mut m.timecode_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TimecodeControlNodeConfig>(
-            "TimecodeControlNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for TimecodeControlNodeConfig {
-    const NAME: &'static str = "TimecodeControlNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.timecode_id = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.timecode_id != 0 {
-            my_size += ::protobuf::rt::uint32_size(1, self.timecode_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.timecode_id != 0 {
-            os.write_uint32(1, self.timecode_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> TimecodeControlNodeConfig {
-        TimecodeControlNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.timecode_id = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static TimecodeControlNodeConfig {
-        static instance: TimecodeControlNodeConfig = TimecodeControlNodeConfig {
-            timecode_id: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for TimecodeControlNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("TimecodeControlNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for TimecodeControlNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for TimecodeControlNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.TimecodeOutputNodeConfig)
-pub struct TimecodeOutputNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.TimecodeOutputNodeConfig.control_id)
-    pub control_id: u32,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.TimecodeOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a TimecodeOutputNodeConfig {
-    fn default() -> &'a TimecodeOutputNodeConfig {
-        <TimecodeOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl TimecodeOutputNodeConfig {
-    pub fn new() -> TimecodeOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "control_id",
-            |m: &TimecodeOutputNodeConfig| { &m.control_id },
-            |m: &mut TimecodeOutputNodeConfig| { &mut m.control_id },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<TimecodeOutputNodeConfig>(
-            "TimecodeOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for TimecodeOutputNodeConfig {
-    const NAME: &'static str = "TimecodeOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                8 => {
-                    self.control_id = is.read_uint32()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if self.control_id != 0 {
-            my_size += ::protobuf::rt::uint32_size(1, self.control_id);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if self.control_id != 0 {
-            os.write_uint32(1, self.control_id)?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> TimecodeOutputNodeConfig {
-        TimecodeOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.control_id = 0;
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static TimecodeOutputNodeConfig {
-        static instance: TimecodeOutputNodeConfig = TimecodeOutputNodeConfig {
-            control_id: 0,
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for TimecodeOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("TimecodeOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for TimecodeOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for TimecodeOutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioFileNodeConfig)
-pub struct AudioFileNodeConfig {
-    // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.AudioFileNodeConfig.file)
-    pub file: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.AudioFileNodeConfig.playback_mode)
-    pub playback_mode: ::protobuf::EnumOrUnknown<audio_file_node_config::PlaybackMode>,
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioFileNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioFileNodeConfig {
-    fn default() -> &'a AudioFileNodeConfig {
-        <AudioFileNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioFileNodeConfig {
-    pub fn new() -> AudioFileNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "file",
-            |m: &AudioFileNodeConfig| { &m.file },
-            |m: &mut AudioFileNodeConfig| { &mut m.file },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "playback_mode",
-            |m: &AudioFileNodeConfig| { &m.playback_mode },
-            |m: &mut AudioFileNodeConfig| { &mut m.playback_mode },
-        ));
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioFileNodeConfig>(
-            "AudioFileNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioFileNodeConfig {
-    const NAME: &'static str = "AudioFileNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                10 => {
-                    self.file = is.read_string()?;
-                },
-                16 => {
-                    self.playback_mode = is.read_enum_or_unknown()?;
-                },
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        if !self.file.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.file);
-        }
-        if self.playback_mode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
-            my_size += ::protobuf::rt::int32_size(2, self.playback_mode.value());
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.file.is_empty() {
-            os.write_string(1, &self.file)?;
-        }
-        if self.playback_mode != ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT) {
-            os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.playback_mode))?;
-        }
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioFileNodeConfig {
-        AudioFileNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.file.clear();
-        self.playback_mode = ::protobuf::EnumOrUnknown::new(audio_file_node_config::PlaybackMode::ONE_SHOT);
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioFileNodeConfig {
-        static instance: AudioFileNodeConfig = AudioFileNodeConfig {
-            file: ::std::string::String::new(),
-            playback_mode: ::protobuf::EnumOrUnknown::from_i32(0),
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioFileNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioFileNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioFileNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioFileNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-/// Nested message and enums of message `AudioFileNodeConfig`
-pub mod audio_file_node_config {
-    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-    // @@protoc_insertion_point(enum:mizer.nodes.AudioFileNodeConfig.PlaybackMode)
-    pub enum PlaybackMode {
-        // @@protoc_insertion_point(enum_value:mizer.nodes.AudioFileNodeConfig.PlaybackMode.ONE_SHOT)
-        ONE_SHOT = 0,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.AudioFileNodeConfig.PlaybackMode.LOOP)
-        LOOP = 1,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.AudioFileNodeConfig.PlaybackMode.PING_PONG)
-        PING_PONG = 2,
-    }
-
-    impl ::protobuf::Enum for PlaybackMode {
-        const NAME: &'static str = "PlaybackMode";
-
-        fn value(&self) -> i32 {
-            *self as i32
-        }
-
-        fn from_i32(value: i32) -> ::std::option::Option<PlaybackMode> {
-            match value {
-                0 => ::std::option::Option::Some(PlaybackMode::ONE_SHOT),
-                1 => ::std::option::Option::Some(PlaybackMode::LOOP),
-                2 => ::std::option::Option::Some(PlaybackMode::PING_PONG),
-                _ => ::std::option::Option::None
-            }
-        }
-
-        const VALUES: &'static [PlaybackMode] = &[
-            PlaybackMode::ONE_SHOT,
-            PlaybackMode::LOOP,
-            PlaybackMode::PING_PONG,
-        ];
-    }
-
-    impl ::protobuf::EnumFull for PlaybackMode {
-        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
-            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("AudioFileNodeConfig.PlaybackMode").unwrap()).clone()
-        }
-
-        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-            let index = *self as usize;
-            Self::enum_descriptor().value_by_index(index)
-        }
-    }
-
-    impl ::std::default::Default for PlaybackMode {
-        fn default() -> Self {
-            PlaybackMode::ONE_SHOT
-        }
-    }
-
-    impl PlaybackMode {
-        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
-            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<PlaybackMode>("AudioFileNodeConfig.PlaybackMode")
-        }
-    }
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioOutputNodeConfig)
-pub struct AudioOutputNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioOutputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioOutputNodeConfig {
-    fn default() -> &'a AudioOutputNodeConfig {
-        <AudioOutputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioOutputNodeConfig {
-    pub fn new() -> AudioOutputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioOutputNodeConfig>(
-            "AudioOutputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioOutputNodeConfig {
-    const NAME: &'static str = "AudioOutputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioOutputNodeConfig {
-        AudioOutputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioOutputNodeConfig {
-        static instance: AudioOutputNodeConfig = AudioOutputNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioOutputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioOutputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioOutputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioOutputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioVolumeNodeConfig)
-pub struct AudioVolumeNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioVolumeNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioVolumeNodeConfig {
-    fn default() -> &'a AudioVolumeNodeConfig {
-        <AudioVolumeNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioVolumeNodeConfig {
-    pub fn new() -> AudioVolumeNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioVolumeNodeConfig>(
-            "AudioVolumeNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioVolumeNodeConfig {
-    const NAME: &'static str = "AudioVolumeNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioVolumeNodeConfig {
-        AudioVolumeNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioVolumeNodeConfig {
-        static instance: AudioVolumeNodeConfig = AudioVolumeNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioVolumeNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioVolumeNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioVolumeNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioVolumeNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioInputNodeConfig)
-pub struct AudioInputNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioInputNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioInputNodeConfig {
-    fn default() -> &'a AudioInputNodeConfig {
-        <AudioInputNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioInputNodeConfig {
-    pub fn new() -> AudioInputNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioInputNodeConfig>(
-            "AudioInputNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioInputNodeConfig {
-    const NAME: &'static str = "AudioInputNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioInputNodeConfig {
-        AudioInputNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioInputNodeConfig {
-        static instance: AudioInputNodeConfig = AudioInputNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioInputNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioInputNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioInputNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioInputNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioMixNodeConfig)
-pub struct AudioMixNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioMixNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioMixNodeConfig {
-    fn default() -> &'a AudioMixNodeConfig {
-        <AudioMixNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioMixNodeConfig {
-    pub fn new() -> AudioMixNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioMixNodeConfig>(
-            "AudioMixNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioMixNodeConfig {
-    const NAME: &'static str = "AudioMixNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioMixNodeConfig {
-        AudioMixNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioMixNodeConfig {
-        static instance: AudioMixNodeConfig = AudioMixNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioMixNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioMixNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioMixNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioMixNodeConfig {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.AudioMeterNodeConfig)
-pub struct AudioMeterNodeConfig {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.AudioMeterNodeConfig.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AudioMeterNodeConfig {
-    fn default() -> &'a AudioMeterNodeConfig {
-        <AudioMeterNodeConfig as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AudioMeterNodeConfig {
-    pub fn new() -> AudioMeterNodeConfig {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AudioMeterNodeConfig>(
-            "AudioMeterNodeConfig",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AudioMeterNodeConfig {
-    const NAME: &'static str = "AudioMeterNodeConfig";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AudioMeterNodeConfig {
-        AudioMeterNodeConfig::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AudioMeterNodeConfig {
-        static instance: AudioMeterNodeConfig = AudioMeterNodeConfig {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AudioMeterNodeConfig {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AudioMeterNodeConfig").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AudioMeterNodeConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AudioMeterNodeConfig {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -18265,333 +8485,170 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x0e\n\x0cNod\
     esRequest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04\
     path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05value\
-    \x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"^\n\x17UpdateNod\
-    eConfigRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12/\n\x06c\
-    onfig\x18\x02\x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\x1a\
-    \n\x18UpdateNodeConfigResponse\"\\\n\x0fMoveNodeRequest\x12\x12\n\x04pat\
-    h\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\x18\x02\x20\x01(\x0b2\
-    \x19.mizer.nodes.NodePositionR\x08position\"\x12\n\x10MoveNodeResponse\"\
-    \x84\x01\n\x0fShowNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04p\
-    ath\x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositio\
-    nR\x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\
-    \x01\x01B\t\n\x07_parent\"\x12\n\x10ShowNodeResponse\"B\n\x11RenameNodeR\
-    equest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x19\n\x08new_na\
-    me\x18\x02\x20\x01(\tR\x07newName\"\x14\n\x12RenameNodeResponse\"Q\n\x11\
-    GroupNodesRequest\x12\x14\n\x05nodes\x18\x01\x20\x03(\tR\x05nodes\x12\
-    \x1b\n\x06parent\x18\x02\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_p\
-    arent\"\x14\n\x12GroupNodesResponse\"'\n\x11DeleteNodeRequest\x12\x12\n\
-    \x04path\x18\x01\x20\x01(\tR\x04path\"\x14\n\x12DeleteNodeResponse\"%\n\
-    \x0fHideNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x12\
-    \n\x10HideNodeResponse\"\x99\x01\n\x05Nodes\x12'\n\x05nodes\x18\x01\x20\
-    \x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\x127\n\x08channels\x18\x02\x20\
-    \x03(\x0b2\x1b.mizer.nodes.NodeConnectionR\x08channels\x12.\n\tall_nodes\
-    \x18\x03\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x08allNodes\"\xf4\x01\n\x0e\
-    NodeConnection\x12\x1f\n\x0btarget_node\x18\x01\x20\x01(\tR\ntargetNode\
-    \x122\n\x0btarget_port\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntarg\
-    etPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\x122\n\
-    \x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\
-    \x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
-    lR\x08protocol\"\x96\x0b\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\
-    \x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\
-    \x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.\
-    PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.\
-    PortR\x07outputs\x125\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.node\
-    s.NodeDesignerR\x08designer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.miz\
-    er.nodes.Node.NodePreviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\
-    \x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\xd6\x07\n\x08NodeType\
-    \x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\x01\x12\x0e\n\nOSCILLATOR\
-    \x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06SCRIPT\x10\x04\x12\x0c\n\
-    \x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\x06\x12\n\n\x06SELECT\x10\
-    \x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHOLD\x10\t\x12\x0e\n\nDMX_OU\
-    TPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\x0e\n\nOSC_OUTPUT\x10\x0c\x12\
-    \x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI_OUTPUT\x10\x0e\x12\r\n\tSEQUE\
-    NCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\x0e\n\nPROGRAMMER\x10\x11\
-    \x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\x10\x13\x12\x0e\n\nVIDEO_FIL\
-    E\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\x12\x10\n\x0cVIDEO_EFFECT\
-    \x10\x16\x12\x17\n\x13VIDEO_COLOR_BALANCE\x10\x17\x12\x13\n\x0fVIDEO_TRA\
-    NSFORM\x10\x18\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PATTER\
-    N\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\tI\
-    LDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\n\
-    \tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_BRI\
-    GHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\n\
-    \x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VALU\
-    E\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\
-    \x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\
-    \x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\
-    \r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\
-    \x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\
-    \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
-    \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
-    ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
-    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\
-    \"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\
-    \x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\
-    \x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DAT\
-    A\x10\x06\x12\t\n\x05COLOR\x10\x07\"\x85'\n\nNodeConfig\x12P\n\x11oscill\
-    ator_config\x18\n\x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\
-    \x10oscillatorConfig\x12M\n\x10scripting_config\x18\x0b\x20\x01(\x0b2\
-    \x20.mizer.nodes.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12J\n\x0fse\
-    quence_config\x18\x0c\x20\x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\
-    \0R\x0esequenceConfig\x12A\n\x0cclock_config\x18\r\x20\x01(\x0b2\x1c.miz\
-    er.nodes.ClockNodeConfigH\0R\x0bclockConfig\x12G\n\x0efixture_config\x18\
-    \x0e\x20\x01(\x0b2\x1e.mizer.nodes.FixtureNodeConfigH\0R\rfixtureConfig\
-    \x12D\n\rbutton_config\x18\x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeC\
-    onfigH\0R\x0cbuttonConfig\x12A\n\x0cfader_config\x18\x10\x20\x01(\x0b2\
-    \x1c.mizer.nodes.FaderNodeConfigH\0R\x0bfaderConfig\x12K\n\x10ilda_file_\
-    config\x18\x11\x20\x01(\x0b2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0ei\
-    ldaFileConfig\x12A\n\x0claser_config\x18\x12\x20\x01(\x0b2\x1c.mizer.nod\
-    es.LaserNodeConfigH\0R\x0blaserConfig\x12W\n\x14pixel_pattern_config\x18\
-    \x13\x20\x01(\x0b2#.mizer.nodes.PixelPatternNodeConfigH\0R\x12pixelPatte\
-    rnConfig\x12K\n\x10pixel_dmx_config\x18\x14\x20\x01(\x0b2\x1f.mizer.node\
-    s.PixelDmxNodeConfigH\0R\x0epixelDmxConfig\x12N\n\x11dmx_output_config\
-    \x18\x15\x20\x01(\x0b2\x20.mizer.nodes.DmxOutputNodeConfigH\0R\x0fdmxOut\
-    putConfig\x12I\n\x11midi_input_config\x18\x16\x20\x01(\x0b2\x1b.mizer.no\
-    des.MidiNodeConfigH\0R\x0fmidiInputConfig\x12K\n\x12midi_output_config\
-    \x18\x17\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x10midiOutputC\
-    onfig\x12N\n\x11opc_output_config\x18\x18\x20\x01(\x0b2\x20.mizer.nodes.\
-    OpcOutputNodeConfigH\0R\x0fopcOutputConfig\x12F\n\x10osc_input_config\
-    \x18\x19\x20\x01(\x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0eoscInputConf\
-    ig\x12H\n\x11osc_output_config\x18\x1a\x20\x01(\x0b2\x1a.mizer.nodes.Osc\
-    NodeConfigH\0R\x0foscOutputConfig\x12g\n\x1avideo_color_balance_config\
-    \x18\x1b\x20\x01(\x0b2(.mizer.nodes.VideoColorBalanceNodeConfigH\0R\x17v\
-    ideoColorBalanceConfig\x12T\n\x13video_effect_config\x18\x1c\x20\x01(\
-    \x0b2\".mizer.nodes.VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12N\
-    \n\x11video_file_config\x18\x1d\x20\x01(\x0b2\x20.mizer.nodes.VideoFileN\
-    odeConfigH\0R\x0fvideoFileConfig\x12T\n\x13video_output_config\x18\x1e\
-    \x20\x01(\x0b2\".mizer.nodes.VideoOutputNodeConfigH\0R\x11videoOutputCon\
-    fig\x12]\n\x16video_transform_config\x18\x1f\x20\x01(\x0b2%.mizer.nodes.\
-    VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12D\n\rselect_conf\
-    ig\x18\x20\x20\x01(\x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\x0cselectC\
-    onfig\x12A\n\x0cmerge_config\x18!\x20\x01(\x0b2\x1c.mizer.nodes.MergeNod\
-    eConfigH\0R\x0bmergeConfig\x12J\n\x0fenvelope_config\x18\"\x20\x01(\x0b2\
-    \x1f.mizer.nodes.EnvelopeNodeConfigH\0R\x0eenvelopeConfig\x12M\n\x10sequ\
-    encer_config\x18#\x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeConfigH\0R\
-    \x0fsequencerConfig\x12P\n\x11programmer_config\x18$\x20\x01(\x0b2!.mize\
-    r.nodes.ProgrammerNodeConfigH\0R\x10programmerConfig\x12A\n\x0cgroup_con\
-    fig\x18%\x20\x01(\x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgroupConfi\
-    g\x12D\n\rpreset_config\x18&\x20\x01(\x0b2\x1d.mizer.nodes.PresetNodeCon\
-    figH\0R\x0cpresetConfig\x12K\n\x10color_rgb_config\x18(\x20\x01(\x0b2\
-    \x1f.mizer.nodes.ColorRgbNodeConfigH\0R\x0ecolorRgbConfig\x12K\n\x10colo\
-    r_hsv_config\x18)\x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfigH\0R\
-    \x0ecolorHsvConfig\x12P\n\x13gamepad_node_config\x18*\x20\x01(\x0b2\x1e.\
-    mizer.nodes.GamepadNodeConfigH\0R\x11gamepadNodeConfig\x12M\n\x10thresho\
-    ld_config\x18+\x20\x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\x0f\
-    thresholdConfig\x12G\n\x0eencoder_config\x18,\x20\x01(\x0b2\x1e.mizer.no\
-    des.EncoderNodeConfigH\0R\rencoderConfig\x12M\n\x10container_config\x18-\
-    \x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfi\
-    g\x12>\n\x0bmath_config\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfi\
-    gH\0R\nmathConfig\x12N\n\x11mqtt_input_config\x18/\x20\x01(\x0b2\x20.miz\
-    er.nodes.MqttInputNodeConfigH\0R\x0fmqttInputConfig\x12Q\n\x12mqtt_outpu\
-    t_config\x180\x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqt\
-    tOutputConfig\x12X\n\x15number_to_data_config\x181\x20\x01(\x0b2#.mizer.\
-    nodes.NumberToDataNodeConfigH\0R\x12numberToDataConfig\x12X\n\x15data_to\
-    _number_config\x182\x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0\
-    R\x12dataToNumberConfig\x12A\n\x0cvalue_config\x183\x20\x01(\x0b2\x1c.mi\
-    zer.nodes.ValueNodeConfigH\0R\x0bvalueConfig\x12G\n\x0eextract_config\
-    \x184\x20\x01(\x0b2\x1e.mizer.nodes.ExtractNodeConfigH\0R\rextractConfig\
-    \x12Q\n\x12plan_screen_config\x185\x20\x01(\x0b2!.mizer.nodes.PlanScreen\
-    NodeConfigH\0R\x10planScreenConfig\x12A\n\x0cdelay_config\x186\x20\x01(\
-    \x0b2\x1c.mizer.nodes.DelayNodeConfigH\0R\x0bdelayConfig\x12>\n\x0bramp_\
-    config\x187\x20\x01(\x0b2\x1b.mizer.nodes.RampNodeConfigH\0R\nrampConfig\
-    \x12A\n\x0cnoise_config\x188\x20\x01(\x0b2\x1c.mizer.nodes.NoiseNodeConf\
-    igH\0R\x0bnoiseConfig\x12A\n\x0clabel_config\x189\x20\x01(\x0b2\x1c.mize\
-    r.nodes.LabelNodeConfigH\0R\x0blabelConfig\x12M\n\x10transport_config\
-    \x18:\x20\x01(\x0b2\x20.mizer.nodes.TransportNodeConfigH\0R\x0ftransport\
-    Config\x12K\n\x10g13_input_config\x18;\x20\x01(\x0b2\x1f.mizer.nodes.G13\
-    InputNodeConfigH\0R\x0eg13InputConfig\x12N\n\x11g13_output_config\x18<\
-    \x20\x01(\x0b2\x20.mizer.nodes.G13OutputNodeConfigH\0R\x0fg13OutputConfi\
-    g\x12]\n\x16constant_number_config\x18=\x20\x01(\x0b2%.mizer.nodes.Const\
-    antNumberNodeConfigH\0R\x14constantNumberConfig\x12S\n\x12conditional_co\
-    nfig\x18>\x20\x01(\x0b2\".mizer.nodes.ConditionalNodeConfigH\0R\x11condi\
-    tionalConfig\x12`\n\x17timecode_control_config\x18?\x20\x01(\x0b2&.mizer\
-    .nodes.TimecodeControlNodeConfigH\0R\x15timecodeControlConfig\x12]\n\x16\
-    timecode_output_config\x18@\x20\x01(\x0b2%.mizer.nodes.TimecodeOutputNod\
-    eConfigH\0R\x14timecodeOutputConfig\x12N\n\x11audio_file_config\x18A\x20\
-    \x01(\x0b2\x20.mizer.nodes.AudioFileNodeConfigH\0R\x0faudioFileConfig\
-    \x12T\n\x13audio_output_config\x18B\x20\x01(\x0b2\".mizer.nodes.AudioOut\
-    putNodeConfigH\0R\x11audioOutputConfig\x12T\n\x13audio_volume_config\x18\
-    C\x20\x01(\x0b2\".mizer.nodes.AudioVolumeNodeConfigH\0R\x11audioVolumeCo\
-    nfig\x12Q\n\x12audio_input_config\x18D\x20\x01(\x0b2!.mizer.nodes.AudioI\
-    nputNodeConfigH\0R\x10audioInputConfig\x12K\n\x10audio_mix_config\x18E\
-    \x20\x01(\x0b2\x1f.mizer.nodes.AudioMixNodeConfigH\0R\x0eaudioMixConfig\
-    \x12Q\n\x12audio_meter_config\x18F\x20\x01(\x0b2!.mizer.nodes.AudioMeter\
-    NodeConfigH\0R\x10audioMeterConfig\x12J\n\x0ftemplate_config\x18G\x20\
-    \x01(\x0b2\x1f.mizer.nodes.TemplateNodeConfigH\0R\x0etemplateConfig\x12Z\
-    \n\x15color_constant_config\x18H\x20\x01(\x0b2$.mizer.nodes.ColorConstan\
-    tNodeConfigH\0R\x13colorConstantConfig\x12`\n\x17color_brightness_config\
-    \x18I\x20\x01(\x0b2&.mizer.nodes.ColorBrightnessNodeConfigH\0R\x15colorB\
-    rightnessConfigB\x06\n\x04type\"\x87\x02\n\x14OscillatorNodeConfig\x12D\
-    \n\x04type\x18\x01\x20\x01(\x0e20.mizer.nodes.OscillatorNodeConfig.Oscil\
-    latorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\
-    \x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\
-    \x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\
-    \x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillato\
-    rType\x12\n\n\x06SQUARE\x10\0\x12\x08\n\x04SINE\x10\x01\x12\x07\n\x03SAW\
-    \x10\x02\x12\x0c\n\x08TRIANGLE\x10\x03\"-\n\x13ScriptingNodeConfig\x12\
-    \x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa6\x01\n\x12SequenceNo\
-    deConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b2,.mizer.nodes.SequenceNode\
-    Config.SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\
-    \x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
-    \x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"\x16\n\x14Pro\
-    grammerNodeConfig\",\n\x0fGroupNodeConfig\x12\x19\n\x08group_id\x18\x01\
-    \x20\x01(\rR\x07groupId\"K\n\x10PresetNodeConfig\x127\n\tpreset_id\x18\
-    \x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x08presetId\"v\n\x12En\
-    velopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\x01(\x01R\x06attack\x12\
-    \x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\x12\x18\n\x07sustain\x18\
-    \x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07release\x18\x04\x20\x01(\x01R\
-    \x07release\"'\n\x0fClockNodeConfig\x12\x14\n\x05speed\x18\x01\x20\x01(\
-    \x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\x1d\n\nfixture_id\x18\x01\
-    \x20\x01(\rR\tfixtureId\"6\n\x13SequencerNodeConfig\x12\x1f\n\x0bsequenc\
-    e_id\x18\x01\x20\x01(\rR\nsequenceId\"*\n\x10ButtonNodeConfig\x12\x16\n\
-    \x06toggle\x18\x01\x20\x01(\x08R\x06toggle\"\x11\n\x0fFaderNodeConfig\"(\
-    \n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\
-    .\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08devic\
-    eId\"\xbb\x03\n\x11GamepadNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\
-    \x01(\tR\x08deviceId\x12@\n\x07control\x18\x02\x20\x01(\x0e2&.mizer.node\
-    s.GamepadNodeConfig.ControlR\x07control\"\xc6\x02\n\x07Control\x12\x10\n\
-    \x0cLEFT_STICK_X\x10\0\x12\x10\n\x0cLEFT_STICK_Y\x10\x01\x12\x11\n\rRIGH\
-    T_STICK_X\x10\x02\x12\x11\n\rRIGHT_STICK_Y\x10\x03\x12\x10\n\x0cLEFT_TRI\
-    GGER\x10\x04\x12\x11\n\rRIGHT_TRIGGER\x10\x05\x12\x11\n\rLEFT_SHOULDER\
-    \x10\x06\x12\x12\n\x0eRIGHT_SHOULDER\x10\x07\x12\t\n\x05SOUTH\x10\x08\
-    \x12\x08\n\x04EAST\x10\t\x12\t\n\x05NORTH\x10\n\x12\x08\n\x04WEST\x10\
-    \x0b\x12\n\n\x06SELECT\x10\x0c\x12\t\n\x05START\x10\r\x12\x08\n\x04MODE\
-    \x10\x0e\x12\x0b\n\x07DPAD_UP\x10\x0f\x12\r\n\tDPAD_DOWN\x10\x10\x12\r\n\
-    \tDPAD_LEFT\x10\x11\x12\x0e\n\nDPAD_RIGHT\x10\x12\x12\x0e\n\nLEFT_STICK\
-    \x10\x13\x12\x0f\n\x0bRIGHT_STICK\x10\x14\"\x86\x01\n\x16PixelPatternNod\
-    eConfig\x12E\n\x07pattern\x18\x01\x20\x01(\x0e2+.mizer.nodes.PixelPatter\
-    nNodeConfig.PatternR\x07pattern\"%\n\x07Pattern\x12\x0f\n\x0bRGB_ITERATE\
-    \x10\0\x12\t\n\x05SWIRL\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\
-    \x14\n\x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\
-    \x02\x20\x01(\x04R\x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\r\
-    R\rstartUniverse\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\
-    \x13DmxOutputNodeConfig\x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06ou\
-    tput\x88\x01\x01\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\
-    \x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\
-    \xf4\x03\n\x0eMidiNodeConfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06\
-    device\x12L\n\x0cnote_binding\x18\x02\x20\x01(\x0b2'.mizer.nodes.MidiNod\
-    eConfig.NoteBindingH\0R\x0bnoteBinding\x12U\n\x0fcontrol_binding\x18\x03\
-    \x20\x01(\x0b2*.mizer.nodes.MidiNodeConfig.ControlBindingH\0R\x0econtrol\
-    Binding\x1a\xd9\x01\n\x0bNoteBinding\x12\x18\n\x07channel\x18\x01\x20\
-    \x01(\rR\x07channel\x12D\n\x04type\x18\x02\x20\x01(\x0e20.mizer.nodes.Mi\
-    diNodeConfig.NoteBinding.MidiTypeR\x04type\x12\x12\n\x04port\x18\x03\x20\
-    \x01(\rR\x04port\x12\x1d\n\nrange_from\x18\x04\x20\x01(\rR\trangeFrom\
-    \x12\x19\n\x08range_to\x18\x05\x20\x01(\rR\x07rangeTo\"\x1c\n\x08MidiTyp\
-    e\x12\x06\n\x02CC\x10\0\x12\x08\n\x04NOTE\x10\x01\x1a>\n\x0eControlBindi\
-    ng\x12\x12\n\x04page\x18\x01\x20\x01(\tR\x04page\x12\x18\n\x07control\
-    \x18\x02\x20\x01(\tR\x07controlB\t\n\x07binding\"k\n\x13OpcOutputNodeCon\
-    fig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\
-    \x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\x05wid\
-    th\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"\x8c\x02\n\rOscN\
-    odeConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\
-    \n\x04path\x18\x02\x20\x01(\tR\x04path\x12L\n\rargument_type\x18\x03\x20\
-    \x01(\x0e2'.mizer.nodes.OscNodeConfig.ArgumentTypeR\x0cargumentType\x12*\
-    \n\x11only_emit_changes\x18\x04\x20\x01(\x08R\x0fonlyEmitChanges\"M\n\
-    \x0cArgumentType\x12\x07\n\x03INT\x10\0\x12\t\n\x05FLOAT\x10\x01\x12\x08\
-    \n\x04LONG\x10\x02\x12\n\n\x06DOUBLE\x10\x03\x12\x08\n\x04BOOL\x10\x04\
-    \x12\t\n\x05COLOR\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\
-    \x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\
-    \x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\
-    \x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeConfig\"\x7f\n\x0fMerg\
-    eNodeConfig\x12:\n\x04mode\x18\x01\x20\x01(\x0e2&.mizer.nodes.MergeNodeC\
-    onfig.MergeModeR\x04mode\"0\n\tMergeMode\x12\n\n\x06LATEST\x10\0\x12\x0b\
-    \n\x07HIGHEST\x10\x01\x12\n\n\x06LOWEST\x10\x02\"\xb1\x01\n\x13Threshold\
-    NodeConfig\x12'\n\x0flower_threshold\x18\x01\x20\x01(\x01R\x0elowerThres\
-    hold\x12'\n\x0fupper_threshold\x18\x02\x20\x01(\x01R\x0eupperThreshold\
-    \x12!\n\x0cactive_value\x18\x03\x20\x01(\x01R\x0bactiveValue\x12%\n\x0ei\
-    nactive_value\x18\x04\x20\x01(\x01R\rinactiveValue\"D\n\x11EncoderNodeCo\
-    nfig\x12\x1b\n\thold_rate\x18\x01\x20\x01(\x01R\x08holdRate\x12\x12\n\
-    \x04hold\x18\x02\x20\x01(\x08R\x04hold\"\x14\n\x12ColorRgbNodeConfig\"\
-    \x14\n\x12ColorHsvNodeConfig\"\xc4\x02\n\x17ColorConstantNodeConfig\x12A\
-    \n\x03rgb\x18\x01\x20\x01(\x0b2-.mizer.nodes.ColorConstantNodeConfig.Rgb\
-    ColorH\0R\x03rgb\x12A\n\x03hsv\x18\x02\x20\x01(\x0b2-.mizer.nodes.ColorC\
-    onstantNodeConfig.HsvColorH\0R\x03hsv\x1aF\n\x08RgbColor\x12\x10\n\x03re\
-    d\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\
-    \x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\x1aR\n\x08HsvC\
-    olor\x12\x10\n\x03hue\x18\x01\x20\x01(\x01R\x03hue\x12\x1e\n\nsaturation\
-    \x18\x02\x20\x01(\x01R\nsaturation\x12\x14\n\x05value\x18\x03\x20\x01(\
-    \x01R\x05valueB\x07\n\x05color\"\x1b\n\x19ColorBrightnessNodeConfig\">\n\
-    \x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.\
-    nodes.NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeConfig\x124\n\x04mode\x18\
-    \x01\x20\x01(\x0e2\x20.mizer.nodes.MathNodeConfig.ModeR\x04mode\"v\n\x04\
-    Mode\x12\x0c\n\x08ADDITION\x10\0\x12\x0f\n\x0bSUBTRACTION\x10\x01\x12\
-    \x12\n\x0eMULTIPLICATION\x10\x02\x12\x0c\n\x08DIVISION\x10\x03\x12\n\n\
-    \x06INVERT\x10\x04\x12\x08\n\x04SINE\x10\x05\x12\n\n\x06COSINE\x10\x06\
-    \x12\x0b\n\x07TANGENT\x10\x07\"I\n\x13MqttInputNodeConfig\x12\x1e\n\ncon\
-    nection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
-    \x01(\tR\x04path\"b\n\x14MqttOutputNodeConfig\x12\x1e\n\nconnection\x18\
-    \x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04pa\
-    th\x12\x16\n\x06retain\x18\x03\x20\x01(\x08R\x06retain\"\x18\n\x16Number\
-    ToDataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\x0fValueNodeConf\
-    ig\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"'\n\x11ExtractNodeCo\
-    nfig\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"0\n\x12TemplateNodeC\
-    onfig\x12\x1a\n\x08template\x18\x01\x20\x01(\tR\x08template\"L\n\x14Plan\
-    ScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\
-    \x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDelayNodeConfi\
-    g\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\xbc\x01\n\
-    \x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mizer.nodes.Ra\
-    mpNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\x01x\x18\
-    \x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\
-    \x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\
-    \x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\
-    \n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\x12\x1b\n\
-    \ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fade\x18\x02\
-    \x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\x04text\x18\x01\
-    \x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"\xb7\x03\n\x12G13In\
-    putNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x125\
-    \n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G13InputNodeConfig.KeyR\x03\
-    key\"\xcc\x02\n\x03Key\x12\x06\n\x02G1\x10\0\x12\x06\n\x02G2\x10\x01\x12\
-    \x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\x12\x06\n\x02G5\x10\x04\x12\
-    \x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\x12\x06\n\x02G8\x10\x07\x12\
-    \x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\x12\x07\n\x03G11\x10\n\x12\
-    \x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\x0c\x12\x07\n\x03G14\x10\r\
-    \x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\x10\x0f\x12\x07\n\x03G17\x10\
-    \x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03G19\x10\x12\x12\x07\n\x03G20\
-    \x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\x03G22\x10\x15\x12\x06\n\x02\
-    M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\n\x02M3\x10\x18\x12\x06\n\x02\
-    MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\n\x02L2\x10\x1b\x12\x06\n\x02\
-    L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\x0e\n\nJOYSTICK_X\x10\x1e\x12\x0e\
-    \n\nJOYSTICK_Y\x10\x1f\x12\x0c\n\x08JOYSTICK\x10\x20\x12\x08\n\x04LEFT\
-    \x10!\x12\x08\n\x04DOWN\x10\"\x12\x06\n\x02BD\x10#\"2\n\x13G13OutputNode\
-    Config\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\"0\n\x18Cons\
-    tantNumberNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"\
-    5\n\x15ConditionalNodeConfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\x01R\
-    \tthreshold\"<\n\x19TimecodeControlNodeConfig\x12\x1f\n\x0btimecode_id\
-    \x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18TimecodeOutputNodeConfig\x12\
-    \x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\"\xb4\x01\n\x13AudioFi\
-    leNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\x12R\n\rplayb\
-    ack_mode\x18\x02\x20\x01(\x0e2-.mizer.nodes.AudioFileNodeConfig.Playback\
-    ModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\x0c\n\x08ONE_SHOT\x10\0\
-    \x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\x10\x02\"\x17\n\x15AudioOu\
-    tputNodeConfig\"\x17\n\x15AudioVolumeNodeConfig\"\x16\n\x14AudioInputNod\
-    eConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\x14AudioMeterNodeConfig\"*\
-    \n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\
-    \x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\
-    \x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\
-    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\
-    \x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\
-    \tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.Cha\
-    nnelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\
-    \x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\
-    \n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
-    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
-    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
-    \n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\x08NodesApi\x129\n\
-    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
-    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
-    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
-    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
-    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProper\
-    ty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeC\
-    onfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\
-    \x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes\
-    .DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08Hide\
-    Node\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeRes\
-    ponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.miz\
-    er.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.Duplica\
-    teNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.\
-    nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nG\
-    roupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.Grou\
-    pNodesResponseb\x06proto3\
+    \x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"b\n\x18UpdateNod\
+    eSettingRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x122\n\x07\
+    setting\x18\x02\x20\x01(\x0b2\x18.mizer.nodes.NodeSettingR\x07setting\"\
+    \\\n\x0fMoveNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\
+    \x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\
+    \x08position\"\x12\n\x10MoveNodeResponse\"\x84\x01\n\x0fShowNodeRequest\
+    \x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\x18\
+    \x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x1b\n\
+    \x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\
+    \"\x12\n\x10ShowNodeResponse\"B\n\x11RenameNodeRequest\x12\x12\n\x04path\
+    \x18\x01\x20\x01(\tR\x04path\x12\x19\n\x08new_name\x18\x02\x20\x01(\tR\
+    \x07newName\"\x14\n\x12RenameNodeResponse\"Q\n\x11GroupNodesRequest\x12\
+    \x14\n\x05nodes\x18\x01\x20\x03(\tR\x05nodes\x12\x1b\n\x06parent\x18\x02\
+    \x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x14\n\x12GroupNo\
+    desResponse\"'\n\x11DeleteNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\
+    \tR\x04path\"\x14\n\x12DeleteNodeResponse\"%\n\x0fHideNodeRequest\x12\
+    \x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x12\n\x10HideNodeResponse\"\
+    \x99\x01\n\x05Nodes\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.node\
+    s.NodeR\x05nodes\x127\n\x08channels\x18\x02\x20\x03(\x0b2\x1b.mizer.node\
+    s.NodeConnectionR\x08channels\x12.\n\tall_nodes\x18\x03\x20\x03(\x0b2\
+    \x11.mizer.nodes.NodeR\x08allNodes\"\xf4\x01\n\x0eNodeConnection\x12\x1f\
+    \n\x0btarget_node\x18\x01\x20\x01(\tR\ntargetNode\x122\n\x0btarget_port\
+    \x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntargetPort\x12\x1f\n\x0bso\
+    urce_node\x18\x03\x20\x01(\tR\nsourceNode\x122\n\x0bsource_port\x18\x04\
+    \x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\x128\n\x08protocol\x18\
+    \x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\"\xcc\
+    \x0b\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.Node\
+    .NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12)\n\
+    \x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.PortR\x06inputs\x12+\n\
+    \x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.PortR\x07outputs\x125\
+    \n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.nodes.NodeDesignerR\x08de\
+    signer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.mizer.nodes.Node.NodePre\
+    viewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\x01(\x0b2\x17.mizer.no\
+    des.NodeConfigR\x06config\x124\n\x08settings\x18\x08\x20\x03(\x0b2\x18.m\
+    izer.nodes.NodeSettingR\x08settings\"\xd6\x07\n\x08NodeType\x12\t\n\x05F\
+    ADER\x10\0\x12\n\n\x06BUTTON\x10\x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\
+    \n\x05CLOCK\x10\x03\x12\n\n\x06SCRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\
+    \x05\x12\x0c\n\x08SEQUENCE\x10\x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05\
+    MERGE\x10\x08\x12\r\n\tTHRESHOLD\x10\t\x12\x0e\n\nDMX_OUTPUT\x10\n\x12\r\
+    \n\tOSC_INPUT\x10\x0b\x12\x0e\n\nOSC_OUTPUT\x10\x0c\x12\x0e\n\nMIDI_INPU\
+    T\x10\r\x12\x0f\n\x0bMIDI_OUTPUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\
+    \x0b\n\x07FIXTURE\x10\x10\x12\x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\
+    \x10\x12\x12\n\n\x06PRESET\x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\
+    \n\x0cVIDEO_OUTPUT\x10\x15\x12\x10\n\x0cVIDEO_EFFECT\x10\x16\x12\x17\n\
+    \x13VIDEO_COLOR_BALANCE\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\
+    \x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PATTERN\x10\x1f\x12\x0e\
+    \n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\tILDA_FILE\x10)\x12\
+    \x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\n\tCOLOR_HSV\x103\
+    \x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_BRIGHTNESS\x105\x12\
+    \x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\n\x0eDATA_TO_NUMBE\
+    R\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\
+    \x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10\
+    >\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\
+    \x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\r\n\tTRANSPORT\x10\
+    D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTA\
+    NT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\n\x10TIMECODE_CONTR\
+    OL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\
+    \x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0b\
+    AUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\
+    \x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewT\
+    ype\x12\x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WA\
+    VEFORM\x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\
+    \x04\x12\x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05\
+    COLOR\x10\x07\"\xbb\x02\n\nNodeConfig\x12M\n\x10sequencer_config\x18#\
+    \x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeConfigH\0R\x0fsequencerConfi\
+    g\x12A\n\x0cgroup_config\x18%\x20\x01(\x0b2\x1c.mizer.nodes.GroupNodeCon\
+    figH\0R\x0bgroupConfig\x12D\n\rpreset_config\x18&\x20\x01(\x0b2\x1d.mize\
+    r.nodes.PresetNodeConfigH\0R\x0cpresetConfig\x12M\n\x10container_config\
+    \x18-\x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainer\
+    ConfigB\x06\n\x04type\"\xd7\x0f\n\x0bNodeSetting\x12\x14\n\x05label\x18\
+    \x01\x20\x01(\tR\x05label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\
+    \x0bdescription\x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\
+    \x128\n\x04text\x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValu\
+    eH\0R\x04text\x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSet\
+    ting.FloatValueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.\
+    nodes.NodeSetting.IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\
+    \x0b2\".mizer.nodes.NodeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\
+    \x18\x08\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SelectValueH\0R\x06selec\
+    t\x128\n\x04enum\x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValue\
+    H\0R\x04enum\x122\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSettin\
+    g.IdValueH\0R\x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.\
+    NodeSetting.SplineValueH\0R\x06spline\x1a?\n\tTextValue\x12\x14\n\x05val\
+    ue\x18\x01\x20\x01(\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\
+    \x08R\tmultiline\x1a\xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\
+    \x20\x01(\x01R\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\
+    \x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\
+    \x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\
+    \x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\
+    \x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\
+    \x1a\xb8\x01\n\x08IntValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05val\
+    ue\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0R\x03min\x88\x01\x01\x12\x1e\n\
+    \x08min_hint\x18\x03\x20\x01(\rH\x01R\x07minHint\x88\x01\x01\x12\x15\n\
+    \x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hin\
+    t\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\
+    \t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a!\n\tBoolValue\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\x08R\x05value\x1ag\n\x0bSelectValue\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\tR\x05value\x12B\n\x08variants\x18\x02\x20\
+    \x03(\x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x08variants\x1a\xcc\
+    \x02\n\rSelectVariant\x12J\n\x05group\x18\x01\x20\x01(\x0b22.mizer.nodes\
+    .NodeSetting.SelectVariant.SelectGroupH\0R\x05group\x12G\n\x04item\x18\
+    \x02\x20\x01(\x0b21.mizer.nodes.NodeSetting.SelectVariant.SelectItemH\0R\
+    \x04item\x1aa\n\x0bSelectGroup\x12\x14\n\x05label\x18\x01\x20\x01(\tR\
+    \x05label\x12<\n\x05items\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting\
+    .SelectVariantR\x05items\x1a8\n\nSelectItem\x12\x14\n\x05value\x18\x01\
+    \x20\x01(\tR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05labelB\t\
+    \n\x07variant\x1ac\n\tEnumValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\
+    \x05value\x12@\n\x08variants\x18\x02\x20\x03(\x0b2$.mizer.nodes.NodeSett\
+    ing.EnumVariantR\x08variants\x1a9\n\x0bEnumVariant\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05\
+    label\x1a_\n\x07IdValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\
+    \x12>\n\x08variants\x18\x02\x20\x03(\x0b2\".mizer.nodes.NodeSetting.IdVa\
+    riantR\x08variants\x1a7\n\tIdVariant\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \rR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05label\x1a\xc6\x01\
+    \n\x0bSplineValue\x12E\n\x05steps\x18\x01\x20\x03(\x0b2/.mizer.nodes.Nod\
+    eSetting.SplineValue.SplineStepR\x05steps\x1ap\n\nSplineStep\x12\x0c\n\
+    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
+    \x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\
+    \x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\
+    \x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1bB\x07\n\x05value\",\n\x0fG\
+    roupNodeConfig\x12\x19\n\x08group_id\x18\x01\x20\x01(\rR\x07groupId\"K\n\
+    \x10PresetNodeConfig\x127\n\tpreset_id\x18\x01\x20\x01(\x0b2\x1a.mizer.p\
+    rogrammer.PresetIdR\x08presetId\"6\n\x13SequencerNodeConfig\x12\x1f\n\
+    \x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\"\xf4\x03\n\x0eMidiNodeC\
+    onfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_b\
+    inding\x18\x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\
+    \x0bnoteBinding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.n\
+    odes.MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\
+    \x0bNoteBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\
+    \n\x04type\x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding\
+    .MidiTypeR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\
+    \n\nrange_from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\
+    \x05\x20\x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\
+    \x12\x08\n\x04NOTE\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\
+    \x18\x01\x20\x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\
+    \x07controlB\t\n\x07binding\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\
+    \x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"*\n\x0cNodePositi\
+    on\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
+    \x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\
+    \x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\x05scale\x18\
+    \x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\
+    \x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
+    lR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\x08multiple*\
+    \x8d\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\
+    \x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06\
+    VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\
+    \x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\
+    \x10\x08\x12\t\n\x05CLOCK\x10\n2\xef\x06\n\x08NodesApi\x129\n\x08GetNode\
+    s\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07A\
+    ddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\
+    \n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.Nod\
+    eConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\
+    \x1a\x1a.mizer.nodes.WriteResponse\x12M\n\x11UpdateNodeSetting\x12%.mize\
+    r.nodes.UpdateNodeSettingRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08Move\
+    Node\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeRes\
+    ponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.m\
+    izer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.Hid\
+    eNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\
+    \x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\
+    \x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.miz\
+    er.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\
+    \x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer\
+    .nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06prot\
+    o3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -18610,14 +8667,13 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::programmer::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(93);
+            let mut messages = ::std::vec::Vec::with_capacity(47);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());
             messages.push(NodesRequest::generated_message_descriptor_data());
             messages.push(WriteControl::generated_message_descriptor_data());
             messages.push(WriteResponse::generated_message_descriptor_data());
-            messages.push(UpdateNodeConfigRequest::generated_message_descriptor_data());
-            messages.push(UpdateNodeConfigResponse::generated_message_descriptor_data());
+            messages.push(UpdateNodeSettingRequest::generated_message_descriptor_data());
             messages.push(MoveNodeRequest::generated_message_descriptor_data());
             messages.push(MoveNodeResponse::generated_message_descriptor_data());
             messages.push(ShowNodeRequest::generated_message_descriptor_data());
@@ -18634,89 +8690,36 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(NodeConnection::generated_message_descriptor_data());
             messages.push(Node::generated_message_descriptor_data());
             messages.push(NodeConfig::generated_message_descriptor_data());
-            messages.push(OscillatorNodeConfig::generated_message_descriptor_data());
-            messages.push(ScriptingNodeConfig::generated_message_descriptor_data());
-            messages.push(SequenceNodeConfig::generated_message_descriptor_data());
-            messages.push(ProgrammerNodeConfig::generated_message_descriptor_data());
+            messages.push(NodeSetting::generated_message_descriptor_data());
             messages.push(GroupNodeConfig::generated_message_descriptor_data());
             messages.push(PresetNodeConfig::generated_message_descriptor_data());
-            messages.push(EnvelopeNodeConfig::generated_message_descriptor_data());
-            messages.push(ClockNodeConfig::generated_message_descriptor_data());
-            messages.push(FixtureNodeConfig::generated_message_descriptor_data());
             messages.push(SequencerNodeConfig::generated_message_descriptor_data());
-            messages.push(ButtonNodeConfig::generated_message_descriptor_data());
-            messages.push(FaderNodeConfig::generated_message_descriptor_data());
-            messages.push(IldaFileNodeConfig::generated_message_descriptor_data());
-            messages.push(LaserNodeConfig::generated_message_descriptor_data());
-            messages.push(GamepadNodeConfig::generated_message_descriptor_data());
-            messages.push(PixelPatternNodeConfig::generated_message_descriptor_data());
-            messages.push(PixelDmxNodeConfig::generated_message_descriptor_data());
-            messages.push(DmxOutputNodeConfig::generated_message_descriptor_data());
             messages.push(MidiNodeConfig::generated_message_descriptor_data());
-            messages.push(OpcOutputNodeConfig::generated_message_descriptor_data());
-            messages.push(OscNodeConfig::generated_message_descriptor_data());
-            messages.push(VideoColorBalanceNodeConfig::generated_message_descriptor_data());
-            messages.push(VideoEffectNodeConfig::generated_message_descriptor_data());
-            messages.push(VideoFileNodeConfig::generated_message_descriptor_data());
-            messages.push(VideoOutputNodeConfig::generated_message_descriptor_data());
-            messages.push(VideoTransformNodeConfig::generated_message_descriptor_data());
-            messages.push(SelectNodeConfig::generated_message_descriptor_data());
-            messages.push(MergeNodeConfig::generated_message_descriptor_data());
-            messages.push(ThresholdNodeConfig::generated_message_descriptor_data());
-            messages.push(EncoderNodeConfig::generated_message_descriptor_data());
-            messages.push(ColorRgbNodeConfig::generated_message_descriptor_data());
-            messages.push(ColorHsvNodeConfig::generated_message_descriptor_data());
-            messages.push(ColorConstantNodeConfig::generated_message_descriptor_data());
-            messages.push(ColorBrightnessNodeConfig::generated_message_descriptor_data());
             messages.push(ContainerNodeConfig::generated_message_descriptor_data());
-            messages.push(MathNodeConfig::generated_message_descriptor_data());
-            messages.push(MqttInputNodeConfig::generated_message_descriptor_data());
-            messages.push(MqttOutputNodeConfig::generated_message_descriptor_data());
-            messages.push(NumberToDataNodeConfig::generated_message_descriptor_data());
-            messages.push(DataToNumberNodeConfig::generated_message_descriptor_data());
-            messages.push(ValueNodeConfig::generated_message_descriptor_data());
-            messages.push(ExtractNodeConfig::generated_message_descriptor_data());
-            messages.push(TemplateNodeConfig::generated_message_descriptor_data());
-            messages.push(PlanScreenNodeConfig::generated_message_descriptor_data());
-            messages.push(DelayNodeConfig::generated_message_descriptor_data());
-            messages.push(RampNodeConfig::generated_message_descriptor_data());
-            messages.push(NoiseNodeConfig::generated_message_descriptor_data());
-            messages.push(LabelNodeConfig::generated_message_descriptor_data());
-            messages.push(TransportNodeConfig::generated_message_descriptor_data());
-            messages.push(G13InputNodeConfig::generated_message_descriptor_data());
-            messages.push(G13OutputNodeConfig::generated_message_descriptor_data());
-            messages.push(ConstantNumberNodeConfig::generated_message_descriptor_data());
-            messages.push(ConditionalNodeConfig::generated_message_descriptor_data());
-            messages.push(TimecodeControlNodeConfig::generated_message_descriptor_data());
-            messages.push(TimecodeOutputNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioFileNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioOutputNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioVolumeNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioInputNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioMixNodeConfig::generated_message_descriptor_data());
-            messages.push(AudioMeterNodeConfig::generated_message_descriptor_data());
             messages.push(NodePosition::generated_message_descriptor_data());
             messages.push(NodeDesigner::generated_message_descriptor_data());
             messages.push(Port::generated_message_descriptor_data());
-            messages.push(sequence_node_config::SequenceStep::generated_message_descriptor_data());
+            messages.push(node_setting::TextValue::generated_message_descriptor_data());
+            messages.push(node_setting::FloatValue::generated_message_descriptor_data());
+            messages.push(node_setting::IntValue::generated_message_descriptor_data());
+            messages.push(node_setting::BoolValue::generated_message_descriptor_data());
+            messages.push(node_setting::SelectValue::generated_message_descriptor_data());
+            messages.push(node_setting::SelectVariant::generated_message_descriptor_data());
+            messages.push(node_setting::EnumValue::generated_message_descriptor_data());
+            messages.push(node_setting::EnumVariant::generated_message_descriptor_data());
+            messages.push(node_setting::IdValue::generated_message_descriptor_data());
+            messages.push(node_setting::IdVariant::generated_message_descriptor_data());
+            messages.push(node_setting::SplineValue::generated_message_descriptor_data());
+            messages.push(node_setting::select_variant::SelectGroup::generated_message_descriptor_data());
+            messages.push(node_setting::select_variant::SelectItem::generated_message_descriptor_data());
+            messages.push(node_setting::spline_value::SplineStep::generated_message_descriptor_data());
             messages.push(midi_node_config::NoteBinding::generated_message_descriptor_data());
             messages.push(midi_node_config::ControlBinding::generated_message_descriptor_data());
-            messages.push(color_constant_node_config::RgbColor::generated_message_descriptor_data());
-            messages.push(color_constant_node_config::HsvColor::generated_message_descriptor_data());
-            messages.push(ramp_node_config::RampStep::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(12);
+            let mut enums = ::std::vec::Vec::with_capacity(4);
             enums.push(ChannelProtocol::generated_enum_descriptor_data());
             enums.push(node::NodeType::generated_enum_descriptor_data());
             enums.push(node::NodePreviewType::generated_enum_descriptor_data());
-            enums.push(oscillator_node_config::OscillatorType::generated_enum_descriptor_data());
-            enums.push(gamepad_node_config::Control::generated_enum_descriptor_data());
-            enums.push(pixel_pattern_node_config::Pattern::generated_enum_descriptor_data());
             enums.push(midi_node_config::note_binding::MidiType::generated_enum_descriptor_data());
-            enums.push(osc_node_config::ArgumentType::generated_enum_descriptor_data());
-            enums.push(merge_node_config::MergeMode::generated_enum_descriptor_data());
-            enums.push(math_node_config::Mode::generated_enum_descriptor_data());
-            enums.push(g13input_node_config::Key::generated_enum_descriptor_data());
-            enums.push(audio_file_node_config::PlaybackMode::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

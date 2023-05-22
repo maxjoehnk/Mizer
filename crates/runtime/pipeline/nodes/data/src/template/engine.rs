@@ -56,7 +56,6 @@ impl TemplateEngine {
                     Self::execute_ast(*conditional.failure, values)?
                 }
             }
-            _ => unimplemented!(),
         };
 
         Ok(result)

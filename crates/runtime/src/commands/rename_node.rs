@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::commands::UpdateNodeCommand;
 use mizer_commander::{Command, RefMut};
 use mizer_execution_planner::ExecutionPlanner;
 use mizer_node::{NodePath, NodeType};
@@ -17,7 +16,7 @@ pub struct RenameNodeCommand {
 
 impl<'a> Command<'a> for RenameNodeCommand {
     type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
-    type State = Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>;
+    type State = Vec<(NodePath, Node)>;
     type Result = ();
 
     fn label(&self) -> String {
@@ -33,9 +32,9 @@ impl<'a> Command<'a> for RenameNodeCommand {
         rename_nodes_view(pipeline, &self.path, &self.new_name)?;
         rename_links(pipeline, &self.path, &self.new_name)?;
         planner.rename_node(&self.path, self.new_name.clone());
-        let update_commands = self.rename_node_in_containers(pipeline)?;
+        let previous_containers = self.rename_node_in_containers(pipeline)?;
 
-        Ok(((), update_commands))
+        Ok(((), previous_containers))
     }
 
     fn revert(
@@ -48,8 +47,8 @@ impl<'a> Command<'a> for RenameNodeCommand {
         rename_nodes_view(pipeline, &self.new_name, &self.path)?;
         rename_links(pipeline, &self.new_name, &self.path)?;
         planner.rename_node(&self.new_name, self.path.clone());
-        for (cmd, state) in container_commands {
-            cmd.revert(pipeline, state)?;
+        for (path, container) in container_commands {
+            pipeline.apply_node_config(&path, container)?;
         }
 
         Ok(())
@@ -119,10 +118,10 @@ fn rename_links(
 }
 
 impl RenameNodeCommand {
-    fn rename_node_in_containers<'a>(
+    fn rename_node_in_containers(
         &self,
         pipeline: &mut PipelineAccess,
-    ) -> anyhow::Result<Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>> {
+    ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
         for (path, node) in pipeline
             .nodes
@@ -133,21 +132,17 @@ impl RenameNodeCommand {
                 let updated_node = container.nodes.iter().position(|p| p == &self.path);
                 if let Some(updated_node_index) = updated_node {
                     container.nodes[updated_node_index] = self.new_name.clone();
-                    let cmd = UpdateNodeCommand {
-                        path: path.clone(),
-                        config: Node::Container(container),
-                    };
-                    update_node_commands.push(cmd);
+                    update_node_commands.push((path.clone(), container));
                 }
             }
         }
 
         update_node_commands
             .into_iter()
-            .map(|cmd| {
-                let (_, state) = cmd.apply(pipeline)?;
+            .map(|(path, node)| {
+                let previous = pipeline.apply_node_config(&path, node.into());
 
-                Ok((cmd, state))
+                previous.map(|previous| (path, previous))
             })
             .collect()
     }

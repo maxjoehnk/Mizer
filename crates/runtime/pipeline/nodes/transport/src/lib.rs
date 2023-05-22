@@ -15,6 +15,8 @@ const PLAYING_OUTPUT: &str = "Playing";
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct TransportNode;
 
+impl ConfigurableNode for TransportNode {}
+
 impl PipelineNode for TransportNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -88,8 +90,6 @@ impl ProcessingNode for TransportNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 #[derive(Default)]

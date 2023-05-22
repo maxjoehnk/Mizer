@@ -1,14 +1,19 @@
-use super::ProjectMigration;
-use crate::Project;
+use crate::versioning::migrations::ProjectFileMigration;
+use crate::Channel;
+use indexmap::IndexMap;
 use mizer_node::{NodePath, NodeType};
+use serde::{Deserialize, Serialize};
+use serde_yaml::Value;
 
 #[derive(Clone, Copy)]
 pub struct RenamePortsMigration;
 
-impl ProjectMigration for RenamePortsMigration {
+impl ProjectFileMigration for RenamePortsMigration {
     const VERSION: usize = 1;
 
-    fn migrate(&self, project: &mut Project) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+        let mut project: ProjectConfig = serde_yaml::from_str(project_file)?;
+
         project.rename_input(NodeType::Select, "channel", "Channel");
         project.rename_input(NodeType::Select, "input", "Inputs");
         project.rename_output(NodeType::Select, "output", "Output");
@@ -71,11 +76,23 @@ impl ProjectMigration for RenamePortsMigration {
         project.rename_output(NodeType::IldaFile, "frames", "Frames");
         project.rename_input(NodeType::Laser, "input", "Frames");
 
+        *project_file = serde_yaml::to_string(&project)?;
+
         Ok(())
     }
 }
 
-impl Project {
+#[derive(Serialize, Deserialize)]
+struct ProjectConfig {
+    #[serde(default)]
+    pub nodes: Vec<Node>,
+    #[serde(default)]
+    pub channels: Vec<Channel>,
+    #[serde(flatten)]
+    other: IndexMap<String, Value>,
+}
+
+impl ProjectConfig {
     pub(super) fn rename_input(&mut self, node_type: NodeType, from: &str, to: &str) {
         let nodes = self.get_nodes_with_type(node_type);
 
@@ -107,8 +124,17 @@ impl Project {
     fn get_nodes_with_type(&mut self, node_type: NodeType) -> Vec<NodePath> {
         self.nodes
             .iter()
-            .filter(|node| node.config.node_type() == node_type)
+            .filter(|node| node.node_type == node_type)
             .map(|node| node.path.clone())
             .collect()
     }
+}
+
+#[derive(Serialize, Deserialize)]
+struct Node {
+    #[serde(rename = "type")]
+    node_type: NodeType,
+    path: NodePath,
+    #[serde(flatten)]
+    other: IndexMap<String, Value>,
 }

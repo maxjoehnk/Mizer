@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_devices::DeviceManager;
 
+use crate::G13InjectorExt;
 use mizer_node::*;
 
 const KEY_COLOR: &str = "Key Color";
@@ -10,10 +11,26 @@ const M2: &str = "M2";
 const M3: &str = "M3";
 const MR: &str = "MR";
 
+const DEVICE_SETTING: &str = "Device";
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct G13OutputNode {
     #[serde(rename = "device")]
     pub device_id: String,
+}
+
+impl ConfigurableNode for G13OutputNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let devices = injector.get_devices();
+
+        vec![setting!(select DEVICE_SETTING, &self.device_id, devices)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, DEVICE_SETTING, self.device_id);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for G13OutputNode {
@@ -75,9 +92,5 @@ impl ProcessingNode for G13OutputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.device_id = config.device_id.clone();
     }
 }

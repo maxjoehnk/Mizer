@@ -3,6 +3,8 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
+const SCRIPT_SETTING: &str = "Script";
+
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ScriptingNode {
     pub script: String,
@@ -29,7 +31,17 @@ impl<'a> Default for ScriptingNodeState<'a> {
     }
 }
 
-impl ScriptingNode {}
+impl ConfigurableNode for ScriptingNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(SCRIPT_SETTING, &self.script).multiline()]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, SCRIPT_SETTING, self.script);
+
+        update_fallback!(setting)
+    }
+}
 
 impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
@@ -71,9 +83,5 @@ impl ProcessingNode for ScriptingNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.script = config.script.clone();
     }
 }

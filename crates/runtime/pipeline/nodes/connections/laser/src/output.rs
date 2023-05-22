@@ -1,11 +1,13 @@
 use anyhow::Context;
 use serde::{Deserialize, Serialize};
 
-use mizer_devices::DeviceManager;
+use mizer_devices::{DeviceManager, DeviceRef};
 pub use mizer_node::*;
 use mizer_protocol_laser::{Laser, LaserFrame};
 
 const INPUT_PORT: &str = "Frames";
+
+const DEVICE_SETTING: &str = "Device";
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LaserNode {
@@ -17,6 +19,29 @@ pub struct LaserNode {
 pub struct LaserState {
     current_frame: usize,
     frames: Vec<LaserFrame>,
+}
+
+impl ConfigurableNode for LaserNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let device_manager = injector.get::<DeviceManager>().unwrap();
+        let devices = device_manager
+            .current_devices()
+            .into_iter()
+            .filter_map(|device| match device {
+                DeviceRef::EtherDream(ether_dream) => Some(SelectVariant::from(ether_dream.name)),
+                DeviceRef::Helios(helios) => Some(SelectVariant::from(helios.name)),
+                _ => None,
+            })
+            .collect();
+
+        vec![setting!(select DEVICE_SETTING, &self.device_id, devices)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, DEVICE_SETTING, self.device_id);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for LaserNode {
@@ -64,9 +89,5 @@ impl ProcessingNode for LaserNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.device_id = config.device_id.clone();
     }
 }

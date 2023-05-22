@@ -9,9 +9,9 @@ pub use self::move_node::*;
 pub use self::remove_link::*;
 pub use self::rename_node::*;
 pub use self::show_node::*;
-pub use self::update_node::*;
+pub use self::update_node_setting::*;
 use crate::pipeline_access::PipelineAccess;
-use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeType, PortMetadata};
+use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeSetting, NodeType, PortMetadata};
 use mizer_nodes::{ContainerNode, Node};
 use mizer_ports::PortId;
 
@@ -26,7 +26,7 @@ mod move_node;
 mod remove_link;
 mod rename_node;
 mod show_node;
-mod update_node;
+mod update_node_setting;
 
 #[derive(Debug, Clone)]
 pub struct StaticNodeDescriptor {
@@ -36,6 +36,7 @@ pub struct StaticNodeDescriptor {
     pub ports: Vec<(PortId, PortMetadata)>,
     pub details: NodeDetails,
     pub config: Node,
+    pub settings: Vec<NodeSetting>,
 }
 
 pub(crate) fn assert_valid_parent(

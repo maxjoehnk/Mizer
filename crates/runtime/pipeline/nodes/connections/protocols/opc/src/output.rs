@@ -10,6 +10,11 @@ use crate::protocol::SetColors;
 
 const PIXELS_INPUT: &str = "Pixels";
 
+const HOST_SETTING: &str = "Host";
+const PORT_SETTING: &str = "Port";
+const WIDTH_SETTING: &str = "Width";
+const HEIGHT_SETTING: &str = "Height";
+
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OpcOutputNode {
     pub host: String,
@@ -35,6 +40,26 @@ pub enum OpcOutputState {
     #[default]
     Open,
     Connected(TcpStream),
+}
+
+impl ConfigurableNode for OpcOutputNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(HOST_SETTING, &self.host),
+            setting!(PORT_SETTING, self.port as u32).min(1).max(65535),
+            setting!(WIDTH_SETTING, self.width as u32).min(1),
+            setting!(HEIGHT_SETTING, self.height as u32).min(1),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, HOST_SETTING, self.host);
+        update!(int setting, PORT_SETTING, self.port);
+        update!(int setting, WIDTH_SETTING, self.width);
+        update!(int setting, HEIGHT_SETTING, self.height);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for OpcOutputNode {
@@ -76,13 +101,6 @@ impl ProcessingNode for OpcOutputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.host = config.host.clone();
-        self.port = config.port;
-        self.width = config.width;
-        self.height = config.height;
     }
 }
 

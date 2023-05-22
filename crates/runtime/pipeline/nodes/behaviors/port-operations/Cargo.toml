@@ -12,6 +12,8 @@ serde = { version = "1", features = ["derive"] }
 itertools = "0.10"
 rand = "0.8"
 mizer-util = { path = "../../../../../util" }
+enum-iterator = "1.2"
+num_enum = "0.6"
 
 [dev-dependencies]
 test-case = "3.1"

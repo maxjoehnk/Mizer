@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/fields/spline_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/spline_field.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/splines/handle_state.dart';
 import 'package:mizer/widgets/splines/point_state.dart';
@@ -45,37 +45,36 @@ class TimecodeDetail extends StatelessWidget {
             ...timecode.controls.map((control) {
               var c = controls.firstWhere((c) => c.id == control.controlId);
               return Container(
-                height: rowHeight,
-                child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Container(
-                      width: firstColumnWidth,
-                      child: Text(c.name)),
-                  LayoutBuilder(
-                    builder: (context, constraints) => SplineEditor<TimecodeControlValues_Step,
-                        TimecodePointState, TimecodeHandleState>(
-                      points: control.steps,
-                      builder: (context, points, handles) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomPaint(
-                            painter: SplineFieldPainter(control.steps, points, handles),
-                            size: Size(rowHeight, constraints.maxWidth),
-                          )),
-                      createPoint: (step, index) => TimecodePointState(step, index),
-                      createHandle: (step, index, first) => TimecodeHandleState(step, first, index),
-                      onAddPoint: (_, x, y) {},
-                      onRemovePoint: (_) {},
-                      onFinishInteraction: ({point, handle}) {},
-                      onUpdateHandle: (_, x, y) {},
-                      onUpdatePoint: (_, x, y) {},
-                      translatePosition: (position) {
-                        double x = position.dx;
-                        double y = (rowHeight - position.dy) / rowHeight;
+                  height: rowHeight,
+                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    Container(width: firstColumnWidth, child: Text(c.name)),
+                    LayoutBuilder(
+                      builder: (context, constraints) => SplineEditor<TimecodeControlValues_Step,
+                          TimecodePointState, TimecodeHandleState>(
+                        points: control.steps,
+                        builder: (context, points, handles) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomPaint(
+                              painter: SplineFieldPainter(control.steps, points, handles),
+                              size: Size(rowHeight, constraints.maxWidth),
+                            )),
+                        createPoint: (step, index) => TimecodePointState(step, index),
+                        createHandle: (step, index, first) =>
+                            TimecodeHandleState(step, first, index),
+                        onAddPoint: (_, x, y) {},
+                        onRemovePoint: (_) {},
+                        onFinishInteraction: ({point, handle}) {},
+                        onUpdateHandle: (_, x, y) {},
+                        onUpdatePoint: (_, x, y) {},
+                        translatePosition: (position) {
+                          double x = position.dx;
+                          double y = (rowHeight - position.dy) / rowHeight;
 
-                        return Offset(x, y);
-                      },
-                    ),
-                  )
-                ]));
+                          return Offset(x, y);
+                        },
+                      ),
+                    )
+                  ]));
             })
           ],
         ),

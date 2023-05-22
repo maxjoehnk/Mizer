@@ -16,6 +16,8 @@ pub struct IldaFileState {
     frames: Option<Vec<LaserFrame>>,
 }
 
+impl ConfigurableNode for IldaFileNode {}
+
 impl PipelineNode for IldaFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -52,9 +54,5 @@ impl ProcessingNode for IldaFileNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.file = config.file.clone();
     }
 }

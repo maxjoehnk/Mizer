@@ -20,6 +20,8 @@ pub struct VideoFileState {
     convert: Element,
 }
 
+impl ConfigurableNode for VideoFileNode {}
+
 impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -63,10 +65,6 @@ impl ProcessingNode for VideoFileNode {
 
     fn create_state(&self) -> Self::State {
         VideoFileState::new(&self.file)
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.file = config.file.clone();
     }
 }
 

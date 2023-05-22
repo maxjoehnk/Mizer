@@ -1,25 +1,29 @@
-use mizer_node::*;
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
+
+use mizer_node::*;
 
 const INPUT_PORT: &str = "Inputs";
 const OUTPUT_PORT: &str = "Output";
+
+const MODE_SETTING: &str = "Mode";
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MergeNode {
     pub mode: MergeMode,
 }
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(rename_all = "lowercase")]
-pub enum MergeMode {
-    Latest,
-    Highest,
-    Lowest,
-}
+impl ConfigurableNode for MergeNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(enum MODE_SETTING, self.mode)]
+    }
 
-impl Default for MergeMode {
-    fn default() -> Self {
-        Self::Latest
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, MODE_SETTING, self.mode);
+
+        update_fallback!(setting)
     }
 }
 
@@ -74,8 +78,32 @@ impl ProcessingNode for MergeNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
 
-    fn update(&mut self, config: &Self) {
-        self.mode = config.mode;
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[serde(rename_all = "lowercase")]
+#[repr(u8)]
+pub enum MergeMode {
+    #[default]
+    Latest,
+    Highest,
+    Lowest,
+}
+
+impl Display for MergeMode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }

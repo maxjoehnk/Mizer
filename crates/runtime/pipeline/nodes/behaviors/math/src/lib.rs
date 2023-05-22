@@ -1,43 +1,38 @@
+use enum_iterator::Sequence;
 use mizer_node::*;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::f64::consts::PI;
+use std::fmt::{Display, Formatter};
 
 const LHS_INPUT: &str = "LHS";
 const RHS_INPUT: &str = "RHS";
 const VALUE_INPUT: &str = "Value";
 const VALUE_OUTPUT: &str = "Value";
 
+const MODE_SETTING: &str = "Mode";
+
 #[derive(Default, Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MathNode {
     pub mode: MathMode,
 }
 
-#[derive(Default, Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
-pub enum MathMode {
-    #[default]
-    Addition,
-    Subtraction,
-    Multiplication,
-    Division,
-    Invert,
-    Sine,
-    Cosine,
-    Tangent,
-}
+impl ConfigurableNode for MathNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(enum MODE_SETTING, self.mode)]
+    }
 
-impl MathMode {
-    fn single_parameter(&self) -> bool {
-        matches!(
-            self,
-            MathMode::Invert | MathMode::Sine | MathMode::Cosine | MathMode::Tangent
-        )
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, MODE_SETTING, self.mode);
+
+        update_fallback!(setting)
     }
 }
 
 impl PipelineNode for MathNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MathNode".into(),
+            name: stringify!(MathNode).into(),
             preview_type: PreviewType::History,
         }
     }
@@ -104,8 +99,45 @@ impl ProcessingNode for MathNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
 
-    fn update(&mut self, config: &Self) {
-        self.mode = config.mode;
+#[derive(
+    Default,
+    Clone,
+    Copy,
+    Debug,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
+pub enum MathMode {
+    #[default]
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division,
+    Invert,
+    Sine,
+    Cosine,
+    Tangent,
+}
+
+impl MathMode {
+    fn single_parameter(&self) -> bool {
+        matches!(
+            self,
+            MathMode::Invert | MathMode::Sine | MathMode::Cosine | MathMode::Tangent
+        )
+    }
+}
+
+impl Display for MathMode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }

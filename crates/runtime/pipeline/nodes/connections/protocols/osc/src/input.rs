@@ -1,9 +1,13 @@
 use serde::{Deserialize, Serialize};
 
-use crate::OscArgumentType;
+use crate::{OscArgumentType, OscInjectorExt};
 use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertPercentages;
+
+const CONNECTION_SETTING: &str = "Connection";
+const ARGUMENT_TYPE_SETTING: &str = "Argument Type";
+const PATH_SETTING: &str = "Path";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscInputNode {
@@ -24,6 +28,26 @@ impl Default for OscInputNode {
             argument_type: default_argument_type(),
             path: "".into(),
         }
+    }
+}
+
+impl ConfigurableNode for OscInputNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let connections = injector.get_connections();
+
+        vec![
+            setting!(select CONNECTION_SETTING, &self.connection, connections),
+            setting!(enum ARGUMENT_TYPE_SETTING, self.argument_type),
+            setting!(PATH_SETTING, &self.path),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, CONNECTION_SETTING, self.connection);
+        update!(enum setting, ARGUMENT_TYPE_SETTING, self.argument_type);
+        update!(text setting, PATH_SETTING, self.path);
+
+        update_fallback!(setting)
     }
 }
 
@@ -66,12 +90,6 @@ impl ProcessingNode for OscInputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.path = config.path.clone();
-        self.connection = config.connection.clone();
-        self.argument_type = config.argument_type;
     }
 }
 

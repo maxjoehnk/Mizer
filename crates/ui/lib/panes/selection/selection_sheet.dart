@@ -9,8 +9,8 @@ import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/fields/number_field.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,12 @@ class SelectionSheet extends StatefulWidget {
   final bool isEmpty;
   final ProgrammerState state;
 
-  const SelectionSheet({required this.fixtures, required this.api, required this.isEmpty, required this.state, Key? key})
+  const SelectionSheet(
+      {required this.fixtures,
+      required this.api,
+      required this.isEmpty,
+      required this.state,
+      Key? key})
       : super(key: key);
 
   @override
@@ -79,18 +84,33 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                               ))
                           .toList()),
                 ),
-                NumberField(label: "Block Size", value: widget.state.blockSize, min: 0, maxHint: 10, onUpdate: (v) {
-                  var api = context.read<ProgrammerApi>();
-                  api.updateBlockSize(v.toInt());
-                }),
-                NumberField(label: "Groups", value: widget.state.groups, min: 0, maxHint: 10, onUpdate: (v) {
-                  var api = context.read<ProgrammerApi>();
-                  api.updateGroups(v.toInt());
-                }),
-                NumberField(label: "Wings", value: widget.state.wings, min: 0, maxHint: 10, onUpdate: (v) {
-                  var api = context.read<ProgrammerApi>();
-                  api.updateWings(v.toInt());
-                }),
+                NumberField(
+                    label: "Block Size",
+                    value: widget.state.blockSize,
+                    min: 0,
+                    maxHint: 10,
+                    onUpdate: (v) {
+                      var api = context.read<ProgrammerApi>();
+                      api.updateBlockSize(v.toInt());
+                    }),
+                NumberField(
+                    label: "Groups",
+                    value: widget.state.groups,
+                    min: 0,
+                    maxHint: 10,
+                    onUpdate: (v) {
+                      var api = context.read<ProgrammerApi>();
+                      api.updateGroups(v.toInt());
+                    }),
+                NumberField(
+                    label: "Wings",
+                    value: widget.state.wings,
+                    min: 0,
+                    maxHint: 10,
+                    onUpdate: (v) {
+                      var api = context.read<ProgrammerApi>();
+                      api.updateWings(v.toInt());
+                    }),
               ],
             ),
           ),
@@ -104,11 +124,22 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
-            PanelAction(label: "Assign Group", hotkeyId: "assign_group", disabled: widget.isEmpty, onClick: () => _assignGroup(context)),
-            PanelAction(label: "Shuffle", hotkeyId: "shuffle", disabled: widget.isEmpty, onClick: () => _shuffle()),
-            PanelAction(label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
-            PanelAction(label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
-            PanelAction(label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
+            PanelAction(
+                label: "Assign Group",
+                hotkeyId: "assign_group",
+                disabled: widget.isEmpty,
+                onClick: () => _assignGroup(context)),
+            PanelAction(
+                label: "Shuffle",
+                hotkeyId: "shuffle",
+                disabled: widget.isEmpty,
+                onClick: () => _shuffle()),
+            PanelAction(
+                label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
+            PanelAction(
+                label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
+            PanelAction(
+                label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
           ]),
     );
   }
@@ -143,7 +174,9 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
   _assignGroup(BuildContext context) async {
     var programmerApi = context.read<ProgrammerApi>();
     var presetsBloc = context.read<PresetsBloc>();
-    Group? group = await showDialog(context: context, builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    Group? group = await showDialog(
+        context: context,
+        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
     if (group == null) {
       return;
     }

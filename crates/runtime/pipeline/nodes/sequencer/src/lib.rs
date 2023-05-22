@@ -12,10 +12,28 @@ const ACTIVE: &str = "Active";
 const CUE: &str = "Cue";
 const RATE: &str = "Rate";
 
+const SEQUENCE_SETTING: &str = "Sequence";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct SequencerNode {
     #[serde(rename = "sequence")]
     pub sequence_id: u32,
+}
+
+impl ConfigurableNode for SequencerNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let sequencer = injector.get::<Sequencer>().unwrap();
+        let sequences = sequencer
+            .sequences()
+            .into_iter()
+            .map(|sequence| IdVariant {
+                value: sequence.id,
+                label: sequence.name,
+            })
+            .collect();
+
+        vec![setting!(id SEQUENCE_SETTING, self.sequence_id, sequences).disabled()]
+    }
 }
 
 impl PipelineNode for SequencerNode {
@@ -105,8 +123,6 @@ impl ProcessingNode for SequencerNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 #[derive(Default)]

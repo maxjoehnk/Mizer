@@ -13,6 +13,8 @@ impl PartialEq for TestSink {
     }
 }
 
+impl ConfigurableNode for TestSink {}
+
 impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -45,8 +47,6 @@ impl ProcessingNode for TestSink {
     }
 
     fn create_state(&self) -> Self::State {}
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl TestSink {

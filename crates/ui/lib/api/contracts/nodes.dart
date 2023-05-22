@@ -12,7 +12,7 @@ abstract class NodesApi {
   Future<void> writeControlValue(
       {required String path, required String port, required double value});
 
-  Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
+  Future<void> updateNodeSetting(UpdateNodeSettingRequest request);
 
   Future<void> moveNode(MoveNodeRequest request);
 

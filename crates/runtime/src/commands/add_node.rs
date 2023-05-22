@@ -56,6 +56,7 @@ impl<'a> Command<'a> for AddNodeCommand {
             designer: self.designer.clone(),
             details,
             ports,
+            settings: Default::default(),
             config: node.downcast(),
         };
 

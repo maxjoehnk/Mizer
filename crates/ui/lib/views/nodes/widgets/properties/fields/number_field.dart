@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../field.dart';
+import 'field.dart';
 
 class NumberField extends StatefulWidget {
   final String label;

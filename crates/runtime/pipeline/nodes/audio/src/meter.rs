@@ -7,6 +7,8 @@ const VOLUME_OUTPUT: &str = "Volume";
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct AudioMeterNode;
 
+impl ConfigurableNode for AudioMeterNode {}
+
 impl PipelineNode for AudioMeterNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -43,8 +45,6 @@ impl ProcessingNode for AudioMeterNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 fn rms(buffer: Vec<f64>) -> f64 {

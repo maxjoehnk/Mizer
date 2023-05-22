@@ -8,14 +8,14 @@ use serde::{Deserialize, Serialize};
 const CALL_PORT: &str = "Call";
 const ACTIVE_PORT: &str = "Active";
 
+const GROUP_ID_SETTING: &str = "Group";
+
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct GroupNode {
     pub id: GroupId,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
 }
-
-impl GroupNode {}
 
 impl std::fmt::Debug for GroupNode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -28,6 +28,22 @@ impl std::fmt::Debug for GroupNode {
 impl PartialEq for GroupNode {
     fn eq(&self, other: &Self) -> bool {
         self.id == other.id
+    }
+}
+
+impl ConfigurableNode for GroupNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let manager = injector.get::<FixtureManager>().unwrap();
+        let groups = manager
+            .get_groups()
+            .into_iter()
+            .map(|group| IdVariant {
+                value: group.id.into(),
+                label: group.name.clone(),
+            })
+            .collect();
+
+        vec![setting!(id GROUP_ID_SETTING, self.id, groups).disabled()]
     }
 }
 
@@ -84,8 +100,6 @@ impl ProcessingNode for GroupNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl GroupNode {

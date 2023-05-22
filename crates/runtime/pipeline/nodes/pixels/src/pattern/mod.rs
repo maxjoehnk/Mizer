@@ -1,9 +1,15 @@
-use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 use std::ops::{Index, IndexMut};
 
-use self::rgb_iterate::RgbIteratePattern;
-use crate::pattern::swirl::SwirlPattern;
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
+
 use mizer_node::*;
+
+use crate::pattern::swirl::SwirlPattern;
+
+use self::rgb_iterate::RgbIteratePattern;
 
 mod rgb_iterate;
 mod swirl;
@@ -11,17 +17,23 @@ mod swirl;
 const COLOR_INPUT: &str = "Color";
 const OUTPUT_PORT: &str = "Output";
 
+const PATTERN_SETTING: &str = "Pattern";
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PixelPatternGeneratorNode {
     pub pattern: Pattern,
 }
 
-#[derive(Debug, Default, Copy, Clone, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(rename_all = "kebab-case")]
-pub enum Pattern {
-    #[default]
-    RgbIterate,
-    Swirl,
+impl ConfigurableNode for PixelPatternGeneratorNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(enum PATTERN_SETTING, self.pattern)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, PATTERN_SETTING, self.pattern);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for PixelPatternGeneratorNode {
@@ -79,9 +91,35 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
 
-    fn update(&mut self, config: &Self) {
-        self.pattern = config.pattern;
+#[derive(
+    Debug,
+    Default,
+    Copy,
+    Clone,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
+#[serde(rename_all = "kebab-case")]
+pub enum Pattern {
+    #[default]
+    RgbIterate,
+    Swirl,
+}
+
+impl Display for Pattern {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::RgbIterate => write!(f, "RGB Iterate"),
+            Self::Swirl => write!(f, "Swirl"),
+        }
     }
 }
 
@@ -198,8 +236,9 @@ impl<'a> IndexMut<(usize, usize)> for PixelGrid<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::pattern::PixelGrid;
     use test_case::test_case;
+
+    use crate::pattern::PixelGrid;
 
     #[test_case((0, 0), 0, (2, 2))]
     #[test_case((1, 0), 1, (2, 2))]

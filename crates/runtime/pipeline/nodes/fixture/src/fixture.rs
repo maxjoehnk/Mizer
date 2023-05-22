@@ -5,6 +5,8 @@ use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
 
+const FIXTURE_SETTING: &str = "Fixture";
+
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
@@ -24,6 +26,22 @@ impl std::fmt::Debug for FixtureNode {
 impl PartialEq<Self> for FixtureNode {
     fn eq(&self, other: &FixtureNode) -> bool {
         self.fixture_id == other.fixture_id
+    }
+}
+
+impl ConfigurableNode for FixtureNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+        let fixtures = fixture_manager
+            .get_fixtures()
+            .into_iter()
+            .map(|fixture| IdVariant {
+                value: fixture.id,
+                label: fixture.name.clone(),
+            })
+            .collect();
+
+        vec![setting!(id FIXTURE_SETTING, self.fixture_id, fixtures).disabled()]
     }
 }
 
@@ -96,9 +114,5 @@ impl ProcessingNode for FixtureNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.fixture_id = config.fixture_id;
     }
 }

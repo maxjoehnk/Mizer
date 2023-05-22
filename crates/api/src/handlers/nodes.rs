@@ -162,10 +162,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
-    pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
-        self.runtime.run_command(UpdateNodeCommand {
+    pub fn update_node_setting(&self, request: UpdateNodeSettingRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(UpdateNodeSettingCommand {
             path: request.path.into(),
-            config: request.config.unwrap().type_.unwrap().into(),
+            setting: request.setting.unwrap().into(),
         })?;
 
         Ok(())

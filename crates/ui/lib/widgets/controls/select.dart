@@ -6,8 +6,10 @@ class MizerSelect<T> extends StatefulWidget {
   final List<SelectItem<T>> options;
   final T? value;
   final Function(T) onChanged;
+  final bool disabled;
 
-  const MizerSelect({required this.options, this.value, required this.onChanged, Key? key})
+  const MizerSelect(
+      {required this.options, this.disabled = false, this.value, required this.onChanged, Key? key})
       : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
   @override
   Widget build(BuildContext context) {
     return Hoverable(
+      disabled: widget.disabled,
       onTap: () {
         RenderBox renderBox = context.findRenderObject() as RenderBox;
         Navigator.of(context).push(_MizerSelectRoute<T>(
@@ -34,7 +37,8 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
                   ? Container()
                   : Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Text(label!),
+                      child: Text(label!,
+                          style: TextStyle(color: widget.disabled ? Colors.white70 : null)),
                     )),
           Icon(Icons.arrow_drop_down)
         ]),

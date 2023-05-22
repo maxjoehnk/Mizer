@@ -297,6 +297,8 @@ impl Api {
     ) -> NodeDescriptor {
         let node = self.access.nodes.get(&path).unwrap();
         let ports = node.list_ports();
+        let mut settings = self.access.settings.read();
+        let settings = settings.remove(&path).unwrap_or_default();
         let designer = designer[&path].clone();
 
         NodeDescriptor {
@@ -304,6 +306,7 @@ impl Api {
             node,
             designer,
             ports,
+            settings,
         }
     }
 

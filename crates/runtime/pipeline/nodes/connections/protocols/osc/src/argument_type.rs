@@ -1,10 +1,25 @@
+use enum_iterator::Sequence;
 use mizer_node::{PortId, PortType};
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 const NUMBER_PORT: &str = "Number";
 const COLOR_PORT: &str = "Color";
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
 #[serde(rename_all = "camelCase")]
 pub enum OscArgumentType {
     Int,
@@ -43,5 +58,11 @@ impl OscArgumentType {
 
     pub(crate) fn is_color(&self) -> bool {
         matches!(self, Self::Color)
+    }
+}
+
+impl Display for OscArgumentType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }

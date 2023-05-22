@@ -5,6 +5,9 @@ use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 
 const INPUT_PORT: &str = "Input";
 
+const UNIVERSE_SETTING: &str = "Universe";
+const CHANNEL_SETTING: &str = "Channel";
+
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
@@ -25,6 +28,26 @@ impl Default for DmxOutputNode {
 
 fn default_universe() -> u16 {
     1
+}
+
+impl ConfigurableNode for DmxOutputNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(UNIVERSE_SETTING, self.universe as u32)
+                .min(1)
+                .max(32768),
+            setting!(CHANNEL_SETTING, self.channel as u32)
+                .min(1)
+                .max(512),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(int setting, UNIVERSE_SETTING, self.universe);
+        update!(int setting, CHANNEL_SETTING, self.channel);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for DmxOutputNode {
@@ -77,10 +100,5 @@ impl ProcessingNode for DmxOutputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.channel = config.channel;
-        self.universe = config.universe;
     }
 }

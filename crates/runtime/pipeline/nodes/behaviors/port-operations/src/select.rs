@@ -8,6 +8,8 @@ const OUTPUT_PORT: &str = "Output";
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct SelectNode {}
 
+impl ConfigurableNode for SelectNode {}
+
 impl PipelineNode for SelectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -54,6 +56,4 @@ impl ProcessingNode for SelectNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }

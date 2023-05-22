@@ -7,6 +7,9 @@ const DECREASE_INPUT: &str = "Decrease";
 const RESET_INPUT: &str = "Reset";
 const VALUE_OUTPUT: &str = "Value";
 
+const HOLD_RATE_SETTING: &str = "Hold Rate";
+const HOLD_SETTING: &str = "Hold";
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct EncoderNode {
     pub hold_rate: f64,
@@ -24,6 +27,24 @@ impl Default for EncoderNode {
             hold_rate: 0.01,
             hold: false,
         }
+    }
+}
+
+impl ConfigurableNode for EncoderNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(HOLD_RATE_SETTING, self.hold_rate)
+                .min(0.)
+                .max_hint(1.),
+            setting!(HOLD_SETTING, self.hold),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, HOLD_RATE_SETTING, self.hold_rate);
+        update!(bool setting, HOLD_SETTING, self.hold);
+
+        update_fallback!(setting)
     }
 }
 
@@ -76,11 +97,6 @@ impl ProcessingNode for EncoderNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.hold_rate = config.hold_rate;
-        self.hold = config.hold;
     }
 }
 

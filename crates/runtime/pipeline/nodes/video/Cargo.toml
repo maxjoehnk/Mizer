@@ -14,3 +14,5 @@ gstreamer-gl = "0.20"
 glib = "0.17"
 lazy_static = "1.4"
 serde = { version = "1", features = ["derive"] }
+enum-iterator = "1.2"
+num_enum = "0.6"

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-import 'fields/text_field.dart';
+import '../fields/text_field.dart';
 import 'property_group.dart';
 
 class NodeProperties extends StatelessWidget {

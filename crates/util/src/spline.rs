@@ -1,5 +1,6 @@
 use bezier_rs::{Identifier, ManipulatorGroup, Subpath, SubpathTValue};
 use serde::{Deserialize, Serialize};
+use std::hash::{Hash, Hasher};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq)]
 pub struct SplineStep {
@@ -11,7 +12,18 @@ pub struct SplineStep {
     pub c1b: f64,
 }
 
-#[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq)]
+impl Hash for SplineStep {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        state.write_u64(self.x.to_bits());
+        state.write_u64(self.y.to_bits());
+        state.write_u64(self.c0a.to_bits());
+        state.write_u64(self.c0b.to_bits());
+        state.write_u64(self.c1a.to_bits());
+        state.write_u64(self.c1b.to_bits());
+    }
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Hash)]
 pub struct Spline {
     pub steps: Vec<SplineStep>,
 }

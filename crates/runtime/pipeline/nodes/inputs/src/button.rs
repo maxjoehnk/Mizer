@@ -6,10 +6,24 @@ use mizer_node::*;
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
 
+const TOGGLE_SETTING: &str = "Toggle";
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ButtonNode {
     #[serde(default)]
     pub toggle: bool,
+}
+
+impl ConfigurableNode for ButtonNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(TOGGLE_SETTING, self.toggle)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(bool setting, TOGGLE_SETTING, self.toggle);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for ButtonNode {
@@ -58,10 +72,6 @@ impl ProcessingNode for ButtonNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.toggle = config.toggle;
     }
 
     fn debug_ui(&self, ui: &mut DebugUiDrawHandle, (state, edge): &Self::State) {

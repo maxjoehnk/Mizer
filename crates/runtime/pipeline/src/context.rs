@@ -13,6 +13,7 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
+/// Context for execution of a single node
 pub struct PipelineContext<'a> {
     pub(crate) frame: ClockFrame,
     pub(crate) senders: Option<&'a NodeSenders>,

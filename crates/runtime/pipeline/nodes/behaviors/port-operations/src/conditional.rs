@@ -5,6 +5,8 @@ const CONDITION_INPUT: &str = "Condition";
 const VALUE_INPUT: &str = "Value";
 const VALUE_OUTPUT: &str = "Value";
 
+const THRESHOLD_SETTING: &str = "Threshold";
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ConditionalNode {
     pub threshold: f64,
@@ -13,6 +15,20 @@ pub struct ConditionalNode {
 impl Default for ConditionalNode {
     fn default() -> Self {
         Self { threshold: 0.5 }
+    }
+}
+
+impl ConfigurableNode for ConditionalNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(THRESHOLD_SETTING, self.threshold)
+            .min_hint(0.)
+            .max_hint(1.)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, THRESHOLD_SETTING, self.threshold);
+
+        update_fallback!(setting)
     }
 }
 
@@ -55,9 +71,5 @@ impl ProcessingNode for ConditionalNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.threshold = config.threshold;
     }
 }

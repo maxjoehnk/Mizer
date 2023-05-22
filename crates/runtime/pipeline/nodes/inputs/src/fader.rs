@@ -8,6 +8,8 @@ const OUTPUT_PORT: &str = "Output";
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FaderNode;
 
+impl ConfigurableNode for FaderNode {}
+
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -44,8 +46,6 @@ impl ProcessingNode for FaderNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 
     fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
         ui.collapsing_header("State", |ui| {

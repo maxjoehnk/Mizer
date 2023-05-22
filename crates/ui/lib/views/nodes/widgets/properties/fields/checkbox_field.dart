@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../field.dart';
+import 'field.dart';
 
 class CheckboxField extends StatelessWidget {
   final String label;
@@ -16,7 +16,6 @@ class CheckboxField extends StatelessWidget {
         child: Checkbox(
           value: value,
           onChanged: (value) => onUpdate(value!),
-        )
-    );
+        ));
   }
 }

@@ -7,9 +7,33 @@ use mizer_timecode::{TimecodeId, TimecodeManager};
 const TIMECODE_INPUT: &str = "Clock";
 const PLAYBACK_INPUT: &str = "Playback";
 
+const TIMECODE_ID_SETTING: &str = "Timecode";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct TimecodeControlNode {
     pub timecode_id: TimecodeId,
+}
+
+impl ConfigurableNode for TimecodeControlNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let manager = injector.get::<TimecodeManager>().unwrap();
+        let timecodes = manager
+            .timecodes()
+            .into_iter()
+            .map(|timecode| IdVariant {
+                value: timecode.id.into(),
+                label: timecode.name,
+            })
+            .collect();
+
+        vec![setting!(id TIMECODE_ID_SETTING, self.timecode_id, timecodes)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(id setting, TIMECODE_ID_SETTING, self.timecode_id);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for TimecodeControlNode {
@@ -61,9 +85,5 @@ impl ProcessingNode for TimecodeControlNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.timecode_id = config.timecode_id;
     }
 }

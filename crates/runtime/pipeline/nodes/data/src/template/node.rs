@@ -8,9 +8,23 @@ use super::engine::TemplateEngine;
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
 
+const TEMPLATE_SETTING: &str = "Template";
+
 #[derive(Default, Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct TemplateNode {
     pub template: String,
+}
+
+impl ConfigurableNode for TemplateNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(TEMPLATE_SETTING, &self.template).multiline()]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, TEMPLATE_SETTING, self.template);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for TemplateNode {
@@ -51,9 +65,5 @@ impl ProcessingNode for TemplateNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.template = config.template.clone();
     }
 }

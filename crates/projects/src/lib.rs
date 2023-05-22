@@ -1,6 +1,7 @@
 use indexmap::IndexMap;
 use std::convert::TryFrom;
 use std::fs::File;
+use std::io::Read;
 use std::path::Path;
 
 use lazy_static::lazy_static;
@@ -76,28 +77,31 @@ pub struct Timecodes {
 
 impl Project {
     pub fn new() -> Self {
-        let mut project = Self::default();
-        project.version = Migrations::latest_version();
-
-        project
+        Self {
+            version: Migrations::latest_version(),
+            ..Default::default()
+        }
     }
 
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
-        let file = File::open(path)?;
-        let mut project: Project = serde_yaml::from_reader(file)?;
-        migrate(&mut project)?;
+        let mut file = File::open(path)?;
+        let mut project_file = String::new();
+        file.read_to_string(&mut project_file)?;
+        migrate(&mut project_file)?;
+        let project = serde_yaml::from_str(&project_file)?;
 
         Ok(project)
     }
 
     pub fn load(content: &str) -> anyhow::Result<Project> {
-        let mut project = serde_yaml::from_str(content)?;
-        migrate(&mut project)?;
+        let mut content = content.to_string();
+        migrate(&mut content)?;
+        let project = serde_yaml::from_str(&content)?;
 
         Ok(project)
     }
 
-    // TODO: do file persistance on background thread
+    // TODO: do file persistence on background thread
     pub fn save_file<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
         let file = File::create(path)?;
         serde_yaml::to_writer(file, &self)?;

@@ -1,43 +1,56 @@
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
-use mizer_devices::DeviceManager;
+use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_gamepads::{Axis, Button};
 pub use mizer_node::*;
 use mizer_util::LerpExt;
 
 const VALUE: &str = "Value";
 
-#[derive(Debug, Clone, Copy, Default, Serialize, Deserialize, PartialEq, Eq)]
-pub enum GamepadControl {
-    #[default]
-    LeftStickX,
-    LeftStickY,
-    RightStickX,
-    RightStickY,
-    LeftTrigger,
-    RightTrigger,
-    LeftShoulder,
-    RightShoulder,
-    South,
-    East,
-    North,
-    West,
-    Select,
-    Start,
-    Mode,
-    DpadUp,
-    DpadDown,
-    DpadLeft,
-    DpadRight,
-    LeftStick,
-    RightStick,
-}
+const DEVICE_SETTING: &str = "Device";
+const CONTROL_SETTING: &str = "Control";
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct GamepadNode {
     #[serde(rename = "device")]
     pub device_id: String,
     pub control: GamepadControl,
+}
+
+impl ConfigurableNode for GamepadNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let device_manager = injector.get::<DeviceManager>().unwrap();
+
+        let devices = device_manager
+            .current_devices()
+            .into_iter()
+            .flat_map(|device| {
+                if let DeviceRef::Gamepad(gamepad) = device {
+                    Some(SelectVariant::Item {
+                        value: gamepad.id,
+                        label: gamepad.name,
+                    })
+                } else {
+                    None
+                }
+            })
+            .collect();
+
+        vec![
+            setting!(enum CONTROL_SETTING, self.control),
+            setting!(select DEVICE_SETTING, &self.device_id, devices),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, DEVICE_SETTING, self.device_id);
+        update!(enum setting, CONTROL_SETTING, self.control);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for GamepadNode {
@@ -134,13 +147,53 @@ impl ProcessingNode for GamepadNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
 
-    fn update(&mut self, config: &Self) {
-        self.device_id = config.device_id.clone();
-        self.control = config.control;
-    }
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    Default,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    IntoPrimitive,
+    TryFromPrimitive,
+)]
+#[repr(u8)]
+pub enum GamepadControl {
+    #[default]
+    LeftStickX,
+    LeftStickY,
+    RightStickX,
+    RightStickY,
+    LeftTrigger,
+    RightTrigger,
+    LeftShoulder,
+    RightShoulder,
+    South,
+    East,
+    North,
+    West,
+    Select,
+    Start,
+    Mode,
+    DpadUp,
+    DpadDown,
+    DpadLeft,
+    DpadRight,
+    LeftStick,
+    RightStick,
 }
 
 fn axis(value: f64) -> f64 {
     value.linear_extrapolate((-1., 1.), (0., 1.))
+}
+
+impl Display for GamepadControl {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
+    }
 }

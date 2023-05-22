@@ -20,6 +20,8 @@ pub struct VideoColorBalanceState {
     node: Element,
 }
 
+impl ConfigurableNode for VideoColorBalanceNode {}
+
 impl PipelineNode for VideoColorBalanceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -66,8 +68,6 @@ impl ProcessingNode for VideoColorBalanceNode {
     fn create_state(&self) -> Self::State {
         VideoColorBalanceState::new()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl VideoColorBalanceState {

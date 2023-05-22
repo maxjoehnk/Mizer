@@ -6,6 +6,8 @@ use mizer_node::*;
 const INPUT_VALUE_PORT: &str = "Input";
 const OUTPUT_VALUE_PORT: &str = "Output";
 
+const BUFFER_SIZE_SETTING: &str = "Buffer Size";
+
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct DelayNode {
     pub buffer_size: usize,
@@ -14,6 +16,20 @@ pub struct DelayNode {
 impl Default for DelayNode {
     fn default() -> Self {
         Self { buffer_size: 1 }
+    }
+}
+
+impl ConfigurableNode for DelayNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size as u32)
+            .min(0)
+            .max_hint(300)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(int setting, BUFFER_SIZE_SETTING, self.buffer_size);
+
+        update_fallback!(setting)
     }
 }
 
@@ -58,10 +74,6 @@ impl ProcessingNode for DelayNode {
 
     fn create_state(&self) -> Self::State {
         DelayBuffer::new(self.buffer_size)
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.buffer_size = config.buffer_size;
     }
 }
 

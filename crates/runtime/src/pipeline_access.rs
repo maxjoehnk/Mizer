@@ -1,4 +1,6 @@
+use mizer_nodes::NodeDowncast;
 use std::collections::HashMap;
+use std::ops::DerefMut;
 use std::str::FromStr;
 use std::sync::Arc;
 
@@ -14,6 +16,7 @@ pub struct PipelineAccess {
     pub nodes_view: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
+    pub(crate) settings: Arc<NonEmptyPinboard<HashMap<NodePath, Vec<NodeSetting>>>>,
 }
 
 impl Default for PipelineAccess {
@@ -23,6 +26,7 @@ impl Default for PipelineAccess {
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
+            settings: NonEmptyPinboard::new(Default::default()).into(),
         }
     }
 }
@@ -236,5 +240,34 @@ impl PipelineAccess {
     pub(crate) fn get_output_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
         let node = self.nodes_view.get(path).unwrap();
         node.introspect_output_port(port).unwrap_or_default()
+    }
+
+    pub fn get_settings(&self, path: &NodePath) -> Option<Vec<NodeSetting>> {
+        let mut settings = self.settings.read();
+
+        settings.remove(path)
+    }
+
+    pub fn apply_node_config(&mut self, path: &NodePath, config: Node) -> anyhow::Result<Node> {
+        let node = self
+            .nodes
+            .get(path)
+            .ok_or_else(|| anyhow::anyhow!("Unknown Node {path}"))?;
+        let previous = node.downcast();
+        let node = self
+            .nodes
+            .get_mut(path)
+            .ok_or_else(|| anyhow::anyhow!("Unknown Node {path}"))?;
+        let node: &mut dyn ProcessingNodeExt = node.deref_mut();
+        config.apply_to(node.as_pipeline_node_mut())?;
+
+        let mut node = self
+            .nodes_view
+            .get_mut(path)
+            .ok_or_else(|| anyhow::anyhow!("Unknown Node {path}"))?;
+        let node = node.value_mut();
+        config.apply_to(node.deref_mut())?;
+
+        Ok(previous)
     }
 }

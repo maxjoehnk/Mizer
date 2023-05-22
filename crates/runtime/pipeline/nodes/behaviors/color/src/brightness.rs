@@ -9,6 +9,8 @@ const COLOR_OUTPUT: &str = "Output";
 #[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ColorBrightnessNode;
 
+impl ConfigurableNode for ColorBrightnessNode {}
+
 impl PipelineNode for ColorBrightnessNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -45,8 +47,6 @@ impl ProcessingNode for ColorBrightnessNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl ColorBrightnessNode {

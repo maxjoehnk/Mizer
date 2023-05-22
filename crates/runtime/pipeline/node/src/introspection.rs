@@ -13,6 +13,7 @@ macro_rules! node_type_name {
         $($variant:ident),*,
     }) => {
         #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Hash)]
+        #[serde(rename_all = "kebab-case")]
         pub enum $name {
             $($variant),*
         }

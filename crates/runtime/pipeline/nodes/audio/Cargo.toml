@@ -12,3 +12,5 @@ cpal = "0.15"
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 rb = "0.4"
+enum-iterator = "1.2"
+num_enum = "0.6"

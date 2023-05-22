@@ -5,6 +5,8 @@ use mizer_util::StructuredData;
 
 const VALUE_PORT: &str = "Output";
 
+const VALUE_SETTING: &str = "Value";
+
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ValueNode {
     pub value: String,
@@ -15,6 +17,18 @@ impl Default for ValueNode {
         Self {
             value: "{}".to_string(),
         }
+    }
+}
+
+impl ConfigurableNode for ValueNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(VALUE_SETTING, &self.value).multiline()]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, VALUE_SETTING, self.value);
+
+        update_fallback!(setting)
     }
 }
 
@@ -57,9 +71,5 @@ impl ProcessingNode for ValueNode {
 
     fn create_state(&self) -> Self::State {
         None
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.value = config.value.clone();
     }
 }

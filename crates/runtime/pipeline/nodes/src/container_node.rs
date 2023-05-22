@@ -1,5 +1,6 @@
 use mizer_node::{
-    NodeContext, NodeDetails, NodePath, NodeType, PipelineNode, PreviewType, ProcessingNode,
+    ConfigurableNode, NodeContext, NodeDetails, NodePath, NodeType, PipelineNode, PreviewType,
+    ProcessingNode,
 };
 use serde::{Deserialize, Serialize};
 
@@ -7,6 +8,8 @@ use serde::{Deserialize, Serialize};
 pub struct ContainerNode {
     pub nodes: Vec<NodePath>,
 }
+
+impl ConfigurableNode for ContainerNode {}
 
 impl PipelineNode for ContainerNode {
     fn details(&self) -> NodeDetails {
@@ -30,9 +33,5 @@ impl ProcessingNode for ContainerNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.nodes = config.nodes.clone();
     }
 }

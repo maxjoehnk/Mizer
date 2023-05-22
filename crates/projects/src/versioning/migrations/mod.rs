@@ -1,11 +1,11 @@
 pub use rename_ports::*;
-
-use crate::Project;
+pub use rework_midi_config::*;
 
 mod rename_ports;
+mod rework_midi_config;
 
-pub trait ProjectMigration: Clone + Copy {
+pub trait ProjectFileMigration: Clone + Copy {
     const VERSION: usize;
 
-    fn migrate(&self, project: &mut Project) -> anyhow::Result<()>;
+    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()>;
 }

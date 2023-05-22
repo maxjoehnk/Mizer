@@ -8,6 +8,8 @@ use mizer_node::*;
 #[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ProgrammerNode;
 
+impl ConfigurableNode for ProgrammerNode {}
+
 impl PipelineNode for ProgrammerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -104,6 +106,4 @@ impl ProcessingNode for ProgrammerNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }

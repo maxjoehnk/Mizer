@@ -11,6 +11,8 @@ const COLOR_OUTPUT: &str = "Color";
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct HsvColorNode;
 
+impl ConfigurableNode for HsvColorNode {}
+
 impl PipelineNode for HsvColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -65,8 +67,6 @@ impl ProcessingNode for HsvColorNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 #[cfg(test)]

@@ -7,7 +7,14 @@ class Hoverable extends StatefulWidget {
   final void Function()? onDoubleTap;
   final Widget Function(bool) builder;
 
-  const Hoverable({this.disabled = false, this.onTap, this.onSecondaryTap, this.onDoubleTap, required this.builder, Key? key}) : super(key: key);
+  const Hoverable(
+      {this.disabled = false,
+      this.onTap,
+      this.onSecondaryTap,
+      this.onDoubleTap,
+      required this.builder,
+      Key? key})
+      : super(key: key);
 
   @override
   State<Hoverable> createState() => _HoverableState();
@@ -19,16 +26,30 @@ class _HoverableState extends State<Hoverable> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: (widget.disabled == true || widget.onTap == null) ? SystemMouseCursors.basic : SystemMouseCursors.click,
-      onHover: (e) => setState(() => hovering = true),
+      cursor: (widget.disabled == true || widget.onTap == null)
+          ? SystemMouseCursors.basic
+          : SystemMouseCursors.click,
+      onHover: (e) => setState(() => hovering = !widget.disabled),
       onExit: (e) => setState(() => hovering = false),
       child: GestureDetector(
-        onTap: widget.onTap,
-        onSecondaryTap: widget.onSecondaryTap,
-        onDoubleTap: widget.onDoubleTap,
+        onTap: _callWhenNotDisabled(widget.onTap),
+        onSecondaryTap: _callWhenNotDisabled(widget.onSecondaryTap),
+        onDoubleTap: _callWhenNotDisabled(widget.onDoubleTap),
         behavior: HitTestBehavior.opaque,
         child: widget.builder(hovering),
       ),
     );
+  }
+
+  void Function()? _callWhenNotDisabled(void Function()? function) {
+    if (function == null) {
+      return null;
+    }
+    return () {
+      if (widget.disabled) {
+        return;
+      }
+      function();
+    };
   }
 }

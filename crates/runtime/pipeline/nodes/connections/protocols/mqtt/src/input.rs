@@ -1,9 +1,13 @@
 use serde::{Deserialize, Serialize};
 
+use crate::MqttInjectorExt;
 use mizer_node::*;
 use mizer_protocol_mqtt::{MqttConnectionManager, MqttSubscription};
 
 const VALUE_PORT: &str = "Output";
+
+const CONNECTION_SETTING: &str = "Connection";
+const PATH_SETTING: &str = "Path";
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct MqttInputNode {
@@ -17,6 +21,24 @@ impl Default for MqttInputNode {
             path: "/".to_string(),
             connection: Default::default(),
         }
+    }
+}
+
+impl ConfigurableNode for MqttInputNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let connections = injector.get_connections();
+
+        vec![
+            setting!(select CONNECTION_SETTING, &self.connection, connections),
+            setting!(PATH_SETTING, &self.path),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, CONNECTION_SETTING, self.connection);
+        update!(text setting, PATH_SETTING, self.path);
+
+        update_fallback!(setting)
     }
 }
 
@@ -54,11 +76,6 @@ impl ProcessingNode for MqttInputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.connection = config.connection.clone();
-        self.path = config.path.clone();
     }
 }
 

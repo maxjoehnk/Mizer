@@ -1,4 +1,3 @@
-use crate::commands::UpdateNodeCommand;
 use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
@@ -25,7 +24,7 @@ impl<'a> Command<'a> for DeleteNodeCommand {
         NodeDesigner,
         Vec<NodeLink>,
         HashMap<String, Vec<ControlConfig>>,
-        Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>,
+        Vec<(NodePath, Node)>,
     );
     type Result = ();
 
@@ -88,8 +87,8 @@ impl<'a> Command<'a> for DeleteNodeCommand {
             layout.controls.append(&mut controls);
         }
         layout_storage.set(layouts);
-        for (cmd, state) in container_commands {
-            cmd.revert(pipeline, state)?;
+        for (path, container) in container_commands {
+            pipeline.apply_node_config(&path, container)?;
         }
 
         Ok(())
@@ -97,10 +96,10 @@ impl<'a> Command<'a> for DeleteNodeCommand {
 }
 
 impl DeleteNodeCommand {
-    fn remove_node_from_containers<'a>(
+    fn remove_node_from_containers(
         &self,
         pipeline: &mut PipelineAccess,
-    ) -> anyhow::Result<Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>> {
+    ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
         for (path, node) in pipeline
             .nodes
@@ -111,21 +110,17 @@ impl DeleteNodeCommand {
                 let removed_node = container.nodes.iter().position(|p| p == &self.path);
                 if let Some(removed_node_index) = removed_node {
                     container.nodes.remove(removed_node_index);
-                    let cmd = UpdateNodeCommand {
-                        path: path.clone(),
-                        config: Node::Container(container),
-                    };
-                    update_node_commands.push(cmd);
+                    update_node_commands.push((path.clone(), container));
                 }
             }
         }
 
         update_node_commands
             .into_iter()
-            .map(|cmd| {
-                let (_, state) = cmd.apply(pipeline)?;
+            .map(|(path, node)| {
+                let previous = pipeline.apply_node_config(&path, node.into());
 
-                Ok((cmd, state))
+                previous.map(|previous| (path, previous))
             })
             .collect()
     }

@@ -13,6 +13,8 @@ pub struct VideoTransformState {
     node: Element,
 }
 
+impl ConfigurableNode for VideoTransformNode {}
+
 impl PipelineNode for VideoTransformNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -60,8 +62,6 @@ impl ProcessingNode for VideoTransformNode {
     fn create_state(&self) -> Self::State {
         VideoTransformState::new()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl VideoTransformState {

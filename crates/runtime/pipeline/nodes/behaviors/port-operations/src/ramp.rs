@@ -6,6 +6,8 @@ use mizer_util::{Spline, SplineStep};
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
 
+const SPLINE_SETTING: &str = "Spline";
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct RampNode {
     #[serde(flatten)]
@@ -36,6 +38,18 @@ impl Default for RampNode {
                 ],
             },
         }
+    }
+}
+
+impl ConfigurableNode for RampNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(SPLINE_SETTING, self.spline.clone())]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(spline setting, SPLINE_SETTING, self.spline);
+
+        update_fallback!(setting)
     }
 }
 
@@ -74,9 +88,5 @@ impl ProcessingNode for RampNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.spline = config.spline.clone();
     }
 }

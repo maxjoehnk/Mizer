@@ -1,6 +1,6 @@
 use super::ObjectSafeProjectMigration;
-use crate::versioning::migrations::ProjectMigration;
-use crate::Project;
+use crate::versioning::migrations::ProjectFileMigration;
+use crate::versioning::{get_version, write_version};
 
 #[macro_export]
 macro_rules! migrations {
@@ -38,25 +38,22 @@ macro_rules! migrations {
         pub(super) trait ObjectSafeProjectMigration {
             fn version(&self) -> usize;
 
-            fn migrate(&self, project: &mut $crate::Project) -> anyhow::Result<()>;
+            fn migrate(&self, project: &mut String) -> anyhow::Result<()>;
         }
     }
 }
 
-impl<T: ProjectMigration> ObjectSafeProjectMigration for T {
+impl<T: ProjectFileMigration> ObjectSafeProjectMigration for T {
     #[inline]
     fn version(&self) -> usize {
         T::VERSION
     }
 
-    fn migrate(&self, project: &mut Project) -> anyhow::Result<()> {
-        log::info!(
-            "Migrating project file from {} to {}",
-            project.version,
-            T::VERSION
-        );
+    fn migrate(&self, project: &mut String) -> anyhow::Result<()> {
+        let version = get_version(project)?;
+        log::info!("Migrating project file from {} to {}", version, T::VERSION);
         self.migrate(project)?;
-        project.version = T::VERSION;
+        write_version(project, T::VERSION)?;
 
         Ok(())
     }

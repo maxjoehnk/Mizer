@@ -4,9 +4,33 @@ use serde::{Deserialize, Serialize};
 
 const VALUE_OUTPUT: &str = "Value";
 
+const CONTROL_ID_SETTING: &str = "Control";
+
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct TimecodeOutputNode {
     pub control_id: TimecodeControlId,
+}
+
+impl ConfigurableNode for TimecodeOutputNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let manager = injector.get::<TimecodeManager>().unwrap();
+        let controls = manager
+            .controls()
+            .into_iter()
+            .map(|control| IdVariant {
+                value: control.id.into(),
+                label: control.name,
+            })
+            .collect();
+
+        vec![setting!(id CONTROL_ID_SETTING, self.control_id, controls)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(id setting, CONTROL_ID_SETTING, self.control_id);
+
+        update_fallback!(setting)
+    }
 }
 
 impl PipelineNode for TimecodeOutputNode {
@@ -42,9 +66,5 @@ impl ProcessingNode for TimecodeOutputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.control_id = config.control_id;
     }
 }

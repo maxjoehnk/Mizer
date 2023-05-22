@@ -142,6 +142,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             nodes: pipeline_access.nodes_view.clone(),
             designer: pipeline_access.designer.clone(),
             links: pipeline_access.links.clone(),
+            settings: pipeline_access.settings.clone(),
             layouts: self.layouts.clone(),
             plans: self.plans.clone(),
             clock_recv: self.clock_recv.clone(),
@@ -295,6 +296,20 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             )
             .collect()
     }
+
+    pub(crate) fn read_node_settings(&self) {
+        let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
+        let settings = pipeline_access
+            .nodes
+            .iter()
+            .map(|(path, node)| {
+                let settings = node.settings(&self.injector);
+
+                (path.clone(), settings)
+            })
+            .collect();
+        pipeline_access.settings.set(settings);
+    }
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
@@ -339,6 +354,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
+        self.read_node_settings();
         #[cfg(feature = "debug-ui")]
         if let Some(ui) = self.ui.as_mut() {
             log::trace!("Update Debug UI");

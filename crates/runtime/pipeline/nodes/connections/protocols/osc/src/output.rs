@@ -5,6 +5,12 @@ use mizer_protocol_osc::*;
 use mizer_util::ConvertBytes;
 
 use crate::argument_type::OscArgumentType;
+use crate::OscInjectorExt;
+
+const CONNECTION_SETTING: &str = "Connection";
+const ARGUMENT_TYPE_SETTING: &str = "Argument Type";
+const PATH_SETTING: &str = "Path";
+const ONLY_EMIT_CHANGES_SETTING: &str = "Only emit changes";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscOutputNode {
@@ -28,6 +34,28 @@ impl Default for OscOutputNode {
             path: "".into(),
             only_emit_changes: false,
         }
+    }
+}
+
+impl ConfigurableNode for OscOutputNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let connections = injector.get_connections();
+
+        vec![
+            setting!(select CONNECTION_SETTING, &self.connection, connections),
+            setting!(enum ARGUMENT_TYPE_SETTING, self.argument_type),
+            setting!(PATH_SETTING, &self.path),
+            setting!(ONLY_EMIT_CHANGES_SETTING, self.only_emit_changes),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(select setting, CONNECTION_SETTING, self.connection);
+        update!(enum setting, ARGUMENT_TYPE_SETTING, self.argument_type);
+        update!(text setting, PATH_SETTING, self.path);
+        update!(bool setting, ONLY_EMIT_CHANGES_SETTING, self.only_emit_changes);
+
+        update_fallback!(setting)
     }
 }
 
@@ -112,11 +140,5 @@ impl ProcessingNode for OscOutputNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.path = config.path.clone();
-        self.connection = config.connection.clone();
-        self.argument_type = config.argument_type;
     }
 }

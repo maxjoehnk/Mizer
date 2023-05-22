@@ -1,4 +1,7 @@
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use std::f64::consts::PI;
+use std::fmt::{Display, Formatter};
 
 use serde::{Deserialize, Serialize};
 
@@ -9,15 +12,12 @@ const MIN_INPUT_PORT: &str = "Min";
 const MAX_INPUT_PORT: &str = "Max";
 const VALUE_OUTPUT_PORT: &str = "Value";
 
-#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(rename_all = "lowercase")]
-pub enum OscillatorType {
-    Square,
-    #[default]
-    Sine,
-    Saw,
-    Triangle,
-}
+const TYPE_SETTING: &str = "Type";
+const INTERVAL_SETTING: &str = "Interval";
+const MIN_SETTING: &str = "Min";
+const MAX_SETTING: &str = "Max";
+const OFFSET_SETTING: &str = "Offset";
+const REVERSE_SETTING: &str = "Reverse";
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct OscillatorNode {
@@ -60,6 +60,34 @@ fn default_max() -> f64 {
     OscillatorNode::default().max
 }
 
+impl ConfigurableNode for OscillatorNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(enum TYPE_SETTING, self.oscillator_type),
+            setting!(INTERVAL_SETTING, self.interval)
+                .min(0.)
+                .max_hint(1.),
+            setting!(MIN_SETTING, self.min).min_hint(0.).max_hint(1.),
+            setting!(MAX_SETTING, self.max).min_hint(0.).max_hint(1.),
+            setting!(OFFSET_SETTING, self.offset)
+                .min_hint(0.)
+                .max_hint(1.),
+            setting!(REVERSE_SETTING, self.reverse),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, TYPE_SETTING, self.oscillator_type);
+        update!(float setting, INTERVAL_SETTING, self.interval);
+        update!(float setting, MIN_SETTING, self.min);
+        update!(float setting, MAX_SETTING, self.max);
+        update!(float setting, OFFSET_SETTING, self.offset);
+        update!(bool setting, REVERSE_SETTING, self.reverse);
+
+        update_fallback!(setting)
+    }
+}
+
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -96,15 +124,6 @@ impl ProcessingNode for OscillatorNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
-    }
-
-    fn update(&mut self, config: &Self) {
-        self.oscillator_type = config.oscillator_type;
-        self.min = config.min;
-        self.max = config.max;
-        self.offset = config.offset;
-        self.interval = config.interval;
-        self.reverse = config.reverse;
     }
 }
 
@@ -215,6 +234,35 @@ impl OscillatorContext {
             frame -= self.interval;
         }
         frame
+    }
+}
+
+#[derive(
+    Clone,
+    Copy,
+    Debug,
+    Default,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[serde(rename_all = "lowercase")]
+#[repr(u8)]
+pub enum OscillatorType {
+    Square,
+    #[default]
+    Sine,
+    Saw,
+    Triangle,
+}
+
+impl Display for OscillatorType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }
 

@@ -9,6 +9,7 @@ pub use self::macros::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
+pub use self::settings::*;
 pub use mizer_debug_ui::DebugUiDrawHandle;
 use std::fmt::Debug;
 
@@ -18,13 +19,14 @@ mod ports;
 // TODO: pick better name
 mod introspection;
 mod preview;
+mod settings;
 
 pub mod edge;
 mod macros;
 #[cfg(feature = "test")]
 pub mod mocks;
 
-pub trait PipelineNode: Debug + Send + Sync + Any {
+pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
@@ -65,6 +67,16 @@ pub trait PipelineNode: Debug + Send + Sync + Any {
     fn prepare(&mut self, injector: &Injector) {}
 }
 
+pub trait ConfigurableNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update_fallback!(setting)
+    }
+}
+
 downcast!(dyn PipelineNode);
 
 pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
@@ -77,8 +89,6 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()>;
 
     fn create_state(&self) -> Self::State;
-
-    fn update(&mut self, config: &Self);
 
     fn debug_ui(&self, _ui: &mut DebugUiDrawHandle, _state: &Self::State) {}
 }

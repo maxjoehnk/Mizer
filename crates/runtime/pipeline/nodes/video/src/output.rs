@@ -23,6 +23,8 @@ impl VideoOutputState {
     }
 }
 
+impl ConfigurableNode for VideoOutputNode {}
+
 impl PipelineNode for VideoOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
@@ -53,8 +55,6 @@ impl ProcessingNode for VideoOutputNode {
     fn create_state(&self) -> Self::State {
         VideoOutputState::new()
     }
-
-    fn update(&mut self, _config: &Self) {}
 }
 
 impl GstreamerNode for VideoOutputState {

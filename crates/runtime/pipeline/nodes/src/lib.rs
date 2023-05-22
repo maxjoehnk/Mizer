@@ -18,9 +18,11 @@ pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
 pub use mizer_input_nodes::{ButtonNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
-pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
+pub use mizer_midi_nodes::{
+    MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode,
+};
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
-use mizer_node::{Injector, NodeType, PipelineNode, ProcessingNode};
+use mizer_node::{ConfigurableNode, Injector, NodeSetting, NodeType, PipelineNode};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -74,17 +76,15 @@ macro_rules! node_impl {
                 }
             }
 
-            pub fn update(&self, target: &mut dyn PipelineNode) -> anyhow::Result<()> {
+            pub fn apply_to(&self, target: &mut dyn PipelineNode) -> anyhow::Result<()> {
                 let node_type = target.node_type();
                 match (node_type, self) {
                     $((NodeType::$node_type, Node::$node_type(config)) => {
                         let node: &mut $node = target.downcast_mut()?;
-                        node.update(config);
+                        *node = config.clone();
                     },)*
-                    (node_type, node) => log::warn!(
-                        "invalid node type {:?} for given update {:?}",
-                        node_type,
-                        node
+                    (node_type, node) => anyhow::bail!(
+                        "invalid node type {node_type:?} for given update {node:?}"
                     ),
                 }
 
@@ -95,6 +95,20 @@ macro_rules! node_impl {
                 match self {
                     $(Node::$node_type(node) => node.prepare(injector),)*
                     Node::TestSink(_) => {},
+                }
+            }
+
+            pub fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+                match self {
+                    $(Node::$node_type(node) => node.settings(injector),)*
+                    Node::TestSink(_) => vec![],
+                }
+            }
+
+            pub fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+                match self {
+                    $(Node::$node_type(node) => node.update_setting(setting),)*
+                    Node::TestSink(_) => Ok(()),
                 }
             }
         }

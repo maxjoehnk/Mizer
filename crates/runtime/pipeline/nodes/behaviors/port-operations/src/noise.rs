@@ -6,9 +6,12 @@ use mizer_util::LerpExt;
 
 const VALUE_OUTPUT: &str = "Value";
 
+const TICK_RATE_SETTING: &str = "Tick Rate";
+const FADE_SETTING: &str = "Fade";
+
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct NoiseNode {
-    pub tick_rate: u64,
+    pub tick_rate: u32,
     pub fade: bool,
 }
 
@@ -18,6 +21,24 @@ impl Default for NoiseNode {
             tick_rate: 1,
             fade: true,
         }
+    }
+}
+
+impl ConfigurableNode for NoiseNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(TICK_RATE_SETTING, self.tick_rate)
+                .min(0)
+                .max_hint(300),
+            setting!(FADE_SETTING, self.fade),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(int setting, TICK_RATE_SETTING, self.tick_rate);
+        update!(bool setting, FADE_SETTING, self.fade);
+
+        update_fallback!(setting)
     }
 }
 
@@ -52,11 +73,6 @@ impl ProcessingNode for NoiseNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-
-    fn update(&mut self, config: &Self) {
-        self.tick_rate = config.tick_rate;
-        self.fade = config.fade;
-    }
 }
 
 pub struct NoiseNodeState {
@@ -82,11 +98,12 @@ impl Default for NoiseNodeState {
 
 impl NoiseNodeState {
     fn next(&mut self, config: &NoiseNode) -> f64 {
+        let tick_rate = config.tick_rate as u64;
         self.last_tick += 1;
-        if self.last_tick < self.last_value.0 + config.tick_rate {
+        if self.last_tick < self.last_value.0 + tick_rate {
             if config.fade {
                 let min_tick = self.last_value.0;
-                let max_tick = self.last_value.0 + config.tick_rate;
+                let max_tick = self.last_value.0 + tick_rate;
 
                 self.last_tick
                     .linear_extrapolate((min_tick, max_tick), (self.last_value.1, self.next_value))
@@ -114,7 +131,7 @@ mod tests {
     #[test_case(0f64, 10, 5, 0)]
     fn next_should_return_previous_value_when_tick(
         value: f64,
-        tick_rate: u64,
+        tick_rate: u32,
         last_tick: u64,
         last_value_tick: u64,
     ) {

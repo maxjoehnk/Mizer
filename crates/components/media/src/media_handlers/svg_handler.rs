@@ -27,14 +27,18 @@ impl MediaHandler for SvgHandler {
         file.read_to_end(&mut buffer)?;
         let tree = usvg::Tree::from_data(&buffer, &Options::default())?;
         let mut pixmap = Pixmap::new(THUMBNAIL_SIZE, THUMBNAIL_SIZE).unwrap();
-        let pixel_buffer = pixmap.as_mut();
+        let mut pixel_buffer = pixmap.as_mut();
         let bounding_box = tree.root.calculate_bbox().unwrap();
-        let size = if bounding_box.width() > bounding_box.height() {
-            resvg::FitTo::Width(THUMBNAIL_SIZE)
+        let scale = if bounding_box.width() > bounding_box.height() {
+            (THUMBNAIL_SIZE as f64) / bounding_box.width()
         } else {
-            resvg::FitTo::Height(THUMBNAIL_SIZE)
-        };
-        resvg::render(&tree, size, Default::default(), pixel_buffer);
+            (THUMBNAIL_SIZE as f64) / bounding_box.height()
+        } as f32;
+        let tree = resvg::Tree::from_usvg(&tree);
+        tree.render(
+            tiny_skia::Transform::from_scale(scale, scale),
+            &mut pixel_buffer,
+        );
         let buffer = pixmap.encode_png()?;
         let thumbnail_path = storage.get_thumbnail_path(&path);
         let mut file = std::fs::File::create(thumbnail_path)?;

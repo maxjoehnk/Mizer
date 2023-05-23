@@ -22,6 +22,7 @@ impl Migrations {
     }
 }
 
+#[profiling::function]
 pub fn migrate(project: &mut String) -> anyhow::Result<()> {
     let version = get_version(project)?;
     let mut migrations = all::<Migrations>()
@@ -36,12 +37,14 @@ pub fn migrate(project: &mut String) -> anyhow::Result<()> {
     Ok(())
 }
 
+#[profiling::function]
 fn get_version(file: &str) -> anyhow::Result<usize> {
     let project_file: ProjectVersion = serde_yaml::from_str(file)?;
 
     Ok(project_file.version)
 }
 
+#[profiling::function]
 fn write_version(file: &mut String, version: usize) -> anyhow::Result<()> {
     let mut project_file: ProjectVersionWithContent = serde_yaml::from_str(file)?;
     project_file.version = version;

@@ -61,6 +61,7 @@ impl MidiDeviceProvider {
     }
 
     pub fn list_devices(&self) -> anyhow::Result<Vec<MidiDeviceIdentifier>> {
+        profiling::scope!("MidiDeviceProvider::list_devices");
         let input_provider = MidiInput::new("mizer")?;
         let output_provider = MidiOutput::new("mizer")?;
 

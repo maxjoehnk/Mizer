@@ -12,6 +12,7 @@ impl ProjectFileMigration for ReworkLayoutControlsToNotUseNodes {
     const VERSION: usize = 3;
 
     fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+        profiling::scope!("ReworkLayoutControlsToNotUseNodes::migrate");
         let project: ProjectConfig<OldControlConfig> = serde_yaml::from_str(project_file)?;
         let project: ProjectConfig<NewControlConfig> = project.into();
 

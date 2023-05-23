@@ -132,6 +132,7 @@ impl Mizer {
         }
     }
 
+    #[profiling::function]
     fn new_project(&mut self) {
         mizer_util::message!("New Project", 0);
         self.close_project();
@@ -154,6 +155,7 @@ impl Mizer {
         self.send_session_update();
     }
 
+    #[profiling::function]
     fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
         self.close_project();
         self.project_path = Some(path);
@@ -162,6 +164,7 @@ impl Mizer {
         Ok(())
     }
 
+    #[profiling::function]
     fn load_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Loading Project", 0);
         if let Some(ref path) = self.project_path {
@@ -212,6 +215,7 @@ impl Mizer {
         Ok(())
     }
 
+    #[profiling::function]
     fn save_project_as(&mut self, path: PathBuf) -> anyhow::Result<()> {
         self.project_path = Some(path.clone());
         self.save_project()?;
@@ -221,6 +225,7 @@ impl Mizer {
         Ok(())
     }
 
+    #[profiling::function]
     fn save_project(&self) -> anyhow::Result<()> {
         mizer_util::message!("Saving Project", 0);
         if let Some(ref file) = self.project_path {
@@ -249,6 +254,7 @@ impl Mizer {
         Ok(())
     }
 
+    #[profiling::function]
     fn close_project(&mut self) {
         mizer_util::message!("Closing Project", 0);
         self.runtime.clear();
@@ -272,6 +278,7 @@ impl Mizer {
         self.send_session_update();
     }
 
+    #[profiling::function]
     fn send_session_update(&self) {
         let history = match self.project_history.load() {
             Ok(history) => history,

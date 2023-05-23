@@ -11,6 +11,7 @@ impl ProjectFileMigration for ReworkMidiConfig {
     const VERSION: usize = 2;
 
     fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+        profiling::scope!("ReworkMidiConfig::migrate");
         let project: ProjectConfig<OldMidiConfig> = serde_yaml::from_str(project_file)?;
         let project: ProjectConfig<NewMidiConfig> = project.into();
 

@@ -10,6 +10,7 @@ impl ProjectManager for FixtureManager {
     }
 
     fn load(&self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("FixtureManager::load");
         for fixture in &project.fixtures {
             let def = self.get_definition(&fixture.fixture);
             if let Some(def) = def {
@@ -35,6 +36,7 @@ impl ProjectManager for FixtureManager {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("FixtureManager::save");
         for fixture in self.get_fixtures() {
             project.fixtures.push(FixtureConfig {
                 id: fixture.id,

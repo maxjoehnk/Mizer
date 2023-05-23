@@ -203,12 +203,14 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         }
     }
 
+    #[profiling::function]
     fn force_plan(&mut self) {
         let planner = self.injector.get_mut::<ExecutionPlanner>().unwrap();
         let plan = planner.plan();
         self.rebuild_pipeline(plan);
     }
 
+    #[profiling::function]
     pub(crate) fn read_states_into_view(&self) {
         let layouts = self.layouts.read();
         let nodes = layouts
@@ -300,12 +302,15 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect()
     }
 
+    #[profiling::function]
     pub(crate) fn read_node_settings(&self) {
         let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
         let settings = pipeline_access
             .nodes
             .iter()
             .map(|(path, node)| {
+                let _scope = format!("{:?}Node::settings", node.node_type());
+                profiling::scope!(&_scope);
                 let settings = node.settings(&self.injector);
 
                 (path.clone(), settings)
@@ -380,6 +385,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new_project(&mut self) {
+        profiling::scope!("CoordinatorRuntime::new_project");
         let preset_ids = self.get_preset_ids();
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
         let mut paths = Vec::new();
@@ -416,6 +422,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("CoordinatorRuntime::load");
         for node in &project.nodes {
             let mut node_config: Node = node.config.clone();
             node_config.prepare(&self.injector);
@@ -463,6 +470,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("CoordinatorRuntime::save");
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         project.channels = pipeline_access
             .links

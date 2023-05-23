@@ -275,6 +275,7 @@ impl Sequencer {
     }
 
     pub fn sequences(&self) -> Vec<Sequence> {
+        profiling::scope!("Sequencer::sequences");
         self.sequences.read().values().cloned().collect()
     }
 

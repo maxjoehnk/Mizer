@@ -83,6 +83,7 @@ impl Project {
         }
     }
 
+    #[profiling::function]
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
         let mut file = File::open(path)?;
         let mut project_file = String::new();
@@ -102,6 +103,7 @@ impl Project {
     }
 
     // TODO: do file persistence on background thread
+    #[profiling::function]
     pub fn save_file<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
         let file = File::create(path)?;
         serde_yaml::to_writer(file, &self)?;

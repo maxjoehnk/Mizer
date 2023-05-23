@@ -101,6 +101,7 @@ impl DeviceManager {
     }
 
     pub fn current_devices(&self) -> Vec<DeviceRef> {
+        profiling::scope!("DeviceManager::current_devices");
         let lasers = self.lasers.iter().map(|laser| match laser.value() {
             LaserDevice::EtherDream(ether_dream) => EtherDreamView::from(ether_dream).into(),
             LaserDevice::Helios(helios) => HeliosView::from(helios).into(),

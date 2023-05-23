@@ -3910,6 +3910,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-protocol-laser",
+ "profiling",
  "tokio",
  "tokio-stream",
 ]
@@ -4522,6 +4523,7 @@ dependencies = [
  "mizer-protocol-osc",
  "mizer-sequencer",
  "mizer-timecode",
+ "profiling",
  "regex",
  "serde",
  "serde_json",

@@ -12,6 +12,7 @@ impl ProjectFileMigration for RenamePorts {
     const VERSION: usize = 1;
 
     fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+        profiling::scope!("RenamePorts::migrate");
         let mut project: ProjectConfig = serde_yaml::from_str(project_file)?;
 
         project.rename_input(NodeType::Select, "channel", "Channel");

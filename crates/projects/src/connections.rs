@@ -12,6 +12,7 @@ impl ProjectManagerMut for DmxConnectionManager {
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("DmxConnectionManager::load");
         for connection in &project.connections {
             match &connection.config {
                 ConnectionTypes::Sacn => self.add_output(connection.id.clone(), SacnOutput::new()),
@@ -27,6 +28,7 @@ impl ProjectManagerMut for DmxConnectionManager {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("DmxConnectionManager::save");
         for (id, output) in self.list_outputs() {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),
@@ -53,6 +55,7 @@ fn get_config(connection: &DmxConnection) -> ConnectionTypes {
 
 impl ProjectManagerMut for MqttConnectionManager {
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("MqttConnectionManager::load");
         for connection in &project.connections {
             if let ConnectionTypes::Mqtt(ref address) = connection.config {
                 self.add_connection(connection.id.clone(), address.clone())?;
@@ -63,6 +66,7 @@ impl ProjectManagerMut for MqttConnectionManager {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("MqttConnectionManager::save");
         for (id, connection) in self.list_connections() {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),
@@ -79,6 +83,7 @@ impl ProjectManagerMut for MqttConnectionManager {
 
 impl ProjectManagerMut for OscConnectionManager {
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("OscConnectionManager::load");
         for connection in &project.connections {
             if let ConnectionTypes::Osc(ref address) = connection.config {
                 self.add_connection(connection.id.clone(), *address)?;
@@ -89,6 +94,7 @@ impl ProjectManagerMut for OscConnectionManager {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("OscConnectionManager::save");
         for (id, connection) in self.list_connections() {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),

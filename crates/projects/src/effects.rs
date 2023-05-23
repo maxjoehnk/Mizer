@@ -8,6 +8,7 @@ impl ProjectManagerMut for EffectEngine {
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        profiling::scope!("EffectEngine::load");
         log::debug!("load effect engine");
         for effect in &project.effects {
             self.effects.insert(effect.id, effect.clone());
@@ -16,6 +17,7 @@ impl ProjectManagerMut for EffectEngine {
     }
 
     fn save(&self, project: &mut Project) {
+        profiling::scope!("EffectEngine::save");
         log::debug!("save effect engine");
         for effect in self.effects.iter() {
             project.effects.push(effect.value().clone());

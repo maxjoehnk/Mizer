@@ -41,6 +41,7 @@ impl ApiHandler {
     fn handle_command(&self, command: ApiCommand, mizer: &mut Mizer) {
         match command {
             ApiCommand::WritePort(path, port, value, sender) => {
+                profiling::scope!("ApiCommand::WritePort");
                 mizer.runtime.pipeline.write_port(path, port, value);
 
                 sender
@@ -48,6 +49,7 @@ impl ApiHandler {
                     .expect("api command sender disconnected");
             }
             ApiCommand::ReadFaderValue(path, sender) => {
+                profiling::scope!("ApiCommand::ReadFaderValue");
                 let value = mizer
                     .runtime
                     .pipeline
@@ -57,81 +59,98 @@ impl ApiHandler {
 
                 sender.send(value).expect("api command sender disconnected");
             }
-            ApiCommand::GetNodePreviewRef(path, sender) => sender
-                .send(mizer.runtime.get_preview_ref(&path))
-                .expect("api command sender disconnected"),
+            ApiCommand::GetNodePreviewRef(path, sender) => {
+                profiling::scope!("ApiCommand::GetNodePreviewRef");
+                sender
+                    .send(mizer.runtime.get_preview_ref(&path))
+                    .expect("api command sender disconnected")
+            }
             ApiCommand::GetNodeMetadataRef(sender) => {
+                profiling::scope!("ApiCommand::GetNodeMetadataRef");
                 if let Err(err) = sender.send(mizer.runtime.get_node_metadata_ref()) {
                     log::error!("Unable to respond to ApiCommand::GetNodeMetadataRef: {err:?}");
                 }
             }
             ApiCommand::SetClockState(state) => {
+                profiling::scope!("ApiCommand::SetClockState");
                 mizer.runtime.clock.set_state(state);
             }
             ApiCommand::SetBpm(bpm) => {
+                profiling::scope!("ApiCommand::SetBpm");
                 let speed = mizer.runtime.clock.speed_mut();
                 *speed = bpm;
             }
             ApiCommand::SaveProject(sender) => {
+                profiling::scope!("ApiCommand::SaveProject");
                 let result = mizer.save_project();
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::SaveProjectAs(path, sender) => {
+                profiling::scope!("ApiCommand::SaveProjectAs");
                 let result = mizer.save_project_as(PathBuf::from(&path));
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::NewProject(sender) => {
+                profiling::scope!("ApiCommand::NewProject");
                 mizer.new_project();
                 sender
                     .send(Ok(()))
                     .expect("api command sender disconnected");
             }
             ApiCommand::LoadProject(path, sender) => {
+                profiling::scope!("ApiCommand::LoadProject");
                 let result = mizer.load_project_from(PathBuf::from(&path));
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetConnections(sender) => {
+                profiling::scope!("ApiCommand::GetConnections");
                 let connections = self.get_connections(mizer);
                 sender
                     .send(connections)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetMidiDeviceProfiles(sender) => {
+                profiling::scope!("ApiCommand::GetMidiDeviceProfiles");
                 let device_profiles = self.get_midi_device_profiles(mizer);
                 sender
                     .send(device_profiles)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetDmxMonitor(output_id, sender) => {
+                profiling::scope!("ApiCommand::GetDmxMonitor");
                 let result = self.monitor_dmx(mizer, output_id);
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetMidiMonitor(name, sender) => {
+                profiling::scope!("ApiCommand::GetMidiMonitor");
                 let result = self.monitor_midi(mizer, name);
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetOscMonitor(id, sender) => {
+                profiling::scope!("ApiCommand::GetOscMonitor");
                 let result = self.monitor_osc(mizer, id);
                 sender
                     .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::ObserveSession(sender) => {
+                profiling::scope!("ApiCommand::ObserveSession");
                 sender
                     .send(mizer.session_events.subscribe())
                     .expect("api command sender disconnected");
             }
             ApiCommand::ReloadFixtureLibraries(paths, sender) => {
+                profiling::scope!("ApiCommand::ReloadFixtureLibraries");
                 let injector = mizer.runtime.injector();
                 let library = injector.get::<FixtureLibrary>().unwrap();
                 let result = FixtureLibrariesLoader(library.clone()).reload(paths);
@@ -141,6 +160,7 @@ impl ApiHandler {
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetHistory(sender) => {
+                profiling::scope!("ApiCommand::GetHistory");
                 let injector = mizer.runtime.injector();
                 let history = injector.get::<CommandHistory>().unwrap();
                 let result = history.items();
@@ -151,6 +171,7 @@ impl ApiHandler {
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetGamepadRef(id, sender) => {
+                profiling::scope!("ApiCommand::GetGamepadRef");
                 let gamepad_ref = self.get_gamepad(mizer, id);
                 if let Err(err) = sender.send(gamepad_ref) {
                     log::error!("Unable to respond to ApiCommand::GetGamepadRef: {err:?}");
@@ -159,6 +180,7 @@ impl ApiHandler {
         }
     }
 
+    #[profiling::function]
     fn get_connections(&self, mizer: &mut Mizer) -> Vec<Connection> {
         let manager = mizer
             .runtime

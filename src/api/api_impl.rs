@@ -4,7 +4,7 @@ use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::Layout;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, PortId};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, NodeSetting, PortId};
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
 use mizer_session::SessionState;
 
@@ -28,6 +28,7 @@ pub struct Api {
 }
 
 impl RuntimeApi for Api {
+    #[profiling::function]
     fn run_command<'a, T: SendableCommand<'a> + 'static>(
         &self,
         command: T,
@@ -56,13 +57,15 @@ impl RuntimeApi for Api {
         self.history_bus.subscribe()
     }
 
+    #[profiling::function]
     fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.access.designer.read();
+        let settings = self.access.settings.read();
         self.access
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .map(|path| self.get_descriptor(path, &designer))
+            .map(|path| self.get_descriptor(path, &designer, &settings))
             .collect()
     }
 
@@ -78,6 +81,7 @@ impl RuntimeApi for Api {
         self.access.plans.read()
     }
 
+    #[profiling::function]
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -86,6 +90,7 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
+    #[profiling::function]
     fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodePreviewRef(node, tx))?;
@@ -95,6 +100,7 @@ impl RuntimeApi for Api {
         Ok(value)
     }
 
+    #[profiling::function]
     fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodeMetadataRef(tx))?;
@@ -104,14 +110,16 @@ impl RuntimeApi for Api {
         Ok(value)
     }
 
+    #[profiling::function]
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
         let designer = self.access.designer.read();
+        let settings = self.access.settings.read();
         self.access
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
             .find(|node_path| node_path == path)
-            .map(|path| self.get_descriptor(path, &designer))
+            .map(|path| self.get_descriptor(path, &designer, &settings))
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -175,6 +183,7 @@ impl RuntimeApi for Api {
         self.access.clock_snapshot.clone()
     }
 
+    #[profiling::function]
     fn get_connections(&self) -> Vec<Connection> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetConnections(tx)).unwrap();
@@ -182,6 +191,7 @@ impl RuntimeApi for Api {
         rx.recv().unwrap()
     }
 
+    #[profiling::function]
     fn get_midi_device_profiles(&self) -> Vec<DeviceProfile> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -191,6 +201,7 @@ impl RuntimeApi for Api {
         rx.recv().unwrap()
     }
 
+    #[profiling::function]
     fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -200,6 +211,7 @@ impl RuntimeApi for Api {
         rx.recv().unwrap()
     }
 
+    #[profiling::function]
     fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -209,6 +221,7 @@ impl RuntimeApi for Api {
         rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
     }
 
+    #[profiling::function]
     fn get_osc_monitor(&self, connection_id: String) -> anyhow::Result<Subscriber<OscMessage>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -218,6 +231,7 @@ impl RuntimeApi for Api {
         rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
     }
 
+    #[profiling::function]
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -227,6 +241,7 @@ impl RuntimeApi for Api {
         rx.recv().map_err(anyhow::Error::from)
     }
 
+    #[profiling::function]
     fn read_fader_value(&self, node_path: NodePath) -> anyhow::Result<f64> {
         let (tx, rx) = flume::bounded(1);
         self.sender
@@ -235,10 +250,12 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
+    #[profiling::function]
     fn read_settings(&self) -> Settings {
         self.settings.read().settings
     }
 
+    #[profiling::function]
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()> {
         let mut settings_manager = self.settings.read();
         let refresh_fixture_libraries =
@@ -263,6 +280,7 @@ impl RuntimeApi for Api {
         self.settings_bus.subscribe()
     }
 
+    #[profiling::function]
     fn layouts_view(&self) -> LayoutsView {
         self.access.layouts_view.clone()
     }
@@ -290,15 +308,16 @@ impl Api {
         )
     }
 
+    #[profiling::function]
     fn get_descriptor(
         &self,
         path: NodePath,
         designer: &HashMap<NodePath, NodeDesigner>,
+        settings: &HashMap<NodePath, Vec<NodeSetting>>,
     ) -> NodeDescriptor {
         let node = self.access.nodes.get(&path).unwrap();
         let ports = node.list_ports();
-        let mut settings = self.access.settings.read();
-        let settings = settings.remove(&path).unwrap_or_default();
+        let settings = settings.get(&path).cloned().unwrap_or_default();
         let designer = designer[&path].clone();
 
         NodeDescriptor {

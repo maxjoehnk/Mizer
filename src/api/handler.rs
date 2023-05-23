@@ -37,6 +37,7 @@ impl ApiHandler {
         }
     }
 
+    #[profiling::function]
     fn handle_command(&self, command: ApiCommand, mizer: &mut Mizer) {
         match command {
             ApiCommand::WritePort(path, port, value, sender) => {

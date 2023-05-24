@@ -26,8 +26,8 @@ jobs:
       - name: Compile docs
         working-directory: docs
         run: |
-          apt-get update
-          apt-get install -y asciidoctor
+          sudo apt-get update
+          sudo apt-get install -y asciidoctor
           asciidoctor index.adoc
       - name: Setup Pages
         uses: actions/configure-pages@v3

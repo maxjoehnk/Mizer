@@ -13,6 +13,7 @@ impl MediaHandler {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
         let document = self.api.create_tag(name)?;
 
@@ -20,6 +21,7 @@ impl MediaHandler {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
         let tags = self.api.get_tags()?;
         let tags = tags.into_iter().map(MediaTagWithFiles::from).collect();
@@ -31,6 +33,7 @@ impl MediaHandler {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_media(&self) -> anyhow::Result<MediaFiles> {
         let files = self.api.get_media()?;
         let files = files.into_iter().map(MediaFile::from).collect();

@@ -17,11 +17,13 @@ impl<R: RuntimeApi> TransportHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn transport_stream(&self) -> TransportStream {
         TransportStream(self.runtime.transport_recv())
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn set_state(&self, state: TransportState) -> anyhow::Result<()> {
         let clock_state = state.into();
         self.runtime.set_clock_state(clock_state)?;
@@ -30,6 +32,7 @@ impl<R: RuntimeApi> TransportHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn set_bpm(&self, bpm: f64) -> anyhow::Result<()> {
         self.runtime.set_bpm(bpm)?;
 
@@ -37,6 +40,7 @@ impl<R: RuntimeApi> TransportHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn clock_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>> {
         self.runtime.get_clock_snapshot_ref()
     }

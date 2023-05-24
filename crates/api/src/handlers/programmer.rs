@@ -24,12 +24,14 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn state_stream(&self) -> impl Stream<Item = ProgrammerState> + 'static {
         let programmer = self.fixture_manager.get_programmer();
         programmer.bus().map(ProgrammerState::from)
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn write_control(&self, request: WriteControlRequest) {
         let mut programmer = self.fixture_manager.get_programmer();
         let control = request.as_controls();
@@ -37,6 +39,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         log::debug!("select_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
@@ -44,6 +47,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         log::debug!("unselect_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
@@ -51,6 +55,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn select_group(&self, group_id: u32) {
         log::debug!("select_group {:?}", group_id);
         if let Some(group) = self.fixture_manager.get_group(GroupId(group_id)) {
@@ -60,18 +65,21 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn clear(&self) {
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.clear();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn highlight(&self, highlight: bool) {
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.set_highlight(highlight);
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn store(&self, sequence_id: u32, store_mode: store_request::Mode, cue_id: Option<u32>) {
         let (controls, effects) = {
             let programmer = self.fixture_manager.get_programmer();
@@ -92,6 +100,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_presets(&self) -> Presets {
         Presets {
             intensities: self
@@ -127,6 +136,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn call_preset(&self, preset_id: PresetId) {
         log::debug!("call_preset {:?}", preset_id);
         let mut programmer = self.fixture_manager.get_programmer();
@@ -134,6 +144,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn call_effect(&self, effect_id: u32) {
         log::debug!("call_effect {:?}", effect_id);
         let mut programmer = self.fixture_manager.get_programmer();
@@ -141,6 +152,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_groups(&self) -> Groups {
         Groups {
             groups: self
@@ -154,6 +166,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_group(&self, name: String) -> Group {
         let group = self.runtime.run_command(AddGroupCommand { name }).unwrap();
 
@@ -161,6 +174,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_group(&self, id: u32) {
         self.runtime
             .run_command(DeleteGroupCommand { id: id.into() })
@@ -168,6 +182,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn rename_group(&self, id: u32, name: String) {
         self.runtime
             .run_command(RenameGroupCommand {
@@ -178,6 +193,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
         let group_id = GroupId(group_id);
         let fixture_ids = fixture_ids
@@ -193,6 +209,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
         let group_id = GroupId(group_id);
         let fixture_ids = {
@@ -210,11 +227,13 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn programmer_view(&self) -> ProgrammerView {
         self.fixture_manager.get_programmer().view()
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_block_size(&self, block_size: usize) {
         self.fixture_manager
             .get_programmer()
@@ -222,36 +241,43 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_groups(&self, groups: usize) {
         self.fixture_manager.get_programmer().set_groups(groups);
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_wings(&self, wings: usize) {
         self.fixture_manager.get_programmer().set_wings(wings);
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn next(&self) {
         self.fixture_manager.get_programmer().next();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn prev(&self) {
         self.fixture_manager.get_programmer().prev();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn set(&self) {
         self.fixture_manager.get_programmer().set();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn shuffle(&self) {
         self.fixture_manager.get_programmer().shuffle();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn write_effect_rate(&self, request: WriteEffectRateRequest) {
         self.fixture_manager
             .get_programmer()
@@ -259,6 +285,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn write_effect_offset(&self, request: WriteEffectOffsetRequest) {
         self.fixture_manager
             .get_programmer()

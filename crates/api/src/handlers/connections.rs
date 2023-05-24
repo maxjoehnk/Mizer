@@ -17,6 +17,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_connections(&self) -> Connections {
         let connections = self
             .runtime
@@ -32,11 +33,13 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn monitor_dmx(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
         self.runtime.get_dmx_monitor(output_id)
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn monitor_midi(
         &self,
         name: String,
@@ -56,6 +59,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn monitor_osc(
         &self,
         connection_id: String,
@@ -75,6 +79,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {
         self.runtime.run_command(AddSacnOutputCommand { name })?;
 
@@ -82,6 +87,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_artnet(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddArtnetOutputCommand { name, host, port })?;
@@ -90,6 +96,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_mqtt(
         &self,
         url: String,
@@ -106,6 +113,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_osc(
         &self,
         output_host: String,
@@ -122,6 +130,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
         let profiles = self
             .runtime
@@ -137,6 +146,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
         if let Some(connection::Connection::Dmx(dmx)) = connection.connection {
             self.runtime.run_command(DeleteOutputCommand {
@@ -156,6 +166,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
         match update.config {
             Some(configure_connection_request::Config::Dmx(connection)) => {
@@ -197,6 +208,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_gamepad_ref(&self, name: String) -> anyhow::Result<Option<GamepadRef>> {
         self.runtime.get_gamepad_ref(name)
     }

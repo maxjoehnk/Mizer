@@ -13,16 +13,19 @@ impl<R: RuntimeApi> SettingsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_settings(&self) -> models::Settings {
         self.runtime.read_settings().into()
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn save_settings(&self, settings: models::Settings) -> anyhow::Result<()> {
         self.runtime.save_settings(settings.into())
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn watch_settings(&self) -> impl Stream<Item = models::Settings> {
         self.runtime
             .observe_settings()

@@ -18,6 +18,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_effects(&self) -> Effects {
         let effects = self.engine.effects();
 
@@ -30,11 +31,13 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_effect(&self, name: String) {
         self.runtime.run_command(AddEffectCommand { name }).unwrap();
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_effect_channel(&self, request: AddEffectChannelRequest) {
         self.runtime
             .run_command(AddEffectChannelCommand {
@@ -45,6 +48,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_effect_step(&self, request: AddEffectStepRequest) {
         self.runtime
             .run_command(AddEffectStepCommand {
@@ -56,6 +60,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_effect_step(&self, request: UpdateEffectStepRequest) {
         self.runtime
             .run_command(UpdateEffectStepCommand {
@@ -68,6 +73,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_effect(&self, effect_id: u32) {
         self.runtime
             .run_command(DeleteEffectCommand { effect_id })
@@ -75,6 +81,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_effect_channel(&self, request: DeleteEffectChannelRequest) {
         self.runtime
             .run_command(DeleteEffectChannelCommand {
@@ -85,6 +92,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_effect_step(&self, request: DeleteEffectStepRequest) {
         self.runtime
             .run_command(DeleteEffectStepCommand {

@@ -18,6 +18,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_nodes(&self) -> Nodes {
         let mut res = Nodes::new();
 
@@ -98,6 +99,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_node(&self, path: String) -> Option<Node> {
         let node = self.runtime.get_node(&NodePath(path))?;
 
@@ -105,6 +107,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_node(&self, request: AddNodeRequest) -> Node {
         let position = request.position.unwrap();
         let designer = mizer_node::NodeDesigner {
@@ -128,6 +131,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_link(&self, link: NodeConnection) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddLinkCommand { link: link.into() })?;
@@ -136,6 +140,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn remove_link(&self, link: NodeConnection) -> anyhow::Result<()> {
         self.runtime
             .run_command(RemoveLinkCommand { link: link.into() })?;
@@ -144,6 +149,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {
         self.runtime
             .write_node_port(control.path.into(), control.port.into(), control.value)?;
@@ -152,16 +158,19 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_node_preview_ref(&self, path: String) -> anyhow::Result<Option<NodePreviewRef>> {
         self.runtime.get_node_preview_ref(path.into())
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef> {
         self.runtime.get_node_metadata_ref()
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_node_setting(&self, request: UpdateNodeSettingRequest) -> anyhow::Result<()> {
         self.runtime.run_command(UpdateNodeSettingCommand {
             path: request.path.into(),
@@ -172,6 +181,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(MoveNodeCommand {
             path: request.path.into(),
@@ -182,6 +192,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn show_node(&self, request: ShowNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(ShowNodeCommand {
             path: request.path.into(),
@@ -193,6 +204,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn rename_node(&self, request: RenameNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(RenameNodeCommand {
             path: request.path.into(),
@@ -203,6 +215,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(HideNodeCommand { path })?;
 
@@ -210,6 +223,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(DeleteNodeCommand { path })?;
 
@@ -217,6 +231,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn disconnect_ports(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(DisconnectPortsCommand { path })?;
 
@@ -224,6 +239,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn duplicate_node(&self, request: DuplicateNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(DuplicateNodeCommand {
             path: request.path.into(),
@@ -234,6 +250,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn group_nodes(&self, request: GroupNodesRequest) -> anyhow::Result<()> {
         self.runtime.run_command(GroupNodesCommand {
             nodes: request.nodes.into_iter().map(NodePath::from).collect(),

@@ -16,6 +16,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_sequences(&self) -> Sequences {
         let sequences = self.sequencer.sequences();
         let sequences = sequences.into_iter().map(Sequence::from).collect();
@@ -27,11 +28,13 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
         self.sequencer.sequence(sequence_id).map(Sequence::from)
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_sequence(&self) -> Sequence {
         let sequence = self.runtime.run_command(AddSequenceCommand {}).unwrap();
 
@@ -39,6 +42,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn duplicate_sequence(&self, sequence: u32) -> Sequence {
         let sequence = self
             .runtime
@@ -51,16 +55,19 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn sequence_go(&self, sequence: u32) {
         self.sequencer.sequence_go(sequence);
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn sequence_stop(&self, sequence: u32) {
         self.sequencer.sequence_stop(sequence);
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_sequence(&self, sequence: u32) -> anyhow::Result<()> {
         self.runtime.run_command(DeleteSequenceCommand {
             sequence_id: sequence,
@@ -70,6 +77,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_cue_trigger(&self, request: CueTriggerRequest) {
         self.runtime
             .run_command(UpdateCueTriggerCommand {
@@ -81,6 +89,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_cue_trigger_time(&self, request: CueTriggerTimeRequest) {
         self.runtime
             .run_command(UpdateCueTriggerTimeCommand {
@@ -92,6 +101,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_cue_effect_offset_time(&self, request: CueEffectOffsetTimeRequest) {
         self.runtime
             .run_command(UpdateCueEffectOffsetCommand {
@@ -104,6 +114,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_cue_name(&self, request: CueNameRequest) {
         self.runtime
             .run_command(RenameCueCommand {
@@ -115,6 +126,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_cue_value(&self, request: CueValueRequest) {
         self.runtime
             .run_command(UpdateCueValueCommand {
@@ -127,6 +139,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_control_fade_time(&self, request: CueTimingRequest) {
         self.runtime
             .run_command(UpdateControlFadeTimeCommand {
@@ -141,6 +154,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_control_delay_time(&self, request: CueTimingRequest) {
         self.runtime
             .run_command(UpdateControlDelayTimeCommand {
@@ -155,6 +169,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_sequence_wrap_around(&self, request: SequenceWrapAroundRequest) {
         self.runtime
             .run_command(UpdateSequenceWrapAroundCommand {
@@ -165,6 +180,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_sequence_stop_on_last_cue(&self, request: SequenceStopOnLastCueRequest) {
         self.runtime
             .run_command(UpdateSequenceStopOnLastCueCommand {
@@ -175,6 +191,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn update_sequence_name(&self, request: SequenceNameRequest) {
         self.runtime
             .run_command(RenameSequenceCommand {
@@ -185,6 +202,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn sequencer_view(&self) -> SequencerView {
         self.sequencer.get_sequencer_view()
     }

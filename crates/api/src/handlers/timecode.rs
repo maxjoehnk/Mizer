@@ -16,6 +16,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Self { manager, runtime }
     }
 
+    #[profiling::function]
     pub fn get_timecodes(&self) -> AllTimecodes {
         let timecodes = self
             .manager
@@ -37,6 +38,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         }
     }
 
+    #[profiling::function]
     pub fn add_timecode(&self, req: AddTimecodeRequest) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddTimecodeCommand { name: req.name })?;
@@ -44,6 +46,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn rename_timecode(&self, req: RenameTimecodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(RenameTimecodeCommand {
             id: req.id.into(),
@@ -53,6 +56,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn delete_timecode(&self, req: DeleteTimecodeRequest) -> anyhow::Result<()> {
         self.runtime
             .run_command(DeleteTimecodeCommand { id: req.id.into() })?;
@@ -60,6 +64,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn add_timecode_control(&self, req: AddTimecodeControlRequest) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddTimecodeControlCommand { name: req.name })?;
@@ -67,6 +72,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn rename_timecode_control(&self, req: RenameTimecodeControlRequest) -> anyhow::Result<()> {
         self.runtime.run_command(RenameTimecodeControlCommand {
             id: req.id.into(),
@@ -76,6 +82,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn delete_timecode_control(&self, req: DeleteTimecodeControlRequest) -> anyhow::Result<()> {
         self.runtime
             .run_command(DeleteTimecodeControlCommand { id: req.id.into() })?;
@@ -83,6 +90,7 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         Ok(())
     }
 
+    #[profiling::function]
     pub fn get_timecode_state_ref(&self, id: u32) -> Option<TimecodeStateAccess> {
         self.manager.get_state_access(id.into())
     }

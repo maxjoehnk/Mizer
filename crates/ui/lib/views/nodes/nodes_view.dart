@@ -1,3 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
@@ -22,6 +27,7 @@ import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/properties_pane.dart';
 
 const double PathBreadcrumbHeight = 32;
+const bool EnableScreenshot = false;
 
 class FetchNodesView extends StatelessWidget {
   const FetchNodesView({Key? key}) : super(key: key);
@@ -144,6 +150,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate,
                     onClick: () => _duplicateNode(context),
                     hotkeyId: "duplicate_node"),
+                if (EnableScreenshot)
+                  PanelAction(
+                      label: "Screenshot Node",
+                      disabled: model.selectedNode == null,
+                      onClick: () => _screenshotNode(context)),
               ],
             ),
           ),
@@ -191,6 +202,20 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     }
     context.read<NodesBloc>().add(GroupNodes(nodes.map((n) => n.node.path).toList(),
         parent: widget.nodeEditorModel.parent?.node.path));
+  }
+
+  void _screenshotNode(BuildContext context) async {
+    BaseNodeState nodeState = model.selectedNode!.key.currentState!;
+    final typeGroup = XTypeGroup(label: 'Images'.i18n, extensions: ['png']);
+    final path = await getSavePath(acceptedTypeGroups: [typeGroup]);
+    if (path == null) {
+      return;
+    }
+    final ui.Image image = await nodeState.screenshot();
+    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List pngBytes = byteData!.buffer.asUint8List();
+    final File file = File(path);
+    await file.writeAsBytes(pngBytes);
   }
 
   @override

@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/i18n.dart';
@@ -19,7 +23,7 @@ import 'ports.dart';
 import 'preview.dart';
 import 'tabs.dart';
 
-class BaseNode extends StatelessWidget {
+class BaseNode extends StatefulWidget {
   final NodeModel nodeModel;
   final Widget child;
   final bool selected;
@@ -28,7 +32,7 @@ class BaseNode extends StatelessWidget {
   final bool connected;
   final Function() onSelect;
   final Function() onSelectAdditional;
-  late List<CustomNodeTab> tabs;
+  late final List<CustomNodeTab> tabs;
 
   BaseNode(this.nodeModel,
       {required this.child,
@@ -72,67 +76,79 @@ class BaseNode extends StatelessWidget {
     );
   }
 
+  @override
+  State<BaseNode> createState() => BaseNodeState();
+}
+
+class BaseNodeState extends State<BaseNode> {
+  final GlobalKey _repaintKey = GlobalKey();
+  bool _screenshotMode = false;
+
   Node get node {
-    return nodeModel.node;
+    return widget.nodeModel.node;
   }
 
   NodeTab get selectedTab {
-    return nodeModel.tab;
+    return widget.nodeModel.tab;
   }
 
   @override
   Widget build(BuildContext context) {
-    return ContextMenu(
-      menu: Menu(items: [
-        MenuItem(label: "Hide", action: () => _onHideNode(context)),
-        MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
-        if (nodeModel.node.canRename)
-          MenuItem(label: "Rename", action: () => _onRenameNode(context)),
-        if (nodeModel.node.canDuplicate)
-          MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
-        if (nodeModel.node.canDelete)
-          MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
-      ]),
-      child: Container(
-        width: NODE_BASE_WIDTH,
-        child: GestureDetector(
-          onTap: () {
-            if (RawKeyboard.instance.keysPressed.any((key) => [
-                  LogicalKeyboardKey.shift,
-                  LogicalKeyboardKey.shiftLeft,
-                  LogicalKeyboardKey.shiftRight,
-                ].contains(key))) {
-              this.onSelectAdditional();
-            } else {
-              this.onSelect();
-            }
-          },
-          child: NodeContainer(
-            child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.bodyText2!,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    NodeHeader(this.node.path, this.node.type, collapsed: collapsed),
-                    if (!collapsed)
-                      Stack(children: [
-                        _portsView(),
-                        if (selectedTab == NodeTab.Preview) _previewView(),
-                        if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
-                      ]),
-                    if (!collapsed)
-                      NodeFooter(
-                        node: node,
-                        tabs: tabs,
-                        selectedTab: selectedTab,
-                        onSelectTab: (tab) => nodeModel.selectTab(tab),
-                      )
-                  ]),
+    return RepaintBoundary(
+      key: _repaintKey,
+      child: ContextMenu(
+        menu: Menu(items: [
+          MenuItem(label: "Hide", action: () => _onHideNode(context)),
+          MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
+          if (widget.nodeModel.node.canRename)
+            MenuItem(label: "Rename", action: () => _onRenameNode(context)),
+          if (widget.nodeModel.node.canDuplicate)
+            MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
+          if (widget.nodeModel.node.canDelete)
+            MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
+        ]),
+        child: Container(
+          margin: _screenshotMode ? EdgeInsets.all(8.0) : EdgeInsets.zero,
+          width: NODE_BASE_WIDTH,
+          child: GestureDetector(
+            onTap: () {
+              if (RawKeyboard.instance.keysPressed.any((key) => [
+                    LogicalKeyboardKey.shift,
+                    LogicalKeyboardKey.shiftLeft,
+                    LogicalKeyboardKey.shiftRight,
+                  ].contains(key))) {
+                this.widget.onSelectAdditional();
+              } else {
+                this.widget.onSelect();
+              }
+            },
+            child: NodeContainer(
+              child: DefaultTextStyle(
+                style: Theme.of(context).textTheme.bodyText2!,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      NodeHeader(this.node.path, this.node.type, collapsed: widget.collapsed),
+                      if (!widget.collapsed)
+                        Stack(children: [
+                          _portsView(),
+                          if (selectedTab == NodeTab.Preview) _previewView(),
+                          if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
+                        ]),
+                      if (!widget.collapsed)
+                        NodeFooter(
+                          node: node,
+                          tabs: widget.tabs,
+                          selectedTab: selectedTab,
+                          onSelectTab: (tab) => widget.nodeModel.selectTab(tab),
+                        )
+                    ]),
+              ),
+              selected: !_screenshotMode && widget.selected,
+              selectedAdditionally: widget.selectedAdditionally,
+              connected: widget.connected,
             ),
-            selected: selected,
-            selectedAdditionally: selectedAdditionally,
-            connected: connected,
           ),
         ),
       ),
@@ -167,7 +183,7 @@ class BaseNode extends StatelessWidget {
       padding: const EdgeInsets.all(32.0),
       child: ElevatedButton(
           onPressed: () {
-            context.read<NodeEditorModel>().openContainer(nodeModel);
+            context.read<NodeEditorModel>().openContainer(widget.nodeModel);
           },
           child: Text("Open")),
     ));
@@ -196,6 +212,28 @@ class BaseNode extends StatelessWidget {
 
   void _onDeleteNode(BuildContext context) async {
     context.read<NodesBloc>().add(DeleteNode(node.path));
+  }
+
+  Future<ui.Image> screenshot() async {
+    await _setScreenshotMode(true);
+    final RenderRepaintBoundary boundary =
+        _repaintKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    final image = await boundary.toImage();
+    await _setScreenshotMode(false);
+
+    return image;
+  }
+
+  Future<void> _setScreenshotMode(bool screenshotMode) {
+    setState(() {
+      _screenshotMode = screenshotMode;
+    });
+    var completer = Completer();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      completer.complete();
+    });
+
+    return completer.future;
   }
 }
 

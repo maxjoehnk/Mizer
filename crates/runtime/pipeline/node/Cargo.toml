@@ -19,7 +19,7 @@ mizer-injector = { path = "../../injector" }
 mizer-util = { path = "../../../util" }
 downcast = "0.11"
 pinboard = "2.2"
-enum-iterator = "1.2"
+enum-iterator = "1.4"
 
 [dev-dependencies]
 test-case = "3.1"

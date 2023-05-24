@@ -9,7 +9,8 @@ Midi Output is a node that sends midi messages to a midi device.
 
 == Settings
 
+include::setting_device.adoc[leveloffset=+2]
+
 == Ports
-=== Outputs
 
 === Inputs

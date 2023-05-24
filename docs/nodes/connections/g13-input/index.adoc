@@ -9,7 +9,8 @@ G13 Input is a node that allows you to use the Logitech G13 as an input device.
 
 == Settings
 
+include::setting_device.adoc[leveloffset=+2]
+include::setting_key.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
-
-=== Inputs

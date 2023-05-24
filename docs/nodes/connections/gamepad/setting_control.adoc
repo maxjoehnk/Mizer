@@ -1,0 +1,3 @@
+= Control
+
+Select the button or axis for which this node should output the value.

@@ -8,8 +8,7 @@ image::nodes/connections/g13-output/images/node.png[Node Preview,300]
 G13 Output is a node that allows you to control the Logitech G13 key colors.
 
 == Settings
+include::setting_device.adoc[leveloffset=+2]
 
 == Ports
-=== Outputs
-
 === Inputs

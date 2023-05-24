@@ -1,0 +1,9 @@
+= Channel
+
+Controls the DMX channel that the node will send its data to.
+
+*Default*: 1
+
+*Min*: 1
+
+*Max*: 512

@@ -1,0 +1,5 @@
+= Mode
+
+Select between *RGB* and *HSV* mode.
+
+*Default*: RGB

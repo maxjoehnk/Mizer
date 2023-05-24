@@ -9,7 +9,7 @@ Gamepad node is used to get input from a gamepad.
 
 == Settings
 
+include::setting_device.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
-
-=== Inputs

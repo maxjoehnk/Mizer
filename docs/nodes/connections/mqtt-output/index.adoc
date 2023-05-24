@@ -9,7 +9,9 @@ MQTT Output node allows you to send messages to a MQTT connection.
 
 == Settings
 
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_path.adoc[leveloffset=+2]
+include::setting_retain.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
-
-=== Inputs

@@ -1,0 +1,15 @@
+= Color Balance
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/video/color-balance/images/node.png[Node Preview,300]
+
+Control the Brightness, Contrast, Saturation, and Hue of the input image.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

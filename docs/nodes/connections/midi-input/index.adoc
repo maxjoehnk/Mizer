@@ -9,7 +9,7 @@ Midi Input is a node that receives midi messages from a midi device.
 
 == Settings
 
+include::setting_device.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
-
-=== Inputs

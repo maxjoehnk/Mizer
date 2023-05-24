@@ -1,2 +1,5 @@
 = Conversions
+ifndef::imagesdir[:imagesdir: ../../]
 
+include::data-to-number/index.adoc[leveloffset=+1]
+include::number-to-data/index.adoc[leveloffset=+1]

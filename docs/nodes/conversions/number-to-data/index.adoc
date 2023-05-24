@@ -1,0 +1,15 @@
+= Number to Data
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/conversions/number-to-data/images/node.png[Node Preview,300]
+
+Converts a number to a data type.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

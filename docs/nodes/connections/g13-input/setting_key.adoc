@@ -1,0 +1,3 @@
+= Key
+
+Select the Key or Joystick Axis for which this node should output the value.

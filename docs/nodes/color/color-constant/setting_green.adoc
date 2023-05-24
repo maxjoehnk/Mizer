@@ -1,0 +1,3 @@
+= Green
+
+When Mode is *RGB* controls the Green channel of the output color.

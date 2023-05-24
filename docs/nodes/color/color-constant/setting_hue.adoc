@@ -1,0 +1,3 @@
+= Hue
+
+When Mode is *HSV* controls the Hue channel of the output color.

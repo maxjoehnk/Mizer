@@ -1,0 +1,15 @@
+= Value
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/data/value/images/node.png[Node Preview,300]
+
+Outputs a constant data value.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

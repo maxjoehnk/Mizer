@@ -9,6 +9,14 @@ Outputs a constant color.
 
 == Settings
 
+include::setting_mode.adoc[leveloffset=+2]
+include::setting_red.adoc[leveloffset=+2]
+include::setting_green.adoc[leveloffset=+2]
+include::setting_blue.adoc[leveloffset=+2]
+include::setting_hue.adoc[leveloffset=+2]
+include::setting_saturation.adoc[leveloffset=+2]
+include::setting_value.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
 

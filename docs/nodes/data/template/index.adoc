@@ -1,0 +1,15 @@
+= Template
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/data/template/images/node.png[Node Preview,300]
+
+Combines multiple data inputs to a single output.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

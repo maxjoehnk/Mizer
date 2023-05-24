@@ -1,0 +1,3 @@
+= Red
+
+When Mode is *RGB* controls the Red channel of the output color.

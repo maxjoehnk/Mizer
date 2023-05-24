@@ -1,2 +1,8 @@
 = Video
+ifndef::imagesdir[:imagesdir: ../../]
 
+include::color-balance/index.adoc[leveloffset=+1]
+include::effect/index.adoc[leveloffset=+1]
+include::file/index.adoc[leveloffset=+1]
+include::output/index.adoc[leveloffset=+1]
+include::transform/index.adoc[leveloffset=+1]

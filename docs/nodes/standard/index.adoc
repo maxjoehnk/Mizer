@@ -1,0 +1,4 @@
+= Standard
+ifndef::imagesdir[:imagesdir: ../../]
+
+include::oscillator/index.adoc[leveloffset=+1]

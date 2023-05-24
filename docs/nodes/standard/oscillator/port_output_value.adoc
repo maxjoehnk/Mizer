@@ -1,0 +1,3 @@
+= Value
+
+The current output value of the oscillator.

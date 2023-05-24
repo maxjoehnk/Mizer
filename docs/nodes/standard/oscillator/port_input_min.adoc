@@ -1,0 +1,3 @@
+= Min
+
+Specifies the lowest value the oscillator reaches overwriting the corresponding setting.

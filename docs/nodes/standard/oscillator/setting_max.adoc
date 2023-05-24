@@ -1,0 +1,5 @@
+= Max
+
+Specifies the highest value the oscillator reaches.
+
+Default: 1.0

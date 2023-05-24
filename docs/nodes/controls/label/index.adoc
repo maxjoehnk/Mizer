@@ -1,0 +1,12 @@
+= LabelNode
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/controls/label/images/node.png[Node Preview,300]
+
+The LabelNode corresponds to a label control in the <<Layout View>>.
+
+== Settings
+
+include::setting_text.adoc[leveloffset=+2]

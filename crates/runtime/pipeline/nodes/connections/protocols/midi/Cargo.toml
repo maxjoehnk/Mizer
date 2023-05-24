@@ -12,5 +12,5 @@ mizer-node = { path = "../../../../node" }
 mizer-protocol-midi = { path = "../../../../../../components/connections/protocols/midi" }
 mizer-util = { path = "../../../../../../util" }
 mizer-message-bus = { path = "../../../../../../util/bus" }
-enum-iterator = "1.2"
+enum-iterator = "1.4"
 num_enum = "0.6"

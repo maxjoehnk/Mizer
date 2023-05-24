@@ -11,5 +11,5 @@ mizer-node = { path = "../../../../node" }
 mizer-protocol-osc = { path = "../../../../../../components/connections/protocols/osc" }
 log = "0.4"
 mizer-util = { path = "../../../../../../util" }
-enum-iterator = "1.2"
+enum-iterator = "1.4"
 num_enum = "0.6"

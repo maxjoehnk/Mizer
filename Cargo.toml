@@ -158,7 +158,7 @@ sentry-tracing = "0.31"
 
 [dev-dependencies]
 test-case = "3.1"
-criterion = { version = "0.4", features = ["html_reports"] }
+criterion = { version = "0.5", features = ["html_reports"] }
 
 [[bench]]
 name = "dmx_pixel_pushing"

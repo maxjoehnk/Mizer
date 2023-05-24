@@ -1,9 +1,5 @@
 #[cfg(feature = "compile")]
-use egui::{
-    CentralPanel, CollapsingHeader, ColorImage, Response, ScrollArea, TextureHandle, Ui, WidgetText,
-};
-#[cfg(feature = "compile")]
-use egui_dock::TabViewer;
+use egui::{CentralPanel, CollapsingHeader, ColorImage, Response, ScrollArea, TextureHandle, Ui};
 #[cfg(feature = "compile")]
 use std::collections::HashMap;
 
@@ -190,18 +186,5 @@ impl DebugUiResponse {
     #[cfg(not(feature = "compile"))]
     pub fn clicked(&self) -> bool {
         false
-    }
-}
-
-struct DebugUiTabs {}
-
-#[cfg(feature = "compile")]
-impl TabViewer for DebugUiTabs {
-    type Tab = String;
-
-    fn ui(&mut self, _ui: &mut Ui, _tab: &mut Self::Tab) {}
-
-    fn title(&mut self, tab: &mut Self::Tab) -> WidgetText {
-        (&*tab).into()
     }
 }

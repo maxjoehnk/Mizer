@@ -29,7 +29,7 @@ impl DebugUi {
         window.set_title("Mizer Debug UI");
         let context = Context::default();
 
-        let mut painter = Painter::new(WgpuConfiguration::default(), 1, 0, false);
+        let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
         futures::executor::block_on(unsafe { painter.set_window(Some(&window)) })?;
 
         Ok(DebugUi {
@@ -110,6 +110,7 @@ impl DebugUi {
                 [0., 0., 0., 1.],
                 &clipped_primitives,
                 &output.textures_delta,
+                false,
             );
         }
     }

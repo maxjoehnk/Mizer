@@ -1,0 +1,15 @@
+= MIDI Input
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/midi-input/images/node.png[Node Preview,300]
+
+Midi Input is a node that receives midi messages from a midi device.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

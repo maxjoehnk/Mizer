@@ -1,4 +1,4 @@
-= OscillatorNode
+= Oscillator
 :toc:
 :toclevels: 3
 ifndef::imagesdir[:imagesdir: ../../../]

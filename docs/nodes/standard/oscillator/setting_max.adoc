@@ -2,4 +2,4 @@
 
 Specifies the highest value the oscillator reaches.
 
-Default: 1.0
+*Default*: 1.0

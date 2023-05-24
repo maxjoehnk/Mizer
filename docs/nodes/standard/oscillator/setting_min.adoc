@@ -2,4 +2,4 @@
 
 Specifies the lowest value the oscillator reaches.
 
-Default: 0.0
+*Default*: 0.0

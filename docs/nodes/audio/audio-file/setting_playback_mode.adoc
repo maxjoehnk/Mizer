@@ -1,0 +1,14 @@
+= Playback Mode
+
+Controls how the audio file is played back.
+
+*Default*: One Shot
+
+== One Shot
+The audio file will play once and stop.
+
+== Loop
+The audio file will play continuously until the audio file is stopped.
+
+== Ping Pong
+The audio file will play continuously until the audio file is stopped. When the audio file reaches the end, it will play in reverse until it reaches the beginning, and then play forward again.

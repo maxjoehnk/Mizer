@@ -1,0 +1,15 @@
+= MIDI Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/midi-output/images/node.png[Node Preview,300]
+
+Midi Output is a node that sends midi messages to a midi device.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

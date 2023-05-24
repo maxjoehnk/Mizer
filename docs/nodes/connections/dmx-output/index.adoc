@@ -1,0 +1,15 @@
+= DMX Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/dmx-output/images/node.png[Node Preview,300]
+
+DMX Output sends one channel of DMX data to a DMX connection.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

@@ -1,0 +1,15 @@
+= HSV Mixer
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/color/hsv-mixer/images/node.png[Node Preview,300]
+
+Creates a color by mixing hue, saturation and value.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

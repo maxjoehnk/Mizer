@@ -1,0 +1,15 @@
+= OSC Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/osc-output/images/node.png[Node Preview,300]
+
+OSC Output node sends OSC messages on the specified path to an OSC connection.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

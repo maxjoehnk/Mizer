@@ -1,0 +1,15 @@
+= G13 Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/g13-output/images/node.png[Node Preview,300]
+
+G13 Output is a node that allows you to control the Logitech G13 key colors.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

@@ -2,7 +2,7 @@ name: Deploy docs to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "docs"]
   workflow_dispatch:
 
 permissions:

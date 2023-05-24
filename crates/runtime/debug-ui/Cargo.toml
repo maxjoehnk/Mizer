@@ -9,7 +9,7 @@ compile = ["egui", "egui-winit", "egui-wgpu", "egui_dock", "winit", "image"]
 
 [dependencies]
 anyhow = "1"
-egui = { version = "0.21", optional = true }
+egui = { version = "0.22", optional = true }
 egui-winit = { version = "0.21", optional = true }
 egui-wgpu = { version = "0.21", features = ["winit"], optional = true }
 egui_dock = { version = "0.5", optional = true }

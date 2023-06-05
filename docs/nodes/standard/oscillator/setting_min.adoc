@@ -1,0 +1,5 @@
+= Min
+
+Specifies the lowest value the oscillator reaches.
+
+*Default*: 0.0

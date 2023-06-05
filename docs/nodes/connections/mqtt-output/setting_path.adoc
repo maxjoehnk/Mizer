@@ -1,0 +1,3 @@
+= Path
+
+Configure the MQTT path to send values to.

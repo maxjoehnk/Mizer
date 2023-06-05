@@ -1,0 +1,13 @@
+= Audio Volume
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/audio/audio-volume/images/node.png[Node Preview,300]
+
+Controls the volume of an audio signal.
+
+== Ports
+=== Outputs
+
+=== Inputs

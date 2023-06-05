@@ -1,0 +1,16 @@
+= MQTT Input
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/mqtt-input/images/node.png[Node Preview,300]
+
+MQTT Input node subscribes to a topic on a MQTT connection and outputs the received messages.
+
+== Settings
+
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_path.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs

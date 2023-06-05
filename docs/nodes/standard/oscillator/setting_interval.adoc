@@ -1,0 +1,3 @@
+= Interval
+
+*Default*: 1.0

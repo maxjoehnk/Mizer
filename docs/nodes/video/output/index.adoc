@@ -1,0 +1,15 @@
+= Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/video/output/images/node.png[Node Preview,300]
+
+Outputs the video stream to a new window.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

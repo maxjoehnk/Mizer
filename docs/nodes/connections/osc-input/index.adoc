@@ -1,0 +1,15 @@
+= OSC Input
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/osc-input/images/node.png[Node Preview,300]
+
+OSC Input node receives OSC messages with the specified path on an OSC connection.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

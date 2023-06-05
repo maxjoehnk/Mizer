@@ -1,0 +1,15 @@
+= OPC Output
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/pixel/opc-output/images/node.png[Node Preview,300]
+
+Sends pixel data to an http://openpixelcontrol.org/[Open Pixel Control] server.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

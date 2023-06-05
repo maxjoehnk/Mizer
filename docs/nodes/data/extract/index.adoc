@@ -1,0 +1,15 @@
+= Extract
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/data/extract/images/node.png[Node Preview,300]
+
+Extracts a value from an object or array.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

@@ -1,0 +1,3 @@
+= Max
+
+Specifies the highest value the oscillator reaches overwriting the corresponding setting.

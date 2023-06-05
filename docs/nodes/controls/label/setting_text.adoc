@@ -1,0 +1,3 @@
+= Text
+
+Controls the text which should be displayed in the label control in the Layout View.

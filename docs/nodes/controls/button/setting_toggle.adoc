@@ -1,0 +1,5 @@
+= Toggle
+
+When checked this button will toggle between `on` and `off` everytime the `Input` port rises.
+
+Default: `off`

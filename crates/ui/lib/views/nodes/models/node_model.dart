@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
+import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 
 enum NodeTab {
   Ports,
@@ -11,7 +12,7 @@ enum NodeTab {
 
 class NodeModel extends ChangeNotifier {
   final Node node;
-  final GlobalKey key;
+  final GlobalKey<BaseNodeState> key;
   final List<PortModel> ports = [];
   NodeTab tab = NodeTab.Ports;
   Offset offset = Offset.infinite;
@@ -25,7 +26,7 @@ class NodeModel extends ChangeNotifier {
     }
   }
 
-  NodeModel updateNode(Node node, GlobalKey key) {
+  NodeModel updateNode(Node node, GlobalKey<BaseNodeState> key) {
     var next = NodeModel(key: key, node: node);
     next.tab = this.tab;
     next.offset = this.offset;

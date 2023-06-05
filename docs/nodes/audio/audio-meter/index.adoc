@@ -1,0 +1,13 @@
+= Audio Meter
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/audio/audio-meter/images/node.png[Node Preview,300]
+
+Measures the audio level of the input signal.
+
+== Ports
+=== Outputs
+
+=== Inputs

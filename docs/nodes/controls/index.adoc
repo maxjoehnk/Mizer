@@ -1,0 +1,6 @@
+= Controls
+ifndef::imagesdir[:imagesdir: ../../]
+
+include::button/index.adoc[leveloffset=+1]
+include::fader/index.adoc[leveloffset=+1]
+include::label/index.adoc[leveloffset=+1]

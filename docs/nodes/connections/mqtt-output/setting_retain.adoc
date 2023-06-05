@@ -1,0 +1,3 @@
+= Retain
+
+When turned on sets the _retain_ flag on the mqtt messages, causing mqtt clients which connect after a message got sent to still receive the message.

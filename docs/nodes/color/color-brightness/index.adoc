@@ -1,0 +1,15 @@
+= Color Brightness
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/color/color-brightness/images/node.png[Node Preview,300]
+
+Control the brightness of the input color.
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

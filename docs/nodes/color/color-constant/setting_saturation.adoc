@@ -1,0 +1,3 @@
+= Saturation
+
+When Mode is *HSV* controls the Saturation channel of the output color.

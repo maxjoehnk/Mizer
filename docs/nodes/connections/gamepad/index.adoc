@@ -1,0 +1,15 @@
+= Gamepad
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/gamepad/images/node.png[Node Preview,300]
+
+Gamepad node is used to get input from a gamepad.
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs

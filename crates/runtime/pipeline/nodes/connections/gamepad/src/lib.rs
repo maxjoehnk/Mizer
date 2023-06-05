@@ -56,8 +56,9 @@ impl ConfigurableNode for GamepadNode {
 impl PipelineNode for GamepadNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(GamepadNode).into(),
+            name: "Gamepad".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Connections,
         }
     }
 

@@ -45,8 +45,9 @@ impl ConfigurableNode for NoiseNode {
 impl PipelineNode for NoiseNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(NoiseNode).into(),
+            name: "Noise".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

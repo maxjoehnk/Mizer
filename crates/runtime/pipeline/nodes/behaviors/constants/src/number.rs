@@ -26,8 +26,9 @@ impl ConfigurableNode for ConstantNumberNode {
 impl PipelineNode for ConstantNumberNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(NumberConstantNode).into(),
+            name: "Constant Number".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

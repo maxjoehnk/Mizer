@@ -22,8 +22,9 @@ impl ConfigurableNode for PresetNode {}
 impl PipelineNode for PresetNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(PresetNode).into(),
+            name: "Preset".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

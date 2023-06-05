@@ -13,8 +13,9 @@ impl ConfigurableNode for ProgrammerNode {}
 impl PipelineNode for ProgrammerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ProgrammerNode).into(),
+            name: "Programmer".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

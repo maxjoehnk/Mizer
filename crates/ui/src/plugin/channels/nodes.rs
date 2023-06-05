@@ -32,6 +32,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
 
                 resp.respond_msg(response);
             }
+            "getAvailableNodes" => {
+                let response = self.handler.get_available_nodes();
+
+                resp.respond_msg(response);
+            }
             "linkNodes" => match call.arguments() {
                 Ok(args) => match self.handler.add_link(args) {
                     Ok(()) => resp.send_ok(Value::Null),

@@ -40,8 +40,9 @@ impl ConfigurableNode for ClockNode {
 impl PipelineNode for ClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ClockNode).into(),
+            name: "Clock".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Standard,
         }
     }
 

@@ -36,8 +36,9 @@ impl ConfigurableNode for G13OutputNode {
 impl PipelineNode for G13OutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(G13OutputNode).into(),
+            name: "G13 Output".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Connections,
         }
     }
 

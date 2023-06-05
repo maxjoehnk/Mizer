@@ -14,7 +14,6 @@ import 'package:mizer/extensions/layout_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
-import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
@@ -175,7 +174,7 @@ class _ControlLayoutState extends State<ControlLayout> {
     return BlocBuilder<SequencerBloc, SequencerState>(builder: (context, sequences) {
       return BlocBuilder<PresetsBloc, PresetsState>(
         builder: (context, presets) {
-          return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
+          return BlocBuilder<NodesBloc, PipelineState>(builder: (context, nodes) {
             return Container(
               width: 20 * MULTIPLIER,
               height: 15 * MULTIPLIER,

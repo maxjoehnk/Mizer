@@ -62,8 +62,9 @@ impl ConfigurableNode for OscOutputNode {
 impl PipelineNode for OscOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(OscOutputNode).into(),
+            name: "OSC Output".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Connections,
         }
     }
 

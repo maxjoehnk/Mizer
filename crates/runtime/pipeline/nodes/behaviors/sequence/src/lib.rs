@@ -54,8 +54,9 @@ impl ConfigurableNode for SequenceNode {}
 impl PipelineNode for SequenceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(SequenceNode).into(),
+            name: "Sequence".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

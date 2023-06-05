@@ -42,8 +42,9 @@ impl ConfigurableNode for G13InputNode {
 impl PipelineNode for G13InputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(G13InputNode).into(),
+            name: "G13 Input".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Connections,
         }
     }
 

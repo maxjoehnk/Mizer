@@ -129,7 +129,8 @@ class BaseNodeState extends State<BaseNode> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      NodeHeader(this.node.path, this.node.type, collapsed: widget.collapsed),
+                      NodeHeader(this.node.path, this.node.details.category,
+                          collapsed: widget.collapsed),
                       if (!widget.collapsed)
                         Stack(children: [
                           _portsView(),

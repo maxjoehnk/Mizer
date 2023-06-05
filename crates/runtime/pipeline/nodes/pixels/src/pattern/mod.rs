@@ -39,8 +39,9 @@ impl ConfigurableNode for PixelPatternGeneratorNode {
 impl PipelineNode for PixelPatternGeneratorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(PixelPatternGeneratorNode).into(),
+            name: "Pattern Generator".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Pixel,
         }
     }
 

@@ -54,8 +54,9 @@ impl ConfigurableNode for OscInputNode {
 impl PipelineNode for OscInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(OscInputNode).into(),
+            name: "OSC Input".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Connections,
         }
     }
 

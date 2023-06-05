@@ -50,8 +50,9 @@ impl ConfigurableNode for GroupNode {
 impl PipelineNode for GroupNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(GroupNode).into(),
+            name: "Group".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

@@ -36,8 +36,9 @@ impl ConfigurableNode for TimecodeOutputNode {
 impl PipelineNode for TimecodeOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(TimecodeOutputNode).into(),
+            name: "Timecode Output".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

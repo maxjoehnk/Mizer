@@ -39,8 +39,9 @@ impl ConfigurableNode for TimecodeControlNode {
 impl PipelineNode for TimecodeControlNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(TimecodeControlNode).into(),
+            name: "Timecode Control".into(),
             preview_type: PreviewType::Timecode,
+            category: NodeCategory::Standard,
         }
     }
 

@@ -17,8 +17,9 @@ impl ConfigurableNode for AudioOutputNode {}
 impl PipelineNode for AudioOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(AudioOutputNode).to_string(),
+            name: "Audio Output".to_string(),
             preview_type: PreviewType::Waveform,
+            category: NodeCategory::Audio,
         }
     }
 

@@ -14,8 +14,9 @@ impl ConfigurableNode for ColorBrightnessNode {}
 impl PipelineNode for ColorBrightnessNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ColorBrightnessNode).into(),
+            name: "Color Brightness".into(),
             preview_type: PreviewType::Color,
+            category: NodeCategory::Color,
         }
     }
 

@@ -25,8 +25,9 @@ impl ConfigurableNode for VideoFileNode {}
 impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(VideoFileNode).into(),
+            name: "Video File".into(),
             preview_type: PreviewType::Texture,
+            category: NodeCategory::Video,
         }
     }
 

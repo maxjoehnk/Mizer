@@ -35,8 +35,9 @@ impl ConfigurableNode for ValueNode {
 impl PipelineNode for ValueNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ValueNode).into(),
+            name: "Value".into(),
             preview_type: PreviewType::Data,
+            category: NodeCategory::Data,
         }
     }
 

@@ -32,8 +32,9 @@ impl ConfigurableNode for MathNode {
 impl PipelineNode for MathNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(MathNode).into(),
+            name: "Math".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

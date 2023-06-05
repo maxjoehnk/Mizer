@@ -9,6 +9,39 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class NodeCategory extends $pb.ProtobufEnum {
+  static const NodeCategory NODE_CATEGORY_NONE = NodeCategory._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_NONE');
+  static const NodeCategory NODE_CATEGORY_STANDARD = NodeCategory._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_STANDARD');
+  static const NodeCategory NODE_CATEGORY_CONNECTIONS = NodeCategory._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONNECTIONS');
+  static const NodeCategory NODE_CATEGORY_CONVERSIONS = NodeCategory._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONVERSIONS');
+  static const NodeCategory NODE_CATEGORY_CONTROLS = NodeCategory._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONTROLS');
+  static const NodeCategory NODE_CATEGORY_DATA = NodeCategory._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_DATA');
+  static const NodeCategory NODE_CATEGORY_COLOR = NodeCategory._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_COLOR');
+  static const NodeCategory NODE_CATEGORY_AUDIO = NodeCategory._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_AUDIO');
+  static const NodeCategory NODE_CATEGORY_VIDEO = NodeCategory._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_VIDEO');
+  static const NodeCategory NODE_CATEGORY_LASER = NodeCategory._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_LASER');
+  static const NodeCategory NODE_CATEGORY_PIXEL = NodeCategory._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_PIXEL');
+
+  static const $core.List<NodeCategory> values = <NodeCategory> [
+    NODE_CATEGORY_NONE,
+    NODE_CATEGORY_STANDARD,
+    NODE_CATEGORY_CONNECTIONS,
+    NODE_CATEGORY_CONVERSIONS,
+    NODE_CATEGORY_CONTROLS,
+    NODE_CATEGORY_DATA,
+    NODE_CATEGORY_COLOR,
+    NODE_CATEGORY_AUDIO,
+    NODE_CATEGORY_VIDEO,
+    NODE_CATEGORY_LASER,
+    NODE_CATEGORY_PIXEL,
+  ];
+
+  static final $core.Map<$core.int, NodeCategory> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static NodeCategory? valueOf($core.int value) => _byValue[value];
+
+  const NodeCategory._($core.int v, $core.String n) : super(v, n);
+}
+
 class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol SINGLE = ChannelProtocol._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SINGLE');
   static const ChannelProtocol MULTI = ChannelProtocol._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTI');

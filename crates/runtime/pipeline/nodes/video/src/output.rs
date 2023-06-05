@@ -28,8 +28,9 @@ impl ConfigurableNode for VideoOutputNode {}
 impl PipelineNode for VideoOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(VideoOutputNode).into(),
+            name: "Video Output".into(),
             preview_type: PreviewType::Texture,
+            category: NodeCategory::Video,
         }
     }
 

@@ -138,8 +138,9 @@ impl ConfigurableNode for MidiOutputNode {
 impl PipelineNode for MidiOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(MidiOutputNode).into(),
+            name: "MIDI Output".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Connections,
         }
     }
 

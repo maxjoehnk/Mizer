@@ -8,6 +8,26 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use nodeCategoryDescriptor instead')
+const NodeCategory$json = const {
+  '1': 'NodeCategory',
+  '2': const [
+    const {'1': 'NODE_CATEGORY_NONE', '2': 0},
+    const {'1': 'NODE_CATEGORY_STANDARD', '2': 1},
+    const {'1': 'NODE_CATEGORY_CONNECTIONS', '2': 2},
+    const {'1': 'NODE_CATEGORY_CONVERSIONS', '2': 3},
+    const {'1': 'NODE_CATEGORY_CONTROLS', '2': 4},
+    const {'1': 'NODE_CATEGORY_DATA', '2': 5},
+    const {'1': 'NODE_CATEGORY_COLOR', '2': 6},
+    const {'1': 'NODE_CATEGORY_AUDIO', '2': 7},
+    const {'1': 'NODE_CATEGORY_VIDEO', '2': 8},
+    const {'1': 'NODE_CATEGORY_LASER', '2': 9},
+    const {'1': 'NODE_CATEGORY_PIXEL', '2': 10},
+  ],
+};
+
+/// Descriptor for `NodeCategory`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List nodeCategoryDescriptor = $convert.base64Decode('CgxOb2RlQ2F0ZWdvcnkSFgoSTk9ERV9DQVRFR09SWV9OT05FEAASGgoWTk9ERV9DQVRFR09SWV9TVEFOREFSRBABEh0KGU5PREVfQ0FURUdPUllfQ09OTkVDVElPTlMQAhIdChlOT0RFX0NBVEVHT1JZX0NPTlZFUlNJT05TEAMSGgoWTk9ERV9DQVRFR09SWV9DT05UUk9MUxAEEhYKEk5PREVfQ0FURUdPUllfREFUQRAFEhcKE05PREVfQ0FURUdPUllfQ09MT1IQBhIXChNOT0RFX0NBVEVHT1JZX0FVRElPEAcSFwoTTk9ERV9DQVRFR09SWV9WSURFTxAIEhcKE05PREVfQ0FURUdPUllfTEFTRVIQCRIXChNOT0RFX0NBVEVHT1JZX1BJWEVMEAo=');
 @$core.Deprecated('Use channelProtocolDescriptor instead')
 const ChannelProtocol$json = const {
   '1': 'ChannelProtocol',
@@ -219,6 +239,28 @@ const Nodes$json = const {
 
 /// Descriptor for `Nodes`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxInCgVub2RlcxgBIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSBW5vZGVzEjcKCGNoYW5uZWxzGAIgAygLMhsubWl6ZXIubm9kZXMuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxzEi4KCWFsbF9ub2RlcxgDIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSCGFsbE5vZGVz');
+@$core.Deprecated('Use availableNodesDescriptor instead')
+const AvailableNodes$json = const {
+  '1': 'AvailableNodes',
+  '2': const [
+    const {'1': 'nodes', '3': 1, '4': 3, '5': 11, '6': '.mizer.nodes.AvailableNode', '10': 'nodes'},
+  ],
+};
+
+/// Descriptor for `AvailableNodes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List availableNodesDescriptor = $convert.base64Decode('Cg5BdmFpbGFibGVOb2RlcxIwCgVub2RlcxgBIAMoCzIaLm1pemVyLm5vZGVzLkF2YWlsYWJsZU5vZGVSBW5vZGVz');
+@$core.Deprecated('Use availableNodeDescriptor instead')
+const AvailableNode$json = const {
+  '1': 'AvailableNode',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'type'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
+  ],
+};
+
+/// Descriptor for `AvailableNode`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List availableNodeDescriptor = $convert.base64Decode('Cg1BdmFpbGFibGVOb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeXBlUgR0eXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIY2F0ZWdvcnkYAyABKA4yGS5taXplci5ub2Rlcy5Ob2RlQ2F0ZWdvcnlSCGNhdGVnb3J5');
 @$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = const {
   '1': 'NodeConnection',
@@ -245,6 +287,7 @@ const Node$json = const {
     const {'1': 'preview', '3': 6, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodePreviewType', '10': 'preview'},
     const {'1': 'config', '3': 7, '4': 1, '5': 11, '6': '.mizer.nodes.NodeConfig', '10': 'config'},
     const {'1': 'settings', '3': 8, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSetting', '10': 'settings'},
+    const {'1': 'details', '3': 9, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDetails', '10': 'details'},
   ],
   '4': const [Node_NodeType$json, Node_NodePreviewType$json],
 };
@@ -335,7 +378,18 @@ const Node_NodePreviewType$json = const {
 };
 
 /// Descriptor for `Node`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode('CgROb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeXBlUgR0eXBlEhIKBHBhdGgYAiABKAlSBHBhdGgSKQoGaW5wdXRzGAMgAygLMhEubWl6ZXIubm9kZXMuUG9ydFIGaW5wdXRzEisKB291dHB1dHMYBCADKAsyES5taXplci5ub2Rlcy5Qb3J0UgdvdXRwdXRzEjUKCGRlc2lnbmVyGAUgASgLMhkubWl6ZXIubm9kZXMuTm9kZURlc2lnbmVyUghkZXNpZ25lchI7CgdwcmV2aWV3GAYgASgOMiEubWl6ZXIubm9kZXMuTm9kZS5Ob2RlUHJldmlld1R5cGVSB3ByZXZpZXcSLwoGY29uZmlnGAcgASgLMhcubWl6ZXIubm9kZXMuTm9kZUNvbmZpZ1IGY29uZmlnEjQKCHNldHRpbmdzGAggAygLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSCHNldHRpbmdzItYHCghOb2RlVHlwZRIJCgVGQURFUhAAEgoKBkJVVFRPThABEg4KCk9TQ0lMTEFUT1IQAhIJCgVDTE9DSxADEgoKBlNDUklQVBAEEgwKCEVOVkVMT1BFEAUSDAoIU0VRVUVOQ0UQBhIKCgZTRUxFQ1QQBxIJCgVNRVJHRRAIEg0KCVRIUkVTSE9MRBAJEg4KCkRNWF9PVVRQVVQQChINCglPU0NfSU5QVVQQCxIOCgpPU0NfT1VUUFVUEAwSDgoKTUlESV9JTlBVVBANEg8KC01JRElfT1VUUFVUEA4SDQoJU0VRVUVOQ0VSEA8SCwoHRklYVFVSRRAQEg4KClBST0dSQU1NRVIQERIJCgVHUk9VUBASEgoKBlBSRVNFVBATEg4KClZJREVPX0ZJTEUQFBIQCgxWSURFT19PVVRQVVQQFRIQCgxWSURFT19FRkZFQ1QQFhIXChNWSURFT19DT0xPUl9CQUxBTkNFEBcSEwoPVklERU9fVFJBTlNGT1JNEBgSEAoMUElYRUxfVE9fRE1YEB4SEQoNUElYRUxfUEFUVEVSThAfEg4KCk9QQ19PVVRQVVQQIBIJCgVMQVNFUhAoEg0KCUlMREFfRklMRRApEgsKB0dBTUVQQUQQLRINCglDT0xPUl9SR0IQMhINCglDT0xPUl9IU1YQMxISCg5DT0xPUl9DT05TVEFOVBA0EhQKEENPTE9SX0JSSUdIVE5FU1MQNRILCgdFTkNPREVSEDcSCAoETUFUSBA4EhIKDkRBVEFfVE9fTlVNQkVSEDkSEgoOTlVNQkVSX1RPX0RBVEEQOhIJCgVWQUxVRRA7EgsKB0VYVFJBQ1QQPBIOCgpNUVRUX0lOUFVUED0SDwoLTVFUVF9PVVRQVVQQPhIPCgtQTEFOX1NDUkVFThA/EgkKBURFTEFZEEASCAoEUkFNUBBBEgkKBU5PSVNFEEISCQoFTEFCRUwQQxINCglUUkFOU1BPUlQQRBIMCghHMTNJTlBVVBBFEg0KCUcxM09VVFBVVBBGEhMKD0NPTlNUQU5UX05VTUJFUhBHEg8KC0NPTkRJVElPTkFMEEgSFAoQVElNRUNPREVfQ09OVFJPTBBJEhMKD1RJTUVDT0RFX09VVFBVVBBKEg4KCkFVRElPX0ZJTEUQSxIQCgxBVURJT19PVVRQVVQQTBIQCgxBVURJT19WT0xVTUUQTRIPCgtBVURJT19JTlBVVBBOEg0KCUFVRElPX01JWBBPEg8KC0FVRElPX01FVEVSEFASDAoIVEVNUExBVEUQURINCglDT05UQUlORVIQZCJ0Cg9Ob2RlUHJldmlld1R5cGUSCAoETk9ORRAAEgsKB0hJU1RPUlkQARIMCghXQVZFRk9STRACEgwKCE1VTFRJUExFEAMSCwoHVEVYVFVSRRAEEgwKCFRJTUVDT0RFEAUSCAoEREFUQRAGEgkKBUNPTE9SEAc=');
+final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode('CgROb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeXBlUgR0eXBlEhIKBHBhdGgYAiABKAlSBHBhdGgSKQoGaW5wdXRzGAMgAygLMhEubWl6ZXIubm9kZXMuUG9ydFIGaW5wdXRzEisKB291dHB1dHMYBCADKAsyES5taXplci5ub2Rlcy5Qb3J0UgdvdXRwdXRzEjUKCGRlc2lnbmVyGAUgASgLMhkubWl6ZXIubm9kZXMuTm9kZURlc2lnbmVyUghkZXNpZ25lchI7CgdwcmV2aWV3GAYgASgOMiEubWl6ZXIubm9kZXMuTm9kZS5Ob2RlUHJldmlld1R5cGVSB3ByZXZpZXcSLwoGY29uZmlnGAcgASgLMhcubWl6ZXIubm9kZXMuTm9kZUNvbmZpZ1IGY29uZmlnEjQKCHNldHRpbmdzGAggAygLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSCHNldHRpbmdzEjIKB2RldGFpbHMYCSABKAsyGC5taXplci5ub2Rlcy5Ob2RlRGV0YWlsc1IHZGV0YWlscyLWBwoITm9kZVR5cGUSCQoFRkFERVIQABIKCgZCVVRUT04QARIOCgpPU0NJTExBVE9SEAISCQoFQ0xPQ0sQAxIKCgZTQ1JJUFQQBBIMCghFTlZFTE9QRRAFEgwKCFNFUVVFTkNFEAYSCgoGU0VMRUNUEAcSCQoFTUVSR0UQCBINCglUSFJFU0hPTEQQCRIOCgpETVhfT1VUUFVUEAoSDQoJT1NDX0lOUFVUEAsSDgoKT1NDX09VVFBVVBAMEg4KCk1JRElfSU5QVVQQDRIPCgtNSURJX09VVFBVVBAOEg0KCVNFUVVFTkNFUhAPEgsKB0ZJWFRVUkUQEBIOCgpQUk9HUkFNTUVSEBESCQoFR1JPVVAQEhIKCgZQUkVTRVQQExIOCgpWSURFT19GSUxFEBQSEAoMVklERU9fT1VUUFVUEBUSEAoMVklERU9fRUZGRUNUEBYSFwoTVklERU9fQ09MT1JfQkFMQU5DRRAXEhMKD1ZJREVPX1RSQU5TRk9STRAYEhAKDFBJWEVMX1RPX0RNWBAeEhEKDVBJWEVMX1BBVFRFUk4QHxIOCgpPUENfT1VUUFVUECASCQoFTEFTRVIQKBINCglJTERBX0ZJTEUQKRILCgdHQU1FUEFEEC0SDQoJQ09MT1JfUkdCEDISDQoJQ09MT1JfSFNWEDMSEgoOQ09MT1JfQ09OU1RBTlQQNBIUChBDT0xPUl9CUklHSFRORVNTEDUSCwoHRU5DT0RFUhA3EggKBE1BVEgQOBISCg5EQVRBX1RPX05VTUJFUhA5EhIKDk5VTUJFUl9UT19EQVRBEDoSCQoFVkFMVUUQOxILCgdFWFRSQUNUEDwSDgoKTVFUVF9JTlBVVBA9Eg8KC01RVFRfT1VUUFVUED4SDwoLUExBTl9TQ1JFRU4QPxIJCgVERUxBWRBAEggKBFJBTVAQQRIJCgVOT0lTRRBCEgkKBUxBQkVMEEMSDQoJVFJBTlNQT1JUEEQSDAoIRzEzSU5QVVQQRRINCglHMTNPVVRQVVQQRhITCg9DT05TVEFOVF9OVU1CRVIQRxIPCgtDT05ESVRJT05BTBBIEhQKEFRJTUVDT0RFX0NPTlRST0wQSRITCg9USU1FQ09ERV9PVVRQVVQQShIOCgpBVURJT19GSUxFEEsSEAoMQVVESU9fT1VUUFVUEEwSEAoMQVVESU9fVk9MVU1FEE0SDwoLQVVESU9fSU5QVVQQThINCglBVURJT19NSVgQTxIPCgtBVURJT19NRVRFUhBQEgwKCFRFTVBMQVRFEFESDQoJQ09OVEFJTkVSEGQidAoPTm9kZVByZXZpZXdUeXBlEggKBE5PTkUQABILCgdISVNUT1JZEAESDAoIV0FWRUZPUk0QAhIMCghNVUxUSVBMRRADEgsKB1RFWFRVUkUQBBIMCghUSU1FQ09ERRAFEggKBERBVEEQBhIJCgVDT0xPUhAH');
+@$core.Deprecated('Use nodeDetailsDescriptor instead')
+const NodeDetails$json = const {
+  '1': 'NodeDetails',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'category', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
+  ],
+};
+
+/// Descriptor for `NodeDetails`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeDetailsDescriptor = $convert.base64Decode('CgtOb2RlRGV0YWlscxISCgRuYW1lGAEgASgJUgRuYW1lEjUKCGNhdGVnb3J5GAIgASgOMhkubWl6ZXIubm9kZXMuTm9kZUNhdGVnb3J5UghjYXRlZ29yeQ==');
 @$core.Deprecated('Use nodeConfigDescriptor instead')
 const NodeConfig$json = const {
   '1': 'NodeConfig',

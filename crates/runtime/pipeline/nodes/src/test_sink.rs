@@ -20,6 +20,7 @@ impl PipelineNode for TestSink {
         NodeDetails {
             name: stringify!(TestSink).into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

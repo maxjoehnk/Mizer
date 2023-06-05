@@ -1,6 +1,6 @@
 use mizer_node::{
-    ConfigurableNode, NodeContext, NodeDetails, NodePath, NodeType, PipelineNode, PreviewType,
-    ProcessingNode,
+    ConfigurableNode, NodeCategory, NodeContext, NodeDetails, NodePath, NodeType, PipelineNode,
+    PreviewType, ProcessingNode,
 };
 use serde::{Deserialize, Serialize};
 
@@ -14,8 +14,9 @@ impl ConfigurableNode for ContainerNode {}
 impl PipelineNode for ContainerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ContainerNode).into(),
+            name: "Container".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Standard,
         }
     }
 

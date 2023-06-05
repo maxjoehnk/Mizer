@@ -100,8 +100,9 @@ impl ConfigurableNode for ConstantColorNode {
 impl PipelineNode for ConstantColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ConstantColorNode).into(),
+            name: "Color".into(),
             preview_type: PreviewType::Color,
+            category: NodeCategory::Color,
         }
     }
 

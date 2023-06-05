@@ -35,8 +35,9 @@ impl ConfigurableNode for VideoEffectNode {
 impl PipelineNode for VideoEffectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(VideoEffectNode).into(),
+            name: "Effect".into(),
             preview_type: PreviewType::Texture,
+            category: NodeCategory::Video,
         }
     }
 

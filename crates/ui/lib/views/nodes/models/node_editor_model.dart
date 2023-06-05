@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
 import 'node_model.dart';
@@ -21,7 +22,7 @@ class NodeEditorModel extends ChangeNotifier {
   List<NodeModel>? currentNodes;
   List<String> path = [];
 
-  NodeEditorModel(Nodes nodes) {
+  NodeEditorModel(PipelineState nodes) {
     this.refresh(nodes);
     transformationController = TransformationController()..addListener(update);
   }
@@ -46,7 +47,7 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   /// Rebuild the node and port states
-  void refresh(Nodes nodes) {
+  void refresh(PipelineState nodes) {
     this._disposeOldNodes();
     this.rootNodes = nodes.nodes.map(this._createModel).map((nodeModel) {
       nodeModel.addListener(this.update);

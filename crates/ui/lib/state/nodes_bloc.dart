@@ -5,9 +5,38 @@ import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
+class PipelineState {
+  final List<Node> nodes;
+  final List<Node> allNodes;
+  final List<NodeConnection> channels;
+  final List<AvailableNode> availableNodes;
+
+  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes);
+
+  factory PipelineState.empty() {
+    return PipelineState([], [], [], []);
+  }
+
+  PipelineState copyWith({
+    List<Node>? nodes,
+    List<Node>? allNodes,
+    List<NodeConnection>? channels,
+    List<AvailableNode>? availableNodes,
+  }) {
+    return PipelineState(
+      nodes ?? this.nodes,
+      allNodes ?? this.allNodes,
+      channels ?? this.channels,
+      availableNodes ?? this.availableNodes,
+    );
+  }
+}
+
 abstract class NodesEvent {}
 
 class FetchNodes extends NodesEvent {}
+
+class FetchAvailableNodes extends NodesEvent {}
 
 class AddNode extends NodesEvent {
   final Node_NodeType nodeType;
@@ -83,10 +112,7 @@ class RenameNode extends NodesEvent {
   RenameNode(this.node, this.newName);
 
   RenameNodeRequest into() {
-    return RenameNodeRequest(
-      path: node,
-      newName: newName
-    );
+    return RenameNodeRequest(path: node, newName: newName);
   }
 }
 
@@ -109,19 +135,23 @@ class ShowNode extends NodesEvent {
   }
 }
 
-class NodesBloc extends Bloc<NodesEvent, Nodes> {
+class NodesBloc extends Bloc<NodesEvent, PipelineState> {
   final NodesApi api;
 
-  NodesBloc(this.api) : super(Nodes.create()) {
+  NodesBloc(this.api) : super(PipelineState.empty()) {
     on<FetchNodes>((event, emit) async {
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
+    });
+    on<FetchAvailableNodes>((event, emit) async {
+      var availableNodes = await this.api.getAvailableNodes();
+      emit(state.copyWith(availableNodes: availableNodes));
     });
     on<AddNode>((event, emit) async {
       await api.addNode(AddNodeRequest(
           type: event.nodeType,
           position: NodePosition(x: event.position.dx, y: event.position.dy),
           parent: event.parent));
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<LinkNodes>((event, emit) async {
       LinkNodes request = event;
@@ -131,52 +161,64 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
           sourcePort: request.sourcePort,
           targetNode: request.target.node.path,
           targetPort: request.target.port);
-      if (state.channels.any((c) => c.sourcePort.name == connection.sourcePort.name &&
+      if (state.channels.any((c) =>
+          c.sourcePort.name == connection.sourcePort.name &&
           c.sourceNode == connection.sourceNode &&
           c.targetPort.name == connection.targetPort.name &&
           c.targetNode == connection.targetNode)) {
         await api.unlinkNodes(connection);
-      }else {
+      } else {
         await api.linkNodes(connection);
       }
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<MoveNode>((event, emit) async {
       var request = event.into();
       await api.moveNode(request);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<DeleteNode>((event, emit) async {
       await api.deleteNode(event.node);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<HideNode>((event, emit) async {
       await api.hideNode(event.node);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<ShowNode>((event, emit) async {
       var request = event.into();
       await api.showNode(request);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<RenameNode>((event, emit) async {
       var request = event.into();
       await api.renameNode(request);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<DisconnectPorts>((event, emit) async {
       await api.disconnectPorts(event.node);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<DuplicateNode>((event, emit) async {
       await api.duplicateNode(DuplicateNodeRequest(path: event.node, parent: event.parent));
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     on<GroupNodes>((event, emit) async {
       await api.groupNodes(event.nodes, parent: event.parent);
-      emit(await api.getNodes());
+      emit(await _fetchNodes());
     });
     this.add(FetchNodes());
+    this.add(FetchAvailableNodes());
+  }
+
+  Future<PipelineState> _fetchNodes() async {
+    var nodes = await api.getNodes();
+
+    return state.copyWith(
+      nodes: nodes.nodes,
+      channels: nodes.channels,
+      allNodes: nodes.allNodes,
+    );
   }
 
   Node? getNodeByPath(String path) {

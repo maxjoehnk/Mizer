@@ -28,8 +28,9 @@ impl ConfigurableNode for ExtractNode {
 impl PipelineNode for ExtractNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ExtractNode).into(),
+            name: "Extract".into(),
             preview_type: PreviewType::Data,
+            category: NodeCategory::Data,
         }
     }
 

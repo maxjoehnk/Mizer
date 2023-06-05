@@ -66,8 +66,9 @@ impl ConfigurableNode for ThresholdNode {
 impl PipelineNode for ThresholdNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ThresholdNode).into(),
+            name: "Threshold".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

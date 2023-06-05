@@ -37,6 +37,7 @@ pinboard = "2.2"
 regex = "1.8"
 lazy_static = "1.4"
 tracing = "0.1"
+enum-iterator = "1.4"
 
 [build-dependencies]
 protobuf-codegen = "3.2"

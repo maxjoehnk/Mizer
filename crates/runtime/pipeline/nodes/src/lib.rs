@@ -22,7 +22,7 @@ pub use mizer_midi_nodes::{
     MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode,
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
-use mizer_node::{ConfigurableNode, Injector, NodeSetting, NodeType, PipelineNode};
+use mizer_node::{ConfigurableNode, Injector, NodeDetails, NodeSetting, NodeType, PipelineNode};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -95,6 +95,13 @@ macro_rules! node_impl {
                 match self {
                     $(Node::$node_type(node) => node.prepare(injector),)*
                     Node::TestSink(_) => {},
+                }
+            }
+
+            pub fn details(&self) -> NodeDetails {
+                match self {
+                    $(Node::$node_type(node) => node.details(),)*
+                    Node::TestSink(node) => node.details(),
                 }
             }
 

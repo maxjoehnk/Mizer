@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class _NodesViewStateState extends State<NodesViewState> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
+    return BlocBuilder<NodesBloc, PipelineState>(builder: (context, nodes) {
       _updateModel(nodes);
       return SizeChangedLayoutNotifier(
         child: ChangeNotifierProvider<NodeEditorModel>.value(
@@ -29,11 +28,11 @@ class _NodesViewStateState extends State<NodesViewState> {
     });
   }
 
-  _updateModel(Nodes nodes) {
+  _updateModel(PipelineState state) {
     if (model == null) {
-      model = NodeEditorModel(nodes);
+      model = NodeEditorModel(state);
     } else {
-      model!.refresh(nodes);
+      model!.refresh(state);
     }
   }
 }

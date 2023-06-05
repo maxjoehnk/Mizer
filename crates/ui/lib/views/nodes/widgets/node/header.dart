@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import '../../consts.dart';
 
 class NodeHeader extends StatelessWidget {
   final String name;
-  final Node_NodeType type;
+  final NodeCategory category;
   final bool collapsed;
 
-  NodeHeader(this.name, this.type, { this.collapsed = false });
+  NodeHeader(this.name, this.category, {this.collapsed = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,10 @@ class NodeHeader extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-            borderRadius: collapsed ? BorderRadius.circular(INNER_RADIUS) : BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
-        color: getColorForType(type),
+            borderRadius: collapsed
+                ? BorderRadius.circular(INNER_RADIUS)
+                : BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
+        color: CATEGORY_COLORS[category] ?? Colors.black,
       ),
       clipBehavior: Clip.none,
       padding: const EdgeInsets.all(4),

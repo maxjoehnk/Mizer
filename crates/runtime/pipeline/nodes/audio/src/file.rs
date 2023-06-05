@@ -81,8 +81,9 @@ impl ConfigurableNode for AudioFileNode {
 impl PipelineNode for AudioFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(AudioFileNode).to_string(),
+            name: "Audio File".to_string(),
             preview_type: PreviewType::Waveform,
+            category: NodeCategory::Audio,
         }
     }
 

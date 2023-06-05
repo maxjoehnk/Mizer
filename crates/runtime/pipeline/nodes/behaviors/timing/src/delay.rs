@@ -36,8 +36,9 @@ impl ConfigurableNode for DelayNode {
 impl PipelineNode for DelayNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(DelayNode).into(),
+            name: "Delay".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

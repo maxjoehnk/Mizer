@@ -69,8 +69,9 @@ impl ConfigurableNode for PixelDmxNode {
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(PixelDmxNode).into(),
+            name: "Pixel to DMX".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Pixel,
         }
     }
 

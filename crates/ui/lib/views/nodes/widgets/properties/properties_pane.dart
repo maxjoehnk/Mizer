@@ -32,7 +32,7 @@ class NodePropertiesPane extends StatelessWidget {
     List<Widget> widgets = [
       NodeProperties(node: node),
       NodeSettingsPane(
-          title: NODE_LABELS[node.type] ?? "",
+          title: node.details.name,
           type: node.type,
           settings: node.settings,
           onUpdate: (updated) {

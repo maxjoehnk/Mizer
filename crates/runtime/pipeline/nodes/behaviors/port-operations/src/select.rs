@@ -13,8 +13,9 @@ impl ConfigurableNode for SelectNode {}
 impl PipelineNode for SelectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(SelectNode).into(),
+            name: "Select".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

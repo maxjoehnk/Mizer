@@ -48,8 +48,9 @@ impl ConfigurableNode for FixtureNode {
 impl PipelineNode for FixtureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(FixtureNode).into(),
+            name: "Fixture".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

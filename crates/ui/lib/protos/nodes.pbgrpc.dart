@@ -14,6 +14,11 @@ import 'nodes.pb.dart' as $0;
 export 'nodes.pb.dart';
 
 class NodesApiClient extends $grpc.Client {
+  static final _$getAvailableNodes =
+      $grpc.ClientMethod<$0.NodesRequest, $0.AvailableNodes>(
+          '/mizer.nodes.NodesApi/GetAvailableNodes',
+          ($0.NodesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.AvailableNodes.fromBuffer(value));
   static final _$getNodes = $grpc.ClientMethod<$0.NodesRequest, $0.Nodes>(
       '/mizer.nodes.NodesApi/GetNodes',
       ($0.NodesRequest value) => value.writeToBuffer(),
@@ -83,6 +88,12 @@ class NodesApiClient extends $grpc.Client {
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
+
+  $grpc.ResponseFuture<$0.AvailableNodes> getAvailableNodes(
+      $0.NodesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getAvailableNodes, request, options: options);
+  }
 
   $grpc.ResponseFuture<$0.Nodes> getNodes($0.NodesRequest request,
       {$grpc.CallOptions? options}) {
@@ -154,6 +165,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
   $core.String get $name => 'mizer.nodes.NodesApi';
 
   NodesApiServiceBase() {
+    $addMethod($grpc.ServiceMethod<$0.NodesRequest, $0.AvailableNodes>(
+        'GetAvailableNodes',
+        getAvailableNodes_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.NodesRequest.fromBuffer(value),
+        ($0.AvailableNodes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.NodesRequest, $0.Nodes>(
         'GetNodes',
         getNodes_Pre,
@@ -242,6 +260,11 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         ($0.GroupNodesResponse value) => value.writeToBuffer()));
   }
 
+  $async.Future<$0.AvailableNodes> getAvailableNodes_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.NodesRequest> request) async {
+    return getAvailableNodes(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes_Pre(
       $grpc.ServiceCall call, $async.Future<$0.NodesRequest> request) async {
     return getNodes(call, await request);
@@ -302,6 +325,8 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return groupNodes(call, await request);
   }
 
+  $async.Future<$0.AvailableNodes> getAvailableNodes(
+      $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(

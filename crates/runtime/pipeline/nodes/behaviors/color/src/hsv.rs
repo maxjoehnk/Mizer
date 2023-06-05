@@ -16,8 +16,9 @@ impl ConfigurableNode for HsvColorNode {}
 impl PipelineNode for HsvColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(HsvColorNode).into(),
+            name: "HSV Color".into(),
             preview_type: PreviewType::Color,
+            category: NodeCategory::Color,
         }
     }
 

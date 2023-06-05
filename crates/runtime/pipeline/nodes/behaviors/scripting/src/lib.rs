@@ -46,8 +46,9 @@ impl ConfigurableNode for ScriptingNode {
 impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ScriptingNode).into(),
+            name: "Scripting".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::Standard,
         }
     }
 

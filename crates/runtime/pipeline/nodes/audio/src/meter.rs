@@ -12,8 +12,9 @@ impl ConfigurableNode for AudioMeterNode {}
 impl PipelineNode for AudioMeterNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(AudioMeterNode).to_string(),
+            name: "Audio Level".to_string(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Audio,
         }
     }
 

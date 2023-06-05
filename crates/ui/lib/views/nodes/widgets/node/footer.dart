@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -38,7 +37,7 @@ class NodeFooter extends StatelessWidget {
         Spacer(),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(NODE_LABELS[node.type]!, style: textTheme.bodySmall))
+            child: Text(node.details.name, style: textTheme.bodySmall))
       ]),
     );
   }

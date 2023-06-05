@@ -100,6 +100,32 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn get_available_nodes(&self) -> AvailableNodes {
+        let node_types = enum_iterator::all::<NodeType>();
+        let nodes = node_types
+            .into_iter()
+            .filter(|node_type| node_type != &NodeType::TestSink)
+            .map(|node_type| {
+                let node: mizer_nodes::Node = node_type.into();
+                let details = node.details();
+
+                AvailableNode {
+                    name: details.name,
+                    category: EnumOrUnknown::new(details.category.into()),
+                    type_: EnumOrUnknown::new(node_type.into()),
+                    ..Default::default()
+                }
+            })
+            .collect();
+
+        AvailableNodes {
+            nodes,
+            ..Default::default()
+        }
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn get_node(&self, path: String) -> Option<Node> {
         let node = self.runtime.get_node(&NodePath(path))?;
 

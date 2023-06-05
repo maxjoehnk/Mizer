@@ -35,8 +35,9 @@ impl ConfigurableNode for ConditionalNode {
 impl PipelineNode for ConditionalNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(ConditionalNode).into(),
+            name: "Conditional".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

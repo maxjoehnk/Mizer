@@ -13,8 +13,9 @@ impl ConfigurableNode for AudioVolumeNode {}
 impl PipelineNode for AudioVolumeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(AudioVolumeNode).to_string(),
+            name: "Audio Volume".to_string(),
             preview_type: PreviewType::Waveform,
+            category: NodeCategory::Audio,
         }
     }
 

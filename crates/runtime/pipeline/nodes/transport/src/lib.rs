@@ -20,8 +20,9 @@ impl ConfigurableNode for TransportNode {}
 impl PipelineNode for TransportNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(TransportNode).into(),
+            name: "Transport".into(),
             preview_type: PreviewType::None,
+            category: NodeCategory::None,
         }
     }
 

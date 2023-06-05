@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 const double CANVAS_SIZE = 20000;
@@ -45,18 +43,4 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
       log("no color for protocol ${protocol.name}");
       return Colors.blueGrey;
   }
-}
-
-Color getColorForType(Node_NodeType type) {
-  // Special case as these are not creatable
-  if (_GENERATED_TYPES.contains(type)) {
-    return Colors.blueGrey;
-  }
-  var category = NODES.firstWhereOrNull((category) => category.nodes.contains(type));
-  if (category == null) {
-    log("no color for node type ${type.name}");
-    return Colors.green;
-  }
-
-  return category.color;
 }

@@ -1,4 +1,5 @@
 use crate::PreviewType;
+use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 
@@ -6,13 +7,14 @@ use std::hash::{Hash, Hasher};
 pub struct NodeDetails {
     pub name: String,
     pub preview_type: PreviewType,
+    pub category: NodeCategory,
 }
 
 macro_rules! node_type_name {
     (enum $name:ident {
         $($variant:ident),*,
     }) => {
-        #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Hash)]
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Hash, Sequence)]
         #[serde(rename_all = "kebab-case")]
         pub enum $name {
             $($variant),*
@@ -28,6 +30,21 @@ macro_rules! node_type_name {
             }
         }
     }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+pub enum NodeCategory {
+    None,
+    Standard,
+    Connections,
+    Conversions,
+    Controls,
+    Data,
+    Color,
+    Audio,
+    Video,
+    Laser,
+    Pixel,
 }
 
 node_type_name! {

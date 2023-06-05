@@ -56,8 +56,9 @@ impl ConfigurableNode for RampNode {
 impl PipelineNode for RampNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(RampNode).into(),
+            name: "Ramp".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

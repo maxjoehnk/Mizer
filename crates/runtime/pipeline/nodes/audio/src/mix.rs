@@ -12,8 +12,9 @@ impl ConfigurableNode for AudioMixNode {}
 impl PipelineNode for AudioMixNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(AudioMixNode).to_string(),
+            name: "Audio Mixer".to_string(),
             preview_type: PreviewType::Waveform,
+            category: NodeCategory::Audio,
         }
     }
 

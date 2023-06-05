@@ -45,8 +45,9 @@ impl ConfigurableNode for MqttInputNode {
 impl PipelineNode for MqttInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(MqttInputNode).into(),
+            name: "MQTT Input".into(),
             preview_type: PreviewType::Data,
+            category: NodeCategory::Connections,
         }
     }
 

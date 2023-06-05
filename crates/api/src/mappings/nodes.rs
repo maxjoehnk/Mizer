@@ -303,6 +303,11 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
         config: MessageField::some(config),
         designer: MessageField::some(descriptor.designer.into()),
         preview: EnumOrUnknown::new(details.preview_type.into()),
+        details: MessageField::some(NodeDetails {
+            name: details.name,
+            category: EnumOrUnknown::new(details.category.into()),
+            ..Default::default()
+        }),
         ..Default::default()
     };
     let (inputs, outputs) = descriptor
@@ -335,6 +340,11 @@ impl From<StaticNodeDescriptor> for Node {
             config: descriptor.config.try_into().ok().into(),
             designer: MessageField::some(descriptor.designer.into()),
             preview: EnumOrUnknown::new(descriptor.details.preview_type.into()),
+            details: MessageField::some(NodeDetails {
+                name: descriptor.details.name,
+                category: EnumOrUnknown::new(descriptor.details.category.into()),
+                ..Default::default()
+            }),
             ..Default::default()
         };
         let (inputs, outputs) = descriptor
@@ -690,6 +700,26 @@ impl From<PreviewType> for node::NodePreviewType {
             PreviewType::Data => node::NodePreviewType::DATA,
             PreviewType::Color => node::NodePreviewType::COLOR,
             PreviewType::None => node::NodePreviewType::NONE,
+        }
+    }
+}
+
+impl From<mizer_node::NodeCategory> for NodeCategory {
+    fn from(category: mizer_node::NodeCategory) -> Self {
+        use mizer_node::NodeCategory::*;
+
+        match category {
+            None => Self::NODE_CATEGORY_NONE,
+            Standard => Self::NODE_CATEGORY_STANDARD,
+            Connections => Self::NODE_CATEGORY_CONNECTIONS,
+            Conversions => Self::NODE_CATEGORY_CONVERSIONS,
+            Controls => Self::NODE_CATEGORY_CONTROLS,
+            Data => Self::NODE_CATEGORY_DATA,
+            Color => Self::NODE_CATEGORY_COLOR,
+            Audio => Self::NODE_CATEGORY_AUDIO,
+            Video => Self::NODE_CATEGORY_VIDEO,
+            Laser => Self::NODE_CATEGORY_LASER,
+            Pixel => Self::NODE_CATEGORY_PIXEL,
         }
     }
 }

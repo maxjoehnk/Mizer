@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/available_nodes.dart';
@@ -83,10 +84,20 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 children: [
                   GestureDetector(
                       onSecondaryTapUp: (event) {
+                        var availableNodes = context.read<NodesBloc>().state.availableNodes.where(
+                            (element) => element.category != NodeCategory.NODE_CATEGORY_NONE);
+                        var categories =
+                            groupBy(availableNodes, (AvailableNode node) => node.category);
                         Navigator.of(context).push(MizerPopupRoute(
                             position: event.globalPosition,
                             child: PopupMenu<Node_NodeType>(
-                                categories: NODES.map((node) => node.category).toList(),
+                                categories: categories.entries
+                                    .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
+                                    .map((e) => PopupCategory(
+                                        label: CATEGORY_NAMES[e.key]!,
+                                        items:
+                                            e.value.map((n) => PopupItem(n.type, n.name)).toList()))
+                                    .toList(),
                                 onSelect: (nodeType) => _addNode(model, nodeType))));
                         setState(() {
                           addMenuPosition = event.localPosition;
@@ -166,7 +177,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 Flexible(
                     flex: 2,
                     child: Panel(
-                        label: NODE_LABELS[model.selectedNode!.node.type] ?? "",
+                        label: model.selectedNode!.node.details.name,
                         child: NodePropertiesPane(
                             node: model.selectedNode!.node, onUpdate: _refresh))),
             ]),

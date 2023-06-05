@@ -51,8 +51,9 @@ impl ConfigurableNode for EncoderNode {
 impl PipelineNode for EncoderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(EncoderNode).into(),
+            name: "Encoder".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

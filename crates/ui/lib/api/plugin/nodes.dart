@@ -32,6 +32,13 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
+  Future<List<AvailableNode>> getAvailableNodes() async {
+    var response = await channel.invokeMethod("getAvailableNodes");
+
+    return AvailableNodes.fromBuffer(_convertBuffer(response)).nodes;
+  }
+
+  @override
   Future<void> linkNodes(NodeConnection connection) {
     return channel.invokeMethod("linkNodes", connection.writeToBuffer());
   }

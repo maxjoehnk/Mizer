@@ -91,8 +91,9 @@ impl ConfigurableNode for OscillatorNode {
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(OscillatorNode).into(),
+            name: "Oscillator".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

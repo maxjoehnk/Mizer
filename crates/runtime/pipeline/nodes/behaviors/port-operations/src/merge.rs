@@ -30,8 +30,9 @@ impl ConfigurableNode for MergeNode {
 impl PipelineNode for MergeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(MergeNode).into(),
+            name: "Merge".into(),
             preview_type: PreviewType::History,
+            category: NodeCategory::Standard,
         }
     }
 

@@ -3761,6 +3761,7 @@ name = "mizer-api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "enum-iterator",
  "flume",
  "futures",
  "lazy_static",

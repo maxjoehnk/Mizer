@@ -3,6 +3,7 @@ syntax = "proto3";
 package mizer.nodes;
 
 service NodesApi {
+  rpc GetAvailableNodes (NodesRequest) returns (AvailableNodes) {}
   rpc GetNodes (NodesRequest) returns (Nodes) {}
   rpc AddNode (AddNodeRequest) returns (Node) {}
   rpc AddLink (NodeConnection) returns (NodeConnection) {}
@@ -97,6 +98,16 @@ message Nodes {
   repeated NodeConnection channels = 2;
   // Flat list of all nodes
   repeated Node all_nodes = 3;
+}
+
+message AvailableNodes {
+  repeated AvailableNode nodes = 1;
+}
+
+message AvailableNode {
+  Node.NodeType type = 1;
+  string name = 2;
+  NodeCategory category = 3;
 }
 
 message NodeConnection {
@@ -194,6 +205,26 @@ message Node {
   NodePreviewType preview = 6;
   NodeConfig config = 7;
   repeated NodeSetting settings = 8;
+  NodeDetails details = 9;
+}
+
+message NodeDetails {
+  string name = 1;
+  NodeCategory category = 2;
+}
+
+enum NodeCategory {
+  NODE_CATEGORY_NONE = 0;
+  NODE_CATEGORY_STANDARD = 1;
+  NODE_CATEGORY_CONNECTIONS = 2;
+  NODE_CATEGORY_CONVERSIONS = 3;
+  NODE_CATEGORY_CONTROLS = 4;
+  NODE_CATEGORY_DATA = 5;
+  NODE_CATEGORY_COLOR = 6;
+  NODE_CATEGORY_AUDIO = 7;
+  NODE_CATEGORY_VIDEO = 8;
+  NODE_CATEGORY_LASER = 9;
+  NODE_CATEGORY_PIXEL = 10;
 }
 
 message NodeConfig {

@@ -2,6 +2,7 @@ use crate::commands::update_plan;
 use crate::PlanStorage;
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
+use std::mem::swap;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Hash)]
 pub struct RenamePlanCommand {
@@ -11,7 +12,7 @@ pub struct RenamePlanCommand {
 
 impl<'a> Command<'a> for RenamePlanCommand {
     type Dependencies = Ref<PlanStorage>;
-    type State = ();
+    type State = String;
     type Result = ();
 
     fn label(&self) -> String {
@@ -19,17 +20,22 @@ impl<'a> Command<'a> for RenamePlanCommand {
     }
 
     fn apply(&self, plans_access: &PlanStorage) -> anyhow::Result<(Self::Result, Self::State)> {
-        update_plan(plans_access, &self.id, |plan| {
-            plan.name = self.name.clone();
-        });
+        let previous_name = update_plan(plans_access, &self.id, |plan| {
+            let mut name = self.name.clone();
+            swap(&mut plan.name, &mut name);
 
-        Ok(((), ()))
+            Ok(name)
+        })?;
+
+        Ok(((), previous_name))
     }
 
-    fn revert(&self, plans_access: &PlanStorage, _: Self::State) -> anyhow::Result<()> {
+    fn revert(&self, plans_access: &PlanStorage, name: Self::State) -> anyhow::Result<()> {
         update_plan(plans_access, &self.name, |plan| {
-            plan.name = self.id.clone();
-        });
+            plan.name = name;
+
+            Ok(())
+        })?;
 
         Ok(())
     }

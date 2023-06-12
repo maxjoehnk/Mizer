@@ -56,6 +56,35 @@ message MoveFixtureRequest {
   int32 y = 4;
 }
 
+message AddImageRequest {
+  string plan_id = 1;
+  double x = 2;
+  double y = 3;
+  double width = 4;
+  double height = 5;
+  double transparency = 6;
+  bytes data = 7;
+}
+
+message MoveImageRequest {
+  string plan_id = 1;
+  string image_id = 2;
+  double x = 3;
+  double y = 4;
+}
+
+message ResizeImageRequest {
+  string plan_id = 1;
+  string image_id = 2;
+  double width = 3;
+  double height = 4;
+}
+
+message RemoveImageRequest {
+  string plan_id = 1;
+  string image_id = 2;
+}
+
 message Plans {
   repeated Plan plans = 1;
 }
@@ -64,6 +93,7 @@ message Plan {
   string name = 1;
   repeated FixturePosition positions = 2;
   repeated PlanScreen screens = 3;
+  repeated PlanImage images = 4;
 }
 
 message FixturePosition {
@@ -80,4 +110,14 @@ message PlanScreen {
   int32 y = 3;
   uint32 width = 4;
   uint32 height = 5;
+}
+
+message PlanImage {
+  string id = 1;
+  double x = 2;
+  double y = 3;
+  double width = 4;
+  double height = 5;
+  double transparency = 6;
+  bytes data = 7;
 }

@@ -34,7 +34,9 @@ impl<'a> Command<'a> for MoveFixturesInPlanCommand {
                 position.y += self.offset.1;
                 fixtures.insert(position.fixture, (position.x, position.y));
             }
-        });
+
+            Ok(())
+        })?;
 
         Ok(((), fixtures))
     }
@@ -50,7 +52,9 @@ impl<'a> Command<'a> for MoveFixturesInPlanCommand {
                 position.x += offset.0;
                 position.y += offset.1;
             }
-        });
+
+            Ok(())
+        })?;
 
         Ok(())
     }

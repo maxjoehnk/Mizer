@@ -4,6 +4,8 @@ use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureStates;
+use mizer_plan::ImageId;
+use mizer_util::Base64Image;
 
 #[derive(Clone)]
 pub struct PlansHandler<R: RuntimeApi> {
@@ -124,5 +126,58 @@ impl<R: RuntimeApi> PlansHandler<R> {
                 column_gap,
             })
             .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_image(&self, request: AddImageRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(AddPlanImageCommand {
+            plan: request.plan_id,
+            x: request.x,
+            y: request.y,
+            width: request.width,
+            height: request.height,
+            transparency: request.transparency,
+            data: Base64Image::from_buffer(request.data),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn move_image(&self, request: MoveImageRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(MovePlanImageCommand {
+            plan: request.plan_id,
+            image: ImageId::try_from(request.image_id)?,
+            x: request.x,
+            y: request.y,
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn resize_image(&self, request: ResizeImageRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(ResizePlanImageCommand {
+            plan: request.plan_id,
+            image: ImageId::try_from(request.image_id)?,
+            width: request.width,
+            height: request.height,
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn remove_image(&self, request: RemoveImageRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(RemovePlanImageCommand {
+            plan_id: request.plan_id,
+            image_id: ImageId::try_from(request.image_id)?,
+        })?;
+
+        Ok(())
     }
 }

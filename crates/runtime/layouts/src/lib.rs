@@ -2,6 +2,7 @@ use base64::Engine;
 use mizer_fixtures::programmer::PresetId;
 use mizer_fixtures::GroupId;
 use mizer_node::{Color, NodePath};
+use mizer_util::Base64Image;
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
@@ -123,19 +124,4 @@ pub enum SequencerControlClickBehavior {
     #[default]
     GoForward,
     Toggle,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Hash)]
-pub struct Base64Image(String);
-
-impl Base64Image {
-    pub fn from_buffer(buffer: Vec<u8>) -> Self {
-        Self(base64::engine::general_purpose::STANDARD.encode(buffer))
-    }
-
-    pub fn try_to_buffer(&self) -> anyhow::Result<Vec<u8>> {
-        let buffer = base64::engine::general_purpose::STANDARD.decode(&self.0)?;
-
-        Ok(buffer)
-    }
 }

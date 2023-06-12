@@ -30,6 +30,20 @@ impl From<mizer_plan::Plan> for Plan {
                     ..Default::default()
                 })
                 .collect(),
+            images: plan
+                .images
+                .into_iter()
+                .map(|i| PlanImage {
+                    id: i.id.to_string(),
+                    x: i.x,
+                    y: i.y,
+                    width: i.width,
+                    height: i.height,
+                    transparency: i.transparency,
+                    data: i.data.try_to_buffer().unwrap_or_default(),
+                    ..Default::default()
+                })
+                .collect(),
             ..Default::default()
         }
     }

@@ -12,3 +12,4 @@ mizer-node = { path = "../pipeline/node" }
 mizer-fixtures = { path = "../../components/fixtures" }
 pinboard = "2.2"
 base64 = "0.21"
+mizer-util = { path = "../../util" }

@@ -1099,6 +1099,728 @@ impl ::protobuf::reflect::ProtobufValue for MoveFixtureRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.plan.AddImageRequest)
+pub struct AddImageRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.plan_id)
+    pub plan_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.x)
+    pub x: f64,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.y)
+    pub y: f64,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.width)
+    pub width: f64,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.height)
+    pub height: f64,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.transparency)
+    pub transparency: f64,
+    // @@protoc_insertion_point(field:mizer.plan.AddImageRequest.data)
+    pub data: ::std::vec::Vec<u8>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.plan.AddImageRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a AddImageRequest {
+    fn default() -> &'a AddImageRequest {
+        <AddImageRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddImageRequest {
+    pub fn new() -> AddImageRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "plan_id",
+            |m: &AddImageRequest| { &m.plan_id },
+            |m: &mut AddImageRequest| { &mut m.plan_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "x",
+            |m: &AddImageRequest| { &m.x },
+            |m: &mut AddImageRequest| { &mut m.x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "y",
+            |m: &AddImageRequest| { &m.y },
+            |m: &mut AddImageRequest| { &mut m.y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "width",
+            |m: &AddImageRequest| { &m.width },
+            |m: &mut AddImageRequest| { &mut m.width },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "height",
+            |m: &AddImageRequest| { &m.height },
+            |m: &mut AddImageRequest| { &mut m.height },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "transparency",
+            |m: &AddImageRequest| { &m.transparency },
+            |m: &mut AddImageRequest| { &mut m.transparency },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "data",
+            |m: &AddImageRequest| { &m.data },
+            |m: &mut AddImageRequest| { &mut m.data },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddImageRequest>(
+            "AddImageRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for AddImageRequest {
+    const NAME: &'static str = "AddImageRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.plan_id = is.read_string()?;
+                },
+                17 => {
+                    self.x = is.read_double()?;
+                },
+                25 => {
+                    self.y = is.read_double()?;
+                },
+                33 => {
+                    self.width = is.read_double()?;
+                },
+                41 => {
+                    self.height = is.read_double()?;
+                },
+                49 => {
+                    self.transparency = is.read_double()?;
+                },
+                58 => {
+                    self.data = is.read_bytes()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if self.x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.y != 0. {
+            my_size += 1 + 8;
+        }
+        if self.width != 0. {
+            my_size += 1 + 8;
+        }
+        if self.height != 0. {
+            my_size += 1 + 8;
+        }
+        if self.transparency != 0. {
+            my_size += 1 + 8;
+        }
+        if !self.data.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(7, &self.data);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if self.x != 0. {
+            os.write_double(2, self.x)?;
+        }
+        if self.y != 0. {
+            os.write_double(3, self.y)?;
+        }
+        if self.width != 0. {
+            os.write_double(4, self.width)?;
+        }
+        if self.height != 0. {
+            os.write_double(5, self.height)?;
+        }
+        if self.transparency != 0. {
+            os.write_double(6, self.transparency)?;
+        }
+        if !self.data.is_empty() {
+            os.write_bytes(7, &self.data)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> AddImageRequest {
+        AddImageRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.x = 0.;
+        self.y = 0.;
+        self.width = 0.;
+        self.height = 0.;
+        self.transparency = 0.;
+        self.data.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static AddImageRequest {
+        static instance: AddImageRequest = AddImageRequest {
+            plan_id: ::std::string::String::new(),
+            x: 0.,
+            y: 0.,
+            width: 0.,
+            height: 0.,
+            transparency: 0.,
+            data: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for AddImageRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("AddImageRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for AddImageRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddImageRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.plan.MoveImageRequest)
+pub struct MoveImageRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.plan.MoveImageRequest.plan_id)
+    pub plan_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.MoveImageRequest.image_id)
+    pub image_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.MoveImageRequest.x)
+    pub x: f64,
+    // @@protoc_insertion_point(field:mizer.plan.MoveImageRequest.y)
+    pub y: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.plan.MoveImageRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a MoveImageRequest {
+    fn default() -> &'a MoveImageRequest {
+        <MoveImageRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MoveImageRequest {
+    pub fn new() -> MoveImageRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "plan_id",
+            |m: &MoveImageRequest| { &m.plan_id },
+            |m: &mut MoveImageRequest| { &mut m.plan_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "image_id",
+            |m: &MoveImageRequest| { &m.image_id },
+            |m: &mut MoveImageRequest| { &mut m.image_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "x",
+            |m: &MoveImageRequest| { &m.x },
+            |m: &mut MoveImageRequest| { &mut m.x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "y",
+            |m: &MoveImageRequest| { &m.y },
+            |m: &mut MoveImageRequest| { &mut m.y },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MoveImageRequest>(
+            "MoveImageRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for MoveImageRequest {
+    const NAME: &'static str = "MoveImageRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.plan_id = is.read_string()?;
+                },
+                18 => {
+                    self.image_id = is.read_string()?;
+                },
+                25 => {
+                    self.x = is.read_double()?;
+                },
+                33 => {
+                    self.y = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if !self.image_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.image_id);
+        }
+        if self.x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.y != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if !self.image_id.is_empty() {
+            os.write_string(2, &self.image_id)?;
+        }
+        if self.x != 0. {
+            os.write_double(3, self.x)?;
+        }
+        if self.y != 0. {
+            os.write_double(4, self.y)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> MoveImageRequest {
+        MoveImageRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.image_id.clear();
+        self.x = 0.;
+        self.y = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static MoveImageRequest {
+        static instance: MoveImageRequest = MoveImageRequest {
+            plan_id: ::std::string::String::new(),
+            image_id: ::std::string::String::new(),
+            x: 0.,
+            y: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for MoveImageRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("MoveImageRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for MoveImageRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MoveImageRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.plan.ResizeImageRequest)
+pub struct ResizeImageRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.plan.ResizeImageRequest.plan_id)
+    pub plan_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.ResizeImageRequest.image_id)
+    pub image_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.ResizeImageRequest.width)
+    pub width: f64,
+    // @@protoc_insertion_point(field:mizer.plan.ResizeImageRequest.height)
+    pub height: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.plan.ResizeImageRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ResizeImageRequest {
+    fn default() -> &'a ResizeImageRequest {
+        <ResizeImageRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ResizeImageRequest {
+    pub fn new() -> ResizeImageRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "plan_id",
+            |m: &ResizeImageRequest| { &m.plan_id },
+            |m: &mut ResizeImageRequest| { &mut m.plan_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "image_id",
+            |m: &ResizeImageRequest| { &m.image_id },
+            |m: &mut ResizeImageRequest| { &mut m.image_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "width",
+            |m: &ResizeImageRequest| { &m.width },
+            |m: &mut ResizeImageRequest| { &mut m.width },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "height",
+            |m: &ResizeImageRequest| { &m.height },
+            |m: &mut ResizeImageRequest| { &mut m.height },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ResizeImageRequest>(
+            "ResizeImageRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ResizeImageRequest {
+    const NAME: &'static str = "ResizeImageRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.plan_id = is.read_string()?;
+                },
+                18 => {
+                    self.image_id = is.read_string()?;
+                },
+                25 => {
+                    self.width = is.read_double()?;
+                },
+                33 => {
+                    self.height = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if !self.image_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.image_id);
+        }
+        if self.width != 0. {
+            my_size += 1 + 8;
+        }
+        if self.height != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if !self.image_id.is_empty() {
+            os.write_string(2, &self.image_id)?;
+        }
+        if self.width != 0. {
+            os.write_double(3, self.width)?;
+        }
+        if self.height != 0. {
+            os.write_double(4, self.height)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ResizeImageRequest {
+        ResizeImageRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.image_id.clear();
+        self.width = 0.;
+        self.height = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ResizeImageRequest {
+        static instance: ResizeImageRequest = ResizeImageRequest {
+            plan_id: ::std::string::String::new(),
+            image_id: ::std::string::String::new(),
+            width: 0.,
+            height: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ResizeImageRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ResizeImageRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ResizeImageRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ResizeImageRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.plan.RemoveImageRequest)
+pub struct RemoveImageRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.plan.RemoveImageRequest.plan_id)
+    pub plan_id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.RemoveImageRequest.image_id)
+    pub image_id: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.plan.RemoveImageRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RemoveImageRequest {
+    fn default() -> &'a RemoveImageRequest {
+        <RemoveImageRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RemoveImageRequest {
+    pub fn new() -> RemoveImageRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "plan_id",
+            |m: &RemoveImageRequest| { &m.plan_id },
+            |m: &mut RemoveImageRequest| { &mut m.plan_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "image_id",
+            |m: &RemoveImageRequest| { &m.image_id },
+            |m: &mut RemoveImageRequest| { &mut m.image_id },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RemoveImageRequest>(
+            "RemoveImageRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RemoveImageRequest {
+    const NAME: &'static str = "RemoveImageRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.plan_id = is.read_string()?;
+                },
+                18 => {
+                    self.image_id = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if !self.image_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.image_id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if !self.image_id.is_empty() {
+            os.write_string(2, &self.image_id)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RemoveImageRequest {
+        RemoveImageRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.image_id.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RemoveImageRequest {
+        static instance: RemoveImageRequest = RemoveImageRequest {
+            plan_id: ::std::string::String::new(),
+            image_id: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RemoveImageRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RemoveImageRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RemoveImageRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RemoveImageRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.plan.Plans)
 pub struct Plans {
     // message fields
@@ -1231,6 +1953,8 @@ pub struct Plan {
     pub positions: ::std::vec::Vec<FixturePosition>,
     // @@protoc_insertion_point(field:mizer.plan.Plan.screens)
     pub screens: ::std::vec::Vec<PlanScreen>,
+    // @@protoc_insertion_point(field:mizer.plan.Plan.images)
+    pub images: ::std::vec::Vec<PlanImage>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.plan.Plan.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1248,7 +1972,7 @@ impl Plan {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -1264,6 +1988,11 @@ impl Plan {
             "screens",
             |m: &Plan| { &m.screens },
             |m: &mut Plan| { &mut m.screens },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "images",
+            |m: &Plan| { &m.images },
+            |m: &mut Plan| { &mut m.images },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Plan>(
             "Plan",
@@ -1292,6 +2021,9 @@ impl ::protobuf::Message for Plan {
                 26 => {
                     self.screens.push(is.read_message()?);
                 },
+                34 => {
+                    self.images.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1315,6 +2047,10 @@ impl ::protobuf::Message for Plan {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
+        for value in &self.images {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1329,6 +2065,9 @@ impl ::protobuf::Message for Plan {
         };
         for v in &self.screens {
             ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        };
+        for v in &self.images {
+            ::protobuf::rt::write_message_field_with_cached_size(4, v, os)?;
         };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1350,6 +2089,7 @@ impl ::protobuf::Message for Plan {
         self.name.clear();
         self.positions.clear();
         self.screens.clear();
+        self.images.clear();
         self.special_fields.clear();
     }
 
@@ -1358,6 +2098,7 @@ impl ::protobuf::Message for Plan {
             name: ::std::string::String::new(),
             positions: ::std::vec::Vec::new(),
             screens: ::std::vec::Vec::new(),
+            images: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1770,6 +2511,236 @@ impl ::protobuf::reflect::ProtobufValue for PlanScreen {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.plan.PlanImage)
+pub struct PlanImage {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.id)
+    pub id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.x)
+    pub x: f64,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.y)
+    pub y: f64,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.width)
+    pub width: f64,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.height)
+    pub height: f64,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.transparency)
+    pub transparency: f64,
+    // @@protoc_insertion_point(field:mizer.plan.PlanImage.data)
+    pub data: ::std::vec::Vec<u8>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.plan.PlanImage.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a PlanImage {
+    fn default() -> &'a PlanImage {
+        <PlanImage as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PlanImage {
+    pub fn new() -> PlanImage {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(7);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &PlanImage| { &m.id },
+            |m: &mut PlanImage| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "x",
+            |m: &PlanImage| { &m.x },
+            |m: &mut PlanImage| { &mut m.x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "y",
+            |m: &PlanImage| { &m.y },
+            |m: &mut PlanImage| { &mut m.y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "width",
+            |m: &PlanImage| { &m.width },
+            |m: &mut PlanImage| { &mut m.width },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "height",
+            |m: &PlanImage| { &m.height },
+            |m: &mut PlanImage| { &mut m.height },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "transparency",
+            |m: &PlanImage| { &m.transparency },
+            |m: &mut PlanImage| { &mut m.transparency },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "data",
+            |m: &PlanImage| { &m.data },
+            |m: &mut PlanImage| { &mut m.data },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PlanImage>(
+            "PlanImage",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for PlanImage {
+    const NAME: &'static str = "PlanImage";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.id = is.read_string()?;
+                },
+                17 => {
+                    self.x = is.read_double()?;
+                },
+                25 => {
+                    self.y = is.read_double()?;
+                },
+                33 => {
+                    self.width = is.read_double()?;
+                },
+                41 => {
+                    self.height = is.read_double()?;
+                },
+                49 => {
+                    self.transparency = is.read_double()?;
+                },
+                58 => {
+                    self.data = is.read_bytes()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if self.x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.y != 0. {
+            my_size += 1 + 8;
+        }
+        if self.width != 0. {
+            my_size += 1 + 8;
+        }
+        if self.height != 0. {
+            my_size += 1 + 8;
+        }
+        if self.transparency != 0. {
+            my_size += 1 + 8;
+        }
+        if !self.data.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(7, &self.data);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if self.x != 0. {
+            os.write_double(2, self.x)?;
+        }
+        if self.y != 0. {
+            os.write_double(3, self.y)?;
+        }
+        if self.width != 0. {
+            os.write_double(4, self.width)?;
+        }
+        if self.height != 0. {
+            os.write_double(5, self.height)?;
+        }
+        if self.transparency != 0. {
+            os.write_double(6, self.transparency)?;
+        }
+        if !self.data.is_empty() {
+            os.write_bytes(7, &self.data)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> PlanImage {
+        PlanImage::new()
+    }
+
+    fn clear(&mut self) {
+        self.id.clear();
+        self.x = 0.;
+        self.y = 0.;
+        self.width = 0.;
+        self.height = 0.;
+        self.transparency = 0.;
+        self.data.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static PlanImage {
+        static instance: PlanImage = PlanImage {
+            id: ::std::string::String::new(),
+            x: 0.,
+            y: 0.,
+            width: 0.,
+            height: 0.,
+            transparency: 0.,
+            data: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for PlanImage {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("PlanImage").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for PlanImage {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PlanImage {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0bplans.proto\x12\nmizer.plan\x1a\x0efixtures.proto\"\x0e\n\x0cPlans\
     Request\"$\n\x0eAddPlanRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04\
@@ -1787,27 +2758,47 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x83\x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\t\
     R\x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.\
     FixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\
-    \n\x01y\x18\x04\x20\x01(\x05R\x01y\"/\n\x05Plans\x12&\n\x05plans\x18\x01\
-    \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"\x87\x01\n\x04Plan\x12\x12\
-    \n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03\
-    (\x0b2\x1b.mizer.plan.FixturePositionR\tpositions\x120\n\x07screens\x18\
-    \x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreenR\x07screens\"\x86\x01\n\x0f\
-    FixturePosition\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.Fi\
-    xtureIdR\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\
-    \x18\x03\x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05wi\
-    dth\x12\x16\n\x06height\x18\x05\x20\x01(\rR\x06height\"f\n\nPlanScreen\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x0c\n\x01x\x18\x02\x20\
-    \x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\x12\x14\n\x05w\
-    idth\x18\x04\x20\x01(\rR\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\r\
-    R\x06height2\xc9\x03\n\x08PlansApi\x127\n\x08GetPlans\x12\x18.mizer.plan\
-    .PlansRequest\x1a\x11.mizer.plan.Plans\x128\n\x07AddPlan\x12\x1a.mizer.p\
-    lan.AddPlanRequest\x1a\x11.mizer.plan.Plans\x12>\n\nRemovePlan\x12\x1d.m\
-    izer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\x12>\n\nRenamePlan\
-    \x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.plan.Plans\x12B\n\
-    \x0cMoveFixtures\x12\x1f.mizer.plan.MoveFixturesRequest\x1a\x11.mizer.pl\
-    an.Plans\x12@\n\x0bMoveFixture\x12\x1e.mizer.plan.MoveFixtureRequest\x1a\
-    \x11.mizer.plan.Plans\x12D\n\rAlignFixtures\x12\x20.mizer.plan.AlignFixt\
-    uresRequest\x1a\x11.mizer.plan.Plansb\x06proto3\
+    \n\x01y\x18\x04\x20\x01(\x05R\x01y\"\xac\x01\n\x0fAddImageRequest\x12\
+    \x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\x02\
+    \x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\
+    \x05width\x18\x04\x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x05\x20\
+    \x01(\x01R\x06height\x12\"\n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctr\
+    ansparency\x12\x12\n\x04data\x18\x07\x20\x01(\x0cR\x04data\"b\n\x10MoveI\
+    mageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\n\
+    \x08image_id\x18\x02\x20\x01(\tR\x07imageId\x12\x0c\n\x01x\x18\x03\x20\
+    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x04\x20\x01(\x01R\x01y\"v\n\x12Resize\
+    ImageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\
+    \n\x08image_id\x18\x02\x20\x01(\tR\x07imageId\x12\x14\n\x05width\x18\x03\
+    \x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x01R\x06hei\
+    ght\"H\n\x12RemoveImageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
+    \x06planId\x12\x19\n\x08image_id\x18\x02\x20\x01(\tR\x07imageId\"/\n\x05\
+    Plans\x12&\n\x05plans\x18\x01\x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plan\
+    s\"\xb6\x01\n\x04Plan\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\
+    \n\tpositions\x18\x02\x20\x03(\x0b2\x1b.mizer.plan.FixturePositionR\tpos\
+    itions\x120\n\x07screens\x18\x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreen\
+    R\x07screens\x12-\n\x06images\x18\x04\x20\x03(\x0b2\x15.mizer.plan.PlanI\
+    mageR\x06images\"\x86\x01\n\x0fFixturePosition\x12)\n\x02id\x18\x01\x20\
+    \x01(\x0b2\x19.mizer.fixtures.FixtureIdR\x02id\x12\x0c\n\x01x\x18\x02\
+    \x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\x12\x14\n\
+    \x05width\x18\x04\x20\x01(\rR\x05width\x12\x16\n\x06height\x18\x05\x20\
+    \x01(\rR\x06height\"f\n\nPlanScreen\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
+    \x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
+    \x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05width\x12\
+    \x16\n\x06height\x18\x05\x20\x01(\rR\x06height\"\x9d\x01\n\tPlanImage\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x0c\n\x01x\x18\x02\x20\
+    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\x05w\
+    idth\x18\x04\x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\
+    \x01R\x06height\x12\"\n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctranspa\
+    rency\x12\x12\n\x04data\x18\x07\x20\x01(\x0cR\x04data2\xc9\x03\n\x08Plan\
+    sApi\x127\n\x08GetPlans\x12\x18.mizer.plan.PlansRequest\x1a\x11.mizer.pl\
+    an.Plans\x128\n\x07AddPlan\x12\x1a.mizer.plan.AddPlanRequest\x1a\x11.miz\
+    er.plan.Plans\x12>\n\nRemovePlan\x12\x1d.mizer.plan.RemovePlanRequest\
+    \x1a\x11.mizer.plan.Plans\x12>\n\nRenamePlan\x12\x1d.mizer.plan.RenamePl\
+    anRequest\x1a\x11.mizer.plan.Plans\x12B\n\x0cMoveFixtures\x12\x1f.mizer.\
+    plan.MoveFixturesRequest\x1a\x11.mizer.plan.Plans\x12@\n\x0bMoveFixture\
+    \x12\x1e.mizer.plan.MoveFixtureRequest\x1a\x11.mizer.plan.Plans\x12D\n\r\
+    AlignFixtures\x12\x20.mizer.plan.AlignFixturesRequest\x1a\x11.mizer.plan\
+    .Plansb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1826,7 +2817,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(11);
+            let mut messages = ::std::vec::Vec::with_capacity(16);
             messages.push(PlansRequest::generated_message_descriptor_data());
             messages.push(AddPlanRequest::generated_message_descriptor_data());
             messages.push(RemovePlanRequest::generated_message_descriptor_data());
@@ -1834,10 +2825,15 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(MoveFixturesRequest::generated_message_descriptor_data());
             messages.push(AlignFixturesRequest::generated_message_descriptor_data());
             messages.push(MoveFixtureRequest::generated_message_descriptor_data());
+            messages.push(AddImageRequest::generated_message_descriptor_data());
+            messages.push(MoveImageRequest::generated_message_descriptor_data());
+            messages.push(ResizeImageRequest::generated_message_descriptor_data());
+            messages.push(RemoveImageRequest::generated_message_descriptor_data());
             messages.push(Plans::generated_message_descriptor_data());
             messages.push(Plan::generated_message_descriptor_data());
             messages.push(FixturePosition::generated_message_descriptor_data());
             messages.push(PlanScreen::generated_message_descriptor_data());
+            messages.push(PlanImage::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(1);
             enums.push(align_fixtures_request::AlignDirection::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(

@@ -1,18 +1,34 @@
 use mizer_fixtures::FixtureId;
+use mizer_util::Base64Image;
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 use std::sync::Arc;
+use uuid::Uuid;
 
 pub mod commands;
 
 pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Plan {
     pub name: String,
     pub fixtures: Vec<FixturePosition>,
     #[serde(default)]
     pub screens: Vec<PlanScreen>,
+    #[serde(default)]
+    pub images: Vec<PlanImage>,
+}
+
+impl Plan {
+    pub fn new(name: String) -> Self {
+        Self {
+            name,
+            fixtures: Default::default(),
+            screens: Default::default(),
+            images: Default::default(),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -71,6 +87,44 @@ impl PlanScreen {
         let y = fixture.y - self.y;
 
         (x as usize, y as usize)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct PlanImage {
+    pub id: ImageId,
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64,
+    pub transparency: f64,
+    pub data: Base64Image,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(transparent)]
+#[repr(transparent)]
+pub struct ImageId(Uuid);
+
+impl ImageId {
+    pub fn new() -> Self {
+        Self(Uuid::new_v4())
+    }
+}
+
+impl Display for ImageId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0.as_hyphenated())
+    }
+}
+
+impl TryFrom<String> for ImageId {
+    type Error = uuid::Error;
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        let uuid = Uuid::parse_str(&value)?;
+
+        Ok(Self(uuid))
     }
 }
 

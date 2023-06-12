@@ -83,6 +83,43 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addImage" => {
+                if let Err(err) = call.arguments().and_then(|req| self.handler.add_image(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "moveImage" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|req| self.handler.move_image(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "resizeImage" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|req| self.handler.resize_image(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "removeImage" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|req| self.handler.remove_image(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

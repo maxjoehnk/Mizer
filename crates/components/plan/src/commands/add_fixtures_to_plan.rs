@@ -30,7 +30,9 @@ impl<'a> Command<'a> for AddFixturesToPlanCommand {
                     height: 1,
                 });
             }
-        });
+
+            Ok(())
+        })?;
 
         Ok(((), ()))
     }
@@ -39,7 +41,9 @@ impl<'a> Command<'a> for AddFixturesToPlanCommand {
         update_plan(plans_access, &self.id, |plan| {
             plan.fixtures
                 .retain(|p| self.fixture_ids.contains(&p.fixture));
-        });
+
+            Ok(())
+        })?;
 
         Ok(())
     }

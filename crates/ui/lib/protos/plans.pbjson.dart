@@ -95,6 +95,59 @@ const MoveFixtureRequest$json = const {
 
 /// Descriptor for `MoveFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveFixtureRequestDescriptor = $convert.base64Decode('ChJNb3ZlRml4dHVyZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEjgKCmZpeHR1cmVfaWQYAiABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCWZpeHR1cmVJZBIMCgF4GAMgASgFUgF4EgwKAXkYBCABKAVSAXk=');
+@$core.Deprecated('Use addImageRequestDescriptor instead')
+const AddImageRequest$json = const {
+  '1': 'AddImageRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'x', '3': 2, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 3, '4': 1, '5': 1, '10': 'y'},
+    const {'1': 'width', '3': 4, '4': 1, '5': 1, '10': 'width'},
+    const {'1': 'height', '3': 5, '4': 1, '5': 1, '10': 'height'},
+    const {'1': 'transparency', '3': 6, '4': 1, '5': 1, '10': 'transparency'},
+    const {'1': 'data', '3': 7, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `AddImageRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addImageRequestDescriptor = $convert.base64Decode('Cg9BZGRJbWFnZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEgwKAXgYAiABKAFSAXgSDAoBeRgDIAEoAVIBeRIUCgV3aWR0aBgEIAEoAVIFd2lkdGgSFgoGaGVpZ2h0GAUgASgBUgZoZWlnaHQSIgoMdHJhbnNwYXJlbmN5GAYgASgBUgx0cmFuc3BhcmVuY3kSEgoEZGF0YRgHIAEoDFIEZGF0YQ==');
+@$core.Deprecated('Use moveImageRequestDescriptor instead')
+const MoveImageRequest$json = const {
+  '1': 'MoveImageRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'image_id', '3': 2, '4': 1, '5': 9, '10': 'imageId'},
+    const {'1': 'x', '3': 3, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 4, '4': 1, '5': 1, '10': 'y'},
+  ],
+};
+
+/// Descriptor for `MoveImageRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveImageRequestDescriptor = $convert.base64Decode('ChBNb3ZlSW1hZ2VSZXF1ZXN0EhcKB3BsYW5faWQYASABKAlSBnBsYW5JZBIZCghpbWFnZV9pZBgCIAEoCVIHaW1hZ2VJZBIMCgF4GAMgASgBUgF4EgwKAXkYBCABKAFSAXk=');
+@$core.Deprecated('Use resizeImageRequestDescriptor instead')
+const ResizeImageRequest$json = const {
+  '1': 'ResizeImageRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'image_id', '3': 2, '4': 1, '5': 9, '10': 'imageId'},
+    const {'1': 'width', '3': 3, '4': 1, '5': 1, '10': 'width'},
+    const {'1': 'height', '3': 4, '4': 1, '5': 1, '10': 'height'},
+  ],
+};
+
+/// Descriptor for `ResizeImageRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List resizeImageRequestDescriptor = $convert.base64Decode('ChJSZXNpemVJbWFnZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEhkKCGltYWdlX2lkGAIgASgJUgdpbWFnZUlkEhQKBXdpZHRoGAMgASgBUgV3aWR0aBIWCgZoZWlnaHQYBCABKAFSBmhlaWdodA==');
+@$core.Deprecated('Use removeImageRequestDescriptor instead')
+const RemoveImageRequest$json = const {
+  '1': 'RemoveImageRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'image_id', '3': 2, '4': 1, '5': 9, '10': 'imageId'},
+  ],
+};
+
+/// Descriptor for `RemoveImageRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List removeImageRequestDescriptor = $convert.base64Decode('ChJSZW1vdmVJbWFnZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEhkKCGltYWdlX2lkGAIgASgJUgdpbWFnZUlk');
 @$core.Deprecated('Use plansDescriptor instead')
 const Plans$json = const {
   '1': 'Plans',
@@ -112,11 +165,12 @@ const Plan$json = const {
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'positions', '3': 2, '4': 3, '5': 11, '6': '.mizer.plan.FixturePosition', '10': 'positions'},
     const {'1': 'screens', '3': 3, '4': 3, '5': 11, '6': '.mizer.plan.PlanScreen', '10': 'screens'},
+    const {'1': 'images', '3': 4, '4': 3, '5': 11, '6': '.mizer.plan.PlanImage', '10': 'images'},
   ],
 };
 
 /// Descriptor for `Plan`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOQoJcG9zaXRpb25zGAIgAygLMhsubWl6ZXIucGxhbi5GaXh0dXJlUG9zaXRpb25SCXBvc2l0aW9ucxIwCgdzY3JlZW5zGAMgAygLMhYubWl6ZXIucGxhbi5QbGFuU2NyZWVuUgdzY3JlZW5z');
+final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOQoJcG9zaXRpb25zGAIgAygLMhsubWl6ZXIucGxhbi5GaXh0dXJlUG9zaXRpb25SCXBvc2l0aW9ucxIwCgdzY3JlZW5zGAMgAygLMhYubWl6ZXIucGxhbi5QbGFuU2NyZWVuUgdzY3JlZW5zEi0KBmltYWdlcxgEIAMoCzIVLm1pemVyLnBsYW4uUGxhbkltYWdlUgZpbWFnZXM=');
 @$core.Deprecated('Use fixturePositionDescriptor instead')
 const FixturePosition$json = const {
   '1': 'FixturePosition',
@@ -145,3 +199,19 @@ const PlanScreen$json = const {
 
 /// Descriptor for `PlanScreen`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List planScreenDescriptor = $convert.base64Decode('CgpQbGFuU2NyZWVuEg4KAmlkGAEgASgNUgJpZBIMCgF4GAIgASgFUgF4EgwKAXkYAyABKAVSAXkSFAoFd2lkdGgYBCABKA1SBXdpZHRoEhYKBmhlaWdodBgFIAEoDVIGaGVpZ2h0');
+@$core.Deprecated('Use planImageDescriptor instead')
+const PlanImage$json = const {
+  '1': 'PlanImage',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'x', '3': 2, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 3, '4': 1, '5': 1, '10': 'y'},
+    const {'1': 'width', '3': 4, '4': 1, '5': 1, '10': 'width'},
+    const {'1': 'height', '3': 5, '4': 1, '5': 1, '10': 'height'},
+    const {'1': 'transparency', '3': 6, '4': 1, '5': 1, '10': 'transparency'},
+    const {'1': 'data', '3': 7, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `PlanImage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List planImageDescriptor = $convert.base64Decode('CglQbGFuSW1hZ2USDgoCaWQYASABKAlSAmlkEgwKAXgYAiABKAFSAXgSDAoBeRgDIAEoAVIBeRIUCgV3aWR0aBgEIAEoAVIFd2lkdGgSFgoGaGVpZ2h0GAUgASgBUgZoZWlnaHQSIgoMdHJhbnNwYXJlbmN5GAYgASgBUgx0cmFuc3BhcmVuY3kSEgoEZGF0YRgHIAEoDFIEZGF0YQ==');

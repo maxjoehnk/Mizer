@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/plans.dart';
@@ -7,6 +10,7 @@ import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/views/plan/layers/drag_selection_layer.dart';
 import 'package:mizer/views/plan/layers/fixtures_layer.dart';
+import 'package:mizer/views/plan/layers/image_layer.dart';
 import 'package:mizer/views/plan/layers/screens_layer.dart';
 import 'package:mizer/views/plan/layers/transform_layer.dart';
 
@@ -16,8 +20,18 @@ class PlanLayout extends StatefulWidget {
   final Plan plan;
   final ProgrammerState? programmerState;
   final bool setupMode;
+  final Uint8List? placingImage;
+  final Function() cancelPlacing;
+  final Function(Offset, Size) placeImage;
 
-  const PlanLayout({required this.plan, this.programmerState, required this.setupMode, Key? key})
+  const PlanLayout(
+      {required this.plan,
+      this.programmerState,
+      required this.setupMode,
+      this.placingImage,
+      required this.cancelPlacing,
+      required this.placeImage,
+      Key? key})
       : super(key: key);
 
   @override
@@ -72,7 +86,6 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
       builder: (context, candidates, rejects) => Stack(
         fit: StackFit.expand,
         children: [
-          Transform(transform: _transformationController.value, child: PlansScreenLayer(plan: widget.plan)),
           TransformLayer(transformationController: _transformationController),
           DragSelectionLayer(
             plan: widget.plan,
@@ -80,6 +93,18 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
             selectionState: _selectionState,
             onUpdateSelection: (selection) => setState(() => _selectionState = selection),
           ),
+          PlansImageLayer(
+              plan: widget.plan,
+              isSetup: widget.setupMode,
+              transformation: _transformationController.value),
+          Transform(
+              transform: _transformationController.value,
+              child: PlansScreenLayer(plan: widget.plan)),
+          if (widget.placingImage != null)
+            ImagePlacer(
+                image: widget.placingImage!,
+                onPlaced: widget.placeImage,
+                onCancel: widget.cancelPlacing),
           Transform(
             transform: _transformationController.value,
             child: PlansFixturesLayer(
@@ -90,7 +115,8 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
             ),
           ),
           if (_selectionState != null) SelectionIndicator(_selectionState!),
-          if (_selectionState?.direction != null) SelectionDirectionIndicator(_selectionState!.direction!),
+          if (_selectionState?.direction != null)
+            SelectionDirectionIndicator(_selectionState!.direction!),
         ],
       ),
     );
@@ -99,4 +125,67 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
 
 Offset _convertFromScreenPosition(Offset offset) {
   return offset / fieldSize;
+}
+
+class ImagePlacer extends StatefulWidget {
+  final Uint8List image;
+  final Function(Offset, Size) onPlaced;
+  final Function() onCancel;
+
+  const ImagePlacer({required this.image, required this.onPlaced, required this.onCancel, Key? key})
+      : super(key: key);
+
+  @override
+  State<ImagePlacer> createState() => _ImagePlacerState();
+}
+
+class _ImagePlacerState extends State<ImagePlacer> {
+  double x = 0;
+  double y = 0;
+  double width = 0;
+  double height = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    decodeImageFromList(widget.image).then((value) {
+      setState(() {
+        width = value.width.toDouble();
+        height = value.height.toDouble();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+          left: x,
+          top: y,
+          width: width,
+          height: height,
+          child: Image.memory(widget.image),
+        ),
+        Listener(
+          behavior: HitTestBehavior.translucent,
+          onPointerHover: (event) {
+            setState(() {
+              x = event.localPosition.dx;
+              y = event.localPosition.dy;
+            });
+          },
+          onPointerDown: (event) {
+            if (event.buttons == kPrimaryButton) {
+              widget.onPlaced(Offset(x, y), Size(width, height));
+            }
+            if (event.buttons == kSecondaryButton) {
+              widget.onCancel();
+            }
+          },
+          child: Container(),
+        ),
+      ],
+    );
+  }
 }

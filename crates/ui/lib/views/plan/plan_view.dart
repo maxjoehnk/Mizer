@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'dart:typed_data';
+
+import 'package:file_selector/file_selector.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -28,6 +31,7 @@ class PlanView extends StatefulWidget {
 class _PlanViewState extends State<PlanView>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   bool _setupMode = false;
+  Uint8List? _placingImage;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +61,13 @@ class _PlanViewState extends State<PlanView>
                   child: Column(children: [
                     Expanded(
                         child: PlanLayout(
-                            plan: plan, programmerState: programmerState, setupMode: _setupMode)),
+                      plan: plan,
+                      programmerState: programmerState,
+                      setupMode: _setupMode,
+                      placingImage: _placingImage,
+                      cancelPlacing: () => setState(() => _placingImage = null),
+                      placeImage: _placeImage,
+                    )),
                     if (_setupMode) AlignToolbar(),
                   ])))
               .toList(),
@@ -80,9 +90,12 @@ class _PlanViewState extends State<PlanView>
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
-            PanelAction(
-                label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
             PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
+            if (_setupMode)
+              PanelAction(
+                  label: "Place Fixture Selection",
+                  onClick: () => _placeFixtureSelection(plansBloc)),
+            if (_setupMode) PanelAction(label: "Add Image", onClick: () => _addImage(plansBloc)),
           ],
         ),
       );
@@ -141,6 +154,32 @@ class _PlanViewState extends State<PlanView>
 
   Future _placeFixtureSelection(PlansBloc bloc) async {
     bloc.add(PlaceFixtureSelection());
+  }
+
+  _addImage(PlansBloc bloc) async {
+    const imageGroup = XTypeGroup(label: 'Images', extensions: ['jpg', 'jpeg', 'png']);
+    XFile? image = await openFile(acceptedTypeGroups: [imageGroup]);
+    if (image == null) {
+      return;
+    }
+    Uint8List buffer = await image.readAsBytes();
+    setState(() {
+      _placingImage = buffer;
+    });
+  }
+
+  _placeImage(Offset offset, Size size) async {
+    PlansBloc bloc = context.read();
+    bloc.add(AddImage(
+        x: offset.dx,
+        y: offset.dy,
+        transparency: 1,
+        width: size.width,
+        height: size.height,
+        data: _placingImage!));
+    setState(() {
+      _placingImage = null;
+    });
   }
 
   void _setup() {

@@ -72,7 +72,9 @@ impl<'a> Command<'a> for AlignFixturesInPlanCommand {
                     }
                 }
             }
-        });
+
+            Ok(())
+        })?;
 
         Ok(((), fixtures))
     }
@@ -88,7 +90,9 @@ impl<'a> Command<'a> for AlignFixturesInPlanCommand {
                 position.x += offset.0;
                 position.y += offset.1;
             }
-        });
+
+            Ok(())
+        })?;
 
         Ok(())
     }

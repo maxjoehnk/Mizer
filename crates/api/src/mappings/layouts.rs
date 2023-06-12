@@ -1,5 +1,5 @@
 use crate::models::layouts::*;
-use mizer_layouts::Base64Image;
+use mizer_util::Base64Image;
 use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<mizer_layouts::Layout> for Layout {

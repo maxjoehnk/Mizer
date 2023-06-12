@@ -18,11 +18,7 @@ impl<'a> Command<'a> for AddPlanCommand {
 
     fn apply(&self, plans_access: &PlanStorage) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut plans = plans_access.read();
-        plans.push(Plan {
-            name: self.name.clone(),
-            fixtures: Default::default(),
-            screens: Default::default(),
-        });
+        plans.push(Plan::new(self.name.clone()));
         plans_access.set(plans);
 
         Ok(((), ()))

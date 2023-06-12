@@ -19,7 +19,6 @@ class PlansPluginApi implements PlansApi {
     return Plans.fromBuffer(_convertBuffer(response));
   }
 
-
   @override
   Future<Plans> addPlan(String name) async {
     var response = await channel.invokeMethod("addPlan", name);
@@ -72,5 +71,26 @@ class PlansPluginApi implements PlansApi {
   @override
   Future<void> alignFixtures(AlignFixturesRequest request) async {
     await channel.invokeMethod("alignFixtures", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addImage(AddImageRequest request) async {
+    await channel.invokeMethod("addImage", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> moveImage(MoveImageRequest request) async {
+    await channel.invokeMethod("moveImage", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> removeImage(String planId, String imageId) async {
+    RemoveImageRequest request = RemoveImageRequest(planId: planId, imageId: imageId);
+    await channel.invokeMethod("removeImage", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> resizeImage(ResizeImageRequest request) async {
+    await channel.invokeMethod("resizeImage", request.writeToBuffer());
   }
 }

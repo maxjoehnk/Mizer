@@ -44,7 +44,7 @@ impl Clock for SystemClock {
         let mut downbeat = false;
         if self.state == ClockState::Playing {
             let tick = now();
-            delta = (tick - self.last_tick) as f64 * (self.speed / 60000f64);
+            delta = tick.saturating_sub(self.last_tick) as f64 * (self.speed / 60000f64);
             self.frame += delta;
             self.beat += delta;
             downbeat = self.beat > 4f64;

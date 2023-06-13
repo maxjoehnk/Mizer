@@ -2,11 +2,14 @@ import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/panes/programmer/dialogs/select_store_target_dialog.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
@@ -106,6 +109,19 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
   }
 
   _store() async {
+    var storeTarget = await selectStoreTarget(context);
+    if (storeTarget == null) {
+      return;
+    }
+
+    if (storeTarget == StoreTarget.Sequence) {
+      await _storeToSequence();
+    } else if (storeTarget == StoreTarget.Group) {
+      await _storeToGroup();
+    }
+  }
+
+  _storeToSequence() async {
     var sequencerApi = context.read<SequencerApi>();
     Sequence? sequence = await showDialog(
         context: context, builder: (context) => SelectSequenceDialog(api: sequencerApi));
@@ -126,6 +142,18 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     }
 
     widget.api.store(sequence.id, storeMode, cueId: cueId);
+  }
+
+  _storeToGroup() async {
+    var programmerApi = context.read<ProgrammerApi>();
+    var presetsBloc = context.read<PresetsBloc>();
+    Group? group = await showDialog(
+        context: context,
+        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    if (group == null) {
+      return;
+    }
+    await programmerApi.assignFixturesToGroup(widget.fixtures.map((e) => e.id).toList(), group);
   }
 
   _getStoreMode(Sequence sequence) async {

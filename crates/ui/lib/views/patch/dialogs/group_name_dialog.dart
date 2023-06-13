@@ -27,6 +27,7 @@ class _GroupNameDialogState extends State<GroupNameDialog> {
         controller: nameController,
         autofocus: true,
         decoration: InputDecoration(labelText: "Name"),
+        onSubmitted: (value) => _close(context, name: value),
       ),
       actions: [
         PopupAction("Confirm", () => _close(context, name: nameController.text)),

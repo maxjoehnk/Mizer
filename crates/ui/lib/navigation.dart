@@ -95,15 +95,9 @@ class _HomeState extends State<Home> {
                 RepaintBoundary(
                     child: TransportControls(
                         showProgrammer: _showProgrammer,
-                        toggleProgrammer: () => setState(() {
-                              _showProgrammer = !_showProgrammer;
-                              _showSelection = false;
-                            }),
+                        toggleProgrammer: () => _toggleProgrammerPane(),
                         showSelection: _showSelection,
-                        toggleSelection: () => setState(() {
-                              _showSelection = !_showSelection;
-                              _showProgrammer = false;
-                            })))
+                        toggleSelection: () => _toggleSelectionPane()))
               ],
             ))
           ],
@@ -111,6 +105,20 @@ class _HomeState extends State<Home> {
         ),
       ),
     ));
+  }
+
+  void _toggleSelectionPane() {
+    return setState(() {
+      _showSelection = !_showSelection;
+      _showProgrammer = false;
+    });
+  }
+
+  void _toggleProgrammerPane() {
+    return setState(() {
+      _showProgrammer = !_showProgrammer;
+      _showSelection = false;
+    });
   }
 
   void _updateWidget() {
@@ -125,7 +133,10 @@ class _HomeState extends State<Home> {
   }
 
   Map<String, Function()> _getShortcuts(List<Route> routes) {
-    Map<String, Function()> shortcuts = {};
+    Map<String, Function()> shortcuts = {
+      'programmer_pane': () => _toggleProgrammerPane(),
+      'selection_pane': () => _toggleSelectionPane(),
+    };
     for (var entry in routes.asMap().entries) {
       shortcuts[entry.value.viewKey.toHotkeyString()] = () => _selectView(entry.key);
     }

@@ -86,11 +86,11 @@ class _EffectsViewState extends State<EffectsView> {
                   ),
                 ),
                 actions: [
-                  PanelAction(
+                  PanelActionModel(
                       label: "Add Effect".i18n,
                       hotkeyId: "add_effect",
                       onClick: () => _addEffect(context, bloc)),
-                  PanelAction(
+                  PanelActionModel(
                       label: "Delete".i18n,
                       hotkeyId: "delete",
                       disabled: this.effect == null,

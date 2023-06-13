@@ -147,22 +147,22 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 ],
               ),
               actions: [
-                PanelAction(
+                PanelActionModel(
                     label: "Group Nodes".i18n,
                     onClick: () => _groupNodes(context),
                     hotkeyId: "group_nodes"),
-                PanelAction(
+                PanelActionModel(
                     label: "Delete Node".i18n,
                     disabled: model.selectedNode == null || !model.selectedNode!.node.canDelete,
                     onClick: () => _deleteNode(context),
                     hotkeyId: "delete_node"),
-                PanelAction(
+                PanelActionModel(
                     label: "Duplicate Node".i18n,
                     disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate,
                     onClick: () => _duplicateNode(context),
                     hotkeyId: "duplicate_node"),
                 if (EnableScreenshot)
-                  PanelAction(
+                  PanelActionModel(
                       label: "Screenshot Node",
                       disabled: model.selectedNode == null,
                       onClick: () => _screenshotNode(context)),

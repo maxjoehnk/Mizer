@@ -73,7 +73,7 @@ class _PlanViewState extends State<PlanView>
               .toList(),
           onAdd: () => _addPlan(context, plansBloc),
           actions: [
-            PanelAction(
+            PanelActionModel(
                 hotkeyId: "highlight",
                 label: "Highlight",
                 onClick: _highlight,
@@ -82,7 +82,7 @@ class _PlanViewState extends State<PlanView>
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
                 ])),
-            PanelAction(
+            PanelActionModel(
                 hotkeyId: "clear",
                 label: "Clear",
                 onClick: _clear,
@@ -90,12 +90,13 @@ class _PlanViewState extends State<PlanView>
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
-            PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
+            PanelActionModel(label: "Setup", activated: _setupMode, onClick: _setup),
             if (_setupMode)
-              PanelAction(
+              PanelActionModel(
                   label: "Place Fixture Selection",
                   onClick: () => _placeFixtureSelection(plansBloc)),
-            if (_setupMode) PanelAction(label: "Add Image", onClick: () => _addImage(plansBloc)),
+            if (_setupMode)
+              PanelActionModel(label: "Add Image", onClick: () => _addImage(plansBloc)),
           ],
         ),
       );

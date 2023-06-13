@@ -115,7 +115,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
             ),
           ),
           actions: [
-            PanelAction(
+            PanelActionModel(
                 hotkeyId: "clear",
                 label: "Clear",
                 onClick: () => _clear(),
@@ -124,21 +124,21 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
-            PanelAction(
+            PanelActionModel(
                 label: "Assign Group",
                 hotkeyId: "assign_group",
                 disabled: widget.isEmpty,
                 onClick: () => _assignGroup(context)),
-            PanelAction(
+            PanelActionModel(
                 label: "Shuffle",
                 hotkeyId: "shuffle",
                 disabled: widget.isEmpty,
                 onClick: () => _shuffle()),
-            PanelAction(
+            PanelActionModel(
                 label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
-            PanelAction(
+            PanelActionModel(
                 label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
-            PanelAction(
+            PanelActionModel(
                 label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
           ]),
     );

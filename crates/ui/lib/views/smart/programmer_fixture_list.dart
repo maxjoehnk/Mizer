@@ -21,7 +21,7 @@ class ProgrammerFixtureList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var channels =
-    programmerState.controls.map((c) => c.control).toSet().sorted((a, b) => a.value - b.value);
+        programmerState.controls.map((c) => c.control).toSet().sorted((a, b) => a.value - b.value);
     return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
@@ -31,12 +31,12 @@ class ProgrammerFixtureList extends StatelessWidget {
       child: Panel(
         label: "Fixtures",
         actions: [
-          PanelAction(
+          PanelActionModel(
               label: "Highlight",
               hotkeyId: "highlight",
               activated: programmerState.highlight,
               onClick: _highlight),
-          PanelAction(
+          PanelActionModel(
               label: "Clear",
               hotkeyId: "clear",
               disabled: programmerState.fixtures.isEmpty && programmerState.activeFixtures.isEmpty,
@@ -47,14 +47,14 @@ class ProgrammerFixtureList extends StatelessWidget {
             columns: [Text("ID"), Text("Name"), ...channels.map((c) => Text(NAMES[c]!))],
             rows: fixtures
                 .map((f) => MizerTableRow(cells: [
-              Text(f.id.toDisplay()),
-              Text(f.name),
-              ...channels
-                  .map((control) => programmerState.controls.firstWhereOrNull(
-                      (c) => control == c.control && c.fixtures.contains(f.id)))
-                  .map((control) =>
-              control == null ? Text("") : Text(control.toDisplayValue()))
-            ], selected: programmerState.activeFixtures.contains(f.id)))
+                      Text(f.id.toDisplay()),
+                      Text(f.name),
+                      ...channels
+                          .map((control) => programmerState.controls.firstWhereOrNull(
+                              (c) => control == c.control && c.fixtures.contains(f.id)))
+                          .map((control) =>
+                              control == null ? Text("") : Text(control.toDisplayValue()))
+                    ], selected: programmerState.activeFixtures.contains(f.id)))
                 .toList(),
           ),
         ),

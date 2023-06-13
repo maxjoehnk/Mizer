@@ -77,7 +77,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
           child: EffectsSheet(effects: widget.effects),
         )
       ], actions: [
-        PanelAction(
+        PanelActionModel(
             hotkeyId: "highlight",
             label: "Highlight",
             activated: widget.highlight,
@@ -86,9 +86,9 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
               MenuItem(
                   label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
             ])),
-        PanelAction(
+        PanelActionModel(
             hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
-        PanelAction(
+        PanelActionModel(
             hotkeyId: "clear",
             label: "Clear",
             onClick: () => _clear(),

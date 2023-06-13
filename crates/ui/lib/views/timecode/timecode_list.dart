@@ -23,8 +23,8 @@ class TimecodeList extends StatelessWidget {
     return Panel(
         label: "Timecodes",
         actions: [
-          PanelAction(label: "Add Timecode", onClick: () => _addTimecode(context)),
-          PanelAction(
+          PanelActionModel(label: "Add Timecode", onClick: () => _addTimecode(context)),
+          PanelActionModel(
               label: "Delete",
               disabled: selectedTimecode == null,
               onClick: () => _deleteTimecode(context))
@@ -40,15 +40,15 @@ class TimecodeList extends StatelessWidget {
             ),
             children: timecodes
                 .map((t) => TimecodePane(
-                timecode: t,
-                selected: t.id == this.selectedTimecode?.id,
-                onSelect: () => onSelect(t)))
+                    timecode: t,
+                    selected: t.id == this.selectedTimecode?.id,
+                    onSelect: () => onSelect(t)))
                 .toList()));
   }
 
   Future<void> _addTimecode(BuildContext context) async {
     String? name =
-    await showDialog(context: context, builder: (context) => new AddTimecodeDialog());
+        await showDialog(context: context, builder: (context) => new AddTimecodeDialog());
     if (name == null) {
       return;
     }
@@ -83,21 +83,21 @@ class TimecodePane extends StatelessWidget {
       child: Hoverable(
           onTap: onSelect,
           builder: (hovered) => Container(
-            width: 100,
-            height: 100,
-            padding: const EdgeInsets.all(2),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: hovered ? Colors.white10 : Colors.transparent,
-              border:
-              Border.all(color: selected ? Colors.deepOrange : Colors.white10, width: 4),
-            ),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Text(timecode.id.toString(), textAlign: TextAlign.start),
-              AutoSizeText(timecode.name, textAlign: TextAlign.center, maxLines: 2),
-            ]),
-          )),
+                width: 100,
+                height: 100,
+                padding: const EdgeInsets.all(2),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  color: hovered ? Colors.white10 : Colors.transparent,
+                  border:
+                      Border.all(color: selected ? Colors.deepOrange : Colors.white10, width: 4),
+                ),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  Text(timecode.id.toString(), textAlign: TextAlign.start),
+                  AutoSizeText(timecode.name, textAlign: TextAlign.center, maxLines: 2),
+                ]),
+              )),
     );
   }
 
@@ -106,4 +106,3 @@ class TimecodePane extends StatelessWidget {
     bloc.renameTimecode(timecode.id, name);
   }
 }
-

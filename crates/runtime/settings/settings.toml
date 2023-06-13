@@ -23,6 +23,8 @@ media_view = "f9"
 surfaces_view = "f10"
 connections_view = "f11"
 fixture_patch_view = "f12"
+programmer_pane = "shift+p"
+selection_pane = "shift+s"
 undo = "ctrl+z"
 redo = "ctrl+shift+z"
 

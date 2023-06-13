@@ -7,8 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
-import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/panel.dart';
 
 import 'time_control.dart';
 
@@ -68,26 +68,22 @@ class _TransportControlsState extends State<TransportControls> {
           RepaintBoundary(
               child: TransportControl(transportStream.map((event) => event.state).distinct())),
           Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: MizerButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Selection"),
-                ),
-                active: widget.showSelection,
-                onClick: widget.toggleSelection),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: MizerButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Programmer"),
-                ),
-                active: widget.showProgrammer,
-                onClick: widget.toggleProgrammer),
-          )
+          PanelAction(
+              width: 80,
+              action: PanelActionModel(
+                label: "Selection",
+                hotkeyId: "selection_pane",
+                onClick: widget.toggleSelection,
+                activated: widget.showSelection,
+              )),
+          PanelAction(
+              width: 80,
+              action: PanelActionModel(
+                label: "Programmer",
+                hotkeyId: "programmer_pane",
+                onClick: widget.toggleProgrammer,
+                activated: widget.showProgrammer,
+              )),
         ]));
   }
 }

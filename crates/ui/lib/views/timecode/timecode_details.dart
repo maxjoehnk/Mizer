@@ -25,7 +25,9 @@ class TimecodeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Panel(
       label: timecode.name,
-      actions: [PanelAction(label: "Add Control", onClick: () => _addTimecodeControl(context))],
+      actions: [
+        PanelActionModel(label: "Add Control", onClick: () => _addTimecodeControl(context))
+      ],
       child: InteractiveViewer(
         scaleEnabled: false,
         child: Column(

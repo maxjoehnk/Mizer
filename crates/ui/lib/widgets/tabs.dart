@@ -6,7 +6,7 @@ import 'panel.dart';
 
 class Tabs extends StatefulWidget {
   final List<Tab> children;
-  final List<PanelAction>? actions;
+  final List<PanelActionModel>? actions;
   final Function()? onAdd;
   final bool padding;
   final int? tabIndex;
@@ -16,7 +16,13 @@ class Tabs extends StatefulWidget {
     return onAdd != null;
   }
 
-  Tabs({required this.children, this.actions, this.tabIndex, this.onSelectTab, this.onAdd, this.padding = true});
+  Tabs(
+      {required this.children,
+      this.actions,
+      this.tabIndex,
+      this.onSelectTab,
+      this.onAdd,
+      this.padding = true});
 
   @override
   _TabsState createState() => _TabsState(activeIndex: this.tabIndex ?? 0);
@@ -25,7 +31,7 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
   int activeIndex = 0;
 
-  _TabsState({ this.activeIndex = 0 });
+  _TabsState({this.activeIndex = 0});
 
   @override
   void didUpdateWidget(Tabs oldWidget) {
@@ -51,29 +57,30 @@ class _TabsState extends State<Tabs> {
                 .widget
                 .children
                 .asMap()
-                .map((i, e) =>
-                MapEntry(
+                .map((i, e) => MapEntry(
                     i,
                     e.header(
                       this.activeIndex == i,
-                          () => _onSelectTab(i),
+                      () => _onSelectTab(i),
                     )))
                 .values,
             if (widget.canAdd) AddTabButton(onClick: widget.onAdd!),
           ]),
         ),
-        if (this.active != null) Expanded(child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
-                child: this.active,
+        if (this.active != null)
+          Expanded(
+              child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
+                  child: this.active,
+                ),
               ),
-            ),
-            if (widget.actions != null) PanelActions(actions: widget.actions!)
-          ],
-        )),
+              if (widget.actions != null) PanelActions(actions: widget.actions!)
+            ],
+          )),
       ],
     );
   }

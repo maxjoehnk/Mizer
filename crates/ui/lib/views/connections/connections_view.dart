@@ -69,10 +69,10 @@ class _ConnectionsViewState extends State<ConnectionsView> {
               );
             }),
         actions: [
-          PanelAction(label: "Add sACN".i18n, onClick: _addSacn),
-          PanelAction(label: "Add Artnet".i18n, onClick: _addArtnet),
-          PanelAction(label: "Add MQTT".i18n, onClick: _addMqtt),
-          PanelAction(label: "Add OSC".i18n, onClick: _addOsc),
+          PanelActionModel(label: "Add sACN".i18n, onClick: _addSacn),
+          PanelActionModel(label: "Add Artnet".i18n, onClick: _addArtnet),
+          PanelActionModel(label: "Add MQTT".i18n, onClick: _addMqtt),
+          PanelActionModel(label: "Add OSC".i18n, onClick: _addOsc),
         ]);
   }
 

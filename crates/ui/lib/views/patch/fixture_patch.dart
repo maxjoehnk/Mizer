@@ -63,21 +63,21 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                       fixturesBloc.add(UpdateFixture(fixtureId, updateRequest)),
                 ),
                 actions: [
-                  PanelAction(
+                  PanelActionModel(
                       label: "Add Fixture",
                       hotkeyId: "add_fixture",
                       onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
-                  PanelAction(
+                  PanelActionModel(
                       label: "Clear",
                       hotkeyId: "clear",
                       onClick: _clear,
                       disabled: selectedIds.isEmpty),
-                  PanelAction(
+                  PanelActionModel(
                       label: "Delete",
                       hotkeyId: "delete",
                       onClick: () => _deleteFixture(context, fixturesBloc),
                       disabled: selectedIds.isEmpty),
-                  PanelAction(
+                  PanelActionModel(
                       label: "Assign Group",
                       hotkeyId: "assign_group",
                       onClick: () => _assignGroup(context, fixturesBloc)),

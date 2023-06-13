@@ -28,26 +28,34 @@ class _HistoryViewState extends State<HistoryView> {
             int lastItem = state.data?.items.length ?? 0;
 
             return Panel(
-                label: "History",
-                child: SingleChildScrollView(
-                  child: MizerTable(
-                    columns: [Text("Label"), Text("Timestamp")],
-                    rows: (state.data?.items ?? []).mapEnumerated((item, i) {
-                      var inactive = (i + 1) > pointer;
+              label: "History",
+              child: SingleChildScrollView(
+                child: MizerTable(
+                  columns: [Text("Label"), Text("Timestamp")],
+                  rows: (state.data?.items ?? [])
+                      .mapEnumerated((item, i) {
+                        var inactive = (i + 1) > pointer;
 
-                      var textStyle = inactive ? TextStyle(color: Colors.white24) : null;
-                      return MizerTableRow(cells: [
-                        Text(item.label, style: textStyle),
-                        Text(DateTime.fromMillisecondsSinceEpoch(item.timestamp.toInt()).toString(), style: textStyle)
-                      ]);
-                    }).reversed.toList(),
-                  ),
+                        var textStyle = inactive ? TextStyle(color: Colors.white24) : null;
+                        return MizerTableRow(cells: [
+                          Text(item.label, style: textStyle),
+                          Text(
+                              DateTime.fromMillisecondsSinceEpoch(item.timestamp.toInt())
+                                  .toString(),
+                              style: textStyle)
+                        ]);
+                      })
+                      .reversed
+                      .toList(),
                 ),
-                actions: [
-                  PanelAction(label: "Undo", hotkeyId: "undo", onClick: _undo, disabled: pointer == 0),
-                  PanelAction(label: "Redo", hotkeyId: "redo", onClick: _redo, disabled: pointer >= lastItem),
-                ],
-              );
+              ),
+              actions: [
+                PanelActionModel(
+                    label: "Undo", hotkeyId: "undo", onClick: _undo, disabled: pointer == 0),
+                PanelActionModel(
+                    label: "Redo", hotkeyId: "redo", onClick: _redo, disabled: pointer >= lastItem),
+              ],
+            );
           }),
     );
   }

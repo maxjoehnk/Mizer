@@ -63,7 +63,7 @@ class FrameEditor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Panel(
         label: "Frames".i18n,
-        actions: [PanelAction(label: "Add Channel", onClick: () => _addChannel(context))],
+        actions: [PanelActionModel(label: "Add Channel", onClick: () => _addChannel(context))],
         child: ListView(
           children: effect.channels.mapIndexed((channelIndex, channel) {
             return Padding(

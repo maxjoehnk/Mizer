@@ -12,7 +12,7 @@ class Panel extends StatefulWidget {
   final String? label;
   final Widget? child;
   final List<tab.Tab>? tabs;
-  final List<PanelAction>? actions;
+  final List<PanelActionModel>? actions;
   final Function()? onAdd;
   final bool padding;
   final int? tabIndex;
@@ -41,7 +41,7 @@ class Panel extends StatefulWidget {
   factory Panel.tabs(
       {required List<tab.Tab> tabs,
       String? label,
-      List<PanelAction>? actions,
+      List<PanelActionModel>? actions,
       int? tabIndex,
       Function(int)? onSelectTab,
       Function()? onAdd,
@@ -200,7 +200,7 @@ class _PanelState extends State<Panel> {
   }
 }
 
-class PanelAction {
+class PanelActionModel {
   final String label;
   final Function()? onClick;
   final bool disabled;
@@ -208,7 +208,7 @@ class PanelAction {
   final String? hotkeyId;
   final Menu? menu;
 
-  PanelAction(
+  PanelActionModel(
       {required this.label,
       this.onClick,
       this.disabled = false,
@@ -218,69 +218,80 @@ class PanelAction {
 }
 
 class PanelActions extends StatelessWidget {
-  final List<PanelAction> actions;
+  final List<PanelActionModel> actions;
 
   const PanelActions({required this.actions, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    var hotkeys = context.read<HotkeyMapping?>();
-
     return SingleChildScrollView(
       child: Column(
-        children: actions.map((a) {
-          var hotkey = _getHotkey(hotkeys, a);
-          return GestureDetector(
-            onSecondaryTapDown: (event) => _openActionMenu(context, a, event.globalPosition),
-            onLongPressEnd: (event) => _openActionMenu(context, a, event.globalPosition),
-            child: Hoverable(
-              disabled: a.disabled || a.onClick == null,
-              onTap: a.onClick,
-              builder: (hovered) => Container(
-                color: _getBackground(a, hovered),
-                height: 64,
-                width: 64,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(a.label,
-                        textAlign: TextAlign.center,
-                        style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
-                    if (hotkey != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 2.0),
-                        child: Text(hotkey.toCapitalCase(),
-                            style: textTheme.bodySmall!
-                                .copyWith(color: _getHotkeyColor(a), fontSize: 10)),
-                      ),
-                  ],
+        children: actions.map((a) => PanelAction(action: a)).toList(),
+      ),
+    );
+  }
+}
+
+class PanelAction extends StatelessWidget {
+  final PanelActionModel action;
+  final HotkeyMapping? hotkeys;
+  final double width;
+  final double height;
+
+  const PanelAction(
+      {required this.action, this.hotkeys, this.width = 64, this.height = 64, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    var hotkey = _getHotkey(context);
+    return GestureDetector(
+      onSecondaryTapDown: (event) => _openActionMenu(context, event.globalPosition),
+      onLongPressEnd: (event) => _openActionMenu(context, event.globalPosition),
+      child: Hoverable(
+        disabled: action.disabled || action.onClick == null,
+        onTap: action.onClick,
+        builder: (hovered) => Container(
+          color: _getBackground(hovered),
+          height: height,
+          width: width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(action.label,
+                  textAlign: TextAlign.center,
+                  style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor())),
+              if (hotkey != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2.0),
+                  child: Text(hotkey.toCapitalCase(),
+                      style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(), fontSize: 10)),
                 ),
-              ),
-            ),
-          );
-        }).toList(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  void _openActionMenu(BuildContext context, PanelAction action, Offset position) {
+  void _openActionMenu(BuildContext context, Offset position) {
     if (action.menu == null || action.disabled) {
       return;
     }
     Platform.of(context).showContextMenu(context: context, menu: action.menu!, position: position);
   }
 
-  String? _getHotkey(HotkeyMapping? hotkeys, PanelAction action) {
+  String? _getHotkey(BuildContext context) {
+    var hotkeys = context.read<HotkeyMapping?>();
     if (hotkeys?.mappings == null) {
       return null;
     }
     return hotkeys!.mappings[action.hotkeyId];
   }
 
-  Color _getBackground(PanelAction action, bool hovered) {
+  Color _getBackground(bool hovered) {
     if (action.disabled == true) {
       return Colors.grey.shade800.withAlpha(128);
     }
@@ -290,14 +301,14 @@ class PanelActions extends StatelessWidget {
     return Colors.grey.shade800;
   }
 
-  Color _getColor(PanelAction action) {
+  Color _getColor() {
     if (action.disabled == true) {
       return Colors.white54;
     }
     return Colors.white;
   }
 
-  Color _getHotkeyColor(PanelAction action) {
+  Color _getHotkeyColor() {
     if (action.disabled == true) {
       return Colors.white24;
     }

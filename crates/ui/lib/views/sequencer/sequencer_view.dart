@@ -90,7 +90,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                     sequenceStates: sequenceStates,
                     searchQuery: searchQuery),
                 actions: [
-                  PanelAction(
+                  PanelActionModel(
                       hotkeyId: "go_forward",
                       label: "Go+",
                       onClick: () => _sequenceGo(state.selectedSequenceId!),
@@ -100,7 +100,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                             label: "Add Midi Mapping",
                             action: () => _addMidiMappingForGo(context, state))
                       ])),
-                  PanelAction(
+                  PanelActionModel(
                       label: "Stop",
                       onClick: () => _sequenceStop(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null,
@@ -109,12 +109,12 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                             label: "Add Midi Mapping",
                             action: () => _addMidiMappingForStop(context, state))
                       ])),
-                  PanelAction(
+                  PanelActionModel(
                       hotkeyId: "delete",
                       label: "Delete",
                       onClick: () => _deleteSequence(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null),
-                  PanelAction(
+                  PanelActionModel(
                       hotkeyId: "duplicate",
                       label: "Duplicate",
                       onClick: () => _duplicateSequence(state.selectedSequenceId!),

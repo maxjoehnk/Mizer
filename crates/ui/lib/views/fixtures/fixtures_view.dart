@@ -68,13 +68,13 @@ class _FixturesViewState extends State<FixturesView>
                   ? this.expandedIds.remove(id)
                   : this.expandedIds.add(id))),
           actions: [
-            PanelAction(
+            PanelActionModel(
                 hotkeyId: "select_all",
                 label: "Select All".i18n,
                 onClick: () => _selectAll(fixtures.fixtures)),
-            PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
-            PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-            PanelAction(
+            PanelActionModel(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
+            PanelActionModel(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
+            PanelActionModel(
                 hotkeyId: "clear",
                 label: "Clear".i18n,
                 onClick: _clear,

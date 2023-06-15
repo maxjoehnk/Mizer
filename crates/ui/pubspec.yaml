@@ -12,7 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   i18n_extension: ^9.0.0
-  protobuf: ^2.1.0
+  protobuf: ^3.0.0
   grpc: ^3.1.0
   fixnum: ^1.0.0
   bloc: ^8.1.0

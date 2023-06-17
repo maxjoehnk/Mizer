@@ -291,4 +291,39 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_programmer()
             .write_offset(request.effect_id, request.effect_offset);
     }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_preset(&self, preset_type: preset_id::PresetType, name: String) {
+        let preset_type: mizer_fixtures::programmer::PresetType = preset_type.into();
+        let value = self
+            .fixture_manager
+            .get_programmer()
+            .get_controls()
+            .iter()
+            .filter(|control| preset_type.contains_control(&control.control))
+            .map(|control| todo!())
+            .collect();
+        self.runtime
+            .run_command(AddPresetCommand {
+                preset_type,
+                name,
+                values: value,
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn store_programmer_to_preset(&self) {}
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn delete_preset(&self, preset_id: PresetId) {
+        self.runtime
+            .run_command(DeletePresetCommand {
+                id: preset_id.into(),
+            })
+            .unwrap();
+    }
 }

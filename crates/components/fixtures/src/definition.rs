@@ -1,4 +1,5 @@
 use std::convert::TryFrom;
+use std::hash::{Hash, Hasher};
 use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
@@ -737,6 +738,68 @@ pub enum FixtureControlValue {
     Frost(f64),
     Gobo(f64),
     Generic(String, f64),
+}
+
+impl Hash for FixtureControlValue {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            Self::Intensity(value) => {
+                state.write_u8(0);
+                value.to_bits().hash(state);
+            }
+            Self::Shutter(value) => {
+                state.write_u8(1);
+                value.to_bits().hash(state);
+            }
+            Self::ColorMixer(r, g, b) => {
+                state.write_u8(2);
+                r.to_bits().hash(state);
+                g.to_bits().hash(state);
+                b.to_bits().hash(state);
+            }
+            Self::ColorWheel(value) => {
+                state.write_u8(3);
+                value.to_bits().hash(state);
+            }
+            Self::Pan(value) => {
+                state.write_u8(4);
+                value.to_bits().hash(state);
+            }
+            Self::Tilt(value) => {
+                state.write_u8(5);
+                value.to_bits().hash(state);
+            }
+            Self::Focus(value) => {
+                state.write_u8(6);
+                value.to_bits().hash(state);
+            }
+            Self::Zoom(value) => {
+                state.write_u8(7);
+                value.to_bits().hash(state);
+            }
+            Self::Prism(value) => {
+                state.write_u8(8);
+                value.to_bits().hash(state);
+            }
+            Self::Iris(value) => {
+                state.write_u8(9);
+                value.to_bits().hash(state);
+            }
+            Self::Frost(value) => {
+                state.write_u8(10);
+                value.to_bits().hash(state);
+            }
+            Self::Gobo(value) => {
+                state.write_u8(11);
+                value.to_bits().hash(state);
+            }
+            Self::Generic(name, value) => {
+                state.write_u8(12);
+                name.hash(state);
+                value.to_bits().hash(state);
+            }
+        }
+    }
 }
 
 impl From<FixtureControlValue> for FixtureControl {

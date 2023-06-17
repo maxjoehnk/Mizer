@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 
 class PresetsState {
   final Presets presets;
@@ -8,6 +9,21 @@ class PresetsState {
   PresetsState({Presets? presets, List<Group>? groups})
       : this.presets = presets ?? Presets(),
         this.groups = groups ?? [];
+
+  List<Preset> getByPresetType(PresetType type) {
+    switch (type) {
+      case PresetType.Intensity:
+        return presets.intensities;
+      case PresetType.Shutter:
+        return presets.shutters;
+      case PresetType.Color:
+        return presets.colors;
+      case PresetType.Position:
+        return presets.positions;
+      default:
+        return [];
+    }
+  }
 }
 
 abstract class PresetsEvent {}

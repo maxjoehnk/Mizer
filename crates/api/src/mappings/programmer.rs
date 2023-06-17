@@ -113,6 +113,17 @@ impl From<mizer_fixtures::programmer::PresetId> for PresetId {
     }
 }
 
+impl From<preset_id::PresetType> for mizer_fixtures::programmer::PresetType {
+    fn from(value: preset_id::PresetType) -> Self {
+        match value {
+            preset_id::PresetType::INTENSITY => Self::Intensity,
+            preset_id::PresetType::SHUTTER => Self::Shutter,
+            preset_id::PresetType::COLOR => Self::Color,
+            preset_id::PresetType::POSITION => Self::Position,
+        }
+    }
+}
+
 impl
     From<(
         mizer_fixtures::programmer::PresetId,
@@ -188,11 +199,23 @@ impl
 }
 
 impl From<mizer_fixtures::programmer::Position> for preset::Position {
-    fn from((pan, tilt): mizer_fixtures::programmer::Position) -> Self {
-        Self {
-            pan,
-            tilt,
-            ..Default::default()
+    fn from(position: mizer_fixtures::programmer::Position) -> Self {
+        use mizer_fixtures::programmer::Position::*;
+
+        match position {
+            Pan(pan) => Self {
+                pan,
+                ..Default::default()
+            },
+            Tilt(tilt) => Self {
+                tilt,
+                ..Default::default()
+            },
+            PanTilt(pan, tilt) => Self {
+                pan,
+                tilt,
+                ..Default::default()
+            },
         }
     }
 }

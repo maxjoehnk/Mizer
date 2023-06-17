@@ -1,15 +1,18 @@
+use std::ops::{Deref, DerefMut};
+use std::sync::{Arc, Mutex, MutexGuard};
+
+use dashmap::DashMap;
+use itertools::Itertools;
+
+use mizer_protocol_dmx::DmxConnectionManager;
+
 use crate::definition::{
-    FixtureControl, FixtureControlType, FixtureDefinition, FixtureFaderControl,
+    FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
 };
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
-use crate::programmer::{Group, Presets, Programmer};
+use crate::programmer::{GenericPreset, Group, Preset, PresetId, PresetType, Presets, Programmer};
 use crate::{FixtureId, FixtureStates, GroupId};
-use dashmap::DashMap;
-use itertools::Itertools;
-use mizer_protocol_dmx::DmxConnectionManager;
-use std::ops::{Deref, DerefMut};
-use std::sync::{Arc, Mutex, MutexGuard};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -84,6 +87,92 @@ impl FixtureManager {
 
     pub fn delete_group(&self, group_id: GroupId) -> Option<Group> {
         self.groups.remove(&group_id).map(|(_, group)| group)
+    }
+
+    pub fn add_preset(
+        &self,
+        name: String,
+        preset_type: PresetType,
+        values: Vec<FixtureControlValue>,
+    ) -> anyhow::Result<GenericPreset> {
+        let preset_id = self.presets.next_id(preset_type);
+        match (preset_type, values.as_slice()) {
+            (PresetType::Intensity, [FixtureControlValue::Intensity(value)]) => {
+                let preset = Preset {
+                    id: preset_id,
+                    value: *value,
+                    label: Some(name),
+                };
+                self.presets.intensity.insert(preset_id, preset.clone());
+
+                Ok(GenericPreset::Intensity(preset))
+            }
+            (PresetType::Shutter, [FixtureControlValue::Shutter(value)]) => {
+                let preset = Preset {
+                    id: preset_id,
+                    value: *value,
+                    label: Some(name),
+                };
+                self.presets.shutter.insert(preset_id, preset.clone());
+
+                Ok(GenericPreset::Shutter(preset))
+            }
+            (PresetType::Color, [FixtureControlValue::ColorMixer(red, green, blue)]) => {
+                let preset = Preset {
+                    id: preset_id,
+                    value: (*red, *green, *blue),
+                    label: Some(name),
+                };
+                self.presets.color.insert(preset_id, preset.clone());
+
+                Ok(GenericPreset::Color(preset))
+            }
+            (PresetType::Position, values) => {
+                let pan = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Pan(value) => Some(*value),
+                    _ => None,
+                });
+                let tilt = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Tilt(value) => Some(*value),
+                    _ => None,
+                });
+                todo!()
+                // let preset = Preset {
+                //     id: preset_id,
+                //     value: (*pan, *tilt),
+                //     label: Some(name),
+                // };
+                // self.presets.position.insert(preset_id, preset.clone());
+                //
+                // Ok(GenericPreset::Position(preset))
+            }
+            _ => Err(anyhow::anyhow!("Invalid preset type/value combination")),
+        }
+    }
+
+    pub fn delete_preset(&self, preset_id: PresetId) -> Option<GenericPreset> {
+        match preset_id {
+            PresetId::Intensity(preset_id) => {
+                let (_, preset) = self.presets.intensity.remove(&preset_id)?;
+
+                Some(GenericPreset::Intensity(preset))
+            }
+            PresetId::Shutter(preset_id) => {
+                let (_, preset) = self.presets.shutter.remove(&preset_id)?;
+
+                Some(GenericPreset::Shutter(preset))
+            }
+            PresetId::Position(preset_id) => {
+                let (_, preset) = self.presets.position.remove(&preset_id)?;
+
+                Some(GenericPreset::Position(preset))
+            }
+            PresetId::Color(preset_id) => {
+                let (_, preset) = self.presets.color.remove(&preset_id)?;
+
+                Some(GenericPreset::Color(preset))
+            }
+        }
     }
 
     pub fn get_fixture(&self, fixture_id: u32) -> Option<impl Deref<Target = Fixture> + '_> {

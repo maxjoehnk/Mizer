@@ -25,6 +25,8 @@ abstract class ProgrammerApi {
 
   Future<void> callEffect(int id);
 
+  Future<void> storeToPreset(PresetId? id);
+
   Future<Groups> getGroups();
 
   Future<void> selectGroup(int id);

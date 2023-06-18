@@ -23,8 +23,8 @@ $(OUT_DIR)/%.pb.dart : $(SRC_DIR)/%.proto
 
 ffi: generate_bindings
 	cargo build -p mizer-ui-ffi
-	mkdir -p ../target/debug/lib
-	cp ../target/debug/libmizer_ui_ffi.so ../target/debug/lib/
+	mkdir -p ../../target/debug/lib
+	cp ../../target/debug/libmizer_ui_ffi.so ../../target/debug/lib/
 
 ffi_release: generate_bindings
 	cargo build --release -p mizer-ui-ffi

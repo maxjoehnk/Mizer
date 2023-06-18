@@ -24,8 +24,8 @@ dependencies:
   collection: ^1.16.0
   nativeshell:
     git:
-      url: https://github.com/nativeshell/nativeshell.git
-      ref: b9199bf
+      url: https://github.com/maxjoehnk/nativeshell.git
+      ref: 98ba14af
       path: nativeshell_dart
   flutter_svg: ^2.0.0
   flex_color_picker: ^3.0.0

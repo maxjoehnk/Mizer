@@ -9,6 +9,6 @@ log = "0.4"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 serde_yaml = "0.8"
-rhai = { version = "1.14", features = ["sync"] }
+rhai = { version = "1.15", features = ["sync"] }
 mizer-midi-messages = { path = "../messages" }
 mizer-util = { path = "../../../../../util" }

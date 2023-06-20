@@ -13,6 +13,30 @@ pub enum Position {
     PanTilt(f64, f64),
 }
 
+impl Position {
+    pub fn from_pan_tilt(pan: Option<f64>, tilt: Option<f64>) -> Option<Position> {
+        match (pan, tilt) {
+            (Some(pan), Some(tilt)) => Some(Self::PanTilt(pan, tilt)),
+            (Some(pan), None) => Some(Self::Pan(pan)),
+            (None, Some(tilt)) => Some(Self::Tilt(tilt)),
+            (None, None) => None,
+        }
+    }
+}
+
+impl From<Position> for Vec<FixtureControlValue> {
+    fn from(value: Position) -> Self {
+        match value {
+            Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
+            Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
+            Position::PanTilt(pan, tilt) => vec![
+                FixtureControlValue::Pan(pan),
+                FixtureControlValue::Tilt(tilt),
+            ],
+        }
+    }
+}
+
 #[derive(Default, Debug, Deserialize, Serialize)]
 pub struct Presets {
     pub intensity: DashMap<u32, Preset<f64>>,

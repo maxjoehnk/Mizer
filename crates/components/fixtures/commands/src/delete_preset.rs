@@ -1,8 +1,9 @@
 use mizer_commander::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{GenericPreset, PresetId};
-use mizer_nodes::NodeDowncast;
+use mizer_nodes::{Node, NodeDowncast};
 use mizer_runtime::commands::DeleteNodeCommand;
+use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, Hash)]
@@ -11,7 +12,11 @@ pub struct DeletePresetCommand {
 }
 
 impl<'a> Command<'a> for DeletePresetCommand {
-    type Dependencies = (Ref<FixtureManager>, SubCommand<DeleteNodeCommand>);
+    type Dependencies = (
+        Ref<FixtureManager>,
+        Ref<PipelineAccess>,
+        SubCommand<DeleteNodeCommand>,
+    );
     type State = (GenericPreset, sub_command!(DeleteNodeCommand));
     type Result = ();
 
@@ -21,8 +26,9 @@ impl<'a> Command<'a> for DeletePresetCommand {
 
     fn apply(
         &self,
-        (fixture_manager, delete_node_runner): (
+        (fixture_manager, pipeline, delete_node_runner): (
             &FixtureManager,
+            &PipelineAccess,
             SubCommandRunner<DeleteNodeCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
@@ -30,30 +36,30 @@ impl<'a> Command<'a> for DeletePresetCommand {
             .delete_preset(self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown preset {}", self.id))?;
 
-        todo!();
-        // let path = pipeline
-        //     .nodes_view
-        //     .iter()
-        //     .find(|node| {
-        //         if let Node::Preset(node) = node.downcast() {
-        //             node.id == self.id
-        //         } else {
-        //             false
-        //         }
-        //     })
-        //     .map(|node| node.key().clone())
-        //     .ok_or_else(|| anyhow::anyhow!("Missing node for preset {}", self.id))?;
-        //
-        // let sub_cmd = DeleteNodeCommand { path };
-        // let (_, state) = delete_node_runner.apply(sub_cmd)?;
-        //
-        // Ok(((), (preset, state)))
+        let path = pipeline
+            .nodes_view
+            .iter()
+            .find(|node| {
+                if let Node::Preset(node) = node.downcast() {
+                    node.id == self.id
+                } else {
+                    false
+                }
+            })
+            .map(|node| node.key().clone())
+            .ok_or_else(|| anyhow::anyhow!("Missing node for preset {}", self.id))?;
+
+        let sub_cmd = DeleteNodeCommand { path };
+        let (_, state) = delete_node_runner.apply(sub_cmd)?;
+
+        Ok(((), (preset, state)))
     }
 
     fn revert(
         &self,
-        (fixture_manager, delete_node_runner): (
+        (fixture_manager, _, delete_node_runner): (
             &FixtureManager,
+            &PipelineAccess,
             SubCommandRunner<DeleteNodeCommand>,
         ),
         (preset, sub_cmd): Self::State,

@@ -11,7 +11,9 @@ use crate::definition::{
 };
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
-use crate::programmer::{GenericPreset, Group, Preset, PresetId, PresetType, Presets, Programmer};
+use crate::programmer::{
+    GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
+};
 use crate::{FixtureId, FixtureStates, GroupId};
 
 #[derive(Clone)]
@@ -136,15 +138,81 @@ impl FixtureManager {
                     FixtureControlValue::Tilt(value) => Some(*value),
                     _ => None,
                 });
-                todo!()
-                // let preset = Preset {
-                //     id: preset_id,
-                //     value: (*pan, *tilt),
-                //     label: Some(name),
-                // };
-                // self.presets.position.insert(preset_id, preset.clone());
-                //
-                // Ok(GenericPreset::Position(preset))
+                let preset = Preset {
+                    id: preset_id,
+                    value: Position::from_pan_tilt(pan, tilt)
+                        .ok_or_else(|| anyhow::anyhow!("Invalid preset type/value combination"))?,
+                    label,
+                };
+                self.presets.position.insert(preset_id, preset.clone());
+
+                Ok(GenericPreset::Position(preset))
+            }
+            _ => Err(anyhow::anyhow!("Invalid preset type/value combination")),
+        }
+    }
+
+    pub fn store_in_preset(
+        &self,
+        preset_id: PresetId,
+        mut values: Vec<FixtureControlValue>,
+    ) -> anyhow::Result<Vec<FixtureControlValue>> {
+        match (preset_id, values.as_mut_slice()) {
+            (PresetId::Intensity(preset_id), [FixtureControlValue::Intensity(value)]) => {
+                let mut preset = self
+                    .presets
+                    .intensity
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+                std::mem::swap(&mut preset.value, value);
+
+                Ok(vec![FixtureControlValue::Intensity(*value)])
+            }
+            (PresetId::Shutter(preset_id), [FixtureControlValue::Shutter(value)]) => {
+                let mut preset = self
+                    .presets
+                    .shutter
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+                std::mem::swap(&mut preset.value, value);
+
+                Ok(vec![FixtureControlValue::Shutter(*value)])
+            }
+            (PresetId::Color(preset_id), [FixtureControlValue::ColorMixer(red, green, blue)]) => {
+                let mut preset = self
+                    .presets
+                    .color
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+                let mut value = (*red, *green, *blue);
+
+                std::mem::swap(&mut preset.value, &mut value);
+
+                Ok(vec![FixtureControlValue::ColorMixer(
+                    value.0, value.1, value.2,
+                )])
+            }
+            (PresetId::Position(preset_id), values) => {
+                let pan = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Pan(value) => Some(*value),
+                    _ => None,
+                });
+                let tilt = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Tilt(value) => Some(*value),
+                    _ => None,
+                });
+                let mut preset = self
+                    .presets
+                    .position
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+
+                let mut value = Position::from_pan_tilt(pan, tilt)
+                    .ok_or_else(|| anyhow::anyhow!("Invalid preset type/value combination"))?;
+
+                std::mem::swap(&mut preset.value, &mut value);
+
+                Ok(value.into())
             }
             _ => Err(anyhow::anyhow!("Invalid preset type/value combination")),
         }

@@ -3,6 +3,7 @@ use crate::models::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use mizer_command_executor::*;
+use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::ProgrammerView;
 use mizer_fixtures::GroupId;
@@ -299,15 +300,38 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         preset_type: preset_id::PresetType,
         name: Option<String>,
     ) -> anyhow::Result<()> {
-        let preset_type: mizer_fixtures::programmer::PresetType = preset_type.into();
-        let value = self
-            .fixture_manager
+        self.runtime.run_command(AddPresetCommand {
+            preset_type: preset_type.into(),
+            name,
+            values: self.get_preset_values(preset_type.into()),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
+        let value = self.get_preset_values(preset_id.type_.unwrap().into());
+
+        self.runtime.run_command(StoreInPresetCommand {
+            id: preset_id.into(),
+            values: value,
+        })?;
+
+        Ok(())
+    }
+
+    fn get_preset_values(
+        &self,
+        preset_type: mizer_fixtures::programmer::PresetType,
+    ) -> Vec<FixtureControlValue> {
+        self.fixture_manager
             .get_programmer()
             .get_controls()
             .iter()
             .filter(|control| preset_type.contains_control(&control.control))
             .map(|control| {
-                use mizer_fixtures::definition::FixtureControlValue;
                 use mizer_fixtures::definition::FixtureFaderControl::*;
 
                 match &control.control {
@@ -328,21 +352,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                     }
                 }
             })
-            .collect();
-
-        self.runtime.run_command(AddPresetCommand {
-            preset_type,
-            name,
-            values: value,
-        })?;
-
-        Ok(())
-    }
-
-    #[tracing::instrument(skip(self))]
-    #[profiling::function]
-    pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
-        Ok(())
+            .collect()
     }
 
     #[tracing::instrument(skip(self))]

@@ -31,7 +31,7 @@ class SelectPresetDialog extends StatelessWidget {
                 .map((preset) => Tile(
                     title: preset.id.id.toString(),
                     child: Center(child: Text(preset.label ?? "")),
-                    onClick: () => Navigator.of(context).pop(preset)))
+                    onClick: () => Navigator.of(context).pop(preset.id)))
                 .toList()),
       ),
       actions: [

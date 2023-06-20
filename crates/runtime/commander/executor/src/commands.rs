@@ -65,6 +65,7 @@ command_impl! {
     AssignFixturesToGroupCommand,
     UpdateFixtureCommand,
     AddPresetCommand,
+    StoreInPresetCommand,
     DeletePresetCommand,
     RenamePresetCommand,
     AddNodeCommand,

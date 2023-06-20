@@ -36,7 +36,7 @@ class SelectPresetDialog extends StatelessWidget {
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Preset", () => Navigator.of(context).pop())
+        PopupAction("New Preset", () => Navigator.of(context).pop(presetType))
       ],
     );
   }

@@ -25,7 +25,10 @@ abstract class ProgrammerApi {
 
   Future<void> callEffect(int id);
 
-  Future<void> storeToPreset(PresetId? id);
+  Future<void> storePreset(StorePresetRequest request);
+
+  Future<void> deletePreset(PresetId id);
+  Future<void> renamePreset(PresetId id, String name);
 
   Future<Groups> getGroups();
 

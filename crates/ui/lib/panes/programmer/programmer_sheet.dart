@@ -143,12 +143,16 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
       return;
     }
     var presetsBloc = context.read<PresetsBloc>();
-    Preset? preset = await showDialog(
+    dynamic result = await showDialog(
         context: context, builder: (context) => SelectPresetDialog(presetType, presetsBloc.state));
-    if (preset == null) {
+    if (result == null) {
       return;
     }
-    // await programmerApi.assignFixturesToPreset(widget.fixtures.map((e) => e.id).toList(), preset);
+    if (result is PresetId) {
+      presetsBloc.add(StorePresets.existing(result));
+    } else if (result is PresetType) {
+      presetsBloc.add(StorePresets.newPreset(result, null));
+    }
   }
 
   _storeToSequence() async {

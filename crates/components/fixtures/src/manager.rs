@@ -91,7 +91,7 @@ impl FixtureManager {
 
     pub fn add_preset(
         &self,
-        name: String,
+        label: Option<String>,
         preset_type: PresetType,
         values: Vec<FixtureControlValue>,
     ) -> anyhow::Result<GenericPreset> {
@@ -101,7 +101,7 @@ impl FixtureManager {
                 let preset = Preset {
                     id: preset_id,
                     value: *value,
-                    label: Some(name),
+                    label,
                 };
                 self.presets.intensity.insert(preset_id, preset.clone());
 
@@ -111,7 +111,7 @@ impl FixtureManager {
                 let preset = Preset {
                     id: preset_id,
                     value: *value,
-                    label: Some(name),
+                    label,
                 };
                 self.presets.shutter.insert(preset_id, preset.clone());
 
@@ -121,7 +121,7 @@ impl FixtureManager {
                 let preset = Preset {
                     id: preset_id,
                     value: (*red, *green, *blue),
-                    label: Some(name),
+                    label,
                 };
                 self.presets.color.insert(preset_id, preset.clone());
 

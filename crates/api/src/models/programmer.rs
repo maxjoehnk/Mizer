@@ -3659,6 +3659,565 @@ impl ::protobuf::reflect::ProtobufValue for StoreResponse {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.StorePresetRequest)
+pub struct StorePresetRequest {
+    // message oneof groups
+    pub target: ::std::option::Option<store_preset_request::Target>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.StorePresetRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a StorePresetRequest {
+    fn default() -> &'a StorePresetRequest {
+        <StorePresetRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StorePresetRequest {
+    pub fn new() -> StorePresetRequest {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.programmer.PresetId existing = 1;
+
+    pub fn existing(&self) -> &PresetId {
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::Existing(ref v)) => v,
+            _ => <PresetId as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_existing(&mut self) {
+        self.target = ::std::option::Option::None;
+    }
+
+    pub fn has_existing(&self) -> bool {
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::Existing(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_existing(&mut self, v: PresetId) {
+        self.target = ::std::option::Option::Some(store_preset_request::Target::Existing(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_existing(&mut self) -> &mut PresetId {
+        if let ::std::option::Option::Some(store_preset_request::Target::Existing(_)) = self.target {
+        } else {
+            self.target = ::std::option::Option::Some(store_preset_request::Target::Existing(PresetId::new()));
+        }
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::Existing(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_existing(&mut self) -> PresetId {
+        if self.has_existing() {
+            match self.target.take() {
+                ::std::option::Option::Some(store_preset_request::Target::Existing(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            PresetId::new()
+        }
+    }
+
+    // .mizer.programmer.StorePresetRequest.NewPreset new_preset = 2;
+
+    pub fn new_preset(&self) -> &store_preset_request::NewPreset {
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::NewPreset(ref v)) => v,
+            _ => <store_preset_request::NewPreset as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_new_preset(&mut self) {
+        self.target = ::std::option::Option::None;
+    }
+
+    pub fn has_new_preset(&self) -> bool {
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::NewPreset(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_new_preset(&mut self, v: store_preset_request::NewPreset) {
+        self.target = ::std::option::Option::Some(store_preset_request::Target::NewPreset(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_new_preset(&mut self) -> &mut store_preset_request::NewPreset {
+        if let ::std::option::Option::Some(store_preset_request::Target::NewPreset(_)) = self.target {
+        } else {
+            self.target = ::std::option::Option::Some(store_preset_request::Target::NewPreset(store_preset_request::NewPreset::new()));
+        }
+        match self.target {
+            ::std::option::Option::Some(store_preset_request::Target::NewPreset(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_new_preset(&mut self) -> store_preset_request::NewPreset {
+        if self.has_new_preset() {
+            match self.target.take() {
+                ::std::option::Option::Some(store_preset_request::Target::NewPreset(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            store_preset_request::NewPreset::new()
+        }
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(1);
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PresetId>(
+            "existing",
+            StorePresetRequest::has_existing,
+            StorePresetRequest::existing,
+            StorePresetRequest::mut_existing,
+            StorePresetRequest::set_existing,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, store_preset_request::NewPreset>(
+            "new_preset",
+            StorePresetRequest::has_new_preset,
+            StorePresetRequest::new_preset,
+            StorePresetRequest::mut_new_preset,
+            StorePresetRequest::set_new_preset,
+        ));
+        oneofs.push(store_preset_request::Target::generated_oneof_descriptor_data());
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StorePresetRequest>(
+            "StorePresetRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for StorePresetRequest {
+    const NAME: &'static str = "StorePresetRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.target = ::std::option::Option::Some(store_preset_request::Target::Existing(is.read_message()?));
+                },
+                18 => {
+                    self.target = ::std::option::Option::Some(store_preset_request::Target::NewPreset(is.read_message()?));
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.target {
+            match v {
+                &store_preset_request::Target::Existing(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+                &store_preset_request::Target::NewPreset(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let ::std::option::Option::Some(ref v) = self.target {
+            match v {
+                &store_preset_request::Target::Existing(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                },
+                &store_preset_request::Target::NewPreset(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> StorePresetRequest {
+        StorePresetRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.target = ::std::option::Option::None;
+        self.target = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static StorePresetRequest {
+        static instance: StorePresetRequest = StorePresetRequest {
+            target: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for StorePresetRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("StorePresetRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for StorePresetRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StorePresetRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `StorePresetRequest`
+pub mod store_preset_request {
+
+    #[derive(Clone,PartialEq,Debug)]
+    #[non_exhaustive]
+    // @@protoc_insertion_point(oneof:mizer.programmer.StorePresetRequest.target)
+    pub enum Target {
+        // @@protoc_insertion_point(oneof_field:mizer.programmer.StorePresetRequest.existing)
+        Existing(super::PresetId),
+        // @@protoc_insertion_point(oneof_field:mizer.programmer.StorePresetRequest.new_preset)
+        NewPreset(NewPreset),
+    }
+
+    impl ::protobuf::Oneof for Target {
+    }
+
+    impl ::protobuf::OneofFull for Target {
+        fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| <super::StorePresetRequest as ::protobuf::MessageFull>::descriptor().oneof_by_name("target").unwrap()).clone()
+        }
+    }
+
+    impl Target {
+        pub(in super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+            ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Target>("target")
+        }
+    }
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.programmer.StorePresetRequest.NewPreset)
+    pub struct NewPreset {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.programmer.StorePresetRequest.NewPreset.type)
+        pub type_: ::protobuf::EnumOrUnknown<super::preset_id::PresetType>,
+        // @@protoc_insertion_point(field:mizer.programmer.StorePresetRequest.NewPreset.label)
+        pub label: ::std::option::Option<::std::string::String>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.programmer.StorePresetRequest.NewPreset.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a NewPreset {
+        fn default() -> &'a NewPreset {
+            <NewPreset as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl NewPreset {
+        pub fn new() -> NewPreset {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "type",
+                |m: &NewPreset| { &m.type_ },
+                |m: &mut NewPreset| { &mut m.type_ },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "label",
+                |m: &NewPreset| { &m.label },
+                |m: &mut NewPreset| { &mut m.label },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NewPreset>(
+                "StorePresetRequest.NewPreset",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for NewPreset {
+        const NAME: &'static str = "NewPreset";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.type_ = is.read_enum_or_unknown()?;
+                    },
+                    18 => {
+                        self.label = ::std::option::Option::Some(is.read_string()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.type_ != ::protobuf::EnumOrUnknown::new(super::preset_id::PresetType::INTENSITY) {
+                my_size += ::protobuf::rt::int32_size(1, self.type_.value());
+            }
+            if let Some(v) = self.label.as_ref() {
+                my_size += ::protobuf::rt::string_size(2, &v);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.type_ != ::protobuf::EnumOrUnknown::new(super::preset_id::PresetType::INTENSITY) {
+                os.write_enum(1, ::protobuf::EnumOrUnknown::value(&self.type_))?;
+            }
+            if let Some(v) = self.label.as_ref() {
+                os.write_string(2, v)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> NewPreset {
+            NewPreset::new()
+        }
+
+        fn clear(&mut self) {
+            self.type_ = ::protobuf::EnumOrUnknown::new(super::preset_id::PresetType::INTENSITY);
+            self.label = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static NewPreset {
+            static instance: NewPreset = NewPreset {
+                type_: ::protobuf::EnumOrUnknown::from_i32(0),
+                label: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for NewPreset {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("StorePresetRequest.NewPreset").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for NewPreset {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for NewPreset {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.RenamePresetRequest)
+pub struct RenamePresetRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.programmer.RenamePresetRequest.id)
+    pub id: ::protobuf::MessageField<PresetId>,
+    // @@protoc_insertion_point(field:mizer.programmer.RenamePresetRequest.label)
+    pub label: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.RenamePresetRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a RenamePresetRequest {
+    fn default() -> &'a RenamePresetRequest {
+        <RenamePresetRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RenamePresetRequest {
+    pub fn new() -> RenamePresetRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, PresetId>(
+            "id",
+            |m: &RenamePresetRequest| { &m.id },
+            |m: &mut RenamePresetRequest| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "label",
+            |m: &RenamePresetRequest| { &m.label },
+            |m: &mut RenamePresetRequest| { &mut m.label },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RenamePresetRequest>(
+            "RenamePresetRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for RenamePresetRequest {
+    const NAME: &'static str = "RenamePresetRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.id)?;
+                },
+                18 => {
+                    self.label = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if let Some(v) = self.id.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
+        if !self.label.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.label);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.id.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
+        if !self.label.is_empty() {
+            os.write_string(2, &self.label)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> RenamePresetRequest {
+        RenamePresetRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.id.clear();
+        self.label.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static RenamePresetRequest {
+        static instance: RenamePresetRequest = RenamePresetRequest {
+            id: ::protobuf::MessageField::none(),
+            label: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for RenamePresetRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("RenamePresetRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for RenamePresetRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RenamePresetRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.programmer.PresetsRequest)
 pub struct PresetsRequest {
     // special fields
@@ -6179,7 +6738,15 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     est.ModeR\tstoreMode\x12\x1a\n\x06cue_id\x18\x03\x20\x01(\rH\0R\x05cueId\
     \x88\x01\x01\"-\n\x04Mode\x12\r\n\tOVERWRITE\x10\0\x12\t\n\x05MERGE\x10\
     \x01\x12\x0b\n\x07ADD_CUE\x10\x02B\t\n\x07_cue_id\"\x0f\n\rStoreResponse\
-    \"\x10\n\x0ePresetsRequest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\
+    \"\x96\x02\n\x12StorePresetRequest\x128\n\x08existing\x18\x01\x20\x01(\
+    \x0b2\x1a.mizer.programmer.PresetIdH\0R\x08existing\x12O\n\nnew_preset\
+    \x18\x02\x20\x01(\x0b2..mizer.programmer.StorePresetRequest.NewPresetH\0\
+    R\tnewPreset\x1ak\n\tNewPreset\x129\n\x04type\x18\x01\x20\x01(\x0e2%.miz\
+    er.programmer.PresetId.PresetTypeR\x04type\x12\x19\n\x05label\x18\x02\
+    \x20\x01(\tH\0R\x05label\x88\x01\x01B\x08\n\x06_labelB\x08\n\x06target\"\
+    W\n\x13RenamePresetRequest\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.\
+    programmer.PresetIdR\x02id\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05lab\
+    el\"\x10\n\x0ePresetsRequest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\
     \x01\x20\x01(\rR\x02id\x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.progr\
     ammer.PresetId.PresetTypeR\x04type\"A\n\nPresetType\x12\r\n\tINTENSITY\
     \x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\x10\x02\x12\x0c\n\
@@ -6254,7 +6821,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(41);
+            let mut messages = ::std::vec::Vec::with_capacity(44);
             messages.push(SubscribeProgrammerRequest::generated_message_descriptor_data());
             messages.push(ProgrammerState::generated_message_descriptor_data());
             messages.push(FixtureSelection::generated_message_descriptor_data());
@@ -6276,6 +6843,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(HighlightResponse::generated_message_descriptor_data());
             messages.push(StoreRequest::generated_message_descriptor_data());
             messages.push(StoreResponse::generated_message_descriptor_data());
+            messages.push(StorePresetRequest::generated_message_descriptor_data());
+            messages.push(RenamePresetRequest::generated_message_descriptor_data());
             messages.push(PresetsRequest::generated_message_descriptor_data());
             messages.push(PresetId::generated_message_descriptor_data());
             messages.push(Presets::generated_message_descriptor_data());
@@ -6294,6 +6863,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(fixture_selection::GroupedFixtureList::generated_message_descriptor_data());
             messages.push(programmer_channel::GenericValue::generated_message_descriptor_data());
             messages.push(write_control_request::GenericValue::generated_message_descriptor_data());
+            messages.push(store_preset_request::NewPreset::generated_message_descriptor_data());
             messages.push(preset::Color::generated_message_descriptor_data());
             messages.push(preset::Position::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(3);

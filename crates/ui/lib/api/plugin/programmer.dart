@@ -175,4 +175,20 @@ class ProgrammerPluginApi implements ProgrammerApi {
     var request = WriteEffectRateRequest(effectId: effectId, effectRate: effectRate);
     await channel.invokeMethod("writeEffectRate", request.writeToBuffer());
   }
+
+  @override
+  Future<void> storePreset(StorePresetRequest request) async {
+    await channel.invokeMethod("storePreset", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> deletePreset(PresetId id) async {
+    await channel.invokeMethod("deletePreset", id.writeToBuffer());
+  }
+
+  @override
+  Future<void> renamePreset(PresetId id, String name) async {
+    var req = RenamePresetRequest(id: id, label: name);
+    await channel.invokeMethod("renamePreset", req.writeToBuffer());
+  }
 }

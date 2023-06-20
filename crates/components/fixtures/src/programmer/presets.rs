@@ -1,7 +1,6 @@
 use std::fmt::{Display, Formatter};
 
 use dashmap::DashMap;
-use mizer_node::NodeSettingValue::Float;
 use serde::{Deserialize, Serialize};
 
 use crate::definition::{FixtureControlValue, FixtureFaderControl};
@@ -65,6 +64,15 @@ impl Presets {
             GenericPreset::Position(preset) => {
                 self.position.insert(preset.id, preset);
             }
+        }
+    }
+
+    pub fn get_mut(&self, id: &PresetId) -> Option<GenericPresetMut> {
+        match id {
+            PresetId::Intensity(id) => self.intensity.get_mut(id).map(GenericPresetMut::Intensity),
+            PresetId::Shutter(id) => self.shutter.get_mut(id).map(GenericPresetMut::Shutter),
+            PresetId::Color(id) => self.color.get_mut(id).map(GenericPresetMut::Color),
+            PresetId::Position(id) => self.position.get_mut(id).map(GenericPresetMut::Position),
         }
     }
 
@@ -201,6 +209,24 @@ impl GenericPreset {
             GenericPreset::Shutter(preset) => PresetId::Shutter(preset.id),
             GenericPreset::Color(preset) => PresetId::Color(preset.id),
             GenericPreset::Position(preset) => PresetId::Position(preset.id),
+        }
+    }
+}
+
+pub enum GenericPresetMut<'a> {
+    Intensity(dashmap::mapref::one::RefMut<'a, u32, Preset<f64>>),
+    Shutter(dashmap::mapref::one::RefMut<'a, u32, Preset<f64>>),
+    Color(dashmap::mapref::one::RefMut<'a, u32, Preset<Color>>),
+    Position(dashmap::mapref::one::RefMut<'a, u32, Preset<Position>>),
+}
+
+impl GenericPresetMut<'_> {
+    pub fn name_mut(&mut self) -> &mut Option<String> {
+        match self {
+            GenericPresetMut::Intensity(preset) => &mut preset.label,
+            GenericPresetMut::Shutter(preset) => &mut preset.label,
+            GenericPresetMut::Color(preset) => &mut preset.label,
+            GenericPresetMut::Position(preset) => &mut preset.label,
         }
     }
 }

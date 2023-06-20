@@ -49,6 +49,49 @@ class RenameGroup extends PresetsEvent {
   RenameGroup(this.groupId, this.name);
 }
 
+class StorePresets extends PresetsEvent {
+  final StorePresetRequest request;
+
+  StorePresets(this.request);
+
+  factory StorePresets.existing(PresetId id) {
+    return StorePresets(StorePresetRequest(existing: id));
+  }
+
+  factory StorePresets.newPreset(PresetType type, String? label) {
+    return StorePresets(StorePresetRequest(
+        newPreset: StorePresetRequest_NewPreset(type: type.into(), label: label)));
+  }
+}
+
+class DeletePreset extends PresetsEvent {
+  final PresetId presetId;
+
+  DeletePreset(this.presetId);
+}
+
+class RenamePreset extends PresetsEvent {
+  final PresetId presetId;
+  final String name;
+
+  RenamePreset(this.presetId, this.name);
+}
+
+extension ConvertPresetType on PresetType {
+  PresetId_PresetType into() {
+    switch (this) {
+      case PresetType.Intensity:
+        return PresetId_PresetType.INTENSITY;
+      case PresetType.Shutter:
+        return PresetId_PresetType.SHUTTER;
+      case PresetType.Color:
+        return PresetId_PresetType.COLOR;
+      case PresetType.Position:
+        return PresetId_PresetType.POSITION;
+    }
+  }
+}
+
 class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
   final ProgrammerApi api;
 
@@ -72,6 +115,18 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
     });
     on<RenameGroup>((event, emit) async {
       await this.api.renameGroup(event.groupId, event.name);
+      this.add(FetchPresets());
+    });
+    on<StorePresets>((event, emit) async {
+      await this.api.storePreset(event.request);
+      this.add(FetchPresets());
+    });
+    on<DeletePreset>((event, emit) async {
+      await this.api.deletePreset(event.presetId);
+      this.add(FetchPresets());
+    });
+    on<RenamePreset>((event, emit) async {
+      await this.api.renamePreset(event.presetId, event.name);
       this.add(FetchPresets());
     });
     this.add(FetchPresets());

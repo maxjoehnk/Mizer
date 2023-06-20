@@ -66,6 +66,7 @@ command_impl! {
     UpdateFixtureCommand,
     AddPresetCommand,
     DeletePresetCommand,
+    RenamePresetCommand,
     AddNodeCommand,
     DeleteNodeCommand,
     DuplicateNodeCommand,

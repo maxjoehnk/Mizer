@@ -294,7 +294,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn add_preset(&self, preset_type: preset_id::PresetType, name: String) {
+    pub fn add_preset(
+        &self,
+        preset_type: preset_id::PresetType,
+        name: Option<String>,
+    ) -> anyhow::Result<()> {
         let preset_type: mizer_fixtures::programmer::PresetType = preset_type.into();
         let value = self
             .fixture_manager
@@ -302,20 +306,44 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_controls()
             .iter()
             .filter(|control| preset_type.contains_control(&control.control))
-            .map(|control| todo!())
-            .collect();
-        self.runtime
-            .run_command(AddPresetCommand {
-                preset_type,
-                name,
-                values: value,
+            .map(|control| {
+                use mizer_fixtures::definition::FixtureControlValue;
+                use mizer_fixtures::definition::FixtureFaderControl::*;
+
+                match &control.control {
+                    Intensity => FixtureControlValue::Intensity(control.value),
+                    Shutter => FixtureControlValue::Shutter(control.value),
+                    Pan => FixtureControlValue::Pan(control.value),
+                    Tilt => FixtureControlValue::Tilt(control.value),
+                    Focus => FixtureControlValue::Focus(control.value),
+                    Zoom => FixtureControlValue::Zoom(control.value),
+                    Prism => FixtureControlValue::Prism(control.value),
+                    Iris => FixtureControlValue::Iris(control.value),
+                    Frost => FixtureControlValue::Frost(control.value),
+                    Gobo => FixtureControlValue::Gobo(control.value),
+                    ColorMixer(_) => FixtureControlValue::ColorMixer(0., 0., 0.),
+                    ColorWheel => FixtureControlValue::ColorWheel(control.value),
+                    Generic(channel) => {
+                        FixtureControlValue::Generic(channel.clone(), control.value)
+                    }
+                }
             })
-            .unwrap();
+            .collect();
+
+        self.runtime.run_command(AddPresetCommand {
+            preset_type,
+            name,
+            values: value,
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn store_programmer_to_preset(&self) {}
+    pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
+        Ok(())
+    }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
@@ -323,6 +351,17 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.runtime
             .run_command(DeletePresetCommand {
                 id: preset_id.into(),
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn rename_preset(&self, preset_id: PresetId, label: String) {
+        self.runtime
+            .run_command(RenamePresetCommand {
+                id: preset_id.into(),
+                label,
             })
             .unwrap();
     }

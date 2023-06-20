@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct AddPresetCommand {
-    pub name: String,
+    pub name: Option<String>,
     pub preset_type: PresetType,
     pub values: Vec<FixtureControlValue>,
 }
@@ -20,7 +20,11 @@ impl<'a> Command<'a> for AddPresetCommand {
     type Result = GenericPreset;
 
     fn label(&self) -> String {
-        format!("Add {} Preset {}", self.preset_type, self.name)
+        format!(
+            "Add {} Preset {}",
+            self.preset_type,
+            self.name.as_deref().unwrap_or_default()
+        )
     }
 
     fn apply(

@@ -148,6 +148,23 @@ message StoreRequest {
 message StoreResponse {
 }
 
+message StorePresetRequest {
+  oneof target {
+    PresetId existing = 1;
+    NewPreset new_preset = 2;
+  }
+
+  message NewPreset {
+    PresetId.PresetType type = 1;
+    optional string label = 2;
+  }
+}
+
+message RenamePresetRequest {
+  PresetId id = 1;
+  string label = 2;
+}
+
 message PresetsRequest {
 }
 

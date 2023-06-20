@@ -276,6 +276,44 @@ const StoreResponse$json = const {
 
 /// Descriptor for `StoreResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List storeResponseDescriptor = $convert.base64Decode('Cg1TdG9yZVJlc3BvbnNl');
+@$core.Deprecated('Use storePresetRequestDescriptor instead')
+const StorePresetRequest$json = const {
+  '1': 'StorePresetRequest',
+  '2': const [
+    const {'1': 'existing', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '9': 0, '10': 'existing'},
+    const {'1': 'new_preset', '3': 2, '4': 1, '5': 11, '6': '.mizer.programmer.StorePresetRequest.NewPreset', '9': 0, '10': 'newPreset'},
+  ],
+  '3': const [StorePresetRequest_NewPreset$json],
+  '8': const [
+    const {'1': 'target'},
+  ],
+};
+
+@$core.Deprecated('Use storePresetRequestDescriptor instead')
+const StorePresetRequest_NewPreset$json = const {
+  '1': 'NewPreset',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.programmer.PresetId.PresetType', '10': 'type'},
+    const {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'label', '17': true},
+  ],
+  '8': const [
+    const {'1': '_label'},
+  ],
+};
+
+/// Descriptor for `StorePresetRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List storePresetRequestDescriptor = $convert.base64Decode('ChJTdG9yZVByZXNldFJlcXVlc3QSOAoIZXhpc3RpbmcYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkSABSCGV4aXN0aW5nEk8KCm5ld19wcmVzZXQYAiABKAsyLi5taXplci5wcm9ncmFtbWVyLlN0b3JlUHJlc2V0UmVxdWVzdC5OZXdQcmVzZXRIAFIJbmV3UHJlc2V0GmsKCU5ld1ByZXNldBI5CgR0eXBlGAEgASgOMiUubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRJZC5QcmVzZXRUeXBlUgR0eXBlEhkKBWxhYmVsGAIgASgJSABSBWxhYmVsiAEBQggKBl9sYWJlbEIICgZ0YXJnZXQ=');
+@$core.Deprecated('Use renamePresetRequestDescriptor instead')
+const RenamePresetRequest$json = const {
+  '1': 'RenamePresetRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'id'},
+    const {'1': 'label', '3': 2, '4': 1, '5': 9, '10': 'label'},
+  ],
+};
+
+/// Descriptor for `RenamePresetRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List renamePresetRequestDescriptor = $convert.base64Decode('ChNSZW5hbWVQcmVzZXRSZXF1ZXN0EioKAmlkGAEgASgLMhoubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRJZFICaWQSFAoFbGFiZWwYAiABKAlSBWxhYmVs');
 @$core.Deprecated('Use presetsRequestDescriptor instead')
 const PresetsRequest$json = const {
   '1': 'PresetsRequest',

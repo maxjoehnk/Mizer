@@ -6,6 +6,7 @@ pub use delete_group::*;
 pub use delete_preset::*;
 pub use patch_fixtures::*;
 pub use rename_group::*;
+pub use rename_preset::*;
 pub use update_fixture::*;
 
 mod add_group;
@@ -16,4 +17,5 @@ mod delete_group;
 mod delete_preset;
 mod patch_fixtures;
 mod rename_group;
+mod rename_preset;
 mod update_fixture;

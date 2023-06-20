@@ -6,6 +6,7 @@ import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
+import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
@@ -82,13 +83,34 @@ class ColorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PresetButton(
-        child: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
-        ),
-        preset: preset);
+    return ContextMenu(
+      menu: Menu(items: [
+        MenuItem(label: "Rename", action: () => _renamePreset(context)),
+        MenuItem(label: "Delete", action: () => _deletePreset(context)),
+      ]),
+      child: PresetButton(
+          child: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
+          ),
+          preset: preset),
+    );
+  }
+
+  void _renamePreset(BuildContext context) async {
+    var name = await showDialog(
+        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+    if (name == null) {
+      return;
+    }
+    PresetsBloc state = context.read();
+    state.add(RenamePreset(preset.id, name));
+  }
+
+  void _deletePreset(BuildContext context) async {
+    PresetsBloc state = context.read();
+    state.add(DeletePreset(preset.id));
   }
 }
 

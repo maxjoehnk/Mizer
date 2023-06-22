@@ -3764,6 +3764,7 @@ dependencies = [
  "enum-iterator",
  "flume",
  "futures",
+ "itertools",
  "lazy_static",
  "log",
  "mizer-clock",

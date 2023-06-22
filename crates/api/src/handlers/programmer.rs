@@ -2,6 +2,7 @@ use crate::models::fixtures::*;
 use crate::models::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
+use itertools::Itertools;
 use mizer_command_executor::*;
 use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
@@ -109,6 +110,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .intensity_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             shutters: self
@@ -116,6 +118,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .shutter_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             colors: self
@@ -123,6 +126,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .color_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             positions: self
@@ -130,6 +134,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .position_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             ..Default::default()
@@ -328,30 +333,10 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     ) -> Vec<FixtureControlValue> {
         self.fixture_manager
             .get_programmer()
-            .get_controls()
-            .iter()
-            .filter(|control| preset_type.contains_control(&control.control))
-            .map(|control| {
-                use mizer_fixtures::definition::FixtureFaderControl::*;
-
-                match &control.control {
-                    Intensity => FixtureControlValue::Intensity(control.value),
-                    Shutter => FixtureControlValue::Shutter(control.value),
-                    Pan => FixtureControlValue::Pan(control.value),
-                    Tilt => FixtureControlValue::Tilt(control.value),
-                    Focus => FixtureControlValue::Focus(control.value),
-                    Zoom => FixtureControlValue::Zoom(control.value),
-                    Prism => FixtureControlValue::Prism(control.value),
-                    Iris => FixtureControlValue::Iris(control.value),
-                    Frost => FixtureControlValue::Frost(control.value),
-                    Gobo => FixtureControlValue::Gobo(control.value),
-                    ColorMixer(_) => FixtureControlValue::ColorMixer(0., 0., 0.),
-                    ColorWheel => FixtureControlValue::ColorWheel(control.value),
-                    Generic(channel) => {
-                        FixtureControlValue::Generic(channel.clone(), control.value)
-                    }
-                }
-            })
+            .get_channels()
+            .into_iter()
+            .map(|control| control.value)
+            .filter(|value| preset_type.contains_control(value))
             .collect()
     }
 

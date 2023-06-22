@@ -98,38 +98,61 @@ impl FixtureManager {
         values: Vec<FixtureControlValue>,
     ) -> anyhow::Result<GenericPreset> {
         let preset_id = self.presets.next_id(preset_type);
-        match (preset_type, values.as_slice()) {
-            (PresetType::Intensity, [FixtureControlValue::Intensity(value)]) => {
+        match preset_type {
+            PresetType::Intensity => {
+                let value = values
+                    .iter()
+                    .find_map(|v| match v {
+                        FixtureControlValue::Intensity(value) => Some(*value),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing intensity value in programmer"))?;
                 let preset = Preset {
                     id: preset_id,
-                    value: *value,
+                    value,
                     label,
                 };
                 self.presets.intensity.insert(preset_id, preset.clone());
 
                 Ok(GenericPreset::Intensity(preset))
             }
-            (PresetType::Shutter, [FixtureControlValue::Shutter(value)]) => {
+            PresetType::Shutter => {
+                let value = values
+                    .iter()
+                    .find_map(|v| match v {
+                        FixtureControlValue::Shutter(value) => Some(*value),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing shutter value in programmer"))?;
                 let preset = Preset {
                     id: preset_id,
-                    value: *value,
+                    value,
                     label,
                 };
                 self.presets.shutter.insert(preset_id, preset.clone());
 
                 Ok(GenericPreset::Shutter(preset))
             }
-            (PresetType::Color, [FixtureControlValue::ColorMixer(red, green, blue)]) => {
+            PresetType::Color => {
+                let value = values
+                    .iter()
+                    .find_map(|v| match v {
+                        FixtureControlValue::ColorMixer(red, green, blue) => {
+                            Some((*red, *green, *blue))
+                        }
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing color value in programmer"))?;
                 let preset = Preset {
                     id: preset_id,
-                    value: (*red, *green, *blue),
+                    value,
                     label,
                 };
                 self.presets.color.insert(preset_id, preset.clone());
 
                 Ok(GenericPreset::Color(preset))
             }
-            (PresetType::Position, values) => {
+            PresetType::Position => {
                 let pan = values.iter().find_map(|v| match v {
                     FixtureControlValue::Pan(value) => Some(*value),
                     _ => None,
@@ -148,7 +171,6 @@ impl FixtureManager {
 
                 Ok(GenericPreset::Position(preset))
             }
-            _ => Err(anyhow::anyhow!("Invalid preset type/value combination")),
         }
     }
 
@@ -157,8 +179,15 @@ impl FixtureManager {
         preset_id: PresetId,
         mut values: Vec<FixtureControlValue>,
     ) -> anyhow::Result<Vec<FixtureControlValue>> {
-        match (preset_id, values.as_mut_slice()) {
-            (PresetId::Intensity(preset_id), [FixtureControlValue::Intensity(value)]) => {
+        match preset_id {
+            PresetId::Intensity(preset_id) => {
+                let value = values
+                    .iter_mut()
+                    .find_map(|v| match v {
+                        FixtureControlValue::Intensity(value) => Some(value),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing intensity value in programmer"))?;
                 let mut preset = self
                     .presets
                     .intensity
@@ -168,7 +197,14 @@ impl FixtureManager {
 
                 Ok(vec![FixtureControlValue::Intensity(*value)])
             }
-            (PresetId::Shutter(preset_id), [FixtureControlValue::Shutter(value)]) => {
+            PresetId::Shutter(preset_id) => {
+                let value = values
+                    .iter_mut()
+                    .find_map(|v| match v {
+                        FixtureControlValue::Shutter(value) => Some(value),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing shutter value in programmer"))?;
                 let mut preset = self
                     .presets
                     .shutter
@@ -178,13 +214,21 @@ impl FixtureManager {
 
                 Ok(vec![FixtureControlValue::Shutter(*value)])
             }
-            (PresetId::Color(preset_id), [FixtureControlValue::ColorMixer(red, green, blue)]) => {
+            PresetId::Color(preset_id) => {
+                let mut value = values
+                    .into_iter()
+                    .find_map(|v| match v {
+                        FixtureControlValue::ColorMixer(red, green, blue) => {
+                            Some((red, green, blue))
+                        }
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing color value in programmer"))?;
                 let mut preset = self
                     .presets
                     .color
                     .get_mut(&preset_id)
                     .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
-                let mut value = (*red, *green, *blue);
 
                 std::mem::swap(&mut preset.value, &mut value);
 
@@ -192,7 +236,7 @@ impl FixtureManager {
                     value.0, value.1, value.2,
                 )])
             }
-            (PresetId::Position(preset_id), values) => {
+            PresetId::Position(preset_id) => {
                 let pan = values.iter().find_map(|v| match v {
                     FixtureControlValue::Pan(value) => Some(*value),
                     _ => None,
@@ -214,7 +258,6 @@ impl FixtureManager {
 
                 Ok(value.into())
             }
-            _ => Err(anyhow::anyhow!("Invalid preset type/value combination")),
         }
     }
 

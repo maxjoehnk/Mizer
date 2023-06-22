@@ -527,7 +527,7 @@ impl Programmer {
             .collect()
     }
 
-    fn get_channels(&self) -> Vec<ProgrammerChannel> {
+    pub fn get_channels(&self) -> Vec<ProgrammerChannel> {
         let mut controls: HashMap<FixtureControl, Vec<(Vec<FixtureId>, FixtureControlValue)>> =
             HashMap::new();
         let selections = self.get_selections();

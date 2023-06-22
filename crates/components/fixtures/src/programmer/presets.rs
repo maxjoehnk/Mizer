@@ -54,14 +54,14 @@ pub enum PresetType {
 }
 
 impl PresetType {
-    pub fn contains_control(&self, control: &FixtureFaderControl) -> bool {
+    pub fn contains_control(&self, control: &FixtureControlValue) -> bool {
         match self {
-            Self::Intensity => control == &FixtureFaderControl::Intensity,
-            Self::Shutter => control == &FixtureFaderControl::Shutter,
-            Self::Color => matches!(control, &FixtureFaderControl::ColorMixer(_)),
+            Self::Intensity => matches!(control, &FixtureControlValue::Intensity(_)),
+            Self::Shutter => matches!(control, &FixtureControlValue::Shutter(_)),
+            Self::Color => matches!(control, &FixtureControlValue::ColorMixer(_, _, _)),
             Self::Position => matches!(
                 control,
-                &FixtureFaderControl::Pan | &FixtureFaderControl::Tilt
+                &FixtureControlValue::Pan(_) | &FixtureControlValue::Tilt(_)
             ),
         }
     }
@@ -183,17 +183,19 @@ impl Presets {
     }
 
     pub(crate) fn next_id(&self, preset_type: PresetType) -> u32 {
-        match preset_type {
+        let highest_id = match preset_type {
             PresetType::Intensity => highest_preset_id(&self.intensity),
             PresetType::Shutter => highest_preset_id(&self.shutter),
             PresetType::Color => highest_preset_id(&self.color),
             PresetType::Position => highest_preset_id(&self.position),
-        }
+        };
+
+        highest_id + 1
     }
 }
 
 fn highest_preset_id<TValue>(map: &DashMap<u32, TValue>) -> u32 {
-    map.iter().map(|e| *e.key()).max().unwrap_or(1)
+    map.iter().map(|e| *e.key()).max().unwrap_or_default()
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]

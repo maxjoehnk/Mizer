@@ -204,16 +204,16 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
 
         match position {
             Pan(pan) => Self {
-                pan,
+                pan: Some(pan),
                 ..Default::default()
             },
             Tilt(tilt) => Self {
-                tilt,
+                tilt: Some(tilt),
                 ..Default::default()
             },
             PanTilt(pan, tilt) => Self {
-                pan,
-                tilt,
+                pan: Some(pan),
+                tilt: Some(tilt),
                 ..Default::default()
             },
         }

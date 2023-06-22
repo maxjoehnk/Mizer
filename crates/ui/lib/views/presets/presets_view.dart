@@ -39,6 +39,10 @@ class PresetsView extends StatelessWidget {
             ]).map((effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Position", children: [
+            ...state.presets.positions.map((preset) => PositionButton(
+                pan: preset.position.hasPan() ? preset.position.pan : null,
+                tilt: preset.position.hasTilt() ? preset.position.tilt : null,
+                preset: preset)),
             ...effects.getEffectsForControls([FixtureControl.PAN, FixtureControl.TILT]).map(
                 (effect) => EffectButton(effect: effect))
           ]),

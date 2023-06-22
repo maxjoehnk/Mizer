@@ -388,13 +388,17 @@ const Preset_Color$json = const {
 const Preset_Position$json = const {
   '1': 'Position',
   '2': const [
-    const {'1': 'tilt', '3': 1, '4': 1, '5': 1, '10': 'tilt'},
-    const {'1': 'pan', '3': 2, '4': 1, '5': 1, '10': 'pan'},
+    const {'1': 'tilt', '3': 1, '4': 1, '5': 1, '9': 0, '10': 'tilt', '17': true},
+    const {'1': 'pan', '3': 2, '4': 1, '5': 1, '9': 1, '10': 'pan', '17': true},
+  ],
+  '8': const [
+    const {'1': '_tilt'},
+    const {'1': '_pan'},
   ],
 };
 
 /// Descriptor for `Preset`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARIWCgVmYWRlchgDIAEoAUgAUgVmYWRlchI2CgVjb2xvchgEIAEoCzIeLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0LkNvbG9ySABSBWNvbG9yEj8KCHBvc2l0aW9uGAUgASgLMiEubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuUG9zaXRpb25IAFIIcG9zaXRpb24aQwoFQ29sb3ISEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWUaMAoIUG9zaXRpb24SEgoEdGlsdBgBIAEoAVIEdGlsdBIQCgNwYW4YAiABKAFSA3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
+final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARIWCgVmYWRlchgDIAEoAUgAUgVmYWRlchI2CgVjb2xvchgEIAEoCzIeLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0LkNvbG9ySABSBWNvbG9yEj8KCHBvc2l0aW9uGAUgASgLMiEubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuUG9zaXRpb25IAFIIcG9zaXRpb24aQwoFQ29sb3ISEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWUaSwoIUG9zaXRpb24SFwoEdGlsdBgBIAEoAUgAUgR0aWx0iAEBEhUKA3BhbhgCIAEoAUgBUgNwYW6IAQFCBwoFX3RpbHRCBgoEX3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
 @$core.Deprecated('Use callPresetResponseDescriptor instead')
 const CallPresetResponse$json = const {
   '1': 'CallPresetResponse',

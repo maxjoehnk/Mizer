@@ -114,6 +114,75 @@ class ColorButton extends StatelessWidget {
   }
 }
 
+class PositionButton extends StatelessWidget {
+  final Preset preset;
+  final double? pan;
+  final double? tilt;
+
+  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ContextMenu(
+      menu: Menu(items: [
+        MenuItem(label: "Rename", action: () => _renamePreset(context)),
+        MenuItem(label: "Delete", action: () => _deletePreset(context)),
+      ]),
+      child: PresetButton(
+          child: Container(
+            margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
+            width: pan == null ? 24 : 48,
+            height: tilt == null ? 24 : 48,
+            padding: const EdgeInsets.all(4),
+            decoration:
+                BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
+            child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
+          ),
+          preset: preset),
+    );
+  }
+
+  void _renamePreset(BuildContext context) async {
+    var name = await showDialog(
+        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+    if (name == null) {
+      return;
+    }
+    PresetsBloc state = context.read();
+    state.add(RenamePreset(preset.id, name));
+  }
+
+  void _deletePreset(BuildContext context) async {
+    PresetsBloc state = context.read();
+    state.add(DeletePreset(preset.id));
+  }
+}
+
+class PositionPainter extends CustomPainter {
+  final double? pan;
+  final double? tilt;
+
+  PositionPainter({required this.pan, required this.tilt});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var x = size.width * (pan ?? 0.5);
+    var y = size.height * (tilt ?? 0.5);
+
+    var paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(Offset(x, y), 4, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant PositionPainter oldDelegate) {
+    return pan != oldDelegate.pan || tilt != oldDelegate.tilt;
+  }
+}
+
 class PresetButton extends StatelessWidget {
   final Widget child;
   final bool? active;

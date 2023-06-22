@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
 
-use crate::definition::{FixtureControlValue, FixtureFaderControl};
+use crate::definition::FixtureControlValue;
 
 pub type Color = (f64, f64, f64);
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]

@@ -203,8 +203,8 @@ message Preset {
   }
 
   message Position {
-    double tilt = 1;
-    double pan = 2;
+    optional double tilt = 1;
+    optional double pan = 2;
   }
 }
 

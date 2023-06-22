@@ -11,6 +11,7 @@ migrations! {
     RenamePorts,
     ReworkMidiConfig,
     ReworkLayoutControlsToNotUseNodes,
+    MigratePositionPresets,
 }
 
 impl Migrations {

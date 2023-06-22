@@ -55,12 +55,13 @@ impl From<OldPosition> for NewPosition {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct ProjectConfig<T: Serialize> {
+    #[serde(default)]
     presets: PresetsConfig<T>,
     #[serde(flatten)]
     other: IndexMap<String, Value>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Default, Debug, Serialize, Deserialize)]
 struct PresetsConfig<T: Serialize> {
     position: Vec<Preset<T>>,
     #[serde(flatten)]

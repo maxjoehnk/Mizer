@@ -69,6 +69,29 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
+            "storePreset" => {
+                if let Err(err) = call.arguments().map(|req| self.store_preset(req)) {
+                    reply.respond_error(err)
+                } else {
+                    reply.send_ok(Value::Null)
+                }
+            }
+            "deletePreset" => {
+                if let Err(err) = call.arguments().map(|id| self.handler.delete_preset(id)) {
+                    reply.respond_error(err)
+                } else {
+                    reply.send_ok(Value::Null)
+                }
+            }
+            "renamePreset" => {
+                if let Err(err) = call.arguments().map(|req: RenamePresetRequest| {
+                    self.handler.rename_preset(req.id.unwrap(), req.label)
+                }) {
+                    reply.respond_error(err)
+                } else {
+                    reply.send_ok(Value::Null)
+                }
+            }
             "getPresets" => {
                 let presets = self.handler.get_presets();
                 reply.respond_msg(presets);
@@ -228,6 +251,22 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         log::trace!("ProgrammerChannel::store({:?})", req);
         self.handler
             .store(req.sequence_id, req.store_mode.unwrap(), req.cue_id);
+    }
+
+    fn store_preset(&self, req: StorePresetRequest) -> anyhow::Result<()> {
+        log::trace!("ProgrammerChannel::store_preset({req:?})");
+        match req.target {
+            Some(store_preset_request::Target::Existing(preset_id)) => {
+                self.handler.store_programmer_to_preset(preset_id)?;
+            }
+            Some(store_preset_request::Target::NewPreset(preset)) => {
+                self.handler
+                    .add_preset(preset.type_.unwrap(), preset.label)?;
+            }
+            _ => unimplemented!(),
+        }
+
+        Ok(())
     }
 
     fn get_programmer_pointer(&self) -> anyhow::Result<i64> {

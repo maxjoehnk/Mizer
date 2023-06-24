@@ -22,6 +22,12 @@ class PresetsView extends StatelessWidget {
             ...effects.getEffectsForControls([FixtureControl.INTENSITY]).map(
                 (effect) => EffectButton(effect: effect))
           ]),
+          PresetGroup(label: "Shutter", children: [
+            ...state.presets.shutters.map((preset) =>
+                ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
+            ...effects.getEffectsForControls([FixtureControl.SHUTTER]).map(
+                (effect) => EffectButton(effect: effect))
+          ]),
           PresetGroup(label: "Color", children: [
             ...state.presets.colors.map((preset) => ColorButton(
                 color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
@@ -33,6 +39,10 @@ class PresetsView extends StatelessWidget {
             ]).map((effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Position", children: [
+            ...state.presets.positions.map((preset) => PositionButton(
+                pan: preset.position.hasPan() ? preset.position.pan : null,
+                tilt: preset.position.hasTilt() ? preset.position.tilt : null,
+                preset: preset)),
             ...effects.getEffectsForControls([FixtureControl.PAN, FixtureControl.TILT]).map(
                 (effect) => EffectButton(effect: effect))
           ]),

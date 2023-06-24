@@ -2,7 +2,9 @@ use crate::models::fixtures::*;
 use crate::models::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
+use itertools::Itertools;
 use mizer_command_executor::*;
+use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::ProgrammerView;
 use mizer_fixtures::GroupId;
@@ -108,6 +110,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .intensity_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             shutters: self
@@ -115,6 +118,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .shutter_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             colors: self
@@ -122,6 +126,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .color_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             positions: self
@@ -129,6 +134,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .presets
                 .position_presets()
                 .into_iter()
+                .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
             ..Default::default()
@@ -290,5 +296,68 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.fixture_manager
             .get_programmer()
             .write_offset(request.effect_id, request.effect_offset);
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_preset(
+        &self,
+        preset_type: preset_id::PresetType,
+        name: Option<String>,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddPresetCommand {
+            preset_type: preset_type.into(),
+            name,
+            values: self.get_preset_values(preset_type.into()),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
+        let value = self.get_preset_values(preset_id.type_.unwrap().into());
+
+        self.runtime.run_command(StoreInPresetCommand {
+            id: preset_id.into(),
+            values: value,
+        })?;
+
+        Ok(())
+    }
+
+    fn get_preset_values(
+        &self,
+        preset_type: mizer_fixtures::programmer::PresetType,
+    ) -> Vec<FixtureControlValue> {
+        self.fixture_manager
+            .get_programmer()
+            .get_channels()
+            .into_iter()
+            .map(|control| control.value)
+            .filter(|value| preset_type.contains_control(value))
+            .collect()
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn delete_preset(&self, preset_id: PresetId) {
+        self.runtime
+            .run_command(DeletePresetCommand {
+                id: preset_id.into(),
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn rename_preset(&self, preset_id: PresetId, label: String) {
+        self.runtime
+            .run_command(RenamePresetCommand {
+                id: preset_id.into(),
+                label,
+            })
+            .unwrap();
     }
 }

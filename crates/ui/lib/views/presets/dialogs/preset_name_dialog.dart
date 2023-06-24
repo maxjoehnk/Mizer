@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
-class GroupNameDialog extends StatefulWidget {
+class PresetNameDialog extends StatefulWidget {
   final String? name;
 
-  GroupNameDialog({this.name, Key? key}) : super(key: key);
+  PresetNameDialog({this.name, Key? key}) : super(key: key);
 
   @override
-  State<GroupNameDialog> createState() => _GroupNameDialogState();
+  State<PresetNameDialog> createState() => _PresetNameDialogState();
 }
 
-class _GroupNameDialogState extends State<GroupNameDialog> {
+class _PresetNameDialogState extends State<PresetNameDialog> {
   final TextEditingController nameController = TextEditingController();
 
   @override
@@ -22,7 +22,7 @@ class _GroupNameDialogState extends State<GroupNameDialog> {
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Enter Group Name",
+      title: "Enter Preset Name",
       content: TextField(
         controller: nameController,
         autofocus: true,

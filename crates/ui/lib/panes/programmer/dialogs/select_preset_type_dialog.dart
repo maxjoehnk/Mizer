@@ -3,37 +3,35 @@ import 'package:flutter/services.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/tile.dart';
 
-enum StoreTarget {
-  Group,
-  Sequence,
-  Preset,
-}
+enum PresetType { Intensity, Shutter, Color, Position }
 
-const Map<StoreTarget, String> storeTargetNames = {
-  StoreTarget.Group: "Group",
-  StoreTarget.Sequence: "Sequence",
-  StoreTarget.Preset: "Preset",
+const Map<PresetType, String> storeTargetNames = {
+  PresetType.Intensity: "Intensity",
+  PresetType.Shutter: "Shutter",
+  PresetType.Color: "Color",
+  PresetType.Position: "Position",
 };
 
-final Map<LogicalKeyboardKey, StoreTarget> storeTargetHotkeys = {
-  LogicalKeyboardKey.keyG: StoreTarget.Group,
-  LogicalKeyboardKey.keyS: StoreTarget.Sequence,
-  LogicalKeyboardKey.keyP: StoreTarget.Preset,
+final Map<LogicalKeyboardKey, PresetType> storeTargetHotkeys = {
+  LogicalKeyboardKey.keyI: PresetType.Intensity,
+  LogicalKeyboardKey.keyS: PresetType.Shutter,
+  LogicalKeyboardKey.keyC: PresetType.Color,
+  LogicalKeyboardKey.keyP: PresetType.Position,
 };
 
-Future<StoreTarget?> selectStoreTarget(BuildContext context) async {
-  return await showDialog<StoreTarget>(
-      context: context, builder: (context) => SelectStoreTargetDialog());
+Future<PresetType?> selectPresetType(BuildContext context) async {
+  return await showDialog<PresetType>(
+      context: context, builder: (context) => SelectPresetTypeDialog());
 }
 
-class SelectStoreTargetDialog extends StatefulWidget {
-  const SelectStoreTargetDialog({super.key});
+class SelectPresetTypeDialog extends StatefulWidget {
+  const SelectPresetTypeDialog({super.key});
 
   @override
-  State<SelectStoreTargetDialog> createState() => _SelectStoreTargetDialogState();
+  State<SelectPresetTypeDialog> createState() => _SelectPresetTypeDialogState();
 }
 
-class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
+class _SelectPresetTypeDialogState extends State<SelectPresetTypeDialog> {
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -57,9 +55,9 @@ class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
               spacing: 4,
               runSpacing: 4,
               direction: Axis.horizontal,
-              children: StoreTarget.values
+              children: PresetType.values
                   .map((target) =>
-                      StoreTargetTile(target: target, onSelect: () => _select(context, target)))
+                      PresetTypeTile(target: target, onSelect: () => _select(context, target)))
                   .toList()),
         ),
         actions: [
@@ -67,16 +65,16 @@ class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
         ]);
   }
 
-  _select(BuildContext context, StoreTarget storeTarget) {
+  _select(BuildContext context, PresetType storeTarget) {
     Navigator.of(context).pop(storeTarget);
   }
 }
 
-class StoreTargetTile extends StatelessWidget {
-  final StoreTarget target;
+class PresetTypeTile extends StatelessWidget {
+  final PresetType target;
   final Function() onSelect;
 
-  const StoreTargetTile({required this.target, required this.onSelect, super.key});
+  const PresetTypeTile({required this.target, required this.onSelect, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/panes/programmer/dialogs/select_store_target_dialog.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -15,6 +16,7 @@ import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
 import 'dialogs/select_cue_dialog.dart';
+import 'dialogs/select_preset_dialog.dart';
 import 'dialogs/select_sequence_dialog.dart';
 import 'dialogs/store_mode_dialog.dart';
 import 'sheets/beam_sheet.dart';
@@ -118,6 +120,38 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
       await _storeToSequence();
     } else if (storeTarget == StoreTarget.Group) {
       await _storeToGroup();
+    } else if (storeTarget == StoreTarget.Preset) {
+      await _storeToPreset();
+    }
+  }
+
+  _storeToGroup() async {
+    var programmerApi = context.read<ProgrammerApi>();
+    var presetsBloc = context.read<PresetsBloc>();
+    Group? group = await showDialog(
+        context: context,
+        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    if (group == null) {
+      return;
+    }
+    await programmerApi.assignFixturesToGroup(widget.fixtures.map((e) => e.id).toList(), group);
+  }
+
+  _storeToPreset() async {
+    var presetType = await selectPresetType(context);
+    if (presetType == null) {
+      return;
+    }
+    var presetsBloc = context.read<PresetsBloc>();
+    dynamic result = await showDialog(
+        context: context, builder: (context) => SelectPresetDialog(presetType, presetsBloc.state));
+    if (result == null) {
+      return;
+    }
+    if (result is PresetId) {
+      presetsBloc.add(StorePresets.existing(result));
+    } else if (result is PresetType) {
+      presetsBloc.add(StorePresets.newPreset(result, null));
     }
   }
 
@@ -142,18 +176,6 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     }
 
     widget.api.store(sequence.id, storeMode, cueId: cueId);
-  }
-
-  _storeToGroup() async {
-    var programmerApi = context.read<ProgrammerApi>();
-    var presetsBloc = context.read<PresetsBloc>();
-    Group? group = await showDialog(
-        context: context,
-        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
-    if (group == null) {
-      return;
-    }
-    await programmerApi.assignFixturesToGroup(widget.fixtures.map((e) => e.id).toList(), group);
   }
 
   _getStoreMode(Sequence sequence) async {

@@ -1284,6 +1284,210 @@ class StoreResponse extends $pb.GeneratedMessage {
   static StoreResponse? _defaultInstance;
 }
 
+class StorePresetRequest_NewPreset extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorePresetRequest.NewPreset', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..e<PresetId_PresetType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PresetId_PresetType.INTENSITY, valueOf: PresetId_PresetType.valueOf, enumValues: PresetId_PresetType.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..hasRequiredFields = false
+  ;
+
+  StorePresetRequest_NewPreset._() : super();
+  factory StorePresetRequest_NewPreset({
+    PresetId_PresetType? type,
+    $core.String? label,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    return _result;
+  }
+  factory StorePresetRequest_NewPreset.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorePresetRequest_NewPreset.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StorePresetRequest_NewPreset clone() => StorePresetRequest_NewPreset()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StorePresetRequest_NewPreset copyWith(void Function(StorePresetRequest_NewPreset) updates) => super.copyWith((message) => updates(message as StorePresetRequest_NewPreset)) as StorePresetRequest_NewPreset; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StorePresetRequest_NewPreset create() => StorePresetRequest_NewPreset._();
+  StorePresetRequest_NewPreset createEmptyInstance() => create();
+  static $pb.PbList<StorePresetRequest_NewPreset> createRepeated() => $pb.PbList<StorePresetRequest_NewPreset>();
+  @$core.pragma('dart2js:noInline')
+  static StorePresetRequest_NewPreset getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorePresetRequest_NewPreset>(create);
+  static StorePresetRequest_NewPreset? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  PresetId_PresetType get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(PresetId_PresetType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get label => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set label($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLabel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLabel() => clearField(2);
+}
+
+enum StorePresetRequest_Target {
+  existing, 
+  newPreset, 
+  notSet
+}
+
+class StorePresetRequest extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, StorePresetRequest_Target> _StorePresetRequest_TargetByTag = {
+    1 : StorePresetRequest_Target.existing,
+    2 : StorePresetRequest_Target.newPreset,
+    0 : StorePresetRequest_Target.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StorePresetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..aOM<PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'existing', subBuilder: PresetId.create)
+    ..aOM<StorePresetRequest_NewPreset>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newPreset', subBuilder: StorePresetRequest_NewPreset.create)
+    ..hasRequiredFields = false
+  ;
+
+  StorePresetRequest._() : super();
+  factory StorePresetRequest({
+    PresetId? existing,
+    StorePresetRequest_NewPreset? newPreset,
+  }) {
+    final _result = create();
+    if (existing != null) {
+      _result.existing = existing;
+    }
+    if (newPreset != null) {
+      _result.newPreset = newPreset;
+    }
+    return _result;
+  }
+  factory StorePresetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StorePresetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StorePresetRequest clone() => StorePresetRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StorePresetRequest copyWith(void Function(StorePresetRequest) updates) => super.copyWith((message) => updates(message as StorePresetRequest)) as StorePresetRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StorePresetRequest create() => StorePresetRequest._();
+  StorePresetRequest createEmptyInstance() => create();
+  static $pb.PbList<StorePresetRequest> createRepeated() => $pb.PbList<StorePresetRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StorePresetRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StorePresetRequest>(create);
+  static StorePresetRequest? _defaultInstance;
+
+  StorePresetRequest_Target whichTarget() => _StorePresetRequest_TargetByTag[$_whichOneof(0)]!;
+  void clearTarget() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  PresetId get existing => $_getN(0);
+  @$pb.TagNumber(1)
+  set existing(PresetId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasExisting() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearExisting() => clearField(1);
+  @$pb.TagNumber(1)
+  PresetId ensureExisting() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  StorePresetRequest_NewPreset get newPreset => $_getN(1);
+  @$pb.TagNumber(2)
+  set newPreset(StorePresetRequest_NewPreset v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNewPreset() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNewPreset() => clearField(2);
+  @$pb.TagNumber(2)
+  StorePresetRequest_NewPreset ensureNewPreset() => $_ensure(1);
+}
+
+class RenamePresetRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenamePresetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..aOM<PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: PresetId.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..hasRequiredFields = false
+  ;
+
+  RenamePresetRequest._() : super();
+  factory RenamePresetRequest({
+    PresetId? id,
+    $core.String? label,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    return _result;
+  }
+  factory RenamePresetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RenamePresetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RenamePresetRequest clone() => RenamePresetRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RenamePresetRequest copyWith(void Function(RenamePresetRequest) updates) => super.copyWith((message) => updates(message as RenamePresetRequest)) as RenamePresetRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RenamePresetRequest create() => RenamePresetRequest._();
+  RenamePresetRequest createEmptyInstance() => create();
+  static $pb.PbList<RenamePresetRequest> createRepeated() => $pb.PbList<RenamePresetRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RenamePresetRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenamePresetRequest>(create);
+  static RenamePresetRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  PresetId get id => $_getN(0);
+  @$pb.TagNumber(1)
+  set id(PresetId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+  @$pb.TagNumber(1)
+  PresetId ensureId() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get label => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set label($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLabel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLabel() => clearField(2);
+}
+
 class PresetsRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false

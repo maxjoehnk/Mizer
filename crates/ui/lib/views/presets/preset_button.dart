@@ -6,6 +6,7 @@ import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
+import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
@@ -82,13 +83,103 @@ class ColorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PresetButton(
-        child: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
-        ),
-        preset: preset);
+    return ContextMenu(
+      menu: Menu(items: [
+        MenuItem(label: "Rename", action: () => _renamePreset(context)),
+        MenuItem(label: "Delete", action: () => _deletePreset(context)),
+      ]),
+      child: PresetButton(
+          child: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
+          ),
+          preset: preset),
+    );
+  }
+
+  void _renamePreset(BuildContext context) async {
+    var name = await showDialog(
+        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+    if (name == null) {
+      return;
+    }
+    PresetsBloc state = context.read();
+    state.add(RenamePreset(preset.id, name));
+  }
+
+  void _deletePreset(BuildContext context) async {
+    PresetsBloc state = context.read();
+    state.add(DeletePreset(preset.id));
+  }
+}
+
+class PositionButton extends StatelessWidget {
+  final Preset preset;
+  final double? pan;
+  final double? tilt;
+
+  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ContextMenu(
+      menu: Menu(items: [
+        MenuItem(label: "Rename", action: () => _renamePreset(context)),
+        MenuItem(label: "Delete", action: () => _deletePreset(context)),
+      ]),
+      child: PresetButton(
+          child: Container(
+            margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
+            width: pan == null ? 24 : 48,
+            height: tilt == null ? 24 : 48,
+            padding: const EdgeInsets.all(4),
+            decoration:
+                BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
+            child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
+          ),
+          preset: preset),
+    );
+  }
+
+  void _renamePreset(BuildContext context) async {
+    var name = await showDialog(
+        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+    if (name == null) {
+      return;
+    }
+    PresetsBloc state = context.read();
+    state.add(RenamePreset(preset.id, name));
+  }
+
+  void _deletePreset(BuildContext context) async {
+    PresetsBloc state = context.read();
+    state.add(DeletePreset(preset.id));
+  }
+}
+
+class PositionPainter extends CustomPainter {
+  final double? pan;
+  final double? tilt;
+
+  PositionPainter({required this.pan, required this.tilt});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var x = size.width * (pan ?? 0.5);
+    var y = size.height * (tilt ?? 0.5);
+
+    var paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(Offset(x, y), 4, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant PositionPainter oldDelegate) {
+    return pan != oldDelegate.pan || tilt != oldDelegate.tilt;
   }
 }
 

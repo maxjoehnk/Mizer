@@ -37,6 +37,6 @@ tracing-unwrap = "0.10"
 itertools = "0.10"
 
 [dev-dependencies]
-insta = "1.29"
+insta = "1.30"
 test-case = "3.1"
 mizer-util = { path = "../util", features = ["test"] }

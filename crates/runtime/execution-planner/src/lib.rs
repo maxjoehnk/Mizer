@@ -280,6 +280,13 @@ impl ExecutionPlanner {
                         .push(ExecutorCommand::RenameNode(from.clone(), to.clone()));
                 }
             }
+            for node in previous_executor.associated_nodes {
+                if !executor.associated_nodes.contains(&node) {
+                    executor
+                        .commands
+                        .push(ExecutorCommand::RemoveNode(node.path));
+                }
+            }
             for link in &executor.links {
                 if !previous_executor.links.contains(link) {
                     executor.commands.push(ExecutorCommand::AddLink(NodeLink {
@@ -756,6 +763,36 @@ mod tests {
         let plan = planner.plan();
 
         assert!(plan.executors[0].commands.is_empty());
+    }
+
+    #[test_case("/test", "orchestrator")]
+    #[test_case("/project/node", "main")]
+    fn remove_single_node_single_executor(node_path: &str, executor_id: &str) {
+        let mut planner = ExecutionPlanner::new();
+        let node = ExecutionNode {
+            path: node_path.into(),
+            attached_executor: None,
+        };
+        planner.add_node(node);
+        let executor_id: ExecutorId = executor_id.into();
+        planner.add_executor(Executor {
+            id: executor_id.clone(),
+        });
+        planner.plan();
+        planner.remove_node(&node_path.into());
+        let expected = ExecutionPlan {
+            executors: vec![PlannedExecutor {
+                id: executor_id,
+                associated_nodes: vec![],
+                links: vec![],
+                commands: vec![ExecutorCommand::RemoveNode(node_path.into())],
+            }],
+        };
+
+        let mut plan = planner.plan();
+        order_plan(&mut plan);
+
+        assert_eq!(plan, expected);
     }
 
     fn order_plan(plan: &mut ExecutionPlan) {

@@ -154,7 +154,7 @@ impl PipelineWorker {
     }
 
     pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
-        log::debug!("remove_node {:?}", path);
+        log::debug!("remove_node {path:?} and links {links:?}");
         self.disconnect_ports(links);
         self.states.remove(path);
         self.receivers.remove(path);

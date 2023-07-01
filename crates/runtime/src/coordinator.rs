@@ -160,6 +160,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn rebuild_pipeline(&mut self, plan: ExecutionPlan) {
+        log::debug!("Rebuilding pipeline");
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
 

@@ -1,26 +1,31 @@
-use gstreamer::prelude::*;
-use gstreamer::{ClockTime, Element, ElementFactory, MessageType, SeekFlags, SeekType, State};
+use anyhow::Context;
+use ffmpeg_the_third as ffmpeg;
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 
 use mizer_node::*;
-
-use crate::{GstreamerNode, PIPELINE};
+use mizer_wgpu::{TextureProvider, TextureSourceStage, WgpuContext, WgpuPipeline};
 
 const OUTPUT_PORT: &str = "Output";
+
+const FILE_SETTING: &str = "File";
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoFileNode {
     pub file: String,
 }
 
-pub struct VideoFileState {
-    file_src: Element,
-    decoder: Element,
-    upload: Element,
-    convert: Element,
-}
+impl ConfigurableNode for VideoFileNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(FILE_SETTING, &self.file)]
+    }
 
-impl ConfigurableNode for VideoFileNode {}
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(text setting, FILE_SETTING, self.file);
+
+        update_fallback!(setting)
+    }
+}
 
 impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
@@ -32,7 +37,7 @@ impl PipelineNode for VideoFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(OUTPUT_PORT, PortType::Gstreamer)]
+        vec![output_port!(OUTPUT_PORT, PortType::Texture)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -41,92 +46,108 @@ impl PipelineNode for VideoFileNode {
 }
 
 impl ProcessingNode for VideoFileNode {
-    type State = VideoFileState;
+    type State = Option<VideoFileState>;
 
-    fn process(&self, _: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let pipeline = PIPELINE.lock().unwrap();
-        let bus = pipeline.bus().unwrap();
-        if let Some(msg) = bus.pop() {
-            log::trace!("pipeline {:?}", msg);
-            if msg.type_() == MessageType::Eos {
-                pipeline.seek(
-                    1.0,
-                    SeekFlags::FLUSH,
-                    SeekType::Set,
-                    Some(ClockTime::ZERO),
-                    SeekType::None,
-                    ClockTime::NONE,
-                )?;
-                pipeline.set_state(State::Playing)?;
-            }
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        let wgpu_context = context.inject::<WgpuContext>().unwrap();
+        let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
+
+        if self.file.is_empty() {
+            return Ok(());
+        }
+
+        if state.is_none() {
+            *state = Some(
+                VideoFileState::new(wgpu_context, &self.file)
+                    .context("Creating video file state")?,
+            );
+        }
+
+        let state = state.as_mut().unwrap();
+        if let Some(texture) = context.write_texture(OUTPUT_PORT) {
+            let stage = state
+                .pipeline
+                .render(wgpu_context, &texture, &mut state.texture)
+                .context("Rendering texture source pipeline")?;
+            video_pipeline.add_stage(stage);
         }
 
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        VideoFileState::new(&self.file)
+        None
     }
+}
+
+pub struct VideoFileState {
+    texture: VideoTexture,
+    pipeline: TextureSourceStage,
 }
 
 impl VideoFileState {
-    fn new(file: &str) -> Self {
-        let full_path = std::env::current_dir().unwrap_or_default();
-        let path = full_path.join(file);
-        let path = path.to_str().unwrap();
-        let node = VideoFileState::build(path);
-        node.link_decoder();
+    fn new(context: &WgpuContext, path: &str) -> anyhow::Result<Self> {
+        log::debug!("Loading video file: {}", path);
+        let mut texture = VideoTexture::new(path).context("Creating new video texture provider")?;
+        let pipeline = TextureSourceStage::new(context, &mut texture)
+            .context("Creating texture source stage")?;
 
-        node
-    }
-
-    fn build(file: &str) -> Self {
-        let pipeline = PIPELINE.lock().unwrap();
-        let file_src = ElementFactory::make("filesrc").build().unwrap();
-        let decoder = ElementFactory::make("decodebin").build().unwrap();
-        let upload = ElementFactory::make("glupload").build().unwrap();
-        let convert = ElementFactory::make("glcolorconvert").build().unwrap();
-        pipeline.add(&file_src).unwrap();
-        pipeline.add(&decoder).unwrap();
-        pipeline.add(&upload).unwrap();
-        pipeline.add(&convert).unwrap();
-        file_src.set_property("location", &glib::Value::from(file));
-        file_src.link(&decoder).unwrap();
-        upload.link(&convert).unwrap();
-
-        Self {
-            file_src,
-            decoder,
-            upload,
-            convert,
-        }
-    }
-
-    fn link_decoder(&self) {
-        let sink = self.upload.static_pad("sink").unwrap();
-        let video_caps: gstreamer::Caps = "video/x-raw".parse().unwrap();
-        self.decoder.connect_pad_added(move |_, pad| {
-            let caps = pad.current_caps().unwrap();
-            log::trace!("connect_pad_added: {:?}", caps);
-            if caps.can_intersect(&video_caps) {
-                log::trace!("connecting pads");
-                pad.link(&sink).unwrap();
-            }
-        });
+        Ok(Self { texture, pipeline })
     }
 }
 
-impl GstreamerNode for VideoFileState {
-    fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()> {
-        self.convert.link(target.sink())?;
-        Ok(())
+struct VideoTexture {
+    context: ffmpeg::format::context::Input,
+    decoder: ffmpeg::decoder::Video,
+    converter: ffmpeg::software::scaling::context::Context,
+    stream_index: usize,
+}
+
+impl VideoTexture {
+    pub fn new(path: &str) -> anyhow::Result<Self> {
+        let context = ffmpeg::format::input(&path)?;
+        ffmpeg::format::context::input::dump(&context, 0, Some(path));
+        let stream = context.streams().best(ffmpeg::media::Type::Video).unwrap();
+        let video_stream_index = stream.index();
+
+        let context_decoder =
+            ffmpeg::codec::context::Context::from_parameters(stream.parameters())?;
+        let decoder = context_decoder.decoder().video()?;
+
+        let converter = decoder.converter(ffmpeg::format::Pixel::RGBA)?;
+
+        Ok(Self {
+            decoder,
+            context,
+            converter,
+            stream_index: video_stream_index,
+        })
+    }
+}
+
+impl TextureProvider for VideoTexture {
+    fn width(&self) -> u32 {
+        self.decoder.width()
     }
 
-    fn unlink_from(&self, target: &dyn GstreamerNode) {
-        self.convert.unlink(target.sink());
+    fn height(&self) -> u32 {
+        self.decoder.height()
     }
 
-    fn sink(&self) -> &Element {
-        unimplemented!()
+    fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
+        profiling::scope!("VideoTexture::data");
+        for (stream, packet) in self.context.packets() {
+            if self.stream_index == stream.index() {
+                self.decoder.send_packet(&packet)?;
+                let mut decoded = ffmpeg::frame::Video::empty();
+                self.decoder.receive_frame(&mut decoded)?;
+                let mut frame = ffmpeg::frame::Video::empty();
+                self.converter.run(&decoded, &mut frame)?;
+
+                return Ok(Some(Cow::Owned(frame.data(0).to_vec())));
+            }
+        }
+        self.context.seek(0, 0..0)?;
+        Ok(None)
     }
 }

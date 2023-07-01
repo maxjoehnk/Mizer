@@ -71,6 +71,7 @@ members = [
     "crates/runtime/pipeline/templates",
     "crates/runtime/processing",
     "crates/runtime/settings",
+    "crates/runtime/wgpu",
     "crates/ui",
     "crates/ui/ffi",
     "crates/util",
@@ -145,6 +146,7 @@ mizer-util = { path = "crates/util" }
 mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
 mizer-command-executor = { path = "crates/runtime/commander/executor" }
+mizer-wgpu = { path = "crates/runtime/wgpu" }
 tokio = { version = "1.28", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"

@@ -10,29 +10,29 @@ nodes:
   - type: video-file
     path: /video-file-0
     config:
-      file: examples/media/video/file_example_MP4_1920_18MG.mp4
+      file: examples/media/image/file_example_PNG_3MB.png
     designer:
       position:
         x: 0
         y: 0
       scale: 1
-  - type: video-effect
-    path: /video-effect-0
-    config:
-      type: twirl
-    designer:
-      position:
-        x: 5
-        y: 0
-      scale: 1
-  - type: video-transform
-    path: /video-transform-0
-    config: {}
-    designer:
-      position:
-        x: 10
-        y: 2.5
-      scale: 1
+#  - type: video-effect
+#    path: /video-effect-0
+#    config:
+#      type: twirl
+#    designer:
+#      position:
+#        x: 5
+#        y: 0
+#      scale: 1
+#  - type: video-transform
+#    path: /video-transform-0
+#    config: {}
+#    designer:
+#      position:
+#        x: 10
+#        y: 2.5
+#      scale: 1
   - type: video-output
     path: /video-output-0
     config: {}
@@ -41,23 +41,23 @@ nodes:
         x: 15
         y: 2.5
       scale: 1
-  - type: oscillator
-    path: /oscillator-0
-    config:
-      type: sine
-      ratio: 4
-      max: 90
-      min: -90
-    designer:
-      position:
-        x: 5
-        y: 5
-      scale: 1
+#  - type: oscillator
+#    path: /oscillator-0
+#    config:
+#      type: sine
+#      ratio: 4
+#      max: 90
+#      min: -90
+#    designer:
+#      position:
+#        x: 5
+#        y: 5
+#      scale: 1
 channels:
-  - output@/video-file-0 -> input@/video-effect-0
-  - output@/video-effect-0 -> input@/video-transform-0
-  - output@/video-transform-0 -> input@/video-output-0
-  - value@/oscillator-0 -> rotate-x@/video-transform-0
-  - value@/oscillator-0 -> rotate-y@/video-transform-0
-media:
-  - examples/media
+  - output@/video-file-0 -> input@/video-output-0
+#  - output@/video-effect-0 -> input@/video-transform-0
+#  - output@/video-transform-0 -> input@/video-output-0
+#  - value@/oscillator-0 -> rotate-x@/video-transform-0
+#  - value@/oscillator-0 -> rotate-y@/video-transform-0
+media: []
+#  - examples/media

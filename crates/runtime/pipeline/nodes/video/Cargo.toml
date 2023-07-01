@@ -16,3 +16,9 @@ lazy_static = "1.4"
 serde = { version = "1", features = ["derive"] }
 enum-iterator = "1.4"
 num_enum = "0.6"
+mizer-wgpu = { path = "../../../wgpu" }
+image = "0.24"
+ffmpeg-the-third = "1.2"
+profiling = "1"
+wgpu = "0.16"
+bytemuck = "1.13"

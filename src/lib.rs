@@ -25,6 +25,7 @@ use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_timecode::{TimecodeManager, TimecodeModule};
+use mizer_wgpu::{window::WindowModule, WgpuModule};
 
 pub use crate::api::*;
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -60,6 +61,9 @@ pub fn build_runtime(
     register_osc_module(&mut runtime).context("failed to register osc module")?;
     register_midi_module(&mut runtime, &settings.read().settings)
         .context("Failed to register midi module")?;
+    handle
+        .block_on(register_wgpu_module(&mut runtime))
+        .context("Failed to register wgpu module")?;
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
             .context("Failed to register fixtures module")?;
@@ -373,6 +377,14 @@ fn register_fixtures_module(
     fixture_module.register(runtime)?;
 
     Ok((fixture_manager, fixture_library))
+}
+
+async fn register_wgpu_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+    let module = WgpuModule::new().await?;
+    module.register(runtime)?;
+    WindowModule.register(runtime)?;
+
+    Ok(())
 }
 
 // TODO: handle transparently by MediaServer

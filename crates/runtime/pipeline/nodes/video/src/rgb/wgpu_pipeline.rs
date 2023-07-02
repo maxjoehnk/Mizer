@@ -1,7 +1,7 @@
 use mizer_wgpu::{TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
 
-pub struct ColorBalanceWgpuPipeline {
+pub struct RgbWgpuPipeline {
     sampler: wgpu::Sampler,
     texture_bind_group_layout: wgpu::BindGroupLayout,
     render_pipeline: wgpu::RenderPipeline,
@@ -12,8 +12,8 @@ pub struct ColorBalanceWgpuPipeline {
     uniform_buffer: wgpu::Buffer,
 }
 
-impl ColorBalanceWgpuPipeline {
-    pub fn new(context: &WgpuContext) -> Self {
+impl RgbWgpuPipeline {
+    pub fn new(context: &WgpuContext, initial: &[f32]) -> Self {
         let sampler = context.create_sampler();
         let texture_bind_group_layout =
             context
@@ -58,8 +58,8 @@ impl ColorBalanceWgpuPipeline {
         let uniform_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Color Buffer"),
-                contents: bytemuck::cast_slice(&[360.0f32, 1.0, 1.0]),
+                label: Some("RGB Color Buffer"),
+                contents: bytemuck::cast_slice(initial),
                 usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
             });
         let uniform_bind_group = context
@@ -79,7 +79,7 @@ impl ColorBalanceWgpuPipeline {
             context
                 .device
                 .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-                    label: Some("Color Balance Pipeline Layout"),
+                    label: Some("RGB Pipeline Layout"),
                     bind_group_layouts: &[&texture_bind_group_layout, &uniform_bind_group_layout],
                     push_constant_ranges: &[],
                 });
@@ -88,7 +88,7 @@ impl ColorBalanceWgpuPipeline {
             context
                 .device
                 .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-                    label: Some("Color Balance Render Pipeline"),
+                    label: Some("RGB Render Pipeline"),
                     layout: Some(&render_pipeline_layout),
                     vertex: wgpu::VertexState {
                         module: &shader,
@@ -125,7 +125,7 @@ impl ColorBalanceWgpuPipeline {
         let vertex_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Vertex Buffer"),
+                label: Some("RGB Vertex Buffer"),
                 contents: bytemuck::cast_slice(RECT_VERTICES),
                 usage: wgpu::BufferUsages::VERTEX,
             });
@@ -133,7 +133,7 @@ impl ColorBalanceWgpuPipeline {
         let index_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Index Buffer"),
+                label: Some("RGB Index Buffer"),
                 contents: bytemuck::cast_slice(RECT_INDICES),
                 usage: wgpu::BufferUsages::INDEX,
             });
@@ -150,19 +150,19 @@ impl ColorBalanceWgpuPipeline {
         }
     }
 
-    pub fn write_params(&self, context: &WgpuContext, hue: f32, saturation: f32, value: f32) {
+    pub fn write_params(&self, context: &WgpuContext, red: f32, green: f32, blue: f32) {
         context.queue.write_buffer(
             &self.uniform_buffer,
             0,
-            bytemuck::cast_slice(&[hue, saturation, value]),
+            bytemuck::cast_slice(&[red, green, blue]),
         );
     }
 
     pub fn render(
         &self,
         context: &WgpuContext,
-        target: &TextureView,
         source: &TextureView,
+        target: &TextureView,
     ) -> wgpu::CommandBuffer {
         let texture_bind_group = context
             .device
@@ -183,11 +183,11 @@ impl ColorBalanceWgpuPipeline {
         let mut encoder = context
             .device
             .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Color Balance Pipeline Render Encoder"),
+                label: Some("RGB Pipeline Render Encoder"),
             });
         {
             let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Color Balance Render Pass"),
+                label: Some("RGB Render Pass"),
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                     view: target,
                     resolve_target: None,

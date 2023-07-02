@@ -16,7 +16,7 @@ use mizer_ports::PortValue;
 use mizer_processing::{DebugUiDrawHandle, Injector};
 use mizer_protocol_laser::LaserFrame;
 use mizer_util::{HashMapExtension, StructuredData};
-use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext};
+use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodeMetadata, NodePreviewState, PipelineContext};
@@ -104,7 +104,6 @@ impl PipelineWorker {
         &mut self,
         path: NodePath,
         node: &T,
-        injector: &Injector,
     ) {
         log::debug!("register_node {:?} ({:?})", path, node);
         let state = node.create_state();

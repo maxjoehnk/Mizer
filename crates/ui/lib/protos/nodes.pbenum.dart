@@ -99,6 +99,9 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType VIDEO_EFFECT = Node_NodeType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_EFFECT');
   static const Node_NodeType VIDEO_COLOR_BALANCE = Node_NodeType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_COLOR_BALANCE');
   static const Node_NodeType VIDEO_TRANSFORM = Node_NodeType._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_TRANSFORM');
+  static const Node_NodeType VIDEO_MIXER = Node_NodeType._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_MIXER');
+  static const Node_NodeType VIDEO_RGB = Node_NodeType._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_RGB');
+  static const Node_NodeType VIDEO_RGB_SPLIT = Node_NodeType._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_RGB_SPLIT');
   static const Node_NodeType PIXEL_TO_DMX = Node_NodeType._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PIXEL_TO_DMX');
   static const Node_NodeType PIXEL_PATTERN = Node_NodeType._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PIXEL_PATTERN');
   static const Node_NodeType OPC_OUTPUT = Node_NodeType._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OPC_OUTPUT');
@@ -164,6 +167,9 @@ class Node_NodeType extends $pb.ProtobufEnum {
     VIDEO_EFFECT,
     VIDEO_COLOR_BALANCE,
     VIDEO_TRANSFORM,
+    VIDEO_MIXER,
+    VIDEO_RGB,
+    VIDEO_RGB_SPLIT,
     PIXEL_TO_DMX,
     PIXEL_PATTERN,
     OPC_OUTPUT,

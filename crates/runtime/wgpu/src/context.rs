@@ -22,7 +22,9 @@ impl WgpuContext {
         let (device, queue) = adapter
             .request_device(
                 &wgpu::DeviceDescriptor {
-                    features: wgpu::Features::DEPTH_CLIP_CONTROL,
+                    features: wgpu::Features::DEPTH_CLIP_CONTROL
+                        | wgpu::Features::TEXTURE_BINDING_ARRAY
+                        | wgpu::Features::SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING,
                     ..Default::default()
                 },
                 None,

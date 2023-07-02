@@ -76,7 +76,9 @@ impl Texture {
             bind_group,
             bind_group_layout,
         };
-        texture.render(context, provider)?;
+        if let Err(err) = texture.render(context, provider) {
+            log::error!("Failed initially render texture: {err:?}");
+        }
 
         Ok(texture)
     }

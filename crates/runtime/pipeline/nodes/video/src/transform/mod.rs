@@ -100,7 +100,7 @@ impl ConfigurableNode for VideoTransformNode {
 impl PipelineNode for VideoTransformNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Transform".into(),
+            name: "Video Transform".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

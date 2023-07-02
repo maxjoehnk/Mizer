@@ -63,7 +63,7 @@ impl ConfigurableNode for VideoColorBalanceNode {
 impl PipelineNode for VideoColorBalanceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Color Balance".into(),
+            name: "Video Color Balance".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

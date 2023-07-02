@@ -1,5 +1,4 @@
 use mizer_wgpu::{TextureView, Vertex, WgpuContext};
-use std::ops::Deref;
 use wgpu::util::DeviceExt;
 
 const VERTICES: &[Vertex] = &[
@@ -133,7 +132,7 @@ impl OutputWgpuPipeline {
         }
     }
 
-    pub fn render(
+    pub fn render_input(
         &self,
         context: &WgpuContext,
         target: &TextureView,
@@ -183,6 +182,35 @@ impl OutputWgpuPipeline {
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &texture_bind_group, &[]);
             render_pass.draw_indexed(0..(INDICES.len() as u32), 0, 0..1);
+        }
+
+        encoder.finish()
+    }
+
+    pub(crate) fn clear(&self, context: &WgpuContext, target: &TextureView) -> wgpu::CommandBuffer {
+        let mut encoder = context
+            .device
+            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+                label: Some("Output Pipeline Render Encoder"),
+            });
+        {
+            let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+                label: Some("Output Clear Render Pass"),
+                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                    view: target,
+                    resolve_target: None,
+                    ops: wgpu::Operations {
+                        load: wgpu::LoadOp::Clear(wgpu::Color {
+                            r: 0.0,
+                            g: 0.0,
+                            b: 0.0,
+                            a: 1.0,
+                        }),
+                        store: true,
+                    },
+                })],
+                depth_stencil_attachment: None,
+            });
         }
 
         encoder.finish()

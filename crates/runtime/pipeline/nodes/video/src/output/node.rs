@@ -59,11 +59,15 @@ impl ProcessingNode for VideoOutputNode {
             if let Some(texture) = context.read_texture("Input") {
                 let stage = state
                     .pipeline
-                    .render(wgpu_context, &surface.view(), &texture);
+                    .render_input(wgpu_context, &surface.view(), &texture);
 
                 wgpu_pipeline.add_stage(stage);
-                wgpu_pipeline.add_surface(surface);
+            } else {
+                let stage = state.pipeline.clear(wgpu_context, &surface.view());
+
+                wgpu_pipeline.add_stage(stage);
             }
+            wgpu_pipeline.add_surface(surface);
         }
 
         Ok(())

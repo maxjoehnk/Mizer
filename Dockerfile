@@ -86,7 +86,8 @@ RUN apt-get update && \
       libsrt-gnutls-dev \
       libmfx-dev \
       libvorbis-dev \
-      libwavpack-dev
+      libwavpack-dev \
+      yasm
 
 FROM base as build
 

@@ -1,26 +1,7 @@
-use crate::{Texture, TextureProvider, TextureView, Vertex, WgpuContext};
+use crate::{
+    Texture, TextureProvider, TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES,
+};
 use wgpu::util::DeviceExt;
-
-const VERTICES: &[Vertex] = &[
-    Vertex {
-        position: [1., 1., 0.0],
-        tex_coords: [1., 0.],
-    },
-    Vertex {
-        position: [-1., 1., 0.0],
-        tex_coords: [0., 0.],
-    },
-    Vertex {
-        position: [-1., -1., 0.0],
-        tex_coords: [0., 1.],
-    },
-    Vertex {
-        position: [1., -1., 0.0],
-        tex_coords: [1., 1.],
-    },
-];
-
-const INDICES: &[u16] = &[0, 1, 2, 0, 2, 3];
 
 pub struct TextureSourceStage {
     texture: Texture,
@@ -91,7 +72,7 @@ impl TextureSourceStage {
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
                 label: Some("Texture Source Stage Vertex Buffer"),
-                contents: bytemuck::cast_slice(VERTICES),
+                contents: bytemuck::cast_slice(RECT_VERTICES),
                 usage: wgpu::BufferUsages::VERTEX,
             });
 
@@ -99,7 +80,7 @@ impl TextureSourceStage {
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
                 label: Some("Texture Source Stage Index Buffer"),
-                contents: bytemuck::cast_slice(INDICES),
+                contents: bytemuck::cast_slice(RECT_INDICES),
                 usage: wgpu::BufferUsages::INDEX,
             });
 
@@ -147,7 +128,7 @@ impl TextureSourceStage {
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &self.texture.bind_group, &[]);
-            render_pass.draw_indexed(0..(INDICES.len() as u32), 0, 0..1);
+            render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }
 
         Ok(encoder.finish())

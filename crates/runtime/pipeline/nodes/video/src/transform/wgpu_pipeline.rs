@@ -1,15 +1,19 @@
+use cgmath::{Matrix4, SquareMatrix};
 use mizer_wgpu::{TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
 
-pub struct OutputWgpuPipeline {
+pub struct TransformWgpuPipeline {
     sampler: wgpu::Sampler,
     texture_bind_group_layout: wgpu::BindGroupLayout,
     render_pipeline: wgpu::RenderPipeline,
     vertex_buffer: wgpu::Buffer,
     index_buffer: wgpu::Buffer,
+    uniform_bind_group_layout: wgpu::BindGroupLayout,
+    uniform_bind_group: wgpu::BindGroup,
+    uniform_buffer: wgpu::Buffer,
 }
 
-impl OutputWgpuPipeline {
+impl TransformWgpuPipeline {
     pub fn new(context: &WgpuContext) -> Self {
         let sampler = context.create_sampler();
         let texture_bind_group_layout =
@@ -36,6 +40,40 @@ impl OutputWgpuPipeline {
                     ],
                     label: None,
                 });
+        let uniform_bind_group_layout =
+            context
+                .device
+                .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+                    entries: &[wgpu::BindGroupLayoutEntry {
+                        binding: 0,
+                        visibility: wgpu::ShaderStages::VERTEX,
+                        ty: wgpu::BindingType::Buffer {
+                            ty: wgpu::BufferBindingType::Uniform,
+                            has_dynamic_offset: false,
+                            min_binding_size: None,
+                        },
+                        count: None,
+                    }],
+                    label: None,
+                });
+        let identity: [[f32; 4]; 4] = Matrix4::<f32>::identity().into();
+        let uniform_buffer = context
+            .device
+            .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+                label: Some("Transform Color Buffer"),
+                contents: bytemuck::cast_slice(&[identity]),
+                usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
+            });
+        let uniform_bind_group = context
+            .device
+            .create_bind_group(&wgpu::BindGroupDescriptor {
+                label: None,
+                entries: &[wgpu::BindGroupEntry {
+                    binding: 0,
+                    resource: uniform_buffer.as_entire_binding(),
+                }],
+                layout: &uniform_bind_group_layout,
+            });
         let shader = context
             .device
             .create_shader_module(wgpu::include_wgsl!("shader.wgsl"));
@@ -43,8 +81,8 @@ impl OutputWgpuPipeline {
             context
                 .device
                 .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-                    label: Some("Output Pipeline Layout"),
-                    bind_group_layouts: &[&texture_bind_group_layout],
+                    label: Some("Transform Pipeline Layout"),
+                    bind_group_layouts: &[&texture_bind_group_layout, &uniform_bind_group_layout],
                     push_constant_ranges: &[],
                 });
 
@@ -52,7 +90,7 @@ impl OutputWgpuPipeline {
             context
                 .device
                 .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-                    label: Some("Output Render Pipeline"),
+                    label: Some("Transform Render Pipeline"),
                     layout: Some(&render_pipeline_layout),
                     vertex: wgpu::VertexState {
                         module: &shader,
@@ -89,7 +127,7 @@ impl OutputWgpuPipeline {
         let vertex_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Output Vertex Buffer"),
+                label: Some("Transform Vertex Buffer"),
                 contents: bytemuck::cast_slice(RECT_VERTICES),
                 usage: wgpu::BufferUsages::VERTEX,
             });
@@ -97,7 +135,7 @@ impl OutputWgpuPipeline {
         let index_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Output Index Buffer"),
+                label: Some("Transform Index Buffer"),
                 contents: bytemuck::cast_slice(RECT_INDICES),
                 usage: wgpu::BufferUsages::INDEX,
             });
@@ -108,10 +146,19 @@ impl OutputWgpuPipeline {
             render_pipeline,
             vertex_buffer,
             index_buffer,
+            uniform_buffer,
+            uniform_bind_group,
+            uniform_bind_group_layout,
         }
     }
 
-    pub fn render_input(
+    pub fn write_params(&self, context: &WgpuContext, matrix: [[f32; 4]; 4]) {
+        context
+            .queue
+            .write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(&[matrix]));
+    }
+
+    pub fn render(
         &self,
         context: &WgpuContext,
         target: &TextureView,
@@ -136,11 +183,11 @@ impl OutputWgpuPipeline {
         let mut encoder = context
             .device
             .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Output Pipeline Render Encoder"),
+                label: Some("Transform Render Encoder"),
             });
         {
             let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Output Render Pass"),
+                label: Some("Transform Render Pass"),
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                     view: target,
                     resolve_target: None,
@@ -160,36 +207,8 @@ impl OutputWgpuPipeline {
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &texture_bind_group, &[]);
+            render_pass.set_bind_group(1, &self.uniform_bind_group, &[]);
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
-        }
-
-        encoder.finish()
-    }
-
-    pub(crate) fn clear(&self, context: &WgpuContext, target: &TextureView) -> wgpu::CommandBuffer {
-        let mut encoder = context
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Output Pipeline Render Encoder"),
-            });
-        {
-            let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Output Clear Render Pass"),
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: true,
-                    },
-                })],
-                depth_stencil_attachment: None,
-            });
         }
 
         encoder.finish()

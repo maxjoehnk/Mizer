@@ -87,8 +87,6 @@ pub enum PortType {
     // TODO: figure out what kind's of data should be transmitted here
     /// Materials and Shaders for 3D Objects
     Material,
-    /// Legacy, should be converted to texture
-    Gstreamer,
     /// Time signal measured in frames
     Clock,
 }

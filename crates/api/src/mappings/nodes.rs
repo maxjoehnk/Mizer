@@ -641,7 +641,6 @@ impl From<PortType> for ChannelProtocol {
             PortType::Poly => ChannelProtocol::POLY,
             PortType::Data => ChannelProtocol::DATA,
             PortType::Material => ChannelProtocol::MATERIAL,
-            PortType::Gstreamer => ChannelProtocol::GST,
             PortType::Clock => ChannelProtocol::CLOCK,
         }
     }
@@ -659,7 +658,6 @@ impl From<ChannelProtocol> for PortType {
             ChannelProtocol::POLY => PortType::Poly,
             ChannelProtocol::DATA => PortType::Data,
             ChannelProtocol::MATERIAL => PortType::Material,
-            ChannelProtocol::GST => PortType::Gstreamer,
             ChannelProtocol::CLOCK => PortType::Clock,
         }
     }

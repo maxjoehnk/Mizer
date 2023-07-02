@@ -170,7 +170,7 @@ impl PipelineWorker {
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
                     PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
                     PortType::Clock => receivers.register::<u64>(port_id, metadata),
-                    PortType::Gstreamer | PortType::Texture => {}
+                    PortType::Texture => {}
                     port_type => log::debug!("TODO: implement port type {:?}", port_type),
                 }
             }

@@ -1,12 +1,8 @@
 use enum_iterator::Sequence;
-use gstreamer::prelude::*;
-use gstreamer::{update_registry, Element, ElementFactory};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-
-use crate::{GstreamerNode, PIPELINE};
 
 const EFFECT_TYPE_SETTING: &str = "Effect Type";
 
@@ -16,9 +12,7 @@ pub struct VideoEffectNode {
     pub effect_type: VideoEffectType,
 }
 
-pub struct VideoEffectState {
-    node: Element,
-}
+pub struct VideoEffectState {}
 
 impl ConfigurableNode for VideoEffectNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
@@ -43,8 +37,8 @@ impl PipelineNode for VideoEffectNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!("input", PortType::Gstreamer),
-            output_port!("output", PortType::Gstreamer),
+            input_port!("Input", PortType::Texture),
+            output_port!("Output", PortType::Texture),
         ]
     }
 
@@ -67,31 +61,7 @@ impl ProcessingNode for VideoEffectNode {
 
 impl VideoEffectState {
     fn new(effect_type: VideoEffectType) -> Self {
-        let pipeline = PIPELINE.lock().unwrap();
-        let effect = ElementFactory::make(&format!(
-            "gleffects_{}",
-            effect_type.to_string().to_lowercase()
-        ))
-        .build()
-        .unwrap();
-        pipeline.add(&effect).unwrap();
-
-        VideoEffectState { node: effect }
-    }
-}
-
-impl GstreamerNode for VideoEffectState {
-    fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()> {
-        self.node.link(target.sink())?;
-        Ok(())
-    }
-
-    fn unlink_from(&self, target: &dyn GstreamerNode) {
-        self.node.unlink(target.sink());
-    }
-
-    fn sink(&self) -> &Element {
-        &self.node
+        VideoEffectState {}
     }
 }
 

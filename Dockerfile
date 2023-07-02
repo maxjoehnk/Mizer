@@ -3,9 +3,6 @@ FROM rust:1.70 as base
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-      libgstreamer1.0-dev \
-      libgstreamer-plugins-base1.0-dev \
-      libgstreamer-plugins-bad1.0-dev \
       libasound2-dev \
       libavahi-client-dev \
       xorg-dev \

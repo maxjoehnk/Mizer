@@ -9,9 +9,6 @@ RUN git config --global --add safe.directory /flutter
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
-      libgstreamer1.0-dev \
-      libgstreamer-plugins-base1.0-dev \
-      libgstreamer-plugins-bad1.0-dev \
       libasound2-dev \
       libavahi-client-dev \
       xorg-dev \

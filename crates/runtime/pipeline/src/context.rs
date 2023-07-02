@@ -23,10 +23,6 @@ pub struct PipelineContext<'a> {
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
     pub(crate) node_metadata: RefCell<&'a mut NodeMetadata>,
-    /// Map of textures to read from
-    pub(crate) texture_sources: &'a HashMap<PortId, TextureHandle>,
-    /// Map of textures to write to
-    pub(crate) texture_targets: &'a HashMap<PortId, TextureHandle>,
 }
 
 impl<'a> Debug for PipelineContext<'a> {
@@ -198,15 +194,9 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<mizer_wgpu::TextureView> {
-        let handle = self.texture_sources.get(&port.into())?;
+        let handle = self.read_port(port)?;
         let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
-        texture_registry.get(handle)
-    }
-
-    fn write_texture<P: Into<PortId>>(&self, port: P) -> Option<mizer_wgpu::TextureView> {
-        let handle = self.texture_targets.get(&port.into())?;
-        let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
-        texture_registry.get(handle)
+        texture_registry.get(&handle)
     }
 }
 

@@ -1,7 +1,8 @@
+use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_wgpu::{WgpuContext, WgpuPipeline};
+use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
 
 mod wgpu_pipeline;
 
@@ -34,6 +35,7 @@ impl Default for VideoColorBalanceNode {
 
 pub struct VideoColorBalanceState {
     pipeline: wgpu_pipeline::ColorBalanceWgpuPipeline,
+    target_texture: TextureHandle,
 }
 
 impl ConfigurableNode for VideoColorBalanceNode {
@@ -88,6 +90,7 @@ impl ProcessingNode for VideoColorBalanceNode {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let wgpu_context = context.inject::<WgpuContext>().unwrap();
         let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
+        let texture_registry = context.inject::<TextureRegistry>().unwrap();
         let brightness = context
             .read_port::<_, f64>(BRIGHTNESS_PORT)
             .unwrap_or(self.brightness);
@@ -100,20 +103,21 @@ impl ProcessingNode for VideoColorBalanceNode {
             .unwrap_or(self.saturation);
 
         if state.is_none() {
-            *state = Some(VideoColorBalanceState::new(wgpu_context));
+            *state = Some(VideoColorBalanceState::new(wgpu_context, texture_registry));
         }
 
         let state = state.as_mut().unwrap();
+        context.write_port(OUTPUT_PORT, state.target_texture);
         state.pipeline.write_params(
             wgpu_context,
             hue as f32,
             saturation as f32,
             brightness as f32,
         );
-        if let Some((input, output)) = context
-            .read_texture(INPUT_PORT)
-            .zip(context.write_texture(OUTPUT_PORT))
-        {
+        let output = texture_registry
+            .get(&state.target_texture)
+            .ok_or_else(|| anyhow!("Missing target texture"))?;
+        if let Some(input) = context.read_texture(INPUT_PORT) {
             let stage = state.pipeline.render(wgpu_context, &output, &input);
 
             wgpu_pipeline.add_stage(stage);
@@ -128,9 +132,15 @@ impl ProcessingNode for VideoColorBalanceNode {
 }
 
 impl VideoColorBalanceState {
-    fn new(context: &WgpuContext) -> Self {
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
         Self {
             pipeline: wgpu_pipeline::ColorBalanceWgpuPipeline::new(context),
+            target_texture: texture_registry.register(
+                context,
+                1920,
+                1080,
+                Some("Color balance target"),
+            ),
         }
     }
 }

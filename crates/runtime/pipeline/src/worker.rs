@@ -74,10 +74,6 @@ pub struct PipelineWorker {
     dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
-    /// Map of textures to read from
-    texture_sources: HashMap<NodePath, HashMap<PortId, TextureHandle>>,
-    /// Map of textures to write to
-    texture_targets: HashMap<NodePath, HashMap<PortId, TextureHandle>>,
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -88,8 +84,6 @@ impl std::fmt::Debug for PipelineWorker {
             .field("dependencies", &self.dependencies)
             .field("previews", &self.previews)
             .field("port_metadata", &self.node_metadata)
-            .field("texture_sources", &self.texture_sources)
-            .field("texture_targets", &self.texture_targets)
             .finish()
     }
 }
@@ -102,8 +96,6 @@ impl PipelineWorker {
             receivers: Default::default(),
             dependencies: Default::default(),
             previews: Default::default(),
-            texture_sources: Default::default(),
-            texture_targets: Default::default(),
             node_metadata,
         }
     }
@@ -146,21 +138,6 @@ impl PipelineWorker {
         self.states.insert(path.clone(), state);
         let mut receivers = NodeReceivers::default();
         for (port_id, metadata) in node.list_ports() {
-            if metadata.is_output() && matches!(metadata.port_type, PortType::Texture) {
-                log::debug!("Registering transfer texture for {path:?} {port_id:?}");
-                let texture_registry = injector.get::<TextureRegistry>().unwrap();
-                let wgpu_context = injector.get::<WgpuContext>().unwrap();
-                let handle = texture_registry.register(
-                    wgpu_context,
-                    1920,
-                    1080,
-                    Some(&format!("Target Texture {port_id}@{path}")),
-                );
-                self.texture_targets
-                    .entry(path.clone())
-                    .or_default()
-                    .insert(port_id.clone(), handle);
-            }
             if metadata.is_input() {
                 log::debug!("Registering port receiver for {:?} {:?}", &path, &port_id);
                 match metadata.port_type {
@@ -170,7 +147,7 @@ impl PipelineWorker {
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
                     PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
                     PortType::Clock => receivers.register::<u64>(port_id, metadata),
-                    PortType::Texture => {}
+                    PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
                     port_type => log::debug!("TODO: implement port type {:?}", port_type),
                 }
             }
@@ -250,7 +227,9 @@ impl PipelineWorker {
             PortType::Data => {
                 self.connect_memory_ports::<StructuredData>(link, source_meta, target_meta)
             }
-            PortType::Texture => self.connect_wgpu_texture_ports(link, source_meta, target_meta),
+            PortType::Texture => {
+                self.connect_memory_ports::<TextureHandle>(link, source_meta, target_meta)
+            }
             _ => todo!(),
         }
         Ok(())
@@ -270,7 +249,7 @@ impl PipelineWorker {
             PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
             PortType::Data => self.disconnect_memory_ports::<StructuredData>(link),
-            PortType::Texture => self.disconnect_wgpu_texture_ports(link),
+            PortType::Texture => self.disconnect_memory_ports::<TextureHandle>(link),
             _ => unimplemented!(),
         }
     }
@@ -318,28 +297,6 @@ impl PipelineWorker {
                 &link.target_port,
                 (link.source.clone(), link.source_port.clone()),
             );
-        }
-    }
-
-    fn connect_wgpu_texture_ports(
-        &mut self,
-        link: NodeLink,
-        source_meta: PortMetadata,
-        target_meta: PortMetadata,
-    ) {
-        if let Some(target_handles) = self.texture_targets.get(&link.source) {
-            if let Some(handle) = target_handles.get(&link.source_port) {
-                self.texture_sources
-                    .entry(link.target)
-                    .or_default()
-                    .insert(link.target_port, *handle);
-            }
-        }
-    }
-
-    fn disconnect_wgpu_texture_ports(&mut self, link: &NodeLink) {
-        if let Some(handles) = self.texture_sources.get_mut(&link.target) {
-            handles.remove(&link.target_port);
         }
     }
 
@@ -396,8 +353,6 @@ impl PipelineWorker {
                 senders: self.senders.get(path),
                 node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),
                 clock: RefCell::new(clock),
-                texture_targets: self.texture_targets.entry(path.clone()).or_default(),
-                texture_sources: self.texture_sources.entry(path.clone()).or_default(),
             };
             log::trace!("process_node {} with context {:?}", &path, &context);
             let state = self.states.get_mut(path);

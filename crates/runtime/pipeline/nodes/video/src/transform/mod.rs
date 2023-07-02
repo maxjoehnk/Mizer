@@ -1,10 +1,12 @@
 mod wgpu_pipeline;
 
+use anyhow::anyhow;
 use cgmath::{Deg, Matrix4, Vector3};
 use serde::{Deserialize, Serialize};
 
+use crate::transform::wgpu_pipeline::TransformWgpuPipeline;
 use mizer_node::*;
-use mizer_wgpu::{WgpuContext, WgpuPipeline};
+use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
@@ -125,13 +127,14 @@ impl PipelineNode for VideoTransformNode {
 }
 
 impl ProcessingNode for VideoTransformNode {
-    type State = Option<wgpu_pipeline::TransformWgpuPipeline>;
+    type State = Option<VideoTransformState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let wgpu_context = context.inject::<WgpuContext>().unwrap();
         let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
+        let texture_registry = context.inject::<TextureRegistry>().unwrap();
         if state.is_none() {
-            *state = Some(wgpu_pipeline::TransformWgpuPipeline::new(wgpu_context));
+            *state = Some(VideoTransformState::new(wgpu_context, texture_registry));
         }
 
         let rotation_x = context
@@ -167,13 +170,14 @@ impl ProcessingNode for VideoTransformNode {
         let matrix = OPENGL_TO_WGPU_MATRIX * matrix;
 
         let state = state.as_mut().unwrap();
-        state.write_params(wgpu_context, matrix.into());
+        context.write_port(OUTPUT_PORT, state.target_texture);
+        state.pipeline.write_params(wgpu_context, matrix.into());
 
-        if let Some((input, output)) = context
-            .read_texture(INPUT_PORT)
-            .zip(context.write_texture(OUTPUT_PORT))
-        {
-            let stage = state.render(wgpu_context, &output, &input);
+        let output = texture_registry
+            .get(&state.target_texture)
+            .ok_or_else(|| anyhow!("Missing target texture"))?;
+        if let Some(input) = context.read_texture(INPUT_PORT) {
+            let stage = state.pipeline.render(wgpu_context, &output, &input);
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -183,5 +187,24 @@ impl ProcessingNode for VideoTransformNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
+    }
+}
+
+pub struct VideoTransformState {
+    pipeline: TransformWgpuPipeline,
+    target_texture: TextureHandle,
+}
+
+impl VideoTransformState {
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
+        Self {
+            pipeline: TransformWgpuPipeline::new(context),
+            target_texture: texture_registry.register(
+                context,
+                1920,
+                1080,
+                Some("Transform target"),
+            ),
+        }
     }
 }

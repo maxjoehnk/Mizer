@@ -1,10 +1,13 @@
-use anyhow::Context;
+use anyhow::{anyhow, Context};
 use ffmpeg_the_third as ffmpeg;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 
 use mizer_node::*;
-use mizer_wgpu::{TextureProvider, TextureSourceStage, WgpuContext, WgpuPipeline};
+use mizer_wgpu::{
+    Texture, TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext,
+    WgpuPipeline,
+};
 
 const OUTPUT_PORT: &str = "Output";
 
@@ -50,6 +53,7 @@ impl ProcessingNode for VideoFileNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let wgpu_context = context.inject::<WgpuContext>().unwrap();
+        let texture_registry = context.inject::<TextureRegistry>().unwrap();
         let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
 
         if self.file.is_empty() {
@@ -58,19 +62,21 @@ impl ProcessingNode for VideoFileNode {
 
         if state.is_none() {
             *state = Some(
-                VideoFileState::new(wgpu_context, &self.file)
+                VideoFileState::new(wgpu_context, texture_registry, &self.file)
                     .context("Creating video file state")?,
             );
         }
 
         let state = state.as_mut().unwrap();
-        if let Some(texture) = context.write_texture(OUTPUT_PORT) {
-            let stage = state
-                .pipeline
-                .render(wgpu_context, &texture, &mut state.texture)
-                .context("Rendering texture source pipeline")?;
-            video_pipeline.add_stage(stage);
-        }
+        context.write_port(OUTPUT_PORT, state.transfer_texture);
+        let texture = texture_registry
+            .get(&state.transfer_texture)
+            .ok_or_else(|| anyhow!("Texture not found in registry"))?;
+        let stage = state
+            .pipeline
+            .render(wgpu_context, &texture, &mut state.texture)
+            .context("Rendering texture source pipeline")?;
+        video_pipeline.add_stage(stage);
 
         Ok(())
     }
@@ -83,16 +89,22 @@ impl ProcessingNode for VideoFileNode {
 pub struct VideoFileState {
     texture: VideoTexture,
     pipeline: TextureSourceStage,
+    transfer_texture: TextureHandle,
 }
 
 impl VideoFileState {
-    fn new(context: &WgpuContext, path: &str) -> anyhow::Result<Self> {
+    fn new(context: &WgpuContext, registry: &TextureRegistry, path: &str) -> anyhow::Result<Self> {
         log::debug!("Loading video file: {}", path);
         let mut texture = VideoTexture::new(path).context("Creating new video texture provider")?;
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
+        let transfer_texture = registry.register(context, texture.width(), texture.height(), None);
 
-        Ok(Self { texture, pipeline })
+        Ok(Self {
+            texture,
+            pipeline,
+            transfer_texture,
+        })
     }
 }
 

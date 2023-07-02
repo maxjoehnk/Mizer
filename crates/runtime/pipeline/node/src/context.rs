@@ -30,5 +30,4 @@ pub trait NodeContext: PreviewContext {
     fn inject<T: 'static>(&self) -> Option<&T>;
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView>;
-    fn write_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView>;
 }

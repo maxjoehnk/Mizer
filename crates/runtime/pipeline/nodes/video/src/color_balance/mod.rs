@@ -8,19 +8,19 @@ mod wgpu_pipeline;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
-const BRIGHTNESS_PORT: &str = "Brightness";
 const HUE_PORT: &str = "Hue";
 const SATURATION_PORT: &str = "Saturation";
+const BRIGHTNESS_PORT: &str = "Brightness";
 
 const HUE_SETTING: &str = "Hue";
-const BRIGHTNESS_SETTING: &str = "Brightness";
 const SATURATION_SETTING: &str = "Saturation";
+const BRIGHTNESS_SETTING: &str = "Brightness";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoColorBalanceNode {
-    pub brightness: f64,
     pub hue: f64,
     pub saturation: f64,
+    pub brightness: f64,
 }
 
 impl Default for VideoColorBalanceNode {

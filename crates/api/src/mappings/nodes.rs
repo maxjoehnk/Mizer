@@ -390,6 +390,7 @@ impl From<NodeSetting> for mizer_node::NodeSetting {
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),
+            optional: false,
         }
     }
 }

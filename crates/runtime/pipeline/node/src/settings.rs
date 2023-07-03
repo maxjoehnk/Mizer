@@ -10,6 +10,7 @@ pub struct NodeSetting {
     pub description: String,
     pub disabled: bool,
     pub value: NodeSettingValue,
+    pub optional: bool,
 }
 
 impl NodeSetting {
@@ -29,6 +30,12 @@ impl NodeSetting {
         if let NodeSettingValue::Text { multiline, .. } = &mut self.value {
             *multiline = true;
         }
+
+        self
+    }
+
+    pub fn optional(mut self) -> Self {
+        self.optional = true;
 
         self
     }
@@ -197,7 +204,7 @@ impl NodeSettingValue {
 
     pub fn select(value: String, values: Vec<SelectVariant>) -> Self {
         Self::Select {
-            value,
+            value: value.into(),
             variants: values,
         }
     }

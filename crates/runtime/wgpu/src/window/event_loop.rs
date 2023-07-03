@@ -1,8 +1,9 @@
-use dashmap::DashMap;
 use std::sync::mpsc::Sender;
-use wgpu::PresentMode;
 
+use dashmap::DashMap;
+use wgpu::PresentMode;
 use winit::event_loop::{EventLoop, EventLoopBuilder};
+use winit::monitor::MonitorHandle;
 use winit::platform::x11::EventLoopBuilderExtX11;
 use winit::window::WindowId;
 
@@ -64,4 +65,33 @@ impl EventLoopHandle {
             events: rx,
         })
     }
+
+    pub fn available_screens(&self) -> Vec<Screen> {
+        self.event_loop
+            .available_monitors()
+            .filter_map(|handle| {
+                let name = handle.name()?;
+                let size = handle.size();
+
+                Some(Screen {
+                    handle,
+                    id: name.clone(),
+                    name,
+                    size: (size.width, size.height),
+                })
+            })
+            .collect()
+    }
+
+    pub fn get_screen(&self, id: &String) -> Option<Screen> {
+        self.available_screens().into_iter().find(|s| &s.id == id)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Screen {
+    pub(crate) handle: MonitorHandle,
+    pub id: String,
+    pub name: String,
+    pub size: (u32, u32),
 }

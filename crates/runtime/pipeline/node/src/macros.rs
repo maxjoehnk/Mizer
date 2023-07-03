@@ -44,6 +44,7 @@ macro_rules! setting {
             value: $value.into(),
             description: Default::default(),
             disabled: Default::default(),
+            optional: Default::default(),
         }
     };
     (enum $name:expr, $value:expr) => {

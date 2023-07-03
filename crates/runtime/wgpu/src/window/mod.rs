@@ -1,6 +1,7 @@
 use std::sync::mpsc::Receiver;
 
 use wgpu::SurfaceTexture;
+use winit::window::Fullscreen;
 
 pub use event_loop::*;
 pub use module::*;
@@ -52,6 +53,21 @@ impl WindowRef {
         Ok(WindowSurface {
             texture: self.surface.get_current_texture()?,
         })
+    }
+
+    pub fn set_title(&mut self, name: &str) {
+        profiling::scope!("WindowRef::set_title");
+        self.window.set_title(name);
+    }
+
+    pub fn set_fullscreen(&mut self, fullscreen: bool, screen: Option<Screen>) {
+        profiling::scope!("WindowRef::set_fullscreen");
+        if fullscreen {
+            self.window
+                .set_fullscreen(Some(Fullscreen::Borderless(screen.map(|s| s.handle))));
+        } else {
+            self.window.set_fullscreen(None);
+        }
     }
 }
 

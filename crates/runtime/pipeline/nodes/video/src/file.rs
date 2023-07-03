@@ -68,6 +68,7 @@ impl ProcessingNode for VideoFileNode {
         }
 
         let state = state.as_mut().unwrap();
+        state.texture.clock_state = context.clock_state();
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
             .get(&state.transfer_texture)
@@ -113,6 +114,7 @@ struct VideoTexture {
     decoder: ffmpeg::decoder::Video,
     converter: ffmpeg::software::scaling::context::Context,
     stream_index: usize,
+    clock_state: ClockState,
 }
 
 impl VideoTexture {
@@ -133,6 +135,7 @@ impl VideoTexture {
             context,
             converter,
             stream_index: video_stream_index,
+            clock_state: ClockState::Playing,
         })
     }
 }
@@ -148,6 +151,15 @@ impl TextureProvider for VideoTexture {
 
     fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
         profiling::scope!("VideoTexture::data");
+        match self.clock_state {
+            ClockState::Stopped => {
+                self.context.seek(0, 0..0)?;
+            }
+            ClockState::Paused => {
+                return Ok(None);
+            }
+            _ => {}
+        }
         for (stream, packet) in self.context.packets() {
             if self.stream_index == stream.index() {
                 self.decoder.send_packet(&packet)?;

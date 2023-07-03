@@ -194,12 +194,14 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
+        profiling::scope!("PipelineContext::read_texture");
         let handle = self.read_port(port)?;
         let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
         texture_registry.get(&handle)
     }
 
     fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
+        profiling::scope!("PipelineContext::read_textures");
         let handles = self.read_ports(port);
         let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
 

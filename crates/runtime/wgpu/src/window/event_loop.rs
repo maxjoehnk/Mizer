@@ -1,5 +1,6 @@
 use dashmap::DashMap;
 use std::sync::mpsc::Sender;
+use wgpu::PresentMode;
 
 use winit::event_loop::{EventLoop, EventLoopBuilder};
 use winit::platform::x11::EventLoopBuilderExtX11;
@@ -49,7 +50,7 @@ impl EventLoopHandle {
             format: surface_format,
             width: window.inner_size().width,
             height: window.inner_size().height,
-            present_mode: surface_caps.present_modes[0],
+            present_mode: PresentMode::Mailbox,
             alpha_mode: surface_caps.alpha_modes[0],
             view_formats: vec![],
         };

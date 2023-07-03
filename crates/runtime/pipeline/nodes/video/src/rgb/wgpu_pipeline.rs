@@ -151,6 +151,7 @@ impl RgbWgpuPipeline {
     }
 
     pub fn write_params(&self, context: &WgpuContext, red: f32, green: f32, blue: f32) {
+        profiling::scope!("RgbWgpuPipeline::write_params");
         context.queue.write_buffer(
             &self.uniform_buffer,
             0,
@@ -164,6 +165,7 @@ impl RgbWgpuPipeline {
         source: &TextureView,
         target: &TextureView,
     ) -> wgpu::CommandBuffer {
+        profiling::scope!("RgbWgpuPipeline::render");
         let texture_bind_group = context
             .device
             .create_bind_group(&wgpu::BindGroupDescriptor {

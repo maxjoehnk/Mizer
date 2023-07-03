@@ -153,6 +153,7 @@ impl TransformWgpuPipeline {
     }
 
     pub fn write_params(&self, context: &WgpuContext, matrix: [[f32; 4]; 4]) {
+        profiling::scope!("TransformWgpuPipeline::write_params");
         context
             .queue
             .write_buffer(&self.uniform_buffer, 0, bytemuck::cast_slice(&[matrix]));
@@ -164,6 +165,7 @@ impl TransformWgpuPipeline {
         target: &TextureView,
         source: &TextureView,
     ) -> wgpu::CommandBuffer {
+        profiling::scope!("TransformWgpuPipeline::render");
         let texture_bind_group = context
             .device
             .create_bind_group(&wgpu::BindGroupDescriptor {

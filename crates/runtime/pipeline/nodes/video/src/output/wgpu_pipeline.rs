@@ -117,6 +117,7 @@ impl OutputWgpuPipeline {
         target: &TextureView,
         source: &TextureView,
     ) -> wgpu::CommandBuffer {
+        profiling::scope!("OutputWgpuPipeline::render_input");
         let texture_bind_group = context
             .device
             .create_bind_group(&wgpu::BindGroupDescriptor {
@@ -167,6 +168,7 @@ impl OutputWgpuPipeline {
     }
 
     pub(crate) fn clear(&self, context: &WgpuContext, target: &TextureView) -> wgpu::CommandBuffer {
+        profiling::scope!("OutputWgpuPipeline::clear");
         let mut encoder = context
             .device
             .create_command_encoder(&wgpu::CommandEncoderDescriptor {

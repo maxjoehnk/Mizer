@@ -182,6 +182,7 @@ impl MixerWgpuPipeline {
     }
 
     fn rebuild_pipeline(&mut self, context: &WgpuContext, texture_count: usize) {
+        profiling::scope!("MixerWgpuPipeline::rebuild_pipeline");
         self.texture_bind_group_layout = Self::create_texture_layout(context, texture_count);
         self.render_pipeline = Self::create_render_pipeline(
             context,
@@ -203,6 +204,7 @@ impl MixerWgpuPipeline {
         sources: &[&wgpu::TextureView],
         target: &TextureView,
     ) -> wgpu::CommandBuffer {
+        profiling::scope!("MixerWgpuPipeline::render");
         let texture_count = sources.len();
         if texture_count != self.texture_count {
             self.rebuild_pipeline(context, texture_count);

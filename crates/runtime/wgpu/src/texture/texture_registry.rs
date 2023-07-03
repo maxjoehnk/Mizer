@@ -27,6 +27,7 @@ impl TextureRegistry {
         height: u32,
         label: Option<&str>,
     ) -> TextureHandle {
+        profiling::scope!("TextureRegistry::register");
         let texture = context.create_texture(
             width,
             height,
@@ -41,6 +42,7 @@ impl TextureRegistry {
     }
 
     pub fn get(&self, handle: &TextureHandle) -> Option<TextureView> {
+        profiling::scope!("TextureRegistry::get");
         let texture = self.textures.get(handle)?;
         let texture_view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         let texture_view = TextureView(texture_view);

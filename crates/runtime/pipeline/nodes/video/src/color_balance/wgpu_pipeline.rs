@@ -151,6 +151,7 @@ impl ColorBalanceWgpuPipeline {
     }
 
     pub fn write_params(&self, context: &WgpuContext, hue: f32, saturation: f32, value: f32) {
+        profiling::scope!("ColorBalanceWgpuPipeline::write_params");
         context.queue.write_buffer(
             &self.uniform_buffer,
             0,

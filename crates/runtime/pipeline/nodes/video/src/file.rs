@@ -20,11 +20,13 @@ pub struct VideoFileNode {
 
 impl ConfigurableNode for VideoFileNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(FILE_SETTING, &self.file)]
+        vec![
+            setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video, MediaContentType::Image]),
+        ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(text setting, FILE_SETTING, self.file);
+        update!(media setting, FILE_SETTING, self.file);
 
         update_fallback!(setting)
     }

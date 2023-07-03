@@ -59,6 +59,12 @@ macro_rules! setting {
     (id $name:expr, $value:expr, $values:expr) => {
         $crate::setting!($name, $crate::NodeSettingValue::id($value, $values))
     };
+    (media $name:expr, $value:expr, $content_types:expr) => {
+        $crate::setting!(
+            $name,
+            $crate::NodeSettingValue::media($value.into(), $content_types)
+        )
+    };
 }
 
 #[macro_export]
@@ -122,6 +128,14 @@ macro_rules! update {
     (spline $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Spline(_)) && $setting.label == $name {
             if let NodeSettingValue::Spline(value) = $setting.value {
+                $field = value;
+                return Ok(());
+            }
+        }
+    };
+    (media $setting:expr, $name:expr, $field:expr) => {
+        if matches!($setting.value, NodeSettingValue::Media { .. }) && $setting.label == $name {
+            if let NodeSettingValue::Media { value, .. } = $setting.value {
                 $field = value;
                 return Ok(());
             }

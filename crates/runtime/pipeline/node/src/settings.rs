@@ -144,6 +144,18 @@ pub enum NodeSettingValue {
         variants: Vec<IdVariant>,
     },
     Spline(Spline),
+    Media {
+        value: String,
+        content_types: Vec<MediaContentType>,
+    },
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+pub enum MediaContentType {
+    Image,
+    Audio,
+    Video,
+    Vector,
 }
 
 #[allow(clippy::derive_hash_xor_eq)]
@@ -190,6 +202,10 @@ impl Hash for NodeSettingValue {
                 value.hash(state);
             }
             Self::Spline(spline) => spline.hash(state),
+            Self::Media { value, .. } => {
+                state.write_u8(7);
+                value.hash(state);
+            }
         }
     }
 }
@@ -213,6 +229,13 @@ impl NodeSettingValue {
         Self::Id {
             value: value.into(),
             variants: values,
+        }
+    }
+
+    pub fn media(value: String, content_types: Vec<MediaContentType>) -> Self {
+        Self::Media {
+            value,
+            content_types,
         }
     }
 }

@@ -10,152 +10,152 @@ import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-import 'nodes.pb.dart' as $0;
+import 'nodes.pb.dart' as $1;
 export 'nodes.pb.dart';
 
 class NodesApiClient extends $grpc.Client {
   static final _$getAvailableNodes =
-      $grpc.ClientMethod<$0.NodesRequest, $0.AvailableNodes>(
+      $grpc.ClientMethod<$1.NodesRequest, $1.AvailableNodes>(
           '/mizer.nodes.NodesApi/GetAvailableNodes',
-          ($0.NodesRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.AvailableNodes.fromBuffer(value));
-  static final _$getNodes = $grpc.ClientMethod<$0.NodesRequest, $0.Nodes>(
+          ($1.NodesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.AvailableNodes.fromBuffer(value));
+  static final _$getNodes = $grpc.ClientMethod<$1.NodesRequest, $1.Nodes>(
       '/mizer.nodes.NodesApi/GetNodes',
-      ($0.NodesRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Nodes.fromBuffer(value));
-  static final _$addNode = $grpc.ClientMethod<$0.AddNodeRequest, $0.Node>(
+      ($1.NodesRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Nodes.fromBuffer(value));
+  static final _$addNode = $grpc.ClientMethod<$1.AddNodeRequest, $1.Node>(
       '/mizer.nodes.NodesApi/AddNode',
-      ($0.AddNodeRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
+      ($1.AddNodeRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Node.fromBuffer(value));
   static final _$addLink =
-      $grpc.ClientMethod<$0.NodeConnection, $0.NodeConnection>(
+      $grpc.ClientMethod<$1.NodeConnection, $1.NodeConnection>(
           '/mizer.nodes.NodesApi/AddLink',
-          ($0.NodeConnection value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.NodeConnection.fromBuffer(value));
+          ($1.NodeConnection value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.NodeConnection.fromBuffer(value));
   static final _$writeControlValue =
-      $grpc.ClientMethod<$0.WriteControl, $0.WriteResponse>(
+      $grpc.ClientMethod<$1.WriteControl, $1.WriteResponse>(
           '/mizer.nodes.NodesApi/WriteControlValue',
-          ($0.WriteControl value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.WriteResponse.fromBuffer(value));
+          ($1.WriteControl value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.WriteResponse.fromBuffer(value));
   static final _$updateNodeSetting =
-      $grpc.ClientMethod<$0.UpdateNodeSettingRequest, $0.Node>(
+      $grpc.ClientMethod<$1.UpdateNodeSettingRequest, $1.Node>(
           '/mizer.nodes.NodesApi/UpdateNodeSetting',
-          ($0.UpdateNodeSettingRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
+          ($1.UpdateNodeSettingRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Node.fromBuffer(value));
   static final _$moveNode =
-      $grpc.ClientMethod<$0.MoveNodeRequest, $0.MoveNodeResponse>(
+      $grpc.ClientMethod<$1.MoveNodeRequest, $1.MoveNodeResponse>(
           '/mizer.nodes.NodesApi/MoveNode',
-          ($0.MoveNodeRequest value) => value.writeToBuffer(),
+          ($1.MoveNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.MoveNodeResponse.fromBuffer(value));
+              $1.MoveNodeResponse.fromBuffer(value));
   static final _$deleteNode =
-      $grpc.ClientMethod<$0.DeleteNodeRequest, $0.DeleteNodeResponse>(
+      $grpc.ClientMethod<$1.DeleteNodeRequest, $1.DeleteNodeResponse>(
           '/mizer.nodes.NodesApi/DeleteNode',
-          ($0.DeleteNodeRequest value) => value.writeToBuffer(),
+          ($1.DeleteNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.DeleteNodeResponse.fromBuffer(value));
+              $1.DeleteNodeResponse.fromBuffer(value));
   static final _$hideNode =
-      $grpc.ClientMethod<$0.HideNodeRequest, $0.HideNodeResponse>(
+      $grpc.ClientMethod<$1.HideNodeRequest, $1.HideNodeResponse>(
           '/mizer.nodes.NodesApi/HideNode',
-          ($0.HideNodeRequest value) => value.writeToBuffer(),
+          ($1.HideNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.HideNodeResponse.fromBuffer(value));
+              $1.HideNodeResponse.fromBuffer(value));
   static final _$showNode =
-      $grpc.ClientMethod<$0.ShowNodeRequest, $0.ShowNodeResponse>(
+      $grpc.ClientMethod<$1.ShowNodeRequest, $1.ShowNodeResponse>(
           '/mizer.nodes.NodesApi/ShowNode',
-          ($0.ShowNodeRequest value) => value.writeToBuffer(),
+          ($1.ShowNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.ShowNodeResponse.fromBuffer(value));
+              $1.ShowNodeResponse.fromBuffer(value));
   static final _$duplicateNode =
-      $grpc.ClientMethod<$0.DuplicateNodeRequest, $0.Node>(
+      $grpc.ClientMethod<$1.DuplicateNodeRequest, $1.Node>(
           '/mizer.nodes.NodesApi/DuplicateNode',
-          ($0.DuplicateNodeRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
+          ($1.DuplicateNodeRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Node.fromBuffer(value));
   static final _$renameNode =
-      $grpc.ClientMethod<$0.RenameNodeRequest, $0.RenameNodeResponse>(
+      $grpc.ClientMethod<$1.RenameNodeRequest, $1.RenameNodeResponse>(
           '/mizer.nodes.NodesApi/RenameNode',
-          ($0.RenameNodeRequest value) => value.writeToBuffer(),
+          ($1.RenameNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.RenameNodeResponse.fromBuffer(value));
+              $1.RenameNodeResponse.fromBuffer(value));
   static final _$groupNodes =
-      $grpc.ClientMethod<$0.GroupNodesRequest, $0.GroupNodesResponse>(
+      $grpc.ClientMethod<$1.GroupNodesRequest, $1.GroupNodesResponse>(
           '/mizer.nodes.NodesApi/GroupNodes',
-          ($0.GroupNodesRequest value) => value.writeToBuffer(),
+          ($1.GroupNodesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $0.GroupNodesResponse.fromBuffer(value));
+              $1.GroupNodesResponse.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.AvailableNodes> getAvailableNodes(
-      $0.NodesRequest request,
+  $grpc.ResponseFuture<$1.AvailableNodes> getAvailableNodes(
+      $1.NodesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAvailableNodes, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Nodes> getNodes($0.NodesRequest request,
+  $grpc.ResponseFuture<$1.Nodes> getNodes($1.NodesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNodes, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Node> addNode($0.AddNodeRequest request,
+  $grpc.ResponseFuture<$1.Node> addNode($1.AddNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.NodeConnection> addLink($0.NodeConnection request,
+  $grpc.ResponseFuture<$1.NodeConnection> addLink($1.NodeConnection request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addLink, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.WriteResponse> writeControlValue(
-      $0.WriteControl request,
+  $grpc.ResponseFuture<$1.WriteResponse> writeControlValue(
+      $1.WriteControl request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$writeControlValue, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Node> updateNodeSetting(
-      $0.UpdateNodeSettingRequest request,
+  $grpc.ResponseFuture<$1.Node> updateNodeSetting(
+      $1.UpdateNodeSettingRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateNodeSetting, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MoveNodeResponse> moveNode($0.MoveNodeRequest request,
+  $grpc.ResponseFuture<$1.MoveNodeResponse> moveNode($1.MoveNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$moveNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DeleteNodeResponse> deleteNode(
-      $0.DeleteNodeRequest request,
+  $grpc.ResponseFuture<$1.DeleteNodeResponse> deleteNode(
+      $1.DeleteNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.HideNodeResponse> hideNode($0.HideNodeRequest request,
+  $grpc.ResponseFuture<$1.HideNodeResponse> hideNode($1.HideNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$hideNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.ShowNodeResponse> showNode($0.ShowNodeRequest request,
+  $grpc.ResponseFuture<$1.ShowNodeResponse> showNode($1.ShowNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$showNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Node> duplicateNode($0.DuplicateNodeRequest request,
+  $grpc.ResponseFuture<$1.Node> duplicateNode($1.DuplicateNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$duplicateNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.RenameNodeResponse> renameNode(
-      $0.RenameNodeRequest request,
+  $grpc.ResponseFuture<$1.RenameNodeResponse> renameNode(
+      $1.RenameNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renameNode, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.GroupNodesResponse> groupNodes(
-      $0.GroupNodesRequest request,
+  $grpc.ResponseFuture<$1.GroupNodesResponse> groupNodes(
+      $1.GroupNodesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$groupNodes, request, options: options);
   }
@@ -165,190 +165,190 @@ abstract class NodesApiServiceBase extends $grpc.Service {
   $core.String get $name => 'mizer.nodes.NodesApi';
 
   NodesApiServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.NodesRequest, $0.AvailableNodes>(
+    $addMethod($grpc.ServiceMethod<$1.NodesRequest, $1.AvailableNodes>(
         'GetAvailableNodes',
         getAvailableNodes_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.NodesRequest.fromBuffer(value),
-        ($0.AvailableNodes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.NodesRequest, $0.Nodes>(
+        ($core.List<$core.int> value) => $1.NodesRequest.fromBuffer(value),
+        ($1.AvailableNodes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.NodesRequest, $1.Nodes>(
         'GetNodes',
         getNodes_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.NodesRequest.fromBuffer(value),
-        ($0.Nodes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.AddNodeRequest, $0.Node>(
+        ($core.List<$core.int> value) => $1.NodesRequest.fromBuffer(value),
+        ($1.Nodes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.AddNodeRequest, $1.Node>(
         'AddNode',
         addNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.AddNodeRequest.fromBuffer(value),
-        ($0.Node value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.NodeConnection, $0.NodeConnection>(
+        ($core.List<$core.int> value) => $1.AddNodeRequest.fromBuffer(value),
+        ($1.Node value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.NodeConnection, $1.NodeConnection>(
         'AddLink',
         addLink_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.NodeConnection.fromBuffer(value),
-        ($0.NodeConnection value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.WriteControl, $0.WriteResponse>(
+        ($core.List<$core.int> value) => $1.NodeConnection.fromBuffer(value),
+        ($1.NodeConnection value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.WriteControl, $1.WriteResponse>(
         'WriteControlValue',
         writeControlValue_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.WriteControl.fromBuffer(value),
-        ($0.WriteResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.UpdateNodeSettingRequest, $0.Node>(
+        ($core.List<$core.int> value) => $1.WriteControl.fromBuffer(value),
+        ($1.WriteResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.UpdateNodeSettingRequest, $1.Node>(
         'UpdateNodeSetting',
         updateNodeSetting_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $0.UpdateNodeSettingRequest.fromBuffer(value),
-        ($0.Node value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.MoveNodeRequest, $0.MoveNodeResponse>(
+            $1.UpdateNodeSettingRequest.fromBuffer(value),
+        ($1.Node value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.MoveNodeRequest, $1.MoveNodeResponse>(
         'MoveNode',
         moveNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.MoveNodeRequest.fromBuffer(value),
-        ($0.MoveNodeResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.DeleteNodeRequest, $0.DeleteNodeResponse>(
+        ($core.List<$core.int> value) => $1.MoveNodeRequest.fromBuffer(value),
+        ($1.MoveNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.DeleteNodeRequest, $1.DeleteNodeResponse>(
         'DeleteNode',
         deleteNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.DeleteNodeRequest.fromBuffer(value),
-        ($0.DeleteNodeResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HideNodeRequest, $0.HideNodeResponse>(
+        ($core.List<$core.int> value) => $1.DeleteNodeRequest.fromBuffer(value),
+        ($1.DeleteNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.HideNodeRequest, $1.HideNodeResponse>(
         'HideNode',
         hideNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.HideNodeRequest.fromBuffer(value),
-        ($0.HideNodeResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ShowNodeRequest, $0.ShowNodeResponse>(
+        ($core.List<$core.int> value) => $1.HideNodeRequest.fromBuffer(value),
+        ($1.HideNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.ShowNodeRequest, $1.ShowNodeResponse>(
         'ShowNode',
         showNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.ShowNodeRequest.fromBuffer(value),
-        ($0.ShowNodeResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.DuplicateNodeRequest, $0.Node>(
+        ($core.List<$core.int> value) => $1.ShowNodeRequest.fromBuffer(value),
+        ($1.ShowNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.DuplicateNodeRequest, $1.Node>(
         'DuplicateNode',
         duplicateNode_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $0.DuplicateNodeRequest.fromBuffer(value),
-        ($0.Node value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RenameNodeRequest, $0.RenameNodeResponse>(
+            $1.DuplicateNodeRequest.fromBuffer(value),
+        ($1.Node value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.RenameNodeRequest, $1.RenameNodeResponse>(
         'RenameNode',
         renameNode_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.RenameNodeRequest.fromBuffer(value),
-        ($0.RenameNodeResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GroupNodesRequest, $0.GroupNodesResponse>(
+        ($core.List<$core.int> value) => $1.RenameNodeRequest.fromBuffer(value),
+        ($1.RenameNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.GroupNodesRequest, $1.GroupNodesResponse>(
         'GroupNodes',
         groupNodes_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GroupNodesRequest.fromBuffer(value),
-        ($0.GroupNodesResponse value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $1.GroupNodesRequest.fromBuffer(value),
+        ($1.GroupNodesResponse value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.AvailableNodes> getAvailableNodes_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.NodesRequest> request) async {
+  $async.Future<$1.AvailableNodes> getAvailableNodes_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.NodesRequest> request) async {
     return getAvailableNodes(call, await request);
   }
 
-  $async.Future<$0.Nodes> getNodes_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.NodesRequest> request) async {
+  $async.Future<$1.Nodes> getNodes_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.NodesRequest> request) async {
     return getNodes(call, await request);
   }
 
-  $async.Future<$0.Node> addNode_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.AddNodeRequest> request) async {
+  $async.Future<$1.Node> addNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.AddNodeRequest> request) async {
     return addNode(call, await request);
   }
 
-  $async.Future<$0.NodeConnection> addLink_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.NodeConnection> request) async {
+  $async.Future<$1.NodeConnection> addLink_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.NodeConnection> request) async {
     return addLink(call, await request);
   }
 
-  $async.Future<$0.WriteResponse> writeControlValue_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.WriteControl> request) async {
+  $async.Future<$1.WriteResponse> writeControlValue_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.WriteControl> request) async {
     return writeControlValue(call, await request);
   }
 
-  $async.Future<$0.Node> updateNodeSetting_Pre($grpc.ServiceCall call,
-      $async.Future<$0.UpdateNodeSettingRequest> request) async {
+  $async.Future<$1.Node> updateNodeSetting_Pre($grpc.ServiceCall call,
+      $async.Future<$1.UpdateNodeSettingRequest> request) async {
     return updateNodeSetting(call, await request);
   }
 
-  $async.Future<$0.MoveNodeResponse> moveNode_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.MoveNodeRequest> request) async {
+  $async.Future<$1.MoveNodeResponse> moveNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.MoveNodeRequest> request) async {
     return moveNode(call, await request);
   }
 
-  $async.Future<$0.DeleteNodeResponse> deleteNode_Pre($grpc.ServiceCall call,
-      $async.Future<$0.DeleteNodeRequest> request) async {
+  $async.Future<$1.DeleteNodeResponse> deleteNode_Pre($grpc.ServiceCall call,
+      $async.Future<$1.DeleteNodeRequest> request) async {
     return deleteNode(call, await request);
   }
 
-  $async.Future<$0.HideNodeResponse> hideNode_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.HideNodeRequest> request) async {
+  $async.Future<$1.HideNodeResponse> hideNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.HideNodeRequest> request) async {
     return hideNode(call, await request);
   }
 
-  $async.Future<$0.ShowNodeResponse> showNode_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.ShowNodeRequest> request) async {
+  $async.Future<$1.ShowNodeResponse> showNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.ShowNodeRequest> request) async {
     return showNode(call, await request);
   }
 
-  $async.Future<$0.Node> duplicateNode_Pre($grpc.ServiceCall call,
-      $async.Future<$0.DuplicateNodeRequest> request) async {
+  $async.Future<$1.Node> duplicateNode_Pre($grpc.ServiceCall call,
+      $async.Future<$1.DuplicateNodeRequest> request) async {
     return duplicateNode(call, await request);
   }
 
-  $async.Future<$0.RenameNodeResponse> renameNode_Pre($grpc.ServiceCall call,
-      $async.Future<$0.RenameNodeRequest> request) async {
+  $async.Future<$1.RenameNodeResponse> renameNode_Pre($grpc.ServiceCall call,
+      $async.Future<$1.RenameNodeRequest> request) async {
     return renameNode(call, await request);
   }
 
-  $async.Future<$0.GroupNodesResponse> groupNodes_Pre($grpc.ServiceCall call,
-      $async.Future<$0.GroupNodesRequest> request) async {
+  $async.Future<$1.GroupNodesResponse> groupNodes_Pre($grpc.ServiceCall call,
+      $async.Future<$1.GroupNodesRequest> request) async {
     return groupNodes(call, await request);
   }
 
-  $async.Future<$0.AvailableNodes> getAvailableNodes(
-      $grpc.ServiceCall call, $0.NodesRequest request);
-  $async.Future<$0.Nodes> getNodes(
-      $grpc.ServiceCall call, $0.NodesRequest request);
-  $async.Future<$0.Node> addNode(
-      $grpc.ServiceCall call, $0.AddNodeRequest request);
-  $async.Future<$0.NodeConnection> addLink(
-      $grpc.ServiceCall call, $0.NodeConnection request);
-  $async.Future<$0.WriteResponse> writeControlValue(
-      $grpc.ServiceCall call, $0.WriteControl request);
-  $async.Future<$0.Node> updateNodeSetting(
-      $grpc.ServiceCall call, $0.UpdateNodeSettingRequest request);
-  $async.Future<$0.MoveNodeResponse> moveNode(
-      $grpc.ServiceCall call, $0.MoveNodeRequest request);
-  $async.Future<$0.DeleteNodeResponse> deleteNode(
-      $grpc.ServiceCall call, $0.DeleteNodeRequest request);
-  $async.Future<$0.HideNodeResponse> hideNode(
-      $grpc.ServiceCall call, $0.HideNodeRequest request);
-  $async.Future<$0.ShowNodeResponse> showNode(
-      $grpc.ServiceCall call, $0.ShowNodeRequest request);
-  $async.Future<$0.Node> duplicateNode(
-      $grpc.ServiceCall call, $0.DuplicateNodeRequest request);
-  $async.Future<$0.RenameNodeResponse> renameNode(
-      $grpc.ServiceCall call, $0.RenameNodeRequest request);
-  $async.Future<$0.GroupNodesResponse> groupNodes(
-      $grpc.ServiceCall call, $0.GroupNodesRequest request);
+  $async.Future<$1.AvailableNodes> getAvailableNodes(
+      $grpc.ServiceCall call, $1.NodesRequest request);
+  $async.Future<$1.Nodes> getNodes(
+      $grpc.ServiceCall call, $1.NodesRequest request);
+  $async.Future<$1.Node> addNode(
+      $grpc.ServiceCall call, $1.AddNodeRequest request);
+  $async.Future<$1.NodeConnection> addLink(
+      $grpc.ServiceCall call, $1.NodeConnection request);
+  $async.Future<$1.WriteResponse> writeControlValue(
+      $grpc.ServiceCall call, $1.WriteControl request);
+  $async.Future<$1.Node> updateNodeSetting(
+      $grpc.ServiceCall call, $1.UpdateNodeSettingRequest request);
+  $async.Future<$1.MoveNodeResponse> moveNode(
+      $grpc.ServiceCall call, $1.MoveNodeRequest request);
+  $async.Future<$1.DeleteNodeResponse> deleteNode(
+      $grpc.ServiceCall call, $1.DeleteNodeRequest request);
+  $async.Future<$1.HideNodeResponse> hideNode(
+      $grpc.ServiceCall call, $1.HideNodeRequest request);
+  $async.Future<$1.ShowNodeResponse> showNode(
+      $grpc.ServiceCall call, $1.ShowNodeRequest request);
+  $async.Future<$1.Node> duplicateNode(
+      $grpc.ServiceCall call, $1.DuplicateNodeRequest request);
+  $async.Future<$1.RenameNodeResponse> renameNode(
+      $grpc.ServiceCall call, $1.RenameNodeRequest request);
+  $async.Future<$1.GroupNodesResponse> groupNodes(
+      $grpc.ServiceCall call, $1.GroupNodesRequest request);
 }

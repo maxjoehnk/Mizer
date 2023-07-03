@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package mizer.nodes;
 
+import "media.proto";
+
 service NodesApi {
   rpc GetAvailableNodes (NodesRequest) returns (AvailableNodes) {}
   rpc GetNodes (NodesRequest) returns (Nodes) {}
@@ -250,6 +252,7 @@ message NodeSetting {
     EnumValue enum = 9;
     IdValue id = 10;
     SplineValue spline = 11;
+    MediaValue media = 12;
   }
 
   message TextValue {
@@ -330,6 +333,11 @@ message NodeSetting {
       double c1a = 5;
       double c1b = 6;
     }
+  }
+
+  message MediaValue {
+    string value = 1;
+    repeated mizer.media.MediaType allowed_types = 2;
   }
 }
 

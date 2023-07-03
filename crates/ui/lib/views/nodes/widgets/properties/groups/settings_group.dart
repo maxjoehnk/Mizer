@@ -5,6 +5,7 @@ import 'package:protobuf/protobuf.dart';
 
 import '../fields/checkbox_field.dart';
 import '../fields/enum_field.dart';
+import '../fields/media_field.dart';
 import '../fields/number_field.dart';
 import '../fields/spline_field.dart';
 import '../fields/text_field.dart';
@@ -134,6 +135,16 @@ class NodeSettingsPane extends StatelessWidget {
               updated.spline = v;
               onUpdate(updated);
             });
+      }
+      if (setting.hasMedia()) {
+        return MediaField(
+          value: setting.media,
+          label: setting.label,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.media.value = v;
+            onUpdate(updated);
+          });
       }
 
       return Container();

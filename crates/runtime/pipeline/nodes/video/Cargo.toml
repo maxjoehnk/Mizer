@@ -19,3 +19,4 @@ profiling = "1"
 wgpu = "0.16"
 bytemuck = "1.13"
 cgmath = "0.18"
+mizer-media = { path = "../../../../components/media" }

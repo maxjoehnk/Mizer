@@ -1,7 +1,10 @@
 use anyhow::{anyhow, Context};
 use ffmpeg_the_third as ffmpeg;
+use mizer_media::documents::MediaId;
+use mizer_media::MediaServer;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
+use std::path::PathBuf;
 
 use mizer_node::*;
 use mizer_wgpu::{
@@ -57,19 +60,32 @@ impl ProcessingNode for VideoFileNode {
         let wgpu_context = context.inject::<WgpuContext>().unwrap();
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
         let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
+        let media_server = context.inject::<MediaServer>().unwrap();
 
         if self.file.is_empty() {
             return Ok(());
         }
 
+        let media_id = MediaId::try_from(self.file.clone())?;
+        let media_file = media_server.get_media_file(media_id);
+        if media_file.is_none() {
+            return Ok(());
+        }
+
+        let media_file = media_file.unwrap();
+
         if state.is_none() {
             *state = Some(
-                VideoFileState::new(wgpu_context, texture_registry, &self.file)
+                VideoFileState::new(wgpu_context, texture_registry, media_file.file_path.clone())
                     .context("Creating video file state")?,
             );
         }
 
         let state = state.as_mut().unwrap();
+        if state.texture.file_path != media_file.file_path {
+            state.texture = VideoTexture::new(media_file.file_path)
+                .context("Creating new video texture provider")?;
+        }
         state.texture.clock_state = context.clock_state();
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
@@ -96,8 +112,12 @@ pub struct VideoFileState {
 }
 
 impl VideoFileState {
-    fn new(context: &WgpuContext, registry: &TextureRegistry, path: &str) -> anyhow::Result<Self> {
-        log::debug!("Loading video file: {}", path);
+    fn new(
+        context: &WgpuContext,
+        registry: &TextureRegistry,
+        path: PathBuf,
+    ) -> anyhow::Result<Self> {
+        log::debug!("Loading video file: {path:?}");
         let mut texture = VideoTexture::new(path).context("Creating new video texture provider")?;
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
@@ -117,12 +137,13 @@ struct VideoTexture {
     converter: ffmpeg::software::scaling::context::Context,
     stream_index: usize,
     clock_state: ClockState,
+    file_path: PathBuf,
 }
 
 impl VideoTexture {
-    pub fn new(path: &str) -> anyhow::Result<Self> {
+    pub fn new(path: PathBuf) -> anyhow::Result<Self> {
         let context = ffmpeg::format::input(&path)?;
-        ffmpeg::format::context::input::dump(&context, 0, Some(path));
+        ffmpeg::format::context::input::dump(&context, 0, path.to_str());
         let stream = context.streams().best(ffmpeg::media::Type::Video).unwrap();
         let video_stream_index = stream.index();
 
@@ -138,6 +159,7 @@ impl VideoTexture {
             converter,
             stream_index: video_stream_index,
             clock_state: ClockState::Playing,
+            file_path: path,
         })
     }
 }

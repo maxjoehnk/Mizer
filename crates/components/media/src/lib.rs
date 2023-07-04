@@ -8,6 +8,7 @@ pub use crate::discovery::MediaDiscovery;
 use crate::documents::*;
 use crate::file_storage::FileStorage;
 use crate::import_handler::ImportFileHandler;
+pub use module::MediaModule;
 
 mod data_access;
 mod discovery;
@@ -15,6 +16,7 @@ pub mod documents;
 mod file_storage;
 mod import_handler;
 pub mod media_handlers;
+mod module;
 
 #[derive(Clone)]
 #[repr(transparent)]
@@ -121,6 +123,10 @@ impl MediaServer {
                 Err(err)
             }
         }
+    }
+
+    pub fn get_media_file(&self, id: MediaId) -> Option<MediaDocument> {
+        self.db.get_media(id)
     }
 }
 

@@ -1,10 +1,11 @@
+use crate::documents::MediaId;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use uuid::Uuid;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaDocument {
-    pub id: Uuid,
+    pub id: MediaId,
     pub filename: String,
     pub name: String,
     pub tags: Vec<AttachedTag>,

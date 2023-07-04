@@ -138,13 +138,13 @@ class NodeSettingsPane extends StatelessWidget {
       }
       if (setting.hasMedia()) {
         return MediaField(
-          value: setting.media,
-          label: setting.label,
-          onUpdate: (v) {
-            var updated = setting.deepCopy();
-            updated.media.value = v;
-            onUpdate(updated);
-          });
+            value: setting.media,
+            label: setting.label,
+            onUpdate: (v) {
+              var updated = setting.deepCopy();
+              updated.media.value = v.value;
+              onUpdate(updated);
+            });
       }
 
       return Container();

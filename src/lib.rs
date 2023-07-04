@@ -11,7 +11,7 @@ use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
-use mizer_media::{MediaDiscovery, MediaServer};
+use mizer_media::{MediaDiscovery, MediaModule, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
@@ -72,7 +72,7 @@ pub fn build_runtime(
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
-    let media_server = MediaServer::new()?;
+    let media_server = register_media_module(&mut runtime)?;
 
     let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings);
 
@@ -310,6 +310,13 @@ fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Seq
     module.register(runtime)?;
 
     Ok(sequencer)
+}
+
+fn register_media_module(runtime: &mut DefaultRuntime) -> anyhow::Result<MediaServer> {
+    let (media_module, media_server) = MediaModule::new()?;
+    media_module.register(runtime)?;
+
+    Ok(media_server)
 }
 
 fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<EffectEngine> {

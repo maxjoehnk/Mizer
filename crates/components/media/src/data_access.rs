@@ -1,14 +1,15 @@
 use dashmap::DashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
+use uuid::Uuid;
 
 use crate::documents::*;
 use crate::TagCreateModel;
 
 #[derive(Clone, Default)]
 pub struct DataAccess {
-    tags: Arc<DashMap<uuid::Uuid, TagDocument>>,
-    media: Arc<DashMap<uuid::Uuid, MediaDocument>>,
+    tags: Arc<DashMap<Uuid, TagDocument>>,
+    media: Arc<DashMap<MediaId, MediaDocument>>,
 }
 
 impl DataAccess {
@@ -24,6 +25,10 @@ impl DataAccess {
             .collect();
 
         Ok(media)
+    }
+
+    pub fn get_media(&self, id: MediaId) -> Option<MediaDocument> {
+        self.media.get(&id).map(|entry| entry.value().clone())
     }
 
     pub fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
@@ -101,11 +106,7 @@ impl DataAccess {
         Ok(())
     }
 
-    fn update_tag_document(
-        &self,
-        id: uuid::Uuid,
-        document: AttachedMediaDocument,
-    ) -> anyhow::Result<()> {
+    fn update_tag_document(&self, id: Uuid, document: AttachedMediaDocument) -> anyhow::Result<()> {
         if let Some(mut tag) = self.tags.get_mut(&id) {
             tag.media.push(document);
         }

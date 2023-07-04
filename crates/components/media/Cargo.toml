@@ -22,6 +22,7 @@ tiny-skia = "0.9"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 rsmpeg = { version = "0.14.1+ffmpeg.6.0", features = ["link_system_ffmpeg"] }
 dashmap = "5.4"
+mizer-module = { path = "../../runtime/module" }
 
 [dev-dependencies]
 test-case = "3.1"

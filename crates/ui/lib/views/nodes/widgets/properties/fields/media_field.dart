@@ -1,174 +1,123 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/views/media/media_list.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/tile.dart';
 
 import 'field.dart';
+
+const double MAX_DIALOG_WIDTH = 512;
+const double MAX_DIALOG_HEIGHT = 512;
+const double TILE_SIZE = 96;
 
 class MediaField extends StatefulWidget {
   final String label;
   final NodeSetting_MediaValue value;
   final Function(NodeSetting_MediaValue) onUpdate;
-  final bool multiline;
 
-  MediaField(
-      {required this.label, required this.value, required this.onUpdate, this.multiline = false});
+  MediaField({required this.label, required this.value, required this.onUpdate});
 
   @override
-  _MediaFieldState createState() => _MediaFieldState(value.value);
+  _MediaFieldState createState() => _MediaFieldState();
 }
 
 class _MediaFieldState extends State<MediaField> {
-  final FocusNode focusNode = FocusNode(debugLabel: "TextField");
-  final TextEditingController controller = TextEditingController();
-
-  bool isEditing = false;
-
-  _MediaFieldState(String value) {
-    this.controller.text = value;
-  }
-
-  @override
-  void didUpdateWidget(MediaField oldWidget) {
-    if (oldWidget.value != widget.value && widget.value.value != this.controller.text) {
-      this.controller.text = widget.value.value;
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    this.focusNode.addListener(() {
-      if (!focusNode.hasFocus) {
-        setState(() {
-          this.isEditing = false;
-        });
-      }
-      this._setValue(controller.text);
-    });
-  }
-
-  @override
-  void dispose() {
-    focusNode.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
-      child: this.isEditing ? _editView(context) : _readView(context),
+      child: _readView(context),
     );
   }
 
   Widget _readView(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
+    var bloc = context.read<MediaBloc>();
+    var file = bloc.state.files.firstWhereOrNull((element) => element.id == widget.value.value);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => setState(() => this.isEditing = true),
-        child: widget.multiline ? _readMultilineView(context) : _readSinglelineView(context),
-      ),
-    );
-  }
-
-  Widget _readSinglelineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
-    return Field(
-      label: this.widget.label,
-      child: Text(
-        controller.text,
-        style: textStyle,
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-
-  Widget _readMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(widget.label),
-        Text(
-          controller.text,
-          style: textStyle,
-          maxLines: 10,
-          textAlign: TextAlign.start,
-        ),
-        _mediaSelector(context)
-      ],
-    );
-  }
-
-  Widget _editView(BuildContext context) {
-    return MouseRegion(
-        cursor: SystemMouseCursors.text,
-        child: widget.multiline ? _editMultilineView(context) : _editSinglelineView(context));
-  }
-
-  Widget _editSinglelineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
-
-    return Field(
+      child: Field(
         label: this.widget.label,
-        child: EditableText(
-          focusNode: focusNode,
-          controller: controller,
-          cursorColor: Colors.black87,
-          backgroundCursorColor: Colors.black12,
+        child: Text(
+          file?.name ?? "",
           style: textStyle,
           textAlign: TextAlign.center,
-          selectionColor: Colors.black38,
-          keyboardType: TextInputType.text,
-          autofocus: true,
-          inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-        ));
-  }
-
-  Widget _editMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
-
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.label),
-          EditableText(
-            focusNode: focusNode,
-            controller: controller,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            style: textStyle,
-            textAlign: TextAlign.start,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.multiline,
-            autofocus: true,
-            maxLines: null,
-          ),
-          _mediaSelector(context)
-        ]);
+        ),
+        suffix: _mediaSelector(context),
+      ),
+    );
   }
 
   Widget _mediaSelector(BuildContext context) {
-    return Hoverable(builder: (hovered) => Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2),
-        color: Colors.grey.shade700,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Icon(Icons.perm_media_outlined),
-    ), onTap: () => _selectMedia(context));
+    return Hoverable(
+        builder: (hovered) => Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(2),
+                color: Colors.grey.shade700,
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Icon(Icons.perm_media_outlined, size: 16),
+            ),
+        onTap: () => _selectMedia(context));
   }
 
   void _setValue(String value) {
     log("_setValue $value", name: "MediaField");
     if (widget.value.value != value) {
-      widget.onUpdate(NodeSetting_MediaValue(value: value, allowedTypes: widget.value.allowedTypes));
+      widget
+          .onUpdate(NodeSetting_MediaValue(value: value, allowedTypes: widget.value.allowedTypes));
     }
+  }
+
+  Future<void> _selectMedia(BuildContext context) async {
+    var bloc = context.read<MediaBloc>();
+    MediaFile? result = await showDialog(
+        context: context, builder: (context) => MediaDialog(mediaFiles: bloc.state));
+    if (result == null) {
+      return;
+    }
+    _setValue(result.id);
+  }
+}
+
+class MediaDialog extends StatelessWidget {
+  final MediaFiles mediaFiles;
+
+  const MediaDialog({required this.mediaFiles, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionDialog(
+      title: "Select media",
+      content: Container(
+        width: MAX_DIALOG_WIDTH,
+        height: MAX_DIALOG_HEIGHT,
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 4,
+          ),
+          itemCount: mediaFiles.files.length,
+          itemBuilder: (context, index) {
+            MediaFile file = mediaFiles.files[index];
+            return Tile(
+              child: MediaThumbnail(file),
+              onClick: () {
+                Navigator.of(context).pop(file);
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

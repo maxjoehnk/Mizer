@@ -51,7 +51,7 @@ impl EventLoopHandle {
             format: surface_format,
             width: window.inner_size().width,
             height: window.inner_size().height,
-            present_mode: PresentMode::Mailbox,
+            present_mode: PresentMode::Immediate,
             alpha_mode: surface_caps.alpha_modes[0],
             view_formats: vec![],
         };

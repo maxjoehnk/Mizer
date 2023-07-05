@@ -1,10 +1,10 @@
 use crate::documents::MediaType;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
+use resvg::tiny_skia::{self, Pixmap};
+use resvg::usvg::{self, NodeExt, Options, TreeParsing};
 use std::io::{Read, Write};
 use std::path::Path;
-use tiny_skia::Pixmap;
-use usvg::{NodeExt, Options, TreeParsing};
 
 #[derive(Clone)]
 pub struct SvgHandler;
@@ -30,10 +30,10 @@ impl MediaHandler for SvgHandler {
         let mut pixel_buffer = pixmap.as_mut();
         let bounding_box = tree.root.calculate_bbox().unwrap();
         let scale = if bounding_box.width() > bounding_box.height() {
-            (THUMBNAIL_SIZE as f64) / bounding_box.width()
+            (THUMBNAIL_SIZE as f32) / bounding_box.width()
         } else {
-            (THUMBNAIL_SIZE as f64) / bounding_box.height()
-        } as f32;
+            (THUMBNAIL_SIZE as f32) / bounding_box.height()
+        };
         let tree = resvg::Tree::from_usvg(&tree);
         tree.render(
             tiny_skia::Transform::from_scale(scale, scale),

@@ -224,16 +224,21 @@ class MediaTag extends $pb.GeneratedMessage {
 class MediaFiles extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
     ..pc<MediaFile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: MediaFile.create)
+    ..aOM<MediaFolders>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'folders', subBuilder: MediaFolders.create)
     ..hasRequiredFields = false
   ;
 
   MediaFiles._() : super();
   factory MediaFiles({
     $core.Iterable<MediaFile>? files,
+    MediaFolders? folders,
   }) {
     final _result = create();
     if (files != null) {
       _result.files.addAll(files);
+    }
+    if (folders != null) {
+      _result.folders = folders;
     }
     return _result;
   }
@@ -260,6 +265,17 @@ class MediaFiles extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<MediaFile> get files => $_getList(0);
+
+  @$pb.TagNumber(2)
+  MediaFolders get folders => $_getN(1);
+  @$pb.TagNumber(2)
+  set folders(MediaFolders v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFolders() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFolders() => clearField(2);
+  @$pb.TagNumber(2)
+  MediaFolders ensureFolders() => $_ensure(1);
 }
 
 class MediaFile extends $pb.GeneratedMessage {
@@ -665,5 +681,87 @@ class MediaTagWithFiles extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<MediaFile> get files => $_getList(1);
+}
+
+class MediaFolders extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFolders', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths')
+    ..hasRequiredFields = false
+  ;
+
+  MediaFolders._() : super();
+  factory MediaFolders({
+    $core.Iterable<$core.String>? paths,
+  }) {
+    final _result = create();
+    if (paths != null) {
+      _result.paths.addAll(paths);
+    }
+    return _result;
+  }
+  factory MediaFolders.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MediaFolders.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MediaFolders clone() => MediaFolders()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MediaFolders copyWith(void Function(MediaFolders) updates) => super.copyWith((message) => updates(message as MediaFolders)) as MediaFolders; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MediaFolders create() => MediaFolders._();
+  MediaFolders createEmptyInstance() => create();
+  static $pb.PbList<MediaFolders> createRepeated() => $pb.PbList<MediaFolders>();
+  @$core.pragma('dart2js:noInline')
+  static MediaFolders getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaFolders>(create);
+  static MediaFolders? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get paths => $_getList(0);
+}
+
+class ImportMediaRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ImportMediaRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files')
+    ..hasRequiredFields = false
+  ;
+
+  ImportMediaRequest._() : super();
+  factory ImportMediaRequest({
+    $core.Iterable<$core.String>? files,
+  }) {
+    final _result = create();
+    if (files != null) {
+      _result.files.addAll(files);
+    }
+    return _result;
+  }
+  factory ImportMediaRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ImportMediaRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ImportMediaRequest clone() => ImportMediaRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ImportMediaRequest copyWith(void Function(ImportMediaRequest) updates) => super.copyWith((message) => updates(message as ImportMediaRequest)) as ImportMediaRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ImportMediaRequest create() => ImportMediaRequest._();
+  ImportMediaRequest createEmptyInstance() => create();
+  static $pb.PbList<ImportMediaRequest> createRepeated() => $pb.PbList<ImportMediaRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ImportMediaRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ImportMediaRequest>(create);
+  static ImportMediaRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get files => $_getList(0);
 }
 

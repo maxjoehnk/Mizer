@@ -1,63 +1,1009 @@
+---
+version: 4
 nodes:
-  - type: programmer
-    path: /programmer
-    config: {}
+  - path: /video-rgb-2
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
     designer:
       position:
-        x: -5
-        y: 0
-      scale: 1
-  - type: video-file
-    path: /video-file-0
+        x: 14.48230189059051
+        y: 20.355094374913794
+      scale: 1.0
+      hidden: false
+  - path: /video-color-balance-0
+    type: video-color-balance
     config:
-      file: examples/media/image/file_example_PNG_3MB.png
+      hue: 0.0
+      saturation: 1.0
+      brightness: 0.0
     designer:
+      position:
+        x: 7.968822693869452
+        y: 4.4219141329980225
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-1
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
+    designer:
+      position:
+        x: 14.633045353460469
+        y: 23.380783195235715
+      scale: 1.0
+      hidden: false
+  - path: /video-transform-3
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.0
+      translation_y: 0.0
+      translation_z: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+    designer:
+      position:
+        x: 16.21775091818732
+        y: -9.935358359927028
+      scale: 1.0
+      hidden: false
+  - path: /fader-10
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -9.785965944920685
+        y: -14.21621001445094
+      scale: 0.0
+      hidden: false
+  - path: /video-output-1
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: HSL Faders
+    designer:
+      position:
+        x: 15.260791249482718
+        y: 4.89540188023383
+      scale: 1.0
+      hidden: false
+  - path: /fader-2
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -1.8724199939394162
+        y: 4.091906429654508
+      scale: 0.0
+      hidden: false
+  - path: /video-transform-2
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.1
+      translation_y: 0.0
+      translation_z: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+    designer:
+      position:
+        x: 16.234091436589733
+        y: -13.701984054390142
+      scale: 1.0
+      hidden: false
+  - path: /fader-3
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -0.3759055498487881
+        y: 9.645158486404265
+      scale: 0.0
+      hidden: false
+  - path: /video-output-7
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Color shift
+    designer:
+      position:
+        x: 31.373083670061046
+        y: -12.729309315451088
+      scale: 1.0
+      hidden: false
+  - path: /video-output-0
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: source
+    designer:
+      position:
+        x: 15.0
+        y: 2.5
+      scale: 1.0
+      hidden: false
+  - path: /video-mixer-0
+    type: video-mixer
+    config: ~
+    designer:
+      position:
+        x: 25.668614327771927
+        y: -12.224366728701103
+      scale: 1.0
+      hidden: false
+  - path: /video-output-6
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Blue
+    designer:
+      position:
+        x: 15.971430748200973
+        y: -1.5148852068280174
+      scale: 1.0
+      hidden: false
+  - path: /video-mixer-1
+    type: video-mixer
+    config: ~
+    designer:
+      position:
+        x: 20.195035835800773
+        y: 21.280801468652147
+      scale: 1.0
+      hidden: false
+  - path: /video-output-3
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: RGB Faders
+    designer:
+      position:
+        x: 14.723184728744426
+        y: 0.7380940662417739
+      scale: 1.0
+      hidden: false
+  - path: /fader-6
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -0.35235092529376894
+        y: 14.287733411253544
+      scale: 0.0
+      hidden: false
+  - path: /fader-11
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: 2.279407498472624
+        y: 23.53480592145317
+      scale: 0.0
+      hidden: false
+  - path: /video-output-10
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: ""
+    designer:
+      position:
+        x: 7.6259904833827505
+        y: 17.35302100099457
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-split-0
+    type: video-rgb-split
+    config: ~
+    designer:
+      position:
+        x: 6.26814457469215
+        y: -5.5486479625263305
+      scale: 1.0
+      hidden: false
+  - path: /math-0
+    type: math
+    config:
+      mode: Multiplication
+    designer:
+      position:
+        x: 9.972109169219452
+        y: -16.303299953983316
+      scale: 1.0
+      hidden: false
+  - path: /math-1
+    type: math
+    config:
+      mode: Multiplication
+    designer:
+      position:
+        x: -5.241498261276368
+        y: -15.569217952618244
+      scale: 1.0
+      hidden: false
+  - path: /constant-number-0
+    type: constant-number
+    config:
+      value: -1.0
+    designer:
+      position:
+        x: 1.5937923796028615
+        y: -19.012129409013525
+      scale: 1.0
+      hidden: false
+  - path: /constant-number-1
+    type: constant-number
+    config:
+      value: 0.2
+    designer:
+      position:
+        x: -9.971886469209386
+        y: -17.166534478738207
+      scale: 1.0
+      hidden: false
+  - path: /constant-number-2
+    type: constant-number
+    config:
+      value: 1.0
+    designer:
+      position:
+        x: 3.2362841338087143
+        y: 20.29932876851416
+      scale: 1.0
+      hidden: false
+  - path: /fader-4
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -1.124401482938638
+        y: 11.112543124461785
+      scale: 0.0
+      hidden: false
+  - path: /video-transform-1
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: -0.1
+      translation_y: 0.0
+      translation_z: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+    designer:
+      position:
+        x: 16.20161228633097
+        y: -17.67294647823907
+      scale: 1.0
+      hidden: false
+  - path: /video-output-5
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Green
+    designer:
+      position:
+        x: 16.169377981889085
+        y: -3.0172515686008112
+      scale: 1.0
+      hidden: false
+  - path: /math-2
+    type: math
+    config:
+      mode: Subtraction
+    designer:
+      position:
+        x: 8.361416919517763
+        y: 20.69127831353253
+      scale: 1.0
+      hidden: false
+  - path: /video-transform-0
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.0
+      translation_y: 0.0
+      translation_z: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+    designer:
+      position:
+        x: 9.678483857249953
+        y: 9.947771116491257
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-0
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
+    designer:
+      position:
+        x: 8.114256465345555
+        y: 0.6688756066361642
+      scale: 1.0
+      hidden: false
+  - path: /video-file-1
+    type: video-file
+    config:
+      file: de02186d-0184-439b-92a9-33ed08f2564e
+    designer:
+      position:
+        x: -1.533331286678954
+        y: 17.56402486801022
+      scale: 1.0
+      hidden: false
+  - path: /oscillator-0
+    type: oscillator
+    config:
+      type: sine
+      interval: 0.5
+      max: 0.1
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: 1.3143054714232365
+        y: -14.924560821981101
+      scale: 1.0
+      hidden: false
+  - path: /fader-9
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -0.3749026804213243
+        y: 1.47381673618501
+      scale: 0.0
+      hidden: false
+  - path: /video-output-4
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Red
+    designer:
+      position:
+        x: 15.625571722682464
+        y: -4.550095082663592
+      scale: 1.0
+      hidden: false
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -8.901909546309145
+        y: -0.8452031139563974
+      scale: 1.0
+      hidden: true
+  - path: /fader-1
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -1.9281987674334247
+        y: 8.0382979136645
+      scale: 0.0
+      hidden: false
+  - path: /fader-0
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -1.9379562501319212
+        y: 5.98324920340128
+      scale: 0.0
+      hidden: false
+  - path: /fader-5
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -0.41538350170404253
+        y: 12.693875073297049
+      scale: 0.0
+      hidden: false
+  - path: /video-output-2
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Transform
+    designer:
+      position:
+        x: 14.954228756495922
+        y: 8.716911541190427
+      scale: 1.0
+      hidden: false
+  - path: /fader-7
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: 0.5505392260714673
+        y: -2.8747652435155957
+      scale: 0.0
+      hidden: false
+  - path: /video-file-0
+    type: video-file
+    config:
+      file: c8c03086-24b6-4c2c-8386-6c6d824de3d3
+    designer:
+      position:
+        x: -0.11578084084503114
+        y: 2.8903793635109425
+      scale: 1.0
+      hidden: false
+  - path: /video-output-9
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Final Output
+    designer:
+      position:
+        x: 26.79413312497972
+        y: 21.000487940780815
+      scale: 1.0
+      hidden: false
+  - path: /fader-8
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: 0.2774969542544068
+        y: -1.2726291658281328
+      scale: 0.0
+      hidden: false
+channels:
+  - Output@/video-file-0 -> Input@/video-output-0
+  - Output@/video-file-0 -> Input@/video-color-balance-0
+  - Output@/video-color-balance-0 -> Input@/video-output-1
+  - Output@/video-file-0 -> Input@/video-transform-0
+  - Output@/video-transform-0 -> Input@/video-output-2
+  - Output@/fader-1 -> Saturation@/video-color-balance-0
+  - Output@/fader-2 -> Brightness@/video-color-balance-0
+  - Output@/fader-0 -> Hue@/video-color-balance-0
+  - Output@/fader-3 -> Translate X@/video-transform-0
+  - Output@/fader-4 -> Translate Y@/video-transform-0
+  - Output@/fader-5 -> Translate Z@/video-transform-0
+  - Output@/fader-6 -> Scale X@/video-transform-0
+  - Output@/fader-6 -> Scale Y@/video-transform-0
+  - Output@/video-file-0 -> Input@/video-rgb-0
+  - Output@/video-rgb-0 -> Input@/video-output-3
+  - Output@/fader-7 -> Red@/video-rgb-0
+  - Output@/fader-8 -> Green@/video-rgb-0
+  - Output@/fader-9 -> Blue@/video-rgb-0
+  - Output@/video-file-0 -> Input@/video-rgb-split-0
+  - Red@/video-rgb-split-0 -> Input@/video-output-4
+  - Green@/video-rgb-split-0 -> Input@/video-output-5
+  - Blue@/video-rgb-split-0 -> Input@/video-output-6
+  - Red@/video-rgb-split-0 -> Input@/video-transform-1
+  - Green@/video-rgb-split-0 -> Input@/video-transform-2
+  - Blue@/video-rgb-split-0 -> Input@/video-transform-3
+  - Output@/video-transform-1 -> Inputs@/video-mixer-0
+  - Output@/video-transform-2 -> Inputs@/video-mixer-0
+  - Output@/video-transform-3 -> Inputs@/video-mixer-0
+  - Output@/video-mixer-0 -> Input@/video-output-7
+  - Value@/oscillator-0 -> Translate X@/video-transform-2
+  - Value@/constant-number-0 -> LHS@/math-0
+  - Value@/oscillator-0 -> RHS@/math-0
+  - Value@/math-0 -> Translate X@/video-transform-1
+  - Output@/fader-10 -> RHS@/math-1
+  - Value@/constant-number-1 -> LHS@/math-1
+  - Value@/math-1 -> Max@/oscillator-0
+  - Output@/video-file-1 -> Input@/video-output-10
+  - Output@/video-mixer-1 -> Input@/video-output-9
+  - Value@/constant-number-2 -> LHS@/math-2
+  - Output@/fader-11 -> RHS@/math-2
+  - Value@/math-2 -> Red@/video-rgb-2
+  - Value@/math-2 -> Green@/video-rgb-2
+  - Value@/math-2 -> Blue@/video-rgb-2
+  - Output@/fader-11 -> Red@/video-rgb-1
+  - Output@/fader-11 -> Green@/video-rgb-1
+  - Output@/fader-11 -> Blue@/video-rgb-1
+  - Output@/video-file-1 -> Input@/video-rgb-1
+  - Output@/video-file-0 -> Input@/video-rgb-2
+  - Output@/video-rgb-2 -> Inputs@/video-mixer-1
+  - Output@/video-rgb-1 -> Inputs@/video-mixer-1
+media:
+  import_paths:
+    - examples/media
+  files:
+    - id: 4499a341-63ef-48da-a409-0f1ab33ae8a4
+      filename: file_example_AVI_1920_2_3MG.avi
+      name: file_example_AVI_1920_2_3MG.avi
+      tags: []
+      content_type: video/x-msvideo
+      media_type: Video
+      file_path: ".storage/media/file_example_AVI_1920_2_3MG.avi"
+      source_path: video/file_example_AVI_1920_2_3MG.avi
+      file_size: 2279794
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_AVI_1920_2_3MG.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: c8c03086-24b6-4c2c-8386-6c6d824de3d3
+      filename: DOC000 Flo Bay - H.264 1080p.mov
+      name: DOC000 Flo Bay - H.264 1080p.mov
+      tags: []
+      content_type: video/quicktime
+      media_type: Video
+      file_path: ".storage/media/DOC000 Flo Bay - H.264 1080p.mov"
+      source_path: video/DOC000 Flo Bay - H.264 1080p.mov
+      file_size: 113753711
+      metadata:
+        thumbnail_path: ".storage/thumbnails/DOC000 Flo Bay - H.264 1080p.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 5
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: b79fce94-973e-4933-ba70-fcae462c715a
+      filename: file_example_WAV_10MG.wav
+      name: file_example_WAV_10MG.wav
+      tags: []
+      content_type: audio/x-wav
+      media_type: Audio
+      file_path: ".storage/media/file_example_WAV_10MG.wav"
+      source_path: audio/file_example_WAV_10MG.wav
+      file_size: 10406738
+      metadata:
+        thumbnail_path: ~
+        dimensions: ~
+        duration: 58
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 374da9e1-7b95-4ea1-9bd6-fd5b8ebbe147
+      filename: file_example_WMV_1920_9_3MB.wmv
+      name: file_example_WMV_1920_9_3MB.wmv
+      tags: []
+      content_type: video/x-ms-wmv
+      media_type: Video
+      file_path: ".storage/media/file_example_WMV_1920_9_3MB.wmv"
+      source_path: video/file_example_WMV_1920_9_3MB.wmv
+      file_size: 9338829
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_WMV_1920_9_3MB.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: 3d2cc38e-d7d7-4e0d-9066-58a5b49de408
+      filename: file_example_WEBM_1920_3_7MB.webm
+      name: file_example_WEBM_1920_3_7MB.webm
+      tags: []
+      content_type: video/webm
+      media_type: Video
+      file_path: ".storage/media/file_example_WEBM_1920_3_7MB.webm"
+      source_path: video/file_example_WEBM_1920_3_7MB.webm
+      file_size: 3667214
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_WEBM_1920_3_7MB.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: cace61f1-3365-47f6-b637-3ad9016d941a
+      filename: file_example_TIFF_10MB.tiff
+      name: file_example_TIFF_10MB.tiff
+      tags: []
+      content_type: image/tiff
+      media_type: Image
+      file_path: ".storage/media/file_example_TIFF_10MB.tiff"
+      source_path: image/file_example_TIFF_10MB.tiff
+      file_size: 10151438
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_TIFF_10MB.png"
+        dimensions:
+          - 1950
+          - 1301
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 232644cc-8a2b-4109-86e7-58c2a9dc50d9
+      filename: pixel_animation_12x12.mp4
+      name: pixel_animation_12x12.mp4
+      tags: []
+      content_type: video/mp4
+      media_type: Video
+      file_path: ".storage/media/pixel_animation_12x12.mp4"
+      source_path: video/pixel_animation_12x12.mp4
+      file_size: 2529
+      metadata:
+        thumbnail_path: ".storage/thumbnails/pixel_animation_12x12.png"
+        dimensions:
+          - 12
+          - 12
+        duration: 2
+        framerate: 10.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: 4a42bba3-6be1-45ca-99ec-a25844a7cdce
+      filename: file_example_SVG_30kB.svg
+      name: file_example_SVG_30kB.svg
+      tags: []
+      content_type: text/xml
+      media_type: Vector
+      file_path: ".storage/media/file_example_SVG_30kB.svg"
+      source_path: vector/file_example_SVG_30kB.svg
+      file_size: 30868
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_SVG_30kB.png"
+        dimensions: ~
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 7e793482-22ba-4665-b343-c9fe4422a613
+      filename: file_example_JPG_2500kB.jpg
+      name: file_example_JPG_2500kB.jpg
+      tags: []
+      content_type: image/jpeg
+      media_type: Image
+      file_path: ".storage/media/file_example_JPG_2500kB.jpg"
+      source_path: image/file_example_JPG_2500kB.jpg
+      file_size: 2504642
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_JPG_2500kB.png"
+        dimensions:
+          - 5760
+          - 3840
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 22596824-2a13-486e-ad14-f94bda5da49a
+      filename: file_example_MOV_1920_2_2MB.mov
+      name: file_example_MOV_1920_2_2MB.mov
+      tags: []
+      content_type: video/quicktime
+      media_type: Video
+      file_path: ".storage/media/file_example_MOV_1920_2_2MB.mov"
+      source_path: video/file_example_MOV_1920_2_2MB.mov
+      file_size: 2247200
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_MOV_1920_2_2MB.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: de02186d-0184-439b-92a9-33ed08f2564e
+      filename: DOC000 Colorwhip - H.264 1080p.mov
+      name: DOC000 Colorwhip - H.264 1080p.mov
+      tags: []
+      content_type: video/quicktime
+      media_type: Video
+      file_path: ".storage/media/DOC000 Colorwhip - H.264 1080p.mov"
+      source_path: video/DOC000 Colorwhip - H.264 1080p.mov
+      file_size: 360366833
+      metadata:
+        thumbnail_path: ".storage/thumbnails/DOC000 Colorwhip - H.264 1080p.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 19
+        framerate: 24.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: d4e92055-ea49-4241-8d7d-18da43a5c7e3
+      filename: file_example_WEBP_1500kB.webp
+      name: file_example_WEBP_1500kB.webp
+      tags: []
+      content_type: image/webp
+      media_type: Image
+      file_path: ".storage/media/file_example_WEBP_1500kB.webp"
+      source_path: image/file_example_WEBP_1500kB.webp
+      file_size: 1490952
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_WEBP_1500kB.png"
+        dimensions:
+          - 5760
+          - 3840
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 3611c054-f80b-4ba4-8e9b-c08307db9bee
+      filename: file_example_MP4_1920_18MG.mp4
+      name: file_example_MP4_1920_18MG.mp4
+      tags: []
+      content_type: video/mp4
+      media_type: Video
+      file_path: ".storage/media/file_example_MP4_1920_18MG.mp4"
+      source_path: video/file_example_MP4_1920_18MG.mp4
+      file_size: 17839845
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_MP4_1920_18MG.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: 352b3566-a512-49df-b020-8b72179700b0
+      filename: file_example_MP3_5MG.mp3
+      name: Impact Moderato
+      tags: []
+      content_type: audio/mpeg
+      media_type: Audio
+      file_path: ".storage/media/file_example_MP3_5MG.mp3"
+      source_path: audio/file_example_MP3_5MG.mp3
+      file_size: 5289384
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_MP3_5MG.png"
+        dimensions: ~
+        duration: 132
+        framerate: ~
+        name: Impact Moderato
+        artist: Kevin MacLeod
+        album: YouTube Audio Library
+    - id: f562b4a1-6dc5-42c2-9038-63055aecb53b
+      filename: file_example_PNG_3MB.png
+      name: file_example_PNG_3MB.png
+      tags: []
+      content_type: image/png
+      media_type: Image
+      file_path: ".storage/media/file_example_PNG_3MB.png"
+      source_path: image/file_example_PNG_3MB.png
+      file_size: 2964729
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_PNG_3MB.png"
+        dimensions:
+          - 2200
+          - 1467
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+  tags: []
+layouts:
+  Test:
+    - id: f9c0bd19-c5da-46db-9d08-fa0a1a04e7a1
+      label: Hue
+      path: /fader-0
       position:
         x: 0
         y: 0
-      scale: 1
-#  - type: video-effect
-#    path: /video-effect-0
-#    config:
-#      type: twirl
-#    designer:
-#      position:
-#        x: 5
-#        y: 0
-#      scale: 1
-#  - type: video-transform
-#    path: /video-transform-0
-#    config: {}
-#    designer:
-#      position:
-#        x: 10
-#        y: 2.5
-#      scale: 1
-  - type: video-output
-    path: /video-output-0
-    config: {}
-    designer:
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: c9ad55ce-691a-4307-994c-51d2419deb56
+      label: Saturation
+      path: /fader-1
+      position:
+        x: 1
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: b65caf7d-fd9e-4db3-96a1-03892da57136
+      label: Value
+      path: /fader-2
+      position:
+        x: 2
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: f10957e4-64b8-49d7-b669-6a401d08b014
+      label: X
+      path: /fader-3
+      position:
+        x: 4
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: 4f8e2b12-b698-44bc-adb1-f8ba1cfa75e1
+      label: Y
+      path: /fader-4
+      position:
+        x: 5
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: f9ef376d-2e5a-432c-9ba3-77fb76689355
+      label: Z
+      path: /fader-5
+      position:
+        x: 6
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: 5ed9c9a6-ad5f-4575-bede-1dbae47e2f0c
+      label: Scale
+      path: /fader-6
+      position:
+        x: 7
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: 28604657-9b19-4e9d-a3de-ec42fd5402a6
+      label: Red
+      path: /fader-7
+      position:
+        x: 9
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: 4509adcb-b5ae-482d-beb1-a46da5f774cd
+      label: Green
+      path: /fader-8
+      position:
+        x: 10
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: 8866c624-9233-4b82-87ff-fca19686c0fd
+      label: Blue
+      path: /fader-9
+      position:
+        x: 11
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: d6308737-30f0-41c1-840f-595ac1040b59
+      label: Offset
+      path: /fader-10
+      position:
+        x: 13
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - id: bae346cf-3c5a-4d8b-be14-769c82cee75e
+      label: Crossfade
+      path: /fader-11
       position:
         x: 15
-        y: 2.5
-      scale: 1
-#  - type: oscillator
-#    path: /oscillator-0
-#    config:
-#      type: sine
-#      ratio: 4
-#      max: 90
-#      min: -90
-#    designer:
-#      position:
-#        x: 5
-#        y: 5
-#      scale: 1
-channels:
-  - output@/video-file-0 -> input@/video-output-0
-#  - output@/video-effect-0 -> input@/video-transform-0
-#  - output@/video-transform-0 -> input@/video-output-0
-#  - value@/oscillator-0 -> rotate-x@/video-transform-0
-#  - value@/oscillator-0 -> rotate-y@/video-transform-0
-media: []
-#  - examples/media
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+connections: []
+fixtures: []
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences: []
+effects: []
+plans: []
+timecodes:
+  timecodes: []
+  controls: []

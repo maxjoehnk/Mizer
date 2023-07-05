@@ -113,4 +113,8 @@ impl DataAccess {
 
         Ok(())
     }
+
+    pub fn remove_media(&self, id: MediaId) {
+        self.media.remove(&id);
+    }
 }

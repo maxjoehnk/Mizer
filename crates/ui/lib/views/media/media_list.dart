@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/number_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/media.pb.dart';
+import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/views/media/dialogs/media_folders.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
+import 'package:provider/provider.dart';
 
 const double thumbnailWidth = 100;
 
@@ -51,6 +56,15 @@ class _MediaListState extends State<MediaList> {
         },
       )),
       onSearch: (query) => setState(() => this.searchQuery = query),
+      actions: [
+        PanelActionModel(label: "Add File(s)", onClick: () => _addFiles(context)),
+        PanelActionModel(
+          label: "Delete",
+          disabled: widget.selectedFile == null,
+          onClick: () => context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id)),
+        ),
+        PanelActionModel(label: "Media Folders", onClick: () => _manageMediaFolders(context)),
+      ],
     );
   }
 
@@ -66,6 +80,21 @@ class _MediaListState extends State<MediaList> {
           : Container(),
       file.metadata.hasFramerate() ? Text("${file.metadata.framerate}") : Container(),
     ], onTap: () => widget.onSelectFile(file), selected: widget.selectedFile == file);
+  }
+
+  _addFiles(BuildContext context) async {
+    final videoGroup = XTypeGroup(
+        label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv', 'gif']);
+    var files = await openFiles(acceptedTypeGroups: [videoGroup]);
+    if (files.isEmpty) {
+      return;
+    }
+    context.read<MediaBloc>().add(ImportMedia(files.map((f) => f.path).toList()));
+  }
+
+  _manageMediaFolders(BuildContext context) {
+    MediaBloc bloc = context.read();
+    showDialog(context: context, builder: (context) => MediaFoldersDialog(bloc: bloc));
   }
 }
 

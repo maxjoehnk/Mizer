@@ -71,11 +71,12 @@ const MediaFiles$json = const {
   '1': 'MediaFiles',
   '2': const [
     const {'1': 'files', '3': 1, '4': 3, '5': 11, '6': '.mizer.media.MediaFile', '10': 'files'},
+    const {'1': 'folders', '3': 2, '4': 1, '5': 11, '6': '.mizer.media.MediaFolders', '10': 'folders'},
   ],
 };
 
 /// Descriptor for `MediaFiles`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mediaFilesDescriptor = $convert.base64Decode('CgpNZWRpYUZpbGVzEiwKBWZpbGVzGAEgAygLMhYubWl6ZXIubWVkaWEuTWVkaWFGaWxlUgVmaWxlcw==');
+final $typed_data.Uint8List mediaFilesDescriptor = $convert.base64Decode('CgpNZWRpYUZpbGVzEiwKBWZpbGVzGAEgAygLMhYubWl6ZXIubWVkaWEuTWVkaWFGaWxlUgVmaWxlcxIzCgdmb2xkZXJzGAIgASgLMhkubWl6ZXIubWVkaWEuTWVkaWFGb2xkZXJzUgdmb2xkZXJz');
 @$core.Deprecated('Use mediaFileDescriptor instead')
 const MediaFile$json = const {
   '1': 'MediaFile',
@@ -148,3 +149,23 @@ const MediaTagWithFiles$json = const {
 
 /// Descriptor for `MediaTagWithFiles`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List mediaTagWithFilesDescriptor = $convert.base64Decode('ChFNZWRpYVRhZ1dpdGhGaWxlcxInCgN0YWcYASABKAsyFS5taXplci5tZWRpYS5NZWRpYVRhZ1IDdGFnEiwKBWZpbGVzGAIgAygLMhYubWl6ZXIubWVkaWEuTWVkaWFGaWxlUgVmaWxlcw==');
+@$core.Deprecated('Use mediaFoldersDescriptor instead')
+const MediaFolders$json = const {
+  '1': 'MediaFolders',
+  '2': const [
+    const {'1': 'paths', '3': 1, '4': 3, '5': 9, '10': 'paths'},
+  ],
+};
+
+/// Descriptor for `MediaFolders`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mediaFoldersDescriptor = $convert.base64Decode('CgxNZWRpYUZvbGRlcnMSFAoFcGF0aHMYASADKAlSBXBhdGhz');
+@$core.Deprecated('Use importMediaRequestDescriptor instead')
+const ImportMediaRequest$json = const {
+  '1': 'ImportMediaRequest',
+  '2': const [
+    const {'1': 'files', '3': 1, '4': 3, '5': 9, '10': 'files'},
+  ],
+};
+
+/// Descriptor for `ImportMediaRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List importMediaRequestDescriptor = $convert.base64Decode('ChJJbXBvcnRNZWRpYVJlcXVlc3QSFAoFZmlsZXMYASADKAlSBWZpbGVz');

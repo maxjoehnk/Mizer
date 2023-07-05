@@ -14,7 +14,7 @@ extension ContextStateExtensions on BuildContext {
   void refreshAllStates() {
     this.read<FixturesBloc>().add(FetchFixtures());
     this.read<LayoutsBloc>().add(FetchLayouts());
-    this.read<MediaBloc>().add(MediaEvent.Fetch);
+    this.read<MediaBloc>().add(FetchMedia());
     this.read<NodesBloc>().add(FetchNodes());
     this.read<SequencerBloc>().add(FetchSequences());
     this.read<PresetsBloc>().add(FetchPresets());

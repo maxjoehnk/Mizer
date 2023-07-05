@@ -33,6 +33,10 @@ impl AsyncRuntime for TokioRuntime {
 
         TokioSubscription(handle)
     }
+
+    fn block_on<E: Future>(&self, future: E) -> E::Output {
+        self.runtime.block_on(future)
+    }
 }
 
 pub struct TokioSubscription(JoinHandle<()>);

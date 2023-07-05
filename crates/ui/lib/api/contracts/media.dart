@@ -6,4 +6,14 @@ abstract class MediaApi {
   Future<GroupedMediaFiles> getTagsWithMedia();
 
   Future<MediaFiles> getMedia();
+
+  Future<void> importMedia(List<String> files);
+
+  Future<void> removeMedia(String mediaId);
+
+  Future<List<String>> getMediaFolders();
+
+  Future<void> addMediaFolder(String folder);
+
+  Future<void> removeMediaFolder(String folder);
 }

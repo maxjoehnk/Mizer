@@ -11,10 +11,10 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 uuid = { version = "1.4", features = ["v4", "serde"] }
 id3 = "1.7"
-infer = "0.14"
+infer = "0.15"
 image = "0.24"
 futures = "0.3"
-tokio = { version = "1.28", features = ["fs", "rt"] }
+tokio = { version = "1.29", features = ["fs", "rt"] }
 async-walkdir = "0.2"
 resvg = "0.35"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }

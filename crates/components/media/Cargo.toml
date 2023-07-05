@@ -14,7 +14,7 @@ id3 = "1.7"
 infer = "0.15"
 image = "0.24"
 futures = "0.3"
-tokio = { version = "1.28", features = ["fs"] }
+tokio = { version = "1.29", features = ["fs"] }
 async-walkdir = "0.2"
 resvg = "0.33"
 usvg = "0.33"

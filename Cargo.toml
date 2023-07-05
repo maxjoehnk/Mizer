@@ -145,7 +145,7 @@ mizer-util = { path = "crates/util" }
 mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
 mizer-command-executor = { path = "crates/runtime/commander/executor" }
-tokio = { version = "1.28", features = ["rt-multi-thread", "macros", "time", "rt"] }
+tokio = { version = "1.29", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"
 dashmap = "5"

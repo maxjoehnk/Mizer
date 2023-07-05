@@ -19,7 +19,7 @@ profiling = "1"
 dashmap = "5"
 bezier-nd = "0.5"
 geo-nd = "0.5"
-itertools = "0.10"
+itertools = "0.11"
 num-traits = "0.2"
 uuid = { version = "1.4", features = ["v4"] }
 tracing = "0.1"

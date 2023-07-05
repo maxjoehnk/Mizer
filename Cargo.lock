@@ -1266,7 +1266,7 @@ dependencies = [
  "clap 4.3.0",
  "criterion-plot",
  "is-terminal",
- "itertools",
+ "itertools 0.10.3",
  "num-traits",
  "once_cell",
  "oorandom",
@@ -1287,7 +1287,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6b50826342786a51a89e2da3a28f1c32b06e387201bc2d19791f622c673706b1"
 dependencies = [
  "cast",
- "itertools",
+ "itertools 0.10.3",
 ]
 
 [[package]]
@@ -3219,6 +3219,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3786,7 +3795,7 @@ dependencies = [
  "enum-iterator",
  "flume",
  "futures",
- "itertools",
+ "itertools 0.11.0",
  "lazy_static",
  "log",
  "mizer-clock",
@@ -4002,7 +4011,7 @@ dependencies = [
 name = "mizer-execution-planner"
 version = "0.1.0"
 dependencies = [
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-node",
  "mizer-util",
@@ -4062,7 +4071,7 @@ dependencies = [
  "dashmap",
  "futures",
  "indexmap 2.0.0",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-commander",
  "mizer-module",
@@ -4499,7 +4508,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-commander",
  "mizer-fixtures",
@@ -4532,7 +4541,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-node",
  "mizer-util",
@@ -4713,7 +4722,7 @@ dependencies = [
  "downcast",
  "flume",
  "insta",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-clock",
  "mizer-commander",
@@ -4767,7 +4776,7 @@ dependencies = [
  "dashmap",
  "geo-nd",
  "indexmap 2.0.0",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "mizer-fixtures",
  "mizer-module",
@@ -5933,7 +5942,7 @@ checksum = "a5aab5be6e4732b473071984b3164dbbfb7a3674d30ea5ff44410b6bcd960c3c"
 dependencies = [
  "difflib",
  "float-cmp",
- "itertools",
+ "itertools 0.10.3",
  "normalize-line-endings",
  "predicates-core",
  "regex",
@@ -7505,7 +7514,7 @@ dependencies = [
  "anyhow",
  "cfg-expr 0.8.1",
  "heck 0.3.3",
- "itertools",
+ "itertools 0.10.3",
  "pkg-config",
  "strum",
  "strum_macros",

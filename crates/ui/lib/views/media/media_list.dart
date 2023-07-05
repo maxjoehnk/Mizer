@@ -83,9 +83,11 @@ class _MediaListState extends State<MediaList> {
   }
 
   _addFiles(BuildContext context) async {
-    final videoGroup = XTypeGroup(
-        label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv', 'gif']);
-    var files = await openFiles(acceptedTypeGroups: [videoGroup]);
+    final videoGroup =
+        XTypeGroup(label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv']);
+    final imageGroup =
+        XTypeGroup(label: 'Images'.i18n, extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp']);
+    var files = await openFiles(acceptedTypeGroups: [videoGroup, imageGroup]);
     if (files.isEmpty) {
       return;
     }

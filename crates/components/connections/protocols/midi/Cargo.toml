@@ -15,7 +15,7 @@ mizer-midi-device-profiles = { path = "device-profiles" }
 mizer-util = { path = "../../../../util" }
 mizer-message-bus = { path = "../../../../util/bus" }
 mizer-midi-messages = { path = "messages" }
-regex = "1.8"
+regex = "1.9"
 lazy_static = "1.4"
 profiling = "1"
 tracing = "0.1"

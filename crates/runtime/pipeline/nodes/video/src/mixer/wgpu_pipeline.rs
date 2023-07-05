@@ -241,9 +241,10 @@ impl MixerWgpuPipeline {
     }
 
     pub fn set_mode(&mut self, context: &WgpuContext, mode: VideoMixerMode) {
+        let mode = mode as i32;
         context
             .queue
-            .write_buffer(&self.mode_buffer, 0, &(mode as u32).to_ne_bytes());
+            .write_buffer(&self.mode_buffer, 0, &mode.to_ne_bytes());
     }
 
     pub fn render(

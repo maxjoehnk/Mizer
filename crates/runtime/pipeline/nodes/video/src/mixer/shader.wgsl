@@ -39,6 +39,10 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         let pixel = textureSample(t_diffuse[i], s_diffuse, in.tex_coords);
         let alpha_pixel = pixel.rgb * pixel.a;
 
+        if (i == 0) {
+            rgb = alpha_pixel;
+            continue;
+        }
         if (mode == 0) { // ADD
             rgb += alpha_pixel;
         } else if (mode == 1) { // MULTIPLY

@@ -1,3 +1,4 @@
+use crate::mixer::node::VideoMixerMode;
 use mizer_wgpu::{TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use std::num::NonZeroU32;
 use wgpu::util::DeviceExt;
@@ -14,6 +15,9 @@ pub struct MixerWgpuPipeline {
     texture_count_bind_group_layout: wgpu::BindGroupLayout,
     texture_count_bind_group: wgpu::BindGroup,
     texture_count_buffer: wgpu::Buffer,
+    mode_bind_group_layout: wgpu::BindGroupLayout,
+    mode_bind_group: wgpu::BindGroup,
+    mode_buffer: wgpu::Buffer,
 }
 
 impl MixerWgpuPipeline {
@@ -45,8 +49,7 @@ impl MixerWgpuPipeline {
 
     fn create_render_pipeline(
         context: &WgpuContext,
-        texture_bind_group_layout: &wgpu::BindGroupLayout,
-        texture_count_bind_group_layout: &wgpu::BindGroupLayout,
+        bind_group_layouts: &[&wgpu::BindGroupLayout],
         shader: &wgpu::ShaderModule,
     ) -> wgpu::RenderPipeline {
         let render_pipeline_layout =
@@ -54,10 +57,7 @@ impl MixerWgpuPipeline {
                 .device
                 .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                     label: Some("Mixer Pipeline Layout"),
-                    bind_group_layouts: &[
-                        texture_bind_group_layout,
-                        texture_count_bind_group_layout,
-                    ],
+                    bind_group_layouts,
                     push_constant_ranges: &[],
                 });
 
@@ -143,11 +143,47 @@ impl MixerWgpuPipeline {
                         resource: texture_count_buffer.as_entire_binding(),
                     }],
                 });
+        let mode_bind_group_layout =
+            context
+                .device
+                .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+                    entries: &[wgpu::BindGroupLayoutEntry {
+                        binding: 0,
+                        visibility: wgpu::ShaderStages::FRAGMENT,
+                        ty: wgpu::BindingType::Buffer {
+                            ty: wgpu::BufferBindingType::Uniform,
+                            has_dynamic_offset: false,
+                            min_binding_size: None,
+                        },
+                        count: None,
+                    }],
+                    label: None,
+                });
+        let mode_buffer = context
+            .device
+            .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+                usage: BufferUsages::COPY_DST | BufferUsages::UNIFORM,
+                contents: &(0 as u32).to_ne_bytes(),
+                label: Some("Mixer Mode Buffer"),
+            });
+        let mode_bind_group = context
+            .device
+            .create_bind_group(&wgpu::BindGroupDescriptor {
+                label: Some("Mixer Mode Bind Group"),
+                layout: &mode_bind_group_layout,
+                entries: &[wgpu::BindGroupEntry {
+                    binding: 0,
+                    resource: mode_buffer.as_entire_binding(),
+                }],
+            });
 
         let render_pipeline = Self::create_render_pipeline(
             context,
-            &texture_bind_group_layout,
-            &texture_count_bind_group_layout,
+            &[
+                &texture_bind_group_layout,
+                &texture_count_bind_group_layout,
+                &mode_bind_group_layout,
+            ],
             &shader,
         );
 
@@ -178,6 +214,9 @@ impl MixerWgpuPipeline {
             texture_count_buffer,
             texture_count_bind_group,
             texture_count_bind_group_layout,
+            mode_buffer,
+            mode_bind_group,
+            mode_bind_group_layout,
         }
     }
 
@@ -186,16 +225,25 @@ impl MixerWgpuPipeline {
         self.texture_bind_group_layout = Self::create_texture_layout(context, texture_count);
         self.render_pipeline = Self::create_render_pipeline(
             context,
-            &self.texture_bind_group_layout,
-            &self.texture_count_bind_group_layout,
+            &[
+                &self.texture_bind_group_layout,
+                &self.texture_count_bind_group_layout,
+                &self.mode_bind_group_layout,
+            ],
             &self.shader,
         );
         self.texture_count = texture_count;
         context.queue.write_buffer(
             &self.texture_count_buffer,
             0,
-            &(texture_count as u32).to_ne_bytes(),
+            &(texture_count as i32).to_ne_bytes(),
         );
+    }
+
+    pub fn set_mode(&mut self, context: &WgpuContext, mode: VideoMixerMode) {
+        context
+            .queue
+            .write_buffer(&self.mode_buffer, 0, &(mode as u32).to_ne_bytes());
     }
 
     pub fn render(
@@ -253,6 +301,7 @@ impl MixerWgpuPipeline {
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &texture_bind_group, &[]);
             render_pass.set_bind_group(1, &self.texture_count_bind_group, &[]);
+            render_pass.set_bind_group(2, &self.mode_bind_group, &[]);
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }
 

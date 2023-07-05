@@ -1,17 +1,60 @@
 use crate::mixer::wgpu_pipeline::MixerWgpuPipeline;
 use anyhow::anyhow;
+use enum_iterator::Sequence;
 use mizer_node::*;
 use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
 use std::ops::Deref;
 
 const INPUTS_PORT: &str = "Inputs";
 const OUTPUT_PORT: &str = "Output";
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-pub struct VideoMixerNode;
+pub struct VideoMixerNode {
+    #[serde(default)]
+    mode: VideoMixerMode,
+}
 
-impl ConfigurableNode for VideoMixerNode {}
+#[derive(
+    Default,
+    Debug,
+    Clone,
+    Copy,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    IntoPrimitive,
+    TryFromPrimitive,
+)]
+#[repr(u8)]
+pub enum VideoMixerMode {
+    #[default]
+    Add,
+    Multiply,
+    Subtract,
+}
+
+impl Display for VideoMixerMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
+    }
+}
+
+impl ConfigurableNode for VideoMixerNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![setting!(enum "Mode", self.mode)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, "Mode", self.mode);
+
+        update_fallback!(setting)
+    }
+}
 
 impl PipelineNode for VideoMixerNode {
     fn details(&self) -> NodeDetails {
@@ -59,6 +102,7 @@ impl ProcessingNode for VideoMixerNode {
         if inputs.is_empty() {
             return Ok(());
         }
+        state.pipeline.set_mode(wgpu_context, self.mode);
         let stage = state
             .pipeline
             .render(wgpu_context, inputs.as_slice(), &output);

@@ -28,16 +28,24 @@ var t_diffuse: binding_array<texture_2d<f32>>;
 var s_diffuse: sampler;
 @group(1) @binding(0)
 var<uniform> texture_count: i32;
+@group(2) @binding(0)
+var<uniform> mode: i32;
 
 @fragment
 fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
-//    let count: i32 = i32(arrayLength(t_diffuse));
     let count: i32 = texture_count;
     var rgb: vec3<f32>;
     for (var i: i32 = 0; i < count; i++) {
         let pixel = textureSample(t_diffuse[i], s_diffuse, in.tex_coords);
+        let alpha_pixel = pixel.rgb * pixel.a;
 
-        rgb += pixel.rgb * pixel.a;
+        if (mode == 0) { // ADD
+            rgb += alpha_pixel;
+        } else if (mode == 1) { // MULTIPLY
+            rgb *= alpha_pixel;
+        } else if (mode == 2) { // SUBTRACT
+            rgb -= alpha_pixel;
+        }
     }
 
     return vec4<f32>(rgb, 1.0);

@@ -136,7 +136,7 @@ nodes:
       hidden: false
   - path: /video-mixer-0
     type: video-mixer
-    config: ~
+    config: {}
     designer:
       position:
         x: 25.668614327771927
@@ -157,7 +157,7 @@ nodes:
       hidden: false
   - path: /video-mixer-1
     type: video-mixer
-    config: ~
+    config: {}
     designer:
       position:
         x: 20.195035835800773

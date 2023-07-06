@@ -100,7 +100,8 @@ jobs:
             libmfx-dev \
             libvorbis-dev \
             libwavpack-dev \
-            libzimg-dev
+            libzimg-dev \
+            yasm
       - uses: taiki-e/install-action@protoc
       - uses: nschloe/action-cached-lfs-checkout@v1
       - uses: actions-rs/toolchain@v1

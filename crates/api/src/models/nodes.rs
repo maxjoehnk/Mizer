@@ -3230,8 +3230,6 @@ pub mod node {
         VIDEO_FILE = 20,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_OUTPUT)
         VIDEO_OUTPUT = 21,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_EFFECT)
-        VIDEO_EFFECT = 22,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_COLOR_BALANCE)
         VIDEO_COLOR_BALANCE = 23,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_TRANSFORM)
@@ -3351,7 +3349,6 @@ pub mod node {
                 19 => ::std::option::Option::Some(NodeType::PRESET),
                 20 => ::std::option::Option::Some(NodeType::VIDEO_FILE),
                 21 => ::std::option::Option::Some(NodeType::VIDEO_OUTPUT),
-                22 => ::std::option::Option::Some(NodeType::VIDEO_EFFECT),
                 23 => ::std::option::Option::Some(NodeType::VIDEO_COLOR_BALANCE),
                 24 => ::std::option::Option::Some(NodeType::VIDEO_TRANSFORM),
                 25 => ::std::option::Option::Some(NodeType::VIDEO_MIXER),
@@ -3422,7 +3419,6 @@ pub mod node {
             NodeType::PRESET,
             NodeType::VIDEO_FILE,
             NodeType::VIDEO_OUTPUT,
-            NodeType::VIDEO_EFFECT,
             NodeType::VIDEO_COLOR_BALANCE,
             NodeType::VIDEO_TRANSFORM,
             NodeType::VIDEO_MIXER,
@@ -3499,50 +3495,49 @@ pub mod node {
                 NodeType::PRESET => 19,
                 NodeType::VIDEO_FILE => 20,
                 NodeType::VIDEO_OUTPUT => 21,
-                NodeType::VIDEO_EFFECT => 22,
-                NodeType::VIDEO_COLOR_BALANCE => 23,
-                NodeType::VIDEO_TRANSFORM => 24,
-                NodeType::VIDEO_MIXER => 25,
-                NodeType::VIDEO_RGB => 26,
-                NodeType::VIDEO_RGB_SPLIT => 27,
-                NodeType::PIXEL_TO_DMX => 28,
-                NodeType::PIXEL_PATTERN => 29,
-                NodeType::OPC_OUTPUT => 30,
-                NodeType::LASER => 31,
-                NodeType::ILDA_FILE => 32,
-                NodeType::GAMEPAD => 33,
-                NodeType::COLOR_RGB => 34,
-                NodeType::COLOR_HSV => 35,
-                NodeType::COLOR_CONSTANT => 36,
-                NodeType::COLOR_BRIGHTNESS => 37,
-                NodeType::ENCODER => 38,
-                NodeType::MATH => 39,
-                NodeType::DATA_TO_NUMBER => 40,
-                NodeType::NUMBER_TO_DATA => 41,
-                NodeType::VALUE => 42,
-                NodeType::EXTRACT => 43,
-                NodeType::MQTT_INPUT => 44,
-                NodeType::MQTT_OUTPUT => 45,
-                NodeType::PLAN_SCREEN => 46,
-                NodeType::DELAY => 47,
-                NodeType::RAMP => 48,
-                NodeType::NOISE => 49,
-                NodeType::LABEL => 50,
-                NodeType::TRANSPORT => 51,
-                NodeType::G13INPUT => 52,
-                NodeType::G13OUTPUT => 53,
-                NodeType::CONSTANT_NUMBER => 54,
-                NodeType::CONDITIONAL => 55,
-                NodeType::TIMECODE_CONTROL => 56,
-                NodeType::TIMECODE_OUTPUT => 57,
-                NodeType::AUDIO_FILE => 58,
-                NodeType::AUDIO_OUTPUT => 59,
-                NodeType::AUDIO_VOLUME => 60,
-                NodeType::AUDIO_INPUT => 61,
-                NodeType::AUDIO_MIX => 62,
-                NodeType::AUDIO_METER => 63,
-                NodeType::TEMPLATE => 64,
-                NodeType::CONTAINER => 65,
+                NodeType::VIDEO_COLOR_BALANCE => 22,
+                NodeType::VIDEO_TRANSFORM => 23,
+                NodeType::VIDEO_MIXER => 24,
+                NodeType::VIDEO_RGB => 25,
+                NodeType::VIDEO_RGB_SPLIT => 26,
+                NodeType::PIXEL_TO_DMX => 27,
+                NodeType::PIXEL_PATTERN => 28,
+                NodeType::OPC_OUTPUT => 29,
+                NodeType::LASER => 30,
+                NodeType::ILDA_FILE => 31,
+                NodeType::GAMEPAD => 32,
+                NodeType::COLOR_RGB => 33,
+                NodeType::COLOR_HSV => 34,
+                NodeType::COLOR_CONSTANT => 35,
+                NodeType::COLOR_BRIGHTNESS => 36,
+                NodeType::ENCODER => 37,
+                NodeType::MATH => 38,
+                NodeType::DATA_TO_NUMBER => 39,
+                NodeType::NUMBER_TO_DATA => 40,
+                NodeType::VALUE => 41,
+                NodeType::EXTRACT => 42,
+                NodeType::MQTT_INPUT => 43,
+                NodeType::MQTT_OUTPUT => 44,
+                NodeType::PLAN_SCREEN => 45,
+                NodeType::DELAY => 46,
+                NodeType::RAMP => 47,
+                NodeType::NOISE => 48,
+                NodeType::LABEL => 49,
+                NodeType::TRANSPORT => 50,
+                NodeType::G13INPUT => 51,
+                NodeType::G13OUTPUT => 52,
+                NodeType::CONSTANT_NUMBER => 53,
+                NodeType::CONDITIONAL => 54,
+                NodeType::TIMECODE_CONTROL => 55,
+                NodeType::TIMECODE_OUTPUT => 56,
+                NodeType::AUDIO_FILE => 57,
+                NodeType::AUDIO_OUTPUT => 58,
+                NodeType::AUDIO_VOLUME => 59,
+                NodeType::AUDIO_INPUT => 60,
+                NodeType::AUDIO_MIX => 61,
+                NodeType::AUDIO_METER => 62,
+                NodeType::TEMPLATE => 63,
+                NodeType::CONTAINER => 64,
             };
             Self::enum_descriptor().value_by_index(index)
         }
@@ -8693,7 +8688,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     rtR\ntargetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\
     \x122\n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsour\
     cePort\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelP\
-    rotocolR\x08protocol\"\xb5\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
+    rotocolR\x08protocol\"\xa3\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
     \x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
     \x20\x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.no\
     des.PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.no\
@@ -8703,7 +8698,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\
     \x18\x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\
     \x07details\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\
-    \"\x8b\x08\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
+    \"\xf9\x07\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
     \x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06S\
     CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\
     \x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHO\
@@ -8712,133 +8707,132 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     PUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\
     \x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\
     \x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\
-    \x12\x10\n\x0cVIDEO_EFFECT\x10\x16\x12\x17\n\x13VIDEO_COLOR_BALANCE\x10\
-    \x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\x0f\n\x0bVIDEO_MIXER\x10\
-    \x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVIDEO_RGB_SPLIT\x10\x1b\x12\
-    \x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PATTERN\x10\x1f\x12\x0e\
-    \n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\tILDA_FILE\x10)\x12\
-    \x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\n\tCOLOR_HSV\x103\
-    \x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_BRIGHTNESS\x105\x12\
-    \x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\n\x0eDATA_TO_NUMBE\
-    R\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\
-    \x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10\
-    >\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\
-    \x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\r\n\tTRANSPORT\x10\
-    D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTA\
-    NT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\n\x10TIMECODE_CONTR\
-    OL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\
-    \x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0b\
-    AUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\
-    \x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewT\
-    ype\x12\x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WA\
-    VEFORM\x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\
-    \x04\x12\x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05\
-    COLOR\x10\x07\"X\n\x0bNodeDetails\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x125\n\x08category\x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCa\
-    tegoryR\x08category\"c\n\nNodeConfig\x12M\n\x10container_config\x18-\x20\
-    \x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfigB\
-    \x06\n\x04type\"\xf5\x10\n\x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\
-    \x01(\tR\x05label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescri\
-    ption\x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04\
-    text\x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValueH\0R\x04te\
-    xt\x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatV\
-    alueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeS\
-    etting.IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.\
-    nodes.NodeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01\
-    (\x0b2$.mizer.nodes.NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\
-    \x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x12\
-    2\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\
-    \x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.S\
-    plineValueH\0R\x06spline\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.no\
-    des.NodeSetting.MediaValueH\0R\x05media\x1a?\n\tTextValue\x12\x14\n\x05v\
-    alue\x18\x01\x20\x01(\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\
-    \x08R\tmultiline\x1a\xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x01R\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\
-    \x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\
-    \x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\
-    \x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\
-    \x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\
-    \x1a\xb8\x01\n\x08IntValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05val\
-    ue\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0R\x03min\x88\x01\x01\x12\x1e\n\
-    \x08min_hint\x18\x03\x20\x01(\rH\x01R\x07minHint\x88\x01\x01\x12\x15\n\
-    \x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hin\
-    t\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\
-    \t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a!\n\tBoolValue\x12\x14\n\
-    \x05value\x18\x01\x20\x01(\x08R\x05value\x1ag\n\x0bSelectValue\x12\x14\n\
-    \x05value\x18\x01\x20\x01(\tR\x05value\x12B\n\x08variants\x18\x02\x20\
-    \x03(\x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x08variants\x1a\xcc\
-    \x02\n\rSelectVariant\x12J\n\x05group\x18\x01\x20\x01(\x0b22.mizer.nodes\
-    .NodeSetting.SelectVariant.SelectGroupH\0R\x05group\x12G\n\x04item\x18\
-    \x02\x20\x01(\x0b21.mizer.nodes.NodeSetting.SelectVariant.SelectItemH\0R\
-    \x04item\x1aa\n\x0bSelectGroup\x12\x14\n\x05label\x18\x01\x20\x01(\tR\
-    \x05label\x12<\n\x05items\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting\
-    .SelectVariantR\x05items\x1a8\n\nSelectItem\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\tR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05labelB\t\
-    \n\x07variant\x1ac\n\tEnumValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\
-    \x05value\x12@\n\x08variants\x18\x02\x20\x03(\x0b2$.mizer.nodes.NodeSett\
-    ing.EnumVariantR\x08variants\x1a9\n\x0bEnumVariant\x12\x14\n\x05value\
-    \x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05\
-    label\x1a_\n\x07IdValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\
-    \x12>\n\x08variants\x18\x02\x20\x03(\x0b2\".mizer.nodes.NodeSetting.IdVa\
-    riantR\x08variants\x1a7\n\tIdVariant\x12\x14\n\x05value\x18\x01\x20\x01(\
-    \rR\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05label\x1a\xc6\x01\
-    \n\x0bSplineValue\x12E\n\x05steps\x18\x01\x20\x03(\x0b2/.mizer.nodes.Nod\
-    eSetting.SplineValue.SplineStepR\x05steps\x1ap\n\nSplineStep\x12\x0c\n\
+    \x12\x17\n\x13VIDEO_COLOR_BALANCE\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\
+    \x10\x18\x12\x0f\n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\
+    \x13\n\x0fVIDEO_RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\
+    \x11\n\rPIXEL_PATTERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05L\
+    ASER\x10(\x12\r\n\tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOL\
+    OR_RGB\x102\x12\r\n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\
+    \x14\n\x10COLOR_BRIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04M\
+    ATH\x108\x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\
+    \x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_IN\
+    PUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\
+    \t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\
+    \x05LABEL\x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\
+    \n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDIT\
+    IONAL\x10H\x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTP\
+    UT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\
+    \x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO\
+    _MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\
+    \n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\x12\
+    \x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\x08MUL\
+    TIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\x10\x05\
+    \x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\x10\x07\"X\n\x0bNodeDetails\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x125\n\x08category\x18\
+    \x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08category\"c\n\nNodeC\
+    onfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.Cont\
+    ainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\x04type\"\xf5\x10\n\x0bNod\
+    eSetting\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12\x20\n\x0bde\
+    scription\x18\x02\x20\x01(\tR\x0bdescription\x12\x1a\n\x08disabled\x18\
+    \x03\x20\x01(\x08R\x08disabled\x128\n\x04text\x18\x04\x20\x01(\x0b2\".mi\
+    zer.nodes.NodeSetting.TextValueH\0R\x04text\x12;\n\x05float\x18\x05\x20\
+    \x01(\x0b2#.mizer.nodes.NodeSetting.FloatValueH\0R\x05float\x125\n\x03in\
+    t\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSetting.IntValueH\0R\x03int\x12\
+    8\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.nodes.NodeSetting.BoolValueH\0\
+    R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\x0b2$.mizer.nodes.NodeSettin\
+    g.SelectValueH\0R\x06select\x128\n\x04enum\x18\t\x20\x01(\x0b2\".mizer.n\
+    odes.NodeSetting.EnumValueH\0R\x04enum\x122\n\x02id\x18\n\x20\x01(\x0b2\
+    \x20.mizer.nodes.NodeSetting.IdValueH\0R\x02id\x12>\n\x06spline\x18\x0b\
+    \x20\x01(\x0b2$.mizer.nodes.NodeSetting.SplineValueH\0R\x06spline\x12;\n\
+    \x05media\x18\x0c\x20\x01(\x0b2#.mizer.nodes.NodeSetting.MediaValueH\0R\
+    \x05media\x1a?\n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05va\
+    lue\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\xba\x01\n\
+    \nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x15\n\
+    \x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hin\
+    t\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\
+    \x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\
+    \x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_h\
+    intB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntValue\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\
+    \rH\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\
+    \x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\
+    \x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\
+    \x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_ma\
+    x_hint\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05val\
+    ue\x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\
+    \x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting.Selec\
+    tVariantR\x08variants\x1a\xcc\x02\n\rSelectVariant\x12J\n\x05group\x18\
+    \x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.SelectVariant.SelectGroupH\0\
+    R\x05group\x12G\n\x04item\x18\x02\x20\x01(\x0b21.mizer.nodes.NodeSetting\
+    .SelectVariant.SelectItemH\0R\x04item\x1aa\n\x0bSelectGroup\x12\x14\n\
+    \x05label\x18\x01\x20\x01(\tR\x05label\x12<\n\x05items\x18\x02\x20\x03(\
+    \x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x05items\x1a8\n\nSelectIte\
+    m\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x14\n\x05label\x18\
+    \x02\x20\x01(\tR\x05labelB\t\n\x07variant\x1ac\n\tEnumValue\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\rR\x05value\x12@\n\x08variants\x18\x02\x20\
+    \x03(\x0b2$.mizer.nodes.NodeSetting.EnumVariantR\x08variants\x1a9\n\x0bE\
+    numVariant\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05\
+    label\x18\x02\x20\x01(\tR\x05label\x1a_\n\x07IdValue\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\rR\x05value\x12>\n\x08variants\x18\x02\x20\x03(\x0b2\"\
+    .mizer.nodes.NodeSetting.IdVariantR\x08variants\x1a7\n\tIdVariant\x12\
+    \x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\x02\
+    \x20\x01(\tR\x05label\x1a\xc6\x01\n\x0bSplineValue\x12E\n\x05steps\x18\
+    \x01\x20\x03(\x0b2/.mizer.nodes.NodeSetting.SplineValue.SplineStepR\x05s\
+    teps\x1ap\n\nSplineStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
+    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\
+    \x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03\
+    c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\
+    \x03c1b\x1a_\n\nMediaValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05val\
+    ue\x12;\n\rallowed_types\x18\x02\x20\x03(\x0e2\x16.mizer.media.MediaType\
+    R\x0callowedTypesB\x07\n\x05value\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\
+    \n\x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_binding\x18\
+    \x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBi\
+    nding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiN\
+    odeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBind\
+    ing\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04type\
+    \x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTypeR\
+    \x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nrange_\
+    from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\x05\x20\
+    \x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\
+    \x04NOTE\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\
+    \x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\
+    \n\x07binding\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\
+    \x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"*\n\x0cNodePosition\x12\x0c\n\
     \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\
-    \x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\
-    \x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\x1a_\n\nMediaValue\x12\
-    \x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12;\n\rallowed_types\x18\
-    \x02\x20\x03(\x0e2\x16.mizer.media.MediaTypeR\x0callowedTypesB\x07\n\x05\
-    value\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\n\x06device\x18\x01\x20\x01(\
-    \tR\x06device\x12L\n\x0cnote_binding\x18\x02\x20\x01(\x0b2'.mizer.nodes.\
-    MidiNodeConfig.NoteBindingH\0R\x0bnoteBinding\x12U\n\x0fcontrol_binding\
-    \x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiNodeConfig.ControlBindingH\0R\
-    \x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBinding\x12\x18\n\x07channel\x18\
-    \x01\x20\x01(\rR\x07channel\x12D\n\x04type\x18\x02\x20\x01(\x0e20.mizer.\
-    nodes.MidiNodeConfig.NoteBinding.MidiTypeR\x04type\x12\x12\n\x04port\x18\
-    \x03\x20\x01(\rR\x04port\x12\x1d\n\nrange_from\x18\x04\x20\x01(\rR\trang\
-    eFrom\x12\x19\n\x08range_to\x18\x05\x20\x01(\rR\x07rangeTo\"\x1c\n\x08Mi\
-    diType\x12\x06\n\x02CC\x10\0\x12\x08\n\x04NOTE\x10\x01\x1a>\n\x0eControl\
-    Binding\x12\x12\n\x04page\x18\x01\x20\x01(\tR\x04page\x12\x18\n\x07contr\
-    ol\x18\x02\x20\x01(\tR\x07controlB\t\n\x07binding\">\n\x13ContainerNodeC\
-    onfig\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nod\
-    es\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
-    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08po\
-    sition\x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\
-    \x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\
-    \x18\x03\x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.\
-    nodes.ChannelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01\
-    (\x08R\x08multiple*\xb1\x02\n\x0cNodeCategory\x12\x16\n\x12NODE_CATEGORY\
-    _NONE\x10\0\x12\x1a\n\x16NODE_CATEGORY_STANDARD\x10\x01\x12\x1d\n\x19NOD\
-    E_CATEGORY_CONNECTIONS\x10\x02\x12\x1d\n\x19NODE_CATEGORY_CONVERSIONS\
-    \x10\x03\x12\x1a\n\x16NODE_CATEGORY_CONTROLS\x10\x04\x12\x16\n\x12NODE_C\
-    ATEGORY_DATA\x10\x05\x12\x17\n\x13NODE_CATEGORY_COLOR\x10\x06\x12\x17\n\
-    \x13NODE_CATEGORY_AUDIO\x10\x07\x12\x17\n\x13NODE_CATEGORY_VIDEO\x10\x08\
-    \x12\x17\n\x13NODE_CATEGORY_LASER\x10\t\x12\x17\n\x13NODE_CATEGORY_PIXEL\
-    \x10\n*\x84\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05\
-    MULTI\x10\x01\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\
-    \t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\
-    \x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLO\
-    CK\x10\n2\xbc\x07\n\x08NodesApi\x12K\n\x11GetAvailableNodes\x12\x19.mize\
-    r.nodes.NodesRequest\x1a\x1b.mizer.nodes.AvailableNodes\x129\n\x08GetNod\
-    es\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07\
-    AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\
-    \n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.Nod\
-    eConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\
-    \x1a\x1a.mizer.nodes.WriteResponse\x12M\n\x11UpdateNodeSetting\x12%.mize\
-    r.nodes.UpdateNodeSettingRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08Move\
-    Node\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeRes\
-    ponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.m\
-    izer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.Hid\
-    eNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\
-    \x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\
-    \x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.miz\
-    er.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\
-    \x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer\
-    .nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06prot\
-    o3\
+    \x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\x0b2\x19.\
+    mizer.nodes.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01\
+    (\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"p\n\
+    \x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x128\n\x08protoco\
+    l\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\x12\
+    \x1a\n\x08multiple\x18\x03\x20\x01(\x08R\x08multiple*\xb1\x02\n\x0cNodeC\
+    ategory\x12\x16\n\x12NODE_CATEGORY_NONE\x10\0\x12\x1a\n\x16NODE_CATEGORY\
+    _STANDARD\x10\x01\x12\x1d\n\x19NODE_CATEGORY_CONNECTIONS\x10\x02\x12\x1d\
+    \n\x19NODE_CATEGORY_CONVERSIONS\x10\x03\x12\x1a\n\x16NODE_CATEGORY_CONTR\
+    OLS\x10\x04\x12\x16\n\x12NODE_CATEGORY_DATA\x10\x05\x12\x17\n\x13NODE_CA\
+    TEGORY_COLOR\x10\x06\x12\x17\n\x13NODE_CATEGORY_AUDIO\x10\x07\x12\x17\n\
+    \x13NODE_CATEGORY_VIDEO\x10\x08\x12\x17\n\x13NODE_CATEGORY_LASER\x10\t\
+    \x12\x17\n\x13NODE_CATEGORY_PIXEL\x10\n*\x84\x01\n\x0fChannelProtocol\
+    \x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\x0b\n\x07TEXTURE\
+    \x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\
+    \x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\
+    \x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\x10\n2\xbc\x07\n\x08NodesApi\
+    \x12K\n\x11GetAvailableNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x1b.mi\
+    zer.nodes.AvailableNodes\x129\n\x08GetNodes\x12\x19.mizer.nodes.NodesReq\
+    uest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.nodes.Add\
+    NodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mizer.nod\
+    es.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11WriteCont\
+    rolValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.WriteRespo\
+    nse\x12M\n\x11UpdateNodeSetting\x12%.mizer.nodes.UpdateNodeSettingReques\
+    t\x1a\x11.mizer.nodes.Node\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNo\
+    deRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\
+    \x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeRespons\
+    e\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.n\
+    odes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeReq\
+    uest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.miz\
+    er.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNod\
+    e\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNodeRe\
+    sponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.\
+    mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

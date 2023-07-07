@@ -59,7 +59,6 @@ node_type_name! {
         OscOutput,
         VideoFile,
         VideoOutput,
-        VideoEffect,
         VideoColorBalance,
         VideoTransform,
         VideoMixer,

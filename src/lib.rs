@@ -61,9 +61,9 @@ pub fn build_runtime(
     register_osc_module(&mut runtime).context("failed to register osc module")?;
     register_midi_module(&mut runtime, &settings.read().settings)
         .context("Failed to register midi module")?;
-    handle
-        .block_on(register_wgpu_module(&mut runtime))
-        .context("Failed to register wgpu module")?;
+    if let Err(err) = handle.block_on(register_wgpu_module(&mut runtime)) {
+        log::warn!("Failed to register gpu module, video nodes unavailable.\n{err:?}");
+    }
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
             .context("Failed to register fixtures module")?;

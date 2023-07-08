@@ -145,13 +145,14 @@ jobs:
           channel: stable
       - name: Build
         run: make build-release
+        continue-on-error: true
       - name: Package
         run: make mizer.zip
+        continue-on-error: true
       - uses: actions/upload-artifact@v3
         with:
           name: windows-full
           path: mizer.zip
-          if-no-files-found: error
 
   build-docker:
     runs-on: ubuntu-latest

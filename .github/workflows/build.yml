@@ -107,7 +107,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Install build dependencies
-        run: brew install protobuf
+        run: brew install protobuf ffmpeg pkg-config yasm
       - uses: actions/checkout@v3
         with:
           submodules: recursive
@@ -132,7 +132,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget
+        run: choco install protoc make wget yasm ffmpeg
         shell: bash
       - uses: actions/checkout@v3
         with:

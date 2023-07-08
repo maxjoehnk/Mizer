@@ -58,21 +58,3 @@ RUN tar -xvf flutter_linux_3.7.11-stable.tar.xz && /flutter/bin/flutter precache
 
 WORKDIR /
 
-# Roughly based on https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#FFmpeg
-RUN git clone https://github.com/ffmpeg/ffmpeg --depth 1 --single-branch --branch release/6.0 && \
-    cd ffmpeg && \
-    PKG_CONFIG_PATH="/ffmpeg_build/lib/pkgconfig" ./configure \
-      --disable-decoder=exr,phm \
-      --pkg-config-flags="--static" \
-      --extra-cflags="-I/ffmpeg_build/include" \
-      --extra-ldflags="-L/ffmpeg_build/lib" \
-      --extra-libs="-lpthread -lm" \
-      --ld="g++" \
-      --prefix=/ffmpeg_build && \
-    make -j$(nproc) && \
-    make install && \
-    rm -rf /ffmpeg
-
-ENV FFMPEG_LIBS_DIR=/ffmpeg_build/lib
-ENV FFMPEG_INCLUDE_DIR=/ffmpeg_build/include
-ENV FFMPEG_PKG_CONFIG_PATH=/ffmpeg_build/lib/pkgconfig

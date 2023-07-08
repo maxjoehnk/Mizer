@@ -550,7 +550,6 @@ dependencies = [
  "clang-sys",
  "lazy_static",
  "lazycell",
- "log",
  "peeking_take_while",
  "proc-macro2",
  "quote",
@@ -558,7 +557,6 @@ dependencies = [
  "rustc-hash",
  "shlex 1.1.0",
  "syn 1.0.103",
- "which 4.2.2",
 ]
 
 [[package]]
@@ -797,12 +795,6 @@ dependencies = [
  "thiserror",
  "vec_map",
 ]
-
-[[package]]
-name = "camino"
-version = "1.1.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c530edf18f37068ac2d977409ed5cd50d53d73bc653c7647b48eb78976ac9ae2"
 
 [[package]]
 name = "cargo-emit"
@@ -4076,6 +4068,7 @@ dependencies = [
  "anyhow",
  "async-walkdir",
  "dashmap",
+ "ffmpeg-the-third",
  "futures",
  "id3",
  "image",
@@ -4083,7 +4076,6 @@ dependencies = [
  "log",
  "mizer-module",
  "resvg",
- "rsmpeg",
  "serde",
  "serde_json",
  "symphonia",
@@ -5543,12 +5535,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "paste"
-version = "1.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0744126afe1a6dd7f394cb50a716dbe086cb06e255e53d8d0185d82828358fb5"
-
-[[package]]
 name = "path-slash"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6324,18 +6310,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rsmpeg"
-version = "0.14.1+ffmpeg.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "055510ebd8693dfe70570352b19a9147314da95e7435477526b976fc83b04455"
-dependencies = [
- "libc",
- "paste",
- "rusty_ffmpeg",
- "thiserror",
-]
-
-[[package]]
 name = "rusb"
 version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6429,20 +6403,6 @@ name = "rustversion"
 version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a0a5f7c728f5d284929a1cccb5bc19884422bfe6ef4d6c409da2c41838983fcf"
-
-[[package]]
-name = "rusty_ffmpeg"
-version = "0.13.1+ffmpeg.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0e7c726b08ea3ed199e21f6f4b3a1c23fc56a154be731b4445e4ef9ee004cffc"
-dependencies = [
- "bindgen 0.64.0",
- "camino",
- "libc",
- "once_cell",
- "pkg-config",
- "vcpkg",
-]
 
 [[package]]
 name = "rustybuzz"

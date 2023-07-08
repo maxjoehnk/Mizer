@@ -4,19 +4,8 @@ use std::process::{Child, Command};
 use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use anyhow::Context;
-use rsmpeg::avcodec::{AVCodec, AVCodecContext, AVPacket};
-use rsmpeg::avformat::AVFormatContextInput;
-use rsmpeg::avutil::{av_inv_q, av_q2d, AVFrame, AVFrameWithImage, AVImage};
-use rsmpeg::error::RsmpegError;
-use rsmpeg::ffi::{
-    AVCodecID_AV_CODEC_ID_PNG, AVMediaType_AVMEDIA_TYPE_VIDEO, SWS_FAST_BILINEAR, SWS_PRINT_INFO,
-};
-use rsmpeg::swscale::SwsContext;
-use std::ffi::{CString, OsStr};
-use std::fs::File;
-use std::io::Write;
-use std::slice;
+use ffmpeg_the_third as ffmpeg;
+use std::ffi::OsStr;
 
 #[derive(Clone)]
 pub struct VideoHandler;
@@ -85,7 +74,7 @@ impl MediaHandler for VideoHandler {
         _content_type: &str,
     ) -> anyhow::Result<()> {
         let target = storage.get_thumbnail_path(&file);
-        VideoHandler::generate_thumbnail_child_process(file, target)?;
+        VideoHandler::generate_thumbnail(file, target)?;
 
         Ok(())
     }
@@ -95,170 +84,96 @@ impl MediaHandler for VideoHandler {
         file: P,
         _content_type: &str,
     ) -> anyhow::Result<MediaMetadata> {
+        let file = file.as_ref();
         let mut metadata = MediaMetadata::default();
-        let context = VideoHandler::open_context(file)?;
-        metadata.duration = if context.duration < 0 {
+        let input_context = ffmpeg::format::input(&file)?;
+        ffmpeg::format::context::input::dump(&input_context, 0, file.to_str());
+        let stream = input_context
+            .streams()
+            .best(ffmpeg::media::Type::Video)
+            .unwrap();
+
+        let decoder_context =
+            ffmpeg::codec::context::Context::from_parameters(stream.parameters())?;
+        let decoder = decoder_context.decoder().video()?;
+        metadata.duration = if stream.duration() < 0 {
             None
         } else {
-            Some(context.duration as u64 / 1_000_000)
+            let time_base: f64 = stream.time_base().into();
+            let duration = stream.duration() as f64 * time_base;
+            Some(duration.round() as u64)
         };
 
-        let (stream_index, decoder) = VideoHandler::open_decoder(&context)?;
-        metadata.dimensions = Some((decoder.width as u64, decoder.height as u64));
-        let stream = context.streams().get(stream_index).unwrap();
-        metadata.framerate = Some(av_q2d(stream.r_frame_rate));
+        metadata.dimensions = Some((decoder.width() as u64, decoder.height() as u64));
+        metadata.framerate = Some(stream.rate().into());
 
         Ok(metadata)
     }
 }
 
 impl VideoHandler {
-    #[deprecated(note = "swap to generate_thumbnail_ffi once it's stable")]
-    fn generate_thumbnail_child_process<P: AsRef<Path>>(
-        file: P,
-        target: PathBuf,
-    ) -> anyhow::Result<()> {
-        let mut child = Command::new("ffmpeg")
-            .arg("-i")
-            .arg(file.as_ref().as_os_str())
-            .arg("-vframes")
-            .arg("1")
-            .arg("-filter:v")
-            .arg(format!("scale={}:-1", THUMBNAIL_SIZE))
-            .arg(&target)
-            .spawn()?;
+    fn generate_thumbnail<P: AsRef<Path>>(file: P, target: PathBuf) -> anyhow::Result<()> {
+        let file = file.as_ref();
+        let mut input_context = ffmpeg::format::input(&file)?;
+        ffmpeg::format::context::input::dump(&input_context, 0, file.to_str());
+        let stream = input_context
+            .streams()
+            .best(ffmpeg::media::Type::Video)
+            .unwrap();
+        let stream_index = stream.index();
 
-        let status = child.wait()?;
+        let decoder_context =
+            ffmpeg::codec::context::Context::from_parameters(stream.parameters())?;
+        let mut decoder = decoder_context.decoder().video()?;
 
-        if status.success() {
-            Ok(())
-        } else {
-            anyhow::bail!("Something went wrong")
-        }
-    }
+        let mut converter = decoder.converter(ffmpeg::format::Pixel::RGBA)?;
 
-    // This method doesn't produce proper thumbnails for all input files yet
-    // Also the aspect ratio is always forced to 1:1 which should be changed
-    #[allow(unused)]
-    fn generate_thumbnail_ffi<P: AsRef<Path>>(file: P, target: PathBuf) -> anyhow::Result<()> {
-        let mut context = VideoHandler::open_context(file)?;
-        let (stream_index, mut decoder) = VideoHandler::open_decoder(&context)?;
-        let cover_frame = VideoHandler::get_cover_frame(&mut context, &mut decoder, stream_index)?;
-        let thumbnail = VideoHandler::scale_thumbnail(&cover_frame, &decoder)?;
-        let mut file = File::create(target)?;
-        VideoHandler::write_thumbnail(thumbnail, &mut file)?;
+        let mut converted_video = None;
+        for (stream, packet) in input_context.packets() {
+            if stream_index == stream.index() {
+                decoder.send_packet(&packet)?;
+                let mut decoded = ffmpeg::frame::Video::empty();
+                decoder.receive_frame(&mut decoded)?;
+                let mut frame = ffmpeg::frame::Video::empty();
+                converter.run(&decoded, &mut frame)?;
 
-        Ok(())
-    }
-
-    fn open_context<P: AsRef<Path>>(path: P) -> anyhow::Result<AVFormatContextInput> {
-        let filename = path.as_ref().to_str().unwrap();
-        let file_cstr = CString::new(filename)?;
-        let context = AVFormatContextInput::open(&file_cstr)?;
-
-        Ok(context)
-    }
-
-    fn open_decoder(context: &AVFormatContextInput) -> anyhow::Result<(usize, AVCodecContext)> {
-        let (stream_index, decoder) = context
-            .find_best_stream(AVMediaType_AVMEDIA_TYPE_VIDEO)?
-            .context("Failed to find the best stream")?;
-
-        let stream = context.streams().get(stream_index).unwrap();
-
-        let mut decode_context = AVCodecContext::new(&decoder);
-        decode_context.apply_codecpar(&stream.codecpar())?;
-        decode_context.open(None)?;
-
-        Ok((stream_index, decode_context))
-    }
-
-    fn get_cover_frame(
-        context: &mut AVFormatContextInput,
-        decoder: &mut AVCodecContext,
-        stream_index: usize,
-    ) -> anyhow::Result<AVFrame> {
-        loop {
-            let cover_packet = loop {
-                match context.read_packet()? {
-                    Some(x) if x.stream_index != stream_index as i32 => {}
-                    x => break x,
-                }
-            };
-
-            decoder.send_packet(cover_packet.as_ref())?;
-            // repeatedly send packet until a frame can be extracted
-            match decoder.receive_frame() {
-                Ok(x) => break Ok(x),
-                Err(RsmpegError::DecoderDrainError) => {}
-                Err(e) => anyhow::bail!(e),
-            }
-
-            if cover_packet.is_none() {
-                anyhow::bail!("Can't find video cover frame");
+                converted_video = Some(frame);
+                break;
             }
         }
-    }
 
-    fn scale_thumbnail(
-        frame: &AVFrame,
-        decode_context: &AVCodecContext,
-    ) -> anyhow::Result<AVPacket> {
-        let mut encode_context = {
-            let encoder =
-                AVCodec::find_encoder(AVCodecID_AV_CODEC_ID_PNG).context("Encoder not found")?;
-            let mut encode_context = AVCodecContext::new(&encoder);
+        if converted_video.is_none() {
+            return Ok(());
+        }
 
-            encode_context.set_bit_rate(decode_context.bit_rate);
-            encode_context.set_width(THUMBNAIL_SIZE as i32);
-            encode_context.set_height(THUMBNAIL_SIZE as i32);
-            encode_context.set_time_base(av_inv_q(decode_context.framerate));
-            encode_context.set_pix_fmt(if let Some(pix_fmts) = encoder.pix_fmts() {
-                pix_fmts[0]
-            } else {
-                decode_context.pix_fmt
-            });
-            encode_context.open(None)?;
+        let converted_video = converted_video.unwrap();
+        let mut scaler = converted_video.scaler(
+            THUMBNAIL_SIZE,
+            THUMBNAIL_SIZE,
+            ffmpeg::software::scaling::Flags::empty(),
+        )?;
+        let mut thumbnail_frame = ffmpeg::frame::Video::empty();
+        scaler.run(&converted_video, &mut thumbnail_frame)?;
+        let mut output_context = ffmpeg::format::output(&target)?;
+        ffmpeg::format::context::output::dump(&output_context, 0, target.to_str());
+        output_context.write_header()?;
 
-            encode_context
-        };
+        let context = ffmpeg::encoder::find(ffmpeg::codec::Id::PNG).unwrap();
+        let thumbnail_stream = output_context.add_stream(context)?;
+        let mut encoder = ffmpeg::codec::Context::from_parameters(thumbnail_stream.parameters())?
+            .encoder()
+            .video()?;
+        encoder.set_width(THUMBNAIL_SIZE);
+        encoder.set_height(THUMBNAIL_SIZE);
+        encoder.set_aspect_ratio(decoder.aspect_ratio());
+        encoder.set_format(ffmpeg::format::Pixel::RGBA);
+        encoder.set_frame_rate(decoder.frame_rate());
+        encoder.set_time_base(decoder.time_base());
 
-        let scaled_cover_packet = {
-            let mut sws_context = SwsContext::get_context(
-                decode_context.width,
-                decode_context.height,
-                decode_context.pix_fmt,
-                encode_context.width,
-                encode_context.height,
-                encode_context.pix_fmt,
-                SWS_FAST_BILINEAR | SWS_PRINT_INFO,
-            )
-            .context("Invalid swscontext parameter.")?;
-
-            let image_buffer = AVImage::new(
-                encode_context.pix_fmt,
-                encode_context.width,
-                encode_context.height,
-                1,
-            )
-            .context("Image buffer parameter invalid.")?;
-
-            let mut scaled_cover_frame = AVFrameWithImage::new(image_buffer);
-
-            sws_context
-                .scale_frame(frame, 0, decode_context.height, &mut scaled_cover_frame)
-                .context("Scaling frame")?;
-
-            encode_context.send_frame(Some(&scaled_cover_frame))?;
-            encode_context.receive_packet()?
-        };
-
-        Ok(scaled_cover_packet)
-    }
-
-    fn write_thumbnail(packet: AVPacket, file: &mut File) -> anyhow::Result<()> {
-        let data = unsafe { slice::from_raw_parts(packet.data, packet.size as usize) };
-        file.write_all(data)?;
+        encoder.send_frame(&thumbnail_frame)?;
+        let mut packet = ffmpeg::packet::Packet::empty();
+        encoder.receive_packet(&mut packet)?;
+        packet.write_interleaved(&mut output_context)?;
 
         Ok(())
     }

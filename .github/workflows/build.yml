@@ -61,25 +61,6 @@ jobs:
         with:
           channel: stable
       - uses: Swatinem/rust-cache@v2
-      - name: Build ffmpeg
-        run: |
-          git clone https://github.com/ffmpeg/ffmpeg --depth 1 --single-branch --branch release/6.0
-          cd ffmpeg
-          PKG_CONFIG_PATH="${HOME}/ffmpeg_build/lib/pkgconfig" ./configure \
-            --disable-decoder=exr,phm \
-            --pkg-config-flags="--static" \
-            --extra-cflags="-I${HOME}/ffmpeg_build/include" \
-            --extra-ldflags="-L${HOME}/ffmpeg_build/lib" \
-            --extra-libs="-lpthread -lm" \
-            --ld="g++" \
-            --prefix=${HOME}/ffmpeg_build
-          make -j$(nproc)
-          make install
-          rm -rf ${HOME}/ffmpeg
-          echo "FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib" >> "$GITHUB_ENV"
-          echo "FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include" >> "$GITHUB_ENV"
-          echo "FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig" >> "$GITHUB_ENV"
-
       - name: Build Headless
         run: make build-headless
       - uses: actions/upload-artifact@v3

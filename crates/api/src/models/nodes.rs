@@ -3230,8 +3230,8 @@ pub mod node {
         VIDEO_FILE = 20,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_OUTPUT)
         VIDEO_OUTPUT = 21,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_COLOR_BALANCE)
-        VIDEO_COLOR_BALANCE = 23,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_HSV)
+        VIDEO_HSV = 23,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_TRANSFORM)
         VIDEO_TRANSFORM = 24,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.VIDEO_MIXER)
@@ -3349,7 +3349,7 @@ pub mod node {
                 19 => ::std::option::Option::Some(NodeType::PRESET),
                 20 => ::std::option::Option::Some(NodeType::VIDEO_FILE),
                 21 => ::std::option::Option::Some(NodeType::VIDEO_OUTPUT),
-                23 => ::std::option::Option::Some(NodeType::VIDEO_COLOR_BALANCE),
+                23 => ::std::option::Option::Some(NodeType::VIDEO_HSV),
                 24 => ::std::option::Option::Some(NodeType::VIDEO_TRANSFORM),
                 25 => ::std::option::Option::Some(NodeType::VIDEO_MIXER),
                 26 => ::std::option::Option::Some(NodeType::VIDEO_RGB),
@@ -3419,7 +3419,7 @@ pub mod node {
             NodeType::PRESET,
             NodeType::VIDEO_FILE,
             NodeType::VIDEO_OUTPUT,
-            NodeType::VIDEO_COLOR_BALANCE,
+            NodeType::VIDEO_HSV,
             NodeType::VIDEO_TRANSFORM,
             NodeType::VIDEO_MIXER,
             NodeType::VIDEO_RGB,
@@ -3495,7 +3495,7 @@ pub mod node {
                 NodeType::PRESET => 19,
                 NodeType::VIDEO_FILE => 20,
                 NodeType::VIDEO_OUTPUT => 21,
-                NodeType::VIDEO_COLOR_BALANCE => 22,
+                NodeType::VIDEO_HSV => 22,
                 NodeType::VIDEO_TRANSFORM => 23,
                 NodeType::VIDEO_MIXER => 24,
                 NodeType::VIDEO_RGB => 25,
@@ -8688,7 +8688,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     rtR\ntargetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\
     \x122\n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsour\
     cePort\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelP\
-    rotocolR\x08protocol\"\xa3\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
+    rotocolR\x08protocol\"\x99\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
     \x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
     \x20\x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.no\
     des.PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.no\
@@ -8698,7 +8698,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\
     \x18\x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\
     \x07details\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\
-    \"\xf9\x07\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
+    \"\xef\x07\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
     \x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06S\
     CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\
     \x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHO\
@@ -8707,59 +8707,59 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     PUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\
     \x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\
     \x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\
-    \x12\x17\n\x13VIDEO_COLOR_BALANCE\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\
-    \x10\x18\x12\x0f\n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\
-    \x13\n\x0fVIDEO_RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\
-    \x11\n\rPIXEL_PATTERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05L\
-    ASER\x10(\x12\r\n\tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOL\
-    OR_RGB\x102\x12\r\n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\
-    \x14\n\x10COLOR_BRIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04M\
-    ATH\x108\x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\
-    \x10:\x12\t\n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_IN\
-    PUT\x10=\x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\
-    \t\n\x05DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\
-    \x05LABEL\x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\
-    \n\tG13OUTPUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDIT\
-    IONAL\x10H\x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTP\
-    UT\x10J\x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\
-    \x10\n\x0cAUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO\
-    _MIX\x10O\x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\
-    \n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\x12\
-    \x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\x08MUL\
-    TIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\x10\x05\
-    \x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\x10\x07\"X\n\x0bNodeDetails\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x125\n\x08category\x18\
-    \x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08category\"c\n\nNodeC\
-    onfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.Cont\
-    ainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\x04type\"\xf5\x10\n\x0bNod\
-    eSetting\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12\x20\n\x0bde\
-    scription\x18\x02\x20\x01(\tR\x0bdescription\x12\x1a\n\x08disabled\x18\
-    \x03\x20\x01(\x08R\x08disabled\x128\n\x04text\x18\x04\x20\x01(\x0b2\".mi\
-    zer.nodes.NodeSetting.TextValueH\0R\x04text\x12;\n\x05float\x18\x05\x20\
-    \x01(\x0b2#.mizer.nodes.NodeSetting.FloatValueH\0R\x05float\x125\n\x03in\
-    t\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSetting.IntValueH\0R\x03int\x12\
-    8\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.nodes.NodeSetting.BoolValueH\0\
-    R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\x0b2$.mizer.nodes.NodeSettin\
-    g.SelectValueH\0R\x06select\x128\n\x04enum\x18\t\x20\x01(\x0b2\".mizer.n\
-    odes.NodeSetting.EnumValueH\0R\x04enum\x122\n\x02id\x18\n\x20\x01(\x0b2\
-    \x20.mizer.nodes.NodeSetting.IdValueH\0R\x02id\x12>\n\x06spline\x18\x0b\
-    \x20\x01(\x0b2$.mizer.nodes.NodeSetting.SplineValueH\0R\x06spline\x12;\n\
-    \x05media\x18\x0c\x20\x01(\x0b2#.mizer.nodes.NodeSetting.MediaValueH\0R\
-    \x05media\x1a?\n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05va\
-    lue\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\xba\x01\n\
-    \nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x15\n\
-    \x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hin\
-    t\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\
-    \x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\
-    \x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_h\
-    intB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntValue\x12\x14\n\
-    \x05value\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\
-    \rH\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\
-    \x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\
-    \x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\
-    \x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_ma\
-    x_hint\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05val\
-    ue\x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\
+    \x12\r\n\tVIDEO_HSV\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\x0f\
+    \n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVIDEO_\
+    RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PAT\
+    TERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\
+    \tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\
+    \n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_B\
+    RIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\
+    \n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VA\
+    LUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\
+    \x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\
+    \x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\
+    \r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\
+    \x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\
+    \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
+    \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
+    ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
+    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\
+    \"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\
+    \x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\
+    \x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DAT\
+    A\x10\x06\x12\t\n\x05COLOR\x10\x07\"X\n\x0bNodeDetails\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x125\n\x08category\x18\x02\x20\x01(\x0e2\
+    \x19.mizer.nodes.NodeCategoryR\x08category\"c\n\nNodeConfig\x12M\n\x10co\
+    ntainer_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0\
+    R\x0fcontainerConfigB\x06\n\x04type\"\xf5\x10\n\x0bNodeSetting\x12\x14\n\
+    \x05label\x18\x01\x20\x01(\tR\x05label\x12\x20\n\x0bdescription\x18\x02\
+    \x20\x01(\tR\x0bdescription\x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\
+    \x08disabled\x128\n\x04text\x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSett\
+    ing.TextValueH\0R\x04text\x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.n\
+    odes.NodeSetting.FloatValueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\
+    \x0b2!.mizer.nodes.NodeSetting.IntValueH\0R\x03int\x128\n\x04bool\x18\
+    \x07\x20\x01(\x0b2\".mizer.nodes.NodeSetting.BoolValueH\0R\x04bool\x12>\
+    \n\x06select\x18\x08\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SelectValueH\
+    \0R\x06select\x128\n\x04enum\x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetti\
+    ng.EnumValueH\0R\x04enum\x122\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.node\
+    s.NodeSetting.IdValueH\0R\x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.\
+    mizer.nodes.NodeSetting.SplineValueH\0R\x06spline\x12;\n\x05media\x18\
+    \x0c\x20\x01(\x0b2#.mizer.nodes.NodeSetting.MediaValueH\0R\x05media\x1a?\
+    \n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x1c\n\
+    \tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\xba\x01\n\nFloatValue\
+    \x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x15\n\x03min\x18\
+    \x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\
+    \x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\
+    \x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01\
+    (\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\
+    \n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntValue\x12\x14\n\x05valu\
+    e\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0R\
+    \x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\x07mi\
+    nHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\
+    \x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\
+    \x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hi\
+    nt\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05value\
+    \x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\
     \x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting.Selec\
     tVariantR\x08variants\x1a\xcc\x02\n\rSelectVariant\x12J\n\x05group\x18\
     \x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.SelectVariant.SelectGroupH\0\

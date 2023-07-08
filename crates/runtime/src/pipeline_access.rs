@@ -99,7 +99,7 @@ impl PipelineAccess {
             OscOutput(node) => self.add_node(path, node),
             VideoFile(node) => self.add_node(path, node),
             VideoTransform(node) => self.add_node(path, node),
-            VideoColorBalance(node) => self.add_node(path, node),
+            VideoHsv(node) => self.add_node(path, node),
             VideoOutput(node) => self.add_node(path, node),
             VideoMixer(node) => self.add_node(path, node),
             VideoRgb(node) => self.add_node(path, node),

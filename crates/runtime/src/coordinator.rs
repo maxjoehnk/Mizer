@@ -554,7 +554,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::OscInput(node) => pipeline.register_node(path, &node),
         Node::OscOutput(node) => pipeline.register_node(path, &node),
         Node::VideoFile(node) => pipeline.register_node(path, &node),
-        Node::VideoColorBalance(node) => pipeline.register_node(path, &node),
+        Node::VideoHsv(node) => pipeline.register_node(path, &node),
         Node::VideoOutput(node) => pipeline.register_node(path, &node),
         Node::VideoTransform(node) => pipeline.register_node(path, &node),
         Node::VideoMixer(node) => pipeline.register_node(path, &node),

@@ -45,12 +45,12 @@ impl ProjectFileMigration for RenamePorts {
         project.rename_input(NodeType::PixelDmx, "input", "Input");
         project.rename_output(NodeType::PixelPattern, "output", "Output");
         project.rename_input(NodeType::PlanScreen, "output", "Input");
-        project.rename_input(NodeType::VideoColorBalance, "input", "Input");
-        project.rename_output(NodeType::VideoColorBalance, "output", "Output");
-        project.rename_input(NodeType::VideoColorBalance, "brightness", "Brightness");
-        project.rename_input(NodeType::VideoColorBalance, "contrast", "Contrast");
-        project.rename_input(NodeType::VideoColorBalance, "hue", "Hue");
-        project.rename_input(NodeType::VideoColorBalance, "saturation", "Saturation");
+        project.rename_input(NodeType::VideoHsv, "input", "Input");
+        project.rename_output(NodeType::VideoHsv, "output", "Output");
+        project.rename_input(NodeType::VideoHsv, "brightness", "Brightness");
+        project.rename_input(NodeType::VideoHsv, "contrast", "Contrast");
+        project.rename_input(NodeType::VideoHsv, "hue", "Hue");
+        project.rename_input(NodeType::VideoHsv, "saturation", "Saturation");
         project.rename_output(NodeType::VideoFile, "output", "Output");
         project.rename_input(NodeType::VideoOutput, "input", "Input");
         project.rename_input(NodeType::VideoTransform, "input", "Input");

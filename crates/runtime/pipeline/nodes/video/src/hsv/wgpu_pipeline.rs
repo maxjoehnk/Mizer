@@ -1,7 +1,7 @@
 use mizer_wgpu::{TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
 
-pub struct ColorBalanceWgpuPipeline {
+pub struct HsvWgpuPipeline {
     sampler: wgpu::Sampler,
     texture_bind_group_layout: wgpu::BindGroupLayout,
     render_pipeline: wgpu::RenderPipeline,
@@ -12,7 +12,7 @@ pub struct ColorBalanceWgpuPipeline {
     uniform_buffer: wgpu::Buffer,
 }
 
-impl ColorBalanceWgpuPipeline {
+impl HsvWgpuPipeline {
     pub fn new(context: &WgpuContext) -> Self {
         let sampler = context.create_sampler();
         let texture_bind_group_layout =
@@ -58,7 +58,7 @@ impl ColorBalanceWgpuPipeline {
         let uniform_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Color Buffer"),
+                label: Some("HSV Color Buffer"),
                 contents: bytemuck::cast_slice(&[360.0f32, 1.0, 1.0]),
                 usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST,
             });
@@ -79,7 +79,7 @@ impl ColorBalanceWgpuPipeline {
             context
                 .device
                 .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-                    label: Some("Color Balance Pipeline Layout"),
+                    label: Some("HSV Pipeline Layout"),
                     bind_group_layouts: &[&texture_bind_group_layout, &uniform_bind_group_layout],
                     push_constant_ranges: &[],
                 });
@@ -88,7 +88,7 @@ impl ColorBalanceWgpuPipeline {
             context
                 .device
                 .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-                    label: Some("Color Balance Render Pipeline"),
+                    label: Some("HSV Render Pipeline"),
                     layout: Some(&render_pipeline_layout),
                     vertex: wgpu::VertexState {
                         module: &shader,
@@ -125,7 +125,7 @@ impl ColorBalanceWgpuPipeline {
         let vertex_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Vertex Buffer"),
+                label: Some("HSV Vertex Buffer"),
                 contents: bytemuck::cast_slice(RECT_VERTICES),
                 usage: wgpu::BufferUsages::VERTEX,
             });
@@ -133,7 +133,7 @@ impl ColorBalanceWgpuPipeline {
         let index_buffer = context
             .device
             .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                label: Some("Color Balance Index Buffer"),
+                label: Some("HSV Index Buffer"),
                 contents: bytemuck::cast_slice(RECT_INDICES),
                 usage: wgpu::BufferUsages::INDEX,
             });
@@ -184,11 +184,11 @@ impl ColorBalanceWgpuPipeline {
         let mut encoder = context
             .device
             .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Color Balance Pipeline Render Encoder"),
+                label: Some("HSV Pipeline Render Encoder"),
             });
         {
             let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Color Balance Render Pass"),
+                label: Some("HSV Render Pass"),
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
                     view: target,
                     resolve_target: None,

@@ -96,7 +96,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType PRESET = Node_NodeType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRESET');
   static const Node_NodeType VIDEO_FILE = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_FILE');
   static const Node_NodeType VIDEO_OUTPUT = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_OUTPUT');
-  static const Node_NodeType VIDEO_COLOR_BALANCE = Node_NodeType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_COLOR_BALANCE');
+  static const Node_NodeType VIDEO_HSV = Node_NodeType._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_HSV');
   static const Node_NodeType VIDEO_TRANSFORM = Node_NodeType._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_TRANSFORM');
   static const Node_NodeType VIDEO_MIXER = Node_NodeType._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_MIXER');
   static const Node_NodeType VIDEO_RGB = Node_NodeType._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VIDEO_RGB');
@@ -163,7 +163,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     PRESET,
     VIDEO_FILE,
     VIDEO_OUTPUT,
-    VIDEO_COLOR_BALANCE,
+    VIDEO_HSV,
     VIDEO_TRANSFORM,
     VIDEO_MIXER,
     VIDEO_RGB,

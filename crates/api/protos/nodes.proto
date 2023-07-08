@@ -145,7 +145,7 @@ message Node {
     PRESET = 19;
     VIDEO_FILE = 20;
     VIDEO_OUTPUT = 21;
-    VIDEO_COLOR_BALANCE = 23;
+    VIDEO_HSV = 23;
     VIDEO_TRANSFORM = 24;
     VIDEO_MIXER = 25;
     VIDEO_RGB = 26;

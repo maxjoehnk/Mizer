@@ -218,14 +218,14 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   void _screenshotNode(BuildContext context) async {
     BaseNodeState nodeState = model.selectedNode!.key.currentState!;
     final typeGroup = XTypeGroup(label: 'Images'.i18n, extensions: ['png']);
-    final path = await getSavePath(acceptedTypeGroups: [typeGroup]);
-    if (path == null) {
+    final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
+    if (location == null) {
       return;
     }
     final ui.Image image = await nodeState.screenshot();
     final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
-    final File file = File(path);
+    final File file = File(location.path);
     await file.writeAsBytes(pngBytes);
   }
 

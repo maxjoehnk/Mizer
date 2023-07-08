@@ -123,11 +123,11 @@ class ApplicationMenu extends StatelessWidget {
 
   Future<void> _saveProjectAs(BuildContext context, SessionApi api) async {
     final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: ['yml']);
-    final path = await getSavePath(acceptedTypeGroups: [typeGroup]);
-    if (path == null) {
+    final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
+    if (location == null) {
       return;
     }
-    await api.saveProjectAs(path);
+    await api.saveProjectAs(location.path);
   }
 
   void _refreshViews(BuildContext context) {

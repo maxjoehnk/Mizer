@@ -109,6 +109,8 @@ jobs:
       - name: Install build dependencies
         run: brew install protobuf
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

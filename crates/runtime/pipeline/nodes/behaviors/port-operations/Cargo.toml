@@ -14,6 +14,8 @@ rand = "0.8"
 mizer-util = { path = "../../../../../util" }
 enum-iterator = "1.4"
 num_enum = "0.6"
+mizer-wgpu = { path = "../../../../wgpu" }
+mizer-protocol-laser = { path = "../../../../../components/connections/protocols/laser" }
 
 [dev-dependencies]
 test-case = "3.1"

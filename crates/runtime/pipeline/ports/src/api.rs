@@ -1,4 +1,6 @@
+use enum_iterator::Sequence;
 use mizer_util::hsv_to_rgb;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fmt::{Debug, Display, Formatter, Result};
@@ -52,7 +54,21 @@ impl AsRef<str> for PortId {
     }
 }
 
-#[derive(Debug, Default, Clone, Copy, Hash, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    Hash,
+    PartialEq,
+    Eq,
+    Deserialize,
+    Serialize,
+    Sequence,
+    IntoPrimitive,
+    TryFromPrimitive,
+)]
+#[repr(u8)]
 pub enum PortType {
     /// Single float value
     ///
@@ -89,6 +105,12 @@ pub enum PortType {
     Material,
     /// Time signal measured in frames
     Clock,
+}
+
+impl Display for PortType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        write!(f, "{:?}", self)
+    }
 }
 
 pub trait NodePortReceiver<'a, Item>

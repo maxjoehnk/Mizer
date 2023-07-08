@@ -1,7 +1,7 @@
 use crate::{PortMetadata, PreviewContext};
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
-use mizer_ports::{PortId, PortValue};
+pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
 
 pub trait NodeContext: PreviewContext {

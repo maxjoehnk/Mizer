@@ -138,17 +138,7 @@ impl PipelineWorker {
         let mut receivers = NodeReceivers::default();
         for (port_id, metadata) in node.list_ports() {
             if metadata.is_input() {
-                log::debug!("Registering port receiver for {:?} {:?}", &path, &port_id);
-                match metadata.port_type {
-                    PortType::Single => receivers.register::<f64>(port_id, metadata),
-                    PortType::Color => receivers.register::<Color>(port_id, metadata),
-                    PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
-                    PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
-                    PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
-                    PortType::Clock => receivers.register::<u64>(port_id, metadata),
-                    PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
-                    port_type => log::debug!("TODO: implement port type {:?}", port_type),
-                }
+                register_receiver(&mut receivers, &path, port_id, metadata);
             }
         }
         self.receivers.insert(path, receivers);
@@ -307,8 +297,28 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process");
+        self.check_node_receivers(&nodes);
         self.order_nodes_by_dependencies(&mut nodes);
         self.process_nodes(&mut nodes, frame, injector, clock)
+    }
+
+    fn check_node_receivers(&mut self, nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)]) {
+        for (path, node) in nodes {
+            let receivers = self.receivers.entry((*path).clone()).or_default();
+            for (port_id, metadata) in node.list_ports() {
+                if !metadata.is_input() {
+                    continue;
+                }
+                if let Some(port_receiver) = receivers.get_mut(&port_id) {
+                    if port_receiver.metadata.port_type == metadata.port_type {
+                        continue;
+                    }
+                    register_receiver(receivers, path, port_id, metadata);
+                } else {
+                    register_receiver(receivers, path, port_id, metadata);
+                }
+            }
+        }
     }
 
     fn order_nodes_by_dependencies(
@@ -413,6 +423,25 @@ impl PipelineWorker {
         } else {
             None
         }
+    }
+}
+
+fn register_receiver(
+    receivers: &mut NodeReceivers,
+    path: &NodePath,
+    port_id: PortId,
+    metadata: PortMetadata,
+) {
+    log::debug!("Registering port receiver for {:?} {:?}", path, &port_id);
+    match metadata.port_type {
+        PortType::Single => receivers.register::<f64>(port_id, metadata),
+        PortType::Color => receivers.register::<Color>(port_id, metadata),
+        PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
+        PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
+        PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
+        PortType::Clock => receivers.register::<u64>(port_id, metadata),
+        PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
+        port_type => log::debug!("TODO: implement port type {:?}", port_type),
     }
 }
 

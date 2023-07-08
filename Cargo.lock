@@ -4385,7 +4385,9 @@ dependencies = [
  "itertools 0.11.0",
  "log",
  "mizer-node",
+ "mizer-protocol-laser",
  "mizer-util",
+ "mizer-wgpu",
  "num_enum 0.6.1",
  "rand 0.8.5",
  "serde",
@@ -4400,7 +4402,9 @@ dependencies = [
  "bincode",
  "criterion",
  "crossbeam",
+ "enum-iterator",
  "mizer-util",
+ "num_enum 0.6.1",
  "serde",
 ]
 

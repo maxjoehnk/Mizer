@@ -57,6 +57,10 @@ impl NodeReceivers {
         self.0.get(port)
     }
 
+    pub fn get_mut(&mut self, port: &PortId) -> Option<&mut AnyPortReceiver> {
+        self.0.get_mut(port)
+    }
+
     pub fn ports(&self) -> Vec<PortId> {
         self.0.keys().cloned().collect()
     }

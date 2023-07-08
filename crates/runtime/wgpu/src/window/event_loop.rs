@@ -4,6 +4,7 @@ use dashmap::DashMap;
 use wgpu::PresentMode;
 use winit::event_loop::{EventLoop, EventLoopBuilder};
 use winit::monitor::MonitorHandle;
+#[cfg(target_os = "linux")]
 use winit::platform::x11::EventLoopBuilderExtX11;
 use winit::window::WindowId;
 
@@ -20,7 +21,10 @@ pub struct EventLoopHandle {
 
 impl EventLoopHandle {
     pub fn new() -> Self {
-        let event_loop = EventLoopBuilder::new().with_any_thread(true).build();
+        let mut builder = EventLoopBuilder::new();
+        #[cfg(target_os = "linux")]
+        builder.with_any_thread(true);
+        let event_loop = builder.build();
 
         Self {
             event_loop,

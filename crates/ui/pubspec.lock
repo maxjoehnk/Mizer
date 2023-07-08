@@ -185,14 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
-  device_frame:
-    dependency: transitive
-    description:
-      name: device_frame
-      sha256: afe76182aec178d171953d9b4a50a43c57c7cf3c77d8b09a48bf30c8fa04dd9d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -381,14 +373,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  freezed_annotation:
-    dependency: transitive
-    description:
-      name: freezed_annotation
-      sha256: aeac15850ef1b38ee368d4c53ba9a847e900bb2c53a4db3f6881cbb3cb684338
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   from_css_color:
     dependency: "direct main"
     description:
@@ -694,14 +678,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
-  resizable_widget:
-    dependency: transitive
-    description:
-      name: resizable_widget
-      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   select_form_field:
     dependency: "direct main"
     description:
@@ -915,14 +891,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  widgetbook:
-    dependency: "direct dev"
-    description:
-      name: widgetbook
-      sha256: "2e01004a0e5b03fbfaf6a8bc5378e86b977ee5859a6aac27490252c77e88e870"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   xml:
     dependency: transitive
     description:

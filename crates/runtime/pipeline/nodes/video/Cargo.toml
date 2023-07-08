@@ -8,11 +8,15 @@ edition = "2021"
 anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../node" }
-gstreamer = "0.20"
-gstreamer-video = "0.20"
-gstreamer-gl = "0.20"
-glib = "0.17"
-lazy_static = "1.4"
 serde = { version = "1", features = ["derive"] }
 enum-iterator = "1.4"
 num_enum = "0.6"
+mizer-wgpu = { path = "../../../wgpu" }
+image = "0.24"
+ffmpeg-the-third = "1.2"
+ffmpeg-sys-the-third = { version = "1.1", features = ["build"] }
+profiling = "1"
+wgpu = "0.16"
+bytemuck = "1.13"
+cgmath = "0.18"
+mizer-media = { path = "../../../../components/media" }

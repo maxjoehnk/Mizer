@@ -15,18 +15,18 @@ export 'media.pb.dart';
 
 class MediaApiClient extends $grpc.Client {
   static final _$createTag = $grpc.ClientMethod<$0.CreateMediaTag, $0.MediaTag>(
-      '/mizer.MediaApi/CreateTag',
+      '/mizer.media.MediaApi/CreateTag',
       ($0.CreateMediaTag value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.MediaTag.fromBuffer(value));
   static final _$getTagsWithMedia =
       $grpc.ClientMethod<$0.GetMediaTags, $0.GroupedMediaFiles>(
-          '/mizer.MediaApi/GetTagsWithMedia',
+          '/mizer.media.MediaApi/GetTagsWithMedia',
           ($0.GetMediaTags value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.GroupedMediaFiles.fromBuffer(value));
   static final _$getMedia =
       $grpc.ClientMethod<$0.GetMediaRequest, $0.MediaFiles>(
-          '/mizer.MediaApi/GetMedia',
+          '/mizer.media.MediaApi/GetMedia',
           ($0.GetMediaRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.MediaFiles.fromBuffer(value));
 
@@ -53,7 +53,7 @@ class MediaApiClient extends $grpc.Client {
 }
 
 abstract class MediaApiServiceBase extends $grpc.Service {
-  $core.String get $name => 'mizer.MediaApi';
+  $core.String get $name => 'mizer.media.MediaApi';
 
   MediaApiServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.CreateMediaTag, $0.MediaTag>(

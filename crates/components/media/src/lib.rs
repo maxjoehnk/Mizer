@@ -8,6 +8,7 @@ pub use crate::discovery::MediaDiscovery;
 use crate::documents::*;
 use crate::file_storage::FileStorage;
 use crate::import_handler::ImportFileHandler;
+pub use module::MediaModule;
 
 mod data_access;
 mod discovery;
@@ -15,6 +16,7 @@ pub mod documents;
 mod file_storage;
 mod import_handler;
 pub mod media_handlers;
+mod module;
 
 #[derive(Clone)]
 #[repr(transparent)]
@@ -44,6 +46,22 @@ impl ImportPaths {
     pub fn paths(&self) -> Vec<PathBuf> {
         self.0.read().unwrap().clone()
     }
+
+    pub fn add_path(&self, path: PathBuf) {
+        let mut paths = self
+            .0
+            .write()
+            .expect("Unable to lock media server import paths for writing");
+        paths.push(path);
+    }
+
+    pub fn remove_path(&self, path: PathBuf) {
+        let mut paths = self
+            .0
+            .write()
+            .expect("Unable to lock media server import paths for writing");
+        paths.retain(|p| p != &path);
+    }
 }
 
 #[derive(Clone)]
@@ -72,6 +90,22 @@ impl MediaServer {
 
     pub fn get_import_paths(&self) -> Vec<PathBuf> {
         self.import_paths.paths()
+    }
+
+    pub async fn add_import_path(&self, path: PathBuf) {
+        self.import_paths.add_path(path.clone());
+        let api = self.clone();
+
+        tokio::spawn(async move {
+            let discovery = MediaDiscovery::new(api, path).discover().await;
+            if let Err(err) = discovery {
+                log::error!("Error discovering media files: {err:?}");
+            }
+        });
+    }
+
+    pub fn remove_import_path(&self, path: PathBuf) {
+        self.import_paths.remove_path(path);
     }
 
     pub fn create_tag(&self, name: String) -> anyhow::Result<TagDocument> {
@@ -121,6 +155,14 @@ impl MediaServer {
                 Err(err)
             }
         }
+    }
+
+    pub fn get_media_file(&self, id: MediaId) -> Option<MediaDocument> {
+        self.db.get_media(id)
+    }
+
+    pub fn remove_file(&self, id: MediaId) {
+        self.db.remove_media(id);
     }
 }
 

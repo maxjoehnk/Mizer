@@ -16,6 +16,7 @@ use mizer_ports::PortValue;
 use mizer_processing::{DebugUiDrawHandle, Injector};
 use mizer_protocol_laser::LaserFrame;
 use mizer_util::{HashMapExtension, StructuredData};
+use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodeMetadata, NodePreviewState, PipelineContext};
@@ -145,7 +146,7 @@ impl PipelineWorker {
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
                     PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
                     PortType::Clock => receivers.register::<u64>(port_id, metadata),
-                    PortType::Gstreamer => {}
+                    PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
                     port_type => log::debug!("TODO: implement port type {:?}", port_type),
                 }
             }
@@ -225,7 +226,9 @@ impl PipelineWorker {
             PortType::Data => {
                 self.connect_memory_ports::<StructuredData>(link, source_meta, target_meta)
             }
-            PortType::Gstreamer => self.connect_gst_ports(link)?,
+            PortType::Texture => {
+                self.connect_memory_ports::<TextureHandle>(link, source_meta, target_meta)
+            }
             _ => todo!(),
         }
         Ok(())
@@ -245,7 +248,7 @@ impl PipelineWorker {
             PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
             PortType::Data => self.disconnect_memory_ports::<StructuredData>(link),
-            PortType::Gstreamer => self.disconnect_gst_ports(link),
+            PortType::Texture => self.disconnect_memory_ports::<TextureHandle>(link),
             _ => unimplemented!(),
         }
     }
@@ -293,49 +296,6 @@ impl PipelineWorker {
                 &link.target_port,
                 (link.source.clone(), link.source_port.clone()),
             );
-        }
-    }
-
-    fn connect_gst_ports(&self, link: NodeLink) -> anyhow::Result<()> {
-        let source = self.states.get(&link.source).expect("invalid source path");
-        let target = self.states.get(&link.target).expect("invalid target path");
-
-        let gst_source = self.get_gst_node(source);
-        let gst_target = self.get_gst_node(target);
-
-        gst_source.link_to(gst_target)?;
-
-        Ok(())
-    }
-
-    fn disconnect_gst_ports(&mut self, link: &NodeLink) {
-        let source = self.states.get(&link.source).expect("invalid source path");
-        let target = self.states.get(&link.target).expect("invalid target path");
-
-        let gst_source = self.get_gst_node(source);
-        let gst_target = self.get_gst_node(target);
-
-        gst_source.unlink_from(gst_target);
-    }
-
-    fn get_gst_node<'a>(
-        &self,
-        node_state: &'a Box<dyn Any>,
-    ) -> &'a dyn mizer_video_nodes::GstreamerNode {
-        use mizer_video_nodes::*;
-
-        if let Some(node_state) = node_state.downcast_ref::<VideoColorBalanceState>() {
-            node_state as &dyn GstreamerNode
-        } else if let Some(node_state) = node_state.downcast_ref::<VideoOutputState>() {
-            node_state as &dyn GstreamerNode
-        } else if let Some(node_state) = node_state.downcast_ref::<VideoEffectState>() {
-            node_state as &dyn GstreamerNode
-        } else if let Some(node_state) = node_state.downcast_ref::<VideoTransformState>() {
-            node_state as &dyn GstreamerNode
-        } else if let Some(node_state) = node_state.downcast_ref::<VideoFileState>() {
-            node_state as &dyn GstreamerNode
-        } else {
-            unreachable!()
         }
     }
 

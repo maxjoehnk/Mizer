@@ -26,7 +26,7 @@ pub struct AttachedDocument {
 impl From<&MediaDocument> for AttachedMediaDocument {
     fn from(doc: &MediaDocument) -> Self {
         let document = AttachedDocument {
-            id: doc.id,
+            id: doc.id.0,
             name: doc.name.clone(),
         };
         match doc.content_type.as_str() {

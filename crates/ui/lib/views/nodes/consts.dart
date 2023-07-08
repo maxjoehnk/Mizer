@@ -29,7 +29,6 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
       return Colors.amber;
     case ChannelProtocol.MULTI:
       return Colors.green;
-    case ChannelProtocol.GST:
     case ChannelProtocol.TEXTURE:
     case ChannelProtocol.COLOR:
       return Colors.red;

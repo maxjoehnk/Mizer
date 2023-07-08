@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
-import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import 'groups/node_group.dart';

@@ -46,7 +46,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _nodes =
         NodesChannel::new(handlers.nodes, handlers.timecode.clone()).channel(context.weak());
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.weak());
-    let _media = MediaChannel::new(handlers.media).channel(context.weak());
+    let _media = MediaChannel::new(handlers.media, async_runtime.clone()).channel(context.weak());
     let _transport = TransportChannel::new(handlers.transport.clone()).channel(context.weak());
     let _transport_events =
         TransportEventChannel::new(handlers.transport, async_runtime.clone(), context.weak())

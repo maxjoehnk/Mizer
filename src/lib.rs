@@ -11,7 +11,7 @@ use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
-use mizer_media::{MediaDiscovery, MediaServer};
+use mizer_media::{MediaDiscovery, MediaModule, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
@@ -25,6 +25,7 @@ use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_timecode::{TimecodeManager, TimecodeModule};
+use mizer_wgpu::{window::WindowModule, WgpuModule};
 
 pub use crate::api::*;
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -60,6 +61,9 @@ pub fn build_runtime(
     register_osc_module(&mut runtime).context("failed to register osc module")?;
     register_midi_module(&mut runtime, &settings.read().settings)
         .context("Failed to register midi module")?;
+    if let Err(err) = handle.block_on(register_wgpu_module(&mut runtime)) {
+        log::warn!("Failed to register gpu module, video nodes unavailable.\n{err:?}");
+    }
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
             .context("Failed to register fixtures module")?;
@@ -68,7 +72,7 @@ pub fn build_runtime(
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
-    let media_server = MediaServer::new()?;
+    let media_server = register_media_module(&mut runtime)?;
 
     let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings);
 
@@ -308,6 +312,13 @@ fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Seq
     Ok(sequencer)
 }
 
+fn register_media_module(runtime: &mut DefaultRuntime) -> anyhow::Result<MediaServer> {
+    let (media_module, media_server) = MediaModule::new()?;
+    media_module.register(runtime)?;
+
+    Ok(media_server)
+}
+
 fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<EffectEngine> {
     let (module, engine) = EffectsModule::new();
     module.register(runtime)?;
@@ -373,6 +384,14 @@ fn register_fixtures_module(
     fixture_module.register(runtime)?;
 
     Ok((fixture_manager, fixture_library))
+}
+
+async fn register_wgpu_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+    let module = WgpuModule::new().await?;
+    module.register(runtime)?;
+    WindowModule.register(runtime)?;
+
+    Ok(())
 }
 
 // TODO: handle transparently by MediaServer

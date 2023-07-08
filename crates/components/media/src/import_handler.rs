@@ -3,7 +3,6 @@ use std::path::Path;
 use anyhow::Context;
 use tokio::fs;
 use tokio::io::AsyncReadExt;
-use uuid::Uuid;
 
 use crate::data_access::DataAccess;
 use crate::documents::*;
@@ -51,7 +50,7 @@ impl ImportFileHandler {
                 return Ok(None);
             }
         }
-        let id = Uuid::new_v4();
+        let id = MediaId::new();
         let mut file = fs::File::open(file_path).await?;
         let file_size = file.metadata().await?.len();
         let mut buffer = [0u8; 256];

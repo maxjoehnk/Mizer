@@ -10,6 +10,7 @@ pub struct NodeSetting {
     pub description: String,
     pub disabled: bool,
     pub value: NodeSettingValue,
+    pub optional: bool,
 }
 
 impl NodeSetting {
@@ -29,6 +30,12 @@ impl NodeSetting {
         if let NodeSettingValue::Text { multiline, .. } = &mut self.value {
             *multiline = true;
         }
+
+        self
+    }
+
+    pub fn optional(mut self) -> Self {
+        self.optional = true;
 
         self
     }
@@ -137,6 +144,18 @@ pub enum NodeSettingValue {
         variants: Vec<IdVariant>,
     },
     Spline(Spline),
+    Media {
+        value: String,
+        content_types: Vec<MediaContentType>,
+    },
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+pub enum MediaContentType {
+    Image,
+    Audio,
+    Video,
+    Vector,
 }
 
 #[allow(clippy::derive_hash_xor_eq)]
@@ -183,6 +202,10 @@ impl Hash for NodeSettingValue {
                 value.hash(state);
             }
             Self::Spline(spline) => spline.hash(state),
+            Self::Media { value, .. } => {
+                state.write_u8(7);
+                value.hash(state);
+            }
         }
     }
 }
@@ -197,7 +220,7 @@ impl NodeSettingValue {
 
     pub fn select(value: String, values: Vec<SelectVariant>) -> Self {
         Self::Select {
-            value,
+            value: value.into(),
             variants: values,
         }
     }
@@ -206,6 +229,13 @@ impl NodeSettingValue {
         Self::Id {
             value: value.into(),
             variants: values,
+        }
+    }
+
+    pub fn media(value: String, content_types: Vec<MediaContentType>) -> Self {
+        Self::Media {
+            value,
+            content_types,
         }
     }
 }

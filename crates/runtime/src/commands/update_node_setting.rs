@@ -93,6 +93,12 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
             NodeSettingValue::Spline(_) => {
                 format!("Update Node '{}' setting {}", self.path, self.setting.label)
             }
+            NodeSettingValue::Media { value, .. } => {
+                format!(
+                    "Update Node '{}' setting {} to {}",
+                    self.path, self.setting.label, value
+                )
+            }
         }
     }
 

@@ -21,9 +21,36 @@ class MediaPluginApi implements MediaApi {
 
   @override
   Future<GroupedMediaFiles> getTagsWithMedia() async {
-    var response = await  channel.invokeMethod("getTagsWithMedia");
+    var response = await channel.invokeMethod("getTagsWithMedia");
 
     return GroupedMediaFiles.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<void> importMedia(List<String> files) async {
+    await channel.invokeMethod("importMedia", files);
+  }
+
+  @override
+  Future<void> removeMedia(String mediaId) async {
+    await channel.invokeMethod("removeMedia", mediaId);
+  }
+
+  @override
+  Future<List<String>> getMediaFolders() async {
+    var folders = await channel.invokeListMethod<String>("getFolders");
+
+    return folders ?? [];
+  }
+
+  @override
+  Future<void> addMediaFolder(String folder) async {
+    await channel.invokeMethod("addFolder", folder);
+  }
+
+  @override
+  Future<void> removeMediaFolder(String folder) async {
+    await channel.invokeMethod("removeFolder", folder);
   }
 
   static List<int> _convertBuffer(List<Object> response) {

@@ -1,63 +1,571 @@
+---
+version: 4
 nodes:
-  - type: programmer
-    path: /programmer
-    config: {}
+  - path: /preset-11
+    type: preset
+    config:
+      id:
+        Intensity: 5
     designer:
       position:
-        x: -5
-        y: 0
-      scale: 1
-  - type: video-file
-    path: /video-file-0
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-transform-3
+    type: video-transform
     config:
-      file: examples/media/video/file_example_MP4_1920_18MG.mp4
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.5
+      translation_y: -0.5
+      translation_z: 0.0
+      scale_x: 0.5
+      scale_y: 0.5
     designer:
+      position:
+        x: 15.557567946328867
+        y: 8.660534139057226
+      scale: 1.0
+      hidden: false
+  - path: /preset-9
+    type: preset
+    config:
+      id:
+        Intensity: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-8
+    type: preset
+    config:
+      id:
+        Intensity: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /constant-number-0
+    type: constant-number
+    config:
+      value: 1.0
+    designer:
+      position:
+        x: -3.507647238749017
+        y: 20.2648557496644
+      scale: 1.0
+      hidden: false
+  - path: /preset-7
+    type: preset
+    config:
+      id:
+        Intensity: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-transform-2
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: -0.5
+      translation_y: -0.5
+      translation_z: 0.0
+      scale_x: 0.5
+      scale_y: 0.5
+    designer:
+      position:
+        x: 15.536441353249623
+        y: 4.794711592388003
+      scale: 1.0
+      hidden: false
+  - path: /preset-5
+    type: preset
+    config:
+      id:
+        Color: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-6
+    type: preset
+    config:
+      id:
+        Color: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-3
+    type: preset
+    config:
+      id:
+        Color: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-output-0
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: RGB split
+    designer:
+      position:
+        x: 36.75176685106913
+        y: 3.5097660761763603
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-0
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
+    designer:
+      position:
+        x: 7.607224286445823
+        y: 16.09676588660259
+      scale: 1.0
+      hidden: false
+  - path: /video-mixer-0
+    type: video-mixer
+    config:
+      mode: Add
+    designer:
+      position:
+        x: 29.337627928738268
+        y: 3.788999490326559
+      scale: 1.0
+      hidden: false
+  - path: /video-mixer-1
+    type: video-mixer
+    config:
+      mode: Add
+    designer:
+      position:
+        x: 12.736374187176192
+        y: 17.507302345076358
+      scale: 1.0
+      hidden: false
+  - path: /video-output-1
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: Crossfade
+    designer:
+      position:
+        x: 18.866787939073596
+        y: 17.141450595153398
+      scale: 1.0
+      hidden: false
+  - path: /video-transform-0
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: -0.5
+      translation_y: 0.4
+      translation_z: 0.0
+      scale_x: 0.5
+      scale_y: 0.5
+    designer:
+      position:
+        x: 15.958033924894323
+        y: -2.924601085101872
+      scale: 1.0
+      hidden: false
+  - path: /preset-0
+    type: preset
+    config:
+      id:
+        Color: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-10
+    type: preset
+    config:
+      id:
+        Intensity: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-transform-1
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.5
+      translation_y: 0.5
+      translation_z: 0.0
+      scale_x: 0.5
+      scale_y: 0.5
+    designer:
+      position:
+        x: 15.776912224289742
+        y: 0.9880691815174578
+      scale: 1.0
+      hidden: false
+  - path: /math-0
+    type: math
+    config:
+      mode: Subtraction
+    designer:
+      position:
+        x: 2.1014199310658537
+        y: 18.870739364877398
+      scale: 1.0
+      hidden: false
+  - path: /preset-1
+    type: preset
+    config:
+      id:
+        Color: 6
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-file-1
+    type: video-file
+    config:
+      file: ef6a77f9-fccb-46a4-b187-6add26783275
+    designer:
+      position:
+        x: -1.950816847563592
+        y: 11.036573827391981
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-split-0
+    type: video-rgb-split
+    config: ~
+    designer:
+      position:
+        x: 8.354381884767005
+        y: 5.243899390410543
+      scale: 1.0
+      hidden: false
+  - path: /fader-0
+    type: fader
+    config: ~
+    designer:
+      position:
+        x: -3.7220865227231554
+        y: 15.512736353580072
+      scale: 0.0
+      hidden: false
+  - path: /preset-2
+    type: preset
+    config:
+      id:
+        Color: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-4
+    type: preset
+    config:
+      id:
+        Color: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /video-file-0
+    type: video-file
+    config:
+      file: 7c7cd691-2e61-47d4-9d51-0bd069a3b175
+    designer:
+      position:
+        x: -0.5307788683184739
+        y: 2.2425632579589165
+      scale: 1.0
+      hidden: false
+  - path: /video-rgb-1
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
+    designer:
+      position:
+        x: 7.647224286445823
+        y: 18.576765886602587
+      scale: 1.0
+      hidden: false
+channels:
+  - Output@/video-file-0 -> Input@/video-rgb-split-0
+  - Output@/video-file-0 -> Input@/video-transform-0
+  - Red@/video-rgb-split-0 -> Input@/video-transform-1
+  - Green@/video-rgb-split-0 -> Input@/video-transform-2
+  - Blue@/video-rgb-split-0 -> Input@/video-transform-3
+  - Output@/video-transform-0 -> Inputs@/video-mixer-0
+  - Output@/video-transform-1 -> Inputs@/video-mixer-0
+  - Output@/video-transform-2 -> Inputs@/video-mixer-0
+  - Output@/video-transform-3 -> Inputs@/video-mixer-0
+  - Output@/video-mixer-0 -> Input@/video-output-0
+  - Output@/fader-0 -> Red@/video-rgb-0
+  - Output@/fader-0 -> Green@/video-rgb-0
+  - Output@/fader-0 -> Blue@/video-rgb-0
+  - Output@/video-rgb-0 -> Inputs@/video-mixer-1
+  - Output@/video-rgb-1 -> Inputs@/video-mixer-1
+  - Output@/video-mixer-1 -> Input@/video-output-1
+  - Output@/video-file-0 -> Input@/video-rgb-0
+  - Output@/video-file-1 -> Input@/video-rgb-1
+  - Output@/fader-0 -> RHS@/math-0
+  - Value@/constant-number-0 -> LHS@/math-0
+  - Value@/math-0 -> Red@/video-rgb-1
+  - Value@/math-0 -> Green@/video-rgb-1
+  - Value@/math-0 -> Blue@/video-rgb-1
+media:
+  import_paths: []
+  files:
+    - id: ef6a77f9-fccb-46a4-b187-6add26783275
+      filename: file_example_JPG_2500kB.jpg
+      name: file_example_JPG_2500kB.jpg
+      tags: []
+      content_type: image/jpeg
+      media_type: Image
+      file_path: ".storage/media/file_example_JPG_2500kB.jpg"
+      source_path: ~
+      file_size: 2504642
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_JPG_2500kB.png"
+        dimensions:
+          - 5760
+          - 3840
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 7c7cd691-2e61-47d4-9d51-0bd069a3b175
+      filename: file_example_MOV_1920_2_2MB.mov
+      name: file_example_MOV_1920_2_2MB.mov
+      tags: []
+      content_type: video/quicktime
+      media_type: Video
+      file_path: ".storage/media/file_example_MOV_1920_2_2MB.mov"
+      source_path: ~
+      file_size: 2247200
+      metadata:
+        thumbnail_path: ".storage/thumbnails/file_example_MOV_1920_2_2MB.png"
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+  tags: []
+layouts:
+  Default:
+    - id: f8156f6f-1798-45d8-ba33-f76ac47f1687
+      label: Crossfade
+      path: /fader-0
       position:
         x: 0
         y: 0
-      scale: 1
-  - type: video-effect
-    path: /video-effect-0
-    config:
-      type: twirl
-    designer:
-      position:
-        x: 5
-        y: 0
-      scale: 1
-  - type: video-transform
-    path: /video-transform-0
-    config: {}
-    designer:
-      position:
-        x: 10
-        y: 2.5
-      scale: 1
-  - type: video-output
-    path: /video-output-0
-    config: {}
-    designer:
-      position:
-        x: 15
-        y: 2.5
-      scale: 1
-  - type: oscillator
-    path: /oscillator-0
-    config:
-      type: sine
-      ratio: 4
-      max: 90
-      min: -90
-    designer:
-      position:
-        x: 5
-        y: 5
-      scale: 1
-channels:
-  - output@/video-file-0 -> input@/video-effect-0
-  - output@/video-effect-0 -> input@/video-transform-0
-  - output@/video-transform-0 -> input@/video-output-0
-  - value@/oscillator-0 -> rotate-x@/video-transform-0
-  - value@/oscillator-0 -> rotate-y@/video-transform-0
-media:
-  - examples/media
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures: []
+groups: []
+presets:
+  intensity:
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 5
+      label: 100%
+      value: 1.0
+  shutter: []
+  color:
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+  position: []
+sequences: []
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans: []
+timecodes:
+  timecodes: []
+  controls: []

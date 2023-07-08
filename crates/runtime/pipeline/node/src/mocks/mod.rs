@@ -5,6 +5,7 @@ use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
 use mizer_clock::ClockState;
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
+use mizer_wgpu::TextureView;
 use std::cell::RefCell;
 
 mod clock;
@@ -79,6 +80,14 @@ impl NodeContext for NodeContextMock {
     }
 
     fn inject<T: 'static>(&self) -> Option<&T> {
+        todo!()
+    }
+
+    fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
+        todo!()
+    }
+
+    fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
         todo!()
     }
 }

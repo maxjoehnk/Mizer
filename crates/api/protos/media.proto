@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.media;
 
 service MediaApi {
   rpc CreateTag (CreateMediaTag) returns (MediaTag);
@@ -29,6 +29,7 @@ message MediaTag {
 
 message MediaFiles {
   repeated MediaFile files = 1;
+  MediaFolders folders = 2;
 }
 
 message MediaFile {
@@ -69,4 +70,12 @@ message GroupedMediaFiles {
 message MediaTagWithFiles {
   MediaTag tag = 1;
   repeated MediaFile files = 2;
+}
+
+message MediaFolders {
+  repeated string paths = 1;
+}
+
+message ImportMediaRequest {
+  repeated string files = 1;
 }

@@ -26,10 +26,10 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.GetMediaTags)
+// @@protoc_insertion_point(message:mizer.media.GetMediaTags)
 pub struct GetMediaTags {
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.GetMediaTags.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.GetMediaTags.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -129,10 +129,10 @@ impl ::protobuf::reflect::ProtobufValue for GetMediaTags {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.GetMediaRequest)
+// @@protoc_insertion_point(message:mizer.media.GetMediaRequest)
 pub struct GetMediaRequest {
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.GetMediaRequest.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.GetMediaRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -232,13 +232,13 @@ impl ::protobuf::reflect::ProtobufValue for GetMediaRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.CreateMediaTag)
+// @@protoc_insertion_point(message:mizer.media.CreateMediaTag)
 pub struct CreateMediaTag {
     // message fields
-    // @@protoc_insertion_point(field:mizer.CreateMediaTag.name)
+    // @@protoc_insertion_point(field:mizer.media.CreateMediaTag.name)
     pub name: ::std::string::String,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.CreateMediaTag.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.CreateMediaTag.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -354,13 +354,13 @@ impl ::protobuf::reflect::ProtobufValue for CreateMediaTag {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaTags)
+// @@protoc_insertion_point(message:mizer.media.MediaTags)
 pub struct MediaTags {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaTags.tags)
+    // @@protoc_insertion_point(field:mizer.media.MediaTags.tags)
     pub tags: ::std::vec::Vec<MediaTag>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaTags.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaTags.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -477,15 +477,15 @@ impl ::protobuf::reflect::ProtobufValue for MediaTags {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaTag)
+// @@protoc_insertion_point(message:mizer.media.MediaTag)
 pub struct MediaTag {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaTag.id)
+    // @@protoc_insertion_point(field:mizer.media.MediaTag.id)
     pub id: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.MediaTag.name)
+    // @@protoc_insertion_point(field:mizer.media.MediaTag.name)
     pub name: ::std::string::String,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaTag.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaTag.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -617,13 +617,15 @@ impl ::protobuf::reflect::ProtobufValue for MediaTag {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaFiles)
+// @@protoc_insertion_point(message:mizer.media.MediaFiles)
 pub struct MediaFiles {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaFiles.files)
+    // @@protoc_insertion_point(field:mizer.media.MediaFiles.files)
     pub files: ::std::vec::Vec<MediaFile>,
+    // @@protoc_insertion_point(field:mizer.media.MediaFiles.folders)
+    pub folders: ::protobuf::MessageField<MediaFolders>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaFiles.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaFiles.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -639,12 +641,17 @@ impl MediaFiles {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut fields = ::std::vec::Vec::with_capacity(2);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "files",
             |m: &MediaFiles| { &m.files },
             |m: &mut MediaFiles| { &mut m.files },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, MediaFolders>(
+            "folders",
+            |m: &MediaFiles| { &m.folders },
+            |m: &mut MediaFiles| { &mut m.folders },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MediaFiles>(
             "MediaFiles",
@@ -667,6 +674,9 @@ impl ::protobuf::Message for MediaFiles {
                 10 => {
                     self.files.push(is.read_message()?);
                 },
+                18 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.folders)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -683,6 +693,10 @@ impl ::protobuf::Message for MediaFiles {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         };
+        if let Some(v) = self.folders.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -692,6 +706,9 @@ impl ::protobuf::Message for MediaFiles {
         for v in &self.files {
             ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
         };
+        if let Some(v) = self.folders.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -710,12 +727,14 @@ impl ::protobuf::Message for MediaFiles {
 
     fn clear(&mut self) {
         self.files.clear();
+        self.folders.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static MediaFiles {
         static instance: MediaFiles = MediaFiles {
             files: ::std::vec::Vec::new(),
+            folders: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -740,21 +759,21 @@ impl ::protobuf::reflect::ProtobufValue for MediaFiles {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaFile)
+// @@protoc_insertion_point(message:mizer.media.MediaFile)
 pub struct MediaFile {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaFile.id)
+    // @@protoc_insertion_point(field:mizer.media.MediaFile.id)
     pub id: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.MediaFile.name)
+    // @@protoc_insertion_point(field:mizer.media.MediaFile.name)
     pub name: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.MediaFile.type)
+    // @@protoc_insertion_point(field:mizer.media.MediaFile.type)
     pub type_: ::protobuf::EnumOrUnknown<MediaType>,
-    // @@protoc_insertion_point(field:mizer.MediaFile.metadata)
+    // @@protoc_insertion_point(field:mizer.media.MediaFile.metadata)
     pub metadata: ::protobuf::MessageField<MediaMetadata>,
-    // @@protoc_insertion_point(field:mizer.MediaFile.thumbnail_path)
+    // @@protoc_insertion_point(field:mizer.media.MediaFile.thumbnail_path)
     pub thumbnail_path: ::std::option::Option<::std::string::String>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaFile.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaFile.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -935,27 +954,27 @@ impl ::protobuf::reflect::ProtobufValue for MediaFile {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaMetadata)
+// @@protoc_insertion_point(message:mizer.media.MediaMetadata)
 pub struct MediaMetadata {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.source_path)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.source_path)
     pub source_path: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.file_size)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.file_size)
     pub file_size: u64,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.tags)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.tags)
     pub tags: ::std::vec::Vec<MediaTag>,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.dimensions)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.dimensions)
     pub dimensions: ::protobuf::MessageField<media_metadata::Dimensions>,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.duration)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.duration)
     pub duration: ::std::option::Option<u64>,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.framerate)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.framerate)
     pub framerate: ::std::option::Option<f64>,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.album)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.album)
     pub album: ::std::option::Option<::std::string::String>,
-    // @@protoc_insertion_point(field:mizer.MediaMetadata.artist)
+    // @@protoc_insertion_point(field:mizer.media.MediaMetadata.artist)
     pub artist: ::std::option::Option<::std::string::String>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaMetadata.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaMetadata.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -1187,15 +1206,15 @@ impl ::protobuf::reflect::ProtobufValue for MediaMetadata {
 /// Nested message and enums of message `MediaMetadata`
 pub mod media_metadata {
     #[derive(PartialEq,Clone,Default,Debug)]
-    // @@protoc_insertion_point(message:mizer.MediaMetadata.Dimensions)
+    // @@protoc_insertion_point(message:mizer.media.MediaMetadata.Dimensions)
     pub struct Dimensions {
         // message fields
-        // @@protoc_insertion_point(field:mizer.MediaMetadata.Dimensions.width)
+        // @@protoc_insertion_point(field:mizer.media.MediaMetadata.Dimensions.width)
         pub width: u64,
-        // @@protoc_insertion_point(field:mizer.MediaMetadata.Dimensions.height)
+        // @@protoc_insertion_point(field:mizer.media.MediaMetadata.Dimensions.height)
         pub height: u64,
         // special fields
-        // @@protoc_insertion_point(special_field:mizer.MediaMetadata.Dimensions.special_fields)
+        // @@protoc_insertion_point(special_field:mizer.media.MediaMetadata.Dimensions.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
     }
 
@@ -1328,13 +1347,13 @@ pub mod media_metadata {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.GroupedMediaFiles)
+// @@protoc_insertion_point(message:mizer.media.GroupedMediaFiles)
 pub struct GroupedMediaFiles {
     // message fields
-    // @@protoc_insertion_point(field:mizer.GroupedMediaFiles.tags)
+    // @@protoc_insertion_point(field:mizer.media.GroupedMediaFiles.tags)
     pub tags: ::std::vec::Vec<MediaTagWithFiles>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.GroupedMediaFiles.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.GroupedMediaFiles.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -1451,15 +1470,15 @@ impl ::protobuf::reflect::ProtobufValue for GroupedMediaFiles {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.MediaTagWithFiles)
+// @@protoc_insertion_point(message:mizer.media.MediaTagWithFiles)
 pub struct MediaTagWithFiles {
     // message fields
-    // @@protoc_insertion_point(field:mizer.MediaTagWithFiles.tag)
+    // @@protoc_insertion_point(field:mizer.media.MediaTagWithFiles.tag)
     pub tag: ::protobuf::MessageField<MediaTag>,
-    // @@protoc_insertion_point(field:mizer.MediaTagWithFiles.files)
+    // @@protoc_insertion_point(field:mizer.media.MediaTagWithFiles.files)
     pub files: ::std::vec::Vec<MediaFile>,
     // special fields
-    // @@protoc_insertion_point(special_field:mizer.MediaTagWithFiles.special_fields)
+    // @@protoc_insertion_point(special_field:mizer.media.MediaTagWithFiles.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
 }
 
@@ -1592,16 +1611,260 @@ impl ::protobuf::reflect::ProtobufValue for MediaTagWithFiles {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.media.MediaFolders)
+pub struct MediaFolders {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.media.MediaFolders.paths)
+    pub paths: ::std::vec::Vec<::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.media.MediaFolders.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a MediaFolders {
+    fn default() -> &'a MediaFolders {
+        <MediaFolders as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MediaFolders {
+    pub fn new() -> MediaFolders {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "paths",
+            |m: &MediaFolders| { &m.paths },
+            |m: &mut MediaFolders| { &mut m.paths },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MediaFolders>(
+            "MediaFolders",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for MediaFolders {
+    const NAME: &'static str = "MediaFolders";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.paths.push(is.read_string()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.paths {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.paths {
+            os.write_string(1, &v)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> MediaFolders {
+        MediaFolders::new()
+    }
+
+    fn clear(&mut self) {
+        self.paths.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static MediaFolders {
+        static instance: MediaFolders = MediaFolders {
+            paths: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for MediaFolders {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("MediaFolders").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for MediaFolders {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MediaFolders {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.media.ImportMediaRequest)
+pub struct ImportMediaRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.media.ImportMediaRequest.files)
+    pub files: ::std::vec::Vec<::std::string::String>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.media.ImportMediaRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a ImportMediaRequest {
+    fn default() -> &'a ImportMediaRequest {
+        <ImportMediaRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ImportMediaRequest {
+    pub fn new() -> ImportMediaRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "files",
+            |m: &ImportMediaRequest| { &m.files },
+            |m: &mut ImportMediaRequest| { &mut m.files },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ImportMediaRequest>(
+            "ImportMediaRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for ImportMediaRequest {
+    const NAME: &'static str = "ImportMediaRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.files.push(is.read_string()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        for value in &self.files {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        for v in &self.files {
+            os.write_string(1, &v)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> ImportMediaRequest {
+        ImportMediaRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.files.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static ImportMediaRequest {
+        static instance: ImportMediaRequest = ImportMediaRequest {
+            files: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for ImportMediaRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("ImportMediaRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for ImportMediaRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ImportMediaRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
-// @@protoc_insertion_point(enum:mizer.MediaType)
+// @@protoc_insertion_point(enum:mizer.media.MediaType)
 pub enum MediaType {
-    // @@protoc_insertion_point(enum_value:mizer.MediaType.IMAGE)
+    // @@protoc_insertion_point(enum_value:mizer.media.MediaType.IMAGE)
     IMAGE = 0,
-    // @@protoc_insertion_point(enum_value:mizer.MediaType.AUDIO)
+    // @@protoc_insertion_point(enum_value:mizer.media.MediaType.AUDIO)
     AUDIO = 1,
-    // @@protoc_insertion_point(enum_value:mizer.MediaType.VIDEO)
+    // @@protoc_insertion_point(enum_value:mizer.media.MediaType.VIDEO)
     VIDEO = 2,
-    // @@protoc_insertion_point(enum_value:mizer.MediaType.VECTOR)
+    // @@protoc_insertion_point(enum_value:mizer.media.MediaType.VECTOR)
     VECTOR = 3,
 }
 
@@ -1655,37 +1918,42 @@ impl MediaType {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bmedia.proto\x12\x05mizer\"\x0e\n\x0cGetMediaTags\"\x11\n\x0fGetMed\
-    iaRequest\"$\n\x0eCreateMediaTag\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\"0\n\tMediaTags\x12#\n\x04tags\x18\x01\x20\x03(\x0b2\x0f.mizer.\
-    MediaTagR\x04tags\".\n\x08MediaTag\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"4\n\nMediaFiles\
-    \x12&\n\x05files\x18\x01\x20\x03(\x0b2\x10.mizer.MediaFileR\x05files\"\
-    \xc6\x01\n\tMediaFile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
-    \n\x04name\x18\x02\x20\x01(\tR\x04name\x12$\n\x04type\x18\x03\x20\x01(\
-    \x0e2\x10.mizer.MediaTypeR\x04type\x120\n\x08metadata\x18\x04\x20\x01(\
-    \x0b2\x14.mizer.MediaMetadataR\x08metadata\x12*\n\x0ethumbnail_path\x18\
-    \x05\x20\x01(\tH\0R\rthumbnailPath\x88\x01\x01B\x11\n\x0f_thumbnail_path\
-    \"\xaf\x03\n\rMediaMetadata\x12\x1f\n\x0bsource_path\x18\x01\x20\x01(\tR\
-    \nsourcePath\x12\x1b\n\tfile_size\x18\x02\x20\x01(\x04R\x08fileSize\x12#\
-    \n\x04tags\x18\x03\x20\x03(\x0b2\x0f.mizer.MediaTagR\x04tags\x12D\n\ndim\
-    ensions\x18\x04\x20\x01(\x0b2\x1f.mizer.MediaMetadata.DimensionsH\0R\ndi\
-    mensions\x88\x01\x01\x12\x1f\n\x08duration\x18\x05\x20\x01(\x04H\x01R\
-    \x08duration\x88\x01\x01\x12!\n\tframerate\x18\x06\x20\x01(\x01H\x02R\tf\
-    ramerate\x88\x01\x01\x12\x19\n\x05album\x18\x07\x20\x01(\tH\x03R\x05albu\
-    m\x88\x01\x01\x12\x1b\n\x06artist\x18\x08\x20\x01(\tH\x04R\x06artist\x88\
-    \x01\x01\x1a:\n\nDimensions\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05\
-    width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06heightB\r\n\x0b_dimen\
-    sionsB\x0b\n\t_durationB\x0c\n\n_framerateB\x08\n\x06_albumB\t\n\x07_art\
-    ist\"A\n\x11GroupedMediaFiles\x12,\n\x04tags\x18\x01\x20\x03(\x0b2\x18.m\
-    izer.MediaTagWithFilesR\x04tags\"^\n\x11MediaTagWithFiles\x12!\n\x03tag\
-    \x18\x01\x20\x01(\x0b2\x0f.mizer.MediaTagR\x03tag\x12&\n\x05files\x18\
-    \x02\x20\x03(\x0b2\x10.mizer.MediaFileR\x05files*8\n\tMediaType\x12\t\n\
-    \x05IMAGE\x10\0\x12\t\n\x05AUDIO\x10\x01\x12\t\n\x05VIDEO\x10\x02\x12\n\
-    \n\x06VECTOR\x10\x032\xb9\x01\n\x08MediaApi\x123\n\tCreateTag\x12\x15.mi\
-    zer.CreateMediaTag\x1a\x0f.mizer.MediaTag\x12A\n\x10GetTagsWithMedia\x12\
-    \x13.mizer.GetMediaTags\x1a\x18.mizer.GroupedMediaFiles\x125\n\x08GetMed\
-    ia\x12\x16.mizer.GetMediaRequest\x1a\x11.mizer.MediaFilesb\x06proto3\
+    \n\x0bmedia.proto\x12\x0bmizer.media\"\x0e\n\x0cGetMediaTags\"\x11\n\x0f\
+    GetMediaRequest\"$\n\x0eCreateMediaTag\x12\x12\n\x04name\x18\x01\x20\x01\
+    (\tR\x04name\"6\n\tMediaTags\x12)\n\x04tags\x18\x01\x20\x03(\x0b2\x15.mi\
+    zer.media.MediaTagR\x04tags\".\n\x08MediaTag\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"o\n\nMedia\
+    Files\x12,\n\x05files\x18\x01\x20\x03(\x0b2\x16.mizer.media.MediaFileR\
+    \x05files\x123\n\x07folders\x18\x02\x20\x01(\x0b2\x19.mizer.media.MediaF\
+    oldersR\x07folders\"\xd2\x01\n\tMediaFile\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12*\n\x04t\
+    ype\x18\x03\x20\x01(\x0e2\x16.mizer.media.MediaTypeR\x04type\x126\n\x08m\
+    etadata\x18\x04\x20\x01(\x0b2\x1a.mizer.media.MediaMetadataR\x08metadata\
+    \x12*\n\x0ethumbnail_path\x18\x05\x20\x01(\tH\0R\rthumbnailPath\x88\x01\
+    \x01B\x11\n\x0f_thumbnail_path\"\xbb\x03\n\rMediaMetadata\x12\x1f\n\x0bs\
+    ource_path\x18\x01\x20\x01(\tR\nsourcePath\x12\x1b\n\tfile_size\x18\x02\
+    \x20\x01(\x04R\x08fileSize\x12)\n\x04tags\x18\x03\x20\x03(\x0b2\x15.mize\
+    r.media.MediaTagR\x04tags\x12J\n\ndimensions\x18\x04\x20\x01(\x0b2%.mize\
+    r.media.MediaMetadata.DimensionsH\0R\ndimensions\x88\x01\x01\x12\x1f\n\
+    \x08duration\x18\x05\x20\x01(\x04H\x01R\x08duration\x88\x01\x01\x12!\n\t\
+    framerate\x18\x06\x20\x01(\x01H\x02R\tframerate\x88\x01\x01\x12\x19\n\
+    \x05album\x18\x07\x20\x01(\tH\x03R\x05album\x88\x01\x01\x12\x1b\n\x06art\
+    ist\x18\x08\x20\x01(\tH\x04R\x06artist\x88\x01\x01\x1a:\n\nDimensions\
+    \x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\
+    \x18\x02\x20\x01(\x04R\x06heightB\r\n\x0b_dimensionsB\x0b\n\t_durationB\
+    \x0c\n\n_framerateB\x08\n\x06_albumB\t\n\x07_artist\"G\n\x11GroupedMedia\
+    Files\x122\n\x04tags\x18\x01\x20\x03(\x0b2\x1e.mizer.media.MediaTagWithF\
+    ilesR\x04tags\"j\n\x11MediaTagWithFiles\x12'\n\x03tag\x18\x01\x20\x01(\
+    \x0b2\x15.mizer.media.MediaTagR\x03tag\x12,\n\x05files\x18\x02\x20\x03(\
+    \x0b2\x16.mizer.media.MediaFileR\x05files\"$\n\x0cMediaFolders\x12\x14\n\
+    \x05paths\x18\x01\x20\x03(\tR\x05paths\"*\n\x12ImportMediaRequest\x12\
+    \x14\n\x05files\x18\x01\x20\x03(\tR\x05files*8\n\tMediaType\x12\t\n\x05I\
+    MAGE\x10\0\x12\t\n\x05AUDIO\x10\x01\x12\t\n\x05VIDEO\x10\x02\x12\n\n\x06\
+    VECTOR\x10\x032\xdd\x01\n\x08MediaApi\x12?\n\tCreateTag\x12\x1b.mizer.me\
+    dia.CreateMediaTag\x1a\x15.mizer.media.MediaTag\x12M\n\x10GetTagsWithMed\
+    ia\x12\x19.mizer.media.GetMediaTags\x1a\x1e.mizer.media.GroupedMediaFile\
+    s\x12A\n\x08GetMedia\x12\x1c.mizer.media.GetMediaRequest\x1a\x17.mizer.m\
+    edia.MediaFilesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1703,7 +1971,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(11);
+            let mut messages = ::std::vec::Vec::with_capacity(13);
             messages.push(GetMediaTags::generated_message_descriptor_data());
             messages.push(GetMediaRequest::generated_message_descriptor_data());
             messages.push(CreateMediaTag::generated_message_descriptor_data());
@@ -1714,6 +1982,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(MediaMetadata::generated_message_descriptor_data());
             messages.push(GroupedMediaFiles::generated_message_descriptor_data());
             messages.push(MediaTagWithFiles::generated_message_descriptor_data());
+            messages.push(MediaFolders::generated_message_descriptor_data());
+            messages.push(ImportMediaRequest::generated_message_descriptor_data());
             messages.push(media_metadata::Dimensions::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(1);
             enums.push(MediaType::generated_enum_descriptor_data());

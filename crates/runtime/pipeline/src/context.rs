@@ -6,6 +6,7 @@ use mizer_processing::Injector;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 use mizer_util::StructuredData;
+use mizer_wgpu::{TextureRegistry, TextureView};
 use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
 use std::cell::RefCell;
@@ -190,6 +191,24 @@ impl<'a> NodeContext for PipelineContext<'a> {
 
     fn inject<T: 'static>(&self) -> Option<&T> {
         self.injector.get::<T>()
+    }
+
+    fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
+        profiling::scope!("PipelineContext::read_texture");
+        let handle = self.read_port(port)?;
+        let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
+        texture_registry.get(&handle)
+    }
+
+    fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
+        profiling::scope!("PipelineContext::read_textures");
+        let handles = self.read_ports(port);
+        let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
+
+        handles
+            .into_iter()
+            .filter_map(|handle| handle.and_then(|handle| texture_registry.get(&handle)))
+            .collect()
     }
 }
 

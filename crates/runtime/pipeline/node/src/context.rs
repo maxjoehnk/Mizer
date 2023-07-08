@@ -2,6 +2,7 @@ use crate::{PortMetadata, PreviewContext};
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
 use mizer_ports::{PortId, PortValue};
+use mizer_wgpu::TextureView;
 
 pub trait NodeContext: PreviewContext {
     fn clock(&self) -> ClockFrame;
@@ -27,4 +28,7 @@ pub trait NodeContext: PreviewContext {
     fn input_ports(&self) -> Vec<PortId>;
 
     fn inject<T: 'static>(&self) -> Option<&T>;
+
+    fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView>;
+    fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView>;
 }

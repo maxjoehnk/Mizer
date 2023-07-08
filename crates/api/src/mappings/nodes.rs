@@ -154,9 +154,11 @@ impl From<NodeType> for node::NodeType {
             NodeType::OscOutput => node::NodeType::OSC_OUTPUT,
             NodeType::VideoFile => node::NodeType::VIDEO_FILE,
             NodeType::VideoOutput => node::NodeType::VIDEO_OUTPUT,
-            NodeType::VideoEffect => node::NodeType::VIDEO_EFFECT,
             NodeType::VideoColorBalance => node::NodeType::VIDEO_COLOR_BALANCE,
             NodeType::VideoTransform => node::NodeType::VIDEO_TRANSFORM,
+            NodeType::VideoMixer => node::NodeType::VIDEO_MIXER,
+            NodeType::VideoRgb => node::NodeType::VIDEO_RGB,
+            NodeType::VideoRgbSplit => node::NodeType::VIDEO_RGB_SPLIT,
             NodeType::Scripting => node::NodeType::SCRIPT,
             NodeType::PixelDmx => node::NodeType::PIXEL_TO_DMX,
             NodeType::PixelPattern => node::NodeType::PIXEL_PATTERN,
@@ -225,9 +227,11 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::OSC_OUTPUT => NodeType::OscOutput,
             node::NodeType::VIDEO_FILE => NodeType::VideoFile,
             node::NodeType::VIDEO_OUTPUT => NodeType::VideoOutput,
-            node::NodeType::VIDEO_EFFECT => NodeType::VideoEffect,
             node::NodeType::VIDEO_COLOR_BALANCE => NodeType::VideoColorBalance,
             node::NodeType::VIDEO_TRANSFORM => NodeType::VideoTransform,
+            node::NodeType::VIDEO_MIXER => NodeType::VideoMixer,
+            node::NodeType::VIDEO_RGB => NodeType::VideoRgb,
+            node::NodeType::VIDEO_RGB_SPLIT => NodeType::VideoRgbSplit,
             node::NodeType::SCRIPT => NodeType::Scripting,
             node::NodeType::PIXEL_TO_DMX => NodeType::PixelDmx,
             node::NodeType::PIXEL_PATTERN => NodeType::PixelPattern,
@@ -384,6 +388,7 @@ impl From<NodeSetting> for mizer_node::NodeSetting {
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),
+            optional: false,
         }
     }
 }
@@ -455,6 +460,18 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 ..Default::default()
             }),
             Spline(spline) => Self::Spline(spline.into()),
+            Media {
+                value,
+                content_types,
+            } => Self::Media(node_setting::MediaValue {
+                value,
+                allowed_types: content_types
+                    .into_iter()
+                    .map(crate::models::media::MediaType::from)
+                    .map(EnumOrUnknown::new)
+                    .collect(),
+                ..Default::default()
+            }),
         }
     }
 }
@@ -508,6 +525,15 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .collect(),
             },
             Spline(value) => Self::Spline(value.into()),
+            Media(value) => Self::Media {
+                value: value.value,
+                content_types: value
+                    .allowed_types
+                    .into_iter()
+                    .map(|t| t.unwrap())
+                    .map(mizer_node::MediaContentType::from)
+                    .collect(),
+            },
         }
     }
 }
@@ -596,6 +622,28 @@ impl From<node_setting::SelectVariant> for mizer_node::SelectVariant {
     }
 }
 
+impl From<mizer_node::MediaContentType> for crate::models::media::MediaType {
+    fn from(value: mizer_node::MediaContentType) -> Self {
+        match value {
+            mizer_node::MediaContentType::Audio => Self::AUDIO,
+            mizer_node::MediaContentType::Image => Self::IMAGE,
+            mizer_node::MediaContentType::Video => Self::VIDEO,
+            mizer_node::MediaContentType::Vector => Self::VECTOR,
+        }
+    }
+}
+
+impl From<crate::models::media::MediaType> for mizer_node::MediaContentType {
+    fn from(value: crate::models::media::MediaType) -> Self {
+        match value {
+            crate::models::media::MediaType::AUDIO => Self::Audio,
+            crate::models::media::MediaType::IMAGE => Self::Image,
+            crate::models::media::MediaType::VIDEO => Self::Video,
+            crate::models::media::MediaType::VECTOR => Self::Vector,
+        }
+    }
+}
+
 impl From<mizer_node::NodeDesigner> for NodeDesigner {
     fn from(designer: mizer_node::NodeDesigner) -> Self {
         Self {
@@ -641,7 +689,6 @@ impl From<PortType> for ChannelProtocol {
             PortType::Poly => ChannelProtocol::POLY,
             PortType::Data => ChannelProtocol::DATA,
             PortType::Material => ChannelProtocol::MATERIAL,
-            PortType::Gstreamer => ChannelProtocol::GST,
             PortType::Clock => ChannelProtocol::CLOCK,
         }
     }
@@ -659,7 +706,6 @@ impl From<ChannelProtocol> for PortType {
             ChannelProtocol::POLY => PortType::Poly,
             ChannelProtocol::DATA => PortType::Data,
             ChannelProtocol::MATERIAL => PortType::Material,
-            ChannelProtocol::GST => PortType::Gstreamer,
             ChannelProtocol::CLOCK => PortType::Clock,
         }
     }

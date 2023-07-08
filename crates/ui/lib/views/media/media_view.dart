@@ -18,7 +18,7 @@ class _MediaViewState extends State<MediaView> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<MediaBloc>().add(MediaEvent.Fetch);
+    context.read<MediaBloc>().add(FetchMedia());
     return BlocBuilder<MediaBloc, MediaFiles>(
         builder: (context, data) => MediaLayout(
               list: MediaList(data.files,
@@ -46,12 +46,12 @@ class MediaLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      Expanded(child: list),
-      Expanded(
-        child: Column(
-          children: [Flexible(child: preview, flex: 1), Flexible(child: metadata, flex: 2)],
-        ),
-      )
+      Flexible(child: list, flex: 2),
+      Flexible(
+          child: Column(
+            children: [Flexible(child: preview, flex: 1), Flexible(child: metadata, flex: 2)],
+          ),
+          flex: 1)
     ]);
   }
 }

@@ -25,9 +25,10 @@ use test_case::test_case;
 #[test_case("sequencer"; "sequencer")]
 #[test_case("timecode"; "timecode")]
 #[test_case("video"; "video")]
-#[tokio::test]
-async fn test_build_project_pipeline(project: &str) {
-    let handle = tokio::runtime::Handle::current();
+fn test_build_project_pipeline(project: &str) {
+    let runtime = tokio::runtime::Runtime::new().unwrap();
+    let _guard = runtime.enter();
+    let handle = runtime.handle().clone();
     let flags = Flags {
         join: false,
         generate_graph: false,

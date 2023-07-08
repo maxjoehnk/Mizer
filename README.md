@@ -16,7 +16,6 @@ You need to have the following tools installed:
 * cbindgen
 * Flutter SDK
 * protoc
-* GStreamer
 * LLVM
 
 ### Building

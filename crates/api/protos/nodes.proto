@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package mizer.nodes;
 
+import "media.proto";
+
 service NodesApi {
   rpc GetAvailableNodes (NodesRequest) returns (AvailableNodes) {}
   rpc GetNodes (NodesRequest) returns (Nodes) {}
@@ -143,9 +145,11 @@ message Node {
     PRESET = 19;
     VIDEO_FILE = 20;
     VIDEO_OUTPUT = 21;
-    VIDEO_EFFECT = 22;
     VIDEO_COLOR_BALANCE = 23;
     VIDEO_TRANSFORM = 24;
+    VIDEO_MIXER = 25;
+    VIDEO_RGB = 26;
+    VIDEO_RGB_SPLIT = 27;
     PIXEL_TO_DMX = 30;
     PIXEL_PATTERN = 31;
     OPC_OUTPUT = 32;
@@ -247,6 +251,7 @@ message NodeSetting {
     EnumValue enum = 9;
     IdValue id = 10;
     SplineValue spline = 11;
+    MediaValue media = 12;
   }
 
   message TextValue {
@@ -328,6 +333,11 @@ message NodeSetting {
       double c1b = 6;
     }
   }
+
+  message MediaValue {
+    string value = 1;
+    repeated mizer.media.MediaType allowed_types = 2;
+  }
 }
 
 message MidiNodeConfig {
@@ -374,14 +384,13 @@ message NodeDesigner {
 enum ChannelProtocol {
   SINGLE = 0;
   MULTI = 1;
-  COLOR = 9;
   TEXTURE = 2;
   VECTOR = 3;
   LASER = 4;
   POLY = 5;
   DATA = 6;
   MATERIAL = 7;
-  GST = 8;
+  COLOR = 9;
   CLOCK = 10;
 }
 

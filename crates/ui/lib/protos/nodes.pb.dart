@@ -10,6 +10,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'nodes.pbenum.dart';
+import 'media.pbenum.dart' as $0;
 
 export 'nodes.pbenum.dart';
 
@@ -2376,6 +2377,61 @@ class NodeSetting_SplineValue extends $pb.GeneratedMessage {
   $core.List<NodeSetting_SplineValue_SplineStep> get steps => $_getList(0);
 }
 
+class NodeSetting_MediaValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.MediaValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
+    ..pc<$0.MediaType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allowedTypes', $pb.PbFieldType.KE, valueOf: $0.MediaType.valueOf, enumValues: $0.MediaType.values, defaultEnumValue: $0.MediaType.IMAGE)
+    ..hasRequiredFields = false
+  ;
+
+  NodeSetting_MediaValue._() : super();
+  factory NodeSetting_MediaValue({
+    $core.String? value,
+    $core.Iterable<$0.MediaType>? allowedTypes,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (allowedTypes != null) {
+      _result.allowedTypes.addAll(allowedTypes);
+    }
+    return _result;
+  }
+  factory NodeSetting_MediaValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_MediaValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSetting_MediaValue clone() => NodeSetting_MediaValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSetting_MediaValue copyWith(void Function(NodeSetting_MediaValue) updates) => super.copyWith((message) => updates(message as NodeSetting_MediaValue)) as NodeSetting_MediaValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_MediaValue create() => NodeSetting_MediaValue._();
+  NodeSetting_MediaValue createEmptyInstance() => create();
+  static $pb.PbList<NodeSetting_MediaValue> createRepeated() => $pb.PbList<NodeSetting_MediaValue>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_MediaValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_MediaValue>(create);
+  static NodeSetting_MediaValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get value => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set value($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$0.MediaType> get allowedTypes => $_getList(1);
+}
+
 enum NodeSetting_Value {
   text, 
   float, 
@@ -2385,6 +2441,7 @@ enum NodeSetting_Value {
   enum_9, 
   id, 
   spline, 
+  media, 
   notSet
 }
 
@@ -2398,10 +2455,11 @@ class NodeSetting extends $pb.GeneratedMessage {
     9 : NodeSetting_Value.enum_9,
     10 : NodeSetting_Value.id,
     11 : NodeSetting_Value.spline,
+    12 : NodeSetting_Value.media,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11])
+    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'disabled')
@@ -2413,6 +2471,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     ..aOM<NodeSetting_EnumValue>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'enum', subBuilder: NodeSetting_EnumValue.create)
     ..aOM<NodeSetting_IdValue>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: NodeSetting_IdValue.create)
     ..aOM<NodeSetting_SplineValue>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
+    ..aOM<NodeSetting_MediaValue>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -2429,6 +2488,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_EnumValue? enum_9,
     NodeSetting_IdValue? id,
     NodeSetting_SplineValue? spline,
+    NodeSetting_MediaValue? media,
   }) {
     final _result = create();
     if (label != null) {
@@ -2463,6 +2523,9 @@ class NodeSetting extends $pb.GeneratedMessage {
     }
     if (spline != null) {
       _result.spline = spline;
+    }
+    if (media != null) {
+      _result.media = media;
     }
     return _result;
   }
@@ -2604,6 +2667,17 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearSpline() => clearField(11);
   @$pb.TagNumber(11)
   NodeSetting_SplineValue ensureSpline() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  NodeSetting_MediaValue get media => $_getN(11);
+  @$pb.TagNumber(12)
+  set media(NodeSetting_MediaValue v) { setField(12, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasMedia() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearMedia() => clearField(12);
+  @$pb.TagNumber(12)
+  NodeSetting_MediaValue ensureMedia() => $_ensure(11);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

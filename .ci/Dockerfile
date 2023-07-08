@@ -9,9 +9,6 @@ RUN git config --global --add safe.directory /flutter
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
-      libgstreamer1.0-dev \
-      libgstreamer-plugins-base1.0-dev \
-      libgstreamer-plugins-bad1.0-dev \
       libasound2-dev \
       libavahi-client-dev \
       xorg-dev \
@@ -49,7 +46,8 @@ RUN apt-get update && \
       libnuma-dev \
       libvpx-dev \
       libmp3lame-dev \
-      libopus-dev && \
+      libopus-dev \
+      yasm && \
     rm -rf /var/lib/apt/lists/*
 
 RUN cargo install cbindgen

@@ -71,6 +71,7 @@ members = [
     "crates/runtime/pipeline/templates",
     "crates/runtime/processing",
     "crates/runtime/settings",
+    "crates/runtime/wgpu",
     "crates/ui",
     "crates/ui/ffi",
     "crates/util",
@@ -110,7 +111,6 @@ tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
 log = "0.4"
 anyhow = "1"
-gstreamer = "0.20"
 structopt = "0.3"
 metrics = "0.21"
 mizer-media = { path = "crates/components/media" }
@@ -145,6 +145,7 @@ mizer-util = { path = "crates/util" }
 mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
 mizer-command-executor = { path = "crates/runtime/commander/executor" }
+mizer-wgpu = { path = "crates/runtime/wgpu" }
 tokio = { version = "1.29", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"

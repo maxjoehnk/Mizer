@@ -15,9 +15,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install \
-            libgstreamer1.0-dev \
-            libgstreamer-plugins-base1.0-dev \
-            libgstreamer-plugins-bad1.0-dev \
             libasound2-dev \
             libavahi-client-dev \
             xorg-dev \
@@ -103,7 +100,8 @@ jobs:
             libmfx-dev \
             libvorbis-dev \
             libwavpack-dev \
-            libzimg-dev
+            libzimg-dev \
+            yasm
       - uses: taiki-e/install-action@protoc
       - uses: nschloe/action-cached-lfs-checkout@v1
       - uses: actions-rs/toolchain@v1

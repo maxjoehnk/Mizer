@@ -20,6 +20,7 @@ pub enum Connection {
     Mqtt(MqttView),
     Osc(OscView),
     G13(G13View),
+    Webcam(WebcamView),
 }
 
 impl Connection {
@@ -33,6 +34,7 @@ impl Connection {
             Connection::Mqtt(connection) => connection.name.clone(),
             Connection::Osc(connection) => connection.name.clone(),
             Connection::G13(_) => "Logitech G13".to_string(),
+            Connection::Webcam(connection) => connection.name.clone(),
         }
     }
 }
@@ -44,6 +46,7 @@ impl From<DeviceRef> for Connection {
             DeviceRef::EtherDream(view) => view.into(),
             DeviceRef::Gamepad(view) => view.into(),
             DeviceRef::G13(view) => view.into(),
+            DeviceRef::Webcam(view) => view.into(),
         }
     }
 }

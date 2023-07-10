@@ -9,12 +9,14 @@ use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
+use mizer_webcams::{WebcamDiscovery, WebcamRef};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
 pub mod g13;
 pub mod gamepads;
 pub mod laser;
+pub mod webcams;
 
 pub trait Device {
     fn status(&self) -> DeviceStatus;
@@ -36,6 +38,7 @@ enum DiscoveredDevice {
     Laser(LaserDevice),
     Gamepad(GamepadRef),
     G13(G13Ref),
+    Webcam(WebcamRef),
 }
 
 #[derive(Default, Clone)]
@@ -45,6 +48,7 @@ pub struct DeviceManager {
     gamepads: Arc<DashMap<String, GamepadRef>>,
     g13_id_counter: Arc<AtomicUsize>,
     g13s: Arc<DashMap<String, G13Ref>>,
+    webcams: Arc<DashMap<String, WebcamRef>>,
 }
 
 impl DeviceManager {
@@ -63,7 +67,10 @@ impl DeviceManager {
         let g13s = G13Discovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let mut devices = select_all([lasers, gamepads, g13s]);
+        let webcams = WebcamDiscovery::discover()
+            .map(DiscoveredDevice::from)
+            .boxed_local();
+        let mut devices = select_all([lasers, gamepads, g13s, webcams]);
         while let Some(device) = devices.next().await {
             match device {
                 DiscoveredDevice::Laser(laser) => {
@@ -84,6 +91,12 @@ impl DeviceManager {
                     log::debug!("Discovered device {g13:?} => {id}");
                     self.g13s.insert(id, g13);
                 }
+                DiscoveredDevice::Webcam(webcam) => {
+                    let id = webcam.id();
+                    let id = format!("webcam-{}", id);
+                    log::debug!("Discovered device {webcam:?} => {id}");
+                    self.webcams.insert(id, webcam);
+                }
             }
         }
     }
@@ -94,6 +107,10 @@ impl DeviceManager {
 
     pub fn get_gamepad(&self, id: &str) -> Option<Ref<'_, String, GamepadRef>> {
         self.gamepads.get(id)
+    }
+
+    pub fn get_webcam(&self, id: &str) -> Option<Ref<'_, String, WebcamRef>> {
+        self.webcams.get(id)
     }
 
     pub fn get_g13_mut(&self, id: &str) -> Option<RefMut<'_, String, G13Ref>> {
@@ -120,8 +137,15 @@ impl DeviceManager {
             }
             .into()
         });
+        let webcams = self.webcams.iter().map(|webcam| {
+            WebcamView {
+                id: webcam.key().clone(),
+                name: webcam.name(),
+            }
+            .into()
+        });
 
-        lasers.chain(gamepads).chain(g13s).collect()
+        lasers.chain(gamepads).chain(g13s).chain(webcams).collect()
     }
 }
 
@@ -167,11 +191,18 @@ pub enum DeviceRef {
     EtherDream(EtherDreamView),
     Gamepad(GamepadView),
     G13(G13View),
+    Webcam(WebcamView),
 }
 
 #[derive(Debug, Clone)]
 pub struct G13View {
     pub id: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct WebcamView {
+    pub id: String,
+    pub name: String,
 }
 
 pub struct DeviceModule(DeviceManager);

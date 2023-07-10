@@ -316,6 +316,9 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasG13()) {
       return _tag("G13");
     }
+    if (connection.hasWebcam()) {
+      return _tag("Webcam");
+    }
     return Container();
   }
 

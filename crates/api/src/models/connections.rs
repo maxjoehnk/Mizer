@@ -3344,8 +3344,57 @@ impl Connection {
         }
     }
 
+    // .mizer.WebcamConnection webcam = 19;
+
+    pub fn webcam(&self) -> &WebcamConnection {
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::Webcam(ref v)) => v,
+            _ => <WebcamConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_webcam(&mut self) {
+        self.connection = ::std::option::Option::None;
+    }
+
+    pub fn has_webcam(&self) -> bool {
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::Webcam(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_webcam(&mut self, v: WebcamConnection) {
+        self.connection = ::std::option::Option::Some(connection::Connection::Webcam(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_webcam(&mut self) -> &mut WebcamConnection {
+        if let ::std::option::Option::Some(connection::Connection::Webcam(_)) = self.connection {
+        } else {
+            self.connection = ::std::option::Option::Some(connection::Connection::Webcam(WebcamConnection::new()));
+        }
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::Webcam(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_webcam(&mut self) -> WebcamConnection {
+        if self.has_webcam() {
+            match self.connection.take() {
+                ::std::option::Option::Some(connection::Connection::Webcam(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            WebcamConnection::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(10);
+        let mut fields = ::std::vec::Vec::with_capacity(11);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -3415,6 +3464,13 @@ impl Connection {
             Connection::mut_g13,
             Connection::set_g13,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, WebcamConnection>(
+            "webcam",
+            Connection::has_webcam,
+            Connection::webcam,
+            Connection::mut_webcam,
+            Connection::set_webcam,
+        ));
         oneofs.push(connection::Connection::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Connection>(
             "Connection",
@@ -3463,6 +3519,9 @@ impl ::protobuf::Message for Connection {
                 },
                 146 => {
                     self.connection = ::std::option::Option::Some(connection::Connection::G13(is.read_message()?));
+                },
+                154 => {
+                    self.connection = ::std::option::Option::Some(connection::Connection::Webcam(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -3517,6 +3576,10 @@ impl ::protobuf::Message for Connection {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &connection::Connection::Webcam(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -3557,6 +3620,9 @@ impl ::protobuf::Message for Connection {
                 &connection::Connection::G13(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(18, v, os)?;
                 },
+                &connection::Connection::Webcam(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(19, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -3577,6 +3643,7 @@ impl ::protobuf::Message for Connection {
 
     fn clear(&mut self) {
         self.name.clear();
+        self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
@@ -3641,6 +3708,8 @@ pub mod connection {
         Mqtt(super::MqttConnection),
         // @@protoc_insertion_point(oneof_field:mizer.Connection.g13)
         G13(super::G13Connection),
+        // @@protoc_insertion_point(oneof_field:mizer.Connection.webcam)
+        Webcam(super::WebcamConnection),
     }
 
     impl ::protobuf::Oneof for Connection {
@@ -4479,6 +4548,146 @@ impl ::std::fmt::Display for G13Connection {
 }
 
 impl ::protobuf::reflect::ProtobufValue for G13Connection {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.WebcamConnection)
+pub struct WebcamConnection {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.WebcamConnection.id)
+    pub id: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.WebcamConnection.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.WebcamConnection.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WebcamConnection {
+    fn default() -> &'a WebcamConnection {
+        <WebcamConnection as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WebcamConnection {
+    pub fn new() -> WebcamConnection {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &WebcamConnection| { &m.id },
+            |m: &mut WebcamConnection| { &mut m.id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &WebcamConnection| { &m.name },
+            |m: &mut WebcamConnection| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WebcamConnection>(
+            "WebcamConnection",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WebcamConnection {
+    const NAME: &'static str = "WebcamConnection";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.id = is.read_string()?;
+                },
+                18 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WebcamConnection {
+        WebcamConnection::new()
+    }
+
+    fn clear(&mut self) {
+        self.id.clear();
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WebcamConnection {
+        static instance: WebcamConnection = WebcamConnection {
+            id: ::std::string::String::new(),
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WebcamConnection {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WebcamConnection").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WebcamConnection {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WebcamConnection {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -6717,7 +6926,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     R\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04por\
     t\x18\x03\x20\x01(\rR\x04port\"\x20\n\nSacnConfig\x12\x12\n\x04name\x18\
     \x01\x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\
-    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xed\x03\n\nCon\
+    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xa0\x04\n\nCon\
     nection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\
     \n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\
     \x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\
@@ -6728,68 +6937,71 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     eamConnectionH\0R\netherDream\x124\n\x07gamepad\x18\x10\x20\x01(\x0b2\
     \x18.mizer.GamepadConnectionH\0R\x07gamepad\x12+\n\x04mqtt\x18\x11\x20\
     \x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03g13\x18\x12\
-    \x20\x01(\x0b2\x14.mizer.G13ConnectionH\0R\x03g13B\x0c\n\nconnection\"\
-    \x8e\x01\n\rDmxConnection\x12\x1b\n\toutput_id\x18\x01\x20\x01(\tR\x08ou\
-    tputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\
-    \x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\
-    \x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08fi\
-    rmware\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
-    R\x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1f\n\rG13Connect\
-    ion\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"O\n\x0eMidiConnection\x12\
-    *\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
-    \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
-    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x93\
-    \x04\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\
-    \x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\
-    \x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\
-    \x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\
-    \x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08contro\
-    ls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08control\
-    s\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\
-    \x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\
-    \x08controls\x1ai\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x1b\n\thas_input\x18\
-    \x03\x20\x01(\x08R\x08hasInput\x12\x1d\n\nhas_output\x18\x04\x20\x01(\
-    \x08R\thasOutputB\t\n\x07_layout\"\x9b\x01\n\rOscConnection\x12#\n\rconn\
-    ection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\
-    \x02\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\
-    \noutputPort\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\
-    \"\x9a\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01\
-    (\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12#\n\r\
-    player_number\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\x18\
-    \x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdj\
-    Playback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bp\
-    m\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\
-    \x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback\
-    .StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjP\
-    layback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\
-    \x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\
-    \x05State\x12\x0b\n\x07LOADING\x10\0\x12\x0b\n\x07PLAYING\x10\x01\x12\
-    \x08\n\x04CUED\x10\x02\x12\n\n\x06CUEING\x10\x03\"\xa3\x01\n\x0eMqttConn\
-    ection\x12#\n\rconnection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x10\
-    \n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\x03\x20\
-    \x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\x04\x20\
-    \x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t_passwor\
-    d\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\
-    \x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\x20\
-    \x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\x03\
-    \x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06config2\xf9\
-    \x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.GetConne\
-    ctionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\x18.mizer\
-    .MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0bMonitorMid\
-    i\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\x12\
-    A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.MonitorOsc\
-    Response\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\
-    \x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.SacnCon\
-    fig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\x1f.mi\
-    zer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\x129\n\x10\
-    DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Connections\x12K\
-    \n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionRequest\x1a\x11.\
-    mizer.Connectionb\x06proto3\
+    \x20\x01(\x0b2\x14.mizer.G13ConnectionH\0R\x03g13\x121\n\x06webcam\x18\
+    \x13\x20\x01(\x0b2\x17.mizer.WebcamConnectionH\0R\x06webcamB\x0c\n\nconn\
+    ection\"\x8e\x01\n\rDmxConnection\x12\x1b\n\toutput_id\x18\x01\x20\x01(\
+    \tR\x08outputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetC\
+    onfigH\0R\x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnC\
+    onfigH\0R\x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\
+    \x01(\rR\x08firmware\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\
+    \x1f\n\rG13Connection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"6\n\x10\
+    WebcamConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04\
+    name\x18\x02\x20\x01(\tR\x04name\"O\n\x0eMidiConnection\x12*\n\x0edevice\
+    _profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\x11\n\x0f_de\
+    vice_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\x18\x01\x20\
+    \x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x93\x04\n\x11MidiD\
+    eviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\"\n\x0cmanufa\
+    cturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\x05model\x18\x03\
+    \x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\x01(\tH\0R\x06layo\
+    ut\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\x1d.mizer.MidiDevic\
+    eProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\x03(\x0b2\x1e.mizer.Mi\
+    diDeviceProfile.GroupR\x06groups\x12<\n\x08controls\x18\x03\x20\x03(\x0b\
+    2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1aY\n\x05Group\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\x08controls\x18\x02\
+    \x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1ai\n\
+    \x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\x12\x1b\n\thas_input\x18\x03\x20\x01(\x08R\
+    \x08hasInput\x12\x1d\n\nhas_output\x18\x04\x20\x01(\x08R\thasOutputB\t\n\
+    \x07_layout\"\x9b\x01\n\rOscConnection\x12#\n\rconnection_id\x18\x01\x20\
+    \x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\x02\x20\x01(\rR\tinpu\
+    tPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\noutputPort\x12%\n\
+    \x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\"\x9a\x01\n\x13Pro\
+    DjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01(\tR\x07address\x12\
+    \x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12#\n\rplayer_number\x18\
+    \x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\x18\x05\x20\x01(\x0b\
+    2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\
+    \n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\
+    \x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\
+    \x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playb\
+    ack\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\
+    \x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06art\
+    ist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\
+    \x0b\n\x07LOADING\x10\0\x12\x0b\n\x07PLAYING\x10\x01\x12\x08\n\x04CUED\
+    \x10\x02\x12\n\n\x06CUEING\x10\x03\"\xa3\x01\n\x0eMqttConnection\x12#\n\
+    \rconnection_id\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x10\n\x03url\x18\
+    \x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\x03\x20\x01(\tH\0R\x08\
+    username\x88\x01\x01\x12\x1f\n\x08password\x18\x04\x20\x01(\tH\x01R\x08p\
+    assword\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t_password\"\xa7\x01\n\x1aC\
+    onfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\x01(\x0b2\x14.mizer.\
+    DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\x20\x01(\x0b2\x15.mizer.\
+    MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\x03\x20\x01(\x0b2\x14.mizer\
+    .OscConnectionH\0R\x03oscB\x08\n\x06config2\xf9\x04\n\x0eConnectionsApi\
+    \x12B\n\x0eGetConnections\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mi\
+    zer.Connections\x12A\n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\
+    \x19.mizer.MonitorDmxResponse\x12D\n\x0bMonitorMidi\x12\x19.mizer.Monito\
+    rMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\x12A\n\nMonitorOsc\x12\
+    \x18.mizer.MonitorOscRequest\x1a\x19.mizer.MonitorOscResponse\x12>\n\x13\
+    AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\x12.mizer.Connections\
+    \x12:\n\x11AddSacnConnection\x12\x11.mizer.SacnConfig\x1a\x12.mizer.Conn\
+    ections\x12S\n\x15GetMidiDeviceProfiles\x12\x1f.mizer.GetDeviceProfilesR\
+    equest\x1a\x19.mizer.MidiDeviceProfiles\x129\n\x10DeleteConnection\x12\
+    \x11.mizer.Connection\x1a\x12.mizer.Connections\x12K\n\x13ConfigureConne\
+    ction\x12!.mizer.ConfigureConnectionRequest\x1a\x11.mizer.Connectionb\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -6807,7 +7019,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(34);
+            let mut messages = ::std::vec::Vec::with_capacity(35);
             messages.push(MonitorDmxRequest::generated_message_descriptor_data());
             messages.push(MonitorDmxResponse::generated_message_descriptor_data());
             messages.push(MonitorDmxUniverse::generated_message_descriptor_data());
@@ -6826,6 +7038,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(EtherDreamConnection::generated_message_descriptor_data());
             messages.push(GamepadConnection::generated_message_descriptor_data());
             messages.push(G13Connection::generated_message_descriptor_data());
+            messages.push(WebcamConnection::generated_message_descriptor_data());
             messages.push(MidiConnection::generated_message_descriptor_data());
             messages.push(MidiDeviceProfiles::generated_message_descriptor_data());
             messages.push(MidiDeviceProfile::generated_message_descriptor_data());

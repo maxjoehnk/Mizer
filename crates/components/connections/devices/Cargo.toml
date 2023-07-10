@@ -11,6 +11,7 @@ log = "0.4"
 mizer-protocol-laser = { path = "../protocols/laser" }
 mizer-gamepads = { path = "./gamepads" }
 mizer-g13 = { path = "./g13" }
+mizer-webcams = { path = "./webcams" }
 mizer-module = { path = "../../../runtime/module" }
 mizer-processing = { path = "../../../runtime/processing" }
 tokio = { version = "1.29", features = ["sync", "rt"] }

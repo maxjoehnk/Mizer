@@ -118,6 +118,7 @@ message Connection {
     GamepadConnection gamepad = 16;
     MqttConnection mqtt = 17;
     G13Connection g13 = 18;
+    WebcamConnection webcam = 19;
   }
 }
 
@@ -145,6 +146,11 @@ message GamepadConnection {
 
 message G13Connection {
   string id = 1;
+}
+
+message WebcamConnection {
+  string id = 1;
+  string name = 2;
 }
 
 message MidiConnection {

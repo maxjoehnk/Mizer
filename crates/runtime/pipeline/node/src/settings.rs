@@ -80,27 +80,57 @@ impl NumericSettings<f64> for NodeSetting {
 
 impl NumericSettings<u32> for NodeSetting {
     fn min(mut self, value: u32) -> Self {
-        if let NodeSettingValue::Int { min, .. } = &mut self.value {
+        if let NodeSettingValue::Uint { min, .. } = &mut self.value {
             *min = Some(value);
         }
         self
     }
 
     fn max(mut self, value: u32) -> Self {
-        if let NodeSettingValue::Int { max, .. } = &mut self.value {
+        if let NodeSettingValue::Uint { max, .. } = &mut self.value {
             *max = Some(value);
         }
         self
     }
 
     fn min_hint(mut self, value: u32) -> Self {
-        if let NodeSettingValue::Int { min_hint, .. } = &mut self.value {
+        if let NodeSettingValue::Uint { min_hint, .. } = &mut self.value {
             *min_hint = Some(value);
         }
         self
     }
 
     fn max_hint(mut self, value: u32) -> Self {
+        if let NodeSettingValue::Uint { max_hint, .. } = &mut self.value {
+            *max_hint = Some(value);
+        }
+        self
+    }
+}
+
+impl NumericSettings<i64> for NodeSetting {
+    fn min(mut self, value: i64) -> Self {
+        if let NodeSettingValue::Int { min, .. } = &mut self.value {
+            *min = Some(value);
+        }
+        self
+    }
+
+    fn max(mut self, value: i64) -> Self {
+        if let NodeSettingValue::Int { max, .. } = &mut self.value {
+            *max = Some(value);
+        }
+        self
+    }
+
+    fn min_hint(mut self, value: i64) -> Self {
+        if let NodeSettingValue::Int { min_hint, .. } = &mut self.value {
+            *min_hint = Some(value);
+        }
+        self
+    }
+
+    fn max_hint(mut self, value: i64) -> Self {
         if let NodeSettingValue::Int { max_hint, .. } = &mut self.value {
             *max_hint = Some(value);
         }
@@ -121,12 +151,19 @@ pub enum NodeSettingValue {
         max: Option<f64>,
         max_hint: Option<f64>,
     },
-    Int {
+    Uint {
         value: u32,
         min: Option<u32>,
         min_hint: Option<u32>,
         max: Option<u32>,
         max_hint: Option<u32>,
+    },
+    Int {
+        value: i64,
+        min: Option<i64>,
+        min_hint: Option<i64>,
+        max: Option<i64>,
+        max_hint: Option<i64>,
     },
     Bool {
         value: bool,
@@ -170,6 +207,20 @@ impl Hash for NodeSettingValue {
             Self::Float { value, .. } => {
                 state.write_u8(1);
                 value.to_bits().hash(state);
+            }
+            Self::Uint {
+                value,
+                min,
+                min_hint,
+                max,
+                max_hint,
+            } => {
+                state.write_u8(2);
+                value.hash(state);
+                min.hash(state);
+                min_hint.hash(state);
+                max.hash(state);
+                max_hint.hash(state);
             }
             Self::Int {
                 value,
@@ -284,6 +335,18 @@ impl From<f64> for NodeSettingValue {
 
 impl From<u32> for NodeSettingValue {
     fn from(value: u32) -> Self {
+        Self::Uint {
+            value,
+            max: None,
+            min: None,
+            max_hint: None,
+            min_hint: None,
+        }
+    }
+}
+
+impl From<i64> for NodeSettingValue {
+    fn from(value: i64) -> Self {
         Self::Int {
             value,
             max: None,

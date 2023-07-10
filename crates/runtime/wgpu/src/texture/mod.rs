@@ -1,3 +1,4 @@
+use anyhow::anyhow;
 pub use static_texture::StaticTexture;
 pub use texture_provider::TextureProvider;
 pub use texture_registry::*;
@@ -103,6 +104,14 @@ impl Texture {
             self.recreate_texture(context, width, height);
         }
         if let Some(data) = provider.data()? {
+            let expected_bytes = width as usize * height as usize * 4;
+            if data.len() != expected_bytes {
+                anyhow::bail!(
+                    "Texture data size mismatch: expected {} bytes, got {} bytes",
+                    expected_bytes,
+                    data.len()
+                );
+            }
             context.write_texture(&self.texture, data.as_ref(), width, height);
         }
 

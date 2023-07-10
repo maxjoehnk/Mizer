@@ -88,10 +88,18 @@ impl ConfigurableNode for MidiInputNode {
                 device_setting,
                 binding_setting,
                 setting!(enum MODE_SETTING, mode),
-                setting!(CHANNEL_SETTING, channel as u32).min(1).max(16),
-                setting!(PORT_SETTING, port as u32).min(1).max_hint(255),
-                setting!(RANGE_FROM_SETTING, range.0 as u32).min(0).max(255),
-                setting!(RANGE_TO_SETTING, range.1 as u32).min(1).max(255),
+                setting!(CHANNEL_SETTING, channel as u32)
+                    .min(1u32)
+                    .max(16u32),
+                setting!(PORT_SETTING, port as u32)
+                    .min(1u32)
+                    .max_hint(255u32),
+                setting!(RANGE_FROM_SETTING, range.0 as u32)
+                    .min(0u32)
+                    .max(255u32),
+                setting!(RANGE_TO_SETTING, range.1 as u32)
+                    .min(1u32)
+                    .max(255u32),
             ],
             MidiInputConfig::Control { page, control } => {
                 let (pages, controls) = get_pages_and_controls(injector, &self.device, &page, true);

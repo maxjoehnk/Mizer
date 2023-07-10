@@ -1,0 +1,14 @@
+[package]
+name = "mizer-webcams"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+log = "0.4"
+anyhow = "1"
+futures = "0.3"
+flume = "0.10"
+pinboard = "2.2"
+enum-iterator = "1.4"
+nokhwa = { version = "0.10", features = ["input-native"] }

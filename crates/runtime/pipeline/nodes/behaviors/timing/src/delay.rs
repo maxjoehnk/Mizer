@@ -22,8 +22,8 @@ impl Default for DelayNode {
 impl ConfigurableNode for DelayNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size as u32)
-            .min(0)
-            .max_hint(300)]
+            .min(0u32)
+            .max_hint(300u32)]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {

@@ -209,6 +209,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::AudioMix => node::NodeType::AUDIO_MIX,
             NodeType::AudioMeter => node::NodeType::AUDIO_METER,
             NodeType::Template => node::NodeType::TEMPLATE,
+            NodeType::Webcam => node::NodeType::WEBCAM,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -282,6 +283,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::AUDIO_MIX => NodeType::AudioMix,
             node::NodeType::AUDIO_METER => NodeType::AudioMeter,
             node::NodeType::TEMPLATE => NodeType::Template,
+            node::NodeType::WEBCAM => NodeType::Webcam,
         }
     }
 }
@@ -417,6 +419,20 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 max_hint,
                 ..Default::default()
             }),
+            Uint {
+                value,
+                min,
+                min_hint,
+                max,
+                max_hint,
+            } => Self::Uint(node_setting::UintValue {
+                value,
+                min,
+                min_hint,
+                max,
+                max_hint,
+                ..Default::default()
+            }),
             Int {
                 value,
                 min,
@@ -424,11 +440,11 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 max,
                 max_hint,
             } => Self::Int(node_setting::IntValue {
-                value,
-                min,
-                min_hint,
-                max,
-                max_hint,
+                value: value as i32,
+                min: min.map(|v| v as i32),
+                min_hint: min_hint.map(|v| v as i32),
+                max: max.map(|v| v as i32),
+                max_hint: max_hint.map(|v| v as i32),
                 ..Default::default()
             }),
             Bool { value } => Self::Bool(node_setting::BoolValue {
@@ -493,6 +509,13 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                 max_hint: value.max_hint,
             },
             Int(value) => Self::Int {
+                value: value.value as i64,
+                min: value.min.map(|v| v as i64),
+                min_hint: value.min_hint.map(|v| v as i64),
+                max: value.max.map(|v| v as i64),
+                max_hint: value.max_hint.map(|v| v as i64),
+            },
+            Uint(value) => Self::Uint {
                 value: value.value,
                 min: value.min,
                 min_hint: value.min_hint,

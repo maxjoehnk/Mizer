@@ -34,11 +34,11 @@ impl ConfigurableNode for DmxOutputNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(UNIVERSE_SETTING, self.universe as u32)
-                .min(1)
-                .max(32768),
+                .min(1u32)
+                .max(32768u32),
             setting!(CHANNEL_SETTING, self.channel as u32)
-                .min(1)
-                .max(512),
+                .min(1u32)
+                .max(512u32),
         ]
     }
 

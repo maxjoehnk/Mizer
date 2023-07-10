@@ -46,9 +46,11 @@ impl ConfigurableNode for OpcOutputNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(HOST_SETTING, &self.host),
-            setting!(PORT_SETTING, self.port as u32).min(1).max(65535),
-            setting!(WIDTH_SETTING, self.width as u32).min(1),
-            setting!(HEIGHT_SETTING, self.height as u32).min(1),
+            setting!(PORT_SETTING, self.port as u32)
+                .min(1u32)
+                .max(65535u32),
+            setting!(WIDTH_SETTING, self.width as u32).min(1u32),
+            setting!(HEIGHT_SETTING, self.height as u32).min(1u32),
         ]
     }
 

@@ -28,8 +28,8 @@ impl ConfigurableNode for NoiseNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(TICK_RATE_SETTING, self.tick_rate)
-                .min(0)
-                .max_hint(300),
+                .min(0u32)
+                .max_hint(300u32),
             setting!(FADE_SETTING, self.fade),
         ]
     }

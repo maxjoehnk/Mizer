@@ -70,6 +70,11 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 id: g13.id,
                 ..Default::default()
             }),
+            Webcam(webcam) => Self::Webcam(WebcamConnection {
+                id: webcam.id,
+                name: webcam.name,
+                ..Default::default()
+            }),
         }
     }
 }

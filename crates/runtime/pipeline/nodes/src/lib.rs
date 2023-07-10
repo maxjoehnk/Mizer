@@ -42,6 +42,7 @@ pub use mizer_video_nodes::{
     VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode, VideoRgbSplitNode,
     VideoTransformNode,
 };
+pub use mizer_webcam_nodes::WebcamNode;
 use serde::{Deserialize, Serialize};
 
 mod container_node;
@@ -173,6 +174,7 @@ node_impl! {
     VideoHsv(VideoHsvNode),
     VideoRgb(VideoRgbNode),
     VideoRgbSplit(VideoRgbSplitNode),
+    Webcam(WebcamNode),
     Gamepad(GamepadNode),
     ColorConstant(ConstantColorNode),
     ColorBrightness(ColorBrightnessNode),

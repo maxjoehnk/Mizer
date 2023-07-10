@@ -1588,11 +1588,11 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
 
 class NodeSetting_IntValue extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.IntValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.OU3)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1642,6 +1642,109 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static NodeSetting_IntValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_IntValue>(create);
   static NodeSetting_IntValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get value => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set value($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get min => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set min($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMin() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMin() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get minHint => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set minHint($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMinHint() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMinHint() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get max => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set max($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMax() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMax() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get maxHint => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set maxHint($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMaxHint() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMaxHint() => clearField(5);
+}
+
+class NodeSetting_UintValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.UintValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  NodeSetting_UintValue._() : super();
+  factory NodeSetting_UintValue({
+    $core.int? value,
+    $core.int? min,
+    $core.int? minHint,
+    $core.int? max,
+    $core.int? maxHint,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (min != null) {
+      _result.min = min;
+    }
+    if (minHint != null) {
+      _result.minHint = minHint;
+    }
+    if (max != null) {
+      _result.max = max;
+    }
+    if (maxHint != null) {
+      _result.maxHint = maxHint;
+    }
+    return _result;
+  }
+  factory NodeSetting_UintValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_UintValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSetting_UintValue clone() => NodeSetting_UintValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSetting_UintValue copyWith(void Function(NodeSetting_UintValue) updates) => super.copyWith((message) => updates(message as NodeSetting_UintValue)) as NodeSetting_UintValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_UintValue create() => NodeSetting_UintValue._();
+  NodeSetting_UintValue createEmptyInstance() => create();
+  static $pb.PbList<NodeSetting_UintValue> createRepeated() => $pb.PbList<NodeSetting_UintValue>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_UintValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_UintValue>(create);
+  static NodeSetting_UintValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get value => $_getIZ(0);
@@ -2442,6 +2545,7 @@ enum NodeSetting_Value {
   id, 
   spline, 
   media, 
+  uint, 
   notSet
 }
 
@@ -2456,10 +2560,11 @@ class NodeSetting extends $pb.GeneratedMessage {
     10 : NodeSetting_Value.id,
     11 : NodeSetting_Value.spline,
     12 : NodeSetting_Value.media,
+    13 : NodeSetting_Value.uint,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12])
+    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'disabled')
@@ -2472,6 +2577,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     ..aOM<NodeSetting_IdValue>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: NodeSetting_IdValue.create)
     ..aOM<NodeSetting_SplineValue>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
     ..aOM<NodeSetting_MediaValue>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
+    ..aOM<NodeSetting_UintValue>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uint', subBuilder: NodeSetting_UintValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -2489,6 +2595,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_IdValue? id,
     NodeSetting_SplineValue? spline,
     NodeSetting_MediaValue? media,
+    NodeSetting_UintValue? uint,
   }) {
     final _result = create();
     if (label != null) {
@@ -2526,6 +2633,9 @@ class NodeSetting extends $pb.GeneratedMessage {
     }
     if (media != null) {
       _result.media = media;
+    }
+    if (uint != null) {
+      _result.uint = uint;
     }
     return _result;
   }
@@ -2678,6 +2788,17 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearMedia() => clearField(12);
   @$pb.TagNumber(12)
   NodeSetting_MediaValue ensureMedia() => $_ensure(11);
+
+  @$pb.TagNumber(13)
+  NodeSetting_UintValue get uint => $_getN(12);
+  @$pb.TagNumber(13)
+  set uint(NodeSetting_UintValue v) { setField(13, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasUint() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearUint() => clearField(13);
+  @$pb.TagNumber(13)
+  NodeSetting_UintValue ensureUint() => $_ensure(12);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

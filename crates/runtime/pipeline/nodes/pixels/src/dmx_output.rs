@@ -48,11 +48,11 @@ impl ConfigurableNode for PixelDmxNode {
 
         vec![
             setting!(select OUTPUT_SETTING, &self.output, outputs),
-            setting!(WIDTH_SETTING, self.width as u32).min(1),
-            setting!(HEIGHT_SETTING, self.height as u32).min(1),
+            setting!(WIDTH_SETTING, self.width as u32).min(1u32),
+            setting!(HEIGHT_SETTING, self.height as u32).min(1u32),
             setting!(START_UNIVERSE_SETTING, self.start_universe as u32)
-                .min(1)
-                .max(32768),
+                .min(1u32)
+                .max(32768u32),
         ]
     }
 

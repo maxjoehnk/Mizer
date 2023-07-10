@@ -78,6 +78,22 @@ class NodeSettingsPane extends StatelessWidget {
           },
         );
       }
+      if (setting.hasUint()) {
+        return NumberField(
+          label: setting.label,
+          value: setting.uint.value,
+          fractions: false,
+          min: setting.uint.hasMin() ? setting.uint.min : null,
+          minHint: setting.uint.hasMinHint() ? setting.uint.minHint : null,
+          max: setting.uint.hasMax() ? setting.uint.max : null,
+          maxHint: setting.uint.hasMaxHint() ? setting.uint.maxHint : null,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.uint.value = v.toInt();
+            onUpdate(updated);
+          },
+        );
+      }
       if (setting.hasBool_7()) {
         return CheckboxField(
             label: setting.label,

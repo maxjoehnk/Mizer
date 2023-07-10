@@ -138,6 +138,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType AUDIO_MIX = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_MIX');
   static const Node_NodeType AUDIO_METER = Node_NodeType._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AUDIO_METER');
   static const Node_NodeType TEMPLATE = Node_NodeType._(81, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEMPLATE');
+  static const Node_NodeType WEBCAM = Node_NodeType._(82, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WEBCAM');
   static const Node_NodeType CONTAINER = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTAINER');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
@@ -205,6 +206,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     AUDIO_MIX,
     AUDIO_METER,
     TEMPLATE,
+    WEBCAM,
     CONTAINER,
   ];
 

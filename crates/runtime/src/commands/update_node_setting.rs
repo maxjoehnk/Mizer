@@ -29,6 +29,12 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                     self.path, self.setting.label, value
                 )
             }
+            NodeSettingValue::Uint { value, .. } => {
+                format!(
+                    "Update Node '{}' setting {} to {}",
+                    self.path, self.setting.label, value
+                )
+            }
             NodeSettingValue::Int { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",

@@ -3314,6 +3314,8 @@ pub mod node {
         AUDIO_METER = 80,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.TEMPLATE)
         TEMPLATE = 81,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.WEBCAM)
+        WEBCAM = 82,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.CONTAINER)
         CONTAINER = 100,
     }
@@ -3391,6 +3393,7 @@ pub mod node {
                 79 => ::std::option::Option::Some(NodeType::AUDIO_MIX),
                 80 => ::std::option::Option::Some(NodeType::AUDIO_METER),
                 81 => ::std::option::Option::Some(NodeType::TEMPLATE),
+                82 => ::std::option::Option::Some(NodeType::WEBCAM),
                 100 => ::std::option::Option::Some(NodeType::CONTAINER),
                 _ => ::std::option::Option::None
             }
@@ -3461,6 +3464,7 @@ pub mod node {
             NodeType::AUDIO_MIX,
             NodeType::AUDIO_METER,
             NodeType::TEMPLATE,
+            NodeType::WEBCAM,
             NodeType::CONTAINER,
         ];
     }
@@ -3537,7 +3541,8 @@ pub mod node {
                 NodeType::AUDIO_MIX => 61,
                 NodeType::AUDIO_METER => 62,
                 NodeType::TEMPLATE => 63,
-                NodeType::CONTAINER => 64,
+                NodeType::WEBCAM => 64,
+                NodeType::CONTAINER => 65,
             };
             Self::enum_descriptor().value_by_index(index)
         }
@@ -4453,8 +4458,57 @@ impl NodeSetting {
         }
     }
 
+    // .mizer.nodes.NodeSetting.UintValue uint = 13;
+
+    pub fn uint(&self) -> &node_setting::UintValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Uint(ref v)) => v,
+            _ => <node_setting::UintValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_uint(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_uint(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Uint(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_uint(&mut self, v: node_setting::UintValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::Uint(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_uint(&mut self) -> &mut node_setting::UintValue {
+        if let ::std::option::Option::Some(node_setting::Value::Uint(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::Uint(node_setting::UintValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::Uint(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_uint(&mut self) -> node_setting::UintValue {
+        if self.has_uint() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::Uint(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::UintValue::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(12);
+        let mut fields = ::std::vec::Vec::with_capacity(13);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "label",
@@ -4534,6 +4588,13 @@ impl NodeSetting {
             NodeSetting::mut_media,
             NodeSetting::set_media,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::UintValue>(
+            "uint",
+            NodeSetting::has_uint,
+            NodeSetting::uint,
+            NodeSetting::mut_uint,
+            NodeSetting::set_uint,
+        ));
         oneofs.push(node_setting::Value::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeSetting>(
             "NodeSetting",
@@ -4588,6 +4649,9 @@ impl ::protobuf::Message for NodeSetting {
                 },
                 98 => {
                     self.value = ::std::option::Option::Some(node_setting::Value::Media(is.read_message()?));
+                },
+                106 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::Uint(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -4648,6 +4712,10 @@ impl ::protobuf::Message for NodeSetting {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &node_setting::Value::Uint(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -4694,6 +4762,9 @@ impl ::protobuf::Message for NodeSetting {
                 &node_setting::Value::Media(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
                 },
+                &node_setting::Value::Uint(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -4716,6 +4787,7 @@ impl ::protobuf::Message for NodeSetting {
         self.label.clear();
         self.description.clear();
         self.disabled = false;
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
@@ -4782,6 +4854,8 @@ pub mod node_setting {
         Spline(SplineValue),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.media)
         Media(MediaValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.uint)
+        Uint(UintValue),
     }
 
     impl ::protobuf::Oneof for Value {
@@ -5138,15 +5212,15 @@ pub mod node_setting {
     pub struct IntValue {
         // message fields
         // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.value)
-        pub value: u32,
+        pub value: i32,
         // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.min)
-        pub min: ::std::option::Option<u32>,
+        pub min: ::std::option::Option<i32>,
         // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.min_hint)
-        pub min_hint: ::std::option::Option<u32>,
+        pub min_hint: ::std::option::Option<i32>,
         // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.max)
-        pub max: ::std::option::Option<u32>,
+        pub max: ::std::option::Option<i32>,
         // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.IntValue.max_hint)
-        pub max_hint: ::std::option::Option<u32>,
+        pub max_hint: ::std::option::Option<i32>,
         // special fields
         // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.IntValue.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -5201,6 +5275,200 @@ pub mod node_setting {
 
     impl ::protobuf::Message for IntValue {
         const NAME: &'static str = "IntValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.value = is.read_int32()?;
+                    },
+                    16 => {
+                        self.min = ::std::option::Option::Some(is.read_int32()?);
+                    },
+                    24 => {
+                        self.min_hint = ::std::option::Option::Some(is.read_int32()?);
+                    },
+                    32 => {
+                        self.max = ::std::option::Option::Some(is.read_int32()?);
+                    },
+                    40 => {
+                        self.max_hint = ::std::option::Option::Some(is.read_int32()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if self.value != 0 {
+                my_size += ::protobuf::rt::int32_size(1, self.value);
+            }
+            if let Some(v) = self.min {
+                my_size += ::protobuf::rt::int32_size(2, v);
+            }
+            if let Some(v) = self.min_hint {
+                my_size += ::protobuf::rt::int32_size(3, v);
+            }
+            if let Some(v) = self.max {
+                my_size += ::protobuf::rt::int32_size(4, v);
+            }
+            if let Some(v) = self.max_hint {
+                my_size += ::protobuf::rt::int32_size(5, v);
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if self.value != 0 {
+                os.write_int32(1, self.value)?;
+            }
+            if let Some(v) = self.min {
+                os.write_int32(2, v)?;
+            }
+            if let Some(v) = self.min_hint {
+                os.write_int32(3, v)?;
+            }
+            if let Some(v) = self.max {
+                os.write_int32(4, v)?;
+            }
+            if let Some(v) = self.max_hint {
+                os.write_int32(5, v)?;
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> IntValue {
+            IntValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = 0;
+            self.min = ::std::option::Option::None;
+            self.min_hint = ::std::option::Option::None;
+            self.max = ::std::option::Option::None;
+            self.max_hint = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static IntValue {
+            static instance: IntValue = IntValue {
+                value: 0,
+                min: ::std::option::Option::None,
+                min_hint: ::std::option::Option::None,
+                max: ::std::option::Option::None,
+                max_hint: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for IntValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.IntValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for IntValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for IntValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.UintValue)
+    pub struct UintValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.UintValue.value)
+        pub value: u32,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.UintValue.min)
+        pub min: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.UintValue.min_hint)
+        pub min_hint: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.UintValue.max)
+        pub max: ::std::option::Option<u32>,
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.UintValue.max_hint)
+        pub max_hint: ::std::option::Option<u32>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.UintValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a UintValue {
+        fn default() -> &'a UintValue {
+            <UintValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl UintValue {
+        pub fn new() -> UintValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(5);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                "value",
+                |m: &UintValue| { &m.value },
+                |m: &mut UintValue| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min",
+                |m: &UintValue| { &m.min },
+                |m: &mut UintValue| { &mut m.min },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "min_hint",
+                |m: &UintValue| { &m.min_hint },
+                |m: &mut UintValue| { &mut m.min_hint },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max",
+                |m: &UintValue| { &m.max },
+                |m: &mut UintValue| { &mut m.max },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "max_hint",
+                |m: &UintValue| { &m.max_hint },
+                |m: &mut UintValue| { &mut m.max_hint },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UintValue>(
+                "NodeSetting.UintValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for UintValue {
+        const NAME: &'static str = "UintValue";
 
         fn is_initialized(&self) -> bool {
             true
@@ -5284,8 +5552,8 @@ pub mod node_setting {
             &mut self.special_fields
         }
 
-        fn new() -> IntValue {
-            IntValue::new()
+        fn new() -> UintValue {
+            UintValue::new()
         }
 
         fn clear(&mut self) {
@@ -5297,8 +5565,8 @@ pub mod node_setting {
             self.special_fields.clear();
         }
 
-        fn default_instance() -> &'static IntValue {
-            static instance: IntValue = IntValue {
+        fn default_instance() -> &'static UintValue {
+            static instance: UintValue = UintValue {
                 value: 0,
                 min: ::std::option::Option::None,
                 min_hint: ::std::option::Option::None,
@@ -5310,20 +5578,20 @@ pub mod node_setting {
         }
     }
 
-    impl ::protobuf::MessageFull for IntValue {
+    impl ::protobuf::MessageFull for UintValue {
         fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
             static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.IntValue").unwrap()).clone()
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.UintValue").unwrap()).clone()
         }
     }
 
-    impl ::std::fmt::Display for IntValue {
+    impl ::std::fmt::Display for UintValue {
         fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
             ::protobuf::text_format::fmt(self, f)
         }
     }
 
-    impl ::protobuf::reflect::ProtobufValue for IntValue {
+    impl ::protobuf::reflect::ProtobufValue for UintValue {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 
@@ -8688,7 +8956,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     rtR\ntargetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\
     \x122\n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsour\
     cePort\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelP\
-    rotocolR\x08protocol\"\x99\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
+    rotocolR\x08protocol\"\xa5\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
     \x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
     \x20\x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.no\
     des.PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.no\
@@ -8698,7 +8966,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\
     \x18\x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\
     \x07details\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\
-    \"\xef\x07\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
+    \"\xfb\x07\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
     \x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06S\
     CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\
     \x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHO\
@@ -8723,76 +8991,83 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
     \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
     ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
-    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\r\n\tCONTAINER\x10d\
-    \"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\
-    \x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\
-    \x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DAT\
-    A\x10\x06\x12\t\n\x05COLOR\x10\x07\"X\n\x0bNodeDetails\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\x125\n\x08category\x18\x02\x20\x01(\x0e2\
-    \x19.mizer.nodes.NodeCategoryR\x08category\"c\n\nNodeConfig\x12M\n\x10co\
-    ntainer_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0\
-    R\x0fcontainerConfigB\x06\n\x04type\"\xf5\x10\n\x0bNodeSetting\x12\x14\n\
-    \x05label\x18\x01\x20\x01(\tR\x05label\x12\x20\n\x0bdescription\x18\x02\
-    \x20\x01(\tR\x0bdescription\x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\
-    \x08disabled\x128\n\x04text\x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSett\
-    ing.TextValueH\0R\x04text\x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.n\
-    odes.NodeSetting.FloatValueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\
-    \x0b2!.mizer.nodes.NodeSetting.IntValueH\0R\x03int\x128\n\x04bool\x18\
-    \x07\x20\x01(\x0b2\".mizer.nodes.NodeSetting.BoolValueH\0R\x04bool\x12>\
-    \n\x06select\x18\x08\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SelectValueH\
-    \0R\x06select\x128\n\x04enum\x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetti\
-    ng.EnumValueH\0R\x04enum\x122\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.node\
-    s.NodeSetting.IdValueH\0R\x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.\
-    mizer.nodes.NodeSetting.SplineValueH\0R\x06spline\x12;\n\x05media\x18\
-    \x0c\x20\x01(\x0b2#.mizer.nodes.NodeSetting.MediaValueH\0R\x05media\x1a?\
-    \n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x1c\n\
-    \tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\xba\x01\n\nFloatValue\
-    \x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x15\n\x03min\x18\
-    \x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\
-    \x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\
-    \x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01\
-    (\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\
-    \n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntValue\x12\x14\n\x05valu\
-    e\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0R\
-    \x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\x07mi\
-    nHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\
-    \x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\
-    \x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hi\
-    nt\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05value\
-    \x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\
-    \x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting.Selec\
-    tVariantR\x08variants\x1a\xcc\x02\n\rSelectVariant\x12J\n\x05group\x18\
-    \x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.SelectVariant.SelectGroupH\0\
-    R\x05group\x12G\n\x04item\x18\x02\x20\x01(\x0b21.mizer.nodes.NodeSetting\
-    .SelectVariant.SelectItemH\0R\x04item\x1aa\n\x0bSelectGroup\x12\x14\n\
-    \x05label\x18\x01\x20\x01(\tR\x05label\x12<\n\x05items\x18\x02\x20\x03(\
-    \x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x05items\x1a8\n\nSelectIte\
-    m\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x14\n\x05label\x18\
-    \x02\x20\x01(\tR\x05labelB\t\n\x07variant\x1ac\n\tEnumValue\x12\x14\n\
-    \x05value\x18\x01\x20\x01(\rR\x05value\x12@\n\x08variants\x18\x02\x20\
-    \x03(\x0b2$.mizer.nodes.NodeSetting.EnumVariantR\x08variants\x1a9\n\x0bE\
-    numVariant\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05\
-    label\x18\x02\x20\x01(\tR\x05label\x1a_\n\x07IdValue\x12\x14\n\x05value\
-    \x18\x01\x20\x01(\rR\x05value\x12>\n\x08variants\x18\x02\x20\x03(\x0b2\"\
-    .mizer.nodes.NodeSetting.IdVariantR\x08variants\x1a7\n\tIdVariant\x12\
-    \x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\x02\
-    \x20\x01(\tR\x05label\x1a\xc6\x01\n\x0bSplineValue\x12E\n\x05steps\x18\
-    \x01\x20\x03(\x0b2/.mizer.nodes.NodeSetting.SplineValue.SplineStepR\x05s\
-    teps\x1ap\n\nSplineStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
-    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\
-    \x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03\
-    c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\
-    \x03c1b\x1a_\n\nMediaValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05val\
-    ue\x12;\n\rallowed_types\x18\x02\x20\x03(\x0e2\x16.mizer.media.MediaType\
-    R\x0callowedTypesB\x07\n\x05value\"\xf4\x03\n\x0eMidiNodeConfig\x12\x16\
-    \n\x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_binding\x18\
-    \x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bnoteBi\
-    nding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.MidiN\
-    odeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNoteBind\
-    ing\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04type\
-    \x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTypeR\
-    \x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nrange_\
-    from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\x05\x20\
+    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\n\n\x06WEBCAM\x10R\
+    \x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\x08\n\x04NONE\x10\0\
+    \x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\x12\x0c\n\
+    \x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\x08TIMECODE\
+    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\x10\x07\"X\n\x0bNode\
+    Details\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x125\n\x08category\
+    \x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08category\"c\n\nN\
+    odeConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\x20.mizer.nodes.\
+    ContainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\x04type\"\xeb\x12\n\
+    \x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12\x20\
+    \n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescription\x12\x1a\n\x08disabl\
+    ed\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04text\x18\x04\x20\x01(\x0b\
+    2\".mizer.nodes.NodeSetting.TextValueH\0R\x04text\x12;\n\x05float\x18\
+    \x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatValueH\0R\x05float\x125\
+    \n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSetting.IntValueH\0R\
+    \x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.nodes.NodeSetting.B\
+    oolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\x0b2$.mizer.nodes\
+    .NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\x18\t\x20\x01(\x0b\
+    2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x122\n\x02id\x18\n\x20\
+    \x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\x02id\x12>\n\x06splin\
+    e\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SplineValueH\0R\x06spli\
+    ne\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.nodes.NodeSetting.MediaV\
+    alueH\0R\x05media\x128\n\x04uint\x18\r\x20\x01(\x0b2\".mizer.nodes.NodeS\
+    etting.UintValueH\0R\x04uint\x1a?\n\tTextValue\x12\x14\n\x05value\x18\
+    \x01\x20\x01(\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmu\
+    ltiline\x1a\xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \x01R\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\
+    \x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\
+    \x01\x12\x15\n\x03max\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\
+    \x1e\n\x08max_hint\x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\
+    \x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\
+    \xb8\x01\n\x08IntValue\x12\x14\n\x05value\x18\x01\x20\x01(\x05R\x05value\
+    \x12\x15\n\x03min\x18\x02\x20\x01(\x05H\0R\x03min\x88\x01\x01\x12\x1e\n\
+    \x08min_hint\x18\x03\x20\x01(\x05H\x01R\x07minHint\x88\x01\x01\x12\x15\n\
+    \x03max\x18\x04\x20\x01(\x05H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_h\
+    int\x18\x05\x20\x01(\x05H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\
+    \x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb9\x01\n\tUintVa\
+    lue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\
+    \x02\x20\x01(\rH\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\
+    \x01(\rH\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\r\
+    H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\
+    \x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\
+    \x0b\n\t_max_hint\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \x08R\x05value\x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \tR\x05value\x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeS\
+    etting.SelectVariantR\x08variants\x1a\xcc\x02\n\rSelectVariant\x12J\n\
+    \x05group\x18\x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.SelectVariant.S\
+    electGroupH\0R\x05group\x12G\n\x04item\x18\x02\x20\x01(\x0b21.mizer.node\
+    s.NodeSetting.SelectVariant.SelectItemH\0R\x04item\x1aa\n\x0bSelectGroup\
+    \x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12<\n\x05items\x18\x02\
+    \x20\x03(\x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x05items\x1a8\n\n\
+    SelectItem\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x14\n\x05\
+    label\x18\x02\x20\x01(\tR\x05labelB\t\n\x07variant\x1ac\n\tEnumValue\x12\
+    \x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12@\n\x08variants\x18\x02\
+    \x20\x03(\x0b2$.mizer.nodes.NodeSetting.EnumVariantR\x08variants\x1a9\n\
+    \x0bEnumVariant\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\
+    \n\x05label\x18\x02\x20\x01(\tR\x05label\x1a_\n\x07IdValue\x12\x14\n\x05\
+    value\x18\x01\x20\x01(\rR\x05value\x12>\n\x08variants\x18\x02\x20\x03(\
+    \x0b2\".mizer.nodes.NodeSetting.IdVariantR\x08variants\x1a7\n\tIdVariant\
+    \x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\
+    \x02\x20\x01(\tR\x05label\x1a\xc6\x01\n\x0bSplineValue\x12E\n\x05steps\
+    \x18\x01\x20\x03(\x0b2/.mizer.nodes.NodeSetting.SplineValue.SplineStepR\
+    \x05steps\x1ap\n\nSplineStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\
+    \x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\
+    \x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\
+    \n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\
+    \x01R\x03c1b\x1a_\n\nMediaValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\
+    \x05value\x12;\n\rallowed_types\x18\x02\x20\x03(\x0e2\x16.mizer.media.Me\
+    diaTypeR\x0callowedTypesB\x07\n\x05value\"\xf4\x03\n\x0eMidiNodeConfig\
+    \x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_bindin\
+    g\x18\x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0bn\
+    oteBinding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes.\
+    MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNot\
+    eBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04t\
+    ype\x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiTy\
+    peR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nran\
+    ge_from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\x05\x20\
     \x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\
     \x04NOTE\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\
     \x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\
@@ -8851,7 +9126,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::media::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(48);
+            let mut messages = ::std::vec::Vec::with_capacity(49);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());
             messages.push(NodesRequest::generated_message_descriptor_data());
@@ -8886,6 +9161,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(node_setting::TextValue::generated_message_descriptor_data());
             messages.push(node_setting::FloatValue::generated_message_descriptor_data());
             messages.push(node_setting::IntValue::generated_message_descriptor_data());
+            messages.push(node_setting::UintValue::generated_message_descriptor_data());
             messages.push(node_setting::BoolValue::generated_message_descriptor_data());
             messages.push(node_setting::SelectValue::generated_message_descriptor_data());
             messages.push(node_setting::SelectVariant::generated_message_descriptor_data());

@@ -104,6 +104,7 @@ impl PipelineAccess {
             VideoMixer(node) => self.add_node(path, node),
             VideoRgb(node) => self.add_node(path, node),
             VideoRgbSplit(node) => self.add_node(path, node),
+            Webcam(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
             ColorConstant(node) => self.add_node(path, node),

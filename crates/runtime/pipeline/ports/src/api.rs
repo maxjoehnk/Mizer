@@ -179,6 +179,17 @@ impl From<Color> for (f64, f64, f64) {
     }
 }
 
+impl From<Color> for [f32; 4] {
+    fn from(color: Color) -> Self {
+        [
+            color.red as f32,
+            color.green as f32,
+            color.blue as f32,
+            color.alpha as f32,
+        ]
+    }
+}
+
 impl Mul<f64> for Color {
     type Output = Self;
 

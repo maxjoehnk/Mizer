@@ -1,0 +1,18 @@
+[package]
+name = "mizer-text-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+mizer-node = { path = "../../../node" }
+serde = { version = "1", features = ["derive"] }
+enum-iterator = "1.4"
+num_enum = "0.6"
+mizer-wgpu = { path = "../../../../wgpu" }
+image = "0.24"
+profiling = "1"
+wgpu_glyph = "0.20"
+font-kit = "0.11"

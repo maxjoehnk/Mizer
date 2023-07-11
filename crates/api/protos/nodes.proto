@@ -189,6 +189,7 @@ message Node {
     TEMPLATE = 81;
     WEBCAM = 82;
     TEXTURE_BORDER = 83;
+    VIDEO_TEXT = 84;
     CONTAINER = 100;
   }
 

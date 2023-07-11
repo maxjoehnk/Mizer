@@ -64,6 +64,7 @@ node_type_name! {
         VideoMixer,
         VideoRgb,
         VideoRgbSplit,
+        VideoText,
         Webcam,
         TextureBorder,
         Scripting,

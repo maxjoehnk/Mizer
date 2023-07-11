@@ -34,6 +34,7 @@ mizer-opc-nodes = { path = "connections/protocols/opc" }
 mizer-osc-nodes = { path = "connections/protocols/osc" }
 mizer-video-nodes = { path = "video" }
 mizer-webcam-nodes = { path = "video/webcams" }
+mizer-text-nodes = { path = "video/text" }
 mizer-data-nodes = { path = "data" }
 mizer-plan-nodes = { path = "plan" }
 mizer-timing-nodes = { path = "behaviors/timing" }

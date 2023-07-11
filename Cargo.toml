@@ -68,6 +68,7 @@ members = [
     "crates/runtime/pipeline/nodes/timecode",
     "crates/runtime/pipeline/nodes/transport",
     "crates/runtime/pipeline/nodes/video",
+    "crates/runtime/pipeline/nodes/video/text",
     "crates/runtime/pipeline/nodes/video/webcams",
     "crates/runtime/pipeline/ports",
     "crates/runtime/pipeline/templates",

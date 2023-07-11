@@ -35,6 +35,7 @@ pub use mizer_port_operation_nodes::{
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;
+pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
 pub use mizer_transport_nodes::TransportNode;
@@ -174,6 +175,7 @@ node_impl! {
     VideoHsv(VideoHsvNode),
     VideoRgb(VideoRgbNode),
     VideoRgbSplit(VideoRgbSplitNode),
+    VideoText(VideoTextNode),
     TextureBorder(TextureBorderNode),
     Webcam(WebcamNode),
     Gamepad(GamepadNode),

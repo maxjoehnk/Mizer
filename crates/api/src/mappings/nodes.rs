@@ -211,6 +211,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::Template => node::NodeType::TEMPLATE,
             NodeType::Webcam => node::NodeType::WEBCAM,
             NodeType::TextureBorder => node::NodeType::TEXTURE_BORDER,
+            NodeType::VideoText => node::NodeType::VIDEO_TEXT,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -286,6 +287,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::TEMPLATE => NodeType::Template,
             node::NodeType::WEBCAM => NodeType::Webcam,
             node::NodeType::TEXTURE_BORDER => NodeType::TextureBorder,
+            node::NodeType::VIDEO_TEXT => NodeType::VideoText,
         }
     }
 }

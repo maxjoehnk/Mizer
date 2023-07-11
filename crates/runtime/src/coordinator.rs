@@ -561,6 +561,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::VideoRgb(node) => pipeline.register_node(path, &node),
         Node::VideoRgbSplit(node) => pipeline.register_node(path, &node),
         Node::TextureBorder(node) => pipeline.register_node(path, &node),
+        Node::VideoText(node) => pipeline.register_node(path, &node),
         Node::Webcam(node) => pipeline.register_node(path, &node),
         Node::ColorConstant(node) => pipeline.register_node(path, &node),
         Node::ColorBrightness(node) => pipeline.register_node(path, &node),

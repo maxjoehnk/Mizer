@@ -14,7 +14,7 @@ mizer-clock = { path = "../../runtime/clock" }
 pinboard = "2.2"
 profiling = "1"
 tracing = "0.1"
-dashmap = "5.4"
+dashmap = "5.5"
 mizer-util = { path = "../../util" }
 
 [dev-dependencies]

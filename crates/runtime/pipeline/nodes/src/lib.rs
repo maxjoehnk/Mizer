@@ -39,8 +39,8 @@ pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
 pub use mizer_transport_nodes::TransportNode;
 pub use mizer_video_nodes::{
-    VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode, VideoRgbSplitNode,
-    VideoTransformNode,
+    TextureBorderNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
+    VideoRgbSplitNode, VideoTransformNode,
 };
 pub use mizer_webcam_nodes::WebcamNode;
 use serde::{Deserialize, Serialize};
@@ -174,6 +174,7 @@ node_impl! {
     VideoHsv(VideoHsvNode),
     VideoRgb(VideoRgbNode),
     VideoRgbSplit(VideoRgbSplitNode),
+    TextureBorder(TextureBorderNode),
     Webcam(WebcamNode),
     Gamepad(GamepadNode),
     ColorConstant(ConstantColorNode),

@@ -188,6 +188,7 @@ message Node {
     AUDIO_METER = 80;
     TEMPLATE = 81;
     WEBCAM = 82;
+    TEXTURE_BORDER = 83;
     CONTAINER = 100;
   }
 

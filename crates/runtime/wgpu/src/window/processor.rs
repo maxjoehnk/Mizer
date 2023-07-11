@@ -13,7 +13,7 @@ impl Processor for WindowProcessor {
         let event_loop = injector.get_mut::<EventLoopHandle>().unwrap();
         event_loop
             .event_loop
-            .run_return(|event, target, control_flow| match event {
+            .run_return(|event, _target, control_flow| match event {
                 Event::WindowEvent {
                     event: winit::event::WindowEvent::Resized(size),
                     window_id,

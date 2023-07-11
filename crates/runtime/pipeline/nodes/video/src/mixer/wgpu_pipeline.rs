@@ -1,5 +1,5 @@
 use crate::mixer::node::VideoMixerMode;
-use mizer_wgpu::{TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
+use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use std::num::NonZeroU32;
 use wgpu::util::DeviceExt;
 use wgpu::BufferUsages;
@@ -52,54 +52,7 @@ impl MixerWgpuPipeline {
         bind_group_layouts: &[&wgpu::BindGroupLayout],
         shader: &wgpu::ShaderModule,
     ) -> wgpu::RenderPipeline {
-        let render_pipeline_layout =
-            context
-                .device
-                .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-                    label: Some("Mixer Pipeline Layout"),
-                    bind_group_layouts,
-                    push_constant_ranges: &[],
-                });
-
-        let render_pipeline =
-            context
-                .device
-                .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-                    label: Some("Mixer Render Pipeline"),
-                    layout: Some(&render_pipeline_layout),
-                    vertex: wgpu::VertexState {
-                        module: shader,
-                        entry_point: "vs_main",
-                        buffers: &[Vertex::desc()],
-                    },
-                    fragment: Some(wgpu::FragmentState {
-                        module: shader,
-                        entry_point: "fs_main",
-                        targets: &[Some(wgpu::ColorTargetState {
-                            format: wgpu::TextureFormat::Bgra8UnormSrgb,
-                            blend: Some(wgpu::BlendState::REPLACE),
-                            write_mask: wgpu::ColorWrites::ALL,
-                        })],
-                    }),
-                    primitive: wgpu::PrimitiveState {
-                        topology: wgpu::PrimitiveTopology::TriangleList,
-                        strip_index_format: None,
-                        front_face: wgpu::FrontFace::Ccw,
-                        cull_mode: Some(wgpu::Face::Back),
-                        polygon_mode: wgpu::PolygonMode::Fill,
-                        conservative: false,
-                        unclipped_depth: true,
-                    },
-                    depth_stencil: None,
-                    multisample: wgpu::MultisampleState {
-                        count: 1,
-                        mask: !0,
-                        alpha_to_coverage_enabled: false,
-                    },
-                    multiview: None,
-                });
-
-        render_pipeline
+        context.create_standard_pipeline(bind_group_layouts, shader, Some("Mixer Pipeline"))
     }
 
     pub fn new(context: &WgpuContext) -> Self {

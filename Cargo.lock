@@ -4926,7 +4926,6 @@ dependencies = [
  "num_enum 0.6.1",
  "profiling",
  "serde",
- "wgpu",
 ]
 
 [[package]]

@@ -8,8 +8,7 @@ use std::path::PathBuf;
 
 use mizer_node::*;
 use mizer_wgpu::{
-    Texture, TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext,
-    WgpuPipeline,
+    TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
 
 const OUTPUT_PORT: &str = "Output";

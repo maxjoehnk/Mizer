@@ -5,6 +5,7 @@ use std::ops::Deref;
 pub use texture::*;
 pub use texture_source_stage::TextureSourceStage;
 pub use vertex::Vertex;
+pub use wgpu;
 
 mod context;
 mod module;

@@ -1,11 +1,8 @@
-use crate::{
-    Texture, TextureProvider, TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES,
-};
+use crate::{Texture, TextureProvider, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
 
 pub struct TextureSourceStage {
     texture: Texture,
-    pipeline_layout: wgpu::PipelineLayout,
     pipeline: wgpu::RenderPipeline,
     vertex_buffer: wgpu::Buffer,
     index_buffer: wgpu::Buffer,
@@ -21,52 +18,11 @@ impl TextureSourceStage {
             .device
             .create_shader_module(wgpu::include_wgsl!("texture_source_stage.wgsl"));
 
-        let render_pipeline_layout =
-            context
-                .device
-                .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
-                    label: Some("Texture Source Pipeline Layout"),
-                    bind_group_layouts: &[&texture.bind_group_layout],
-                    push_constant_ranges: &[],
-                });
-
-        let render_pipeline =
-            context
-                .device
-                .create_render_pipeline(&wgpu::RenderPipelineDescriptor {
-                    label: Some("Texture Source Stage Render Pipeline"),
-                    layout: Some(&render_pipeline_layout),
-                    vertex: wgpu::VertexState {
-                        module: &shader,
-                        entry_point: "vs_main",
-                        buffers: &[Vertex::desc()],
-                    },
-                    fragment: Some(wgpu::FragmentState {
-                        module: &shader,
-                        entry_point: "fs_main",
-                        targets: &[Some(wgpu::ColorTargetState {
-                            format: wgpu::TextureFormat::Bgra8UnormSrgb,
-                            blend: Some(wgpu::BlendState::REPLACE),
-                            write_mask: wgpu::ColorWrites::ALL,
-                        })],
-                    }),
-                    primitive: wgpu::PrimitiveState {
-                        topology: wgpu::PrimitiveTopology::TriangleList,
-                        strip_index_format: None,
-                        front_face: wgpu::FrontFace::Ccw,
-                        cull_mode: Some(wgpu::Face::Back),
-                        polygon_mode: wgpu::PolygonMode::Fill,
-                        conservative: false,
-                        unclipped_depth: true,
-                    },
-                    depth_stencil: None,
-                    multisample: wgpu::MultisampleState {
-                        count: 1,
-                        mask: !0,
-                        alpha_to_coverage_enabled: false,
-                    },
-                    multiview: None,
-                });
+        let render_pipeline = context.create_standard_pipeline(
+            &[&texture.bind_group_layout],
+            &shader,
+            Some("Texture Source Stage Render Pipeline"),
+        );
 
         let vertex_buffer = context
             .device
@@ -86,7 +42,6 @@ impl TextureSourceStage {
 
         Ok(Self {
             texture,
-            pipeline_layout: render_pipeline_layout,
             pipeline: render_pipeline,
             vertex_buffer,
             index_buffer,

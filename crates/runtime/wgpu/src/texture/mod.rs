@@ -1,4 +1,3 @@
-use anyhow::anyhow;
 pub use static_texture::StaticTexture;
 pub use texture_provider::TextureProvider;
 pub use texture_registry::*;
@@ -19,6 +18,8 @@ pub struct Texture {
     pub bind_group_layout: wgpu::BindGroupLayout,
 }
 
+const BIND_GROUP_LABEL: &str = "Texture Source Stage Bind Group";
+
 impl Texture {
     pub fn new(context: &WgpuContext, provider: &mut impl TextureProvider) -> anyhow::Result<Self> {
         let texture = context.create_texture(
@@ -31,46 +32,13 @@ impl Texture {
 
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         let sampler = context.create_sampler();
-        let bind_group_layout =
-            context
-                .device
-                .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-                    entries: &[
-                        wgpu::BindGroupLayoutEntry {
-                            binding: 0,
-                            visibility: wgpu::ShaderStages::FRAGMENT,
-                            ty: wgpu::BindingType::Texture {
-                                multisampled: false,
-                                view_dimension: wgpu::TextureViewDimension::D2,
-                                sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                            },
-                            count: None,
-                        },
-                        wgpu::BindGroupLayoutEntry {
-                            binding: 1,
-                            visibility: wgpu::ShaderStages::FRAGMENT,
-                            ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
-                            count: None,
-                        },
-                    ],
-                    label: None,
-                });
-        let bind_group = context
-            .device
-            .create_bind_group(&wgpu::BindGroupDescriptor {
-                layout: &bind_group_layout,
-                entries: &[
-                    wgpu::BindGroupEntry {
-                        binding: 0,
-                        resource: wgpu::BindingResource::TextureView(&view),
-                    },
-                    wgpu::BindGroupEntry {
-                        binding: 1,
-                        resource: wgpu::BindingResource::Sampler(&sampler),
-                    },
-                ],
-                label: None,
-            });
+        let bind_group_layout = context.create_texture_bind_group_layout(Some("Texture"));
+        let bind_group = context.create_texture_bind_group(
+            &bind_group_layout,
+            &view,
+            &sampler,
+            BIND_GROUP_LABEL,
+        );
 
         let mut texture = Self {
             texture,
@@ -130,21 +98,11 @@ impl Texture {
         self.view = self
             .texture
             .create_view(&wgpu::TextureViewDescriptor::default());
-        self.bind_group = context
-            .device
-            .create_bind_group(&wgpu::BindGroupDescriptor {
-                layout: &self.bind_group_layout,
-                entries: &[
-                    wgpu::BindGroupEntry {
-                        binding: 0,
-                        resource: wgpu::BindingResource::TextureView(&self.view),
-                    },
-                    wgpu::BindGroupEntry {
-                        binding: 1,
-                        resource: wgpu::BindingResource::Sampler(&self.sampler),
-                    },
-                ],
-                label: None,
-            });
+        self.bind_group = context.create_texture_bind_group(
+            &self.bind_group_layout,
+            &self.view,
+            &self.sampler,
+            BIND_GROUP_LABEL,
+        );
     }
 }

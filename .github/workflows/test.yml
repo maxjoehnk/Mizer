@@ -7,10 +7,10 @@ jobs:
   test-linux:
     runs-on: ubuntu-22.04
     steps:
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          large-packages: true # llvm is removed in here
+#      - name: Free Disk Space
+#        uses: jlumbroso/free-disk-space@main
+#        with:
+#          large-packages: true # llvm is removed in here
       - name: Install native dependencies
         run: |
           sudo apt-get update

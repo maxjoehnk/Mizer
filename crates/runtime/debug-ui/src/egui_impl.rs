@@ -30,7 +30,7 @@ impl DebugUi {
         let context = Context::default();
 
         let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
-        futures::executor::block_on(unsafe { painter.set_window(Some(&window)) })?;
+        futures::executor::block_on(painter.set_window(Some(&window)))?;
 
         Ok(DebugUi {
             egui_context: context,

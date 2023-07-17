@@ -242,7 +242,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                     .pipeline
                     .get_state::<<ButtonNode as ProcessingNode>::State>(path);
 
-                value.map(|(value, _)| (path.clone(), *value))
+                value.map(|state| (path.clone(), state.value()))
             })
             .collect::<HashMap<_, _>>();
 

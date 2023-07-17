@@ -1,4 +1,3 @@
-use base64::Engine;
 use mizer_fixtures::programmer::PresetId;
 use mizer_fixtures::GroupId;
 use mizer_node::{Color, NodePath};

@@ -140,6 +140,7 @@ impl PipelineAccess {
             AudioMix(node) => self.add_node(path, node),
             AudioMeter(node) => self.add_node(path, node),
             Template(node) => self.add_node(path, node),
+            Beats(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

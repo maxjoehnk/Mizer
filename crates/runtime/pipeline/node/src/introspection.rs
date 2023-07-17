@@ -104,6 +104,7 @@ node_type_name! {
         Delay,
         Noise,
         Transport,
+        Beats,
         G13Input,
         G13Output,
         ConstantNumber,

@@ -38,7 +38,7 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
-pub use mizer_transport_nodes::TransportNode;
+pub use mizer_transport_nodes::{BeatsNode, TransportNode};
 pub use mizer_video_nodes::{
     TextureBorderNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
     VideoRgbSplitNode, VideoTransformNode,
@@ -195,6 +195,7 @@ node_impl! {
     Delay(DelayNode),
     Ramp(RampNode),
     Transport(TransportNode),
+    Beats(BeatsNode),
     Noise(NoiseNode),
     G13Input(G13InputNode),
     G13Output(G13OutputNode),

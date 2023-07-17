@@ -148,7 +148,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         context: context, builder: (context) => EditControlDialog(control: widget.control));
     if (result != null) {
       bloc.add(UpdateControlDecoration(
-          layoutId: widget.layoutId, controlId: widget.control.node.path, decorations: result));
+          layoutId: widget.layoutId, controlId: widget.control.id, decorations: result));
     }
   }
 

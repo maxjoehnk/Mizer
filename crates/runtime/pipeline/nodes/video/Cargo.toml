@@ -14,7 +14,6 @@ num_enum = "0.6"
 mizer-wgpu = { path = "../../../wgpu" }
 image = "0.24"
 ffmpeg-the-third = "1.2"
-ffmpeg-sys-the-third = { version = "1.1", features = ["build"] }
 profiling = "1"
 bytemuck = "1.13"
 cgmath = "0.18"

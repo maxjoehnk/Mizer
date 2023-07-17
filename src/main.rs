@@ -59,8 +59,16 @@ fn init() -> anyhow::Result<Flags> {
     logger::init()?;
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
+    init_ffmpeg()?;
 
     Ok(flags)
+}
+
+fn init_ffmpeg() -> anyhow::Result<()> {
+    ffmpeg_the_third::init()?;
+    ffmpeg_the_third::log::set_level(ffmpeg_the_third::log::Level::Warning);
+
+    Ok(())
 }
 
 fn build_tokio_runtime() -> tokio::runtime::Runtime {

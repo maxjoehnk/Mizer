@@ -5,6 +5,7 @@ use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
 use ffmpeg_the_third as ffmpeg;
+use image::DynamicImage;
 use std::ffi::OsStr;
 
 #[derive(Clone)]
@@ -147,33 +148,21 @@ impl VideoHandler {
         }
 
         let converted_video = converted_video.unwrap();
-        let mut scaler = converted_video.scaler(
+
+        let image = image::RgbaImage::from_raw(
+            decoder.width(),
+            decoder.height(),
+            converted_video.data(0).into(),
+        )
+        .ok_or_else(|| anyhow::anyhow!("Unable to construct image buffer"))?;
+        let image = DynamicImage::ImageRgba8(image);
+        let image = image.resize(
             THUMBNAIL_SIZE,
             THUMBNAIL_SIZE,
-            ffmpeg::software::scaling::Flags::empty(),
-        )?;
-        let mut thumbnail_frame = ffmpeg::frame::Video::empty();
-        scaler.run(&converted_video, &mut thumbnail_frame)?;
-        let mut output_context = ffmpeg::format::output(&target)?;
-        ffmpeg::format::context::output::dump(&output_context, 0, target.to_str());
-        output_context.write_header()?;
+            image::imageops::FilterType::Nearest,
+        );
 
-        let context = ffmpeg::encoder::find(ffmpeg::codec::Id::PNG).unwrap();
-        let thumbnail_stream = output_context.add_stream(context)?;
-        let mut encoder = ffmpeg::codec::Context::from_parameters(thumbnail_stream.parameters())?
-            .encoder()
-            .video()?;
-        encoder.set_width(THUMBNAIL_SIZE);
-        encoder.set_height(THUMBNAIL_SIZE);
-        encoder.set_aspect_ratio(decoder.aspect_ratio());
-        encoder.set_format(ffmpeg::format::Pixel::RGBA);
-        encoder.set_frame_rate(decoder.frame_rate());
-        encoder.set_time_base(decoder.time_base());
-
-        encoder.send_frame(&thumbnail_frame)?;
-        let mut packet = ffmpeg::packet::Packet::empty();
-        encoder.receive_packet(&mut packet)?;
-        packet.write_interleaved(&mut output_context)?;
+        image.save(&target)?;
 
         Ok(())
     }

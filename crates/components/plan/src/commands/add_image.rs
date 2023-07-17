@@ -51,7 +51,7 @@ impl<'a> Command<'a> for AddPlanImageCommand {
             });
 
             Ok(())
-        });
+        })?;
 
         Ok(((), id))
     }
@@ -61,7 +61,7 @@ impl<'a> Command<'a> for AddPlanImageCommand {
             plan.images.retain(|image| image.id != id);
 
             Ok(())
-        });
+        })?;
 
         Ok(())
     }

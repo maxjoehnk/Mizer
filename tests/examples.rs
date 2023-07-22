@@ -21,7 +21,6 @@ use test_case::test_case;
 #[test_case("plan_screen"; "plan_screen")]
 #[test_case("presets"; "presets")]
 #[test_case("sacn"; "sacn")]
-#[test_case("sequence"; "sequence")]
 #[test_case("sequencer"; "sequencer")]
 #[test_case("timecode"; "timecode")]
 #[test_case("video"; "video")]

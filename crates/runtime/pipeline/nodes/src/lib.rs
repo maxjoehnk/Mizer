@@ -33,8 +33,8 @@ pub use mizer_port_operation_nodes::{
     ThresholdNode,
 };
 pub use mizer_scripting_nodes::ScriptingNode;
-pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;
+pub use mizer_step_sequencer_nodes::{StepSequencerNode};
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
@@ -145,7 +145,7 @@ node_impl! {
     Oscillator(OscillatorNode),
     DmxOutput(DmxOutputNode),
     Scripting(ScriptingNode),
-    Sequence(SequenceNode),
+    StepSequencer(StepSequencerNode),
     Envelope(EnvelopeNode),
     Merge(MergeNode),
     Select(SelectNode),

@@ -128,7 +128,7 @@ message Node {
     CLOCK = 3;
     SCRIPT = 4;
     ENVELOPE = 5;
-    SEQUENCE = 6;
+    STEP_SEQUENCER = 6;
     SELECT = 7;
     MERGE = 8;
     THRESHOLD = 9;
@@ -257,6 +257,7 @@ message NodeSetting {
     SplineValue spline = 11;
     MediaValue media = 12;
     UintValue uint = 13;
+    StepSequencerValue step_sequencer = 14;
   }
 
   message TextValue {
@@ -350,6 +351,10 @@ message NodeSetting {
   message MediaValue {
     string value = 1;
     repeated mizer.media.MediaType allowed_types = 2;
+  }
+
+  message StepSequencerValue {
+    repeated bool steps = 1;
   }
 }
 

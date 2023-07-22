@@ -168,7 +168,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::Group => node::NodeType::GROUP,
             NodeType::Preset => node::NodeType::PRESET,
             NodeType::Sequencer => node::NodeType::SEQUENCER,
-            NodeType::Sequence => node::NodeType::SEQUENCE,
+            NodeType::StepSequencer => node::NodeType::STEP_SEQUENCER,
             NodeType::Envelope => node::NodeType::ENVELOPE,
             NodeType::Select => node::NodeType::SELECT,
             NodeType::Merge => node::NodeType::MERGE,
@@ -245,7 +245,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::GROUP => NodeType::Group,
             node::NodeType::PRESET => NodeType::Preset,
             node::NodeType::SEQUENCER => NodeType::Sequencer,
-            node::NodeType::SEQUENCE => NodeType::Sequence,
+            node::NodeType::STEP_SEQUENCER => NodeType::StepSequencer,
             node::NodeType::ENVELOPE => NodeType::Envelope,
             node::NodeType::SELECT => NodeType::Select,
             node::NodeType::MERGE => NodeType::Merge,
@@ -482,6 +482,10 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 ..Default::default()
             }),
             Spline(spline) => Self::Spline(spline.into()),
+            Steps(steps) => Self::StepSequencer(node_setting::StepSequencerValue {
+                steps,
+                ..Default::default()
+            }),
             Media {
                 value,
                 content_types,
@@ -554,6 +558,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .collect(),
             },
             Spline(value) => Self::Spline(value.into()),
+            StepSequencer(value) => Self::Steps(value.steps),
             Media(value) => Self::Media {
                 value: value.value,
                 content_types: value

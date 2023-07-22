@@ -3198,8 +3198,8 @@ pub mod node {
         SCRIPT = 4,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.ENVELOPE)
         ENVELOPE = 5,
-        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SEQUENCE)
-        SEQUENCE = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.STEP_SEQUENCER)
+        STEP_SEQUENCER = 6,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.SELECT)
         SELECT = 7,
         // @@protoc_insertion_point(enum_value:mizer.nodes.Node.NodeType.MERGE)
@@ -3341,7 +3341,7 @@ pub mod node {
                 3 => ::std::option::Option::Some(NodeType::CLOCK),
                 4 => ::std::option::Option::Some(NodeType::SCRIPT),
                 5 => ::std::option::Option::Some(NodeType::ENVELOPE),
-                6 => ::std::option::Option::Some(NodeType::SEQUENCE),
+                6 => ::std::option::Option::Some(NodeType::STEP_SEQUENCER),
                 7 => ::std::option::Option::Some(NodeType::SELECT),
                 8 => ::std::option::Option::Some(NodeType::MERGE),
                 9 => ::std::option::Option::Some(NodeType::THRESHOLD),
@@ -3415,7 +3415,7 @@ pub mod node {
             NodeType::CLOCK,
             NodeType::SCRIPT,
             NodeType::ENVELOPE,
-            NodeType::SEQUENCE,
+            NodeType::STEP_SEQUENCER,
             NodeType::SELECT,
             NodeType::MERGE,
             NodeType::THRESHOLD,
@@ -3495,7 +3495,7 @@ pub mod node {
                 NodeType::CLOCK => 3,
                 NodeType::SCRIPT => 4,
                 NodeType::ENVELOPE => 5,
-                NodeType::SEQUENCE => 6,
+                NodeType::STEP_SEQUENCER => 6,
                 NodeType::SELECT => 7,
                 NodeType::MERGE => 8,
                 NodeType::THRESHOLD => 9,
@@ -4522,8 +4522,57 @@ impl NodeSetting {
         }
     }
 
+    // .mizer.nodes.NodeSetting.StepSequencerValue step_sequencer = 14;
+
+    pub fn step_sequencer(&self) -> &node_setting::StepSequencerValue {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::StepSequencer(ref v)) => v,
+            _ => <node_setting::StepSequencerValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_step_sequencer(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_step_sequencer(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::StepSequencer(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_step_sequencer(&mut self, v: node_setting::StepSequencerValue) {
+        self.value = ::std::option::Option::Some(node_setting::Value::StepSequencer(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_step_sequencer(&mut self) -> &mut node_setting::StepSequencerValue {
+        if let ::std::option::Option::Some(node_setting::Value::StepSequencer(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(node_setting::Value::StepSequencer(node_setting::StepSequencerValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(node_setting::Value::StepSequencer(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_step_sequencer(&mut self) -> node_setting::StepSequencerValue {
+        if self.has_step_sequencer() {
+            match self.value.take() {
+                ::std::option::Option::Some(node_setting::Value::StepSequencer(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            node_setting::StepSequencerValue::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(13);
+        let mut fields = ::std::vec::Vec::with_capacity(14);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "label",
@@ -4610,6 +4659,13 @@ impl NodeSetting {
             NodeSetting::mut_uint,
             NodeSetting::set_uint,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, node_setting::StepSequencerValue>(
+            "step_sequencer",
+            NodeSetting::has_step_sequencer,
+            NodeSetting::step_sequencer,
+            NodeSetting::mut_step_sequencer,
+            NodeSetting::set_step_sequencer,
+        ));
         oneofs.push(node_setting::Value::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodeSetting>(
             "NodeSetting",
@@ -4667,6 +4723,9 @@ impl ::protobuf::Message for NodeSetting {
                 },
                 106 => {
                     self.value = ::std::option::Option::Some(node_setting::Value::Uint(is.read_message()?));
+                },
+                114 => {
+                    self.value = ::std::option::Option::Some(node_setting::Value::StepSequencer(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -4731,6 +4790,10 @@ impl ::protobuf::Message for NodeSetting {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &node_setting::Value::StepSequencer(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -4780,6 +4843,9 @@ impl ::protobuf::Message for NodeSetting {
                 &node_setting::Value::Uint(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(13, v, os)?;
                 },
+                &node_setting::Value::StepSequencer(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(14, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -4802,6 +4868,7 @@ impl ::protobuf::Message for NodeSetting {
         self.label.clear();
         self.description.clear();
         self.disabled = false;
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
@@ -4871,6 +4938,8 @@ pub mod node_setting {
         Media(MediaValue),
         // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.uint)
         Uint(UintValue),
+        // @@protoc_insertion_point(oneof_field:mizer.nodes.NodeSetting.step_sequencer)
+        StepSequencer(StepSequencerValue),
     }
 
     impl ::protobuf::Oneof for Value {
@@ -7474,6 +7543,129 @@ pub mod node_setting {
     impl ::protobuf::reflect::ProtobufValue for MediaValue {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.nodes.NodeSetting.StepSequencerValue)
+    pub struct StepSequencerValue {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.nodes.NodeSetting.StepSequencerValue.steps)
+        pub steps: ::std::vec::Vec<bool>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.nodes.NodeSetting.StepSequencerValue.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a StepSequencerValue {
+        fn default() -> &'a StepSequencerValue {
+            <StepSequencerValue as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl StepSequencerValue {
+        pub fn new() -> StepSequencerValue {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(1);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+                "steps",
+                |m: &StepSequencerValue| { &m.steps },
+                |m: &mut StepSequencerValue| { &mut m.steps },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<StepSequencerValue>(
+                "NodeSetting.StepSequencerValue",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for StepSequencerValue {
+        const NAME: &'static str = "StepSequencerValue";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        is.read_repeated_packed_bool_into(&mut self.steps)?;
+                    },
+                    8 => {
+                        self.steps.push(is.read_bool()?);
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            my_size += 2 * self.steps.len() as u64;
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            for v in &self.steps {
+                os.write_bool(1, *v)?;
+            };
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> StepSequencerValue {
+            StepSequencerValue::new()
+        }
+
+        fn clear(&mut self) {
+            self.steps.clear();
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static StepSequencerValue {
+            static instance: StepSequencerValue = StepSequencerValue {
+                steps: ::std::vec::Vec::new(),
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for StepSequencerValue {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("NodeSetting.StepSequencerValue").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for StepSequencerValue {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for StepSequencerValue {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -8971,7 +9163,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     rtR\ntargetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\
     \x122\n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsour\
     cePort\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelP\
-    rotocolR\x08protocol\"\xd4\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
+    rotocolR\x08protocol\"\xda\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
     \x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
     \x20\x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.no\
     des.PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.no\
@@ -8981,150 +9173,152 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\
     \x18\x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\
     \x07details\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\
-    \"\xaa\x08\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
+    \"\xb0\x08\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
     \x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06S\
-    CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x0c\n\x08SEQUENCE\x10\
-    \x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHO\
-    LD\x10\t\x12\x0e\n\nDMX_OUTPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\x0e\
-    \n\nOSC_OUTPUT\x10\x0c\x12\x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI_OUT\
-    PUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\
-    \x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\
-    \x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\
-    \x12\r\n\tVIDEO_HSV\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\x0f\
-    \n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVIDEO_\
-    RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PAT\
-    TERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\
-    \tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\
-    \n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_B\
-    RIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\
-    \n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VA\
-    LUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\
-    \x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\
-    \x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\
-    \r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\
-    \x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\
-    \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
-    \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
-    ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
-    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\n\n\x06WEBCAM\x10R\
-    \x12\x12\n\x0eTEXTURE_BORDER\x10S\x12\x0e\n\nVIDEO_TEXT\x10T\x12\t\n\x05\
-    BEATS\x10U\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\x08\n\x04\
-    NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\
-    \x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\
-    \x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\x10\x07\
-    \"X\n\x0bNodeDetails\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x125\
-    \n\x08category\x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08ca\
-    tegory\"c\n\nNodeConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\
-    \x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\x04ty\
-    pe\"\xeb\x12\n\x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05\
-    label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescription\x12\
-    \x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04text\x18\
-    \x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValueH\0R\x04text\x12;\
-    \n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatValueH\0\
-    R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSetting.\
-    IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.nodes.N\
-    odeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\x0b2$\
-    .mizer.nodes.NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\x18\t\
-    \x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x122\n\
-    \x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\x02id\
-    \x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SplineV\
-    alueH\0R\x06spline\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.nodes.No\
-    deSetting.MediaValueH\0R\x05media\x128\n\x04uint\x18\r\x20\x01(\x0b2\".m\
-    izer.nodes.NodeSetting.UintValueH\0R\x04uint\x1a?\n\tTextValue\x12\x14\n\
-    \x05value\x18\x01\x20\x01(\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\
-    \x01(\x08R\tmultiline\x1a\xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\
-    \x01\x20\x01(\x01R\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\
-    \x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07\
-    minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\x01H\x02R\x03max\
-    \x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\x01H\x03R\x07maxHint\
-    \x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_ma\
-    x_hint\x1a\xb8\x01\n\x08IntValue\x12\x14\n\x05value\x18\x01\x20\x01(\x05\
-    R\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\x05H\0R\x03min\x88\x01\x01\
-    \x12\x1e\n\x08min_hint\x18\x03\x20\x01(\x05H\x01R\x07minHint\x88\x01\x01\
-    \x12\x15\n\x03max\x18\x04\x20\x01(\x05H\x02R\x03max\x88\x01\x01\x12\x1e\
-    \n\x08max_hint\x18\x05\x20\x01(\x05H\x03R\x07maxHint\x88\x01\x01B\x06\n\
-    \x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb9\x01\
-    \n\tUintValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x15\n\
-    \x03min\x18\x02\x20\x01(\rH\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\
-    \x18\x03\x20\x01(\rH\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\
-    \x04\x20\x01(\rH\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\
-    \x20\x01(\rH\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hin\
-    tB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a!\n\tBoolValue\x12\x14\n\x05value\
-    \x18\x01\x20\x01(\x08R\x05value\x1ag\n\x0bSelectValue\x12\x14\n\x05value\
-    \x18\x01\x20\x01(\tR\x05value\x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.\
-    mizer.nodes.NodeSetting.SelectVariantR\x08variants\x1a\xcc\x02\n\rSelect\
-    Variant\x12J\n\x05group\x18\x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.S\
-    electVariant.SelectGroupH\0R\x05group\x12G\n\x04item\x18\x02\x20\x01(\
-    \x0b21.mizer.nodes.NodeSetting.SelectVariant.SelectItemH\0R\x04item\x1aa\
-    \n\x0bSelectGroup\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12<\n\
-    \x05items\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting.SelectVariantR\
-    \x05items\x1a8\n\nSelectItem\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05v\
-    alue\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05labelB\t\n\x07variant\x1a\
-    c\n\tEnumValue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12@\n\
-    \x08variants\x18\x02\x20\x03(\x0b2$.mizer.nodes.NodeSetting.EnumVariantR\
-    \x08variants\x1a9\n\x0bEnumVariant\x12\x14\n\x05value\x18\x01\x20\x01(\r\
-    R\x05value\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05label\x1a_\n\x07IdV\
-    alue\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12>\n\x08variants\
-    \x18\x02\x20\x03(\x0b2\".mizer.nodes.NodeSetting.IdVariantR\x08variants\
-    \x1a7\n\tIdVariant\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\
-    \x14\n\x05label\x18\x02\x20\x01(\tR\x05label\x1a\xc6\x01\n\x0bSplineValu\
-    e\x12E\n\x05steps\x18\x01\x20\x03(\x0b2/.mizer.nodes.NodeSetting.SplineV\
-    alue.SplineStepR\x05steps\x1ap\n\nSplineStep\x12\x0c\n\x01x\x18\x01\x20\
-    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c\
-    0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\
-    \x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\
-    \x18\x06\x20\x01(\x01R\x03c1b\x1a_\n\nMediaValue\x12\x14\n\x05value\x18\
-    \x01\x20\x01(\tR\x05value\x12;\n\rallowed_types\x18\x02\x20\x03(\x0e2\
-    \x16.mizer.media.MediaTypeR\x0callowedTypesB\x07\n\x05value\"\xf4\x03\n\
-    \x0eMidiNodeConfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12\
-    L\n\x0cnote_binding\x18\x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.No\
-    teBindingH\0R\x0bnoteBinding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\
-    \x0b2*.mizer.nodes.MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\
-    \x1a\xd9\x01\n\x0bNoteBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\
-    \x07channel\x12D\n\x04type\x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeCo\
-    nfig.NoteBinding.MidiTypeR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\
-    \x04port\x12\x1d\n\nrange_from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\
-    \x08range_to\x18\x05\x20\x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\
-    \n\x02CC\x10\0\x12\x08\n\x04NOTE\x10\x01\x1a>\n\x0eControlBinding\x12\
-    \x12\n\x04page\x18\x01\x20\x01(\tR\x04page\x12\x18\n\x07control\x18\x02\
-    \x20\x01(\tR\x07controlB\t\n\x07binding\">\n\x13ContainerNodeConfig\x12'\
-    \n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"*\n\
-    \x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01\
-    y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\
-    \x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\
-    \x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\
-    \x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.Channe\
-    lProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\x08mu\
-    ltiple*\xb1\x02\n\x0cNodeCategory\x12\x16\n\x12NODE_CATEGORY_NONE\x10\0\
-    \x12\x1a\n\x16NODE_CATEGORY_STANDARD\x10\x01\x12\x1d\n\x19NODE_CATEGORY_\
-    CONNECTIONS\x10\x02\x12\x1d\n\x19NODE_CATEGORY_CONVERSIONS\x10\x03\x12\
-    \x1a\n\x16NODE_CATEGORY_CONTROLS\x10\x04\x12\x16\n\x12NODE_CATEGORY_DATA\
-    \x10\x05\x12\x17\n\x13NODE_CATEGORY_COLOR\x10\x06\x12\x17\n\x13NODE_CATE\
-    GORY_AUDIO\x10\x07\x12\x17\n\x13NODE_CATEGORY_VIDEO\x10\x08\x12\x17\n\
-    \x13NODE_CATEGORY_LASER\x10\t\x12\x17\n\x13NODE_CATEGORY_PIXEL\x10\n*\
-    \x84\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\
-    \x10\x01\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\
-    \x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\
-    \x12\x0c\n\x08MATERIAL\x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\
-    \x10\n2\xbc\x07\n\x08NodesApi\x12K\n\x11GetAvailableNodes\x12\x19.mizer.\
-    nodes.NodesRequest\x1a\x1b.mizer.nodes.AvailableNodes\x129\n\x08GetNodes\
-    \x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07Ad\
-    dNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\
-    \x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeC\
-    onnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\
-    \x1a\x1a.mizer.nodes.WriteResponse\x12M\n\x11UpdateNodeSetting\x12%.mize\
-    r.nodes.UpdateNodeSettingRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08Move\
-    Node\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeRes\
-    ponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.m\
-    izer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.Hid\
-    eNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\
-    \x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\
-    \x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.miz\
-    er.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\
-    \x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer\
-    .nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06prot\
-    o3\
+    CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x12\n\x0eSTEP_SEQUENCER\
+    \x10\x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHR\
+    ESHOLD\x10\t\x12\x0e\n\nDMX_OUTPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\
+    \x0e\n\nOSC_OUTPUT\x10\x0c\x12\x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI\
+    _OUTPUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\
+    \x12\x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESE\
+    T\x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\
+    \x15\x12\r\n\tVIDEO_HSV\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\
+    \x0f\n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVI\
+    DEO_RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL\
+    _PATTERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\
+    \r\n\tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\
+    \x12\r\n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10C\
+    OLOR_BRIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\
+    \x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\
+    \n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\
+    \x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05\
+    DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\
+    \x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUT\
+    PUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\
+    \x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\
+    \x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0c\
+    AUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\
+    \x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\n\n\x06WEB\
+    CAM\x10R\x12\x12\n\x0eTEXTURE_BORDER\x10S\x12\x0e\n\nVIDEO_TEXT\x10T\x12\
+    \t\n\x05BEATS\x10U\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\
+    \x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\
+    \x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\
+    \x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\
+    \x10\x07\"X\n\x0bNodeDetails\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
+    me\x125\n\x08category\x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategory\
+    R\x08category\"c\n\nNodeConfig\x12M\n\x10container_config\x18-\x20\x01(\
+    \x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\
+    \x04type\"\xed\x13\n\x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\x01(\
+    \tR\x05label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescription\
+    \x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04text\
+    \x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValueH\0R\x04text\
+    \x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatVal\
+    ueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSet\
+    ting.IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.no\
+    des.NodeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\
+    \x0b2$.mizer.nodes.NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\
+    \x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x12\
+    2\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\
+    \x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.S\
+    plineValueH\0R\x06spline\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.no\
+    des.NodeSetting.MediaValueH\0R\x05media\x128\n\x04uint\x18\r\x20\x01(\
+    \x0b2\".mizer.nodes.NodeSetting.UintValueH\0R\x04uint\x12T\n\x0estep_seq\
+    uencer\x18\x0e\x20\x01(\x0b2+.mizer.nodes.NodeSetting.StepSequencerValue\
+    H\0R\rstepSequencer\x1a?\n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01\
+    (\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\
+    \xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
+    \x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\
+    \x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\
+    \x03max\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_h\
+    int\x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\
+    \x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntV\
+    alue\x12\x14\n\x05value\x18\x01\x20\x01(\x05R\x05value\x12\x15\n\x03min\
+    \x18\x02\x20\x01(\x05H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\
+    \x03\x20\x01(\x05H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\
+    \x20\x01(\x05H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\
+    \x01(\x05H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\
+    \x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb9\x01\n\tUintValue\x12\x14\n\x05v\
+    alue\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0\
+    R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\x07m\
+    inHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\
+    \x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\
+    \x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hi\
+    nt\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05value\
+    \x1ag\n\x0bSelectValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\
+    \x12B\n\x08variants\x18\x02\x20\x03(\x0b2&.mizer.nodes.NodeSetting.Selec\
+    tVariantR\x08variants\x1a\xcc\x02\n\rSelectVariant\x12J\n\x05group\x18\
+    \x01\x20\x01(\x0b22.mizer.nodes.NodeSetting.SelectVariant.SelectGroupH\0\
+    R\x05group\x12G\n\x04item\x18\x02\x20\x01(\x0b21.mizer.nodes.NodeSetting\
+    .SelectVariant.SelectItemH\0R\x04item\x1aa\n\x0bSelectGroup\x12\x14\n\
+    \x05label\x18\x01\x20\x01(\tR\x05label\x12<\n\x05items\x18\x02\x20\x03(\
+    \x0b2&.mizer.nodes.NodeSetting.SelectVariantR\x05items\x1a8\n\nSelectIte\
+    m\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\x12\x14\n\x05label\x18\
+    \x02\x20\x01(\tR\x05labelB\t\n\x07variant\x1ac\n\tEnumValue\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\rR\x05value\x12@\n\x08variants\x18\x02\x20\
+    \x03(\x0b2$.mizer.nodes.NodeSetting.EnumVariantR\x08variants\x1a9\n\x0bE\
+    numVariant\x12\x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05\
+    label\x18\x02\x20\x01(\tR\x05label\x1a_\n\x07IdValue\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\rR\x05value\x12>\n\x08variants\x18\x02\x20\x03(\x0b2\"\
+    .mizer.nodes.NodeSetting.IdVariantR\x08variants\x1a7\n\tIdVariant\x12\
+    \x14\n\x05value\x18\x01\x20\x01(\rR\x05value\x12\x14\n\x05label\x18\x02\
+    \x20\x01(\tR\x05label\x1a\xc6\x01\n\x0bSplineValue\x12E\n\x05steps\x18\
+    \x01\x20\x03(\x0b2/.mizer.nodes.NodeSetting.SplineValue.SplineStepR\x05s\
+    teps\x1ap\n\nSplineStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
+    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\
+    \x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03\
+    c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\
+    \x03c1b\x1a_\n\nMediaValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05val\
+    ue\x12;\n\rallowed_types\x18\x02\x20\x03(\x0e2\x16.mizer.media.MediaType\
+    R\x0callowedTypes\x1a*\n\x12StepSequencerValue\x12\x14\n\x05steps\x18\
+    \x01\x20\x03(\x08R\x05stepsB\x07\n\x05value\"\xf4\x03\n\x0eMidiNodeConfi\
+    g\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12L\n\x0cnote_bindi\
+    ng\x18\x02\x20\x01(\x0b2'.mizer.nodes.MidiNodeConfig.NoteBindingH\0R\x0b\
+    noteBinding\x12U\n\x0fcontrol_binding\x18\x03\x20\x01(\x0b2*.mizer.nodes\
+    .MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd9\x01\n\x0bNo\
+    teBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12D\n\x04\
+    type\x18\x02\x20\x01(\x0e20.mizer.nodes.MidiNodeConfig.NoteBinding.MidiT\
+    ypeR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1d\n\nra\
+    nge_from\x18\x04\x20\x01(\rR\trangeFrom\x12\x19\n\x08range_to\x18\x05\
+    \x20\x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\
+    \x08\n\x04NOTE\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\
+    \x01\x20\x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07con\
+    trolB\t\n\x07binding\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\
+    \x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"*\n\x0cNodePosition\x12\
+    \x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\
+    \x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\x0b2\
+    \x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\
+    \x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hid\
+    den\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x128\n\
+    \x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08p\
+    rotocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\x08multiple*\xb1\x02\
+    \n\x0cNodeCategory\x12\x16\n\x12NODE_CATEGORY_NONE\x10\0\x12\x1a\n\x16NO\
+    DE_CATEGORY_STANDARD\x10\x01\x12\x1d\n\x19NODE_CATEGORY_CONNECTIONS\x10\
+    \x02\x12\x1d\n\x19NODE_CATEGORY_CONVERSIONS\x10\x03\x12\x1a\n\x16NODE_CA\
+    TEGORY_CONTROLS\x10\x04\x12\x16\n\x12NODE_CATEGORY_DATA\x10\x05\x12\x17\
+    \n\x13NODE_CATEGORY_COLOR\x10\x06\x12\x17\n\x13NODE_CATEGORY_AUDIO\x10\
+    \x07\x12\x17\n\x13NODE_CATEGORY_VIDEO\x10\x08\x12\x17\n\x13NODE_CATEGORY\
+    _LASER\x10\t\x12\x17\n\x13NODE_CATEGORY_PIXEL\x10\n*\x84\x01\n\x0fChanne\
+    lProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\x0b\n\x07\
+    TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
+    \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
+    \x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\x10\n2\xbc\x07\n\x08Nod\
+    esApi\x12K\n\x11GetAvailableNodes\x12\x19.mizer.nodes.NodesRequest\x1a\
+    \x1b.mizer.nodes.AvailableNodes\x129\n\x08GetNodes\x12\x19.mizer.nodes.N\
+    odesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.no\
+    des.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mi\
+    zer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11Wr\
+    iteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.Wri\
+    teResponse\x12M\n\x11UpdateNodeSetting\x12%.mizer.nodes.UpdateNodeSettin\
+    gRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08MoveNode\x12\x1c.mizer.nodes\
+    .MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\
+    \x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeRes\
+    ponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.miz\
+    er.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNod\
+    eRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!\
+    .mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenam\
+    eNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNo\
+    deResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\
+    \x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -9143,7 +9337,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::media::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(49);
+            let mut messages = ::std::vec::Vec::with_capacity(50);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());
             messages.push(NodesRequest::generated_message_descriptor_data());
@@ -9188,6 +9382,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(node_setting::IdVariant::generated_message_descriptor_data());
             messages.push(node_setting::SplineValue::generated_message_descriptor_data());
             messages.push(node_setting::MediaValue::generated_message_descriptor_data());
+            messages.push(node_setting::StepSequencerValue::generated_message_descriptor_data());
             messages.push(node_setting::select_variant::SelectGroup::generated_message_descriptor_data());
             messages.push(node_setting::select_variant::SelectItem::generated_message_descriptor_data());
             messages.push(node_setting::spline_value::SplineStep::generated_message_descriptor_data());

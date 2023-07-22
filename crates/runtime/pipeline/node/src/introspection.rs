@@ -77,7 +77,7 @@ node_type_name! {
         Group,
         Preset,
         Envelope,
-        Sequence,
+        StepSequencer,
         MidiInput,
         MidiOutput,
         Laser,

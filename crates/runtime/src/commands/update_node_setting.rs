@@ -105,6 +105,9 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                     self.path, self.setting.label, value
                 )
             }
+            NodeSettingValue::Steps(_) => {
+                format!("Update Node '{}' setting {}", self.path, self.setting.label)
+            }
         }
     }
 

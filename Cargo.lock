@@ -4468,8 +4468,8 @@ dependencies = [
  "mizer-plan-nodes",
  "mizer-port-operation-nodes",
  "mizer-scripting-nodes",
- "mizer-sequence-nodes",
  "mizer-sequencer-nodes",
+ "mizer-step-sequencer-nodes",
  "mizer-text-nodes",
  "mizer-timecode-nodes",
  "mizer-timing-nodes",
@@ -4850,15 +4850,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mizer-sequence-nodes"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "mizer-node",
- "serde",
-]
-
-[[package]]
 name = "mizer-sequencer"
 version = "0.1.0"
 dependencies = [
@@ -4930,6 +4921,15 @@ dependencies = [
  "log",
  "serde",
  "toml 0.7.2",
+]
+
+[[package]]
+name = "mizer-step-sequencer-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]

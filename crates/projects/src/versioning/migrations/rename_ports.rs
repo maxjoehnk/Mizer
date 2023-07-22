@@ -34,7 +34,7 @@ impl ProjectFileMigration for RenamePorts {
         project.rename_output(NodeType::Oscillator, "value", "Value");
         project.rename_input(NodeType::Ramp, "value", "Input");
         project.rename_output(NodeType::Ramp, "value", "Output");
-        project.rename_output(NodeType::Sequence, "value", "Output");
+        project.rename_output(NodeType::StepSequencer, "value", "Output");
         project.rename_input(NodeType::Delay, "value", "Input");
         project.rename_output(NodeType::Delay, "value", "Output");
         project.rename_output(NodeType::Value, "value", "Output");

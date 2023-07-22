@@ -7,6 +7,7 @@ import '../fields/checkbox_field.dart';
 import '../fields/enum_field.dart';
 import '../fields/media_field.dart';
 import '../fields/number_field.dart';
+import '../fields/sequencer_field.dart';
 import '../fields/spline_field.dart';
 import '../fields/text_field.dart';
 import '../previews/envelope_preview.dart';
@@ -159,6 +160,15 @@ class NodeSettingsPane extends StatelessWidget {
             onUpdate: (v) {
               var updated = setting.deepCopy();
               updated.media.value = v.value;
+              onUpdate(updated);
+            });
+      }
+      if (setting.hasStepSequencer()) {
+        return StepSequencerField(
+            value: setting.stepSequencer,
+            onUpdate: (v) {
+              var updated = setting.deepCopy();
+              updated.stepSequencer = v;
               onUpdate(updated);
             });
       }

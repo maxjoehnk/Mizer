@@ -2535,6 +2535,47 @@ class NodeSetting_MediaValue extends $pb.GeneratedMessage {
   $core.List<$0.MediaType> get allowedTypes => $_getList(1);
 }
 
+class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.StepSequencerValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..p<$core.bool>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.KB)
+    ..hasRequiredFields = false
+  ;
+
+  NodeSetting_StepSequencerValue._() : super();
+  factory NodeSetting_StepSequencerValue({
+    $core.Iterable<$core.bool>? steps,
+  }) {
+    final _result = create();
+    if (steps != null) {
+      _result.steps.addAll(steps);
+    }
+    return _result;
+  }
+  factory NodeSetting_StepSequencerValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_StepSequencerValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSetting_StepSequencerValue clone() => NodeSetting_StepSequencerValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSetting_StepSequencerValue copyWith(void Function(NodeSetting_StepSequencerValue) updates) => super.copyWith((message) => updates(message as NodeSetting_StepSequencerValue)) as NodeSetting_StepSequencerValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_StepSequencerValue create() => NodeSetting_StepSequencerValue._();
+  NodeSetting_StepSequencerValue createEmptyInstance() => create();
+  static $pb.PbList<NodeSetting_StepSequencerValue> createRepeated() => $pb.PbList<NodeSetting_StepSequencerValue>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_StepSequencerValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_StepSequencerValue>(create);
+  static NodeSetting_StepSequencerValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.bool> get steps => $_getList(0);
+}
+
 enum NodeSetting_Value {
   text, 
   float, 
@@ -2546,6 +2587,7 @@ enum NodeSetting_Value {
   spline, 
   media, 
   uint, 
+  stepSequencer, 
   notSet
 }
 
@@ -2561,10 +2603,11 @@ class NodeSetting extends $pb.GeneratedMessage {
     11 : NodeSetting_Value.spline,
     12 : NodeSetting_Value.media,
     13 : NodeSetting_Value.uint,
+    14 : NodeSetting_Value.stepSequencer,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13])
+    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'disabled')
@@ -2578,6 +2621,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     ..aOM<NodeSetting_SplineValue>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
     ..aOM<NodeSetting_MediaValue>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
     ..aOM<NodeSetting_UintValue>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uint', subBuilder: NodeSetting_UintValue.create)
+    ..aOM<NodeSetting_StepSequencerValue>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepSequencer', subBuilder: NodeSetting_StepSequencerValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -2596,6 +2640,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_SplineValue? spline,
     NodeSetting_MediaValue? media,
     NodeSetting_UintValue? uint,
+    NodeSetting_StepSequencerValue? stepSequencer,
   }) {
     final _result = create();
     if (label != null) {
@@ -2636,6 +2681,9 @@ class NodeSetting extends $pb.GeneratedMessage {
     }
     if (uint != null) {
       _result.uint = uint;
+    }
+    if (stepSequencer != null) {
+      _result.stepSequencer = stepSequencer;
     }
     return _result;
   }
@@ -2799,6 +2847,17 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearUint() => clearField(13);
   @$pb.TagNumber(13)
   NodeSetting_UintValue ensureUint() => $_ensure(12);
+
+  @$pb.TagNumber(14)
+  NodeSetting_StepSequencerValue get stepSequencer => $_getN(13);
+  @$pb.TagNumber(14)
+  set stepSequencer(NodeSetting_StepSequencerValue v) { setField(14, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasStepSequencer() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearStepSequencer() => clearField(14);
+  @$pb.TagNumber(14)
+  NodeSetting_StepSequencerValue ensureStepSequencer() => $_ensure(13);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

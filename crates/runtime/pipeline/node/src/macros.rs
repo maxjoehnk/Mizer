@@ -117,6 +117,14 @@ macro_rules! update {
             }
         }
     };
+    (uint $setting:expr, $name:expr, $field:expr) => {
+        if matches!($setting.value, NodeSettingValue::Uint { .. }) && $setting.label == $name {
+            if let NodeSettingValue::Uint { value, .. } = $setting.value {
+                $field = value.try_into()?;
+                return Ok(());
+            }
+        }
+    };
     (bool $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Bool { .. }) && $setting.label == $name {
             if let NodeSettingValue::Bool { value, .. } = $setting.value {
@@ -136,6 +144,14 @@ macro_rules! update {
     (media $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Media { .. }) && $setting.label == $name {
             if let NodeSettingValue::Media { value, .. } = $setting.value {
+                $field = value;
+                return Ok(());
+            }
+        }
+    };
+    (steps $setting:expr, $name:expr, $field:expr) => {
+        if matches!($setting.value, NodeSettingValue::Steps(_)) && $setting.label == $name {
+            if let NodeSettingValue::Steps(value) = $setting.value {
                 $field = value;
                 return Ok(());
             }

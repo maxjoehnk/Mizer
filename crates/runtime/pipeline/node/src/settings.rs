@@ -185,6 +185,7 @@ pub enum NodeSettingValue {
         value: String,
         content_types: Vec<MediaContentType>,
     },
+    Steps(Vec<bool>),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
@@ -256,6 +257,10 @@ impl Hash for NodeSettingValue {
             Self::Media { value, .. } => {
                 state.write_u8(7);
                 value.hash(state);
+            }
+            Self::Steps(steps) => {
+                state.write_u8(8);
+                steps.hash(state);
             }
         }
     }
@@ -354,6 +359,12 @@ impl From<i64> for NodeSettingValue {
             max_hint: None,
             min_hint: None,
         }
+    }
+}
+
+impl From<Vec<bool>> for NodeSettingValue {
+    fn from(value: Vec<bool>) -> Self {
+        Self::Steps(value)
     }
 }
 

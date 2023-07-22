@@ -21,7 +21,7 @@ mizer-dmx-nodes = { path = "connections/protocols/dmx" }
 mizer-g13-nodes = { path = "connections/g13" }
 mizer-gamepad-nodes = { path = "connections/gamepad" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
-mizer-sequence-nodes = { path = "behaviors/sequence" }
+mizer-step-sequencer-nodes = { path = "behaviors/step-sequencer" }
 mizer-math-nodes = { path = "behaviors/math" }
 mizer-sequencer-nodes = { path = "sequencer" }
 mizer-fixture-nodes = { path = "fixture" }

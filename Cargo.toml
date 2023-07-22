@@ -48,7 +48,7 @@ members = [
     "crates/runtime/pipeline/nodes/behaviors/oscillator",
     "crates/runtime/pipeline/nodes/behaviors/port-operations",
     "crates/runtime/pipeline/nodes/behaviors/scripting",
-    "crates/runtime/pipeline/nodes/behaviors/sequence",
+    "crates/runtime/pipeline/nodes/behaviors/step-sequencer",
     "crates/runtime/pipeline/nodes/behaviors/timing",
     "crates/runtime/pipeline/nodes/clock",
     "crates/runtime/pipeline/nodes/fixture",

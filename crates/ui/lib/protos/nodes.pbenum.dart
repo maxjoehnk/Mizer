@@ -80,7 +80,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType CLOCK = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLOCK');
   static const Node_NodeType SCRIPT = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SCRIPT');
   static const Node_NodeType ENVELOPE = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ENVELOPE');
-  static const Node_NodeType SEQUENCE = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SEQUENCE');
+  static const Node_NodeType STEP_SEQUENCER = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STEP_SEQUENCER');
   static const Node_NodeType SELECT = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SELECT');
   static const Node_NodeType MERGE = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MERGE');
   static const Node_NodeType THRESHOLD = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'THRESHOLD');
@@ -151,7 +151,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     CLOCK,
     SCRIPT,
     ENVELOPE,
-    SEQUENCE,
+    STEP_SEQUENCER,
     SELECT,
     MERGE,
     THRESHOLD,

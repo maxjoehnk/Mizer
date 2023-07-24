@@ -1,0 +1,6 @@
+id: novation-dicer
+manufacturer: Novation
+name: Dicer
+keyword: Novation Dicer
+scripts:
+  pages: pages.rhai

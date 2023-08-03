@@ -1,7 +1,7 @@
 use downcast::*;
 
 pub use mizer_injector::Injector;
-pub use mizer_ports::{Color, PortId, PortType};
+pub use mizer_ports::{Color, Coordinate, PortId, PortType};
 
 pub use self::context::*;
 pub use self::introspection::*;

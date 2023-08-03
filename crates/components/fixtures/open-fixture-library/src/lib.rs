@@ -658,8 +658,8 @@ fn group_controls(
                 controls.pan = Some(AxisGroup {
                     channel: name,
                     angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
+                        from: *angle_start as f64,
+                        to: *angle_end as f64,
                     }),
                 })
             }
@@ -670,8 +670,8 @@ fn group_controls(
                 controls.tilt = Some(AxisGroup {
                     channel: name,
                     angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
+                        from: *angle_start as f64,
+                        to: *angle_end as f64,
                     }),
                 })
             }

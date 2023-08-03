@@ -724,6 +724,7 @@ impl From<PortType> for ChannelProtocol {
             PortType::Data => ChannelProtocol::DATA,
             PortType::Material => ChannelProtocol::MATERIAL,
             PortType::Clock => ChannelProtocol::CLOCK,
+            PortType::Position => ChannelProtocol::POSITION,
         }
     }
 }
@@ -741,6 +742,7 @@ impl From<ChannelProtocol> for PortType {
             ChannelProtocol::DATA => PortType::Data,
             ChannelProtocol::MATERIAL => PortType::Material,
             ChannelProtocol::CLOCK => PortType::Clock,
+            ChannelProtocol::POSITION => PortType::Position,
         }
     }
 }

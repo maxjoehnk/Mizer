@@ -39,10 +39,16 @@ class PresetsView extends StatelessWidget {
             ]).map((effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Position", children: [
-            ...state.presets.positions.map((preset) => PositionButton(
-                pan: preset.position.hasPan() ? preset.position.pan : null,
-                tilt: preset.position.hasTilt() ? preset.position.tilt : null,
-                preset: preset)),
+            ...state.presets.positions.map((preset) {
+              if (preset.position.hasPanTilt()) {
+                return PositionButton(
+                    pan: preset.position.panTilt.hasPan() ? preset.position.panTilt.pan : null,
+                    tilt: preset.position.panTilt.hasTilt() ? preset.position.panTilt.tilt : null,
+                    preset: preset);
+              }else {
+                return PositionButton(preset: preset, world: preset.position.world);
+              }
+            }),
             ...effects.getEffectsForControls([FixtureControl.PAN, FixtureControl.TILT]).map(
                 (effect) => EffectButton(effect: effect))
           ]),

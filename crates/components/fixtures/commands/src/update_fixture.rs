@@ -1,5 +1,5 @@
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::fixture::FixtureConfiguration;
+use mizer_fixtures::fixture::{FixtureConfiguration, FixturePlacement};
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 
@@ -11,11 +11,12 @@ pub struct UpdateFixtureCommand {
     pub reverse_pixel_order: Option<bool>,
     pub name: Option<String>,
     pub address: Option<(u16, u16)>,
+    pub placement: Option<FixturePlacement>,
 }
 
 impl<'a> Command<'a> for UpdateFixtureCommand {
     type Dependencies = Ref<FixtureManager>;
-    type State = (FixtureConfiguration, String, (u16, u16));
+    type State = (FixtureConfiguration, String, (u16, u16), FixturePlacement);
     type Result = ();
 
     fn label(&self) -> String {
@@ -33,6 +34,7 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
         let config = fixture.configuration;
         let name = fixture.name.clone();
         let address = (fixture.universe, fixture.channel);
+        let placement = fixture.placement;
 
         if let Some(invert_pan) = self.invert_pan {
             fixture.configuration.invert_pan = invert_pan;
@@ -50,14 +52,17 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
             fixture.universe = universe;
             fixture.channel = channel;
         }
+        if let Some(placement) = self.placement {
+            fixture.placement = placement;
+        }
 
-        Ok(((), (config, name, address)))
+        Ok(((), (config, name, address, placement)))
     }
 
     fn revert(
         &self,
         fixture_manager: &FixtureManager,
-        (config, name, (universe, channel)): Self::State,
+        (config, name, (universe, channel), placement): Self::State,
     ) -> anyhow::Result<()> {
         let mut fixture = fixture_manager
             .get_fixture_mut(self.fixture_id)
@@ -66,6 +71,7 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
         fixture.name = name;
         fixture.universe = universe;
         fixture.channel = channel;
+        fixture.placement = placement;
 
         Ok(())
     }

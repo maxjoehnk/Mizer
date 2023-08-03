@@ -24,12 +24,13 @@ const FixtureControl$json = const {
     const {'1': 'IRIS', '2': 9},
     const {'1': 'FROST', '2': 10},
     const {'1': 'GOBO', '2': 11},
-    const {'1': 'GENERIC', '2': 12},
+    const {'1': 'POINT_AT', '2': 12},
+    const {'1': 'GENERIC', '2': 13},
   ],
 };
 
 /// Descriptor for `FixtureControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESDwoLQ09MT1JfTUlYRVIQAhIPCgtDT0xPUl9XSEVFTBADEgcKA1BBThAEEggKBFRJTFQQBRIJCgVGT0NVUxAGEggKBFpPT00QBxIJCgVQUklTTRAIEggKBElSSVMQCRIJCgVGUk9TVBAKEggKBEdPQk8QCxILCgdHRU5FUklDEAw=');
+final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESDwoLQ09MT1JfTUlYRVIQAhIPCgtDT0xPUl9XSEVFTBADEgcKA1BBThAEEggKBFRJTFQQBRIJCgVGT0NVUxAGEggKBFpPT00QBxIJCgVQUklTTRAIEggKBElSSVMQCRIJCgVGUk9TVBAKEggKBEdPQk8QCxIMCghQT0lOVF9BVBAMEgsKB0dFTkVSSUMQDQ==');
 @$core.Deprecated('Use addFixturesRequestDescriptor instead')
 const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
@@ -83,6 +84,7 @@ const UpdateFixtureRequest$json = const {
     const {'1': 'reverse_pixel_order', '3': 4, '4': 1, '5': 8, '9': 2, '10': 'reversePixelOrder', '17': true},
     const {'1': 'name', '3': 5, '4': 1, '5': 9, '9': 3, '10': 'name', '17': true},
     const {'1': 'address', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureAddress', '9': 4, '10': 'address', '17': true},
+    const {'1': 'placement', '3': 7, '4': 1, '5': 11, '6': '.mizer.fixtures.FixturePlacement', '9': 5, '10': 'placement', '17': true},
   ],
   '8': const [
     const {'1': '_invert_pan'},
@@ -90,11 +92,12 @@ const UpdateFixtureRequest$json = const {
     const {'1': '_reverse_pixel_order'},
     const {'1': '_name'},
     const {'1': '_address'},
+    const {'1': '_placement'},
   ],
 };
 
 /// Descriptor for `UpdateFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIdCgpmaXh0dXJlX2lkGAEgASgNUglmaXh0dXJlSWQSIgoKaW52ZXJ0X3BhbhgCIAEoCEgAUglpbnZlcnRQYW6IAQESJAoLaW52ZXJ0X3RpbHQYAyABKAhIAVIKaW52ZXJ0VGlsdIgBARIzChNyZXZlcnNlX3BpeGVsX29yZGVyGAQgASgISAJSEXJldmVyc2VQaXhlbE9yZGVyiAEBEhcKBG5hbWUYBSABKAlIA1IEbmFtZYgBARI9CgdhZGRyZXNzGAYgASgLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUFkZHJlc3NIBFIHYWRkcmVzc4gBAUINCgtfaW52ZXJ0X3BhbkIOCgxfaW52ZXJ0X3RpbHRCFgoUX3JldmVyc2VfcGl4ZWxfb3JkZXJCBwoFX25hbWVCCgoIX2FkZHJlc3M=');
+final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIdCgpmaXh0dXJlX2lkGAEgASgNUglmaXh0dXJlSWQSIgoKaW52ZXJ0X3BhbhgCIAEoCEgAUglpbnZlcnRQYW6IAQESJAoLaW52ZXJ0X3RpbHQYAyABKAhIAVIKaW52ZXJ0VGlsdIgBARIzChNyZXZlcnNlX3BpeGVsX29yZGVyGAQgASgISAJSEXJldmVyc2VQaXhlbE9yZGVyiAEBEhcKBG5hbWUYBSABKAlIA1IEbmFtZYgBARI9CgdhZGRyZXNzGAYgASgLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUFkZHJlc3NIBFIHYWRkcmVzc4gBARJDCglwbGFjZW1lbnQYByABKAsyIC5taXplci5maXh0dXJlcy5GaXh0dXJlUGxhY2VtZW50SAVSCXBsYWNlbWVudIgBAUINCgtfaW52ZXJ0X3BhbkIOCgxfaW52ZXJ0X3RpbHRCFgoUX3JldmVyc2VfcGl4ZWxfb3JkZXJCBwoFX25hbWVCCgoIX2FkZHJlc3NCDAoKX3BsYWNlbWVudA==');
 @$core.Deprecated('Use fixtureAddressDescriptor instead')
 const FixtureAddress$json = const {
   '1': 'FixtureAddress',
@@ -156,11 +159,12 @@ const Fixture$json = const {
     const {'1': 'controls', '3': 9, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureControls', '10': 'controls'},
     const {'1': 'children', '3': 10, '4': 3, '5': 11, '6': '.mizer.fixtures.SubFixture', '10': 'children'},
     const {'1': 'config', '3': 11, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureConfig', '10': 'config'},
+    const {'1': 'placement', '3': 12, '4': 1, '5': 11, '6': '.mizer.fixtures.FixturePlacement', '10': 'placement'},
   ],
 };
 
 /// Descriptor for `Fixture`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode('CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYWN0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhQKBW1vZGVsGAQgASgJUgVtb2RlbBISCgRtb2RlGAUgASgJUgRtb2RlEhoKCHVuaXZlcnNlGAYgASgNUgh1bml2ZXJzZRIYCgdjaGFubmVsGAcgASgNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI7Cghjb250cm9scxgJIAMoCzIfLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sc1IIY29udHJvbHMSNgoIY2hpbGRyZW4YCiADKAsyGi5taXplci5maXh0dXJlcy5TdWJGaXh0dXJlUghjaGlsZHJlbhI1CgZjb25maWcYCyABKAsyHS5taXplci5maXh0dXJlcy5GaXh0dXJlQ29uZmlnUgZjb25maWc=');
+final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode('CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYWN0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhQKBW1vZGVsGAQgASgJUgVtb2RlbBISCgRtb2RlGAUgASgJUgRtb2RlEhoKCHVuaXZlcnNlGAYgASgNUgh1bml2ZXJzZRIYCgdjaGFubmVsGAcgASgNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI7Cghjb250cm9scxgJIAMoCzIfLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sc1IIY29udHJvbHMSNgoIY2hpbGRyZW4YCiADKAsyGi5taXplci5maXh0dXJlcy5TdWJGaXh0dXJlUghjaGlsZHJlbhI1CgZjb25maWcYCyABKAsyHS5taXplci5maXh0dXJlcy5GaXh0dXJlQ29uZmlnUgZjb25maWcSPgoJcGxhY2VtZW50GAwgASgLMiAubWl6ZXIuZml4dHVyZXMuRml4dHVyZVBsYWNlbWVudFIJcGxhY2VtZW50');
 @$core.Deprecated('Use fixtureConfigDescriptor instead')
 const FixtureConfig$json = const {
   '1': 'FixtureConfig',
@@ -173,6 +177,21 @@ const FixtureConfig$json = const {
 
 /// Descriptor for `FixtureConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixtureConfigDescriptor = $convert.base64Decode('Cg1GaXh0dXJlQ29uZmlnEh0KCmludmVydF9wYW4YASABKAhSCWludmVydFBhbhIfCgtpbnZlcnRfdGlsdBgCIAEoCFIKaW52ZXJ0VGlsdBIuChNyZXZlcnNlX3BpeGVsX29yZGVyGAMgASgIUhFyZXZlcnNlUGl4ZWxPcmRlcg==');
+@$core.Deprecated('Use fixturePlacementDescriptor instead')
+const FixturePlacement$json = const {
+  '1': 'FixturePlacement',
+  '2': const [
+    const {'1': 'x', '3': 1, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 2, '4': 1, '5': 1, '10': 'y'},
+    const {'1': 'z', '3': 3, '4': 1, '5': 1, '10': 'z'},
+    const {'1': 'rotate_x', '3': 4, '4': 1, '5': 1, '10': 'rotateX'},
+    const {'1': 'rotate_y', '3': 5, '4': 1, '5': 1, '10': 'rotateY'},
+    const {'1': 'rotate_z', '3': 6, '4': 1, '5': 1, '10': 'rotateZ'},
+  ],
+};
+
+/// Descriptor for `FixturePlacement`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixturePlacementDescriptor = $convert.base64Decode('ChBGaXh0dXJlUGxhY2VtZW50EgwKAXgYASABKAFSAXgSDAoBeRgCIAEoAVIBeRIMCgF6GAMgASgBUgF6EhkKCHJvdGF0ZV94GAQgASgBUgdyb3RhdGVYEhkKCHJvdGF0ZV95GAUgASgBUgdyb3RhdGVZEhkKCHJvdGF0ZV96GAYgASgBUgdyb3RhdGVa');
 @$core.Deprecated('Use subFixtureDescriptor instead')
 const SubFixture$json = const {
   '1': 'SubFixture',
@@ -226,6 +245,18 @@ const ColorMixerChannel$json = const {
 
 /// Descriptor for `ColorMixerChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List colorMixerChannelDescriptor = $convert.base64Decode('ChFDb2xvck1peGVyQ2hhbm5lbBIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZQ==');
+@$core.Deprecated('Use worldPositionDescriptor instead')
+const WorldPosition$json = const {
+  '1': 'WorldPosition',
+  '2': const [
+    const {'1': 'x', '3': 1, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 2, '4': 1, '5': 1, '10': 'y'},
+    const {'1': 'z', '3': 3, '4': 1, '5': 1, '10': 'z'},
+  ],
+};
+
+/// Descriptor for `WorldPosition`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List worldPositionDescriptor = $convert.base64Decode('Cg1Xb3JsZFBvc2l0aW9uEgwKAXgYASABKAFSAXgSDAoBeRgCIAEoAVIBeRIMCgF6GAMgASgBUgF6');
 @$core.Deprecated('Use colorWheelChannelDescriptor instead')
 const ColorWheelChannel$json = const {
   '1': 'ColorWheelChannel',
@@ -407,11 +438,13 @@ const FixtureFaderControl$json = const {
     const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
     const {'1': 'color_mixer_channel', '3': 2, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureFaderControl.ColorMixerControlChannel', '9': 0, '10': 'colorMixerChannel', '17': true},
     const {'1': 'generic_channel', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'genericChannel', '17': true},
+    const {'1': 'world_axis_channel', '3': 4, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureFaderControl.WorldAxisChannel', '9': 2, '10': 'worldAxisChannel', '17': true},
   ],
-  '4': const [FixtureFaderControl_ColorMixerControlChannel$json],
+  '4': const [FixtureFaderControl_ColorMixerControlChannel$json, FixtureFaderControl_WorldAxisChannel$json],
   '8': const [
     const {'1': '_color_mixer_channel'},
     const {'1': '_generic_channel'},
+    const {'1': '_world_axis_channel'},
   ],
 };
 
@@ -425,5 +458,15 @@ const FixtureFaderControl_ColorMixerControlChannel$json = const {
   ],
 };
 
+@$core.Deprecated('Use fixtureFaderControlDescriptor instead')
+const FixtureFaderControl_WorldAxisChannel$json = const {
+  '1': 'WorldAxisChannel',
+  '2': const [
+    const {'1': 'X', '2': 0},
+    const {'1': 'Y', '2': 1},
+    const {'1': 'Z', '2': 2},
+  ],
+};
+
 /// Descriptor for `FixtureFaderControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureFaderControlDescriptor = $convert.base64Decode('ChNGaXh0dXJlRmFkZXJDb250cm9sEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBJxChNjb2xvcl9taXhlcl9jaGFubmVsGAIgASgOMjwubWl6ZXIuZml4dHVyZXMuRml4dHVyZUZhZGVyQ29udHJvbC5Db2xvck1peGVyQ29udHJvbENoYW5uZWxIAFIRY29sb3JNaXhlckNoYW5uZWyIAQESLAoPZ2VuZXJpY19jaGFubmVsGAMgASgJSAFSDmdlbmVyaWNDaGFubmVsiAEBIjgKGENvbG9yTWl4ZXJDb250cm9sQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggKBEJMVUUQAkIWChRfY29sb3JfbWl4ZXJfY2hhbm5lbEISChBfZ2VuZXJpY19jaGFubmVs');
+final $typed_data.Uint8List fixtureFaderControlDescriptor = $convert.base64Decode('ChNGaXh0dXJlRmFkZXJDb250cm9sEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBJxChNjb2xvcl9taXhlcl9jaGFubmVsGAIgASgOMjwubWl6ZXIuZml4dHVyZXMuRml4dHVyZUZhZGVyQ29udHJvbC5Db2xvck1peGVyQ29udHJvbENoYW5uZWxIAFIRY29sb3JNaXhlckNoYW5uZWyIAQESLAoPZ2VuZXJpY19jaGFubmVsGAMgASgJSAFSDmdlbmVyaWNDaGFubmVsiAEBEmcKEndvcmxkX2F4aXNfY2hhbm5lbBgEIAEoDjI0Lm1pemVyLmZpeHR1cmVzLkZpeHR1cmVGYWRlckNvbnRyb2wuV29ybGRBeGlzQ2hhbm5lbEgCUhB3b3JsZEF4aXNDaGFubmVsiAEBIjgKGENvbG9yTWl4ZXJDb250cm9sQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggKBEJMVUUQAiInChBXb3JsZEF4aXNDaGFubmVsEgUKAVgQABIFCgFZEAESBQoBWhACQhYKFF9jb2xvcl9taXhlcl9jaGFubmVsQhIKEF9nZW5lcmljX2NoYW5uZWxCFQoTX3dvcmxkX2F4aXNfY2hhbm5lbA==');

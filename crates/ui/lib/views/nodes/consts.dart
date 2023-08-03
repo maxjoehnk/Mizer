@@ -14,15 +14,6 @@ const double INNER_RADIUS = 2;
 
 const double DOT_SIZE = 16;
 
-const _GENERATED_TYPES = [
-  Node_NodeType.PROGRAMMER,
-  Node_NodeType.TRANSPORT,
-  Node_NodeType.SEQUENCER,
-  Node_NodeType.FIXTURE,
-  Node_NodeType.GROUP,
-  Node_NodeType.PRESET,
-];
-
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {
     case ChannelProtocol.SINGLE:
@@ -38,6 +29,8 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
       return Colors.blue;
     case ChannelProtocol.CLOCK:
       return Colors.pink;
+    case ChannelProtocol.POSITION:
+      return Colors.cyan;
     default:
       log("no color for protocol ${protocol.name}");
       return Colors.blueGrey;

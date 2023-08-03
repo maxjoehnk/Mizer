@@ -4,6 +4,7 @@ import 'package:mizer/widgets/popup/popup_dmx_address_input.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 import 'package:mizer/widgets/table/table.dart';
+import 'package:protobuf/protobuf.dart';
 
 class FixtureTable extends StatelessWidget {
   final List<Fixture> fixtures;
@@ -28,6 +29,16 @@ class FixtureTable extends StatelessWidget {
     return SingleChildScrollView(
       child: MizerTable(columnWidths: {
         0: FixedColumnWidth(64),
+        2: FixedColumnWidth(128),
+        6: FixedColumnWidth(96),
+        7: FixedColumnWidth(96),
+        8: FixedColumnWidth(160),
+        9: FixedColumnWidth(64),
+        10: FixedColumnWidth(64),
+        11: FixedColumnWidth(64),
+        // 11: FixedColumnWidth(64),
+        // 12: FixedColumnWidth(64),
+        // 13: FixedColumnWidth(64),
       }, columns: const [
         Text("Id"),
         Text("Name"),
@@ -38,6 +49,12 @@ class FixtureTable extends StatelessWidget {
         Text("Invert Pan"),
         Text("Invert Tilt"),
         Text("Reverse Pixel Order"),
+        Text("X"),
+        Text("Y"),
+        Text("Z"),
+        // Text("X Rot"),
+        // Text("Y Rot"),
+        // Text("Z Rot"),
       ], rows: rows),
     );
   }
@@ -63,6 +80,21 @@ class FixtureTable extends StatelessWidget {
         invertedAxisField(context, "Invert Pan", fixture.config.invertPan, (invertPan) => onUpdateFixture(fixture.id, UpdateFixtureRequest(invertPan: invertPan))),
         invertedAxisField(context, "Invert Tilt", fixture.config.invertTilt, (invertTilt) => onUpdateFixture(fixture.id, UpdateFixtureRequest(invertTilt: invertTilt))),
         reversePixelField(context, "Reverse Pixel Order", fixture.config.reversePixelOrder, (reversePixelOrder) => onUpdateFixture(fixture.id, UpdateFixtureRequest(reversePixelOrder: reversePixelOrder))),
+        placementField(context, "X", fixture.placement.x, (x) {
+          var fixturePlacement = fixture.placement.deepCopy();
+          fixturePlacement.x = x;
+          return onUpdateFixture(fixture.id, UpdateFixtureRequest(placement: fixturePlacement));
+        }),
+        placementField(context, "Y", fixture.placement.y, (y) {
+          var fixturePlacement = fixture.placement.deepCopy();
+          fixturePlacement.y = y;
+          return onUpdateFixture(fixture.id, UpdateFixtureRequest(placement: fixturePlacement));
+        }),
+        placementField(context, "Z", fixture.placement.z, (z) {
+          var fixturePlacement = fixture.placement.deepCopy();
+          fixturePlacement.z = z;
+          return onUpdateFixture(fixture.id, UpdateFixtureRequest(placement: fixturePlacement));
+        }),
       ],
       onTap: () => onSelect(fixture.id, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),
@@ -82,9 +114,19 @@ Widget nameField(BuildContext context, Fixture fixture, Function(String) onUpdat
 
 Widget addressField(BuildContext context, Fixture fixture, Function(FixtureAddress) onUpdate) {
   return PopupTableCell(child: Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, "0")}"), popup: PopupDmxAddressInput(
-    title: "Name",
+    title: "Address",
     value: FixtureAddress(universe: fixture.universe, channel: fixture.channel),
     onChange: onUpdate,
+  ));
+}
+
+Widget placementField(BuildContext context, String label, double value, Function(double) onUpdate) {
+  return PopupTableCell(child: Text("$value"), popup: PopupInput(
+    title: label,
+    value: value.toString(),
+    onChange: (value) {
+      onUpdate(double.parse(value));
+    },
   ));
 }
 

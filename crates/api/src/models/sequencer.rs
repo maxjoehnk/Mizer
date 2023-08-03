@@ -3549,20 +3549,26 @@ pub mod cue_control {
         PAN = 6,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.TILT)
         TILT = 7,
+        // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.WORLD_X)
+        WORLD_X = 8,
+        // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.WORLD_Y)
+        WORLD_Y = 9,
+        // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.WORLD_Z)
+        WORLD_Z = 10,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.FOCUS)
-        FOCUS = 8,
+        FOCUS = 11,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.ZOOM)
-        ZOOM = 9,
+        ZOOM = 12,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.PRISM)
-        PRISM = 10,
+        PRISM = 13,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.IRIS)
-        IRIS = 11,
+        IRIS = 14,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.FROST)
-        FROST = 12,
+        FROST = 15,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.GOBO)
-        GOBO = 13,
+        GOBO = 16,
         // @@protoc_insertion_point(enum_value:mizer.sequencer.CueControl.Type.GENERIC)
-        GENERIC = 14,
+        GENERIC = 17,
     }
 
     impl ::protobuf::Enum for Type {
@@ -3582,13 +3588,16 @@ pub mod cue_control {
                 5 => ::std::option::Option::Some(Type::COLOR_WHEEL),
                 6 => ::std::option::Option::Some(Type::PAN),
                 7 => ::std::option::Option::Some(Type::TILT),
-                8 => ::std::option::Option::Some(Type::FOCUS),
-                9 => ::std::option::Option::Some(Type::ZOOM),
-                10 => ::std::option::Option::Some(Type::PRISM),
-                11 => ::std::option::Option::Some(Type::IRIS),
-                12 => ::std::option::Option::Some(Type::FROST),
-                13 => ::std::option::Option::Some(Type::GOBO),
-                14 => ::std::option::Option::Some(Type::GENERIC),
+                8 => ::std::option::Option::Some(Type::WORLD_X),
+                9 => ::std::option::Option::Some(Type::WORLD_Y),
+                10 => ::std::option::Option::Some(Type::WORLD_Z),
+                11 => ::std::option::Option::Some(Type::FOCUS),
+                12 => ::std::option::Option::Some(Type::ZOOM),
+                13 => ::std::option::Option::Some(Type::PRISM),
+                14 => ::std::option::Option::Some(Type::IRIS),
+                15 => ::std::option::Option::Some(Type::FROST),
+                16 => ::std::option::Option::Some(Type::GOBO),
+                17 => ::std::option::Option::Some(Type::GENERIC),
                 _ => ::std::option::Option::None
             }
         }
@@ -3602,6 +3611,9 @@ pub mod cue_control {
             Type::COLOR_WHEEL,
             Type::PAN,
             Type::TILT,
+            Type::WORLD_X,
+            Type::WORLD_Y,
+            Type::WORLD_Z,
             Type::FOCUS,
             Type::ZOOM,
             Type::PRISM,
@@ -4758,52 +4770,53 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     r.TypeR\x04type\x121\n\x04time\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer\
     .CueTimeH\0R\x04time\x88\x01\x01\"=\n\x04Type\x12\x06\n\x02GO\x10\0\x12\
     \n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\
-    \x03\x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\"\xef\x02\n\nCueContr\
+    \x03\x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\"\x96\x03\n\nCueContr\
     ol\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueControl.T\
     ypeR\x04type\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.mizer.sequencer.C\
     ueValueR\x05value\x125\n\x08fixtures\x18\x03\x20\x03(\x0b2\x19.mizer.fix\
-    tures.FixtureIdR\x08fixtures\"\xc2\x01\n\x04Type\x12\r\n\tINTENSITY\x10\
+    tures.FixtureIdR\x08fixtures\"\xe9\x01\n\x04Type\x12\r\n\tINTENSITY\x10\
     \0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0b\
     COLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x0f\n\x0bCOLOR_WHE\
-    EL\x10\x05\x12\x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\t\n\
-    \x05FOCUS\x10\x08\x12\x08\n\x04ZOOM\x10\t\x12\t\n\x05PRISM\x10\n\x12\x08\
-    \n\x04IRIS\x10\x0b\x12\t\n\x05FROST\x10\x0c\x12\x08\n\x04GOBO\x10\r\x12\
-    \x0b\n\x07GENERIC\x10\x0e\"e\n\x08CueValue\x12\x18\n\x06direct\x18\x03\
-    \x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\x0b2\x1e.mi\
-    zer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\x9c\x01\n\x08\
-    CueTimer\x12\x1b\n\thas_timer\x18\x01\x20\x01(\x08R\x08hasTimer\x122\n\
-    \x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeH\0R\x06dire\
-    ct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequencer.CueTimerRan\
-    geH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\n\x04from\
-    \x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01(\x01R\x02\
-    to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\0R\x07seco\
-    nds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\
-    \"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x02to2\xfa\n\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12\
-    $.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\
-    \x12M\n\x0bGetSequence\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.m\
-    izer.sequencer.Sequence\x12M\n\x0bAddSequence\x12#.mizer.sequencer.AddSe\
-    quenceRequest\x1a\x19.mizer.sequencer.Sequence\x12T\n\x0eDeleteSequence\
-    \x12&.mizer.sequencer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequ\
-    ences\x12P\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e\
-    .mizer.sequencer.EmptyResponse\x12T\n\x0cSequenceStop\x12$.mizer.sequenc\
-    er.SequenceStopRequest\x1a\x1e.mizer.sequencer.EmptyResponse\x12R\n\x10U\
-    pdateCueTrigger\x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.mizer.se\
-    quencer.Sequences\x12Z\n\x14UpdateCueTriggerTime\x12&.mizer.sequencer.Cu\
-    eTriggerTimeRequest\x1a\x1a.mizer.sequencer.Sequences\x12d\n\x19UpdateCu\
-    eEffectOffsetTime\x12+.mizer.sequencer.CueEffectOffsetTimeRequest\x1a\
-    \x1a.mizer.sequencer.Sequences\x12L\n\rUpdateCueName\x12\x1f.mizer.seque\
-    ncer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\x12N\n\x0eUpdateCu\
-    eValue\x12\x20.mizer.sequencer.CueValueRequest\x1a\x1a.mizer.sequencer.S\
-    equences\x12R\n\x11UpdateCueFadeTime\x12!.mizer.sequencer.CueTimingReque\
-    st\x1a\x1a.mizer.sequencer.Sequences\x12S\n\x12UpdateCueDelayTime\x12!.m\
-    izer.sequencer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12b\n\
-    \x18UpdateSequenceWrapAround\x12*.mizer.sequencer.SequenceWrapAroundRequ\
-    est\x1a\x1a.mizer.sequencer.Sequences\x12h\n\x1bUpdateSequenceStopOnLast\
-    Cue\x12-.mizer.sequencer.SequenceStopOnLastCueRequest\x1a\x1a.mizer.sequ\
-    encer.Sequences\x12Q\n\x12UpdateSequenceName\x12\x1f.mizer.sequencer.Cue\
-    NameRequest\x1a\x1a.mizer.sequencer.Sequencesb\x06proto3\
+    EL\x10\x05\x12\x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\x0b\n\
+    \x07WORLD_X\x10\x08\x12\x0b\n\x07WORLD_Y\x10\t\x12\x0b\n\x07WORLD_Z\x10\
+    \n\x12\t\n\x05FOCUS\x10\x0b\x12\x08\n\x04ZOOM\x10\x0c\x12\t\n\x05PRISM\
+    \x10\r\x12\x08\n\x04IRIS\x10\x0e\x12\t\n\x05FROST\x10\x0f\x12\x08\n\x04G\
+    OBO\x10\x10\x12\x0b\n\x07GENERIC\x10\x11\"e\n\x08CueValue\x12\x18\n\x06d\
+    irect\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01\
+    (\x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\
+    \x9c\x01\n\x08CueTimer\x12\x1b\n\thas_timer\x18\x01\x20\x01(\x08R\x08has\
+    Timer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTime\
+    H\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequencer\
+    .CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\
+    \n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01\
+    (\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\
+    \0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\
+    \n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.\
+    mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.\
+    mizer.sequencer.CueTimeR\x02to2\xfa\n\n\x0cSequencerApi\x12P\n\x0cGetSeq\
+    uences\x12$.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.sequencer.\
+    Sequences\x12M\n\x0bGetSequence\x12#.mizer.sequencer.GetSequenceRequest\
+    \x1a\x19.mizer.sequencer.Sequence\x12M\n\x0bAddSequence\x12#.mizer.seque\
+    ncer.AddSequenceRequest\x1a\x19.mizer.sequencer.Sequence\x12T\n\x0eDelet\
+    eSequence\x12&.mizer.sequencer.DeleteSequenceRequest\x1a\x1a.mizer.seque\
+    ncer.Sequences\x12P\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoReques\
+    t\x1a\x1e.mizer.sequencer.EmptyResponse\x12T\n\x0cSequenceStop\x12$.mize\
+    r.sequencer.SequenceStopRequest\x1a\x1e.mizer.sequencer.EmptyResponse\
+    \x12R\n\x10UpdateCueTrigger\x12\".mizer.sequencer.CueTriggerRequest\x1a\
+    \x1a.mizer.sequencer.Sequences\x12Z\n\x14UpdateCueTriggerTime\x12&.mizer\
+    .sequencer.CueTriggerTimeRequest\x1a\x1a.mizer.sequencer.Sequences\x12d\
+    \n\x19UpdateCueEffectOffsetTime\x12+.mizer.sequencer.CueEffectOffsetTime\
+    Request\x1a\x1a.mizer.sequencer.Sequences\x12L\n\rUpdateCueName\x12\x1f.\
+    mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\x12N\n\
+    \x0eUpdateCueValue\x12\x20.mizer.sequencer.CueValueRequest\x1a\x1a.mizer\
+    .sequencer.Sequences\x12R\n\x11UpdateCueFadeTime\x12!.mizer.sequencer.Cu\
+    eTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12S\n\x12UpdateCueDela\
+    yTime\x12!.mizer.sequencer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequ\
+    ences\x12b\n\x18UpdateSequenceWrapAround\x12*.mizer.sequencer.SequenceWr\
+    apAroundRequest\x1a\x1a.mizer.sequencer.Sequences\x12h\n\x1bUpdateSequen\
+    ceStopOnLastCue\x12-.mizer.sequencer.SequenceStopOnLastCueRequest\x1a\
+    \x1a.mizer.sequencer.Sequences\x12Q\n\x12UpdateSequenceName\x12\x1f.mize\
+    r.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequencesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

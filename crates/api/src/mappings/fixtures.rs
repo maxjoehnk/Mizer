@@ -351,6 +351,7 @@ impl From<definition::FixtureFaderControl> for models::FixtureControl {
             Generic(_) => Self::GENERIC,
             Zoom => Self::ZOOM,
             Focus => Self::FOCUS,
+            PointAt(_) => Self::POINT_AT,
             Gobo => Self::GOBO,
         }
     }
@@ -367,6 +368,16 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
                 RED => definition::ColorChannel::Red,
                 GREEN => definition::ColorChannel::Green,
                 BLUE => definition::ColorChannel::Blue,
+            }
+        });
+
+        let world_axis_channel = control.world_axis_channel.map(|channel| {
+            use models::fixture_fader_control::WorldAxisChannel::*;
+
+            match channel.unwrap() {
+                X => definition::WorldAxis::X,
+                Y => definition::WorldAxis::Y,
+                Z => definition::WorldAxis::Z,
             }
         });
 
@@ -389,6 +400,13 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
             GOBO => Self::Gobo,
             PAN => Self::Pan,
             TILT => Self::Tilt,
+            POINT_AT => {
+                if let Some(axis) = world_axis_channel {
+                    Self::PointAt(axis)
+                } else {
+                    unreachable!("PointAt control without world axis channel")
+                }
+            }
             PRISM => Self::Prism,
             GENERIC => {
                 if let Some(generic) = generic_channel {
@@ -398,6 +416,33 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
                 }
             }
             IRIS => Self::Iris,
+        }
+    }
+}
+
+impl From<mizer_fixtures::fixture::FixturePlacement> for FixturePlacement {
+    fn from(placement: mizer_fixtures::fixture::FixturePlacement) -> Self {
+        Self {
+            x: placement.x,
+            y: placement.y,
+            z: placement.z,
+            rotate_x: placement.rotate_x,
+            rotate_y: placement.rotate_y,
+            rotate_z: placement.rotate_z,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<FixturePlacement> for mizer_fixtures::fixture::FixturePlacement {
+    fn from(placement: FixturePlacement) -> Self {
+        Self {
+            x: placement.x,
+            y: placement.y,
+            z: placement.z,
+            rotate_x: placement.rotate_x,
+            rotate_y: placement.rotate_y,
+            rotate_z: placement.rotate_z,
         }
     }
 }

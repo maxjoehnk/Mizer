@@ -204,16 +204,34 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
 
         match position {
             Pan(pan) => Self {
-                pan: Some(pan),
+                value: Some(preset::position::Value::PanTilt(preset::PanTilt {
+                    pan: Some(pan),
+                    ..Default::default()
+                })),
                 ..Default::default()
             },
             Tilt(tilt) => Self {
-                tilt: Some(tilt),
+                value: Some(preset::position::Value::PanTilt(preset::PanTilt {
+                    tilt: Some(tilt),
+                    ..Default::default()
+                })),
                 ..Default::default()
             },
             PanTilt(pan, tilt) => Self {
-                pan: Some(pan),
-                tilt: Some(tilt),
+                value: Some(preset::position::Value::PanTilt(preset::PanTilt {
+                    pan: Some(pan),
+                    tilt: Some(tilt),
+                    ..Default::default()
+                })),
+                ..Default::default()
+            },
+            World(x, y, z) => Self {
+                value: Some(preset::position::Value::World(WorldPosition {
+                    x,
+                    y,
+                    z,
+                    ..Default::default()
+                })),
                 ..Default::default()
             },
         }
@@ -247,6 +265,15 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                 FixtureControl::TILT,
                 programmer_channel::Value::Fader(value),
             ),
+            PointAt(x, y, z) => (
+                FixtureControl::POINT_AT,
+                programmer_channel::Value::World(WorldPosition {
+                    x,
+                    y,
+                    z,
+                    ..Default::default()
+                }),
+            ),
             Focus(value) => (
                 FixtureControl::FOCUS,
                 programmer_channel::Value::Fader(value),
@@ -269,7 +296,7 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
             ),
             ColorMixer(red, green, blue) => (
                 FixtureControl::COLOR_MIXER,
-                programmer_channel::Value::Color(crate::models::fixtures::ColorMixerChannel {
+                programmer_channel::Value::Color(ColorMixerChannel {
                     red,
                     green,
                     blue,

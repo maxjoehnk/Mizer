@@ -51,6 +51,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                     fixture.deref() as &mizer_fixtures::fixture::Fixture,
                     fixture.current_mode.controls.clone(),
                 ),
+                placement: MessageField::some(fixture.placement.into()),
                 children: fixture
                     .current_mode
                     .sub_fixtures
@@ -132,6 +133,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 .address
                 .into_option()
                 .map(|address| (address.universe as u16, address.channel as u16)),
+            placement: request
+                .placement
+                .into_option()
+                .map(|placement| placement.into()),
         };
         self.runtime.run_command(cmd)?;
 

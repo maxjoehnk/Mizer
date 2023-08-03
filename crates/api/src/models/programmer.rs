@@ -818,8 +818,57 @@ impl ProgrammerChannel {
         }
     }
 
+    // .mizer.fixtures.WorldPosition world = 6;
+
+    pub fn world(&self) -> &super::fixtures::WorldPosition {
+        match self.value {
+            ::std::option::Option::Some(programmer_channel::Value::World(ref v)) => v,
+            _ => <super::fixtures::WorldPosition as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_world(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_world(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(programmer_channel::Value::World(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_world(&mut self, v: super::fixtures::WorldPosition) {
+        self.value = ::std::option::Option::Some(programmer_channel::Value::World(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_world(&mut self) -> &mut super::fixtures::WorldPosition {
+        if let ::std::option::Option::Some(programmer_channel::Value::World(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(programmer_channel::Value::World(super::fixtures::WorldPosition::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(programmer_channel::Value::World(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_world(&mut self) -> super::fixtures::WorldPosition {
+        if self.has_world() {
+            match self.value.take() {
+                ::std::option::Option::Some(programmer_channel::Value::World(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            super::fixtures::WorldPosition::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "fixtures",
@@ -850,6 +899,13 @@ impl ProgrammerChannel {
             ProgrammerChannel::generic,
             ProgrammerChannel::mut_generic,
             ProgrammerChannel::set_generic,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::fixtures::WorldPosition>(
+            "world",
+            ProgrammerChannel::has_world,
+            ProgrammerChannel::world,
+            ProgrammerChannel::mut_world,
+            ProgrammerChannel::set_world,
         ));
         oneofs.push(programmer_channel::Value::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProgrammerChannel>(
@@ -885,6 +941,9 @@ impl ::protobuf::Message for ProgrammerChannel {
                 42 => {
                     self.value = ::std::option::Option::Some(programmer_channel::Value::Generic(is.read_message()?));
                 },
+                50 => {
+                    self.value = ::std::option::Option::Some(programmer_channel::Value::World(is.read_message()?));
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -917,6 +976,10 @@ impl ::protobuf::Message for ProgrammerChannel {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &programmer_channel::Value::World(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -942,6 +1005,9 @@ impl ::protobuf::Message for ProgrammerChannel {
                 &programmer_channel::Value::Generic(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
                 },
+                &programmer_channel::Value::World(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -963,6 +1029,7 @@ impl ::protobuf::Message for ProgrammerChannel {
     fn clear(&mut self) {
         self.fixtures.clear();
         self.control = ::protobuf::EnumOrUnknown::new(super::fixtures::FixtureControl::INTENSITY);
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
@@ -1010,6 +1077,8 @@ pub mod programmer_channel {
         Color(super::super::fixtures::ColorMixerChannel),
         // @@protoc_insertion_point(oneof_field:mizer.programmer.ProgrammerChannel.generic)
         Generic(GenericValue),
+        // @@protoc_insertion_point(oneof_field:mizer.programmer.ProgrammerChannel.world)
+        World(super::super::fixtures::WorldPosition),
     }
 
     impl ::protobuf::Oneof for Value {
@@ -5224,11 +5293,8 @@ pub mod preset {
     #[derive(PartialEq,Clone,Default,Debug)]
     // @@protoc_insertion_point(message:mizer.programmer.Preset.Position)
     pub struct Position {
-        // message fields
-        // @@protoc_insertion_point(field:mizer.programmer.Preset.Position.tilt)
-        pub tilt: ::std::option::Option<f64>,
-        // @@protoc_insertion_point(field:mizer.programmer.Preset.Position.pan)
-        pub pan: ::std::option::Option<f64>,
+        // message oneof groups
+        pub value: ::std::option::Option<position::Value>,
         // special fields
         // @@protoc_insertion_point(special_field:mizer.programmer.Preset.Position.special_fields)
         pub special_fields: ::protobuf::SpecialFields,
@@ -5245,19 +5311,122 @@ pub mod preset {
             ::std::default::Default::default()
         }
 
+        // .mizer.programmer.Preset.PanTilt pan_tilt = 1;
+
+        pub fn pan_tilt(&self) -> &PanTilt {
+            match self.value {
+                ::std::option::Option::Some(position::Value::PanTilt(ref v)) => v,
+                _ => <PanTilt as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_pan_tilt(&mut self) {
+            self.value = ::std::option::Option::None;
+        }
+
+        pub fn has_pan_tilt(&self) -> bool {
+            match self.value {
+                ::std::option::Option::Some(position::Value::PanTilt(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_pan_tilt(&mut self, v: PanTilt) {
+            self.value = ::std::option::Option::Some(position::Value::PanTilt(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_pan_tilt(&mut self) -> &mut PanTilt {
+            if let ::std::option::Option::Some(position::Value::PanTilt(_)) = self.value {
+            } else {
+                self.value = ::std::option::Option::Some(position::Value::PanTilt(PanTilt::new()));
+            }
+            match self.value {
+                ::std::option::Option::Some(position::Value::PanTilt(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_pan_tilt(&mut self) -> PanTilt {
+            if self.has_pan_tilt() {
+                match self.value.take() {
+                    ::std::option::Option::Some(position::Value::PanTilt(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                PanTilt::new()
+            }
+        }
+
+        // .mizer.fixtures.WorldPosition world = 2;
+
+        pub fn world(&self) -> &super::super::fixtures::WorldPosition {
+            match self.value {
+                ::std::option::Option::Some(position::Value::World(ref v)) => v,
+                _ => <super::super::fixtures::WorldPosition as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_world(&mut self) {
+            self.value = ::std::option::Option::None;
+        }
+
+        pub fn has_world(&self) -> bool {
+            match self.value {
+                ::std::option::Option::Some(position::Value::World(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_world(&mut self, v: super::super::fixtures::WorldPosition) {
+            self.value = ::std::option::Option::Some(position::Value::World(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_world(&mut self) -> &mut super::super::fixtures::WorldPosition {
+            if let ::std::option::Option::Some(position::Value::World(_)) = self.value {
+            } else {
+                self.value = ::std::option::Option::Some(position::Value::World(super::super::fixtures::WorldPosition::new()));
+            }
+            match self.value {
+                ::std::option::Option::Some(position::Value::World(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_world(&mut self) -> super::super::fixtures::WorldPosition {
+            if self.has_world() {
+                match self.value.take() {
+                    ::std::option::Option::Some(position::Value::World(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                super::super::fixtures::WorldPosition::new()
+            }
+        }
+
         pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
             let mut fields = ::std::vec::Vec::with_capacity(2);
-            let mut oneofs = ::std::vec::Vec::with_capacity(0);
-            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
-                "tilt",
-                |m: &Position| { &m.tilt },
-                |m: &mut Position| { &mut m.tilt },
+            let mut oneofs = ::std::vec::Vec::with_capacity(1);
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, PanTilt>(
+                "pan_tilt",
+                Position::has_pan_tilt,
+                Position::pan_tilt,
+                Position::mut_pan_tilt,
+                Position::set_pan_tilt,
             ));
-            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
-                "pan",
-                |m: &Position| { &m.pan },
-                |m: &mut Position| { &mut m.pan },
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, super::super::fixtures::WorldPosition>(
+                "world",
+                Position::has_world,
+                Position::world,
+                Position::mut_world,
+                Position::set_world,
             ));
+            oneofs.push(position::Value::generated_oneof_descriptor_data());
             ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Position>(
                 "Preset.Position",
                 fields,
@@ -5268,6 +5437,185 @@ pub mod preset {
 
     impl ::protobuf::Message for Position {
         const NAME: &'static str = "Position";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    10 => {
+                        self.value = ::std::option::Option::Some(position::Value::PanTilt(is.read_message()?));
+                    },
+                    18 => {
+                        self.value = ::std::option::Option::Some(position::Value::World(is.read_message()?));
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let ::std::option::Option::Some(ref v) = self.value {
+                match v {
+                    &position::Value::PanTilt(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                    &position::Value::World(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                };
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let ::std::option::Option::Some(ref v) = self.value {
+                match v {
+                    &position::Value::PanTilt(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+                    },
+                    &position::Value::World(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                    },
+                };
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> Position {
+            Position::new()
+        }
+
+        fn clear(&mut self) {
+            self.value = ::std::option::Option::None;
+            self.value = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static Position {
+            static instance: Position = Position {
+                value: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for Position {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Preset.Position").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for Position {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for Position {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `Position`
+    pub mod position {
+
+        #[derive(Clone,PartialEq,Debug)]
+        #[non_exhaustive]
+        // @@protoc_insertion_point(oneof:mizer.programmer.Preset.Position.value)
+        pub enum Value {
+            // @@protoc_insertion_point(oneof_field:mizer.programmer.Preset.Position.pan_tilt)
+            PanTilt(super::PanTilt),
+            // @@protoc_insertion_point(oneof_field:mizer.programmer.Preset.Position.world)
+            World(super::super::super::fixtures::WorldPosition),
+        }
+
+        impl ::protobuf::Oneof for Value {
+        }
+
+        impl ::protobuf::OneofFull for Value {
+            fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| <super::Position as ::protobuf::MessageFull>::descriptor().oneof_by_name("value").unwrap()).clone()
+            }
+        }
+
+        impl Value {
+            pub(in super::super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+                ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Value>("value")
+            }
+        }
+    }
+
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.programmer.Preset.PanTilt)
+    pub struct PanTilt {
+        // message fields
+        // @@protoc_insertion_point(field:mizer.programmer.Preset.PanTilt.tilt)
+        pub tilt: ::std::option::Option<f64>,
+        // @@protoc_insertion_point(field:mizer.programmer.Preset.PanTilt.pan)
+        pub pan: ::std::option::Option<f64>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.programmer.Preset.PanTilt.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a PanTilt {
+        fn default() -> &'a PanTilt {
+            <PanTilt as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl PanTilt {
+        pub fn new() -> PanTilt {
+            ::std::default::Default::default()
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(2);
+            let mut oneofs = ::std::vec::Vec::with_capacity(0);
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "tilt",
+                |m: &PanTilt| { &m.tilt },
+                |m: &mut PanTilt| { &mut m.tilt },
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+                "pan",
+                |m: &PanTilt| { &m.pan },
+                |m: &mut PanTilt| { &mut m.pan },
+            ));
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PanTilt>(
+                "Preset.PanTilt",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for PanTilt {
+        const NAME: &'static str = "PanTilt";
 
         fn is_initialized(&self) -> bool {
             true
@@ -5324,8 +5672,8 @@ pub mod preset {
             &mut self.special_fields
         }
 
-        fn new() -> Position {
-            Position::new()
+        fn new() -> PanTilt {
+            PanTilt::new()
         }
 
         fn clear(&mut self) {
@@ -5334,8 +5682,8 @@ pub mod preset {
             self.special_fields.clear();
         }
 
-        fn default_instance() -> &'static Position {
-            static instance: Position = Position {
+        fn default_instance() -> &'static PanTilt {
+            static instance: PanTilt = PanTilt {
                 tilt: ::std::option::Option::None,
                 pan: ::std::option::Option::None,
                 special_fields: ::protobuf::SpecialFields::new(),
@@ -5344,20 +5692,20 @@ pub mod preset {
         }
     }
 
-    impl ::protobuf::MessageFull for Position {
+    impl ::protobuf::MessageFull for PanTilt {
         fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
             static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Preset.Position").unwrap()).clone()
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("Preset.PanTilt").unwrap()).clone()
         }
     }
 
-    impl ::std::fmt::Display for Position {
+    impl ::std::fmt::Display for PanTilt {
         fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
             ::protobuf::text_format::fmt(self, f)
         }
     }
 
-    impl ::protobuf::reflect::ProtobufValue for Position {
+    impl ::protobuf::reflect::ProtobufValue for PanTilt {
         type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
     }
 }
@@ -6700,49 +7048,50 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x10FixtureSelection\x12Q\n\x08fixtures\x18\x01\x20\x03(\x0b25.mizer.pro\
     grammer.FixtureSelection.GroupedFixtureListR\x08fixtures\x1aK\n\x12Group\
     edFixtureList\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixture\
-    s.FixtureIdR\x08fixtures\"\x96\x03\n\x11ProgrammerChannel\x125\n\x08fixt\
+    s.FixtureIdR\x08fixtures\"\xcd\x03\n\x11ProgrammerChannel\x125\n\x08fixt\
     ures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\x12\
     8\n\x07control\x18\x02\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\
     \x07control\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x129\n\
     \x05color\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\
     \x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.programmer.Prog\
-    rammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\x12\
-    \n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\
-    \x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03RED\x10\0\x12\t\n\
-    \x05GREEN\x10\x01\x12\x08\n\x04BLUE\x10\x02B\x07\n\x05value\"\x91\x01\n\
-    \x15EffectProgrammerState\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08ef\
-    fectId\x12\x1f\n\x0beffect_rate\x18\x02\x20\x01(\x01R\neffectRate\x12(\n\
-    \reffect_offset\x18\x03\x20\x01(\x01H\0R\x0ceffectOffset\x88\x01\x01B\
-    \x10\n\x0e_effect_offset\"V\n\x16WriteEffectRateRequest\x12\x1b\n\teffec\
-    t_id\x18\x01\x20\x01(\rR\x08effectId\x12\x1f\n\x0beffect_rate\x18\x02\
-    \x20\x01(\x01R\neffectRate\"\x19\n\x17WriteEffectRateResponse\"s\n\x18Wr\
-    iteEffectOffsetRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effec\
-    tId\x12(\n\reffect_offset\x18\x02\x20\x01(\x01H\0R\x0ceffectOffset\x88\
-    \x01\x01B\x10\n\x0e_effect_offset\"\x1b\n\x19WriteEffectOffsetResponse\"\
-    \xb5\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e\
-    2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\
-    \x02\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\x01(\x0b2!.mi\
-    zer.fixtures.ColorMixerChannelH\0R\x05color\x12N\n\x07generic\x18\x04\
-    \x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0R\
-    \x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05val\
-    ue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
-    \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
-    ures\"\x18\n\x16SelectFixturesResponse\"P\n\x17UnselectFixturesRequest\
-    \x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
-    \x08fixtures\"\x1a\n\x18UnselectFixturesResponse\"\x0e\n\x0cClearRequest\
-    \"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\
-    \x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xc9\x01\
-    \n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenc\
-    eId\x12B\n\nstore_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequ\
-    est.ModeR\tstoreMode\x12\x1a\n\x06cue_id\x18\x03\x20\x01(\rH\0R\x05cueId\
-    \x88\x01\x01\"-\n\x04Mode\x12\r\n\tOVERWRITE\x10\0\x12\t\n\x05MERGE\x10\
-    \x01\x12\x0b\n\x07ADD_CUE\x10\x02B\t\n\x07_cue_id\"\x0f\n\rStoreResponse\
-    \"\x96\x02\n\x12StorePresetRequest\x128\n\x08existing\x18\x01\x20\x01(\
-    \x0b2\x1a.mizer.programmer.PresetIdH\0R\x08existing\x12O\n\nnew_preset\
-    \x18\x02\x20\x01(\x0b2..mizer.programmer.StorePresetRequest.NewPresetH\0\
-    R\tnewPreset\x1ak\n\tNewPreset\x129\n\x04type\x18\x01\x20\x01(\x0e2%.miz\
-    er.programmer.PresetId.PresetTypeR\x04type\x12\x19\n\x05label\x18\x02\
+    rammerChannel.GenericValueH\0R\x07generic\x125\n\x05world\x18\x06\x20\
+    \x01(\x0b2\x1d.mizer.fixtures.WorldPositionH\0R\x05world\x1a8\n\x0cGener\
+    icValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03RED\
+    \x10\0\x12\t\n\x05GREEN\x10\x01\x12\x08\n\x04BLUE\x10\x02B\x07\n\x05valu\
+    e\"\x91\x01\n\x15EffectProgrammerState\x12\x1b\n\teffect_id\x18\x01\x20\
+    \x01(\rR\x08effectId\x12\x1f\n\x0beffect_rate\x18\x02\x20\x01(\x01R\neff\
+    ectRate\x12(\n\reffect_offset\x18\x03\x20\x01(\x01H\0R\x0ceffectOffset\
+    \x88\x01\x01B\x10\n\x0e_effect_offset\"V\n\x16WriteEffectRateRequest\x12\
+    \x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12\x1f\n\x0beffect_ra\
+    te\x18\x02\x20\x01(\x01R\neffectRate\"\x19\n\x17WriteEffectRateResponse\
+    \"s\n\x18WriteEffectOffsetRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\
+    \rR\x08effectId\x12(\n\reffect_offset\x18\x02\x20\x01(\x01H\0R\x0ceffect\
+    Offset\x88\x01\x01B\x10\n\x0e_effect_offset\"\x1b\n\x19WriteEffectOffset\
+    Response\"\xb5\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\
+    \x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\
+    \x05fader\x18\x02\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\
+    \x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\x05color\x12N\n\x07gene\
+    ric\x18\x04\x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericV\
+    alueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\
+    \n\x05value\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesReques\
+    t\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
+    \x08fixtures\"\x18\n\x16SelectFixturesResponse\"P\n\x17UnselectFixturesR\
+    equest\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.Fixtu\
+    reIdR\x08fixtures\"\x1a\n\x18UnselectFixturesResponse\"\x0e\n\x0cClearRe\
+    quest\"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlig\
+    ht\x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xc9\
+    \x01\n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nseq\
+    uenceId\x12B\n\nstore_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.Store\
+    Request.ModeR\tstoreMode\x12\x1a\n\x06cue_id\x18\x03\x20\x01(\rH\0R\x05c\
+    ueId\x88\x01\x01\"-\n\x04Mode\x12\r\n\tOVERWRITE\x10\0\x12\t\n\x05MERGE\
+    \x10\x01\x12\x0b\n\x07ADD_CUE\x10\x02B\t\n\x07_cue_id\"\x0f\n\rStoreResp\
+    onse\"\x96\x02\n\x12StorePresetRequest\x128\n\x08existing\x18\x01\x20\
+    \x01(\x0b2\x1a.mizer.programmer.PresetIdH\0R\x08existing\x12O\n\nnew_pre\
+    set\x18\x02\x20\x01(\x0b2..mizer.programmer.StorePresetRequest.NewPreset\
+    H\0R\tnewPreset\x1ak\n\tNewPreset\x129\n\x04type\x18\x01\x20\x01(\x0e2%.\
+    mizer.programmer.PresetId.PresetTypeR\x04type\x12\x19\n\x05label\x18\x02\
     \x20\x01(\tH\0R\x05label\x88\x01\x01B\x08\n\x06_labelB\x08\n\x06target\"\
     W\n\x13RenamePresetRequest\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.\
     programmer.PresetIdR\x02id\x12\x14\n\x05label\x18\x02\x20\x01(\tR\x05lab\
@@ -6755,7 +7104,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x08shutters\x18\x02\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x08shutt\
     ers\x120\n\x06colors\x18\x03\x20\x03(\x0b2\x18.mizer.programmer.PresetR\
     \x06colors\x126\n\tpositions\x18\x04\x20\x03(\x0b2\x18.mizer.programmer.\
-    PresetR\tpositions\"\x85\x03\n\x06Preset\x12*\n\x02id\x18\x01\x20\x01(\
+    PresetR\tpositions\"\x90\x04\n\x06Preset\x12*\n\x02id\x18\x01\x20\x01(\
     \x0b2\x1a.mizer.programmer.PresetIdR\x02id\x12\x19\n\x05label\x18\x02\
     \x20\x01(\tH\0R\x05label\x88\x01\x01\x12\x16\n\x05fader\x18\x03\x20\x01(\
     \x01H\x01R\x05fader\x126\n\x05color\x18\x04\x20\x01(\x0b2\x1e.mizer.prog\
@@ -6763,47 +7112,50 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0b2!.mizer.programmer.Preset.PositionH\x01R\x08position\x1aC\n\x05Colo\
     r\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\
     \x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04b\
-    lue\x1aK\n\x08Position\x12\x17\n\x04tilt\x18\x01\x20\x01(\x01H\0R\x04til\
-    t\x88\x01\x01\x12\x15\n\x03pan\x18\x02\x20\x01(\x01H\x01R\x03pan\x88\x01\
-    \x01B\x07\n\x05_tiltB\x06\n\x04_panB\x08\n\x06_labelB\x07\n\x05value\"\
-    \x14\n\x12CallPresetResponse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\
-    \n\x06groups\x18\x01\x20\x03(\x0b2\x17.mizer.programmer.GroupR\x06groups\
-    \"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04na\
-    me\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupRequest\x12\x0e\n\x02i\
-    d\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupResponse\"%\n\x0fAddGr\
-    oupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"8\n\x12RenameG\
-    roupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
-    \x18\x02\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToGroupRequest\x12\
-    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\x20\
-    \x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$AssignFixtureS\
-    electionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x1f\n\
-    \x1dAssignFixturesToGroupResponse2\xc2\x0c\n\rProgrammerApi\x12h\n\x15Su\
-    bscribeToProgrammer\x12,.mizer.programmer.SubscribeProgrammerRequest\x1a\
-    !.mizer.programmer.ProgrammerState\x12]\n\x0cWriteControl\x12%.mizer.pro\
-    grammer.WriteControlRequest\x1a&.mizer.programmer.WriteControlResponse\
-    \x12c\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesRequest\
-    \x1a(.mizer.programmer.SelectFixturesResponse\x12i\n\x10UnselectFixtures\
-    \x12).mizer.programmer.UnselectFixturesRequest\x1a*.mizer.programmer.Uns\
-    electFixturesResponse\x12H\n\x05Clear\x12\x1e.mizer.programmer.ClearRequ\
-    est\x1a\x1f.mizer.programmer.ClearResponse\x12T\n\tHighlight\x12\".mizer\
-    .programmer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\x12\
-    H\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.program\
-    mer.StoreResponse\x12I\n\nGetPresets\x12\x20.mizer.programmer.PresetsReq\
-    uest\x1a\x19.mizer.programmer.Presets\x12N\n\nCallPreset\x12\x1a.mizer.p\
-    rogrammer.PresetId\x1a$.mizer.programmer.CallPresetResponse\x12F\n\tGetG\
-    roups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.programmer.Gr\
-    oups\x12Z\n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%\
-    .mizer.programmer.SelectGroupResponse\x12F\n\x08AddGroup\x12!.mizer.prog\
-    rammer.AddGroupRequest\x1a\x17.mizer.programmer.Group\x12L\n\x0bRenameGr\
-    oup\x12$.mizer.programmer.RenameGroupRequest\x1a\x17.mizer.programmer.Gr\
-    oup\x12x\n\x15AssignFixturesToGroup\x12..mizer.programmer.AssignFixtures\
-    ToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\x12\
-    \x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.mizer.programmer.Assign\
-    FixtureSelectionToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGro\
-    upResponse\x12f\n\x0fWriteEffectRate\x12(.mizer.programmer.WriteEffectRa\
-    teRequest\x1a).mizer.programmer.WriteEffectRateResponse\x12l\n\x11WriteE\
-    ffectOffset\x12*.mizer.programmer.WriteEffectOffsetRequest\x1a+.mizer.pr\
-    ogrammer.WriteEffectOffsetResponseb\x06proto3\
+    lue\x1a\x89\x01\n\x08Position\x12=\n\x08pan_tilt\x18\x01\x20\x01(\x0b2\
+    \x20.mizer.programmer.Preset.PanTiltH\0R\x07panTilt\x125\n\x05world\x18\
+    \x02\x20\x01(\x0b2\x1d.mizer.fixtures.WorldPositionH\0R\x05worldB\x07\n\
+    \x05value\x1aJ\n\x07PanTilt\x12\x17\n\x04tilt\x18\x01\x20\x01(\x01H\0R\
+    \x04tilt\x88\x01\x01\x12\x15\n\x03pan\x18\x02\x20\x01(\x01H\x01R\x03pan\
+    \x88\x01\x01B\x07\n\x05_tiltB\x06\n\x04_panB\x08\n\x06_labelB\x07\n\x05v\
+    alue\"\x14\n\x12CallPresetResponse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\
+    \x12/\n\x06groups\x18\x01\x20\x03(\x0b2\x17.mizer.programmer.GroupR\x06g\
+    roups\"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupRequest\x12\x0e\
+    \n\x02id\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupResponse\"%\n\
+    \x0fAddGroupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"8\n\
+    \x12RenameGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\
+    \n\x04name\x18\x02\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToGroupRequ\
+    est\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\
+    \x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$AssignFixt\
+    ureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\
+    \x1f\n\x1dAssignFixturesToGroupResponse2\xc2\x0c\n\rProgrammerApi\x12h\n\
+    \x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgrammerReque\
+    st\x1a!.mizer.programmer.ProgrammerState\x12]\n\x0cWriteControl\x12%.miz\
+    er.programmer.WriteControlRequest\x1a&.mizer.programmer.WriteControlResp\
+    onse\x12c\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesReques\
+    t\x1a(.mizer.programmer.SelectFixturesResponse\x12i\n\x10UnselectFixture\
+    s\x12).mizer.programmer.UnselectFixturesRequest\x1a*.mizer.programmer.Un\
+    selectFixturesResponse\x12H\n\x05Clear\x12\x1e.mizer.programmer.ClearReq\
+    uest\x1a\x1f.mizer.programmer.ClearResponse\x12T\n\tHighlight\x12\".mize\
+    r.programmer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\
+    \x12H\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.pro\
+    grammer.StoreResponse\x12I\n\nGetPresets\x12\x20.mizer.programmer.Preset\
+    sRequest\x1a\x19.mizer.programmer.Presets\x12N\n\nCallPreset\x12\x1a.miz\
+    er.programmer.PresetId\x1a$.mizer.programmer.CallPresetResponse\x12F\n\t\
+    GetGroups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.programme\
+    r.Groups\x12Z\n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\
+    \x1a%.mizer.programmer.SelectGroupResponse\x12F\n\x08AddGroup\x12!.mizer\
+    .programmer.AddGroupRequest\x1a\x17.mizer.programmer.Group\x12L\n\x0bRen\
+    ameGroup\x12$.mizer.programmer.RenameGroupRequest\x1a\x17.mizer.programm\
+    er.Group\x12x\n\x15AssignFixturesToGroup\x12..mizer.programmer.AssignFix\
+    turesToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\
+    \x12\x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.mizer.programmer.As\
+    signFixtureSelectionToGroupRequest\x1a/.mizer.programmer.AssignFixturesT\
+    oGroupResponse\x12f\n\x0fWriteEffectRate\x12(.mizer.programmer.WriteEffe\
+    ctRateRequest\x1a).mizer.programmer.WriteEffectRateResponse\x12l\n\x11Wr\
+    iteEffectOffset\x12*.mizer.programmer.WriteEffectOffsetRequest\x1a+.mize\
+    r.programmer.WriteEffectOffsetResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -6822,7 +7174,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(44);
+            let mut messages = ::std::vec::Vec::with_capacity(45);
             messages.push(SubscribeProgrammerRequest::generated_message_descriptor_data());
             messages.push(ProgrammerState::generated_message_descriptor_data());
             messages.push(FixtureSelection::generated_message_descriptor_data());
@@ -6867,6 +7219,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(store_preset_request::NewPreset::generated_message_descriptor_data());
             messages.push(preset::Color::generated_message_descriptor_data());
             messages.push(preset::Position::generated_message_descriptor_data());
+            messages.push(preset::PanTilt::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(3);
             enums.push(programmer_channel::ColorChannel::generated_enum_descriptor_data());
             enums.push(store_request::Mode::generated_enum_descriptor_data());

@@ -40,13 +40,14 @@ const ChannelProtocol$json = const {
     const {'1': 'POLY', '2': 5},
     const {'1': 'DATA', '2': 6},
     const {'1': 'MATERIAL', '2': 7},
+    const {'1': 'POSITION', '2': 8},
     const {'1': 'COLOR', '2': 9},
     const {'1': 'CLOCK', '2': 10},
   ],
 };
 
 /// Descriptor for `ChannelProtocol`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List channelProtocolDescriptor = $convert.base64Decode('Cg9DaGFubmVsUHJvdG9jb2wSCgoGU0lOR0xFEAASCQoFTVVMVEkQARILCgdURVhUVVJFEAISCgoGVkVDVE9SEAMSCQoFTEFTRVIQBBIICgRQT0xZEAUSCAoEREFUQRAGEgwKCE1BVEVSSUFMEAcSCQoFQ09MT1IQCRIJCgVDTE9DSxAK');
+final $typed_data.Uint8List channelProtocolDescriptor = $convert.base64Decode('Cg9DaGFubmVsUHJvdG9jb2wSCgoGU0lOR0xFEAASCQoFTVVMVEkQARILCgdURVhUVVJFEAISCgoGVkVDVE9SEAMSCQoFTEFTRVIQBBIICgRQT0xZEAUSCAoEREFUQRAGEgwKCE1BVEVSSUFMEAcSDAoIUE9TSVRJT04QCBIJCgVDT0xPUhAJEgkKBUNMT0NLEAo=');
 @$core.Deprecated('Use addNodeRequestDescriptor instead')
 const AddNodeRequest$json = const {
   '1': 'AddNodeRequest',

@@ -271,6 +271,7 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reversePixelOrder')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<FixtureAddress>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', subBuilder: FixtureAddress.create)
+    ..aOM<FixturePlacement>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'placement', subBuilder: FixturePlacement.create)
     ..hasRequiredFields = false
   ;
 
@@ -282,6 +283,7 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     $core.bool? reversePixelOrder,
     $core.String? name,
     FixtureAddress? address,
+    FixturePlacement? placement,
   }) {
     final _result = create();
     if (fixtureId != null) {
@@ -301,6 +303,9 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     }
     if (address != null) {
       _result.address = address;
+    }
+    if (placement != null) {
+      _result.placement = placement;
     }
     return _result;
   }
@@ -380,6 +385,17 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
   void clearAddress() => clearField(6);
   @$pb.TagNumber(6)
   FixtureAddress ensureAddress() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  FixturePlacement get placement => $_getN(6);
+  @$pb.TagNumber(7)
+  set placement(FixturePlacement v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasPlacement() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPlacement() => clearField(7);
+  @$pb.TagNumber(7)
+  FixturePlacement ensurePlacement() => $_ensure(6);
 }
 
 class FixtureAddress extends $pb.GeneratedMessage {
@@ -636,6 +652,7 @@ class Fixture extends $pb.GeneratedMessage {
     ..pc<FixtureControls>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
     ..pc<SubFixture>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
     ..aOM<FixtureConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: FixtureConfig.create)
+    ..aOM<FixturePlacement>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'placement', subBuilder: FixturePlacement.create)
     ..hasRequiredFields = false
   ;
 
@@ -652,6 +669,7 @@ class Fixture extends $pb.GeneratedMessage {
     $core.Iterable<FixtureControls>? controls,
     $core.Iterable<SubFixture>? children,
     FixtureConfig? config,
+    FixturePlacement? placement,
   }) {
     final _result = create();
     if (id != null) {
@@ -686,6 +704,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (config != null) {
       _result.config = config;
+    }
+    if (placement != null) {
+      _result.placement = placement;
     }
     return _result;
   }
@@ -798,6 +819,17 @@ class Fixture extends $pb.GeneratedMessage {
   void clearConfig() => clearField(11);
   @$pb.TagNumber(11)
   FixtureConfig ensureConfig() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  FixturePlacement get placement => $_getN(11);
+  @$pb.TagNumber(12)
+  set placement(FixturePlacement v) { setField(12, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasPlacement() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearPlacement() => clearField(12);
+  @$pb.TagNumber(12)
+  FixturePlacement ensurePlacement() => $_ensure(11);
 }
 
 class FixtureConfig extends $pb.GeneratedMessage {
@@ -873,6 +905,123 @@ class FixtureConfig extends $pb.GeneratedMessage {
   $core.bool hasReversePixelOrder() => $_has(2);
   @$pb.TagNumber(3)
   void clearReversePixelOrder() => clearField(3);
+}
+
+class FixturePlacement extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixturePlacement', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'z', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rotateX', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rotateY', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rotateZ', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  FixturePlacement._() : super();
+  factory FixturePlacement({
+    $core.double? x,
+    $core.double? y,
+    $core.double? z,
+    $core.double? rotateX,
+    $core.double? rotateY,
+    $core.double? rotateZ,
+  }) {
+    final _result = create();
+    if (x != null) {
+      _result.x = x;
+    }
+    if (y != null) {
+      _result.y = y;
+    }
+    if (z != null) {
+      _result.z = z;
+    }
+    if (rotateX != null) {
+      _result.rotateX = rotateX;
+    }
+    if (rotateY != null) {
+      _result.rotateY = rotateY;
+    }
+    if (rotateZ != null) {
+      _result.rotateZ = rotateZ;
+    }
+    return _result;
+  }
+  factory FixturePlacement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixturePlacement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixturePlacement clone() => FixturePlacement()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixturePlacement copyWith(void Function(FixturePlacement) updates) => super.copyWith((message) => updates(message as FixturePlacement)) as FixturePlacement; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixturePlacement create() => FixturePlacement._();
+  FixturePlacement createEmptyInstance() => create();
+  static $pb.PbList<FixturePlacement> createRepeated() => $pb.PbList<FixturePlacement>();
+  @$core.pragma('dart2js:noInline')
+  static FixturePlacement getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixturePlacement>(create);
+  static FixturePlacement? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get x => $_getN(0);
+  @$pb.TagNumber(1)
+  set x($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearX() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get y => $_getN(1);
+  @$pb.TagNumber(2)
+  set y($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearY() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get z => $_getN(2);
+  @$pb.TagNumber(3)
+  set z($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasZ() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearZ() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get rotateX => $_getN(3);
+  @$pb.TagNumber(4)
+  set rotateX($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRotateX() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRotateX() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get rotateY => $_getN(4);
+  @$pb.TagNumber(5)
+  set rotateY($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRotateY() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRotateY() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.double get rotateZ => $_getN(5);
+  @$pb.TagNumber(6)
+  set rotateZ($core.double v) { $_setDouble(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasRotateZ() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRotateZ() => clearField(6);
 }
 
 class SubFixture extends $pb.GeneratedMessage {
@@ -1230,6 +1379,81 @@ class ColorMixerChannel extends $pb.GeneratedMessage {
   $core.bool hasBlue() => $_has(2);
   @$pb.TagNumber(3)
   void clearBlue() => clearField(3);
+}
+
+class WorldPosition extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WorldPosition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'z', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  WorldPosition._() : super();
+  factory WorldPosition({
+    $core.double? x,
+    $core.double? y,
+    $core.double? z,
+  }) {
+    final _result = create();
+    if (x != null) {
+      _result.x = x;
+    }
+    if (y != null) {
+      _result.y = y;
+    }
+    if (z != null) {
+      _result.z = z;
+    }
+    return _result;
+  }
+  factory WorldPosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WorldPosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WorldPosition clone() => WorldPosition()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WorldPosition copyWith(void Function(WorldPosition) updates) => super.copyWith((message) => updates(message as WorldPosition)) as WorldPosition; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WorldPosition create() => WorldPosition._();
+  WorldPosition createEmptyInstance() => create();
+  static $pb.PbList<WorldPosition> createRepeated() => $pb.PbList<WorldPosition>();
+  @$core.pragma('dart2js:noInline')
+  static WorldPosition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorldPosition>(create);
+  static WorldPosition? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get x => $_getN(0);
+  @$pb.TagNumber(1)
+  set x($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearX() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get y => $_getN(1);
+  @$pb.TagNumber(2)
+  set y($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearY() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get z => $_getN(2);
+  @$pb.TagNumber(3)
+  set z($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasZ() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearZ() => clearField(3);
 }
 
 class ColorWheelChannel extends $pb.GeneratedMessage {
@@ -2286,6 +2510,7 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
     ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.INTENSITY, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
     ..e<FixtureFaderControl_ColorMixerControlChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorMixerChannel', $pb.PbFieldType.OE, defaultOrMaker: FixtureFaderControl_ColorMixerControlChannel.RED, valueOf: FixtureFaderControl_ColorMixerControlChannel.valueOf, enumValues: FixtureFaderControl_ColorMixerControlChannel.values)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'genericChannel')
+    ..e<FixtureFaderControl_WorldAxisChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'worldAxisChannel', $pb.PbFieldType.OE, defaultOrMaker: FixtureFaderControl_WorldAxisChannel.X, valueOf: FixtureFaderControl_WorldAxisChannel.valueOf, enumValues: FixtureFaderControl_WorldAxisChannel.values)
     ..hasRequiredFields = false
   ;
 
@@ -2294,6 +2519,7 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
     FixtureControl? control,
     FixtureFaderControl_ColorMixerControlChannel? colorMixerChannel,
     $core.String? genericChannel,
+    FixtureFaderControl_WorldAxisChannel? worldAxisChannel,
   }) {
     final _result = create();
     if (control != null) {
@@ -2304,6 +2530,9 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
     }
     if (genericChannel != null) {
       _result.genericChannel = genericChannel;
+    }
+    if (worldAxisChannel != null) {
+      _result.worldAxisChannel = worldAxisChannel;
     }
     return _result;
   }
@@ -2354,5 +2583,14 @@ class FixtureFaderControl extends $pb.GeneratedMessage {
   $core.bool hasGenericChannel() => $_has(2);
   @$pb.TagNumber(3)
   void clearGenericChannel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  FixtureFaderControl_WorldAxisChannel get worldAxisChannel => $_getN(3);
+  @$pb.TagNumber(4)
+  set worldAxisChannel(FixtureFaderControl_WorldAxisChannel v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWorldAxisChannel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWorldAxisChannel() => clearField(4);
 }
 

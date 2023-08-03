@@ -166,13 +166,16 @@ message CueControl {
     COLOR_WHEEL = 5;
     PAN = 6;
     TILT = 7;
-    FOCUS = 8;
-    ZOOM = 9;
-    PRISM = 10;
-    IRIS = 11;
-    FROST = 12;
-    GOBO = 13;
-    GENERIC = 14;
+    WORLD_X = 8;
+    WORLD_Y = 9;
+    WORLD_Z = 10;
+    FOCUS = 11;
+    ZOOM = 12;
+    PRISM = 13;
+    IRIS = 14;
+    FROST = 15;
+    GOBO = 16;
+    GENERIC = 17;
   }
 }
 

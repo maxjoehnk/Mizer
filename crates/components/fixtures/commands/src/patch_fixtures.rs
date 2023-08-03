@@ -88,6 +88,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
                 channel,
                 Some(universe),
                 Default::default(),
+                Default::default(),
             );
             let node = FixtureNode {
                 fixture_id,

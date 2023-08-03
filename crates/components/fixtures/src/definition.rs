@@ -362,6 +362,7 @@ impl From<FixtureControls<String>> for FixtureControls<SubFixtureControlChannel>
 pub enum FixtureControlType {
     Fader,
     Color,
+    Coordinate,
 }
 
 impl<TChannel> FixtureControls<TChannel> {
@@ -393,6 +394,9 @@ impl<TChannel> FixtureControls<TChannel> {
         }
         if self.tilt.is_some() {
             controls.push((FixtureControl::Tilt, FixtureControlType::Fader));
+        }
+        if self.pan.is_some() && self.tilt.is_some() {
+            controls.push((FixtureControl::PointAt, FixtureControlType::Coordinate));
         }
         if self.color_mixer.is_some() {
             controls.push((FixtureControl::ColorMixer, FixtureControlType::Color));
@@ -539,8 +543,8 @@ pub struct AxisGroup<TChannel> {
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Angle {
-    pub from: f32,
-    pub to: f32,
+    pub from: f64,
+    pub to: f64,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -594,6 +598,7 @@ pub enum FixtureControl {
     Iris,
     Frost,
     Gobo,
+    PointAt,
     Generic(String),
 }
 
@@ -612,6 +617,7 @@ impl ToString for FixtureControl {
             Self::Iris => "Iris".into(),
             Self::Frost => "Frost".into(),
             Self::Gobo => "Gobo".into(),
+            Self::PointAt => "Point At".into(),
             Self::Generic(control) => control.clone(),
         }
     }
@@ -668,6 +674,7 @@ impl TryFrom<FixtureControl> for FixtureFaderControl {
             FixtureControl::Iris => Ok(Self::Iris),
             FixtureControl::Frost => Ok(Self::Frost),
             FixtureControl::Gobo => Ok(Self::Gobo),
+            FixtureControl::PointAt => Err(()),
             FixtureControl::Generic(name) => Ok(Self::Generic(name)),
         }
     }
@@ -688,6 +695,7 @@ pub enum FixtureFaderControl {
     Iris,
     Frost,
     Gobo,
+    PointAt(WorldAxis),
     Generic(String),
 }
 
@@ -711,6 +719,11 @@ impl FixtureControl {
             Iris => vec![FixtureFaderControl::Iris],
             Frost => vec![FixtureFaderControl::Frost],
             Gobo => vec![FixtureFaderControl::Gobo],
+            PointAt => vec![
+                FixtureFaderControl::PointAt(WorldAxis::X),
+                FixtureFaderControl::PointAt(WorldAxis::Y),
+                FixtureFaderControl::PointAt(WorldAxis::Z),
+            ],
             Generic(generic) => vec![FixtureFaderControl::Generic(generic)],
         }
     }
@@ -721,6 +734,13 @@ pub enum ColorChannel {
     Red,
     Green,
     Blue,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Deserialize, Serialize)]
+pub enum WorldAxis {
+    X,
+    Y,
+    Z,
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -738,6 +758,8 @@ pub enum FixtureControlValue {
     Frost(f64),
     Gobo(f64),
     Generic(String, f64),
+    // Point at a position in 3D space
+    PointAt(f64, f64, f64),
 }
 
 impl Hash for FixtureControlValue {
@@ -798,6 +820,12 @@ impl Hash for FixtureControlValue {
                 name.hash(state);
                 value.to_bits().hash(state);
             }
+            Self::PointAt(x, y, z) => {
+                state.write_u8(13);
+                x.to_bits().hash(state);
+                y.to_bits().hash(state);
+                z.to_bits().hash(state);
+            }
         }
     }
 }
@@ -818,6 +846,7 @@ impl From<FixtureControlValue> for FixtureControl {
             Iris(_) => Self::Iris,
             Frost(_) => Self::Frost,
             Gobo(_) => Self::Gobo,
+            PointAt(_, _, _) => Self::PointAt,
             Generic(channel, _) => Self::Generic(channel),
         }
     }

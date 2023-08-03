@@ -1,11 +1,13 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 
 use mizer_protocol_dmx::DmxOutput;
 
 use crate::color_mixer::update_color_mixer;
 use crate::definition::*;
 pub use crate::sub_fixture::*;
+use crate::WorldCoordinate;
 
 const U24_MAX: u32 = 16_777_215;
 
@@ -24,6 +26,8 @@ pub struct Fixture {
     /// Contains values for all dmx channels including sub-fixtures
     pub channel_values: HashMap<String, f64>,
     pub configuration: FixtureConfiguration,
+    pub placement: FixturePlacement,
+    point_at: Option<WorldCoordinate>,
 }
 
 #[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
@@ -46,6 +50,27 @@ impl FixtureConfiguration {
     }
 }
 
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+pub struct FixturePlacement {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+    pub rotate_x: f64,
+    pub rotate_y: f64,
+    pub rotate_z: f64,
+}
+
+impl Hash for FixturePlacement {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.x.to_bits().hash(state);
+        self.y.to_bits().hash(state);
+        self.z.to_bits().hash(state);
+        self.rotate_x.to_bits().hash(state);
+        self.rotate_y.to_bits().hash(state);
+        self.rotate_z.to_bits().hash(state);
+    }
+}
+
 impl Fixture {
     pub fn new(
         fixture_id: u32,
@@ -56,6 +81,7 @@ impl Fixture {
         channel: u16,
         universe: Option<u16>,
         configuration: FixtureConfiguration,
+        placement: FixturePlacement,
     ) -> Self {
         Fixture {
             id: fixture_id,
@@ -67,6 +93,8 @@ impl Fixture {
             universe: universe.unwrap_or(1),
             channel_values: Default::default(),
             configuration,
+            placement,
+            point_at: Default::default(),
         }
     }
 
@@ -118,6 +146,7 @@ impl Fixture {
         for channel in self.current_mode.channels.iter() {
             self.channel_values.insert(channel.name.clone(), 0f64);
         }
+        self.point_at = Default::default();
         if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
             if mixer.virtual_dimmer().is_some() {
                 mixer.set_virtual_dimmer(0f64);
@@ -196,6 +225,50 @@ impl Fixture {
             |channel, value| self.write(channel, value),
         );
     }
+
+    fn update_point_at(&mut self) -> Option<()> {
+        let point_at = self.point_at?;
+        let (pan_control, tilt_control) = self
+            .current_mode
+            .controls
+            .pan
+            .as_ref()
+            .zip(self.current_mode.controls.tilt.as_ref())?;
+        let pan_angle = pan_control.angle.unwrap_or(Angle { from: 0., to: 360. });
+        let tilt_angle = tilt_control.angle.unwrap_or(Angle { from: 0., to: 180. });
+        let pan_channel = pan_control.channel.clone().into_channel()?;
+        let tilt_channel = tilt_control.channel.clone().into_channel()?;
+        let origin = (self.placement.x, self.placement.y, self.placement.z);
+        let rotation = (
+            self.placement.rotate_x,
+            self.placement.rotate_y,
+            self.placement.rotate_z,
+        );
+        let target = (point_at.x, point_at.y, point_at.z);
+
+        let (pan, tilt) = calculate_pan_tilt(origin, rotation, target, pan_angle, tilt_angle);
+
+        self.write(pan_channel, pan);
+        self.write(tilt_channel, tilt);
+
+        Some(())
+    }
+}
+
+fn calculate_pan_tilt(
+    origin: (f64, f64, f64),
+    rotation: (f64, f64, f64),
+    target: (f64, f64, f64),
+    pan_angle: Angle,
+    tilt_angle: Angle,
+) -> (f64, f64) {
+    let (x, y, z) = target;
+    let (x, y, z) = (x - origin.0, y - origin.1, z - origin.2);
+    let pan = (x.atan2(y).to_degrees() + 360.) % 360.;
+    let tilt = (z.atan2((x * x + y * y).sqrt()).to_degrees() + 360.) % 360.;
+    let pan = pan_angle.from + (pan_angle.to - pan_angle.from) * pan / 360.;
+    let tilt = tilt_angle.from + (tilt_angle.to - tilt_angle.from) * tilt / 360.;
+    (pan, tilt)
 }
 
 impl IFixtureMut for Fixture {
@@ -238,7 +311,20 @@ impl IFixtureMut for Fixture {
                 }
                 self.update_color_mixer();
             }
-            None => {}
+            None => {
+                if let FixtureFaderControl::PointAt(axis) = control {
+                    if self.point_at.is_none() {
+                        self.point_at = Some(Default::default());
+                    }
+                    let point_at = self.point_at.as_mut().unwrap();
+                    match axis {
+                        WorldAxis::X => point_at.x = value,
+                        WorldAxis::Y => point_at.y = value,
+                        WorldAxis::Z => point_at.z = value,
+                    }
+                    self.update_point_at();
+                }
+            }
         }
     }
 }
@@ -351,6 +437,9 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Gobo => self.gobo.as_ref().map(|gobo| &gobo.channel),
+            FixtureFaderControl::PointAt(WorldAxis::X) => None,
+            FixtureFaderControl::PointAt(WorldAxis::Y) => None,
+            FixtureFaderControl::PointAt(WorldAxis::Z) => None,
             FixtureFaderControl::Generic(ref channel) => self
                 .generic
                 .iter()

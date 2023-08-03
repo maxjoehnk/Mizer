@@ -622,6 +622,8 @@ pub struct UpdateFixtureRequest {
     pub name: ::std::option::Option<::std::string::String>,
     // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.address)
     pub address: ::protobuf::MessageField<FixtureAddress>,
+    // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.placement)
+    pub placement: ::protobuf::MessageField<FixturePlacement>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.fixtures.UpdateFixtureRequest.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -639,7 +641,7 @@ impl UpdateFixtureRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut fields = ::std::vec::Vec::with_capacity(7);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "fixture_id",
@@ -670,6 +672,11 @@ impl UpdateFixtureRequest {
             "address",
             |m: &UpdateFixtureRequest| { &m.address },
             |m: &mut UpdateFixtureRequest| { &mut m.address },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, FixturePlacement>(
+            "placement",
+            |m: &UpdateFixtureRequest| { &m.placement },
+            |m: &mut UpdateFixtureRequest| { &mut m.placement },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<UpdateFixtureRequest>(
             "UpdateFixtureRequest",
@@ -707,6 +714,9 @@ impl ::protobuf::Message for UpdateFixtureRequest {
                 50 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.address)?;
                 },
+                58 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.placement)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -738,6 +748,10 @@ impl ::protobuf::Message for UpdateFixtureRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.placement.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -762,6 +776,9 @@ impl ::protobuf::Message for UpdateFixtureRequest {
         if let Some(v) = self.address.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
         }
+        if let Some(v) = self.placement.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(7, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -785,6 +802,7 @@ impl ::protobuf::Message for UpdateFixtureRequest {
         self.reverse_pixel_order = ::std::option::Option::None;
         self.name = ::std::option::Option::None;
         self.address.clear();
+        self.placement.clear();
         self.special_fields.clear();
     }
 
@@ -796,6 +814,7 @@ impl ::protobuf::Message for UpdateFixtureRequest {
             reverse_pixel_order: ::std::option::Option::None,
             name: ::std::option::Option::None,
             address: ::protobuf::MessageField::none(),
+            placement: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1501,6 +1520,8 @@ pub struct Fixture {
     pub children: ::std::vec::Vec<SubFixture>,
     // @@protoc_insertion_point(field:mizer.fixtures.Fixture.config)
     pub config: ::protobuf::MessageField<FixtureConfig>,
+    // @@protoc_insertion_point(field:mizer.fixtures.Fixture.placement)
+    pub placement: ::protobuf::MessageField<FixturePlacement>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.fixtures.Fixture.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1518,7 +1539,7 @@ impl Fixture {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(11);
+        let mut fields = ::std::vec::Vec::with_capacity(12);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "id",
@@ -1575,6 +1596,11 @@ impl Fixture {
             |m: &Fixture| { &m.config },
             |m: &mut Fixture| { &mut m.config },
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, FixturePlacement>(
+            "placement",
+            |m: &Fixture| { &m.placement },
+            |m: &mut Fixture| { &mut m.placement },
+        ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Fixture>(
             "Fixture",
             fields,
@@ -1626,6 +1652,9 @@ impl ::protobuf::Message for Fixture {
                 90 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.config)?;
                 },
+                98 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.placement)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1674,6 +1703,10 @@ impl ::protobuf::Message for Fixture {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if let Some(v) = self.placement.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1713,6 +1746,9 @@ impl ::protobuf::Message for Fixture {
         if let Some(v) = self.config.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(11, v, os)?;
         }
+        if let Some(v) = self.placement.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(12, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1741,6 +1777,7 @@ impl ::protobuf::Message for Fixture {
         self.controls.clear();
         self.children.clear();
         self.config.clear();
+        self.placement.clear();
         self.special_fields.clear();
     }
 
@@ -1757,6 +1794,7 @@ impl ::protobuf::Message for Fixture {
             controls: ::std::vec::Vec::new(),
             children: ::std::vec::Vec::new(),
             config: ::protobuf::MessageField::none(),
+            placement: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1935,6 +1973,218 @@ impl ::std::fmt::Display for FixtureConfig {
 }
 
 impl ::protobuf::reflect::ProtobufValue for FixtureConfig {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.fixtures.FixturePlacement)
+pub struct FixturePlacement {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.x)
+    pub x: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.y)
+    pub y: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.z)
+    pub z: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.rotate_x)
+    pub rotate_x: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.rotate_y)
+    pub rotate_y: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixturePlacement.rotate_z)
+    pub rotate_z: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.fixtures.FixturePlacement.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a FixturePlacement {
+    fn default() -> &'a FixturePlacement {
+        <FixturePlacement as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl FixturePlacement {
+    pub fn new() -> FixturePlacement {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(6);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "x",
+            |m: &FixturePlacement| { &m.x },
+            |m: &mut FixturePlacement| { &mut m.x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "y",
+            |m: &FixturePlacement| { &m.y },
+            |m: &mut FixturePlacement| { &mut m.y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "z",
+            |m: &FixturePlacement| { &m.z },
+            |m: &mut FixturePlacement| { &mut m.z },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "rotate_x",
+            |m: &FixturePlacement| { &m.rotate_x },
+            |m: &mut FixturePlacement| { &mut m.rotate_x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "rotate_y",
+            |m: &FixturePlacement| { &m.rotate_y },
+            |m: &mut FixturePlacement| { &mut m.rotate_y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "rotate_z",
+            |m: &FixturePlacement| { &m.rotate_z },
+            |m: &mut FixturePlacement| { &mut m.rotate_z },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FixturePlacement>(
+            "FixturePlacement",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for FixturePlacement {
+    const NAME: &'static str = "FixturePlacement";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                9 => {
+                    self.x = is.read_double()?;
+                },
+                17 => {
+                    self.y = is.read_double()?;
+                },
+                25 => {
+                    self.z = is.read_double()?;
+                },
+                33 => {
+                    self.rotate_x = is.read_double()?;
+                },
+                41 => {
+                    self.rotate_y = is.read_double()?;
+                },
+                49 => {
+                    self.rotate_z = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.y != 0. {
+            my_size += 1 + 8;
+        }
+        if self.z != 0. {
+            my_size += 1 + 8;
+        }
+        if self.rotate_x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.rotate_y != 0. {
+            my_size += 1 + 8;
+        }
+        if self.rotate_z != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.x != 0. {
+            os.write_double(1, self.x)?;
+        }
+        if self.y != 0. {
+            os.write_double(2, self.y)?;
+        }
+        if self.z != 0. {
+            os.write_double(3, self.z)?;
+        }
+        if self.rotate_x != 0. {
+            os.write_double(4, self.rotate_x)?;
+        }
+        if self.rotate_y != 0. {
+            os.write_double(5, self.rotate_y)?;
+        }
+        if self.rotate_z != 0. {
+            os.write_double(6, self.rotate_z)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> FixturePlacement {
+        FixturePlacement::new()
+    }
+
+    fn clear(&mut self) {
+        self.x = 0.;
+        self.y = 0.;
+        self.z = 0.;
+        self.rotate_x = 0.;
+        self.rotate_y = 0.;
+        self.rotate_z = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static FixturePlacement {
+        static instance: FixturePlacement = FixturePlacement {
+            x: 0.,
+            y: 0.,
+            z: 0.,
+            rotate_x: 0.,
+            rotate_y: 0.,
+            rotate_z: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for FixturePlacement {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("FixturePlacement").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for FixturePlacement {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for FixturePlacement {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -2948,6 +3198,164 @@ impl ::std::fmt::Display for ColorMixerChannel {
 }
 
 impl ::protobuf::reflect::ProtobufValue for ColorMixerChannel {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.fixtures.WorldPosition)
+pub struct WorldPosition {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.fixtures.WorldPosition.x)
+    pub x: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.WorldPosition.y)
+    pub y: f64,
+    // @@protoc_insertion_point(field:mizer.fixtures.WorldPosition.z)
+    pub z: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.fixtures.WorldPosition.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WorldPosition {
+    fn default() -> &'a WorldPosition {
+        <WorldPosition as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WorldPosition {
+    pub fn new() -> WorldPosition {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "x",
+            |m: &WorldPosition| { &m.x },
+            |m: &mut WorldPosition| { &mut m.x },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "y",
+            |m: &WorldPosition| { &m.y },
+            |m: &mut WorldPosition| { &mut m.y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "z",
+            |m: &WorldPosition| { &m.z },
+            |m: &mut WorldPosition| { &mut m.z },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WorldPosition>(
+            "WorldPosition",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WorldPosition {
+    const NAME: &'static str = "WorldPosition";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                9 => {
+                    self.x = is.read_double()?;
+                },
+                17 => {
+                    self.y = is.read_double()?;
+                },
+                25 => {
+                    self.z = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.x != 0. {
+            my_size += 1 + 8;
+        }
+        if self.y != 0. {
+            my_size += 1 + 8;
+        }
+        if self.z != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.x != 0. {
+            os.write_double(1, self.x)?;
+        }
+        if self.y != 0. {
+            os.write_double(2, self.y)?;
+        }
+        if self.z != 0. {
+            os.write_double(3, self.z)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WorldPosition {
+        WorldPosition::new()
+    }
+
+    fn clear(&mut self) {
+        self.x = 0.;
+        self.y = 0.;
+        self.z = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WorldPosition {
+        static instance: WorldPosition = WorldPosition {
+            x: 0.,
+            y: 0.,
+            z: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WorldPosition {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WorldPosition").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WorldPosition {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WorldPosition {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -5572,6 +5980,8 @@ pub struct FixtureFaderControl {
     pub color_mixer_channel: ::std::option::Option<::protobuf::EnumOrUnknown<fixture_fader_control::ColorMixerControlChannel>>,
     // @@protoc_insertion_point(field:mizer.fixtures.FixtureFaderControl.generic_channel)
     pub generic_channel: ::std::option::Option<::std::string::String>,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixtureFaderControl.world_axis_channel)
+    pub world_axis_channel: ::std::option::Option<::protobuf::EnumOrUnknown<fixture_fader_control::WorldAxisChannel>>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.fixtures.FixtureFaderControl.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -5589,7 +5999,7 @@ impl FixtureFaderControl {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "control",
@@ -5605,6 +6015,11 @@ impl FixtureFaderControl {
             "generic_channel",
             |m: &FixtureFaderControl| { &m.generic_channel },
             |m: &mut FixtureFaderControl| { &mut m.generic_channel },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "world_axis_channel",
+            |m: &FixtureFaderControl| { &m.world_axis_channel },
+            |m: &mut FixtureFaderControl| { &mut m.world_axis_channel },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FixtureFaderControl>(
             "FixtureFaderControl",
@@ -5633,6 +6048,9 @@ impl ::protobuf::Message for FixtureFaderControl {
                 26 => {
                     self.generic_channel = ::std::option::Option::Some(is.read_string()?);
                 },
+                32 => {
+                    self.world_axis_channel = ::std::option::Option::Some(is.read_enum_or_unknown()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -5654,6 +6072,9 @@ impl ::protobuf::Message for FixtureFaderControl {
         if let Some(v) = self.generic_channel.as_ref() {
             my_size += ::protobuf::rt::string_size(3, &v);
         }
+        if let Some(v) = self.world_axis_channel {
+            my_size += ::protobuf::rt::int32_size(4, v.value());
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -5668,6 +6089,9 @@ impl ::protobuf::Message for FixtureFaderControl {
         }
         if let Some(v) = self.generic_channel.as_ref() {
             os.write_string(3, v)?;
+        }
+        if let Some(v) = self.world_axis_channel {
+            os.write_enum(4, ::protobuf::EnumOrUnknown::value(&v))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -5689,6 +6113,7 @@ impl ::protobuf::Message for FixtureFaderControl {
         self.control = ::protobuf::EnumOrUnknown::new(FixtureControl::INTENSITY);
         self.color_mixer_channel = ::std::option::Option::None;
         self.generic_channel = ::std::option::Option::None;
+        self.world_axis_channel = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -5697,6 +6122,7 @@ impl ::protobuf::Message for FixtureFaderControl {
             control: ::protobuf::EnumOrUnknown::from_i32(0),
             color_mixer_channel: ::std::option::Option::None,
             generic_channel: ::std::option::Option::None,
+            world_axis_channel: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -5779,6 +6205,64 @@ pub mod fixture_fader_control {
             ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ColorMixerControlChannel>("FixtureFaderControl.ColorMixerControlChannel")
         }
     }
+
+    #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
+    // @@protoc_insertion_point(enum:mizer.fixtures.FixtureFaderControl.WorldAxisChannel)
+    pub enum WorldAxisChannel {
+        // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureFaderControl.WorldAxisChannel.X)
+        X = 0,
+        // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureFaderControl.WorldAxisChannel.Y)
+        Y = 1,
+        // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureFaderControl.WorldAxisChannel.Z)
+        Z = 2,
+    }
+
+    impl ::protobuf::Enum for WorldAxisChannel {
+        const NAME: &'static str = "WorldAxisChannel";
+
+        fn value(&self) -> i32 {
+            *self as i32
+        }
+
+        fn from_i32(value: i32) -> ::std::option::Option<WorldAxisChannel> {
+            match value {
+                0 => ::std::option::Option::Some(WorldAxisChannel::X),
+                1 => ::std::option::Option::Some(WorldAxisChannel::Y),
+                2 => ::std::option::Option::Some(WorldAxisChannel::Z),
+                _ => ::std::option::Option::None
+            }
+        }
+
+        const VALUES: &'static [WorldAxisChannel] = &[
+            WorldAxisChannel::X,
+            WorldAxisChannel::Y,
+            WorldAxisChannel::Z,
+        ];
+    }
+
+    impl ::protobuf::EnumFull for WorldAxisChannel {
+        fn enum_descriptor() -> ::protobuf::reflect::EnumDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().enum_by_package_relative_name("FixtureFaderControl.WorldAxisChannel").unwrap()).clone()
+        }
+
+        fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
+            let index = *self as usize;
+            Self::enum_descriptor().value_by_index(index)
+        }
+    }
+
+    impl ::std::default::Default for WorldAxisChannel {
+        fn default() -> Self {
+            WorldAxisChannel::X
+        }
+    }
+
+    impl WorldAxisChannel {
+        pub(in super) fn generated_enum_descriptor_data() -> ::protobuf::reflect::GeneratedEnumDescriptorData {
+            ::protobuf::reflect::GeneratedEnumDescriptorData::new::<WorldAxisChannel>("FixtureFaderControl.WorldAxisChannel")
+        }
+    }
 }
 
 #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
@@ -5808,8 +6292,10 @@ pub enum FixtureControl {
     FROST = 10,
     // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureControl.GOBO)
     GOBO = 11,
+    // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureControl.POINT_AT)
+    POINT_AT = 12,
     // @@protoc_insertion_point(enum_value:mizer.fixtures.FixtureControl.GENERIC)
-    GENERIC = 12,
+    GENERIC = 13,
 }
 
 impl ::protobuf::Enum for FixtureControl {
@@ -5833,7 +6319,8 @@ impl ::protobuf::Enum for FixtureControl {
             9 => ::std::option::Option::Some(FixtureControl::IRIS),
             10 => ::std::option::Option::Some(FixtureControl::FROST),
             11 => ::std::option::Option::Some(FixtureControl::GOBO),
-            12 => ::std::option::Option::Some(FixtureControl::GENERIC),
+            12 => ::std::option::Option::Some(FixtureControl::POINT_AT),
+            13 => ::std::option::Option::Some(FixtureControl::GENERIC),
             _ => ::std::option::Option::None
         }
     }
@@ -5851,6 +6338,7 @@ impl ::protobuf::Enum for FixtureControl {
         FixtureControl::IRIS,
         FixtureControl::FROST,
         FixtureControl::GOBO,
+        FixtureControl::POINT_AT,
         FixtureControl::GENERIC,
     ];
 }
@@ -5889,110 +6377,123 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     hannel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08universe\x12\x12\n\
     \x04name\x18\x06\x20\x01(\tR\x04name\"\x14\n\x12GetFixturesRequest\"8\n\
     \x15DeleteFixturesRequest\x12\x1f\n\x0bfixture_ids\x18\x01\x20\x03(\rR\n\
-    fixtureIds\"\xd8\x02\n\x14UpdateFixtureRequest\x12\x1d\n\nfixture_id\x18\
+    fixtureIds\"\xab\x03\n\x14UpdateFixtureRequest\x12\x1d\n\nfixture_id\x18\
     \x01\x20\x01(\rR\tfixtureId\x12\"\n\ninvert_pan\x18\x02\x20\x01(\x08H\0R\
     \tinvertPan\x88\x01\x01\x12$\n\x0binvert_tilt\x18\x03\x20\x01(\x08H\x01R\
     \ninvertTilt\x88\x01\x01\x123\n\x13reverse_pixel_order\x18\x04\x20\x01(\
     \x08H\x02R\x11reversePixelOrder\x88\x01\x01\x12\x17\n\x04name\x18\x05\
     \x20\x01(\tH\x03R\x04name\x88\x01\x01\x12=\n\x07address\x18\x06\x20\x01(\
-    \x0b2\x1e.mizer.fixtures.FixtureAddressH\x04R\x07address\x88\x01\x01B\r\
-    \n\x0b_invert_panB\x0e\n\x0c_invert_tiltB\x16\n\x14_reverse_pixel_orderB\
-    \x07\n\x05_nameB\n\n\x08_address\"F\n\x0eFixtureAddress\x12\x1a\n\x08uni\
-    verse\x18\x01\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x02\x20\
-    \x01(\rR\x07channel\"n\n\tFixtureId\x12\x1a\n\x07fixture\x18\x01\x20\x01\
-    (\rH\0R\x07fixture\x12?\n\x0bsub_fixture\x18\x02\x20\x01(\x0b2\x1c.mizer\
-    .fixtures.SubFixtureIdH\0R\nsubFixtureB\x04\n\x02id\"H\n\x0cSubFixtureId\
-    \x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\x12\x19\n\x08child\
-    _id\x18\x02\x20\x01(\rR\x07childId\"?\n\x08Fixtures\x123\n\x08fixtures\
-    \x18\x01\x20\x03(\x0b2\x17.mizer.fixtures.FixtureR\x08fixtures\"\x82\x03\
-    \n\x07Fixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04nam\
-    e\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\t\
-    R\x0cmanufacturer\x12\x14\n\x05model\x18\x04\x20\x01(\tR\x05model\x12\
-    \x12\n\x04mode\x18\x05\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x06\
-    \x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x07\x20\x01(\rR\x07cha\
-    nnel\x12#\n\rchannel_count\x18\x08\x20\x01(\rR\x0cchannelCount\x12;\n\
-    \x08controls\x18\t\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08\
-    controls\x126\n\x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFi\
-    xtureR\x08children\x125\n\x06config\x18\x0b\x20\x01(\x0b2\x1d.mizer.fixt\
-    ures.FixtureConfigR\x06config\"\x7f\n\rFixtureConfig\x12\x1d\n\ninvert_p\
-    an\x18\x01\x20\x01(\x08R\tinvertPan\x12\x1f\n\x0binvert_tilt\x18\x02\x20\
-    \x01(\x08R\ninvertTilt\x12.\n\x13reverse_pixel_order\x18\x03\x20\x01(\
-    \x08R\x11reversePixelOrder\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08c\
-    ontrols\x18\x03\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08con\
-    trols\"\xb8\x03\n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\
-    \x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\
-    \x02\x20\x01(\x0b2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x12D\n\
-    \x0bcolor_mixer\x18\x03\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\
-    \0R\ncolorMixer\x12D\n\x0bcolor_wheel\x18\x04\x20\x01(\x0b2!.mizer.fixtu\
-    res.ColorWheelChannelH\0R\ncolorWheel\x121\n\x04axis\x18\x05\x20\x01(\
-    \x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x121\n\x04gobo\x18\x06\
-    \x20\x01(\x0b2\x1b.mizer.fixtures.GoboChannelH\0R\x04gobo\x12:\n\x07gene\
-    ric\x18\x07\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChannelH\0R\x07gener\
-    icB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value\"O\n\x11ColorMixerChannel\x12\x10\n\x03red\x18\x01\
-    \x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\
-    \x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"a\n\x11ColorWheelChann\
-    el\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x126\n\x06colors\
-    \x18\x02\x20\x03(\x0b2\x1e.mizer.fixtures.ColorWheelSlotR\x06colors\"R\n\
-    \x0eColorWheelSlot\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\
-    \n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x16\n\x06colors\x18\x03\
-    \x20\x03(\tR\x06colors\"]\n\x0bAxisChannel\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tang\
-    leFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\"O\n\x0bGo\
-    boChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12*\n\x05go\
-    bos\x18\x02\x20\x03(\x0b2\x14.mizer.fixtures.GoboR\x05gobos\"g\n\x04Gobo\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\x01R\x05value\x12\x12\n\x03svg\x18\x03\x20\x01(\tH\0R\x03s\
-    vg\x12\x18\n\x06raster\x18\x04\x20\x01(\x0cH\0R\x06rasterB\x07\n\x05imag\
-    e\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05val\
-    ue\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\n\x1cGetFixtureDe\
-    finitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0bdefinitions\x18\
-    \x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0bdefinitions\"\
-    \xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02i\
-    d\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\
-    \x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\x20\x03(\
-    \x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physical\x18\
-    \x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physical\x12\
-    \x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\x18\x07\
-    \x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\x1e.mizer.\
-    fixtures.FixtureChannelR\x08channels\"\x9d\x04\n\x0eFixtureChannel\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\x02\x20\
-    \x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\x06coarse\
-    \x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureChannel.Fin\
-    eResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2/.mizer.fi\
-    xtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\x10CoarseRes\
-    olution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x1aZ\n\x0eFi\
-    neResolution\x12!\n\x0cfine_channel\x18\x01\x20\x01(\rR\x0bfineChannel\
-    \x12%\n\x0ecoarse_channel\x18\x02\x20\x01(\rR\rcoarseChannel\x1a\x83\x01\
-    \n\x10FinestResolution\x12%\n\x0efinest_channel\x18\x01\x20\x01(\rR\rfin\
-    estChannel\x12!\n\x0cfine_channel\x18\x02\x20\x01(\rR\x0bfineChannel\x12\
-    %\n\x0ecoarse_channel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\nresolut\
-    ion\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\x01(\x02R\
-    \x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\x12\x14\n\
-    \x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\x18\x04\x20\
-    \x01(\x02R\x06weight\"\xd6\x02\n\x13FixtureFaderControl\x128\n\x07contro\
-    l\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\
-    \x12q\n\x13color_mixer_channel\x18\x02\x20\x01(\x0e2<.mizer.fixtures.Fix\
-    tureFaderControl.ColorMixerControlChannelH\0R\x11colorMixerChannel\x88\
-    \x01\x01\x12,\n\x0fgeneric_channel\x18\x03\x20\x01(\tH\x01R\x0egenericCh\
-    annel\x88\x01\x01\"8\n\x18ColorMixerControlChannel\x12\x07\n\x03RED\x10\
-    \0\x12\t\n\x05GREEN\x10\x01\x12\x08\n\x04BLUE\x10\x02B\x16\n\x14_color_m\
-    ixer_channelB\x12\n\x10_generic_channel*\xad\x01\n\x0eFixtureControl\x12\
-    \r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\x0bCOLOR_MI\
-    XER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\
-    \x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\
-    \x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\n\x05FRO\
-    ST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\xb6\x03\
-    \n\x0bFixturesApi\x12K\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixtures\
-    Request\x1a\x18.mizer.fixtures.Fixtures\x12i\n\x15GetFixtureDefinitions\
-    \x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.F\
-    ixtureDefinitions\x12K\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixtures\
-    Request\x1a\x18.mizer.fixtures.Fixtures\x12Q\n\x0eDeleteFixtures\x12%.mi\
-    zer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\x12O\
-    \n\rUpdateFixture\x12$.mizer.fixtures.UpdateFixtureRequest\x1a\x18.mizer\
-    .fixtures.Fixturesb\x06proto3\
+    \x0b2\x1e.mizer.fixtures.FixtureAddressH\x04R\x07address\x88\x01\x01\x12\
+    C\n\tplacement\x18\x07\x20\x01(\x0b2\x20.mizer.fixtures.FixturePlacement\
+    H\x05R\tplacement\x88\x01\x01B\r\n\x0b_invert_panB\x0e\n\x0c_invert_tilt\
+    B\x16\n\x14_reverse_pixel_orderB\x07\n\x05_nameB\n\n\x08_addressB\x0c\n\
+    \n_placement\"F\n\x0eFixtureAddress\x12\x1a\n\x08universe\x18\x01\x20\
+    \x01(\rR\x08universe\x12\x18\n\x07channel\x18\x02\x20\x01(\rR\x07channel\
+    \"n\n\tFixtureId\x12\x1a\n\x07fixture\x18\x01\x20\x01(\rH\0R\x07fixture\
+    \x12?\n\x0bsub_fixture\x18\x02\x20\x01(\x0b2\x1c.mizer.fixtures.SubFixtu\
+    reIdH\0R\nsubFixtureB\x04\n\x02id\"H\n\x0cSubFixtureId\x12\x1d\n\nfixtur\
+    e_id\x18\x01\x20\x01(\rR\tfixtureId\x12\x19\n\x08child_id\x18\x02\x20\
+    \x01(\rR\x07childId\"?\n\x08Fixtures\x123\n\x08fixtures\x18\x01\x20\x03(\
+    \x0b2\x17.mizer.fixtures.FixtureR\x08fixtures\"\xc2\x03\n\x07Fixture\x12\
+    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
+    (\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\
+    \x12\x14\n\x05model\x18\x04\x20\x01(\tR\x05model\x12\x12\n\x04mode\x18\
+    \x05\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x06\x20\x01(\rR\x08un\
+    iverse\x12\x18\n\x07channel\x18\x07\x20\x01(\rR\x07channel\x12#\n\rchann\
+    el_count\x18\x08\x20\x01(\rR\x0cchannelCount\x12;\n\x08controls\x18\t\
+    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\x126\n\
+    \x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtureR\x08child\
+    ren\x125\n\x06config\x18\x0b\x20\x01(\x0b2\x1d.mizer.fixtures.FixtureCon\
+    figR\x06config\x12>\n\tplacement\x18\x0c\x20\x01(\x0b2\x20.mizer.fixture\
+    s.FixturePlacementR\tplacement\"\x7f\n\rFixtureConfig\x12\x1d\n\ninvert_\
+    pan\x18\x01\x20\x01(\x08R\tinvertPan\x12\x1f\n\x0binvert_tilt\x18\x02\
+    \x20\x01(\x08R\ninvertTilt\x12.\n\x13reverse_pixel_order\x18\x03\x20\x01\
+    (\x08R\x11reversePixelOrder\"\x8d\x01\n\x10FixturePlacement\x12\x0c\n\
+    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
+    \x01y\x12\x0c\n\x01z\x18\x03\x20\x01(\x01R\x01z\x12\x19\n\x08rotate_x\
+    \x18\x04\x20\x01(\x01R\x07rotateX\x12\x19\n\x08rotate_y\x18\x05\x20\x01(\
+    \x01R\x07rotateY\x12\x19\n\x08rotate_z\x18\x06\x20\x01(\x01R\x07rotateZ\
+    \"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08controls\x18\x03\x20\x03(\
+    \x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xb8\x03\n\x0fFix\
+    tureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.\
+    FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\x0b2\x1c.miz\
+    er.fixtures.FaderChannelH\0R\x05fader\x12D\n\x0bcolor_mixer\x18\x03\x20\
+    \x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\ncolorMixer\x12D\n\x0bc\
+    olor_wheel\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorWheelChannelH\0R\n\
+    colorWheel\x121\n\x04axis\x18\x05\x20\x01(\x0b2\x1b.mizer.fixtures.AxisC\
+    hannelH\0R\x04axis\x121\n\x04gobo\x18\x06\x20\x01(\x0b2\x1b.mizer.fixtur\
+    es.GoboChannelH\0R\x04gobo\x12:\n\x07generic\x18\x07\x20\x01(\x0b2\x1e.m\
+    izer.fixtures.GenericChannelH\0R\x07genericB\x07\n\x05value\"$\n\x0cFade\
+    rChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"O\n\x11Color\
+    MixerChannel\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05\
+    green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\
+    \x01R\x04blue\"9\n\rWorldPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\
+    \x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x0c\n\x01z\x18\x03\
+    \x20\x01(\x01R\x01z\"a\n\x11ColorWheelChannel\x12\x14\n\x05value\x18\x01\
+    \x20\x01(\x01R\x05value\x126\n\x06colors\x18\x02\x20\x03(\x0b2\x1e.mizer\
+    .fixtures.ColorWheelSlotR\x06colors\"R\n\x0eColorWheelSlot\x12\x12\n\x04\
+    name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01\
+    R\x05value\x12\x16\n\x06colors\x18\x03\x20\x03(\tR\x06colors\"]\n\x0bAxi\
+    sChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nan\
+    gle_from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\
+    \x20\x01(\x01R\x07angleTo\"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\
+    \x20\x01(\x01R\x05value\x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.\
+    fixtures.GoboR\x05gobos\"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\
+    \tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\
+    \x03svg\x18\x03\x20\x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\
+    \x01(\x0cH\0R\x06rasterB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\
+    \x01(\tR\x04name\"\x1e\n\x1cGetFixtureDefinitionsRequest\"Y\n\x12Fixture\
+    Definitions\x12C\n\x0bdefinitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.\
+    FixtureDefinitionR\x0bdefinitions\"\xff\x01\n\x11FixtureDefinition\x12\
+    \x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
+    (\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\
+    \x121\n\x05modes\x18\x04\x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\
+    \x05modes\x12?\n\x08physical\x18\x05\x20\x01(\x0b2#.mizer.fixtures.Fixtu\
+    rePhysicalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tag\
+    s\x12\x1a\n\x08provider\x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureM\
+    ode\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\
+    \x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x9d\
+    \x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.C\
+    oarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mize\
+    r.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\
+    \x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\
+    \0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\
+    \x20\x01(\rR\x07channel\x1aZ\n\x0eFineResolution\x12!\n\x0cfine_channel\
+    \x18\x01\x20\x01(\rR\x0bfineChannel\x12%\n\x0ecoarse_channel\x18\x02\x20\
+    \x01(\rR\rcoarseChannel\x1a\x83\x01\n\x10FinestResolution\x12%\n\x0efine\
+    st_channel\x18\x01\x20\x01(\rR\rfinestChannel\x12!\n\x0cfine_channel\x18\
+    \x02\x20\x01(\rR\x0bfineChannel\x12%\n\x0ecoarse_channel\x18\x03\x20\x01\
+    (\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\
+    \x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\
+    \x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\
+    \x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight\"\xff\x03\
+    \n\x13FixtureFaderControl\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mi\
+    zer.fixtures.FixtureControlR\x07control\x12q\n\x13color_mixer_channel\
+    \x18\x02\x20\x01(\x0e2<.mizer.fixtures.FixtureFaderControl.ColorMixerCon\
+    trolChannelH\0R\x11colorMixerChannel\x88\x01\x01\x12,\n\x0fgeneric_chann\
+    el\x18\x03\x20\x01(\tH\x01R\x0egenericChannel\x88\x01\x01\x12g\n\x12worl\
+    d_axis_channel\x18\x04\x20\x01(\x0e24.mizer.fixtures.FixtureFaderControl\
+    .WorldAxisChannelH\x02R\x10worldAxisChannel\x88\x01\x01\"8\n\x18ColorMix\
+    erControlChannel\x12\x07\n\x03RED\x10\0\x12\t\n\x05GREEN\x10\x01\x12\x08\
+    \n\x04BLUE\x10\x02\"'\n\x10WorldAxisChannel\x12\x05\n\x01X\x10\0\x12\x05\
+    \n\x01Y\x10\x01\x12\x05\n\x01Z\x10\x02B\x16\n\x14_color_mixer_channelB\
+    \x12\n\x10_generic_channelB\x15\n\x13_world_axis_channel*\xbb\x01\n\x0eF\
+    ixtureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\
+    \x0f\n\x0bCOLOR_MIXER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\
+    \x03PAN\x10\x04\x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\
+    \x08\n\x04ZOOM\x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\
+    \x12\t\n\x05FROST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0c\n\x08POINT_AT\
+    \x10\x0c\x12\x0b\n\x07GENERIC\x10\r2\xb6\x03\n\x0bFixturesApi\x12K\n\x0b\
+    GetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\x18.mizer.fixtur\
+    es.Fixtures\x12i\n\x15GetFixtureDefinitions\x12,.mizer.fixtures.GetFixtu\
+    reDefinitionsRequest\x1a\".mizer.fixtures.FixtureDefinitions\x12K\n\x0bA\
+    ddFixtures\x12\".mizer.fixtures.AddFixturesRequest\x1a\x18.mizer.fixture\
+    s.Fixtures\x12Q\n\x0eDeleteFixtures\x12%.mizer.fixtures.DeleteFixturesRe\
+    quest\x1a\x18.mizer.fixtures.Fixtures\x12O\n\rUpdateFixture\x12$.mizer.f\
+    ixtures.UpdateFixtureRequest\x1a\x18.mizer.fixtures.Fixturesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -6010,7 +6511,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(31);
+            let mut messages = ::std::vec::Vec::with_capacity(33);
             messages.push(AddFixturesRequest::generated_message_descriptor_data());
             messages.push(AddFixtureRequest::generated_message_descriptor_data());
             messages.push(GetFixturesRequest::generated_message_descriptor_data());
@@ -6022,10 +6523,12 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(Fixtures::generated_message_descriptor_data());
             messages.push(Fixture::generated_message_descriptor_data());
             messages.push(FixtureConfig::generated_message_descriptor_data());
+            messages.push(FixturePlacement::generated_message_descriptor_data());
             messages.push(SubFixture::generated_message_descriptor_data());
             messages.push(FixtureControls::generated_message_descriptor_data());
             messages.push(FaderChannel::generated_message_descriptor_data());
             messages.push(ColorMixerChannel::generated_message_descriptor_data());
+            messages.push(WorldPosition::generated_message_descriptor_data());
             messages.push(ColorWheelChannel::generated_message_descriptor_data());
             messages.push(ColorWheelSlot::generated_message_descriptor_data());
             messages.push(AxisChannel::generated_message_descriptor_data());
@@ -6042,9 +6545,10 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(fixture_channel::CoarseResolution::generated_message_descriptor_data());
             messages.push(fixture_channel::FineResolution::generated_message_descriptor_data());
             messages.push(fixture_channel::FinestResolution::generated_message_descriptor_data());
-            let mut enums = ::std::vec::Vec::with_capacity(2);
+            let mut enums = ::std::vec::Vec::with_capacity(3);
             enums.push(FixtureControl::generated_enum_descriptor_data());
             enums.push(fixture_fader_control::ColorMixerControlChannel::generated_enum_descriptor_data());
+            enums.push(fixture_fader_control::WorldAxisChannel::generated_enum_descriptor_data());
             ::protobuf::reflect::GeneratedFileDescriptor::new_generated(
                 file_descriptor_proto(),
                 deps,

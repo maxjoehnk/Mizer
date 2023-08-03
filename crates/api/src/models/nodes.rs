@@ -9045,6 +9045,8 @@ pub enum ChannelProtocol {
     DATA = 6,
     // @@protoc_insertion_point(enum_value:mizer.nodes.ChannelProtocol.MATERIAL)
     MATERIAL = 7,
+    // @@protoc_insertion_point(enum_value:mizer.nodes.ChannelProtocol.POSITION)
+    POSITION = 8,
     // @@protoc_insertion_point(enum_value:mizer.nodes.ChannelProtocol.COLOR)
     COLOR = 9,
     // @@protoc_insertion_point(enum_value:mizer.nodes.ChannelProtocol.CLOCK)
@@ -9068,6 +9070,7 @@ impl ::protobuf::Enum for ChannelProtocol {
             5 => ::std::option::Option::Some(ChannelProtocol::POLY),
             6 => ::std::option::Option::Some(ChannelProtocol::DATA),
             7 => ::std::option::Option::Some(ChannelProtocol::MATERIAL),
+            8 => ::std::option::Option::Some(ChannelProtocol::POSITION),
             9 => ::std::option::Option::Some(ChannelProtocol::COLOR),
             10 => ::std::option::Option::Some(ChannelProtocol::CLOCK),
             _ => ::std::option::Option::None
@@ -9083,6 +9086,7 @@ impl ::protobuf::Enum for ChannelProtocol {
         ChannelProtocol::POLY,
         ChannelProtocol::DATA,
         ChannelProtocol::MATERIAL,
+        ChannelProtocol::POSITION,
         ChannelProtocol::COLOR,
         ChannelProtocol::CLOCK,
     ];
@@ -9095,18 +9099,7 @@ impl ::protobuf::EnumFull for ChannelProtocol {
     }
 
     fn descriptor(&self) -> ::protobuf::reflect::EnumValueDescriptor {
-        let index = match self {
-            ChannelProtocol::SINGLE => 0,
-            ChannelProtocol::MULTI => 1,
-            ChannelProtocol::TEXTURE => 2,
-            ChannelProtocol::VECTOR => 3,
-            ChannelProtocol::LASER => 4,
-            ChannelProtocol::POLY => 5,
-            ChannelProtocol::DATA => 6,
-            ChannelProtocol::MATERIAL => 7,
-            ChannelProtocol::COLOR => 8,
-            ChannelProtocol::CLOCK => 9,
-        };
+        let index = *self as usize;
         Self::enum_descriptor().value_by_index(index)
     }
 }
@@ -9297,28 +9290,29 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     TEGORY_CONTROLS\x10\x04\x12\x16\n\x12NODE_CATEGORY_DATA\x10\x05\x12\x17\
     \n\x13NODE_CATEGORY_COLOR\x10\x06\x12\x17\n\x13NODE_CATEGORY_AUDIO\x10\
     \x07\x12\x17\n\x13NODE_CATEGORY_VIDEO\x10\x08\x12\x17\n\x13NODE_CATEGORY\
-    _LASER\x10\t\x12\x17\n\x13NODE_CATEGORY_PIXEL\x10\n*\x84\x01\n\x0fChanne\
+    _LASER\x10\t\x12\x17\n\x13NODE_CATEGORY_PIXEL\x10\n*\x92\x01\n\x0fChanne\
     lProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\x0b\n\x07\
     TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
     \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
-    \x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\x10\n2\xbc\x07\n\x08Nod\
-    esApi\x12K\n\x11GetAvailableNodes\x12\x19.mizer.nodes.NodesRequest\x1a\
-    \x1b.mizer.nodes.AvailableNodes\x129\n\x08GetNodes\x12\x19.mizer.nodes.N\
-    odesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.no\
-    des.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mi\
-    zer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11Wr\
-    iteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.Wri\
-    teResponse\x12M\n\x11UpdateNodeSetting\x12%.mizer.nodes.UpdateNodeSettin\
-    gRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08MoveNode\x12\x1c.mizer.nodes\
-    .MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\
-    \x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeRes\
-    ponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.miz\
-    er.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNod\
-    eRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!\
-    .mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenam\
-    eNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNo\
-    deResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\
-    \x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
+    \x10\x07\x12\x0c\n\x08POSITION\x10\x08\x12\t\n\x05COLOR\x10\t\x12\t\n\
+    \x05CLOCK\x10\n2\xbc\x07\n\x08NodesApi\x12K\n\x11GetAvailableNodes\x12\
+    \x19.mizer.nodes.NodesRequest\x1a\x1b.mizer.nodes.AvailableNodes\x129\n\
+    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
+    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
+    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
+    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
+    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12M\n\x11UpdateNodeSettin\
+    g\x12%.mizer.nodes.UpdateNodeSettingRequest\x1a\x11.mizer.nodes.Node\x12\
+    G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.\
+    MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeReques\
+    t\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mize\
+    r.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08S\
+    howNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNode\
+    Response\x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\
+    \x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeR\
+    equest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e\
+    .mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\
+    \x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

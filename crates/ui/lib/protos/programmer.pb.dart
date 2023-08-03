@@ -337,6 +337,7 @@ enum ProgrammerChannel_Value {
   fader, 
   color, 
   generic, 
+  world, 
   notSet
 }
 
@@ -345,15 +346,17 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     3 : ProgrammerChannel_Value.fader,
     4 : ProgrammerChannel_Value.color,
     5 : ProgrammerChannel_Value.generic,
+    6 : ProgrammerChannel_Value.world,
     0 : ProgrammerChannel_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5])
+    ..oo(0, [3, 4, 5, 6])
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..e<$0.FixtureControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
     ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
     ..aOM<$0.ColorMixerChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
     ..aOM<ProgrammerChannel_GenericValue>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: ProgrammerChannel_GenericValue.create)
+    ..aOM<$0.WorldPosition>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'world', subBuilder: $0.WorldPosition.create)
     ..hasRequiredFields = false
   ;
 
@@ -364,6 +367,7 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     $core.double? fader,
     $0.ColorMixerChannel? color,
     ProgrammerChannel_GenericValue? generic,
+    $0.WorldPosition? world,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -380,6 +384,9 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     }
     if (generic != null) {
       _result.generic = generic;
+    }
+    if (world != null) {
+      _result.world = world;
     }
     return _result;
   }
@@ -449,6 +456,17 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
   void clearGeneric() => clearField(5);
   @$pb.TagNumber(5)
   ProgrammerChannel_GenericValue ensureGeneric() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $0.WorldPosition get world => $_getN(5);
+  @$pb.TagNumber(6)
+  set world($0.WorldPosition v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasWorld() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearWorld() => clearField(6);
+  @$pb.TagNumber(6)
+  $0.WorldPosition ensureWorld() => $_ensure(5);
 }
 
 class EffectProgrammerState extends $pb.GeneratedMessage {
@@ -1718,24 +1736,36 @@ class Preset_Color extends $pb.GeneratedMessage {
   void clearBlue() => clearField(3);
 }
 
+enum Preset_Position_Value {
+  panTilt, 
+  world, 
+  notSet
+}
+
 class Preset_Position extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, Preset_Position_Value> _Preset_Position_ValueByTag = {
+    1 : Preset_Position_Value.panTilt,
+    2 : Preset_Position_Value.world,
+    0 : Preset_Position_Value.notSet
+  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset.Position', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', $pb.PbFieldType.OD)
+    ..oo(0, [1, 2])
+    ..aOM<Preset_PanTilt>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'panTilt', subBuilder: Preset_PanTilt.create)
+    ..aOM<$0.WorldPosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'world', subBuilder: $0.WorldPosition.create)
     ..hasRequiredFields = false
   ;
 
   Preset_Position._() : super();
   factory Preset_Position({
-    $core.double? tilt,
-    $core.double? pan,
+    Preset_PanTilt? panTilt,
+    $0.WorldPosition? world,
   }) {
     final _result = create();
-    if (tilt != null) {
-      _result.tilt = tilt;
+    if (panTilt != null) {
+      _result.panTilt = panTilt;
     }
-    if (pan != null) {
-      _result.pan = pan;
+    if (world != null) {
+      _result.world = world;
     }
     return _result;
   }
@@ -1759,6 +1789,74 @@ class Preset_Position extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Preset_Position getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Preset_Position>(create);
   static Preset_Position? _defaultInstance;
+
+  Preset_Position_Value whichValue() => _Preset_Position_ValueByTag[$_whichOneof(0)]!;
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  Preset_PanTilt get panTilt => $_getN(0);
+  @$pb.TagNumber(1)
+  set panTilt(Preset_PanTilt v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPanTilt() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPanTilt() => clearField(1);
+  @$pb.TagNumber(1)
+  Preset_PanTilt ensurePanTilt() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $0.WorldPosition get world => $_getN(1);
+  @$pb.TagNumber(2)
+  set world($0.WorldPosition v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasWorld() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWorld() => clearField(2);
+  @$pb.TagNumber(2)
+  $0.WorldPosition ensureWorld() => $_ensure(1);
+}
+
+class Preset_PanTilt extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset.PanTilt', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Preset_PanTilt._() : super();
+  factory Preset_PanTilt({
+    $core.double? tilt,
+    $core.double? pan,
+  }) {
+    final _result = create();
+    if (tilt != null) {
+      _result.tilt = tilt;
+    }
+    if (pan != null) {
+      _result.pan = pan;
+    }
+    return _result;
+  }
+  factory Preset_PanTilt.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Preset_PanTilt.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Preset_PanTilt clone() => Preset_PanTilt()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Preset_PanTilt copyWith(void Function(Preset_PanTilt) updates) => super.copyWith((message) => updates(message as Preset_PanTilt)) as Preset_PanTilt; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Preset_PanTilt create() => Preset_PanTilt._();
+  Preset_PanTilt createEmptyInstance() => create();
+  static $pb.PbList<Preset_PanTilt> createRepeated() => $pb.PbList<Preset_PanTilt>();
+  @$core.pragma('dart2js:noInline')
+  static Preset_PanTilt getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Preset_PanTilt>(create);
+  static Preset_PanTilt? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get tilt => $_getN(0);

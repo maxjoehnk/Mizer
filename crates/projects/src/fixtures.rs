@@ -23,6 +23,7 @@ impl ProjectManager for FixtureManager {
                     fixture.channel,
                     fixture.universe,
                     fixture.configuration,
+                    fixture.placement,
                 );
             } else {
                 log::warn!("No fixture definition for fixture id {}", fixture.fixture);
@@ -47,6 +48,7 @@ impl ProjectManager for FixtureManager {
                 mode: fixture.current_mode.name.clone().into(),
                 output: fixture.output.clone(),
                 configuration: fixture.configuration,
+                placement: fixture.placement,
             });
         }
         for group in self.get_groups() {

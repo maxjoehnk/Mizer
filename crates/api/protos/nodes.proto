@@ -408,6 +408,7 @@ enum ChannelProtocol {
   POLY = 5;
   DATA = 6;
   MATERIAL = 7;
+  POSITION = 8;
   COLOR = 9;
   CLOCK = 10;
 }

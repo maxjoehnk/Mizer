@@ -22,7 +22,8 @@ class FixtureControl extends $pb.ProtobufEnum {
   static const FixtureControl IRIS = FixtureControl._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
   static const FixtureControl FROST = FixtureControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
   static const FixtureControl GOBO = FixtureControl._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
-  static const FixtureControl GENERIC = FixtureControl._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+  static const FixtureControl POINT_AT = FixtureControl._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POINT_AT');
+  static const FixtureControl GENERIC = FixtureControl._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
   static const $core.List<FixtureControl> values = <FixtureControl> [
     INTENSITY,
@@ -37,6 +38,7 @@ class FixtureControl extends $pb.ProtobufEnum {
     IRIS,
     FROST,
     GOBO,
+    POINT_AT,
     GENERIC,
   ];
 
@@ -61,5 +63,22 @@ class FixtureFaderControl_ColorMixerControlChannel extends $pb.ProtobufEnum {
   static FixtureFaderControl_ColorMixerControlChannel? valueOf($core.int value) => _byValue[value];
 
   const FixtureFaderControl_ColorMixerControlChannel._($core.int v, $core.String n) : super(v, n);
+}
+
+class FixtureFaderControl_WorldAxisChannel extends $pb.ProtobufEnum {
+  static const FixtureFaderControl_WorldAxisChannel X = FixtureFaderControl_WorldAxisChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'X');
+  static const FixtureFaderControl_WorldAxisChannel Y = FixtureFaderControl_WorldAxisChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Y');
+  static const FixtureFaderControl_WorldAxisChannel Z = FixtureFaderControl_WorldAxisChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Z');
+
+  static const $core.List<FixtureFaderControl_WorldAxisChannel> values = <FixtureFaderControl_WorldAxisChannel> [
+    X,
+    Y,
+    Z,
+  ];
+
+  static final $core.Map<$core.int, FixtureFaderControl_WorldAxisChannel> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static FixtureFaderControl_WorldAxisChannel? valueOf($core.int value) => _byValue[value];
+
+  const FixtureFaderControl_WorldAxisChannel._($core.int v, $core.String n) : super(v, n);
 }
 

@@ -55,6 +55,7 @@ message ProgrammerChannel {
     double fader = 3;
     mizer.fixtures.ColorMixerChannel color = 4;
     GenericValue generic = 5;
+    mizer.fixtures.WorldPosition world = 6;
   }
 
   enum ColorChannel {
@@ -203,6 +204,13 @@ message Preset {
   }
 
   message Position {
+    oneof value {
+      PanTilt pan_tilt = 1;
+      mizer.fixtures.WorldPosition world = 2;
+    }
+  }
+
+  message PanTilt {
     optional double tilt = 1;
     optional double pan = 2;
   }

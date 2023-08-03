@@ -14,9 +14,11 @@ pub use groups::*;
 pub use presets::*;
 
 use crate::contracts::FixtureController;
-use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
+use crate::definition::{
+    ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl, WorldAxis,
+};
 use crate::selection::FixtureSelection;
-use crate::{FixtureId, GroupId, RgbColor};
+use crate::{FixtureId, GroupId, RgbColor, WorldCoordinate};
 
 mod default_presets;
 mod groups;
@@ -93,6 +95,7 @@ pub struct FixtureProgrammer {
     color_wheel: Option<f64>,
     pan: Option<f64>,
     tilt: Option<f64>,
+    point_at: Option<WorldCoordinate>,
     focus: Option<f64>,
     zoom: Option<f64>,
     prism: Option<f64>,
@@ -128,6 +131,10 @@ impl FixtureProgrammer {
             .tilt
             .iter()
             .map(|value| FixtureControlValue::Tilt(*value));
+        let point_at = self
+            .point_at
+            .iter()
+            .map(|value| FixtureControlValue::PointAt(value.x, value.y, value.z));
         let focus = self
             .focus
             .iter()
@@ -163,6 +170,7 @@ impl FixtureProgrammer {
             .chain(color_wheel)
             .chain(pan)
             .chain(tilt)
+            .chain(point_at)
             .chain(focus)
             .chain(zoom)
             .chain(prism)
@@ -209,6 +217,13 @@ impl FixtureProgrammer {
             .tilt
             .iter()
             .map(|value| (FixtureFaderControl::Tilt, *value));
+        let point_at = self.point_at.iter().flat_map(|value| {
+            vec![
+                (FixtureFaderControl::PointAt(WorldAxis::X), value.x),
+                (FixtureFaderControl::PointAt(WorldAxis::Y), value.y),
+                (FixtureFaderControl::PointAt(WorldAxis::Z), value.z),
+            ]
+        });
         let focus = self
             .focus
             .iter()
@@ -244,6 +259,7 @@ impl FixtureProgrammer {
             .chain(color_wheel)
             .chain(pan)
             .chain(tilt)
+            .chain(point_at)
             .chain(focus)
             .chain(zoom)
             .chain(prism)
@@ -500,6 +516,9 @@ impl Programmer {
             FixtureControlValue::Iris(value) => programmer.iris = Some(value),
             FixtureControlValue::Frost(value) => programmer.frost = Some(value),
             FixtureControlValue::Gobo(value) => programmer.gobo = Some(value),
+            FixtureControlValue::PointAt(x, y, z) => {
+                programmer.point_at = Some(WorldCoordinate { x, y, z })
+            }
             FixtureControlValue::Generic(ref name, value) => {
                 programmer.generic.insert(name.clone(), value);
             }

@@ -210,6 +210,12 @@ impl FFIProgrammerChannel {
                 FFIFixtureFaderControl::ColorWheel,
                 ProgrammerChannelValue { fader: value },
             ),
+            PointAt(x, y, z) => (
+                FFIFixtureFaderControl::PointAt,
+                ProgrammerChannelValue {
+                    world: FFIWorldCoordinate { x, y, z },
+                },
+            ),
             Generic(channel, value) => {
                 let channel = CString::new(channel).unwrap();
                 let channel_pointer = channel.as_ptr();
@@ -243,6 +249,7 @@ pub union ProgrammerChannelValue {
     pub fader: f64,
     pub color: FFIColorValue,
     pub generic: FFIGenericValue,
+    pub world: FFIWorldCoordinate,
 }
 
 #[derive(Clone, Copy)]
@@ -260,6 +267,14 @@ pub struct FFIGenericValue {
     pub value: f64,
 }
 
+#[derive(Clone, Copy)]
+#[repr(C)]
+pub struct FFIWorldCoordinate {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+}
+
 #[repr(C)]
 pub enum FFIFixtureFaderControl {
     Intensity = 0,
@@ -274,7 +289,8 @@ pub enum FFIFixtureFaderControl {
     Iris = 9,
     Frost = 10,
     Gobo = 11,
-    Generic = 12,
+    PointAt = 12,
+    Generic = 13,
 }
 
 #[repr(C)]

@@ -151,3 +151,10 @@ pub struct RgbColor {
     pub green: f64,
     pub blue: f64,
 }
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct WorldCoordinate {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+}

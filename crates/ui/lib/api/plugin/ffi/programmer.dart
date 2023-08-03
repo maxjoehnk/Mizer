@@ -18,6 +18,7 @@ Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Prism: FixtureControl.PRISM,
   FFIFixtureFaderControl.Iris: FixtureControl.IRIS,
   FFIFixtureFaderControl.Frost: FixtureControl.FROST,
+  FFIFixtureFaderControl.PointAt: FixtureControl.POINT_AT,
   FFIFixtureFaderControl.Gobo: FixtureControl.GOBO,
 };
 
@@ -97,6 +98,12 @@ class ProgrammerStatePointer {
         result.generic = ProgrammerChannel_GenericValue(
           name: channel.value.generic.channel.cast<Utf8>().toDartString(),
           value: channel.value.generic.value,
+        );
+      } else if (channel.control == FFIFixtureFaderControl.PointAt) {
+        result.world = WorldPosition(
+          x: channel.value.world.x,
+          y: channel.value.world.y,
+          z: channel.value.world.z,
         );
       } else {
         result.fader = channel.value.fader;

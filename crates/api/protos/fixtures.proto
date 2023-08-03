@@ -38,6 +38,7 @@ message UpdateFixtureRequest {
   optional bool reverse_pixel_order = 4;
   optional string name = 5;
   optional FixtureAddress address = 6;
+  optional FixturePlacement placement = 7;
 }
 
 message FixtureAddress {
@@ -73,12 +74,22 @@ message Fixture {
   repeated FixtureControls controls = 9;
   repeated SubFixture children = 10;
   FixtureConfig config = 11;
+  FixturePlacement placement = 12;
 }
 
 message FixtureConfig {
   bool invert_pan = 1;
   bool invert_tilt = 2;
   bool reverse_pixel_order = 3;
+}
+
+message FixturePlacement {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+  double rotate_x = 4;
+  double rotate_y = 5;
+  double rotate_z = 6;
 }
 
 message SubFixture {
@@ -100,7 +111,8 @@ enum FixtureControl {
   IRIS = 9;
   FROST = 10;
   GOBO = 11;
-  GENERIC = 12;
+  POINT_AT = 12;
+  GENERIC = 13;
 }
 
 message FixtureControls {
@@ -123,6 +135,12 @@ message ColorMixerChannel {
   double red = 1;
   double green = 2;
   double blue = 3;
+}
+
+message WorldPosition {
+  double x = 1;
+  double y = 2;
+  double z = 3;
 }
 
 message ColorWheelChannel {
@@ -219,10 +237,17 @@ message FixtureFaderControl {
   FixtureControl control = 1;
   optional ColorMixerControlChannel color_mixer_channel = 2;
   optional string generic_channel = 3;
+  optional WorldAxisChannel world_axis_channel = 4;
 
   enum ColorMixerControlChannel {
     RED = 0;
     GREEN = 1;
     BLUE = 2;
+  }
+
+  enum WorldAxisChannel {
+    X = 0;
+    Y = 1;
+    Z = 2;
   }
 }

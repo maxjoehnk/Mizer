@@ -105,6 +105,31 @@ impl Processor for FixtureProcessor {
                         ui.collapsing_header("Modes", |ui| {
                             for mode in &fixture.definition.modes {
                                 ui.collapsing_header(&mode.name, |ui| {
+                                    ui.collapsing_header("Controls", |ui| {
+                                        if let Some(ref pan) = mode.controls.pan {
+                                            ui.label("Pan");
+                                            ui.label(format!("Channel: {:?}", pan.channel));
+
+                                            if let Some(angle) = pan.angle {
+                                                ui.label(format!(
+                                                    "Angle: {} - {}",
+                                                    angle.from, angle.to
+                                                ))
+                                            }
+                                        }
+                                        if let Some(ref tilt) = mode.controls.tilt {
+                                            ui.label("Tilt");
+                                            ui.label(format!("Channel: {:?}", tilt.channel));
+
+                                            if let Some(angle) = tilt.angle {
+                                                ui.label(format!(
+                                                    "Angle: {} - {}",
+                                                    angle.from, angle.to
+                                                ))
+                                            }
+                                        }
+                                    });
+
                                     ui.collapsing_header("Channels", |ui| {
                                         ui.columns(2, |columns| {
                                             for channel in &mode.channels {

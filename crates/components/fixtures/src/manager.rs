@@ -9,7 +9,7 @@ use mizer_protocol_dmx::DmxConnectionManager;
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
 };
-use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
+use crate::fixture::{Fixture, FixtureConfiguration, FixturePlacement, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{
     GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
@@ -53,6 +53,7 @@ impl FixtureManager {
         channel: u16,
         universe: Option<u16>,
         configuration: FixtureConfiguration,
+        placement: FixturePlacement,
     ) {
         log::trace!(
             "Adding fixture {} with address {}.{}",
@@ -69,6 +70,7 @@ impl FixtureManager {
             channel,
             universe,
             configuration,
+            placement,
         );
         self.states.add_fixture(&fixture);
         self.fixtures.insert(fixture_id, fixture);

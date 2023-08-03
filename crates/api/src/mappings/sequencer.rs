@@ -223,6 +223,7 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type
     fn from(fixture_control: mizer_fixtures::definition::FixtureFaderControl) -> Self {
         use mizer_fixtures::definition::ColorChannel;
         use mizer_fixtures::definition::FixtureFaderControl::*;
+        use mizer_fixtures::definition::WorldAxis;
 
         match fixture_control {
             Intensity => Self::INTENSITY,
@@ -234,6 +235,9 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type
             Frost => Self::FROST,
             Pan => Self::PAN,
             Tilt => Self::TILT,
+            PointAt(WorldAxis::X) => Self::WORLD_X,
+            PointAt(WorldAxis::Y) => Self::WORLD_Y,
+            PointAt(WorldAxis::Z) => Self::WORLD_Z,
             Gobo => Self::GOBO,
             ColorMixer(ColorChannel::Red) => Self::COLOR_RED,
             ColorMixer(ColorChannel::Green) => Self::COLOR_GREEN,

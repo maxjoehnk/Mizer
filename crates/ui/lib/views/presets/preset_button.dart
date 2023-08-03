@@ -4,6 +4,7 @@ import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
 import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
@@ -118,8 +119,9 @@ class PositionButton extends StatelessWidget {
   final Preset preset;
   final double? pan;
   final double? tilt;
+  final WorldPosition? world;
 
-  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key})
+  const PositionButton({this.pan, this.tilt, this.world, required this.preset, Key? key})
       : super(key: key);
 
   @override
@@ -137,7 +139,7 @@ class PositionButton extends StatelessWidget {
             padding: const EdgeInsets.all(4),
             decoration:
                 BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
-            child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
+            child: CustomPaint(painter: world == null ? PositionPainter(pan: pan, tilt: tilt) : Position3dPainter(world: world!)),
           ),
           preset: preset),
     );
@@ -180,6 +182,30 @@ class PositionPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant PositionPainter oldDelegate) {
     return pan != oldDelegate.pan || tilt != oldDelegate.tilt;
+  }
+}
+
+class Position3dPainter extends CustomPainter {
+  final WorldPosition world;
+
+  Position3dPainter({required this.world});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var x = size.width * ((1 + world.x) / 2);
+    var y = size.height * ((1 + world.y) / 2);
+    var z = size.height * ((1 + world.z) / 2);
+
+    var paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(Offset(x, y), 4, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant Position3dPainter oldDelegate) {
+    return world != oldDelegate.world;
   }
 }
 

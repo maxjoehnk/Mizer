@@ -105,6 +105,8 @@ pub enum PortType {
     Material,
     /// Time signal measured in frames
     Clock,
+    /// Position in 3D space
+    Position,
 }
 
 impl Display for PortType {
@@ -210,5 +212,20 @@ impl Hash for Color {
         self.green.to_bits().hash(state);
         self.blue.to_bits().hash(state);
         self.alpha.to_bits().hash(state);
+    }
+}
+
+#[derive(Debug, Default, Clone, Copy, PartialEq, Serialize, Deserialize)]
+pub struct Coordinate {
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
+}
+
+impl Hash for Coordinate {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.x.to_bits().hash(state);
+        self.y.to_bits().hash(state);
+        self.z.to_bits().hash(state);
     }
 }

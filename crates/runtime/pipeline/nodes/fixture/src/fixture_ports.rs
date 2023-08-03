@@ -1,5 +1,5 @@
 use mizer_fixtures::definition::{
-    ColorChannel, FixtureControl, FixtureControlType, FixtureFaderControl,
+    ColorChannel, FixtureControl, FixtureControlType, FixtureFaderControl, WorldAxis,
 };
 use mizer_node::*;
 use std::collections::HashMap;
@@ -28,6 +28,13 @@ pub(crate) fn write_ports(
                         );
                     }
                 }
+                PortType::Position => {
+                    if let Some(value) = context.read_port::<_, Coordinate>(port.clone()) {
+                        write_fader_control(FixtureFaderControl::PointAt(WorldAxis::X), value.x);
+                        write_fader_control(FixtureFaderControl::PointAt(WorldAxis::Y), value.y);
+                        write_fader_control(FixtureFaderControl::PointAt(WorldAxis::Z), value.z);
+                    }
+                }
                 PortType::Single => {
                     if let Some(value) = context.read_port(port.clone()) {
                         let control = FixtureControl::from(port.as_str());
@@ -52,6 +59,8 @@ impl FixtureControlPorts for Vec<(FixtureControl, FixtureControlType)> {
                     name.to_string(),
                     if control_type == FixtureControlType::Color {
                         PortType::Color
+                    } else if control_type == FixtureControlType::Coordinate {
+                        PortType::Position
                     } else {
                         PortType::Single
                     }

@@ -11,6 +11,7 @@ pub enum Position {
     Pan(f64),
     Tilt(f64),
     PanTilt(f64, f64),
+    World(f64, f64, f64),
 }
 
 impl Position {
@@ -33,6 +34,7 @@ impl From<Position> for Vec<FixtureControlValue> {
                 FixtureControlValue::Pan(pan),
                 FixtureControlValue::Tilt(tilt),
             ],
+            Position::World(x, y, z) => vec![FixtureControlValue::PointAt(x, y, z)],
         }
     }
 }
@@ -169,14 +171,7 @@ impl Presets {
         id: u32,
     ) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
-            match preset.value {
-                Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
-                Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
-                Position::PanTilt(pan, tilt) => vec![
-                    FixtureControlValue::Pan(pan),
-                    FixtureControlValue::Tilt(tilt),
-                ],
-            }
+            preset.value.into()
         } else {
             Default::default()
         }

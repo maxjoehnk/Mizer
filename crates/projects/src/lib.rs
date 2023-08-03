@@ -5,7 +5,7 @@ use std::io::Read;
 use std::path::Path;
 
 use lazy_static::lazy_static;
-use mizer_fixtures::fixture::FixtureConfiguration;
+use mizer_fixtures::fixture::{FixtureConfiguration, FixturePlacement};
 use mizer_fixtures::programmer::Group;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
@@ -182,7 +182,7 @@ pub struct Node {
     pub designer: NodeDesigner,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {
     pub id: u32,
     pub name: String,
@@ -194,6 +194,8 @@ pub struct FixtureConfig {
     pub output: Option<String>,
     #[serde(default)]
     pub configuration: FixtureConfiguration,
+    #[serde(default)]
+    pub placement: FixturePlacement,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]

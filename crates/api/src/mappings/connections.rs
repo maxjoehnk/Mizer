@@ -61,6 +61,42 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 id: webcam.id,
                 name: webcam.name,
             }),
+            Cdj(cdj) => Self::Cdj(cdj.into()),
+            Djm(djm) => Self::Djm(djm.into()),
+        }
+    }
+}
+
+impl From<mizer_connections::CDJView> for PioneerCdjConnection {
+    fn from(cdj: mizer_connections::CDJView) -> Self {
+        Self {
+            id: cdj.id(),
+            playback: Some(CdjPlayback {
+                frame: cdj.beat as u32,
+                bpm: cdj.current_bpm(),
+                live: cdj.is_live(),
+                playback: (if cdj.is_playing() {
+                    cdj_playback::State::Playing
+                } else {
+                    cdj_playback::State::Cued
+                }) as i32,
+                track: None,
+            }),
+            address: cdj.device.ip_addr.to_string(),
+            model: cdj.device.name,
+            player_number: cdj.device.device_id as u32,
+        }
+    }
+}
+
+impl From<mizer_connections::DJMView> for PioneerDjmConnection {
+    fn from(djm: mizer_connections::DJMView) -> Self {
+        Self {
+            id: djm.id(),
+            address: djm.device.ip_addr.to_string(),
+            model: djm.device.name,
+            player_number: djm.device.device_id as u32,
+            ..Default::default()
         }
     }
 }

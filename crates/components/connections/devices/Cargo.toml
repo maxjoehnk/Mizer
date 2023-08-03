@@ -14,6 +14,7 @@ mizer-g13 = { path = "./g13" }
 mizer-webcams = { path = "./webcams" }
 mizer-module = { path = "../../../runtime/module" }
 mizer-processing = { path = "../../../runtime/processing" }
+mizer-protocol-pro-dj-link = { path = "../protocols/pro-dj-link" }
 tokio = { version = "1.32", features = ["sync", "rt"] }
 tokio-stream = "0.1"
 futures = "0.3"

@@ -11,8 +11,16 @@ class ConnectionsPluginApi implements ConnectionsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/connections");
   final EventChannel midiMonitorChannel = const EventChannel("mizer.live/connections/midi");
   final EventChannel oscMonitorChannel = const EventChannel("mizer.live/connections/osc");
+  ConnectionsPointer? _connectionsPointer;
 
-  ConnectionsPluginApi(this.bindings);
+  ConnectionsPluginApi(this.bindings) {
+    _openConnectionsRef();
+  }
+
+  void _openConnectionsRef() async {
+    int pointer = await channel.invokeMethod("getConnectionsRef");
+    _connectionsPointer = bindings.openConnectionsRef(pointer);
+  }
 
   @override
   Future<Connections> getConnections() async {
@@ -89,5 +97,10 @@ class ConnectionsPluginApi implements ConnectionsApi {
     int pointer = await channel.invokeMethod("getGamepadPointer", id);
 
     return this.bindings.openGamepadRef(pointer);
+  }
+
+  @override
+  PioneerCdjConnection? getCdjState(String id) {
+    return this._connectionsPointer?.readCdjState(id);
   }
 }

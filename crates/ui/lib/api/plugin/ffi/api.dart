@@ -76,6 +76,12 @@ extension FFIBindingsExt on FFIBindings {
     return GamepadStatePointer(this, pointer);
   }
 
+  ConnectionsPointer openConnectionsRef(int pointerAddress) {
+    var pointer = ffi.Pointer<ConnectionsRef>.fromAddress(pointerAddress);
+
+    return ConnectionsPointer(this, pointer);
+  }
+
   NodesPointer openNodesRef(int pointerAddress) {
     var pointer = ffi.Pointer<NodesRef>.fromAddress(pointerAddress);
 

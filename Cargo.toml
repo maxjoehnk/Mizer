@@ -13,6 +13,7 @@ members = [
     "crates/components/connections/protocols/midi/messages",
     "crates/components/connections/protocols/mqtt",
     "crates/components/connections/protocols/osc",
+    "crates/components/connections/protocols/pro-dj-link",
     "crates/components/fixtures",
     "crates/components/fixtures/commands",
     "crates/components/fixtures/gdtf",

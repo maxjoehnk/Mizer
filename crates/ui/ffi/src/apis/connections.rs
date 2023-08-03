@@ -1,9 +1,18 @@
-use crate::types::FFIFromPointer;
-use bitflags::bitflags;
-use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
+use std::ffi::CStr;
+use std::os::raw::c_char;
 use std::sync::Arc;
 
+use bitflags::bitflags;
+
+use mizer_api::proto::connections::PioneerCdjConnection;
+use mizer_api::Message;
+use mizer_devices::DeviceManager;
+use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
+
+use crate::types::{Array, FFIFromPointer};
+
 pub struct GamepadConnectionRef(pub GamepadRef);
+pub struct ConnectionsRef(pub DeviceManager);
 
 #[no_mangle]
 pub extern "C" fn read_gamepad_state(ptr: *const GamepadConnectionRef) -> FFIGamepadState {
@@ -31,6 +40,23 @@ pub extern "C" fn read_gamepad_state(ptr: *const GamepadConnectionRef) -> FFIGam
         left_stick: button(&state, Button::LeftStick),
         right_stick: button(&state, Button::RightStick),
         dpad: dpad(&state),
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn read_cdj_state(ptr: *const ConnectionsRef, id: *const c_char) -> Array<u8> {
+    let id = unsafe { CStr::from_ptr(id) };
+    let id = id.to_str().unwrap();
+    let ffi = Arc::from_pointer(ptr);
+    let cdj = ffi.0.get_cdj(id);
+    let state = cdj.map(|cdj_ref| PioneerCdjConnection::from(cdj_ref.clone()));
+
+    std::mem::forget(ffi);
+
+    if let Some(state) = state {
+        state.encode_to_vec().into()
+    } else {
+        Vec::default().into()
     }
 }
 

@@ -1,23 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:provider/provider.dart';
 
 const double HEADER_BADGE_HEIGHT = 32;
 
-class ProDJLinkConnectionView extends StatelessWidget {
-  final ProDjLinkConnection device;
+class ProDJLinkConnectionView extends StatefulWidget {
+  final PioneerCdjConnection device;
 
   ProDJLinkConnectionView({required this.device});
 
   @override
+  State<ProDJLinkConnectionView> createState() => _ProDJLinkConnectionViewState();
+}
+
+class _ProDJLinkConnectionViewState extends State<ProDJLinkConnectionView>
+    with SingleTickerProviderStateMixin {
+  late Ticker _ticker;
+  PioneerCdjConnection? _device;
+
+  @override
   Widget build(BuildContext context) {
-    return CdjConnection(device: device);
+    return CdjConnection(device: _device ?? widget.device);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _device = widget.device;
+    _ticker = createTicker((elapsed) {
+      setState(() {
+        _device = context.read<ConnectionsApi>().getCdjState(widget.device.id);
+      });
+    });
+    _ticker.start();
+  }
+
+  @override
+  void dispose() {
+    _ticker.stop();
+    super.dispose();
   }
 }
 
 class CdjConnection extends StatelessWidget {
-  final ProDjLinkConnection device;
+  final PioneerCdjConnection device;
 
   CdjConnection({required this.device});
 
@@ -37,7 +67,7 @@ class CdjConnection extends StatelessWidget {
 }
 
 class PlayerHeader extends StatelessWidget {
-  final ProDjLinkConnection device;
+  final PioneerCdjConnection device;
 
   PlayerHeader(this.device);
 
@@ -129,10 +159,10 @@ class FrameIndicator extends StatelessWidget {
       height: HEADER_BADGE_HEIGHT,
       alignment: AlignmentDirectional.center,
       child: Row(children: [
-        Frame(frame == 0),
         Frame(frame == 1),
         Frame(frame == 2),
         Frame(frame == 3),
+        Frame(frame == 4),
       ]),
     );
   }
@@ -246,7 +276,7 @@ class PlayerMetadata extends StatelessWidget {
 }
 
 class DeviceInfo extends StatelessWidget {
-  final ProDjLinkConnection device;
+  final PioneerCdjConnection device;
 
   DeviceInfo(this.device);
 

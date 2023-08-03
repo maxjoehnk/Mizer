@@ -1,12 +1,15 @@
 use std::collections::HashMap;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener};
+use std::sync::Arc;
 
-use crate::handlers::Handlers;
-use crate::proto::fixtures::fixtures_api_server::FixturesApiServer;
-use crate::proto::programmer::programmer_api_server::ProgrammerApiServer;
+use pinboard::NonEmptyPinboard;
+pub use prost::Message;
+use tonic::transport::Server;
+
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::SendableCommand;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent, OscMessage};
+pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;
 use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
@@ -15,11 +18,10 @@ use mizer_plan::Plan;
 use mizer_runtime::{LayoutsView, NodeDescriptor, NodeMetadataRef};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
-use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
-use tonic::transport::Server;
 
-pub use prost::Message;
+use crate::handlers::Handlers;
+use crate::proto::fixtures::fixtures_api_server::FixturesApiServer;
+use crate::proto::programmer::programmer_api_server::ProgrammerApiServer;
 
 pub mod handlers;
 mod mappings;
@@ -75,6 +77,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_osc_monitor(&self, name: String) -> anyhow::Result<Subscriber<OscMessage>>;
 
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>>;
+    fn get_device_manager(&self) -> DeviceManager;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 

@@ -16,6 +16,7 @@ mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }
 mizer-plan = { path = "../components/plan" }
 mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }
+mizer-devices = { path = "../components/connections/devices" }
 mizer-gamepads = { path = "../components/connections/devices/gamepads" }
 mizer-node = { path = "../runtime/pipeline/node" }
 mizer-nodes = { path = "../runtime/pipeline/nodes" }

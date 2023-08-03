@@ -9,6 +9,7 @@ use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
+use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -16,6 +17,7 @@ use std::sync::Arc;
 pub mod g13;
 pub mod gamepads;
 pub mod laser;
+pub mod pro_dj_link;
 pub mod webcams;
 
 pub trait Device {
@@ -39,6 +41,17 @@ enum DiscoveredDevice {
     Gamepad(GamepadRef),
     G13(G13Ref),
     Webcam(WebcamRef),
+    PioneerCDJ(CDJView),
+    PioneerDJM(DJMView),
+}
+
+impl From<ProDJLinkDevice> for DiscoveredDevice {
+    fn from(value: ProDJLinkDevice) -> Self {
+        match value {
+            ProDJLinkDevice::CDJ(view) => Self::PioneerCDJ(view),
+            ProDJLinkDevice::DJM(view) => Self::PioneerDJM(view),
+        }
+    }
 }
 
 #[derive(Default, Clone)]
@@ -49,6 +62,8 @@ pub struct DeviceManager {
     g13_id_counter: Arc<AtomicUsize>,
     g13s: Arc<DashMap<String, G13Ref>>,
     webcams: Arc<DashMap<String, WebcamRef>>,
+    cdjs: Arc<DashMap<String, CDJView>>,
+    djms: Arc<DashMap<String, DJMView>>,
 }
 
 impl DeviceManager {
@@ -70,7 +85,10 @@ impl DeviceManager {
         let webcams = WebcamDiscovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let mut devices = select_all([lasers, gamepads, g13s, webcams]);
+        let pro_dj_link_devices = ProDJLinkDiscovery::discover()
+            .map(DiscoveredDevice::from)
+            .boxed_local();
+        let mut devices = select_all([lasers, gamepads, g13s, webcams, pro_dj_link_devices]);
         while let Some(device) = devices.next().await {
             match device {
                 DiscoveredDevice::Laser(laser) => {
@@ -97,6 +115,20 @@ impl DeviceManager {
                     log::debug!("Discovered device {webcam:?} => {id}");
                     self.webcams.insert(id, webcam);
                 }
+                DiscoveredDevice::PioneerCDJ(cdj) => {
+                    let id = cdj.id();
+                    if !self.cdjs.contains_key(&id) {
+                        log::debug!("Discovered Pioneer CDJ {cdj:?}");
+                    }
+                    self.cdjs.insert(id, cdj);
+                }
+                DiscoveredDevice::PioneerDJM(djm) => {
+                    let id = djm.id();
+                    if !self.djms.contains_key(&id) {
+                        log::debug!("Discovered Pioneer DJM {djm:?}");
+                    }
+                    self.djms.insert(id, djm);
+                }
             }
         }
     }
@@ -115,6 +147,10 @@ impl DeviceManager {
 
     pub fn get_g13_mut(&self, id: &str) -> Option<RefMut<'_, String, G13Ref>> {
         self.g13s.get_mut(id)
+    }
+
+    pub fn get_cdj(&self, id: &str) -> Option<Ref<'_, String, CDJView>> {
+        self.cdjs.get(id)
     }
 
     pub fn current_devices(&self) -> Vec<DeviceRef> {
@@ -144,8 +180,16 @@ impl DeviceManager {
             }
             .into()
         });
+        let cdjs = self.cdjs.iter().map(|cdj| cdj.value().clone().into());
+        let djms = self.djms.iter().map(|djm| djm.value().clone().into());
 
-        lasers.chain(gamepads).chain(g13s).chain(webcams).collect()
+        lasers
+            .chain(gamepads)
+            .chain(g13s)
+            .chain(webcams)
+            .chain(cdjs)
+            .chain(djms)
+            .collect()
     }
 }
 
@@ -192,6 +236,8 @@ pub enum DeviceRef {
     Gamepad(GamepadView),
     G13(G13View),
     Webcam(WebcamView),
+    PioneerCDJ(CDJView),
+    PioneerDJM(DJMView),
 }
 
 #[derive(Debug, Clone)]

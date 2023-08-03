@@ -1,5 +1,8 @@
 import 'dart:ffi' as ffi;
 
+import 'package:ffi/ffi.dart';
+import 'package:mizer/protos/connections.pb.dart';
+
 import 'bindings.dart';
 
 class GamepadStatePointer {
@@ -98,4 +101,26 @@ class GamepadDpadState {
 
 bool isFlag(int bits, int flag) {
   return bits & flag == flag;
+}
+
+class ConnectionsPointer {
+  final FFIBindings _bindings;
+  final ffi.Pointer<ConnectionsRef> _ptr;
+
+  ConnectionsPointer(this._bindings, this._ptr);
+
+  PioneerCdjConnection? readCdjState(String id) {
+    var ffiId = id.toNativeUtf8();
+    var result = _bindings.read_cdj_state(_ptr, ffiId.cast<ffi.Char>());
+    var buffer = new List.generate(result.len, (index) => result.array.elementAt(index))
+        .map((e) => e.value)
+        .toList();
+
+    if (buffer.isEmpty) {
+      return null;
+    }
+
+    var pioneerCdjConnection = PioneerCdjConnection.fromBuffer(buffer);
+    return pioneerCdjConnection;
+  }
 }

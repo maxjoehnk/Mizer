@@ -124,8 +124,8 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   Widget _buildConnection(Connection connection) {
-    if (connection.hasProDjLink()) {
-      return ProDJLinkConnectionView(device: connection.proDjLink);
+    if (connection.hasCdj()) {
+      return ProDJLinkConnectionView(device: connection.cdj);
     }
     if (connection.hasHelios()) {
       return HeliosConnectionView(device: connection.helios);
@@ -298,8 +298,8 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasDmx()) {
       return _tag("DMX");
     }
-    if (connection.hasProDjLink()) {
-      return _tag("ProDJLink");
+    if (connection.hasCdj()) {
+      return _tag("Pioneer CDJ");
     }
     if (connection.hasHelios()) {
       return _tag("Helios");

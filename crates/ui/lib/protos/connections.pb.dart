@@ -1120,13 +1120,14 @@ enum Connection_Connection {
   dmx, 
   midi, 
   osc, 
-  proDjLink, 
   helios, 
   etherDream, 
   gamepad, 
   mqtt, 
   g13, 
   webcam, 
+  cdj, 
+  djm, 
   notSet
 }
 
@@ -1135,28 +1136,30 @@ class Connection extends $pb.GeneratedMessage {
     10 : Connection_Connection.dmx,
     11 : Connection_Connection.midi,
     12 : Connection_Connection.osc,
-    13 : Connection_Connection.proDjLink,
     14 : Connection_Connection.helios,
     15 : Connection_Connection.etherDream,
     16 : Connection_Connection.gamepad,
     17 : Connection_Connection.mqtt,
     18 : Connection_Connection.g13,
     19 : Connection_Connection.webcam,
+    20 : Connection_Connection.cdj,
+    21 : Connection_Connection.djm,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
+    ..oo(0, [10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
     ..aOM<OscConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
-    ..aOM<ProDjLinkConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proDjLink', subBuilder: ProDjLinkConnection.create)
     ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
     ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', subBuilder: EtherDreamConnection.create)
     ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
     ..aOM<MqttConnection>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
     ..aOM<G13Connection>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13', subBuilder: G13Connection.create)
     ..aOM<WebcamConnection>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'webcam', subBuilder: WebcamConnection.create)
+    ..aOM<PioneerCdjConnection>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cdj', subBuilder: PioneerCdjConnection.create)
+    ..aOM<PioneerDjmConnection>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'djm', subBuilder: PioneerDjmConnection.create)
     ..hasRequiredFields = false
   ;
 
@@ -1166,13 +1169,14 @@ class Connection extends $pb.GeneratedMessage {
     DmxConnection? dmx,
     MidiConnection? midi,
     OscConnection? osc,
-    ProDjLinkConnection? proDjLink,
     HeliosConnection? helios,
     EtherDreamConnection? etherDream,
     GamepadConnection? gamepad,
     MqttConnection? mqtt,
     G13Connection? g13,
     WebcamConnection? webcam,
+    PioneerCdjConnection? cdj,
+    PioneerDjmConnection? djm,
   }) {
     final _result = create();
     if (name != null) {
@@ -1186,9 +1190,6 @@ class Connection extends $pb.GeneratedMessage {
     }
     if (osc != null) {
       _result.osc = osc;
-    }
-    if (proDjLink != null) {
-      _result.proDjLink = proDjLink;
     }
     if (helios != null) {
       _result.helios = helios;
@@ -1207,6 +1208,12 @@ class Connection extends $pb.GeneratedMessage {
     }
     if (webcam != null) {
       _result.webcam = webcam;
+    }
+    if (cdj != null) {
+      _result.cdj = cdj;
+    }
+    if (djm != null) {
+      _result.djm = djm;
     }
     return _result;
   }
@@ -1276,82 +1283,93 @@ class Connection extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   OscConnection ensureOsc() => $_ensure(3);
 
-  @$pb.TagNumber(13)
-  ProDjLinkConnection get proDjLink => $_getN(4);
-  @$pb.TagNumber(13)
-  set proDjLink(ProDjLinkConnection v) { setField(13, v); }
-  @$pb.TagNumber(13)
-  $core.bool hasProDjLink() => $_has(4);
-  @$pb.TagNumber(13)
-  void clearProDjLink() => clearField(13);
-  @$pb.TagNumber(13)
-  ProDjLinkConnection ensureProDjLink() => $_ensure(4);
-
   @$pb.TagNumber(14)
-  HeliosConnection get helios => $_getN(5);
+  HeliosConnection get helios => $_getN(4);
   @$pb.TagNumber(14)
   set helios(HeliosConnection v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasHelios() => $_has(5);
+  $core.bool hasHelios() => $_has(4);
   @$pb.TagNumber(14)
   void clearHelios() => clearField(14);
   @$pb.TagNumber(14)
-  HeliosConnection ensureHelios() => $_ensure(5);
+  HeliosConnection ensureHelios() => $_ensure(4);
 
   @$pb.TagNumber(15)
-  EtherDreamConnection get etherDream => $_getN(6);
+  EtherDreamConnection get etherDream => $_getN(5);
   @$pb.TagNumber(15)
   set etherDream(EtherDreamConnection v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasEtherDream() => $_has(6);
+  $core.bool hasEtherDream() => $_has(5);
   @$pb.TagNumber(15)
   void clearEtherDream() => clearField(15);
   @$pb.TagNumber(15)
-  EtherDreamConnection ensureEtherDream() => $_ensure(6);
+  EtherDreamConnection ensureEtherDream() => $_ensure(5);
 
   @$pb.TagNumber(16)
-  GamepadConnection get gamepad => $_getN(7);
+  GamepadConnection get gamepad => $_getN(6);
   @$pb.TagNumber(16)
   set gamepad(GamepadConnection v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasGamepad() => $_has(7);
+  $core.bool hasGamepad() => $_has(6);
   @$pb.TagNumber(16)
   void clearGamepad() => clearField(16);
   @$pb.TagNumber(16)
-  GamepadConnection ensureGamepad() => $_ensure(7);
+  GamepadConnection ensureGamepad() => $_ensure(6);
 
   @$pb.TagNumber(17)
-  MqttConnection get mqtt => $_getN(8);
+  MqttConnection get mqtt => $_getN(7);
   @$pb.TagNumber(17)
   set mqtt(MqttConnection v) { setField(17, v); }
   @$pb.TagNumber(17)
-  $core.bool hasMqtt() => $_has(8);
+  $core.bool hasMqtt() => $_has(7);
   @$pb.TagNumber(17)
   void clearMqtt() => clearField(17);
   @$pb.TagNumber(17)
-  MqttConnection ensureMqtt() => $_ensure(8);
+  MqttConnection ensureMqtt() => $_ensure(7);
 
   @$pb.TagNumber(18)
-  G13Connection get g13 => $_getN(9);
+  G13Connection get g13 => $_getN(8);
   @$pb.TagNumber(18)
   set g13(G13Connection v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasG13() => $_has(9);
+  $core.bool hasG13() => $_has(8);
   @$pb.TagNumber(18)
   void clearG13() => clearField(18);
   @$pb.TagNumber(18)
-  G13Connection ensureG13() => $_ensure(9);
+  G13Connection ensureG13() => $_ensure(8);
 
   @$pb.TagNumber(19)
-  WebcamConnection get webcam => $_getN(10);
+  WebcamConnection get webcam => $_getN(9);
   @$pb.TagNumber(19)
   set webcam(WebcamConnection v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasWebcam() => $_has(10);
+  $core.bool hasWebcam() => $_has(9);
   @$pb.TagNumber(19)
   void clearWebcam() => clearField(19);
   @$pb.TagNumber(19)
-  WebcamConnection ensureWebcam() => $_ensure(10);
+  WebcamConnection ensureWebcam() => $_ensure(9);
+
+  @$pb.TagNumber(20)
+  PioneerCdjConnection get cdj => $_getN(10);
+  @$pb.TagNumber(20)
+  set cdj(PioneerCdjConnection v) { setField(20, v); }
+  @$pb.TagNumber(20)
+  $core.bool hasCdj() => $_has(10);
+  @$pb.TagNumber(20)
+  void clearCdj() => clearField(20);
+  @$pb.TagNumber(20)
+  PioneerCdjConnection ensureCdj() => $_ensure(10);
+
+  @$pb.TagNumber(21)
+  PioneerDjmConnection get djm => $_getN(11);
+  @$pb.TagNumber(21)
+  set djm(PioneerDjmConnection v) { setField(21, v); }
+  @$pb.TagNumber(21)
+  $core.bool hasDjm() => $_has(11);
+  @$pb.TagNumber(21)
+  void clearDjm() => clearField(21);
+  @$pb.TagNumber(21)
+  PioneerDjmConnection ensureDjm() => $_ensure(11);
 }
 
 enum DmxConnection_Config {
@@ -2206,23 +2224,28 @@ class OscConnection extends $pb.GeneratedMessage {
   void clearOutputAddress() => clearField(4);
 }
 
-class ProDjLinkConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProDjLinkConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
+class PioneerCdjConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PioneerCdjConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
     ..aOM<CdjPlayback>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', subBuilder: CdjPlayback.create)
     ..hasRequiredFields = false
   ;
 
-  ProDjLinkConnection._() : super();
-  factory ProDjLinkConnection({
+  PioneerCdjConnection._() : super();
+  factory PioneerCdjConnection({
+    $core.String? id,
     $core.String? address,
     $core.String? model,
     $core.int? playerNumber,
     CdjPlayback? playback,
   }) {
     final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
     if (address != null) {
       _result.address = address;
     }
@@ -2237,64 +2260,162 @@ class ProDjLinkConnection extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ProDjLinkConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ProDjLinkConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory PioneerCdjConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PioneerCdjConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ProDjLinkConnection clone() => ProDjLinkConnection()..mergeFromMessage(this);
+  PioneerCdjConnection clone() => PioneerCdjConnection()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProDjLinkConnection copyWith(void Function(ProDjLinkConnection) updates) => super.copyWith((message) => updates(message as ProDjLinkConnection)) as ProDjLinkConnection; // ignore: deprecated_member_use
+  PioneerCdjConnection copyWith(void Function(PioneerCdjConnection) updates) => super.copyWith((message) => updates(message as PioneerCdjConnection)) as PioneerCdjConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ProDjLinkConnection create() => ProDjLinkConnection._();
-  ProDjLinkConnection createEmptyInstance() => create();
-  static $pb.PbList<ProDjLinkConnection> createRepeated() => $pb.PbList<ProDjLinkConnection>();
+  static PioneerCdjConnection create() => PioneerCdjConnection._();
+  PioneerCdjConnection createEmptyInstance() => create();
+  static $pb.PbList<PioneerCdjConnection> createRepeated() => $pb.PbList<PioneerCdjConnection>();
   @$core.pragma('dart2js:noInline')
-  static ProDjLinkConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProDjLinkConnection>(create);
-  static ProDjLinkConnection? _defaultInstance;
+  static PioneerCdjConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PioneerCdjConnection>(create);
+  static PioneerCdjConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get address => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set address($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasAddress() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearAddress() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get model => $_getSZ(1);
+  $core.String get address => $_getSZ(1);
   @$pb.TagNumber(2)
-  set model($core.String v) { $_setString(1, v); }
+  set address($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasModel() => $_has(1);
+  $core.bool hasAddress() => $_has(1);
   @$pb.TagNumber(2)
-  void clearModel() => clearField(2);
+  void clearAddress() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get playerNumber => $_getIZ(2);
+  $core.String get model => $_getSZ(2);
   @$pb.TagNumber(3)
-  set playerNumber($core.int v) { $_setUnsignedInt32(2, v); }
+  set model($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasPlayerNumber() => $_has(2);
+  $core.bool hasModel() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPlayerNumber() => clearField(3);
+  void clearModel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get playerNumber => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set playerNumber($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPlayerNumber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPlayerNumber() => clearField(4);
 
   @$pb.TagNumber(5)
-  CdjPlayback get playback => $_getN(3);
+  CdjPlayback get playback => $_getN(4);
   @$pb.TagNumber(5)
   set playback(CdjPlayback v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPlayback() => $_has(3);
+  $core.bool hasPlayback() => $_has(4);
   @$pb.TagNumber(5)
   void clearPlayback() => clearField(5);
   @$pb.TagNumber(5)
-  CdjPlayback ensurePlayback() => $_ensure(3);
+  CdjPlayback ensurePlayback() => $_ensure(4);
+}
+
+class PioneerDjmConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PioneerDjmConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  PioneerDjmConnection._() : super();
+  factory PioneerDjmConnection({
+    $core.String? id,
+    $core.String? address,
+    $core.String? model,
+    $core.int? playerNumber,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (address != null) {
+      _result.address = address;
+    }
+    if (model != null) {
+      _result.model = model;
+    }
+    if (playerNumber != null) {
+      _result.playerNumber = playerNumber;
+    }
+    return _result;
+  }
+  factory PioneerDjmConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PioneerDjmConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PioneerDjmConnection clone() => PioneerDjmConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PioneerDjmConnection copyWith(void Function(PioneerDjmConnection) updates) => super.copyWith((message) => updates(message as PioneerDjmConnection)) as PioneerDjmConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PioneerDjmConnection create() => PioneerDjmConnection._();
+  PioneerDjmConnection createEmptyInstance() => create();
+  static $pb.PbList<PioneerDjmConnection> createRepeated() => $pb.PbList<PioneerDjmConnection>();
+  @$core.pragma('dart2js:noInline')
+  static PioneerDjmConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PioneerDjmConnection>(create);
+  static PioneerDjmConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get address => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set address($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAddress() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAddress() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get model => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set model($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasModel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearModel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get playerNumber => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set playerNumber($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPlayerNumber() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPlayerNumber() => clearField(4);
 }
 
 class CdjPlayback_Track extends $pb.GeneratedMessage {

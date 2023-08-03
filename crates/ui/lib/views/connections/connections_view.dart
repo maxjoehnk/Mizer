@@ -7,6 +7,7 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/views/connections/types/gamepad_connection.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
@@ -218,22 +219,16 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   _onDelete(Connection connection) async {
     bool result = await showDialog(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text("Delete Connection".i18n),
+        builder: (BuildContext context) => ActionDialog(
+              title: "Delete Connection".i18n,
               content: SingleChildScrollView(
                 child: Text("Delete Connection ${connection.name}?".i18n),
               ),
               actions: [
-                TextButton(
-                  child: Text("Cancel".i18n),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-                TextButton(
-                  autofocus: true,
-                  child: Text("Delete".i18n),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
+                PopupAction("Cancel".i18n, () => Navigator.of(context).pop(false)),
+                PopupAction("Delete".i18n, () => Navigator.of(context).pop(true)),
               ],
+              onConfirm: () => Navigator.of(context).pop(true),
             ));
     if (result) {
       await api.deleteConnection(connection);

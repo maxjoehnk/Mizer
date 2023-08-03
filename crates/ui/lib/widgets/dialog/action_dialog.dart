@@ -23,7 +23,7 @@ class _ActionDialogState extends State<ActionDialog> {
     return Dialog(
       child: KeyboardListener(
         focusNode: _focusNode,
-        autofocus: true,
+        autofocus: widget.onConfirm != null,
         onKeyEvent: (event) {
           if (event.logicalKey == LogicalKeyboardKey.enter) {
             if (widget.onConfirm != null) {

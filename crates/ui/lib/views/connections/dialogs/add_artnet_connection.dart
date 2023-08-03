@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class ConfigureArtnetConnectionDialog extends StatefulWidget {
   final ArtnetConfig? config;
@@ -35,8 +36,8 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Add Artnet Connection".i18n),
+    return ActionDialog(
+      title: widget.config != null ? "Configure Artnet Connection".i18n : "Add Artnet Connection".i18n,
       content: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -50,6 +51,8 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
             decoration: InputDecoration(labelText: "Name".i18n),
             controller: _nameController,
             keyboardType: TextInputType.name,
+            autofocus: true,
+            textInputAction: TextInputAction.next,
           ),
           TextFormField(
             validator: (value) {
@@ -61,6 +64,7 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
             decoration: InputDecoration(labelText: "Host".i18n),
             controller: _hostController,
             keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
           ),
           TextFormField(
             validator: (value) {
@@ -72,29 +76,26 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
             decoration: InputDecoration(labelText: "Port".i18n),
             controller: _portController,
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _onCreate(),
           ),
         ]),
       ),
       actions: [
-        TextButton(
-          child: Text("Cancel".i18n),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        TextButton(
-          autofocus: true,
-          child: Text("Create".i18n),
-          onPressed: () {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            Navigator.of(context).pop(ArtnetConfig(
-                name: _nameController.text,
-                host: _hostController.text,
-                port: int.parse(_portController.text
-            )));
-          },
-        ),
+        PopupAction("Cancel", () => Navigator.of(context).pop()),
+        PopupAction("Create", _onCreate)
       ],
     );
+  }
+
+  _onCreate() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    Navigator.of(context).pop(ArtnetConfig(
+        name: _nameController.text,
+        host: _hostController.text,
+        port: int.parse(_portController.text
+        )));
   }
 }

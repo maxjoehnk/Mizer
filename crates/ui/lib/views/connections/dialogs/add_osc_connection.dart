@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class ConfigureOscConnectionDialog extends StatefulWidget {
   final OscConnection? config;
@@ -35,8 +36,8 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Add OSC Connection".i18n),
+    return ActionDialog(
+      title: widget.config != null ? "Configure OSC Connection".i18n : "Add OSC Connection".i18n,
       content: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -50,39 +51,51 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
             decoration: InputDecoration(labelText: "Output Host".i18n),
             controller: _hostController,
             keyboardType: TextInputType.name,
+            autofocus: true,
+            textInputAction: TextInputAction.next,
           ),
           TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Output Port is required'.i18n;
+              }
+              return null;
+            },
             decoration: InputDecoration(labelText: "Output Port".i18n),
             controller: _outputPortController,
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.next,
           ),
           TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Input Port is required'.i18n;
+              }
+              return null;
+            },
             decoration: InputDecoration(labelText: "Input Port".i18n),
             controller: _inputPortController,
             keyboardType: TextInputType.number,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _onConfirm(),
           ),
         ]),
       ),
       actions: [
-        TextButton(
-          child: Text("Cancel".i18n),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        TextButton(
-          autofocus: true,
-          child: Text("Save".i18n),
-          onPressed: () {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            Navigator.of(context).pop(OscConnection(
-              outputAddress: _hostController.text,
-              outputPort: int.tryParse(_outputPortController.text.trimToMaybeNull()!)!,
-              inputPort: int.tryParse(_inputPortController.text.trimToMaybeNull()!)!,
-            ));
-          },
-        ),
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("Save".i18n, _onConfirm)
       ],
     );
+  }
+
+  _onConfirm() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    Navigator.of(context).pop(OscConnection(
+      outputAddress: _hostController.text,
+      outputPort: int.tryParse(_outputPortController.text.trimToMaybeNull()!)!,
+      inputPort: int.tryParse(_inputPortController.text.trimToMaybeNull()!)!,
+    ));
   }
 }

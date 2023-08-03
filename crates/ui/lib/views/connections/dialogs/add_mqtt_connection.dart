@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class ConfigureMqttConnectionDialog extends StatefulWidget {
   final MqttConnection? config;
@@ -35,8 +36,8 @@ class _ConfigureMqttConnectionDialogState extends State<ConfigureMqttConnectionD
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Add MQTT Connection".i18n),
+    return ActionDialog(
+      title: widget.config != null ? "Configure MQTT Connection".i18n : "Add MQTT Connection".i18n,
       content: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -50,39 +51,39 @@ class _ConfigureMqttConnectionDialogState extends State<ConfigureMqttConnectionD
             decoration: InputDecoration(labelText: "URL".i18n),
             controller: _urlController,
             keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
+            autofocus: true,
           ),
           TextFormField(
             decoration: InputDecoration(labelText: "Username".i18n),
             controller: _usernameController,
             keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
           ),
           TextFormField(
             decoration: InputDecoration(labelText: "Password".i18n),
             controller: _passwordController,
             keyboardType: TextInputType.visiblePassword,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _onConfirm(),
           ),
         ]),
       ),
       actions: [
-        TextButton(
-          child: Text("Cancel".i18n),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        TextButton(
-          autofocus: true,
-          child: Text("Save".i18n),
-          onPressed: () {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            Navigator.of(context).pop(MqttConnection(
-              url: _urlController.text,
-              username: _usernameController.text.trimToMaybeNull(),
-              password: _passwordController.text.trimToMaybeNull(),
-            ));
-          },
-        ),
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("Save", () => _onConfirm())
       ],
     );
+  }
+
+  _onConfirm() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    Navigator.of(context).pop(MqttConnection(
+      url: _urlController.text,
+      username: _usernameController.text.trimToMaybeNull(),
+      password: _passwordController.text.trimToMaybeNull(),
+    ));
   }
 }

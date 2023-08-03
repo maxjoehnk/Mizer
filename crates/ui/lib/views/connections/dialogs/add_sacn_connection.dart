@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class ConfigureSacnConnectionDialog extends StatefulWidget {
   const ConfigureSacnConnectionDialog({Key? key}) : super(key: key);
@@ -17,8 +18,8 @@ class _ConfigureSacnConnectionDialogState extends State<ConfigureSacnConnectionD
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Add Sacn Connection".i18n),
+    return ActionDialog(
+      title: "Add Sacn Connection".i18n,
       content: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -32,27 +33,25 @@ class _ConfigureSacnConnectionDialogState extends State<ConfigureSacnConnectionD
             decoration: InputDecoration(labelText: "Name".i18n),
             controller: _nameController,
             keyboardType: TextInputType.name,
+            autofocus: true,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) => _onConfirm(),
           ),
         ]),
       ),
       actions: [
-        TextButton(
-          child: Text("Cancel".i18n),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        TextButton(
-          autofocus: true,
-          child: Text("Create".i18n),
-          onPressed: () {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            Navigator.of(context).pop(SacnConfig(
-              name: _nameController.text,
-            ));
-          },
-        ),
+        PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
+        PopupAction("Create".i18n, () => _onConfirm()),
       ],
     );
+  }
+
+  _onConfirm() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    Navigator.of(context).pop(SacnConfig(
+      name: _nameController.text,
+    ));
   }
 }

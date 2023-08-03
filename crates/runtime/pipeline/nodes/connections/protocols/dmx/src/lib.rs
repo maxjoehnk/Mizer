@@ -43,8 +43,8 @@ impl ConfigurableNode for DmxOutputNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(int setting, UNIVERSE_SETTING, self.universe);
-        update!(int setting, CHANNEL_SETTING, self.channel);
+        update!(uint setting, UNIVERSE_SETTING, self.universe);
+        update!(uint setting, CHANNEL_SETTING, self.channel);
 
         update_fallback!(setting)
     }

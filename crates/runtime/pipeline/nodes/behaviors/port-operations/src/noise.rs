@@ -35,7 +35,7 @@ impl ConfigurableNode for NoiseNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(int setting, TICK_RATE_SETTING, self.tick_rate);
+        update!(uint setting, TICK_RATE_SETTING, self.tick_rate);
         update!(bool setting, FADE_SETTING, self.fade);
 
         update_fallback!(setting)

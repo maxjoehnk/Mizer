@@ -127,10 +127,10 @@ impl ConfigurableNode for MidiOutputNode {
                 mode,
                 channel,
             } => {
-                update!(int setting, PORT_SETTING, *port);
-                update!(int setting, CHANNEL_SETTING, *channel);
-                update!(int setting, RANGE_FROM_SETTING, range.0);
-                update!(int setting, RANGE_TO_SETTING, range.1);
+                update!(uint setting, PORT_SETTING, *port);
+                update!(uint setting, CHANNEL_SETTING, *channel);
+                update!(uint setting, RANGE_FROM_SETTING, range.0);
+                update!(uint setting, RANGE_TO_SETTING, range.1);
                 update!(enum setting, MODE_SETTING, *mode);
             }
             MidiOutputConfig::Control { page, control } => {

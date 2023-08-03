@@ -27,7 +27,7 @@ impl ConfigurableNode for DelayNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(int setting, BUFFER_SIZE_SETTING, self.buffer_size);
+        update!(uint setting, BUFFER_SIZE_SETTING, self.buffer_size);
 
         update_fallback!(setting)
     }

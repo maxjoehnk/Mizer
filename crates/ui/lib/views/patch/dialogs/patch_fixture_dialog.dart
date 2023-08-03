@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/table/table.dart';
 
 import 'fixture_selector.dart';
@@ -20,11 +21,10 @@ class PatchFixtureDialog extends StatelessWidget {
         future: apiClient.getFixtureDefinitions(),
         initialData: FixtureDefinitions(),
         builder: (context, AsyncSnapshot<FixtureDefinitions> state) {
-          return Dialog(
-              child: PatchFixtureDialogStepper(
+          return PatchFixtureDialogStepper(
             definitions: state.data!,
             bloc: fixturesBloc,
-          ));
+          );
         });
   }
 }
@@ -51,19 +51,11 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Patch Fixture",
-            style: textTheme.headline6,
-          ),
-        ),
-        Expanded(child: _getStep()),
-        Row(mainAxisAlignment: MainAxisAlignment.end, children: _getActions(context))
-      ],
+    var windowSize = MediaQuery.of(context).size;
+    return ActionDialog(
+      title: "Patch Fixture",
+      content: SizedBox(child: _getStep(), width: windowSize.width * 0.9, height: windowSize.height * 0.8),
+      actions: _getActions(context),
     );
   }
 
@@ -87,47 +79,30 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
                 channel = event.channel;
                 id = event.id;
                 count = event.count;
-              }));
+              }),
+          onConfirm: () => this.addFixtures(context),
+      );
     }
     return Container();
   }
 
-  List<Widget> _getActions(BuildContext context) {
+  List<PopupAction> _getActions(BuildContext context) {
     if (step == 0) {
       return [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text("Cancel")),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-              onPressed: this.mode == null ? null : () => setState(() => step += 1),
-              child: Text("Next")),
-        ),
+        PopupAction("Cancel", () => Navigator.of(context).pop()),
+        PopupAction("Next", () => this.mode == null ? null : setState(() => step += 1)),
       ];
     }
     if (step == 1) {
       return [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextButton(
-              onPressed: () => setState(() => step = 0),
-              child: Text("Back")),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-              onPressed: () => this.addFixture(context), child: Text("Add Fixtures")),
-        )
+        PopupAction("Back", () => setState(() => step = 0)),
+        PopupAction("Add Fixtures", () => this.addFixtures(context)),
       ];
     }
     return [];
   }
 
-  Future addFixture(BuildContext context) async {
+  Future addFixtures(BuildContext context) async {
     widget.bloc.add(AddFixtures(
         definition: definition!,
         name: name!,
@@ -144,10 +119,11 @@ class FixturePatch extends StatefulWidget {
   final FixtureDefinition definition;
   final FixtureMode mode;
   final Function(PatchSettingsEvent) onChange;
+  final Function() onConfirm;
   final int initialId;
   final int initialChannel;
 
-  FixturePatch(this.definition, this.mode, {required this.onChange, required this.initialId, required this.initialChannel});
+  FixturePatch(this.definition, this.mode, {required this.onChange, required this.onConfirm, required this.initialId, required this.initialChannel});
 
   @override
   _FixturePatchState createState() => _FixturePatchState();
@@ -193,7 +169,8 @@ class _FixturePatchState extends State<FixturePatch> {
                       count = event.count;
                     });
                     widget.onChange(event);
-                  }),
+                  },
+                  onConfirm: widget.onConfirm),
             ),
             Expanded(child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -206,13 +183,14 @@ class _FixturePatchState extends State<FixturePatch> {
 
 class PatchSettings extends StatefulWidget {
   final Function(PatchSettingsEvent) onChange;
+  final Function() onConfirm;
   final String name;
   final int universe;
   final int channel;
   final int id;
   final int count;
 
-  PatchSettings({Key? key, required this.channel, required this.universe, required this.name, required this.id, required this.count, required this.onChange}) : super(key: key);
+  PatchSettings({Key? key, required this.channel, required this.universe, required this.name, required this.id, required this.count, required this.onChange, required this.onConfirm}) : super(key: key);
 
   @override
   _PatchSettingsState createState() =>
@@ -248,6 +226,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           decoration: InputDecoration(labelText: "Name"),
           controller: _nameController,
           keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.next,
         ),
       ),
       PatchField(
@@ -255,6 +234,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           decoration: InputDecoration(labelText: "Universe"),
           controller: _universeController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+          textInputAction: TextInputAction.next,
         ),
       ),
       PatchField(
@@ -262,6 +242,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           decoration: InputDecoration(labelText: "Channel"),
           controller: _channelController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+          textInputAction: TextInputAction.next,
         ),
       ),
       PatchField(
@@ -269,6 +250,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           decoration: InputDecoration(labelText: "Start ID"),
           controller: _idController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+          textInputAction: TextInputAction.next,
         ),
       ),
       PatchField(
@@ -276,6 +258,8 @@ class _PatchSettingsState extends State<PatchSettings> {
           decoration: InputDecoration(labelText: "Count"),
           controller: _countController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+          textInputAction: TextInputAction.done,
+          onSubmitted: (_) => widget.onConfirm(),
         ),
       ),
     ]);

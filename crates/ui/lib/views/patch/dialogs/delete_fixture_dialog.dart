@@ -12,6 +12,7 @@ class DeleteFixtureDialog extends StatelessWidget {
         PopupAction("Confirm", () => _close(context, true)),
         PopupAction("Cancel", () => _close(context, false)),
       ],
+      onConfirm: () => _close(context, true),
     );
   }
 

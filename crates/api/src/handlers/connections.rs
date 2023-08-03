@@ -160,8 +160,14 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             })?;
 
             Ok(())
+        } else if let Some(connection::Connection::Osc(osc)) = connection.connection {
+            self.runtime.run_command(DeleteOscConnectionCommand {
+                id: osc.connection_id,
+            })?;
+
+            Ok(())
         } else {
-            unimplemented!()
+            anyhow::bail!("Connection {connection:?} cannot be deleted.")
         }
     }
 
@@ -180,7 +186,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
                     Ok(())
                 } else {
-                    unimplemented!()
+                    anyhow::bail!("Dmx Output {connection:?} cannot be configured")
                 }
             }
             Some(configure_connection_request::Config::Mqtt(connection)) => {
@@ -203,7 +209,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
                 Ok(())
             }
-            _ => unimplemented!(),
+            _ => anyhow::bail!("Connection {:?} cannot be configured", update.config),
         }
     }
 

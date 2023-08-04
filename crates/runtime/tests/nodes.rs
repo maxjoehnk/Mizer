@@ -1,7 +1,7 @@
 use crate::utils::add_node;
 use mizer_module::Runtime;
 use mizer_node::ProcessingNode;
-use mizer_nodes::{Node, OscillatorNode, SequenceNode};
+use mizer_nodes::{Node, OscillatorNode};
 use mizer_runtime::*;
 
 mod utils;
@@ -9,21 +9,6 @@ mod utils;
 #[test]
 fn oscillator() {
     let frames = run_pipeline_with_node(OscillatorNode::default(), 60, "Value");
-    insta::assert_debug_snapshot!(frames);
-}
-
-#[test]
-fn sequence() {
-    let node = SequenceNode {
-        steps: vec![
-            (0., 0.).into(),
-            (1., 0.5, true).into(),
-            (2., 1.).into(),
-            (3., 0.75).into(),
-            (3.5, 1.).into(),
-        ],
-    };
-    let frames = run_pipeline_with_node(node, 240, "Output");
     insta::assert_debug_snapshot!(frames);
 }
 

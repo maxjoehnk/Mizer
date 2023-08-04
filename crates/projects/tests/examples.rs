@@ -16,7 +16,6 @@ use test_case::test_case;
 #[test_case("pixels"; "pixels")]
 #[test_case("presets"; "presets")]
 #[test_case("sacn"; "sacn")]
-#[test_case("sequence"; "sequence")]
 #[test_case("sequencer"; "sequencer")]
 #[test_case("video"; "video")]
 fn test_load_project(project: &str) {

@@ -104,37 +104,6 @@ nodes:
         y: 15
       scale: 1
 
-  - type: sequence
-    path: /sequence-0
-    config:
-      steps:
-        - tick: 0
-          value: 0
-        - tick: 1
-          value: 0.5
-          hold: true
-        - tick: 2
-          value: 1
-        - tick: 3
-          value: 0.75
-        - tick: 3.5
-          value: 1
-    designer:
-      position:
-        x: 0
-        y: 20
-      scale: 1
-  - type: dmx-output
-    path: /dmx-output-4
-    designer:
-      position:
-        x: 5
-        y: 20
-      scale: 1
-    config:
-      universe: 1
-      channel: 1
-
 layouts:
   Default:
     - node: /fader-0
@@ -150,7 +119,6 @@ channels:
   - value@/midi-input-1 -> value@/dmx-output-1
   - value@/oscillator-0 -> value@/dmx-output-2
   - value@/fader-0 -> value@/dmx-output-3
-  - value@/sequence-0 -> value@/dmx-output-4
 
 connections:
   - type: sacn

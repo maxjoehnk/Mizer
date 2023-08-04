@@ -143,7 +143,7 @@ impl Presets {
                 .map(|value| vec![FixtureControlValue::Intensity(value.value)])
                 .unwrap_or_default(),
             PresetId::Shutter(id) => self
-                .intensity
+                .shutter
                 .get(&id)
                 .map(|value| vec![FixtureControlValue::Shutter(value.value)])
                 .unwrap_or_default(),

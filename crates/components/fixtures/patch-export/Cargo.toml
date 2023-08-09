@@ -1,0 +1,12 @@
+[package]
+name = "mizer-fixture-patch-export"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tectonic = "0.14"
+mizer-fixtures = { path = ".." }
+
+[dev-dependencies]
+mizer-open-fixture-library-provider = { path = "../open-fixture-library" }

@@ -46,8 +46,7 @@ RUN apt-get update && \
       libnuma-dev \
       libvpx-dev \
       libmp3lame-dev \
-      libopus-dev \
-      yasm && \
+      libopus-dev && \
     rm -rf /var/lib/apt/lists/*
 
 RUN cargo install cbindgen

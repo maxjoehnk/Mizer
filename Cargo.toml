@@ -18,6 +18,7 @@ members = [
     "crates/components/fixtures/gdtf",
     "crates/components/fixtures/mizer-definitions",
     "crates/components/fixtures/open-fixture-library",
+    "crates/components/fixtures/patch-export",
     "crates/components/fixtures/qlcplus",
     "crates/components/plan",
     "crates/components/media",
@@ -159,7 +160,7 @@ rayon = "1.7"
 serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.31", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.31"
-ffmpeg-the-third = { version = "1.2", features = ["build"] }
+ffmpeg-the-third = { version = "1.2", features = [] }
 
 [dev-dependencies]
 test-case = "3.1"

@@ -4,7 +4,7 @@ import 'package:mizer/protos/fixtures.pb.dart';
 
 class FixturesPluginApi implements FixturesApi {
   final MethodChannel channel = const MethodChannel("mizer.live/fixtures");
-  
+
   @override
   Future<Fixtures> addFixtures(AddFixturesRequest request) async {
     var response = await channel.invokeMethod("addFixtures", request.writeToBuffer());
@@ -45,5 +45,10 @@ class FixturesPluginApi implements FixturesApi {
   Future<void> updateFixture(int fixtureId, UpdateFixtureRequest request) async {
     request.fixtureId = fixtureId;
     await channel.invokeMethod("updateFixture", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> exportPatch(String path) async {
+    await channel.invokeMethod("exportPatch", path);
   }
 }

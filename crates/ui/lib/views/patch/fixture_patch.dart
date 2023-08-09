@@ -1,8 +1,10 @@
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -37,6 +39,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
           "clear": () => _clear(),
           "delete": () => _deleteFixture(context, fixturesBloc),
           "assign_group": () => _assignGroup(context, fixturesBloc),
+          "export_patch": () => _exportPatch(context),
         },
         child: Column(
           children: [
@@ -81,6 +84,11 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                       label: "Assign Group",
                       hotkeyId: "assign_group",
                       onClick: () => _assignGroup(context, fixturesBloc)),
+                  PanelActionModel(
+                    label: "Export Patch",
+                    hotkeyId: "export_patch",
+                    onClick: () => _exportPatch(context),
+                  )
                 ],
                 onSearch: (query) => setState(() => searchQuery = query),
               ),
@@ -129,5 +137,16 @@ class _FixturePatchViewState extends State<FixturePatchView> {
     }
     await programmerApi.assignFixturesToGroup(
         selectedIds.map((id) => FixtureId(fixture: id)).toList(), group);
+  }
+
+  _exportPatch(BuildContext context) async {
+    final typeGroup = XTypeGroup(label: 'PDF'.i18n, extensions: ['pdf']);
+    final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
+    if (location == null) {
+      return;
+    }
+
+    var fixturesApi = context.read<FixturesApi>();
+    await fixturesApi.exportPatch(location.path);
   }
 }

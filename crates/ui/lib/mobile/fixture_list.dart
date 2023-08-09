@@ -87,6 +87,8 @@ class _FixtureListState extends State<FixtureList> {
         leading: Text(fixture.id.toString()),
         selected: selected,
         selectedColor: Colors.deepOrangeAccent,
+        dense: true,
+        visualDensity: VisualDensity.compact,
         onTap: () {
           if (selected) {
             _programmerApi.unselectFixtures([FixtureId(fixture: fixture.id)]);

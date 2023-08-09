@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
 class Hoverable extends StatefulWidget {
@@ -29,7 +30,12 @@ class _HoverableState extends State<Hoverable> {
       cursor: (widget.disabled == true || widget.onTap == null)
           ? SystemMouseCursors.basic
           : SystemMouseCursors.click,
-      onHover: (e) => setState(() => hovering = !widget.disabled),
+      onHover: (e) {
+        if (e.kind == PointerDeviceKind.touch) {
+          return;
+        }
+        setState(() => hovering = !widget.disabled);
+      },
       onExit: (e) => setState(() => hovering = false),
       child: GestureDetector(
         onTap: _callWhenNotDisabled(widget.onTap),

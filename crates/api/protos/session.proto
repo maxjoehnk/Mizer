@@ -2,32 +2,15 @@ syntax = "proto3";
 
 package mizer;
 
-service SessionApi {
-  rpc GetSession (SessionRequest) returns (stream Session) {}
-  rpc JoinSession (ClientAnnouncement) returns (Session) {}
-  rpc NewProject (ProjectRequest) returns (ProjectResponse) {}
-  rpc LoadProject (LoadProjectRequest) returns (ProjectResponse) {}
-  rpc SaveProject (ProjectRequest) returns (ProjectResponse) {}
-  rpc SaveProjectAs (SaveProjectAsRequest) returns (ProjectResponse) {}
-  rpc LoadHistory (LoadHistoryRequest) returns (stream History) {}
-}
-
-message ProjectRequest {
-}
 message LoadProjectRequest {
   string path = 1;
 }
 message SaveProjectAsRequest {
   string path = 1;
 }
-message ProjectResponse {
-}
 
 message ClientAnnouncement {
   string name = 1;
-}
-
-message SessionRequest {
 }
 
 message Session {
@@ -49,8 +32,6 @@ message DeviceClock {
   double drift = 2;
 }
 
-message LoadHistoryRequest {
-}
 message History {
   repeated HistoryItem items = 1;
   uint64 pointer = 2;

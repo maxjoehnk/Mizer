@@ -4,13 +4,6 @@ package mizer.mappings;
 
 import "nodes.proto";
 
-service MappingsApi {
-  rpc AddMapping (MappingRequest) returns (MappingResult) {}
-}
-
-message MappingResult {
-}
-
 message MappingRequest {
   oneof binding {
     MidiMapping midi = 1;

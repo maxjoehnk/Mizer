@@ -6777,33 +6777,13 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\x20\
     \x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$AssignFixtureS\
     electionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x1f\n\
-    \x1dAssignFixturesToGroupResponse2\xc2\x0c\n\rProgrammerApi\x12h\n\x15Su\
+    \x1dAssignFixturesToGroupResponse2\xfe\x02\n\rProgrammerApi\x12h\n\x15Su\
     bscribeToProgrammer\x12,.mizer.programmer.SubscribeProgrammerRequest\x1a\
-    !.mizer.programmer.ProgrammerState\x12]\n\x0cWriteControl\x12%.mizer.pro\
-    grammer.WriteControlRequest\x1a&.mizer.programmer.WriteControlResponse\
-    \x12c\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesRequest\
-    \x1a(.mizer.programmer.SelectFixturesResponse\x12i\n\x10UnselectFixtures\
-    \x12).mizer.programmer.UnselectFixturesRequest\x1a*.mizer.programmer.Uns\
-    electFixturesResponse\x12H\n\x05Clear\x12\x1e.mizer.programmer.ClearRequ\
-    est\x1a\x1f.mizer.programmer.ClearResponse\x12T\n\tHighlight\x12\".mizer\
-    .programmer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\x12\
-    H\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.program\
-    mer.StoreResponse\x12I\n\nGetPresets\x12\x20.mizer.programmer.PresetsReq\
-    uest\x1a\x19.mizer.programmer.Presets\x12N\n\nCallPreset\x12\x1a.mizer.p\
-    rogrammer.PresetId\x1a$.mizer.programmer.CallPresetResponse\x12F\n\tGetG\
-    roups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.programmer.Gr\
-    oups\x12Z\n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%\
-    .mizer.programmer.SelectGroupResponse\x12F\n\x08AddGroup\x12!.mizer.prog\
-    rammer.AddGroupRequest\x1a\x17.mizer.programmer.Group\x12L\n\x0bRenameGr\
-    oup\x12$.mizer.programmer.RenameGroupRequest\x1a\x17.mizer.programmer.Gr\
-    oup\x12x\n\x15AssignFixturesToGroup\x12..mizer.programmer.AssignFixtures\
-    ToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\x12\
-    \x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.mizer.programmer.Assign\
-    FixtureSelectionToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGro\
-    upResponse\x12f\n\x0fWriteEffectRate\x12(.mizer.programmer.WriteEffectRa\
-    teRequest\x1a).mizer.programmer.WriteEffectRateResponse\x12l\n\x11WriteE\
-    ffectOffset\x12*.mizer.programmer.WriteEffectOffsetRequest\x1a+.mizer.pr\
-    ogrammer.WriteEffectOffsetResponseb\x06proto3\
+    !.mizer.programmer.ProgrammerState\x12c\n\x0eSelectFixtures\x12'.mizer.p\
+    rogrammer.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixturesResp\
+    onse\x12H\n\x05Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer\
+    .programmer.ClearResponse\x12T\n\tHighlight\x12\".mizer.programmer.Highl\
+    ightRequest\x1a#.mizer.programmer.HighlightResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

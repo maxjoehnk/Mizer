@@ -15,35 +15,6 @@ import 'sequencer.pbenum.dart';
 
 export 'sequencer.pbenum.dart';
 
-class GetSequencesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSequencesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  GetSequencesRequest._() : super();
-  factory GetSequencesRequest() => create();
-  factory GetSequencesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetSequencesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetSequencesRequest clone() => GetSequencesRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetSequencesRequest copyWith(void Function(GetSequencesRequest) updates) => super.copyWith((message) => updates(message as GetSequencesRequest)) as GetSequencesRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GetSequencesRequest create() => GetSequencesRequest._();
-  GetSequencesRequest createEmptyInstance() => create();
-  static $pb.PbList<GetSequencesRequest> createRepeated() => $pb.PbList<GetSequencesRequest>();
-  @$core.pragma('dart2js:noInline')
-  static GetSequencesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSequencesRequest>(create);
-  static GetSequencesRequest? _defaultInstance;
-}
-
 class GetSequenceRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
@@ -89,35 +60,6 @@ class GetSequenceRequest extends $pb.GeneratedMessage {
   $core.bool hasSequence() => $_has(0);
   @$pb.TagNumber(1)
   void clearSequence() => clearField(1);
-}
-
-class AddSequenceRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  AddSequenceRequest._() : super();
-  factory AddSequenceRequest() => create();
-  factory AddSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  AddSequenceRequest clone() => AddSequenceRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AddSequenceRequest copyWith(void Function(AddSequenceRequest) updates) => super.copyWith((message) => updates(message as AddSequenceRequest)) as AddSequenceRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static AddSequenceRequest create() => AddSequenceRequest._();
-  AddSequenceRequest createEmptyInstance() => create();
-  static $pb.PbList<AddSequenceRequest> createRepeated() => $pb.PbList<AddSequenceRequest>();
-  @$core.pragma('dart2js:noInline')
-  static AddSequenceRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddSequenceRequest>(create);
-  static AddSequenceRequest? _defaultInstance;
 }
 
 class DeleteSequenceRequest extends $pb.GeneratedMessage {
@@ -926,35 +868,6 @@ class SequenceNameRequest extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
-}
-
-class EmptyResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EmptyResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  EmptyResponse._() : super();
-  factory EmptyResponse() => create();
-  factory EmptyResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory EmptyResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  EmptyResponse clone() => EmptyResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  EmptyResponse copyWith(void Function(EmptyResponse) updates) => super.copyWith((message) => updates(message as EmptyResponse)) as EmptyResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static EmptyResponse create() => EmptyResponse._();
-  EmptyResponse createEmptyInstance() => create();
-  static $pb.PbList<EmptyResponse> createRepeated() => $pb.PbList<EmptyResponse>();
-  @$core.pragma('dart2js:noInline')
-  static EmptyResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyResponse>(create);
-  static EmptyResponse? _defaultInstance;
 }
 
 class Sequences extends $pb.GeneratedMessage {

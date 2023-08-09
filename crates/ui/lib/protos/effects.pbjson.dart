@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use getEffectsRequestDescriptor instead')
-const GetEffectsRequest$json = const {
-  '1': 'GetEffectsRequest',
-};
-
-/// Descriptor for `GetEffectsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getEffectsRequestDescriptor = $convert.base64Decode('ChFHZXRFZmZlY3RzUmVxdWVzdA==');
 @$core.Deprecated('Use addEffectRequestDescriptor instead')
 const AddEffectRequest$json = const {
   '1': 'AddEffectRequest',

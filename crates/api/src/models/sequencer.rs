@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.sequencer.GetSequencesRequest)
-pub struct GetSequencesRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.sequencer.GetSequencesRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a GetSequencesRequest {
-    fn default() -> &'a GetSequencesRequest {
-        <GetSequencesRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl GetSequencesRequest {
-    pub fn new() -> GetSequencesRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GetSequencesRequest>(
-            "GetSequencesRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for GetSequencesRequest {
-    const NAME: &'static str = "GetSequencesRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> GetSequencesRequest {
-        GetSequencesRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static GetSequencesRequest {
-        static instance: GetSequencesRequest = GetSequencesRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for GetSequencesRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("GetSequencesRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for GetSequencesRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for GetSequencesRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.sequencer.GetSequenceRequest)
 pub struct GetSequenceRequest {
     // message fields
@@ -247,109 +144,6 @@ impl ::std::fmt::Display for GetSequenceRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for GetSequenceRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.sequencer.AddSequenceRequest)
-pub struct AddSequenceRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.sequencer.AddSequenceRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a AddSequenceRequest {
-    fn default() -> &'a AddSequenceRequest {
-        <AddSequenceRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl AddSequenceRequest {
-    pub fn new() -> AddSequenceRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<AddSequenceRequest>(
-            "AddSequenceRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for AddSequenceRequest {
-    const NAME: &'static str = "AddSequenceRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> AddSequenceRequest {
-        AddSequenceRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static AddSequenceRequest {
-        static instance: AddSequenceRequest = AddSequenceRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for AddSequenceRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("AddSequenceRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for AddSequenceRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for AddSequenceRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -2123,109 +1917,6 @@ impl ::std::fmt::Display for SequenceNameRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for SequenceNameRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.sequencer.EmptyResponse)
-pub struct EmptyResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.sequencer.EmptyResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a EmptyResponse {
-    fn default() -> &'a EmptyResponse {
-        <EmptyResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl EmptyResponse {
-    pub fn new() -> EmptyResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EmptyResponse>(
-            "EmptyResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for EmptyResponse {
-    const NAME: &'static str = "EmptyResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> EmptyResponse {
-        EmptyResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static EmptyResponse {
-        static instance: EmptyResponse = EmptyResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for EmptyResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("EmptyResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for EmptyResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for EmptyResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -4698,76 +4389,75 @@ impl ::protobuf::reflect::ProtobufValue for CueTimerRange {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0fsequencer.proto\x12\x0fmizer.sequencer\x1a\x0efixtures.proto\"\x15\
-    \n\x13GetSequencesRequest\"0\n\x12GetSequenceRequest\x12\x1a\n\x08sequen\
-    ce\x18\x01\x20\x01(\rR\x08sequence\"\x14\n\x12AddSequenceRequest\"3\n\
-    \x15DeleteSequenceRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08s\
-    equence\"/\n\x11SequenceGoRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\
-    \rR\x08sequence\"1\n\x13SequenceStopRequest\x12\x1a\n\x08sequence\x18\
-    \x01\x20\x01(\rR\x08sequence\"}\n\x11CueTriggerRequest\x12\x1a\n\x08sequ\
-    ence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\r\
-    R\x03cue\x12:\n\x07trigger\x18\x03\x20\x01(\x0e2\x20.mizer.sequencer.Cue\
-    Trigger.TypeR\x07trigger\"s\n\x15CueTriggerTimeRequest\x12\x1a\n\x08sequ\
-    ence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\r\
-    R\x03cue\x12,\n\x04time\x18\x03\x20\x01(\x0b2\x18.mizer.sequencer.CueTim\
-    eR\x04time\"\x84\x01\n\x1aCueEffectOffsetTimeRequest\x12\x1a\n\x08sequen\
-    ce\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\
-    \x03cue\x12\x16\n\x06effect\x18\x03\x20\x01(\rR\x06effect\x12\x17\n\x04t\
-    ime\x18\x04\x20\x01(\x01H\0R\x04time\x88\x01\x01B\x07\n\x05_time\"R\n\
-    \x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\
-    \x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\x04name\x18\x03\
-    \x20\x01(\tR\x04name\"\x9f\x01\n\x0fCueValueRequest\x12\x1f\n\x0bsequenc\
-    e_id\x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01\
-    (\rR\x05cueId\x12#\n\rcontrol_index\x18\x03\x20\x01(\rR\x0ccontrolIndex\
-    \x12/\n\x05value\x18\x04\x20\x01(\x0b2\x19.mizer.sequencer.CueValueR\x05\
-    value\"y\n\x10CueTimingRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\
-    \rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01(\rR\x05cueId\x12-\n\
-    \x04time\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04time\"X\
-    \n\x19SequenceWrapAroundRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\r\
-    R\x08sequence\x12\x1f\n\x0bwrap_around\x18\x02\x20\x01(\x08R\nwrapAround\
-    \"c\n\x1cSequenceStopOnLastCueRequest\x12\x1a\n\x08sequence\x18\x01\x20\
-    \x01(\rR\x08sequence\x12'\n\x10stop_on_last_cue\x18\x02\x20\x01(\x08R\rs\
-    topOnLastCue\"E\n\x13SequenceNameRequest\x12\x1a\n\x08sequence\x18\x01\
-    \x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\
-    \x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\x01\x20\x03(\
-    \x0b2\x19.mizer.sequencer.SequenceR\tsequences\"\xd9\x01\n\x08Sequence\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequence\
-    r.CueR\x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.mizer.fixtur\
-    es.FixtureIdR\x08fixtures\x12\x1f\n\x0bwrap_around\x18\x05\x20\x01(\x08R\
-    \nwrapAround\x12'\n\x10stop_on_last_cue\x18\x06\x20\x01(\x08R\rstopOnLas\
-    tCue\"\xdb\x03\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
-    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\x20\
-    \x01(\x0b2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x127\n\x08controls\
-    \x18\x04\x20\x03(\x0b2\x1b.mizer.sequencer.CueControlR\x08controls\x12<\
-    \n\x0bcue_timings\x18\x05\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\
-    \ncueTimings\x12B\n\x0edimmer_timings\x18\x06\x20\x01(\x0b2\x1b.mizer.se\
-    quencer.CueTimingsR\rdimmerTimings\x12F\n\x10position_timings\x18\x07\
-    \x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\x0fpositionTimings\x12@\n\
-    \rcolor_timings\x18\x08\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\
-    \x0ccolorTimings\x124\n\x07effects\x18\t\x20\x03(\x0b2\x1a.mizer.sequenc\
-    er.CueEffectR\x07effects\"\xd4\x01\n\tCueEffect\x12\x1b\n\teffect_id\x18\
-    \x01\x20\x01(\rR\x08effectId\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\
-    \x19.mizer.fixtures.FixtureIdR\x08fixtures\x12*\n\x0eeffect_offsets\x18\
-    \x03\x20\x01(\x01H\0R\reffectOffsets\x88\x01\x01\x12$\n\x0beffect_rate\
-    \x18\x04\x20\x01(\x01H\x01R\neffectRate\x88\x01\x01B\x11\n\x0f_effect_of\
-    fsetsB\x0e\n\x0c_effect_rate\"l\n\nCueTimings\x12-\n\x04fade\x18\x08\x20\
-    \x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\t\
-    \x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\"\xbd\x01\n\nCueTr\
-    igger\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueTrigge\
-    r.TypeR\x04type\x121\n\x04time\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer\
-    .CueTimeH\0R\x04time\x88\x01\x01\"=\n\x04Type\x12\x06\n\x02GO\x10\0\x12\
-    \n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\
-    \x03\x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\"\xef\x02\n\nCueContr\
-    ol\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueControl.T\
-    ypeR\x04type\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.mizer.sequencer.C\
-    ueValueR\x05value\x125\n\x08fixtures\x18\x03\x20\x03(\x0b2\x19.mizer.fix\
-    tures.FixtureIdR\x08fixtures\"\xc2\x01\n\x04Type\x12\r\n\tINTENSITY\x10\
-    \0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0b\
-    COLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x0f\n\x0bCOLOR_WHE\
-    EL\x10\x05\x12\x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\t\n\
-    \x05FOCUS\x10\x08\x12\x08\n\x04ZOOM\x10\t\x12\t\n\x05PRISM\x10\n\x12\x08\
-    \n\x04IRIS\x10\x0b\x12\t\n\x05FROST\x10\x0c\x12\x08\n\x04GOBO\x10\r\x12\
+    \n\x0fsequencer.proto\x12\x0fmizer.sequencer\x1a\x0efixtures.proto\"0\n\
+    \x12GetSequenceRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequ\
+    ence\"3\n\x15DeleteSequenceRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01\
+    (\rR\x08sequence\"/\n\x11SequenceGoRequest\x12\x1a\n\x08sequence\x18\x01\
+    \x20\x01(\rR\x08sequence\"1\n\x13SequenceStopRequest\x12\x1a\n\x08sequen\
+    ce\x18\x01\x20\x01(\rR\x08sequence\"}\n\x11CueTriggerRequest\x12\x1a\n\
+    \x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\
+    \x20\x01(\rR\x03cue\x12:\n\x07trigger\x18\x03\x20\x01(\x0e2\x20.mizer.se\
+    quencer.CueTrigger.TypeR\x07trigger\"s\n\x15CueTriggerTimeRequest\x12\
+    \x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\
+    \x02\x20\x01(\rR\x03cue\x12,\n\x04time\x18\x03\x20\x01(\x0b2\x18.mizer.s\
+    equencer.CueTimeR\x04time\"\x84\x01\n\x1aCueEffectOffsetTimeRequest\x12\
+    \x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\
+    \x02\x20\x01(\rR\x03cue\x12\x16\n\x06effect\x18\x03\x20\x01(\rR\x06effec\
+    t\x12\x17\n\x04time\x18\x04\x20\x01(\x01H\0R\x04time\x88\x01\x01B\x07\n\
+    \x05_time\"R\n\x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\
+    \rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\
+    \x04name\x18\x03\x20\x01(\tR\x04name\"\x9f\x01\n\x0fCueValueRequest\x12\
+    \x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_i\
+    d\x18\x02\x20\x01(\rR\x05cueId\x12#\n\rcontrol_index\x18\x03\x20\x01(\rR\
+    \x0ccontrolIndex\x12/\n\x05value\x18\x04\x20\x01(\x0b2\x19.mizer.sequenc\
+    er.CueValueR\x05value\"y\n\x10CueTimingRequest\x12\x1f\n\x0bsequence_id\
+    \x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01(\rR\
+    \x05cueId\x12-\n\x04time\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueTi\
+    merR\x04time\"X\n\x19SequenceWrapAroundRequest\x12\x1a\n\x08sequence\x18\
+    \x01\x20\x01(\rR\x08sequence\x12\x1f\n\x0bwrap_around\x18\x02\x20\x01(\
+    \x08R\nwrapAround\"c\n\x1cSequenceStopOnLastCueRequest\x12\x1a\n\x08sequ\
+    ence\x18\x01\x20\x01(\rR\x08sequence\x12'\n\x10stop_on_last_cue\x18\x02\
+    \x20\x01(\x08R\rstopOnLastCue\"E\n\x13SequenceNameRequest\x12\x1a\n\x08s\
+    equence\x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\
+    \x01(\tR\x04name\"D\n\tSequences\x127\n\tsequences\x18\x01\x20\x03(\x0b2\
+    \x19.mizer.sequencer.SequenceR\tsequences\"\xd9\x01\n\x08Sequence\x12\
+    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
+    (\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequencer.Cu\
+    eR\x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.mizer.fixtures.F\
+    ixtureIdR\x08fixtures\x12\x1f\n\x0bwrap_around\x18\x05\x20\x01(\x08R\nwr\
+    apAround\x12'\n\x10stop_on_last_cue\x18\x06\x20\x01(\x08R\rstopOnLastCue\
+    \"\xdb\x03\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\x20\x01(\
+    \x0b2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x127\n\x08controls\x18\
+    \x04\x20\x03(\x0b2\x1b.mizer.sequencer.CueControlR\x08controls\x12<\n\
+    \x0bcue_timings\x18\x05\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\nc\
+    ueTimings\x12B\n\x0edimmer_timings\x18\x06\x20\x01(\x0b2\x1b.mizer.seque\
+    ncer.CueTimingsR\rdimmerTimings\x12F\n\x10position_timings\x18\x07\x20\
+    \x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\x0fpositionTimings\x12@\n\rco\
+    lor_timings\x18\x08\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\x0ccol\
+    orTimings\x124\n\x07effects\x18\t\x20\x03(\x0b2\x1a.mizer.sequencer.CueE\
+    ffectR\x07effects\"\xd4\x01\n\tCueEffect\x12\x1b\n\teffect_id\x18\x01\
+    \x20\x01(\rR\x08effectId\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\x19.mi\
+    zer.fixtures.FixtureIdR\x08fixtures\x12*\n\x0eeffect_offsets\x18\x03\x20\
+    \x01(\x01H\0R\reffectOffsets\x88\x01\x01\x12$\n\x0beffect_rate\x18\x04\
+    \x20\x01(\x01H\x01R\neffectRate\x88\x01\x01B\x11\n\x0f_effect_offsetsB\
+    \x0e\n\x0c_effect_rate\"l\n\nCueTimings\x12-\n\x04fade\x18\x08\x20\x01(\
+    \x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\t\x20\
+    \x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\"\xbd\x01\n\nCueTrigge\
+    r\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueTrigger.Ty\
+    peR\x04type\x121\n\x04time\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.Cue\
+    TimeH\0R\x04time\x88\x01\x01\"=\n\x04Type\x12\x06\n\x02GO\x10\0\x12\n\n\
+    \x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\x03\
+    \x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\"\xef\x02\n\nCueControl\
+    \x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueControl.Typ\
+    eR\x04type\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.mizer.sequencer.Cue\
+    ValueR\x05value\x125\n\x08fixtures\x18\x03\x20\x03(\x0b2\x19.mizer.fixtu\
+    res.FixtureIdR\x08fixtures\"\xc2\x01\n\x04Type\x12\r\n\tINTENSITY\x10\0\
+    \x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0bCO\
+    LOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x0f\n\x0bCOLOR_WHEEL\
+    \x10\x05\x12\x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\t\n\x05F\
+    OCUS\x10\x08\x12\x08\n\x04ZOOM\x10\t\x12\t\n\x05PRISM\x10\n\x12\x08\n\
+    \x04IRIS\x10\x0b\x12\t\n\x05FROST\x10\x0c\x12\x08\n\x04GOBO\x10\r\x12\
     \x0b\n\x07GENERIC\x10\x0e\"e\n\x08CueValue\x12\x18\n\x06direct\x18\x03\
     \x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\x0b2\x1e.mi\
     zer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\x9c\x01\n\x08\
@@ -4780,30 +4470,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     nds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\
     \"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequ\
     encer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x02to2\xfa\n\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12\
-    $.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\
-    \x12M\n\x0bGetSequence\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.m\
-    izer.sequencer.Sequence\x12M\n\x0bAddSequence\x12#.mizer.sequencer.AddSe\
-    quenceRequest\x1a\x19.mizer.sequencer.Sequence\x12T\n\x0eDeleteSequence\
-    \x12&.mizer.sequencer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequ\
-    ences\x12P\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e\
-    .mizer.sequencer.EmptyResponse\x12T\n\x0cSequenceStop\x12$.mizer.sequenc\
-    er.SequenceStopRequest\x1a\x1e.mizer.sequencer.EmptyResponse\x12R\n\x10U\
-    pdateCueTrigger\x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.mizer.se\
-    quencer.Sequences\x12Z\n\x14UpdateCueTriggerTime\x12&.mizer.sequencer.Cu\
-    eTriggerTimeRequest\x1a\x1a.mizer.sequencer.Sequences\x12d\n\x19UpdateCu\
-    eEffectOffsetTime\x12+.mizer.sequencer.CueEffectOffsetTimeRequest\x1a\
-    \x1a.mizer.sequencer.Sequences\x12L\n\rUpdateCueName\x12\x1f.mizer.seque\
-    ncer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\x12N\n\x0eUpdateCu\
-    eValue\x12\x20.mizer.sequencer.CueValueRequest\x1a\x1a.mizer.sequencer.S\
-    equences\x12R\n\x11UpdateCueFadeTime\x12!.mizer.sequencer.CueTimingReque\
-    st\x1a\x1a.mizer.sequencer.Sequences\x12S\n\x12UpdateCueDelayTime\x12!.m\
-    izer.sequencer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12b\n\
-    \x18UpdateSequenceWrapAround\x12*.mizer.sequencer.SequenceWrapAroundRequ\
-    est\x1a\x1a.mizer.sequencer.Sequences\x12h\n\x1bUpdateSequenceStopOnLast\
-    Cue\x12-.mizer.sequencer.SequenceStopOnLastCueRequest\x1a\x1a.mizer.sequ\
-    encer.Sequences\x12Q\n\x12UpdateSequenceName\x12\x1f.mizer.sequencer.Cue\
-    NameRequest\x1a\x1a.mizer.sequencer.Sequencesb\x06proto3\
+    encer.CueTimeR\x02tob\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -4822,10 +4489,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(28);
-            messages.push(GetSequencesRequest::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(25);
             messages.push(GetSequenceRequest::generated_message_descriptor_data());
-            messages.push(AddSequenceRequest::generated_message_descriptor_data());
             messages.push(DeleteSequenceRequest::generated_message_descriptor_data());
             messages.push(SequenceGoRequest::generated_message_descriptor_data());
             messages.push(SequenceStopRequest::generated_message_descriptor_data());
@@ -4838,7 +4503,6 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(SequenceWrapAroundRequest::generated_message_descriptor_data());
             messages.push(SequenceStopOnLastCueRequest::generated_message_descriptor_data());
             messages.push(SequenceNameRequest::generated_message_descriptor_data());
-            messages.push(EmptyResponse::generated_message_descriptor_data());
             messages.push(Sequences::generated_message_descriptor_data());
             messages.push(Sequence::generated_message_descriptor_data());
             messages.push(Cue::generated_message_descriptor_data());

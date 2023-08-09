@@ -5984,15 +5984,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     XER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\
     \x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\
     \x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\n\x05FRO\
-    ST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\xb6\x03\
-    \n\x0bFixturesApi\x12K\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixtures\
-    Request\x1a\x18.mizer.fixtures.Fixtures\x12i\n\x15GetFixtureDefinitions\
-    \x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.F\
-    ixtureDefinitions\x12K\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixtures\
-    Request\x1a\x18.mizer.fixtures.Fixtures\x12Q\n\x0eDeleteFixtures\x12%.mi\
-    zer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\x12O\
-    \n\rUpdateFixture\x12$.mizer.fixtures.UpdateFixtureRequest\x1a\x18.mizer\
-    .fixtures.Fixturesb\x06proto3\
+    ST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2Z\n\x0bF\
+    ixturesApi\x12K\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRequest\
+    \x1a\x18.mizer.fixtures.Fixturesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

@@ -2,18 +2,6 @@ syntax = "proto3";
 
 package mizer.media;
 
-service MediaApi {
-  rpc CreateTag (CreateMediaTag) returns (MediaTag);
-  rpc GetTagsWithMedia (GetMediaTags) returns (GroupedMediaFiles);
-  rpc GetMedia (GetMediaRequest) returns (MediaFiles);
-}
-
-message GetMediaTags {
-}
-
-message GetMediaRequest {
-}
-
 message CreateMediaTag {
   string name = 1;
 }

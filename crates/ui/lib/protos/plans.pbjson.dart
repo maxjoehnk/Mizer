@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use plansRequestDescriptor instead')
-const PlansRequest$json = const {
-  '1': 'PlansRequest',
-};
-
-/// Descriptor for `PlansRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List plansRequestDescriptor = $convert.base64Decode('CgxQbGFuc1JlcXVlc3Q=');
 @$core.Deprecated('Use addPlanRequestDescriptor instead')
 const AddPlanRequest$json = const {
   '1': 'AddPlanRequest',

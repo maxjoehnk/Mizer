@@ -5,18 +5,6 @@ package mizer.effects;
 import "fixtures.proto";
 import "sequencer.proto";
 
-service EffectsApi {
-  rpc GetEffects (GetEffectsRequest) returns (Effects) {}
-  rpc AddEffect (AddEffectRequest) returns (Effect) {}
-  rpc AddEffectChannel (AddEffectChannelRequest) returns (Effect) {}
-  rpc DeleteEffectChannel (DeleteEffectChannelRequest) returns (Effect) {}
-  rpc UpdateEffectStep (UpdateEffectStepRequest) returns (Effect) {}
-  rpc AddEffectStep (AddEffectStepRequest) returns (Effect) {}
-  rpc DeleteEffectStep (DeleteEffectStepRequest) returns (Effect) {}
-}
-
-message GetEffectsRequest {
-}
 message AddEffectRequest {
   string name = 1;
 }

@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.ProjectRequest)
-pub struct ProjectRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.ProjectRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ProjectRequest {
-    fn default() -> &'a ProjectRequest {
-        <ProjectRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ProjectRequest {
-    pub fn new() -> ProjectRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProjectRequest>(
-            "ProjectRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ProjectRequest {
-    const NAME: &'static str = "ProjectRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ProjectRequest {
-        ProjectRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ProjectRequest {
-        static instance: ProjectRequest = ProjectRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ProjectRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProjectRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ProjectRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ProjectRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.LoadProjectRequest)
 pub struct LoadProjectRequest {
     // message fields
@@ -373,109 +270,6 @@ impl ::protobuf::reflect::ProtobufValue for SaveProjectAsRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.ProjectResponse)
-pub struct ProjectResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.ProjectResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ProjectResponse {
-    fn default() -> &'a ProjectResponse {
-        <ProjectResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ProjectResponse {
-    pub fn new() -> ProjectResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProjectResponse>(
-            "ProjectResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ProjectResponse {
-    const NAME: &'static str = "ProjectResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ProjectResponse {
-        ProjectResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ProjectResponse {
-        static instance: ProjectResponse = ProjectResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ProjectResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ProjectResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ProjectResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ProjectResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.ClientAnnouncement)
 pub struct ClientAnnouncement {
     // message fields
@@ -594,109 +388,6 @@ impl ::std::fmt::Display for ClientAnnouncement {
 }
 
 impl ::protobuf::reflect::ProtobufValue for ClientAnnouncement {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.SessionRequest)
-pub struct SessionRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.SessionRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a SessionRequest {
-    fn default() -> &'a SessionRequest {
-        <SessionRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl SessionRequest {
-    pub fn new() -> SessionRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SessionRequest>(
-            "SessionRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for SessionRequest {
-    const NAME: &'static str = "SessionRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> SessionRequest {
-        SessionRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static SessionRequest {
-        static instance: SessionRequest = SessionRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for SessionRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("SessionRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for SessionRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for SessionRequest {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -1177,109 +868,6 @@ impl ::protobuf::reflect::ProtobufValue for DeviceClock {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.LoadHistoryRequest)
-pub struct LoadHistoryRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.LoadHistoryRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a LoadHistoryRequest {
-    fn default() -> &'a LoadHistoryRequest {
-        <LoadHistoryRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl LoadHistoryRequest {
-    pub fn new() -> LoadHistoryRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<LoadHistoryRequest>(
-            "LoadHistoryRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for LoadHistoryRequest {
-    const NAME: &'static str = "LoadHistoryRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> LoadHistoryRequest {
-        LoadHistoryRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static LoadHistoryRequest {
-        static instance: LoadHistoryRequest = LoadHistoryRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for LoadHistoryRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("LoadHistoryRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for LoadHistoryRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for LoadHistoryRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.History)
 pub struct History {
     // message fields
@@ -1561,32 +1149,22 @@ impl ::protobuf::reflect::ProtobufValue for HistoryItem {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12LoadPro\
-    jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"*\n\x14SavePr\
-    ojectAsRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0f\
-    ProjectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"\x92\x01\n\x07Session\x12\
-    \x20\n\tfile_path\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\
-    \x07devices\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\
-    \x12'\n\x0fproject_history\x18\x03\x20\x03(\tR\x0eprojectHistoryB\x0c\n\
-    \n_file_path\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\
-    \x03\x20\x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\
-    \x04\x20\x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\
-    \x01\x20\x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\
-    \x05drift\"\x14\n\x12LoadHistoryRequest\"M\n\x07History\x12(\n\x05items\
-    \x18\x01\x20\x03(\x0b2\x12.mizer.HistoryItemR\x05items\x12\x18\n\x07poin\
-    ter\x18\x02\x20\x01(\x04R\x07pointer\"A\n\x0bHistoryItem\x12\x14\n\x05la\
-    bel\x18\x01\x20\x01(\tR\x05label\x12\x1c\n\ttimestamp\x18\x02\x20\x01(\
-    \x04R\ttimestamp2\xb8\x03\n\nSessionApi\x123\n\nGetSession\x12\x15.mizer\
-    .SessionRequest\x1a\x0e.mizer.Session\x128\n\x0bJoinSession\x12\x19.mize\
-    r.ClientAnnouncement\x1a\x0e.mizer.Session\x12;\n\nNewProject\x12\x15.mi\
-    zer.ProjectRequest\x1a\x16.mizer.ProjectResponse\x12@\n\x0bLoadProject\
-    \x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\x12<\n\
-    \x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRespon\
-    se\x12D\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\x16.mize\
-    r.ProjectResponse\x128\n\x0bLoadHistory\x12\x19.mizer.LoadHistoryRequest\
-    \x1a\x0e.mizer.Historyb\x06proto3\
+    \n\rsession.proto\x12\x05mizer\"(\n\x12LoadProjectRequest\x12\x12\n\x04p\
+    ath\x18\x01\x20\x01(\tR\x04path\"*\n\x14SaveProjectAsRequest\x12\x12\n\
+    \x04path\x18\x01\x20\x01(\tR\x04path\"(\n\x12ClientAnnouncement\x12\x12\
+    \n\x04name\x18\x01\x20\x01(\tR\x04name\"\x92\x01\n\x07Session\x12\x20\n\
+    \tfile_path\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\x07dev\
+    ices\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\x12'\n\
+    \x0fproject_history\x18\x03\x20\x03(\tR\x0eprojectHistoryB\x0c\n\n_file_\
+    path\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\
+    \x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\
+    \x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\
+    \x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift\"\
+    M\n\x07History\x12(\n\x05items\x18\x01\x20\x03(\x0b2\x12.mizer.HistoryIt\
+    emR\x05items\x12\x18\n\x07pointer\x18\x02\x20\x01(\x04R\x07pointer\"A\n\
+    \x0bHistoryItem\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05label\x12\x1c\
+    \n\ttimestamp\x18\x02\x20\x01(\x04R\ttimestampb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1604,17 +1182,13 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(12);
-            messages.push(ProjectRequest::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(8);
             messages.push(LoadProjectRequest::generated_message_descriptor_data());
             messages.push(SaveProjectAsRequest::generated_message_descriptor_data());
-            messages.push(ProjectResponse::generated_message_descriptor_data());
             messages.push(ClientAnnouncement::generated_message_descriptor_data());
-            messages.push(SessionRequest::generated_message_descriptor_data());
             messages.push(Session::generated_message_descriptor_data());
             messages.push(SessionDevice::generated_message_descriptor_data());
             messages.push(DeviceClock::generated_message_descriptor_data());
-            messages.push(LoadHistoryRequest::generated_message_descriptor_data());
             messages.push(History::generated_message_descriptor_data());
             messages.push(HistoryItem::generated_message_descriptor_data());
             let mut enums = ::std::vec::Vec::with_capacity(0);

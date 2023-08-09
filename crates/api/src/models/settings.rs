@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.settings.RequestSettings)
-pub struct RequestSettings {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.settings.RequestSettings.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a RequestSettings {
-    fn default() -> &'a RequestSettings {
-        <RequestSettings as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl RequestSettings {
-    pub fn new() -> RequestSettings {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RequestSettings>(
-            "RequestSettings",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for RequestSettings {
-    const NAME: &'static str = "RequestSettings";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> RequestSettings {
-        RequestSettings::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static RequestSettings {
-        static instance: RequestSettings = RequestSettings {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for RequestSettings {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("RequestSettings").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for RequestSettings {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for RequestSettings {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.settings.Settings)
 pub struct Settings {
     // message fields
@@ -1012,46 +909,42 @@ impl ::protobuf::reflect::ProtobufValue for General {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"\
-    \xa4\x01\n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer\
-    .settings.HotkeysR\x07hotkeys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.\
-    mizer.settings.PathSettingsR\x05paths\x121\n\x07general\x18\x03\x20\x01(\
-    \x0b2\x17.mizer.settings.GeneralR\x07general\"\x82\x02\n\x0cPathSettings\
-    \x120\n\x14midi_device_profiles\x18\x01\x20\x01(\tR\x12midiDeviceProfile\
-    s\x125\n\x14open_fixture_library\x18\x02\x20\x01(\tH\0R\x12openFixtureLi\
-    brary\x88\x01\x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcpl\
-    us\x88\x01\x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\
-    \x01\x01\x12\x19\n\x05mizer\x18\x05\x20\x01(\tH\x03R\x05mizer\x88\x01\
-    \x01B\x17\n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdtfB\
-    \x08\n\x06_mizer\"\xdd\x07\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03\
-    (\x0b2#.mizer.settings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07layouts\
-    \x18\x02\x20\x03(\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07layouts\
-    \x12G\n\nprogrammer\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.Progra\
-    mmerEntryR\nprogrammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.set\
-    tings.Hotkeys.NodesEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\
-    \".mizer.settings.Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\
-    \x20\x03(\x0b2&.mizer.settings.Hotkeys.SequencerEntryR\tsequencer\x125\n\
-    \x04plan\x18\x07\x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04pla\
-    n\x12>\n\x07effects\x18\x08\x20\x03(\x0b2$.mizer.settings.Hotkeys.Effect\
-    sEntryR\x07effects\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\
-    \x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\
-    \x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
-    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fPro\
-    grammerEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05va\
-    lue\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\
-    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
-    R\x05value:\x028\x01\x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01\
-    (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
-    \x1a<\n\x0eSequencerEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
-    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a7\n\tPlanE\
-    ntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cEffectsEntry\x12\x10\n\x03\
-    key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\
-    \x05value:\x028\x01\"%\n\x07General\x12\x1a\n\x08language\x18\x01\x20\
-    \x01(\tR\x08language2\x9c\x01\n\x0bSettingsApi\x12I\n\x0cLoadSettings\
-    \x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Settings\
-    \x12B\n\x0cSaveSettings\x12\x18.mizer.settings.Settings\x1a\x18.mizer.se\
-    ttings.Settingsb\x06proto3\
+    \n\x0esettings.proto\x12\x0emizer.settings\"\xa4\x01\n\x08Settings\x121\
+    \n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer.settings.HotkeysR\x07hotke\
+    ys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.mizer.settings.PathSettings\
+    R\x05paths\x121\n\x07general\x18\x03\x20\x01(\x0b2\x17.mizer.settings.Ge\
+    neralR\x07general\"\x82\x02\n\x0cPathSettings\x120\n\x14midi_device_prof\
+    iles\x18\x01\x20\x01(\tR\x12midiDeviceProfiles\x125\n\x14open_fixture_li\
+    brary\x18\x02\x20\x01(\tH\0R\x12openFixtureLibrary\x88\x01\x01\x12\x1d\n\
+    \x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcplus\x88\x01\x01\x12\x17\n\
+    \x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\x01\x01\x12\x19\n\x05mizer\
+    \x18\x05\x20\x01(\tH\x03R\x05mizer\x88\x01\x01B\x17\n\x15_open_fixture_l\
+    ibraryB\n\n\x08_qlcplusB\x07\n\x05_gdtfB\x08\n\x06_mizer\"\xdd\x07\n\x07\
+    Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.settings.Hotkeys.G\
+    lobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03(\x0b2$.mizer.set\
+    tings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogrammer\x18\x03\x20\
+    \x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogrammer\x128\n\
+    \x05nodes\x18\x04\x20\x03(\x0b2\".mizer.settings.Hotkeys.NodesEntryR\x05\
+    nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings.Hotkeys.Pat\
+    chEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.mizer.setting\
+    s.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\x20\x03(\x0b\
+    2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x12>\n\x07effects\x18\x08\
+    \x20\x03(\x0b2$.mizer.settings.Hotkeys.EffectsEntryR\x07effects\x1a9\n\
+    \x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\
+    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03k\
+    ey\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05\
+    value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
+    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\
+    \nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05va\
+    lue\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEntry\x12\
+    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\tR\x05value:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\x18\x01\
+    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
+    8\x01\x1a:\n\x0cEffectsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"%\n\x07Gener\
+    al\x12\x1a\n\x08language\x18\x01\x20\x01(\tR\x08languageb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1069,8 +962,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(5);
-            messages.push(RequestSettings::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(4);
             messages.push(Settings::generated_message_descriptor_data());
             messages.push(PathSettings::generated_message_descriptor_data());
             messages.push(Hotkeys::generated_message_descriptor_data());

@@ -46,3 +46,6 @@ i18n:
 
 icons:
 	flutter pub run flutter_launcher_icons
+
+companion:
+	flutter run -t lib/mobile/main.dart

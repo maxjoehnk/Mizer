@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/api",
+    "crates/api/remote",
     "crates/components/connections",
     "crates/components/connections/devices",
     "crates/components/connections/devices/g13",
@@ -126,6 +127,7 @@ mizer-fixture-definition-provider = { path = "crates/components/fixtures/mizer-d
 mizer-plan = { path = "crates/components/plan" }
 mizer-pipeline = { path = "crates/runtime/pipeline" }
 mizer-api = { path = "crates/api" }
+mizer-remote-api = { path = "crates/api/remote" }
 mizer-session = { path = "crates/runtime/session" }
 mizer-connections = { path = "crates/components/connections" }
 mizer-devices = { path = "crates/components/connections/devices" }

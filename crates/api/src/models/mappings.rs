@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.mappings.MappingResult)
-pub struct MappingResult {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.mappings.MappingResult.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MappingResult {
-    fn default() -> &'a MappingResult {
-        <MappingResult as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MappingResult {
-    pub fn new() -> MappingResult {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MappingResult>(
-            "MappingResult",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MappingResult {
-    const NAME: &'static str = "MappingResult";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MappingResult {
-        MappingResult::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MappingResult {
-        static instance: MappingResult = MappingResult {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MappingResult {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MappingResult").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MappingResult {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MappingResult {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.mappings.MappingRequest)
 pub struct MappingRequest {
     // message oneof groups
@@ -1430,26 +1327,24 @@ impl ::protobuf::reflect::ProtobufValue for ProgrammerClearAction {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0emappings.proto\x12\x0emizer.mappings\x1a\x0bnodes.proto\"\x0f\n\rM\
-    appingResult\"\xf0\x03\n\x0eMappingRequest\x121\n\x04midi\x18\x01\x20\
-    \x01(\x0b2\x1b.mizer.mappings.MidiMappingH\0R\x04midi\x12F\n\x0csequence\
-    r_go\x18\n\x20\x01(\x0b2!.mizer.mappings.SequencerGoActionH\x01R\x0bsequ\
-    encerGo\x12L\n\x0esequencer_stop\x18\x0b\x20\x01(\x0b2#.mizer.mappings.S\
-    equencerStopActionH\x01R\rsequencerStop\x12L\n\x0elayout_control\x18\x0c\
-    \x20\x01(\x0b2#.mizer.mappings.LayoutControlActionH\x01R\rlayoutControl\
-    \x12^\n\x14programmer_highlight\x18\r\x20\x01(\x0b2).mizer.mappings.Prog\
-    rammerHighlightActionH\x01R\x13programmerHighlight\x12R\n\x10programmer_\
-    clear\x18\x0e\x20\x01(\x0b2%.mizer.mappings.ProgrammerClearActionH\x01R\
-    \x0fprogrammerClearB\t\n\x07bindingB\x08\n\x06action\"g\n\x0bMidiMapping\
-    \x123\n\x06config\x18\x01\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigR\
-    \x06config\x12#\n\rinput_mapping\x18\x02\x20\x01(\x08R\x0cinputMapping\"\
-    6\n\x11SequencerGoAction\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bs\
-    equencerId\"8\n\x13SequencerStopAction\x12!\n\x0csequencer_id\x18\x01\
-    \x20\x01(\rR\x0bsequencerId\"8\n\x13LayoutControlAction\x12!\n\x0ccontro\
-    l_node\x18\x01\x20\x01(\tR\x0bcontrolNode\"\x1b\n\x19ProgrammerHighlight\
-    Action\"\x17\n\x15ProgrammerClearAction2Z\n\x0bMappingsApi\x12K\n\nAddMa\
-    pping\x12\x1e.mizer.mappings.MappingRequest\x1a\x1d.mizer.mappings.Mappi\
-    ngResultb\x06proto3\
+    \n\x0emappings.proto\x12\x0emizer.mappings\x1a\x0bnodes.proto\"\xf0\x03\
+    \n\x0eMappingRequest\x121\n\x04midi\x18\x01\x20\x01(\x0b2\x1b.mizer.mapp\
+    ings.MidiMappingH\0R\x04midi\x12F\n\x0csequencer_go\x18\n\x20\x01(\x0b2!\
+    .mizer.mappings.SequencerGoActionH\x01R\x0bsequencerGo\x12L\n\x0esequenc\
+    er_stop\x18\x0b\x20\x01(\x0b2#.mizer.mappings.SequencerStopActionH\x01R\
+    \rsequencerStop\x12L\n\x0elayout_control\x18\x0c\x20\x01(\x0b2#.mizer.ma\
+    ppings.LayoutControlActionH\x01R\rlayoutControl\x12^\n\x14programmer_hig\
+    hlight\x18\r\x20\x01(\x0b2).mizer.mappings.ProgrammerHighlightActionH\
+    \x01R\x13programmerHighlight\x12R\n\x10programmer_clear\x18\x0e\x20\x01(\
+    \x0b2%.mizer.mappings.ProgrammerClearActionH\x01R\x0fprogrammerClearB\t\
+    \n\x07bindingB\x08\n\x06action\"g\n\x0bMidiMapping\x123\n\x06config\x18\
+    \x01\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigR\x06config\x12#\n\rinp\
+    ut_mapping\x18\x02\x20\x01(\x08R\x0cinputMapping\"6\n\x11SequencerGoActi\
+    on\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bsequencerId\"8\n\x13Seq\
+    uencerStopAction\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bsequencer\
+    Id\"8\n\x13LayoutControlAction\x12!\n\x0ccontrol_node\x18\x01\x20\x01(\t\
+    R\x0bcontrolNode\"\x1b\n\x19ProgrammerHighlightAction\"\x17\n\x15Program\
+    merClearActionb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1468,8 +1363,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::nodes::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(8);
-            messages.push(MappingResult::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(7);
             messages.push(MappingRequest::generated_message_descriptor_data());
             messages.push(MidiMapping::generated_message_descriptor_data());
             messages.push(SequencerGoAction::generated_message_descriptor_data());

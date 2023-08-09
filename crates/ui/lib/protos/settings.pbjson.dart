@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use requestSettingsDescriptor instead')
-const RequestSettings$json = const {
-  '1': 'RequestSettings',
-};
-
-/// Descriptor for `RequestSettings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestSettingsDescriptor = $convert.base64Decode('Cg9SZXF1ZXN0U2V0dGluZ3M=');
 @$core.Deprecated('Use settingsDescriptor instead')
 const Settings$json = const {
   '1': 'Settings',

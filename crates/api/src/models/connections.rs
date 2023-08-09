@@ -6989,19 +6989,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     onfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\x01(\x0b2\x14.mizer.\
     DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\x20\x01(\x0b2\x15.mizer.\
     MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\x03\x20\x01(\x0b2\x14.mizer\
-    .OscConnectionH\0R\x03oscB\x08\n\x06config2\xf9\x04\n\x0eConnectionsApi\
-    \x12B\n\x0eGetConnections\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mi\
-    zer.Connections\x12A\n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\
-    \x19.mizer.MonitorDmxResponse\x12D\n\x0bMonitorMidi\x12\x19.mizer.Monito\
-    rMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\x12A\n\nMonitorOsc\x12\
-    \x18.mizer.MonitorOscRequest\x1a\x19.mizer.MonitorOscResponse\x12>\n\x13\
-    AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\x12.mizer.Connections\
-    \x12:\n\x11AddSacnConnection\x12\x11.mizer.SacnConfig\x1a\x12.mizer.Conn\
-    ections\x12S\n\x15GetMidiDeviceProfiles\x12\x1f.mizer.GetDeviceProfilesR\
-    equest\x1a\x19.mizer.MidiDeviceProfiles\x129\n\x10DeleteConnection\x12\
-    \x11.mizer.Connection\x1a\x12.mizer.Connections\x12K\n\x13ConfigureConne\
-    ction\x12!.mizer.ConfigureConnectionRequest\x1a\x11.mizer.Connectionb\
-    \x06proto3\
+    .OscConnectionH\0R\x03oscB\x08\n\x06configb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

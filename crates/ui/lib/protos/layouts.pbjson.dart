@@ -8,20 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use layoutResponseDescriptor instead')
-const LayoutResponse$json = const {
-  '1': 'LayoutResponse',
-};
-
-/// Descriptor for `LayoutResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List layoutResponseDescriptor = $convert.base64Decode('Cg5MYXlvdXRSZXNwb25zZQ==');
-@$core.Deprecated('Use getLayoutsRequestDescriptor instead')
-const GetLayoutsRequest$json = const {
-  '1': 'GetLayoutsRequest',
-};
-
-/// Descriptor for `GetLayoutsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getLayoutsRequestDescriptor = $convert.base64Decode('ChFHZXRMYXlvdXRzUmVxdWVzdA==');
 @$core.Deprecated('Use addLayoutRequestDescriptor instead')
 const AddLayoutRequest$json = const {
   '1': 'AddLayoutRequest',

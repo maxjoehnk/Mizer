@@ -4,10 +4,6 @@ package mizer.fixtures;
 
 service FixturesApi {
   rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
-  rpc GetFixtureDefinitions (GetFixtureDefinitionsRequest) returns (FixtureDefinitions) {}
-  rpc AddFixtures (AddFixturesRequest) returns (Fixtures) {}
-  rpc DeleteFixtures (DeleteFixturesRequest) returns (Fixtures) {}
-  rpc UpdateFixture (UpdateFixtureRequest) returns (Fixtures) {}
 }
 
 message AddFixturesRequest {

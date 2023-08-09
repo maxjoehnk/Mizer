@@ -2,15 +2,6 @@ syntax = "proto3";
 
 package mizer;
 
-service TransportApi {
-  rpc SubscribeTransport (SubscribeTransportRequest) returns (stream Transport) {}
-  rpc SetState (SetTransportRequest) returns (Transport) {}
-  rpc SetBpm (SetBpmRequest) returns (Transport) {}
-}
-
-message SubscribeTransportRequest {
-}
-
 message Transport {
   TransportState state = 1;
   double speed = 2;

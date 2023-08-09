@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.SubscribeTransportRequest)
-pub struct SubscribeTransportRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.SubscribeTransportRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a SubscribeTransportRequest {
-    fn default() -> &'a SubscribeTransportRequest {
-        <SubscribeTransportRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl SubscribeTransportRequest {
-    pub fn new() -> SubscribeTransportRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SubscribeTransportRequest>(
-            "SubscribeTransportRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for SubscribeTransportRequest {
-    const NAME: &'static str = "SubscribeTransportRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> SubscribeTransportRequest {
-        SubscribeTransportRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static SubscribeTransportRequest {
-        static instance: SubscribeTransportRequest = SubscribeTransportRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for SubscribeTransportRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("SubscribeTransportRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for SubscribeTransportRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for SubscribeTransportRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.Transport)
 pub struct Transport {
     // message fields
@@ -766,21 +663,17 @@ impl TransportState {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0ftransport.proto\x12\x05mizer\"\x1b\n\x19SubscribeTransportRequest\
-    \"{\n\tTransport\x12+\n\x05state\x18\x01\x20\x01(\x0e2\x15.mizer.Transpo\
-    rtStateR\x05state\x12\x14\n\x05speed\x18\x02\x20\x01(\x01R\x05speed\x12+\
-    \n\x08timecode\x18\x03\x20\x01(\x0b2\x0f.mizer.TimecodeR\x08timecode\"l\
-    \n\x08Timecode\x12\x16\n\x06frames\x18\x01\x20\x01(\x04R\x06frames\x12\
-    \x18\n\x07seconds\x18\x02\x20\x01(\x04R\x07seconds\x12\x18\n\x07minutes\
-    \x18\x03\x20\x01(\x04R\x07minutes\x12\x14\n\x05hours\x18\x04\x20\x01(\
-    \x04R\x05hours\"B\n\x13SetTransportRequest\x12+\n\x05state\x18\x01\x20\
-    \x01(\x0e2\x15.mizer.TransportStateR\x05state\"!\n\rSetBpmRequest\x12\
-    \x10\n\x03bpm\x18\x01\x20\x01(\x01R\x03bpm*6\n\x0eTransportState\x12\x0b\
-    \n\x07STOPPED\x10\0\x12\n\n\x06PAUSED\x10\x01\x12\x0b\n\x07PLAYING\x10\
-    \x022\xc4\x01\n\x0cTransportApi\x12H\n\x12SubscribeTransport\x12\x20.miz\
-    er.SubscribeTransportRequest\x1a\x10.mizer.Transport\x128\n\x08SetState\
-    \x12\x1a.mizer.SetTransportRequest\x1a\x10.mizer.Transport\x120\n\x06Set\
-    Bpm\x12\x14.mizer.SetBpmRequest\x1a\x10.mizer.Transportb\x06proto3\
+    \n\x0ftransport.proto\x12\x05mizer\"{\n\tTransport\x12+\n\x05state\x18\
+    \x01\x20\x01(\x0e2\x15.mizer.TransportStateR\x05state\x12\x14\n\x05speed\
+    \x18\x02\x20\x01(\x01R\x05speed\x12+\n\x08timecode\x18\x03\x20\x01(\x0b2\
+    \x0f.mizer.TimecodeR\x08timecode\"l\n\x08Timecode\x12\x16\n\x06frames\
+    \x18\x01\x20\x01(\x04R\x06frames\x12\x18\n\x07seconds\x18\x02\x20\x01(\
+    \x04R\x07seconds\x12\x18\n\x07minutes\x18\x03\x20\x01(\x04R\x07minutes\
+    \x12\x14\n\x05hours\x18\x04\x20\x01(\x04R\x05hours\"B\n\x13SetTransportR\
+    equest\x12+\n\x05state\x18\x01\x20\x01(\x0e2\x15.mizer.TransportStateR\
+    \x05state\"!\n\rSetBpmRequest\x12\x10\n\x03bpm\x18\x01\x20\x01(\x01R\x03\
+    bpm*6\n\x0eTransportState\x12\x0b\n\x07STOPPED\x10\0\x12\n\n\x06PAUSED\
+    \x10\x01\x12\x0b\n\x07PLAYING\x10\x02b\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -798,8 +691,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(5);
-            messages.push(SubscribeTransportRequest::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(4);
             messages.push(Transport::generated_message_descriptor_data());
             messages.push(Timecode::generated_message_descriptor_data());
             messages.push(SetTransportRequest::generated_message_descriptor_data());

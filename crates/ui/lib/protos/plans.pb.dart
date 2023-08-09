@@ -15,35 +15,6 @@ import 'plans.pbenum.dart';
 
 export 'plans.pbenum.dart';
 
-class PlansRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlansRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  PlansRequest._() : super();
-  factory PlansRequest() => create();
-  factory PlansRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PlansRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  PlansRequest clone() => PlansRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PlansRequest copyWith(void Function(PlansRequest) updates) => super.copyWith((message) => updates(message as PlansRequest)) as PlansRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static PlansRequest create() => PlansRequest._();
-  PlansRequest createEmptyInstance() => create();
-  static $pb.PbList<PlansRequest> createRepeated() => $pb.PbList<PlansRequest>();
-  @$core.pragma('dart2js:noInline')
-  static PlansRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PlansRequest>(create);
-  static PlansRequest? _defaultInstance;
-}
-
 class AddPlanRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddPlanRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')

@@ -20,13 +20,6 @@ const TransportState$json = const {
 
 /// Descriptor for `TransportState`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List transportStateDescriptor = $convert.base64Decode('Cg5UcmFuc3BvcnRTdGF0ZRILCgdTVE9QUEVEEAASCgoGUEFVU0VEEAESCwoHUExBWUlORxAC');
-@$core.Deprecated('Use subscribeTransportRequestDescriptor instead')
-const SubscribeTransportRequest$json = const {
-  '1': 'SubscribeTransportRequest',
-};
-
-/// Descriptor for `SubscribeTransportRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List subscribeTransportRequestDescriptor = $convert.base64Decode('ChlTdWJzY3JpYmVUcmFuc3BvcnRSZXF1ZXN0');
 @$core.Deprecated('Use transportDescriptor instead')
 const Transport$json = const {
   '1': 'Transport',

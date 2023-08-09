@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.effects.GetEffectsRequest)
-pub struct GetEffectsRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.effects.GetEffectsRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a GetEffectsRequest {
-    fn default() -> &'a GetEffectsRequest {
-        <GetEffectsRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl GetEffectsRequest {
-    pub fn new() -> GetEffectsRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GetEffectsRequest>(
-            "GetEffectsRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for GetEffectsRequest {
-    const NAME: &'static str = "GetEffectsRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> GetEffectsRequest {
-        GetEffectsRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static GetEffectsRequest {
-        static instance: GetEffectsRequest = GetEffectsRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for GetEffectsRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("GetEffectsRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for GetEffectsRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for GetEffectsRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.effects.AddEffectRequest)
 pub struct AddEffectRequest {
     // message fields
@@ -2237,49 +2134,39 @@ impl ::protobuf::reflect::ProtobufValue for CubicControlPoint {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\reffects.proto\x12\rmizer.effects\x1a\x0efixtures.proto\x1a\x0fsequen\
-    cer.proto\"\x13\n\x11GetEffectsRequest\"&\n\x10AddEffectRequest\x12\x12\
-    \n\x04name\x18\x01\x20\x01(\tR\x04name\"\xa9\x01\n\x17UpdateEffectStepRe\
-    quest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12#\n\rchann\
-    el_index\x18\x02\x20\x01(\rR\x0cchannelIndex\x12\x1d\n\nstep_index\x18\
-    \x03\x20\x01(\rR\tstepIndex\x12-\n\x04step\x18\x04\x20\x01(\x0b2\x19.miz\
-    er.effects.EffectStepR\x04step\"u\n\x17AddEffectChannelRequest\x12\x1b\n\
-    \teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12=\n\x07control\x18\x02\
-    \x20\x01(\x0b2#.mizer.fixtures.FixtureFaderControlR\x07control\"^\n\x1aD\
-    eleteEffectChannelRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08ef\
-    fectId\x12#\n\rchannel_index\x18\x02\x20\x01(\rR\x0cchannelIndex\"\x87\
-    \x01\n\x14AddEffectStepRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\
-    \x08effectId\x12#\n\rchannel_index\x18\x02\x20\x01(\rR\x0cchannelIndex\
-    \x12-\n\x04step\x18\x03\x20\x01(\x0b2\x19.mizer.effects.EffectStepR\x04s\
-    tep\"z\n\x17DeleteEffectStepRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01\
-    (\rR\x08effectId\x12#\n\rchannel_index\x18\x02\x20\x01(\rR\x0cchannelInd\
-    ex\x12\x1d\n\nstep_index\x18\x03\x20\x01(\rR\tstepIndex\":\n\x07Effects\
-    \x12/\n\x07effects\x18\x01\x20\x03(\x0b2\x15.mizer.effects.EffectR\x07ef\
-    fects\"f\n\x06Effect\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
-    \x04name\x18\x02\x20\x01(\tR\x04name\x128\n\x08channels\x18\x03\x20\x03(\
-    \x0b2\x1c.mizer.effects.EffectChannelR\x08channels\"z\n\rEffectChannel\
-    \x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureContr\
-    olR\x07control\x12/\n\x05steps\x18\x02\x20\x03(\x0b2\x19.mizer.effects.E\
-    ffectStepR\x05steps\"\x8b\x02\n\nEffectStep\x12/\n\x05value\x18\x01\x20\
-    \x01(\x0b2\x19.mizer.sequencer.CueValueR\x05value\x12;\n\x06simple\x18\
-    \x02\x20\x01(\x0b2!.mizer.effects.SimpleControlPointH\0R\x06simple\x12D\
-    \n\tquadratic\x18\x03\x20\x01(\x0b2$.mizer.effects.QuadraticControlPoint\
-    H\0R\tquadratic\x128\n\x05cubic\x18\x04\x20\x01(\x0b2\x20.mizer.effects.\
-    CubicControlPointH\0R\x05cubicB\x0f\n\rcontrol_point\"\x14\n\x12SimpleCo\
-    ntrolPoint\";\n\x15QuadraticControlPoint\x12\x10\n\x03c0a\x18\x01\x20\
-    \x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11\
-    CubicControlPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\
-    \n\x03c0b\x18\x02\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\
-    \x01R\x03c1a\x12\x10\n\x03c1b\x18\x04\x20\x01(\x01R\x03c1b2\xb8\x04\n\nE\
-    ffectsApi\x12F\n\nGetEffects\x12\x20.mizer.effects.GetEffectsRequest\x1a\
-    \x16.mizer.effects.Effects\x12C\n\tAddEffect\x12\x1f.mizer.effects.AddEf\
-    fectRequest\x1a\x15.mizer.effects.Effect\x12Q\n\x10AddEffectChannel\x12&\
-    .mizer.effects.AddEffectChannelRequest\x1a\x15.mizer.effects.Effect\x12W\
-    \n\x13DeleteEffectChannel\x12).mizer.effects.DeleteEffectChannelRequest\
-    \x1a\x15.mizer.effects.Effect\x12Q\n\x10UpdateEffectStep\x12&.mizer.effe\
-    cts.UpdateEffectStepRequest\x1a\x15.mizer.effects.Effect\x12K\n\rAddEffe\
-    ctStep\x12#.mizer.effects.AddEffectStepRequest\x1a\x15.mizer.effects.Eff\
-    ect\x12Q\n\x10DeleteEffectStep\x12&.mizer.effects.DeleteEffectStepReques\
-    t\x1a\x15.mizer.effects.Effectb\x06proto3\
+    cer.proto\"&\n\x10AddEffectRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\"\xa9\x01\n\x17UpdateEffectStepRequest\x12\x1b\n\teffect_id\x18\
+    \x01\x20\x01(\rR\x08effectId\x12#\n\rchannel_index\x18\x02\x20\x01(\rR\
+    \x0cchannelIndex\x12\x1d\n\nstep_index\x18\x03\x20\x01(\rR\tstepIndex\
+    \x12-\n\x04step\x18\x04\x20\x01(\x0b2\x19.mizer.effects.EffectStepR\x04s\
+    tep\"u\n\x17AddEffectChannelRequest\x12\x1b\n\teffect_id\x18\x01\x20\x01\
+    (\rR\x08effectId\x12=\n\x07control\x18\x02\x20\x01(\x0b2#.mizer.fixtures\
+    .FixtureFaderControlR\x07control\"^\n\x1aDeleteEffectChannelRequest\x12\
+    \x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12#\n\rchannel_index\
+    \x18\x02\x20\x01(\rR\x0cchannelIndex\"\x87\x01\n\x14AddEffectStepRequest\
+    \x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12#\n\rchannel_in\
+    dex\x18\x02\x20\x01(\rR\x0cchannelIndex\x12-\n\x04step\x18\x03\x20\x01(\
+    \x0b2\x19.mizer.effects.EffectStepR\x04step\"z\n\x17DeleteEffectStepRequ\
+    est\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12#\n\rchannel\
+    _index\x18\x02\x20\x01(\rR\x0cchannelIndex\x12\x1d\n\nstep_index\x18\x03\
+    \x20\x01(\rR\tstepIndex\":\n\x07Effects\x12/\n\x07effects\x18\x01\x20\
+    \x03(\x0b2\x15.mizer.effects.EffectR\x07effects\"f\n\x06Effect\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x128\n\x08channels\x18\x03\x20\x03(\x0b2\x1c.mizer.effects.Effe\
+    ctChannelR\x08channels\"z\n\rEffectChannel\x128\n\x07control\x18\x01\x20\
+    \x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12/\n\x05steps\
+    \x18\x02\x20\x03(\x0b2\x19.mizer.effects.EffectStepR\x05steps\"\x8b\x02\
+    \n\nEffectStep\x12/\n\x05value\x18\x01\x20\x01(\x0b2\x19.mizer.sequencer\
+    .CueValueR\x05value\x12;\n\x06simple\x18\x02\x20\x01(\x0b2!.mizer.effect\
+    s.SimpleControlPointH\0R\x06simple\x12D\n\tquadratic\x18\x03\x20\x01(\
+    \x0b2$.mizer.effects.QuadraticControlPointH\0R\tquadratic\x128\n\x05cubi\
+    c\x18\x04\x20\x01(\x0b2\x20.mizer.effects.CubicControlPointH\0R\x05cubic\
+    B\x0f\n\rcontrol_point\"\x14\n\x12SimpleControlPoint\";\n\x15QuadraticCo\
+    ntrolPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0\
+    b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11CubicControlPoint\x12\x10\n\x03c0\
+    a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\x20\x01(\x01R\
+    \x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\
+    \x18\x04\x20\x01(\x01R\x03c1bb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -2299,8 +2186,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             let mut deps = ::std::vec::Vec::with_capacity(2);
             deps.push(super::fixtures::file_descriptor().clone());
             deps.push(super::sequencer::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(14);
-            messages.push(GetEffectsRequest::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(13);
             messages.push(AddEffectRequest::generated_message_descriptor_data());
             messages.push(UpdateEffectStepRequest::generated_message_descriptor_data());
             messages.push(AddEffectChannelRequest::generated_message_descriptor_data());

@@ -17,64 +17,6 @@ import 'layouts.pbenum.dart';
 
 export 'layouts.pbenum.dart';
 
-class LayoutResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  LayoutResponse._() : super();
-  factory LayoutResponse() => create();
-  factory LayoutResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LayoutResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  LayoutResponse clone() => LayoutResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  LayoutResponse copyWith(void Function(LayoutResponse) updates) => super.copyWith((message) => updates(message as LayoutResponse)) as LayoutResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static LayoutResponse create() => LayoutResponse._();
-  LayoutResponse createEmptyInstance() => create();
-  static $pb.PbList<LayoutResponse> createRepeated() => $pb.PbList<LayoutResponse>();
-  @$core.pragma('dart2js:noInline')
-  static LayoutResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutResponse>(create);
-  static LayoutResponse? _defaultInstance;
-}
-
-class GetLayoutsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetLayoutsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  GetLayoutsRequest._() : super();
-  factory GetLayoutsRequest() => create();
-  factory GetLayoutsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetLayoutsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetLayoutsRequest clone() => GetLayoutsRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetLayoutsRequest copyWith(void Function(GetLayoutsRequest) updates) => super.copyWith((message) => updates(message as GetLayoutsRequest)) as GetLayoutsRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GetLayoutsRequest create() => GetLayoutsRequest._();
-  GetLayoutsRequest createEmptyInstance() => create();
-  static $pb.PbList<GetLayoutsRequest> createRepeated() => $pb.PbList<GetLayoutsRequest>();
-  @$core.pragma('dart2js:noInline')
-  static GetLayoutsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLayoutsRequest>(create);
-  static GetLayoutsRequest? _defaultInstance;
-}
-
 class AddLayoutRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')

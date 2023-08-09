@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.timecode.NoContentResponse)
-pub struct NoContentResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.timecode.NoContentResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a NoContentResponse {
-    fn default() -> &'a NoContentResponse {
-        <NoContentResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl NoContentResponse {
-    pub fn new() -> NoContentResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NoContentResponse>(
-            "NoContentResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for NoContentResponse {
-    const NAME: &'static str = "NoContentResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> NoContentResponse {
-        NoContentResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static NoContentResponse {
-        static instance: NoContentResponse = NoContentResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for NoContentResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("NoContentResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for NoContentResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for NoContentResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.timecode.AddTimecodeRequest)
 pub struct AddTimecodeRequest {
     // message fields
@@ -1694,38 +1591,29 @@ pub mod timecode_control_values {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0etimecode.proto\x12\x0emizer.timecode\"\x13\n\x11NoContentResponse\
-    \"(\n\x12AddTimecodeRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
-    e\";\n\x15RenameTimecodeRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02i\
-    d\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"'\n\x15DeleteTimecodeRe\
-    quest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"/\n\x19AddTimecodeContr\
-    olRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x1cRenameTi\
-    mecodeControlRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
-    \x04name\x18\x02\x20\x01(\tR\x04name\".\n\x1cDeleteTimecodeControlReques\
-    t\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x83\x01\n\x0cAllTimecodes\
-    \x126\n\ttimecodes\x18\x01\x20\x03(\x0b2\x18.mizer.timecode.TimecodeR\tt\
-    imecodes\x12;\n\x08controls\x18\x02\x20\x03(\x0b2\x1f.mizer.timecode.Tim\
-    ecodeControlR\x08controls\"q\n\x08Timecode\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12A\n\x08c\
-    ontrols\x18\x03\x20\x03(\x0b2%.mizer.timecode.TimecodeControlValuesR\x08\
-    controls\"5\n\x0fTimecodeControl\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02\
-    id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\xe4\x01\n\x15Timecode\
-    ControlValues\x12\x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\x12@\
-    \n\x05steps\x18\x02\x20\x03(\x0b2*.mizer.timecode.TimecodeControlValues.\
-    StepR\x05steps\x1aj\n\x04Step\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\
-    \x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\
-    \x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\
-    \n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\
-    \x01R\x03c1b2\xd3\x04\n\x0bTimecodeApi\x12T\n\x0bAddTimecode\x12\".mizer\
-    .timecode.AddTimecodeRequest\x1a!.mizer.timecode.NoContentResponse\x12Z\
-    \n\x0eRenameTimecode\x12%.mizer.timecode.RenameTimecodeRequest\x1a!.mize\
-    r.timecode.NoContentResponse\x12Z\n\x0eDeleteTimecode\x12%.mizer.timecod\
-    e.DeleteTimecodeRequest\x1a!.mizer.timecode.NoContentResponse\x12b\n\x12\
-    AddTimecodeControl\x12).mizer.timecode.AddTimecodeControlRequest\x1a!.mi\
-    zer.timecode.NoContentResponse\x12h\n\x15RenameTimecodeControl\x12,.mize\
-    r.timecode.RenameTimecodeControlRequest\x1a!.mizer.timecode.NoContentRes\
-    ponse\x12h\n\x15DeleteTimecodeControl\x12,.mizer.timecode.DeleteTimecode\
-    ControlRequest\x1a!.mizer.timecode.NoContentResponseb\x06proto3\
+    \n\x0etimecode.proto\x12\x0emizer.timecode\"(\n\x12AddTimecodeRequest\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\";\n\x15RenameTimecodeReq\
+    uest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\
+    \x20\x01(\tR\x04name\"'\n\x15DeleteTimecodeRequest\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\rR\x02id\"/\n\x19AddTimecodeControlRequest\x12\x12\n\x04na\
+    me\x18\x01\x20\x01(\tR\x04name\"B\n\x1cRenameTimecodeControlRequest\x12\
+    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
+    (\tR\x04name\".\n\x1cDeleteTimecodeControlRequest\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\rR\x02id\"\x83\x01\n\x0cAllTimecodes\x126\n\ttimecodes\x18\
+    \x01\x20\x03(\x0b2\x18.mizer.timecode.TimecodeR\ttimecodes\x12;\n\x08con\
+    trols\x18\x02\x20\x03(\x0b2\x1f.mizer.timecode.TimecodeControlR\x08contr\
+    ols\"q\n\x08Timecode\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\x12A\n\x08controls\x18\x03\x20\x03(\
+    \x0b2%.mizer.timecode.TimecodeControlValuesR\x08controls\"5\n\x0fTimecod\
+    eControl\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\
+    \x02\x20\x01(\tR\x04name\"\xe4\x01\n\x15TimecodeControlValues\x12\x1d\n\
+    \ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\x12@\n\x05steps\x18\x02\x20\
+    \x03(\x0b2*.mizer.timecode.TimecodeControlValues.StepR\x05steps\x1aj\n\
+    \x04Step\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\
+    \x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\
+    \x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\
+    \x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1bb\x06\
+    proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -1743,8 +1631,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(12);
-            messages.push(NoContentResponse::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(11);
             messages.push(AddTimecodeRequest::generated_message_descriptor_data());
             messages.push(RenameTimecodeRequest::generated_message_descriptor_data());
             messages.push(DeleteTimecodeRequest::generated_message_descriptor_data());

@@ -325,109 +325,6 @@ impl ::protobuf::reflect::ProtobufValue for DuplicateNodeRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.NodesRequest)
-pub struct NodesRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.NodesRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a NodesRequest {
-    fn default() -> &'a NodesRequest {
-        <NodesRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl NodesRequest {
-    pub fn new() -> NodesRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<NodesRequest>(
-            "NodesRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for NodesRequest {
-    const NAME: &'static str = "NodesRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> NodesRequest {
-        NodesRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static NodesRequest {
-        static instance: NodesRequest = NodesRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for NodesRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("NodesRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for NodesRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for NodesRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.WriteControl)
 pub struct WriteControl {
     // message fields
@@ -582,109 +479,6 @@ impl ::std::fmt::Display for WriteControl {
 }
 
 impl ::protobuf::reflect::ProtobufValue for WriteControl {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.WriteResponse)
-pub struct WriteResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.WriteResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a WriteResponse {
-    fn default() -> &'a WriteResponse {
-        <WriteResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl WriteResponse {
-    pub fn new() -> WriteResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WriteResponse>(
-            "WriteResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for WriteResponse {
-    const NAME: &'static str = "WriteResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> WriteResponse {
-        WriteResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static WriteResponse {
-        static instance: WriteResponse = WriteResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for WriteResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("WriteResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for WriteResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for WriteResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -971,109 +765,6 @@ impl ::protobuf::reflect::ProtobufValue for MoveNodeRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.MoveNodeResponse)
-pub struct MoveNodeResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.MoveNodeResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a MoveNodeResponse {
-    fn default() -> &'a MoveNodeResponse {
-        <MoveNodeResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl MoveNodeResponse {
-    pub fn new() -> MoveNodeResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MoveNodeResponse>(
-            "MoveNodeResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for MoveNodeResponse {
-    const NAME: &'static str = "MoveNodeResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> MoveNodeResponse {
-        MoveNodeResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static MoveNodeResponse {
-        static instance: MoveNodeResponse = MoveNodeResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for MoveNodeResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("MoveNodeResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for MoveNodeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for MoveNodeResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.ShowNodeRequest)
 pub struct ShowNodeRequest {
     // message fields
@@ -1233,109 +924,6 @@ impl ::protobuf::reflect::ProtobufValue for ShowNodeRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.ShowNodeResponse)
-pub struct ShowNodeResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.ShowNodeResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a ShowNodeResponse {
-    fn default() -> &'a ShowNodeResponse {
-        <ShowNodeResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl ShowNodeResponse {
-    pub fn new() -> ShowNodeResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ShowNodeResponse>(
-            "ShowNodeResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for ShowNodeResponse {
-    const NAME: &'static str = "ShowNodeResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> ShowNodeResponse {
-        ShowNodeResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static ShowNodeResponse {
-        static instance: ShowNodeResponse = ShowNodeResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for ShowNodeResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("ShowNodeResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for ShowNodeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for ShowNodeResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.RenameNodeRequest)
 pub struct RenameNodeRequest {
     // message fields
@@ -1472,109 +1060,6 @@ impl ::std::fmt::Display for RenameNodeRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for RenameNodeRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.RenameNodeResponse)
-pub struct RenameNodeResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.RenameNodeResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a RenameNodeResponse {
-    fn default() -> &'a RenameNodeResponse {
-        <RenameNodeResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl RenameNodeResponse {
-    pub fn new() -> RenameNodeResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<RenameNodeResponse>(
-            "RenameNodeResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for RenameNodeResponse {
-    const NAME: &'static str = "RenameNodeResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> RenameNodeResponse {
-        RenameNodeResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static RenameNodeResponse {
-        static instance: RenameNodeResponse = RenameNodeResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for RenameNodeResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("RenameNodeResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for RenameNodeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for RenameNodeResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -1719,109 +1204,6 @@ impl ::protobuf::reflect::ProtobufValue for GroupNodesRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.GroupNodesResponse)
-pub struct GroupNodesResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.GroupNodesResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a GroupNodesResponse {
-    fn default() -> &'a GroupNodesResponse {
-        <GroupNodesResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl GroupNodesResponse {
-    pub fn new() -> GroupNodesResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GroupNodesResponse>(
-            "GroupNodesResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for GroupNodesResponse {
-    const NAME: &'static str = "GroupNodesResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> GroupNodesResponse {
-        GroupNodesResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static GroupNodesResponse {
-        static instance: GroupNodesResponse = GroupNodesResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for GroupNodesResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("GroupNodesResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for GroupNodesResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for GroupNodesResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.DeleteNodeRequest)
 pub struct DeleteNodeRequest {
     // message fields
@@ -1944,109 +1326,6 @@ impl ::protobuf::reflect::ProtobufValue for DeleteNodeRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.DeleteNodeResponse)
-pub struct DeleteNodeResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.DeleteNodeResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a DeleteNodeResponse {
-    fn default() -> &'a DeleteNodeResponse {
-        <DeleteNodeResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl DeleteNodeResponse {
-    pub fn new() -> DeleteNodeResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<DeleteNodeResponse>(
-            "DeleteNodeResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for DeleteNodeResponse {
-    const NAME: &'static str = "DeleteNodeResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> DeleteNodeResponse {
-        DeleteNodeResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static DeleteNodeResponse {
-        static instance: DeleteNodeResponse = DeleteNodeResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for DeleteNodeResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("DeleteNodeResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for DeleteNodeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for DeleteNodeResponse {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.HideNodeRequest)
 pub struct HideNodeRequest {
     // message fields
@@ -2165,109 +1444,6 @@ impl ::std::fmt::Display for HideNodeRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for HideNodeRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.nodes.HideNodeResponse)
-pub struct HideNodeResponse {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.nodes.HideNodeResponse.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a HideNodeResponse {
-    fn default() -> &'a HideNodeResponse {
-        <HideNodeResponse as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl HideNodeResponse {
-    pub fn new() -> HideNodeResponse {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<HideNodeResponse>(
-            "HideNodeResponse",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for HideNodeResponse {
-    const NAME: &'static str = "HideNodeResponse";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> HideNodeResponse {
-        HideNodeResponse::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static HideNodeResponse {
-        static instance: HideNodeResponse = HideNodeResponse {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for HideNodeResponse {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("HideNodeResponse").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for HideNodeResponse {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for HideNodeResponse {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -9130,117 +8306,114 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     es.NodePositionR\x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\
     \x06parent\x88\x01\x01B\t\n\x07_parent\"R\n\x14DuplicateNodeRequest\x12\
     \x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x1b\n\x06parent\x18\x02\
-    \x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x0e\n\x0cNodesRe\
-    quest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\
-    \x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05value\x18\
-    \x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"b\n\x18UpdateNodeSet\
-    tingRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x122\n\x07sett\
-    ing\x18\x02\x20\x01(\x0b2\x18.mizer.nodes.NodeSettingR\x07setting\"\\\n\
-    \x0fMoveNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x125\n\
-    \x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08posi\
-    tion\"\x12\n\x10MoveNodeResponse\"\x84\x01\n\x0fShowNodeRequest\x12\x12\
-    \n\x04path\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\x18\x02\x20\
-    \x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x1b\n\x06parent\
-    \x18\x03\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x12\n\
-    \x10ShowNodeResponse\"B\n\x11RenameNodeRequest\x12\x12\n\x04path\x18\x01\
-    \x20\x01(\tR\x04path\x12\x19\n\x08new_name\x18\x02\x20\x01(\tR\x07newNam\
-    e\"\x14\n\x12RenameNodeResponse\"Q\n\x11GroupNodesRequest\x12\x14\n\x05n\
-    odes\x18\x01\x20\x03(\tR\x05nodes\x12\x1b\n\x06parent\x18\x02\x20\x01(\t\
-    H\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x14\n\x12GroupNodesResponse\
-    \"'\n\x11DeleteNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\
-    \"\x14\n\x12DeleteNodeResponse\"%\n\x0fHideNodeRequest\x12\x12\n\x04path\
-    \x18\x01\x20\x01(\tR\x04path\"\x12\n\x10HideNodeResponse\"\x99\x01\n\x05\
-    Nodes\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nod\
-    es\x127\n\x08channels\x18\x02\x20\x03(\x0b2\x1b.mizer.nodes.NodeConnecti\
-    onR\x08channels\x12.\n\tall_nodes\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.\
-    NodeR\x08allNodes\"B\n\x0eAvailableNodes\x120\n\x05nodes\x18\x01\x20\x03\
-    (\x0b2\x1a.mizer.nodes.AvailableNodeR\x05nodes\"\x8a\x01\n\rAvailableNod\
-    e\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.Node.NodeTypeR\
-    \x04type\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x08categor\
-    y\x18\x03\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08category\"\xf4\
-    \x01\n\x0eNodeConnection\x12\x1f\n\x0btarget_node\x18\x01\x20\x01(\tR\nt\
-    argetNode\x122\n\x0btarget_port\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.Po\
-    rtR\ntargetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\
-    \x122\n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsour\
-    cePort\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelP\
-    rotocolR\x08protocol\"\xda\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\
-    \x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
-    \x20\x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.no\
-    des.PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.no\
-    des.PortR\x07outputs\x125\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.\
-    nodes.NodeDesignerR\x08designer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!\
-    .mizer.nodes.Node.NodePreviewTypeR\x07preview\x12/\n\x06config\x18\x07\
-    \x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\
-    \x18\x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\
-    \x07details\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\
-    \"\xb0\x08\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\
-    \x01\x12\x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06S\
-    CRIPT\x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x12\n\x0eSTEP_SEQUENCER\
-    \x10\x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHR\
-    ESHOLD\x10\t\x12\x0e\n\nDMX_OUTPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\
-    \x0e\n\nOSC_OUTPUT\x10\x0c\x12\x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI\
-    _OUTPUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\
-    \x12\x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESE\
-    T\x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\
-    \x15\x12\r\n\tVIDEO_HSV\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\
-    \x0f\n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVI\
-    DEO_RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL\
-    _PATTERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\
-    \r\n\tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\
-    \x12\r\n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10C\
-    OLOR_BRIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\
-    \x12\x12\n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\
-    \n\x05VALUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\
-    \x12\x0f\n\x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05\
-    DELAY\x10@\x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\
-    \x10C\x12\r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUT\
-    PUT\x10F\x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\
-    \x12\x14\n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\
-    \x12\x0e\n\nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0c\
-    AUDIO_VOLUME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\
-    \x12\x0f\n\x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\n\n\x06WEB\
-    CAM\x10R\x12\x12\n\x0eTEXTURE_BORDER\x10S\x12\x0e\n\nVIDEO_TEXT\x10T\x12\
-    \t\n\x05BEATS\x10U\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\
-    \x08\n\x04NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\
-    \x10\x02\x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\
-    \x0c\n\x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\
-    \x10\x07\"X\n\x0bNodeDetails\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
-    me\x125\n\x08category\x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategory\
-    R\x08category\"c\n\nNodeConfig\x12M\n\x10container_config\x18-\x20\x01(\
-    \x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\
-    \x04type\"\xed\x13\n\x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\x01(\
-    \tR\x05label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescription\
-    \x12\x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04text\
-    \x18\x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValueH\0R\x04text\
-    \x12;\n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatVal\
-    ueH\0R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSet\
-    ting.IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.no\
-    des.NodeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\
-    \x0b2$.mizer.nodes.NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\
-    \x18\t\x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x12\
-    2\n\x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\
-    \x02id\x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.S\
-    plineValueH\0R\x06spline\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.no\
-    des.NodeSetting.MediaValueH\0R\x05media\x128\n\x04uint\x18\r\x20\x01(\
-    \x0b2\".mizer.nodes.NodeSetting.UintValueH\0R\x04uint\x12T\n\x0estep_seq\
-    uencer\x18\x0e\x20\x01(\x0b2+.mizer.nodes.NodeSetting.StepSequencerValue\
-    H\0R\rstepSequencer\x1a?\n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01\
-    (\tR\x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\
-    \xba\x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
-    \x12\x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\
-    \x08min_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\
-    \x03max\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_h\
-    int\x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\
-    \x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntV\
-    alue\x12\x14\n\x05value\x18\x01\x20\x01(\x05R\x05value\x12\x15\n\x03min\
-    \x18\x02\x20\x01(\x05H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\
-    \x03\x20\x01(\x05H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\
-    \x20\x01(\x05H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\
-    \x01(\x05H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\
-    \x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb9\x01\n\tUintValue\x12\x14\n\x05v\
-    alue\x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0\
-    R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\x07m\
-    inHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\
+    \x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"L\n\x0cWriteContr\
+    ol\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x12\n\x04port\x18\
+    \x02\x20\x01(\tR\x04port\x12\x14\n\x05value\x18\x03\x20\x01(\x01R\x05val\
+    ue\"b\n\x18UpdateNodeSettingRequest\x12\x12\n\x04path\x18\x01\x20\x01(\t\
+    R\x04path\x122\n\x07setting\x18\x02\x20\x01(\x0b2\x18.mizer.nodes.NodeSe\
+    ttingR\x07setting\"\\\n\x0fMoveNodeRequest\x12\x12\n\x04path\x18\x01\x20\
+    \x01(\tR\x04path\x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.node\
+    s.NodePositionR\x08position\"\x84\x01\n\x0fShowNodeRequest\x12\x12\n\x04\
+    path\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\x18\x02\x20\x01(\x0b\
+    2\x19.mizer.nodes.NodePositionR\x08position\x12\x1b\n\x06parent\x18\x03\
+    \x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"B\n\x11RenameNode\
+    Request\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x19\n\x08new_n\
+    ame\x18\x02\x20\x01(\tR\x07newName\"Q\n\x11GroupNodesRequest\x12\x14\n\
+    \x05nodes\x18\x01\x20\x03(\tR\x05nodes\x12\x1b\n\x06parent\x18\x02\x20\
+    \x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"'\n\x11DeleteNodeRequ\
+    est\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"%\n\x0fHideNodeReques\
+    t\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x99\x01\n\x05Nodes\x12\
+    '\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\x127\n\
+    \x08channels\x18\x02\x20\x03(\x0b2\x1b.mizer.nodes.NodeConnectionR\x08ch\
+    annels\x12.\n\tall_nodes\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x08\
+    allNodes\"B\n\x0eAvailableNodes\x120\n\x05nodes\x18\x01\x20\x03(\x0b2\
+    \x1a.mizer.nodes.AvailableNodeR\x05nodes\"\x8a\x01\n\rAvailableNode\x12.\
+    \n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x08category\x18\
+    \x03\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08category\"\xf4\x01\n\
+    \x0eNodeConnection\x12\x1f\n\x0btarget_node\x18\x01\x20\x01(\tR\ntargetN\
+    ode\x122\n\x0btarget_port\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\nt\
+    argetPort\x12\x1f\n\x0bsource_node\x18\x03\x20\x01(\tR\nsourceNode\x122\
+    \n\x0bsource_port\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePor\
+    t\x128\n\x08protocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoc\
+    olR\x08protocol\"\xda\x0c\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\
+    \x1a.mizer.nodes.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\
+    \x01(\tR\x04path\x12)\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.\
+    PortR\x06inputs\x12+\n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.\
+    PortR\x07outputs\x125\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.node\
+    s.NodeDesignerR\x08designer\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.miz\
+    er.nodes.Node.NodePreviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\
+    \x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\x124\n\x08settings\x18\
+    \x08\x20\x03(\x0b2\x18.mizer.nodes.NodeSettingR\x08settings\x122\n\x07de\
+    tails\x18\t\x20\x01(\x0b2\x18.mizer.nodes.NodeDetailsR\x07details\"\xb0\
+    \x08\n\x08NodeType\x12\t\n\x05FADER\x10\0\x12\n\n\x06BUTTON\x10\x01\x12\
+    \x0e\n\nOSCILLATOR\x10\x02\x12\t\n\x05CLOCK\x10\x03\x12\n\n\x06SCRIPT\
+    \x10\x04\x12\x0c\n\x08ENVELOPE\x10\x05\x12\x12\n\x0eSTEP_SEQUENCER\x10\
+    \x06\x12\n\n\x06SELECT\x10\x07\x12\t\n\x05MERGE\x10\x08\x12\r\n\tTHRESHO\
+    LD\x10\t\x12\x0e\n\nDMX_OUTPUT\x10\n\x12\r\n\tOSC_INPUT\x10\x0b\x12\x0e\
+    \n\nOSC_OUTPUT\x10\x0c\x12\x0e\n\nMIDI_INPUT\x10\r\x12\x0f\n\x0bMIDI_OUT\
+    PUT\x10\x0e\x12\r\n\tSEQUENCER\x10\x0f\x12\x0b\n\x07FIXTURE\x10\x10\x12\
+    \x0e\n\nPROGRAMMER\x10\x11\x12\t\n\x05GROUP\x10\x12\x12\n\n\x06PRESET\
+    \x10\x13\x12\x0e\n\nVIDEO_FILE\x10\x14\x12\x10\n\x0cVIDEO_OUTPUT\x10\x15\
+    \x12\r\n\tVIDEO_HSV\x10\x17\x12\x13\n\x0fVIDEO_TRANSFORM\x10\x18\x12\x0f\
+    \n\x0bVIDEO_MIXER\x10\x19\x12\r\n\tVIDEO_RGB\x10\x1a\x12\x13\n\x0fVIDEO_\
+    RGB_SPLIT\x10\x1b\x12\x10\n\x0cPIXEL_TO_DMX\x10\x1e\x12\x11\n\rPIXEL_PAT\
+    TERN\x10\x1f\x12\x0e\n\nOPC_OUTPUT\x10\x20\x12\t\n\x05LASER\x10(\x12\r\n\
+    \tILDA_FILE\x10)\x12\x0b\n\x07GAMEPAD\x10-\x12\r\n\tCOLOR_RGB\x102\x12\r\
+    \n\tCOLOR_HSV\x103\x12\x12\n\x0eCOLOR_CONSTANT\x104\x12\x14\n\x10COLOR_B\
+    RIGHTNESS\x105\x12\x0b\n\x07ENCODER\x107\x12\x08\n\x04MATH\x108\x12\x12\
+    \n\x0eDATA_TO_NUMBER\x109\x12\x12\n\x0eNUMBER_TO_DATA\x10:\x12\t\n\x05VA\
+    LUE\x10;\x12\x0b\n\x07EXTRACT\x10<\x12\x0e\n\nMQTT_INPUT\x10=\x12\x0f\n\
+    \x0bMQTT_OUTPUT\x10>\x12\x0f\n\x0bPLAN_SCREEN\x10?\x12\t\n\x05DELAY\x10@\
+    \x12\x08\n\x04RAMP\x10A\x12\t\n\x05NOISE\x10B\x12\t\n\x05LABEL\x10C\x12\
+    \r\n\tTRANSPORT\x10D\x12\x0c\n\x08G13INPUT\x10E\x12\r\n\tG13OUTPUT\x10F\
+    \x12\x13\n\x0fCONSTANT_NUMBER\x10G\x12\x0f\n\x0bCONDITIONAL\x10H\x12\x14\
+    \n\x10TIMECODE_CONTROL\x10I\x12\x13\n\x0fTIMECODE_OUTPUT\x10J\x12\x0e\n\
+    \nAUDIO_FILE\x10K\x12\x10\n\x0cAUDIO_OUTPUT\x10L\x12\x10\n\x0cAUDIO_VOLU\
+    ME\x10M\x12\x0f\n\x0bAUDIO_INPUT\x10N\x12\r\n\tAUDIO_MIX\x10O\x12\x0f\n\
+    \x0bAUDIO_METER\x10P\x12\x0c\n\x08TEMPLATE\x10Q\x12\n\n\x06WEBCAM\x10R\
+    \x12\x12\n\x0eTEXTURE_BORDER\x10S\x12\x0e\n\nVIDEO_TEXT\x10T\x12\t\n\x05\
+    BEATS\x10U\x12\r\n\tCONTAINER\x10d\"t\n\x0fNodePreviewType\x12\x08\n\x04\
+    NONE\x10\0\x12\x0b\n\x07HISTORY\x10\x01\x12\x0c\n\x08WAVEFORM\x10\x02\
+    \x12\x0c\n\x08MULTIPLE\x10\x03\x12\x0b\n\x07TEXTURE\x10\x04\x12\x0c\n\
+    \x08TIMECODE\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\t\n\x05COLOR\x10\x07\
+    \"X\n\x0bNodeDetails\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x125\
+    \n\x08category\x18\x02\x20\x01(\x0e2\x19.mizer.nodes.NodeCategoryR\x08ca\
+    tegory\"c\n\nNodeConfig\x12M\n\x10container_config\x18-\x20\x01(\x0b2\
+    \x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfigB\x06\n\x04ty\
+    pe\"\xed\x13\n\x0bNodeSetting\x12\x14\n\x05label\x18\x01\x20\x01(\tR\x05\
+    label\x12\x20\n\x0bdescription\x18\x02\x20\x01(\tR\x0bdescription\x12\
+    \x1a\n\x08disabled\x18\x03\x20\x01(\x08R\x08disabled\x128\n\x04text\x18\
+    \x04\x20\x01(\x0b2\".mizer.nodes.NodeSetting.TextValueH\0R\x04text\x12;\
+    \n\x05float\x18\x05\x20\x01(\x0b2#.mizer.nodes.NodeSetting.FloatValueH\0\
+    R\x05float\x125\n\x03int\x18\x06\x20\x01(\x0b2!.mizer.nodes.NodeSetting.\
+    IntValueH\0R\x03int\x128\n\x04bool\x18\x07\x20\x01(\x0b2\".mizer.nodes.N\
+    odeSetting.BoolValueH\0R\x04bool\x12>\n\x06select\x18\x08\x20\x01(\x0b2$\
+    .mizer.nodes.NodeSetting.SelectValueH\0R\x06select\x128\n\x04enum\x18\t\
+    \x20\x01(\x0b2\".mizer.nodes.NodeSetting.EnumValueH\0R\x04enum\x122\n\
+    \x02id\x18\n\x20\x01(\x0b2\x20.mizer.nodes.NodeSetting.IdValueH\0R\x02id\
+    \x12>\n\x06spline\x18\x0b\x20\x01(\x0b2$.mizer.nodes.NodeSetting.SplineV\
+    alueH\0R\x06spline\x12;\n\x05media\x18\x0c\x20\x01(\x0b2#.mizer.nodes.No\
+    deSetting.MediaValueH\0R\x05media\x128\n\x04uint\x18\r\x20\x01(\x0b2\".m\
+    izer.nodes.NodeSetting.UintValueH\0R\x04uint\x12T\n\x0estep_sequencer\
+    \x18\x0e\x20\x01(\x0b2+.mizer.nodes.NodeSetting.StepSequencerValueH\0R\r\
+    stepSequencer\x1a?\n\tTextValue\x12\x14\n\x05value\x18\x01\x20\x01(\tR\
+    \x05value\x12\x1c\n\tmultiline\x18\x02\x20\x01(\x08R\tmultiline\x1a\xba\
+    \x01\n\nFloatValue\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\
+    \x15\n\x03min\x18\x02\x20\x01(\x01H\0R\x03min\x88\x01\x01\x12\x1e\n\x08m\
+    in_hint\x18\x03\x20\x01(\x01H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03m\
+    ax\x18\x04\x20\x01(\x01H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\
+    \x18\x05\x20\x01(\x01H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\
+    \t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hint\x1a\xb8\x01\n\x08IntValue\
+    \x12\x14\n\x05value\x18\x01\x20\x01(\x05R\x05value\x12\x15\n\x03min\x18\
+    \x02\x20\x01(\x05H\0R\x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\
+    \x20\x01(\x05H\x01R\x07minHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\
+    \x01(\x05H\x02R\x03max\x88\x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01\
+    (\x05H\x03R\x07maxHint\x88\x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\
+    \n\x04_maxB\x0b\n\t_max_hint\x1a\xb9\x01\n\tUintValue\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\rR\x05value\x12\x15\n\x03min\x18\x02\x20\x01(\rH\0R\
+    \x03min\x88\x01\x01\x12\x1e\n\x08min_hint\x18\x03\x20\x01(\rH\x01R\x07mi\
+    nHint\x88\x01\x01\x12\x15\n\x03max\x18\x04\x20\x01(\rH\x02R\x03max\x88\
     \x01\x01\x12\x1e\n\x08max_hint\x18\x05\x20\x01(\rH\x03R\x07maxHint\x88\
     \x01\x01B\x06\n\x04_minB\x0b\n\t_min_hintB\x06\n\x04_maxB\x0b\n\t_max_hi\
     nt\x1a!\n\tBoolValue\x12\x14\n\x05value\x18\x01\x20\x01(\x08R\x05value\
@@ -9301,24 +8474,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     lProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\x0b\n\x07\
     TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
     \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
-    \x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\x10\n2\xbc\x07\n\x08Nod\
-    esApi\x12K\n\x11GetAvailableNodes\x12\x19.mizer.nodes.NodesRequest\x1a\
-    \x1b.mizer.nodes.AvailableNodes\x129\n\x08GetNodes\x12\x19.mizer.nodes.N\
-    odesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.no\
-    des.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mi\
-    zer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11Wr\
-    iteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.Wri\
-    teResponse\x12M\n\x11UpdateNodeSetting\x12%.mizer.nodes.UpdateNodeSettin\
-    gRequest\x1a\x11.mizer.nodes.Node\x12G\n\x08MoveNode\x12\x1c.mizer.nodes\
-    .MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\
-    \x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeRes\
-    ponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.miz\
-    er.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNod\
-    eRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!\
-    .mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenam\
-    eNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNo\
-    deResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\
-    \x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
+    \x10\x07\x12\t\n\x05COLOR\x10\t\x12\t\n\x05CLOCK\x10\nb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -9337,25 +8493,17 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::media::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(50);
+            let mut messages = ::std::vec::Vec::with_capacity(42);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());
-            messages.push(NodesRequest::generated_message_descriptor_data());
             messages.push(WriteControl::generated_message_descriptor_data());
-            messages.push(WriteResponse::generated_message_descriptor_data());
             messages.push(UpdateNodeSettingRequest::generated_message_descriptor_data());
             messages.push(MoveNodeRequest::generated_message_descriptor_data());
-            messages.push(MoveNodeResponse::generated_message_descriptor_data());
             messages.push(ShowNodeRequest::generated_message_descriptor_data());
-            messages.push(ShowNodeResponse::generated_message_descriptor_data());
             messages.push(RenameNodeRequest::generated_message_descriptor_data());
-            messages.push(RenameNodeResponse::generated_message_descriptor_data());
             messages.push(GroupNodesRequest::generated_message_descriptor_data());
-            messages.push(GroupNodesResponse::generated_message_descriptor_data());
             messages.push(DeleteNodeRequest::generated_message_descriptor_data());
-            messages.push(DeleteNodeResponse::generated_message_descriptor_data());
             messages.push(HideNodeRequest::generated_message_descriptor_data());
-            messages.push(HideNodeResponse::generated_message_descriptor_data());
             messages.push(Nodes::generated_message_descriptor_data());
             messages.push(AvailableNodes::generated_message_descriptor_data());
             messages.push(AvailableNode::generated_message_descriptor_data());

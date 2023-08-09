@@ -17,6 +17,7 @@ use std::sync::Arc;
 pub mod handlers;
 mod mappings;
 pub mod models;
+pub mod remote;
 
 pub trait RuntimeApi: Clone + Send + Sync {
     fn run_command<'a, T: SendableCommand<'a> + 'static>(
@@ -74,4 +75,10 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
     fn observe_settings(&self) -> Subscriber<Settings>;
     fn layouts_view(&self) -> LayoutsView;
+}
+
+pub mod mizer {
+    pub mod fixtures {
+        tonic::include_proto!("mizer.fixtures");
+    }
 }

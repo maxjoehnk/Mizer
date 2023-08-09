@@ -26,109 +26,6 @@
 const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_3_2_0;
 
 #[derive(PartialEq,Clone,Default,Debug)]
-// @@protoc_insertion_point(message:mizer.plan.PlansRequest)
-pub struct PlansRequest {
-    // special fields
-    // @@protoc_insertion_point(special_field:mizer.plan.PlansRequest.special_fields)
-    pub special_fields: ::protobuf::SpecialFields,
-}
-
-impl<'a> ::std::default::Default for &'a PlansRequest {
-    fn default() -> &'a PlansRequest {
-        <PlansRequest as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl PlansRequest {
-    pub fn new() -> PlansRequest {
-        ::std::default::Default::default()
-    }
-
-    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
-        let mut oneofs = ::std::vec::Vec::with_capacity(0);
-        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PlansRequest>(
-            "PlansRequest",
-            fields,
-            oneofs,
-        )
-    }
-}
-
-impl ::protobuf::Message for PlansRequest {
-    const NAME: &'static str = "PlansRequest";
-
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
-        while let Some(tag) = is.read_raw_tag_or_eof()? {
-            match tag {
-                tag => {
-                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u64 {
-        let mut my_size = 0;
-        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
-        self.special_fields.cached_size().set(my_size as u32);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        os.write_unknown_fields(self.special_fields.unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn special_fields(&self) -> &::protobuf::SpecialFields {
-        &self.special_fields
-    }
-
-    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
-        &mut self.special_fields
-    }
-
-    fn new() -> PlansRequest {
-        PlansRequest::new()
-    }
-
-    fn clear(&mut self) {
-        self.special_fields.clear();
-    }
-
-    fn default_instance() -> &'static PlansRequest {
-        static instance: PlansRequest = PlansRequest {
-            special_fields: ::protobuf::SpecialFields::new(),
-        };
-        &instance
-    }
-}
-
-impl ::protobuf::MessageFull for PlansRequest {
-    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
-        descriptor.get(|| file_descriptor().message_by_package_relative_name("PlansRequest").unwrap()).clone()
-    }
-}
-
-impl ::std::fmt::Display for PlansRequest {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for PlansRequest {
-    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
-}
-
-#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.plan.AddPlanRequest)
 pub struct AddPlanRequest {
     // message fields
@@ -2742,63 +2639,54 @@ impl ::protobuf::reflect::ProtobufValue for PlanImage {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bplans.proto\x12\nmizer.plan\x1a\x0efixtures.proto\"\x0e\n\x0cPlans\
-    Request\"$\n\x0eAddPlanRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04\
-    name\"#\n\x11RemovePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \"7\n\x11RenamePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\
-    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"J\n\x13MoveFixturesRequest\
-    \x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\
-    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x86\
-    \x02\n\x14AlignFixturesRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
-    \x06planId\x12M\n\tdirection\x18\x02\x20\x01(\x0e2/.mizer.plan.AlignFixt\
-    uresRequest.AlignDirectionR\tdirection\x12\x16\n\x06groups\x18\x03\x20\
-    \x01(\rR\x06groups\x12\x17\n\x07row_gap\x18\x04\x20\x01(\rR\x06rowGap\
-    \x12\x1d\n\ncolumn_gap\x18\x05\x20\x01(\rR\tcolumnGap\"6\n\x0eAlignDirec\
-    tion\x12\x11\n\rLEFT_TO_RIGHT\x10\0\x12\x11\n\rTOP_TO_BOTTOM\x10\x01\"\
-    \x83\x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\t\
-    R\x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.\
-    FixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\
-    \n\x01y\x18\x04\x20\x01(\x05R\x01y\"\xac\x01\n\x0fAddImageRequest\x12\
-    \x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\x02\
-    \x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\
-    \x05width\x18\x04\x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x05\x20\
-    \x01(\x01R\x06height\x12\"\n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctr\
-    ansparency\x12\x12\n\x04data\x18\x07\x20\x01(\x0cR\x04data\"b\n\x10MoveI\
-    mageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\n\
-    \x08image_id\x18\x02\x20\x01(\tR\x07imageId\x12\x0c\n\x01x\x18\x03\x20\
-    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x04\x20\x01(\x01R\x01y\"v\n\x12Resize\
-    ImageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\
-    \n\x08image_id\x18\x02\x20\x01(\tR\x07imageId\x12\x14\n\x05width\x18\x03\
-    \x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x01R\x06hei\
-    ght\"H\n\x12RemoveImageRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
-    \x06planId\x12\x19\n\x08image_id\x18\x02\x20\x01(\tR\x07imageId\"/\n\x05\
-    Plans\x12&\n\x05plans\x18\x01\x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plan\
-    s\"\xb6\x01\n\x04Plan\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\
-    \n\tpositions\x18\x02\x20\x03(\x0b2\x1b.mizer.plan.FixturePositionR\tpos\
-    itions\x120\n\x07screens\x18\x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreen\
-    R\x07screens\x12-\n\x06images\x18\x04\x20\x03(\x0b2\x15.mizer.plan.PlanI\
-    mageR\x06images\"\x86\x01\n\x0fFixturePosition\x12)\n\x02id\x18\x01\x20\
-    \x01(\x0b2\x19.mizer.fixtures.FixtureIdR\x02id\x12\x0c\n\x01x\x18\x02\
-    \x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\x12\x14\n\
-    \x05width\x18\x04\x20\x01(\rR\x05width\x12\x16\n\x06height\x18\x05\x20\
-    \x01(\rR\x06height\"f\n\nPlanScreen\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
-    \x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05width\x12\
-    \x16\n\x06height\x18\x05\x20\x01(\rR\x06height\"\x9d\x01\n\tPlanImage\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x0c\n\x01x\x18\x02\x20\
-    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\x05w\
-    idth\x18\x04\x20\x01(\x01R\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\
-    \x01R\x06height\x12\"\n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctranspa\
-    rency\x12\x12\n\x04data\x18\x07\x20\x01(\x0cR\x04data2\xc9\x03\n\x08Plan\
-    sApi\x127\n\x08GetPlans\x12\x18.mizer.plan.PlansRequest\x1a\x11.mizer.pl\
-    an.Plans\x128\n\x07AddPlan\x12\x1a.mizer.plan.AddPlanRequest\x1a\x11.miz\
-    er.plan.Plans\x12>\n\nRemovePlan\x12\x1d.mizer.plan.RemovePlanRequest\
-    \x1a\x11.mizer.plan.Plans\x12>\n\nRenamePlan\x12\x1d.mizer.plan.RenamePl\
-    anRequest\x1a\x11.mizer.plan.Plans\x12B\n\x0cMoveFixtures\x12\x1f.mizer.\
-    plan.MoveFixturesRequest\x1a\x11.mizer.plan.Plans\x12@\n\x0bMoveFixture\
-    \x12\x1e.mizer.plan.MoveFixtureRequest\x1a\x11.mizer.plan.Plans\x12D\n\r\
-    AlignFixtures\x12\x20.mizer.plan.AlignFixturesRequest\x1a\x11.mizer.plan\
-    .Plansb\x06proto3\
+    \n\x0bplans.proto\x12\nmizer.plan\x1a\x0efixtures.proto\"$\n\x0eAddPlanR\
+    equest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"#\n\x11RemovePlanR\
+    equest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"7\n\x11RenamePlanReque\
+    st\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\
+    \x20\x01(\tR\x04name\"J\n\x13MoveFixturesRequest\x12\x17\n\x07plan_id\
+    \x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\
+    \x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x86\x02\n\x14AlignFixturesR\
+    equest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12M\n\tdirect\
+    ion\x18\x02\x20\x01(\x0e2/.mizer.plan.AlignFixturesRequest.AlignDirectio\
+    nR\tdirection\x12\x16\n\x06groups\x18\x03\x20\x01(\rR\x06groups\x12\x17\
+    \n\x07row_gap\x18\x04\x20\x01(\rR\x06rowGap\x12\x1d\n\ncolumn_gap\x18\
+    \x05\x20\x01(\rR\tcolumnGap\"6\n\x0eAlignDirection\x12\x11\n\rLEFT_TO_RI\
+    GHT\x10\0\x12\x11\n\rTOP_TO_BOTTOM\x10\x01\"\x83\x01\n\x12MoveFixtureReq\
+    uest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x128\n\nfixture_\
+    id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.FixtureIdR\tfixtureId\x12\
+    \x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x04\x20\x01(\
+    \x05R\x01y\"\xac\x01\n\x0fAddImageRequest\x12\x17\n\x07plan_id\x18\x01\
+    \x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\x02\x20\x01(\x01R\x01x\x12\x0c\
+    \n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\
+    \x01R\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\x01R\x06height\x12\"\
+    \n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctransparency\x12\x12\n\x04da\
+    ta\x18\x07\x20\x01(\x0cR\x04data\"b\n\x10MoveImageRequest\x12\x17\n\x07p\
+    lan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\n\x08image_id\x18\x02\x20\
+    \x01(\tR\x07imageId\x12\x0c\n\x01x\x18\x03\x20\x01(\x01R\x01x\x12\x0c\n\
+    \x01y\x18\x04\x20\x01(\x01R\x01y\"v\n\x12ResizeImageRequest\x12\x17\n\
+    \x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\n\x08image_id\x18\x02\
+    \x20\x01(\tR\x07imageId\x12\x14\n\x05width\x18\x03\x20\x01(\x01R\x05widt\
+    h\x12\x16\n\x06height\x18\x04\x20\x01(\x01R\x06height\"H\n\x12RemoveImag\
+    eRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x19\n\
+    \x08image_id\x18\x02\x20\x01(\tR\x07imageId\"/\n\x05Plans\x12&\n\x05plan\
+    s\x18\x01\x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"\xb6\x01\n\x04Pla\
+    n\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\
+    \x02\x20\x03(\x0b2\x1b.mizer.plan.FixturePositionR\tpositions\x120\n\x07\
+    screens\x18\x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreenR\x07screens\x12-\
+    \n\x06images\x18\x04\x20\x03(\x0b2\x15.mizer.plan.PlanImageR\x06images\"\
+    \x86\x01\n\x0fFixturePosition\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.miz\
+    er.fixtures.FixtureIdR\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\
+    \x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\
+    \x20\x01(\rR\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\rR\x06height\
+    \"f\n\nPlanScreen\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x0c\n\
+    \x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\
+    \x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05width\x12\x16\n\x06heigh\
+    t\x18\x05\x20\x01(\rR\x06height\"\x9d\x01\n\tPlanImage\x12\x0e\n\x02id\
+    \x18\x01\x20\x01(\tR\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x01R\x01x\x12\
+    \x0c\n\x01y\x18\x03\x20\x01(\x01R\x01y\x12\x14\n\x05width\x18\x04\x20\
+    \x01(\x01R\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\x01R\x06height\
+    \x12\"\n\x0ctransparency\x18\x06\x20\x01(\x01R\x0ctransparency\x12\x12\n\
+    \x04data\x18\x07\x20\x01(\x0cR\x04datab\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -2817,8 +2705,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(16);
-            messages.push(PlansRequest::generated_message_descriptor_data());
+            let mut messages = ::std::vec::Vec::with_capacity(15);
             messages.push(AddPlanRequest::generated_message_descriptor_data());
             messages.push(RemovePlanRequest::generated_message_descriptor_data());
             messages.push(RenamePlanRequest::generated_message_descriptor_data());

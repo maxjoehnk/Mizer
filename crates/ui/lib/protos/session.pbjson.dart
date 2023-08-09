@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use projectRequestDescriptor instead')
-const ProjectRequest$json = const {
-  '1': 'ProjectRequest',
-};
-
-/// Descriptor for `ProjectRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List projectRequestDescriptor = $convert.base64Decode('Cg5Qcm9qZWN0UmVxdWVzdA==');
 @$core.Deprecated('Use loadProjectRequestDescriptor instead')
 const LoadProjectRequest$json = const {
   '1': 'LoadProjectRequest',
@@ -35,13 +28,6 @@ const SaveProjectAsRequest$json = const {
 
 /// Descriptor for `SaveProjectAsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List saveProjectAsRequestDescriptor = $convert.base64Decode('ChRTYXZlUHJvamVjdEFzUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRo');
-@$core.Deprecated('Use projectResponseDescriptor instead')
-const ProjectResponse$json = const {
-  '1': 'ProjectResponse',
-};
-
-/// Descriptor for `ProjectResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List projectResponseDescriptor = $convert.base64Decode('Cg9Qcm9qZWN0UmVzcG9uc2U=');
 @$core.Deprecated('Use clientAnnouncementDescriptor instead')
 const ClientAnnouncement$json = const {
   '1': 'ClientAnnouncement',
@@ -52,13 +38,6 @@ const ClientAnnouncement$json = const {
 
 /// Descriptor for `ClientAnnouncement`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List clientAnnouncementDescriptor = $convert.base64Decode('ChJDbGllbnRBbm5vdW5jZW1lbnQSEgoEbmFtZRgBIAEoCVIEbmFtZQ==');
-@$core.Deprecated('Use sessionRequestDescriptor instead')
-const SessionRequest$json = const {
-  '1': 'SessionRequest',
-};
-
-/// Descriptor for `SessionRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionRequestDescriptor = $convert.base64Decode('Cg5TZXNzaW9uUmVxdWVzdA==');
 @$core.Deprecated('Use sessionDescriptor instead')
 const Session$json = const {
   '1': 'Session',
@@ -98,13 +77,6 @@ const DeviceClock$json = const {
 
 /// Descriptor for `DeviceClock`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deviceClockDescriptor = $convert.base64Decode('CgtEZXZpY2VDbG9jaxIWCgZtYXN0ZXIYASABKAhSBm1hc3RlchIUCgVkcmlmdBgCIAEoAVIFZHJpZnQ=');
-@$core.Deprecated('Use loadHistoryRequestDescriptor instead')
-const LoadHistoryRequest$json = const {
-  '1': 'LoadHistoryRequest',
-};
-
-/// Descriptor for `LoadHistoryRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List loadHistoryRequestDescriptor = $convert.base64Decode('ChJMb2FkSGlzdG9yeVJlcXVlc3Q=');
 @$core.Deprecated('Use historyDescriptor instead')
 const History$json = const {
   '1': 'History',

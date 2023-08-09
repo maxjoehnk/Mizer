@@ -1,12 +1,11 @@
 use mizer_command_executor::*;
-use protobuf::MessageField;
 use regex::Regex;
 use std::ops::Deref;
 
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 
-use crate::models::fixtures::*;
+use crate::proto::fixtures::*;
 use crate::RuntimeApi;
 
 lazy_static::lazy_static! {
@@ -36,7 +35,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixtures(&self) -> Fixtures {
-        let mut fixtures = Fixtures::new();
+        let mut fixtures = Fixtures::default();
         for fixture in self.fixture_manager.get_fixtures() {
             let fixture_model = Fixture {
                 channel: fixture.channel as u32,
@@ -62,16 +61,13 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                             &fixture.sub_fixture(sub_fixture.id).unwrap(),
                             sub_fixture.controls.clone(),
                         ),
-                        ..Default::default()
                     })
                     .collect(),
-                config: MessageField::some(FixtureConfig {
+                config: Some(FixtureConfig {
                     invert_pan: fixture.configuration.invert_pan,
                     invert_tilt: fixture.configuration.invert_tilt,
                     reverse_pixel_order: fixture.configuration.reverse_pixel_order,
-                    ..Default::default()
                 }),
-                ..Default::default()
             };
             fixtures.fixtures.push(fixture_model);
         }
@@ -130,7 +126,6 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             name: request.name,
             address: request
                 .address
-                .into_option()
                 .map(|address| (address.universe as u16, address.channel as u16)),
         };
         self.runtime.run_command(cmd)?;

@@ -1,5 +1,9 @@
 use std::collections::HashMap;
+use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener};
 
+use crate::handlers::Handlers;
+use crate::proto::fixtures::fixtures_api_server::FixturesApiServer;
+use crate::proto::programmer::programmer_api_server::ProgrammerApiServer;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::SendableCommand;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent, OscMessage};
@@ -13,10 +17,13 @@ use mizer_session::SessionState;
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use tonic::transport::Server;
+
+pub use prost::Message;
 
 pub mod handlers;
 mod mappings;
-pub mod models;
+pub mod proto;
 pub mod remote;
 
 pub trait RuntimeApi: Clone + Send + Sync {
@@ -77,8 +84,31 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn layouts_view(&self) -> LayoutsView;
 }
 
-pub mod mizer {
-    pub mod fixtures {
-        tonic::include_proto!("mizer.fixtures");
-    }
+pub fn start_remote_api<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<u16> {
+    let port = get_available_port().ok_or_else(|| anyhow::anyhow!("no available port"))?;
+    let addr = SocketAddr::new(IpAddr::V4(Ipv4Addr::UNSPECIFIED), port);
+
+    tokio::spawn(async move {
+        tracing::info!("Starting remote API on {addr}");
+        let result = Server::builder()
+            .trace_fn(|_| tracing::info_span!("remote_api"))
+            .add_service(FixturesApiServer::new(handlers.fixtures))
+            .add_service(ProgrammerApiServer::new(handlers.programmer))
+            .serve(addr)
+            .await;
+
+        if let Err(err) = result {
+            tracing::error!("failed to start remote API: {err}");
+        }
+    });
+
+    Ok(port)
+}
+
+fn get_available_port() -> Option<u16> {
+    (50000..60000).find(|port| port_is_available(*port))
+}
+
+fn port_is_available(port: u16) -> bool {
+    TcpListener::bind(("0.0.0.0", port)).is_ok()
 }

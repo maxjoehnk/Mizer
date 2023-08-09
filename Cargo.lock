@@ -3916,7 +3916,6 @@ dependencies = [
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
  "mizer-qlcplus-provider",
- "mizer-remote-api",
  "mizer-runtime",
  "mizer-sequencer",
  "mizer-session",
@@ -3973,7 +3972,6 @@ dependencies = [
  "profiling",
  "prost",
  "prost-types",
- "protobuf",
  "regex",
  "serde",
  "tokio",
@@ -4878,22 +4876,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mizer-remote-api"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "mizer-api",
- "profiling",
- "prost",
- "prost-types",
- "serde",
- "tokio",
- "tonic",
- "tonic-build",
- "tracing",
-]
-
-[[package]]
 name = "mizer-runtime"
 version = "0.1.0"
 dependencies = [
@@ -5101,7 +5083,6 @@ dependencies = [
  "nativeshell_build",
  "pinboard",
  "profiling",
- "protobuf",
  "smol",
 ]
 
@@ -6478,26 +6459,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "213622a1460818959ac1181aaeb2dc9c7f63df720db7d788b3e24eacd1983e13"
 dependencies = [
  "prost",
-]
-
-[[package]]
-name = "protobuf"
-version = "3.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b55bad9126f378a853655831eb7363b7b01b81d19f8cb1218861086ca4a1a61e"
-dependencies = [
- "once_cell",
- "protobuf-support",
- "thiserror",
-]
-
-[[package]]
-name = "protobuf-support"
-version = "3.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a5d4d7b8601c814cfb36bcebb79f0e61e45e1e93640cf778837833bbed05c372"
-dependencies = [
- "thiserror",
 ]
 
 [[package]]

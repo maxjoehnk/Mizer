@@ -1,12 +1,10 @@
 import 'package:grpc/grpc.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
 import '../contracts/fixtures.dart';
 
 class FixturesMobileApi implements FixturesApi {
   final FixturesApiClient _client;
-
 
   FixturesMobileApi(ClientChannel channel) : _client = FixturesApiClient(channel);
 
@@ -38,5 +36,4 @@ class FixturesMobileApi implements FixturesApi {
     // TODO: implement updateFixture
     throw UnimplementedError();
   }
-
 }

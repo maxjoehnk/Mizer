@@ -1,4 +1,4 @@
-use crate::models::mappings::{mapping_request, MappingRequest};
+use crate::proto::mappings::{mapping_request, MappingRequest};
 use crate::RuntimeApi;
 use mizer_node_templates::mappings::*;
 use mizer_node_templates::ExecuteNodeTemplateCommand;

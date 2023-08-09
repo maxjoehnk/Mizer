@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mizer.plan;
+package mizer.plans;
 
 import "fixtures.proto";
 

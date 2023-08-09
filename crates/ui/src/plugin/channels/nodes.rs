@@ -1,7 +1,7 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::{NodesHandler, TimecodeHandler};
-use mizer_api::models::nodes::node::NodeType;
-use mizer_api::models::nodes::*;
+use mizer_api::proto::nodes::node::NodeType;
+use mizer_api::proto::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview, NodesRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
@@ -200,12 +200,17 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
 
     fn get_preview_pointer(&self, path: String) -> Option<i64> {
         let node = self.handler.get_node(path)?;
-        if node.type_.unwrap() == NodeType::TIMECODE_CONTROL {
-            let timecode_id = node
-                .settings
-                .into_iter()
-                .find_map(|setting| setting.has_id().then(|| setting.id().value));
-            let timecode = self.timecode_handler.get_timecode_state_ref(timecode_id?)?;
+        if node.r#type() == NodeType::TimecodeControl {
+            let timecode_id = node.settings.into_iter().find_map(|setting| {
+                if let Some(node_setting::Value::Id(id)) = setting.value {
+                    Some(id)
+                } else {
+                    None
+                }
+            });
+            let timecode = self
+                .timecode_handler
+                .get_timecode_state_ref(timecode_id?.value)?;
             let preview = NodePreview { timecode };
             let preview = Arc::new(preview);
 

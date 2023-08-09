@@ -5,8 +5,8 @@ use nativeshell::shell::{
 };
 
 use mizer_api::handlers::ProgrammerHandler;
-use mizer_api::models::fixtures::FixtureId;
-use mizer_api::models::programmer::*;
+use mizer_api::proto::fixtures::FixtureId;
+use mizer_api::proto::programmer::*;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
@@ -250,7 +250,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     fn store(&self, req: StoreRequest) {
         log::trace!("ProgrammerChannel::store({:?})", req);
         self.handler
-            .store(req.sequence_id, req.store_mode.unwrap(), req.cue_id);
+            .store(req.sequence_id, req.store_mode(), req.cue_id);
     }
 
     fn store_preset(&self, req: StorePresetRequest) -> anyhow::Result<()> {
@@ -260,8 +260,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
                 self.handler.store_programmer_to_preset(preset_id)?;
             }
             Some(store_preset_request::Target::NewPreset(preset)) => {
-                self.handler
-                    .add_preset(preset.type_.unwrap(), preset.label)?;
+                self.handler.add_preset(preset.r#type(), preset.label)?;
             }
             _ => unimplemented!(),
         }

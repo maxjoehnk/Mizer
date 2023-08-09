@@ -1,7 +1,7 @@
 use mizer_command_executor::*;
 use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue, SequencerView};
 
-use crate::models::sequencer::*;
+use crate::proto::sequencer::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]
@@ -83,7 +83,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .run_command(UpdateCueTriggerCommand {
                 sequence_id: request.sequence,
                 cue_id: request.cue,
-                trigger: request.trigger.unwrap().into(),
+                trigger: request.trigger().into(),
             })
             .unwrap();
     }
@@ -95,7 +95,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .run_command(UpdateCueTriggerTimeCommand {
                 sequence_id: request.sequence,
                 cue_id: request.cue,
-                trigger_time: request.time.into_option().map(SequencerTime::from),
+                trigger_time: request.time.map(SequencerTime::from),
             })
             .unwrap();
     }
@@ -147,7 +147,6 @@ impl<R: RuntimeApi> SequencerHandler<R> {
                 cue_id: request.cue_id,
                 fade_time: request
                     .time
-                    .into_option()
                     .and_then(Option::<SequencerValue<SequencerTime>>::from),
             })
             .unwrap();
@@ -162,7 +161,6 @@ impl<R: RuntimeApi> SequencerHandler<R> {
                 cue_id: request.cue_id,
                 delay_time: request
                     .time
-                    .into_option()
                     .and_then(Option::<SequencerValue<SequencerTime>>::from),
             })
             .unwrap();

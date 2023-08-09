@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.connections;
 
 message MonitorDmxRequest {
   string output_id = 1;

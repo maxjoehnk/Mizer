@@ -10,7 +10,6 @@ default = []
 [dependencies]
 anyhow = "1"
 log = "0.4"
-protobuf = "3.2"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-plan = { path = "../components/plan" }

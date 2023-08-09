@@ -56,7 +56,7 @@ const AlignFixturesRequest$json = const {
   '1': 'AlignFixturesRequest',
   '2': const [
     const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
-    const {'1': 'direction', '3': 2, '4': 1, '5': 14, '6': '.mizer.plan.AlignFixturesRequest.AlignDirection', '10': 'direction'},
+    const {'1': 'direction', '3': 2, '4': 1, '5': 14, '6': '.mizer.plans.AlignFixturesRequest.AlignDirection', '10': 'direction'},
     const {'1': 'groups', '3': 3, '4': 1, '5': 13, '10': 'groups'},
     const {'1': 'row_gap', '3': 4, '4': 1, '5': 13, '10': 'rowGap'},
     const {'1': 'column_gap', '3': 5, '4': 1, '5': 13, '10': 'columnGap'},
@@ -74,7 +74,7 @@ const AlignFixturesRequest_AlignDirection$json = const {
 };
 
 /// Descriptor for `AlignFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Decode('ChRBbGlnbkZpeHR1cmVzUmVxdWVzdBIXCgdwbGFuX2lkGAEgASgJUgZwbGFuSWQSTQoJZGlyZWN0aW9uGAIgASgOMi8ubWl6ZXIucGxhbi5BbGlnbkZpeHR1cmVzUmVxdWVzdC5BbGlnbkRpcmVjdGlvblIJZGlyZWN0aW9uEhYKBmdyb3VwcxgDIAEoDVIGZ3JvdXBzEhcKB3Jvd19nYXAYBCABKA1SBnJvd0dhcBIdCgpjb2x1bW5fZ2FwGAUgASgNUgljb2x1bW5HYXAiNgoOQWxpZ25EaXJlY3Rpb24SEQoNTEVGVF9UT19SSUdIVBAAEhEKDVRPUF9UT19CT1RUT00QAQ==');
+final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Decode('ChRBbGlnbkZpeHR1cmVzUmVxdWVzdBIXCgdwbGFuX2lkGAEgASgJUgZwbGFuSWQSTgoJZGlyZWN0aW9uGAIgASgOMjAubWl6ZXIucGxhbnMuQWxpZ25GaXh0dXJlc1JlcXVlc3QuQWxpZ25EaXJlY3Rpb25SCWRpcmVjdGlvbhIWCgZncm91cHMYAyABKA1SBmdyb3VwcxIXCgdyb3dfZ2FwGAQgASgNUgZyb3dHYXASHQoKY29sdW1uX2dhcBgFIAEoDVIJY29sdW1uR2FwIjYKDkFsaWduRGlyZWN0aW9uEhEKDUxFRlRfVE9fUklHSFQQABIRCg1UT1BfVE9fQk9UVE9NEAE=');
 @$core.Deprecated('Use moveFixtureRequestDescriptor instead')
 const MoveFixtureRequest$json = const {
   '1': 'MoveFixtureRequest',
@@ -145,25 +145,25 @@ final $typed_data.Uint8List removeImageRequestDescriptor = $convert.base64Decode
 const Plans$json = const {
   '1': 'Plans',
   '2': const [
-    const {'1': 'plans', '3': 1, '4': 3, '5': 11, '6': '.mizer.plan.Plan', '10': 'plans'},
+    const {'1': 'plans', '3': 1, '4': 3, '5': 11, '6': '.mizer.plans.Plan', '10': 'plans'},
   ],
 };
 
 /// Descriptor for `Plans`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List plansDescriptor = $convert.base64Decode('CgVQbGFucxImCgVwbGFucxgBIAMoCzIQLm1pemVyLnBsYW4uUGxhblIFcGxhbnM=');
+final $typed_data.Uint8List plansDescriptor = $convert.base64Decode('CgVQbGFucxInCgVwbGFucxgBIAMoCzIRLm1pemVyLnBsYW5zLlBsYW5SBXBsYW5z');
 @$core.Deprecated('Use planDescriptor instead')
 const Plan$json = const {
   '1': 'Plan',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'positions', '3': 2, '4': 3, '5': 11, '6': '.mizer.plan.FixturePosition', '10': 'positions'},
-    const {'1': 'screens', '3': 3, '4': 3, '5': 11, '6': '.mizer.plan.PlanScreen', '10': 'screens'},
-    const {'1': 'images', '3': 4, '4': 3, '5': 11, '6': '.mizer.plan.PlanImage', '10': 'images'},
+    const {'1': 'positions', '3': 2, '4': 3, '5': 11, '6': '.mizer.plans.FixturePosition', '10': 'positions'},
+    const {'1': 'screens', '3': 3, '4': 3, '5': 11, '6': '.mizer.plans.PlanScreen', '10': 'screens'},
+    const {'1': 'images', '3': 4, '4': 3, '5': 11, '6': '.mizer.plans.PlanImage', '10': 'images'},
   ],
 };
 
 /// Descriptor for `Plan`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOQoJcG9zaXRpb25zGAIgAygLMhsubWl6ZXIucGxhbi5GaXh0dXJlUG9zaXRpb25SCXBvc2l0aW9ucxIwCgdzY3JlZW5zGAMgAygLMhYubWl6ZXIucGxhbi5QbGFuU2NyZWVuUgdzY3JlZW5zEi0KBmltYWdlcxgEIAMoCzIVLm1pemVyLnBsYW4uUGxhbkltYWdlUgZpbWFnZXM=');
+final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOgoJcG9zaXRpb25zGAIgAygLMhwubWl6ZXIucGxhbnMuRml4dHVyZVBvc2l0aW9uUglwb3NpdGlvbnMSMQoHc2NyZWVucxgDIAMoCzIXLm1pemVyLnBsYW5zLlBsYW5TY3JlZW5SB3NjcmVlbnMSLgoGaW1hZ2VzGAQgAygLMhYubWl6ZXIucGxhbnMuUGxhbkltYWdlUgZpbWFnZXM=');
 @$core.Deprecated('Use fixturePositionDescriptor instead')
 const FixturePosition$json = const {
   '1': 'FixturePosition',

@@ -1,7 +1,6 @@
-use crate::models::session::*;
+use crate::proto::session::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
-use protobuf::MessageField;
 
 #[derive(Clone)]
 pub struct SessionHandler<R: RuntimeApi> {
@@ -27,14 +26,11 @@ impl<R: RuntimeApi> SessionHandler<R> {
                     name: "max-arch".into(),
                     ping: 0f64,
                     ips: vec!["192.168.1.13".to_string()],
-                    clock: MessageField::some(DeviceClock {
+                    clock: Some(DeviceClock {
                         drift: 0f64,
                         master: true,
-                        ..Default::default()
                     }),
-                    ..Default::default()
                 }],
-                ..Default::default()
             });
 
         Ok(stream)

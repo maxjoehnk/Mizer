@@ -1,9 +1,7 @@
-use protobuf::{EnumOrUnknown, MessageField};
-
 use mizer_media::documents::{AttachedMediaDocument, AttachedTag, MediaDocument, TagDocument};
 use mizer_media::TagCreateModel;
 
-use crate::models::media::*;
+use crate::proto::media::*;
 
 impl From<CreateMediaTag> for TagCreateModel {
     fn from(model: CreateMediaTag) -> Self {
@@ -26,7 +24,7 @@ impl From<MediaDocument> for MediaFile {
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
-            metadata: MessageField::some(MediaMetadata {
+            metadata: Some(MediaMetadata {
                 tags: media.tags.into_iter().map(MediaTag::from).collect(),
                 file_size: media.file_size,
                 source_path: media
@@ -52,8 +50,7 @@ impl From<MediaDocument> for MediaFile {
                 .metadata
                 .thumbnail_path
                 .and_then(|path| path.as_os_str().to_str().map(|path| path.to_string())),
-            type_: EnumOrUnknown::new(media.media_type.into()),
-            ..Default::default()
+            r#type: MediaType::from(media.media_type) as i32,
         }
     }
 }
@@ -63,10 +60,10 @@ impl From<mizer_media::documents::MediaType> for MediaType {
         use mizer_media::documents::MediaType::*;
 
         match value {
-            Image => Self::IMAGE,
-            Audio => Self::AUDIO,
-            Video => Self::VIDEO,
-            Vector => Self::VECTOR,
+            Image => Self::Image,
+            Audio => Self::Audio,
+            Video => Self::Video,
+            Vector => Self::Vector,
         }
     }
 }
@@ -76,7 +73,6 @@ impl From<AttachedTag> for MediaTag {
         MediaTag {
             id: tag.id.to_string(),
             name: tag.name,
-            ..Default::default()
         }
     }
 }
@@ -93,13 +89,11 @@ impl From<MediaTag> for AttachedTag {
 impl From<TagDocument> for MediaTagWithFiles {
     fn from(tag: TagDocument) -> Self {
         MediaTagWithFiles {
-            tag: MessageField::some(MediaTag {
+            tag: Some(MediaTag {
                 name: tag.name,
                 id: tag.id.to_string(),
-                ..Default::default()
             }),
             files: tag.media.into_iter().map(MediaFile::from).collect(),
-            ..Default::default()
         }
     }
 }

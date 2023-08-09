@@ -7,6 +7,7 @@ import "fixtures.proto";
 service ProgrammerApi {
   rpc SubscribeToProgrammer (SubscribeProgrammerRequest) returns (stream ProgrammerState) {}
   rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
+  rpc UnselectFixtures (UnselectFixturesRequest) returns (UnselectFixturesResponse) {}
   rpc Clear (ClearRequest) returns (ClearResponse) {}
   rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
 }

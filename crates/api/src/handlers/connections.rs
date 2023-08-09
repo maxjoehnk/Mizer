@@ -3,7 +3,7 @@ use mizer_command_executor::*;
 use mizer_gamepads::GamepadRef;
 use std::collections::HashMap;
 
-use crate::models::connections::*;
+use crate::proto::connections::*;
 use crate::RuntimeApi;
 
 #[derive(Clone, Default)]

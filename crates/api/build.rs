@@ -1,6 +1,7 @@
 fn main() {
     println!("cargo:rerun-if-changed=protos");
     tonic_build::configure()
+        .build_server(true)
         .compile(
             &[
                 "protos/connections.proto",

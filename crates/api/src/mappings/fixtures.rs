@@ -1,9 +1,8 @@
 use mizer_fixtures::definition::{self, ChannelResolution, PhysicalFixtureData};
 use mizer_fixtures::fixture::IFixture;
-use protobuf::MessageField;
 
-use crate::models::fixtures as models;
-use crate::models::fixtures::*;
+use crate::proto::fixtures as models;
+use crate::proto::fixtures::*;
 
 impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
     fn from(definition: mizer_fixtures::definition::FixtureDefinition) -> Self {
@@ -18,7 +17,7 @@ impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
                 .map(FixtureMode::from)
                 .collect(),
             tags: definition.tags,
-            physical: MessageField::some(physical),
+            physical: Some(physical),
             provider: definition.provider.to_string(),
             ..Default::default()
         }
@@ -27,7 +26,7 @@ impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
 
 impl From<mizer_fixtures::definition::PhysicalFixtureData> for FixturePhysicalData {
     fn from(physical_data: PhysicalFixtureData) -> Self {
-        let mut data = FixturePhysicalData::new();
+        let mut data = FixturePhysicalData::default();
         if let Some(dimensions) = physical_data.dimensions {
             data.width = dimensions.width;
             data.height = dimensions.height;
@@ -50,7 +49,6 @@ impl From<mizer_fixtures::definition::FixtureMode> for FixtureMode {
                 .into_iter()
                 .map(FixtureChannel::from)
                 .collect(),
-            ..Default::default()
         }
     }
 }
@@ -60,7 +58,6 @@ impl From<mizer_fixtures::definition::FixtureChannelDefinition> for FixtureChann
         FixtureChannel {
             name: channel.name,
             resolution: Some(channel.resolution.into()),
-            ..Default::default()
         }
     }
 }
@@ -71,14 +68,12 @@ impl From<mizer_fixtures::definition::ChannelResolution> for fixture_channel::Re
             ChannelResolution::Coarse(coarse) => {
                 fixture_channel::Resolution::Coarse(fixture_channel::CoarseResolution {
                     channel: coarse.into(),
-                    ..Default::default()
                 })
             }
             ChannelResolution::Fine(fine, coarse) => {
                 fixture_channel::Resolution::Fine(fixture_channel::FineResolution {
                     fine_channel: fine.into(),
                     coarse_channel: coarse.into(),
-                    ..Default::default()
                 })
             }
             ChannelResolution::Finest(finest, fine, coarse) => {
@@ -86,7 +81,6 @@ impl From<mizer_fixtures::definition::ChannelResolution> for fixture_channel::Re
                     finest_channel: finest.into(),
                     fine_channel: fine.into(),
                     coarse_channel: coarse.into(),
-                    ..Default::default()
                 })
             }
         }
@@ -97,13 +91,7 @@ impl FixtureControls {
     fn build_fader(control: FixtureControl, value: Option<f64>) -> Self {
         FixtureControls {
             control: control.into(),
-            value: value.map(|value| {
-                fixture_controls::Value::Fader(FaderChannel {
-                    value,
-                    ..Default::default()
-                })
-            }),
-            ..Default::default()
+            value: value.map(|value| fixture_controls::Value::Fader(FaderChannel { value })),
         }
     }
 
@@ -116,42 +104,42 @@ impl FixtureControls {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Intensity);
             controls.push(FixtureControls::build_fader(
-                FixtureControl::INTENSITY,
+                FixtureControl::Intensity,
                 value,
             ));
         }
         if fixture_controls.shutter.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Shutter);
-            controls.push(FixtureControls::build_fader(FixtureControl::SHUTTER, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Shutter, value));
         }
         if fixture_controls.iris.is_some() {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Iris);
-            controls.push(FixtureControls::build_fader(FixtureControl::IRIS, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Iris, value));
         }
         if fixture_controls.zoom.is_some() {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Zoom);
-            controls.push(FixtureControls::build_fader(FixtureControl::ZOOM, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Zoom, value));
         }
         if fixture_controls.frost.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Frost);
-            controls.push(FixtureControls::build_fader(FixtureControl::FROST, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Frost, value));
         }
         if fixture_controls.prism.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Prism);
-            controls.push(FixtureControls::build_fader(FixtureControl::PRISM, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Prism, value));
         }
         if fixture_controls.focus.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Focus);
-            controls.push(FixtureControls::build_fader(FixtureControl::FOCUS, value));
+            controls.push(FixtureControls::build_fader(FixtureControl::Focus, value));
         }
         if let Some(channel) = fixture_controls.pan {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Pan);
             controls.push(FixtureControls {
-                control: FixtureControl::PAN.into(),
+                control: FixtureControl::Pan.into(),
                 value: Some(fixture_controls::Value::Axis(AxisChannel::with_value(
                     &channel, value,
                 ))),
@@ -161,7 +149,7 @@ impl FixtureControls {
         if let Some(channel) = fixture_controls.tilt {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Pan);
             controls.push(FixtureControls {
-                control: FixtureControl::TILT.into(),
+                control: FixtureControl::Tilt.into(),
                 value: Some(fixture_controls::Value::Axis(AxisChannel::with_value(
                     &channel, value,
                 ))),
@@ -170,7 +158,7 @@ impl FixtureControls {
         }
         if fixture_controls.color_mixer.is_some() {
             controls.push(FixtureControls {
-                control: FixtureControl::COLOR_MIXER.into(),
+                control: FixtureControl::ColorMixer.into(),
                 value: Some(fixture_controls::Value::ColorMixer(ColorMixerChannel {
                     red: fixture
                         .read_control(mizer_fixtures::definition::FixtureFaderControl::ColorMixer(
@@ -194,7 +182,7 @@ impl FixtureControls {
         }
         if let Some(color_wheel) = fixture_controls.color_wheel {
             controls.push(FixtureControls {
-                control: FixtureControl::COLOR_WHEEL.into(),
+                control: FixtureControl::ColorWheel.into(),
                 value: Some(fixture_controls::Value::ColorWheel(ColorWheelChannel {
                     colors: color_wheel
                         .colors
@@ -211,7 +199,7 @@ impl FixtureControls {
         }
         if let Some(gobo) = fixture_controls.gobo {
             controls.push(FixtureControls {
-                control: FixtureControl::GOBO.into(),
+                control: FixtureControl::Gobo.into(),
                 value: Some(fixture_controls::Value::Gobo(GoboChannel {
                     gobos: gobo.gobos.into_iter().map(Gobo::from).collect(),
                     value: fixture
@@ -227,7 +215,7 @@ impl FixtureControls {
                 mizer_fixtures::definition::FixtureFaderControl::Generic(channel.label.clone()),
             );
             controls.push(FixtureControls {
-                control: FixtureControl::GENERIC.into(),
+                control: FixtureControl::Generic.into(),
                 value: value.map(|value| {
                     fixture_controls::Value::Generic(GenericChannel {
                         name: channel.label,
@@ -339,19 +327,19 @@ impl From<definition::FixtureFaderControl> for models::FixtureControl {
         use definition::FixtureFaderControl::*;
 
         match control {
-            Intensity => Self::INTENSITY,
-            Shutter => Self::SHUTTER,
-            Pan => Self::PAN,
-            Tilt => Self::TILT,
-            Prism => Self::PRISM,
-            Iris => Self::IRIS,
-            Frost => Self::FROST,
-            ColorMixer(_) => Self::COLOR_MIXER,
-            ColorWheel => Self::COLOR_WHEEL,
-            Generic(_) => Self::GENERIC,
-            Zoom => Self::ZOOM,
-            Focus => Self::FOCUS,
-            Gobo => Self::GOBO,
+            Intensity => Self::Intensity,
+            Shutter => Self::Shutter,
+            Pan => Self::Pan,
+            Tilt => Self::Tilt,
+            Prism => Self::Prism,
+            Iris => Self::Iris,
+            Frost => Self::Frost,
+            ColorMixer(_) => Self::ColorMixer,
+            ColorWheel => Self::ColorWheel,
+            Generic(_) => Self::Generic,
+            Zoom => Self::Zoom,
+            Focus => Self::Focus,
+            Gobo => Self::Gobo,
         }
     }
 }
@@ -360,44 +348,42 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
     fn from(control: models::FixtureFaderControl) -> Self {
         use models::FixtureControl::*;
 
-        let color_mixer_channel = control.color_mixer_channel.map(|channel| {
+        let color_mixer_channel = control.color_mixer_channel.map(|_| {
             use models::fixture_fader_control::ColorMixerControlChannel::*;
 
-            match channel.unwrap() {
-                RED => definition::ColorChannel::Red,
-                GREEN => definition::ColorChannel::Green,
-                BLUE => definition::ColorChannel::Blue,
+            match control.color_mixer_channel() {
+                Red => definition::ColorChannel::Red,
+                Green => definition::ColorChannel::Green,
+                Blue => definition::ColorChannel::Blue,
             }
         });
 
-        let generic_channel = control.generic_channel;
-
-        match control.control.unwrap() {
-            INTENSITY => Self::Intensity,
-            SHUTTER => Self::Shutter,
-            FOCUS => Self::Focus,
-            ZOOM => Self::Zoom,
-            FROST => Self::Frost,
-            COLOR_MIXER => {
+        match control.control() {
+            Intensity => Self::Intensity,
+            Shutter => Self::Shutter,
+            Focus => Self::Focus,
+            Zoom => Self::Zoom,
+            Frost => Self::Frost,
+            ColorMixer => {
                 if let Some(color) = color_mixer_channel {
                     Self::ColorMixer(color)
                 } else {
                     unreachable!("ColorMixer control without color channel")
                 }
             }
-            COLOR_WHEEL => Self::ColorWheel,
-            GOBO => Self::Gobo,
-            PAN => Self::Pan,
-            TILT => Self::Tilt,
-            PRISM => Self::Prism,
-            GENERIC => {
-                if let Some(generic) = generic_channel {
+            ColorWheel => Self::ColorWheel,
+            Gobo => Self::Gobo,
+            Pan => Self::Pan,
+            Tilt => Self::Tilt,
+            Prism => Self::Prism,
+            Generic => {
+                if let Some(generic) = control.generic_channel {
                     Self::Generic(generic)
                 } else {
                     unreachable!("Generic control without generic channel name")
                 }
             }
-            IRIS => Self::Iris,
+            Iris => Self::Iris,
         }
     }
 }

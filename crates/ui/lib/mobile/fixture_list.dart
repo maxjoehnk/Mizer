@@ -34,7 +34,9 @@ class _FixtureListState extends State<FixtureList> {
       body: StreamBuilder<Fixtures>(
           stream: _fixtures,
           builder: (context, fixturesSnapshot) {
-            var fixtures = fixturesSnapshot.data ?? Fixtures();
+            var fixtures = (fixturesSnapshot.data ?? Fixtures())
+                .fixtures
+                .sorted((a, b) => a.id.compareTo(b.id));
             return StreamBuilder<ProgrammerState>(
                 stream: _programmer,
                 builder: (context, programmerSnapshot) {
@@ -49,8 +51,7 @@ class _FixtureListState extends State<FixtureList> {
                         PanelActionModel(
                             disabled: !fixturesSnapshot.hasData,
                             label: "Select All",
-                            onClick: () => _programmerApi.selectFixtures(fixturesSnapshot
-                                .requireData.fixtures
+                            onClick: () => _programmerApi.selectFixtures(fixtures
                                 .map((f) => f.id)
                                 .map((id) => FixtureId(fixture: id))
                                 .toList())),
@@ -59,11 +60,19 @@ class _FixtureListState extends State<FixtureList> {
                             onClick: () => _programmerApi.clear(),
                             disabled: programmer.activeFixtures.isEmpty),
                         PanelActionModel(
-                            label: "Prev", disabled: programmer.activeFixtures.isEmpty),
+                            label: "Prev",
+                            disabled: programmer.activeFixtures.isEmpty,
+                            onClick: () => _programmerApi.prev()),
                         PanelActionModel(
-                            label: "Next", disabled: programmer.activeFixtures.isEmpty),
+                            label: "Next",
+                            disabled: programmer.activeFixtures.isEmpty,
+                            onClick: () => _programmerApi.next()),
+                        PanelActionModel(
+                            label: "Set",
+                            disabled: programmer.activeFixtures.isEmpty,
+                            onClick: () => _programmerApi.set()),
                       ],
-                      child: _child(fixtures.fixtures, programmer));
+                      child: _child(fixtures, programmer));
                 });
           }),
     );
@@ -79,7 +88,7 @@ class _FixtureListState extends State<FixtureList> {
 
   Widget _child(List<Fixture> fixtures, ProgrammerState programmerState) {
     return ListView(
-        children: fixtures.sorted((a, b) => a.id.compareTo(b.id)).map((fixture) {
+        children: fixtures.map((fixture) {
       var selected = programmerState.activeFixtures.contains(FixtureId(fixture: fixture.id));
       return ListTile(
         title: Text(fixture.name),

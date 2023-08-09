@@ -27,7 +27,7 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
 
     async fn subscribe_to_programmer(
         &self,
-        _: Request<SubscribeProgrammerRequest>,
+        _: Request<EmptyRequest>,
     ) -> Result<Response<Self::SubscribeToProgrammerStream>, Status> {
         let stream = self.state_stream().map(Ok).boxed();
 
@@ -37,7 +37,7 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
     async fn select_fixtures(
         &self,
         request: Request<SelectFixturesRequest>,
-    ) -> Result<Response<SelectFixturesResponse>, Status> {
+    ) -> Result<Response<EmptyResponse>, Status> {
         self.select_fixtures(request.into_inner().fixtures);
 
         Ok(Response::new(Default::default()))
@@ -46,13 +46,13 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
     async fn unselect_fixtures(
         &self,
         request: Request<UnselectFixturesRequest>,
-    ) -> Result<Response<UnselectFixturesResponse>, Status> {
+    ) -> Result<Response<EmptyResponse>, Status> {
         self.unselect_fixtures(request.into_inner().fixtures);
 
         Ok(Response::new(Default::default()))
     }
 
-    async fn clear(&self, _: Request<ClearRequest>) -> Result<Response<ClearResponse>, Status> {
+    async fn clear(&self, _: Request<EmptyRequest>) -> Result<Response<EmptyResponse>, Status> {
         self.clear();
 
         Ok(Response::new(Default::default()))
@@ -61,8 +61,26 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
     async fn highlight(
         &self,
         request: Request<HighlightRequest>,
-    ) -> Result<Response<HighlightResponse>, Status> {
+    ) -> Result<Response<EmptyResponse>, Status> {
         self.highlight(request.into_inner().highlight);
+
+        Ok(Response::new(Default::default()))
+    }
+
+    async fn next(&self, _: Request<EmptyRequest>) -> Result<Response<EmptyResponse>, Status> {
+        self.next();
+
+        Ok(Response::new(Default::default()))
+    }
+
+    async fn previous(&self, _: Request<EmptyRequest>) -> Result<Response<EmptyResponse>, Status> {
+        self.prev();
+
+        Ok(Response::new(Default::default()))
+    }
+
+    async fn set(&self, _: Request<EmptyRequest>) -> Result<Response<EmptyResponse>, Status> {
+        self.set();
 
         Ok(Response::new(Default::default()))
     }

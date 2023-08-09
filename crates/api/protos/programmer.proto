@@ -5,14 +5,14 @@ package mizer.programmer;
 import "fixtures.proto";
 
 service ProgrammerApi {
-  rpc SubscribeToProgrammer (SubscribeProgrammerRequest) returns (stream ProgrammerState) {}
-  rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
-  rpc UnselectFixtures (UnselectFixturesRequest) returns (UnselectFixturesResponse) {}
-  rpc Clear (ClearRequest) returns (ClearResponse) {}
-  rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
-}
-
-message SubscribeProgrammerRequest {
+  rpc SubscribeToProgrammer (EmptyRequest) returns (stream ProgrammerState) {}
+  rpc SelectFixtures (SelectFixturesRequest) returns (EmptyResponse) {}
+  rpc UnselectFixtures (UnselectFixturesRequest) returns (EmptyResponse) {}
+  rpc Clear (EmptyRequest) returns (EmptyResponse) {}
+  rpc Highlight (HighlightRequest) returns (EmptyResponse) {}
+  rpc Next (EmptyRequest) returns (EmptyResponse) {}
+  rpc Previous (EmptyRequest) returns (EmptyResponse) {}
+  rpc Set (EmptyRequest) returns (EmptyResponse) {}
 }
 
 message ProgrammerState {
@@ -68,15 +68,9 @@ message WriteEffectRateRequest {
   double effect_rate = 2;
 }
 
-message WriteEffectRateResponse {
-}
-
 message WriteEffectOffsetRequest {
   uint32 effect_id = 1;
   optional double effect_offset = 2;
-}
-
-message WriteEffectOffsetResponse {
 }
 
 message WriteControlRequest {
@@ -93,33 +87,21 @@ message WriteControlRequest {
   }
 }
 
-message WriteControlResponse {
-}
-
 message SelectFixturesRequest {
   repeated mizer.fixtures.FixtureId fixtures = 1;
-}
-
-message SelectFixturesResponse {
 }
 
 message UnselectFixturesRequest {
   repeated mizer.fixtures.FixtureId fixtures = 1;
 }
 
-message UnselectFixturesResponse {
+message EmptyRequest {
 }
-
-message ClearRequest {
-}
-message ClearResponse {
+message EmptyResponse {
 }
 
 message HighlightRequest {
   bool highlight = 1;
-}
-
-message HighlightResponse {
 }
 
 message StoreRequest {

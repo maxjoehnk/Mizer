@@ -42,7 +42,7 @@ class ProgrammerMobileApi extends ProgrammerApi {
 
   @override
   Future<void> clear() async {
-    await _client.clear(ClearRequest());
+    await _client.clear(EmptyRequest());
   }
 
   @override
@@ -81,20 +81,18 @@ class ProgrammerMobileApi extends ProgrammerApi {
   }
 
   @override
-  Future<void> next() {
-    // TODO: implement next
-    throw UnimplementedError();
+  Future<void> next() async {
+    await _client.next(EmptyRequest());
   }
 
   @override
   Stream<ProgrammerState> observe() {
-    return this._client.subscribeToProgrammer(SubscribeProgrammerRequest());
+    return this._client.subscribeToProgrammer(EmptyRequest());
   }
 
   @override
-  Future<void> prev() {
-    // TODO: implement prev
-    throw UnimplementedError();
+  Future<void> prev() async {
+    await _client.previous(EmptyRequest());
   }
 
   @override
@@ -121,9 +119,8 @@ class ProgrammerMobileApi extends ProgrammerApi {
   }
 
   @override
-  Future<void> set() {
-    // TODO: implement set
-    throw UnimplementedError();
+  Future<void> set() async {
+    await _client.set(EmptyRequest());
   }
 
   @override

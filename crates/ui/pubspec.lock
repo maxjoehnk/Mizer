@@ -561,8 +561,8 @@ packages:
     dependency: "direct main"
     description:
       path: nativeshell_dart
-      ref: "98ba14af"
-      resolved-ref: "98ba14afbcd5125475960b79e4e8f187eb8de8f4"
+      ref: d6ad54dd
+      resolved-ref: d6ad54dd86a2825703d90b540725637f21b717e5
       url: "https://github.com/maxjoehnk/nativeshell.git"
     source: git
     version: "0.1.16"

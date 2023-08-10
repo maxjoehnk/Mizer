@@ -245,6 +245,9 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      - name: Generate FFI bindings
+        run: make generate_bindings
+        working-directory: crates/ui
       - name: Build
         run: flutter build apk -t lib/mobile/main.dart
         working-directory: crates/ui

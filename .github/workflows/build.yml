@@ -254,5 +254,5 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: android-remote
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: crates/ui/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error

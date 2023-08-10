@@ -92,7 +92,7 @@ impl FixtureMode {
             .any(|f| f.controls.color_mixer.is_some())
             && controls.color_mixer.is_none()
         {
-            controls.color_mixer = Some(ColorGroup {
+            controls.color_mixer = Some(ColorGroup::Rgb {
                 red: FixtureControlChannel::Delegate,
                 green: FixtureControlChannel::Delegate,
                 blue: FixtureControlChannel::Delegate,
@@ -180,12 +180,29 @@ impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {
         Self {
             intensity: controls.intensity.map(FixtureControlChannel::Channel),
             shutter: controls.shutter.map(FixtureControlChannel::Channel),
-            color_mixer: controls.color_mixer.map(|color| ColorGroup {
-                red: FixtureControlChannel::Channel(color.red),
-                green: FixtureControlChannel::Channel(color.green),
-                blue: FixtureControlChannel::Channel(color.blue),
-                white: color.white.map(FixtureControlChannel::Channel),
-                amber: color.amber.map(FixtureControlChannel::Channel),
+            color_mixer: controls.color_mixer.map(|color| match color {
+                ColorGroup::Rgb {
+                    red,
+                    green,
+                    blue,
+                    white,
+                    amber,
+                } => ColorGroup::Rgb {
+                    red: FixtureControlChannel::Channel(red),
+                    green: FixtureControlChannel::Channel(green),
+                    blue: FixtureControlChannel::Channel(blue),
+                    white: white.map(FixtureControlChannel::Channel),
+                    amber: amber.map(FixtureControlChannel::Channel),
+                },
+                ColorGroup::Cmy {
+                    cyan,
+                    magenta,
+                    yellow,
+                } => ColorGroup::Cmy {
+                    cyan: FixtureControlChannel::Channel(cyan),
+                    magenta: FixtureControlChannel::Channel(magenta),
+                    yellow: FixtureControlChannel::Channel(yellow),
+                },
             }),
             color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
                 channel: FixtureControlChannel::Channel(wheel.channel),
@@ -229,25 +246,53 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
             shutter: controls
                 .shutter
                 .and_then(FixtureControlChannel::into_channel),
-            color_mixer: controls.color_mixer.and_then(|color| {
-                if let (
-                    FixtureControlChannel::Channel(red),
-                    FixtureControlChannel::Channel(green),
-                    FixtureControlChannel::Channel(blue),
-                ) = (color.red, color.green, color.blue)
-                {
-                    let amber = color.amber.and_then(|c| c.into_channel());
-                    let white = color.white.and_then(|c| c.into_channel());
+            color_mixer: controls.color_mixer.and_then(|color| match color {
+                ColorGroup::Rgb {
+                    red,
+                    green,
+                    blue,
+                    amber,
+                    white,
+                } => {
+                    if let (
+                        FixtureControlChannel::Channel(red),
+                        FixtureControlChannel::Channel(green),
+                        FixtureControlChannel::Channel(blue),
+                    ) = (red, green, blue)
+                    {
+                        let amber = amber.and_then(|c| c.into_channel());
+                        let white = white.and_then(|c| c.into_channel());
 
-                    Some(ColorGroup {
-                        red,
-                        green,
-                        blue,
-                        amber,
-                        white,
-                    })
-                } else {
-                    None
+                        Some(ColorGroup::Rgb {
+                            red,
+                            green,
+                            blue,
+                            amber,
+                            white,
+                        })
+                    } else {
+                        None
+                    }
+                }
+                ColorGroup::Cmy {
+                    yellow,
+                    magenta,
+                    cyan,
+                } => {
+                    if let (
+                        FixtureControlChannel::Channel(yellow),
+                        FixtureControlChannel::Channel(magenta),
+                        FixtureControlChannel::Channel(cyan),
+                    ) = (yellow, magenta, cyan)
+                    {
+                        Some(ColorGroup::Cmy {
+                            yellow,
+                            magenta,
+                            cyan,
+                        })
+                    } else {
+                        None
+                    }
                 }
             }),
             color_wheel: controls.color_wheel.and_then(|color_wheel| {
@@ -318,12 +363,29 @@ impl From<FixtureControls<String>> for FixtureControls<SubFixtureControlChannel>
         Self {
             intensity: controls.intensity.map(SubFixtureControlChannel::Channel),
             shutter: controls.shutter.map(SubFixtureControlChannel::Channel),
-            color_mixer: controls.color_mixer.map(|color| ColorGroup {
-                red: SubFixtureControlChannel::Channel(color.red),
-                green: SubFixtureControlChannel::Channel(color.green),
-                blue: SubFixtureControlChannel::Channel(color.blue),
-                white: color.white.map(SubFixtureControlChannel::Channel),
-                amber: color.amber.map(SubFixtureControlChannel::Channel),
+            color_mixer: controls.color_mixer.map(|color| match color {
+                ColorGroup::Rgb {
+                    red,
+                    green,
+                    blue,
+                    white,
+                    amber,
+                } => ColorGroup::Rgb {
+                    red: SubFixtureControlChannel::Channel(red),
+                    green: SubFixtureControlChannel::Channel(green),
+                    blue: SubFixtureControlChannel::Channel(blue),
+                    white: white.map(SubFixtureControlChannel::Channel),
+                    amber: amber.map(SubFixtureControlChannel::Channel),
+                },
+                ColorGroup::Cmy {
+                    yellow,
+                    magenta,
+                    cyan,
+                } => ColorGroup::Cmy {
+                    yellow: SubFixtureControlChannel::Channel(yellow),
+                    magenta: SubFixtureControlChannel::Channel(magenta),
+                    cyan: SubFixtureControlChannel::Channel(cyan),
+                },
             }),
             color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
                 channel: SubFixtureControlChannel::Channel(wheel.channel),
@@ -450,12 +512,19 @@ impl IChannelType for SubFixtureControlChannel {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ColorGroup<TChannel> {
-    pub red: TChannel,
-    pub green: TChannel,
-    pub blue: TChannel,
-    pub amber: Option<TChannel>,
-    pub white: Option<TChannel>,
+pub enum ColorGroup<TChannel> {
+    Rgb {
+        red: TChannel,
+        green: TChannel,
+        blue: TChannel,
+        amber: Option<TChannel>,
+        white: Option<TChannel>,
+    },
+    Cmy {
+        cyan: TChannel,
+        magenta: TChannel,
+        yellow: TChannel,
+    },
 }
 
 pub struct ColorGroupBuilder<TChannel> {
@@ -464,6 +533,9 @@ pub struct ColorGroupBuilder<TChannel> {
     blue: Option<TChannel>,
     amber: Option<TChannel>,
     white: Option<TChannel>,
+    cyan: Option<TChannel>,
+    magenta: Option<TChannel>,
+    yellow: Option<TChannel>,
 }
 
 impl<TChannel> Default for ColorGroupBuilder<TChannel> {
@@ -474,6 +546,9 @@ impl<TChannel> Default for ColorGroupBuilder<TChannel> {
             blue: None,
             amber: None,
             white: None,
+            cyan: None,
+            magenta: None,
+            yellow: None,
         }
     }
 }
@@ -503,14 +578,34 @@ impl<TChannel> ColorGroupBuilder<TChannel> {
         self.white = channel.into();
     }
 
+    pub fn cyan(&mut self, channel: TChannel) {
+        self.cyan = channel.into();
+    }
+
+    pub fn magenta(&mut self, channel: TChannel) {
+        self.magenta = channel.into();
+    }
+
+    pub fn yellow(&mut self, channel: TChannel) {
+        self.yellow = channel.into();
+    }
+
     pub fn build(self) -> Option<ColorGroup<TChannel>> {
-        match (self.red, self.green, self.blue) {
-            (Some(red), Some(green), Some(blue)) => ColorGroup {
+        let rgb = self.red.zip(self.green).zip(self.blue);
+        let cmy = self.cyan.zip(self.magenta).zip(self.yellow);
+        match (rgb, cmy) {
+            (Some(((red, green), blue)), _) => ColorGroup::Rgb {
                 red,
                 green,
                 blue,
                 amber: self.amber,
                 white: self.white,
+            }
+            .into(),
+            (_, Some(((cyan, magenta), yellow))) => ColorGroup::Cmy {
+                cyan,
+                magenta,
+                yellow,
             }
             .into(),
             _ => None,

@@ -1,7 +1,7 @@
-use base64::prelude::*;
 use std::collections::HashMap;
 use std::str::FromStr;
 
+use base64::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::*;
@@ -13,6 +13,9 @@ const COLOR_GREEN: &str = "#00ff00";
 const COLOR_BLUE: &str = "#0000ff";
 const COLOR_WHITE: &str = "#ffffff";
 const COLOR_AMBER: &str = "#ffbf00";
+const COLOR_CYAN: &str = "#0ff0fe";
+const COLOR_MAGENTA: &str = "#ff00ff";
+const COLOR_YELLOW: &str = "#ffff00";
 
 const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
 
@@ -651,6 +654,15 @@ fn group_controls(
             Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
                 color_group.amber(name);
             }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_CYAN => {
+                color_group.cyan(name);
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_MAGENTA => {
+                color_group.magenta(name);
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_YELLOW => {
+                color_group.yellow(name);
+            }
             Some(Capability::Pan {
                 angle_start,
                 angle_end,
@@ -770,7 +782,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),
@@ -835,7 +847,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),
@@ -900,7 +912,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),

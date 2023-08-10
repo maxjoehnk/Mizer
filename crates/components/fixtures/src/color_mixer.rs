@@ -1,6 +1,7 @@
+use palette::{FromColor, Hsv, Srgb};
+
 use crate::definition::ColorGroup;
 use crate::fixture::IChannelType;
-use palette::{FromColor, Hsv, Srgb};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct ColorMixer {
@@ -72,6 +73,21 @@ impl ColorMixer {
             white: hsv.value - hsv.saturation,
         }
     }
+
+    pub fn cmy(&self) -> Cmy {
+        profiling::scope!("ColorMixer::cmy");
+        let rgb = self.rgb();
+
+        let cyan = 1.0 - rgb.red;
+        let magenta = 1.0 - rgb.green;
+        let yellow = 1.0 - rgb.blue;
+
+        Cmy {
+            cyan,
+            magenta,
+            yellow,
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -89,6 +105,13 @@ pub struct Rgbw {
     pub white: f64,
 }
 
+#[derive(Debug, Clone, Copy, Default)]
+pub struct Cmy {
+    pub cyan: f64,
+    pub magenta: f64,
+    pub yellow: f64,
+}
+
 pub(crate) fn update_color_mixer<TChannel: IChannelType>(
     color_mixer: Option<ColorMixer>,
     color_group: Option<ColorGroup<TChannel>>,
@@ -103,9 +126,15 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
         "Trying to update color mixer without color group"
     );
     if let Some(color_mixer) = color_mixer {
-        if let Some(color_group) = color_group {
-            let rgb = if let Some(white_channel) = color_group.white.and_then(|c| c.into_channel())
-            {
+        if let Some(ColorGroup::Rgb {
+            red,
+            green,
+            blue,
+            white,
+            amber,
+        }) = color_group
+        {
+            let rgb = if let Some(white_channel) = white.and_then(|c| c.into_channel()) {
                 let value = color_mixer.rgbw();
                 write(white_channel, value.white);
 
@@ -117,14 +146,30 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             } else {
                 color_mixer.rgb()
             };
-            if let Some(channel) = color_group.red.into_channel() {
+            if let Some(channel) = red.into_channel() {
                 write(channel, rgb.red);
             }
-            if let Some(channel) = color_group.green.into_channel() {
+            if let Some(channel) = green.into_channel() {
                 write(channel, rgb.green);
             }
-            if let Some(channel) = color_group.blue.into_channel() {
+            if let Some(channel) = blue.into_channel() {
                 write(channel, rgb.blue);
+            }
+        } else if let Some(ColorGroup::Cmy {
+            cyan,
+            magenta,
+            yellow,
+        }) = color_group
+        {
+            let cmy = color_mixer.cmy();
+            if let Some(channel) = cyan.into_channel() {
+                write(channel, cmy.cyan);
+            }
+            if let Some(channel) = magenta.into_channel() {
+                write(channel, cmy.magenta);
+            }
+            if let Some(channel) = yellow.into_channel() {
+                write(channel, cmy.yellow);
             }
         }
     }
@@ -132,8 +177,9 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use test_case::test_case;
+
+    use super::*;
 
     #[test_case(1f64, 1f64, 1f64)]
     #[test_case(0f64, 1f64, 1f64)]

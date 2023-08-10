@@ -1,3 +1,5 @@
+use test_case::test_case;
+
 use mizer_fixtures::definition::{
     AxisGroup, ChannelResolution, ColorChannel, ColorGroup, ColorWheelGroup,
     FixtureChannelDefinition, FixtureControlChannel, FixtureControls, FixtureDefinition,
@@ -5,7 +7,6 @@ use mizer_fixtures::definition::{
     SubFixtureDefinition,
 };
 use mizer_fixtures::fixture::{Fixture, IFixtureMut};
-use test_case::test_case;
 
 #[test_case(1f64, 255, FixtureFaderControl::Intensity, "Brightness")]
 #[test_case(0f64, 0, FixtureFaderControl::Intensity, "Intensity")]
@@ -34,7 +35,7 @@ fn write_fader_control_should_output_given_value(
 #[test_case((0f64, 0f64, 1f64), (0, 0, 255))]
 fn write_fader_control_should_output_mixed_colors(value: (f64, f64, f64), expected: (u8, u8, u8)) {
     let controls = FixtureControls {
-        color_mixer: Some(ColorGroup {
+        color_mixer: Some(ColorGroup::Rgb {
             red: "Red".to_string(),
             green: "Green".to_string(),
             blue: "Blue".to_string(),
@@ -190,7 +191,7 @@ fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
     expected: (u8, u8, u8),
 ) {
     let controls = FixtureControls {
-        color_mixer: Some(ColorGroup {
+        color_mixer: Some(ColorGroup::Rgb {
             red: FixtureControlChannel::Delegate,
             green: FixtureControlChannel::Delegate,
             blue: FixtureControlChannel::Delegate,
@@ -204,7 +205,7 @@ fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
     let mut channels = vec![];
     for i in 0..count {
         let sub_fixture_controls = FixtureControls {
-            color_mixer: Some(ColorGroup {
+            color_mixer: Some(ColorGroup::Rgb {
                 red: SubFixtureControlChannel::Channel(format!("Red{i}")),
                 green: SubFixtureControlChannel::Channel(format!("Green{i}")),
                 blue: SubFixtureControlChannel::Channel(format!("Blue{i}")),

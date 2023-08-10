@@ -9,7 +9,7 @@ anyhow = "1"
 log = "0.4"
 mizer-api = { path = "../api" }
 smol = "1.3"
-nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "98ba14af" }
+nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "d6ad54dd" }
 mizer-util = { path = "../util" }
 mizer-ui-ffi = { path = "ffi" }
 futures = "0.3"
@@ -17,4 +17,5 @@ pinboard = "2.2"
 profiling = "1"
 
 [build-dependencies]
-nativeshell_build = { git = "https://github.com/maxjoehnk/nativeshell", rev = "98ba14af" }
+nativeshell_build = { git = "https://github.com/maxjoehnk/nativeshell", rev = "d6ad54dd" }
+

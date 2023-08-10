@@ -235,3 +235,17 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  build-android-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Build
+        run: flutter build apk -t lib/mobile/main.dart
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android-remote
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error

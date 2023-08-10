@@ -87,6 +87,7 @@ RUN apt-get update && \
       libmfx-dev \
       libvorbis-dev \
       libwavpack-dev \
+      protobuf-compiler \
       yasm
 
 FROM base as build
@@ -102,5 +103,7 @@ FROM base
 WORKDIR /app
 
 COPY --from=build /app /app/
+
+EXPOSE 50000
 
 ENTRYPOINT ["/app/mizer"]

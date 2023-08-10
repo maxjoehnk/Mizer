@@ -47,6 +47,7 @@ RUN apt-get update && \
       libvpx-dev \
       libmp3lame-dev \
       libopus-dev \
+      protobuf-compiler \
       yasm && \
     rm -rf /var/lib/apt/lists/*
 

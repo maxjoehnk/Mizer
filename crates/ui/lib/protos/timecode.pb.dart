@@ -9,35 +9,6 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class NoContentResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NoContentResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.timecode'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  NoContentResponse._() : super();
-  factory NoContentResponse() => create();
-  factory NoContentResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NoContentResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  NoContentResponse clone() => NoContentResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  NoContentResponse copyWith(void Function(NoContentResponse) updates) => super.copyWith((message) => updates(message as NoContentResponse)) as NoContentResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static NoContentResponse create() => NoContentResponse._();
-  NoContentResponse createEmptyInstance() => create();
-  static $pb.PbList<NoContentResponse> createRepeated() => $pb.PbList<NoContentResponse>();
-  @$core.pragma('dart2js:noInline')
-  static NoContentResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NoContentResponse>(create);
-  static NoContentResponse? _defaultInstance;
-}
-
 class AddTimecodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddTimecodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.timecode'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')

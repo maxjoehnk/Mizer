@@ -2,18 +2,6 @@ syntax = "proto3";
 
 package mizer.timecode;
 
-service TimecodeApi {
-  rpc AddTimecode (AddTimecodeRequest) returns (NoContentResponse);
-  rpc RenameTimecode (RenameTimecodeRequest) returns (NoContentResponse);
-  rpc DeleteTimecode (DeleteTimecodeRequest) returns (NoContentResponse);
-  rpc AddTimecodeControl (AddTimecodeControlRequest) returns (NoContentResponse);
-  rpc RenameTimecodeControl (RenameTimecodeControlRequest) returns (NoContentResponse);
-  rpc DeleteTimecodeControl (DeleteTimecodeControlRequest) returns (NoContentResponse);
-}
-
-message NoContentResponse {
-}
-
 message AddTimecodeRequest {
   string name = 1;
 }

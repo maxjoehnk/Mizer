@@ -2,7 +2,7 @@ use mizer_timecode::commands::*;
 use mizer_timecode::TimecodeManager;
 pub use mizer_timecode::TimecodeStateAccess;
 
-use crate::models::timecode::*;
+use crate::proto::timecode::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]

@@ -2,14 +2,6 @@ syntax = "proto3";
 
 package mizer.settings;
 
-service SettingsApi {
-  rpc LoadSettings (RequestSettings) returns (Settings) {}
-  rpc SaveSettings (Settings) returns (Settings) {}
-}
-
-message RequestSettings {
-}
-
 message Settings {
   Hotkeys hotkeys = 1;
   PathSettings paths = 2;

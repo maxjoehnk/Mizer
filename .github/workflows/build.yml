@@ -235,3 +235,24 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  build-android-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Generate FFI bindings
+        run: make generate_bindings
+        working-directory: crates/ui
+      - name: Build
+        run: flutter build apk -t lib/mobile/main.dart
+        working-directory: crates/ui
+      - uses: actions/upload-artifact@v3
+        with:
+          name: android-remote
+          path: crates/ui/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error

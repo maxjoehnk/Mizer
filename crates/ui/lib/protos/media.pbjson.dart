@@ -21,20 +21,6 @@ const MediaType$json = const {
 
 /// Descriptor for `MediaType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List mediaTypeDescriptor = $convert.base64Decode('CglNZWRpYVR5cGUSCQoFSU1BR0UQABIJCgVBVURJTxABEgkKBVZJREVPEAISCgoGVkVDVE9SEAM=');
-@$core.Deprecated('Use getMediaTagsDescriptor instead')
-const GetMediaTags$json = const {
-  '1': 'GetMediaTags',
-};
-
-/// Descriptor for `GetMediaTags`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getMediaTagsDescriptor = $convert.base64Decode('CgxHZXRNZWRpYVRhZ3M=');
-@$core.Deprecated('Use getMediaRequestDescriptor instead')
-const GetMediaRequest$json = const {
-  '1': 'GetMediaRequest',
-};
-
-/// Descriptor for `GetMediaRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getMediaRequestDescriptor = $convert.base64Decode('Cg9HZXRNZWRpYVJlcXVlc3Q=');
 @$core.Deprecated('Use createMediaTagDescriptor instead')
 const CreateMediaTag$json = const {
   '1': 'CreateMediaTag',

@@ -1,4 +1,4 @@
-use crate::models::settings as models;
+use crate::proto::settings as models;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 

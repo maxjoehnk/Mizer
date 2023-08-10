@@ -6,6 +6,7 @@ use anyhow::Context;
 use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
+use mizer_api::start_remote_api;
 use mizer_command_executor::CommandExecutorModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
@@ -22,7 +23,7 @@ use mizer_protocol_osc::module::OscModule;
 use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
-use mizer_session::SessionState;
+use mizer_session::{Session, SessionState};
 use mizer_settings::{Settings, SettingsManager};
 use mizer_timecode::{TimecodeManager, TimecodeModule};
 use mizer_wgpu::{window::WindowModule, WgpuModule};
@@ -85,6 +86,10 @@ pub fn build_runtime(
         effect_engine,
         timecode_manager,
     );
+
+    let remote_api_port = start_remote_api(handlers.clone())?;
+
+    Session::new(remote_api_port)?;
 
     let project_file = flags.file.clone();
     let mut mizer = Mizer {

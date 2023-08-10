@@ -1,6 +1,6 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::LayoutsHandler;
-use mizer_api::models::layouts::*;
+use mizer_api::proto::layouts::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, LayoutRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
@@ -209,8 +209,9 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     }
 
     fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {
+        let node_type = req.node_type();
         self.handler
-            .add_control(req.layout_id, req.node_type.unwrap(), req.position.unwrap())
+            .add_control(req.layout_id, node_type, req.position.unwrap())
     }
 
     fn add_control_for_node(&self, req: AddExistingControlRequest) -> anyhow::Result<()> {

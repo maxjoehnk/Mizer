@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use getSequencesRequestDescriptor instead')
-const GetSequencesRequest$json = const {
-  '1': 'GetSequencesRequest',
-};
-
-/// Descriptor for `GetSequencesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getSequencesRequestDescriptor = $convert.base64Decode('ChNHZXRTZXF1ZW5jZXNSZXF1ZXN0');
 @$core.Deprecated('Use getSequenceRequestDescriptor instead')
 const GetSequenceRequest$json = const {
   '1': 'GetSequenceRequest',
@@ -25,13 +18,6 @@ const GetSequenceRequest$json = const {
 
 /// Descriptor for `GetSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getSequenceRequestDescriptor = $convert.base64Decode('ChJHZXRTZXF1ZW5jZVJlcXVlc3QSGgoIc2VxdWVuY2UYASABKA1SCHNlcXVlbmNl');
-@$core.Deprecated('Use addSequenceRequestDescriptor instead')
-const AddSequenceRequest$json = const {
-  '1': 'AddSequenceRequest',
-};
-
-/// Descriptor for `AddSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List addSequenceRequestDescriptor = $convert.base64Decode('ChJBZGRTZXF1ZW5jZVJlcXVlc3Q=');
 @$core.Deprecated('Use deleteSequenceRequestDescriptor instead')
 const DeleteSequenceRequest$json = const {
   '1': 'DeleteSequenceRequest',
@@ -172,13 +158,6 @@ const SequenceNameRequest$json = const {
 
 /// Descriptor for `SequenceNameRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sequenceNameRequestDescriptor = $convert.base64Decode('ChNTZXF1ZW5jZU5hbWVSZXF1ZXN0EhoKCHNlcXVlbmNlGAEgASgNUghzZXF1ZW5jZRISCgRuYW1lGAIgASgJUgRuYW1l');
-@$core.Deprecated('Use emptyResponseDescriptor instead')
-const EmptyResponse$json = const {
-  '1': 'EmptyResponse',
-};
-
-/// Descriptor for `EmptyResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List emptyResponseDescriptor = $convert.base64Decode('Cg1FbXB0eVJlc3BvbnNl');
 @$core.Deprecated('Use sequencesDescriptor instead')
 const Sequences$json = const {
   '1': 'Sequences',

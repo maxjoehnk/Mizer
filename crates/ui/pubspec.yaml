@@ -33,6 +33,7 @@ dependencies:
   from_css_color: ^2.0.0
   ffi: ^2.0.1
   filesize: ^2.0.1
+  multicast_dns: ^0.3.0
 
 dev_dependencies:
   flutter_test:

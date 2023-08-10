@@ -152,35 +152,6 @@ class DuplicateNodeRequest extends $pb.GeneratedMessage {
   void clearParent() => clearField(2);
 }
 
-class NodesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  NodesRequest._() : super();
-  factory NodesRequest() => create();
-  factory NodesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NodesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  NodesRequest clone() => NodesRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  NodesRequest copyWith(void Function(NodesRequest) updates) => super.copyWith((message) => updates(message as NodesRequest)) as NodesRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static NodesRequest create() => NodesRequest._();
-  NodesRequest createEmptyInstance() => create();
-  static $pb.PbList<NodesRequest> createRepeated() => $pb.PbList<NodesRequest>();
-  @$core.pragma('dart2js:noInline')
-  static NodesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodesRequest>(create);
-  static NodesRequest? _defaultInstance;
-}
-
 class WriteControl extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -254,35 +225,6 @@ class WriteControl extends $pb.GeneratedMessage {
   $core.bool hasValue() => $_has(2);
   @$pb.TagNumber(3)
   void clearValue() => clearField(3);
-}
-
-class WriteResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  WriteResponse._() : super();
-  factory WriteResponse() => create();
-  factory WriteResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  WriteResponse clone() => WriteResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  WriteResponse copyWith(void Function(WriteResponse) updates) => super.copyWith((message) => updates(message as WriteResponse)) as WriteResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static WriteResponse create() => WriteResponse._();
-  WriteResponse createEmptyInstance() => create();
-  static $pb.PbList<WriteResponse> createRepeated() => $pb.PbList<WriteResponse>();
-  @$core.pragma('dart2js:noInline')
-  static WriteResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteResponse>(create);
-  static WriteResponse? _defaultInstance;
 }
 
 class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
@@ -411,35 +353,6 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
   NodePosition ensurePosition() => $_ensure(1);
 }
 
-class MoveNodeResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  MoveNodeResponse._() : super();
-  factory MoveNodeResponse() => create();
-  factory MoveNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MoveNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  MoveNodeResponse clone() => MoveNodeResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MoveNodeResponse copyWith(void Function(MoveNodeResponse) updates) => super.copyWith((message) => updates(message as MoveNodeResponse)) as MoveNodeResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static MoveNodeResponse create() => MoveNodeResponse._();
-  MoveNodeResponse createEmptyInstance() => create();
-  static $pb.PbList<MoveNodeResponse> createRepeated() => $pb.PbList<MoveNodeResponse>();
-  @$core.pragma('dart2js:noInline')
-  static MoveNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MoveNodeResponse>(create);
-  static MoveNodeResponse? _defaultInstance;
-}
-
 class ShowNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShowNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -517,35 +430,6 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
   void clearParent() => clearField(3);
 }
 
-class ShowNodeResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShowNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  ShowNodeResponse._() : super();
-  factory ShowNodeResponse() => create();
-  factory ShowNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShowNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShowNodeResponse clone() => ShowNodeResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShowNodeResponse copyWith(void Function(ShowNodeResponse) updates) => super.copyWith((message) => updates(message as ShowNodeResponse)) as ShowNodeResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ShowNodeResponse create() => ShowNodeResponse._();
-  ShowNodeResponse createEmptyInstance() => create();
-  static $pb.PbList<ShowNodeResponse> createRepeated() => $pb.PbList<ShowNodeResponse>();
-  @$core.pragma('dart2js:noInline')
-  static ShowNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShowNodeResponse>(create);
-  static ShowNodeResponse? _defaultInstance;
-}
-
 class RenameNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -607,35 +491,6 @@ class RenameNodeRequest extends $pb.GeneratedMessage {
   void clearNewName() => clearField(2);
 }
 
-class RenameNodeResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  RenameNodeResponse._() : super();
-  factory RenameNodeResponse() => create();
-  factory RenameNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RenameNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  RenameNodeResponse clone() => RenameNodeResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  RenameNodeResponse copyWith(void Function(RenameNodeResponse) updates) => super.copyWith((message) => updates(message as RenameNodeResponse)) as RenameNodeResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static RenameNodeResponse create() => RenameNodeResponse._();
-  RenameNodeResponse createEmptyInstance() => create();
-  static $pb.PbList<RenameNodeResponse> createRepeated() => $pb.PbList<RenameNodeResponse>();
-  @$core.pragma('dart2js:noInline')
-  static RenameNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameNodeResponse>(create);
-  static RenameNodeResponse? _defaultInstance;
-}
-
 class GroupNodesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes')
@@ -691,35 +546,6 @@ class GroupNodesRequest extends $pb.GeneratedMessage {
   void clearParent() => clearField(2);
 }
 
-class GroupNodesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  GroupNodesResponse._() : super();
-  factory GroupNodesResponse() => create();
-  factory GroupNodesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GroupNodesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GroupNodesResponse clone() => GroupNodesResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GroupNodesResponse copyWith(void Function(GroupNodesResponse) updates) => super.copyWith((message) => updates(message as GroupNodesResponse)) as GroupNodesResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GroupNodesResponse create() => GroupNodesResponse._();
-  GroupNodesResponse createEmptyInstance() => create();
-  static $pb.PbList<GroupNodesResponse> createRepeated() => $pb.PbList<GroupNodesResponse>();
-  @$core.pragma('dart2js:noInline')
-  static GroupNodesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupNodesResponse>(create);
-  static GroupNodesResponse? _defaultInstance;
-}
-
 class DeleteNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -767,35 +593,6 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
   void clearPath() => clearField(1);
 }
 
-class DeleteNodeResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  DeleteNodeResponse._() : super();
-  factory DeleteNodeResponse() => create();
-  factory DeleteNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DeleteNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  DeleteNodeResponse clone() => DeleteNodeResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  DeleteNodeResponse copyWith(void Function(DeleteNodeResponse) updates) => super.copyWith((message) => updates(message as DeleteNodeResponse)) as DeleteNodeResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static DeleteNodeResponse create() => DeleteNodeResponse._();
-  DeleteNodeResponse createEmptyInstance() => create();
-  static $pb.PbList<DeleteNodeResponse> createRepeated() => $pb.PbList<DeleteNodeResponse>();
-  @$core.pragma('dart2js:noInline')
-  static DeleteNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteNodeResponse>(create);
-  static DeleteNodeResponse? _defaultInstance;
-}
-
 class HideNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HideNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -841,35 +638,6 @@ class HideNodeRequest extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(0);
   @$pb.TagNumber(1)
   void clearPath() => clearField(1);
-}
-
-class HideNodeResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HideNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  HideNodeResponse._() : super();
-  factory HideNodeResponse() => create();
-  factory HideNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HideNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  HideNodeResponse clone() => HideNodeResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  HideNodeResponse copyWith(void Function(HideNodeResponse) updates) => super.copyWith((message) => updates(message as HideNodeResponse)) as HideNodeResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static HideNodeResponse create() => HideNodeResponse._();
-  HideNodeResponse createEmptyInstance() => create();
-  static $pb.PbList<HideNodeResponse> createRepeated() => $pb.PbList<HideNodeResponse>();
-  @$core.pragma('dart2js:noInline')
-  static HideNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HideNodeResponse>(create);
-  static HideNodeResponse? _defaultInstance;
 }
 
 class Nodes extends $pb.GeneratedMessage {

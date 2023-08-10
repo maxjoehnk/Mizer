@@ -32,15 +32,15 @@ mod sequencer;
 mod transport;
 
 pub trait MethodCallExt {
-    fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;
+    fn arguments<T: mizer_api::Message + Default>(&self) -> anyhow::Result<T>;
 }
 
 pub trait MethodReplyExt {
-    fn respond_result<M: protobuf::Message>(self, message: anyhow::Result<M>);
+    fn respond_result<M: mizer_api::Message>(self, message: anyhow::Result<M>);
 
     fn respond_unit_result(self, response: anyhow::Result<()>);
 
-    fn respond_msg<M: protobuf::Message>(self, message: M);
+    fn respond_msg<M: mizer_api::Message>(self, message: M);
 
     fn respond_error(self, err: anyhow::Error);
 
@@ -48,9 +48,9 @@ pub trait MethodReplyExt {
 }
 
 impl MethodCallExt for MethodCall<Value> {
-    fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T> {
+    fn arguments<T: mizer_api::Message + Default>(&self) -> anyhow::Result<T> {
         if let Value::U8List(ref buffer) = self.args {
-            let arg = T::parse_from_bytes(buffer)?;
+            let arg = T::decode(buffer.as_slice())?;
 
             Ok(arg)
         } else {
@@ -60,9 +60,8 @@ impl MethodCallExt for MethodCall<Value> {
 }
 
 impl MethodReplyExt for MethodCallReply<Value> {
-    fn respond_result<M: protobuf::Message>(self, response: anyhow::Result<M>) {
-        let response: anyhow::Result<_> =
-            response.and_then(|msg| msg.write_to_bytes().map_err(anyhow::Error::from));
+    fn respond_result<M: mizer_api::Message>(self, response: anyhow::Result<M>) {
+        let response: anyhow::Result<_> = response.map(|msg| msg.encode_to_vec());
 
         match response {
             Ok(response) => self.send_ok(Value::U8List(response)),
@@ -77,7 +76,7 @@ impl MethodReplyExt for MethodCallReply<Value> {
         }
     }
 
-    fn respond_msg<M: protobuf::Message>(self, message: M) {
+    fn respond_msg<M: mizer_api::Message>(self, message: M) {
         self.respond_result(Ok(message))
     }
 

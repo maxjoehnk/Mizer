@@ -1,22 +1,6 @@
 syntax = "proto3";
 
-package mizer;
-
-service ConnectionsApi {
-  rpc GetConnections (GetConnectionsRequest) returns (Connections) {}
-
-  rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
-  rpc MonitorMidi (MonitorMidiRequest) returns (stream MonitorMidiResponse) {}
-  rpc MonitorOsc (MonitorOscRequest) returns (stream MonitorOscResponse) {}
-
-  rpc AddArtnetConnection (ArtnetConfig) returns (Connections) {}
-  rpc AddSacnConnection (SacnConfig) returns (Connections) {}
-
-  rpc GetMidiDeviceProfiles (GetDeviceProfilesRequest) returns (MidiDeviceProfiles) {}
-
-  rpc DeleteConnection (Connection) returns (Connections) {}
-  rpc ConfigureConnection (ConfigureConnectionRequest) returns (Connection) {}
-}
+package mizer.connections;
 
 message MonitorDmxRequest {
   string output_id = 1;

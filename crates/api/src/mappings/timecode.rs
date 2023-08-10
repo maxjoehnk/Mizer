@@ -1,4 +1,4 @@
-use crate::models::timecode::*;
+use crate::proto::timecode::*;
 
 impl From<mizer_timecode::TimecodeTrack> for Timecode {
     fn from(value: mizer_timecode::TimecodeTrack) -> Self {

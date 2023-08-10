@@ -50,6 +50,9 @@ RUN apt-get update && \
       yasm && \
     rm -rf /var/lib/apt/lists/*
 
+ADD https://github.com/protocolbuffers/protobuf/releases/download/v23.4/protoc-23.4-linux-x86_64.zip /tmp/protoc.zip
+RUN unzip /tmp/protoc.zip -d /usr/local
+
 RUN cargo install cbindgen
 
 ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.11-stable.tar.xz /

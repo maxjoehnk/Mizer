@@ -20,25 +20,18 @@ const TransportState$json = const {
 
 /// Descriptor for `TransportState`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List transportStateDescriptor = $convert.base64Decode('Cg5UcmFuc3BvcnRTdGF0ZRILCgdTVE9QUEVEEAASCgoGUEFVU0VEEAESCwoHUExBWUlORxAC');
-@$core.Deprecated('Use subscribeTransportRequestDescriptor instead')
-const SubscribeTransportRequest$json = const {
-  '1': 'SubscribeTransportRequest',
-};
-
-/// Descriptor for `SubscribeTransportRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List subscribeTransportRequestDescriptor = $convert.base64Decode('ChlTdWJzY3JpYmVUcmFuc3BvcnRSZXF1ZXN0');
 @$core.Deprecated('Use transportDescriptor instead')
 const Transport$json = const {
   '1': 'Transport',
   '2': const [
-    const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.TransportState', '10': 'state'},
+    const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.transport.TransportState', '10': 'state'},
     const {'1': 'speed', '3': 2, '4': 1, '5': 1, '10': 'speed'},
-    const {'1': 'timecode', '3': 3, '4': 1, '5': 11, '6': '.mizer.Timecode', '10': 'timecode'},
+    const {'1': 'timecode', '3': 3, '4': 1, '5': 11, '6': '.mizer.transport.Timecode', '10': 'timecode'},
   ],
 };
 
 /// Descriptor for `Transport`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List transportDescriptor = $convert.base64Decode('CglUcmFuc3BvcnQSKwoFc3RhdGUYASABKA4yFS5taXplci5UcmFuc3BvcnRTdGF0ZVIFc3RhdGUSFAoFc3BlZWQYAiABKAFSBXNwZWVkEisKCHRpbWVjb2RlGAMgASgLMg8ubWl6ZXIuVGltZWNvZGVSCHRpbWVjb2Rl');
+final $typed_data.Uint8List transportDescriptor = $convert.base64Decode('CglUcmFuc3BvcnQSNQoFc3RhdGUYASABKA4yHy5taXplci50cmFuc3BvcnQuVHJhbnNwb3J0U3RhdGVSBXN0YXRlEhQKBXNwZWVkGAIgASgBUgVzcGVlZBI1Cgh0aW1lY29kZRgDIAEoCzIZLm1pemVyLnRyYW5zcG9ydC5UaW1lY29kZVIIdGltZWNvZGU=');
 @$core.Deprecated('Use timecodeDescriptor instead')
 const Timecode$json = const {
   '1': 'Timecode',
@@ -56,12 +49,12 @@ final $typed_data.Uint8List timecodeDescriptor = $convert.base64Decode('CghUaW1l
 const SetTransportRequest$json = const {
   '1': 'SetTransportRequest',
   '2': const [
-    const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.TransportState', '10': 'state'},
+    const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.transport.TransportState', '10': 'state'},
   ],
 };
 
 /// Descriptor for `SetTransportRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setTransportRequestDescriptor = $convert.base64Decode('ChNTZXRUcmFuc3BvcnRSZXF1ZXN0EisKBXN0YXRlGAEgASgOMhUubWl6ZXIuVHJhbnNwb3J0U3RhdGVSBXN0YXRl');
+final $typed_data.Uint8List setTransportRequestDescriptor = $convert.base64Decode('ChNTZXRUcmFuc3BvcnRSZXF1ZXN0EjUKBXN0YXRlGAEgASgOMh8ubWl6ZXIudHJhbnNwb3J0LlRyYW5zcG9ydFN0YXRlUgVzdGF0ZQ==');
 @$core.Deprecated('Use setBpmRequestDescriptor instead')
 const SetBpmRequest$json = const {
   '1': 'SetBpmRequest',

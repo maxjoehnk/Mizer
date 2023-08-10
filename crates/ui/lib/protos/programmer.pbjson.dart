@@ -8,13 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use subscribeProgrammerRequestDescriptor instead')
-const SubscribeProgrammerRequest$json = const {
-  '1': 'SubscribeProgrammerRequest',
-};
-
-/// Descriptor for `SubscribeProgrammerRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List subscribeProgrammerRequestDescriptor = $convert.base64Decode('ChpTdWJzY3JpYmVQcm9ncmFtbWVyUmVxdWVzdA==');
 @$core.Deprecated('Use programmerStateDescriptor instead')
 const ProgrammerState$json = const {
   '1': 'ProgrammerState',
@@ -117,13 +110,6 @@ const WriteEffectRateRequest$json = const {
 
 /// Descriptor for `WriteEffectRateRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List writeEffectRateRequestDescriptor = $convert.base64Decode('ChZXcml0ZUVmZmVjdFJhdGVSZXF1ZXN0EhsKCWVmZmVjdF9pZBgBIAEoDVIIZWZmZWN0SWQSHwoLZWZmZWN0X3JhdGUYAiABKAFSCmVmZmVjdFJhdGU=');
-@$core.Deprecated('Use writeEffectRateResponseDescriptor instead')
-const WriteEffectRateResponse$json = const {
-  '1': 'WriteEffectRateResponse',
-};
-
-/// Descriptor for `WriteEffectRateResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List writeEffectRateResponseDescriptor = $convert.base64Decode('ChdXcml0ZUVmZmVjdFJhdGVSZXNwb25zZQ==');
 @$core.Deprecated('Use writeEffectOffsetRequestDescriptor instead')
 const WriteEffectOffsetRequest$json = const {
   '1': 'WriteEffectOffsetRequest',
@@ -138,13 +124,6 @@ const WriteEffectOffsetRequest$json = const {
 
 /// Descriptor for `WriteEffectOffsetRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List writeEffectOffsetRequestDescriptor = $convert.base64Decode('ChhXcml0ZUVmZmVjdE9mZnNldFJlcXVlc3QSGwoJZWZmZWN0X2lkGAEgASgNUghlZmZlY3RJZBIoCg1lZmZlY3Rfb2Zmc2V0GAIgASgBSABSDGVmZmVjdE9mZnNldIgBAUIQCg5fZWZmZWN0X29mZnNldA==');
-@$core.Deprecated('Use writeEffectOffsetResponseDescriptor instead')
-const WriteEffectOffsetResponse$json = const {
-  '1': 'WriteEffectOffsetResponse',
-};
-
-/// Descriptor for `WriteEffectOffsetResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List writeEffectOffsetResponseDescriptor = $convert.base64Decode('ChlXcml0ZUVmZmVjdE9mZnNldFJlc3BvbnNl');
 @$core.Deprecated('Use writeControlRequestDescriptor instead')
 const WriteControlRequest$json = const {
   '1': 'WriteControlRequest',
@@ -171,13 +150,6 @@ const WriteControlRequest_GenericValue$json = const {
 
 /// Descriptor for `WriteControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List writeControlRequestDescriptor = $convert.base64Decode('ChNXcml0ZUNvbnRyb2xSZXF1ZXN0EjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBIWCgVmYWRlchgCIAEoAUgAUgVmYWRlchI5CgVjb2xvchgDIAEoCzIhLm1pemVyLmZpeHR1cmVzLkNvbG9yTWl4ZXJDaGFubmVsSABSBWNvbG9yEk4KB2dlbmVyaWMYBCABKAsyMi5taXplci5wcm9ncmFtbWVyLldyaXRlQ29udHJvbFJlcXVlc3QuR2VuZXJpY1ZhbHVlSABSB2dlbmVyaWMaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlQgcKBXZhbHVl');
-@$core.Deprecated('Use writeControlResponseDescriptor instead')
-const WriteControlResponse$json = const {
-  '1': 'WriteControlResponse',
-};
-
-/// Descriptor for `WriteControlResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List writeControlResponseDescriptor = $convert.base64Decode('ChRXcml0ZUNvbnRyb2xSZXNwb25zZQ==');
 @$core.Deprecated('Use selectFixturesRequestDescriptor instead')
 const SelectFixturesRequest$json = const {
   '1': 'SelectFixturesRequest',
@@ -188,13 +160,6 @@ const SelectFixturesRequest$json = const {
 
 /// Descriptor for `SelectFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List selectFixturesRequestDescriptor = $convert.base64Decode('ChVTZWxlY3RGaXh0dXJlc1JlcXVlc3QSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVz');
-@$core.Deprecated('Use selectFixturesResponseDescriptor instead')
-const SelectFixturesResponse$json = const {
-  '1': 'SelectFixturesResponse',
-};
-
-/// Descriptor for `SelectFixturesResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List selectFixturesResponseDescriptor = $convert.base64Decode('ChZTZWxlY3RGaXh0dXJlc1Jlc3BvbnNl');
 @$core.Deprecated('Use unselectFixturesRequestDescriptor instead')
 const UnselectFixturesRequest$json = const {
   '1': 'UnselectFixturesRequest',
@@ -205,27 +170,20 @@ const UnselectFixturesRequest$json = const {
 
 /// Descriptor for `UnselectFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List unselectFixturesRequestDescriptor = $convert.base64Decode('ChdVbnNlbGVjdEZpeHR1cmVzUmVxdWVzdBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXM=');
-@$core.Deprecated('Use unselectFixturesResponseDescriptor instead')
-const UnselectFixturesResponse$json = const {
-  '1': 'UnselectFixturesResponse',
+@$core.Deprecated('Use emptyRequestDescriptor instead')
+const EmptyRequest$json = const {
+  '1': 'EmptyRequest',
 };
 
-/// Descriptor for `UnselectFixturesResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List unselectFixturesResponseDescriptor = $convert.base64Decode('ChhVbnNlbGVjdEZpeHR1cmVzUmVzcG9uc2U=');
-@$core.Deprecated('Use clearRequestDescriptor instead')
-const ClearRequest$json = const {
-  '1': 'ClearRequest',
+/// Descriptor for `EmptyRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyRequestDescriptor = $convert.base64Decode('CgxFbXB0eVJlcXVlc3Q=');
+@$core.Deprecated('Use emptyResponseDescriptor instead')
+const EmptyResponse$json = const {
+  '1': 'EmptyResponse',
 };
 
-/// Descriptor for `ClearRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List clearRequestDescriptor = $convert.base64Decode('CgxDbGVhclJlcXVlc3Q=');
-@$core.Deprecated('Use clearResponseDescriptor instead')
-const ClearResponse$json = const {
-  '1': 'ClearResponse',
-};
-
-/// Descriptor for `ClearResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List clearResponseDescriptor = $convert.base64Decode('Cg1DbGVhclJlc3BvbnNl');
+/// Descriptor for `EmptyResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyResponseDescriptor = $convert.base64Decode('Cg1FbXB0eVJlc3BvbnNl');
 @$core.Deprecated('Use highlightRequestDescriptor instead')
 const HighlightRequest$json = const {
   '1': 'HighlightRequest',

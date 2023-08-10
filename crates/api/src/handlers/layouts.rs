@@ -1,6 +1,6 @@
-use crate::models::layouts::*;
-use crate::models::nodes::node;
-use crate::models::programmer::PresetId;
+use crate::proto::layouts::*;
+use crate::proto::nodes::node;
+use crate::proto::programmer::PresetId;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_layouts::ControlType;

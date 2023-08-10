@@ -1,6 +1,5 @@
-use crate::models::plans::*;
+use crate::proto::plans::*;
 use mizer_plan::commands::AlignFixturesDirection;
-use protobuf::MessageField;
 
 impl From<mizer_plan::Plan> for Plan {
     fn from(plan: mizer_plan::Plan) -> Self {
@@ -10,7 +9,7 @@ impl From<mizer_plan::Plan> for Plan {
                 .fixtures
                 .into_iter()
                 .map(|f| FixturePosition {
-                    id: MessageField::some(f.fixture.into()),
+                    id: Some(f.fixture.into()),
                     x: f.x,
                     y: f.y,
                     width: f.width,
@@ -54,8 +53,8 @@ impl From<align_fixtures_request::AlignDirection> for AlignFixturesDirection {
         use align_fixtures_request::AlignDirection::*;
 
         match direction {
-            LEFT_TO_RIGHT => Self::LeftToRight,
-            TOP_TO_BOTTOM => Self::TopToBottom,
+            LeftToRight => Self::LeftToRight,
+            TopToBottom => Self::TopToBottom,
         }
     }
 }

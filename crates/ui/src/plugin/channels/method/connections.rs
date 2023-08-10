@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::connections::*;
+use mizer_api::proto::connections::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, GamepadConnectionRef};
 

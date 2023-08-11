@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -54,7 +55,8 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
     var windowSize = MediaQuery.of(context).size;
     return ActionDialog(
       title: "Patch Fixture",
-      content: SizedBox(child: _getStep(), width: windowSize.width * 0.9, height: windowSize.height * 0.8),
+      content: SizedBox(
+          child: _getStep(), width: windowSize.width * 0.9, height: windowSize.height * 0.8),
       actions: _getActions(context),
     );
   }
@@ -70,17 +72,23 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
               }));
     }
     if (step == 1) {
-      return FixturePatch(this.definition!, this.mode!,
-          initialId: widget.bloc.state.fixtures.isEmpty ? 1 : widget.bloc.state.fixtures.map((f) => f.id).reduce(max) + 1,
-          initialChannel: widget.bloc.state.fixtures.isEmpty ? 1 : widget.bloc.state.fixtures.map((f) => f.channel + f.channelCount).reduce(max),
-          onChange: (event) => setState(() {
-                name = event.name;
-                universe = event.universe;
-                channel = event.channel;
-                id = event.id;
-                count = event.count;
-              }),
-          onConfirm: () => this.addFixtures(context),
+      return FixturePatch(
+        this.definition!,
+        this.mode!,
+        initialId: widget.bloc.state.fixtures.isEmpty
+            ? 1
+            : widget.bloc.state.fixtures.map((f) => f.id).reduce(max) + 1,
+        initialChannel: widget.bloc.state.fixtures.isEmpty
+            ? 1
+            : widget.bloc.state.fixtures.map((f) => f.channel + f.channelCount).reduce(max),
+        onChange: (event) => setState(() {
+          name = event.name;
+          universe = event.universe;
+          channel = event.channel;
+          id = event.id;
+          count = event.count;
+        }),
+        onConfirm: () => this.addFixtures(context),
       );
     }
     return Container();
@@ -123,7 +131,11 @@ class FixturePatch extends StatefulWidget {
   final int initialId;
   final int initialChannel;
 
-  FixturePatch(this.definition, this.mode, {required this.onChange, required this.onConfirm, required this.initialId, required this.initialChannel});
+  FixturePatch(this.definition, this.mode,
+      {required this.onChange,
+      required this.onConfirm,
+      required this.initialId,
+      required this.initialChannel});
 
   @override
   _FixturePatchState createState() => _FixturePatchState();
@@ -172,9 +184,15 @@ class _FixturePatchState extends State<FixturePatch> {
                   },
                   onConfirm: widget.onConfirm),
             ),
-            Expanded(child: Padding(
+            Expanded(
+                child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FixturePatchPreview(mode: widget.mode, universe: universe, startChannel: channel, startId: id, count: count),
+              child: FixturePatchPreview(
+                  mode: widget.mode,
+                  universe: universe,
+                  startChannel: channel,
+                  startId: id,
+                  count: count),
             )),
           ]),
     );
@@ -190,7 +208,16 @@ class PatchSettings extends StatefulWidget {
   final int id;
   final int count;
 
-  PatchSettings({Key? key, required this.channel, required this.universe, required this.name, required this.id, required this.count, required this.onChange, required this.onConfirm}) : super(key: key);
+  PatchSettings(
+      {Key? key,
+      required this.channel,
+      required this.universe,
+      required this.name,
+      required this.id,
+      required this.count,
+      required this.onChange,
+      required this.onConfirm})
+      : super(key: key);
 
   @override
   _PatchSettingsState createState() =>
@@ -204,7 +231,12 @@ class _PatchSettingsState extends State<PatchSettings> {
   final TextEditingController _idController;
   final TextEditingController _countController;
 
-  _PatchSettingsState({required String name, required int channel, required int universe, required int id, required int count})
+  _PatchSettingsState(
+      {required String name,
+      required int channel,
+      required int universe,
+      required int id,
+      required int count})
       : _nameController = TextEditingController(text: name),
         _universeController = TextEditingController(text: universe.toString()),
         _channelController = TextEditingController(text: channel.toString()),
@@ -271,8 +303,8 @@ class _PatchSettingsState extends State<PatchSettings> {
     int universe = int.parse(_universeController.text);
     int channel = int.parse(_channelController.text);
     int count = int.parse(_countController.text);
-    var event = PatchSettingsEvent(
-        id: id, name: name, universe: universe, channel: channel, count: count);
+    var event =
+        PatchSettingsEvent(id: id, name: name, universe: universe, channel: channel, count: count);
     this.widget.onChange(event);
   }
 }
@@ -284,7 +316,12 @@ class PatchSettingsEvent {
   final int channel;
   final int count;
 
-  PatchSettingsEvent({required this.id, required this.name, required this.universe, required this.channel, required this.count});
+  PatchSettingsEvent(
+      {required this.id,
+      required this.name,
+      required this.universe,
+      required this.channel,
+      required this.count});
 }
 
 class FixturePatchPreview extends StatelessWidget {
@@ -306,7 +343,7 @@ class FixturePatchPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<MizerTableRow> rows = _getRows();
-    
+
     return SingleChildScrollView(
       child: MizerTable(
         columnWidths: {
@@ -324,11 +361,20 @@ class FixturePatchPreview extends StatelessWidget {
 
   List<MizerTableRow> _getRows() {
     List<MizerTableRow> rows = [];
-    
+
+    var channelCount = mode.channels.map((e) {
+      if (e.hasFine()) {
+        return 2;
+      }
+      if (e.hasFinest()) {
+        return 3;
+      }
+      return 1;
+    }).sum;
     for (var i = 0; i < count; i++) {
       var id = startId + i;
-      var startAddress = startChannel + (i * mode.channels.length);
-      var endAddress = startAddress + mode.channels.length - 1;
+      var startAddress = startChannel + (i * channelCount);
+      var endAddress = startAddress + channelCount - 1;
 
       rows.add(MizerTableRow(cells: [
         Text(id.toString()),

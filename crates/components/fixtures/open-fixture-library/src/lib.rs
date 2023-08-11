@@ -402,10 +402,15 @@ fn map_channels(
 ) -> Vec<FixtureChannelDefinition> {
     let channels_2 = channels.clone();
 
+    let mut channels_to_omit = Vec::new();
+
     channels
         .into_iter()
         .enumerate()
-        .map(|(i, channel)| {
+        .flat_map(|(i, channel)| {
+            if channels_to_omit.contains(&channel) {
+                return None;
+            }
             let fine_channels = available_channels
                 .get(&channel)
                 .map(|c| &c.fine_channel_aliases[..]);
@@ -413,47 +418,50 @@ fn map_channels(
                 Some([fine]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     if let Some(fine_channel) = fine_channel {
-                        FixtureChannelDefinition {
+                        channels_to_omit.push(fine.to_string());
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                        }
+                        })
                     } else {
-                        FixtureChannelDefinition {
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Coarse(i as u16),
-                        }
+                        })
                     }
                 }
                 Some([fine, finest]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     let finest_channel = channels_2.iter().position(|c| c == finest);
                     if let Some(fine_channel) = fine_channel {
+                        channels_to_omit.push(fine.to_string());
                         if let Some(finest_channel) = finest_channel {
-                            FixtureChannelDefinition {
+                            channels_to_omit.push(finest.to_string());
+                            Some(FixtureChannelDefinition {
                                 name: channel,
                                 resolution: ChannelResolution::Finest(
                                     i as u16,
                                     fine_channel as u16,
                                     finest_channel as u16,
                                 ),
-                            }
+                            })
                         } else {
-                            FixtureChannelDefinition {
+                            Some(FixtureChannelDefinition {
                                 name: channel,
                                 resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                            }
+                            })
                         }
                     } else {
-                        FixtureChannelDefinition {
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Coarse(i as u16),
-                        }
+                        })
                     }
                 }
-                _ => FixtureChannelDefinition {
+                _ => Some(FixtureChannelDefinition {
                     name: channel,
                     resolution: ChannelResolution::Coarse(i as u16),
-                },
+                }),
             }
         })
         .collect()

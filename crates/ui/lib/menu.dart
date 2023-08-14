@@ -1,13 +1,13 @@
 import 'dart:io' as io;
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart' hide MenuItem;
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
+import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/windows/preferences_window.dart';
@@ -32,10 +32,7 @@ class ApplicationMenu extends StatelessWidget {
                   label: "New Project".i18n,
                   action: () => _newProject(context),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
-              MenuItem(
-                  label: "Open Project".i18n,
-                  action: () => _openProject(context, context.read()),
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyO)),
+              MenuItem(label: "Open Project".i18n, action: () => ProjectFiles.openProject(context)),
               SubMenu(
                 title: "Open Recent".i18n,
                 children: state.projectHistory
@@ -47,13 +44,9 @@ class ApplicationMenu extends StatelessWidget {
               MenuItem(
                   disabled: state.filePath.isEmpty,
                   label: 'Save Project'.i18n,
-                  action: () => context.read<SessionApi>().saveProject(),
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyS)),
+                  action: () => ProjectFiles.saveProject(context)),
               MenuItem(
-                  label: 'Save Project as'.i18n,
-                  action: () => _saveProjectAs(context, context.read()),
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-                      LogicalKeyboardKey.keyS)),
+                  label: 'Save Project as'.i18n, action: () => ProjectFiles.saveProjectAs(context)),
               MenuDivider(),
               MenuItem(
                   label: 'Preferences'.i18n,
@@ -73,7 +66,6 @@ class ApplicationMenu extends StatelessWidget {
                   await context.read<SessionApi>().undo();
                   _refreshViews(context);
                 },
-                // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)
               ),
               MenuItem(
                 label: 'Redo'.i18n,
@@ -81,8 +73,6 @@ class ApplicationMenu extends StatelessWidget {
                   await context.read<SessionApi>().redo();
                   _refreshViews(context);
                 },
-                // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-                //     LogicalKeyboardKey.keyZ)
               )
             ]),
             SubMenu(title: 'Window'.i18n, children: [
@@ -105,29 +95,10 @@ class ApplicationMenu extends StatelessWidget {
     _refreshViews(context);
   }
 
-  Future<void> _openProject(BuildContext context, SessionApi api) async {
-    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: ['yml']);
-    final file = await openFile(acceptedTypeGroups: [typeGroup]);
-    if (file == null) {
-      return;
-    }
-    await api.loadProject(file.path);
-    _refreshViews(context);
-  }
-
   Future<void> _openProjectFromHistory(
       BuildContext context, SessionApi api, String filePath) async {
     await api.loadProject(filePath);
     _refreshViews(context);
-  }
-
-  Future<void> _saveProjectAs(BuildContext context, SessionApi api) async {
-    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: ['yml']);
-    final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
-    if (location == null) {
-      return;
-    }
-    await api.saveProjectAs(location.path);
   }
 
   void _refreshViews(BuildContext context) {

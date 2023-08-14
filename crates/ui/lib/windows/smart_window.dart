@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/views/smart/smart_view.dart';
-import 'package:mizer/widgets/undo_hotkey.dart';
+import 'package:mizer/widgets/global_hotkeys.dart';
 import 'package:mizer/windows/base_window_state.dart';
 import 'package:nativeshell/nativeshell.dart';
 
@@ -14,7 +14,7 @@ class SmartWindow extends WindowState {
     return BaseWindowState(
         child: WindowLayoutProbe(
             child: LanguageSwitcher(
-                child: UndoHotkeyConfiguration(child: Scaffold(body: SmartViewWrapper())))));
+                child: GlobalHotkeyConfiguration(child: Scaffold(body: SmartViewWrapper())))));
   }
 
   @override

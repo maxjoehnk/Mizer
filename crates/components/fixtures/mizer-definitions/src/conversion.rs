@@ -1,7 +1,8 @@
 use indexmap::IndexMap;
+
 use mizer_fixtures::definition::{
     ChannelResolution, ColorGroupBuilder, FixtureChannelDefinition, FixtureControls,
-    FixtureDefinition, FixtureMode, SubFixtureControlChannel, SubFixtureDefinition,
+    FixtureDefinition, FixtureMode, GenericControl, SubFixtureControlChannel, SubFixtureDefinition,
 };
 
 use crate::definition::{MizerFixtureControl, MizerFixtureDefinition};
@@ -60,6 +61,12 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                                 }
                                 MizerFixtureControl::ColorBlue => {
                                     color_builder.blue(SubFixtureControlChannel::Channel(ch))
+                                }
+                                MizerFixtureControl::Generic => {
+                                    controls.generic.push(GenericControl {
+                                        channel: SubFixtureControlChannel::Channel(ch),
+                                        label: channel.name.clone(),
+                                    })
                                 }
                             }
                         }

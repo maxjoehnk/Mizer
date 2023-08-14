@@ -1,0 +1,231 @@
+[definition]
+name = "Octostrip"
+manufacturer = "HQ Power"
+tags = ["LED Bar"]
+
+[[mode]]
+name = "DMX Mode 1 - 6 Channel"
+
+[[mode.pixel]]
+name = "Bar 1"
+channels = ["Rainbow 1", "Red 1", "Green 1", "Blue 1", "Strobe 1", "Sound Active 1"]
+
+[[mode.pixel]]
+name = "Bar 2"
+channels = ["Rainbow 2", "Red 2", "Green 2", "Blue 2", "Strobe 2", "Sound Active 2"]
+
+[[mode.pixel]]
+name = "Bar 3"
+channels = ["Rainbow 3", "Red 3", "Green 3", "Blue 3", "Strobe 3", "Sound Active 3"]
+
+[[mode.pixel]]
+name = "Bar 4"
+channels = ["Rainbow 4", "Red 4", "Green 4", "Blue 4", "Strobe 4", "Sound Active 4"]
+
+[[mode.pixel]]
+name = "Bar 5"
+channels = ["Rainbow 5", "Red 5", "Green 5", "Blue 5", "Strobe 5", "Sound Active 5"]
+
+[[mode.pixel]]
+name = "Bar 6"
+channels = ["Rainbow 6", "Red 6", "Green 6", "Blue 6", "Strobe 6", "Sound Active 6"]
+
+[[mode.pixel]]
+name = "Bar 7"
+channels = ["Rainbow 7", "Red 7", "Green 7", "Blue 7", "Strobe 7", "Sound Active 7"]
+
+[[mode.pixel]]
+name = "Bar 8"
+channels = ["Rainbow 8", "Red 8", "Green 8", "Blue 8", "Strobe 8", "Sound Active 8"]
+
+[[channel]]
+name = "Rainbow 1"
+control = "generic"
+
+[[channel]]
+name = "Red 1"
+control = "color_red"
+
+[[channel]]
+name = "Green 1"
+control = "color_green"
+
+[[channel]]
+name = "Blue 1"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 1"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 1"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 2"
+control = "generic"
+
+[[channel]]
+name = "Red 2"
+control = "color_red"
+
+[[channel]]
+name = "Green 2"
+control = "color_green"
+
+[[channel]]
+name = "Blue 2"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 2"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 2"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 3"
+control = "generic"
+
+[[channel]]
+name = "Red 3"
+control = "color_red"
+
+[[channel]]
+name = "Green 3"
+control = "color_green"
+
+[[channel]]
+name = "Blue 3"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 3"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 3"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 4"
+control = "generic"
+
+[[channel]]
+name = "Red 4"
+control = "color_red"
+
+[[channel]]
+name = "Green 4"
+control = "color_green"
+
+[[channel]]
+name = "Blue 4"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 4"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 4"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 5"
+control = "generic"
+
+[[channel]]
+name = "Red 5"
+control = "color_red"
+
+[[channel]]
+name = "Green 5"
+control = "color_green"
+
+[[channel]]
+name = "Blue 5"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 5"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 5"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 6"
+control = "generic"
+
+[[channel]]
+name = "Red 6"
+control = "color_red"
+
+[[channel]]
+name = "Green 6"
+control = "color_green"
+
+[[channel]]
+name = "Blue 6"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 6"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 6"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 7"
+control = "generic"
+
+[[channel]]
+name = "Red 7"
+control = "color_red"
+
+[[channel]]
+name = "Green 7"
+control = "color_green"
+
+[[channel]]
+name = "Blue 7"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 7"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 7"
+control = "generic"
+
+[[channel]]
+name = "Rainbow 8"
+control = "generic"
+
+[[channel]]
+name = "Red 8"
+control = "color_red"
+
+[[channel]]
+name = "Green 8"
+control = "color_green"
+
+[[channel]]
+name = "Blue 8"
+control = "color_blue"
+
+[[channel]]
+name = "Strobe 8"
+control = "shutter"
+
+[[channel]]
+name = "Sound Active 8"
+control = "generic"

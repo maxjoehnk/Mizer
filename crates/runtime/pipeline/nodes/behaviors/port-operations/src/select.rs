@@ -1,8 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use mizer_node::*;
 use mizer_protocol_laser::LaserFrame;
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureHandle;
-use serde::{Deserialize, Serialize};
 
 const CHANNEL_PORT: &str = "Channel";
 const INPUT_PORT: &str = "Inputs";
@@ -114,7 +115,7 @@ impl ProcessingNode for SelectNode {
 
 fn transfer_port<TValue: PortValue + 'static>(context: &impl NodeContext, channel: usize) {
     let mut ports = context.read_ports::<_, TValue>(INPUT_PORT);
-    if channel > ports.len() {
+    if channel >= ports.len() {
         return;
     }
     let value = ports.remove(channel);

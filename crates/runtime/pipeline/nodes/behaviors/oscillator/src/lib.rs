@@ -1,8 +1,8 @@
-use enum_iterator::Sequence;
-use num_enum::{IntoPrimitive, TryFromPrimitive};
 use std::f64::consts::PI;
 use std::fmt::{Display, Formatter};
 
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -67,8 +67,14 @@ impl ConfigurableNode for OscillatorNode {
             setting!(INTERVAL_SETTING, self.interval)
                 .min(0.)
                 .max_hint(1.),
-            setting!(MIN_SETTING, self.min).min_hint(0.).max_hint(1.),
-            setting!(MAX_SETTING, self.max).min_hint(0.).max_hint(1.),
+            setting!(MIN_SETTING, self.min)
+                .min_hint(0.)
+                .max_hint(1.)
+                .max(self.max),
+            setting!(MAX_SETTING, self.max)
+                .min_hint(0.)
+                .max_hint(1.)
+                .min(self.min),
             setting!(OFFSET_SETTING, self.offset)
                 .min_hint(0.)
                 .max_hint(1.),
@@ -154,7 +160,7 @@ impl Default for OscillatorContext {
 
 impl OscillatorContext {
     fn read(node: &OscillatorNode, context: &impl NodeContext) -> Self {
-        Self {
+        let mut context = Self {
             oscillator_type: node.oscillator_type,
             interval: context
                 .read_port::<_, f64>(INTERVAL_INPUT_PORT)
@@ -167,7 +173,12 @@ impl OscillatorContext {
                 .unwrap_or(node.max),
             offset: node.offset,
             reverse: node.reverse,
-        }
+        };
+
+        context.max = context.max.max(context.min);
+        context.min = context.min.min(context.max);
+
+        context
     }
 
     fn tick(&self, beat: f64) -> f64 {

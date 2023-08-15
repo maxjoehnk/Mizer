@@ -95,16 +95,10 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   num get _maxHint {
-    if (widget.max != null) {
-      return widget.max!;
-    }
     return widget.maxHint;
   }
 
   num get _minHint {
-    if (widget.min != null) {
-      return widget.min!;
-    }
     return widget.minHint;
   }
 

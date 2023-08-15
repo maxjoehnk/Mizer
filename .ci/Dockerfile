@@ -46,7 +46,8 @@ RUN apt-get update && \
       libnuma-dev \
       libvpx-dev \
       libmp3lame-dev \
-      libopus-dev && \
+      libopus-dev \
+      yasm && \
     rm -rf /var/lib/apt/lists/*
 
 ADD https://github.com/protocolbuffers/protobuf/releases/download/v23.4/protoc-23.4-linux-x86_64.zip /tmp/protoc.zip

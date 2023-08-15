@@ -26,12 +26,16 @@ class FaderInput extends StatefulWidget {
 
 class _FaderInputState extends State<FaderInput> {
   double value = 0;
+  bool _interacting = false;
 
   _FaderInputState(this.value);
 
   @override
   void didUpdateWidget(FaderInput oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (_interacting) {
+      return;
+    }
     if (oldWidget.value != widget.value) {
       this.value = widget.value;
     }
@@ -57,6 +61,9 @@ class _FaderInputState extends State<FaderInput> {
           }
         },
         child: GestureDetector(
+          onVerticalDragStart: (update) => setState(() => _interacting = true),
+          onVerticalDragEnd: (update) => setState(() => _interacting = false),
+          onVerticalDragCancel: () => setState(() => _interacting = false),
           onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
           onTapDown: (update) => _onInput(constraints, update.localPosition),
           child: Container(

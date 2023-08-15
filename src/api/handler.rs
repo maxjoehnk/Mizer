@@ -1,7 +1,7 @@
-use mizer_api::GamepadRef;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+use mizer_api::GamepadRef;
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
 use mizer_connections::{
@@ -211,7 +211,9 @@ impl ApiHandler {
                         host: config.host.clone(),
                         port: config.port,
                     },
-                    mizer_protocol_dmx::DmxConnection::Sacn(_) => DmxConfig::Sacn,
+                    mizer_protocol_dmx::DmxConnection::Sacn(config) => DmxConfig::Sacn {
+                        priority: config.priority,
+                    },
                 },
             })
             .map(Connection::from);

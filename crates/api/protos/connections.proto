@@ -84,6 +84,7 @@ message ArtnetConfig {
 
 message SacnConfig {
   string name = 1;
+  uint32 priority = 2;
 }
 
 message Connections {

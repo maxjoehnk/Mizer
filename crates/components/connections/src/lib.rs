@@ -1,14 +1,14 @@
 use derive_more::From;
+
 use mizer_devices::*;
+pub use mizer_protocol_midi::{MidiEvent, MidiMessage};
+pub use mizer_protocol_osc::{OscMessage, OscType};
 
 pub mod midi_device_profile {
     pub use mizer_protocol_midi::{
         Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
     };
 }
-
-pub use mizer_protocol_midi::{MidiEvent, MidiMessage};
-pub use mizer_protocol_osc::{OscMessage, OscType};
 
 #[derive(From, Debug, Clone)]
 pub enum Connection {
@@ -67,7 +67,7 @@ pub struct DmxView {
 #[derive(Debug, Clone)]
 pub enum DmxConfig {
     Artnet { host: String, port: u16 },
-    Sacn,
+    Sacn { priority: u8 },
 }
 
 #[derive(Debug, Clone)]

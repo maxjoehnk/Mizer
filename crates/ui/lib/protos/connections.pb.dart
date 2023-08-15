@@ -1017,16 +1017,21 @@ class ArtnetConfig extends $pb.GeneratedMessage {
 class SacnConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SacnConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   SacnConfig._() : super();
   factory SacnConfig({
     $core.String? name,
+    $core.int? priority,
   }) {
     final _result = create();
     if (name != null) {
       _result.name = name;
+    }
+    if (priority != null) {
+      _result.priority = priority;
     }
     return _result;
   }
@@ -1059,6 +1064,15 @@ class SacnConfig extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
   void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get priority => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set priority($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPriority() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPriority() => clearField(2);
 }
 
 class Connections extends $pb.GeneratedMessage {

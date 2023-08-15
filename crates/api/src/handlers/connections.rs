@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+
 use futures::{Stream, StreamExt};
+
 use mizer_command_executor::*;
 use mizer_gamepads::GamepadRef;
-use std::collections::HashMap;
 
 use crate::proto::connections::*;
 use crate::RuntimeApi;
@@ -80,8 +82,9 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {
-        self.runtime.run_command(AddSacnOutputCommand { name })?;
+    pub fn add_sacn(&self, name: String, priority: u8) -> anyhow::Result<()> {
+        self.runtime
+            .run_command(AddSacnOutputCommand { name, priority })?;
 
         Ok(())
     }
@@ -176,17 +179,29 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
         match update.config {
             Some(configure_connection_request::Config::Dmx(connection)) => {
-                if let Some(dmx_connection::Config::Artnet(config)) = connection.config {
-                    self.runtime.run_command(ConfigureArtnetOutputCommand {
-                        id: connection.output_id,
-                        name: config.name,
-                        host: config.host,
-                        port: Some(config.port as u16),
-                    })?;
+                match connection.config {
+                    Some(dmx_connection::Config::Artnet(config)) => {
+                        self.runtime.run_command(ConfigureArtnetOutputCommand {
+                            id: connection.output_id,
+                            name: config.name,
+                            host: config.host,
+                            port: Some(config.port as u16),
+                        })?;
 
-                    Ok(())
-                } else {
-                    anyhow::bail!("Dmx Output {connection:?} cannot be configured")
+                        Ok(())
+                    }
+                    Some(dmx_connection::Config::Sacn(config)) => {
+                        self.runtime.run_command(ConfigureSacnOutputCommand {
+                            id: connection.output_id,
+                            name: config.name,
+                            priority: config.priority.clamp(0, 200) as u8,
+                        })?;
+
+                        Ok(())
+                    }
+                    _ => {
+                        anyhow::bail!("Dmx Output {connection:?} cannot be configured")
+                    }
                 }
             }
             Some(configure_connection_request::Config::Mqtt(connection)) => {

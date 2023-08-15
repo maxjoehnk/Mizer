@@ -1,14 +1,15 @@
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::sync::Arc;
 
-use crate::MethodCallExt;
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::proto::connections::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, GamepadConnectionRef};
 
 use crate::plugin::channels::MethodReplyExt;
+use crate::MethodCallExt;
 
 #[derive(Clone)]
 pub struct ConnectionsChannel<R: RuntimeApi> {
@@ -128,7 +129,8 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
     }
 
     fn add_sacn(&self, request: SacnConfig) -> anyhow::Result<()> {
-        self.handler.add_sacn(request.name)
+        self.handler
+            .add_sacn(request.name, request.priority.clamp(0, 200) as u8)
     }
 
     fn add_mqtt(&self, request: MqttConnection) -> anyhow::Result<()> {

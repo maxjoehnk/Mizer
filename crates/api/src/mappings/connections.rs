@@ -27,9 +27,10 @@ impl From<mizer_connections::Connection> for connection::Connection {
                             port: port as u32,
                         })
                     }
-                    mizer_connections::DmxConfig::Sacn => {
+                    mizer_connections::DmxConfig::Sacn { priority } => {
                         dmx_connection::Config::Sacn(SacnConfig {
                             name: view.output_id,
+                            priority: priority as u32,
                         })
                     }
                 }),
@@ -72,7 +73,10 @@ impl From<mizer_connections::DmxConfig> for dmx_connection::Config {
                 port: port as u32,
                 ..Default::default()
             }),
-            mizer_connections::DmxConfig::Sacn => Self::Sacn(SacnConfig::default()),
+            mizer_connections::DmxConfig::Sacn { priority } => Self::Sacn(SacnConfig {
+                priority: priority as u32,
+                ..Default::default()
+            }),
         }
     }
 }

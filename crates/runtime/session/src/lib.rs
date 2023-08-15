@@ -15,9 +15,9 @@ pub struct Session {
 }
 
 impl Session {
-    pub fn new() -> anyhow::Result<Self> {
+    pub fn new(port: u16) -> anyhow::Result<Self> {
         #[cfg(unix)]
-        discovery::announce_device();
+        discovery::announce_device(port);
         Ok(Session {
             clients: vec![SessionClient::get_self()?],
         })

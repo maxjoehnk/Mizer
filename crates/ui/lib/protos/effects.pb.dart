@@ -14,35 +14,6 @@ import 'sequencer.pb.dart' as $1;
 
 import 'fixtures.pbenum.dart' as $0;
 
-class GetEffectsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetEffectsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  GetEffectsRequest._() : super();
-  factory GetEffectsRequest() => create();
-  factory GetEffectsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetEffectsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetEffectsRequest clone() => GetEffectsRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetEffectsRequest copyWith(void Function(GetEffectsRequest) updates) => super.copyWith((message) => updates(message as GetEffectsRequest)) as GetEffectsRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GetEffectsRequest create() => GetEffectsRequest._();
-  GetEffectsRequest createEmptyInstance() => create();
-  static $pb.PbList<GetEffectsRequest> createRepeated() => $pb.PbList<GetEffectsRequest>();
-  @$core.pragma('dart2js:noInline')
-  static GetEffectsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetEffectsRequest>(create);
-  static GetEffectsRequest? _defaultInstance;
-}
-
 class AddEffectRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddEffectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')

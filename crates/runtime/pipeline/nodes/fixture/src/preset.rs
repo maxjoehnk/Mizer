@@ -1,8 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::PresetId;
+use mizer_fixtures::programmer::{Preset, PresetId};
 use mizer_node::edge::Edge;
 use mizer_node::*;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct PresetNode {
@@ -17,7 +18,37 @@ impl Default for PresetNode {
     }
 }
 
-impl ConfigurableNode for PresetNode {}
+impl ConfigurableNode for PresetNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let manager = injector.get::<FixtureManager>().unwrap();
+        let intensities = convert_presets_to_select_variants(manager.presets.intensity_presets());
+        let shutters = convert_presets_to_select_variants(manager.presets.shutter_presets());
+        let colors = convert_presets_to_select_variants(manager.presets.color_presets());
+        let positions = convert_presets_to_select_variants(manager.presets.position_presets());
+        let presets = vec![
+            SelectVariant::Group {
+                label: "Intensity".into(),
+                children: intensities,
+            },
+            SelectVariant::Group {
+                label: "Shutter".into(),
+                children: shutters,
+            },
+            SelectVariant::Group {
+                label: "Color".into(),
+                children: colors,
+            },
+            SelectVariant::Group {
+                label: "Position".into(),
+                children: positions,
+            },
+        ];
+
+        let id = self.id.to_string();
+
+        vec![setting!(select "Preset", id, presets).disabled()]
+    }
+}
 
 impl PipelineNode for PresetNode {
     fn details(&self) -> NodeDetails {
@@ -56,4 +87,16 @@ impl ProcessingNode for PresetNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
+
+fn convert_presets_to_select_variants<TValue>(
+    presets: Vec<(PresetId, Preset<TValue>)>,
+) -> Vec<SelectVariant> {
+    presets
+        .into_iter()
+        .map(|(id, preset)| SelectVariant::Item {
+            value: id.to_string(),
+            label: preset.label.unwrap_or_else(|| id.to_string()),
+        })
+        .collect()
 }

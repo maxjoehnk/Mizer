@@ -1,6 +1,6 @@
-use crate::models::effects as models;
+use crate::proto::effects as models;
+use crate::proto::fixtures::FixtureControl;
 use mizer_sequencer::effects;
-use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<effects::Effect> for models::Effect {
     fn from(effect: effects::Effect) -> Self {
@@ -20,7 +20,7 @@ impl From<effects::Effect> for models::Effect {
 impl From<effects::EffectStep> for models::EffectStep {
     fn from(step: effects::EffectStep) -> Self {
         Self {
-            value: MessageField::some(step.value.into()),
+            value: Some(step.value.into()),
             control_point: Some(step.control_point.into()),
             ..Default::default()
         }
@@ -39,7 +39,7 @@ impl From<models::EffectStep> for effects::EffectStep {
 impl From<effects::EffectChannel> for models::EffectChannel {
     fn from(channel: effects::EffectChannel) -> Self {
         Self {
-            control: EnumOrUnknown::new(channel.control.into()),
+            control: FixtureControl::from(channel.control) as i32,
             steps: channel
                 .steps
                 .into_iter()
@@ -50,7 +50,7 @@ impl From<effects::EffectChannel> for models::EffectChannel {
     }
 }
 
-impl From<effects::EffectControlPoint> for models::effect_step::Control_point {
+impl From<effects::EffectControlPoint> for models::effect_step::ControlPoint {
     fn from(control_point: effects::EffectControlPoint) -> Self {
         match control_point {
             effects::EffectControlPoint::Simple => Self::Simple(Default::default()),
@@ -72,14 +72,14 @@ impl From<effects::EffectControlPoint> for models::effect_step::Control_point {
     }
 }
 
-impl From<models::effect_step::Control_point> for effects::EffectControlPoint {
-    fn from(control_point: models::effect_step::Control_point) -> Self {
+impl From<models::effect_step::ControlPoint> for effects::EffectControlPoint {
+    fn from(control_point: models::effect_step::ControlPoint) -> Self {
         match control_point {
-            models::effect_step::Control_point::Simple(_) => Self::Simple,
-            models::effect_step::Control_point::Quadratic(point) => {
+            models::effect_step::ControlPoint::Simple(_) => Self::Simple,
+            models::effect_step::ControlPoint::Quadratic(point) => {
                 Self::Quadratic([point.c0a, point.c0b])
             }
-            models::effect_step::Control_point::Cubic(point) => {
+            models::effect_step::ControlPoint::Cubic(point) => {
                 Self::Cubic([point.c0a, point.c0b], [point.c1a, point.c1b])
             }
         }

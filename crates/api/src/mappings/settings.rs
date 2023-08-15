@@ -1,16 +1,15 @@
-use protobuf::MessageField;
 use std::path::PathBuf;
 
 use mizer_settings as settings;
 
-use crate::models::settings as model;
+use crate::proto::settings as model;
 
 impl From<settings::Settings> for model::Settings {
     fn from(settings: settings::Settings) -> Self {
         Self {
-            general: MessageField::some(settings.general.into()),
-            hotkeys: MessageField::some(settings.hotkeys.into()),
-            paths: MessageField::some(settings.paths.into()),
+            general: Some(settings.general.into()),
+            hotkeys: Some(settings.hotkeys.into()),
+            paths: Some(settings.paths.into()),
             ..Default::default()
         }
     }

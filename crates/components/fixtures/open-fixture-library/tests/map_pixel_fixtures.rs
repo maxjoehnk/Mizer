@@ -32,18 +32,21 @@ fn assert_sub_fixture(sub_fixture: &SubFixtureDefinition, index: u32) {
     assert_eq!(sub_fixture.id, index);
     assert_eq!(sub_fixture.name, format!("Pixel {}", index));
     assert!(sub_fixture.controls.color_mixer.is_some());
-    if let Some(ref color) = sub_fixture.controls.color_mixer {
+    if let Some(ColorGroup::Rgb {
+        red, green, blue, ..
+    }) = sub_fixture.controls.color_mixer.as_ref()
+    {
         assert_eq!(
-            color.red,
-            SubFixtureControlChannel::Channel(format!("Red {}", index))
+            red,
+            &SubFixtureControlChannel::Channel(format!("Red {}", index))
         );
         assert_eq!(
-            color.green,
-            SubFixtureControlChannel::Channel(format!("Green {}", index))
+            green,
+            &SubFixtureControlChannel::Channel(format!("Green {}", index))
         );
         assert_eq!(
-            color.blue,
-            SubFixtureControlChannel::Channel(format!("Blue {}", index))
+            blue,
+            &SubFixtureControlChannel::Channel(format!("Blue {}", index))
         );
     }
 }
@@ -68,7 +71,7 @@ fn should_create_delegate_channels() {
     assert!(mode.controls.color_mixer.is_some());
     assert_eq!(
         mode.controls.color_mixer.as_ref().unwrap(),
-        &ColorGroup {
+        &ColorGroup::Rgb {
             red: FixtureControlChannel::Delegate,
             green: FixtureControlChannel::Delegate,
             blue: FixtureControlChannel::Delegate,

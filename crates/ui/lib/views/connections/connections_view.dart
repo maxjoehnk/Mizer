@@ -248,6 +248,17 @@ class _ConnectionsViewState extends State<ConnectionsView> {
           dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
       await _fetch();
     }
+    if (connection.hasDmx() && connection.dmx.hasSacn()) {
+      var value = await showDialog<SacnConfig>(
+          context: context,
+          builder: (context) => ConfigureSacnConnectionDialog(config: connection.dmx.sacn));
+      if (value == null) {
+        return null;
+      }
+      await api.configureConnection(ConfigureConnectionRequest(
+          dmx: DmxConnection(sacn: value, outputId: connection.dmx.outputId)));
+      await _fetch();
+    }
     if (connection.hasMqtt()) {
       var value = await showDialog<MqttConnection>(
           context: context,
@@ -347,7 +358,7 @@ class DeviceTitle extends StatelessWidget {
 
 extension ConnectionExtensions on Connection {
   bool get canConfigure {
-    return (this.hasDmx() && this.dmx.hasArtnet()) || this.hasOsc() || this.hasMqtt();
+    return this.hasDmx() || this.hasOsc() || this.hasMqtt();
   }
 
   bool get canDelete {

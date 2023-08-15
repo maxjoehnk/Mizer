@@ -1,5 +1,5 @@
-use crate::models::fixtures::*;
-use crate::models::programmer::*;
+use crate::proto::fixtures::*;
+use crate::proto::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use itertools::Itertools;
@@ -317,7 +317,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
-        let value = self.get_preset_values(preset_id.type_.unwrap().into());
+        let value = self.get_preset_values(preset_id.r#type().into());
 
         self.runtime.run_command(StoreInPresetCommand {
             id: preset_id.into(),

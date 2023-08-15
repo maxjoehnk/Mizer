@@ -8,14 +8,16 @@ use crate::{ConnectionConfig, ConnectionTypes, Project, ProjectManagerMut};
 
 impl ProjectManagerMut for DmxConnectionManager {
     fn new_project(&mut self) {
-        self.add_output("dmx-0".into(), SacnOutput::new());
+        self.add_output("dmx-0".into(), SacnOutput::new(None));
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         profiling::scope!("DmxConnectionManager::load");
         for connection in &project.connections {
             match &connection.config {
-                ConnectionTypes::Sacn => self.add_output(connection.id.clone(), SacnOutput::new()),
+                ConnectionTypes::Sacn { priority } => {
+                    self.add_output(connection.id.clone(), SacnOutput::new(*priority))
+                }
                 ConnectionTypes::Artnet { port, host } => self.add_output(
                     connection.id.clone(),
                     ArtnetOutput::new(host.clone(), *port)?,
@@ -49,7 +51,9 @@ fn get_config(connection: &DmxConnection) -> ConnectionTypes {
             host: artnet.host.clone(),
             port: artnet.port.into(),
         },
-        DmxConnection::Sacn(_) => ConnectionTypes::Sacn,
+        DmxConnection::Sacn(sacn) => ConnectionTypes::Sacn {
+            priority: Some(sacn.priority),
+        },
     }
 }
 

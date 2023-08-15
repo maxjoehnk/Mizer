@@ -91,6 +91,9 @@ RUN apt-get update && \
 
 FROM base as build
 
+ADD https://github.com/protocolbuffers/protobuf/releases/download/v23.4/protoc-23.4-linux-x86_64.zip /tmp/protoc.zip
+RUN unzip /tmp/protoc.zip -d /usr/local
+
 WORKDIR /build
 
 COPY [".", "/build/"]
@@ -102,5 +105,7 @@ FROM base
 WORKDIR /app
 
 COPY --from=build /app /app/
+
+EXPOSE 50000
 
 ENTRYPOINT ["/app/mizer"]

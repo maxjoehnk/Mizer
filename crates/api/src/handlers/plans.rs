@@ -1,5 +1,5 @@
-use crate::models::fixtures::FixtureId;
-use crate::models::plans::*;
+use crate::proto::fixtures::FixtureId;
+use crate::proto::plans::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_fixtures::manager::FixtureManager;

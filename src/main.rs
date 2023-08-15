@@ -86,7 +86,6 @@ fn start_runtime(
     handler_out: Option<mpsc::Sender<Handlers<Api>>>,
 ) -> anyhow::Result<()> {
     // TODO: integrate discovery mode
-    Session::new()?;
     Session::discover()?;
 
     let _guard = runtime.enter();

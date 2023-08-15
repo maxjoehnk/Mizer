@@ -10,7 +10,6 @@ default = []
 [dependencies]
 anyhow = "1"
 log = "0.4"
-protobuf = "3.2"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }
@@ -40,6 +39,11 @@ lazy_static = "1.4"
 tracing = "0.1"
 enum-iterator = "1.4"
 itertools = "0.11"
+prost = "0.11"
+prost-types = "0.11"
+tonic = "0.9"
+tokio = "1.29"
 
 [build-dependencies]
-protobuf-codegen = "3.2"
+tonic-build = "0.9"
+

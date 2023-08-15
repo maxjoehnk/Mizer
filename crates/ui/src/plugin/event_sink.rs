@@ -14,12 +14,11 @@ struct InnerSubscriber {
     sink: EventSink,
 }
 
-impl<E: Send + Sync + protobuf::Message + Debug> Subscriber<E> for EventSinkSubscriber {
+impl<E: Send + Sync + mizer_api::Message + Debug> Subscriber<E> for EventSinkSubscriber {
     fn next(&self, event: E) {
         log::trace!("send msg {:?}", event);
-        if let Ok(msg) = event.write_to_bytes() {
-            self.run_in_run_loop(move |inner| inner.send(msg));
-        }
+        let msg = event.encode_to_vec();
+        self.run_in_run_loop(move |inner| inner.send(msg));
     }
 }
 

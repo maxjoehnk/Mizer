@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
 
 use mizer_protocol_dmx::DmxOutput;
 
@@ -336,14 +337,26 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Iris => self.iris.as_ref(),
             FixtureFaderControl::Prism => self.prism.as_ref(),
             FixtureFaderControl::Frost => self.frost.as_ref(),
-            FixtureFaderControl::ColorMixer(ColorChannel::Red) => {
-                self.color_mixer.as_ref().map(|c| &c.red)
-            }
+            // TODO: returning cmy channels when fetching rgb channels is not correct
+            // This should probably be restructured, though the capability to specify a channel mode (channel, delegate, virtual) per control is quite nice
+            FixtureFaderControl::ColorMixer(ColorChannel::Red) => match self.color_mixer.as_ref() {
+                Some(ColorGroup::Rgb { red, .. }) => Some(red),
+                Some(ColorGroup::Cmy { cyan, .. }) => Some(cyan),
+                _ => None,
+            },
             FixtureFaderControl::ColorMixer(ColorChannel::Green) => {
-                self.color_mixer.as_ref().map(|c| &c.green)
+                match self.color_mixer.as_ref() {
+                    Some(ColorGroup::Rgb { green, .. }) => Some(green),
+                    Some(ColorGroup::Cmy { magenta, .. }) => Some(magenta),
+                    _ => None,
+                }
             }
             FixtureFaderControl::ColorMixer(ColorChannel::Blue) => {
-                self.color_mixer.as_ref().map(|c| &c.blue)
+                match self.color_mixer.as_ref() {
+                    Some(ColorGroup::Rgb { blue, .. }) => Some(blue),
+                    Some(ColorGroup::Cmy { yellow, .. }) => Some(yellow),
+                    _ => None,
+                }
             }
             FixtureFaderControl::ColorWheel => {
                 self.color_wheel.as_ref().map(|color| &color.channel)
@@ -362,9 +375,10 @@ impl<TChannel> FixtureControls<TChannel> {
 
 #[cfg(test)]
 mod tests {
+    use test_case::test_case;
+
     use crate::definition::FixtureFaderControl;
     use crate::fixture::FixtureConfiguration;
-    use test_case::test_case;
 
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
 

@@ -199,6 +199,9 @@ fn build_controls<TChannel>(
                 ChannelPresetType::IntensityBlue => color_builder.blue(control_channel),
                 ChannelPresetType::IntensityWhite => color_builder.white(control_channel),
                 ChannelPresetType::IntensityAmber => color_builder.amber(control_channel),
+                ChannelPresetType::IntensityCyan => color_builder.cyan(control_channel),
+                ChannelPresetType::IntensityMagenta => color_builder.magenta(control_channel),
+                ChannelPresetType::IntensityYellow => color_builder.yellow(control_channel),
                 ChannelPresetType::IntensityDimmer => controls.intensity = Some(control_channel),
                 ChannelPresetType::IntensityMasterDimmer => {
                     controls.intensity = Some(control_channel)

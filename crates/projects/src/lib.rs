@@ -1,18 +1,15 @@
-use indexmap::IndexMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
+use indexmap::IndexMap;
 use lazy_static::lazy_static;
-use mizer_fixtures::fixture::FixtureConfiguration;
-use mizer_fixtures::programmer::Group;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 
-use crate::fixtures::PresetsStore;
-use crate::media::Media;
-use crate::versioning::{migrate, Migrations};
+use mizer_fixtures::fixture::FixtureConfiguration;
+use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
@@ -20,6 +17,10 @@ use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
 use mizer_sequencer::{Effect, Sequence};
 use mizer_timecode::{TimecodeControl, TimecodeTrack};
+
+use crate::fixtures::PresetsStore;
+use crate::media::Media;
+use crate::versioning::{migrate, Migrations};
 
 mod connections;
 mod effects;
@@ -207,7 +208,7 @@ pub struct ConnectionConfig {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ConnectionTypes {
-    Sacn,
+    Sacn { priority: Option<u8> },
     Artnet { host: String, port: Option<u16> },
     Mqtt(MqttAddress),
     Osc(OscAddress),

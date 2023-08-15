@@ -1,36 +1,9 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.layouts;
 
 import "nodes.proto";
 import "programmer.proto";
-
-service LayoutsApi {
-  rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
-  rpc AddLayout (AddLayoutRequest) returns (Layouts) {}
-  rpc RemoveLayout (RemoveLayoutRequest) returns (Layouts) {}
-  rpc RenameLayout (RenameLayoutRequest) returns (Layouts) {}
-
-  rpc RenameControl(RenameControlRequest) returns (LayoutResponse) {}
-  rpc MoveControl(MoveControlRequest) returns (LayoutResponse) {}
-  rpc ResizeControl(ResizeControlRequest) returns (LayoutResponse) {}
-  rpc UpdateControlDecoration(UpdateControlDecorationRequest) returns (LayoutResponse) {}
-  rpc UpdateControlBehavior(UpdateControlBehaviorRequest) returns (LayoutResponse) {}
-  rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
-  rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
-  rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
-  rpc AddSequenceControl (AddSequenceControlRequest) returns (LayoutResponse) {}
-  rpc AddGroupControl (AddGroupControlRequest) returns (LayoutResponse) {}
-  rpc AddPresetControl (AddPresetControlRequest) returns (LayoutResponse) {}
-
-  rpc ReadFaderValue (ReadFaderValueRequest) returns (FaderValueResponse) {}
-}
-
-message LayoutResponse {
-}
-
-message GetLayoutsRequest {
-}
 
 message AddLayoutRequest {
   string name = 1;

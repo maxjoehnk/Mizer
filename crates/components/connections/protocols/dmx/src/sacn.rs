@@ -6,22 +6,24 @@ use crate::buffer::DmxBuffer;
 use crate::DmxOutput;
 
 pub struct SacnOutput {
+    pub priority: u8,
     source: DmxSource,
     buffer: DmxBuffer,
 }
 
 impl SacnOutput {
-    pub fn new() -> Self {
+    pub fn new(priority: Option<u8>) -> Self {
         Self {
             source: DmxSource::new("mizer").unwrap(),
             buffer: Default::default(),
+            priority: priority.unwrap_or(100),
         }
     }
 }
 
 impl Default for SacnOutput {
     fn default() -> Self {
-        Self::new()
+        Self::new(None)
     }
 }
 
@@ -42,7 +44,10 @@ impl DmxOutput for SacnOutput {
         profiling::scope!("SacnOutput::flush");
         let universe_buffer = self.buffer.buffers.lock().unwrap();
         for (universe, buffer) in universe_buffer.iter() {
-            if let Err(err) = self.source.send(*universe, buffer) {
+            if let Err(err) = self
+                .source
+                .send_with_priority(*universe, buffer, self.priority)
+            {
                 log::error!("Unable to send dmx universe {:?}", err);
             }
         }

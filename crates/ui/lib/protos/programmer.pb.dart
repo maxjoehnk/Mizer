@@ -16,35 +16,6 @@ import 'programmer.pbenum.dart';
 
 export 'programmer.pbenum.dart';
 
-class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubscribeProgrammerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  SubscribeProgrammerRequest._() : super();
-  factory SubscribeProgrammerRequest() => create();
-  factory SubscribeProgrammerRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SubscribeProgrammerRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SubscribeProgrammerRequest clone() => SubscribeProgrammerRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SubscribeProgrammerRequest copyWith(void Function(SubscribeProgrammerRequest) updates) => super.copyWith((message) => updates(message as SubscribeProgrammerRequest)) as SubscribeProgrammerRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static SubscribeProgrammerRequest create() => SubscribeProgrammerRequest._();
-  SubscribeProgrammerRequest createEmptyInstance() => create();
-  static $pb.PbList<SubscribeProgrammerRequest> createRepeated() => $pb.PbList<SubscribeProgrammerRequest>();
-  @$core.pragma('dart2js:noInline')
-  static SubscribeProgrammerRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubscribeProgrammerRequest>(create);
-  static SubscribeProgrammerRequest? _defaultInstance;
-}
-
 class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
@@ -587,35 +558,6 @@ class WriteEffectRateRequest extends $pb.GeneratedMessage {
   void clearEffectRate() => clearField(2);
 }
 
-class WriteEffectRateResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectRateResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  WriteEffectRateResponse._() : super();
-  factory WriteEffectRateResponse() => create();
-  factory WriteEffectRateResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteEffectRateResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  WriteEffectRateResponse clone() => WriteEffectRateResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  WriteEffectRateResponse copyWith(void Function(WriteEffectRateResponse) updates) => super.copyWith((message) => updates(message as WriteEffectRateResponse)) as WriteEffectRateResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static WriteEffectRateResponse create() => WriteEffectRateResponse._();
-  WriteEffectRateResponse createEmptyInstance() => create();
-  static $pb.PbList<WriteEffectRateResponse> createRepeated() => $pb.PbList<WriteEffectRateResponse>();
-  @$core.pragma('dart2js:noInline')
-  static WriteEffectRateResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectRateResponse>(create);
-  static WriteEffectRateResponse? _defaultInstance;
-}
-
 class WriteEffectOffsetRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectOffsetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
@@ -675,35 +617,6 @@ class WriteEffectOffsetRequest extends $pb.GeneratedMessage {
   $core.bool hasEffectOffset() => $_has(1);
   @$pb.TagNumber(2)
   void clearEffectOffset() => clearField(2);
-}
-
-class WriteEffectOffsetResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteEffectOffsetResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  WriteEffectOffsetResponse._() : super();
-  factory WriteEffectOffsetResponse() => create();
-  factory WriteEffectOffsetResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteEffectOffsetResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  WriteEffectOffsetResponse clone() => WriteEffectOffsetResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  WriteEffectOffsetResponse copyWith(void Function(WriteEffectOffsetResponse) updates) => super.copyWith((message) => updates(message as WriteEffectOffsetResponse)) as WriteEffectOffsetResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static WriteEffectOffsetResponse create() => WriteEffectOffsetResponse._();
-  WriteEffectOffsetResponse createEmptyInstance() => create();
-  static $pb.PbList<WriteEffectOffsetResponse> createRepeated() => $pb.PbList<WriteEffectOffsetResponse>();
-  @$core.pragma('dart2js:noInline')
-  static WriteEffectOffsetResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteEffectOffsetResponse>(create);
-  static WriteEffectOffsetResponse? _defaultInstance;
 }
 
 class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
@@ -877,35 +790,6 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   WriteControlRequest_GenericValue ensureGeneric() => $_ensure(3);
 }
 
-class WriteControlResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControlResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  WriteControlResponse._() : super();
-  factory WriteControlResponse() => create();
-  factory WriteControlResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteControlResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  WriteControlResponse clone() => WriteControlResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  WriteControlResponse copyWith(void Function(WriteControlResponse) updates) => super.copyWith((message) => updates(message as WriteControlResponse)) as WriteControlResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static WriteControlResponse create() => WriteControlResponse._();
-  WriteControlResponse createEmptyInstance() => create();
-  static $pb.PbList<WriteControlResponse> createRepeated() => $pb.PbList<WriteControlResponse>();
-  @$core.pragma('dart2js:noInline')
-  static WriteControlResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlResponse>(create);
-  static WriteControlResponse? _defaultInstance;
-}
-
 class SelectFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
@@ -945,35 +829,6 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$0.FixtureId> get fixtures => $_getList(0);
-}
-
-class SelectFixturesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  SelectFixturesResponse._() : super();
-  factory SelectFixturesResponse() => create();
-  factory SelectFixturesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SelectFixturesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SelectFixturesResponse clone() => SelectFixturesResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SelectFixturesResponse copyWith(void Function(SelectFixturesResponse) updates) => super.copyWith((message) => updates(message as SelectFixturesResponse)) as SelectFixturesResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static SelectFixturesResponse create() => SelectFixturesResponse._();
-  SelectFixturesResponse createEmptyInstance() => create();
-  static $pb.PbList<SelectFixturesResponse> createRepeated() => $pb.PbList<SelectFixturesResponse>();
-  @$core.pragma('dart2js:noInline')
-  static SelectFixturesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectFixturesResponse>(create);
-  static SelectFixturesResponse? _defaultInstance;
 }
 
 class UnselectFixturesRequest extends $pb.GeneratedMessage {
@@ -1017,91 +872,62 @@ class UnselectFixturesRequest extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get fixtures => $_getList(0);
 }
 
-class UnselectFixturesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UnselectFixturesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+class EmptyRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EmptyRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  UnselectFixturesResponse._() : super();
-  factory UnselectFixturesResponse() => create();
-  factory UnselectFixturesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UnselectFixturesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  EmptyRequest._() : super();
+  factory EmptyRequest() => create();
+  factory EmptyRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EmptyRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  UnselectFixturesResponse clone() => UnselectFixturesResponse()..mergeFromMessage(this);
+  EmptyRequest clone() => EmptyRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UnselectFixturesResponse copyWith(void Function(UnselectFixturesResponse) updates) => super.copyWith((message) => updates(message as UnselectFixturesResponse)) as UnselectFixturesResponse; // ignore: deprecated_member_use
+  EmptyRequest copyWith(void Function(EmptyRequest) updates) => super.copyWith((message) => updates(message as EmptyRequest)) as EmptyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static UnselectFixturesResponse create() => UnselectFixturesResponse._();
-  UnselectFixturesResponse createEmptyInstance() => create();
-  static $pb.PbList<UnselectFixturesResponse> createRepeated() => $pb.PbList<UnselectFixturesResponse>();
+  static EmptyRequest create() => EmptyRequest._();
+  EmptyRequest createEmptyInstance() => create();
+  static $pb.PbList<EmptyRequest> createRepeated() => $pb.PbList<EmptyRequest>();
   @$core.pragma('dart2js:noInline')
-  static UnselectFixturesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UnselectFixturesResponse>(create);
-  static UnselectFixturesResponse? _defaultInstance;
+  static EmptyRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyRequest>(create);
+  static EmptyRequest? _defaultInstance;
 }
 
-class ClearRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+class EmptyResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EmptyResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  ClearRequest._() : super();
-  factory ClearRequest() => create();
-  factory ClearRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ClearRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  EmptyResponse._() : super();
+  factory EmptyResponse() => create();
+  factory EmptyResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EmptyResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ClearRequest clone() => ClearRequest()..mergeFromMessage(this);
+  EmptyResponse clone() => EmptyResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClearRequest copyWith(void Function(ClearRequest) updates) => super.copyWith((message) => updates(message as ClearRequest)) as ClearRequest; // ignore: deprecated_member_use
+  EmptyResponse copyWith(void Function(EmptyResponse) updates) => super.copyWith((message) => updates(message as EmptyResponse)) as EmptyResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ClearRequest create() => ClearRequest._();
-  ClearRequest createEmptyInstance() => create();
-  static $pb.PbList<ClearRequest> createRepeated() => $pb.PbList<ClearRequest>();
+  static EmptyResponse create() => EmptyResponse._();
+  EmptyResponse createEmptyInstance() => create();
+  static $pb.PbList<EmptyResponse> createRepeated() => $pb.PbList<EmptyResponse>();
   @$core.pragma('dart2js:noInline')
-  static ClearRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClearRequest>(create);
-  static ClearRequest? _defaultInstance;
-}
-
-class ClearResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  ClearResponse._() : super();
-  factory ClearResponse() => create();
-  factory ClearResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ClearResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ClearResponse clone() => ClearResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ClearResponse copyWith(void Function(ClearResponse) updates) => super.copyWith((message) => updates(message as ClearResponse)) as ClearResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static ClearResponse create() => ClearResponse._();
-  ClearResponse createEmptyInstance() => create();
-  static $pb.PbList<ClearResponse> createRepeated() => $pb.PbList<ClearResponse>();
-  @$core.pragma('dart2js:noInline')
-  static ClearResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClearResponse>(create);
-  static ClearResponse? _defaultInstance;
+  static EmptyResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyResponse>(create);
+  static EmptyResponse? _defaultInstance;
 }
 
 class HighlightRequest extends $pb.GeneratedMessage {

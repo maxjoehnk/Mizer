@@ -4,22 +4,6 @@ package mizer.nodes;
 
 import "media.proto";
 
-service NodesApi {
-  rpc GetAvailableNodes (NodesRequest) returns (AvailableNodes) {}
-  rpc GetNodes (NodesRequest) returns (Nodes) {}
-  rpc AddNode (AddNodeRequest) returns (Node) {}
-  rpc AddLink (NodeConnection) returns (NodeConnection) {}
-  rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
-  rpc UpdateNodeSetting (UpdateNodeSettingRequest) returns (Node) {}
-  rpc MoveNode (MoveNodeRequest) returns (MoveNodeResponse) {}
-  rpc DeleteNode (DeleteNodeRequest) returns (DeleteNodeResponse) {}
-  rpc HideNode (HideNodeRequest) returns (HideNodeResponse) {}
-  rpc ShowNode (ShowNodeRequest) returns (ShowNodeResponse) {}
-  rpc DuplicateNode (DuplicateNodeRequest) returns (Node) {}
-  rpc RenameNode (RenameNodeRequest) returns (RenameNodeResponse) {}
-  rpc GroupNodes (GroupNodesRequest) returns (GroupNodesResponse) {}
-}
-
 message AddNodeRequest {
   Node.NodeType type = 1;
   NodePosition position = 2;
@@ -31,16 +15,10 @@ message DuplicateNodeRequest {
   optional string parent = 2;
 }
 
-message NodesRequest {
-}
-
 message WriteControl {
   string path = 1;
   string port = 2;
   double value = 3;
-}
-
-message WriteResponse {
 }
 
 message UpdateNodeSettingRequest {
@@ -53,16 +31,10 @@ message MoveNodeRequest {
   NodePosition position = 2;
 }
 
-message MoveNodeResponse {
-}
-
 message ShowNodeRequest {
   string path = 1;
   NodePosition position = 2;
   optional string parent = 3;
-}
-
-message ShowNodeResponse {
 }
 
 message RenameNodeRequest {
@@ -70,29 +42,17 @@ message RenameNodeRequest {
   string new_name = 2;
 }
 
-message RenameNodeResponse {
-}
-
 message GroupNodesRequest {
   repeated string nodes = 1;
   optional string parent = 2;
-}
-
-message GroupNodesResponse {
 }
 
 message DeleteNodeRequest {
   string path = 1;
 }
 
-message DeleteNodeResponse {
-}
-
 message HideNodeRequest {
   string path = 1;
-}
-
-message HideNodeResponse {
 }
 
 message Nodes {

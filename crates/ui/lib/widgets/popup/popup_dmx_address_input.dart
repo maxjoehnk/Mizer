@@ -7,7 +7,8 @@ class PopupDmxAddressInput extends StatefulWidget {
   final FixtureAddress value;
   final Function(FixtureAddress) onChange;
 
-  const PopupDmxAddressInput({this.title, required this.value, required this.onChange, Key? key}) : super(key: key);
+  const PopupDmxAddressInput({this.title, required this.value, required this.onChange, Key? key})
+      : super(key: key);
 
   @override
   State<PopupDmxAddressInput> createState() => _PopupDmxAddressInputState(value);
@@ -23,21 +24,35 @@ class _PopupDmxAddressInputState extends State<PopupDmxAddressInput> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupContainer(title: widget.title ?? "Address", child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(controller: _universeController, autofocus: true, decoration: InputDecoration(hintText: "Universe")),
-        TextField(controller: _channelController, autofocus: true, decoration: InputDecoration(hintText: "Channel")),
-      ],
-    ), actions: [
-      PopupAction("Cancel", () => Navigator.of(context).pop()),
-      PopupAction("Save", () {
-        var universe = int.parse(_universeController.text);
-        var channel = int.parse(_channelController.text);
+    return PopupContainer(
+        title: widget.title ?? "Address",
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+                controller: _universeController,
+                autofocus: true,
+                decoration: InputDecoration(hintText: "Universe"),
+                textInputAction: TextInputAction.next),
+            TextField(
+                controller: _channelController,
+                autofocus: false,
+                decoration: InputDecoration(hintText: "Channel"),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) => _save(context)),
+          ],
+        ),
+        actions: [
+          PopupAction("Cancel", () => Navigator.of(context).pop()),
+          PopupAction("Save", () => _save(context)),
+        ]);
+  }
 
-        widget.onChange(FixtureAddress(universe: universe, channel: channel));
-        Navigator.of(context).pop();
-      }),
-    ]);
+  void _save(BuildContext context) {
+    var universe = int.parse(_universeController.text);
+    var channel = int.parse(_channelController.text);
+
+    widget.onChange(FixtureAddress(universe: universe, channel: channel));
+    Navigator.of(context).pop();
   }
 }

@@ -2,7 +2,7 @@ use mizer_media::documents::MediaId;
 use mizer_media::{MediaCreateModel, MediaServer};
 use std::path::PathBuf;
 
-use crate::models::media::*;
+use crate::proto::media::*;
 
 #[derive(Clone)]
 pub struct MediaHandler {
@@ -47,11 +47,7 @@ impl MediaHandler {
 
         Ok(MediaFiles {
             files,
-            folders: protobuf::MessageField::some(MediaFolders {
-                paths: folders,
-                ..Default::default()
-            }),
-            ..Default::default()
+            folders: Some(MediaFolders { paths: folders }),
         })
     }
 

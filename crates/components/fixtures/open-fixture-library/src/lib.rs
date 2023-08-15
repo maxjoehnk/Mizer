@@ -1,7 +1,7 @@
-use base64::prelude::*;
 use std::collections::HashMap;
 use std::str::FromStr;
 
+use base64::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::*;
@@ -13,6 +13,9 @@ const COLOR_GREEN: &str = "#00ff00";
 const COLOR_BLUE: &str = "#0000ff";
 const COLOR_WHITE: &str = "#ffffff";
 const COLOR_AMBER: &str = "#ffbf00";
+const COLOR_CYAN: &str = "#0ff0fe";
+const COLOR_MAGENTA: &str = "#ff00ff";
+const COLOR_YELLOW: &str = "#ffff00";
 
 const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
 
@@ -399,10 +402,15 @@ fn map_channels(
 ) -> Vec<FixtureChannelDefinition> {
     let channels_2 = channels.clone();
 
+    let mut channels_to_omit = Vec::new();
+
     channels
         .into_iter()
         .enumerate()
-        .map(|(i, channel)| {
+        .flat_map(|(i, channel)| {
+            if channels_to_omit.contains(&channel) {
+                return None;
+            }
             let fine_channels = available_channels
                 .get(&channel)
                 .map(|c| &c.fine_channel_aliases[..]);
@@ -410,47 +418,50 @@ fn map_channels(
                 Some([fine]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     if let Some(fine_channel) = fine_channel {
-                        FixtureChannelDefinition {
+                        channels_to_omit.push(fine.to_string());
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                        }
+                        })
                     } else {
-                        FixtureChannelDefinition {
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Coarse(i as u16),
-                        }
+                        })
                     }
                 }
                 Some([fine, finest]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
                     let finest_channel = channels_2.iter().position(|c| c == finest);
                     if let Some(fine_channel) = fine_channel {
+                        channels_to_omit.push(fine.to_string());
                         if let Some(finest_channel) = finest_channel {
-                            FixtureChannelDefinition {
+                            channels_to_omit.push(finest.to_string());
+                            Some(FixtureChannelDefinition {
                                 name: channel,
                                 resolution: ChannelResolution::Finest(
                                     i as u16,
                                     fine_channel as u16,
                                     finest_channel as u16,
                                 ),
-                            }
+                            })
                         } else {
-                            FixtureChannelDefinition {
+                            Some(FixtureChannelDefinition {
                                 name: channel,
                                 resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                            }
+                            })
                         }
                     } else {
-                        FixtureChannelDefinition {
+                        Some(FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Coarse(i as u16),
-                        }
+                        })
                     }
                 }
-                _ => FixtureChannelDefinition {
+                _ => Some(FixtureChannelDefinition {
                     name: channel,
                     resolution: ChannelResolution::Coarse(i as u16),
-                },
+                }),
             }
         })
         .collect()
@@ -651,6 +662,15 @@ fn group_controls(
             Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
                 color_group.amber(name);
             }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_CYAN => {
+                color_group.cyan(name);
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_MAGENTA => {
+                color_group.magenta(name);
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_YELLOW => {
+                color_group.yellow(name);
+            }
             Some(Capability::Pan {
                 angle_start,
                 angle_end,
@@ -770,7 +790,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),
@@ -835,7 +855,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),
@@ -900,7 +920,7 @@ mod tests {
         assert!(controls.color_mixer.is_some());
         assert_eq!(
             controls.color_mixer.unwrap(),
-            ColorGroup {
+            ColorGroup::Rgb {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),

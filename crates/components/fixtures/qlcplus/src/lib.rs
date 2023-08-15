@@ -1,18 +1,22 @@
 // This is required because of the EnumFromStr macro from the enum_derive crate
 #![recursion_limit = "256"]
-use rayon::prelude::*;
+
 use std::collections::HashMap;
 use std::fs::{DirEntry, File};
 use std::io::Read;
 use std::path::Path;
+
+use rayon::prelude::*;
 use strong_xml::XmlRead;
 
-pub use self::definition::QlcPlusFixtureDefinition;
-use crate::conversion::map_fixture_definition;
-use crate::resource_reader::ResourceReader;
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::find_path;
+
+use crate::conversion::map_fixture_definition;
+use crate::resource_reader::ResourceReader;
+
+pub use self::definition::QlcPlusFixtureDefinition;
 
 mod conversion;
 mod definition;
@@ -123,13 +127,17 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
 
 #[cfg(test)]
 mod tests {
-    use super::{conversion::map_fixture_definition, QlcPlusFixtureDefinition, ResourceReader};
-    use mizer_fixtures::definition::*;
     use std::path::Path;
+
     use strong_xml::XmlRead;
+
+    use mizer_fixtures::definition::*;
+
+    use super::{conversion::map_fixture_definition, QlcPlusFixtureDefinition, ResourceReader};
 
     const GENERIC_RGB_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGB.qxf");
     const GENERIC_RGBW_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGBW.qxf");
+    const GENERIC_CMY_DEFINITION: &str = include_str!("../tests/Generic-Generic-CMY.qxf");
     const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
 
     #[test]
@@ -153,7 +161,7 @@ mod tests {
         for mode in &definition.modes {
             assert_eq!(
                 mode.controls.color_mixer,
-                Some(ColorGroup {
+                Some(ColorGroup::Rgb {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),
                     blue: FixtureControlChannel::Channel("Blue".into()),
@@ -195,7 +203,7 @@ mod tests {
         for mode in &definition.modes {
             assert_eq!(
                 mode.controls.color_mixer,
-                Some(ColorGroup {
+                Some(ColorGroup::Rgb {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),
                     blue: FixtureControlChannel::Channel("Blue".into()),
@@ -220,6 +228,28 @@ mod tests {
             definition.modes[5].controls.intensity,
             Some(FixtureControlChannel::Channel("Dimmer".into()))
         );
+    }
+
+    #[test]
+    fn generic_cmy() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_CMY_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+        let definition = map_fixture_definition(file, &resource_reader);
+
+        assert_eq!(definition.name, "Generic CMY");
+        assert_eq!(definition.modes.len(), 1);
+        assert_eq!(definition.modes[0].name, "CMY");
+        assert_eq!(definition.modes[0].channels.len(), 3);
+        for mode in &definition.modes {
+            assert_eq!(
+                mode.controls.color_mixer,
+                Some(ColorGroup::Cmy {
+                    cyan: FixtureControlChannel::Channel("Cyan".into()),
+                    magenta: FixtureControlChannel::Channel("Magenta".into()),
+                    yellow: FixtureControlChannel::Channel("Yellow".into()),
+                })
+            );
+        }
     }
 
     #[test]

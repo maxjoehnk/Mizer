@@ -4,33 +4,8 @@ package mizer.sequencer;
 
 import "fixtures.proto";
 
-service SequencerApi {
-  rpc GetSequences (GetSequencesRequest) returns (Sequences) {}
-  rpc GetSequence (GetSequenceRequest) returns (Sequence) {}
-  rpc AddSequence (AddSequenceRequest) returns (Sequence) {}
-  rpc DeleteSequence (DeleteSequenceRequest) returns (Sequences) {}
-  rpc SequenceGo (SequenceGoRequest) returns (EmptyResponse) {}
-  rpc SequenceStop (SequenceStopRequest) returns (EmptyResponse) {}
-  rpc UpdateCueTrigger (CueTriggerRequest) returns (Sequences) {}
-  rpc UpdateCueTriggerTime (CueTriggerTimeRequest) returns (Sequences) {}
-  rpc UpdateCueEffectOffsetTime (CueEffectOffsetTimeRequest) returns (Sequences) {}
-  rpc UpdateCueName (CueNameRequest) returns (Sequences) {}
-  rpc UpdateCueValue (CueValueRequest) returns (Sequences) {}
-  rpc UpdateCueFadeTime (CueTimingRequest) returns (Sequences) {}
-  rpc UpdateCueDelayTime (CueTimingRequest) returns (Sequences) {}
-  rpc UpdateSequenceWrapAround (SequenceWrapAroundRequest) returns (Sequences) {}
-  rpc UpdateSequenceStopOnLastCue (SequenceStopOnLastCueRequest) returns (Sequences) {}
-  rpc UpdateSequenceName (CueNameRequest) returns (Sequences) {}
-}
-
-message GetSequencesRequest {
-}
-
 message GetSequenceRequest {
   uint32 sequence = 1;
-}
-
-message AddSequenceRequest {
 }
 
 message DeleteSequenceRequest {
@@ -96,9 +71,6 @@ message SequenceStopOnLastCueRequest {
 message SequenceNameRequest {
   uint32 sequence = 1;
   string name = 2;
-}
-
-message EmptyResponse {
 }
 
 message Sequences {

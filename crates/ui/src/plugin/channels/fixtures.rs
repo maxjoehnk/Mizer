@@ -1,6 +1,6 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::FixturesHandler;
-use mizer_api::models::fixtures::*;
+use mizer_api::proto::fixtures::*;
 use mizer_api::RuntimeApi;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};

@@ -76,13 +76,6 @@ const DuplicateNodeRequest$json = const {
 
 /// Descriptor for `DuplicateNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List duplicateNodeRequestDescriptor = $convert.base64Decode('ChREdXBsaWNhdGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhsKBnBhcmVudBgCIAEoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
-@$core.Deprecated('Use nodesRequestDescriptor instead')
-const NodesRequest$json = const {
-  '1': 'NodesRequest',
-};
-
-/// Descriptor for `NodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodesRequestDescriptor = $convert.base64Decode('CgxOb2Rlc1JlcXVlc3Q=');
 @$core.Deprecated('Use writeControlDescriptor instead')
 const WriteControl$json = const {
   '1': 'WriteControl',
@@ -95,13 +88,6 @@ const WriteControl$json = const {
 
 /// Descriptor for `WriteControl`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List writeControlDescriptor = $convert.base64Decode('CgxXcml0ZUNvbnRyb2wSEgoEcGF0aBgBIAEoCVIEcGF0aBISCgRwb3J0GAIgASgJUgRwb3J0EhQKBXZhbHVlGAMgASgBUgV2YWx1ZQ==');
-@$core.Deprecated('Use writeResponseDescriptor instead')
-const WriteResponse$json = const {
-  '1': 'WriteResponse',
-};
-
-/// Descriptor for `WriteResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List writeResponseDescriptor = $convert.base64Decode('Cg1Xcml0ZVJlc3BvbnNl');
 @$core.Deprecated('Use updateNodeSettingRequestDescriptor instead')
 const UpdateNodeSettingRequest$json = const {
   '1': 'UpdateNodeSettingRequest',
@@ -124,13 +110,6 @@ const MoveNodeRequest$json = const {
 
 /// Descriptor for `MoveNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveNodeRequestDescriptor = $convert.base64Decode('Cg9Nb3ZlTm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBI1Cghwb3NpdGlvbhgCIAEoCzIZLm1pemVyLm5vZGVzLk5vZGVQb3NpdGlvblIIcG9zaXRpb24=');
-@$core.Deprecated('Use moveNodeResponseDescriptor instead')
-const MoveNodeResponse$json = const {
-  '1': 'MoveNodeResponse',
-};
-
-/// Descriptor for `MoveNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List moveNodeResponseDescriptor = $convert.base64Decode('ChBNb3ZlTm9kZVJlc3BvbnNl');
 @$core.Deprecated('Use showNodeRequestDescriptor instead')
 const ShowNodeRequest$json = const {
   '1': 'ShowNodeRequest',
@@ -146,13 +125,6 @@ const ShowNodeRequest$json = const {
 
 /// Descriptor for `ShowNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List showNodeRequestDescriptor = $convert.base64Decode('Cg9TaG93Tm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBI1Cghwb3NpdGlvbhgCIAEoCzIZLm1pemVyLm5vZGVzLk5vZGVQb3NpdGlvblIIcG9zaXRpb24SGwoGcGFyZW50GAMgASgJSABSBnBhcmVudIgBAUIJCgdfcGFyZW50');
-@$core.Deprecated('Use showNodeResponseDescriptor instead')
-const ShowNodeResponse$json = const {
-  '1': 'ShowNodeResponse',
-};
-
-/// Descriptor for `ShowNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List showNodeResponseDescriptor = $convert.base64Decode('ChBTaG93Tm9kZVJlc3BvbnNl');
 @$core.Deprecated('Use renameNodeRequestDescriptor instead')
 const RenameNodeRequest$json = const {
   '1': 'RenameNodeRequest',
@@ -164,13 +136,6 @@ const RenameNodeRequest$json = const {
 
 /// Descriptor for `RenameNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List renameNodeRequestDescriptor = $convert.base64Decode('ChFSZW5hbWVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhkKCG5ld19uYW1lGAIgASgJUgduZXdOYW1l');
-@$core.Deprecated('Use renameNodeResponseDescriptor instead')
-const RenameNodeResponse$json = const {
-  '1': 'RenameNodeResponse',
-};
-
-/// Descriptor for `RenameNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List renameNodeResponseDescriptor = $convert.base64Decode('ChJSZW5hbWVOb2RlUmVzcG9uc2U=');
 @$core.Deprecated('Use groupNodesRequestDescriptor instead')
 const GroupNodesRequest$json = const {
   '1': 'GroupNodesRequest',
@@ -185,13 +150,6 @@ const GroupNodesRequest$json = const {
 
 /// Descriptor for `GroupNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List groupNodesRequestDescriptor = $convert.base64Decode('ChFHcm91cE5vZGVzUmVxdWVzdBIUCgVub2RlcxgBIAMoCVIFbm9kZXMSGwoGcGFyZW50GAIgASgJSABSBnBhcmVudIgBAUIJCgdfcGFyZW50');
-@$core.Deprecated('Use groupNodesResponseDescriptor instead')
-const GroupNodesResponse$json = const {
-  '1': 'GroupNodesResponse',
-};
-
-/// Descriptor for `GroupNodesResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List groupNodesResponseDescriptor = $convert.base64Decode('ChJHcm91cE5vZGVzUmVzcG9uc2U=');
 @$core.Deprecated('Use deleteNodeRequestDescriptor instead')
 const DeleteNodeRequest$json = const {
   '1': 'DeleteNodeRequest',
@@ -202,13 +160,6 @@ const DeleteNodeRequest$json = const {
 
 /// Descriptor for `DeleteNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteNodeRequestDescriptor = $convert.base64Decode('ChFEZWxldGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRo');
-@$core.Deprecated('Use deleteNodeResponseDescriptor instead')
-const DeleteNodeResponse$json = const {
-  '1': 'DeleteNodeResponse',
-};
-
-/// Descriptor for `DeleteNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteNodeResponseDescriptor = $convert.base64Decode('ChJEZWxldGVOb2RlUmVzcG9uc2U=');
 @$core.Deprecated('Use hideNodeRequestDescriptor instead')
 const HideNodeRequest$json = const {
   '1': 'HideNodeRequest',
@@ -219,13 +170,6 @@ const HideNodeRequest$json = const {
 
 /// Descriptor for `HideNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List hideNodeRequestDescriptor = $convert.base64Decode('Cg9IaWRlTm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aA==');
-@$core.Deprecated('Use hideNodeResponseDescriptor instead')
-const HideNodeResponse$json = const {
-  '1': 'HideNodeResponse',
-};
-
-/// Descriptor for `HideNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hideNodeResponseDescriptor = $convert.base64Decode('ChBIaWRlTm9kZVJlc3BvbnNl');
 @$core.Deprecated('Use nodesDescriptor instead')
 const Nodes$json = const {
   '1': 'Nodes',

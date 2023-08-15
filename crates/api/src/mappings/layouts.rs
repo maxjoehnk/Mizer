@@ -1,6 +1,5 @@
-use crate::models::layouts::*;
+use crate::proto::layouts::*;
 use mizer_util::Base64Image;
-use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<mizer_layouts::Layout> for Layout {
     fn from(layout: mizer_layouts::Layout) -> Self {
@@ -11,7 +10,6 @@ impl From<mizer_layouts::Layout> for Layout {
                 .into_iter()
                 .map(LayoutControl::from)
                 .collect(),
-            ..Default::default()
         }
     }
 }
@@ -22,36 +20,31 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
             id: config.id.to_string(),
             control_type: Some(config.control_type.into()),
             label: config.label.unwrap_or_default(),
-            position: MessageField::some(config.position.into()),
-            size: MessageField::some(config.size.into()),
-            decoration: MessageField::some(config.decoration.into()),
-            behavior: MessageField::some(config.behavior.into()),
-            ..Default::default()
+            position: Some(config.position.into()),
+            size: Some(config.size.into()),
+            decoration: Some(config.decoration.into()),
+            behavior: Some(config.behavior.into()),
         }
     }
 }
 
-impl From<mizer_layouts::ControlType> for layout_control::Control_type {
+impl From<mizer_layouts::ControlType> for layout_control::ControlType {
     fn from(value: mizer_layouts::ControlType) -> Self {
         use mizer_layouts::ControlType::*;
 
         match value {
             Group { group_id } => Self::Group(layout_control::GroupControlType {
                 group_id: group_id.into(),
-                ..Default::default()
             }),
-            Node { path: node } => Self::Node(layout_control::NodeControlType {
-                path: node.into(),
-                ..Default::default()
-            }),
+            Node { path: node } => {
+                Self::Node(layout_control::NodeControlType { path: node.into() })
+            }
             Preset { preset_id } => Self::Preset(layout_control::PresetControlType {
-                preset_id: MessageField::some(preset_id.into()),
-                ..Default::default()
+                preset_id: Some(preset_id.into()),
             }),
-            Sequencer { sequence_id } => Self::Sequencer(layout_control::SequencerControlType {
-                sequence_id,
-                ..Default::default()
-            }),
+            Sequencer { sequence_id } => {
+                Self::Sequencer(layout_control::SequencerControlType { sequence_id })
+            }
         }
     }
 }
@@ -61,7 +54,6 @@ impl From<mizer_layouts::ControlPosition> for ControlPosition {
         Self {
             x: position.x,
             y: position.y,
-            ..Default::default()
         }
     }
 }
@@ -80,7 +72,6 @@ impl From<mizer_layouts::ControlSize> for ControlSize {
         Self {
             width: size.width,
             height: size.height,
-            ..Default::default()
         }
     }
 }
@@ -104,7 +95,6 @@ impl From<mizer_layouts::ControlDecorations> for ControlDecorations {
                 .image
                 .and_then(|img| img.try_to_buffer().ok())
                 .unwrap_or_default(),
-            ..Default::default()
         }
     }
 }
@@ -128,7 +118,6 @@ impl From<mizer_node::Color> for Color {
             red: color.red,
             green: color.green,
             blue: color.blue,
-            ..Default::default()
         }
     }
 }
@@ -142,8 +131,7 @@ impl From<Color> for mizer_node::Color {
 impl From<mizer_layouts::ControlBehavior> for ControlBehavior {
     fn from(value: mizer_layouts::ControlBehavior) -> Self {
         Self {
-            sequencer: MessageField::some(value.sequencer.into()),
-            ..Default::default()
+            sequencer: Some(value.sequencer.into()),
         }
     }
 }
@@ -151,7 +139,7 @@ impl From<mizer_layouts::ControlBehavior> for ControlBehavior {
 impl From<ControlBehavior> for mizer_layouts::ControlBehavior {
     fn from(value: ControlBehavior) -> Self {
         Self {
-            sequencer: value.sequencer.into_option().unwrap().into(),
+            sequencer: value.sequencer.unwrap().into(),
         }
     }
 }
@@ -159,8 +147,8 @@ impl From<ControlBehavior> for mizer_layouts::ControlBehavior {
 impl From<mizer_layouts::SequencerControlBehavior> for SequencerControlBehavior {
     fn from(value: mizer_layouts::SequencerControlBehavior) -> Self {
         Self {
-            click_behavior: EnumOrUnknown::new(value.click_behavior.into()),
-            ..Default::default()
+            click_behavior: sequencer_control_behavior::ClickBehavior::from(value.click_behavior)
+                as i32,
         }
     }
 }
@@ -168,7 +156,7 @@ impl From<mizer_layouts::SequencerControlBehavior> for SequencerControlBehavior 
 impl From<SequencerControlBehavior> for mizer_layouts::SequencerControlBehavior {
     fn from(value: SequencerControlBehavior) -> Self {
         Self {
-            click_behavior: value.click_behavior.unwrap().into(),
+            click_behavior: value.click_behavior().into(),
         }
     }
 }
@@ -180,8 +168,8 @@ impl From<mizer_layouts::SequencerControlClickBehavior>
         use mizer_layouts::SequencerControlClickBehavior::*;
 
         match value {
-            GoForward => Self::GO_FORWARD,
-            Toggle => Self::TOGGLE,
+            GoForward => Self::GoForward,
+            Toggle => Self::Toggle,
         }
     }
 }
@@ -193,8 +181,8 @@ impl From<sequencer_control_behavior::ClickBehavior>
         use sequencer_control_behavior::ClickBehavior::*;
 
         match value {
-            GO_FORWARD => Self::GoForward,
-            TOGGLE => Self::Toggle,
+            GoForward => Self::GoForward,
+            Toggle => Self::Toggle,
         }
     }
 }

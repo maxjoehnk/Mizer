@@ -1,11 +1,10 @@
 use crate::mappings::nodes::map_node_descriptor_with_config;
-use crate::models::nodes::*;
+use crate::proto::nodes::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_node::{NodePath, NodePreviewRef, NodeType};
 use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::NodeMetadataRef;
-use protobuf::{EnumOrUnknown, MessageField};
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -20,7 +19,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_nodes(&self) -> Nodes {
-        let mut res = Nodes::new();
+        let mut res = Nodes::default();
 
         for node in self.runtime.nodes() {
             let node: Node = node.into();
@@ -70,8 +69,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 ..Default::default()
             };
             let config = NodeConfig {
-                type_: Some(node_config::Type::ContainerConfig(config)),
-                ..Default::default()
+                r#type: Some(node_config::Type::ContainerConfig(config)),
             };
             let node = map_node_descriptor_with_config(node, config);
             res.nodes.push(node);
@@ -79,19 +77,18 @@ impl<R: RuntimeApi> NodesHandler<R> {
         for channel in self.runtime.links() {
             res.channels.push(NodeConnection {
                 source_node: channel.source.to_string(),
-                source_port: MessageField::some(Port {
-                    protocol: EnumOrUnknown::new(channel.port_type.into()),
+                source_port: Some(Port {
+                    protocol: ChannelProtocol::from(channel.port_type) as i32,
                     name: channel.source_port.to_string(),
-                    ..Default::default()
+                    multiple: false,
                 }),
                 target_node: channel.target.to_string(),
-                target_port: MessageField::some(Port {
-                    protocol: EnumOrUnknown::new(channel.port_type.into()),
+                target_port: Some(Port {
+                    protocol: ChannelProtocol::from(channel.port_type) as i32,
                     name: channel.target_port.to_string(),
-                    ..Default::default()
+                    multiple: false,
                 }),
-                protocol: EnumOrUnknown::new(channel.port_type.into()),
-                ..Default::default()
+                protocol: ChannelProtocol::from(channel.port_type) as i32,
             });
         }
 
@@ -111,8 +108,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
                 AvailableNode {
                     name: details.name,
-                    category: EnumOrUnknown::new(details.category.into()),
-                    type_: EnumOrUnknown::new(node_type.into()),
+                    category: NodeCategory::from(details.category) as i32,
+                    r#type: node::NodeType::from(node_type) as i32,
                     ..Default::default()
                 }
             })
@@ -135,7 +132,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn add_node(&self, request: AddNodeRequest) -> Node {
-        let position = request.position.unwrap();
+        let position = request.position.as_ref().unwrap();
         let designer = mizer_node::NodeDesigner {
             position: mizer_node::NodePosition {
                 x: position.x,
@@ -147,7 +144,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let cmd = AddNodeCommand {
             designer,
-            node_type: request.type_.unwrap().into(),
+            node_type: request.r#type().into(),
             node: None,
             parent: request.parent.map(NodePath::from),
         };

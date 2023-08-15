@@ -44,4 +44,5 @@ pub enum MizerFixtureControl {
     ColorRed,
     ColorGreen,
     ColorBlue,
+    Generic,
 }

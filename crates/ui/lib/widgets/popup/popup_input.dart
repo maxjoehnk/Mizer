@@ -7,7 +7,8 @@ class PopupInput extends StatefulWidget {
   final String? value;
   final Function(String) onChange;
 
-  const PopupInput({required this.title, this.value, required this.onChange, Key? key}) : super(key: key);
+  const PopupInput({required this.title, this.value, required this.onChange, Key? key})
+      : super(key: key);
 
   @override
   State<PopupInput> createState() => _PopupInputState(value);
@@ -24,10 +25,18 @@ class _PopupInputState extends State<PopupInput> {
       bindings: {
         const SingleActivator(LogicalKeyboardKey.enter): () => _confirm(context),
       },
-      child: PopupContainer(title: widget.title, child: TextField(controller: _controller, autofocus: true), actions: [
-        PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("Save", () => _confirm(context)),
-      ]),
+      child: PopupContainer(
+          title: widget.title,
+          child: TextField(
+            controller: _controller,
+            autofocus: true,
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _confirm(context),
+          ),
+          actions: [
+            PopupAction("Cancel", () => Navigator.of(context).pop()),
+            PopupAction("Save", () => _confirm(context)),
+          ]),
     );
   }
 

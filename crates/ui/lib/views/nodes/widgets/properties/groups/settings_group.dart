@@ -107,6 +107,7 @@ class NodeSettingsPane extends StatelessWidget {
       }
       if (setting.hasSelect()) {
         return EnumField(
+            disabled: setting.disabled,
             label: setting.label,
             initialValue: setting.select.value,
             items: setting.select.variants.map(mapVariant).toList(),

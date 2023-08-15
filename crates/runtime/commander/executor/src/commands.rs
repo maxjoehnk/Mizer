@@ -1,20 +1,22 @@
-use crate::executor::CommandExecutor;
-use derive_more::From;
-use mizer_commander::Command;
-use mizer_processing::Injector;
 use std::any::Any;
 
-pub use crate::aggregates::*;
+use derive_more::From;
+
+use mizer_commander::Command;
 pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
 pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
+use mizer_processing::Injector;
 pub use mizer_protocol_dmx::commands::*;
 pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_protocol_osc::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
 pub use mizer_timecode::commands::*;
+
+pub use crate::aggregates::*;
+use crate::executor::CommandExecutor;
 
 pub trait SendableCommand<'a>: Command<'a> + Into<CommandImpl> + Send + Sync {}
 
@@ -125,6 +127,7 @@ command_impl! {
     AddArtnetOutputCommand,
     AddSacnOutputCommand,
     ConfigureArtnetOutputCommand,
+    ConfigureSacnOutputCommand,
     DeleteOutputCommand,
     AddMqttConnectionCommand,
     DeleteMqttConnectionCommand,

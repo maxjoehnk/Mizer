@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Manufacturer>Generic</Manufacturer>
+ <Model>Generic CMY</Model>
+ <Type>Color Changer</Type>
+ <Channel Name="Cyan" Preset="IntensityCyan"/>
+ <Channel Name="Magenta" Preset="IntensityMagenta"/>
+ <Channel Name="Yellow" Preset="IntensityYellow"/>
+ <Mode Name="CMY">
+  <Channel Number="0">Cyan</Channel>
+  <Channel Number="1">Magenta</Channel>
+  <Channel Number="2">Yellow</Channel>
+ </Mode>
+</FixtureDefinition>

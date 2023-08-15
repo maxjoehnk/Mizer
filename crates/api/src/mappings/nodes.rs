@@ -2,10 +2,9 @@ use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortTy
 use mizer_nodes::{MidiInputConfig, NodeDowncast};
 use mizer_runtime::commands::StaticNodeDescriptor;
 use mizer_runtime::NodeDescriptor;
-use protobuf::{EnumOrUnknown, MessageField};
 
-use crate::models::nodes::node_setting::{spline_value, SplineValue};
-use crate::models::nodes::*;
+use crate::proto::nodes::node_setting::{spline_value, SplineValue};
+use crate::proto::nodes::*;
 
 impl TryFrom<mizer_nodes::Node> for node_config::Type {
     type Error = ();
@@ -31,7 +30,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
     fn from(node: mizer_nodes::Node) -> Self {
         let config: Option<node_config::Type> = node.try_into().ok();
         NodeConfig {
-            type_: config,
+            r#type: config,
             ..Default::default()
         }
     }
@@ -42,22 +41,20 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
         Self {
             device: config.device,
             config: match config.binding {
-                Some(midi_node_config::Binding::NoteBinding(binding)) => {
-                    match binding.type_.unwrap() {
-                        midi_node_config::note_binding::MidiType::CC => MidiInputConfig::Note {
-                            mode: mizer_nodes::NoteMode::CC,
-                            channel: binding.channel as u8,
-                            port: binding.port as u8,
-                            range: (binding.range_from as u8, binding.range_to as u8),
-                        },
-                        midi_node_config::note_binding::MidiType::NOTE => MidiInputConfig::Note {
-                            mode: mizer_nodes::NoteMode::Note,
-                            channel: binding.channel as u8,
-                            port: binding.port as u8,
-                            range: (binding.range_from as u8, binding.range_to as u8),
-                        },
-                    }
-                }
+                Some(midi_node_config::Binding::NoteBinding(binding)) => match binding.r#type() {
+                    midi_node_config::note_binding::MidiType::Cc => MidiInputConfig::Note {
+                        mode: mizer_nodes::NoteMode::CC,
+                        channel: binding.channel as u8,
+                        port: binding.port as u8,
+                        range: (binding.range_from as u8, binding.range_to as u8),
+                    },
+                    midi_node_config::note_binding::MidiType::Note => MidiInputConfig::Note {
+                        mode: mizer_nodes::NoteMode::Note,
+                        channel: binding.channel as u8,
+                        port: binding.port as u8,
+                        range: (binding.range_from as u8, binding.range_to as u8),
+                    },
+                },
                 Some(midi_node_config::Binding::ControlBinding(binding)) => {
                     MidiInputConfig::Control {
                         page: binding.page,
@@ -144,75 +141,75 @@ impl From<mizer_util::SplineStep> for spline_value::SplineStep {
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
-            NodeType::Fader => node::NodeType::FADER,
-            NodeType::Button => node::NodeType::BUTTON,
-            NodeType::Label => node::NodeType::LABEL,
-            NodeType::DmxOutput => node::NodeType::DMX_OUTPUT,
-            NodeType::Oscillator => node::NodeType::OSCILLATOR,
-            NodeType::Clock => node::NodeType::CLOCK,
-            NodeType::OscInput => node::NodeType::OSC_INPUT,
-            NodeType::OscOutput => node::NodeType::OSC_OUTPUT,
-            NodeType::VideoFile => node::NodeType::VIDEO_FILE,
-            NodeType::VideoOutput => node::NodeType::VIDEO_OUTPUT,
-            NodeType::VideoHsv => node::NodeType::VIDEO_HSV,
-            NodeType::VideoTransform => node::NodeType::VIDEO_TRANSFORM,
-            NodeType::VideoMixer => node::NodeType::VIDEO_MIXER,
-            NodeType::VideoRgb => node::NodeType::VIDEO_RGB,
-            NodeType::VideoRgbSplit => node::NodeType::VIDEO_RGB_SPLIT,
-            NodeType::Scripting => node::NodeType::SCRIPT,
-            NodeType::PixelDmx => node::NodeType::PIXEL_TO_DMX,
-            NodeType::PixelPattern => node::NodeType::PIXEL_PATTERN,
-            NodeType::OpcOutput => node::NodeType::OPC_OUTPUT,
-            NodeType::Fixture => node::NodeType::FIXTURE,
-            NodeType::Programmer => node::NodeType::PROGRAMMER,
-            NodeType::Group => node::NodeType::GROUP,
-            NodeType::Preset => node::NodeType::PRESET,
-            NodeType::Sequencer => node::NodeType::SEQUENCER,
-            NodeType::StepSequencer => node::NodeType::STEP_SEQUENCER,
-            NodeType::Envelope => node::NodeType::ENVELOPE,
-            NodeType::Select => node::NodeType::SELECT,
-            NodeType::Merge => node::NodeType::MERGE,
-            NodeType::Threshold => node::NodeType::THRESHOLD,
-            NodeType::Encoder => node::NodeType::ENCODER,
-            NodeType::MidiInput => node::NodeType::MIDI_INPUT,
-            NodeType::MidiOutput => node::NodeType::MIDI_OUTPUT,
-            NodeType::Laser => node::NodeType::LASER,
-            NodeType::IldaFile => node::NodeType::ILDA_FILE,
-            NodeType::ColorConstant => node::NodeType::COLOR_CONSTANT,
-            NodeType::ColorBrightness => node::NodeType::COLOR_BRIGHTNESS,
-            NodeType::ColorHsv => node::NodeType::COLOR_HSV,
-            NodeType::ColorRgb => node::NodeType::COLOR_RGB,
-            NodeType::Gamepad => node::NodeType::GAMEPAD,
-            NodeType::Container => node::NodeType::CONTAINER,
-            NodeType::Math => node::NodeType::MATH,
-            NodeType::MqttInput => node::NodeType::MQTT_INPUT,
-            NodeType::MqttOutput => node::NodeType::MQTT_OUTPUT,
-            NodeType::NumberToData => node::NodeType::NUMBER_TO_DATA,
-            NodeType::DataToNumber => node::NodeType::DATA_TO_NUMBER,
-            NodeType::Value => node::NodeType::VALUE,
-            NodeType::Extract => node::NodeType::EXTRACT,
-            NodeType::PlanScreen => node::NodeType::PLAN_SCREEN,
-            NodeType::Delay => node::NodeType::DELAY,
-            NodeType::Ramp => node::NodeType::RAMP,
-            NodeType::Noise => node::NodeType::NOISE,
-            NodeType::Transport => node::NodeType::TRANSPORT,
-            NodeType::G13Input => node::NodeType::G13INPUT,
-            NodeType::G13Output => node::NodeType::G13OUTPUT,
-            NodeType::ConstantNumber => node::NodeType::CONSTANT_NUMBER,
-            NodeType::Conditional => node::NodeType::CONDITIONAL,
-            NodeType::TimecodeControl => node::NodeType::TIMECODE_CONTROL,
-            NodeType::TimecodeOutput => node::NodeType::TIMECODE_OUTPUT,
-            NodeType::AudioFile => node::NodeType::AUDIO_FILE,
-            NodeType::AudioOutput => node::NodeType::AUDIO_OUTPUT,
-            NodeType::AudioVolume => node::NodeType::AUDIO_VOLUME,
-            NodeType::AudioInput => node::NodeType::AUDIO_INPUT,
-            NodeType::AudioMix => node::NodeType::AUDIO_MIX,
-            NodeType::AudioMeter => node::NodeType::AUDIO_METER,
-            NodeType::Template => node::NodeType::TEMPLATE,
-            NodeType::Webcam => node::NodeType::WEBCAM,
-            NodeType::TextureBorder => node::NodeType::TEXTURE_BORDER,
-            NodeType::VideoText => node::NodeType::VIDEO_TEXT,
-            NodeType::Beats => node::NodeType::BEATS,
+            NodeType::Fader => node::NodeType::Fader,
+            NodeType::Button => node::NodeType::Button,
+            NodeType::Label => node::NodeType::Label,
+            NodeType::DmxOutput => node::NodeType::DmxOutput,
+            NodeType::Oscillator => node::NodeType::Oscillator,
+            NodeType::Clock => node::NodeType::Clock,
+            NodeType::OscInput => node::NodeType::OscInput,
+            NodeType::OscOutput => node::NodeType::OscOutput,
+            NodeType::VideoFile => node::NodeType::VideoFile,
+            NodeType::VideoOutput => node::NodeType::VideoOutput,
+            NodeType::VideoHsv => node::NodeType::VideoHsv,
+            NodeType::VideoTransform => node::NodeType::VideoTransform,
+            NodeType::VideoMixer => node::NodeType::VideoMixer,
+            NodeType::VideoRgb => node::NodeType::VideoRgb,
+            NodeType::VideoRgbSplit => node::NodeType::VideoRgbSplit,
+            NodeType::Scripting => node::NodeType::Script,
+            NodeType::PixelDmx => node::NodeType::PixelToDmx,
+            NodeType::PixelPattern => node::NodeType::PixelPattern,
+            NodeType::OpcOutput => node::NodeType::OpcOutput,
+            NodeType::Fixture => node::NodeType::Fixture,
+            NodeType::Programmer => node::NodeType::Programmer,
+            NodeType::Group => node::NodeType::Group,
+            NodeType::Preset => node::NodeType::Preset,
+            NodeType::Sequencer => node::NodeType::Sequencer,
+            NodeType::StepSequencer => node::NodeType::StepSequencer,
+            NodeType::Envelope => node::NodeType::Envelope,
+            NodeType::Select => node::NodeType::Select,
+            NodeType::Merge => node::NodeType::Merge,
+            NodeType::Threshold => node::NodeType::Threshold,
+            NodeType::Encoder => node::NodeType::Encoder,
+            NodeType::MidiInput => node::NodeType::MidiInput,
+            NodeType::MidiOutput => node::NodeType::MidiOutput,
+            NodeType::Laser => node::NodeType::Laser,
+            NodeType::IldaFile => node::NodeType::IldaFile,
+            NodeType::ColorConstant => node::NodeType::ColorConstant,
+            NodeType::ColorBrightness => node::NodeType::ColorBrightness,
+            NodeType::ColorHsv => node::NodeType::ColorHsv,
+            NodeType::ColorRgb => node::NodeType::ColorRgb,
+            NodeType::Gamepad => node::NodeType::Gamepad,
+            NodeType::Container => node::NodeType::Container,
+            NodeType::Math => node::NodeType::Math,
+            NodeType::MqttInput => node::NodeType::MqttInput,
+            NodeType::MqttOutput => node::NodeType::MqttOutput,
+            NodeType::NumberToData => node::NodeType::NumberToData,
+            NodeType::DataToNumber => node::NodeType::DataToNumber,
+            NodeType::Value => node::NodeType::Value,
+            NodeType::Extract => node::NodeType::Extract,
+            NodeType::PlanScreen => node::NodeType::PlanScreen,
+            NodeType::Delay => node::NodeType::Delay,
+            NodeType::Ramp => node::NodeType::Ramp,
+            NodeType::Noise => node::NodeType::Noise,
+            NodeType::Transport => node::NodeType::Transport,
+            NodeType::G13Input => node::NodeType::G13input,
+            NodeType::G13Output => node::NodeType::G13output,
+            NodeType::ConstantNumber => node::NodeType::ConstantNumber,
+            NodeType::Conditional => node::NodeType::Conditional,
+            NodeType::TimecodeControl => node::NodeType::TimecodeControl,
+            NodeType::TimecodeOutput => node::NodeType::TimecodeOutput,
+            NodeType::AudioFile => node::NodeType::AudioFile,
+            NodeType::AudioOutput => node::NodeType::AudioOutput,
+            NodeType::AudioVolume => node::NodeType::AudioVolume,
+            NodeType::AudioInput => node::NodeType::AudioInput,
+            NodeType::AudioMix => node::NodeType::AudioMix,
+            NodeType::AudioMeter => node::NodeType::AudioMeter,
+            NodeType::Template => node::NodeType::Template,
+            NodeType::Webcam => node::NodeType::Webcam,
+            NodeType::TextureBorder => node::NodeType::TextureBorder,
+            NodeType::VideoText => node::NodeType::VideoText,
+            NodeType::Beats => node::NodeType::Beats,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -221,75 +218,75 @@ impl From<NodeType> for node::NodeType {
 impl From<node::NodeType> for NodeType {
     fn from(node: node::NodeType) -> Self {
         match node {
-            node::NodeType::FADER => NodeType::Fader,
-            node::NodeType::BUTTON => NodeType::Button,
-            node::NodeType::LABEL => NodeType::Label,
-            node::NodeType::DMX_OUTPUT => NodeType::DmxOutput,
-            node::NodeType::OSCILLATOR => NodeType::Oscillator,
-            node::NodeType::CLOCK => NodeType::Clock,
-            node::NodeType::OSC_INPUT => NodeType::OscInput,
-            node::NodeType::OSC_OUTPUT => NodeType::OscOutput,
-            node::NodeType::VIDEO_FILE => NodeType::VideoFile,
-            node::NodeType::VIDEO_OUTPUT => NodeType::VideoOutput,
-            node::NodeType::VIDEO_HSV => NodeType::VideoHsv,
-            node::NodeType::VIDEO_TRANSFORM => NodeType::VideoTransform,
-            node::NodeType::VIDEO_MIXER => NodeType::VideoMixer,
-            node::NodeType::VIDEO_RGB => NodeType::VideoRgb,
-            node::NodeType::VIDEO_RGB_SPLIT => NodeType::VideoRgbSplit,
-            node::NodeType::SCRIPT => NodeType::Scripting,
-            node::NodeType::PIXEL_TO_DMX => NodeType::PixelDmx,
-            node::NodeType::PIXEL_PATTERN => NodeType::PixelPattern,
-            node::NodeType::OPC_OUTPUT => NodeType::OpcOutput,
-            node::NodeType::FIXTURE => NodeType::Fixture,
-            node::NodeType::PROGRAMMER => NodeType::Programmer,
-            node::NodeType::GROUP => NodeType::Group,
-            node::NodeType::PRESET => NodeType::Preset,
-            node::NodeType::SEQUENCER => NodeType::Sequencer,
-            node::NodeType::STEP_SEQUENCER => NodeType::StepSequencer,
-            node::NodeType::ENVELOPE => NodeType::Envelope,
-            node::NodeType::SELECT => NodeType::Select,
-            node::NodeType::MERGE => NodeType::Merge,
-            node::NodeType::THRESHOLD => NodeType::Threshold,
-            node::NodeType::ENCODER => NodeType::Encoder,
-            node::NodeType::MIDI_INPUT => NodeType::MidiInput,
-            node::NodeType::MIDI_OUTPUT => NodeType::MidiOutput,
-            node::NodeType::LASER => NodeType::Laser,
-            node::NodeType::ILDA_FILE => NodeType::IldaFile,
-            node::NodeType::COLOR_CONSTANT => NodeType::ColorConstant,
-            node::NodeType::COLOR_BRIGHTNESS => NodeType::ColorBrightness,
-            node::NodeType::COLOR_HSV => NodeType::ColorHsv,
-            node::NodeType::COLOR_RGB => NodeType::ColorRgb,
-            node::NodeType::GAMEPAD => NodeType::Gamepad,
-            node::NodeType::CONTAINER => NodeType::Container,
-            node::NodeType::MATH => NodeType::Math,
-            node::NodeType::MQTT_INPUT => NodeType::MqttInput,
-            node::NodeType::MQTT_OUTPUT => NodeType::MqttOutput,
-            node::NodeType::NUMBER_TO_DATA => NodeType::NumberToData,
-            node::NodeType::DATA_TO_NUMBER => NodeType::DataToNumber,
-            node::NodeType::VALUE => NodeType::Value,
-            node::NodeType::EXTRACT => NodeType::Extract,
-            node::NodeType::PLAN_SCREEN => NodeType::PlanScreen,
-            node::NodeType::DELAY => NodeType::Delay,
-            node::NodeType::RAMP => NodeType::Ramp,
-            node::NodeType::NOISE => NodeType::Noise,
-            node::NodeType::TRANSPORT => NodeType::Transport,
-            node::NodeType::G13INPUT => NodeType::G13Input,
-            node::NodeType::G13OUTPUT => NodeType::G13Output,
-            node::NodeType::CONSTANT_NUMBER => NodeType::ConstantNumber,
-            node::NodeType::CONDITIONAL => NodeType::Conditional,
-            node::NodeType::TIMECODE_CONTROL => NodeType::TimecodeControl,
-            node::NodeType::TIMECODE_OUTPUT => NodeType::TimecodeOutput,
-            node::NodeType::AUDIO_FILE => NodeType::AudioFile,
-            node::NodeType::AUDIO_OUTPUT => NodeType::AudioOutput,
-            node::NodeType::AUDIO_VOLUME => NodeType::AudioVolume,
-            node::NodeType::AUDIO_INPUT => NodeType::AudioInput,
-            node::NodeType::AUDIO_MIX => NodeType::AudioMix,
-            node::NodeType::AUDIO_METER => NodeType::AudioMeter,
-            node::NodeType::TEMPLATE => NodeType::Template,
-            node::NodeType::WEBCAM => NodeType::Webcam,
-            node::NodeType::TEXTURE_BORDER => NodeType::TextureBorder,
-            node::NodeType::VIDEO_TEXT => NodeType::VideoText,
-            node::NodeType::BEATS => NodeType::Beats,
+            node::NodeType::Fader => NodeType::Fader,
+            node::NodeType::Button => NodeType::Button,
+            node::NodeType::Label => NodeType::Label,
+            node::NodeType::DmxOutput => NodeType::DmxOutput,
+            node::NodeType::Oscillator => NodeType::Oscillator,
+            node::NodeType::Clock => NodeType::Clock,
+            node::NodeType::OscInput => NodeType::OscInput,
+            node::NodeType::OscOutput => NodeType::OscOutput,
+            node::NodeType::VideoFile => NodeType::VideoFile,
+            node::NodeType::VideoOutput => NodeType::VideoOutput,
+            node::NodeType::VideoHsv => NodeType::VideoHsv,
+            node::NodeType::VideoTransform => NodeType::VideoTransform,
+            node::NodeType::VideoMixer => NodeType::VideoMixer,
+            node::NodeType::VideoRgb => NodeType::VideoRgb,
+            node::NodeType::VideoRgbSplit => NodeType::VideoRgbSplit,
+            node::NodeType::Script => NodeType::Scripting,
+            node::NodeType::PixelToDmx => NodeType::PixelDmx,
+            node::NodeType::PixelPattern => NodeType::PixelPattern,
+            node::NodeType::OpcOutput => NodeType::OpcOutput,
+            node::NodeType::Fixture => NodeType::Fixture,
+            node::NodeType::Programmer => NodeType::Programmer,
+            node::NodeType::Group => NodeType::Group,
+            node::NodeType::Preset => NodeType::Preset,
+            node::NodeType::Sequencer => NodeType::Sequencer,
+            node::NodeType::StepSequencer => NodeType::StepSequencer,
+            node::NodeType::Envelope => NodeType::Envelope,
+            node::NodeType::Select => NodeType::Select,
+            node::NodeType::Merge => NodeType::Merge,
+            node::NodeType::Threshold => NodeType::Threshold,
+            node::NodeType::Encoder => NodeType::Encoder,
+            node::NodeType::MidiInput => NodeType::MidiInput,
+            node::NodeType::MidiOutput => NodeType::MidiOutput,
+            node::NodeType::Laser => NodeType::Laser,
+            node::NodeType::IldaFile => NodeType::IldaFile,
+            node::NodeType::ColorConstant => NodeType::ColorConstant,
+            node::NodeType::ColorBrightness => NodeType::ColorBrightness,
+            node::NodeType::ColorHsv => NodeType::ColorHsv,
+            node::NodeType::ColorRgb => NodeType::ColorRgb,
+            node::NodeType::Gamepad => NodeType::Gamepad,
+            node::NodeType::Container => NodeType::Container,
+            node::NodeType::Math => NodeType::Math,
+            node::NodeType::MqttInput => NodeType::MqttInput,
+            node::NodeType::MqttOutput => NodeType::MqttOutput,
+            node::NodeType::NumberToData => NodeType::NumberToData,
+            node::NodeType::DataToNumber => NodeType::DataToNumber,
+            node::NodeType::Value => NodeType::Value,
+            node::NodeType::Extract => NodeType::Extract,
+            node::NodeType::PlanScreen => NodeType::PlanScreen,
+            node::NodeType::Delay => NodeType::Delay,
+            node::NodeType::Ramp => NodeType::Ramp,
+            node::NodeType::Noise => NodeType::Noise,
+            node::NodeType::Transport => NodeType::Transport,
+            node::NodeType::G13input => NodeType::G13Input,
+            node::NodeType::G13output => NodeType::G13Output,
+            node::NodeType::ConstantNumber => NodeType::ConstantNumber,
+            node::NodeType::Conditional => NodeType::Conditional,
+            node::NodeType::TimecodeControl => NodeType::TimecodeControl,
+            node::NodeType::TimecodeOutput => NodeType::TimecodeOutput,
+            node::NodeType::AudioFile => NodeType::AudioFile,
+            node::NodeType::AudioOutput => NodeType::AudioOutput,
+            node::NodeType::AudioVolume => NodeType::AudioVolume,
+            node::NodeType::AudioInput => NodeType::AudioInput,
+            node::NodeType::AudioMix => NodeType::AudioMix,
+            node::NodeType::AudioMeter => NodeType::AudioMeter,
+            node::NodeType::Template => NodeType::Template,
+            node::NodeType::Webcam => NodeType::Webcam,
+            node::NodeType::TextureBorder => NodeType::TextureBorder,
+            node::NodeType::VideoText => NodeType::VideoText,
+            node::NodeType::Beats => NodeType::Beats,
         }
     }
 }
@@ -306,21 +303,21 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
     let node_type = descriptor.node_type();
     let mut node = Node {
         path: descriptor.path.to_string(),
-        type_: EnumOrUnknown::new(node_type.into()),
+        r#type: node::NodeType::from(node_type) as i32,
         settings: descriptor
             .settings
             .into_iter()
             .map(NodeSetting::from)
             .collect(),
-        config: MessageField::some(config),
-        designer: MessageField::some(descriptor.designer.into()),
-        preview: EnumOrUnknown::new(details.preview_type.into()),
-        details: MessageField::some(NodeDetails {
+        config: Some(config),
+        designer: Some(descriptor.designer.into()),
+        preview: node::NodePreviewType::from(details.preview_type) as i32,
+        details: Some(NodeDetails {
             name: details.name,
-            category: EnumOrUnknown::new(details.category.into()),
-            ..Default::default()
+            category: NodeCategory::from(details.category) as i32,
         }),
-        ..Default::default()
+        inputs: vec![],
+        outputs: vec![],
     };
     let (inputs, outputs) = descriptor
         .ports
@@ -343,21 +340,21 @@ impl From<StaticNodeDescriptor> for Node {
     fn from(descriptor: StaticNodeDescriptor) -> Self {
         let mut node = Node {
             path: descriptor.path.to_string(),
-            type_: EnumOrUnknown::new(descriptor.node_type.into()),
+            r#type: node::NodeType::from(descriptor.node_type) as i32,
             settings: descriptor
                 .settings
                 .into_iter()
                 .map(NodeSetting::from)
                 .collect(),
             config: descriptor.config.try_into().ok().into(),
-            designer: MessageField::some(descriptor.designer.into()),
-            preview: EnumOrUnknown::new(descriptor.details.preview_type.into()),
-            details: MessageField::some(NodeDetails {
+            designer: Some(descriptor.designer.into()),
+            preview: node::NodePreviewType::from(descriptor.details.preview_type) as i32,
+            details: Some(NodeDetails {
                 name: descriptor.details.name,
-                category: EnumOrUnknown::new(descriptor.details.category.into()),
-                ..Default::default()
+                category: NodeCategory::from(descriptor.details.category) as i32,
             }),
-            ..Default::default()
+            inputs: vec![],
+            outputs: vec![],
         };
         let (inputs, outputs) = descriptor
             .ports
@@ -493,8 +490,8 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 value,
                 allowed_types: content_types
                     .into_iter()
-                    .map(crate::models::media::MediaType::from)
-                    .map(EnumOrUnknown::new)
+                    .map(crate::proto::media::MediaType::from)
+                    .map(|variant| variant as i32)
                     .collect(),
                 ..Default::default()
             }),
@@ -560,13 +557,12 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
             Spline(value) => Self::Spline(value.into()),
             StepSequencer(value) => Self::Steps(value.steps),
             Media(value) => Self::Media {
-                value: value.value,
                 content_types: value
-                    .allowed_types
+                    .allowed_types()
                     .into_iter()
-                    .map(|t| t.unwrap())
                     .map(mizer_node::MediaContentType::from)
                     .collect(),
+                value: value.value,
             },
         }
     }
@@ -656,24 +652,24 @@ impl From<node_setting::SelectVariant> for mizer_node::SelectVariant {
     }
 }
 
-impl From<mizer_node::MediaContentType> for crate::models::media::MediaType {
+impl From<mizer_node::MediaContentType> for crate::proto::media::MediaType {
     fn from(value: mizer_node::MediaContentType) -> Self {
         match value {
-            mizer_node::MediaContentType::Audio => Self::AUDIO,
-            mizer_node::MediaContentType::Image => Self::IMAGE,
-            mizer_node::MediaContentType::Video => Self::VIDEO,
-            mizer_node::MediaContentType::Vector => Self::VECTOR,
+            mizer_node::MediaContentType::Audio => Self::Audio,
+            mizer_node::MediaContentType::Image => Self::Image,
+            mizer_node::MediaContentType::Video => Self::Video,
+            mizer_node::MediaContentType::Vector => Self::Vector,
         }
     }
 }
 
-impl From<crate::models::media::MediaType> for mizer_node::MediaContentType {
-    fn from(value: crate::models::media::MediaType) -> Self {
+impl From<crate::proto::media::MediaType> for mizer_node::MediaContentType {
+    fn from(value: crate::proto::media::MediaType) -> Self {
         match value {
-            crate::models::media::MediaType::AUDIO => Self::Audio,
-            crate::models::media::MediaType::IMAGE => Self::Image,
-            crate::models::media::MediaType::VIDEO => Self::Video,
-            crate::models::media::MediaType::VECTOR => Self::Vector,
+            crate::proto::media::MediaType::Audio => Self::Audio,
+            crate::proto::media::MediaType::Image => Self::Image,
+            crate::proto::media::MediaType::Video => Self::Video,
+            crate::proto::media::MediaType::Vector => Self::Vector,
         }
     }
 }
@@ -682,13 +678,11 @@ impl From<mizer_node::NodeDesigner> for NodeDesigner {
     fn from(designer: mizer_node::NodeDesigner) -> Self {
         Self {
             scale: designer.scale,
-            position: MessageField::some(NodePosition {
+            position: Some(NodePosition {
                 x: designer.position.x,
                 y: designer.position.y,
-                ..Default::default()
             }),
             hidden: designer.hidden,
-            ..Default::default()
         }
     }
 }
@@ -714,16 +708,16 @@ impl From<NodePosition> for mizer_node::NodePosition {
 impl From<PortType> for ChannelProtocol {
     fn from(port: PortType) -> Self {
         match port {
-            PortType::Single => ChannelProtocol::SINGLE,
-            PortType::Multi => ChannelProtocol::MULTI,
-            PortType::Color => ChannelProtocol::COLOR,
-            PortType::Texture => ChannelProtocol::TEXTURE,
-            PortType::Vector => ChannelProtocol::VECTOR,
-            PortType::Laser => ChannelProtocol::LASER,
-            PortType::Poly => ChannelProtocol::POLY,
-            PortType::Data => ChannelProtocol::DATA,
-            PortType::Material => ChannelProtocol::MATERIAL,
-            PortType::Clock => ChannelProtocol::CLOCK,
+            PortType::Single => ChannelProtocol::Single,
+            PortType::Multi => ChannelProtocol::Multi,
+            PortType::Color => ChannelProtocol::Color,
+            PortType::Texture => ChannelProtocol::Texture,
+            PortType::Vector => ChannelProtocol::Vector,
+            PortType::Laser => ChannelProtocol::Laser,
+            PortType::Poly => ChannelProtocol::Poly,
+            PortType::Data => ChannelProtocol::Data,
+            PortType::Material => ChannelProtocol::Material,
+            PortType::Clock => ChannelProtocol::Clock,
         }
     }
 }
@@ -731,16 +725,16 @@ impl From<PortType> for ChannelProtocol {
 impl From<ChannelProtocol> for PortType {
     fn from(port: ChannelProtocol) -> Self {
         match port {
-            ChannelProtocol::SINGLE => PortType::Single,
-            ChannelProtocol::MULTI => PortType::Multi,
-            ChannelProtocol::COLOR => PortType::Color,
-            ChannelProtocol::TEXTURE => PortType::Texture,
-            ChannelProtocol::VECTOR => PortType::Vector,
-            ChannelProtocol::LASER => PortType::Laser,
-            ChannelProtocol::POLY => PortType::Poly,
-            ChannelProtocol::DATA => PortType::Data,
-            ChannelProtocol::MATERIAL => PortType::Material,
-            ChannelProtocol::CLOCK => PortType::Clock,
+            ChannelProtocol::Single => PortType::Single,
+            ChannelProtocol::Multi => PortType::Multi,
+            ChannelProtocol::Color => PortType::Color,
+            ChannelProtocol::Texture => PortType::Texture,
+            ChannelProtocol::Vector => PortType::Vector,
+            ChannelProtocol::Laser => PortType::Laser,
+            ChannelProtocol::Poly => PortType::Poly,
+            ChannelProtocol::Data => PortType::Data,
+            ChannelProtocol::Material => PortType::Material,
+            ChannelProtocol::Clock => PortType::Clock,
         }
     }
 }
@@ -749,9 +743,8 @@ impl From<(PortId, PortMetadata)> for Port {
     fn from((id, metadata): (PortId, PortMetadata)) -> Self {
         Port {
             name: id.to_string(),
-            protocol: EnumOrUnknown::new(metadata.port_type.into()),
+            protocol: ChannelProtocol::from(metadata.port_type) as i32,
             multiple: metadata.multiple.unwrap_or_default(),
-            ..Default::default()
         }
     }
 }
@@ -759,7 +752,7 @@ impl From<(PortId, PortMetadata)> for Port {
 impl From<NodeConnection> for NodeLink {
     fn from(connection: NodeConnection) -> Self {
         NodeLink {
-            port_type: connection.protocol.unwrap().into(),
+            port_type: connection.protocol().into(),
             source: connection.source_node.into(),
             source_port: connection.source_port.unwrap().name.into(),
             target: connection.target_node.into(),
@@ -772,14 +765,14 @@ impl From<NodeConnection> for NodeLink {
 impl From<PreviewType> for node::NodePreviewType {
     fn from(preview: PreviewType) -> Self {
         match preview {
-            PreviewType::History => node::NodePreviewType::HISTORY,
-            PreviewType::Waveform => node::NodePreviewType::WAVEFORM,
-            PreviewType::Multiple => node::NodePreviewType::MULTIPLE,
-            PreviewType::Texture => node::NodePreviewType::TEXTURE,
-            PreviewType::Timecode => node::NodePreviewType::TIMECODE,
-            PreviewType::Data => node::NodePreviewType::DATA,
-            PreviewType::Color => node::NodePreviewType::COLOR,
-            PreviewType::None => node::NodePreviewType::NONE,
+            PreviewType::History => node::NodePreviewType::History,
+            PreviewType::Waveform => node::NodePreviewType::Waveform,
+            PreviewType::Multiple => node::NodePreviewType::Multiple,
+            PreviewType::Texture => node::NodePreviewType::Texture,
+            PreviewType::Timecode => node::NodePreviewType::Timecode,
+            PreviewType::Data => node::NodePreviewType::Data,
+            PreviewType::Color => node::NodePreviewType::Color,
+            PreviewType::None => node::NodePreviewType::None,
         }
     }
 }
@@ -789,17 +782,17 @@ impl From<mizer_node::NodeCategory> for NodeCategory {
         use mizer_node::NodeCategory::*;
 
         match category {
-            None => Self::NODE_CATEGORY_NONE,
-            Standard => Self::NODE_CATEGORY_STANDARD,
-            Connections => Self::NODE_CATEGORY_CONNECTIONS,
-            Conversions => Self::NODE_CATEGORY_CONVERSIONS,
-            Controls => Self::NODE_CATEGORY_CONTROLS,
-            Data => Self::NODE_CATEGORY_DATA,
-            Color => Self::NODE_CATEGORY_COLOR,
-            Audio => Self::NODE_CATEGORY_AUDIO,
-            Video => Self::NODE_CATEGORY_VIDEO,
-            Laser => Self::NODE_CATEGORY_LASER,
-            Pixel => Self::NODE_CATEGORY_PIXEL,
+            None => Self::None,
+            Standard => Self::Standard,
+            Connections => Self::Connections,
+            Conversions => Self::Conversions,
+            Controls => Self::Controls,
+            Data => Self::Data,
+            Color => Self::Color,
+            Audio => Self::Audio,
+            Video => Self::Video,
+            Laser => Self::Laser,
+            Pixel => Self::Pixel,
         }
     }
 }

@@ -1,21 +1,8 @@
 syntax = "proto3";
 
-package mizer.plan;
+package mizer.plans;
 
 import "fixtures.proto";
-
-service PlansApi {
-  rpc GetPlans (PlansRequest) returns (Plans) {}
-  rpc AddPlan (AddPlanRequest) returns (Plans) {}
-  rpc RemovePlan (RemovePlanRequest) returns (Plans) {}
-  rpc RenamePlan (RenamePlanRequest) returns (Plans) {}
-  rpc MoveFixtures (MoveFixturesRequest) returns (Plans) {}
-  rpc MoveFixture (MoveFixtureRequest) returns (Plans) {}
-  rpc AlignFixtures (AlignFixturesRequest) returns (Plans) {}
-}
-
-message PlansRequest {
-}
 
 message AddPlanRequest {
   string name = 1;

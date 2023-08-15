@@ -10,14 +10,16 @@ use zeroconf::{
 
 const POLL_TIMEOUT: u64 = 1;
 
-pub(crate) fn announce_device() {
+pub(crate) fn announce_device(port: u16) {
     let service_type = build_service_type().unwrap();
     thread::Builder::new()
         .name("Session MDNS Broadcast".into())
-        .spawn(|| {
-            let mut service = MdnsService::new(service_type, 50051);
+        .spawn(move || {
+            log::info!("Announcing api on mdns");
+            let mut service = MdnsService::new(service_type, port);
             let mut txt_record = TxtRecord::new();
             txt_record.insert("project", "video.yml").unwrap();
+            service.set_name("Mizer");
             service.set_txt_record(txt_record);
             service.set_registered_callback(Box::new(on_service_registered));
             let event_loop = service.register().unwrap();
@@ -67,5 +69,5 @@ pub fn on_service_registered(
     result: zeroconf::Result<ServiceRegistration>,
     _context: Option<Arc<dyn Any>>,
 ) {
-    log::debug!("service registered: {:?}", result);
+    log::info!("service registered: {:?}", result);
 }

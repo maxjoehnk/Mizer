@@ -1,4 +1,4 @@
-use crate::models::connections::*;
+use crate::proto::connections::*;
 
 impl From<mizer_connections::Connection> for Connection {
     fn from(connection: mizer_connections::Connection) -> Self {
@@ -16,7 +16,6 @@ impl From<mizer_connections::Connection> for connection::Connection {
         match connection {
             Midi(midi) => Self::Midi(MidiConnection {
                 device_profile: midi.device_profile,
-                ..Default::default()
             }),
             Dmx(view) => Self::Dmx(DmxConnection {
                 output_id: view.output_id.clone(),
@@ -26,54 +25,41 @@ impl From<mizer_connections::Connection> for connection::Connection {
                             name: view.output_id,
                             host,
                             port: port as u32,
-                            ..Default::default()
                         })
                     }
-                    mizer_connections::DmxConfig::Sacn => {
+                    mizer_connections::DmxConfig::Sacn { priority } => {
                         dmx_connection::Config::Sacn(SacnConfig {
                             name: view.output_id,
-                            ..Default::default()
+                            priority: priority as u32,
                         })
                     }
                 }),
-                ..Default::default()
             }),
             Helios(laser) => Self::Helios(HeliosConnection {
                 name: laser.name,
                 firmware: laser.firmware,
-                ..Default::default()
             }),
-            EtherDream(laser) => Self::EtherDream(EtherDreamConnection {
-                name: laser.name,
-                ..Default::default()
-            }),
+            EtherDream(laser) => Self::EtherDream(EtherDreamConnection { name: laser.name }),
             Gamepad(gamepad) => Self::Gamepad(GamepadConnection {
                 id: gamepad.id,
                 name: gamepad.name,
-                ..Default::default()
             }),
             Mqtt(mqtt) => Self::Mqtt(MqttConnection {
                 connection_id: mqtt.connection_id,
                 url: mqtt.url,
                 username: mqtt.username,
                 password: mqtt.password,
-                ..Default::default()
             }),
             Osc(osc) => Self::Osc(OscConnection {
                 connection_id: osc.connection_id,
                 output_address: osc.output_host,
                 output_port: osc.output_port as u32,
                 input_port: osc.input_port as u32,
-                ..Default::default()
             }),
-            G13(g13) => Self::G13(G13Connection {
-                id: g13.id,
-                ..Default::default()
-            }),
+            G13(g13) => Self::G13(G13Connection { id: g13.id }),
             Webcam(webcam) => Self::Webcam(WebcamConnection {
                 id: webcam.id,
                 name: webcam.name,
-                ..Default::default()
             }),
         }
     }
@@ -87,7 +73,10 @@ impl From<mizer_connections::DmxConfig> for dmx_connection::Config {
                 port: port as u32,
                 ..Default::default()
             }),
-            mizer_connections::DmxConfig::Sacn => Self::Sacn(SacnConfig::default()),
+            mizer_connections::DmxConfig::Sacn { priority } => Self::Sacn(SacnConfig {
+                priority: priority as u32,
+                ..Default::default()
+            }),
         }
     }
 }

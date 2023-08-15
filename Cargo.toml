@@ -18,6 +18,7 @@ members = [
     "crates/components/fixtures/gdtf",
     "crates/components/fixtures/mizer-definitions",
     "crates/components/fixtures/open-fixture-library",
+    "crates/components/fixtures/patch-export",
     "crates/components/fixtures/qlcplus",
     "crates/components/plan",
     "crates/components/media",

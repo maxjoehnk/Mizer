@@ -1,7 +1,9 @@
-use mizer_command_executor::*;
-use regex::Regex;
 use std::ops::Deref;
 
+use regex::Regex;
+
+use mizer_command_executor::*;
+use mizer_fixture_patch_export::PatchExporter;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 
@@ -129,6 +131,23 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 .map(|address| (address.universe as u16, address.channel as u16)),
         };
         self.runtime.run_command(cmd)?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn export_patch(&self, path: &str) -> anyhow::Result<()> {
+        let fixtures = self.fixture_manager.get_fixtures();
+        let patch_exporter = PatchExporter::new();
+        let mut fixture_refs = fixtures
+            .iter()
+            .map(|fixture| fixture.deref())
+            .collect::<Vec<_>>();
+        fixture_refs.sort_by_key(|fixture| fixture.id);
+        let pdf = patch_exporter.export_csv(fixture_refs.as_slice())?;
+
+        std::fs::write(path, pdf)?;
 
         Ok(())
     }

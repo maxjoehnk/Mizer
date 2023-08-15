@@ -3953,6 +3953,7 @@ dependencies = [
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
+ "mizer-fixture-patch-export",
  "mizer-fixtures",
  "mizer-gamepads",
  "mizer-layouts",
@@ -4217,6 +4218,14 @@ dependencies = [
  "mizer-fixtures",
  "mizer-node",
  "serde",
+]
+
+[[package]]
+name = "mizer-fixture-patch-export"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-fixtures",
 ]
 
 [[package]]

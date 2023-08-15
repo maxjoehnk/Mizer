@@ -12,6 +12,7 @@ anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
+mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }
 mizer-plan = { path = "../components/plan" }
 mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }

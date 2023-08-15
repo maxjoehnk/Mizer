@@ -10,4 +10,6 @@ abstract class FixturesApi {
   Future<Fixtures> deleteFixtures(List<int> fixtureIds);
 
   Future<void> updateFixture(int fixtureId, UpdateFixtureRequest request);
+
+  Future<void> exportPatch(String path);
 }

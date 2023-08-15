@@ -140,7 +140,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
   }
 
   _exportPatch(BuildContext context) async {
-    final typeGroup = XTypeGroup(label: 'PDF'.i18n, extensions: ['pdf']);
+    final typeGroup = XTypeGroup(label: 'CSV'.i18n, extensions: ['csv']);
     final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
     if (location == null) {
       return;

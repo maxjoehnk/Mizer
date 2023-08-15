@@ -1,9 +1,10 @@
-use mizer_command_executor::*;
-use mizer_fixture_patch_export::PatchExporter;
-use protobuf::MessageField;
-use regex::Regex;
 use std::ops::Deref;
 
+use protobuf::MessageField;
+use regex::Regex;
+
+use mizer_command_executor::*;
+use mizer_fixture_patch_export::PatchExporter;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 
@@ -149,7 +150,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             .map(|fixture| fixture.deref())
             .collect::<Vec<_>>();
         fixture_refs.sort_by_key(|fixture| fixture.id);
-        let pdf = patch_exporter.export(fixture_refs.as_slice())?;
+        let pdf = patch_exporter.export_csv(fixture_refs.as_slice())?;
 
         std::fs::write(path, pdf)?;
 

@@ -36,4 +36,10 @@ class FixturesMobileApi implements FixturesApi {
     // TODO: implement updateFixture
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> exportPatch(String path) {
+    // TODO: implement exportPatch
+    throw UnimplementedError();
+  }
 }

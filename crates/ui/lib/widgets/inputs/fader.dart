@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'decoration.dart';
 
@@ -43,8 +44,16 @@ class _FaderInputState extends State<FaderInput> {
     return LayoutBuilder(
       builder: (context, constraints) => Listener(
         onPointerSignal: (event) {
+          var delta = 0.1;
+          if (RawKeyboard.instance.keysPressed.any((key) => [
+                LogicalKeyboardKey.shift,
+                LogicalKeyboardKey.shiftLeft,
+                LogicalKeyboardKey.shiftRight,
+              ].contains(key))) {
+            delta = 0.01;
+          }
           if (event is PointerScrollEvent) {
-            _onScroll(event.scrollDelta.direction);
+            _onScroll(event.scrollDelta.direction, delta);
           }
         },
         child: GestureDetector(
@@ -96,12 +105,12 @@ class _FaderInputState extends State<FaderInput> {
     _emitUpdate(_value);
   }
 
-  void _onScroll(double direction) {
+  void _onScroll(double direction, double delta) {
     double _value = value;
     if (direction < 0) {
-      _value += 0.1;
+      _value += delta;
     } else {
-      _value -= 0.1;
+      _value -= delta;
     }
     _value = _value.clamp(0.0, 1.0);
     setState(() {

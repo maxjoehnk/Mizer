@@ -19,6 +19,7 @@ class SelectPresetDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return ActionDialog(
       title: "Select Preset",
+      onConfirm: () => _newPreset(context),
       content: Container(
         width: MAX_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
@@ -36,8 +37,12 @@ class SelectPresetDialog extends StatelessWidget {
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Preset", () => Navigator.of(context).pop(presetType))
+        PopupAction("New Preset", () => _newPreset(context))
       ],
     );
+  }
+
+  void _newPreset(BuildContext context) {
+    Navigator.of(context).pop(presetType);
   }
 }

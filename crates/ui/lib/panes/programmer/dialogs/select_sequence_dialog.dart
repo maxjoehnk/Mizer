@@ -16,6 +16,7 @@ class SelectSequenceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return ActionDialog(
       title: "Select Sequence",
+      onConfirm: () => _newSequence(context),
       content: Container(
         width: MAX_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
@@ -40,9 +41,13 @@ class SelectSequenceDialog extends StatelessWidget {
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction(
-            "New Sequence", () => api.addSequence().then((s) => Navigator.of(context).pop(s)))
+        PopupAction("New Sequence", () => _newSequence(context))
       ],
     );
+  }
+
+  _newSequence(BuildContext context) async {
+    var sequence = await api.addSequence();
+    Navigator.of(context).pop(sequence);
   }
 }

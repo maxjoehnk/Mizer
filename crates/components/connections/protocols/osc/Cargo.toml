@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 rosc = "0.10"
 log = "0.4"
-flume = "0.10"
+flume = "0.11"
 mizer-message-bus = { path = "../../../../util/bus" }
 futures = "0.3"
 mizer-module = { path = "../../../../runtime/module" }

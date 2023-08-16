@@ -10,7 +10,7 @@ log = "0.4"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-flume = "0.10"
+flume = "0.11"
 futures = "0.3"
 mqtt-async-client = "0.3"
 mizer-processing = { path = "../../../../runtime/processing" }

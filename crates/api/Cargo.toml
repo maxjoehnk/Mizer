@@ -30,7 +30,7 @@ mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-node-templates = { path = "../runtime/pipeline/templates" }
 mizer-message-bus = { path = "../util/bus" }
 mizer-util = { path = "../util" }
-flume = "0.10"
+flume = "0.11"
 futures = "0.3"
 profiling = "1.0"
 pinboard = "2.2"

@@ -2098,7 +2098,7 @@ checksum = "d4badb9489a465cb2c555af1f00f0bfd8cecd6fc12ac11da9d5b40c5dd5f0200"
 dependencies = [
  "bit_field",
  "deflate",
- "flume",
+ "flume 0.10.9",
  "half",
  "inflate",
  "lebe",
@@ -2227,9 +2227,21 @@ checksum = "24c3fd473b3a903a62609e413ed7538f99e10b665ecb502b5e481a95283f8ab4"
 dependencies = [
  "futures-core",
  "futures-sink",
- "nanorand",
+ "nanorand 0.6.1",
  "pin-project",
- "spin 0.9.2",
+ "spin 0.9.8",
+]
+
+[[package]]
+name = "flume"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55ac459de2512911e4b674ce33cf20befaba382d05b62b008afc1c8b57cbf181"
+dependencies = [
+ "futures-core",
+ "futures-sink",
+ "nanorand 0.7.0",
+ "spin 0.9.8",
 ]
 
 [[package]]
@@ -3887,7 +3899,7 @@ dependencies = [
  "derive_more",
  "directories-next",
  "ffmpeg-the-third",
- "flume",
+ "flume 0.11.0",
  "futures",
  "log",
  "metrics",
@@ -3945,7 +3957,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "flume",
+ "flume 0.11.0",
  "futures",
  "itertools 0.11.0",
  "lazy_static",
@@ -4029,7 +4041,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "derive_more",
- "flume",
+ "flume 0.11.0",
  "log",
  "mizer-commander",
  "mizer-fixture-commands",
@@ -4261,7 +4273,7 @@ name = "mizer-g13"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "flume",
+ "flume 0.11.0",
  "futures",
  "g13",
  "log",
@@ -4305,7 +4317,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "flume",
+ "flume 0.11.0",
  "futures",
  "gilrs",
  "log",
@@ -4421,7 +4433,7 @@ name = "mizer-message-bus"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "flume",
+ "flume 0.11.0",
  "futures",
  "log",
  "parking_lot",
@@ -4631,7 +4643,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "downcast",
- "flume",
+ "flume 0.11.0",
  "log",
  "metrics",
  "mizer-clock",
@@ -4832,7 +4844,7 @@ name = "mizer-protocol-mqtt"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "flume",
+ "flume 0.11.0",
  "futures",
  "log",
  "mizer-commander",
@@ -4853,7 +4865,7 @@ name = "mizer-protocol-osc"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "flume",
+ "flume 0.11.0",
  "futures",
  "log",
  "mizer-commander",
@@ -4891,7 +4903,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "downcast",
- "flume",
+ "flume 0.11.0",
  "insta",
  "itertools 0.11.0",
  "log",
@@ -5173,7 +5185,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "flume",
+ "flume 0.11.0",
  "futures",
  "log",
  "nokhwa",
@@ -5330,6 +5342,15 @@ name = "nanorand"
 version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "729eb334247daa1803e0a094d0a5c55711b85571179f5ec6e53eccfdf7008958"
+dependencies = [
+ "getrandom",
+]
+
+[[package]]
+name = "nanorand"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6a51313c5820b0b02bd422f4b44776fbf47961755c74ce64afc73bfad10226c3"
 dependencies = [
  "getrandom",
 ]
@@ -5514,7 +5535,7 @@ version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc4ae290027ab0d22e1405d304603e41edfaee597a81ce09cf751785b44c32a9"
 dependencies = [
- "flume",
+ "flume 0.10.9",
  "image",
  "nokhwa-bindings-linux",
  "nokhwa-bindings-macos",
@@ -5545,7 +5566,7 @@ dependencies = [
  "cocoa-foundation",
  "core-media-sys",
  "core-video-sys",
- "flume",
+ "flume 0.10.9",
  "nokhwa-core",
  "objc",
  "once_cell",
@@ -7493,9 +7514,9 @@ checksum = "6e63cff320ae2c57904679ba7cb63280a3dc4613885beafb148ee7bf9aa9042d"
 
 [[package]]
 name = "spin"
-version = "0.9.2"
+version = "0.9.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "511254be0c5bcf062b019a6c89c01a664aa359ded62f78aa72c6fc137c0590e5"
+checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 dependencies = [
  "lock_api",
 ]

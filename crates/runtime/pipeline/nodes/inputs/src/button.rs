@@ -5,6 +5,7 @@ use mizer_node::*;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
+const SET_PORT: &str = "Set";
 const RESET_PORT: &str = "Reset";
 
 const TOGGLE_SETTING: &str = "Toggle";
@@ -39,6 +40,7 @@ impl PipelineNode for ButtonNode {
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
+            input_port!(SET_PORT, PortType::Single),
             input_port!(RESET_PORT, PortType::Single),
             output_port!(OUTPUT_PORT, PortType::Single),
         ]
@@ -59,6 +61,7 @@ impl ProcessingNode for ButtonNode {
             state,
             input_edge,
             reset_edge,
+            set_edge,
         }: &mut Self::State,
     ) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>(INPUT_PORT) {
@@ -68,6 +71,11 @@ impl ProcessingNode for ButtonNode {
                 }
             } else {
                 *state = value > 0f64;
+            }
+        }
+        if let Some(value) = context.read_port(SET_PORT) {
+            if let Some(true) = set_edge.update(value) {
+                *state = true;
             }
         }
         if let Some(value) = context.read_port(RESET_PORT) {
@@ -93,6 +101,7 @@ impl ProcessingNode for ButtonNode {
             state,
             input_edge,
             reset_edge,
+            set_edge,
         }: &Self::State,
     ) {
         ui.collapsing_header("Config", |ui| {
@@ -111,6 +120,9 @@ impl ProcessingNode for ButtonNode {
 
                 columns[0].label("Reset Edge");
                 columns[1].label(format!("{reset_edge:?}"));
+
+                columns[0].label("Set Edge");
+                columns[1].label(format!("{set_edge:?}"));
             });
         });
     }
@@ -121,6 +133,7 @@ pub struct ButtonState {
     state: bool,
     input_edge: Edge,
     reset_edge: Edge,
+    set_edge: Edge,
 }
 
 impl ButtonState {

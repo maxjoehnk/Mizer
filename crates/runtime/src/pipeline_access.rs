@@ -1,4 +1,3 @@
-use mizer_nodes::NodeDowncast;
 use std::collections::HashMap;
 use std::ops::DerefMut;
 use std::str::FromStr;
@@ -8,6 +7,7 @@ use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_node::*;
+use mizer_nodes::NodeDowncast;
 use mizer_nodes::*;
 use mizer_pipeline::*;
 
@@ -141,6 +141,8 @@ impl PipelineAccess {
             AudioMeter(node) => self.add_node(path, node),
             Template(node) => self.add_node(path, node),
             Beats(node) => self.add_node(path, node),
+            ProDjLinkClock(node) => self.add_node(path, node),
+            PioneerCdj(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

@@ -88,7 +88,7 @@ macro_rules! update {
     (select $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.label == $name {
             if let NodeSettingValue::Select { value, .. } = $setting.value {
-                $field = value;
+                $field = value.try_into()?;
                 return Ok(());
             }
         }

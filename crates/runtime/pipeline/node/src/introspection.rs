@@ -1,7 +1,9 @@
-use crate::PreviewType;
+use std::hash::{Hash, Hasher};
+
 use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
+
+use crate::PreviewType;
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct NodeDetails {
@@ -118,6 +120,8 @@ node_type_name! {
         AudioMix,
         AudioMeter,
         Template,
+        ProDjLinkClock,
+        PioneerCdj,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

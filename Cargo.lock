@@ -4596,6 +4596,7 @@ dependencies = [
  "mizer-pixel-nodes",
  "mizer-plan-nodes",
  "mizer-port-operation-nodes",
+ "mizer-pro-dj-link-nodes",
  "mizer-scripting-nodes",
  "mizer-sequencer-nodes",
  "mizer-step-sequencer-nodes",
@@ -4780,6 +4781,19 @@ dependencies = [
  "enum-iterator",
  "mizer-util",
  "num_enum 0.6.1",
+ "serde",
+]
+
+[[package]]
+name = "mizer-pro-dj-link-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-devices",
+ "mizer-node",
+ "mizer-protocol-pro-dj-link",
+ "mizer-util",
  "serde",
 ]
 

@@ -3,12 +3,11 @@ use std::ops::{Deref, DerefMut};
 use std::time::Instant;
 
 use enum_dispatch::enum_dispatch;
-
-pub use discovery::*;
 use pro_dj_link::Speed;
 
+pub use discovery::*;
+
 mod discovery;
-mod module;
 
 #[enum_dispatch]
 #[derive(Debug, Clone)]

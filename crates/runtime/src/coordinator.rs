@@ -2,9 +2,10 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
 
-use pinboard::NonEmptyPinboard;
-
 use itertools::Itertools;
+use pinboard::NonEmptyPinboard;
+use tracing_unwrap::ResultExt;
+
 use mizer_clock::{Clock, ClockSnapshot, SystemClock};
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui::DebugUi;
@@ -19,7 +20,6 @@ use mizer_pipeline::*;
 use mizer_plan::PlanStorage;
 use mizer_processing::*;
 use mizer_project_files::{Channel, Project, ProjectManagerMut};
-use tracing_unwrap::ResultExt;
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
@@ -595,6 +595,8 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::AudioMeter(node) => pipeline.register_node(path, &node),
         Node::Template(node) => pipeline.register_node(path, &node),
         Node::Beats(node) => pipeline.register_node(path, &node),
+        Node::ProDjLinkClock(node) => pipeline.register_node(path, &node),
+        Node::PioneerCdj(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

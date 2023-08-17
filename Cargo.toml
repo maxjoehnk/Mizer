@@ -64,6 +64,7 @@ members = [
     "crates/runtime/pipeline/nodes/connections/protocols/mqtt",
     "crates/runtime/pipeline/nodes/connections/protocols/opc",
     "crates/runtime/pipeline/nodes/connections/protocols/osc",
+    "crates/runtime/pipeline/nodes/connections/protocols/pro-dj-link",
     "crates/runtime/pipeline/nodes/data",
     "crates/runtime/pipeline/nodes/pixels",
     "crates/runtime/pipeline/nodes/plan",

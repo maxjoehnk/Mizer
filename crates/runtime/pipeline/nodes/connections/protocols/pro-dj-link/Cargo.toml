@@ -1,0 +1,14 @@
+[package]
+name = "mizer-pro-dj-link-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+mizer-node = { path = "../../../../node" }
+mizer-protocol-pro-dj-link = { path = "../../../../../../components/connections/protocols/pro-dj-link" }
+mizer-devices = { path = "../../../../../../components/connections/devices" }
+log = "0.4"
+mizer-util = { path = "../../../../../../util" }

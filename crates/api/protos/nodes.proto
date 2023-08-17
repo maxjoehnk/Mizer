@@ -151,6 +151,8 @@ message Node {
     TEXTURE_BORDER = 83;
     VIDEO_TEXT = 84;
     BEATS = 85;
+    PRO_DJ_LINK_CLOCK = 86;
+    PIONEER_CDJ = 87;
     CONTAINER = 100;
   }
 

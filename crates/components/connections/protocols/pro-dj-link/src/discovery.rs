@@ -53,6 +53,7 @@ impl ProDJLinkDiscoveryService {
                 tokio::time::sleep(std::time::Duration::from_millis(150)).await;
                 match self.virtual_cdj.recv().await {
                     Ok(Some(StatusPacket::CdjStatus(packet))) => {
+                        log::trace!("Virtual CDJ Packet: {packet}");
                         let mut devices = devices.lock().await;
                         if let Some(ProDJLinkDevice::CDJ(cdj)) = devices.get_mut(&packet.device_id)
                         {
@@ -60,14 +61,16 @@ impl ProDJLinkDiscoveryService {
                             sender.send(ProDJLinkDevice::CDJ(cdj.clone())).unwrap();
                         }
                     }
-                    Ok(Some(StatusPacket::MixerStatus(packet))) => {}
+                    Ok(Some(StatusPacket::MixerStatus(packet))) => {
+                        log::trace!("Virtual CDJ Packet: {packet}");
+                    }
                     Ok(None) => continue,
                     Err(err) => log::error!("Virtual CDJ error: {err:?}"),
                 }
             }
         });
         let devices = self.devices.clone();
-        let sender = self.sender.clone();
+        let sender = self.sender.clone()                        log::trace!("Virtual CDJ Packet: {packet}");;
         let tempo_handle = tokio::spawn(async move {
             loop {
                 match self.tempo.recv().await {

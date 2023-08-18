@@ -73,7 +73,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         "add_node": () => {},
         "duplicate_node": () => _duplicateNode(context),
         "delete_node": () => _deleteNode(context),
-        "group_nodes": () => _groupNodes(context)
+        "group_nodes": () => _groupNodes(context),
+        "rename_node": () => _renameNode(context),
       },
       child: Row(
         children: [
@@ -161,6 +162,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate,
                     onClick: () => _duplicateNode(context),
                     hotkeyId: "duplicate_node"),
+                PanelActionModel(
+                    label: "Rename Node".i18n,
+                    disabled: model.selectedNode == null || !model.selectedNode!.node.canRename,
+                    onClick: () => _renameNode(context),
+                    hotkeyId: "rename_node"),
                 if (EnableScreenshot)
                   PanelActionModel(
                       label: "Screenshot Node",
@@ -199,6 +205,21 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         widget.nodeEditorModel.selectedNode!.node.canDuplicate) {
       context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path,
           parent: widget.nodeEditorModel.parent?.node.path));
+    }
+  }
+
+  void _renameNode(BuildContext context) async {
+    if (widget.nodeEditorModel.selectedNode != null &&
+        widget.nodeEditorModel.selectedNode!.node.canRename) {
+      String? result = await showDialog(
+          context: context,
+          builder: (BuildContext context) =>
+              RenameNodeDialog(path: widget.nodeEditorModel.selectedNode!.node.path));
+      if (result != null) {
+        context
+            .read<NodesBloc>()
+            .add(RenameNode(widget.nodeEditorModel.selectedNode!.node.path, result));
+      }
     }
   }
 

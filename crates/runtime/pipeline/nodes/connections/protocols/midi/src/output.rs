@@ -1,14 +1,15 @@
-use enum_iterator::Sequence;
 use std::convert::TryInto;
 use std::fmt::{Display, Formatter};
 use std::ops::DerefMut;
 
+use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
 
-use crate::{get_devices, get_pages_and_controls, NoteMode};
 use mizer_node::*;
 use mizer_protocol_midi::*;
 use mizer_util::LerpExt;
+
+use crate::{get_devices, get_pages_and_controls, NoteMode};
 
 const INPUT_PORT: &str = "Input";
 const COLOR_PORT: &str = "Color";
@@ -22,6 +23,8 @@ const RANGE_FROM_SETTING: &str = "Range From";
 const RANGE_TO_SETTING: &str = "Range To";
 const PAGE_SETTING: &str = "Page";
 const CONTROL_SETTING: &str = "Control";
+const OFF_STEP_SETTING: &str = "Value Off";
+const ON_STEP_SETTING: &str = "Value On";
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiOutputNode {
@@ -44,6 +47,10 @@ pub enum MidiOutputConfig {
     Control {
         page: String,
         control: String,
+        #[serde(default)]
+        off_step: Option<u8>,
+        #[serde(default)]
+        on_step: Option<u8>,
     },
 }
 
@@ -104,15 +111,28 @@ impl ConfigurableNode for MidiOutputNode {
                     .min(1u32)
                     .max(255u32),
             ],
-            MidiOutputConfig::Control { page, control } => {
-                let (pages, controls) =
-                    get_pages_and_controls(injector, &self.device, &page, false);
-                vec![
+            MidiOutputConfig::Control {
+                page,
+                control,
+                off_step,
+                on_step,
+            } => {
+                let (pages, controls, steps) =
+                    get_pages_and_controls(injector, &self.device, &page, &control, false);
+                let selected_off_step = off_step.unwrap_or(u8::MIN) as u32;
+                let selected_on_step = on_step.unwrap_or(u8::MAX) as u32;
+                let mut settings = vec![
                     device_setting,
                     binding_setting,
                     setting!(select PAGE_SETTING, &page, pages),
                     setting!(select CONTROL_SETTING, &control, controls),
-                ]
+                ];
+                if let Some(steps) = steps {
+                    settings.push(setting!(id ON_STEP_SETTING, selected_on_step, steps.clone()));
+                    settings.push(setting!(id OFF_STEP_SETTING, selected_off_step, steps));
+                }
+
+                settings
             }
         }
     }
@@ -133,7 +153,12 @@ impl ConfigurableNode for MidiOutputNode {
                 update!(uint setting, RANGE_TO_SETTING, range.1);
                 update!(enum setting, MODE_SETTING, *mode);
             }
-            MidiOutputConfig::Control { page, control } => {
+            MidiOutputConfig::Control {
+                page,
+                control,
+                on_step,
+                off_step,
+            } => {
                 update!(select setting, PAGE_SETTING, *page);
                 update!(select setting, CONTROL_SETTING, *control);
             }
@@ -202,7 +227,12 @@ impl ProcessingNode for MidiOutputNode {
                             value.linear_extrapolate((0f64, 1f64), *range),
                         )
                     }),
-                MidiOutputConfig::Control { page, control } => {
+                MidiOutputConfig::Control {
+                    page,
+                    control,
+                    on_step,
+                    off_step,
+                } => {
                     if let Some((profile, control)) = device.profile.as_ref().and_then(|profile| {
                         profile
                             .get_control(page, control)
@@ -217,7 +247,7 @@ impl ProcessingNode for MidiOutputNode {
                                 .read_port_changes::<_, f64>(INPUT_PORT)
                                 .and_then(|value| {
                                     context.push_history_value(value);
-                                    control.send_value(value)
+                                    control.send_value(value, *on_step, *off_step)
                                 })
                         }
                     } else {
@@ -270,6 +300,8 @@ impl Sequence for MidiOutputConfig {
         Some(Self::Control {
             control: Default::default(),
             page: Default::default(),
+            off_step: Default::default(),
+            on_step: Default::default(),
         })
     }
 }

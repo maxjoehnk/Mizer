@@ -1,10 +1,11 @@
 use std::fmt::{Display, Formatter};
 
 use enum_iterator::Sequence;
-use mizer_node::{Injector, SelectVariant};
-use mizer_protocol_midi::MidiConnectionManager;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+
+use mizer_node::{IdVariant, Injector, SelectVariant};
+use mizer_protocol_midi::MidiConnectionManager;
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
 pub use self::output::{MidiOutputConfig, MidiOutputNode};
@@ -40,9 +41,14 @@ fn get_devices(injector: &Injector) -> Vec<SelectVariant> {
 fn get_pages_and_controls(
     injector: &Injector,
     device: &str,
-    page: &str,
+    page_name: &str,
+    control_name: &str,
     input: bool,
-) -> (Vec<SelectVariant>, Vec<SelectVariant>) {
+) -> (
+    Vec<SelectVariant>,
+    Vec<SelectVariant>,
+    Option<Vec<IdVariant>>,
+) {
     let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
         .request_device(device)
@@ -51,12 +57,13 @@ fn get_pages_and_controls(
         .and_then(|device| device.profile.clone())
         .map(|profile| profile.pages)
         .unwrap_or_default();
-    let controls = pages.iter().find(|p| p.name == page).cloned();
+    let page = pages.iter().find(|p| p.name == page_name).cloned();
     let pages = pages
         .into_iter()
         .map(|p| SelectVariant::from(p.name))
         .collect();
-    let controls = controls
+    let controls = page
+        .clone()
         .map(|p| {
             let groups = p
                 .groups
@@ -104,6 +111,20 @@ fn get_pages_and_controls(
             groups.chain(controls).collect()
         })
         .unwrap_or_default();
+    let steps = page
+        .and_then(|page| page.controls.iter().find(|c| c.id == control_name).cloned())
+        .and_then(|control| if input { control.input } else { control.output })
+        .and_then(|control| control.midi_device_control())
+        .and_then(|control| control.steps)
+        .map(|steps| {
+            steps
+                .into_iter()
+                .map(|s| IdVariant {
+                    value: s.value as u32,
+                    label: s.label,
+                })
+                .collect()
+        });
 
-    (pages, controls)
+    (pages, controls, steps)
 }

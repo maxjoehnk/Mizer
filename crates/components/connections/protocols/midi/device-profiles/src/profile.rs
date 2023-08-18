@@ -1,7 +1,10 @@
-use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
-use mizer_midi_messages::{Channel, MidiMessage};
-use serde::{Deserialize, Serialize};
 use std::convert::TryInto;
+
+use serde::{Deserialize, Serialize};
+
+use mizer_midi_messages::{Channel, MidiMessage};
+
+use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
 
 #[derive(Clone, Deserialize, Serialize)]
 pub struct DeviceProfile {
@@ -132,11 +135,21 @@ pub enum DeviceControl {
     RGBSysEx(String),
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+impl DeviceControl {
+    pub fn midi_device_control(self) -> Option<MidiDeviceControl> {
+        match self {
+            DeviceControl::MidiCC(control) | DeviceControl::MidiNote(control) => Some(control),
+            _ => None,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MidiDeviceControl {
     pub channel: Channel,
     pub note: u8,
     pub range: (u8, u8),
+    pub steps: Option<Vec<ControlStep>>,
 }
 
 impl Control {
@@ -155,7 +168,7 @@ impl Control {
     }
 
     pub fn input(self) -> ControlBuilder {
-        match self.output {
+        match self.output.clone() {
             Some(DeviceControl::MidiNote(control)) => ControlBuilder {
                 control: self,
                 input: true,
@@ -163,6 +176,7 @@ impl Control {
                 channel: control.channel,
                 note: control.note,
                 range: control.range,
+                steps: Default::default(),
             },
             Some(DeviceControl::MidiCC(control)) => ControlBuilder {
                 control: self,
@@ -171,6 +185,7 @@ impl Control {
                 channel: control.channel,
                 note: control.note,
                 range: control.range,
+                steps: Default::default(),
             },
             _ => ControlBuilder {
                 control: self,
@@ -179,12 +194,13 @@ impl Control {
                 note: Default::default(),
                 range: (0, 255),
                 control_type: Default::default(),
+                steps: Default::default(),
             },
         }
     }
 
     pub fn output(self) -> ControlBuilder {
-        match self.input {
+        match self.input.clone() {
             Some(DeviceControl::MidiNote(control)) => ControlBuilder {
                 control: self,
                 input: false,
@@ -192,6 +208,7 @@ impl Control {
                 channel: control.channel,
                 note: control.note,
                 range: control.range,
+                steps: Default::default(),
             },
             Some(DeviceControl::MidiCC(control)) => ControlBuilder {
                 control: self,
@@ -200,6 +217,7 @@ impl Control {
                 channel: control.channel,
                 note: control.note,
                 range: control.range,
+                steps: Default::default(),
             },
             _ => ControlBuilder {
                 control: self,
@@ -208,6 +226,7 @@ impl Control {
                 note: Default::default(),
                 range: (0, 255),
                 control_type: Default::default(),
+                steps: Default::default(),
             },
         }
     }
@@ -221,6 +240,7 @@ pub struct ControlBuilder {
     pub note: u8,
     pub range: (u8, u8),
     pub control_type: ControlType,
+    pub steps: Vec<ControlStep>,
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
@@ -267,6 +287,11 @@ impl ControlBuilder {
                 note: self.note,
                 range: self.range,
                 channel: self.channel,
+                steps: if self.steps.is_empty() {
+                    None
+                } else {
+                    Some(self.steps)
+                },
             };
             if self.control_type == ControlType::Note {
                 DeviceControl::MidiNote(control)
@@ -282,6 +307,12 @@ impl ControlBuilder {
 
         self.control
     }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ControlStep {
+    pub label: String,
+    pub value: u8,
 }
 
 fn to_id(name: &str) -> String {

@@ -61,6 +61,7 @@ add_node = "alt+a"
 duplicate_node = "ctrl+d"
 group_nodes = "ctrl+g"
 delete_node = "delete"
+rename_node = "ctrl+r"
 
 [hotkeys.sequencer]
 add_sequence = "alt+a"

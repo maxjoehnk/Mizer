@@ -6480,7 +6480,7 @@ dependencies = [
 [[package]]
 name = "pro-dj-link"
 version = "0.1.0"
-source = "git+https://github.com/maxjoehnk/pro-dj-link-rs.git#269748a6c46fdff3c51cf6be6395d5f12c758377"
+source = "git+https://github.com/maxjoehnk/pro-dj-link-rs.git#505e51994e1fbf91058f8f1715dd887a0823a533"
 dependencies = [
  "bitflags 1.3.2",
  "thiserror",
@@ -8635,7 +8635,7 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 1.0.0",
+ "cfg-if 0.1.10",
  "rand 0.8.5",
  "static_assertions",
 ]

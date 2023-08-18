@@ -301,6 +301,7 @@ class _RenameNodeDialogState extends State<RenameNodeDialog> {
           controller: _nameController,
           autofocus: true,
           decoration: InputDecoration(labelText: "Path".i18n),
+          onSubmitted: (value) => Navigator.of(context).pop(value),
         )
       ]),
       actions: [

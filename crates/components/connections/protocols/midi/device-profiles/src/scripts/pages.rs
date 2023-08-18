@@ -49,13 +49,16 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
         })
         .register_fn("output", |c: ControlBuilder| c.build().output())
         .register_fn("input", |c: ControlBuilder| c.build().input())
-        .register_fn("step", |c: ControlBuilder, value: i64, label: String| {
-            c.steps.push(ControlStep {
-                value: value as u8,
-                label,
-            });
-            c
-        });
+        .register_fn(
+            "step",
+            |mut c: ControlBuilder, value: i64, label: String| {
+                c.steps.push(ControlStep {
+                    value: value as u8,
+                    label,
+                });
+                c
+            },
+        );
 
     let ast = engine.compile_file(script.into())?;
     let pages: Array = engine.eval_ast(&ast)?;

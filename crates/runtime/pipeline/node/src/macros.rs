@@ -77,21 +77,27 @@ macro_rules! update {
             }
         }
     };
-    (id $setting:expr, $name:expr, $field:expr) => {
+    (id $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
         if matches!($setting.value, NodeSettingValue::Id { .. }) && $setting.label == $name {
             if let NodeSettingValue::Id { value, .. } = $setting.value {
-                $field = value.into();
+                $field = $conversion(value);
+                return Ok(());
+            }
+        }
+    };
+    (id $setting:expr, $name:expr, $field:expr) => {
+        update!(id $setting, $name, $field, |value: u32| value.into())
+    };
+    (select $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
+        if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.label == $name {
+            if let NodeSettingValue::Select { value, .. } = $setting.value {
+                $field = $conversion(value)?;
                 return Ok(());
             }
         }
     };
     (select $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.label == $name {
-            if let NodeSettingValue::Select { value, .. } = $setting.value {
-                $field = value.try_into()?;
-                return Ok(());
-            }
-        }
+        update!(select $setting, $name, $field, |value: String| value.try_into())
     };
     (text $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Text { .. }) && $setting.label == $name {

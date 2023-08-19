@@ -1,12 +1,15 @@
-use crate::{get_devices, get_pages_and_controls, NoteMode};
+use std::fmt::{Display, Formatter};
+use std::ops::Deref;
+
 use enum_iterator::Sequence;
+use serde::{Deserialize, Serialize};
+
 use mizer_message_bus::Subscriber;
 use mizer_node::*;
 use mizer_protocol_midi::*;
 use mizer_util::LerpExt;
-use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
-use std::ops::Deref;
+
+use crate::{get_devices, get_pages_and_controls, NoteMode};
 
 const OUTPUT_PORT: &str = "Output";
 
@@ -102,7 +105,8 @@ impl ConfigurableNode for MidiInputNode {
                     .max(255u32),
             ],
             MidiInputConfig::Control { page, control } => {
-                let (pages, controls) = get_pages_and_controls(injector, &self.device, &page, true);
+                let (pages, controls, _) =
+                    get_pages_and_controls(injector, &self.device, &page, &control, true);
                 vec![
                     device_setting,
                     binding_setting,

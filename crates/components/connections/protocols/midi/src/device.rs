@@ -4,12 +4,12 @@ use midir::{MidiInput, MidiInputConnection, MidiOutput, MidiOutputConnection};
 
 use mizer_message_bus::{MessageBus, Subscriber};
 pub use mizer_midi_device_profiles::{
-    Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
+    Control, ControlStep, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
 };
+use mizer_midi_messages::{MidiEvent, MidiMessage};
 use mizer_util::LerpExt;
 
 use crate::device_provider::MidiDeviceIdentifier;
-use mizer_midi_messages::{MidiEvent, MidiMessage};
 
 pub struct MidiDevice {
     pub name: String,
@@ -76,7 +76,12 @@ impl MidiDevice {
 pub trait MidiControl {
     fn receive_value(&self, msg: MidiMessage) -> Option<f64>;
 
-    fn send_value(&self, value: f64) -> Option<MidiMessage>;
+    fn send_value(
+        &self,
+        value: f64,
+        on_step: Option<u8>,
+        off_step: Option<u8>,
+    ) -> Option<MidiMessage>;
 }
 
 impl MidiControl for Control {
@@ -116,27 +121,49 @@ impl MidiControl for Control {
         }
     }
 
-    fn send_value(&self, value: f64) -> Option<MidiMessage> {
+    fn send_value(
+        &self,
+        value: f64,
+        on_step: Option<u8>,
+        off_step: Option<u8>,
+    ) -> Option<MidiMessage> {
         match self.output {
             Some(DeviceControl::MidiNote(MidiDeviceControl {
                 channel,
                 note,
                 range,
+                ..
             })) => Some(MidiMessage::NoteOn(
                 channel,
                 note,
-                value.linear_extrapolate((0f64, 1f64), range),
+                convert_value(value, range, on_step, off_step),
             )),
             Some(DeviceControl::MidiCC(MidiDeviceControl {
                 channel,
                 note,
                 range,
+                ..
             })) => Some(MidiMessage::ControlChange(
                 channel,
                 note,
-                value.linear_extrapolate((0f64, 1f64), range),
+                convert_value(value, range, on_step, off_step),
             )),
             _ => None,
         }
     }
+}
+
+fn convert_value(value: f64, range: (u8, u8), on_step: Option<u8>, off_step: Option<u8>) -> u8 {
+    if let Some(on_step) = on_step {
+        if value > 0f64 + f64::EPSILON {
+            return on_step;
+        }
+    }
+    if let Some(off_step) = off_step {
+        if value > 0f64 - f64::EPSILON && value < 0f64 + f64::EPSILON {
+            return off_step;
+        }
+    }
+
+    value.linear_extrapolate((0f64, 1f64), range)
 }

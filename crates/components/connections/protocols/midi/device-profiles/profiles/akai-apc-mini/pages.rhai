@@ -22,7 +22,14 @@ fn add_buttons(page) {
                 .note(button_note)
                 .range(0, 127)
                 .output()
-                .range(0, 6);
+                .range(0, 6)
+                .step(0, "Off")
+                .step(1, "Green")
+                .step(2, "Green Blinking")
+                .step(3, "Red")
+                .step(4, "Red Blinking")
+                .step(5, "Orange")
+                .step(6, "Orange Blinking");
         }
     }
     let scene_launch = create_group("Scene Launch");
@@ -51,7 +58,10 @@ fn generate_button(prefix, button_index, base) {
         .note(button_note)
         .range(0, 127)
         .output()
-        .range(0, 2);
+        .range(0, 2)
+        .step(0, "Off")
+        .step(1, "On")
+        .step(2, "Blinking");
 
     return button;
 }

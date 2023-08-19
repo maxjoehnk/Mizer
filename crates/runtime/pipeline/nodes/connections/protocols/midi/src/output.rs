@@ -137,9 +137,9 @@ impl ConfigurableNode for MidiOutputNode {
                     setting!(select CONTROL_SETTING, &control, controls),
                 ];
                 if let Some(steps) = steps {
-                    settings.push(setting!(select OFF_STEP_SETTING, selected_off_step, steps));
                     settings
-                        .push(setting!(select ON_STEP_SETTING, selected_on_step, steps.clone()));
+                        .push(setting!(select OFF_STEP_SETTING, selected_off_step, steps.clone()));
+                    settings.push(setting!(select ON_STEP_SETTING, selected_on_step, steps));
                 }
 
                 settings

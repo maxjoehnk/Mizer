@@ -28,7 +28,19 @@ fn generate_pads() {
                 .note(button_note)
                 .range(0, 127)
                 .output()
-                .range(0, 60);
+                .range(0, 63)
+                .step(12, "Off")
+                .step(13, "Red - Low")
+                .step(15, "Red - Full")
+                .step(11, "Red - Flashing")
+                .step(29, "Amber - Low")
+                .step(63, "Amber - Full")
+                .step(59, "Amber - Flashing")
+                .step(62, "Yellow - Full")
+                .step(58, "Yellow - Flashing")
+                .step(28, "Green - Low")
+                .step(60, "Green - Full")
+                .step(56, "Green - Flashing");
         }
     }
 

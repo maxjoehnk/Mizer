@@ -22,29 +22,38 @@ fn add_buttons(channel) {
     for button_index in range(0, 4) {
         let button_number = button_index + 1;
         let button_id = "button-" + (channel - 1) + "-" + button_index;
-        group += control("Pad " + button_number)
-            .id(button_id)
-            .input()
-            .note(9 + button_index)
-            .channel(channel)
-            .range(0, 127)
-            .output()
-            .range(0, 127); // This should be replaced by some calculation;
+        group += create_pad(button_id, "Pad " + button_number, channel, 9 + button_index);
     }
     for button_index in range(0, 4) {
         let button_name = button_index + 5;
         let button_id = "button-" + (channel - 1) + "-" + (button_index + 4);
-        group += control("Pad " + button_name)
-            .id(button_id)
-            .input()
-            .channel(channel)
-            .note(25 + button_index)
-            .range(0, 127)
-            .output()
-            .range(0, 127); // This should be replaced by some calculation;
+        group += create_pad(button_id, "Pad " + button_name, channel, 25 + button_index);
     }
 
     group
+}
+
+fn create_pad(button_id, name, channel, note) {
+    control(name)
+        .id(button_id)
+        .input()
+        .channel(channel)
+        .note(note)
+        .range(0, 127)
+        .output()
+        .range(0, 127)
+        .step(12, "Off")
+        .step(13, "Red - Low")
+        .step(15, "Red - Full")
+        .step(11, "Red - Flashing")
+        .step(29, "Amber - Low")
+        .step(63, "Amber - Full")
+        .step(59, "Amber - Flashing")
+        .step(62, "Yellow - Full")
+        .step(58, "Yellow - Flashing")
+        .step(28, "Green - Low")
+        .step(60, "Green - Full")
+        .step(56, "Green - Flashing");
 }
 
 fn add_faders(channel) {

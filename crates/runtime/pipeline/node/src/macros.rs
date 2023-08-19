@@ -91,13 +91,13 @@ macro_rules! update {
     (select $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
         if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.label == $name {
             if let NodeSettingValue::Select { value, .. } = $setting.value {
-                $field = $conversion(value);
+                $field = $conversion(value)?;
                 return Ok(());
             }
         }
     };
     (select $setting:expr, $name:expr, $field:expr) => {
-        update!(select $setting, $name, $field, |value: String| value.try_into()?)
+        update!(select $setting, $name, $field, |value: String| value.try_into())
     };
     (text $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Text { .. }) && $setting.label == $name {

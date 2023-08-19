@@ -173,16 +173,16 @@ impl ConfigurableNode for MidiOutputNode {
                 update!(select setting, CONTROL_SETTING, *control);
                 update!(select setting, ON_STEP_SETTING, *on_step, |value: String| {
                     if value.is_empty() {
-                        None
+                        Ok(None)
                     } else {
-                        value.parse::<u8>().ok()
+                        Some(value.parse::<u8>()).transpose()
                     }
                 });
                 update!(select setting, OFF_STEP_SETTING, *off_step, |value: String| {
                     if value.is_empty() {
-                        None
+                        Ok(None)
                     } else {
-                        value.parse::<u8>().ok()
+                        Some(value.parse::<u8>()).transpose()
                     }
                 });
             }

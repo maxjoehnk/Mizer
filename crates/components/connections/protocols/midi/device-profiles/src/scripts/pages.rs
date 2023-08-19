@@ -2,7 +2,9 @@ use std::path::PathBuf;
 
 use rhai::{Array, Engine};
 
-use crate::profile::{Control, ControlBuilder, ControlStep, Group, Page};
+use crate::profile::{
+    Control, ControlBuilder, ControlStep, ControlStepVariant, Group, Page, StepsBuilder,
+};
 
 pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
     let mut engine = Engine::new();
@@ -52,13 +54,31 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
         .register_fn(
             "step",
             |mut c: ControlBuilder, value: i64, label: String| {
-                c.steps.push(ControlStep {
+                c.steps.push(ControlStep::Single(ControlStepVariant {
                     value: value as u8,
                     label,
+                }));
+                c
+            },
+        )
+        .register_fn(
+            "steps",
+            |mut c: ControlBuilder, label: String, builder: StepsBuilder| {
+                c.steps.push(ControlStep::Group {
+                    label,
+                    steps: builder.build(),
                 });
                 c
             },
-        );
+        )
+        .register_type::<StepsBuilder>()
+        .register_fn("create_steps", StepsBuilder::new)
+        .register_fn("step", |c: &mut StepsBuilder, value: i64, label: String| {
+            c.add(ControlStepVariant {
+                value: value as u8,
+                label,
+            })
+        });
 
     let ast = engine.compile_file(script.into())?;
     let pages: Array = engine.eval_ast(&ast)?;

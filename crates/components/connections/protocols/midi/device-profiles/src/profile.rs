@@ -309,8 +309,36 @@ impl ControlBuilder {
     }
 }
 
+#[derive(Default, Debug, Clone)]
+pub struct StepsBuilder {
+    steps: Vec<ControlStepVariant>,
+}
+
+impl StepsBuilder {
+    pub fn new() -> Self {
+        Default::default()
+    }
+
+    pub fn add(&mut self, step: ControlStepVariant) {
+        self.steps.push(step);
+    }
+
+    pub fn build(self) -> Vec<ControlStepVariant> {
+        self.steps
+    }
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct ControlStep {
+pub enum ControlStep {
+    Single(ControlStepVariant),
+    Group {
+        label: String,
+        steps: Vec<ControlStepVariant>,
+    },
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ControlStepVariant {
     pub label: String,
     pub value: u8,
 }

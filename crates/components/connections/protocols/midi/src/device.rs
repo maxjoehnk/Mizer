@@ -4,7 +4,7 @@ use midir::{MidiInput, MidiInputConnection, MidiOutput, MidiOutputConnection};
 
 use mizer_message_bus::{MessageBus, Subscriber};
 pub use mizer_midi_device_profiles::{
-    Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
+    Control, ControlStep, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
 };
 use mizer_midi_messages::{MidiEvent, MidiMessage};
 use mizer_util::LerpExt;

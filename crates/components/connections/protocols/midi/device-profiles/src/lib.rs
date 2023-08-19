@@ -1,9 +1,15 @@
-pub use crate::profile::{Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page};
-use crate::profile_reader::read_profile;
-use anyhow::Context;
-use mizer_util::find_path;
 use std::fs;
 use std::path::Path;
+
+use anyhow::Context;
+
+use mizer_util::find_path;
+
+pub use crate::profile::{
+    Control, ControlStep, ControlStepVariant, DeviceControl, DeviceProfile, Group,
+    MidiDeviceControl, Page,
+};
+use crate::profile_reader::read_profile;
 
 mod profile;
 mod profile_reader;

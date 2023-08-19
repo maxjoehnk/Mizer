@@ -117,10 +117,19 @@ impl ConfigurableNode for MidiOutputNode {
                 off_step,
                 on_step,
             } => {
-                let (pages, controls, steps) =
+                let (pages, controls, mut steps) =
                     get_pages_and_controls(injector, &self.device, &page, &control, false);
-                let selected_off_step = off_step.unwrap_or(u8::MIN) as u32;
-                let selected_on_step = on_step.unwrap_or(u8::MAX) as u32;
+                if let Some(steps) = steps.as_mut() {
+                    steps.insert(
+                        0,
+                        SelectVariant::Item {
+                            value: String::new(),
+                            label: String::new(),
+                        },
+                    );
+                }
+                let selected_off_step = off_step.map(|value| value.to_string()).unwrap_or_default();
+                let selected_on_step = on_step.map(|value| value.to_string()).unwrap_or_default();
                 let mut settings = vec![
                     device_setting,
                     binding_setting,
@@ -128,8 +137,9 @@ impl ConfigurableNode for MidiOutputNode {
                     setting!(select CONTROL_SETTING, &control, controls),
                 ];
                 if let Some(steps) = steps {
-                    settings.push(setting!(id ON_STEP_SETTING, selected_on_step, steps.clone()));
-                    settings.push(setting!(id OFF_STEP_SETTING, selected_off_step, steps));
+                    settings.push(setting!(select OFF_STEP_SETTING, selected_off_step, steps));
+                    settings
+                        .push(setting!(select ON_STEP_SETTING, selected_on_step, steps.clone()));
                 }
 
                 settings
@@ -161,6 +171,20 @@ impl ConfigurableNode for MidiOutputNode {
             } => {
                 update!(select setting, PAGE_SETTING, *page);
                 update!(select setting, CONTROL_SETTING, *control);
+                update!(select setting, ON_STEP_SETTING, *on_step, |value: String| {
+                    if value.is_empty() {
+                        None
+                    } else {
+                        value.parse::<u8>().ok()
+                    }
+                });
+                update!(select setting, OFF_STEP_SETTING, *off_step, |value: String| {
+                    if value.is_empty() {
+                        None
+                    } else {
+                        value.parse::<u8>().ok()
+                    }
+                });
             }
         }
 

@@ -4,8 +4,8 @@ use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{IdVariant, Injector, SelectVariant};
-use mizer_protocol_midi::MidiConnectionManager;
+use mizer_node::{Injector, SelectVariant};
+use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
 pub use self::output::{MidiOutputConfig, MidiOutputNode};
@@ -47,7 +47,7 @@ fn get_pages_and_controls(
 ) -> (
     Vec<SelectVariant>,
     Vec<SelectVariant>,
-    Option<Vec<IdVariant>>,
+    Option<Vec<SelectVariant>>,
 ) {
     let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
@@ -112,16 +112,28 @@ fn get_pages_and_controls(
         })
         .unwrap_or_default();
     let steps = page
-        .and_then(|page| page.controls.iter().find(|c| c.id == control_name).cloned())
+        .and_then(|page| page.all_controls().find(|c| c.id == control_name).cloned())
         .and_then(|control| if input { control.input } else { control.output })
         .and_then(|control| control.midi_device_control())
         .and_then(|control| control.steps)
         .map(|steps| {
             steps
                 .into_iter()
-                .map(|s| IdVariant {
-                    value: s.value as u32,
-                    label: s.label,
+                .map(|s| match s {
+                    ControlStep::Single(variant) => SelectVariant::Item {
+                        value: variant.value.to_string(),
+                        label: variant.label,
+                    },
+                    ControlStep::Group { label, steps } => SelectVariant::Group {
+                        label,
+                        children: steps
+                            .into_iter()
+                            .map(|variant| SelectVariant::Item {
+                                value: variant.value.to_string(),
+                                label: variant.label,
+                            })
+                            .collect(),
+                    },
                 })
                 .collect()
         });

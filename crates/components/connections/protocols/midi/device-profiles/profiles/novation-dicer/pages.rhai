@@ -29,10 +29,30 @@ fn create_layer(name, channel, button_base) {
             .note(button_note)
             .range(0, 127)
             .output()
-            .range(0, 112);
+            .range(0, 112)
+            .step(0, "Off")
+            .steps("Red", intensity_steps("Red", 0))
+            .steps("Red/Orange", intensity_steps("Red/Orange", 16))
+            .steps("Orange", intensity_steps("Orange", 32))
+            .steps("Orange/Amber", intensity_steps("Orange/Amber", 48))
+            .steps("Amber", intensity_steps("Amber", 64))
+            .steps("Yellow", intensity_steps("Yellow", 80))
+            .steps("Yellow/Green", intensity_steps("Yellow/Green", 96))
+            .steps("Green", intensity_steps("Green", 112));
     }
 
     pads
+}
+
+fn intensity_steps(prefix, start) {
+    let steps = create_steps();
+    for index in range(1, 16) {
+        let step_name = prefix + " - " + index;
+        let step_value = start + index;
+        steps.step(step_value, step_name);
+    }
+
+    steps
 }
 
 let pages = [

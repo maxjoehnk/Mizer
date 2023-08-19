@@ -1,6 +1,6 @@
-pub use self::container_node::ContainerNode;
-use crate::test_sink::TestSink;
 use derive_more::From;
+use serde::{Deserialize, Serialize};
+
 pub use mizer_audio_nodes::{
     AudioFileNode, AudioInputNode, AudioMeterNode, AudioMixNode, AudioOutputNode, AudioVolumeNode,
     PlaybackMode,
@@ -32,9 +32,10 @@ pub use mizer_port_operation_nodes::{
     ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode, RampNode, SelectNode,
     ThresholdNode,
 };
+pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequencer_nodes::SequencerNode;
-pub use mizer_step_sequencer_nodes::{StepSequencerNode};
+pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
@@ -44,7 +45,10 @@ pub use mizer_video_nodes::{
     VideoRgbSplitNode, VideoTransformNode,
 };
 pub use mizer_webcam_nodes::WebcamNode;
-use serde::{Deserialize, Serialize};
+
+use crate::test_sink::TestSink;
+
+pub use self::container_node::ContainerNode;
 
 mod container_node;
 mod downcast;
@@ -209,5 +213,7 @@ node_impl! {
     AudioInput(AudioInputNode),
     AudioMix(AudioMixNode),
     AudioMeter(AudioMeterNode),
+    ProDjLinkClock(ProDjLinkClockNode),
+    PioneerCdj(PioneerCdjNode),
     Template(TemplateNode),
 }

@@ -3,6 +3,7 @@ use derive_more::From;
 use mizer_devices::*;
 pub use mizer_protocol_midi::{MidiEvent, MidiMessage};
 pub use mizer_protocol_osc::{OscMessage, OscType};
+pub use mizer_protocol_pro_dj_link::{CDJView, DJMView};
 
 pub mod midi_device_profile {
     pub use mizer_protocol_midi::{
@@ -21,6 +22,8 @@ pub enum Connection {
     Osc(OscView),
     G13(G13View),
     Webcam(WebcamView),
+    Cdj(CDJView),
+    Djm(DJMView),
 }
 
 impl Connection {
@@ -35,6 +38,8 @@ impl Connection {
             Connection::Osc(connection) => connection.name.clone(),
             Connection::G13(_) => "Logitech G13".to_string(),
             Connection::Webcam(connection) => connection.name.clone(),
+            Connection::Cdj(cdj) => cdj.device.name.clone(),
+            Connection::Djm(djm) => djm.device.name.clone(),
         }
     }
 }
@@ -47,6 +52,8 @@ impl From<DeviceRef> for Connection {
             DeviceRef::Gamepad(view) => view.into(),
             DeviceRef::G13(view) => view.into(),
             DeviceRef::Webcam(view) => view.into(),
+            DeviceRef::PioneerCDJ(view) => view.into(),
+            DeviceRef::PioneerDJM(view) => view.into(),
         }
     }
 }

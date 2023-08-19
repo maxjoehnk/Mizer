@@ -19,4 +19,5 @@ abstract class ConnectionsApi {
   Future<void> configureConnection(ConfigureConnectionRequest request);
 
   Future<GamepadStatePointer?> getGamepadPointer(String id);
+  PioneerCdjConnection? getCdjState(String id);
 }

@@ -8,7 +8,7 @@ use pinboard::NonEmptyPinboard;
 use mizer_api::handlers::Handlers;
 use mizer_api::start_remote_api;
 use mizer_command_executor::CommandExecutorModule;
-use mizer_devices::DeviceModule;
+use mizer_devices::{DeviceManager, DeviceModule};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
@@ -56,7 +56,7 @@ pub fn build_runtime(
         register_effects_module(&mut runtime).context("Failed to register effects module")?;
     let timecode_manager =
         register_timecode_module(&mut runtime).context("Failed to register timecode module")?;
-    register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
+    let device_manager = register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
     register_dmx_module(&mut runtime).context("failed to register dmx module")?;
     register_mqtt_module(&mut runtime).context("failed to register mqtt module")?;
     register_osc_module(&mut runtime).context("failed to register osc module")?;
@@ -75,7 +75,7 @@ pub fn build_runtime(
 
     let media_server = register_media_module(&mut runtime)?;
 
-    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings);
+    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
 
     let handlers = Handlers::new(
         api,
@@ -334,18 +334,19 @@ fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Effec
 fn register_device_module(
     runtime: &mut DefaultRuntime,
     handle: &tokio::runtime::Handle,
-) -> anyhow::Result<()> {
+) -> anyhow::Result<DeviceManager> {
     let (device_module, device_manager) = DeviceModule::new();
     let handle = handle.clone();
+    let discovery_manager = device_manager.clone();
     std::thread::spawn(move || {
         let local = tokio::task::LocalSet::new();
-        local.spawn_local(device_manager.start_discovery());
+        local.spawn_local(discovery_manager.start_discovery());
 
         handle.block_on(local);
     });
     device_module.register(runtime)?;
 
-    Ok(())
+    Ok(device_manager)
 }
 
 fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {

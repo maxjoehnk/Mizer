@@ -295,15 +295,6 @@ const Connection$json = const {
       '10': 'osc'
     },
     const {
-      '1': 'pro_dj_link',
-      '3': 13,
-      '4': 1,
-      '5': 11,
-      '6': '.mizer.connections.ProDjLinkConnection',
-      '9': 0,
-      '10': 'proDjLink'
-    },
-    const {
       '1': 'helios',
       '3': 14,
       '4': 1,
@@ -357,6 +348,24 @@ const Connection$json = const {
       '9': 0,
       '10': 'webcam'
     },
+    const {
+      '1': 'cdj',
+      '3': 20,
+      '4': 1,
+      '5': 11,
+      '6': '.mizer.connections.PioneerCdjConnection',
+      '9': 0,
+      '10': 'cdj'
+    },
+    const {
+      '1': 'djm',
+      '3': 21,
+      '4': 1,
+      '5': 11,
+      '6': '.mizer.connections.PioneerDjmConnection',
+      '9': 0,
+      '10': 'djm'
+    },
   ],
   '8': const [
     const {'1': 'connection'},
@@ -365,7 +374,7 @@ const Connection$json = const {
 
 /// Descriptor for `Connection`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode(
-    'CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSNAoDZG14GAogASgLMiAubWl6ZXIuY29ubmVjdGlvbnMuRG14Q29ubmVjdGlvbkgAUgNkbXgSNwoEbWlkaRgLIAEoCzIhLm1pemVyLmNvbm5lY3Rpb25zLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSNAoDb3NjGAwgASgLMiAubWl6ZXIuY29ubmVjdGlvbnMuT3NjQ29ubmVjdGlvbkgAUgNvc2MSSAoLcHJvX2RqX2xpbmsYDSABKAsyJi5taXplci5jb25uZWN0aW9ucy5Qcm9EakxpbmtDb25uZWN0aW9uSABSCXByb0RqTGluaxI9CgZoZWxpb3MYDiABKAsyIy5taXplci5jb25uZWN0aW9ucy5IZWxpb3NDb25uZWN0aW9uSABSBmhlbGlvcxJKCgtldGhlcl9kcmVhbRgPIAEoCzInLm1pemVyLmNvbm5lY3Rpb25zLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SQAoHZ2FtZXBhZBgQIAEoCzIkLm1pemVyLmNvbm5lY3Rpb25zLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSNwoEbXF0dBgRIAEoCzIhLm1pemVyLmNvbm5lY3Rpb25zLk1xdHRDb25uZWN0aW9uSABSBG1xdHQSNAoDZzEzGBIgASgLMiAubWl6ZXIuY29ubmVjdGlvbnMuRzEzQ29ubmVjdGlvbkgAUgNnMTMSPQoGd2ViY2FtGBMgASgLMiMubWl6ZXIuY29ubmVjdGlvbnMuV2ViY2FtQ29ubmVjdGlvbkgAUgZ3ZWJjYW1CDAoKY29ubmVjdGlvbg==');
+    'CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSNAoDZG14GAogASgLMiAubWl6ZXIuY29ubmVjdGlvbnMuRG14Q29ubmVjdGlvbkgAUgNkbXgSNwoEbWlkaRgLIAEoCzIhLm1pemVyLmNvbm5lY3Rpb25zLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSNAoDb3NjGAwgASgLMiAubWl6ZXIuY29ubmVjdGlvbnMuT3NjQ29ubmVjdGlvbkgAUgNvc2MSPQoGaGVsaW9zGA4gASgLMiMubWl6ZXIuY29ubmVjdGlvbnMuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSSgoLZXRoZXJfZHJlYW0YDyABKAsyJy5taXplci5jb25uZWN0aW9ucy5FdGhlckRyZWFtQ29ubmVjdGlvbkgAUgpldGhlckRyZWFtEkAKB2dhbWVwYWQYECABKAsyJC5taXplci5jb25uZWN0aW9ucy5HYW1lcGFkQ29ubmVjdGlvbkgAUgdnYW1lcGFkEjcKBG1xdHQYESABKAsyIS5taXplci5jb25uZWN0aW9ucy5NcXR0Q29ubmVjdGlvbkgAUgRtcXR0EjQKA2cxMxgSIAEoCzIgLm1pemVyLmNvbm5lY3Rpb25zLkcxM0Nvbm5lY3Rpb25IAFIDZzEzEj0KBndlYmNhbRgTIAEoCzIjLm1pemVyLmNvbm5lY3Rpb25zLldlYmNhbUNvbm5lY3Rpb25IAFIGd2ViY2FtEjsKA2NkahgUIAEoCzInLm1pemVyLmNvbm5lY3Rpb25zLlBpb25lZXJDZGpDb25uZWN0aW9uSABSA2NkahI7CgNkam0YFSABKAsyJy5taXplci5jb25uZWN0aW9ucy5QaW9uZWVyRGptQ29ubmVjdGlvbkgAUgNkam1CDAoKY29ubmVjdGlvbg==');
 @$core.Deprecated('Use dmxConnectionDescriptor instead')
 const DmxConnection$json = const {
   '1': 'DmxConnection',
@@ -591,13 +600,14 @@ const OscConnection$json = const {
 /// Descriptor for `OscConnection`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List oscConnectionDescriptor = $convert.base64Decode(
     'Cg1Pc2NDb25uZWN0aW9uEiMKDWNvbm5lY3Rpb25faWQYASABKAlSDGNvbm5lY3Rpb25JZBIdCgppbnB1dF9wb3J0GAIgASgNUglpbnB1dFBvcnQSHwoLb3V0cHV0X3BvcnQYAyABKA1SCm91dHB1dFBvcnQSJQoOb3V0cHV0X2FkZHJlc3MYBCABKAlSDW91dHB1dEFkZHJlc3M=');
-@$core.Deprecated('Use proDjLinkConnectionDescriptor instead')
-const ProDjLinkConnection$json = const {
-  '1': 'ProDjLinkConnection',
+@$core.Deprecated('Use pioneerCdjConnectionDescriptor instead')
+const PioneerCdjConnection$json = const {
+  '1': 'PioneerCdjConnection',
   '2': const [
-    const {'1': 'address', '3': 1, '4': 1, '5': 9, '10': 'address'},
-    const {'1': 'model', '3': 2, '4': 1, '5': 9, '10': 'model'},
-    const {'1': 'player_number', '3': 3, '4': 1, '5': 13, '10': 'playerNumber'},
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'address', '3': 2, '4': 1, '5': 9, '10': 'address'},
+    const {'1': 'model', '3': 3, '4': 1, '5': 9, '10': 'model'},
+    const {'1': 'player_number', '3': 4, '4': 1, '5': 13, '10': 'playerNumber'},
     const {
       '1': 'playback',
       '3': 5,
@@ -609,9 +619,23 @@ const ProDjLinkConnection$json = const {
   ],
 };
 
-/// Descriptor for `ProDjLinkConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proDjLinkConnectionDescriptor = $convert.base64Decode(
-    'ChNQcm9EakxpbmtDb25uZWN0aW9uEhgKB2FkZHJlc3MYASABKAlSB2FkZHJlc3MSFAoFbW9kZWwYAiABKAlSBW1vZGVsEiMKDXBsYXllcl9udW1iZXIYAyABKA1SDHBsYXllck51bWJlchI6CghwbGF5YmFjaxgFIAEoCzIeLm1pemVyLmNvbm5lY3Rpb25zLkNkalBsYXliYWNrUghwbGF5YmFjaw==');
+/// Descriptor for `PioneerCdjConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pioneerCdjConnectionDescriptor = $convert.base64Decode(
+    'ChRQaW9uZWVyQ2RqQ29ubmVjdGlvbhIOCgJpZBgBIAEoCVICaWQSGAoHYWRkcmVzcxgCIAEoCVIHYWRkcmVzcxIUCgVtb2RlbBgDIAEoCVIFbW9kZWwSIwoNcGxheWVyX251bWJlchgEIAEoDVIMcGxheWVyTnVtYmVyEjoKCHBsYXliYWNrGAUgASgLMh4ubWl6ZXIuY29ubmVjdGlvbnMuQ2RqUGxheWJhY2tSCHBsYXliYWNr');
+@$core.Deprecated('Use pioneerDjmConnectionDescriptor instead')
+const PioneerDjmConnection$json = const {
+  '1': 'PioneerDjmConnection',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'address', '3': 2, '4': 1, '5': 9, '10': 'address'},
+    const {'1': 'model', '3': 3, '4': 1, '5': 9, '10': 'model'},
+    const {'1': 'player_number', '3': 4, '4': 1, '5': 13, '10': 'playerNumber'},
+  ],
+};
+
+/// Descriptor for `PioneerDjmConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pioneerDjmConnectionDescriptor = $convert.base64Decode(
+    'ChRQaW9uZWVyRGptQ29ubmVjdGlvbhIOCgJpZBgBIAEoCVICaWQSGAoHYWRkcmVzcxgCIAEoCVIHYWRkcmVzcxIUCgVtb2RlbBgDIAEoCVIFbW9kZWwSIwoNcGxheWVyX251bWJlchgEIAEoDVIMcGxheWVyTnVtYmVy');
 @$core.Deprecated('Use cdjPlaybackDescriptor instead')
 const CdjPlayback$json = const {
   '1': 'CdjPlayback',

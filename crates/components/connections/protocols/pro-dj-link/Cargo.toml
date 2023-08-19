@@ -1,0 +1,19 @@
+[package]
+name = "mizer-protocol-pro-dj-link"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+flume = "0.10"
+mizer-message-bus = { path = "../../../../util/bus" }
+futures = "0.3"
+mizer-module = { path = "../../../../runtime/module" }
+mizer-commander = { path = "../../../../runtime/commander" }
+tokio = { version = "1.24", features = ["net", "rt", "sync", "time"] }
+serde = { version = "1", features = ["derive"] }
+pro-dj-link = { git = "https://github.com/maxjoehnk/pro-dj-link-rs.git", features = ["tokio"], default-features = false }
+default-net = "0.16.2"
+enum_dispatch = "0.3"

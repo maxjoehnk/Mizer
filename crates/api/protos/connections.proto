@@ -97,13 +97,14 @@ message Connection {
     DmxConnection dmx = 10;
     MidiConnection midi = 11;
     OscConnection osc = 12;
-    ProDjLinkConnection pro_dj_link = 13;
     HeliosConnection helios = 14;
     EtherDreamConnection ether_dream = 15;
     GamepadConnection gamepad = 16;
     MqttConnection mqtt = 17;
     G13Connection g13 = 18;
     WebcamConnection webcam = 19;
+    PioneerCdjConnection cdj = 20;
+    PioneerDjmConnection djm = 21;
   }
 }
 
@@ -179,11 +180,19 @@ message OscConnection {
   string output_address = 4;
 }
 
-message ProDjLinkConnection {
-  string address = 1;
-  string model = 2;
-  uint32 player_number = 3;
+message PioneerCdjConnection {
+  string id = 1;
+  string address = 2;
+  string model = 3;
+  uint32 player_number = 4;
   CdjPlayback playback = 5;
+}
+
+message PioneerDjmConnection {
+  string id = 1;
+  string address = 2;
+  string model = 3;
+  uint32 player_number = 4;
 }
 
 message CdjPlayback {

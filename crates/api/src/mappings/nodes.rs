@@ -210,6 +210,8 @@ impl From<NodeType> for node::NodeType {
             NodeType::TextureBorder => node::NodeType::TextureBorder,
             NodeType::VideoText => node::NodeType::VideoText,
             NodeType::Beats => node::NodeType::Beats,
+            NodeType::ProDjLinkClock => node::NodeType::ProDjLinkClock,
+            NodeType::PioneerCdj => node::NodeType::PioneerCdj,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -287,6 +289,8 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::TextureBorder => NodeType::TextureBorder,
             node::NodeType::VideoText => NodeType::VideoText,
             node::NodeType::Beats => NodeType::Beats,
+            node::NodeType::ProDjLinkClock => NodeType::ProDjLinkClock,
+            node::NodeType::PioneerCdj => NodeType::PioneerCdj,
         }
     }
 }

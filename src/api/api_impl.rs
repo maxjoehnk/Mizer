@@ -10,6 +10,7 @@ use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
 use mizer_command_executor::{CommandExecutorApi, SendableCommand};
+use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
@@ -25,6 +26,7 @@ pub struct Api {
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
     settings_bus: MessageBus<Settings>,
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
+    device_manager: DeviceManager,
 }
 
 impl RuntimeApi for Api {
@@ -232,13 +234,15 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::GetGamepadRef(id, tx))
-            .map_err(anyhow::Error::from)?;
+    fn get_device_manager(&self) -> DeviceManager {
+        self.device_manager.clone()
+    }
 
-        rx.recv().map_err(anyhow::Error::from)
+    #[profiling::function]
+    fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>> {
+        let gamepad = self.get_gamepad(id);
+
+        Ok(gamepad)
     }
 
     #[profiling::function]
@@ -291,6 +295,7 @@ impl Api {
         runtime: &DefaultRuntime,
         command_executor_api: CommandExecutorApi,
         settings: Arc<NonEmptyPinboard<SettingsManager>>,
+        device_manager: DeviceManager,
     ) -> (ApiHandler, Api) {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
@@ -304,6 +309,7 @@ impl Api {
                 settings,
                 settings_bus: MessageBus::new(),
                 history_bus: MessageBus::new(),
+                device_manager,
             },
         )
     }
@@ -338,5 +344,11 @@ impl Api {
         self.history_bus.send(history);
 
         Ok(())
+    }
+
+    fn get_gamepad(&self, id: String) -> Option<GamepadRef> {
+        self.device_manager
+            .get_gamepad(&id)
+            .map(|gamepad| gamepad.value().clone())
     }
 }

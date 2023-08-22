@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use crate::output::wgpu_pipeline::OutputWgpuPipeline;
 use mizer_node::*;
 use mizer_wgpu::window::{EventLoopHandle, WindowRef};
 use mizer_wgpu::{WgpuContext, WgpuPipeline};
+
+use crate::output::wgpu_pipeline::OutputWgpuPipeline;
 
 const INPUT_PORT: &str = "Input";
 
@@ -43,8 +44,8 @@ impl ConfigurableNode for VideoOutputNode {
         let mut screens: Vec<_> = screens
             .into_iter()
             .map(|screen| SelectVariant::Item {
-                label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1),
-                value: screen.id,
+                label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1).into(),
+                value: screen.id.into(),
             })
             .collect();
         screens.insert(0, SelectVariant::from(String::default())); // No selection

@@ -112,7 +112,7 @@ fn get_pages_and_controls(
         })
         .unwrap_or_default();
     let steps = page
-        .and_then(|page| page.all_controls().find(|c| c.id == control_name).cloned())
+        .and_then(|page| page.all_controls().find(|c| c.id.as_str() == control_name).cloned())
         .and_then(|control| if input { control.input } else { control.output })
         .and_then(|control| control.midi_device_control())
         .and_then(|control| control.steps)
@@ -121,7 +121,7 @@ fn get_pages_and_controls(
                 .into_iter()
                 .map(|s| match s {
                     ControlStep::Single(variant) => SelectVariant::Item {
-                        value: variant.value.to_string(),
+                        value: variant.value.to_string().into(),
                         label: variant.label,
                     },
                     ControlStep::Group { label, steps } => SelectVariant::Group {
@@ -129,7 +129,7 @@ fn get_pages_and_controls(
                         children: steps
                             .into_iter()
                             .map(|variant| SelectVariant::Item {
-                                value: variant.value.to_string(),
+                                value: variant.value.to_string().into(),
                                 label: variant.label,
                             })
                             .collect(),

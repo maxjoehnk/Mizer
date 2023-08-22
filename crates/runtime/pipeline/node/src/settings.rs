@@ -1,8 +1,11 @@
-use enum_iterator::{all, Sequence};
-use mizer_util::Spline;
-use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display};
 use std::hash::{Hash, Hasher};
+use std::sync::Arc;
+
+use enum_iterator::{all, Sequence};
+use serde::{Deserialize, Serialize};
+
+use mizer_util::Spline;
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
 pub struct NodeSetting {
@@ -383,20 +386,30 @@ pub struct IdVariant {
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
 pub enum SelectVariant {
     Group {
-        label: String,
+        label: Arc<String>,
         children: Vec<SelectVariant>,
     },
     Item {
-        label: String,
-        value: String,
+        label: Arc<String>,
+        value: Arc<String>,
     },
 }
 
 impl From<String> for SelectVariant {
     fn from(value: String) -> Self {
+        let value = Arc::new(value);
         Self::Item {
-            value: value.clone(),
-            label: value,
+            label: Arc::clone(&value),
+            value,
+        }
+    }
+}
+
+impl From<Arc<String>> for SelectVariant {
+    fn from(value: Arc<String>) -> Self {
+        Self::Item {
+            label: Arc::clone(&value),
+            value,
         }
     }
 }

@@ -1,5 +1,6 @@
 use std::hash::Hash;
 use std::ops::DerefMut;
+use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
@@ -71,7 +72,7 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                     self.path,
                     self.setting.label,
                     variants
-                        .into_iter()
+                        .iter()
                         .find(|v| v.value == *value)
                         .map(|v| v.label.clone())
                         .unwrap_or_else(|| value.to_string())
@@ -83,9 +84,9 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                     self.path,
                     self.setting.label,
                     variants
-                        .into_iter()
+                        .iter()
                         .find_map(|v| if let SelectVariant::Item { value: v, label } = v {
-                            if v == value {
+                            if v.as_str() == value {
                                 Some(label.clone())
                             } else {
                                 None
@@ -93,7 +94,7 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                         } else {
                             None
                         })
-                        .unwrap_or_else(|| value.clone())
+                        .unwrap_or_else(|| Arc::new(value.clone()))
                 )
             }
             NodeSettingValue::Spline(_) => {

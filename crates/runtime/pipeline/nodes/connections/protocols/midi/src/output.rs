@@ -123,8 +123,8 @@ impl ConfigurableNode for MidiOutputNode {
                     steps.insert(
                         0,
                         SelectVariant::Item {
-                            value: String::new(),
-                            label: String::new(),
+                            value: Default::default(),
+                            label: Default::default(),
                         },
                     );
                 }

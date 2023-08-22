@@ -1,7 +1,8 @@
-pub use self::input::*;
-pub use self::output::*;
 use mizer_node::{Injector, SelectVariant};
 use mizer_protocol_mqtt::MqttConnectionManager;
+
+pub use self::input::*;
+pub use self::output::*;
 
 mod input;
 mod output;
@@ -18,8 +19,8 @@ impl MqttInjectorExt for Injector {
             .list_connections()
             .into_iter()
             .map(|(id, connection)| SelectVariant::Item {
-                value: id.clone(),
-                label: connection.address.url.to_string(),
+                value: id.clone().into(),
+                label: connection.address.url.to_string().into(),
             })
             .collect()
     }

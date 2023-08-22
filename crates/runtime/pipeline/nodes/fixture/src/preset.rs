@@ -27,19 +27,19 @@ impl ConfigurableNode for PresetNode {
         let positions = convert_presets_to_select_variants(manager.presets.position_presets());
         let presets = vec![
             SelectVariant::Group {
-                label: "Intensity".into(),
+                label: "Intensity".to_string().into(),
                 children: intensities,
             },
             SelectVariant::Group {
-                label: "Shutter".into(),
+                label: "Shutter".to_string().into(),
                 children: shutters,
             },
             SelectVariant::Group {
-                label: "Color".into(),
+                label: "Color".to_string().into(),
                 children: colors,
             },
             SelectVariant::Group {
-                label: "Position".into(),
+                label: "Position".to_string().into(),
                 children: positions,
             },
         ];
@@ -95,8 +95,8 @@ fn convert_presets_to_select_variants<TValue>(
     presets
         .into_iter()
         .map(|(id, preset)| SelectVariant::Item {
-            value: id.to_string(),
-            label: preset.label.unwrap_or_else(|| id.to_string()),
+            value: id.to_string().into(),
+            label: preset.label.unwrap_or_else(|| id.to_string()).into(),
         })
         .collect()
 }

@@ -20,8 +20,8 @@ impl OscInjectorExt for Injector {
             .list_connections()
             .into_iter()
             .map(|(id, connection)| SelectVariant::Item {
-                value: id.clone(),
-                label: connection.address.output_host.to_string(),
+                value: id.clone().into(),
+                label: connection.address.output_host.to_string().into(),
             })
             .collect()
     }

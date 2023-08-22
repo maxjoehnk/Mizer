@@ -18,8 +18,8 @@ pub(crate) fn get_cdjs(device_manager: &DeviceManager) -> Vec<SelectVariant> {
             }
         })
         .map(|cdj| SelectVariant::Item {
-            label: format!("{} {}", cdj.device.name, cdj.device.device_id),
-            value: cdj.id(),
+            label: format!("{} {}", cdj.device.name, cdj.device.device_id).into(),
+            value: cdj.id().into(),
         })
         .collect()
 }

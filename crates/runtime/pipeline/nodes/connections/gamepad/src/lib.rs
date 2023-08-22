@@ -1,7 +1,8 @@
+use std::fmt::{Display, Formatter};
+
 use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
 
 use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_gamepads::{Axis, Button};
@@ -30,8 +31,8 @@ impl ConfigurableNode for GamepadNode {
             .flat_map(|device| {
                 if let DeviceRef::Gamepad(gamepad) = device {
                     Some(SelectVariant::Item {
-                        value: gamepad.id,
-                        label: gamepad.name,
+                        value: gamepad.id.into(),
+                        label: gamepad.name.into(),
                     })
                 } else {
                     None

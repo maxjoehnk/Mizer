@@ -1,4 +1,7 @@
+use std::borrow::Cow;
+use std::cell::RefCell;
 use std::convert::TryInto;
+use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
@@ -34,7 +37,7 @@ impl DeviceProfile {
     pub fn get_control(&self, page: &str, control: &str) -> Option<&Control> {
         let page = self.pages.iter().find(|p| p.name == page);
 
-        page.and_then(|page| page.all_controls().find(|c| c.id == control))
+        page.and_then(|page| page.all_controls().find(|c| c.id.as_str() == control))
     }
 
     pub fn write_rgb(&self, control: &Control, color: (f64, f64, f64)) -> Option<MidiMessage> {
@@ -103,14 +106,14 @@ impl Page {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Group {
-    pub name: String,
+    pub name: Arc<String>,
     pub controls: Vec<Control>,
 }
 
 impl Group {
     pub fn new(name: String) -> Self {
         Self {
-            name,
+            name: Arc::new(name),
             controls: Default::default(),
         }
     }
@@ -122,8 +125,8 @@ impl Group {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Control {
-    pub id: String,
-    pub name: String,
+    pub id: Arc<String>,
+    pub name: Arc<String>,
     pub input: Option<DeviceControl>,
     pub output: Option<DeviceControl>,
 }
@@ -155,15 +158,15 @@ pub struct MidiDeviceControl {
 impl Control {
     pub fn new(name: String) -> Self {
         Self {
-            id: to_id(&name),
-            name,
+            id: Arc::new(to_id(&name)),
+            name: Arc::new(name),
             input: None,
             output: None,
         }
     }
 
     pub fn id(mut self, id: String) -> Self {
-        self.id = id;
+        self.id = Arc::new(id);
         self
     }
 
@@ -332,14 +335,14 @@ impl StepsBuilder {
 pub enum ControlStep {
     Single(ControlStepVariant),
     Group {
-        label: String,
+        label: Arc<String>,
         steps: Vec<ControlStepVariant>,
     },
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ControlStepVariant {
-    pub label: String,
+    pub label: Arc<String>,
     pub value: u8,
 }
 

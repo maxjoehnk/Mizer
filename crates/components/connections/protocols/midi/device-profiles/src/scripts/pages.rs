@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+use std::sync::Arc;
 
 use rhai::{Array, Engine};
 
@@ -56,7 +57,7 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
             |mut c: ControlBuilder, value: i64, label: String| {
                 c.steps.push(ControlStep::Single(ControlStepVariant {
                     value: value as u8,
-                    label,
+                    label: Arc::new(label),
                 }));
                 c
             },
@@ -65,7 +66,7 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
             "steps",
             |mut c: ControlBuilder, label: String, builder: StepsBuilder| {
                 c.steps.push(ControlStep::Group {
-                    label,
+                    label: Arc::new(label),
                     steps: builder.build(),
                 });
                 c
@@ -76,7 +77,7 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
         .register_fn("step", |c: &mut StepsBuilder, value: i64, label: String| {
             c.add(ControlStepVariant {
                 value: value as u8,
-                label,
+                label: Arc::new(label),
             })
         });
 

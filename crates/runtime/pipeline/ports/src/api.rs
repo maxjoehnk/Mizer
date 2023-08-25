@@ -1,11 +1,13 @@
-use enum_iterator::Sequence;
-use mizer_util::hsv_to_rgb;
-use num_enum::{IntoPrimitive, TryFromPrimitive};
-use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::hash::{Hash, Hasher};
 use std::ops::{Deref, Mul};
+
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
+
+use mizer_util::hsv_to_rgb;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[repr(transparent)]
@@ -133,6 +135,8 @@ where
     Item: PortValue,
 {
     fn send(&self, value: Item) -> anyhow::Result<()>;
+
+    fn clear(&self) -> anyhow::Result<()>;
 }
 
 pub trait PortValue: Debug + Clone + PartialEq + Send + Sync + Any {}

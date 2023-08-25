@@ -1,8 +1,9 @@
-use crate::{PortMetadata, PreviewContext};
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
+
+use crate::{PortMetadata, PreviewContext};
 
 pub trait NodeContext: PreviewContext {
     fn clock(&self) -> ClockFrame;
@@ -11,6 +12,7 @@ pub trait NodeContext: PreviewContext {
     fn clock_state(&self) -> ClockState;
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V);
+    fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P);
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
     fn read_port_changes<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;

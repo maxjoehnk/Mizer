@@ -1,18 +1,20 @@
+use std::cell::RefCell;
+use std::collections::HashMap;
+use std::fmt::{Debug, Formatter};
+use std::sync::Arc;
+
+use pinboard::NonEmptyPinboard;
+use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
+
 use mizer_clock::{Clock, ClockFrame, ClockState};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
-
-use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 use mizer_util::StructuredData;
 use mizer_wgpu::{TextureRegistry, TextureView};
-use pinboard::NonEmptyPinboard;
-use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
-use std::cell::RefCell;
-use std::collections::HashMap;
-use std::fmt::{Debug, Formatter};
-use std::sync::Arc;
+
+use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
 /// Context for execution of a single node
 pub struct PipelineContext<'a> {
@@ -117,6 +119,19 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .borrow_mut()
             .ports
             .insert(port, RuntimePortMetadata { pushed_value });
+    }
+
+    fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) {
+        profiling::scope!("PipelineContext::clear_port");
+        let port = port.into();
+        if let Some((port, _)) = self.senders.and_then(|senders| senders.get(&port)) {
+            let port = port
+                .downcast_ref::<MemorySender<V>>()
+                .expect("can't downcast sender to proper type");
+            if let Err(e) = port.clear() {
+                log::error!("clearing data from port failed: {e:?}");
+            }
+        }
     }
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {

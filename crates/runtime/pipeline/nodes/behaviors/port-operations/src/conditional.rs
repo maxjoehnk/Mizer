@@ -1,5 +1,6 @@
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 const CONDITION_INPUT: &str = "Condition";
 const VALUE_INPUT: &str = "Value";
@@ -64,6 +65,8 @@ impl ProcessingNode for ConditionalNode {
                     context.write_port(VALUE_OUTPUT, value);
                     context.push_history_value(value);
                 }
+            } else {
+                context.clear_port::<_, f64>(VALUE_OUTPUT);
             }
         }
 

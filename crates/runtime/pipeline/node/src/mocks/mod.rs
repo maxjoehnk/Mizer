@@ -1,12 +1,15 @@
-use self::clock::ClockFunction;
-use self::read_port::ReadPortFunction;
-use self::write_port::WritePortFunction;
-use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
+use std::cell::RefCell;
+
 use mizer_clock::ClockState;
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
-use std::cell::RefCell;
+
+use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
+
+use self::clock::ClockFunction;
+use self::read_port::ReadPortFunction;
+use self::write_port::WritePortFunction;
 
 mod clock;
 mod read_port;
@@ -45,6 +48,10 @@ impl NodeContext for NodeContextMock {
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {
         self.write_port_fn.call(port, value)
+    }
+
+    fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) {
+        todo!()
     }
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {

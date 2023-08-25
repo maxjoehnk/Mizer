@@ -1,8 +1,10 @@
-use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
-use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
-use regex::Regex;
 use std::collections::HashMap;
 use std::path::Path;
+
+use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
+use regex::Regex;
+
+use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
 
 use crate::device::MidiDevice;
 
@@ -10,6 +12,7 @@ lazy_static::lazy_static! {
     static ref LINUX_MIDI_PORT_NAME: Regex = Regex::new("(.*) ([0-9]+:[0-9]+)").unwrap();
 }
 
+#[derive(Clone)]
 pub struct MidiDeviceIdentifier {
     pub name: String,
     pub(crate) input: Option<MidiInputPort>,
@@ -36,6 +39,7 @@ impl std::fmt::Debug for MidiDeviceIdentifier {
 #[derive(Default)]
 pub struct MidiDeviceProvider {
     profiles: Vec<DeviceProfile>,
+    devices: Vec<MidiDeviceIdentifier>,
 }
 
 impl MidiDeviceProvider {
@@ -55,13 +59,16 @@ impl MidiDeviceProvider {
 
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
         profiling::scope!("MidiDeviceProvider::find_device");
-        let devices = self.list_devices()?;
 
-        Ok(devices.into_iter().find(|device| device.name == name))
+        Ok(self
+            .devices
+            .iter()
+            .find(|device| device.name == name)
+            .cloned())
     }
 
-    pub fn list_devices(&self) -> anyhow::Result<Vec<MidiDeviceIdentifier>> {
-        profiling::scope!("MidiDeviceProvider::list_devices");
+    pub(crate) fn load_available_devices(&mut self) -> anyhow::Result<()> {
+        profiling::scope!("MidiDeviceProvider::load_available_devices");
         let input_provider = MidiInput::new("mizer")?;
         let output_provider = MidiOutput::new("mizer")?;
 
@@ -83,21 +90,31 @@ impl MidiDeviceProvider {
             }
         }
 
-        let devices = ports
+        self.devices = ports
             .into_iter()
             .map(|(name, (input, output))| MidiDeviceIdentifier {
-                profile: self
-                    .profiles
-                    .iter()
-                    .find(|profile| profile.matches(&name))
-                    .cloned(),
+                profile: self.search_profile(&name),
                 name: cleanup_name(name),
                 input,
                 output,
             })
             .collect();
 
-        Ok(devices)
+        Ok(())
+    }
+
+    pub(crate) fn list_devices(&self) -> anyhow::Result<Vec<MidiDeviceIdentifier>> {
+        profiling::scope!("MidiDeviceProvider::list_devices");
+
+        Ok(self.devices.clone())
+    }
+
+    fn search_profile(&self, name: &str) -> Option<DeviceProfile> {
+        profiling::scope!("MidiDeviceProvider::search_profile");
+        self.profiles
+            .iter()
+            .find(|profile| profile.matches(name))
+            .cloned()
     }
 }
 

@@ -1,9 +1,12 @@
-use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
-use dashmap::DashMap;
-use mizer_midi_device_profiles::DeviceProfile;
 use std::cell::RefCell;
 use std::ops::DerefMut;
 use std::path::Path;
+
+use dashmap::DashMap;
+
+use mizer_midi_device_profiles::DeviceProfile;
+
+use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 
 pub struct MidiConnectionManager {
     provider: MidiDeviceProvider,
@@ -11,14 +14,18 @@ pub struct MidiConnectionManager {
     requested_devices: RefCell<Vec<String>>,
 }
 
+impl MidiConnectionManager {
+    pub(crate) fn search_available_devices(&mut self) -> anyhow::Result<()> {
+        self.provider.load_available_devices()?;
+
+        Ok(())
+    }
+}
+
 impl Default for MidiConnectionManager {
     fn default() -> Self {
-        let provider = MidiDeviceProvider::new();
-        if let Ok(devices) = provider.list_devices() {
-            log::debug!("Connected devices: {:?}", devices);
-        }
         Self {
-            provider,
+            provider: MidiDeviceProvider::new(),
             devices: Default::default(),
             requested_devices: Default::default(),
         }
@@ -27,7 +34,16 @@ impl Default for MidiConnectionManager {
 
 impl MidiConnectionManager {
     pub fn new() -> Self {
-        Self::default()
+        let mut connection_manager = Self::default();
+        if let Ok(devices) = connection_manager
+            .provider
+            .load_available_devices()
+            .and_then(|_| connection_manager.provider.list_devices())
+        {
+            log::debug!("Connected devices: {:?}", devices);
+        }
+
+        connection_manager
     }
 
     pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
@@ -59,7 +75,7 @@ impl MidiConnectionManager {
     }
 
     pub fn list_available_devices(&self) -> Vec<MidiDeviceIdentifier> {
-        self.provider.list_devices().unwrap()
+        self.provider.list_devices().unwrap_or_default()
     }
 
     pub fn list_available_device_profiles(&self) -> Vec<DeviceProfile> {

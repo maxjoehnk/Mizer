@@ -32,6 +32,11 @@ where
         *self.cell.borrow_mut() = Some(value);
         Ok(())
     }
+
+    fn clear(&self) -> anyhow::Result<()> {
+        *self.cell.borrow_mut() = None;
+        Ok(())
+    }
 }
 
 #[derive(Clone)]

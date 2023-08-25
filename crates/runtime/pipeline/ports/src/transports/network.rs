@@ -1,9 +1,11 @@
-use crate::api::*;
-use crate::swap::{Swap, SwapReadGuard};
-use serde::de::DeserializeOwned;
-use serde::Serialize;
 use std::net::{ToSocketAddrs, UdpSocket};
 use std::thread;
+
+use serde::de::DeserializeOwned;
+use serde::Serialize;
+
+use crate::api::*;
+use crate::swap::{Swap, SwapReadGuard};
 
 pub struct NetworkReceiver<Item>
 where
@@ -74,13 +76,18 @@ where
         assert_eq!(expected_bytes, bytes);
         Ok(())
     }
+
+    fn clear(&self) -> anyhow::Result<()> {
+        todo!()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     use std::ops::Deref;
     use std::time::{Duration, Instant};
+
+    use super::*;
 
     #[test]
     fn it_should_connect() {

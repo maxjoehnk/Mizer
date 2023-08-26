@@ -4934,7 +4934,7 @@ dependencies = [
  "anyhow",
  "default-net",
  "enum_dispatch",
- "flume 0.10.9",
+ "flume 0.11.0",
  "futures",
  "log",
  "mizer-commander",

@@ -1,12 +1,14 @@
-use crate::{CDJView, DJMView, DeviceView, ProDJLinkDevice};
+use std::collections::HashMap;
+use std::sync::Arc;
+
 use flume::{Receiver, Sender};
 use futures::Stream;
 use pro_dj_link::{
     AsyncSearchService, AsyncTrackBpmService, AsyncVirtualCdj, DeviceType, StatusPacket,
 };
-use std::collections::HashMap;
-use std::sync::Arc;
 use tokio::sync::Mutex;
+
+use crate::{CDJView, DJMView, DeviceView, ProDJLinkDevice};
 
 struct ProDJLinkDiscoveryService {
     sender: Sender<ProDJLinkDevice>,
@@ -28,6 +30,7 @@ impl ProDJLinkDiscoveryService {
         let mac_addr = network_interface
             .mac_addr
             .ok_or(anyhow::anyhow!("No MAC address found"))?;
+        log::info!("Starting ProDJLink discovery service on ip {ip} ({mac_addr})...");
         let virtual_cdj = AsyncVirtualCdj::new(ip, mac_addr.octets()).await?;
         let search = AsyncSearchService::new().await?;
         let tempo = AsyncTrackBpmService::new().await?;

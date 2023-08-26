@@ -1,12 +1,14 @@
-use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use std::sync::Arc;
+
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::{NodesHandler, TimecodeHandler};
-use mizer_api::proto::nodes::node::NodeType;
 use mizer_api::proto::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview, NodesRef};
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::sync::Arc;
+
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {
@@ -200,7 +202,7 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
 
     fn get_preview_pointer(&self, path: String) -> Option<i64> {
         let node = self.handler.get_node(path)?;
-        if node.r#type() == NodeType::TimecodeControl {
+        if node.r#type == "timecode-control" {
             let timecode_id = node.settings.into_iter().find_map(|setting| {
                 if let Some(node_setting::Value::Id(id)) = setting.value {
                     Some(id)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
@@ -31,7 +32,7 @@ class AddControlPopup extends StatelessWidget {
   final List<Sequence> sequences;
   final List<Group> groups;
   final Presets presets;
-  final Function(Node_NodeType) onCreateControl;
+  final Function(ControlType) onCreateControl;
   final Function(PresetId) onCreatePresetControl;
   final Function(int) onCreateGroupControl;
   final Function(int) onCreateSequenceControl;
@@ -61,9 +62,9 @@ class AddControlPopup extends StatelessWidget {
     return PopupMenu<dynamic>(
         categories: [
           PopupCategory(label: "New".i18n, items: [
-            PopupItem(Node_NodeType.BUTTON, "Button".i18n),
-            PopupItem(Node_NodeType.FADER, "Fader".i18n),
-            PopupItem(Node_NodeType.LABEL, "Label".i18n),
+            PopupItem(ControlType.BUTTON, "Button".i18n),
+            PopupItem(ControlType.FADER, "Fader".i18n),
+            PopupItem(ControlType.LABEL, "Label".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -95,7 +96,7 @@ class AddControlPopup extends StatelessWidget {
                 items: positionPresets.map((e) => PopupItem(e.id, e.label)).toList()),
         ],
         onSelect: (value) {
-          if (value is Node_NodeType) {
+          if (value is ControlType) {
             this.onCreateControl(value);
           } else if (value is PresetId) {
             this.onCreatePresetControl(value);
@@ -110,10 +111,10 @@ class AddControlPopup extends StatelessWidget {
   }
 }
 
-List<Node_NodeType> CONTROL_NODES = [
-  Node_NodeType.FADER,
-  Node_NodeType.BUTTON,
-  Node_NodeType.LABEL,
+List<String> CONTROL_NODES = [
+  "fader",
+  "button",
+  "label",
 ];
 
 bool isControlNode(Node node) {

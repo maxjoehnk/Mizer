@@ -1,6 +1,5 @@
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/layouts.pb.dart';
-import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/protos/programmer.pbgrpc.dart';
 
 import '../plugin/ffi/layout.dart';
 
@@ -10,7 +9,7 @@ abstract class LayoutsApi {
   Future<Layouts> removeLayout(String id);
   Future<Layouts> renameLayout(String id, String name);
 
-  Future<void> addControl(String layoutId, Node_NodeType nodeType, ControlPosition position);
+  Future<void> addControl(String layoutId, ControlType controlType, ControlPosition position);
   Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position);
   Future<void> addControlForSequence(String layoutId, int sequenceId, ControlPosition position);
   Future<void> addControlForGroup(String layoutId, int groupId, ControlPosition position);

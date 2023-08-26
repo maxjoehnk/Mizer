@@ -17,7 +17,7 @@ import 'property_group.dart';
 class NodeSettingsPane extends StatelessWidget {
   final String title;
   final String nodePath;
-  final Node_NodeType type;
+  final String type;
   final List<NodeSetting> settings;
   final Function(NodeSetting) onUpdate;
 
@@ -32,8 +32,8 @@ class NodeSettingsPane extends StatelessWidget {
   Widget build(BuildContext context) {
     var children = [
       ..._settings,
-      if (type == Node_NodeType.ENVELOPE) EnvelopeSettingsPreview(settings),
-      if (type == Node_NodeType.SURFACE_MAPPING) SurfaceMappingSettingsPreview(settings),
+      if (type == "envelope") EnvelopeSettingsPreview(settings),
+      if (type == "surface-mapping") SurfaceMappingSettingsPreview(settings),
     ];
     if (children.isEmpty) {
       return Container();

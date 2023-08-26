@@ -67,7 +67,7 @@ final $typed_data.Uint8List channelProtocolDescriptor = $convert.base64Decode(
 const AddNodeRequest$json = {
   '1': 'AddNodeRequest',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'type'},
+    {'1': 'type', '3': 1, '4': 1, '5': 9, '10': 'type'},
     {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.nodes.NodePosition', '10': 'position'},
     {'1': 'parent', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
   ],
@@ -78,9 +78,9 @@ const AddNodeRequest$json = {
 
 /// Descriptor for `AddNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode(
-    'Cg5BZGROb2RlUmVxdWVzdBIuCgR0eXBlGAEgASgOMhoubWl6ZXIubm9kZXMuTm9kZS5Ob2RlVH'
-    'lwZVIEdHlwZRI1Cghwb3NpdGlvbhgCIAEoCzIZLm1pemVyLm5vZGVzLk5vZGVQb3NpdGlvblII'
-    'cG9zaXRpb24SGwoGcGFyZW50GAMgASgJSABSBnBhcmVudIgBAUIJCgdfcGFyZW50');
+    'Cg5BZGROb2RlUmVxdWVzdBISCgR0eXBlGAEgASgJUgR0eXBlEjUKCHBvc2l0aW9uGAIgASgLMh'
+    'kubWl6ZXIubm9kZXMuTm9kZVBvc2l0aW9uUghwb3NpdGlvbhIbCgZwYXJlbnQYAyABKAlIAFIG'
+    'cGFyZW50iAEBQgkKB19wYXJlbnQ=');
 
 @$core.Deprecated('Use duplicateNodeRequestDescriptor instead')
 const DuplicateNodeRequest$json = {
@@ -249,7 +249,7 @@ final $typed_data.Uint8List availableNodesDescriptor = $convert.base64Decode(
 const AvailableNode$json = {
   '1': 'AvailableNode',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'type'},
+    {'1': 'type', '3': 1, '4': 1, '5': 9, '10': 'type'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
@@ -258,10 +258,9 @@ const AvailableNode$json = {
 
 /// Descriptor for `AvailableNode`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List availableNodeDescriptor = $convert.base64Decode(
-    'Cg1BdmFpbGFibGVOb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeX'
-    'BlUgR0eXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIY2F0ZWdvcnkYAyABKA4yGS5taXplci5u'
-    'b2Rlcy5Ob2RlQ2F0ZWdvcnlSCGNhdGVnb3J5EiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcm'
-    'lwdGlvbg==');
+    'Cg1BdmFpbGFibGVOb2RlEhIKBHR5cGUYASABKAlSBHR5cGUSEgoEbmFtZRgCIAEoCVIEbmFtZR'
+    'I1CghjYXRlZ29yeRgDIAEoDjIZLm1pemVyLm5vZGVzLk5vZGVDYXRlZ29yeVIIY2F0ZWdvcnkS'
+    'IAoLZGVzY3JpcHRpb24YBCABKAlSC2Rlc2NyaXB0aW9u');
 
 @$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = {
@@ -287,7 +286,7 @@ final $typed_data.Uint8List nodeConnectionDescriptor = $convert.base64Decode(
 const Node$json = {
   '1': 'Node',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'type'},
+    {'1': 'type', '3': 1, '4': 1, '5': 9, '10': 'type'},
     {'1': 'path', '3': 2, '4': 1, '5': 9, '10': 'path'},
     {'1': 'inputs', '3': 3, '4': 3, '5': 11, '6': '.mizer.nodes.Port', '10': 'inputs'},
     {'1': 'outputs', '3': 4, '4': 3, '5': 11, '6': '.mizer.nodes.Port', '10': 'outputs'},
@@ -297,94 +296,7 @@ const Node$json = {
     {'1': 'settings', '3': 8, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSetting', '10': 'settings'},
     {'1': 'details', '3': 9, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDetails', '10': 'details'},
   ],
-  '4': [Node_NodeType$json, Node_NodePreviewType$json],
-};
-
-@$core.Deprecated('Use nodeDescriptor instead')
-const Node_NodeType$json = {
-  '1': 'NodeType',
-  '2': [
-    {'1': 'FADER', '2': 0},
-    {'1': 'BUTTON', '2': 1},
-    {'1': 'OSCILLATOR', '2': 2},
-    {'1': 'CLOCK', '2': 3},
-    {'1': 'SCRIPT', '2': 4},
-    {'1': 'ENVELOPE', '2': 5},
-    {'1': 'STEP_SEQUENCER', '2': 6},
-    {'1': 'SELECT', '2': 7},
-    {'1': 'MERGE', '2': 8},
-    {'1': 'THRESHOLD', '2': 9},
-    {'1': 'DMX_OUTPUT', '2': 10},
-    {'1': 'OSC_INPUT', '2': 11},
-    {'1': 'OSC_OUTPUT', '2': 12},
-    {'1': 'MIDI_INPUT', '2': 13},
-    {'1': 'MIDI_OUTPUT', '2': 14},
-    {'1': 'SEQUENCER', '2': 15},
-    {'1': 'FIXTURE', '2': 16},
-    {'1': 'PROGRAMMER', '2': 17},
-    {'1': 'GROUP', '2': 18},
-    {'1': 'PRESET', '2': 19},
-    {'1': 'VIDEO_FILE', '2': 20},
-    {'1': 'VIDEO_OUTPUT', '2': 21},
-    {'1': 'VIDEO_HSV', '2': 23},
-    {'1': 'VIDEO_TRANSFORM', '2': 24},
-    {'1': 'VIDEO_MIXER', '2': 25},
-    {'1': 'VIDEO_RGB', '2': 26},
-    {'1': 'VIDEO_RGB_SPLIT', '2': 27},
-    {'1': 'PIXEL_TO_DMX', '2': 30},
-    {'1': 'PIXEL_PATTERN', '2': 31},
-    {'1': 'OPC_OUTPUT', '2': 32},
-    {'1': 'DMX_INPUT', '2': 33},
-    {'1': 'LASER', '2': 40},
-    {'1': 'ILDA_FILE', '2': 41},
-    {'1': 'GAMEPAD', '2': 45},
-    {'1': 'COLOR_RGB', '2': 50},
-    {'1': 'COLOR_HSV', '2': 51},
-    {'1': 'COLOR_CONSTANT', '2': 52},
-    {'1': 'COLOR_BRIGHTNESS', '2': 53},
-    {'1': 'COLOR_TO_HSV', '2': 54},
-    {'1': 'ENCODER', '2': 55},
-    {'1': 'MATH', '2': 56},
-    {'1': 'DATA_TO_NUMBER', '2': 57},
-    {'1': 'NUMBER_TO_DATA', '2': 58},
-    {'1': 'VALUE', '2': 59},
-    {'1': 'EXTRACT', '2': 60},
-    {'1': 'MQTT_INPUT', '2': 61},
-    {'1': 'MQTT_OUTPUT', '2': 62},
-    {'1': 'PLAN_SCREEN', '2': 63},
-    {'1': 'DELAY', '2': 64},
-    {'1': 'RAMP', '2': 65},
-    {'1': 'NOISE', '2': 66},
-    {'1': 'LABEL', '2': 67},
-    {'1': 'TRANSPORT', '2': 68},
-    {'1': 'G13INPUT', '2': 69},
-    {'1': 'G13OUTPUT', '2': 70},
-    {'1': 'CONSTANT_NUMBER', '2': 71},
-    {'1': 'CONDITIONAL', '2': 72},
-    {'1': 'TIMECODE_CONTROL', '2': 73},
-    {'1': 'TIMECODE_OUTPUT', '2': 74},
-    {'1': 'AUDIO_FILE', '2': 75},
-    {'1': 'AUDIO_OUTPUT', '2': 76},
-    {'1': 'AUDIO_VOLUME', '2': 77},
-    {'1': 'AUDIO_INPUT', '2': 78},
-    {'1': 'AUDIO_MIX', '2': 79},
-    {'1': 'AUDIO_METER', '2': 80},
-    {'1': 'TEMPLATE', '2': 81},
-    {'1': 'WEBCAM', '2': 82},
-    {'1': 'TEXTURE_BORDER', '2': 83},
-    {'1': 'VIDEO_TEXT', '2': 84},
-    {'1': 'BEATS', '2': 85},
-    {'1': 'PRO_DJ_LINK_CLOCK', '2': 86},
-    {'1': 'PIONEER_CDJ', '2': 87},
-    {'1': 'NDI_OUTPUT', '2': 88},
-    {'1': 'SCREEN_CAPTURE', '2': 89},
-    {'1': 'COLORIZE_TEXTURE', '2': 90},
-    {'1': 'IMAGE_FILE', '2': 91},
-    {'1': 'TEXTURE_MASK', '2': 92},
-    {'1': 'TEXTURE_OPACITY', '2': 93},
-    {'1': 'SURFACE_MAPPING', '2': 94},
-    {'1': 'CONTAINER', '2': 100},
-  ],
+  '4': [Node_NodePreviewType$json],
 };
 
 @$core.Deprecated('Use nodeDescriptor instead')
@@ -404,40 +316,16 @@ const Node_NodePreviewType$json = {
 
 /// Descriptor for `Node`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
-    'CgROb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeXBlUgR0eXBlEh'
-    'IKBHBhdGgYAiABKAlSBHBhdGgSKQoGaW5wdXRzGAMgAygLMhEubWl6ZXIubm9kZXMuUG9ydFIG'
-    'aW5wdXRzEisKB291dHB1dHMYBCADKAsyES5taXplci5ub2Rlcy5Qb3J0UgdvdXRwdXRzEjUKCG'
-    'Rlc2lnbmVyGAUgASgLMhkubWl6ZXIubm9kZXMuTm9kZURlc2lnbmVyUghkZXNpZ25lchI7Cgdw'
-    'cmV2aWV3GAYgASgOMiEubWl6ZXIubm9kZXMuTm9kZS5Ob2RlUHJldmlld1R5cGVSB3ByZXZpZX'
-    'cSLwoGY29uZmlnGAcgASgLMhcubWl6ZXIubm9kZXMuTm9kZUNvbmZpZ1IGY29uZmlnEjQKCHNl'
-    'dHRpbmdzGAggAygLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSCHNldHRpbmdzEjIKB2RldG'
-    'FpbHMYCSABKAsyGC5taXplci5ub2Rlcy5Ob2RlRGV0YWlsc1IHZGV0YWlscyL/CQoITm9kZVR5'
-    'cGUSCQoFRkFERVIQABIKCgZCVVRUT04QARIOCgpPU0NJTExBVE9SEAISCQoFQ0xPQ0sQAxIKCg'
-    'ZTQ1JJUFQQBBIMCghFTlZFTE9QRRAFEhIKDlNURVBfU0VRVUVOQ0VSEAYSCgoGU0VMRUNUEAcS'
-    'CQoFTUVSR0UQCBINCglUSFJFU0hPTEQQCRIOCgpETVhfT1VUUFVUEAoSDQoJT1NDX0lOUFVUEA'
-    'sSDgoKT1NDX09VVFBVVBAMEg4KCk1JRElfSU5QVVQQDRIPCgtNSURJX09VVFBVVBAOEg0KCVNF'
-    'UVVFTkNFUhAPEgsKB0ZJWFRVUkUQEBIOCgpQUk9HUkFNTUVSEBESCQoFR1JPVVAQEhIKCgZQUk'
-    'VTRVQQExIOCgpWSURFT19GSUxFEBQSEAoMVklERU9fT1VUUFVUEBUSDQoJVklERU9fSFNWEBcS'
-    'EwoPVklERU9fVFJBTlNGT1JNEBgSDwoLVklERU9fTUlYRVIQGRINCglWSURFT19SR0IQGhITCg'
-    '9WSURFT19SR0JfU1BMSVQQGxIQCgxQSVhFTF9UT19ETVgQHhIRCg1QSVhFTF9QQVRURVJOEB8S'
-    'DgoKT1BDX09VVFBVVBAgEg0KCURNWF9JTlBVVBAhEgkKBUxBU0VSECgSDQoJSUxEQV9GSUxFEC'
-    'kSCwoHR0FNRVBBRBAtEg0KCUNPTE9SX1JHQhAyEg0KCUNPTE9SX0hTVhAzEhIKDkNPTE9SX0NP'
-    'TlNUQU5UEDQSFAoQQ09MT1JfQlJJR0hUTkVTUxA1EhAKDENPTE9SX1RPX0hTVhA2EgsKB0VOQ0'
-    '9ERVIQNxIICgRNQVRIEDgSEgoOREFUQV9UT19OVU1CRVIQORISCg5OVU1CRVJfVE9fREFUQRA6'
-    'EgkKBVZBTFVFEDsSCwoHRVhUUkFDVBA8Eg4KCk1RVFRfSU5QVVQQPRIPCgtNUVRUX09VVFBVVB'
-    'A+Eg8KC1BMQU5fU0NSRUVOED8SCQoFREVMQVkQQBIICgRSQU1QEEESCQoFTk9JU0UQQhIJCgVM'
-    'QUJFTBBDEg0KCVRSQU5TUE9SVBBEEgwKCEcxM0lOUFVUEEUSDQoJRzEzT1VUUFVUEEYSEwoPQ0'
-    '9OU1RBTlRfTlVNQkVSEEcSDwoLQ09ORElUSU9OQUwQSBIUChBUSU1FQ09ERV9DT05UUk9MEEkS'
-    'EwoPVElNRUNPREVfT1VUUFVUEEoSDgoKQVVESU9fRklMRRBLEhAKDEFVRElPX09VVFBVVBBMEh'
-    'AKDEFVRElPX1ZPTFVNRRBNEg8KC0FVRElPX0lOUFVUEE4SDQoJQVVESU9fTUlYEE8SDwoLQVVE'
-    'SU9fTUVURVIQUBIMCghURU1QTEFURRBREgoKBldFQkNBTRBSEhIKDlRFWFRVUkVfQk9SREVSEF'
-    'MSDgoKVklERU9fVEVYVBBUEgkKBUJFQVRTEFUSFQoRUFJPX0RKX0xJTktfQ0xPQ0sQVhIPCgtQ'
-    'SU9ORUVSX0NEShBXEg4KCk5ESV9PVVRQVVQQWBISCg5TQ1JFRU5fQ0FQVFVSRRBZEhQKEENPTE'
-    '9SSVpFX1RFWFRVUkUQWhIOCgpJTUFHRV9GSUxFEFsSEAoMVEVYVFVSRV9NQVNLEFwSEwoPVEVY'
-    'VFVSRV9PUEFDSVRZEF0SEwoPU1VSRkFDRV9NQVBQSU5HEF4SDQoJQ09OVEFJTkVSEGQidAoPTm'
-    '9kZVByZXZpZXdUeXBlEggKBE5PTkUQABILCgdISVNUT1JZEAESDAoIV0FWRUZPUk0QAhIMCghN'
-    'VUxUSVBMRRADEgsKB1RFWFRVUkUQBBIMCghUSU1FQ09ERRAFEggKBERBVEEQBhIJCgVDT0xPUh'
-    'AH');
+    'CgROb2RlEhIKBHR5cGUYASABKAlSBHR5cGUSEgoEcGF0aBgCIAEoCVIEcGF0aBIpCgZpbnB1dH'
+    'MYAyADKAsyES5taXplci5ub2Rlcy5Qb3J0UgZpbnB1dHMSKwoHb3V0cHV0cxgEIAMoCzIRLm1p'
+    'emVyLm5vZGVzLlBvcnRSB291dHB1dHMSNQoIZGVzaWduZXIYBSABKAsyGS5taXplci5ub2Rlcy'
+    '5Ob2RlRGVzaWduZXJSCGRlc2lnbmVyEjsKB3ByZXZpZXcYBiABKA4yIS5taXplci5ub2Rlcy5O'
+    'b2RlLk5vZGVQcmV2aWV3VHlwZVIHcHJldmlldxIvCgZjb25maWcYByABKAsyFy5taXplci5ub2'
+    'Rlcy5Ob2RlQ29uZmlnUgZjb25maWcSNAoIc2V0dGluZ3MYCCADKAsyGC5taXplci5ub2Rlcy5O'
+    'b2RlU2V0dGluZ1IIc2V0dGluZ3MSMgoHZGV0YWlscxgJIAEoCzIYLm1pemVyLm5vZGVzLk5vZG'
+    'VEZXRhaWxzUgdkZXRhaWxzInQKD05vZGVQcmV2aWV3VHlwZRIICgROT05FEAASCwoHSElTVE9S'
+    'WRABEgwKCFdBVkVGT1JNEAISDAoITVVMVElQTEUQAxILCgdURVhUVVJFEAQSDAoIVElNRUNPRE'
+    'UQBRIICgREQVRBEAYSCQoFQ09MT1IQBw==');
 
 @$core.Deprecated('Use nodeDetailsDescriptor instead')
 const NodeDetails$json = {

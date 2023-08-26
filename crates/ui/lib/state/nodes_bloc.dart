@@ -39,7 +39,7 @@ class FetchNodes extends NodesEvent {}
 class FetchAvailableNodes extends NodesEvent {}
 
 class AddNode extends NodesEvent {
-  final Node_NodeType nodeType;
+  final String nodeType;
   final Offset position;
   final String? parent;
 

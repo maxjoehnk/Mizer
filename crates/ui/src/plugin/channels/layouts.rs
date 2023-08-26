@@ -1,11 +1,14 @@
-use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use std::sync::Arc;
+
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::LayoutsHandler;
 use mizer_api::proto::layouts::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, LayoutRef};
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::sync::Arc;
+
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
 #[derive(Clone)]
 pub struct LayoutsChannel<R: RuntimeApi> {
@@ -209,9 +212,9 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     }
 
     fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {
-        let node_type = req.node_type();
+        let control_type = req.control_type();
         self.handler
-            .add_control(req.layout_id, node_type, req.position.unwrap())
+            .add_control(req.layout_id, control_type, req.position.unwrap())
     }
 
     fn add_control_for_node(&self, req: AddExistingControlRequest) -> anyhow::Result<()> {

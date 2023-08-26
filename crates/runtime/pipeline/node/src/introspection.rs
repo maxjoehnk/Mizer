@@ -31,6 +31,21 @@ macro_rules! node_type_name {
                 }
             }
         }
+
+        impl TryFrom<String> for $name {
+            type Error = anyhow::Error;
+
+            fn try_from(value: String) -> Result<Self, Self::Error> {
+                use heck::ToPascalCase;
+
+                let name = value.to_pascal_case();
+
+                match name.as_str() {
+                    $(stringify!($variant) => Ok($name::$variant)),*,
+                    _ => Err(anyhow::anyhow!("Invalid node type {value}")),
+                }
+            }
+        }
     }
 }
 

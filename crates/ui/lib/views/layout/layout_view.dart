@@ -194,9 +194,9 @@ class _ControlLayoutState extends State<ControlLayout> {
                               sequences: sequences.sequences,
                               groups: presets.groups,
                               presets: presets.presets,
-                              onCreateControl: (nodeType) => bloc.add(AddControl(
+                              onCreateControl: (controlType) => bloc.add(AddControl(
                                   layoutId: widget.layout.id,
-                                  nodeType: nodeType,
+                                  controlType: controlType,
                                   position: position)),
                               onAddControlForExisting: (node) => bloc.add(AddExistingControl(
                                   layoutId: widget.layout.id, node: node, position: position)),

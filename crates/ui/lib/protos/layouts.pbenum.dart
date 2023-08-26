@@ -1,17 +1,38 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class ControlType extends $pb.ProtobufEnum {
+  static const ControlType BUTTON = ControlType._(0, _omitEnumNames ? '' : 'BUTTON');
+  static const ControlType FADER = ControlType._(1, _omitEnumNames ? '' : 'FADER');
+  static const ControlType LABEL = ControlType._(2, _omitEnumNames ? '' : 'LABEL');
+
+  static const $core.List<ControlType> values = <ControlType> [
+    BUTTON,
+    FADER,
+    LABEL,
+  ];
+
+  static final $core.Map<$core.int, ControlType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ControlType? valueOf($core.int value) => _byValue[value];
+
+  const ControlType._($core.int v, $core.String n) : super(v, n);
+}
+
 class SequencerControlBehavior_ClickBehavior extends $pb.ProtobufEnum {
-  static const SequencerControlBehavior_ClickBehavior GO_FORWARD = SequencerControlBehavior_ClickBehavior._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GO_FORWARD');
-  static const SequencerControlBehavior_ClickBehavior TOGGLE = SequencerControlBehavior_ClickBehavior._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TOGGLE');
+  static const SequencerControlBehavior_ClickBehavior GO_FORWARD = SequencerControlBehavior_ClickBehavior._(0, _omitEnumNames ? '' : 'GO_FORWARD');
+  static const SequencerControlBehavior_ClickBehavior TOGGLE = SequencerControlBehavior_ClickBehavior._(1, _omitEnumNames ? '' : 'TOGGLE');
 
   static const $core.List<SequencerControlBehavior_ClickBehavior> values = <SequencerControlBehavior_ClickBehavior> [
     GO_FORWARD,
@@ -24,3 +45,5 @@ class SequencerControlBehavior_ClickBehavior extends $pb.ProtobufEnum {
   const SequencerControlBehavior_ClickBehavior._($core.int v, $core.String n) : super(v, n);
 }
 
+
+const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

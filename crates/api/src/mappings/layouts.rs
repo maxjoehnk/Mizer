@@ -1,5 +1,6 @@
-use crate::proto::layouts::*;
 use mizer_util::Base64Image;
+
+use crate::proto::layouts::*;
 
 impl From<mizer_layouts::Layout> for Layout {
     fn from(layout: mizer_layouts::Layout) -> Self {
@@ -183,6 +184,16 @@ impl From<sequencer_control_behavior::ClickBehavior>
         match value {
             GoForward => Self::GoForward,
             Toggle => Self::Toggle,
+        }
+    }
+}
+
+impl From<ControlType> for mizer_node::NodeType {
+    fn from(value: ControlType) -> Self {
+        match value {
+            ControlType::Button => Self::Button,
+            ControlType::Fader => Self::Fader,
+            ControlType::Label => Self::Label,
         }
     }
 }

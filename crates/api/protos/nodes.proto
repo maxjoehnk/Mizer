@@ -5,7 +5,7 @@ package mizer.nodes;
 import "media.proto";
 
 message AddNodeRequest {
-  Node.NodeType type = 1;
+  string type = 1;
   NodePosition position = 2;
   optional string parent = 3;
 }
@@ -67,7 +67,7 @@ message AvailableNodes {
 }
 
 message AvailableNode {
-  Node.NodeType type = 1;
+  string type = 1;
   string name = 2;
   NodeCategory category = 3;
   string description = 4;
@@ -82,89 +82,6 @@ message NodeConnection {
 }
 
 message Node {
-  enum NodeType {
-    FADER = 0;
-    BUTTON = 1;
-    OSCILLATOR = 2;
-    CLOCK = 3;
-    SCRIPT = 4;
-    ENVELOPE = 5;
-    STEP_SEQUENCER = 6;
-    SELECT = 7;
-    MERGE = 8;
-    THRESHOLD = 9;
-    DMX_OUTPUT = 10;
-    OSC_INPUT = 11;
-    OSC_OUTPUT = 12;
-    MIDI_INPUT = 13;
-    MIDI_OUTPUT = 14;
-    SEQUENCER = 15;
-    FIXTURE = 16;
-    PROGRAMMER = 17;
-    GROUP = 18;
-    PRESET = 19;
-    VIDEO_FILE = 20;
-    VIDEO_OUTPUT = 21;
-    VIDEO_HSV = 23;
-    VIDEO_TRANSFORM = 24;
-    VIDEO_MIXER = 25;
-    VIDEO_RGB = 26;
-    VIDEO_RGB_SPLIT = 27;
-    PIXEL_TO_DMX = 30;
-    PIXEL_PATTERN = 31;
-    OPC_OUTPUT = 32;
-    DMX_INPUT = 33;
-    LASER = 40;
-    ILDA_FILE = 41;
-    GAMEPAD = 45;
-    COLOR_RGB = 50;
-    COLOR_HSV = 51;
-    COLOR_CONSTANT = 52;
-    COLOR_BRIGHTNESS = 53;
-    COLOR_TO_HSV = 54;
-    ENCODER = 55;
-    MATH = 56;
-    DATA_TO_NUMBER = 57;
-    NUMBER_TO_DATA = 58;
-    VALUE = 59;
-    EXTRACT = 60;
-    MQTT_INPUT = 61;
-    MQTT_OUTPUT = 62;
-    PLAN_SCREEN = 63;
-    DELAY = 64;
-    RAMP = 65;
-    NOISE = 66;
-    LABEL = 67;
-    TRANSPORT = 68;
-    G13INPUT = 69;
-    G13OUTPUT = 70;
-    CONSTANT_NUMBER = 71;
-    CONDITIONAL = 72;
-    TIMECODE_CONTROL = 73;
-    TIMECODE_OUTPUT = 74;
-    AUDIO_FILE = 75;
-    AUDIO_OUTPUT = 76;
-    AUDIO_VOLUME = 77;
-    AUDIO_INPUT = 78;
-    AUDIO_MIX = 79;
-    AUDIO_METER = 80;
-    TEMPLATE = 81;
-    WEBCAM = 82;
-    TEXTURE_BORDER = 83;
-    VIDEO_TEXT = 84;
-    BEATS = 85;
-    PRO_DJ_LINK_CLOCK = 86;
-    PIONEER_CDJ = 87;
-    NDI_OUTPUT = 88;
-    SCREEN_CAPTURE = 89;
-    COLORIZE_TEXTURE = 90;
-    IMAGE_FILE = 91;
-    TEXTURE_MASK = 92;
-    TEXTURE_OPACITY = 93;
-    SURFACE_MAPPING = 94;
-    CONTAINER = 100;
-  }
-
   enum NodePreviewType {
     NONE = 0;
     HISTORY = 1;
@@ -176,7 +93,7 @@ message Node {
     COLOR = 7;
   }
 
-  NodeType type = 1;
+  string type = 1;
   string path = 2;
   repeated Port inputs = 3;
   repeated Port outputs = 4;

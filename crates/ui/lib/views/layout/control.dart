@@ -77,7 +77,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       return Container();
     }
 
-    var supportsMappings = node?.type == Node_NodeType.BUTTON || node?.type == Node_NodeType.FADER;
+    var supportsMappings = node?.type == "button" || node?.type == "fader";
     return ContextMenu(
       menu: Menu(items: [
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
@@ -127,16 +127,16 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         size: widget.control.size,
       );
     }
-    if (node?.type == Node_NodeType.FADER) {
+    if (node?.type == "fader") {
       return FaderControl(pointer: widget.pointer, control: widget.control, color: _color);
-    } else if (node?.type == Node_NodeType.BUTTON) {
+    } else if (node?.type == "button") {
       return ButtonControl(
         pointer: widget.pointer,
         control: widget.control,
         color: _color,
         image: _image,
       );
-    } else if (node?.type == Node_NodeType.LABEL) {
+    } else if (node?.type == "label") {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
     }
     return null;

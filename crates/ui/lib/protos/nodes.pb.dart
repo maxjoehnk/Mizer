@@ -20,7 +20,7 @@ export 'nodes.pbenum.dart';
 
 class AddNodeRequest extends $pb.GeneratedMessage {
   factory AddNodeRequest({
-    Node_NodeType? type,
+    $core.String? type,
     NodePosition? position,
     $core.String? parent,
   }) {
@@ -41,7 +41,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   factory AddNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, _omitFieldNames ? '' : 'type')
     ..aOM<NodePosition>(2, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
     ..aOS(3, _omitFieldNames ? '' : 'parent')
     ..hasRequiredFields = false
@@ -69,9 +69,9 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   static AddNodeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -781,7 +781,7 @@ class AvailableNodes extends $pb.GeneratedMessage {
 
 class AvailableNode extends $pb.GeneratedMessage {
   factory AvailableNode({
-    Node_NodeType? type,
+    $core.String? type,
     $core.String? name,
     NodeCategory? category,
     $core.String? description,
@@ -806,7 +806,7 @@ class AvailableNode extends $pb.GeneratedMessage {
   factory AvailableNode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AvailableNode', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, _omitFieldNames ? '' : 'type')
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..e<NodeCategory>(3, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
     ..aOS(4, _omitFieldNames ? '' : 'description')
@@ -835,9 +835,9 @@ class AvailableNode extends $pb.GeneratedMessage {
   static AvailableNode? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -983,7 +983,7 @@ class NodeConnection extends $pb.GeneratedMessage {
 
 class Node extends $pb.GeneratedMessage {
   factory Node({
-    Node_NodeType? type,
+    $core.String? type,
     $core.String? path,
     $core.Iterable<Port>? inputs,
     $core.Iterable<Port>? outputs,
@@ -1028,7 +1028,7 @@ class Node extends $pb.GeneratedMessage {
   factory Node.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Node', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, _omitFieldNames ? '' : 'type')
     ..aOS(2, _omitFieldNames ? '' : 'path')
     ..pc<Port>(3, _omitFieldNames ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..pc<Port>(4, _omitFieldNames ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
@@ -1062,9 +1062,9 @@ class Node extends $pb.GeneratedMessage {
   static Node? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)

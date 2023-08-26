@@ -77,10 +77,10 @@ class DeleteControl implements LayoutsEvent {
 
 class AddControl implements LayoutsEvent {
   final String layoutId;
-  final Node_NodeType nodeType;
+  final ControlType controlType;
   final ControlPosition position;
 
-  AddControl({required this.layoutId, required this.nodeType, required this.position});
+  AddControl({required this.layoutId, required this.controlType, required this.position});
 }
 
 class AddExistingControl implements LayoutsEvent {
@@ -179,7 +179,7 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
       emit(state.copyWith(layouts: layouts.layouts));
     });
     on<AddControl>((event, emit) async {
-      await api.addControl(event.layoutId, event.nodeType, event.position);
+      await api.addControl(event.layoutId, event.controlType, event.position);
       var layouts = await api.getLayouts();
       emit(state.copyWith(layouts: layouts.layouts));
     });

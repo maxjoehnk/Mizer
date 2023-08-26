@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mizer.layouts;
 
-import "nodes.proto";
 import "programmer.proto";
 
 message AddLayoutRequest {
@@ -55,7 +54,7 @@ message RemoveControlRequest {
 
 message AddControlRequest {
   string layout_id = 1;
-  mizer.nodes.Node.NodeType node_type = 2;
+  ControlType control_type = 2;
   ControlPosition position = 3;
 }
 
@@ -165,4 +164,10 @@ message ReadFaderValueRequest {
 
 message FaderValueResponse {
   double value = 1;
+}
+
+enum ControlType {
+  BUTTON = 0;
+  FADER = 1;
+  LABEL = 2;
 }

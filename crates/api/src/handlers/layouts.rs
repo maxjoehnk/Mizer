@@ -1,11 +1,10 @@
-use crate::proto::layouts::*;
-use crate::proto::nodes::node;
-use crate::proto::programmer::PresetId;
-use crate::RuntimeApi;
 use mizer_command_executor::*;
-use mizer_layouts::ControlType;
 use mizer_node::NodePath;
 use mizer_runtime::LayoutsView;
+
+use crate::proto::layouts::*;
+use crate::proto::programmer::PresetId;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct LayoutsHandler<R: RuntimeApi> {
@@ -27,7 +26,6 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
                 .into_iter()
                 .map(Layout::from)
                 .collect::<Vec<_>>(),
-            ..Default::default()
         }
     }
 
@@ -181,7 +179,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     pub fn add_control(
         &self,
         layout_id: String,
-        node_type: node::NodeType,
+        node_type: ControlType,
         position: ControlPosition,
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlWithNodeCommand {
@@ -203,7 +201,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlCommand {
             layout_id,
-            control_type: ControlType::Node { path: node_path },
+            control_type: mizer_layouts::ControlType::Node { path: node_path },
             position: position.into(),
         })?;
 
@@ -220,7 +218,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlCommand {
             layout_id,
-            control_type: ControlType::Sequencer { sequence_id },
+            control_type: mizer_layouts::ControlType::Sequencer { sequence_id },
             position: position.into(),
         })?;
 
@@ -237,7 +235,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlCommand {
             layout_id,
-            control_type: ControlType::Group {
+            control_type: mizer_layouts::ControlType::Group {
                 group_id: group_id.into(),
             },
             position: position.into(),
@@ -256,7 +254,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlCommand {
             layout_id,
-            control_type: ControlType::Preset {
+            control_type: mizer_layouts::ControlType::Preset {
                 preset_id: preset_id.into(),
             },
             position: position.into(),

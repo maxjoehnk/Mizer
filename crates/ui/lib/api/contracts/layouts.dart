@@ -10,7 +10,7 @@ abstract class LayoutsApi {
   Future<Layouts> removeLayout(String id);
   Future<Layouts> renameLayout(String id, String name);
 
-  Future<void> addControl(String layoutId, Node_NodeType nodeType, ControlPosition position);
+  Future<void> addControl(String layoutId, String nodeType, ControlPosition position);
   Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position);
   Future<void> addControlForSequence(String layoutId, int sequenceId, ControlPosition position);
   Future<void> addControlForGroup(String layoutId, int groupId, ControlPosition position);

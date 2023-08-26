@@ -77,7 +77,7 @@ class DeleteControl implements LayoutsEvent {
 
 class AddControl implements LayoutsEvent {
   final String layoutId;
-  final Node_NodeType nodeType;
+  final String nodeType;
   final ControlPosition position;
 
   AddControl({required this.layoutId, required this.nodeType, required this.position});

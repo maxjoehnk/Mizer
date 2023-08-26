@@ -1,4 +1,4 @@
-use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
+use mizer_node::{NodeLink, PortDirection, PortId, PortMetadata, PortType, PreviewType};
 use mizer_nodes::{MidiInputConfig, NodeDowncast};
 use mizer_runtime::commands::StaticNodeDescriptor;
 use mizer_runtime::NodeDescriptor;
@@ -138,163 +138,6 @@ impl From<mizer_util::SplineStep> for spline_value::SplineStep {
     }
 }
 
-impl From<NodeType> for node::NodeType {
-    fn from(node: NodeType) -> Self {
-        match node {
-            NodeType::Fader => node::NodeType::Fader,
-            NodeType::Button => node::NodeType::Button,
-            NodeType::Label => node::NodeType::Label,
-            NodeType::DmxOutput => node::NodeType::DmxOutput,
-            NodeType::Oscillator => node::NodeType::Oscillator,
-            NodeType::Clock => node::NodeType::Clock,
-            NodeType::OscInput => node::NodeType::OscInput,
-            NodeType::OscOutput => node::NodeType::OscOutput,
-            NodeType::VideoFile => node::NodeType::VideoFile,
-            NodeType::VideoOutput => node::NodeType::VideoOutput,
-            NodeType::VideoHsv => node::NodeType::VideoHsv,
-            NodeType::VideoTransform => node::NodeType::VideoTransform,
-            NodeType::VideoMixer => node::NodeType::VideoMixer,
-            NodeType::VideoRgb => node::NodeType::VideoRgb,
-            NodeType::VideoRgbSplit => node::NodeType::VideoRgbSplit,
-            NodeType::Scripting => node::NodeType::Script,
-            NodeType::PixelDmx => node::NodeType::PixelToDmx,
-            NodeType::PixelPattern => node::NodeType::PixelPattern,
-            NodeType::OpcOutput => node::NodeType::OpcOutput,
-            NodeType::Fixture => node::NodeType::Fixture,
-            NodeType::Programmer => node::NodeType::Programmer,
-            NodeType::Group => node::NodeType::Group,
-            NodeType::Preset => node::NodeType::Preset,
-            NodeType::Sequencer => node::NodeType::Sequencer,
-            NodeType::StepSequencer => node::NodeType::StepSequencer,
-            NodeType::Envelope => node::NodeType::Envelope,
-            NodeType::Select => node::NodeType::Select,
-            NodeType::Merge => node::NodeType::Merge,
-            NodeType::Threshold => node::NodeType::Threshold,
-            NodeType::Encoder => node::NodeType::Encoder,
-            NodeType::MidiInput => node::NodeType::MidiInput,
-            NodeType::MidiOutput => node::NodeType::MidiOutput,
-            NodeType::Laser => node::NodeType::Laser,
-            NodeType::IldaFile => node::NodeType::IldaFile,
-            NodeType::ColorConstant => node::NodeType::ColorConstant,
-            NodeType::ColorBrightness => node::NodeType::ColorBrightness,
-            NodeType::ColorHsv => node::NodeType::ColorHsv,
-            NodeType::ColorRgb => node::NodeType::ColorRgb,
-            NodeType::Gamepad => node::NodeType::Gamepad,
-            NodeType::Container => node::NodeType::Container,
-            NodeType::Math => node::NodeType::Math,
-            NodeType::MqttInput => node::NodeType::MqttInput,
-            NodeType::MqttOutput => node::NodeType::MqttOutput,
-            NodeType::NumberToData => node::NodeType::NumberToData,
-            NodeType::DataToNumber => node::NodeType::DataToNumber,
-            NodeType::Value => node::NodeType::Value,
-            NodeType::Extract => node::NodeType::Extract,
-            NodeType::PlanScreen => node::NodeType::PlanScreen,
-            NodeType::Delay => node::NodeType::Delay,
-            NodeType::Ramp => node::NodeType::Ramp,
-            NodeType::Noise => node::NodeType::Noise,
-            NodeType::Transport => node::NodeType::Transport,
-            NodeType::G13Input => node::NodeType::G13input,
-            NodeType::G13Output => node::NodeType::G13output,
-            NodeType::ConstantNumber => node::NodeType::ConstantNumber,
-            NodeType::Conditional => node::NodeType::Conditional,
-            NodeType::TimecodeControl => node::NodeType::TimecodeControl,
-            NodeType::TimecodeOutput => node::NodeType::TimecodeOutput,
-            NodeType::AudioFile => node::NodeType::AudioFile,
-            NodeType::AudioOutput => node::NodeType::AudioOutput,
-            NodeType::AudioVolume => node::NodeType::AudioVolume,
-            NodeType::AudioInput => node::NodeType::AudioInput,
-            NodeType::AudioMix => node::NodeType::AudioMix,
-            NodeType::AudioMeter => node::NodeType::AudioMeter,
-            NodeType::Template => node::NodeType::Template,
-            NodeType::Webcam => node::NodeType::Webcam,
-            NodeType::TextureBorder => node::NodeType::TextureBorder,
-            NodeType::VideoText => node::NodeType::VideoText,
-            NodeType::Beats => node::NodeType::Beats,
-            NodeType::ProDjLinkClock => node::NodeType::ProDjLinkClock,
-            NodeType::PioneerCdj => node::NodeType::PioneerCdj,
-            NodeType::TestSink => unimplemented!("only for test"),
-        }
-    }
-}
-
-impl From<node::NodeType> for NodeType {
-    fn from(node: node::NodeType) -> Self {
-        match node {
-            node::NodeType::Fader => NodeType::Fader,
-            node::NodeType::Button => NodeType::Button,
-            node::NodeType::Label => NodeType::Label,
-            node::NodeType::DmxOutput => NodeType::DmxOutput,
-            node::NodeType::Oscillator => NodeType::Oscillator,
-            node::NodeType::Clock => NodeType::Clock,
-            node::NodeType::OscInput => NodeType::OscInput,
-            node::NodeType::OscOutput => NodeType::OscOutput,
-            node::NodeType::VideoFile => NodeType::VideoFile,
-            node::NodeType::VideoOutput => NodeType::VideoOutput,
-            node::NodeType::VideoHsv => NodeType::VideoHsv,
-            node::NodeType::VideoTransform => NodeType::VideoTransform,
-            node::NodeType::VideoMixer => NodeType::VideoMixer,
-            node::NodeType::VideoRgb => NodeType::VideoRgb,
-            node::NodeType::VideoRgbSplit => NodeType::VideoRgbSplit,
-            node::NodeType::Script => NodeType::Scripting,
-            node::NodeType::PixelToDmx => NodeType::PixelDmx,
-            node::NodeType::PixelPattern => NodeType::PixelPattern,
-            node::NodeType::OpcOutput => NodeType::OpcOutput,
-            node::NodeType::Fixture => NodeType::Fixture,
-            node::NodeType::Programmer => NodeType::Programmer,
-            node::NodeType::Group => NodeType::Group,
-            node::NodeType::Preset => NodeType::Preset,
-            node::NodeType::Sequencer => NodeType::Sequencer,
-            node::NodeType::StepSequencer => NodeType::StepSequencer,
-            node::NodeType::Envelope => NodeType::Envelope,
-            node::NodeType::Select => NodeType::Select,
-            node::NodeType::Merge => NodeType::Merge,
-            node::NodeType::Threshold => NodeType::Threshold,
-            node::NodeType::Encoder => NodeType::Encoder,
-            node::NodeType::MidiInput => NodeType::MidiInput,
-            node::NodeType::MidiOutput => NodeType::MidiOutput,
-            node::NodeType::Laser => NodeType::Laser,
-            node::NodeType::IldaFile => NodeType::IldaFile,
-            node::NodeType::ColorConstant => NodeType::ColorConstant,
-            node::NodeType::ColorBrightness => NodeType::ColorBrightness,
-            node::NodeType::ColorHsv => NodeType::ColorHsv,
-            node::NodeType::ColorRgb => NodeType::ColorRgb,
-            node::NodeType::Gamepad => NodeType::Gamepad,
-            node::NodeType::Container => NodeType::Container,
-            node::NodeType::Math => NodeType::Math,
-            node::NodeType::MqttInput => NodeType::MqttInput,
-            node::NodeType::MqttOutput => NodeType::MqttOutput,
-            node::NodeType::NumberToData => NodeType::NumberToData,
-            node::NodeType::DataToNumber => NodeType::DataToNumber,
-            node::NodeType::Value => NodeType::Value,
-            node::NodeType::Extract => NodeType::Extract,
-            node::NodeType::PlanScreen => NodeType::PlanScreen,
-            node::NodeType::Delay => NodeType::Delay,
-            node::NodeType::Ramp => NodeType::Ramp,
-            node::NodeType::Noise => NodeType::Noise,
-            node::NodeType::Transport => NodeType::Transport,
-            node::NodeType::G13input => NodeType::G13Input,
-            node::NodeType::G13output => NodeType::G13Output,
-            node::NodeType::ConstantNumber => NodeType::ConstantNumber,
-            node::NodeType::Conditional => NodeType::Conditional,
-            node::NodeType::TimecodeControl => NodeType::TimecodeControl,
-            node::NodeType::TimecodeOutput => NodeType::TimecodeOutput,
-            node::NodeType::AudioFile => NodeType::AudioFile,
-            node::NodeType::AudioOutput => NodeType::AudioOutput,
-            node::NodeType::AudioVolume => NodeType::AudioVolume,
-            node::NodeType::AudioInput => NodeType::AudioInput,
-            node::NodeType::AudioMix => NodeType::AudioMix,
-            node::NodeType::AudioMeter => NodeType::AudioMeter,
-            node::NodeType::Template => NodeType::Template,
-            node::NodeType::Webcam => NodeType::Webcam,
-            node::NodeType::TextureBorder => NodeType::TextureBorder,
-            node::NodeType::VideoText => NodeType::VideoText,
-            node::NodeType::Beats => NodeType::Beats,
-            node::NodeType::ProDjLinkClock => NodeType::ProDjLinkClock,
-            node::NodeType::PioneerCdj => NodeType::PioneerCdj,
-        }
-    }
-}
-
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {
         let config = descriptor.downcast().into();
@@ -307,7 +150,7 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
     let node_type = descriptor.node_type();
     let mut node = Node {
         path: descriptor.path.to_string(),
-        r#type: node::NodeType::from(node_type) as i32,
+        r#type: node_type.get_name(),
         settings: descriptor
             .settings
             .into_iter()
@@ -344,7 +187,7 @@ impl From<StaticNodeDescriptor> for Node {
     fn from(descriptor: StaticNodeDescriptor) -> Self {
         let mut node = Node {
             path: descriptor.path.to_string(),
-            r#type: node::NodeType::from(descriptor.node_type) as i32,
+            r#type: descriptor.node_type.get_name(),
             settings: descriptor
                 .settings
                 .into_iter()

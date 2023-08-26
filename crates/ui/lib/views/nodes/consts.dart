@@ -15,12 +15,12 @@ const double INNER_RADIUS = 2;
 const double DOT_SIZE = 16;
 
 const _GENERATED_TYPES = [
-  Node_NodeType.PROGRAMMER,
-  Node_NodeType.TRANSPORT,
-  Node_NodeType.SEQUENCER,
-  Node_NodeType.FIXTURE,
-  Node_NodeType.GROUP,
-  Node_NodeType.PRESET,
+  "programmer",
+  "transport",
+  "sequencer",
+  "fixture",
+  "group",
+  "preset"
 ];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {

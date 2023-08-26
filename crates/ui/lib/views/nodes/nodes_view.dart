@@ -91,7 +91,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                             groupBy(availableNodes, (AvailableNode node) => node.category);
                         Navigator.of(context).push(MizerPopupRoute(
                             position: event.globalPosition,
-                            child: PopupMenu<Node_NodeType>(
+                            child: PopupMenu<String>(
                                 categories: categories.entries
                                     .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
                                     .map((e) => PopupCategory(
@@ -275,7 +275,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     model.update();
   }
 
-  void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
+  void _addNode(NodeEditorModel model, String nodeType) {
     var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
     context

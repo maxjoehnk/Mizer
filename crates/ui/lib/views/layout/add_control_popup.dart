@@ -31,7 +31,7 @@ class AddControlPopup extends StatelessWidget {
   final List<Sequence> sequences;
   final List<Group> groups;
   final Presets presets;
-  final Function(Node_NodeType) onCreateControl;
+  final Function(String) onCreateControl;
   final Function(PresetId) onCreatePresetControl;
   final Function(int) onCreateGroupControl;
   final Function(int) onCreateSequenceControl;
@@ -61,9 +61,9 @@ class AddControlPopup extends StatelessWidget {
     return PopupMenu<dynamic>(
         categories: [
           PopupCategory(label: "New".i18n, items: [
-            PopupItem(Node_NodeType.BUTTON, "Button".i18n),
-            PopupItem(Node_NodeType.FADER, "Fader".i18n),
-            PopupItem(Node_NodeType.LABEL, "Label".i18n),
+            PopupItem("button", "Button".i18n),
+            PopupItem("fader", "Fader".i18n),
+            PopupItem("label", "Label".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -95,7 +95,7 @@ class AddControlPopup extends StatelessWidget {
                 items: positionPresets.map((e) => PopupItem(e.id, e.label)).toList()),
         ],
         onSelect: (value) {
-          if (value is Node_NodeType) {
+          if (value is String) {
             this.onCreateControl(value);
           } else if (value is PresetId) {
             this.onCreatePresetControl(value);
@@ -110,10 +110,10 @@ class AddControlPopup extends StatelessWidget {
   }
 }
 
-List<Node_NodeType> CONTROL_NODES = [
-  Node_NodeType.FADER,
-  Node_NodeType.BUTTON,
-  Node_NodeType.LABEL,
+List<String> CONTROL_NODES = [
+  "fader",
+  "button",
+  "label",
 ];
 
 bool isControlNode(Node node) {

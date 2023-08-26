@@ -109,16 +109,12 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 AvailableNode {
                     name: details.name,
                     category: NodeCategory::from(details.category) as i32,
-                    r#type: node::NodeType::from(node_type) as i32,
-                    ..Default::default()
+                    r#type: node_type.get_name(),
                 }
             })
             .collect();
 
-        AvailableNodes {
-            nodes,
-            ..Default::default()
-        }
+        AvailableNodes { nodes }
     }
 
     #[tracing::instrument(skip(self))]
@@ -144,7 +140,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let cmd = AddNodeCommand {
             designer,
-            node_type: request.r#type().into(),
+            node_type: request.r#type.try_into().unwrap(),
             node: None,
             parent: request.parent.map(NodePath::from),
         };

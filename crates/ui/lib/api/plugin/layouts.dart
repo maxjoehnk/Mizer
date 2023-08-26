@@ -74,7 +74,7 @@ class LayoutsPluginApi implements LayoutsApi {
   }
 
   @override
-  Future<void> addControl(String layoutId, Node_NodeType nodeType, ControlPosition position) async {
+  Future<void> addControl(String layoutId, String nodeType, ControlPosition position) async {
     var request = AddControlRequest(layoutId: layoutId, nodeType: nodeType, position: position);
     await channel.invokeMethod("addControl", request.writeToBuffer());
   }

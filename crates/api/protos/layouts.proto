@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mizer.layouts;
 
-import "nodes.proto";
 import "programmer.proto";
 
 message AddLayoutRequest {
@@ -55,7 +54,7 @@ message RemoveControlRequest {
 
 message AddControlRequest {
   string layout_id = 1;
-  mizer.nodes.Node.NodeType node_type = 2;
+  string node_type = 2;
   ControlPosition position = 3;
 }
 

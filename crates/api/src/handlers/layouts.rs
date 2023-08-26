@@ -1,5 +1,4 @@
 use crate::proto::layouts::*;
-use crate::proto::nodes::node;
 use crate::proto::programmer::PresetId;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
@@ -181,12 +180,12 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     pub fn add_control(
         &self,
         layout_id: String,
-        node_type: node::NodeType,
+        node_type: String,
         position: ControlPosition,
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlWithNodeCommand {
             layout_id,
-            node_type: node_type.into(),
+            node_type: node_type.try_into()?,
             position: position.into(),
         })?;
 

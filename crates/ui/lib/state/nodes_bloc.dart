@@ -39,7 +39,7 @@ class FetchNodes extends NodesEvent {}
 class FetchAvailableNodes extends NodesEvent {}
 
 class AddNode extends NodesEvent {
-  final Node_NodeType nodeType;
+  final String nodeType;
   final Offset position;
   final String? parent;
 
@@ -144,6 +144,7 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
     });
     on<FetchAvailableNodes>((event, emit) async {
       var availableNodes = await this.api.getAvailableNodes();
+      print(availableNodes);
       emit(state.copyWith(availableNodes: availableNodes));
     });
     on<AddNode>((event, emit) async {

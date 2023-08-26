@@ -209,7 +209,7 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     }
 
     fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {
-        let node_type = req.node_type();
+        let node_type = req.node_type;
         self.handler
             .add_control(req.layout_id, node_type, req.position.unwrap())
     }

@@ -16,7 +16,7 @@ export 'nodes.pbenum.dart';
 
 class AddNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
     ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
     ..hasRequiredFields = false
@@ -24,7 +24,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
 
   AddNodeRequest._() : super();
   factory AddNodeRequest({
-    Node_NodeType? type,
+    $core.String? type,
     NodePosition? position,
     $core.String? parent,
   }) {
@@ -62,9 +62,9 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   static AddNodeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -740,7 +740,7 @@ class AvailableNodes extends $pb.GeneratedMessage {
 
 class AvailableNode extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AvailableNode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<NodeCategory>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
     ..hasRequiredFields = false
@@ -748,7 +748,7 @@ class AvailableNode extends $pb.GeneratedMessage {
 
   AvailableNode._() : super();
   factory AvailableNode({
-    Node_NodeType? type,
+    $core.String? type,
     $core.String? name,
     NodeCategory? category,
   }) {
@@ -786,9 +786,9 @@ class AvailableNode extends $pb.GeneratedMessage {
   static AvailableNode? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -922,7 +922,7 @@ class NodeConnection extends $pb.GeneratedMessage {
 
 class Node extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
@@ -936,7 +936,7 @@ class Node extends $pb.GeneratedMessage {
 
   Node._() : super();
   factory Node({
-    Node_NodeType? type,
+    $core.String? type,
     $core.String? path,
     $core.Iterable<Port>? inputs,
     $core.Iterable<Port>? outputs,
@@ -998,9 +998,9 @@ class Node extends $pb.GeneratedMessage {
   static Node? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Node_NodeType get type => $_getN(0);
+  $core.String get type => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(Node_NodeType v) { setField(1, v); }
+  set type($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)

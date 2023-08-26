@@ -57,7 +57,7 @@ class BaseNode extends StatefulWidget {
       Key? key,
       required bool selectedAdditionally}) {
     List<CustomNodeTab> tabs = [];
-    if (node.node.type == Node_NodeType.CONTAINER) {
+    if (node.node.type == "container") {
       tabs.add(CustomNodeTab(
           tab: NodeTab.ContainerEditor, icon: MdiIcons.pencil, builder: (model) => Container()));
     }
@@ -239,25 +239,25 @@ class BaseNodeState extends State<BaseNode> {
 }
 
 const NON_DUPLICATABLE_NODE_TYPES = [
-  Node_NodeType.PROGRAMMER,
-  Node_NodeType.TRANSPORT,
-  Node_NodeType.FIXTURE,
-  Node_NodeType.SEQUENCER,
-  Node_NodeType.GROUP,
-  Node_NodeType.CONTAINER,
+  "programmer",
+  "transport",
+  "fixture",
+  "sequencer",
+  "group",
+  "container"
 ];
 
 const NON_RENAMEABLE_NODE_TYPES = [
-  Node_NodeType.PROGRAMMER,
-  Node_NodeType.TRANSPORT,
+  "programmer",
+  "transport"
 ];
 
 const UNDELETABLE_NODE_TYPES = [
-  Node_NodeType.PROGRAMMER,
-  Node_NodeType.TRANSPORT,
-  Node_NodeType.FIXTURE,
-  Node_NodeType.SEQUENCER,
-  Node_NodeType.GROUP,
+  "programmer",
+  "transport",
+  "fixture",
+  "sequencer",
+  "group"
 ];
 
 extension NodeOptionExtensions on Node {

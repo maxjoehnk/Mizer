@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::fmt::{Debug, Display};
 use std::hash::{Hash, Hasher};
 use std::sync::Arc;
@@ -9,7 +10,7 @@ use mizer_util::Spline;
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
 pub struct NodeSetting {
-    pub label: String,
+    pub label: Cow<'static, str>,
     pub description: String,
     pub disabled: bool,
     pub value: NodeSettingValue,

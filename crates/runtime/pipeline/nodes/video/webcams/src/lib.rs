@@ -131,7 +131,7 @@ fn collect_webcam_settings(webcam_ref: Option<&WebcamRef>) -> Vec<NodeSetting> {
     settings
 }
 
-fn webcam_to_node_setting(value: WebcamSettingValue, setting: &str) -> NodeSetting {
+fn webcam_to_node_setting(value: WebcamSettingValue, setting: &'static str) -> NodeSetting {
     match value {
         WebcamSettingValue::Float {
             value, min, max, ..

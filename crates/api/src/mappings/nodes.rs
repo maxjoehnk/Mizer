@@ -383,7 +383,7 @@ impl From<StaticNodeDescriptor> for Node {
 impl From<mizer_node::NodeSetting> for NodeSetting {
     fn from(setting: mizer_node::NodeSetting) -> Self {
         Self {
-            label: setting.label,
+            label: setting.label.into(),
             description: setting.description,
             disabled: setting.disabled,
             value: Some(setting.value.into()),
@@ -395,7 +395,7 @@ impl From<mizer_node::NodeSetting> for NodeSetting {
 impl From<NodeSetting> for mizer_node::NodeSetting {
     fn from(setting: NodeSetting) -> Self {
         Self {
-            label: setting.label,
+            label: setting.label.into(),
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),

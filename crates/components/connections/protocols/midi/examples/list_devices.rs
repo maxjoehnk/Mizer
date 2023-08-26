@@ -1,8 +1,8 @@
 use mizer_protocol_midi::*;
 
 pub fn main() -> anyhow::Result<()> {
-    let provider = MidiDeviceProvider::new();
-    let devices = provider.list_devices()?;
+    let connection_manager = MidiConnectionManager::new();
+    let devices = connection_manager.list_available_devices();
 
     println!("{:#?}", devices);
 

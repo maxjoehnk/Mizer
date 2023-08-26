@@ -163,6 +163,7 @@ serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.31", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.31"
 ffmpeg-the-third = { version = "1.2", features = ["build"] }
+rolling-file = "0.2"
 
 [dev-dependencies]
 test-case = "3.1"

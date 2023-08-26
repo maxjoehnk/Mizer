@@ -1,10 +1,12 @@
+use std::sync::mpsc;
+
 use structopt::StructOpt;
 
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
 
-use std::sync::mpsc;
+use crate::logger::LoggingGuard;
 
 mod async_runtime;
 mod logger;
@@ -12,7 +14,7 @@ mod logger;
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
     let _guard = setup_sentry();
-    let flags = init()?;
+    let (flags, _logging_guard) = init()?;
 
     run_headless(flags)
 }
@@ -20,7 +22,7 @@ fn main() -> anyhow::Result<()> {
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
     let _guard = setup_sentry();
-    let flags = init()?;
+    let (flags, _logging_guard) = init()?;
     let headless = flags.headless;
 
     if headless {
@@ -54,14 +56,14 @@ fn run_headless(flags: Flags) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn init() -> anyhow::Result<Flags> {
+fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     mizer_util::tracing::init();
-    logger::init()?;
+    let guard = logger::init()?;
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
     init_ffmpeg()?;
 
-    Ok(flags)
+    Ok((flags, guard))
 }
 
 fn init_ffmpeg() -> anyhow::Result<()> {
@@ -101,14 +103,15 @@ fn start_runtime(
 
 #[cfg(feature = "ui")]
 mod ui {
+    use std::sync::mpsc;
+
     use anyhow::Context;
 
-    use crate::async_runtime::TokioRuntime;
     use mizer::{Api, Flags};
     use mizer_api::handlers::Handlers;
-
     use mizer_ui::LifecycleHandler;
-    use std::sync::mpsc;
+
+    use crate::async_runtime::TokioRuntime;
 
     pub fn run(flags: Flags) -> anyhow::Result<()> {
         let tokio = super::build_tokio_runtime();

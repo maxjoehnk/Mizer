@@ -156,7 +156,7 @@ impl From<mizer_connections::midi_device_profile::Page> for midi_device_profile:
 impl From<mizer_connections::midi_device_profile::Group> for midi_device_profile::Group {
     fn from(page: mizer_connections::midi_device_profile::Group) -> Self {
         Self {
-            name: page.name,
+            name: page.name.to_string(),
             controls: page
                 .controls
                 .into_iter()
@@ -170,8 +170,8 @@ impl From<mizer_connections::midi_device_profile::Group> for midi_device_profile
 impl From<mizer_connections::midi_device_profile::Control> for midi_device_profile::Control {
     fn from(control: mizer_connections::midi_device_profile::Control) -> Self {
         Self {
-            name: control.name,
-            id: control.id,
+            name: control.name.to_string(),
+            id: control.id.to_string(),
             has_input: control.input.is_some(),
             has_output: control.output.is_some(),
             ..Default::default()

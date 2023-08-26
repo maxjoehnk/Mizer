@@ -1,8 +1,9 @@
-use anyhow::{anyhow, Context};
-use mizer_devices::{DeviceManager, DeviceRef};
-use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 
+use anyhow::{anyhow, Context};
+use serde::{Deserialize, Serialize};
+
+use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_node::*;
 use mizer_webcams::{Webcam, WebcamRef, WebcamSetting, WebcamSettingValue};
 use mizer_wgpu::{
@@ -43,8 +44,8 @@ impl ConfigurableNode for WebcamNode {
             .flat_map(|device| {
                 if let DeviceRef::Webcam(webcam) = device {
                     Some(SelectVariant::Item {
-                        value: webcam.id,
-                        label: webcam.name,
+                        value: webcam.id.into(),
+                        label: webcam.name.into(),
                     })
                 } else {
                     None
@@ -130,7 +131,7 @@ fn collect_webcam_settings(webcam_ref: Option<&WebcamRef>) -> Vec<NodeSetting> {
     settings
 }
 
-fn webcam_to_node_setting(value: WebcamSettingValue, setting: &str) -> NodeSetting {
+fn webcam_to_node_setting(value: WebcamSettingValue, setting: &'static str) -> NodeSetting {
     match value {
         WebcamSettingValue::Float {
             value, min, max, ..

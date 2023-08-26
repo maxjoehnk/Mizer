@@ -41,8 +41,8 @@ impl ConfigurableNode for PixelDmxNode {
             .list_outputs()
             .into_iter()
             .map(|(id, output)| SelectVariant::Item {
-                value: id.clone(),
-                label: output.name(),
+                value: id.clone().into(),
+                label: output.name().into(),
             })
             .collect();
 

@@ -3,8 +3,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use anyhow::Context;
-
-use rhai::{Blob, Engine, ImmutableString, Scope, AST};
+use rhai::{Blob, Engine, Scope, AST};
 
 use mizer_midi_messages::MidiMessage;
 
@@ -29,12 +28,8 @@ impl Default for OutputEngine {
             .register_get("green", |color: &mut Color8| color.green as i64)
             .register_get("blue", |color: &mut Color8| color.blue as i64)
             .register_type::<Control>()
-            .register_get("id", |control: &mut Control| {
-                ImmutableString::from(&control.id)
-            })
-            .register_get("name", |control: &mut Control| {
-                ImmutableString::from(&control.name)
-            })
+            .register_get("id", |control: &mut Control| Arc::clone(&control.id))
+            .register_get("name", |control: &mut Control| Arc::clone(&control.name))
             .register_fn("sysex", |p1: i64, p2: i64, p3: i64, p4: i64, data: Blob| {
                 MidiMessage::Sysex((p1 as u8, p2 as u8, p3 as u8), p4 as u8, data)
             });

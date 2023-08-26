@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
 use mizer_nodes::{MidiInputConfig, NodeDowncast};
 use mizer_runtime::commands::StaticNodeDescriptor;
@@ -381,7 +383,7 @@ impl From<StaticNodeDescriptor> for Node {
 impl From<mizer_node::NodeSetting> for NodeSetting {
     fn from(setting: mizer_node::NodeSetting) -> Self {
         Self {
-            label: setting.label,
+            label: setting.label.into(),
             description: setting.description,
             disabled: setting.disabled,
             value: Some(setting.value.into()),
@@ -393,7 +395,7 @@ impl From<mizer_node::NodeSetting> for NodeSetting {
 impl From<NodeSetting> for mizer_node::NodeSetting {
     fn from(setting: NodeSetting) -> Self {
         Self {
-            label: setting.label,
+            label: setting.label.into(),
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),
@@ -616,8 +618,8 @@ impl From<mizer_node::SelectVariant> for node_setting::SelectVariant {
             mizer_node::SelectVariant::Item { value, label } => Self {
                 variant: Some(node_setting::select_variant::Variant::Item(
                     node_setting::select_variant::SelectItem {
-                        label,
-                        value,
+                        label: label.to_string(),
+                        value: value.to_string(),
                         ..Default::default()
                     },
                 )),
@@ -626,7 +628,7 @@ impl From<mizer_node::SelectVariant> for node_setting::SelectVariant {
             mizer_node::SelectVariant::Group { children, label } => Self {
                 variant: Some(node_setting::select_variant::Variant::Group(
                     node_setting::select_variant::SelectGroup {
-                        label,
+                        label: label.to_string(),
                         items: children
                             .into_iter()
                             .map(node_setting::SelectVariant::from)
@@ -645,11 +647,14 @@ impl From<node_setting::SelectVariant> for mizer_node::SelectVariant {
         match variant.variant.unwrap() {
             node_setting::select_variant::Variant::Item(
                 node_setting::select_variant::SelectItem { value, label, .. },
-            ) => Self::Item { label, value },
+            ) => Self::Item {
+                label: Arc::new(label),
+                value: Arc::new(value),
+            },
             node_setting::select_variant::Variant::Group(
                 node_setting::select_variant::SelectGroup { items, label, .. },
             ) => Self::Group {
-                label,
+                label: Arc::new(label),
                 children: items.into_iter().map(Self::from).collect(),
             },
         }

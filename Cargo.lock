@@ -1652,9 +1652,9 @@ dependencies = [
 
 [[package]]
 name = "default-net"
-version = "0.16.2"
+version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cfe553014b8511f63a1324f7cc9b91cf0117289321ad14b4781ef4fed005f30c"
+checksum = "d5d1b93f7700c45c26856522aed3982b685edb0532e4dbdd3a4ec84bb4185526"
 dependencies = [
  "dlopen2",
  "libc",
@@ -2679,7 +2679,7 @@ dependencies = [
  "vec_map",
  "wasm-bindgen",
  "web-sys",
- "windows 0.44.0",
+ "windows 0.48.0",
 ]
 
 [[package]]
@@ -8635,7 +8635,7 @@ version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97fee6b57c6a41524a810daee9286c02d7752c4253064d0b05472833a438f675"
 dependencies = [
- "cfg-if 0.1.10",
+ "cfg-if 1.0.0",
  "rand 0.8.5",
  "static_assertions",
 ]

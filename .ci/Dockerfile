@@ -1,4 +1,4 @@
-FROM rust:1.71 as build
+FROM rust:1.72 as build
 
 ENV DEBIAN_FRONTEND=noninteractive
 

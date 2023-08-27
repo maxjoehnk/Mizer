@@ -11,4 +11,4 @@ serde = { version = "1", features = ["derive"] }
 log = "0.4"
 
 [target.'cfg(unix)'.dependencies]
-zeroconf = "0.10"
+zeroconf = "0.11"

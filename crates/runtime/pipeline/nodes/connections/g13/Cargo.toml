@@ -12,4 +12,4 @@ mizer-g13 = { path = "../../../../../components/connections/devices/g13" }
 mizer-devices = { path = "../../../../../components/connections/devices" }
 mizer-node = { path = "../../../node" }
 enum-iterator = "1.4"
-num_enum = "0.6"
+num_enum = "0.7"

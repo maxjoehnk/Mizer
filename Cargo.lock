@@ -4135,7 +4135,7 @@ dependencies = [
  "cpal",
  "enum-iterator",
  "mizer-node",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "rb",
  "serde",
  "symphonia",
@@ -4428,7 +4428,7 @@ dependencies = [
  "mizer-devices",
  "mizer-g13",
  "mizer-node",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -4443,7 +4443,7 @@ dependencies = [
  "mizer-gamepads",
  "mizer-node",
  "mizer-util",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -4537,7 +4537,7 @@ dependencies = [
  "enum-iterator",
  "log",
  "mizer-node",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -4607,7 +4607,7 @@ dependencies = [
  "mizer-node",
  "mizer-protocol-midi",
  "mizer-util",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -4748,7 +4748,7 @@ dependencies = [
  "mizer-node",
  "mizer-protocol-osc",
  "mizer-util",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -4760,7 +4760,7 @@ dependencies = [
  "enum-iterator",
  "log",
  "mizer-node",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
  "test-case",
 ]
@@ -4813,7 +4813,7 @@ dependencies = [
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
  "test-case",
 ]
@@ -4863,7 +4863,7 @@ dependencies = [
  "mizer-protocol-laser",
  "mizer-util",
  "mizer-wgpu",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "rand 0.8.5",
  "serde",
  "test-case",
@@ -4879,7 +4879,7 @@ dependencies = [
  "crossbeam",
  "enum-iterator",
  "mizer-util",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "serde",
 ]
 
@@ -5203,7 +5203,7 @@ dependencies = [
  "log",
  "mizer-node",
  "mizer-wgpu",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "profiling",
  "serde",
  "wgpu_glyph",
@@ -5327,7 +5327,7 @@ dependencies = [
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "profiling",
  "serde",
 ]
@@ -5344,7 +5344,7 @@ dependencies = [
  "mizer-node",
  "mizer-webcams",
  "mizer-wgpu",
- "num_enum 0.6.1",
+ "num_enum 0.7.0",
  "profiling",
  "serde",
 ]
@@ -5922,11 +5922,11 @@ dependencies = [
 
 [[package]]
 name = "num_enum"
-version = "0.6.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a015b430d3c108a207fd776d2e2196aaf8b1cf8cf93253e3a097ff3085076a1"
+checksum = "70bf6736f74634d299d00086f02986875b3c2d924781a6a2cb6c201e73da0ceb"
 dependencies = [
- "num_enum_derive 0.6.1",
+ "num_enum_derive 0.7.0",
 ]
 
 [[package]]
@@ -5943,9 +5943,9 @@ dependencies = [
 
 [[package]]
 name = "num_enum_derive"
-version = "0.6.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "96667db765a921f7b295ffee8b60472b686a51d4f21c2ee4ffdb94c7013b65a6"
+checksum = "56ea360eafe1022f7cc56cd7b869ed57330fb2453d0c7831d99b74c65d2f5597"
 dependencies = [
  "proc-macro-crate",
  "proc-macro2",

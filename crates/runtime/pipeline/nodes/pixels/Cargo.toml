@@ -13,4 +13,4 @@ mizer-protocol-dmx = { path = "../../../../components/connections/protocols/dmx"
 mizer-util = { path = "../../../../util" }
 test-case = "3.1"
 enum-iterator = "1.4"
-num_enum = "0.6"
+num_enum = "0.7"

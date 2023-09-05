@@ -1,8 +1,9 @@
-use crate::utils::add_node;
 use mizer_module::Runtime;
 use mizer_node::ProcessingNode;
 use mizer_nodes::{Node, OscillatorNode};
 use mizer_runtime::*;
+
+use crate::utils::add_node;
 
 mod utils;
 
@@ -28,6 +29,7 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
         sink.clone(),
         port,
     );
+    runtime.plan();
 
     for _ in 0..frames {
         runtime.process();

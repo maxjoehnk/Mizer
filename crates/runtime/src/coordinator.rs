@@ -105,12 +105,28 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.layouts.set(layouts);
     }
 
+    fn pre_process_pipeline(&mut self, frame: ClockFrame) {
+        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+
+        self.pipeline
+            .pre_process(nodes, frame, &self.injector, &mut self.clock);
+    }
+
     fn process_pipeline(&mut self, frame: ClockFrame) {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
 
         self.pipeline
             .process(nodes, frame, &self.injector, &mut self.clock);
+    }
+
+    fn post_process_pipeline(&mut self, frame: ClockFrame) {
+        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+
+        self.pipeline
+            .post_process(nodes, frame, &self.injector, &mut self.clock);
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
@@ -319,6 +335,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect();
         pipeline_access.settings.set(settings);
     }
+
+    /// Should only be used for testing purposes
+    #[doc(hidden)]
+    pub fn plan(&mut self) {
+        log::trace!("plan");
+        let planner = self.injector.get_mut::<ExecutionPlanner>().unwrap();
+        if planner.should_rebuild() {
+            let plan = planner.plan();
+            self.rebuild_pipeline(plan);
+        }
+    }
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
@@ -343,22 +370,21 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             log::error!("Could not send clock snapshot {:?}", err);
         }
         self.clock_snapshot.set(snapshot);
+        log::trace!("pre_process_pipeline");
+        self.pre_process_pipeline(frame);
         log::trace!("pre_process");
         for processor in self.processors.iter_mut() {
             processor.pre_process(&mut self.injector, frame);
         }
-        log::trace!("plan");
-        let planner = self.injector.get_mut::<ExecutionPlanner>().unwrap();
-        if planner.should_rebuild() {
-            let plan = planner.plan();
-            self.rebuild_pipeline(plan);
-        }
+        self.plan();
         log::trace!("process_pipeline");
         self.process_pipeline(frame);
         log::trace!("process");
         for processor in self.processors.iter_mut() {
             processor.process(&self.injector, frame);
         }
+        log::trace!("post_process_pipeline");
+        self.post_process_pipeline(frame);
         log::trace!("post_process");
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
@@ -383,6 +409,8 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         self.read_states_into_view();
     }
 }
+
+impl<TClock: Clock> CoordinatorRuntime<TClock> {}
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new_project(&mut self) {
@@ -597,6 +625,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Beats(node) => pipeline.register_node(path, &node),
         Node::ProDjLinkClock(node) => pipeline.register_node(path, &node),
         Node::PioneerCdj(node) => pipeline.register_node(path, &node),
+        Node::NdiOutput(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }
@@ -623,6 +652,7 @@ mod tests {
                 path: path.clone(),
                 attached_executor: None,
             });
+        runner.plan();
 
         runner.process();
 

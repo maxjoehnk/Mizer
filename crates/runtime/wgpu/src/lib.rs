@@ -1,11 +1,13 @@
+use std::ops::Deref;
+
+pub use wgpu;
+
 pub use context::WgpuContext;
 pub use module::WgpuModule;
-pub use pipeline::WgpuPipeline;
-use std::ops::Deref;
+pub use pipeline::{BufferHandle, WgpuPipeline};
 pub use texture::*;
 pub use texture_source_stage::TextureSourceStage;
 pub use vertex::Vertex;
-pub use wgpu;
 
 mod context;
 mod module;

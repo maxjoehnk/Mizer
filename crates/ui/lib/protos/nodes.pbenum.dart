@@ -243,6 +243,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
       86, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRO_DJ_LINK_CLOCK');
   static const Node_NodeType PIONEER_CDJ = Node_NodeType._(
       87, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PIONEER_CDJ');
+  static const Node_NodeType NDI_OUTPUT = Node_NodeType._(
+      88, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NDI_OUTPUT');
   static const Node_NodeType CONTAINER = Node_NodeType._(
       100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONTAINER');
 
@@ -317,6 +319,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     BEATS,
     PRO_DJ_LINK_CLOCK,
     PIONEER_CDJ,
+    NDI_OUTPUT,
     CONTAINER,
   ];
 

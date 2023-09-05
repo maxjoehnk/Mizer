@@ -122,6 +122,7 @@ node_type_name! {
         Template,
         ProDjLinkClock,
         PioneerCdj,
+        NdiOutput,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

@@ -1,5 +1,8 @@
-use crate::{TextureView, WgpuContext};
+use std::ops::Deref;
+
 use dashmap::DashMap;
+
+use crate::{TextureView, WgpuContext};
 
 #[derive(Default, Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub struct TextureHandle(uuid::Uuid);
@@ -32,7 +35,9 @@ impl TextureRegistry {
             width,
             height,
             wgpu::TextureFormat::Bgra8UnormSrgb,
-            wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
+            wgpu::TextureUsages::RENDER_ATTACHMENT
+                | wgpu::TextureUsages::TEXTURE_BINDING
+                | wgpu::TextureUsages::COPY_SRC,
             label,
         );
         let handle = TextureHandle::new();
@@ -52,5 +57,14 @@ impl TextureRegistry {
 
     pub fn remove(&self, handle: TextureHandle) -> Option<()> {
         self.textures.remove(&handle).map(|_| ())
+    }
+
+    pub fn get_texture_ref<'a>(
+        &'a self,
+        handle: &'a TextureHandle,
+    ) -> Option<impl Deref<Target = wgpu::Texture> + 'a> {
+        let texture = self.textures.get(handle)?;
+
+        Some(texture)
     }
 }

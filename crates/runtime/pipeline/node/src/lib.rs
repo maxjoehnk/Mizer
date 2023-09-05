@@ -1,5 +1,8 @@
+use std::fmt::Debug;
+
 use downcast::*;
 
+pub use mizer_debug_ui::DebugUiDrawHandle;
 pub use mizer_injector::Injector;
 pub use mizer_ports::{Color, PortId, PortType};
 
@@ -10,8 +13,6 @@ pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
 pub use self::settings::*;
-pub use mizer_debug_ui::DebugUiDrawHandle;
-use std::fmt::Debug;
 
 mod context;
 mod path;
@@ -86,7 +87,23 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
         PipelineNode::details(self)
     }
 
+    fn pre_process(
+        &self,
+        context: &impl NodeContext,
+        state: &mut Self::State,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
+
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()>;
+
+    fn post_process(
+        &self,
+        context: &impl NodeContext,
+        state: &mut Self::State,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
 
     fn create_state(&self) -> Self::State;
 

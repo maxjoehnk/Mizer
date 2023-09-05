@@ -22,7 +22,17 @@ use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodeMetadata, NodePreviewState, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
+    fn pre_process(
+        &self,
+        context: &PipelineContext,
+        state: &mut Box<dyn Any>,
+    ) -> anyhow::Result<()>;
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
+    fn post_process(
+        &self,
+        context: &PipelineContext,
+        state: &mut Box<dyn Any>,
+    ) -> anyhow::Result<()>;
 
     fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Box<dyn Any>);
 
@@ -35,9 +45,33 @@ impl<T, S: 'static> ProcessingNodeExt for T
 where
     T: ProcessingNode<State = S>,
 {
+    fn pre_process(
+        &self,
+        context: &PipelineContext,
+        state: &mut Box<dyn Any>,
+    ) -> anyhow::Result<()> {
+        if let Some(state) = state.downcast_mut() {
+            self.pre_process(context, state)
+        } else {
+            unreachable!()
+        }
+    }
+
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()> {
         if let Some(state) = state.downcast_mut() {
             self.process(context, state)
+        } else {
+            unreachable!()
+        }
+    }
+
+    fn post_process(
+        &self,
+        context: &PipelineContext,
+        state: &mut Box<dyn Any>,
+    ) -> anyhow::Result<()> {
+        if let Some(state) = state.downcast_mut() {
+            self.post_process(context, state)
         } else {
             unreachable!()
         }
@@ -289,6 +323,19 @@ impl PipelineWorker {
         }
     }
 
+    pub fn pre_process<'a>(
+        &mut self,
+        mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
+        frame: ClockFrame,
+        injector: &Injector,
+        clock: &mut impl Clock,
+    ) {
+        profiling::scope!("PipelineWorker::pre_process");
+        self.check_node_receivers(&nodes);
+        self.order_nodes_by_dependencies(&mut nodes);
+        self.pre_process_nodes(&mut nodes, frame, injector, clock)
+    }
+
     pub fn process<'a>(
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
@@ -300,6 +347,19 @@ impl PipelineWorker {
         self.check_node_receivers(&nodes);
         self.order_nodes_by_dependencies(&mut nodes);
         self.process_nodes(&mut nodes, frame, injector, clock)
+    }
+
+    pub fn post_process<'a>(
+        &mut self,
+        mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
+        frame: ClockFrame,
+        injector: &Injector,
+        clock: &mut impl Clock,
+    ) {
+        profiling::scope!("PipelineWorker::post_process");
+        self.check_node_receivers(&nodes);
+        self.order_nodes_by_dependencies(&mut nodes);
+        self.post_process_nodes(&mut nodes, frame, injector, clock)
     }
 
     fn check_node_receivers(&mut self, nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)]) {
@@ -340,6 +400,27 @@ impl PipelineWorker {
         });
     }
 
+    fn pre_process_nodes(
+        &mut self,
+        nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
+        frame: ClockFrame,
+        injector: &Injector,
+        clock: &mut impl Clock,
+    ) {
+        profiling::scope!("PipelineWorker::pre_process_nodes");
+        let mut node_metadata = HashMap::default();
+        for (path, node) in nodes {
+            let (context, state) =
+                self.get_context(path, frame, injector, clock, &mut node_metadata);
+            let _scope = format!("{:?}Node::pre_process", node.node_type());
+            profiling::scope!(&_scope);
+            if let Err(e) = node.pre_process(&context, state) {
+                log::error!("pre processing of node {} failed: {:?}", &path, e)
+            }
+        }
+        self.node_metadata.set(node_metadata);
+    }
+
     fn process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
@@ -350,29 +431,64 @@ impl PipelineWorker {
         profiling::scope!("PipelineWorker::process_nodes");
         let mut node_metadata = HashMap::default();
         for (path, node) in nodes {
-            let context = PipelineContext {
-                frame,
-                injector,
-                preview: RefCell::new(
-                    self.previews
-                        .get_mut(path)
-                        .unwrap_or_else(|| panic!("Missing preview for {path}")),
-                ),
-                receivers: self.receivers.get(path),
-                senders: self.senders.get(path),
-                node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),
-                clock: RefCell::new(clock),
-            };
-            log::trace!("process_node {} with context {:?}", &path, &context);
-            let state = self.states.get_mut(path);
-            let state = state.unwrap();
-            let scope = format!("{:?}Node::process", node.node_type());
-            profiling::scope!(&scope);
+            let (context, state) =
+                self.get_context(path, frame, injector, clock, &mut node_metadata);
+            let _scope = format!("{:?}Node::process", node.node_type());
+            profiling::scope!(&_scope);
             if let Err(e) = node.process(&context, state) {
                 log::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
         self.node_metadata.set(node_metadata);
+    }
+
+    fn post_process_nodes(
+        &mut self,
+        nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
+        frame: ClockFrame,
+        injector: &Injector,
+        clock: &mut impl Clock,
+    ) {
+        profiling::scope!("PipelineWorker::post_process_nodes");
+        let mut node_metadata = HashMap::default();
+        for (path, node) in nodes {
+            let (context, state) =
+                self.get_context(path, frame, injector, clock, &mut node_metadata);
+            let _scope = format!("{:?}Node::post_process", node.node_type());
+            profiling::scope!(&_scope);
+            if let Err(e) = node.post_process(&context, state) {
+                log::error!("post processing of node {} failed: {:?}", &path, e)
+            }
+        }
+        self.node_metadata.set(node_metadata);
+    }
+
+    fn get_context<'a>(
+        &'a mut self,
+        path: &NodePath,
+        frame: ClockFrame,
+        injector: &'a Injector,
+        clock: &'a mut impl Clock,
+        node_metadata: &'a mut HashMap<NodePath, NodeMetadata>,
+    ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
+        let context = PipelineContext {
+            frame,
+            injector,
+            preview: RefCell::new(
+                self.previews
+                    .get_mut(path)
+                    .unwrap_or_else(|| panic!("Missing preview for {path}")),
+            ),
+            receivers: self.receivers.get(path),
+            senders: self.senders.get(path),
+            node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),
+            clock: RefCell::new(clock),
+        };
+        log::trace!("process_node {} with context {:?}", &path, &context);
+        let state = self.states.get_mut(path);
+        let state = state.unwrap();
+
+        (context, state)
     }
 
     pub fn debug_ui(
@@ -447,8 +563,9 @@ fn register_receiver(
 
 #[cfg(test)]
 mod tests {
-    use pinboard::NonEmptyPinboard;
     use std::sync::Arc;
+
+    use pinboard::NonEmptyPinboard;
     use test_case::test_case;
 
     use mizer_node::{NodeLink, NodePath, PortDirection, PortId, PortMetadata, PortType};

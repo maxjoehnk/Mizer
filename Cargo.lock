@@ -4593,6 +4593,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-ndi-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "image",
+ "mizer-node",
+ "mizer-wgpu",
+ "ndi",
+ "profiling",
+ "serde",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-node"
 version = "0.1.0"
 dependencies = [
@@ -4650,6 +4665,7 @@ dependencies = [
  "mizer-math-nodes",
  "mizer-midi-nodes",
  "mizer-mqtt-nodes",
+ "mizer-ndi-nodes",
  "mizer-node",
  "mizer-opc-nodes",
  "mizer-osc-nodes",
@@ -5334,9 +5350,12 @@ dependencies = [
  "image",
  "log",
  "mizer-module",
+ "parking_lot",
  "profiling",
  "raw-window-handle",
+ "tracing",
  "uuid 1.4.0",
+ "weak-table",
  "wgpu",
  "winit",
 ]
@@ -5577,6 +5596,12 @@ dependencies = [
  "tar",
  "yaml-rust",
 ]
+
+[[package]]
+name = "ndi"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0561be8b8e69176572143be0c30c6c25a3bb93a026d501d53ec884fdc0f3988d"
 
 [[package]]
 name = "ndk"
@@ -9243,6 +9268,12 @@ dependencies = [
  "lazy_static",
  "pkg-config",
 ]
+
+[[package]]
+name = "weak-table"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "323f4da9523e9a669e1eaf9c6e763892769b1d38c623913647bfdc1532fe4549"
 
 [[package]]
 name = "web-sys"

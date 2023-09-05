@@ -214,6 +214,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::Beats => node::NodeType::Beats,
             NodeType::ProDjLinkClock => node::NodeType::ProDjLinkClock,
             NodeType::PioneerCdj => node::NodeType::PioneerCdj,
+            NodeType::NdiOutput => node::NodeType::NdiOutput,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -293,6 +294,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::Beats => NodeType::Beats,
             node::NodeType::ProDjLinkClock => NodeType::ProDjLinkClock,
             node::NodeType::PioneerCdj => NodeType::PioneerCdj,
+            node::NodeType::NdiOutput => NodeType::NdiOutput,
         }
     }
 }

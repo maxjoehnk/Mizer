@@ -153,6 +153,7 @@ message Node {
     BEATS = 85;
     PRO_DJ_LINK_CLOCK = 86;
     PIONEER_CDJ = 87;
+    NDI_OUTPUT = 88;
     CONTAINER = 100;
   }
 

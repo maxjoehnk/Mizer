@@ -22,6 +22,7 @@ pub use mizer_midi_nodes::{
     MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode,
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
+pub use mizer_ndi_nodes::NdiOutputNode;
 use mizer_node::{ConfigurableNode, Injector, NodeDetails, NodeSetting, NodeType, PipelineNode};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
@@ -216,4 +217,5 @@ node_impl! {
     ProDjLinkClock(ProDjLinkClockNode),
     PioneerCdj(PioneerCdjNode),
     Template(TemplateNode),
+    NdiOutput(NdiOutputNode),
 }

@@ -1,8 +1,9 @@
-use crate::utils::add_node;
 use mizer_clock::Clock;
 use mizer_module::Runtime;
 use mizer_node::NodeType;
 use mizer_runtime::*;
+
+use crate::utils::add_node;
 
 mod utils;
 
@@ -18,6 +19,7 @@ fn main() {
         sink.clone(),
         "Value",
     );
+    runtime.plan();
 
     run_for_one_second(runtime);
 

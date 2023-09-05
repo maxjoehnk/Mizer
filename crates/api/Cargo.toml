@@ -46,5 +46,5 @@ tonic = "0.9"
 tokio = "1.32"
 
 [build-dependencies]
-tonic-build = "0.9"
+tonic-build = "0.10"
 

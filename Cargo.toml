@@ -178,3 +178,7 @@ lto = true
 
 [target.'cfg(target_os = "macos")'.dependencies]
 oslog = "0.2"
+
+[patch.crates-io]
+avahi-sys = { git = "https://github.com/maxjoehnk/avahi-sys.git", branch = "update-bindgen-0.64" }
+nokhwa = { git = "https://github.com/l1npengtul/nokhwa.git", rev = "3be9227" }

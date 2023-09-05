@@ -433,10 +433,9 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 [[package]]
 name = "avahi-sys"
 version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f792866e533338be173a9dd8b3510591c69ed43998eb0829890486d4bbd39cf"
+source = "git+https://github.com/maxjoehnk/avahi-sys.git?branch=update-bindgen-0.64#2ee675a2ff7c756195bd17e0b0547a3918a50136"
 dependencies = [
- "bindgen 0.55.1",
+ "bindgen 0.64.0",
  "libc",
 ]
 
@@ -572,49 +571,6 @@ dependencies = [
 
 [[package]]
 name = "bindgen"
-version = "0.56.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2da379dbebc0b76ef63ca68d8fc6e71c0f13e59432e0987e508c1820e6ab5239"
-dependencies = [
- "bitflags 1.3.2",
- "cexpr 0.4.0",
- "clang-sys",
- "clap 2.34.0",
- "env_logger 0.8.4",
- "lazy_static",
- "lazycell",
- "log",
- "peeking_take_while",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash",
- "shlex 0.1.1",
- "which 3.1.1",
-]
-
-[[package]]
-name = "bindgen"
-version = "0.61.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a022e58a142a46fea340d68012b9201c094e93ec3d033a944a24f8fd4a4f09a"
-dependencies = [
- "bitflags 1.3.2",
- "cexpr 0.6.0",
- "clang-sys",
- "lazy_static",
- "lazycell",
- "peeking_take_while",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash",
- "shlex 1.1.0",
- "syn 1.0.103",
-]
-
-[[package]]
-name = "bindgen"
 version = "0.64.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c4243e6031260db77ede97ad86c27e501d646a27ab57b59a574f725d98ab1fb4"
@@ -624,6 +580,7 @@ dependencies = [
  "clang-sys",
  "lazy_static",
  "lazycell",
+ "log",
  "peeking_take_while",
  "proc-macro2",
  "quote",
@@ -631,6 +588,30 @@ dependencies = [
  "rustc-hash",
  "shlex 1.1.0",
  "syn 1.0.103",
+ "which 4.2.2",
+]
+
+[[package]]
+name = "bindgen"
+version = "0.65.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfdf7b466f9a4903edc73f95d6d2bcd5baf8ae620638762244d3f60143643cc5"
+dependencies = [
+ "bitflags 1.3.2",
+ "cexpr 0.6.0",
+ "clang-sys",
+ "lazy_static",
+ "lazycell",
+ "log",
+ "peeking_take_while",
+ "prettyplease 0.2.12",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash",
+ "shlex 1.1.0",
+ "syn 2.0.25",
+ "which 4.2.2",
 ]
 
 [[package]]
@@ -1359,11 +1340,11 @@ dependencies = [
 
 [[package]]
 name = "coreaudio-sys"
-version = "0.2.11"
+version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a9444b94b8024feecc29e01a9706c69c1e26bfee480221c90764200cfd778fb"
+checksum = "f034b2258e6c4ade2f73bf87b21047567fb913ee9550837c2316d139b0262b24"
 dependencies = [
- "bindgen 0.61.0",
+ "bindgen 0.64.0",
 ]
 
 [[package]]
@@ -5750,8 +5731,7 @@ checksum = "2bf50223579dc7cdcfb3bfcacf7069ff68243f8c363f62ffa99cf000a6b9c451"
 [[package]]
 name = "nokhwa"
 version = "0.10.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc4ae290027ab0d22e1405d304603e41edfaee597a81ce09cf751785b44c32a9"
+source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
 dependencies = [
  "flume 0.10.9",
  "image",
@@ -5766,8 +5746,7 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-linux"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "448db09af68e12168b6311423409f679d2da6e75fb158b2d75de2f5d6dc460ca"
+source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
 dependencies = [
  "nokhwa-core",
  "v4l",
@@ -5777,8 +5756,7 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-macos"
 version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "739d58859fd2b958f01c25de9a0fbb686be7271e5ef3624150e2be85a627b38a"
+source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
 dependencies = [
  "block",
  "cocoa-foundation",
@@ -5793,8 +5771,7 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-windows"
 version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a9b9bae36d0ce413568cefb94c43748e80f9ae97aa0a9e2d8e18f0275a909746"
+source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
 dependencies = [
  "nokhwa-core",
  "once_cell",
@@ -5803,9 +5780,8 @@ dependencies = [
 
 [[package]]
 name = "nokhwa-core"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cb9b0e58413cb1b6d041d802be0e921368f3c72525b7ea720089c8aa140d6d49"
+version = "0.1.1"
+source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
 dependencies = [
  "bytes 1.4.0",
  "image",
@@ -8999,9 +8975,9 @@ dependencies = [
 
 [[package]]
 name = "v4l"
-version = "0.13.1"
+version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd9946a2fda19c7a729dc72e28b9fd9c653e9b7de954ffe3aecaf51977f88762"
+checksum = "d8fbfea44a46799d62c55323f3c55d06df722fbe577851d848d328a1041c3403"
 dependencies = [
  "bitflags 1.3.2",
  "libc",
@@ -9010,11 +8986,11 @@ dependencies = [
 
 [[package]]
 name = "v4l2-sys-mit"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e0c932c06df4af1dfb229f604214f2a87993784596ff33ffdadcba1b5519254e"
+checksum = "6779878362b9bacadc7893eac76abe69612e8837ef746573c4a5239daf11990b"
 dependencies = [
- "bindgen 0.56.0",
+ "bindgen 0.65.1",
 ]
 
 [[package]]

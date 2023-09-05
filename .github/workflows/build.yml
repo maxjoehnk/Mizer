@@ -98,7 +98,7 @@ jobs:
             yasm
 
       - uses: taiki-e/install-action@protoc
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - uses: actions-rs/toolchain@v1
@@ -135,7 +135,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y flatpak flatpak-builder
           flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Fetch artifact
@@ -155,7 +155,7 @@ jobs:
     steps:
       - name: Install build dependencies
         run: brew install protobuf ffmpeg pkg-config yasm
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - uses: actions-rs/toolchain@v1
@@ -181,7 +181,7 @@ jobs:
       - name: Install build dependencies
         run: choco install protoc make wget yasm ffmpeg
         shell: bash
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - uses: actions-rs/toolchain@v1
@@ -204,7 +204,7 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -239,7 +239,7 @@ jobs:
   build-android-remote:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - uses: subosito/flutter-action@v2

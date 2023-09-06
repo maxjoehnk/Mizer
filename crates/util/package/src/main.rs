@@ -1,6 +1,7 @@
-use mizer_settings::Settings;
 use std::fs;
 use std::path::{Path, PathBuf};
+
+use mizer_settings::Settings;
 
 #[cfg(target_os = "linux")]
 fn main() -> anyhow::Result<()> {
@@ -12,6 +13,7 @@ fn main() -> anyhow::Result<()> {
     artifact.link("lib")?;
     #[cfg(feature = "ui")]
     artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
+    artifact.link_to("deps/libndi.so.4", "lib/libndi.so.4")?;
     artifact.link_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",

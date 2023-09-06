@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use anyhow::Context;
 use directories_next::ProjectDirs;
 use rolling_file::{BasicRollingFileAppender, RollingConditionBasic, RollingFileAppender};
 use tracing::Level;
@@ -19,28 +20,38 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
         .with_filter(EnvFilter::from_default_env())
         .boxed();
 
-    let (file_appender, guard) = NonBlocking::new(file_target()?);
-    let file_layer = tracing_subscriber::fmt::layer()
-        .with_thread_names(true)
-        .with_target(true)
-        .with_level(true)
-        .with_file(false)
-        .with_line_number(false)
-        .json()
-        .with_writer(file_appender)
-        .with_filter(LevelFilter::from_level(Level::DEBUG))
-        .boxed();
-
-    tracing_subscriber::registry()
+    let mut registry = tracing_subscriber::registry()
         .with(stdout_layer)
-        .with(sentry_tracing::layer())
-        .with(file_layer)
-        .try_init()?;
+        .with(sentry_tracing::layer());
 
-    Ok(LoggingGuard(guard))
+    let mut logging_guard = None;
+
+    if let Ok(file_target) = file_target() {
+        let (file_appender, guard) = NonBlocking::new(file_target);
+        logging_guard = Some(guard);
+        let file_layer = tracing_subscriber::fmt::layer()
+            .with_thread_names(true)
+            .with_target(true)
+            .with_level(true)
+            .with_file(false)
+            .with_line_number(false)
+            .json()
+            .with_writer(file_appender)
+            .with_filter(LevelFilter::from_level(Level::DEBUG))
+            .boxed();
+
+        registry
+            .with(file_layer)
+            .try_init()
+            .context("Initializing logger")?;
+    } else {
+        registry.try_init().context("Initializing logger")?;
+    }
+
+    Ok(LoggingGuard(logging_guard))
 }
 
-pub struct LoggingGuard(WorkerGuard);
+pub struct LoggingGuard(Option<WorkerGuard>);
 
 #[cfg(target_os = "macos")]
 pub fn init() -> anyhow::Result<()> {
@@ -66,7 +77,8 @@ fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
             .daily()
             .max_size(1024 * 1024 * 10),
         4,
-    )?;
+    )
+    .context("Creating log file appender")?;
 
     Ok(file_appender)
 }

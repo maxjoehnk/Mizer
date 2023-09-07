@@ -111,8 +111,10 @@ jobs:
         with:
           channel: stable
       - uses: Swatinem/rust-cache@v2
+      - name: Remove ndi libs from cache
+        run: rm -rf target/debug/deps/libndi* target/debug/build/ndi-*
       - name: Remove linked flutter libs from cache
-        run: rm -rf target/debug/lib
+        run: rm -rf target/debug/lib target/debug/deps/libflutter_linux_gtk.so
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: crates/ui
@@ -125,13 +127,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features
       - uses: taiki-e/install-action@nextest
-      - name: Log deps folder
-        run: ls target/debug/deps | grep libndi
       - name: Tests
         run: make test
-        continue-on-error: true
-      - name: Log deps folder
-        run: ls target/debug/deps | grep libndi
   test-android:
     runs-on: ubuntu-latest
     if: false

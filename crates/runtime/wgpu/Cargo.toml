@@ -8,7 +8,7 @@ edition = "2021"
 wgpu = { version = "0.16", features = ["trace"] }
 anyhow = "1"
 winit = "0.28"
-bytemuck = { version = "1.13", features = ["derive"] }
+bytemuck = { version = "1.14", features = ["derive"] }
 raw-window-handle = "0.5"
 log = "0.4"
 tracing = "0.1"

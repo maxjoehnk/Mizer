@@ -15,6 +15,6 @@ mizer-wgpu = { path = "../../../wgpu" }
 image = "0.24"
 ffmpeg-the-third = "1.2"
 profiling = "1"
-bytemuck = "1.13"
+bytemuck = "1.14"
 cgmath = "0.18"
 mizer-media = { path = "../../../../components/media" }

@@ -108,6 +108,10 @@ jobs:
         with:
           channel: stable
       - uses: Swatinem/rust-cache@v2
+      - name: Remove ndi libs from cache
+        run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
+      - name: Remove linked flutter libs from cache
+        run: rm -rf target/release/lib target/release/deps/libflutter_linux_gtk.so
       - name: Build Headless
         run: make build-headless
       - uses: actions/upload-artifact@v3

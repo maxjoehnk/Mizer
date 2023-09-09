@@ -1,8 +1,10 @@
 FROM rust:1.72 as build
 
+ARG FLUTTER_VERSION=3.13.2-stable
+
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV PATH=$PATH:/flutter/bin
+ENV PATH=$PATH:/flutter/bin:/.cargo/bin
 
 RUN git config --global --add safe.directory /flutter
 
@@ -53,11 +55,11 @@ RUN apt-get update && \
 ADD https://github.com/protocolbuffers/protobuf/releases/download/v23.4/protoc-23.4-linux-x86_64.zip /tmp/protoc.zip
 RUN unzip /tmp/protoc.zip -d /usr/local
 
-RUN cargo install cbindgen
+RUN cargo install cbindgen && cargo install nextest
 
-ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.11-stable.tar.xz /
+ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$FLUTTER_VERSION.tar.xz /
 
-RUN tar -xvf flutter_linux_3.7.11-stable.tar.xz && /flutter/bin/flutter precache && /flutter/bin/flutter config --enable-linux-desktop && dart pub global activate ffigen
+RUN tar -xvf flutter_linux_$FLUTTER_VERSION.tar.xz && /flutter/bin/flutter precache && /flutter/bin/flutter config --enable-linux-desktop && dart pub global activate ffigen
 
 WORKDIR /
 

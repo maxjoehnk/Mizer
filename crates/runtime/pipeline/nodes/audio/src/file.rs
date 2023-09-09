@@ -17,6 +17,8 @@ use symphonia::core::io::MediaSourceStream;
 use symphonia::core::probe::Hint;
 use symphonia::default;
 
+use mizer_media::documents::MediaId;
+use mizer_media::MediaServer;
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
@@ -29,10 +31,12 @@ const TIMECODE_OUTPUT: &str = "Timecode";
 const AUDIO_OUTPUT: &str = "Stereo";
 
 const PLAYBACK_MODE_SETTING: &str = "Playback Mode";
+const FILE_SETTING: &str = "File";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct AudioFileNode {
-    pub path: PathBuf,
+    #[serde(alias = "path")]
+    pub file: String,
     pub playback_mode: PlaybackMode,
 }
 
@@ -68,11 +72,15 @@ impl Display for PlaybackMode {
 
 impl ConfigurableNode for AudioFileNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(enum PLAYBACK_MODE_SETTING, self.playback_mode)]
+        vec![
+            setting!(enum PLAYBACK_MODE_SETTING, self.playback_mode),
+            setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Audio]),
+        ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(enum setting, PLAYBACK_MODE_SETTING, self.playback_mode);
+        update!(media setting, FILE_SETTING, self.file);
 
         update_fallback!(setting)
     }
@@ -110,26 +118,40 @@ impl ProcessingNode for AudioFileNode {
         context: &impl NodeContext,
         (node_state, decode_state): &mut Self::State,
     ) -> anyhow::Result<()> {
+        let media_server = context.inject::<MediaServer>().unwrap();
         if let Some(value) = context.read_port(PLAYBACK_INPUT) {
             if let Some(paused) = node_state.paused_edge.update(value) {
                 node_state.paused = paused;
             }
         }
-        if !self.path.exists() {
+        if self.file.is_empty() {
+            return Ok(());
+        }
+
+        let media_id = MediaId::try_from(self.file.clone())?;
+        let media_file = media_server.get_media_file(media_id);
+        if media_file.is_none() {
+            return Ok(());
+        }
+
+        let media_file = media_file.unwrap();
+        let path = media_file.file_path;
+
+        if !path.exists() {
             tracing::debug!(
                 "Skipping processing of AudioFileNode. Path {:?} does not exist",
-                self.path
+                path
             );
 
             return Ok(());
         }
         if decode_state
             .as_ref()
-            .and_then(|s| s.is_file(&self.path).then_some(()))
+            .and_then(|s| s.is_file(&path).then_some(()))
             .is_none()
         {
-            let audio_state = AudioFileDecodeState::new(self.path.clone())
-                .context(format!("Opening AudioFileNodeState for {:?}", &self.path))?;
+            let audio_state = AudioFileDecodeState::new(path.clone())
+                .context(format!("Opening AudioFileNodeState for {:?}", &path))?;
             *decode_state = Some(audio_state);
         }
 

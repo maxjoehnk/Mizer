@@ -4118,6 +4118,7 @@ dependencies = [
  "anyhow",
  "cpal",
  "enum-iterator",
+ "mizer-media",
  "mizer-node",
  "num_enum 0.7.0",
  "rb",

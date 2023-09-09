@@ -14,3 +14,4 @@ serde = { version = "1", features = ["derive"] }
 rb = "0.4"
 enum-iterator = "1.4"
 num_enum = "0.7"
+mizer-media = { path = "../../../../components/media" }

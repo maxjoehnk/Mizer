@@ -7016,14 +7016,15 @@ dependencies = [
 
 [[package]]
 name = "rhai"
-version = "1.15.0"
+version = "1.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "778dd6094c66d4e31cd7b28533aa38af6379e8bbc4fe7aedcb3ed83aa6dc315a"
+checksum = "896e97ee277f7874f5737d02961357688b471e8fabe823f81f7f410d008e4138"
 dependencies = [
  "ahash 0.8.2",
- "bitflags 1.3.2",
+ "bitflags 2.3.0",
  "instant",
  "num-traits",
+ "once_cell",
  "rhai_codegen",
  "smallvec",
  "smartstring",

@@ -13,9 +13,9 @@ import 'package:mizer/widgets/tile.dart';
 
 import 'field.dart';
 
-const double MAX_DIALOG_WIDTH = 512;
+const double MAX_DIALOG_WIDTH = 1280;
 const double MAX_DIALOG_HEIGHT = 512;
-const double TILE_SIZE = 96;
+const double TILE_SIZE = 128;
 
 class MediaField extends StatefulWidget {
   final String label;
@@ -79,8 +79,9 @@ class _MediaFieldState extends State<MediaField> {
 
   Future<void> _selectMedia(BuildContext context) async {
     var bloc = context.read<MediaBloc>();
+    var files = bloc.state.files.where((element) => widget.value.allowedTypes.contains(element.type)).toList();
     MediaFile? result = await showDialog(
-        context: context, builder: (context) => MediaDialog(mediaFiles: bloc.state));
+        context: context, builder: (context) => MediaDialog(mediaFiles: files));
     if (result == null) {
       return;
     }
@@ -89,7 +90,7 @@ class _MediaFieldState extends State<MediaField> {
 }
 
 class MediaDialog extends StatelessWidget {
-  final MediaFiles mediaFiles;
+  final List<MediaFile> mediaFiles;
 
   const MediaDialog({required this.mediaFiles, super.key});
 
@@ -106,11 +107,11 @@ class MediaDialog extends StatelessWidget {
             crossAxisSpacing: 4,
             mainAxisSpacing: 4,
           ),
-          itemCount: mediaFiles.files.length,
+          itemCount: mediaFiles.length,
           itemBuilder: (context, index) {
-            MediaFile file = mediaFiles.files[index];
+            MediaFile file = mediaFiles[index];
             return Tile(
-              child: MediaThumbnail(file),
+              child: file.type == MediaType.AUDIO ? AudioTile(file: file) : MediaTile(file: file),
               onClick: () {
                 Navigator.of(context).pop(file);
               },
@@ -121,3 +122,43 @@ class MediaDialog extends StatelessWidget {
     );
   }
 }
+
+class AudioTile extends StatelessWidget {
+  final MediaFile file;
+
+  const AudioTile({required this.file, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Flexible(
+        flex: 2,
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          margin: const EdgeInsets.all(4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: MediaThumbnail(file)
+        ),
+      ),
+      Flexible(flex: 1, child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Text(file.name),
+      )),
+    ]);
+  }
+}
+
+class MediaTile extends StatelessWidget {
+  final MediaFile file;
+
+  const MediaTile({required this.file, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaThumbnail(file);
+  }
+}
+
+

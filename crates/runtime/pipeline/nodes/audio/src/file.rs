@@ -1,12 +1,17 @@
 use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
 use std::thread;
 use std::thread::JoinHandle;
 
 use anyhow::Context;
+use dasp::frame::Stereo;
+use dasp::interpolate::sinc::Sinc;
+use dasp::ring_buffer::Fixed;
+use dasp::signal::equilibrium;
+use dasp::{Frame, Signal};
 use enum_iterator::Sequence;
+use flume::{bounded, Receiver, Sender};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 use symphonia::core::audio::SampleBuffer;
@@ -22,9 +27,10 @@ use mizer_media::MediaServer;
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
-use crate::BUFFER_SIZE;
+use crate::{AudioContextExt, SAMPLE_RATE};
 
 const PLAYBACK_INPUT: &str = "Playback";
+const PAUSE_INPUT: &str = "Pause";
 const PLAYBACK_OUTPUT: &str = "Playback";
 const TIMECODE_INPUT: &str = "Timecode";
 const TIMECODE_OUTPUT: &str = "Timecode";
@@ -57,7 +63,6 @@ pub enum PlaybackMode {
     #[default]
     OneShot,
     Loop,
-    PingPong,
 }
 
 impl Display for PlaybackMode {
@@ -65,7 +70,6 @@ impl Display for PlaybackMode {
         match self {
             Self::OneShot => write!(f, "One Shot"),
             Self::Loop => write!(f, "Loop"),
-            Self::PingPong => write!(f, "Ping Pong"),
         }
     }
 }
@@ -98,6 +102,7 @@ impl PipelineNode for AudioFileNode {
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(PLAYBACK_INPUT, PortType::Single),
+            input_port!(PAUSE_INPUT, PortType::Single),
             input_port!(TIMECODE_INPUT, PortType::Clock),
             output_port!(PLAYBACK_OUTPUT, PortType::Single),
             output_port!(TIMECODE_OUTPUT, PortType::Clock),
@@ -119,10 +124,18 @@ impl ProcessingNode for AudioFileNode {
         (node_state, decode_state): &mut Self::State,
     ) -> anyhow::Result<()> {
         let media_server = context.inject::<MediaServer>().unwrap();
-        if let Some(value) = context.read_port(PLAYBACK_INPUT) {
+        if let Some(value) = context.read_port(PAUSE_INPUT) {
             if let Some(paused) = node_state.paused_edge.update(value) {
                 node_state.paused = paused;
             }
+        }
+        let mut playback_changed = false;
+        if let Some(value) = context.read_port::<_, f64>(PLAYBACK_INPUT) {
+            let playback = value - f64::EPSILON > 0.0;
+            if playback != node_state.playing {
+                playback_changed = true;
+            }
+            node_state.playing = playback;
         }
         if self.file.is_empty() {
             return Ok(());
@@ -150,20 +163,55 @@ impl ProcessingNode for AudioFileNode {
             .and_then(|s| s.is_file(&path).then_some(()))
             .is_none()
         {
+            tracing::debug!("Opening new decoder for {path:?}");
             let audio_state = AudioFileDecodeState::new(path.clone())
-                .context(format!("Opening AudioFileNodeState for {:?}", &path))?;
+                .context(format!("Opening AudioFileDecodeState for {:?}", &path))?;
             *decode_state = Some(audio_state);
         }
 
-        if node_state.paused {
-            context.write_port::<_, Vec<f64>>(AUDIO_OUTPUT, vec![0.; BUFFER_SIZE]);
+        let playback_value = if node_state.paused {
+            context.output_signal(AUDIO_OUTPUT, equilibrium());
+            0.5
         } else if let Some(state) = decode_state.as_mut() {
-            let frames = state.read();
+            match state.recv.try_recv() {
+                Ok(mut player) => {
+                    tracing::debug!("Received decoded file {path:?} from decoding thread");
+                    if node_state.playing {
+                        player.play();
+                    }
+                    state.player = Some(player)
+                }
+                Err(_) => {}
+            }
+            if let Some(player) = state.player.as_mut() {
+                player.playback_mode = self.playback_mode;
+                let sample_rate = player.sample_rate;
+                if playback_changed {
+                    if node_state.playing {
+                        player.play();
+                    } else {
+                        player.stop();
+                    }
+                }
+                let signal = player.by_ref();
+                let ring_buffer = Fixed::from([[0.0; 2]; 100]);
+                let sinc = Sinc::new(ring_buffer);
+                let signal = signal.from_hz_to_hz(sinc, sample_rate as f64, SAMPLE_RATE as f64);
 
-            context.write_port::<_, Vec<f64>>(AUDIO_OUTPUT, frames);
-        }
+                context.output_signal(AUDIO_OUTPUT, signal);
+                if player.next.is_some() {
+                    1.0
+                } else {
+                    0.0
+                }
+            } else {
+                0.0
+            }
+        } else {
+            0.0
+        };
 
-        context.write_port::<_, f64>(PLAYBACK_OUTPUT, if node_state.paused { 0f64 } else { 1f64 });
+        context.write_port::<_, f64>(PLAYBACK_OUTPUT, playback_value);
 
         Ok(())
     }
@@ -176,53 +224,107 @@ impl ProcessingNode for AudioFileNode {
 pub struct AudioFileNodeState {
     paused: bool,
     paused_edge: Edge,
+    playing: bool,
 }
 
 impl Default for AudioFileNodeState {
     fn default() -> Self {
         Self {
-            paused: true,
+            paused: false,
             paused_edge: Default::default(),
+            playing: false,
         }
     }
 }
 
 pub struct AudioFileDecodeState {
     path: PathBuf,
+    player: Option<DecodedFile>,
+    recv: Receiver<DecodedFile>,
     thread_handle: JoinHandle<anyhow::Result<()>>,
-    buffer: Arc<Mutex<Vec<f64>>>,
+}
+
+struct DecodedFile {
+    samples: Vec<f64>,
     offset: usize,
+    sample_rate: u32,
+    next: Option<Stereo<f64>>,
+    playback_mode: PlaybackMode,
+}
+
+impl Signal for DecodedFile {
+    type Frame = Stereo<f64>;
+
+    fn next(&mut self) -> Self::Frame {
+        match self.next {
+            Some(frame) => {
+                self.get_next_frame();
+                frame
+            }
+            None => Stereo::<f64>::EQUILIBRIUM,
+        }
+    }
+}
+
+impl DecodedFile {
+    fn new(samples: Vec<f64>, sample_rate: u32) -> Self {
+        Self {
+            sample_rate,
+            samples,
+            offset: 0,
+            next: None,
+            playback_mode: PlaybackMode::OneShot,
+        }
+    }
+
+    fn seek_to(&mut self, offset: usize) {
+        self.offset = offset;
+        self.get_next_frame();
+    }
+
+    fn get_next_frame(&mut self) {
+        tracing::trace!("get_next_frame");
+        if self.offset + 2 > self.samples.len() {
+            match self.playback_mode {
+                PlaybackMode::Loop => self.seek_to(0),
+                PlaybackMode::OneShot => {
+                    self.next = None;
+                }
+            }
+        } else {
+            let frame = [self.samples[self.offset], self.samples[self.offset + 1]];
+            self.next = Some(frame);
+            self.offset += 2;
+        }
+    }
+
+    fn stop(&mut self) {
+        tracing::debug!("Stopping playback");
+        self.offset = 0;
+        self.next = None;
+    }
+
+    fn play(&mut self) {
+        tracing::debug!("Starting playback");
+        self.get_next_frame();
+    }
 }
 
 impl AudioFileDecodeState {
     #[tracing::instrument]
     fn new(path: PathBuf) -> anyhow::Result<Self> {
-        let (buffer, thread_handle) = AudioDecodeThread::spawn(path.clone())?;
+        let (recv, thread_handle) = AudioDecodeThread::spawn(path.clone())?;
 
         Ok(Self {
             path,
+            recv,
+            player: None,
             thread_handle,
-            buffer,
-            offset: 0,
         })
     }
 
     pub(crate) fn is_file(&self, path: &Path) -> bool {
         self.path == path
-    }
-
-    fn read(&mut self) -> Vec<f64> {
-        let min = self.offset;
-        let max = self.offset + BUFFER_SIZE;
-
-        let buffer = self.buffer.lock().unwrap();
-        if max > buffer.len() {
-            return vec![0.; BUFFER_SIZE];
-        }
-        let buffer = buffer[min..max].to_vec();
-        self.offset += BUFFER_SIZE;
-
-        buffer
     }
 }
 
@@ -231,13 +333,13 @@ struct AudioDecodeThread {
     format: Box<dyn FormatReader>,
     decoder: Box<dyn Decoder>,
     track_id: u32,
-    buffer: Arc<Mutex<Vec<f64>>>,
+    send: Sender<DecodedFile>,
 }
 
 impl AudioDecodeThread {
     fn spawn(
         path: PathBuf,
-    ) -> anyhow::Result<(Arc<Mutex<Vec<f64>>>, JoinHandle<anyhow::Result<()>>)> {
+    ) -> anyhow::Result<(Receiver<DecodedFile>, JoinHandle<anyhow::Result<()>>)> {
         let codecs = default::get_codecs();
         let probe = default::get_probe();
         let file = File::open(&path)?;
@@ -265,10 +367,15 @@ impl AudioDecodeThread {
 
         let decoder = codecs.make(&track.codec_params, &decoder_options)?;
 
-        let buffer = Arc::new(Mutex::new(Default::default()));
+        tracing::debug!(
+            "Got metadata for audio file sample_rate = {:?}",
+            track.codec_params.sample_rate
+        );
+
+        let (send, recv) = bounded(1);
 
         let decoder_thread = Self {
-            buffer: Arc::clone(&buffer),
+            send,
             track_id,
             format,
             decoder,
@@ -277,15 +384,30 @@ impl AudioDecodeThread {
 
         let thread_handle = thread::spawn(move || decoder_thread.decode());
 
-        Ok((buffer, thread_handle))
+        Ok((recv, thread_handle))
     }
 
+    #[tracing::instrument(skip(self))]
     fn decode(mut self) -> anyhow::Result<()> {
+        tracing::debug!("Decoding file {:?}", self.path);
+        let sample_rate = self.decoder.codec_params().sample_rate.unwrap_or(44_100);
+        let mut buffer = Vec::new();
         loop {
             let packet = match self.format.next_packet() {
                 Ok(packet) => packet,
+                Err(Error::IoError(err))
+                    if err.kind() == std::io::ErrorKind::UnexpectedEof
+                        && err.to_string() == "end of stream" =>
+                {
+                    tracing::debug!("Successfully decoded file");
+                    self.send.send(DecodedFile::new(buffer, sample_rate))?;
+                    return Ok(());
+                }
                 Err(Error::ResetRequired) => todo!(),
-                Err(err) => return Err(err.into()),
+                Err(err) => {
+                    tracing::error!("Error acquiring next packet: {err:?}");
+                    return Err(err.into());
+                }
             };
 
             while !self.format.metadata().is_latest() {
@@ -298,17 +420,21 @@ impl AudioDecodeThread {
 
             match self.decoder.decode(&packet) {
                 Ok(decoded) => {
+                    if decoded.frames() == 0 {
+                        tracing::debug!("No frames left");
+                    }
                     let mut target_buffer =
                         SampleBuffer::new(decoded.frames() as u64, *decoded.spec());
                     target_buffer.copy_interleaved_ref(decoded);
 
-                    let mut buffer = self.buffer.lock().unwrap();
                     buffer.extend_from_slice(target_buffer.samples());
                 }
                 Err(Error::IoError(err))
                     if err.kind() == std::io::ErrorKind::UnexpectedEof
                         && err.to_string() == "end of stream" =>
                 {
+                    tracing::debug!("Successfully decoded file");
+                    self.send.send(DecodedFile::new(buffer, sample_rate))?;
                     return Ok(());
                 }
                 Err(Error::IoError(err)) => {
@@ -317,7 +443,10 @@ impl AudioDecodeThread {
                 Err(Error::DecodeError(err)) => {
                     tracing::error!(error = %err, "Decode Error while decoding next packet for {:?}", &self.path);
                 }
-                Err(err) => return Err(err.into()),
+                Err(err) => {
+                    tracing::error!(error = %err, "Error while decoding next packet for {:?}", &self.path);
+                    return Err(err.into());
+                }
             }
         }
     }

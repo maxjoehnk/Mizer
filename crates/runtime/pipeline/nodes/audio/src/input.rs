@@ -4,7 +4,7 @@ use cpal::{Device, SampleFormat, SampleRate, Stream};
 use rb::{RbConsumer, RbProducer, SpscRb, RB};
 use serde::{Deserialize, Serialize};
 
-use crate::{BUFFER_SIZE, SAMPLE_RATE};
+use crate::{SAMPLE_RATE, TRANSFER_SIZE};
 use mizer_node::*;
 
 const AUDIO_OUTPUT: &str = "Stereo";
@@ -63,7 +63,7 @@ impl AudioInputNodeState {
     fn new() -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio input device");
         if let Some(device) = cpal::default_host().default_input_device() {
-            let buffer = SpscRb::new(BUFFER_SIZE * 2);
+            let buffer = SpscRb::new(TRANSFER_SIZE * 2);
 
             let config = device.supported_input_configs()?;
             let configs = config.collect::<Vec<_>>();
@@ -110,7 +110,7 @@ impl AudioInputNodeState {
     }
 
     fn read(&mut self) -> anyhow::Result<Vec<f64>> {
-        let mut buffer = vec![0.; BUFFER_SIZE];
+        let mut buffer = vec![0.; TRANSFER_SIZE];
         let count = self
             .buffer
             .consumer()

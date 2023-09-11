@@ -1,3 +1,6 @@
+use crate::AudioContextExt;
+use dasp::frame::Stereo;
+use dasp::Signal;
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
@@ -36,11 +39,8 @@ impl ProcessingNode for AudioVolumeNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(volume) = context.read_port::<_, f64>(VOLUME_INPUT) {
-            if let Some(buffer) = context.read_port::<_, Vec<f64>>(AUDIO_INPUT) {
-                let output: Vec<f64> = buffer.into_iter().map(|f| f * volume).collect();
-                context.write_port(AUDIO_OUTPUT, output);
-            }
+        if let Some(output) = self.process(context) {
+            context.output_signal(AUDIO_OUTPUT, output);
         }
 
         Ok(())
@@ -48,5 +48,14 @@ impl ProcessingNode for AudioVolumeNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
+    }
+}
+
+impl AudioVolumeNode {
+    fn process(&self, context: &impl NodeContext) -> Option<impl Signal<Frame = Stereo<f64>>> {
+        let volume = context.read_port::<_, f64>(VOLUME_INPUT)?;
+        let input = context.input_signal(AUDIO_INPUT)?;
+
+        Some(input.scale_amp(volume))
     }
 }

@@ -20,7 +20,7 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
         .with_filter(EnvFilter::from_default_env())
         .boxed();
 
-    let mut registry = tracing_subscriber::registry()
+    let registry = tracing_subscriber::registry()
         .with(stdout_layer)
         .with(sentry_tracing::layer());
 

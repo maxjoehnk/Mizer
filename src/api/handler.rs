@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
 
-use mizer_api::GamepadRef;
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
 use mizer_connections::{

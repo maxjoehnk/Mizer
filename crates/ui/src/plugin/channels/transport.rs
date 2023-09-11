@@ -30,7 +30,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
         match call.method.as_str() {
             "setState" => {
                 if let Value::I64(state) = call.args {
-                    let state = TransportState::from_i32(state as i32).unwrap();
+                    let state = TransportState::try_from(state as i32).unwrap();
                     if let Err(err) = self.set_state(state) {
                         resp.respond_error(err);
                     } else {

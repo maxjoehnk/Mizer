@@ -83,7 +83,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn add_sacn(&self, name: String, priority: u8) -> anyhow::Result<()> {
+    pub fn add_sacn_output(&self, name: String, priority: u8) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddSacnOutputCommand { name, priority })?;
 
@@ -92,9 +92,31 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn add_artnet(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
+    pub fn add_artnet_output(
+        &self,
+        name: String,
+        host: String,
+        port: Option<u16>,
+    ) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddArtnetOutputCommand { name, host, port })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_artnet_input(
+        &self,
+        name: String,
+        host: String,
+        port: Option<u16>,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddArtnetInputCommand {
+            name,
+            host: host.parse()?,
+            port,
+        })?;
 
         Ok(())
     }
@@ -152,10 +174,15 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
-        if let Some(connection::Connection::Dmx(dmx)) = connection.connection {
+        if let Some(connection::Connection::DmxOutput(dmx)) = connection.connection {
             self.runtime.run_command(DeleteOutputCommand {
                 name: dmx.output_id,
             })?;
+
+            Ok(())
+        } else if let Some(connection::Connection::DmxInput(dmx)) = connection.connection {
+            self.runtime
+                .run_command(DeleteInputCommand { name: dmx.id })?;
 
             Ok(())
         } else if let Some(connection::Connection::Mqtt(mqtt)) = connection.connection {
@@ -179,9 +206,9 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
         match update.config {
-            Some(configure_connection_request::Config::Dmx(connection)) => {
+            Some(configure_connection_request::Config::DmxOutput(connection)) => {
                 match connection.config {
-                    Some(dmx_connection::Config::Artnet(config)) => {
+                    Some(dmx_output_connection::Config::Artnet(config)) => {
                         self.runtime.run_command(ConfigureArtnetOutputCommand {
                             id: connection.output_id,
                             name: config.name,
@@ -191,7 +218,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
                         Ok(())
                     }
-                    Some(dmx_connection::Config::Sacn(config)) => {
+                    Some(dmx_output_connection::Config::Sacn(config)) => {
                         self.runtime.run_command(ConfigureSacnOutputCommand {
                             id: connection.output_id,
                             name: config.name,
@@ -224,6 +251,23 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                 })?;
 
                 Ok(())
+            }
+            Some(configure_connection_request::Config::DmxInput(connection)) => {
+                match connection.config {
+                    Some(dmx_input_connection::Config::Artnet(config)) => {
+                        self.runtime.run_command(ConfigureArtnetInputCommand {
+                            id: connection.id,
+                            name: config.name,
+                            host: config.host.parse()?,
+                            port: Some(config.port as u16),
+                        })?;
+
+                        Ok(())
+                    }
+                    _ => {
+                        anyhow::bail!("Dmx Input {connection:?} cannot be configured")
+                    }
+                }
             }
             _ => anyhow::bail!("Connection {:?} cannot be configured", update.config),
         }

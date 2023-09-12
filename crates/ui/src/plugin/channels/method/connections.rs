@@ -53,15 +53,28 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                     }
                 }
             }
-            "addArtnet" => {
-                if let Err(err) = call.arguments().and_then(|args| self.add_artnet(args)) {
+            "addArtnetOutput" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|args| self.add_artnet_output(args))
+                {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);
                 }
             }
-            "addSacn" => {
-                if let Err(err) = call.arguments().and_then(|args| self.add_sacn(args)) {
+            "addSacnOutput" => {
+                if let Err(err) = call.arguments().and_then(|args| self.add_sacn_output(args)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "addArtnetInput" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|args| self.add_artnet_input(args))
+                {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);
@@ -127,14 +140,19 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
         MethodChannel::new(context, "mizer.live/connections", self)
     }
 
-    fn add_artnet(&self, request: ArtnetConfig) -> anyhow::Result<()> {
+    fn add_artnet_output(&self, request: ArtnetOutputConfig) -> anyhow::Result<()> {
         self.handler
-            .add_artnet(request.name, request.host, Some(request.port as u16))
+            .add_artnet_output(request.name, request.host, Some(request.port as u16))
     }
 
-    fn add_sacn(&self, request: SacnConfig) -> anyhow::Result<()> {
+    fn add_artnet_input(&self, request: ArtnetInputConfig) -> anyhow::Result<()> {
         self.handler
-            .add_sacn(request.name, request.priority.clamp(0, 200) as u8)
+            .add_artnet_input(request.name, request.host, Some(request.port as u16))
+    }
+
+    fn add_sacn_output(&self, request: SacnConfig) -> anyhow::Result<()> {
+        self.handler
+            .add_sacn_output(request.name, request.priority.clamp(0, 200) as u8)
     }
 
     fn add_mqtt(&self, request: MqttConnection) -> anyhow::Result<()> {

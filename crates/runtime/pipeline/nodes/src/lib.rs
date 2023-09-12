@@ -10,7 +10,7 @@ pub use mizer_color_nodes::{ColorBrightnessNode, ConstantColorNode, HsvColorNode
 pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{DataToNumberNode, NumberToDataNode};
 pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode};
-pub use mizer_dmx_nodes::DmxOutputNode;
+pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
@@ -150,6 +150,7 @@ node_impl! {
     Clock(ClockNode),
     Oscillator(OscillatorNode),
     DmxOutput(DmxOutputNode),
+    DmxInput(DmxInputNode),
     Scripting(ScriptingNode),
     StepSequencer(StepSequencerNode),
     Envelope(EnvelopeNode),

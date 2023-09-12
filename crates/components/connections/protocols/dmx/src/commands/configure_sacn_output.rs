@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
 
-use crate::{DmxConnection, DmxConnectionManager, SacnOutput};
+use crate::{DmxConnectionManager, DmxOutputConnection, SacnOutput};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct ConfigureSacnOutputCommand {
@@ -27,10 +27,10 @@ impl<'a> Command<'a> for ConfigureSacnOutputCommand {
         let output = dmx_manager
             .get_output(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.id))?;
-        if let DmxConnection::Sacn(_) = output {
+        if let DmxOutputConnection::Sacn(_) = output {
             let new_output = SacnOutput::new(Some(self.priority));
             let output = dmx_manager.delete_output(&self.id).unwrap();
-            let output = if let DmxConnection::Sacn(output) = output {
+            let output = if let DmxOutputConnection::Sacn(output) = output {
                 output
             } else {
                 unreachable!()

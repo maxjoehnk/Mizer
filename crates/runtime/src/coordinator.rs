@@ -563,6 +563,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Clock(node) => pipeline.register_node(path, &node),
         Node::Oscillator(node) => pipeline.register_node(path, &node),
         Node::DmxOutput(node) => pipeline.register_node(path, &node),
+        Node::DmxInput(node) => pipeline.register_node(path, &node),
         Node::Scripting(node) => pipeline.register_node(path, &node),
         Node::StepSequencer(node) => pipeline.register_node(path, &node),
         Node::Envelope(node) => pipeline.register_node(path, &node),

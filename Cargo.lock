@@ -5208,7 +5208,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "artnet_protocol",
+ "dashmap",
  "enum_dispatch",
+ "flume 0.10.9",
  "log",
  "mizer-commander",
  "mizer-module",
@@ -5216,6 +5218,7 @@ dependencies = [
  "profiling",
  "sacn",
  "serde",
+ "tokio",
  "tracing",
 ]
 

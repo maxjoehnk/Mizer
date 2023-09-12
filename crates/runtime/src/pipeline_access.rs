@@ -74,6 +74,7 @@ impl PipelineAccess {
         use Node::*;
         match node {
             DmxOutput(node) => self.add_node(path, node),
+            DmxInput(node) => self.add_node(path, node),
             Oscillator(node) => self.add_node(path, node),
             Clock(node) => self.add_node(path, node),
             Scripting(node) => self.add_node(path, node),

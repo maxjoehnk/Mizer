@@ -1,5 +1,6 @@
 use mizer_protocol_dmx::{
-    ArtnetOutput, DmxConnection, DmxConnectionManager, DmxOutput, SacnOutput,
+    ArtnetInput, ArtnetOutput, DmxConnectionManager, DmxInput, DmxInputConnection, DmxOutput,
+    DmxOutputConnection, SacnOutput,
 };
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::OscConnectionManager;
@@ -18,9 +19,13 @@ impl ProjectManagerMut for DmxConnectionManager {
                 ConnectionTypes::Sacn { priority } => {
                     self.add_output(connection.id.clone(), SacnOutput::new(*priority))
                 }
-                ConnectionTypes::Artnet { port, host } => self.add_output(
+                ConnectionTypes::ArtnetOutput { port, host } => self.add_output(
                     connection.id.clone(),
                     ArtnetOutput::new(host.clone(), *port)?,
+                ),
+                ConnectionTypes::ArtnetInput { port, host } => self.add_input(
+                    connection.id.clone(),
+                    ArtnetInput::new(host.clone(), *port)?,
                 ),
                 _ => {}
             }
@@ -35,7 +40,14 @@ impl ProjectManagerMut for DmxConnectionManager {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),
                 name: output.name(),
-                config: get_config(output),
+                config: get_output_config(output),
+            });
+        }
+        for (id, input) in self.list_inputs() {
+            project.connections.push(ConnectionConfig {
+                id: id.clone(),
+                name: input.name(),
+                config: get_input_config(input),
             });
         }
     }
@@ -45,14 +57,23 @@ impl ProjectManagerMut for DmxConnectionManager {
     }
 }
 
-fn get_config(connection: &DmxConnection) -> ConnectionTypes {
+fn get_output_config(connection: &DmxOutputConnection) -> ConnectionTypes {
     match connection {
-        DmxConnection::Artnet(artnet) => ConnectionTypes::Artnet {
+        DmxOutputConnection::Artnet(artnet) => ConnectionTypes::ArtnetOutput {
             host: artnet.host.clone(),
             port: artnet.port.into(),
         },
-        DmxConnection::Sacn(sacn) => ConnectionTypes::Sacn {
+        DmxOutputConnection::Sacn(sacn) => ConnectionTypes::Sacn {
             priority: Some(sacn.priority),
+        },
+    }
+}
+
+fn get_input_config(connection: &DmxInputConnection) -> ConnectionTypes {
+    match connection {
+        DmxInputConnection::Artnet(artnet) => ConnectionTypes::ArtnetInput {
+            host: artnet.config.host,
+            port: artnet.config.port.into(),
         },
     }
 }

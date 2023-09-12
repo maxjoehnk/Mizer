@@ -42,13 +42,18 @@ class ConnectionsPluginApi implements ConnectionsApi {
   }
 
   @override
-  Future<void> addArtnet(ArtnetConfig request) async {
-    await channel.invokeMethod("addArtnet", request.writeToBuffer());
+  Future<void> addArtnetOutput(ArtnetOutputConfig request) async {
+    await channel.invokeMethod("addArtnetOutput", request.writeToBuffer());
   }
 
   @override
-  Future<void> addSacn(SacnConfig request) async {
-    await channel.invokeMethod("addSacn", request.writeToBuffer());
+  Future<void> addArtnetInput(ArtnetInputConfig request) async {
+    await channel.invokeMethod("addArtnetInput", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addSacnOutput(SacnConfig request) async {
+    await channel.invokeMethod("addSacnOutput", request.writeToBuffer());
   }
 
   @override

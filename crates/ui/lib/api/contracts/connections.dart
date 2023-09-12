@@ -4,8 +4,9 @@ import 'package:mizer/protos/connections.pb.dart';
 abstract class ConnectionsApi {
   Future<Connections> getConnections();
 
-  Future<void> addArtnet(ArtnetConfig request);
-  Future<void> addSacn(SacnConfig request);
+  Future<void> addArtnetOutput(ArtnetOutputConfig request);
+  Future<void> addArtnetInput(ArtnetInputConfig request);
+  Future<void> addSacnOutput(SacnConfig request);
   Future<void> addMqtt(MqttConnection request);
   Future<void> addOsc(OscConnection request);
 

@@ -2,8 +2,8 @@ use std::collections::HashMap;
 
 use ::sacn::DmxSource;
 
+use super::DmxOutput;
 use crate::buffer::DmxBuffer;
-use crate::DmxOutput;
 
 pub struct SacnOutput {
     pub priority: u8,

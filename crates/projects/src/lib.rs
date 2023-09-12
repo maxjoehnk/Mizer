@@ -1,6 +1,7 @@
 use std::convert::TryFrom;
 use std::fs::File;
 use std::io::Read;
+use std::net::Ipv4Addr;
 use std::path::Path;
 
 use indexmap::IndexMap;
@@ -208,8 +209,18 @@ pub struct ConnectionConfig {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ConnectionTypes {
-    Sacn { priority: Option<u8> },
-    Artnet { host: String, port: Option<u16> },
+    Sacn {
+        priority: Option<u8>,
+    },
+    #[serde(alias = "artnet")]
+    ArtnetOutput {
+        host: String,
+        port: Option<u16>,
+    },
+    ArtnetInput {
+        host: Ipv4Addr,
+        port: Option<u16>,
+    },
     Mqtt(MqttAddress),
     Osc(OscAddress),
 }

@@ -1,3 +1,5 @@
+use std::net::Ipv4Addr;
+
 use derive_more::From;
 
 use mizer_devices::*;
@@ -14,7 +16,8 @@ pub mod midi_device_profile {
 #[derive(From, Debug, Clone)]
 pub enum Connection {
     Midi(MidiView),
-    Dmx(DmxView),
+    DmxOutput(DmxOutputView),
+    DmxInput(DmxInputView),
     Helios(HeliosView),
     EtherDream(EtherDreamView),
     Gamepad(GamepadView),
@@ -30,7 +33,8 @@ impl Connection {
     pub fn name(&self) -> String {
         match self {
             Connection::Midi(device) => device.name.clone(),
-            Connection::Dmx(device) => device.name.clone(),
+            Connection::DmxOutput(device) => device.name.clone(),
+            Connection::DmxInput(device) => device.name.clone(),
             Connection::Helios(device) => device.name.clone(),
             Connection::EtherDream(device) => device.name.clone(),
             Connection::Gamepad(device) => device.name.clone(),
@@ -65,16 +69,28 @@ pub struct MidiView {
 }
 
 #[derive(Debug, Clone)]
-pub struct DmxView {
+pub struct DmxOutputView {
     pub name: String,
     pub output_id: String,
-    pub config: DmxConfig,
+    pub config: DmxOutputConfig,
 }
 
 #[derive(Debug, Clone)]
-pub enum DmxConfig {
+pub enum DmxOutputConfig {
     Artnet { host: String, port: u16 },
     Sacn { priority: u8 },
+}
+
+#[derive(Debug, Clone)]
+pub struct DmxInputView {
+    pub name: String,
+    pub input_id: String,
+    pub config: DmxInputConfig,
+}
+
+#[derive(Debug, Clone)]
+pub enum DmxInputConfig {
+    Artnet { host: Ipv4Addr, port: u16 },
 }
 
 #[derive(Debug, Clone)]

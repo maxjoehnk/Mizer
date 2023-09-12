@@ -1,36 +1,20 @@
 use std::collections::HashMap;
 
-use enum_dispatch::enum_dispatch;
+pub use crate::inputs::*;
+pub use crate::module::DmxModule;
+pub use crate::outputs::*;
 
-use mizer_module::{Module, Runtime};
-use mizer_processing::*;
-
-pub use crate::artnet::ArtnetOutput;
-pub use crate::sacn::SacnOutput;
-
-mod artnet;
 mod buffer;
 pub mod commands;
-mod sacn;
-
-#[enum_dispatch(DmxConnection)]
-pub trait DmxOutput {
-    fn name(&self) -> String;
-    fn write_single(&self, universe: u16, channel: u16, value: u8);
-    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]);
-    fn flush(&self);
-    fn read_buffer(&self) -> HashMap<u16, [u8; 512]>;
-}
-
-#[enum_dispatch]
-pub enum DmxConnection {
-    Artnet(ArtnetOutput),
-    Sacn(SacnOutput),
-}
+mod inputs;
+mod module;
+mod outputs;
+mod processor;
 
 #[derive(Default)]
 pub struct DmxConnectionManager {
-    outputs: HashMap<String, DmxConnection>,
+    outputs: HashMap<String, DmxOutputConnection>,
+    inputs: HashMap<String, DmxInputConnection>,
 }
 
 impl DmxConnectionManager {
@@ -38,15 +22,15 @@ impl DmxConnectionManager {
         DmxConnectionManager::default()
     }
 
-    pub fn add_output(&mut self, id: String, output: impl Into<DmxConnection>) {
+    pub fn add_output(&mut self, id: String, output: impl Into<DmxOutputConnection>) {
         self.outputs.insert(id, output.into());
     }
 
-    pub fn get_output(&self, name: &str) -> Option<&DmxConnection> {
+    pub fn get_output(&self, name: &str) -> Option<&DmxOutputConnection> {
         self.outputs.get(name)
     }
 
-    pub fn get_output_mut(&mut self, name: &str) -> Option<&mut DmxConnection> {
+    pub fn get_output_mut(&mut self, name: &str) -> Option<&mut DmxOutputConnection> {
         self.outputs.get_mut(name)
     }
 
@@ -56,43 +40,35 @@ impl DmxConnectionManager {
         }
     }
 
-    pub fn list_outputs(&self) -> Vec<(&String, &DmxConnection)> {
+    pub fn list_outputs(&self) -> Vec<(&String, &DmxOutputConnection)> {
         self.outputs.iter().collect()
     }
 
-    pub fn delete_output(&mut self, id: &str) -> Option<DmxConnection> {
+    pub fn delete_output(&mut self, id: &str) -> Option<DmxOutputConnection> {
         self.outputs.remove(id)
     }
 
     pub fn clear(&mut self) {
         self.outputs.clear();
     }
-}
 
-#[derive(Debug)]
-struct DmxProcessor;
-
-impl Processor for DmxProcessor {
-    #[tracing::instrument]
-    fn post_process(&mut self, injector: &Injector, _: ClockFrame) {
-        profiling::scope!("DmxProcessor::post_process");
-        if let Some(dmx) = injector.get::<DmxConnectionManager>() {
-            dmx.flush();
-        }
+    pub fn add_input(&mut self, id: String, input: impl Into<DmxInputConnection>) {
+        self.inputs.insert(id, input.into());
     }
-}
 
-impl DebuggableProcessor for DmxProcessor {}
+    pub fn get_input(&self, name: &str) -> Option<&DmxInputConnection> {
+        self.inputs.get(name)
+    }
 
-pub struct DmxModule;
+    pub fn get_input_mut(&mut self, name: &str) -> Option<&mut DmxInputConnection> {
+        self.inputs.get_mut(name)
+    }
 
-impl Module for DmxModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
-        let dmx_manager = DmxConnectionManager::new();
-        runtime.injector_mut().provide(dmx_manager);
-        runtime.add_processor(DmxProcessor);
+    pub fn list_inputs(&self) -> Vec<(&String, &DmxInputConnection)> {
+        self.inputs.iter().collect()
+    }
 
-        Ok(())
+    pub fn delete_input(&mut self, id: &str) -> Option<DmxInputConnection> {
+        self.inputs.remove(id)
     }
 }

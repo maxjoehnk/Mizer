@@ -1,15 +1,15 @@
-use crate::{DmxConnectionManager, DmxOutputConnection};
+use crate::{DmxConnectionManager, DmxInputConnection};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
-pub struct DeleteOutputCommand {
+pub struct DeleteInputCommand {
     pub name: String,
 }
 
-impl<'a> Command<'a> for DeleteOutputCommand {
+impl<'a> Command<'a> for DeleteInputCommand {
     type Dependencies = RefMut<DmxConnectionManager>;
-    type State = DmxOutputConnection;
+    type State = DmxInputConnection;
     type Result = ();
 
     fn label(&self) -> String {
@@ -20,19 +20,19 @@ impl<'a> Command<'a> for DeleteOutputCommand {
         &self,
         dmx_manager: &mut DmxConnectionManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let output = dmx_manager
-            .delete_output(&self.name)
-            .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.name))?;
+        let input = dmx_manager
+            .delete_input(&self.name)
+            .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.name))?;
 
-        Ok(((), output))
+        Ok(((), input))
     }
 
     fn revert(
         &self,
         dmx_manager: &mut DmxConnectionManager,
-        output: Self::State,
+        input: Self::State,
     ) -> anyhow::Result<()> {
-        dmx_manager.add_output(self.name.clone(), output);
+        dmx_manager.add_input(self.name.clone(), input);
 
         Ok(())
     }

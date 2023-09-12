@@ -17,20 +17,32 @@ impl From<mizer_connections::Connection> for connection::Connection {
             Midi(midi) => Self::Midi(MidiConnection {
                 device_profile: midi.device_profile,
             }),
-            Dmx(view) => Self::Dmx(DmxConnection {
+            DmxOutput(view) => Self::DmxOutput(DmxOutputConnection {
                 output_id: view.output_id.clone(),
                 config: Some(match view.config {
-                    mizer_connections::DmxConfig::Artnet { host, port } => {
-                        dmx_connection::Config::Artnet(ArtnetConfig {
+                    mizer_connections::DmxOutputConfig::Artnet { host, port } => {
+                        dmx_output_connection::Config::Artnet(ArtnetOutputConfig {
                             name: view.output_id,
                             host,
                             port: port as u32,
                         })
                     }
-                    mizer_connections::DmxConfig::Sacn { priority } => {
-                        dmx_connection::Config::Sacn(SacnConfig {
+                    mizer_connections::DmxOutputConfig::Sacn { priority } => {
+                        dmx_output_connection::Config::Sacn(SacnConfig {
                             name: view.output_id,
                             priority: priority as u32,
+                        })
+                    }
+                }),
+            }),
+            DmxInput(view) => Self::DmxInput(DmxInputConnection {
+                id: view.input_id.clone(),
+                config: Some(match view.config {
+                    mizer_connections::DmxInputConfig::Artnet { host, port } => {
+                        dmx_input_connection::Config::Artnet(ArtnetInputConfig {
+                            name: view.name,
+                            host: host.to_string(),
+                            port: port as u32,
                         })
                     }
                 }),
@@ -96,20 +108,21 @@ impl From<mizer_connections::DJMView> for PioneerDjmConnection {
             address: djm.device.ip_addr.to_string(),
             model: djm.device.name,
             player_number: djm.device.device_id as u32,
-            ..Default::default()
         }
     }
 }
 
-impl From<mizer_connections::DmxConfig> for dmx_connection::Config {
-    fn from(config: mizer_connections::DmxConfig) -> Self {
+impl From<mizer_connections::DmxOutputConfig> for dmx_output_connection::Config {
+    fn from(config: mizer_connections::DmxOutputConfig) -> Self {
         match config {
-            mizer_connections::DmxConfig::Artnet { host, port } => Self::Artnet(ArtnetConfig {
-                host,
-                port: port as u32,
-                ..Default::default()
-            }),
-            mizer_connections::DmxConfig::Sacn { priority } => Self::Sacn(SacnConfig {
+            mizer_connections::DmxOutputConfig::Artnet { host, port } => {
+                Self::Artnet(ArtnetOutputConfig {
+                    host,
+                    port: port as u32,
+                    ..Default::default()
+                })
+            }
+            mizer_connections::DmxOutputConfig::Sacn { priority } => Self::Sacn(SacnConfig {
                 priority: priority as u32,
                 ..Default::default()
             }),

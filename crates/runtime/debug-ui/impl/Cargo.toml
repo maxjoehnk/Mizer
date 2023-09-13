@@ -1,0 +1,12 @@
+[package]
+name = "mizer-debug-ui-impl"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[features]
+active = ["mizer-debug-ui-egui"]
+
+[dependencies]
+mizer-debug-ui-egui = { path = "../egui", optional = true }
+mizer-debug-ui = { path = ".." }

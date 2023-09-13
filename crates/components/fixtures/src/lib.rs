@@ -1,14 +1,17 @@
+use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
+use std::sync::Arc;
+
+use pinboard::NonEmptyPinboard;
+use serde::{Deserialize, Serialize};
+
+use mizer_module::{Module, Runtime};
+
 use crate::fixture::Fixture;
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
 use crate::programmer::Color;
-use mizer_module::{Module, Runtime};
-use pinboard::NonEmptyPinboard;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::fmt::{Display, Formatter};
-use std::sync::Arc;
 
 mod contracts;
 pub mod definition;
@@ -85,12 +88,12 @@ impl FixtureModule {
 }
 
 impl Module for FixtureModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         log::debug!("Registering...");
         let injector = runtime.injector_mut();
         injector.provide(self.0);
         injector.provide(self.1);
-        runtime.add_processor(FixtureProcessor.into());
+        runtime.add_processor(FixtureProcessor);
         Ok(())
     }
 }

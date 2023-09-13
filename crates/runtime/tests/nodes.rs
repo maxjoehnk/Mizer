@@ -20,7 +20,7 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
 ) -> Vec<f64> {
     let clock = utils::TestClock::default();
     let sink = utils::TestSink::new();
-    let mut runtime = CoordinatorRuntime::with_clock(clock, false);
+    let mut runtime = CoordinatorRuntime::with_clock(clock);
     let node_type = node.node_type();
     add_node(
         runtime.injector_mut(),

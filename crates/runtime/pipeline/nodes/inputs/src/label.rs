@@ -47,7 +47,7 @@ impl ProcessingNode for LabelNode {
         Default::default()
     }
 
-    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, _state: &Self::State) {
+    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, _state: &Self::State) {
         ui.collapsing_header("Config", |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Text");

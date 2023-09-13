@@ -1,7 +1,7 @@
 pub use mizer_processing::*;
 
 pub trait Module {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()>;
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()>;
 }
 
 pub trait Runtime {
@@ -9,7 +9,7 @@ pub trait Runtime {
 
     fn injector(&self) -> &Injector;
 
-    fn add_processor(&mut self, processor: Box<dyn Processor>);
+    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static);
 
     fn process(&mut self);
 }

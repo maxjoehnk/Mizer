@@ -32,6 +32,8 @@ members = [
     "crates/runtime/commander",
     "crates/runtime/commander/executor",
     "crates/runtime/debug-ui",
+    "crates/runtime/debug-ui/impl",
+    "crates/runtime/debug-ui/egui",
     "crates/runtime/execution-planner",
     "crates/runtime/injector",
     "crates/runtime/layouts",
@@ -105,7 +107,7 @@ license = "GNU AGPLv3"
 [features]
 default = ["ui", "debug-ui"]
 ui = ["mizer-ui"]
-debug-ui = ["mizer-runtime/debug-ui"]
+debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
 
 [dependencies]
@@ -146,6 +148,8 @@ mizer-protocol-osc = { path = "crates/components/connections/protocols/osc" }
 mizer-processing = { path = "crates/runtime/processing" }
 mizer-module = { path = "crates/runtime/module" }
 mizer-ui = { path = "crates/ui", optional = true }
+mizer-debug-ui-impl = { path = "crates/runtime/debug-ui/impl" }
+mizer-debug-ui-egui = { path = "crates/runtime/debug-ui/egui", optional = true }
 mizer-util = { path = "crates/util" }
 mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
@@ -161,7 +165,7 @@ rayon = "1.7"
 serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.31", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.31"
-ffmpeg-the-third = { version = "1.2", features = ["build"] }
+ffmpeg-the-third = { version = "1.2", features = ["static"] }
 rolling-file = "0.2"
 
 [dev-dependencies]

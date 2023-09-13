@@ -1,7 +1,8 @@
-use crate::sequencer::Sequencer;
-use crate::EffectEngine;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_module::*;
+
+use crate::sequencer::Sequencer;
+use crate::EffectEngine;
 
 #[derive(Debug)]
 pub(crate) struct SequenceProcessor;
@@ -18,3 +19,5 @@ impl Processor for SequenceProcessor {
         sequencer.run_sequences(fixture_manager, effect_engine, frame);
     }
 }
+
+impl DebuggableProcessor for SequenceProcessor {}

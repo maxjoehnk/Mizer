@@ -1,18 +1,21 @@
-use crate::laser::LaserDevice;
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::Arc;
+
 use dashmap::mapref::one::{Ref, RefMut};
 use dashmap::DashMap;
 use derive_more::From;
 use futures::prelude::stream::BoxStream;
 use futures::stream::select_all;
 use futures::StreamExt;
+
 use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Arc;
+
+use crate::laser::LaserDevice;
 
 pub mod g13;
 pub mod gamepads;
@@ -262,7 +265,7 @@ impl DeviceModule {
 }
 
 impl Module for DeviceModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         log::debug!("Registering...");
         let injector = runtime.injector_mut();
         injector.provide(self.0);

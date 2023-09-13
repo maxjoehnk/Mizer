@@ -4134,6 +4134,8 @@ dependencies = [
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
+ "mizer-debug-ui-egui",
+ "mizer-debug-ui-impl",
  "mizer-devices",
  "mizer-execution-planner",
  "mizer-fixture-definition-provider",
@@ -4358,14 +4360,34 @@ name = "mizer-debug-ui"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "futures",
+ "log",
+ "profiling",
+]
+
+[[package]]
+name = "mizer-debug-ui-egui"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
  "egui",
  "egui-wgpu",
  "egui-winit",
  "futures",
  "image",
  "log",
+ "mizer-debug-ui",
+ "mizer-wgpu",
  "profiling",
  "winit",
+]
+
+[[package]]
+name = "mizer-debug-ui-impl"
+version = "0.1.0"
+dependencies = [
+ "mizer-debug-ui",
+ "mizer-debug-ui-egui",
 ]
 
 [[package]]
@@ -4898,6 +4920,7 @@ dependencies = [
  "log",
  "metrics",
  "mizer-clock",
+ "mizer-debug-ui-impl",
  "mizer-devices",
  "mizer-fixtures",
  "mizer-node",
@@ -5191,7 +5214,7 @@ dependencies = [
  "log",
  "mizer-clock",
  "mizer-commander",
- "mizer-debug-ui",
+ "mizer-debug-ui-impl",
  "mizer-execution-planner",
  "mizer-fixtures",
  "mizer-layouts",

@@ -1,11 +1,13 @@
+use std::collections::HashMap;
+use std::ops::Deref;
+
+use mizer_processing::*;
+use mizer_protocol_dmx::DmxConnectionManager;
+
 use crate::definition::{ColorChannel, FixtureFaderControl};
 use crate::fixture::IFixture;
 use crate::manager::FixtureManager;
 use crate::{FixtureId, FixtureState};
-use mizer_processing::*;
-use mizer_protocol_dmx::DmxConnectionManager;
-use std::collections::HashMap;
-use std::ops::Deref;
 
 #[derive(Debug)]
 pub struct FixtureProcessor;
@@ -54,9 +56,11 @@ impl Processor for FixtureProcessor {
             .get_programmer()
             .emit_state(fixture_manager.get_groups());
     }
+}
 
+impl DebuggableProcessor for FixtureProcessor {
     #[tracing::instrument(skip_all)]
-    fn update_debug_ui(&mut self, injector: &Injector, ui: &mut DebugUiDrawHandle) {
+    fn debug_ui<'a>(&mut self, injector: &Injector, ui: &mut impl DebugUiDrawHandle<'a>) {
         profiling::scope!("FixtureProcessor::update_debug_ui");
         let fixture_manager = injector
             .get::<FixtureManager>()

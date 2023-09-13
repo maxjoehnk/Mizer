@@ -1,10 +1,12 @@
-pub use self::commands::*;
+pub use mizer_commander::Command;
+use mizer_module::{Injector, Module, Runtime};
+
 pub use crate::executor::CommandExecutor;
 pub use crate::history::CommandHistory;
 use crate::in_main_loop_executor::{InMainLoopExecutionWorker, InMainLoopExecutor};
 pub use crate::processor::CommandProcessor;
-pub use mizer_commander::Command;
-use mizer_module::{Injector, Module, Runtime};
+
+pub use self::commands::*;
 
 mod aggregates;
 mod commands;
@@ -24,11 +26,11 @@ impl CommandExecutorModule {
 }
 
 impl Module for CommandExecutorModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         let executor = CommandExecutor::new();
         let history = CommandHistory::new();
         runtime.injector_mut().provide(history);
-        runtime.add_processor(Box::new(CommandProcessor::new(executor, self.0)));
+        runtime.add_processor(CommandProcessor::new(executor, self.0));
 
         Ok(())
     }

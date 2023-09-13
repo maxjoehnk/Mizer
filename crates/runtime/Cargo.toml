@@ -4,9 +4,6 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
-[features]
-debug-ui = ["mizer-debug-ui/compile"]
-
 [dependencies]
 anyhow = "1"
 log = "0.4"
@@ -15,7 +12,7 @@ dashmap = "5"
 downcast = "0.11"
 flume = "0.11"
 mizer-clock = { path = "clock" }
-mizer-debug-ui = { path = "debug-ui", optional = true }
+mizer-debug-ui-impl = { path = "debug-ui/impl" }
 mizer-node = { path = "pipeline/node" }
 mizer-nodes = { path = "pipeline/nodes" }
 mizer-fixtures = { path = "../components/fixtures" }

@@ -1,10 +1,10 @@
-use winit::event::Event;
+use winit::event::{Event, WindowEvent};
 use winit::platform::run_return::EventLoopExtRunReturn;
 use winit::window::WindowId;
 
-use mizer_module::{ClockFrame, Injector, Processor};
+use mizer_module::{ClockFrame, DebuggableProcessor, Injector, Processor};
 
-use super::{EventLoopHandle, WindowEvent, WindowEvents};
+use super::{EventLoopHandle, WindowEventSenders};
 
 pub struct WindowProcessor;
 
@@ -15,13 +15,6 @@ impl Processor for WindowProcessor {
             .event_loop
             .run_return(|event, _target, control_flow| match event {
                 Event::WindowEvent {
-                    event: winit::event::WindowEvent::Resized(size),
-                    window_id,
-                } => {
-                    resize(&event_loop.window_events, window_id, size);
-                    control_flow.set_poll();
-                }
-                Event::WindowEvent {
                     event:
                         winit::event::WindowEvent::ScaleFactorChanged {
                             new_inner_size: size,
@@ -29,7 +22,19 @@ impl Processor for WindowProcessor {
                         },
                     window_id,
                 } => {
-                    resize(&event_loop.window_events, window_id, *size);
+                    send_window_event(
+                        &event_loop.window_event_sender,
+                        window_id,
+                        WindowEvent::Resized(*size),
+                    );
+                    control_flow.set_poll();
+                }
+                Event::WindowEvent { event, window_id } => {
+                    send_window_event(
+                        &event_loop.window_event_sender,
+                        window_id,
+                        event.to_static().unwrap(),
+                    );
                     control_flow.set_poll();
                 }
                 _ => control_flow.set_exit(),
@@ -37,12 +42,15 @@ impl Processor for WindowProcessor {
     }
 }
 
-fn resize(window_events: &WindowEvents, window_id: WindowId, size: winit::dpi::PhysicalSize<u32>) {
+impl DebuggableProcessor for WindowProcessor {}
+
+fn send_window_event(
+    window_events: &WindowEventSenders,
+    window_id: WindowId,
+    event: WindowEvent<'static>,
+) {
     if let Some(window) = window_events.get(&window_id) {
-        if let Err(err) = window.send(WindowEvent::Resized {
-            width: size.width,
-            height: size.height,
-        }) {
+        if let Err(err) = window.send(event) {
             log::error!("Failed to send window event: {err:?}");
             // TODO: drop the window from the map here?
         }

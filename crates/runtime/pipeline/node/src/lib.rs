@@ -107,5 +107,5 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
 
     fn create_state(&self) -> Self::State;
 
-    fn debug_ui(&self, _ui: &mut DebugUiDrawHandle, _state: &Self::State) {}
+    fn debug_ui<'a>(&self, _ui: &mut impl DebugUiDrawHandle<'a>, _state: &Self::State) {}
 }

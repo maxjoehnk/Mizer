@@ -1,7 +1,7 @@
-use mizer_debug_ui::DebugUiDrawHandle;
+use mizer_debug_ui_impl::DebugUiDrawHandle;
 use mizer_plan::PlanStorage;
 
-pub(super) fn plans_debug_ui(ui: &mut DebugUiDrawHandle, plans: &PlanStorage) {
+pub(super) fn plans_debug_ui<'a>(ui: &mut impl DebugUiDrawHandle<'a>, plans: &PlanStorage) {
     ui.collapsing_header("Plans", |ui| {
         let plans = plans.read();
         for plan in plans {

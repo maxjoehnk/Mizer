@@ -7,8 +7,7 @@ use pinboard::NonEmptyPinboard;
 use tracing_unwrap::ResultExt;
 
 use mizer_clock::{Clock, ClockSnapshot, SystemClock};
-#[cfg(feature = "debug-ui")]
-use mizer_debug_ui::DebugUi;
+use mizer_debug_ui_impl::*;
 use mizer_execution_planner::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
@@ -25,6 +24,19 @@ use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
 use crate::{LayoutsView, NodeMetadataRef};
 
+trait ProcessorExt: Processor {
+    fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>);
+}
+
+impl<T> ProcessorExt for T
+where
+    T: DebuggableProcessor,
+{
+    fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>) {
+        self.debug_ui(injector, ui);
+    }
+}
+
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
     layouts: LayoutStorage,
@@ -33,26 +45,25 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     pub pipeline: PipelineWorker,
     pub clock: TClock,
     injector: Injector,
-    processors: Vec<Box<dyn Processor>>,
+    processors: Vec<Box<dyn ProcessorExt>>,
     clock_recv: flume::Receiver<ClockSnapshot>,
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
-    #[cfg(feature = "debug-ui")]
-    ui: Option<DebugUi>,
+    ui: Option<DebugUiImpl>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
-    pub fn new(debug_ui: bool) -> Self {
+    pub fn new() -> Self {
         let clock = SystemClock::default();
 
-        Self::with_clock(clock, debug_ui)
+        Self::with_clock(clock)
     }
 }
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
-    pub fn with_clock(clock: TClock, debug_ui: bool) -> CoordinatorRuntime<TClock> {
+    pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
         let (clock_tx, clock_rx) = flume::unbounded();
         let snapshot = clock.snapshot();
         let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
@@ -68,20 +79,16 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
             layout_fader_view: Default::default(),
-            #[cfg(feature = "debug-ui")]
-            ui: debug_ui.then(DebugUi::new).and_then(|ui| match ui {
-                Ok(ui) => Some(ui),
-                Err(err) => {
-                    log::error!("Debug UI is not available: {err:?}");
-
-                    None
-                }
-            }),
+            ui: None,
             node_metadata,
         };
         runtime.bootstrap();
 
         runtime
+    }
+
+    pub fn setup_debug_ui(&mut self, debug_ui: DebugUiImpl) {
+        self.ui = Some(debug_ui);
     }
 
     fn bootstrap(&mut self) {
@@ -357,8 +364,8 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         &self.injector
     }
 
-    fn add_processor(&mut self, processor: Box<dyn Processor>) {
-        self.processors.push(processor);
+    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static) {
+        self.processors.push(Box::new(processor));
     }
 
     fn process(&mut self) {
@@ -390,7 +397,6 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             processor.post_process(&self.injector, frame);
         }
         self.read_node_settings();
-        #[cfg(feature = "debug-ui")]
         if let Some(ui) = self.ui.as_mut() {
             log::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
@@ -400,7 +406,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
                 self.pipeline.debug_ui(ui, &nodes);
                 Self::debug_ui(ui, texture_map, &self.layouts, &self.plans);
                 for processor in self.processors.iter_mut() {
-                    processor.update_debug_ui(&self.injector, ui);
+                    processor.debug_ui(&self.injector, ui);
                 }
             });
 
@@ -636,7 +642,7 @@ mod tests {
 
     #[test]
     fn node_runner_should_lend_state_ref() {
-        let mut runner = CoordinatorRuntime::new(false);
+        let mut runner = CoordinatorRuntime::new();
         let node = FaderNode::default();
         let path = NodePath("/test".to_string());
         runner

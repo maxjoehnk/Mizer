@@ -2,6 +2,7 @@ use std::sync::mpsc::Sender;
 
 use dashmap::DashMap;
 use wgpu::PresentMode;
+use winit::event::WindowEvent;
 use winit::event_loop::{EventLoop, EventLoopBuilder};
 use winit::monitor::MonitorHandle;
 #[cfg(target_os = "linux")]
@@ -10,13 +11,13 @@ use winit::window::WindowId;
 
 use crate::WgpuContext;
 
-use super::{WindowEvent, WindowRef};
+use super::{RawWindowRef, WindowRef};
 
-pub(crate) type WindowEvents = DashMap<WindowId, Sender<WindowEvent>>;
+pub(crate) type WindowEventSenders = DashMap<WindowId, Sender<WindowEvent<'static>>>;
 
 pub struct EventLoopHandle {
     pub(crate) event_loop: EventLoop<()>,
-    pub(crate) window_events: WindowEvents,
+    pub(crate) window_event_sender: WindowEventSenders,
 }
 
 impl EventLoopHandle {
@@ -28,7 +29,7 @@ impl EventLoopHandle {
 
         Self {
             event_loop,
-            window_events: DashMap::new(),
+            window_event_sender: DashMap::new(),
         }
     }
 
@@ -60,7 +61,7 @@ impl EventLoopHandle {
             view_formats: vec![],
         };
         surface.configure(&context.device, &config);
-        self.window_events.insert(window.id(), tx);
+        self.window_event_sender.insert(window.id(), tx);
 
         Ok(WindowRef {
             window,
@@ -68,6 +69,17 @@ impl EventLoopHandle {
             surface_config: config,
             events: rx,
         })
+    }
+
+    pub fn new_raw_window(&self, title: Option<&str>) -> anyhow::Result<RawWindowRef> {
+        let (tx, rx) = std::sync::mpsc::channel();
+        let window = winit::window::WindowBuilder::new()
+            .with_title(title.unwrap_or("Mizer"))
+            .build(&self.event_loop)
+            .unwrap();
+        self.window_event_sender.insert(window.id(), tx);
+
+        Ok(RawWindowRef { window, events: rx })
     }
 
     pub fn available_screens(&self) -> Vec<Screen> {

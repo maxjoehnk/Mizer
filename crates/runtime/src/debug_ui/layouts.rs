@@ -1,9 +1,9 @@
-use mizer_debug_ui::{DebugUiDrawHandle, TextureMap};
+use mizer_debug_ui_impl::*;
 use mizer_layouts::LayoutStorage;
 
 pub(super) fn layouts_debug_ui(
-    ui: &mut DebugUiDrawHandle,
-    textures: &mut TextureMap,
+    ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
+    textures: &mut <DebugUiImpl as DebugUi>::TextureMap,
     layouts: &LayoutStorage,
 ) {
     ui.collapsing_header("Layouts", |ui| {

@@ -1,4 +1,4 @@
-use mizer_module::{ClockFrame, Injector, Processor};
+use mizer_module::{ClockFrame, DebuggableProcessor, Injector, Processor};
 
 use crate::{WgpuContext, WgpuPipeline};
 
@@ -21,3 +21,5 @@ impl Processor for WgpuPipelineProcessor {
         pipeline.cleanup();
     }
 }
+
+impl DebuggableProcessor for WgpuPipelineProcessor {}

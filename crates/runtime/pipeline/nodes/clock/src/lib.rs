@@ -68,7 +68,7 @@ impl ProcessingNode for ClockNode {
         clock
     }
 
-    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
+    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
         ui.collapsing_header("Config", |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("BPM");

@@ -6,7 +6,7 @@
 // pub struct RuntimeModule {}
 //
 // impl Module for RuntimeModule {
-//     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+//     fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
 //         runtime.injector_mut().provide(PipelineAccess::new());
 //         runtime.add_processor(Box::new(RuntimeProcessor));
 //

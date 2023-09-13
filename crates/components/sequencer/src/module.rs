@@ -15,10 +15,10 @@ impl SequencerModule {
 }
 
 impl Module for SequencerModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         runtime.injector_mut().provide(self.0);
         runtime.injector_mut().provide(EffectEngine::new());
-        runtime.add_processor(SequenceProcessor.into());
+        runtime.add_processor(SequenceProcessor);
 
         Ok(())
     }
@@ -35,9 +35,9 @@ impl EffectsModule {
 }
 
 impl Module for EffectsModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         runtime.injector_mut().provide(self.0);
-        runtime.add_processor(EffectsProcessor.into());
+        runtime.add_processor(EffectsProcessor);
 
         Ok(())
     }

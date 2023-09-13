@@ -94,9 +94,9 @@ impl ProcessingNode for ButtonNode {
         Default::default()
     }
 
-    fn debug_ui(
+    fn debug_ui<'a>(
         &self,
-        ui: &mut DebugUiDrawHandle,
+        ui: &mut impl DebugUiDrawHandle<'a>,
         ButtonState {
             state,
             input_edge,

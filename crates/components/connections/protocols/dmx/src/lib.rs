@@ -1,5 +1,6 @@
-use enum_dispatch::enum_dispatch;
 use std::collections::HashMap;
+
+use enum_dispatch::enum_dispatch;
 
 use mizer_module::{Module, Runtime};
 use mizer_processing::*;
@@ -81,14 +82,16 @@ impl Processor for DmxProcessor {
     }
 }
 
+impl DebuggableProcessor for DmxProcessor {}
+
 pub struct DmxModule;
 
 impl Module for DmxModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         log::debug!("Registering...");
         let dmx_manager = DmxConnectionManager::new();
         runtime.injector_mut().provide(dmx_manager);
-        runtime.add_processor(DmxProcessor.into());
+        runtime.add_processor(DmxProcessor);
 
         Ok(())
     }

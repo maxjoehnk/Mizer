@@ -4,16 +4,8 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
-[features]
-compile = ["egui", "egui-winit", "egui-wgpu", "winit", "image"]
-
 [dependencies]
 anyhow = "1"
-egui = { version = "0.22", optional = true }
-egui-winit = { version = "0.22", optional = true }
-egui-wgpu = { version = "0.22", features = ["winit"], optional = true }
-winit = { version = "0.28", optional = true }
-image = { version = "0.24", optional = true }
 log = "0.4"
 profiling = "1"
 futures = { version = "0.3", features = ["executor"] }

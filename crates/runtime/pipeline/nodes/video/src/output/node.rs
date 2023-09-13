@@ -96,7 +96,7 @@ impl ProcessingNode for VideoOutputNode {
         }
 
         let state = state.as_mut().unwrap();
-        state.window.handle_events(wgpu_context);
+        state.window.handle_surface_events(wgpu_context);
         if !self.window_name.is_empty() {
             state.window.set_title(&self.window_name);
         }

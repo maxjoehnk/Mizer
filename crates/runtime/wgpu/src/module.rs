@@ -1,6 +1,7 @@
+use mizer_module::{Module, Runtime};
+
 use crate::processor::WgpuPipelineProcessor;
 use crate::{TextureRegistry, WgpuContext, WgpuPipeline};
-use mizer_module::{Module, Runtime};
 
 pub struct WgpuModule {
     context: WgpuContext,
@@ -15,12 +16,12 @@ impl WgpuModule {
 }
 
 impl Module for WgpuModule {
-    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
         let injector = runtime.injector_mut();
         injector.provide(self.context);
         injector.provide(WgpuPipeline::new());
         injector.provide(TextureRegistry::new());
-        runtime.add_processor(Box::new(WgpuPipelineProcessor));
+        runtime.add_processor(WgpuPipelineProcessor);
 
         Ok(())
     }

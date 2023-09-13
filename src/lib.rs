@@ -8,6 +8,8 @@ use pinboard::NonEmptyPinboard;
 use mizer_api::handlers::Handlers;
 use mizer_api::start_remote_api;
 use mizer_command_executor::CommandExecutorModule;
+#[cfg(feature = "debug-ui")]
+use mizer_debug_ui_egui::EguiDebugUi;
 use mizer_devices::{DeviceManager, DeviceModule};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
@@ -48,7 +50,7 @@ pub fn build_runtime(
         .context("Failed to load settings from disk")?;
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
-    let mut runtime = DefaultRuntime::new(flags.debug);
+    let mut runtime = DefaultRuntime::new();
 
     let sequencer =
         register_sequencer_module(&mut runtime).context("Failed to register sequencer module")?;
@@ -56,7 +58,8 @@ pub fn build_runtime(
         register_effects_module(&mut runtime).context("Failed to register effects module")?;
     let timecode_manager =
         register_timecode_module(&mut runtime).context("Failed to register timecode module")?;
-    let device_manager = register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
+    let device_manager = register_device_module(&mut runtime, &handle)
+        .context("Failed to register devices module")?;
     register_dmx_module(&mut runtime).context("failed to register dmx module")?;
     register_mqtt_module(&mut runtime).context("failed to register mqtt module")?;
     register_osc_module(&mut runtime).context("failed to register osc module")?;
@@ -64,6 +67,21 @@ pub fn build_runtime(
         .context("Failed to register midi module")?;
     if let Err(err) = handle.block_on(register_wgpu_module(&mut runtime)) {
         log::warn!("Failed to register gpu module, video nodes unavailable.\n{err:?}");
+    } else if cfg!(feature = "debug-ui") {
+        if let Some(debug_ui) = flags
+            .debug
+            .then(|| EguiDebugUi::new(runtime.injector().get().unwrap()))
+            .and_then(|ui| match ui {
+                Ok(ui) => Some(ui),
+                Err(err) => {
+                    log::error!("Debug UI is not available: {err:?}");
+
+                    None
+                }
+            })
+        {
+            runtime.setup_debug_ui(debug_ui);
+        }
     }
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
@@ -310,21 +328,21 @@ impl Mizer {
     }
 }
 
-fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Sequencer> {
+fn register_sequencer_module(runtime: &mut impl Runtime) -> anyhow::Result<Sequencer> {
     let (module, sequencer) = SequencerModule::new();
     module.register(runtime)?;
 
     Ok(sequencer)
 }
 
-fn register_media_module(runtime: &mut DefaultRuntime) -> anyhow::Result<MediaServer> {
+fn register_media_module(runtime: &mut impl Runtime) -> anyhow::Result<MediaServer> {
     let (media_module, media_server) = MediaModule::new()?;
     media_module.register(runtime)?;
 
     Ok(media_server)
 }
 
-fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<EffectEngine> {
+fn register_effects_module(runtime: &mut impl Runtime) -> anyhow::Result<EffectEngine> {
     let (module, engine) = EffectsModule::new();
     module.register(runtime)?;
 
@@ -332,7 +350,7 @@ fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Effec
 }
 
 fn register_device_module(
-    runtime: &mut DefaultRuntime,
+    runtime: &mut impl Runtime,
     handle: &tokio::runtime::Handle,
 ) -> anyhow::Result<DeviceManager> {
     let (device_module, device_manager) = DeviceModule::new();
@@ -349,26 +367,26 @@ fn register_device_module(
     Ok(device_manager)
 }
 
-fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+fn register_dmx_module(runtime: &mut impl Runtime) -> anyhow::Result<()> {
     DmxModule.register(runtime)
 }
 
-fn register_mqtt_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+fn register_mqtt_module(runtime: &mut impl Runtime) -> anyhow::Result<()> {
     MqttModule.register(runtime)
 }
 
-fn register_osc_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+fn register_osc_module(runtime: &mut impl Runtime) -> anyhow::Result<()> {
     OscModule.register(runtime)
 }
 
-fn register_timecode_module(runtime: &mut DefaultRuntime) -> anyhow::Result<TimecodeManager> {
+fn register_timecode_module(runtime: &mut impl Runtime) -> anyhow::Result<TimecodeManager> {
     let (module, manager) = TimecodeModule::new();
     module.register(runtime)?;
 
     Ok(manager)
 }
 
-fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> anyhow::Result<()> {
+fn register_midi_module(runtime: &mut impl Runtime, settings: &Settings) -> anyhow::Result<()> {
     MidiModule.register(runtime)?;
 
     let connection_manager = runtime
@@ -381,7 +399,7 @@ fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> an
 }
 
 fn register_fixtures_module(
-    runtime: &mut DefaultRuntime,
+    runtime: &mut impl Runtime,
     settings: &Settings,
 ) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
     let providers = FixtureLibrariesLoader::get_providers(&settings.paths.fixture_libraries);
@@ -392,7 +410,7 @@ fn register_fixtures_module(
     Ok((fixture_manager, fixture_library))
 }
 
-async fn register_wgpu_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+async fn register_wgpu_module(runtime: &mut impl Runtime) -> anyhow::Result<()> {
     let module = WgpuModule::new().await?;
     module.register(runtime)?;
     WindowModule.register(runtime)?;

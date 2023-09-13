@@ -1,5 +1,6 @@
-use crate::{CommandExecutor, InMainLoopExecutionWorker};
 use mizer_processing::*;
+
+use crate::{CommandExecutor, InMainLoopExecutionWorker};
 
 pub struct CommandProcessor {
     executor: CommandExecutor,
@@ -26,3 +27,5 @@ impl Processor for CommandProcessor {
         }
     }
 }
+
+impl DebuggableProcessor for CommandProcessor {}

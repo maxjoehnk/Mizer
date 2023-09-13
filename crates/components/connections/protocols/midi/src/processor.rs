@@ -17,3 +17,5 @@ impl Processor for MidiProcessor {
         }
     }
 }
+
+impl DebuggableProcessor for MidiProcessor {}

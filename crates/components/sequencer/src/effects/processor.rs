@@ -1,7 +1,9 @@
-use crate::EffectEngine;
+use std::ops::Deref;
+
 use mizer_fixtures::manager::FixtureManager;
 use mizer_module::*;
-use std::ops::Deref;
+
+use crate::EffectEngine;
 
 pub(crate) struct EffectsProcessor;
 
@@ -13,8 +15,10 @@ impl Processor for EffectsProcessor {
         engine.run_programmer_effects(fixtures.get_programmer().deref());
         engine.process_instances(fixtures, frame);
     }
+}
 
-    fn update_debug_ui(&mut self, injector: &Injector, ui: &mut DebugUiDrawHandle) {
+impl DebuggableProcessor for EffectsProcessor {
+    fn debug_ui<'a>(&mut self, injector: &Injector, ui: &mut impl DebugUiDrawHandle<'a>) {
         let engine = injector.get::<EffectEngine>().unwrap();
         let instances = engine.instances.lock().unwrap();
         ui.collapsing_header("Effects", |ui| {

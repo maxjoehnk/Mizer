@@ -9,6 +9,7 @@ use downcast::*;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::{Clock, ClockFrame};
+use mizer_debug_ui_impl::{DebugUi, DebugUiImpl};
 use mizer_node::*;
 use mizer_nodes::NodeDowncast;
 use mizer_ports::memory::MemorySender;
@@ -34,7 +35,7 @@ pub trait ProcessingNodeExt: PipelineNode {
         state: &mut Box<dyn Any>,
     ) -> anyhow::Result<()>;
 
-    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Box<dyn Any>);
+    fn debug_ui(&self, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>, state: &Box<dyn Any>);
 
     fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode;
 }
@@ -77,7 +78,7 @@ where
         }
     }
 
-    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Box<dyn Any>) {
+    fn debug_ui(&self, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>, state: &Box<dyn Any>) {
         if let Some(state) = state.downcast_ref() {
             self.debug_ui(ui, state)
         } else {
@@ -493,7 +494,7 @@ impl PipelineWorker {
 
     pub fn debug_ui(
         &self,
-        ui: &mut DebugUiDrawHandle,
+        ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
         nodes: &Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
     ) {
         ui.collapsing_header("Nodes", |ui| {

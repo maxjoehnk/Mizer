@@ -67,20 +67,23 @@ pub fn build_runtime(
         .context("Failed to register midi module")?;
     if let Err(err) = handle.block_on(register_wgpu_module(&mut runtime)) {
         log::warn!("Failed to register gpu module, video nodes unavailable.\n{err:?}");
-    } else if cfg!(feature = "debug-ui") {
-        if let Some(debug_ui) = flags
-            .debug
-            .then(|| EguiDebugUi::new(runtime.injector().get().unwrap()))
-            .and_then(|ui| match ui {
-                Ok(ui) => Some(ui),
-                Err(err) => {
-                    log::error!("Debug UI is not available: {err:?}");
-
-                    None
-                }
-            })
+    } else {
+        #[cfg(feature = "debug-ui")]
         {
-            runtime.setup_debug_ui(debug_ui);
+            if let Some(debug_ui) = flags
+                .debug
+                .then(|| EguiDebugUi::new(runtime.injector().get().unwrap()))
+                .and_then(|ui| match ui {
+                    Ok(ui) => Some(ui),
+                    Err(err) => {
+                        log::error!("Debug UI is not available: {err:?}");
+
+                        None
+                    }
+                })
+            {
+                runtime.setup_debug_ui(debug_ui);
+            }
         }
     }
     let (fixture_manager, fixture_library) =

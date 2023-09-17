@@ -11,6 +11,7 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/state/status_bar_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/windows/preferences_window.dart';
 import 'package:mizer/windows/smart_window.dart';
@@ -94,6 +95,7 @@ class ApplicationMenu extends StatelessWidget {
 
   Future<void> _newProject(BuildContext context) async {
     await context.read<SessionApi>().newProject();
+    context.clearStatus();
     _refreshViews(context);
   }
 
@@ -107,8 +109,7 @@ class ApplicationMenu extends StatelessWidget {
 
   Future<void> _openProjectFromHistory(
       BuildContext context, SessionApi api, String filePath) async {
-    await api.loadProject(filePath);
-    _refreshViews(context);
+    await ProjectFiles.openProjectFrom(context, filePath);
   }
 
   void _refreshViews(BuildContext context) {

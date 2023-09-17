@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/state/nodes_view.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/state/status_bar_bloc.dart';
 
 import 'effects_bloc.dart';
 import 'fixtures_bloc.dart';
@@ -35,6 +36,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => PlansBloc(context.read())),
         BlocProvider(create: (context) => EffectsBloc(context.read())),
         BlocProvider(create: (context) => TimecodeBloc(context.read())),
+        BlocProvider(create: (context) => StatusBarCubit()),
       ],
     );
   }

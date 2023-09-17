@@ -9,7 +9,7 @@ log = "0.4"
 anyhow = "1"
 mizer-fixtures = { path = ".." }
 serde = { version = "1", features = ["derive"] }
-toml = "0.7"
+toml = "0.8"
 mizer-util = { path = "../../../util" }
 base64 = "0.21"
 rayon = "1.7"

@@ -96,7 +96,7 @@ fn start_runtime(
     if let Some(handler_out) = handler_out {
         handler_out.send(mizer.handlers.clone())?;
     }
-    runtime.block_on(mizer.run(&api_handler));
+    mizer.run(&api_handler);
 
     Ok(())
 }

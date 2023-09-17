@@ -145,7 +145,7 @@ pub struct Mizer {
 }
 
 impl Mizer {
-    pub async fn run(&mut self, api_handler: &ApiHandler) {
+    pub fn run(&mut self, api_handler: &ApiHandler) {
         profiling::register_thread!("Main Loop");
         log::trace!("Entering main loop...");
         loop {
@@ -156,7 +156,7 @@ impl Mizer {
             let frame_time = after.duration_since(before);
             metrics::histogram!("mizer.frame_time", frame_time);
             if frame_time <= FRAME_DELAY_60FPS {
-                tokio::time::sleep(FRAME_DELAY_60FPS - frame_time).await;
+                std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
             }
             profiling::finish_frame!();
         }

@@ -95,6 +95,7 @@ jobs:
             libmfx-dev \
             libvorbis-dev \
             libwavpack-dev \
+            libzimg-dev \
             yasm
 
       - uses: taiki-e/install-action@protoc

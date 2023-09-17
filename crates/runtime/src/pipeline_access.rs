@@ -1,3 +1,4 @@
+use anyhow::Context;
 use std::collections::HashMap;
 use std::ops::DerefMut;
 use std::str::FromStr;
@@ -190,7 +191,9 @@ impl PipelineAccess {
     }
 
     pub fn add_link(&mut self, mut link: NodeLink) -> anyhow::Result<()> {
-        let (source_port, target_port) = self.get_ports(&link)?;
+        let (source_port, target_port) = self
+            .get_ports(&link)
+            .context(format!("Fetching ports for link {link:?}"))?;
         anyhow::ensure!(
             source_port.port_type == target_port.port_type,
             "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",

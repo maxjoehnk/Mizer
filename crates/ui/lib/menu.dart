@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 
+import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/windows/preferences_window.dart';
 import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
@@ -32,7 +34,7 @@ class ApplicationMenu extends StatelessWidget {
                   label: "New Project".i18n,
                   action: () => _newProject(context),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
-              MenuItem(label: "Open Project".i18n, action: () => ProjectFiles.openProject(context)),
+              MenuItem(label: "Open Project".i18n, action: () => _openProject(context)),
               SubMenu(
                 title: "Open Recent".i18n,
                 children: state.projectHistory
@@ -95,6 +97,14 @@ class ApplicationMenu extends StatelessWidget {
     _refreshViews(context);
   }
 
+  Future<void> _openProject(BuildContext context) async {
+    try {
+      await ProjectFiles.openProject(context);
+    } on PlatformException catch (err) {
+      showDialog(context: context, builder: (context) => ErrorDialog(title: "Unable to load project file".i18n, text: err.message ?? err.toString()));
+    }
+  }
+
   Future<void> _openProjectFromHistory(
       BuildContext context, SessionApi api, String filePath) async {
     await api.loadProject(filePath);
@@ -103,5 +113,17 @@ class ApplicationMenu extends StatelessWidget {
 
   void _refreshViews(BuildContext context) {
     context.refreshAllStates();
+  }
+}
+
+class ErrorDialog extends StatelessWidget {
+  final String title;
+  final String text;
+
+  const ErrorDialog({super.key, required this.title, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionDialog(title: title, content: SizedBox(height: 768, child: SingleChildScrollView(child: Text(text))));
   }
 }

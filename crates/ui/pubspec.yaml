@@ -34,6 +34,7 @@ dependencies:
   ffi: ^2.0.1
   filesize: ^2.0.1
   multicast_dns: ^0.3.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

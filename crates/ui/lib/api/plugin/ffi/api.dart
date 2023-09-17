@@ -1,6 +1,8 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' as io;
 
+import 'package:mizer/api/plugin/ffi/status.dart';
+
 import 'bindings.dart';
 import 'connections.dart';
 import 'history.dart';
@@ -86,5 +88,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<NodesRef>.fromAddress(pointerAddress);
 
     return NodesPointer(this, pointer);
+  }
+
+  StatusPointer openStatus(int pointerAddress) {
+    var pointer = ffi.Pointer<StatusApi>.fromAddress(pointerAddress);
+
+    return StatusPointer(this, pointer);
   }
 }

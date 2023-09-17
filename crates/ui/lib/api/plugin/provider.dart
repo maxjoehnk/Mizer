@@ -14,12 +14,14 @@ import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/contracts/status.dart';
+import 'package:mizer/api/plugin/status.dart';
 
 import 'app.dart';
 import 'connections.dart';
 import 'effects.dart';
 import 'ffi/api.dart';
-import 'ffi/bindings.dart';
+import 'ffi/bindings.dart' as ffi;
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'mappings.dart';
@@ -34,7 +36,7 @@ import 'transport.dart';
 
 class PluginApiProvider extends StatelessWidget {
   final Widget child;
-  late final FFIBindings bindings;
+  late final ffi.FFIBindings bindings;
 
   PluginApiProvider({required this.child}) {
     this.bindings = openBindings();
@@ -60,6 +62,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<PlansApi>(create: (_) => PlansPluginApi(bindings)),
         RepositoryProvider<MappingsApi>(create: (_) => MappingsPluginApi()),
         RepositoryProvider<TimecodeApi>(create: (_) => TimecodePluginApi()),
+        RepositoryProvider<StatusApi>(create: (_) => StatusPluginApi(bindings)),
       ],
     );
   }

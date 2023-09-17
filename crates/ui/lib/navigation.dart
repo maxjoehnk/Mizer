@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide View;
+import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/api/contracts/status.dart';
+import 'package:mizer/api/plugin/ffi/status.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
@@ -70,38 +76,67 @@ class _HomeState extends State<Home> {
       hotkeySelector: (hotkeys) => hotkeys.global,
       hotkeyMap: _getShortcuts(routes),
       child: ApplicationMenu(
-        child: Row(
+        child: Column(
           children: [
-            NavigationBar(
-              selectedIndex: _selectedIndex,
-              onSelect: this._selectView,
-              routes: routes,
-            ),
             Expanded(
-                child: Column(
-              children: [
-                Expanded(
-                  child: SafeArea(
-                    child: Container(
-                        child: RepaintBoundary(child: _currentWidget),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration()),
+              child: Row(
+                children: [
+                  NavigationBar(
+                    selectedIndex: _selectedIndex,
+                    onSelect: this._selectView,
+                    routes: routes,
                   ),
+                  Expanded(
+                      child: Column(
+                    children: [
+                      Expanded(
+                        child: SafeArea(
+                          child: Container(
+                              child: RepaintBoundary(child: _currentWidget),
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration()),
+                        ),
+                      ),
+                      if (_showSelection)
+                        SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
+                      if (_showProgrammer)
+                        SizedBox(height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+                      RepaintBoundary(
+                          child: TransportControls(
+                              showProgrammer: _showProgrammer,
+                              toggleProgrammer: () => _toggleProgrammerPane(),
+                              showSelection: _showSelection,
+                              toggleSelection: () => _toggleSelectionPane())),
+                    ],
+                  ))
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+            ),
+            RepaintBoundary(
+              child: Container(
+                height: 24,
+                color: Colors.grey.shade900,
+                child: Row(
+                  children: [
+                    Expanded(child: Container()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: StatusBarFps(),
+                    ),
+                    Container(
+                      width: 1,
+                      color: Colors.grey.shade600,
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: StatusBarClock(),
+                    ),
+                  ],
                 ),
-                if (_showSelection)
-                  SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
-                if (_showProgrammer)
-                  SizedBox(height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
-                RepaintBoundary(
-                    child: TransportControls(
-                        showProgrammer: _showProgrammer,
-                        toggleProgrammer: () => _toggleProgrammerPane(),
-                        showSelection: _showSelection,
-                        toggleSelection: () => _toggleSelectionPane()))
-              ],
-            ))
+              ),
+            )
           ],
-          crossAxisAlignment: CrossAxisAlignment.start,
         ),
       ),
     ));
@@ -141,6 +176,76 @@ class _HomeState extends State<Home> {
       shortcuts[entry.value.viewKey.toHotkeyString()] = () => _selectView(entry.key);
     }
     return shortcuts;
+  }
+}
+
+class StatusBarFps extends StatefulWidget {
+  const StatusBarFps({
+    super.key,
+  });
+
+  @override
+  State<StatusBarFps> createState() => _StatusBarFpsState();
+}
+
+class _StatusBarFpsState extends State<StatusBarFps> with SingleTickerProviderStateMixin {
+  StatusPointer? _statusPointer;
+  late final Ticker ticker;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<StatusApi>().getStatusPointer()
+      .then((value) => _statusPointer = value);
+    ticker = createTicker((elapsed) => setState(() {}));
+    ticker.start();
+  }
+
+  @override
+  void dispose() {
+    _statusPointer?.dispose();
+    ticker.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_statusPointer == null) {
+      return Container();
+    }
+    var fps = _statusPointer!.readFps().toStringAsFixed(2);
+    return Text('FPS $fps'.i18n, style: Theme.of(context).textTheme.bodySmall);
+  }
+}
+
+class StatusBarClock extends StatefulWidget {
+  const StatusBarClock({
+    super.key,
+  });
+
+  @override
+  State<StatusBarClock> createState() => _StatusBarClockState();
+}
+
+class _StatusBarClockState extends State<StatusBarClock> {
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    timer = new Timer.periodic(Duration(seconds: 1), (timer) => setState(() {}));
+  }
+
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(DateFormat('Hms').format(DateTime.now()), style: Theme.of(context).textTheme.bodySmall);
   }
 }
 

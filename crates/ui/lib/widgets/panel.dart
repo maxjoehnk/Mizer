@@ -225,8 +225,11 @@ class PanelActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: actions.map((a) => PanelAction(action: a)).toList(),
+      child: Container(
+        color: Colors.grey.shade800,
+        child: Column(
+          children: actions.map((a) => PanelAction(action: a)).toList(),
+        ),
       ),
     );
   }
@@ -293,12 +296,12 @@ class PanelAction extends StatelessWidget {
 
   Color _getBackground(bool hovered) {
     if (action.disabled == true) {
-      return Colors.grey.shade800.withAlpha(128);
+      return Colors.black12;
     }
     if (action.activated || hovered) {
-      return Colors.grey.shade700;
+      return Colors.white10;
     }
-    return Colors.grey.shade800;
+    return Colors.transparent;
   }
 
   Color _getColor() {

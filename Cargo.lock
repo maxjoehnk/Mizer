@@ -5423,6 +5423,7 @@ dependencies = [
  "mizer-devices",
  "mizer-fixtures",
  "mizer-gamepads",
+ "mizer-message-bus",
  "mizer-node",
  "mizer-runtime",
  "mizer-sequencer",

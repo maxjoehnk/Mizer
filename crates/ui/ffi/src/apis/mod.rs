@@ -5,4 +5,5 @@ pub mod node_history;
 pub mod nodes;
 pub mod programmer;
 pub mod sequencer;
+pub mod status;
 pub mod transport;

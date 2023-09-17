@@ -10,12 +10,14 @@ pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::session::*;
 pub use self::settings::*;
+pub use self::status::*;
 pub use self::timecode::*;
 pub use self::transport::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
+use mizer_message_bus::MessageBus;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_timecode::TimecodeManager;
 
@@ -31,6 +33,7 @@ mod programmer;
 mod sequencer;
 mod session;
 mod settings;
+mod status;
 mod timecode;
 mod transport;
 
@@ -50,6 +53,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub plans: PlansHandler<R>,
     pub mappings: MappingsHandler<R>,
     pub timecode: TimecodeHandler<R>,
+    pub status: StatusHandler,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -61,6 +65,7 @@ impl<R: RuntimeApi> Handlers<R> {
         sequencer: Sequencer,
         effect_engine: EffectEngine,
         timecode_manager: TimecodeManager,
+        fps_counter: MessageBus<f64>,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -81,6 +86,7 @@ impl<R: RuntimeApi> Handlers<R> {
             plans: PlansHandler::new(fixture_manager, runtime.clone()),
             mappings: MappingsHandler::new(runtime.clone()),
             timecode: TimecodeHandler::new(timecode_manager, runtime),
+            status: StatusHandler::new(fps_counter),
         }
     }
 }

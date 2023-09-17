@@ -17,6 +17,7 @@ pub use method::connections::*;
 pub use method::mappings::*;
 pub use method::plans::*;
 pub use method::session::*;
+pub use method::status::*;
 pub use method::timecode::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 

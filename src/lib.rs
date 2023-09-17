@@ -98,6 +98,8 @@ pub fn build_runtime(
 
     let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
 
+    let fps_counter = MessageBus::new();
+
     let handlers = Handlers::new(
         api,
         fixture_manager,
@@ -106,6 +108,7 @@ pub fn build_runtime(
         sequencer,
         effect_engine,
         timecode_manager,
+        fps_counter.clone(),
     );
 
     let remote_api_port = start_remote_api(handlers.clone())?;
@@ -121,6 +124,7 @@ pub fn build_runtime(
         media_server_api: media_server,
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
+        fps_sender: fps_counter,
     };
     if project_file.is_some() {
         mizer.load_project().context(format!(
@@ -142,6 +146,7 @@ pub struct Mizer {
     media_server_api: MediaServer,
     session_events: MessageBus<SessionState>,
     project_history: ProjectHistory,
+    fps_sender: MessageBus<f64>,
 }
 
 impl Mizer {
@@ -159,6 +164,9 @@ impl Mizer {
                 std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
             }
             profiling::finish_frame!();
+            let after = std::time::Instant::now();
+            let frame_time = after.duration_since(before);
+            self.fps_sender.send(1.0 / frame_time.as_secs_f64());
         }
     }
 

@@ -75,6 +75,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
     let _mappings = MappingsChannel::new(handlers.mappings).channel(context.weak());
     let _timecode = TimecodeChannel::new(handlers.timecode).channel(context.weak());
+    let _status = StatusChannel::new(handlers.status).channel(context.weak());
 
     context
         .window_manager

@@ -11,24 +11,30 @@ use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
 
+const PLAYBACK_INPUT: &str = "Playback";
+const PLAYBACK_OUTPUT: &str = "Playback";
 const OUTPUT_PORT: &str = "Output";
 
 const FILE_SETTING: &str = "File";
+const SYNC_TRANSPORT_STATE_SETTING: &str = "Sync to Transport State";
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoFileNode {
     pub file: String,
+    pub sync_to_transport_state: bool,
 }
 
 impl ConfigurableNode for VideoFileNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video, MediaContentType::Image]),
+            setting!(SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state),
         ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(media setting, FILE_SETTING, self.file);
+        update!(bool setting, SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state);
 
         update_fallback!(setting)
     }
@@ -44,7 +50,11 @@ impl PipelineNode for VideoFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(OUTPUT_PORT, PortType::Texture)]
+        vec![
+            input_port!(PLAYBACK_INPUT, PortType::Single),
+            output_port!(OUTPUT_PORT, PortType::Texture),
+            output_port!(PLAYBACK_OUTPUT, PortType::Single),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -53,13 +63,22 @@ impl PipelineNode for VideoFileNode {
 }
 
 impl ProcessingNode for VideoFileNode {
-    type State = Option<VideoFileState>;
+    type State = (VideoFileNodeState, Option<VideoFileState>);
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(
+        &self,
+        context: &impl NodeContext,
+        (node_state, state): &mut Self::State,
+    ) -> anyhow::Result<()> {
         let wgpu_context = context.inject::<WgpuContext>().unwrap();
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
         let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
         let media_server = context.inject::<MediaServer>().unwrap();
+
+        if let Some(value) = context.read_port::<_, f64>(PLAYBACK_INPUT) {
+            let playback = value - f64::EPSILON > 0.0;
+            node_state.playing = playback;
+        }
 
         if self.file.is_empty() {
             return Ok(());
@@ -85,7 +104,23 @@ impl ProcessingNode for VideoFileNode {
             state.texture = VideoTexture::new(media_file.file_path)
                 .context("Creating new video texture provider")?;
         }
-        state.texture.clock_state = context.clock_state();
+        state.texture.clock_state = if self.sync_to_transport_state {
+            context.clock_state()
+        } else {
+            if node_state.playing {
+                ClockState::Playing
+            } else {
+                ClockState::Stopped
+            }
+        };
+        context.write_port::<_, f64>(
+            PLAYBACK_OUTPUT,
+            match state.texture.clock_state {
+                ClockState::Playing => 1.0,
+                ClockState::Stopped => 0.0,
+                ClockState::Paused => 0.5,
+            },
+        );
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
             .get(&state.transfer_texture)
@@ -100,7 +135,18 @@ impl ProcessingNode for VideoFileNode {
     }
 
     fn create_state(&self) -> Self::State {
-        None
+        Default::default()
+    }
+}
+
+#[derive(Debug)]
+pub struct VideoFileNodeState {
+    playing: bool,
+}
+
+impl Default for VideoFileNodeState {
+    fn default() -> Self {
+        Self { playing: true }
     }
 }
 

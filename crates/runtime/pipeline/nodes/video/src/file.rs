@@ -21,6 +21,7 @@ const SYNC_TRANSPORT_STATE_SETTING: &str = "Sync to Transport State";
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoFileNode {
     pub file: String,
+    #[serde(default)]
     pub sync_to_transport_state: bool,
 }
 

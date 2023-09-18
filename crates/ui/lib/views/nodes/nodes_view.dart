@@ -84,25 +84,15 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
               child: Stack(
                 children: [
                   GestureDetector(
+                      onDoubleTapDown: (event) {
+                        _openAddNodeMenu(context,
+                            globalPosition: event.globalPosition,
+                            localPosition: event.localPosition);
+                      },
                       onSecondaryTapUp: (event) {
-                        var availableNodes = context.read<NodesBloc>().state.availableNodes.where(
-                            (element) => element.category != NodeCategory.NODE_CATEGORY_NONE);
-                        var categories =
-                            groupBy(availableNodes, (AvailableNode node) => node.category);
-                        Navigator.of(context).push(MizerPopupRoute(
-                            position: event.globalPosition,
-                            child: PopupMenu<Node_NodeType>(
-                                categories: categories.entries
-                                    .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
-                                    .map((e) => PopupCategory(
-                                        label: CATEGORY_NAMES[e.key]!,
-                                        items:
-                                            e.value.map((n) => PopupItem(n.type, n.name)).toList()))
-                                    .toList(),
-                                onSelect: (nodeType) => _addNode(model, nodeType))));
-                        setState(() {
-                          addMenuPosition = event.localPosition;
-                        });
+                        _openAddNodeMenu(context,
+                            globalPosition: event.globalPosition,
+                            localPosition: event.localPosition);
                       },
                       child: Overlay(initialEntries: [
                         OverlayEntry(
@@ -191,6 +181,29 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         ],
       ),
     );
+  }
+
+  void _openAddNodeMenu(BuildContext context,
+      {required Offset globalPosition, required Offset localPosition}) {
+    var availableNodes = context
+        .read<NodesBloc>()
+        .state
+        .availableNodes
+        .where((element) => element.category != NodeCategory.NODE_CATEGORY_NONE);
+    var categories = groupBy(availableNodes, (AvailableNode node) => node.category);
+    Navigator.of(context).push(MizerPopupRoute(
+        position: globalPosition,
+        child: PopupMenu<Node_NodeType>(
+            categories: categories.entries
+                .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
+                .map((e) => PopupCategory(
+                    label: CATEGORY_NAMES[e.key]!,
+                    items: e.value.map((n) => PopupItem(n.type, n.name)).toList()))
+                .toList(),
+            onSelect: (nodeType) => _addNode(model, nodeType))));
+    setState(() {
+      addMenuPosition = localPosition;
+    });
   }
 
   void _deleteNode(BuildContext context) {

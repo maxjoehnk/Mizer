@@ -1,0 +1,1 @@
+Adds a border to the input texture.

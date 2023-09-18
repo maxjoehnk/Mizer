@@ -1,0 +1,1 @@
+The LabelNode corresponds to a label control in the <<Layout View>>.

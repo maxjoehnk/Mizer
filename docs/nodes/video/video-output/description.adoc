@@ -1,0 +1,1 @@
+Outputs the video stream to a new window.

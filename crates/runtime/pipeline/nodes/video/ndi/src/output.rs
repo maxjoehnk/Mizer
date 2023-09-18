@@ -71,7 +71,7 @@ impl PipelineNode for NdiOutputNode {
         NodeDetails {
             name: "NDI Output".into(),
             preview_type: PreviewType::Texture,
-            category: NodeCategory::Connections,
+            category: NodeCategory::Video,
         }
     }
 

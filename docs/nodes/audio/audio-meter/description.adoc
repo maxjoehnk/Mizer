@@ -1,0 +1,1 @@
+Measures the audio level of the input signal.

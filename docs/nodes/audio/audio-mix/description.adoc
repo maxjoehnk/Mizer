@@ -1,0 +1,1 @@
+Combines multiple audio streams into a single stream.

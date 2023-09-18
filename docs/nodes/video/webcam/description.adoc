@@ -1,0 +1,1 @@
+Outputs a video stream from a webcam.

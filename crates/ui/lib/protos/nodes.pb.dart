@@ -1,47 +1,52 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'nodes.pbenum.dart';
 import 'media.pbenum.dart' as $0;
+import 'nodes.pbenum.dart';
 
 export 'nodes.pbenum.dart';
 
 class AddNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
-    ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
-    ..hasRequiredFields = false
-  ;
-
-  AddNodeRequest._() : super();
   factory AddNodeRequest({
     Node_NodeType? type,
     NodePosition? position,
     $core.String? parent,
   }) {
-    final _result = create();
+    final $result = create();
     if (type != null) {
-      _result.type = type;
+      $result.type = type;
     }
     if (position != null) {
-      _result.position = position;
+      $result.position = position;
     }
     if (parent != null) {
-      _result.parent = parent;
+      $result.parent = parent;
     }
-    return _result;
+    return $result;
   }
+  AddNodeRequest._() : super();
   factory AddNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOM<NodePosition>(2, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
+    ..aOS(3, _omitFieldNames ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -51,8 +56,10 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddNodeRequest copyWith(void Function(AddNodeRequest) updates) => super.copyWith((message) => updates(message as AddNodeRequest)) as AddNodeRequest; // ignore: deprecated_member_use
+  AddNodeRequest copyWith(void Function(AddNodeRequest) updates) => super.copyWith((message) => updates(message as AddNodeRequest)) as AddNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddNodeRequest create() => AddNodeRequest._();
   AddNodeRequest createEmptyInstance() => create();
@@ -92,28 +99,29 @@ class AddNodeRequest extends $pb.GeneratedMessage {
 }
 
 class DuplicateNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DuplicateNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
-    ..hasRequiredFields = false
-  ;
-
-  DuplicateNodeRequest._() : super();
   factory DuplicateNodeRequest({
     $core.String? path,
     $core.String? parent,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (parent != null) {
-      _result.parent = parent;
+      $result.parent = parent;
     }
-    return _result;
+    return $result;
   }
+  DuplicateNodeRequest._() : super();
   factory DuplicateNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DuplicateNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DuplicateNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOS(2, _omitFieldNames ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -123,8 +131,10 @@ class DuplicateNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DuplicateNodeRequest copyWith(void Function(DuplicateNodeRequest) updates) => super.copyWith((message) => updates(message as DuplicateNodeRequest)) as DuplicateNodeRequest; // ignore: deprecated_member_use
+  DuplicateNodeRequest copyWith(void Function(DuplicateNodeRequest) updates) => super.copyWith((message) => updates(message as DuplicateNodeRequest)) as DuplicateNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DuplicateNodeRequest create() => DuplicateNodeRequest._();
   DuplicateNodeRequest createEmptyInstance() => create();
@@ -153,33 +163,34 @@ class DuplicateNodeRequest extends $pb.GeneratedMessage {
 }
 
 class WriteControl extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port')
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  WriteControl._() : super();
   factory WriteControl({
     $core.String? path,
     $core.String? port,
     $core.double? value,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (port != null) {
-      _result.port = port;
+      $result.port = port;
     }
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
-    return _result;
+    return $result;
   }
+  WriteControl._() : super();
   factory WriteControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory WriteControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WriteControl', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOS(2, _omitFieldNames ? '' : 'port')
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -189,8 +200,10 @@ class WriteControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteControl copyWith(void Function(WriteControl) updates) => super.copyWith((message) => updates(message as WriteControl)) as WriteControl; // ignore: deprecated_member_use
+  WriteControl copyWith(void Function(WriteControl) updates) => super.copyWith((message) => updates(message as WriteControl)) as WriteControl;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static WriteControl create() => WriteControl._();
   WriteControl createEmptyInstance() => create();
@@ -228,28 +241,29 @@ class WriteControl extends $pb.GeneratedMessage {
 }
 
 class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateNodeSettingRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOM<NodeSetting>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setting', subBuilder: NodeSetting.create)
-    ..hasRequiredFields = false
-  ;
-
-  UpdateNodeSettingRequest._() : super();
   factory UpdateNodeSettingRequest({
     $core.String? path,
     NodeSetting? setting,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (setting != null) {
-      _result.setting = setting;
+      $result.setting = setting;
     }
-    return _result;
+    return $result;
   }
+  UpdateNodeSettingRequest._() : super();
   factory UpdateNodeSettingRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UpdateNodeSettingRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateNodeSettingRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOM<NodeSetting>(2, _omitFieldNames ? '' : 'setting', subBuilder: NodeSetting.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -259,8 +273,10 @@ class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateNodeSettingRequest copyWith(void Function(UpdateNodeSettingRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeSettingRequest)) as UpdateNodeSettingRequest; // ignore: deprecated_member_use
+  UpdateNodeSettingRequest copyWith(void Function(UpdateNodeSettingRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeSettingRequest)) as UpdateNodeSettingRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static UpdateNodeSettingRequest create() => UpdateNodeSettingRequest._();
   UpdateNodeSettingRequest createEmptyInstance() => create();
@@ -291,28 +307,29 @@ class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
 }
 
 class MoveNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
-    ..hasRequiredFields = false
-  ;
-
-  MoveNodeRequest._() : super();
   factory MoveNodeRequest({
     $core.String? path,
     NodePosition? position,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (position != null) {
-      _result.position = position;
+      $result.position = position;
     }
-    return _result;
+    return $result;
   }
+  MoveNodeRequest._() : super();
   factory MoveNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MoveNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOM<NodePosition>(2, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -322,8 +339,10 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveNodeRequest copyWith(void Function(MoveNodeRequest) updates) => super.copyWith((message) => updates(message as MoveNodeRequest)) as MoveNodeRequest; // ignore: deprecated_member_use
+  MoveNodeRequest copyWith(void Function(MoveNodeRequest) updates) => super.copyWith((message) => updates(message as MoveNodeRequest)) as MoveNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MoveNodeRequest create() => MoveNodeRequest._();
   MoveNodeRequest createEmptyInstance() => create();
@@ -354,33 +373,34 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
 }
 
 class ShowNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShowNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
-    ..hasRequiredFields = false
-  ;
-
-  ShowNodeRequest._() : super();
   factory ShowNodeRequest({
     $core.String? path,
     NodePosition? position,
     $core.String? parent,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (position != null) {
-      _result.position = position;
+      $result.position = position;
     }
     if (parent != null) {
-      _result.parent = parent;
+      $result.parent = parent;
     }
-    return _result;
+    return $result;
   }
+  ShowNodeRequest._() : super();
   factory ShowNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ShowNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ShowNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOM<NodePosition>(2, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
+    ..aOS(3, _omitFieldNames ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -390,8 +410,10 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ShowNodeRequest copyWith(void Function(ShowNodeRequest) updates) => super.copyWith((message) => updates(message as ShowNodeRequest)) as ShowNodeRequest; // ignore: deprecated_member_use
+  ShowNodeRequest copyWith(void Function(ShowNodeRequest) updates) => super.copyWith((message) => updates(message as ShowNodeRequest)) as ShowNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ShowNodeRequest create() => ShowNodeRequest._();
   ShowNodeRequest createEmptyInstance() => create();
@@ -431,28 +453,29 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
 }
 
 class RenameNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newName')
-    ..hasRequiredFields = false
-  ;
-
-  RenameNodeRequest._() : super();
   factory RenameNodeRequest({
     $core.String? path,
     $core.String? newName,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (newName != null) {
-      _result.newName = newName;
+      $result.newName = newName;
     }
-    return _result;
+    return $result;
   }
+  RenameNodeRequest._() : super();
   factory RenameNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RenameNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RenameNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOS(2, _omitFieldNames ? '' : 'newName')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -462,8 +485,10 @@ class RenameNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenameNodeRequest copyWith(void Function(RenameNodeRequest) updates) => super.copyWith((message) => updates(message as RenameNodeRequest)) as RenameNodeRequest; // ignore: deprecated_member_use
+  RenameNodeRequest copyWith(void Function(RenameNodeRequest) updates) => super.copyWith((message) => updates(message as RenameNodeRequest)) as RenameNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RenameNodeRequest create() => RenameNodeRequest._();
   RenameNodeRequest createEmptyInstance() => create();
@@ -492,28 +517,29 @@ class RenameNodeRequest extends $pb.GeneratedMessage {
 }
 
 class GroupNodesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
-    ..hasRequiredFields = false
-  ;
-
-  GroupNodesRequest._() : super();
   factory GroupNodesRequest({
     $core.Iterable<$core.String>? nodes,
     $core.String? parent,
   }) {
-    final _result = create();
+    final $result = create();
     if (nodes != null) {
-      _result.nodes.addAll(nodes);
+      $result.nodes.addAll(nodes);
     }
     if (parent != null) {
-      _result.parent = parent;
+      $result.parent = parent;
     }
-    return _result;
+    return $result;
   }
+  GroupNodesRequest._() : super();
   factory GroupNodesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GroupNodesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GroupNodesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'nodes')
+    ..aOS(2, _omitFieldNames ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -523,8 +549,10 @@ class GroupNodesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GroupNodesRequest copyWith(void Function(GroupNodesRequest) updates) => super.copyWith((message) => updates(message as GroupNodesRequest)) as GroupNodesRequest; // ignore: deprecated_member_use
+  GroupNodesRequest copyWith(void Function(GroupNodesRequest) updates) => super.copyWith((message) => updates(message as GroupNodesRequest)) as GroupNodesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GroupNodesRequest create() => GroupNodesRequest._();
   GroupNodesRequest createEmptyInstance() => create();
@@ -547,23 +575,24 @@ class GroupNodesRequest extends $pb.GeneratedMessage {
 }
 
 class DeleteNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..hasRequiredFields = false
-  ;
-
-  DeleteNodeRequest._() : super();
   factory DeleteNodeRequest({
     $core.String? path,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
-    return _result;
+    return $result;
   }
+  DeleteNodeRequest._() : super();
   factory DeleteNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DeleteNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -573,8 +602,10 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteNodeRequest copyWith(void Function(DeleteNodeRequest) updates) => super.copyWith((message) => updates(message as DeleteNodeRequest)) as DeleteNodeRequest; // ignore: deprecated_member_use
+  DeleteNodeRequest copyWith(void Function(DeleteNodeRequest) updates) => super.copyWith((message) => updates(message as DeleteNodeRequest)) as DeleteNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DeleteNodeRequest create() => DeleteNodeRequest._();
   DeleteNodeRequest createEmptyInstance() => create();
@@ -594,23 +625,24 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
 }
 
 class HideNodeRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HideNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..hasRequiredFields = false
-  ;
-
-  HideNodeRequest._() : super();
   factory HideNodeRequest({
     $core.String? path,
   }) {
-    final _result = create();
+    final $result = create();
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
-    return _result;
+    return $result;
   }
+  HideNodeRequest._() : super();
   factory HideNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory HideNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HideNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -620,8 +652,10 @@ class HideNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HideNodeRequest copyWith(void Function(HideNodeRequest) updates) => super.copyWith((message) => updates(message as HideNodeRequest)) as HideNodeRequest; // ignore: deprecated_member_use
+  HideNodeRequest copyWith(void Function(HideNodeRequest) updates) => super.copyWith((message) => updates(message as HideNodeRequest)) as HideNodeRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static HideNodeRequest create() => HideNodeRequest._();
   HideNodeRequest createEmptyInstance() => create();
@@ -641,33 +675,34 @@ class HideNodeRequest extends $pb.GeneratedMessage {
 }
 
 class Nodes extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Nodes', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pc<Node>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
-    ..pc<NodeConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: NodeConnection.create)
-    ..pc<Node>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allNodes', $pb.PbFieldType.PM, subBuilder: Node.create)
-    ..hasRequiredFields = false
-  ;
-
-  Nodes._() : super();
   factory Nodes({
     $core.Iterable<Node>? nodes,
     $core.Iterable<NodeConnection>? channels,
     $core.Iterable<Node>? allNodes,
   }) {
-    final _result = create();
+    final $result = create();
     if (nodes != null) {
-      _result.nodes.addAll(nodes);
+      $result.nodes.addAll(nodes);
     }
     if (channels != null) {
-      _result.channels.addAll(channels);
+      $result.channels.addAll(channels);
     }
     if (allNodes != null) {
-      _result.allNodes.addAll(allNodes);
+      $result.allNodes.addAll(allNodes);
     }
-    return _result;
+    return $result;
   }
+  Nodes._() : super();
   factory Nodes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Nodes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Nodes', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<Node>(1, _omitFieldNames ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
+    ..pc<NodeConnection>(2, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: NodeConnection.create)
+    ..pc<Node>(3, _omitFieldNames ? '' : 'allNodes', $pb.PbFieldType.PM, subBuilder: Node.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -677,8 +712,10 @@ class Nodes extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Nodes copyWith(void Function(Nodes) updates) => super.copyWith((message) => updates(message as Nodes)) as Nodes; // ignore: deprecated_member_use
+  Nodes copyWith(void Function(Nodes) updates) => super.copyWith((message) => updates(message as Nodes)) as Nodes;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Nodes create() => Nodes._();
   Nodes createEmptyInstance() => create();
@@ -693,28 +730,30 @@ class Nodes extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.List<NodeConnection> get channels => $_getList(1);
 
+  /// Flat list of all nodes
   @$pb.TagNumber(3)
   $core.List<Node> get allNodes => $_getList(2);
 }
 
 class AvailableNodes extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AvailableNodes', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pc<AvailableNode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: AvailableNode.create)
-    ..hasRequiredFields = false
-  ;
-
-  AvailableNodes._() : super();
   factory AvailableNodes({
     $core.Iterable<AvailableNode>? nodes,
   }) {
-    final _result = create();
+    final $result = create();
     if (nodes != null) {
-      _result.nodes.addAll(nodes);
+      $result.nodes.addAll(nodes);
     }
-    return _result;
+    return $result;
   }
+  AvailableNodes._() : super();
   factory AvailableNodes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AvailableNodes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AvailableNodes', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<AvailableNode>(1, _omitFieldNames ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: AvailableNode.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -724,8 +763,10 @@ class AvailableNodes extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AvailableNodes copyWith(void Function(AvailableNodes) updates) => super.copyWith((message) => updates(message as AvailableNodes)) as AvailableNodes; // ignore: deprecated_member_use
+  AvailableNodes copyWith(void Function(AvailableNodes) updates) => super.copyWith((message) => updates(message as AvailableNodes)) as AvailableNodes;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AvailableNodes create() => AvailableNodes._();
   AvailableNodes createEmptyInstance() => create();
@@ -739,33 +780,39 @@ class AvailableNodes extends $pb.GeneratedMessage {
 }
 
 class AvailableNode extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AvailableNode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<NodeCategory>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
-    ..hasRequiredFields = false
-  ;
-
-  AvailableNode._() : super();
   factory AvailableNode({
     Node_NodeType? type,
     $core.String? name,
     NodeCategory? category,
+    $core.String? description,
   }) {
-    final _result = create();
+    final $result = create();
     if (type != null) {
-      _result.type = type;
+      $result.type = type;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (category != null) {
-      _result.category = category;
+      $result.category = category;
     }
-    return _result;
+    if (description != null) {
+      $result.description = description;
+    }
+    return $result;
   }
+  AvailableNode._() : super();
   factory AvailableNode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AvailableNode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AvailableNode', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..e<NodeCategory>(3, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
+    ..aOS(4, _omitFieldNames ? '' : 'description')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -775,8 +822,10 @@ class AvailableNode extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AvailableNode copyWith(void Function(AvailableNode) updates) => super.copyWith((message) => updates(message as AvailableNode)) as AvailableNode; // ignore: deprecated_member_use
+  AvailableNode copyWith(void Function(AvailableNode) updates) => super.copyWith((message) => updates(message as AvailableNode)) as AvailableNode;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AvailableNode create() => AvailableNode._();
   AvailableNode createEmptyInstance() => create();
@@ -811,19 +860,18 @@ class AvailableNode extends $pb.GeneratedMessage {
   $core.bool hasCategory() => $_has(2);
   @$pb.TagNumber(3)
   void clearCategory() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get description => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set description($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDescription() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDescription() => clearField(4);
 }
 
 class NodeConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetNode')
-    ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetPort', subBuilder: Port.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNode')
-    ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePort', subBuilder: Port.create)
-    ..e<ChannelProtocol>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
-    ..hasRequiredFields = false
-  ;
-
-  NodeConnection._() : super();
   factory NodeConnection({
     $core.String? targetNode,
     Port? targetPort,
@@ -831,26 +879,37 @@ class NodeConnection extends $pb.GeneratedMessage {
     Port? sourcePort,
     ChannelProtocol? protocol,
   }) {
-    final _result = create();
+    final $result = create();
     if (targetNode != null) {
-      _result.targetNode = targetNode;
+      $result.targetNode = targetNode;
     }
     if (targetPort != null) {
-      _result.targetPort = targetPort;
+      $result.targetPort = targetPort;
     }
     if (sourceNode != null) {
-      _result.sourceNode = sourceNode;
+      $result.sourceNode = sourceNode;
     }
     if (sourcePort != null) {
-      _result.sourcePort = sourcePort;
+      $result.sourcePort = sourcePort;
     }
     if (protocol != null) {
-      _result.protocol = protocol;
+      $result.protocol = protocol;
     }
-    return _result;
+    return $result;
   }
+  NodeConnection._() : super();
   factory NodeConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'targetNode')
+    ..aOM<Port>(2, _omitFieldNames ? '' : 'targetPort', subBuilder: Port.create)
+    ..aOS(3, _omitFieldNames ? '' : 'sourceNode')
+    ..aOM<Port>(4, _omitFieldNames ? '' : 'sourcePort', subBuilder: Port.create)
+    ..e<ChannelProtocol>(5, _omitFieldNames ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -860,8 +919,10 @@ class NodeConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeConnection copyWith(void Function(NodeConnection) updates) => super.copyWith((message) => updates(message as NodeConnection)) as NodeConnection; // ignore: deprecated_member_use
+  NodeConnection copyWith(void Function(NodeConnection) updates) => super.copyWith((message) => updates(message as NodeConnection)) as NodeConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeConnection create() => NodeConnection._();
   NodeConnection createEmptyInstance() => create();
@@ -921,20 +982,6 @@ class NodeConnection extends $pb.GeneratedMessage {
 }
 
 class Node extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
-    ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
-    ..aOM<NodeDesigner>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
-    ..e<Node_NodePreviewType>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.NONE, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
-    ..aOM<NodeConfig>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: NodeConfig.create)
-    ..pc<NodeSetting>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSetting.create)
-    ..aOM<NodeDetails>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'details', subBuilder: NodeDetails.create)
-    ..hasRequiredFields = false
-  ;
-
-  Node._() : super();
   factory Node({
     Node_NodeType? type,
     $core.String? path,
@@ -946,38 +993,53 @@ class Node extends $pb.GeneratedMessage {
     $core.Iterable<NodeSetting>? settings,
     NodeDetails? details,
   }) {
-    final _result = create();
+    final $result = create();
     if (type != null) {
-      _result.type = type;
+      $result.type = type;
     }
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (inputs != null) {
-      _result.inputs.addAll(inputs);
+      $result.inputs.addAll(inputs);
     }
     if (outputs != null) {
-      _result.outputs.addAll(outputs);
+      $result.outputs.addAll(outputs);
     }
     if (designer != null) {
-      _result.designer = designer;
+      $result.designer = designer;
     }
     if (preview != null) {
-      _result.preview = preview;
+      $result.preview = preview;
     }
     if (config != null) {
-      _result.config = config;
+      $result.config = config;
     }
     if (settings != null) {
-      _result.settings.addAll(settings);
+      $result.settings.addAll(settings);
     }
     if (details != null) {
-      _result.details = details;
+      $result.details = details;
     }
-    return _result;
+    return $result;
   }
+  Node._() : super();
   factory Node.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Node.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Node', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..e<Node_NodeType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.FADER, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOS(2, _omitFieldNames ? '' : 'path')
+    ..pc<Port>(3, _omitFieldNames ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
+    ..pc<Port>(4, _omitFieldNames ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
+    ..aOM<NodeDesigner>(5, _omitFieldNames ? '' : 'designer', subBuilder: NodeDesigner.create)
+    ..e<Node_NodePreviewType>(6, _omitFieldNames ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.NONE, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
+    ..aOM<NodeConfig>(7, _omitFieldNames ? '' : 'config', subBuilder: NodeConfig.create)
+    ..pc<NodeSetting>(8, _omitFieldNames ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSetting.create)
+    ..aOM<NodeDetails>(9, _omitFieldNames ? '' : 'details', subBuilder: NodeDetails.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -987,8 +1049,10 @@ class Node extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Node copyWith(void Function(Node) updates) => super.copyWith((message) => updates(message as Node)) as Node; // ignore: deprecated_member_use
+  Node copyWith(void Function(Node) updates) => super.copyWith((message) => updates(message as Node)) as Node;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Node create() => Node._();
   Node createEmptyInstance() => create();
@@ -1068,28 +1132,29 @@ class Node extends $pb.GeneratedMessage {
 }
 
 class NodeDetails extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeDetails', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<NodeCategory>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
-    ..hasRequiredFields = false
-  ;
-
-  NodeDetails._() : super();
   factory NodeDetails({
     $core.String? name,
     NodeCategory? category,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (category != null) {
-      _result.category = category;
+      $result.category = category;
     }
-    return _result;
+    return $result;
   }
+  NodeDetails._() : super();
   factory NodeDetails.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeDetails.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeDetails', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..e<NodeCategory>(2, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1099,8 +1164,10 @@ class NodeDetails extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeDetails copyWith(void Function(NodeDetails) updates) => super.copyWith((message) => updates(message as NodeDetails)) as NodeDetails; // ignore: deprecated_member_use
+  NodeDetails copyWith(void Function(NodeDetails) updates) => super.copyWith((message) => updates(message as NodeDetails)) as NodeDetails;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeDetails create() => NodeDetails._();
   NodeDetails createEmptyInstance() => create();
@@ -1134,28 +1201,29 @@ enum NodeConfig_Type {
 }
 
 class NodeConfig extends $pb.GeneratedMessage {
+  factory NodeConfig({
+    ContainerNodeConfig? containerConfig,
+  }) {
+    final $result = create();
+    if (containerConfig != null) {
+      $result.containerConfig = containerConfig;
+    }
+    return $result;
+  }
+  NodeConfig._() : super();
+  factory NodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
   static const $core.Map<$core.int, NodeConfig_Type> _NodeConfig_TypeByTag = {
     45 : NodeConfig_Type.containerConfig,
     0 : NodeConfig_Type.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..oo(0, [45])
-    ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', subBuilder: ContainerNodeConfig.create)
+    ..aOM<ContainerNodeConfig>(45, _omitFieldNames ? '' : 'containerConfig', subBuilder: ContainerNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
-  NodeConfig._() : super();
-  factory NodeConfig({
-    ContainerNodeConfig? containerConfig,
-  }) {
-    final _result = create();
-    if (containerConfig != null) {
-      _result.containerConfig = containerConfig;
-    }
-    return _result;
-  }
-  factory NodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1165,8 +1233,10 @@ class NodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeConfig copyWith(void Function(NodeConfig) updates) => super.copyWith((message) => updates(message as NodeConfig)) as NodeConfig; // ignore: deprecated_member_use
+  NodeConfig copyWith(void Function(NodeConfig) updates) => super.copyWith((message) => updates(message as NodeConfig)) as NodeConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeConfig create() => NodeConfig._();
   NodeConfig createEmptyInstance() => create();
@@ -1191,28 +1261,29 @@ class NodeConfig extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_TextValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.TextValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'multiline')
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_TextValue._() : super();
   factory NodeSetting_TextValue({
     $core.String? value,
     $core.bool? multiline,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (multiline != null) {
-      _result.multiline = multiline;
+      $result.multiline = multiline;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_TextValue._() : super();
   factory NodeSetting_TextValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_TextValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.TextValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'value')
+    ..aOB(2, _omitFieldNames ? '' : 'multiline')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1222,8 +1293,10 @@ class NodeSetting_TextValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_TextValue copyWith(void Function(NodeSetting_TextValue) updates) => super.copyWith((message) => updates(message as NodeSetting_TextValue)) as NodeSetting_TextValue; // ignore: deprecated_member_use
+  NodeSetting_TextValue copyWith(void Function(NodeSetting_TextValue) updates) => super.copyWith((message) => updates(message as NodeSetting_TextValue)) as NodeSetting_TextValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_TextValue create() => NodeSetting_TextValue._();
   NodeSetting_TextValue createEmptyInstance() => create();
@@ -1252,16 +1325,6 @@ class NodeSetting_TextValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_FloatValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.FloatValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OD)
-    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_FloatValue._() : super();
   factory NodeSetting_FloatValue({
     $core.double? value,
     $core.double? min,
@@ -1269,26 +1332,37 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
     $core.double? max,
     $core.double? maxHint,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (min != null) {
-      _result.min = min;
+      $result.min = min;
     }
     if (minHint != null) {
-      _result.minHint = minHint;
+      $result.minHint = minHint;
     }
     if (max != null) {
-      _result.max = max;
+      $result.max = max;
     }
     if (maxHint != null) {
-      _result.maxHint = maxHint;
+      $result.maxHint = maxHint;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_FloatValue._() : super();
   factory NodeSetting_FloatValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_FloatValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.FloatValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'min', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1298,8 +1372,10 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_FloatValue copyWith(void Function(NodeSetting_FloatValue) updates) => super.copyWith((message) => updates(message as NodeSetting_FloatValue)) as NodeSetting_FloatValue; // ignore: deprecated_member_use
+  NodeSetting_FloatValue copyWith(void Function(NodeSetting_FloatValue) updates) => super.copyWith((message) => updates(message as NodeSetting_FloatValue)) as NodeSetting_FloatValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_FloatValue create() => NodeSetting_FloatValue._();
   NodeSetting_FloatValue createEmptyInstance() => create();
@@ -1355,16 +1431,6 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_IntValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.IntValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.O3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.O3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_IntValue._() : super();
   factory NodeSetting_IntValue({
     $core.int? value,
     $core.int? min,
@@ -1372,26 +1438,37 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
     $core.int? max,
     $core.int? maxHint,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (min != null) {
-      _result.min = min;
+      $result.min = min;
     }
     if (minHint != null) {
-      _result.minHint = minHint;
+      $result.minHint = minHint;
     }
     if (max != null) {
-      _result.max = max;
+      $result.max = max;
     }
     if (maxHint != null) {
-      _result.maxHint = maxHint;
+      $result.maxHint = maxHint;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_IntValue._() : super();
   factory NodeSetting_IntValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_IntValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.IntValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'min', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1401,8 +1478,10 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_IntValue copyWith(void Function(NodeSetting_IntValue) updates) => super.copyWith((message) => updates(message as NodeSetting_IntValue)) as NodeSetting_IntValue; // ignore: deprecated_member_use
+  NodeSetting_IntValue copyWith(void Function(NodeSetting_IntValue) updates) => super.copyWith((message) => updates(message as NodeSetting_IntValue)) as NodeSetting_IntValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_IntValue create() => NodeSetting_IntValue._();
   NodeSetting_IntValue createEmptyInstance() => create();
@@ -1458,16 +1537,6 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_UintValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.UintValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'min', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minHint', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'max', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxHint', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_UintValue._() : super();
   factory NodeSetting_UintValue({
     $core.int? value,
     $core.int? min,
@@ -1475,26 +1544,37 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
     $core.int? max,
     $core.int? maxHint,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (min != null) {
-      _result.min = min;
+      $result.min = min;
     }
     if (minHint != null) {
-      _result.minHint = minHint;
+      $result.minHint = minHint;
     }
     if (max != null) {
-      _result.max = max;
+      $result.max = max;
     }
     if (maxHint != null) {
-      _result.maxHint = maxHint;
+      $result.maxHint = maxHint;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_UintValue._() : super();
   factory NodeSetting_UintValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_UintValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.UintValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'min', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1504,8 +1584,10 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_UintValue copyWith(void Function(NodeSetting_UintValue) updates) => super.copyWith((message) => updates(message as NodeSetting_UintValue)) as NodeSetting_UintValue; // ignore: deprecated_member_use
+  NodeSetting_UintValue copyWith(void Function(NodeSetting_UintValue) updates) => super.copyWith((message) => updates(message as NodeSetting_UintValue)) as NodeSetting_UintValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_UintValue create() => NodeSetting_UintValue._();
   NodeSetting_UintValue createEmptyInstance() => create();
@@ -1561,23 +1643,24 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_BoolValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.BoolValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_BoolValue._() : super();
   factory NodeSetting_BoolValue({
     $core.bool? value,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_BoolValue._() : super();
   factory NodeSetting_BoolValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_BoolValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.BoolValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'value')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1587,8 +1670,10 @@ class NodeSetting_BoolValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_BoolValue copyWith(void Function(NodeSetting_BoolValue) updates) => super.copyWith((message) => updates(message as NodeSetting_BoolValue)) as NodeSetting_BoolValue; // ignore: deprecated_member_use
+  NodeSetting_BoolValue copyWith(void Function(NodeSetting_BoolValue) updates) => super.copyWith((message) => updates(message as NodeSetting_BoolValue)) as NodeSetting_BoolValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_BoolValue create() => NodeSetting_BoolValue._();
   NodeSetting_BoolValue createEmptyInstance() => create();
@@ -1608,28 +1693,29 @@ class NodeSetting_BoolValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_SelectValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SelectValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..pc<NodeSetting_SelectVariant>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_SelectVariant.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_SelectValue._() : super();
   factory NodeSetting_SelectValue({
     $core.String? value,
     $core.Iterable<NodeSetting_SelectVariant>? variants,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (variants != null) {
-      _result.variants.addAll(variants);
+      $result.variants.addAll(variants);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_SelectValue._() : super();
   factory NodeSetting_SelectValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_SelectValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SelectValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'value')
+    ..pc<NodeSetting_SelectVariant>(2, _omitFieldNames ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_SelectVariant.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1639,8 +1725,10 @@ class NodeSetting_SelectValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SelectValue copyWith(void Function(NodeSetting_SelectValue) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectValue)) as NodeSetting_SelectValue; // ignore: deprecated_member_use
+  NodeSetting_SelectValue copyWith(void Function(NodeSetting_SelectValue) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectValue)) as NodeSetting_SelectValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SelectValue create() => NodeSetting_SelectValue._();
   NodeSetting_SelectValue createEmptyInstance() => create();
@@ -1663,28 +1751,29 @@ class NodeSetting_SelectValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_SelectVariant_SelectGroup extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SelectVariant.SelectGroup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..pc<NodeSetting_SelectVariant>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: NodeSetting_SelectVariant.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_SelectVariant_SelectGroup._() : super();
   factory NodeSetting_SelectVariant_SelectGroup({
     $core.String? label,
     $core.Iterable<NodeSetting_SelectVariant>? items,
   }) {
-    final _result = create();
+    final $result = create();
     if (label != null) {
-      _result.label = label;
+      $result.label = label;
     }
     if (items != null) {
-      _result.items.addAll(items);
+      $result.items.addAll(items);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_SelectVariant_SelectGroup._() : super();
   factory NodeSetting_SelectVariant_SelectGroup.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_SelectVariant_SelectGroup.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SelectVariant.SelectGroup', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'label')
+    ..pc<NodeSetting_SelectVariant>(2, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: NodeSetting_SelectVariant.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1694,8 +1783,10 @@ class NodeSetting_SelectVariant_SelectGroup extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SelectVariant_SelectGroup copyWith(void Function(NodeSetting_SelectVariant_SelectGroup) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant_SelectGroup)) as NodeSetting_SelectVariant_SelectGroup; // ignore: deprecated_member_use
+  NodeSetting_SelectVariant_SelectGroup copyWith(void Function(NodeSetting_SelectVariant_SelectGroup) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant_SelectGroup)) as NodeSetting_SelectVariant_SelectGroup;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SelectVariant_SelectGroup create() => NodeSetting_SelectVariant_SelectGroup._();
   NodeSetting_SelectVariant_SelectGroup createEmptyInstance() => create();
@@ -1718,28 +1809,29 @@ class NodeSetting_SelectVariant_SelectGroup extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_SelectVariant_SelectItem extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SelectVariant.SelectItem', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_SelectVariant_SelectItem._() : super();
   factory NodeSetting_SelectVariant_SelectItem({
     $core.String? value,
     $core.String? label,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (label != null) {
-      _result.label = label;
+      $result.label = label;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_SelectVariant_SelectItem._() : super();
   factory NodeSetting_SelectVariant_SelectItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_SelectVariant_SelectItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SelectVariant.SelectItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'value')
+    ..aOS(2, _omitFieldNames ? '' : 'label')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1749,8 +1841,10 @@ class NodeSetting_SelectVariant_SelectItem extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SelectVariant_SelectItem copyWith(void Function(NodeSetting_SelectVariant_SelectItem) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant_SelectItem)) as NodeSetting_SelectVariant_SelectItem; // ignore: deprecated_member_use
+  NodeSetting_SelectVariant_SelectItem copyWith(void Function(NodeSetting_SelectVariant_SelectItem) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant_SelectItem)) as NodeSetting_SelectVariant_SelectItem;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SelectVariant_SelectItem create() => NodeSetting_SelectVariant_SelectItem._();
   NodeSetting_SelectVariant_SelectItem createEmptyInstance() => create();
@@ -1785,34 +1879,35 @@ enum NodeSetting_SelectVariant_Variant {
 }
 
 class NodeSetting_SelectVariant extends $pb.GeneratedMessage {
+  factory NodeSetting_SelectVariant({
+    NodeSetting_SelectVariant_SelectGroup? group,
+    NodeSetting_SelectVariant_SelectItem? item,
+  }) {
+    final $result = create();
+    if (group != null) {
+      $result.group = group;
+    }
+    if (item != null) {
+      $result.item = item;
+    }
+    return $result;
+  }
+  NodeSetting_SelectVariant._() : super();
+  factory NodeSetting_SelectVariant.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_SelectVariant.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
   static const $core.Map<$core.int, NodeSetting_SelectVariant_Variant> _NodeSetting_SelectVariant_VariantByTag = {
     1 : NodeSetting_SelectVariant_Variant.group,
     2 : NodeSetting_SelectVariant_Variant.item,
     0 : NodeSetting_SelectVariant_Variant.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SelectVariant', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SelectVariant', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..aOM<NodeSetting_SelectVariant_SelectGroup>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group', subBuilder: NodeSetting_SelectVariant_SelectGroup.create)
-    ..aOM<NodeSetting_SelectVariant_SelectItem>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'item', subBuilder: NodeSetting_SelectVariant_SelectItem.create)
+    ..aOM<NodeSetting_SelectVariant_SelectGroup>(1, _omitFieldNames ? '' : 'group', subBuilder: NodeSetting_SelectVariant_SelectGroup.create)
+    ..aOM<NodeSetting_SelectVariant_SelectItem>(2, _omitFieldNames ? '' : 'item', subBuilder: NodeSetting_SelectVariant_SelectItem.create)
     ..hasRequiredFields = false
   ;
 
-  NodeSetting_SelectVariant._() : super();
-  factory NodeSetting_SelectVariant({
-    NodeSetting_SelectVariant_SelectGroup? group,
-    NodeSetting_SelectVariant_SelectItem? item,
-  }) {
-    final _result = create();
-    if (group != null) {
-      _result.group = group;
-    }
-    if (item != null) {
-      _result.item = item;
-    }
-    return _result;
-  }
-  factory NodeSetting_SelectVariant.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NodeSetting_SelectVariant.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1822,8 +1917,10 @@ class NodeSetting_SelectVariant extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SelectVariant copyWith(void Function(NodeSetting_SelectVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant)) as NodeSetting_SelectVariant; // ignore: deprecated_member_use
+  NodeSetting_SelectVariant copyWith(void Function(NodeSetting_SelectVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_SelectVariant)) as NodeSetting_SelectVariant;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SelectVariant create() => NodeSetting_SelectVariant._();
   NodeSetting_SelectVariant createEmptyInstance() => create();
@@ -1859,28 +1956,29 @@ class NodeSetting_SelectVariant extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_EnumValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.EnumValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..pc<NodeSetting_EnumVariant>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_EnumVariant.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_EnumValue._() : super();
   factory NodeSetting_EnumValue({
     $core.int? value,
     $core.Iterable<NodeSetting_EnumVariant>? variants,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (variants != null) {
-      _result.variants.addAll(variants);
+      $result.variants.addAll(variants);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_EnumValue._() : super();
   factory NodeSetting_EnumValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_EnumValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.EnumValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..pc<NodeSetting_EnumVariant>(2, _omitFieldNames ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_EnumVariant.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1890,8 +1988,10 @@ class NodeSetting_EnumValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_EnumValue copyWith(void Function(NodeSetting_EnumValue) updates) => super.copyWith((message) => updates(message as NodeSetting_EnumValue)) as NodeSetting_EnumValue; // ignore: deprecated_member_use
+  NodeSetting_EnumValue copyWith(void Function(NodeSetting_EnumValue) updates) => super.copyWith((message) => updates(message as NodeSetting_EnumValue)) as NodeSetting_EnumValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_EnumValue create() => NodeSetting_EnumValue._();
   NodeSetting_EnumValue createEmptyInstance() => create();
@@ -1914,28 +2014,29 @@ class NodeSetting_EnumValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_EnumVariant extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.EnumVariant', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_EnumVariant._() : super();
   factory NodeSetting_EnumVariant({
     $core.int? value,
     $core.String? label,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (label != null) {
-      _result.label = label;
+      $result.label = label;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_EnumVariant._() : super();
   factory NodeSetting_EnumVariant.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_EnumVariant.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.EnumVariant', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..aOS(2, _omitFieldNames ? '' : 'label')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1945,8 +2046,10 @@ class NodeSetting_EnumVariant extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_EnumVariant copyWith(void Function(NodeSetting_EnumVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_EnumVariant)) as NodeSetting_EnumVariant; // ignore: deprecated_member_use
+  NodeSetting_EnumVariant copyWith(void Function(NodeSetting_EnumVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_EnumVariant)) as NodeSetting_EnumVariant;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_EnumVariant create() => NodeSetting_EnumVariant._();
   NodeSetting_EnumVariant createEmptyInstance() => create();
@@ -1975,28 +2078,29 @@ class NodeSetting_EnumVariant extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_IdValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.IdValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..pc<NodeSetting_IdVariant>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_IdVariant.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_IdValue._() : super();
   factory NodeSetting_IdValue({
     $core.int? value,
     $core.Iterable<NodeSetting_IdVariant>? variants,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (variants != null) {
-      _result.variants.addAll(variants);
+      $result.variants.addAll(variants);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_IdValue._() : super();
   factory NodeSetting_IdValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_IdValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.IdValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..pc<NodeSetting_IdVariant>(2, _omitFieldNames ? '' : 'variants', $pb.PbFieldType.PM, subBuilder: NodeSetting_IdVariant.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2006,8 +2110,10 @@ class NodeSetting_IdValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_IdValue copyWith(void Function(NodeSetting_IdValue) updates) => super.copyWith((message) => updates(message as NodeSetting_IdValue)) as NodeSetting_IdValue; // ignore: deprecated_member_use
+  NodeSetting_IdValue copyWith(void Function(NodeSetting_IdValue) updates) => super.copyWith((message) => updates(message as NodeSetting_IdValue)) as NodeSetting_IdValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_IdValue create() => NodeSetting_IdValue._();
   NodeSetting_IdValue createEmptyInstance() => create();
@@ -2030,28 +2136,29 @@ class NodeSetting_IdValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_IdVariant extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.IdVariant', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_IdVariant._() : super();
   factory NodeSetting_IdVariant({
     $core.int? value,
     $core.String? label,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (label != null) {
-      _result.label = label;
+      $result.label = label;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_IdVariant._() : super();
   factory NodeSetting_IdVariant.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_IdVariant.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.IdVariant', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..aOS(2, _omitFieldNames ? '' : 'label')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2061,8 +2168,10 @@ class NodeSetting_IdVariant extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_IdVariant copyWith(void Function(NodeSetting_IdVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_IdVariant)) as NodeSetting_IdVariant; // ignore: deprecated_member_use
+  NodeSetting_IdVariant copyWith(void Function(NodeSetting_IdVariant) updates) => super.copyWith((message) => updates(message as NodeSetting_IdVariant)) as NodeSetting_IdVariant;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_IdVariant create() => NodeSetting_IdVariant._();
   NodeSetting_IdVariant createEmptyInstance() => create();
@@ -2091,17 +2200,6 @@ class NodeSetting_IdVariant extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_SplineValue_SplineStep extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SplineValue.SplineStep', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c0a', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c0b', $pb.PbFieldType.OD)
-    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c1a', $pb.PbFieldType.OD)
-    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c1b', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_SplineValue_SplineStep._() : super();
   factory NodeSetting_SplineValue_SplineStep({
     $core.double? x,
     $core.double? y,
@@ -2110,29 +2208,41 @@ class NodeSetting_SplineValue_SplineStep extends $pb.GeneratedMessage {
     $core.double? c1a,
     $core.double? c1b,
   }) {
-    final _result = create();
+    final $result = create();
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
     if (c0a != null) {
-      _result.c0a = c0a;
+      $result.c0a = c0a;
     }
     if (c0b != null) {
-      _result.c0b = c0b;
+      $result.c0b = c0b;
     }
     if (c1a != null) {
-      _result.c1a = c1a;
+      $result.c1a = c1a;
     }
     if (c1b != null) {
-      _result.c1b = c1b;
+      $result.c1b = c1b;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_SplineValue_SplineStep._() : super();
   factory NodeSetting_SplineValue_SplineStep.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_SplineValue_SplineStep.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SplineValue.SplineStep', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'c0a', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'c0b', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'c1a', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'c1b', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2142,8 +2252,10 @@ class NodeSetting_SplineValue_SplineStep extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SplineValue_SplineStep copyWith(void Function(NodeSetting_SplineValue_SplineStep) updates) => super.copyWith((message) => updates(message as NodeSetting_SplineValue_SplineStep)) as NodeSetting_SplineValue_SplineStep; // ignore: deprecated_member_use
+  NodeSetting_SplineValue_SplineStep copyWith(void Function(NodeSetting_SplineValue_SplineStep) updates) => super.copyWith((message) => updates(message as NodeSetting_SplineValue_SplineStep)) as NodeSetting_SplineValue_SplineStep;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SplineValue_SplineStep create() => NodeSetting_SplineValue_SplineStep._();
   NodeSetting_SplineValue_SplineStep createEmptyInstance() => create();
@@ -2208,23 +2320,24 @@ class NodeSetting_SplineValue_SplineStep extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_SplineValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.SplineValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pc<NodeSetting_SplineValue_SplineStep>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: NodeSetting_SplineValue_SplineStep.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_SplineValue._() : super();
   factory NodeSetting_SplineValue({
     $core.Iterable<NodeSetting_SplineValue_SplineStep>? steps,
   }) {
-    final _result = create();
+    final $result = create();
     if (steps != null) {
-      _result.steps.addAll(steps);
+      $result.steps.addAll(steps);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_SplineValue._() : super();
   factory NodeSetting_SplineValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_SplineValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.SplineValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<NodeSetting_SplineValue_SplineStep>(1, _omitFieldNames ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: NodeSetting_SplineValue_SplineStep.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2234,8 +2347,10 @@ class NodeSetting_SplineValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_SplineValue copyWith(void Function(NodeSetting_SplineValue) updates) => super.copyWith((message) => updates(message as NodeSetting_SplineValue)) as NodeSetting_SplineValue; // ignore: deprecated_member_use
+  NodeSetting_SplineValue copyWith(void Function(NodeSetting_SplineValue) updates) => super.copyWith((message) => updates(message as NodeSetting_SplineValue)) as NodeSetting_SplineValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_SplineValue create() => NodeSetting_SplineValue._();
   NodeSetting_SplineValue createEmptyInstance() => create();
@@ -2249,28 +2364,29 @@ class NodeSetting_SplineValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_MediaValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.MediaValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..pc<$0.MediaType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allowedTypes', $pb.PbFieldType.KE, valueOf: $0.MediaType.valueOf, enumValues: $0.MediaType.values, defaultEnumValue: $0.MediaType.IMAGE)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_MediaValue._() : super();
   factory NodeSetting_MediaValue({
     $core.String? value,
     $core.Iterable<$0.MediaType>? allowedTypes,
   }) {
-    final _result = create();
+    final $result = create();
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
     if (allowedTypes != null) {
-      _result.allowedTypes.addAll(allowedTypes);
+      $result.allowedTypes.addAll(allowedTypes);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_MediaValue._() : super();
   factory NodeSetting_MediaValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_MediaValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.MediaValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'value')
+    ..pc<$0.MediaType>(2, _omitFieldNames ? '' : 'allowedTypes', $pb.PbFieldType.KE, valueOf: $0.MediaType.valueOf, enumValues: $0.MediaType.values, defaultEnumValue: $0.MediaType.IMAGE)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2280,8 +2396,10 @@ class NodeSetting_MediaValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_MediaValue copyWith(void Function(NodeSetting_MediaValue) updates) => super.copyWith((message) => updates(message as NodeSetting_MediaValue)) as NodeSetting_MediaValue; // ignore: deprecated_member_use
+  NodeSetting_MediaValue copyWith(void Function(NodeSetting_MediaValue) updates) => super.copyWith((message) => updates(message as NodeSetting_MediaValue)) as NodeSetting_MediaValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_MediaValue create() => NodeSetting_MediaValue._();
   NodeSetting_MediaValue createEmptyInstance() => create();
@@ -2304,23 +2422,24 @@ class NodeSetting_MediaValue extends $pb.GeneratedMessage {
 }
 
 class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.StepSequencerValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..p<$core.bool>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.KB)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting_StepSequencerValue._() : super();
   factory NodeSetting_StepSequencerValue({
     $core.Iterable<$core.bool>? steps,
   }) {
-    final _result = create();
+    final $result = create();
     if (steps != null) {
-      _result.steps.addAll(steps);
+      $result.steps.addAll(steps);
     }
-    return _result;
+    return $result;
   }
+  NodeSetting_StepSequencerValue._() : super();
   factory NodeSetting_StepSequencerValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting_StepSequencerValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.StepSequencerValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..p<$core.bool>(1, _omitFieldNames ? '' : 'steps', $pb.PbFieldType.KB)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2330,8 +2449,10 @@ class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting_StepSequencerValue copyWith(void Function(NodeSetting_StepSequencerValue) updates) => super.copyWith((message) => updates(message as NodeSetting_StepSequencerValue)) as NodeSetting_StepSequencerValue; // ignore: deprecated_member_use
+  NodeSetting_StepSequencerValue copyWith(void Function(NodeSetting_StepSequencerValue) updates) => super.copyWith((message) => updates(message as NodeSetting_StepSequencerValue)) as NodeSetting_StepSequencerValue;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting_StepSequencerValue create() => NodeSetting_StepSequencerValue._();
   NodeSetting_StepSequencerValue createEmptyInstance() => create();
@@ -2360,40 +2481,6 @@ enum NodeSetting_Value {
 }
 
 class NodeSetting extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, NodeSetting_Value> _NodeSetting_ValueByTag = {
-    4 : NodeSetting_Value.text,
-    5 : NodeSetting_Value.float,
-    6 : NodeSetting_Value.int_6,
-    7 : NodeSetting_Value.bool_7,
-    8 : NodeSetting_Value.select,
-    9 : NodeSetting_Value.enum_9,
-    10 : NodeSetting_Value.id,
-    11 : NodeSetting_Value.spline,
-    12 : NodeSetting_Value.media,
-    13 : NodeSetting_Value.uint,
-    14 : NodeSetting_Value.stepSequencer,
-    0 : NodeSetting_Value.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'disabled')
-    ..aOM<NodeSetting_TextValue>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text', subBuilder: NodeSetting_TextValue.create)
-    ..aOM<NodeSetting_FloatValue>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'float', subBuilder: NodeSetting_FloatValue.create)
-    ..aOM<NodeSetting_IntValue>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'int', subBuilder: NodeSetting_IntValue.create)
-    ..aOM<NodeSetting_BoolValue>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bool', subBuilder: NodeSetting_BoolValue.create)
-    ..aOM<NodeSetting_SelectValue>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'select', subBuilder: NodeSetting_SelectValue.create)
-    ..aOM<NodeSetting_EnumValue>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'enum', subBuilder: NodeSetting_EnumValue.create)
-    ..aOM<NodeSetting_IdValue>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: NodeSetting_IdValue.create)
-    ..aOM<NodeSetting_SplineValue>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
-    ..aOM<NodeSetting_MediaValue>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
-    ..aOM<NodeSetting_UintValue>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uint', subBuilder: NodeSetting_UintValue.create)
-    ..aOM<NodeSetting_StepSequencerValue>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepSequencer', subBuilder: NodeSetting_StepSequencerValue.create)
-    ..hasRequiredFields = false
-  ;
-
-  NodeSetting._() : super();
   factory NodeSetting({
     $core.String? label,
     $core.String? description,
@@ -2410,53 +2497,88 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_UintValue? uint,
     NodeSetting_StepSequencerValue? stepSequencer,
   }) {
-    final _result = create();
+    final $result = create();
     if (label != null) {
-      _result.label = label;
+      $result.label = label;
     }
     if (description != null) {
-      _result.description = description;
+      $result.description = description;
     }
     if (disabled != null) {
-      _result.disabled = disabled;
+      $result.disabled = disabled;
     }
     if (text != null) {
-      _result.text = text;
+      $result.text = text;
     }
     if (float != null) {
-      _result.float = float;
+      $result.float = float;
     }
     if (int_6 != null) {
-      _result.int_6 = int_6;
+      $result.int_6 = int_6;
     }
     if (bool_7 != null) {
-      _result.bool_7 = bool_7;
+      $result.bool_7 = bool_7;
     }
     if (select != null) {
-      _result.select = select;
+      $result.select = select;
     }
     if (enum_9 != null) {
-      _result.enum_9 = enum_9;
+      $result.enum_9 = enum_9;
     }
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (spline != null) {
-      _result.spline = spline;
+      $result.spline = spline;
     }
     if (media != null) {
-      _result.media = media;
+      $result.media = media;
     }
     if (uint != null) {
-      _result.uint = uint;
+      $result.uint = uint;
     }
     if (stepSequencer != null) {
-      _result.stepSequencer = stepSequencer;
+      $result.stepSequencer = stepSequencer;
     }
-    return _result;
+    return $result;
   }
+  NodeSetting._() : super();
   factory NodeSetting.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, NodeSetting_Value> _NodeSetting_ValueByTag = {
+    4 : NodeSetting_Value.text,
+    5 : NodeSetting_Value.float,
+    6 : NodeSetting_Value.int_6,
+    7 : NodeSetting_Value.bool_7,
+    8 : NodeSetting_Value.select,
+    9 : NodeSetting_Value.enum_9,
+    10 : NodeSetting_Value.id,
+    11 : NodeSetting_Value.spline,
+    12 : NodeSetting_Value.media,
+    13 : NodeSetting_Value.uint,
+    14 : NodeSetting_Value.stepSequencer,
+    0 : NodeSetting_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
+    ..aOS(1, _omitFieldNames ? '' : 'label')
+    ..aOS(2, _omitFieldNames ? '' : 'description')
+    ..aOB(3, _omitFieldNames ? '' : 'disabled')
+    ..aOM<NodeSetting_TextValue>(4, _omitFieldNames ? '' : 'text', subBuilder: NodeSetting_TextValue.create)
+    ..aOM<NodeSetting_FloatValue>(5, _omitFieldNames ? '' : 'float', subBuilder: NodeSetting_FloatValue.create)
+    ..aOM<NodeSetting_IntValue>(6, _omitFieldNames ? '' : 'int', subBuilder: NodeSetting_IntValue.create)
+    ..aOM<NodeSetting_BoolValue>(7, _omitFieldNames ? '' : 'bool', subBuilder: NodeSetting_BoolValue.create)
+    ..aOM<NodeSetting_SelectValue>(8, _omitFieldNames ? '' : 'select', subBuilder: NodeSetting_SelectValue.create)
+    ..aOM<NodeSetting_EnumValue>(9, _omitFieldNames ? '' : 'enum', subBuilder: NodeSetting_EnumValue.create)
+    ..aOM<NodeSetting_IdValue>(10, _omitFieldNames ? '' : 'id', subBuilder: NodeSetting_IdValue.create)
+    ..aOM<NodeSetting_SplineValue>(11, _omitFieldNames ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
+    ..aOM<NodeSetting_MediaValue>(12, _omitFieldNames ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
+    ..aOM<NodeSetting_UintValue>(13, _omitFieldNames ? '' : 'uint', subBuilder: NodeSetting_UintValue.create)
+    ..aOM<NodeSetting_StepSequencerValue>(14, _omitFieldNames ? '' : 'stepSequencer', subBuilder: NodeSetting_StepSequencerValue.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2466,8 +2588,10 @@ class NodeSetting extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeSetting copyWith(void Function(NodeSetting) updates) => super.copyWith((message) => updates(message as NodeSetting)) as NodeSetting; // ignore: deprecated_member_use
+  NodeSetting copyWith(void Function(NodeSetting) updates) => super.copyWith((message) => updates(message as NodeSetting)) as NodeSetting;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeSetting create() => NodeSetting._();
   NodeSetting createEmptyInstance() => create();
@@ -2629,16 +2753,6 @@ class NodeSetting extends $pb.GeneratedMessage {
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiNodeConfig.NoteBinding', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..e<MidiNodeConfig_NoteBinding_MidiType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MidiNodeConfig_NoteBinding_MidiType.CC, valueOf: MidiNodeConfig_NoteBinding_MidiType.valueOf, enumValues: MidiNodeConfig_NoteBinding_MidiType.values)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeFrom', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeTo', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  MidiNodeConfig_NoteBinding._() : super();
   factory MidiNodeConfig_NoteBinding({
     $core.int? channel,
     MidiNodeConfig_NoteBinding_MidiType? type,
@@ -2646,26 +2760,37 @@ class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {
     $core.int? rangeFrom,
     $core.int? rangeTo,
   }) {
-    final _result = create();
+    final $result = create();
     if (channel != null) {
-      _result.channel = channel;
+      $result.channel = channel;
     }
     if (type != null) {
-      _result.type = type;
+      $result.type = type;
     }
     if (port != null) {
-      _result.port = port;
+      $result.port = port;
     }
     if (rangeFrom != null) {
-      _result.rangeFrom = rangeFrom;
+      $result.rangeFrom = rangeFrom;
     }
     if (rangeTo != null) {
-      _result.rangeTo = rangeTo;
+      $result.rangeTo = rangeTo;
     }
-    return _result;
+    return $result;
   }
+  MidiNodeConfig_NoteBinding._() : super();
   factory MidiNodeConfig_NoteBinding.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiNodeConfig_NoteBinding.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiNodeConfig.NoteBinding', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..e<MidiNodeConfig_NoteBinding_MidiType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MidiNodeConfig_NoteBinding_MidiType.CC, valueOf: MidiNodeConfig_NoteBinding_MidiType.valueOf, enumValues: MidiNodeConfig_NoteBinding_MidiType.values)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'port', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'rangeFrom', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'rangeTo', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2675,8 +2800,10 @@ class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiNodeConfig_NoteBinding copyWith(void Function(MidiNodeConfig_NoteBinding) updates) => super.copyWith((message) => updates(message as MidiNodeConfig_NoteBinding)) as MidiNodeConfig_NoteBinding; // ignore: deprecated_member_use
+  MidiNodeConfig_NoteBinding copyWith(void Function(MidiNodeConfig_NoteBinding) updates) => super.copyWith((message) => updates(message as MidiNodeConfig_NoteBinding)) as MidiNodeConfig_NoteBinding;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiNodeConfig_NoteBinding create() => MidiNodeConfig_NoteBinding._();
   MidiNodeConfig_NoteBinding createEmptyInstance() => create();
@@ -2732,28 +2859,29 @@ class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {
 }
 
 class MidiNodeConfig_ControlBinding extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiNodeConfig.ControlBinding', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'page')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control')
-    ..hasRequiredFields = false
-  ;
-
-  MidiNodeConfig_ControlBinding._() : super();
   factory MidiNodeConfig_ControlBinding({
     $core.String? page,
     $core.String? control,
   }) {
-    final _result = create();
+    final $result = create();
     if (page != null) {
-      _result.page = page;
+      $result.page = page;
     }
     if (control != null) {
-      _result.control = control;
+      $result.control = control;
     }
-    return _result;
+    return $result;
   }
+  MidiNodeConfig_ControlBinding._() : super();
   factory MidiNodeConfig_ControlBinding.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiNodeConfig_ControlBinding.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiNodeConfig.ControlBinding', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'page')
+    ..aOS(2, _omitFieldNames ? '' : 'control')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2763,8 +2891,10 @@ class MidiNodeConfig_ControlBinding extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiNodeConfig_ControlBinding copyWith(void Function(MidiNodeConfig_ControlBinding) updates) => super.copyWith((message) => updates(message as MidiNodeConfig_ControlBinding)) as MidiNodeConfig_ControlBinding; // ignore: deprecated_member_use
+  MidiNodeConfig_ControlBinding copyWith(void Function(MidiNodeConfig_ControlBinding) updates) => super.copyWith((message) => updates(message as MidiNodeConfig_ControlBinding)) as MidiNodeConfig_ControlBinding;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiNodeConfig_ControlBinding create() => MidiNodeConfig_ControlBinding._();
   MidiNodeConfig_ControlBinding createEmptyInstance() => create();
@@ -2799,39 +2929,40 @@ enum MidiNodeConfig_Binding {
 }
 
 class MidiNodeConfig extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, MidiNodeConfig_Binding> _MidiNodeConfig_BindingByTag = {
-    2 : MidiNodeConfig_Binding.noteBinding,
-    3 : MidiNodeConfig_Binding.controlBinding,
-    0 : MidiNodeConfig_Binding.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [2, 3])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'device')
-    ..aOM<MidiNodeConfig_NoteBinding>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteBinding', subBuilder: MidiNodeConfig_NoteBinding.create)
-    ..aOM<MidiNodeConfig_ControlBinding>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlBinding', subBuilder: MidiNodeConfig_ControlBinding.create)
-    ..hasRequiredFields = false
-  ;
-
-  MidiNodeConfig._() : super();
   factory MidiNodeConfig({
     $core.String? device,
     MidiNodeConfig_NoteBinding? noteBinding,
     MidiNodeConfig_ControlBinding? controlBinding,
   }) {
-    final _result = create();
+    final $result = create();
     if (device != null) {
-      _result.device = device;
+      $result.device = device;
     }
     if (noteBinding != null) {
-      _result.noteBinding = noteBinding;
+      $result.noteBinding = noteBinding;
     }
     if (controlBinding != null) {
-      _result.controlBinding = controlBinding;
+      $result.controlBinding = controlBinding;
     }
-    return _result;
+    return $result;
   }
+  MidiNodeConfig._() : super();
   factory MidiNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, MidiNodeConfig_Binding> _MidiNodeConfig_BindingByTag = {
+    2 : MidiNodeConfig_Binding.noteBinding,
+    3 : MidiNodeConfig_Binding.controlBinding,
+    0 : MidiNodeConfig_Binding.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiNodeConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..oo(0, [2, 3])
+    ..aOS(1, _omitFieldNames ? '' : 'device')
+    ..aOM<MidiNodeConfig_NoteBinding>(2, _omitFieldNames ? '' : 'noteBinding', subBuilder: MidiNodeConfig_NoteBinding.create)
+    ..aOM<MidiNodeConfig_ControlBinding>(3, _omitFieldNames ? '' : 'controlBinding', subBuilder: MidiNodeConfig_ControlBinding.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2841,8 +2972,10 @@ class MidiNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiNodeConfig copyWith(void Function(MidiNodeConfig) updates) => super.copyWith((message) => updates(message as MidiNodeConfig)) as MidiNodeConfig; // ignore: deprecated_member_use
+  MidiNodeConfig copyWith(void Function(MidiNodeConfig) updates) => super.copyWith((message) => updates(message as MidiNodeConfig)) as MidiNodeConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiNodeConfig create() => MidiNodeConfig._();
   MidiNodeConfig createEmptyInstance() => create();
@@ -2887,23 +3020,24 @@ class MidiNodeConfig extends $pb.GeneratedMessage {
 }
 
 class ContainerNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ContainerNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pc<Node>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
-    ..hasRequiredFields = false
-  ;
-
-  ContainerNodeConfig._() : super();
   factory ContainerNodeConfig({
     $core.Iterable<Node>? nodes,
   }) {
-    final _result = create();
+    final $result = create();
     if (nodes != null) {
-      _result.nodes.addAll(nodes);
+      $result.nodes.addAll(nodes);
     }
-    return _result;
+    return $result;
   }
+  ContainerNodeConfig._() : super();
   factory ContainerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ContainerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ContainerNodeConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<Node>(1, _omitFieldNames ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2913,8 +3047,10 @@ class ContainerNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ContainerNodeConfig copyWith(void Function(ContainerNodeConfig) updates) => super.copyWith((message) => updates(message as ContainerNodeConfig)) as ContainerNodeConfig; // ignore: deprecated_member_use
+  ContainerNodeConfig copyWith(void Function(ContainerNodeConfig) updates) => super.copyWith((message) => updates(message as ContainerNodeConfig)) as ContainerNodeConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ContainerNodeConfig create() => ContainerNodeConfig._();
   ContainerNodeConfig createEmptyInstance() => create();
@@ -2928,28 +3064,29 @@ class ContainerNodeConfig extends $pb.GeneratedMessage {
 }
 
 class NodePosition extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodePosition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  NodePosition._() : super();
   factory NodePosition({
     $core.double? x,
     $core.double? y,
   }) {
-    final _result = create();
+    final $result = create();
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
-    return _result;
+    return $result;
   }
+  NodePosition._() : super();
   factory NodePosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodePosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodePosition', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2959,8 +3096,10 @@ class NodePosition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodePosition copyWith(void Function(NodePosition) updates) => super.copyWith((message) => updates(message as NodePosition)) as NodePosition; // ignore: deprecated_member_use
+  NodePosition copyWith(void Function(NodePosition) updates) => super.copyWith((message) => updates(message as NodePosition)) as NodePosition;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodePosition create() => NodePosition._();
   NodePosition createEmptyInstance() => create();
@@ -2989,33 +3128,34 @@ class NodePosition extends $pb.GeneratedMessage {
 }
 
 class NodeDesigner extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeDesigner', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOM<NodePosition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scale', $pb.PbFieldType.OD)
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hidden')
-    ..hasRequiredFields = false
-  ;
-
-  NodeDesigner._() : super();
   factory NodeDesigner({
     NodePosition? position,
     $core.double? scale,
     $core.bool? hidden,
   }) {
-    final _result = create();
+    final $result = create();
     if (position != null) {
-      _result.position = position;
+      $result.position = position;
     }
     if (scale != null) {
-      _result.scale = scale;
+      $result.scale = scale;
     }
     if (hidden != null) {
-      _result.hidden = hidden;
+      $result.hidden = hidden;
     }
-    return _result;
+    return $result;
   }
+  NodeDesigner._() : super();
   factory NodeDesigner.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory NodeDesigner.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeDesigner', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOM<NodePosition>(1, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'scale', $pb.PbFieldType.OD)
+    ..aOB(3, _omitFieldNames ? '' : 'hidden')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -3025,8 +3165,10 @@ class NodeDesigner extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeDesigner copyWith(void Function(NodeDesigner) updates) => super.copyWith((message) => updates(message as NodeDesigner)) as NodeDesigner; // ignore: deprecated_member_use
+  NodeDesigner copyWith(void Function(NodeDesigner) updates) => super.copyWith((message) => updates(message as NodeDesigner)) as NodeDesigner;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static NodeDesigner create() => NodeDesigner._();
   NodeDesigner createEmptyInstance() => create();
@@ -3066,33 +3208,34 @@ class NodeDesigner extends $pb.GeneratedMessage {
 }
 
 class Port extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Port', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<ChannelProtocol>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'multiple')
-    ..hasRequiredFields = false
-  ;
-
-  Port._() : super();
   factory Port({
     $core.String? name,
     ChannelProtocol? protocol,
     $core.bool? multiple,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (protocol != null) {
-      _result.protocol = protocol;
+      $result.protocol = protocol;
     }
     if (multiple != null) {
-      _result.multiple = multiple;
+      $result.multiple = multiple;
     }
-    return _result;
+    return $result;
   }
+  Port._() : super();
   factory Port.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Port.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Port', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..e<ChannelProtocol>(2, _omitFieldNames ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
+    ..aOB(3, _omitFieldNames ? '' : 'multiple')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -3102,8 +3245,10 @@ class Port extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Port copyWith(void Function(Port) updates) => super.copyWith((message) => updates(message as Port)) as Port; // ignore: deprecated_member_use
+  Port copyWith(void Function(Port) updates) => super.copyWith((message) => updates(message as Port)) as Port;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Port create() => Port._();
   Port createEmptyInstance() => create();
@@ -3140,3 +3285,6 @@ class Port extends $pb.GeneratedMessage {
   void clearMultiple() => clearField(3);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

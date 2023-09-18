@@ -1,0 +1,1 @@
+Creates a color by mixing the red, green and blue channels.

@@ -1,0 +1,1 @@
+Controls the envelope of a signal using Attack, Decay, Sustain and Release.

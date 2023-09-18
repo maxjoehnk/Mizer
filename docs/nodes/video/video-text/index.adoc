@@ -1,0 +1,15 @@
+= Video Text
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/video/video-text/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

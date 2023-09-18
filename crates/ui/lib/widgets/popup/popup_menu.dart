@@ -10,8 +10,9 @@ const double ROW_HEIGHT = 26;
 class PopupItem<T> {
   final String label;
   final T value;
+  final String? description;
 
-  const PopupItem(this.value, this.label);
+  const PopupItem(this.value, this.label, {this.description});
 }
 
 class PopupCategory<T> {
@@ -33,6 +34,7 @@ class PopupMenu<T> extends StatefulWidget {
 
 class _PopupMenuState<T> extends State<PopupMenu<T>> {
   PopupCategory<T> selected;
+  PopupItem<T>? hovered;
   TextEditingController _searchController = TextEditingController();
 
   _PopupMenuState(this.selected) {
@@ -45,7 +47,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
       debugLabel: "PopupMenu",
       autofocus: true,
       child: Container(
-          constraints: BoxConstraints(maxHeight: 300, maxWidth: 300),
+          constraints: BoxConstraints(maxHeight: 300, maxWidth: 450),
           decoration: BoxDecoration(
               color: Colors.grey.shade800,
               borderRadius: BorderRadius.all(Radius.circular(2)),
@@ -103,7 +105,20 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
                 children: buildWidgets(selected.items),
               ),
             ),
-          )
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: hovered?.description != null
+                        ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
+                        : []),
+              ),
+            ),
+          ),
         ]);
   }
 
@@ -124,10 +139,12 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
   List<Widget> buildWidgets(Iterable<PopupItem<T>> items) {
     return items
         .sortedBy((item) => item.label)
-        .map((item) => PopupItemButton(item.label, onTap: () {
+        .map((item) => PopupItemButton(item.label,
+            onTap: () {
               widget.onSelect(item.value);
               Navigator.pop(context);
-            }))
+            },
+            onEnter: () => setState(() => hovered = item)))
         .toList();
   }
 }
@@ -135,8 +152,9 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 class PopupItemButton extends StatefulWidget {
   final String text;
   final Function() onTap;
+  final Function() onEnter;
 
-  PopupItemButton(this.text, {required this.onTap});
+  PopupItemButton(this.text, {required this.onTap, required this.onEnter});
 
   @override
   _PopupItemButtonState createState() => _PopupItemButtonState();
@@ -151,10 +169,18 @@ class _PopupItemButtonState extends State<PopupItemButton> {
     return InkWell(
         onTap: this.widget.onTap,
         onHover: (isHovering) {
+          if (isHovering) {
+            this.widget.onEnter();
+          }
           setState(() => hover = isHovering);
         },
         canRequestFocus: true,
-        onFocusChange: (hasFocus) => setState(() => focus = hasFocus),
+        onFocusChange: (hasFocus) {
+          if (hasFocus) {
+            this.widget.onEnter();
+          }
+          setState(() => focus = hasFocus);
+        },
         child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
             decoration:

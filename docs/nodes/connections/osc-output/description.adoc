@@ -1,0 +1,1 @@
+OSC Output node sends OSC messages on the specified path to an OSC connection.

@@ -1,0 +1,1 @@
+Reads a file in the ILDA format and outputs the points as a stream of points.

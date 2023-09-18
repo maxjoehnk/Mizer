@@ -1,0 +1,1 @@
+Combines multiple video sources into a single output.

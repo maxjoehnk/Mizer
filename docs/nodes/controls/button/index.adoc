@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/controls/button/images/node.png[Node Preview,300]
 
-The ButtonNode corresponds to a button control in the <<Layout View>>.
+include::description.adoc[]
 
 == Settings
 

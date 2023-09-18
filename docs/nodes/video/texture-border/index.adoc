@@ -1,0 +1,15 @@
+= Texture Border
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/video/texture-border/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

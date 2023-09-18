@@ -1,10 +1,12 @@
-use crate::mappings::nodes::map_node_descriptor_with_config;
-use crate::proto::nodes::*;
-use crate::RuntimeApi;
 use mizer_command_executor::*;
+use mizer_docs::get_node_description;
 use mizer_node::{NodePath, NodePreviewRef, NodeType};
 use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::NodeMetadataRef;
+
+use crate::mappings::nodes::map_node_descriptor_with_config;
+use crate::proto::nodes::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -105,20 +107,20 @@ impl<R: RuntimeApi> NodesHandler<R> {
             .map(|node_type| {
                 let node: mizer_nodes::Node = node_type.into();
                 let details = node.details();
+                let description = get_node_description(&node_type.get_name())
+                    .map(|desc| desc.to_string())
+                    .unwrap_or_default(); // TODO: remove this
 
                 AvailableNode {
                     name: details.name,
                     category: NodeCategory::from(details.category) as i32,
                     r#type: node::NodeType::from(node_type) as i32,
-                    ..Default::default()
+                    description,
                 }
             })
             .collect();
 
-        AvailableNodes {
-            nodes,
-            ..Default::default()
-        }
+        AvailableNodes { nodes }
     }
 
     #[tracing::instrument(skip(self))]

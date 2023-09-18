@@ -1,0 +1,1 @@
+Control the Brightness, Saturation, and Hue of the input image.

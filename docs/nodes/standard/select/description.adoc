@@ -1,0 +1,1 @@
+Selects the input with the index specified by the `Channel` input.

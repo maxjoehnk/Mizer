@@ -1,0 +1,1 @@
+Midi Input is a node that receives midi messages from a midi device.

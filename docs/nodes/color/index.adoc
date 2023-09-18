@@ -3,5 +3,5 @@ ifndef::imagesdir[:imagesdir: ../../]
 
 include::color-brightness/index.adoc[leveloffset=+1]
 include::color-constant/index.adoc[leveloffset=+1]
-include::hsv-mixer/index.adoc[leveloffset=+1]
-include::rgb-mixer/index.adoc[leveloffset=+1]
+include::color-hsv/index.adoc[leveloffset=+1]
+include::color-rgb/index.adoc[leveloffset=+1]

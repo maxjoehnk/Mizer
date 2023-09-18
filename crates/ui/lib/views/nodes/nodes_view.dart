@@ -198,7 +198,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
                 .map((e) => PopupCategory(
                     label: CATEGORY_NAMES[e.key]!,
-                    items: e.value.map((n) => PopupItem(n.type, n.name)).toList()))
+                    items: e.value
+                        .map((n) => PopupItem(n.type, n.name, description: n.description))
+                        .toList()))
                 .toList(),
             onSelect: (nodeType) => _addNode(model, nodeType))));
     setState(() {

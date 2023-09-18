@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/data/template/images/node.png[Node Preview,300]
 
-Combines multiple data inputs to a single output.
+include::description.adoc[]
 
 == Settings
 

@@ -1,4 +1,10 @@
 = Standard
 ifndef::imagesdir[:imagesdir: ../../]
 
+include::conditional/index.adoc[leveloffset=+1]
+include::envelope/index.adoc[leveloffset=+1]
+include::merge/index.adoc[leveloffset=+1]
 include::oscillator/index.adoc[leveloffset=+1]
+include::scripting/index.adoc[leveloffset=+1]
+include::select/index.adoc[leveloffset=+1]
+include::step-sequencer/index.adoc[leveloffset=+1]

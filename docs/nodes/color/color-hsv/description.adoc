@@ -1,0 +1,1 @@
+Creates a color by mixing hue, saturation and value.

@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/audio/audio-input/images/node.png[Node Preview,300]
 
-Records audio from a microphone or other audio input device.
+include::description.adoc[]
 
 == Ports
 === Outputs

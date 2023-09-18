@@ -1,0 +1,15 @@
+= Step Sequencer
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/standard/step-sequencer/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

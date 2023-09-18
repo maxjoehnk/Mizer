@@ -1,0 +1,1 @@
+Controls the volume of an audio signal.

@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/audio/audio-volume/images/node.png[Node Preview,300]
 
-Controls the volume of an audio signal.
+include::description.adoc[]
 
 == Ports
 === Outputs

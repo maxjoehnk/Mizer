@@ -1,0 +1,3 @@
+Allows you to sequence a series of events in 1/16th note increments.
+
+It is useful for creating drum patterns.

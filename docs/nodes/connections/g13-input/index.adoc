@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/connections/g13-input/images/node.png[Node Preview,300]
 
-G13 Input is a node that allows you to use the Logitech G13 as an input device.
+include::description.adoc[]
 
 == Settings
 

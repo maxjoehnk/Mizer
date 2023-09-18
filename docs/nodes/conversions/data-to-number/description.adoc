@@ -1,0 +1,1 @@
+Converts a data value to a number.

@@ -5,7 +5,7 @@ ifndef::imagesdir[:imagesdir: ../../../]
 
 image::nodes/connections/mqtt-input/images/node.png[Node Preview,300]
 
-MQTT Output node allows you to send messages to a MQTT connection.
+include::description.adoc[]
 
 == Settings
 

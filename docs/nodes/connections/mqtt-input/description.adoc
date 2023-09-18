@@ -1,0 +1,1 @@
+MQTT Input node subscribes to a topic on a MQTT connection and outputs the received messages.

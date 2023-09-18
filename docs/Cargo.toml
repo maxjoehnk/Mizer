@@ -1,0 +1,12 @@
+[package]
+name = "mizer-docs"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+phf = "0.11"
+
+[build-dependencies]
+anyhow = "1"
+phf_codegen = "0.11"

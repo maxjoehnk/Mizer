@@ -1,0 +1,1 @@
+The OscillatorNode represents a periodic waveform, such as a sine wave, synchronized with the global clock.

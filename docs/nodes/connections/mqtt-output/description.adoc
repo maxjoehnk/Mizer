@@ -1,0 +1,1 @@
+MQTT Output node allows you to send messages to a MQTT connection.

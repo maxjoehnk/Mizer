@@ -1,0 +1,1 @@
+OSC Input node receives OSC messages with the specified path on an OSC connection.

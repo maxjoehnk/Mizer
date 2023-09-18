@@ -1,0 +1,1 @@
+Extracts a value from an object or array.

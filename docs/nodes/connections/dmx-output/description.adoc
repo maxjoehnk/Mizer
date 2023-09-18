@@ -1,0 +1,1 @@
+DMX Output sends one channel of DMX data to a DMX connection.

@@ -1,0 +1,1 @@
+The output node is used to send data to the laser. It is the last node in the chain and is always required.

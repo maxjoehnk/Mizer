@@ -1,0 +1,1 @@
+Split the RGB channels of an image into separate images.

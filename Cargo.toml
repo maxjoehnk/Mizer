@@ -84,7 +84,8 @@ members = [
     "crates/ui/ffi",
     "crates/util",
     "crates/util/bus",
-    "crates/util/package"
+    "crates/util/package",
+    "docs"
 ]
 
 [lib]

@@ -1,0 +1,1 @@
+Control the brightness of the input color.

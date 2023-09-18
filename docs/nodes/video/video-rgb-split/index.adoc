@@ -1,0 +1,15 @@
+= Video RGB Split
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/video/video-rgb-split/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+== Ports
+=== Outputs
+
+=== Inputs

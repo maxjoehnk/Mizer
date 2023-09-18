@@ -4196,6 +4196,7 @@ dependencies = [
  "mizer-command-executor",
  "mizer-connections",
  "mizer-devices",
+ "mizer-docs",
  "mizer-fixture-patch-export",
  "mizer-fixtures",
  "mizer-gamepads",
@@ -4419,6 +4420,15 @@ dependencies = [
  "mizer-node",
  "mizer-protocol-dmx",
  "serde",
+]
+
+[[package]]
+name = "mizer-docs"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "phf",
+ "phf_codegen",
 ]
 
 [[package]]
@@ -6501,6 +6511,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "928c6535de93548188ef63bb7c4036bd415cd8f36ad25af44b9789b2ee72a48c"
 dependencies = [
  "phf_macros",
+ "phf_shared",
+]
+
+[[package]]
+name = "phf_codegen"
+version = "0.11.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e8d39688d359e6b34654d328e262234662d16cc0f60ec8dcbe5e718709342a5a"
+dependencies = [
+ "phf_generator",
  "phf_shared",
 ]
 

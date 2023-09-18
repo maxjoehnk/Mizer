@@ -1,0 +1,1 @@
+Outputs a video stream to the network using the NDI protocol.

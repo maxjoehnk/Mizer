@@ -84,11 +84,6 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
               child: Stack(
                 children: [
                   GestureDetector(
-                      onDoubleTapDown: (event) {
-                        _openAddNodeMenu(context,
-                            globalPosition: event.globalPosition,
-                            localPosition: event.localPosition);
-                      },
                       onSecondaryTapUp: (event) {
                         _openAddNodeMenu(context,
                             globalPosition: event.globalPosition,
@@ -107,12 +102,20 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                             Transform(
                                 transform: model.transformationController.value,
                                 child: IgnorePointer(child: GraphPaintLayer(model: model))),
-                            DragSelectionLayer(
-                                nodes: model.nodes,
-                                transformation: model.transformationController.value,
-                                selectionState: _selectionState,
-                                onUpdateSelection: (selection) =>
-                                    setState(() => _selectionState = selection)),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onDoubleTapDown: (event) {
+                                _openAddNodeMenu(context,
+                                    globalPosition: event.globalPosition,
+                                    localPosition: event.localPosition);
+                              },
+                              child: DragSelectionLayer(
+                                  nodes: model.nodes,
+                                  transformation: model.transformationController.value,
+                                  selectionState: _selectionState,
+                                  onUpdateSelection: (selection) =>
+                                      setState(() => _selectionState = selection)),
+                            ),
                             CanvasDropLayer(),
                             NodesTarget(),
                             if (_selectionState != null) SelectionIndicator(_selectionState!),

@@ -1,0 +1,17 @@
+[package]
+name = "mizer-screen-capture-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+mizer-node = { path = "../../../node" }
+serde = { version = "1", features = ["derive"] }
+enum-iterator = "1.4"
+num_enum = "0.7"
+mizer-wgpu = { path = "../../../../wgpu" }
+image = "0.24"
+profiling = "1"
+screenshots = "0.8"

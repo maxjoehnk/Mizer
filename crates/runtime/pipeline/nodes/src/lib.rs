@@ -34,6 +34,7 @@ pub use mizer_port_operation_nodes::{
     ThresholdNode,
 };
 pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
+pub use mizer_screen_capture_nodes::ScreenCaptureNode;
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
@@ -183,6 +184,7 @@ node_impl! {
     VideoText(VideoTextNode),
     TextureBorder(TextureBorderNode),
     Webcam(WebcamNode),
+    ScreenCapture(ScreenCaptureNode),
     Gamepad(GamepadNode),
     ColorConstant(ConstantColorNode),
     ColorBrightness(ColorBrightnessNode),

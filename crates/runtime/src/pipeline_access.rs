@@ -1,9 +1,9 @@
-use anyhow::Context;
 use std::collections::HashMap;
 use std::ops::DerefMut;
 use std::str::FromStr;
 use std::sync::Arc;
 
+use anyhow::Context;
 use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
@@ -108,6 +108,7 @@ impl PipelineAccess {
             TextureBorder(node) => self.add_node(path, node),
             VideoText(node) => self.add_node(path, node),
             Webcam(node) => self.add_node(path, node),
+            ScreenCapture(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
             ColorConstant(node) => self.add_node(path, node),

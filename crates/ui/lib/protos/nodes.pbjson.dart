@@ -252,10 +252,7 @@ const AvailableNode$json = {
     {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'type'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
-    {'1': 'description', '3': 4, '4': 1, '5': 9, '9': 0, '10': 'description', '17': true},
-  ],
-  '8': [
-    {'1': '_description'},
+    {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
   ],
 };
 
@@ -263,8 +260,8 @@ const AvailableNode$json = {
 final $typed_data.Uint8List availableNodeDescriptor = $convert.base64Decode(
     'Cg1BdmFpbGFibGVOb2RlEi4KBHR5cGUYASABKA4yGi5taXplci5ub2Rlcy5Ob2RlLk5vZGVUeX'
     'BlUgR0eXBlEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIY2F0ZWdvcnkYAyABKA4yGS5taXplci5u'
-    'b2Rlcy5Ob2RlQ2F0ZWdvcnlSCGNhdGVnb3J5EiUKC2Rlc2NyaXB0aW9uGAQgASgJSABSC2Rlc2'
-    'NyaXB0aW9uiAEBQg4KDF9kZXNjcmlwdGlvbg==');
+    'b2Rlcy5Ob2RlQ2F0ZWdvcnlSCGNhdGVnb3J5EiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcm'
+    'lwdGlvbg==');
 
 @$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = {
@@ -378,6 +375,7 @@ const Node_NodeType$json = {
     {'1': 'PRO_DJ_LINK_CLOCK', '2': 86},
     {'1': 'PIONEER_CDJ', '2': 87},
     {'1': 'NDI_OUTPUT', '2': 88},
+    {'1': 'SCREEN_CAPTURE', '2': 89},
     {'1': 'CONTAINER', '2': 100},
   ],
 };
@@ -406,7 +404,7 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
     'cmV2aWV3GAYgASgOMiEubWl6ZXIubm9kZXMuTm9kZS5Ob2RlUHJldmlld1R5cGVSB3ByZXZpZX'
     'cSLwoGY29uZmlnGAcgASgLMhcubWl6ZXIubm9kZXMuTm9kZUNvbmZpZ1IGY29uZmlnEjQKCHNl'
     'dHRpbmdzGAggAygLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSCHNldHRpbmdzEjIKB2RldG'
-    'FpbHMYCSABKAsyGC5taXplci5ub2Rlcy5Ob2RlRGV0YWlsc1IHZGV0YWlscyLoCAoITm9kZVR5'
+    'FpbHMYCSABKAsyGC5taXplci5ub2Rlcy5Ob2RlRGV0YWlsc1IHZGV0YWlscyL8CAoITm9kZVR5'
     'cGUSCQoFRkFERVIQABIKCgZCVVRUT04QARIOCgpPU0NJTExBVE9SEAISCQoFQ0xPQ0sQAxIKCg'
     'ZTQ1JJUFQQBBIMCghFTlZFTE9QRRAFEhIKDlNURVBfU0VRVUVOQ0VSEAYSCgoGU0VMRUNUEAcS'
     'CQoFTUVSR0UQCBINCglUSFJFU0hPTEQQCRIOCgpETVhfT1VUUFVUEAoSDQoJT1NDX0lOUFVUEA'
@@ -426,10 +424,10 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
     'RRBLEhAKDEFVRElPX09VVFBVVBBMEhAKDEFVRElPX1ZPTFVNRRBNEg8KC0FVRElPX0lOUFVUEE'
     '4SDQoJQVVESU9fTUlYEE8SDwoLQVVESU9fTUVURVIQUBIMCghURU1QTEFURRBREgoKBldFQkNB'
     'TRBSEhIKDlRFWFRVUkVfQk9SREVSEFMSDgoKVklERU9fVEVYVBBUEgkKBUJFQVRTEFUSFQoRUF'
-    'JPX0RKX0xJTktfQ0xPQ0sQVhIPCgtQSU9ORUVSX0NEShBXEg4KCk5ESV9PVVRQVVQQWBINCglD'
-    'T05UQUlORVIQZCJ0Cg9Ob2RlUHJldmlld1R5cGUSCAoETk9ORRAAEgsKB0hJU1RPUlkQARIMCg'
-    'hXQVZFRk9STRACEgwKCE1VTFRJUExFEAMSCwoHVEVYVFVSRRAEEgwKCFRJTUVDT0RFEAUSCAoE'
-    'REFUQRAGEgkKBUNPTE9SEAc=');
+    'JPX0RKX0xJTktfQ0xPQ0sQVhIPCgtQSU9ORUVSX0NEShBXEg4KCk5ESV9PVVRQVVQQWBISCg5T'
+    'Q1JFRU5fQ0FQVFVSRRBZEg0KCUNPTlRBSU5FUhBkInQKD05vZGVQcmV2aWV3VHlwZRIICgROT0'
+    '5FEAASCwoHSElTVE9SWRABEgwKCFdBVkVGT1JNEAISDAoITVVMVElQTEUQAxILCgdURVhUVVJF'
+    'EAQSDAoIVElNRUNPREUQBRIICgREQVRBEAYSCQoFQ09MT1IQBw==');
 
 @$core.Deprecated('Use nodeDetailsDescriptor instead')
 const NodeDetails$json = {

@@ -149,6 +149,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType PRO_DJ_LINK_CLOCK = Node_NodeType._(86, _omitEnumNames ? '' : 'PRO_DJ_LINK_CLOCK');
   static const Node_NodeType PIONEER_CDJ = Node_NodeType._(87, _omitEnumNames ? '' : 'PIONEER_CDJ');
   static const Node_NodeType NDI_OUTPUT = Node_NodeType._(88, _omitEnumNames ? '' : 'NDI_OUTPUT');
+  static const Node_NodeType SCREEN_CAPTURE = Node_NodeType._(89, _omitEnumNames ? '' : 'SCREEN_CAPTURE');
   static const Node_NodeType CONTAINER = Node_NodeType._(100, _omitEnumNames ? '' : 'CONTAINER');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
@@ -223,6 +224,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     PRO_DJ_LINK_CLOCK,
     PIONEER_CDJ,
     NDI_OUTPUT,
+    SCREEN_CAPTURE,
     CONTAINER,
   ];
 

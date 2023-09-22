@@ -11,4 +11,4 @@ mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
 zip = "0.6"
 strong-xml = "0.6"
-rayon = "1.7"
+rayon = "1.8"

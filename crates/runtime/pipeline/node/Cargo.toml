@@ -23,4 +23,4 @@ pinboard = "2.2"
 enum-iterator = "1.4"
 
 [dev-dependencies]
-test-case = "3.1"
+test-case = "3.2"

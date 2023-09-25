@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/connections.dart';
@@ -12,7 +12,8 @@ import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 
-import 'dialogs/add_artnet_connection.dart';
+import 'dialogs/add_artnet_input_connection.dart';
+import 'dialogs/add_artnet_output_connection.dart';
 import 'dialogs/add_mqtt_connection.dart';
 import 'dialogs/add_osc_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
@@ -70,8 +71,9 @@ class _ConnectionsViewState extends State<ConnectionsView> {
               );
             }),
         actions: [
-          PanelActionModel(label: "Add sACN".i18n, onClick: _addSacn),
-          PanelActionModel(label: "Add Artnet".i18n, onClick: _addArtnet),
+          PanelActionModel(label: "Add sACN Output".i18n, onClick: _addSacnOutput),
+          PanelActionModel(label: "Add Artnet Output".i18n, onClick: _addArtnetOutput),
+          PanelActionModel(label: "Add Artnet Input".i18n, onClick: _addArtnetInput),
           PanelActionModel(label: "Add MQTT".i18n, onClick: _addMqtt),
           PanelActionModel(label: "Add OSC".i18n, onClick: _addOsc),
         ]);
@@ -96,7 +98,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   List<Widget> _buildActions(BuildContext context, Connection connection) {
-    if (connection.hasDmx()) {
+    if (connection.hasDmxOutput()) {
       return [
         MizerIconButton(
             icon: MdiIcons.chartBar,
@@ -176,23 +178,33 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     });
   }
 
-  _addSacn() async {
+  _addSacnOutput() async {
     var value = await showDialog<SacnConfig>(
         context: context, builder: (context) => ConfigureSacnConnectionDialog());
     if (value == null) {
       return null;
     }
-    await api.addSacn(value);
+    await api.addSacnOutput(value);
     await _fetch();
   }
 
-  _addArtnet() async {
-    var value = await showDialog<ArtnetConfig>(
-        context: context, builder: (context) => ConfigureArtnetConnectionDialog());
+  _addArtnetOutput() async {
+    var value = await showDialog<ArtnetOutputConfig>(
+        context: context, builder: (context) => ConfigureArtnetOutputConnectionDialog());
     if (value == null) {
       return null;
     }
-    await api.addArtnet(value);
+    await api.addArtnetOutput(value);
+    await _fetch();
+  }
+
+  _addArtnetInput() async {
+    var value = await showDialog<ArtnetInputConfig>(
+        context: context, builder: (context) => ConfigureArtnetInputConnectionDialog());
+    if (value == null) {
+      return null;
+    }
+    await api.addArtnetInput(value);
     await _fetch();
   }
 
@@ -237,26 +249,39 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   _onConfigure(Connection connection) async {
-    if (connection.hasDmx() && connection.dmx.hasArtnet()) {
-      var value = await showDialog<ArtnetConfig>(
+    if (connection.hasDmxOutput() && connection.dmxOutput.hasArtnet()) {
+      var value = await showDialog<ArtnetOutputConfig>(
           context: context,
-          builder: (context) => ConfigureArtnetConnectionDialog(config: connection.dmx.artnet));
+          builder: (context) =>
+              ConfigureArtnetOutputConnectionDialog(config: connection.dmxOutput.artnet));
       if (value == null) {
         return null;
       }
       await api.configureConnection(ConfigureConnectionRequest(
-          dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
+          dmxOutput: DmxOutputConnection(artnet: value, outputId: connection.dmxOutput.outputId)));
       await _fetch();
     }
-    if (connection.hasDmx() && connection.dmx.hasSacn()) {
+    if (connection.hasDmxOutput() && connection.dmxOutput.hasSacn()) {
       var value = await showDialog<SacnConfig>(
           context: context,
-          builder: (context) => ConfigureSacnConnectionDialog(config: connection.dmx.sacn));
+          builder: (context) => ConfigureSacnConnectionDialog(config: connection.dmxOutput.sacn));
       if (value == null) {
         return null;
       }
       await api.configureConnection(ConfigureConnectionRequest(
-          dmx: DmxConnection(sacn: value, outputId: connection.dmx.outputId)));
+          dmxOutput: DmxOutputConnection(sacn: value, outputId: connection.dmxOutput.outputId)));
+      await _fetch();
+    }
+    if (connection.hasDmxInput() && connection.dmxInput.hasArtnet()) {
+      var value = await showDialog<ArtnetInputConfig>(
+          context: context,
+          builder: (context) =>
+              ConfigureArtnetInputConnectionDialog(config: connection.dmxInput.artnet));
+      if (value == null) {
+        return null;
+      }
+      await api.configureConnection(ConfigureConnectionRequest(
+          dmxInput: DmxInputConnection(artnet: value, id: connection.dmxInput.id)));
       await _fetch();
     }
     if (connection.hasMqtt()) {
@@ -295,8 +320,11 @@ class ConnectionTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (connection.hasDmx()) {
-      return _tag("DMX");
+    if (connection.hasDmxOutput()) {
+      return _tag("DMX Output");
+    }
+    if (connection.hasDmxInput()) {
+      return _tag("DMX Input");
     }
     if (connection.hasCdj()) {
       return _tag("Pioneer CDJ");
@@ -358,10 +386,10 @@ class DeviceTitle extends StatelessWidget {
 
 extension ConnectionExtensions on Connection {
   bool get canConfigure {
-    return this.hasDmx() || this.hasOsc() || this.hasMqtt();
+    return this.hasDmxOutput() || this.hasDmxInput() || this.hasOsc() || this.hasMqtt();
   }
 
   bool get canDelete {
-    return this.hasDmx() || this.hasOsc() || this.hasMqtt();
+    return this.hasDmxOutput() || this.hasDmxInput() || this.hasOsc() || this.hasMqtt();
   }
 }

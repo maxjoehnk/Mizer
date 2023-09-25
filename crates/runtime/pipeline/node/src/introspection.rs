@@ -54,6 +54,7 @@ node_type_name! {
         Fader,
         Button,
         Label,
+        DmxInput,
         DmxOutput,
         Oscillator,
         Clock,

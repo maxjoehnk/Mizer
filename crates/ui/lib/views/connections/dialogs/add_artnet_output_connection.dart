@@ -3,26 +3,27 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
-class ConfigureArtnetConnectionDialog extends StatefulWidget {
-  final ArtnetConfig? config;
+class ConfigureArtnetOutputConnectionDialog extends StatefulWidget {
+  final ArtnetOutputConfig? config;
 
-  const ConfigureArtnetConnectionDialog({this.config, Key? key}) : super(key: key);
+  const ConfigureArtnetOutputConnectionDialog({this.config, Key? key}) : super(key: key);
 
   @override
-  State<ConfigureArtnetConnectionDialog> createState() => _ConfigureArtnetConnectionDialogState();
+  State<ConfigureArtnetOutputConnectionDialog> createState() =>
+      _ConfigureArtnetOutputConnectionDialogState();
 }
 
-class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnectionDialog> {
+class _ConfigureArtnetOutputConnectionDialogState
+    extends State<ConfigureArtnetOutputConnectionDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController;
   final TextEditingController _hostController;
   final TextEditingController _portController;
 
-  _ConfigureArtnetConnectionDialogState()
+  _ConfigureArtnetOutputConnectionDialogState()
       : _nameController = TextEditingController(),
         _hostController = TextEditingController(text: "0.0.0.0"),
         _portController = TextEditingController(text: "6454");
-
 
   @override
   void initState() {
@@ -37,7 +38,9 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: widget.config != null ? "Configure Artnet Connection".i18n : "Add Artnet Connection".i18n,
+      title: widget.config != null
+          ? "Configure Artnet Output Connection".i18n
+          : "Add Artnet Output Connection".i18n,
       content: Form(
         key: _formKey,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -92,10 +95,9 @@ class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnect
     if (!_formKey.currentState!.validate()) {
       return;
     }
-    Navigator.of(context).pop(ArtnetConfig(
+    Navigator.of(context).pop(ArtnetOutputConfig(
         name: _nameController.text,
         host: _hostController.text,
-        port: int.parse(_portController.text
-        )));
+        port: int.parse(_portController.text)));
   }
 }

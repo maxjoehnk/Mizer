@@ -1,0 +1,1 @@
+DMX Input receives one channel of DMX data from a DMX connection.

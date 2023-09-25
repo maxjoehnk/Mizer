@@ -1,5 +1,5 @@
+use super::DmxOutput;
 use crate::buffer::DmxBuffer;
-use crate::DmxOutput;
 use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};

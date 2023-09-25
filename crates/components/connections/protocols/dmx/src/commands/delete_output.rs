@@ -1,4 +1,4 @@
-use crate::{DmxConnection, DmxConnectionManager};
+use crate::{DmxConnectionManager, DmxOutputConnection};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
@@ -9,7 +9,7 @@ pub struct DeleteOutputCommand {
 
 impl<'a> Command<'a> for DeleteOutputCommand {
     type Dependencies = RefMut<DmxConnectionManager>;
-    type State = DmxConnection;
+    type State = DmxOutputConnection;
     type Result = ();
 
     fn label(&self) -> String {

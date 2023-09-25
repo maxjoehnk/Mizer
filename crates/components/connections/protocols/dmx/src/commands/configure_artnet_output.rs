@@ -1,4 +1,4 @@
-use crate::{ArtnetOutput, DmxConnection, DmxConnectionManager};
+use crate::{ArtnetOutput, DmxConnectionManager, DmxOutputConnection};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
@@ -26,10 +26,10 @@ impl<'a> Command<'a> for ConfigureArtnetOutputCommand {
         let output = dmx_manager
             .get_output(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown output {}", self.id))?;
-        if let DmxConnection::Artnet(_) = output {
+        if let DmxOutputConnection::Artnet(_) = output {
             let new_output = ArtnetOutput::new(self.host.clone(), self.port)?;
             let output = dmx_manager.delete_output(&self.id).unwrap();
-            let output = if let DmxConnection::Artnet(output) = output {
+            let output = if let DmxOutputConnection::Artnet(output) = output {
                 output
             } else {
                 unreachable!()

@@ -1,6 +1,7 @@
 = Connections
 ifndef::imagesdir[:imagesdir: ../../]
 
+include::dmx-input/index.adoc[leveloffset=+1]
 include::dmx-output/index.adoc[leveloffset=+1]
 include::g13-input/index.adoc[leveloffset=+1]
 include::g13-output/index.adoc[leveloffset=+1]

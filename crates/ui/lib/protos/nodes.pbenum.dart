@@ -108,6 +108,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType PIXEL_TO_DMX = Node_NodeType._(30, _omitEnumNames ? '' : 'PIXEL_TO_DMX');
   static const Node_NodeType PIXEL_PATTERN = Node_NodeType._(31, _omitEnumNames ? '' : 'PIXEL_PATTERN');
   static const Node_NodeType OPC_OUTPUT = Node_NodeType._(32, _omitEnumNames ? '' : 'OPC_OUTPUT');
+  static const Node_NodeType DMX_INPUT = Node_NodeType._(33, _omitEnumNames ? '' : 'DMX_INPUT');
   static const Node_NodeType LASER = Node_NodeType._(40, _omitEnumNames ? '' : 'LASER');
   static const Node_NodeType ILDA_FILE = Node_NodeType._(41, _omitEnumNames ? '' : 'ILDA_FILE');
   static const Node_NodeType GAMEPAD = Node_NodeType._(45, _omitEnumNames ? '' : 'GAMEPAD');
@@ -183,6 +184,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     PIXEL_TO_DMX,
     PIXEL_PATTERN,
     OPC_OUTPUT,
+    DMX_INPUT,
     LASER,
     ILDA_FILE,
     GAMEPAD,

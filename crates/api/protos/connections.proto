@@ -76,7 +76,13 @@ message GetConnectionsRequest {
 message GetDeviceProfilesRequest {
 }
 
-message ArtnetConfig {
+message ArtnetOutputConfig {
+  string name = 1;
+  string host = 2;
+  uint32 port = 3;
+}
+
+message ArtnetInputConfig {
   string name = 1;
   string host = 2;
   uint32 port = 3;
@@ -94,9 +100,10 @@ message Connections {
 message Connection {
   string name = 1;
   oneof connection {
-    DmxConnection dmx = 10;
-    MidiConnection midi = 11;
-    OscConnection osc = 12;
+    DmxOutputConnection dmx_output = 10;
+    DmxInputConnection dmx_input = 11;
+    MidiConnection midi = 12;
+    OscConnection osc = 13;
     HeliosConnection helios = 14;
     EtherDreamConnection ether_dream = 15;
     GamepadConnection gamepad = 16;
@@ -108,11 +115,18 @@ message Connection {
   }
 }
 
-message DmxConnection {
+message DmxOutputConnection {
   string output_id = 1;
   oneof config {
-    ArtnetConfig artnet = 3;
+    ArtnetOutputConfig artnet = 3;
     SacnConfig sacn = 4;
+  }
+}
+
+message DmxInputConnection {
+  string id = 1;
+  oneof config {
+    ArtnetInputConfig artnet = 2;
   }
 }
 
@@ -224,8 +238,9 @@ message MqttConnection {
 
 message ConfigureConnectionRequest {
   oneof config {
-    DmxConnection dmx = 1;
+    DmxOutputConnection dmx_output = 1;
     MqttConnection mqtt = 2;
     OscConnection osc = 3;
+    DmxInputConnection dmx_input = 4;
   }
 }

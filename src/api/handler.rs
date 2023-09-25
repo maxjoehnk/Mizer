@@ -3,14 +3,12 @@ use std::path::PathBuf;
 
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
-use mizer_connections::{
-    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView, MqttView, OscView,
-};
+use mizer_connections::{midi_device_profile::DeviceProfile, *};
 use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_protocol_dmx::{DmxConnectionManager, DmxInput, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
@@ -192,20 +190,40 @@ impl ApiHandler {
             .injector()
             .get::<DmxConnectionManager>()
             .unwrap();
-        let dmx_connections = dmx_manager
+        let dmx_outputs = dmx_manager
             .list_outputs()
             .into_iter()
-            .map(|(id, output)| DmxView {
+            .map(|(id, output)| DmxOutputView {
                 output_id: id.clone(),
                 name: output.name(),
                 config: match output {
-                    mizer_protocol_dmx::DmxConnection::Artnet(config) => DmxConfig::Artnet {
-                        host: config.host.clone(),
-                        port: config.port,
-                    },
-                    mizer_protocol_dmx::DmxConnection::Sacn(config) => DmxConfig::Sacn {
-                        priority: config.priority,
-                    },
+                    mizer_protocol_dmx::DmxOutputConnection::Artnet(config) => {
+                        DmxOutputConfig::Artnet {
+                            host: config.host.clone(),
+                            port: config.port,
+                        }
+                    }
+                    mizer_protocol_dmx::DmxOutputConnection::Sacn(config) => {
+                        DmxOutputConfig::Sacn {
+                            priority: config.priority,
+                        }
+                    }
+                },
+            })
+            .map(Connection::from);
+        let dmx_inputs = dmx_manager
+            .list_inputs()
+            .into_iter()
+            .map(|(id, input)| DmxInputView {
+                input_id: id.clone(),
+                name: input.name(),
+                config: match input {
+                    mizer_protocol_dmx::DmxInputConnection::Artnet(config) => {
+                        DmxInputConfig::Artnet {
+                            host: config.config.host.clone(),
+                            port: config.config.port,
+                        }
+                    }
                 },
             })
             .map(Connection::from);
@@ -254,7 +272,8 @@ impl ApiHandler {
 
         let mut connections = Vec::new();
         connections.extend(midi_connections);
-        connections.extend(dmx_connections);
+        connections.extend(dmx_outputs);
+        connections.extend(dmx_inputs);
         connections.extend(mqtt_connections);
         connections.extend(osc_connections);
         connections.extend(devices);

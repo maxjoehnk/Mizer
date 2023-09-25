@@ -1,0 +1,9 @@
+= Universe
+
+Set the DMX Universe that the node will receive its data from.
+
+*Default*: 1
+
+*Min*: 1
+
+*Max*: 32768

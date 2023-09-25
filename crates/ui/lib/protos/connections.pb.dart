@@ -939,16 +939,16 @@ class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
   static GetDeviceProfilesRequest? _defaultInstance;
 }
 
-class ArtnetConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+class ArtnetOutputConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetOutputConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
-  ArtnetConfig._() : super();
-  factory ArtnetConfig({
+  ArtnetOutputConfig._() : super();
+  factory ArtnetOutputConfig({
     $core.String? name,
     $core.String? host,
     $core.int? port,
@@ -965,26 +965,101 @@ class ArtnetConfig extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ArtnetConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ArtnetConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ArtnetOutputConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ArtnetOutputConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ArtnetConfig clone() => ArtnetConfig()..mergeFromMessage(this);
+  ArtnetOutputConfig clone() => ArtnetOutputConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ArtnetConfig copyWith(void Function(ArtnetConfig) updates) => super.copyWith((message) => updates(message as ArtnetConfig)) as ArtnetConfig; // ignore: deprecated_member_use
+  ArtnetOutputConfig copyWith(void Function(ArtnetOutputConfig) updates) => super.copyWith((message) => updates(message as ArtnetOutputConfig)) as ArtnetOutputConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ArtnetConfig create() => ArtnetConfig._();
-  ArtnetConfig createEmptyInstance() => create();
-  static $pb.PbList<ArtnetConfig> createRepeated() => $pb.PbList<ArtnetConfig>();
+  static ArtnetOutputConfig create() => ArtnetOutputConfig._();
+  ArtnetOutputConfig createEmptyInstance() => create();
+  static $pb.PbList<ArtnetOutputConfig> createRepeated() => $pb.PbList<ArtnetOutputConfig>();
   @$core.pragma('dart2js:noInline')
-  static ArtnetConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ArtnetConfig>(create);
-  static ArtnetConfig? _defaultInstance;
+  static ArtnetOutputConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ArtnetOutputConfig>(create);
+  static ArtnetOutputConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get host => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set host($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHost() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHost() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get port => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set port($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPort() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPort() => clearField(3);
+}
+
+class ArtnetInputConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetInputConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  ArtnetInputConfig._() : super();
+  factory ArtnetInputConfig({
+    $core.String? name,
+    $core.String? host,
+    $core.int? port,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (host != null) {
+      _result.host = host;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    return _result;
+  }
+  factory ArtnetInputConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ArtnetInputConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ArtnetInputConfig clone() => ArtnetInputConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ArtnetInputConfig copyWith(void Function(ArtnetInputConfig) updates) => super.copyWith((message) => updates(message as ArtnetInputConfig)) as ArtnetInputConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ArtnetInputConfig create() => ArtnetInputConfig._();
+  ArtnetInputConfig createEmptyInstance() => create();
+  static $pb.PbList<ArtnetInputConfig> createRepeated() => $pb.PbList<ArtnetInputConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ArtnetInputConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ArtnetInputConfig>(create);
+  static ArtnetInputConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -1117,7 +1192,8 @@ class Connections extends $pb.GeneratedMessage {
 }
 
 enum Connection_Connection {
-  dmx, 
+  dmxOutput, 
+  dmxInput, 
   midi, 
   osc, 
   helios, 
@@ -1133,9 +1209,10 @@ enum Connection_Connection {
 
 class Connection extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Connection_Connection> _Connection_ConnectionByTag = {
-    10 : Connection_Connection.dmx,
-    11 : Connection_Connection.midi,
-    12 : Connection_Connection.osc,
+    10 : Connection_Connection.dmxOutput,
+    11 : Connection_Connection.dmxInput,
+    12 : Connection_Connection.midi,
+    13 : Connection_Connection.osc,
     14 : Connection_Connection.helios,
     15 : Connection_Connection.etherDream,
     16 : Connection_Connection.gamepad,
@@ -1147,11 +1224,12 @@ class Connection extends $pb.GeneratedMessage {
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
-    ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
-    ..aOM<OscConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
+    ..aOM<DmxOutputConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
+    ..aOM<DmxInputConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
+    ..aOM<MidiConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
+    ..aOM<OscConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
     ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
     ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', subBuilder: EtherDreamConnection.create)
     ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
@@ -1166,7 +1244,8 @@ class Connection extends $pb.GeneratedMessage {
   Connection._() : super();
   factory Connection({
     $core.String? name,
-    DmxConnection? dmx,
+    DmxOutputConnection? dmxOutput,
+    DmxInputConnection? dmxInput,
     MidiConnection? midi,
     OscConnection? osc,
     HeliosConnection? helios,
@@ -1182,8 +1261,11 @@ class Connection extends $pb.GeneratedMessage {
     if (name != null) {
       _result.name = name;
     }
-    if (dmx != null) {
-      _result.dmx = dmx;
+    if (dmxOutput != null) {
+      _result.dmxOutput = dmxOutput;
+    }
+    if (dmxInput != null) {
+      _result.dmxInput = dmxInput;
     }
     if (midi != null) {
       _result.midi = midi;
@@ -1251,151 +1333,162 @@ class Connection extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 
   @$pb.TagNumber(10)
-  DmxConnection get dmx => $_getN(1);
+  DmxOutputConnection get dmxOutput => $_getN(1);
   @$pb.TagNumber(10)
-  set dmx(DmxConnection v) { setField(10, v); }
+  set dmxOutput(DmxOutputConnection v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasDmx() => $_has(1);
+  $core.bool hasDmxOutput() => $_has(1);
   @$pb.TagNumber(10)
-  void clearDmx() => clearField(10);
+  void clearDmxOutput() => clearField(10);
   @$pb.TagNumber(10)
-  DmxConnection ensureDmx() => $_ensure(1);
+  DmxOutputConnection ensureDmxOutput() => $_ensure(1);
 
   @$pb.TagNumber(11)
-  MidiConnection get midi => $_getN(2);
+  DmxInputConnection get dmxInput => $_getN(2);
   @$pb.TagNumber(11)
-  set midi(MidiConnection v) { setField(11, v); }
+  set dmxInput(DmxInputConnection v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasMidi() => $_has(2);
+  $core.bool hasDmxInput() => $_has(2);
   @$pb.TagNumber(11)
-  void clearMidi() => clearField(11);
+  void clearDmxInput() => clearField(11);
   @$pb.TagNumber(11)
-  MidiConnection ensureMidi() => $_ensure(2);
+  DmxInputConnection ensureDmxInput() => $_ensure(2);
 
   @$pb.TagNumber(12)
-  OscConnection get osc => $_getN(3);
+  MidiConnection get midi => $_getN(3);
   @$pb.TagNumber(12)
-  set osc(OscConnection v) { setField(12, v); }
+  set midi(MidiConnection v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasOsc() => $_has(3);
+  $core.bool hasMidi() => $_has(3);
   @$pb.TagNumber(12)
-  void clearOsc() => clearField(12);
+  void clearMidi() => clearField(12);
   @$pb.TagNumber(12)
-  OscConnection ensureOsc() => $_ensure(3);
+  MidiConnection ensureMidi() => $_ensure(3);
+
+  @$pb.TagNumber(13)
+  OscConnection get osc => $_getN(4);
+  @$pb.TagNumber(13)
+  set osc(OscConnection v) { setField(13, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasOsc() => $_has(4);
+  @$pb.TagNumber(13)
+  void clearOsc() => clearField(13);
+  @$pb.TagNumber(13)
+  OscConnection ensureOsc() => $_ensure(4);
 
   @$pb.TagNumber(14)
-  HeliosConnection get helios => $_getN(4);
+  HeliosConnection get helios => $_getN(5);
   @$pb.TagNumber(14)
   set helios(HeliosConnection v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasHelios() => $_has(4);
+  $core.bool hasHelios() => $_has(5);
   @$pb.TagNumber(14)
   void clearHelios() => clearField(14);
   @$pb.TagNumber(14)
-  HeliosConnection ensureHelios() => $_ensure(4);
+  HeliosConnection ensureHelios() => $_ensure(5);
 
   @$pb.TagNumber(15)
-  EtherDreamConnection get etherDream => $_getN(5);
+  EtherDreamConnection get etherDream => $_getN(6);
   @$pb.TagNumber(15)
   set etherDream(EtherDreamConnection v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasEtherDream() => $_has(5);
+  $core.bool hasEtherDream() => $_has(6);
   @$pb.TagNumber(15)
   void clearEtherDream() => clearField(15);
   @$pb.TagNumber(15)
-  EtherDreamConnection ensureEtherDream() => $_ensure(5);
+  EtherDreamConnection ensureEtherDream() => $_ensure(6);
 
   @$pb.TagNumber(16)
-  GamepadConnection get gamepad => $_getN(6);
+  GamepadConnection get gamepad => $_getN(7);
   @$pb.TagNumber(16)
   set gamepad(GamepadConnection v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasGamepad() => $_has(6);
+  $core.bool hasGamepad() => $_has(7);
   @$pb.TagNumber(16)
   void clearGamepad() => clearField(16);
   @$pb.TagNumber(16)
-  GamepadConnection ensureGamepad() => $_ensure(6);
+  GamepadConnection ensureGamepad() => $_ensure(7);
 
   @$pb.TagNumber(17)
-  MqttConnection get mqtt => $_getN(7);
+  MqttConnection get mqtt => $_getN(8);
   @$pb.TagNumber(17)
   set mqtt(MqttConnection v) { setField(17, v); }
   @$pb.TagNumber(17)
-  $core.bool hasMqtt() => $_has(7);
+  $core.bool hasMqtt() => $_has(8);
   @$pb.TagNumber(17)
   void clearMqtt() => clearField(17);
   @$pb.TagNumber(17)
-  MqttConnection ensureMqtt() => $_ensure(7);
+  MqttConnection ensureMqtt() => $_ensure(8);
 
   @$pb.TagNumber(18)
-  G13Connection get g13 => $_getN(8);
+  G13Connection get g13 => $_getN(9);
   @$pb.TagNumber(18)
   set g13(G13Connection v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasG13() => $_has(8);
+  $core.bool hasG13() => $_has(9);
   @$pb.TagNumber(18)
   void clearG13() => clearField(18);
   @$pb.TagNumber(18)
-  G13Connection ensureG13() => $_ensure(8);
+  G13Connection ensureG13() => $_ensure(9);
 
   @$pb.TagNumber(19)
-  WebcamConnection get webcam => $_getN(9);
+  WebcamConnection get webcam => $_getN(10);
   @$pb.TagNumber(19)
   set webcam(WebcamConnection v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasWebcam() => $_has(9);
+  $core.bool hasWebcam() => $_has(10);
   @$pb.TagNumber(19)
   void clearWebcam() => clearField(19);
   @$pb.TagNumber(19)
-  WebcamConnection ensureWebcam() => $_ensure(9);
+  WebcamConnection ensureWebcam() => $_ensure(10);
 
   @$pb.TagNumber(20)
-  PioneerCdjConnection get cdj => $_getN(10);
+  PioneerCdjConnection get cdj => $_getN(11);
   @$pb.TagNumber(20)
   set cdj(PioneerCdjConnection v) { setField(20, v); }
   @$pb.TagNumber(20)
-  $core.bool hasCdj() => $_has(10);
+  $core.bool hasCdj() => $_has(11);
   @$pb.TagNumber(20)
   void clearCdj() => clearField(20);
   @$pb.TagNumber(20)
-  PioneerCdjConnection ensureCdj() => $_ensure(10);
+  PioneerCdjConnection ensureCdj() => $_ensure(11);
 
   @$pb.TagNumber(21)
-  PioneerDjmConnection get djm => $_getN(11);
+  PioneerDjmConnection get djm => $_getN(12);
   @$pb.TagNumber(21)
   set djm(PioneerDjmConnection v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasDjm() => $_has(11);
+  $core.bool hasDjm() => $_has(12);
   @$pb.TagNumber(21)
   void clearDjm() => clearField(21);
   @$pb.TagNumber(21)
-  PioneerDjmConnection ensureDjm() => $_ensure(11);
+  PioneerDjmConnection ensureDjm() => $_ensure(12);
 }
 
-enum DmxConnection_Config {
+enum DmxOutputConnection_Config {
   artnet, 
   sacn, 
   notSet
 }
 
-class DmxConnection extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, DmxConnection_Config> _DmxConnection_ConfigByTag = {
-    3 : DmxConnection_Config.artnet,
-    4 : DmxConnection_Config.sacn,
-    0 : DmxConnection_Config.notSet
+class DmxOutputConnection extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, DmxOutputConnection_Config> _DmxOutputConnection_ConfigByTag = {
+    3 : DmxOutputConnection_Config.artnet,
+    4 : DmxOutputConnection_Config.sacn,
+    0 : DmxOutputConnection_Config.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxOutputConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..oo(0, [3, 4])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId')
-    ..aOM<ArtnetConfig>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetConfig.create)
+    ..aOM<ArtnetOutputConfig>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetOutputConfig.create)
     ..aOM<SacnConfig>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sacn', subBuilder: SacnConfig.create)
     ..hasRequiredFields = false
   ;
 
-  DmxConnection._() : super();
-  factory DmxConnection({
+  DmxOutputConnection._() : super();
+  factory DmxOutputConnection({
     $core.String? outputId,
-    ArtnetConfig? artnet,
+    ArtnetOutputConfig? artnet,
     SacnConfig? sacn,
   }) {
     final _result = create();
@@ -1410,28 +1503,28 @@ class DmxConnection extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory DmxConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DmxConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory DmxOutputConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DmxOutputConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  DmxConnection clone() => DmxConnection()..mergeFromMessage(this);
+  DmxOutputConnection clone() => DmxOutputConnection()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DmxConnection copyWith(void Function(DmxConnection) updates) => super.copyWith((message) => updates(message as DmxConnection)) as DmxConnection; // ignore: deprecated_member_use
+  DmxOutputConnection copyWith(void Function(DmxOutputConnection) updates) => super.copyWith((message) => updates(message as DmxOutputConnection)) as DmxOutputConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static DmxConnection create() => DmxConnection._();
-  DmxConnection createEmptyInstance() => create();
-  static $pb.PbList<DmxConnection> createRepeated() => $pb.PbList<DmxConnection>();
+  static DmxOutputConnection create() => DmxOutputConnection._();
+  DmxOutputConnection createEmptyInstance() => create();
+  static $pb.PbList<DmxOutputConnection> createRepeated() => $pb.PbList<DmxOutputConnection>();
   @$core.pragma('dart2js:noInline')
-  static DmxConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxConnection>(create);
-  static DmxConnection? _defaultInstance;
+  static DmxOutputConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxOutputConnection>(create);
+  static DmxOutputConnection? _defaultInstance;
 
-  DmxConnection_Config whichConfig() => _DmxConnection_ConfigByTag[$_whichOneof(0)]!;
+  DmxOutputConnection_Config whichConfig() => _DmxOutputConnection_ConfigByTag[$_whichOneof(0)]!;
   void clearConfig() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -1444,15 +1537,15 @@ class DmxConnection extends $pb.GeneratedMessage {
   void clearOutputId() => clearField(1);
 
   @$pb.TagNumber(3)
-  ArtnetConfig get artnet => $_getN(1);
+  ArtnetOutputConfig get artnet => $_getN(1);
   @$pb.TagNumber(3)
-  set artnet(ArtnetConfig v) { setField(3, v); }
+  set artnet(ArtnetOutputConfig v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasArtnet() => $_has(1);
   @$pb.TagNumber(3)
   void clearArtnet() => clearField(3);
   @$pb.TagNumber(3)
-  ArtnetConfig ensureArtnet() => $_ensure(1);
+  ArtnetOutputConfig ensureArtnet() => $_ensure(1);
 
   @$pb.TagNumber(4)
   SacnConfig get sacn => $_getN(2);
@@ -1464,6 +1557,82 @@ class DmxConnection extends $pb.GeneratedMessage {
   void clearSacn() => clearField(4);
   @$pb.TagNumber(4)
   SacnConfig ensureSacn() => $_ensure(2);
+}
+
+enum DmxInputConnection_Config {
+  artnet, 
+  notSet
+}
+
+class DmxInputConnection extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, DmxInputConnection_Config> _DmxInputConnection_ConfigByTag = {
+    2 : DmxInputConnection_Config.artnet,
+    0 : DmxInputConnection_Config.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxInputConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..oo(0, [2])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOM<ArtnetInputConfig>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetInputConfig.create)
+    ..hasRequiredFields = false
+  ;
+
+  DmxInputConnection._() : super();
+  factory DmxInputConnection({
+    $core.String? id,
+    ArtnetInputConfig? artnet,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (artnet != null) {
+      _result.artnet = artnet;
+    }
+    return _result;
+  }
+  factory DmxInputConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DmxInputConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DmxInputConnection clone() => DmxInputConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DmxInputConnection copyWith(void Function(DmxInputConnection) updates) => super.copyWith((message) => updates(message as DmxInputConnection)) as DmxInputConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DmxInputConnection create() => DmxInputConnection._();
+  DmxInputConnection createEmptyInstance() => create();
+  static $pb.PbList<DmxInputConnection> createRepeated() => $pb.PbList<DmxInputConnection>();
+  @$core.pragma('dart2js:noInline')
+  static DmxInputConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxInputConnection>(create);
+  static DmxInputConnection? _defaultInstance;
+
+  DmxInputConnection_Config whichConfig() => _DmxInputConnection_ConfigByTag[$_whichOneof(0)]!;
+  void clearConfig() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  ArtnetInputConfig get artnet => $_getN(1);
+  @$pb.TagNumber(2)
+  set artnet(ArtnetInputConfig v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasArtnet() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearArtnet() => clearField(2);
+  @$pb.TagNumber(2)
+  ArtnetInputConfig ensureArtnet() => $_ensure(1);
 }
 
 class HeliosConnection extends $pb.GeneratedMessage {
@@ -2674,42 +2843,49 @@ class MqttConnection extends $pb.GeneratedMessage {
 }
 
 enum ConfigureConnectionRequest_Config {
-  dmx, 
+  dmxOutput, 
   mqtt, 
   osc, 
+  dmxInput, 
   notSet
 }
 
 class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, ConfigureConnectionRequest_Config> _ConfigureConnectionRequest_ConfigByTag = {
-    1 : ConfigureConnectionRequest_Config.dmx,
+    1 : ConfigureConnectionRequest_Config.dmxOutput,
     2 : ConfigureConnectionRequest_Config.mqtt,
     3 : ConfigureConnectionRequest_Config.osc,
+    4 : ConfigureConnectionRequest_Config.dmxInput,
     0 : ConfigureConnectionRequest_Config.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3])
-    ..aOM<DmxConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
+    ..oo(0, [1, 2, 3, 4])
+    ..aOM<DmxOutputConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
     ..aOM<MqttConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
     ..aOM<OscConnection>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
+    ..aOM<DmxInputConnection>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
     ..hasRequiredFields = false
   ;
 
   ConfigureConnectionRequest._() : super();
   factory ConfigureConnectionRequest({
-    DmxConnection? dmx,
+    DmxOutputConnection? dmxOutput,
     MqttConnection? mqtt,
     OscConnection? osc,
+    DmxInputConnection? dmxInput,
   }) {
     final _result = create();
-    if (dmx != null) {
-      _result.dmx = dmx;
+    if (dmxOutput != null) {
+      _result.dmxOutput = dmxOutput;
     }
     if (mqtt != null) {
       _result.mqtt = mqtt;
     }
     if (osc != null) {
       _result.osc = osc;
+    }
+    if (dmxInput != null) {
+      _result.dmxInput = dmxInput;
     }
     return _result;
   }
@@ -2738,15 +2914,15 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   void clearConfig() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  DmxConnection get dmx => $_getN(0);
+  DmxOutputConnection get dmxOutput => $_getN(0);
   @$pb.TagNumber(1)
-  set dmx(DmxConnection v) { setField(1, v); }
+  set dmxOutput(DmxOutputConnection v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasDmx() => $_has(0);
+  $core.bool hasDmxOutput() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDmx() => clearField(1);
+  void clearDmxOutput() => clearField(1);
   @$pb.TagNumber(1)
-  DmxConnection ensureDmx() => $_ensure(0);
+  DmxOutputConnection ensureDmxOutput() => $_ensure(0);
 
   @$pb.TagNumber(2)
   MqttConnection get mqtt => $_getN(1);
@@ -2769,5 +2945,16 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   void clearOsc() => clearField(3);
   @$pb.TagNumber(3)
   OscConnection ensureOsc() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  DmxInputConnection get dmxInput => $_getN(3);
+  @$pb.TagNumber(4)
+  set dmxInput(DmxInputConnection v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDmxInput() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDmxInput() => clearField(4);
+  @$pb.TagNumber(4)
+  DmxInputConnection ensureDmxInput() => $_ensure(3);
 }
 

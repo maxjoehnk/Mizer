@@ -39,8 +39,8 @@ class _DmxMonitorState extends State<DmxMonitor> {
   @override
   Widget build(BuildContext context) {
     var connections = context.read<ConnectionsApi>();
-    var channels = Stream.periodic(Duration(milliseconds: 16))
-        .asyncMap((event) => connections.monitorDmxConnection(widget.connection.dmx.outputId));
+    var channels = Stream.periodic(Duration(milliseconds: 16)).asyncMap(
+        (event) => connections.monitorDmxConnection(widget.connection.dmxOutput.outputId));
     return StreamBuilder<Map<int, List<int>>>(
       stream: channels,
       initialData: {},
@@ -75,7 +75,9 @@ class UniverseSelector extends StatelessWidget {
   final List<int> universes;
   final Function(int) onSelect;
 
-  const UniverseSelector({Key? key, required this.universes, required this.universe, required this.onSelect}) : super(key: key);
+  const UniverseSelector(
+      {Key? key, required this.universes, required this.universe, required this.onSelect})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,8 @@ class Universe extends StatelessWidget {
   final bool selected;
   final Function() onClick;
 
-  const Universe({Key? key, required this.universe, required this.selected, required this.onClick}) : super(key: key);
+  const Universe({Key? key, required this.universe, required this.selected, required this.onClick})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

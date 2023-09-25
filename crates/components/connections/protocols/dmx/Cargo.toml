@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-artnet_protocol = "0.4"
+artnet_protocol = { git = "https://github.com/maxjoehnk/artnet_protocol.git", branch = "feature/access-to-port-address-value" }
 sacn = "0.4"
 log = "0.4"
 mizer-processing = { path = "../../../../runtime/processing" }

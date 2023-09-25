@@ -182,7 +182,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             Ok(())
         } else if let Some(connection::Connection::DmxInput(dmx)) = connection.connection {
             self.runtime
-                .run_command(DeleteInputCommand { name: dmx.id })?;
+                .run_command(DeleteInputCommand { id: dmx.id })?;
 
             Ok(())
         } else if let Some(connection::Connection::Mqtt(mqtt)) = connection.connection {
@@ -232,6 +232,23 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                     }
                 }
             }
+            Some(configure_connection_request::Config::DmxInput(connection)) => {
+                match connection.config {
+                    Some(dmx_input_connection::Config::Artnet(config)) => {
+                        self.runtime.run_command(ConfigureArtnetInputCommand {
+                            id: connection.id,
+                            name: config.name,
+                            host: config.host.parse()?,
+                            port: Some(config.port as u16),
+                        })?;
+
+                        Ok(())
+                    }
+                    _ => {
+                        anyhow::bail!("Dmx Input {connection:?} cannot be configured")
+                    }
+                }
+            }
             Some(configure_connection_request::Config::Mqtt(connection)) => {
                 self.runtime.run_command(ConfigureMqttConnectionCommand {
                     connection_id: connection.connection_id,
@@ -251,23 +268,6 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                 })?;
 
                 Ok(())
-            }
-            Some(configure_connection_request::Config::DmxInput(connection)) => {
-                match connection.config {
-                    Some(dmx_input_connection::Config::Artnet(config)) => {
-                        self.runtime.run_command(ConfigureArtnetInputCommand {
-                            id: connection.id,
-                            name: config.name,
-                            host: config.host.parse()?,
-                            port: Some(config.port as u16),
-                        })?;
-
-                        Ok(())
-                    }
-                    _ => {
-                        anyhow::bail!("Dmx Input {connection:?} cannot be configured")
-                    }
-                }
             }
             _ => anyhow::bail!("Connection {:?} cannot be configured", update.config),
         }

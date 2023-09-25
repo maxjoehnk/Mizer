@@ -1,7 +1,10 @@
-use crate::{ArtnetInputConfig, DmxConnectionManager, DmxInputConnection};
-use mizer_commander::{Command, RefMut};
-use serde::{Deserialize, Serialize};
 use std::net::Ipv4Addr;
+
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, RefMut};
+
+use crate::{ArtnetInputConfig, DmxConnectionManager, DmxInputConnection};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct ConfigureArtnetInputCommand {
@@ -17,7 +20,7 @@ impl<'a> Command<'a> for ConfigureArtnetInputCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Configure Artnet Connection '{}'", self.id)
+        format!("Configure Artnet Connection '{}'", self.name)
     }
 
     fn apply(
@@ -28,8 +31,11 @@ impl<'a> Command<'a> for ConfigureArtnetInputCommand {
             .get_input_mut(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
         if let DmxInputConnection::Artnet(input) = input {
-            let previous_config =
-                input.reconfigure(ArtnetInputConfig::new(self.host, self.port))?;
+            let previous_config = input.reconfigure(ArtnetInputConfig::new(
+                self.host,
+                self.port,
+                self.name.clone(),
+            ))?;
 
             Ok(((), previous_config))
         } else {

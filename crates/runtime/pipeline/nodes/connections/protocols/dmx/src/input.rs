@@ -37,8 +37,10 @@ impl ConfigurableNode for DmxInputNode {
         let inputs = dmx_connections
             .list_inputs()
             .into_iter()
-            .map(|(id, _)| id.clone())
-            .map(|id| SelectVariant::from(id))
+            .map(|(id, connection)| SelectVariant::Item {
+                value: id.clone().into(),
+                label: connection.name().into(),
+            })
             .collect::<Vec<_>>();
         vec![
             setting!(select CONNECTION_SETTING, &self.input, inputs),

@@ -272,6 +272,18 @@ class _ConnectionsViewState extends State<ConnectionsView> {
           dmxOutput: DmxOutputConnection(sacn: value, outputId: connection.dmxOutput.outputId)));
       await _fetch();
     }
+    if (connection.hasDmxInput() && connection.dmxInput.hasArtnet()) {
+      var value = await showDialog<ArtnetInputConfig>(
+          context: context,
+          builder: (context) =>
+              ConfigureArtnetInputConnectionDialog(config: connection.dmxInput.artnet));
+      if (value == null) {
+        return null;
+      }
+      await api.configureConnection(ConfigureConnectionRequest(
+          dmxInput: DmxInputConnection(artnet: value, id: connection.dmxInput.id)));
+      await _fetch();
+    }
     if (connection.hasMqtt()) {
       var value = await showDialog<MqttConnection>(
           context: context,

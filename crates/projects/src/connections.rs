@@ -25,7 +25,7 @@ impl ProjectManagerMut for DmxConnectionManager {
                 ),
                 ConnectionTypes::ArtnetInput { port, host } => self.add_input(
                     connection.id.clone(),
-                    ArtnetInput::new(host.clone(), *port)?,
+                    ArtnetInput::new(*host, *port, connection.name.clone())?,
                 ),
                 _ => {}
             }

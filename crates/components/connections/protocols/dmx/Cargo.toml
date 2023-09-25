@@ -18,4 +18,4 @@ tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.32", features = ["net", "rt", "io-util"] }
 dashmap = "5.5"
-flume = "0.10"
+flume = "0.11"

@@ -5209,7 +5209,7 @@ dependencies = [
  "artnet_protocol",
  "dashmap",
  "enum_dispatch",
- "flume 0.10.9",
+ "flume 0.11.0",
  "log",
  "mizer-commander",
  "mizer-module",

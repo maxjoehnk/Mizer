@@ -1,0 +1,17 @@
+= DMX Input
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/connections/dmx-input/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_universe.adoc[leveloffset=+2]
+include::setting_channel.adoc[leveloffset=+2]
+
+== Ports
+=== Inputs

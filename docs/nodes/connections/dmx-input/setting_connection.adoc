@@ -1,0 +1,6 @@
+= Connection
+
+Select the connection you want to use.
+If you have not created a connection yet, create a new input in the Connections View.
+
+

@@ -141,6 +141,7 @@ impl WgpuPipeline {
     }
 
     pub fn get_buffer(&self, buffer_handle: &Arc<BufferHandle>) -> BufferAccess {
+        profiling::scope!("WgpuPipeline::get_buffer");
         tracing::trace!("Reading buffer {buffer_handle:?}");
 
         BufferAccess {
@@ -176,6 +177,7 @@ pub struct BufferAccess<'a> {
 
 impl BufferAccess<'_> {
     pub fn read_mut(&self) -> Option<wgpu::BufferViewMut> {
+        profiling::scope!("BufferAccess::read_mut");
         if !self.mapped_buffers.contains(&self.handle) {
             return None;
         }

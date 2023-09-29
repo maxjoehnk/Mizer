@@ -27,6 +27,7 @@ pub struct NdiOutputState {
     buffer_handle: Arc<BufferHandle>,
     send: ndi::Send,
     name: String,
+    frame: Option<VideoData>,
 }
 
 impl NdiOutputState {
@@ -39,6 +40,7 @@ impl NdiOutputState {
             buffer_handle,
             send,
             name,
+            frame: None,
         })
     }
 
@@ -51,6 +53,32 @@ impl NdiOutputState {
         self.name = name;
 
         Ok(())
+    }
+
+    fn queue_frame(&mut self, buffer: &mut [u8]) {
+        profiling::scope!("NdiOutputState::queue_frame");
+        tracing::trace!("sending frame via ndi");
+        let video_data = {
+            profiling::scope!("ndi::VideoData::from_buffer");
+            VideoData::from_buffer(
+                1920,
+                1080,
+                FourCCVideoType::BGRA,
+                60,
+                1,
+                ndi::FrameFormatType::Progressive,
+                0,
+                0,
+                None,
+                buffer,
+            )
+        };
+        {
+            profiling::scope!("ndi::Send::send_video");
+            self.send.send_video_async(&video_data);
+        }
+        // Keep frame in memory until next frame is sent as they will be processed in the background
+        self.frame = Some(video_data);
     }
 }
 
@@ -129,20 +157,7 @@ impl ProcessingNode for NdiOutputNode {
                 if texture_registry.get_texture_ref(&texture_handle).is_some() {
                     let buffer_access = wgpu_pipeline.get_buffer(&state.buffer_handle);
                     if let Some(mut buffer_slice) = buffer_access.read_mut() {
-                        tracing::trace!("sending frame via ndi");
-                        let video_data = VideoData::from_buffer(
-                            1920,
-                            1080,
-                            FourCCVideoType::BGRA,
-                            60,
-                            1,
-                            ndi::FrameFormatType::Progressive,
-                            0,
-                            0,
-                            None,
-                            &mut buffer_slice,
-                        );
-                        state.send.send_video(&video_data);
+                        state.queue_frame(&mut buffer_slice);
                     };
                 }
             }

@@ -111,6 +111,7 @@ impl ArtnetInputThread {
         let handle = thread::Builder::new()
             .name("ArtnetInputThread".into())
             .spawn(move || {
+                // TODO: handle crashes
                 if let Err(err) = Self::start(config, send_buffer, receiver) {
                     tracing::error!(err = %err, "ArtnetInputThread crashed");
                 }
@@ -183,7 +184,8 @@ impl ArtnetInputThread {
 
     async fn poll(&self, socket: &UdpSocket, _poll: Poll) -> anyhow::Result<()> {
         if let Some(broadcast_addr) = ("255.255.255.255", 6454).to_socket_addrs()?.next() {
-            let name = self.config.name.as_bytes();
+            let mut name = self.config.name.clone().into_bytes();
+            name.resize(64, 0);
             let short_name = name[0..18].try_into()?;
             let long_name = name[0..64].try_into()?;
             let msg = artnet_protocol::PollReply {

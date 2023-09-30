@@ -124,6 +124,7 @@ impl WgpuPipeline {
     }
 
     pub(crate) fn map_buffers(&self, wgpu_context: &WgpuContext) {
+        profiling::scope!("WgpuPipeline::map_buffers");
         let transfer_buffers = self.transfer_buffers.lock();
         let mapped_buffers = self.mapped_buffers.lock();
         for handle in mapped_buffers.iter() {
@@ -137,7 +138,10 @@ impl WgpuPipeline {
                 });
             }
         }
-        wgpu_context.device.poll(wgpu::Maintain::Wait);
+        {
+            profiling::scope!("WgpuPipeline::Device::poll");
+            wgpu_context.device.poll(wgpu::Maintain::Wait);
+        }
     }
 
     pub fn get_buffer(&self, buffer_handle: &Arc<BufferHandle>) -> BufferAccess {

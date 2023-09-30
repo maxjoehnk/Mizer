@@ -68,6 +68,7 @@ node_type_name! {
         VideoRgb,
         VideoRgbSplit,
         VideoText,
+        ColorizeTexture,
         Webcam,
         ScreenCapture,
         TextureBorder,

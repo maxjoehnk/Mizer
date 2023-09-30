@@ -45,8 +45,8 @@ pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
 pub use mizer_video_nodes::{
-    TextureBorderNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
-    VideoRgbSplitNode, VideoTransformNode,
+    ColorizeTextureNode, TextureBorderNode, VideoFileNode, VideoHsvNode, VideoMixerNode,
+    VideoOutputNode, VideoRgbNode, VideoRgbSplitNode, VideoTransformNode,
 };
 pub use mizer_webcam_nodes::WebcamNode;
 
@@ -185,6 +185,7 @@ node_impl! {
     VideoRgb(VideoRgbNode),
     VideoRgbSplit(VideoRgbSplitNode),
     VideoText(VideoTextNode),
+    ColorizeTexture(ColorizeTextureNode),
     TextureBorder(TextureBorderNode),
     Webcam(WebcamNode),
     ScreenCapture(ScreenCaptureNode),

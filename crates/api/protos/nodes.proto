@@ -157,6 +157,7 @@ message Node {
     PIONEER_CDJ = 87;
     NDI_OUTPUT = 88;
     SCREEN_CAPTURE = 89;
+    COLORIZE_TEXTURE = 90;
     CONTAINER = 100;
   }
 

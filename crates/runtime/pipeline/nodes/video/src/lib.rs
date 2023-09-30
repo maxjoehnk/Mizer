@@ -1,4 +1,5 @@
 pub use self::border::*;
+pub use self::colorize::*;
 pub use self::file::*;
 pub use self::hsv::*;
 pub use self::mixer::*;
@@ -8,6 +9,7 @@ pub use self::rgb_split::*;
 pub use self::transform::*;
 
 mod border;
+mod colorize;
 mod file;
 mod hsv;
 mod mixer;

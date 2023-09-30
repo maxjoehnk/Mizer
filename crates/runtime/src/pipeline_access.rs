@@ -116,6 +116,7 @@ impl PipelineAccess {
             ColorBrightness(node) => self.add_node(path, node),
             ColorHsv(node) => self.add_node(path, node),
             ColorRgb(node) => self.add_node(path, node),
+            ColorToHsv(node) => self.add_node(path, node),
             Gamepad(node) => self.add_node(path, node),
             Container(node) => self.add_node(path, node),
             Math(node) => self.add_node(path, node),

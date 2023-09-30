@@ -1,6 +1,7 @@
+use std::fmt::{Display, Formatter};
+
 use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
 
 use mizer_node::*;
 
@@ -66,7 +67,7 @@ impl ConfigurableNode for ConstantColorNode {
             } => {
                 vec![
                     mode_setting,
-                    setting!(HUE_SETTING, hue).min(0.).max(1.),
+                    setting!(HUE_SETTING, hue).min(0.).max(360.),
                     setting!(SATURATION_SETTING, saturation).min(0.).max(1.),
                     setting!(VALUE_SETTING, value).min(0.).max(1.),
                 ]
@@ -100,7 +101,7 @@ impl ConfigurableNode for ConstantColorNode {
 impl PipelineNode for ConstantColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Color".into(),
+            name: "Color Constant".into(),
             preview_type: PreviewType::Color,
             category: NodeCategory::Color,
         }

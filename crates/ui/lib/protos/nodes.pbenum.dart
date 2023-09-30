@@ -116,6 +116,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType COLOR_HSV = Node_NodeType._(51, _omitEnumNames ? '' : 'COLOR_HSV');
   static const Node_NodeType COLOR_CONSTANT = Node_NodeType._(52, _omitEnumNames ? '' : 'COLOR_CONSTANT');
   static const Node_NodeType COLOR_BRIGHTNESS = Node_NodeType._(53, _omitEnumNames ? '' : 'COLOR_BRIGHTNESS');
+  static const Node_NodeType COLOR_TO_HSV = Node_NodeType._(54, _omitEnumNames ? '' : 'COLOR_TO_HSV');
   static const Node_NodeType ENCODER = Node_NodeType._(55, _omitEnumNames ? '' : 'ENCODER');
   static const Node_NodeType MATH = Node_NodeType._(56, _omitEnumNames ? '' : 'MATH');
   static const Node_NodeType DATA_TO_NUMBER = Node_NodeType._(57, _omitEnumNames ? '' : 'DATA_TO_NUMBER');
@@ -192,6 +193,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     COLOR_HSV,
     COLOR_CONSTANT,
     COLOR_BRIGHTNESS,
+    COLOR_TO_HSV,
     ENCODER,
     MATH,
     DATA_TO_NUMBER,

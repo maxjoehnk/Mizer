@@ -96,6 +96,7 @@ node_type_name! {
         ColorBrightness,
         ColorRgb,
         ColorHsv,
+        ColorToHsv,
         Container,
         Math,
         MqttInput,

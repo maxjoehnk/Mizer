@@ -603,6 +603,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::ColorBrightness(node) => pipeline.register_node(path, &node),
         Node::ColorRgb(node) => pipeline.register_node(path, &node),
         Node::ColorHsv(node) => pipeline.register_node(path, &node),
+        Node::ColorToHsv(node) => pipeline.register_node(path, &node),
         Node::Gamepad(node) => pipeline.register_node(path, &node),
         Node::Container(node) => pipeline.register_node(path, &node),
         Node::Math(node) => pipeline.register_node(path, &node),

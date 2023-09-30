@@ -121,6 +121,7 @@ message Node {
     COLOR_HSV = 51;
     COLOR_CONSTANT = 52;
     COLOR_BRIGHTNESS = 53;
+    COLOR_TO_HSV = 54;
     ENCODER = 55;
     MATH = 56;
     DATA_TO_NUMBER = 57;

@@ -5606,6 +5606,7 @@ dependencies = [
  "cgmath",
  "enum-iterator",
  "ffmpeg-the-third",
+ "flume 0.11.0",
  "image",
  "log",
  "mizer-media",

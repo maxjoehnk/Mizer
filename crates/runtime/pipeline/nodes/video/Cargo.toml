@@ -18,3 +18,4 @@ profiling = "1"
 bytemuck = "1.14"
 cgmath = "0.18"
 mizer-media = { path = "../../../../components/media" }
+flume = "0.11"

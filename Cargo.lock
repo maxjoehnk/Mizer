@@ -5061,7 +5061,7 @@ dependencies = [
  "mizer-wgpu",
  "pinboard",
  "profiling",
- "ringbuffer",
+ "ringbuffer 0.14.0",
  "test-case",
  "tracing",
  "tracing-unwrap",
@@ -5614,6 +5614,7 @@ dependencies = [
  "mizer-wgpu",
  "num_enum 0.7.0",
  "profiling",
+ "ringbuffer 0.15.0",
  "serde",
 ]
 
@@ -7364,6 +7365,12 @@ name = "ringbuffer"
 version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f4d2457fd775198df9ec68fef08ed8038cfb6f532c552d2946036a2432b7b81"
+
+[[package]]
+name = "ringbuffer"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3df6368f71f205ff9c33c076d170dd56ebf68e8161c733c0caa07a7a5509ed53"
 
 [[package]]
 name = "rolling-file"

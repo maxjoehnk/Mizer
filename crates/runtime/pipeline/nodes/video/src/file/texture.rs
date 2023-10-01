@@ -89,6 +89,8 @@ impl TextureProvider for VideoTexture {
         if let ClockState::Stopped = self.clock_state {
             self.frame = 0;
             self.buffer_frame = 0;
+
+            return Ok(None);
         }
         let frame = self.frame as f64;
         let frame = frame * (self.metadata.fps / 60.0);

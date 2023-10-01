@@ -184,7 +184,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget yasm ffmpeg
+        run: choco install protoc make wget yasm
         shell: bash
       - uses: actions/checkout@v4
         with:
@@ -195,6 +195,22 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      - name: Cache vcpkg
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+          key: vcpkg-${{ runner.os }}-x64-windows-static-md
+      - name: Build vcpkg
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg --depth 1
+          ./vcpkg/bootstrap-vcpkg.bat
+
+      - name: Install Dependencies
+        run: |
+          ./vcpkg/vcpkg.exe install ffmpeg:x64-windows-static-md
       - name: Build
         run: make build-release
         continue-on-error: true

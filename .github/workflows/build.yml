@@ -210,6 +210,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          ./vcpkg/vcpkg.exe install ffmpeg
           ./vcpkg/vcpkg.exe install ffmpeg:x64-windows-static-md
       - name: Build
         run: make build-release

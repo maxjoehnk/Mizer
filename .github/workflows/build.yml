@@ -214,9 +214,13 @@ jobs:
       - name: Build
         run: make build-release
         continue-on-error: true
+        env:
+          VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - name: Package
         run: make mizer.zip
         continue-on-error: true
+        env:
+          VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - uses: actions/upload-artifact@v3
         with:
           name: windows-full

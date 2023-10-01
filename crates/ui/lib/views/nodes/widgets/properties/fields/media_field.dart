@@ -79,9 +79,11 @@ class _MediaFieldState extends State<MediaField> {
 
   Future<void> _selectMedia(BuildContext context) async {
     var bloc = context.read<MediaBloc>();
-    var files = bloc.state.files.where((element) => widget.value.allowedTypes.contains(element.type)).toList();
-    MediaFile? result = await showDialog(
-        context: context, builder: (context) => MediaDialog(mediaFiles: files));
+    var files = bloc.state.files
+        .where((element) => widget.value.allowedTypes.contains(element.type))
+        .toList();
+    MediaFile? result =
+        await showDialog(context: context, builder: (context) => MediaDialog(mediaFiles: files));
     if (result == null) {
       return;
     }
@@ -111,7 +113,7 @@ class MediaDialog extends StatelessWidget {
           itemBuilder: (context, index) {
             MediaFile file = mediaFiles[index];
             return Tile(
-              child: file.type == MediaType.AUDIO ? AudioTile(file: file) : MediaTile(file: file),
+              child: MediaTile(file: file),
               onClick: () {
                 Navigator.of(context).pop(file);
               },
@@ -123,33 +125,6 @@ class MediaDialog extends StatelessWidget {
   }
 }
 
-class AudioTile extends StatelessWidget {
-  final MediaFile file;
-
-  const AudioTile({required this.file, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Flexible(
-        flex: 2,
-        child: Container(
-          clipBehavior: Clip.antiAlias,
-          margin: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: MediaThumbnail(file)
-        ),
-      ),
-      Flexible(flex: 1, child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Text(file.name),
-      )),
-    ]);
-  }
-}
-
 class MediaTile extends StatelessWidget {
   final MediaFile file;
 
@@ -157,8 +132,23 @@ class MediaTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MediaThumbnail(file);
+    return Column(children: [
+      Flexible(
+        flex: 2,
+        child: Container(
+            clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: MediaThumbnail(file)),
+      ),
+      Flexible(
+          flex: 1,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Text(file.name),
+          )),
+    ]);
   }
 }
-
-

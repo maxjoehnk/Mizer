@@ -213,12 +213,10 @@ jobs:
           ./vcpkg/vcpkg.exe install ffmpeg:x64-windows-static-md
       - name: Build
         run: make build-release
-        continue-on-error: true
         env:
           VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - name: Package
         run: make mizer.zip
-        continue-on-error: true
         env:
           VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - uses: actions/upload-artifact@v3

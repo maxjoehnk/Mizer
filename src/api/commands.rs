@@ -3,10 +3,9 @@ use std::collections::HashMap;
 use mizer_clock::ClockState;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_message_bus::Subscriber;
-use mizer_node::{NodePath, NodePreviewRef, PortId};
+use mizer_node::{NodeMetadataRef, NodePath, NodePreviewRef, PortId};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
-use mizer_runtime::NodeMetadataRef;
 use mizer_session::SessionState;
 use mizer_settings::FixtureLibraryPaths;
 

@@ -16,7 +16,7 @@ mizer-timecode = { path = "../../components/timecode" }
 mizer-gamepads = { path = "../../components/connections/devices/gamepads" }
 mizer-devices = { path = "../../components/connections/devices" }
 mizer-node = { path = "../../runtime/pipeline/node" }
-mizer-runtime = { path = "../../runtime" }
+mizer-layouts = { path = "../../runtime/layouts" }
 mizer-util = { path = "../../util" }
 mizer-message-bus = { path = "../../util/bus" }
 mizer-api = { path = "../../api" }

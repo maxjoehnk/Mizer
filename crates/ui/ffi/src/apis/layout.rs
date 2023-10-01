@@ -1,11 +1,14 @@
-use crate::types::{drop_pointer, FFIFromPointer};
-use mizer_node::NodePath;
-use mizer_runtime::LayoutsView;
-use parking_lot::Mutex;
 use std::collections::HashMap;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 use std::sync::Arc;
+
+use parking_lot::Mutex;
+
+use mizer_layouts::views::LayoutsView;
+use mizer_node::NodePath;
+
+use crate::types::{drop_pointer, FFIFromPointer};
 
 pub struct LayoutRef {
     pub view: LayoutsView,

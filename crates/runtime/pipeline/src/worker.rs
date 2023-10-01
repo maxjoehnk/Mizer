@@ -20,7 +20,7 @@ use mizer_util::{HashMapExtension, StructuredData};
 use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
-use crate::{NodeMetadata, NodePreviewState, PipelineContext};
+use crate::{NodePreviewState, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn pre_process(

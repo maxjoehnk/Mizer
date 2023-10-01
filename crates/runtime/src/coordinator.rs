@@ -22,7 +22,7 @@ use mizer_project_files::{Channel, Project, ProjectManagerMut};
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
-use crate::{LayoutsView, NodeMetadataRef};
+use crate::LayoutsView;
 
 trait ProcessorExt: Processor {
     fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>);

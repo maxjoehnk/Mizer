@@ -13,9 +13,9 @@ pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;
 use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
-use mizer_node::{NodeLink, NodePath, NodePreviewRef, PortId};
+use mizer_node::{NodeLink, NodeMetadataRef, NodePath, NodePreviewRef, PortId};
 use mizer_plan::Plan;
-use mizer_runtime::{LayoutsView, NodeDescriptor, NodeMetadataRef};
+use mizer_runtime::{LayoutsView, NodeDescriptor};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
 

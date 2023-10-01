@@ -9,6 +9,7 @@ pub use mizer_ports::{Color, PortId, PortType};
 pub use self::context::*;
 pub use self::introspection::*;
 pub use self::macros::*;
+pub use self::metadata::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
@@ -19,6 +20,7 @@ mod path;
 mod ports;
 // TODO: pick better name
 mod introspection;
+mod metadata;
 mod preview;
 mod settings;
 

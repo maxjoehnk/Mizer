@@ -39,9 +39,11 @@ impl WindowRef {
     }
 
     pub fn surface(&self) -> anyhow::Result<WindowSurface> {
-        Ok(WindowSurface {
-            texture: self.surface.get_current_texture()?,
-        })
+        let texture = self.surface.get_current_texture()?;
+        let view = texture
+            .texture
+            .create_view(&wgpu::TextureViewDescriptor::default());
+        Ok(WindowSurface { texture, view })
     }
 
     pub fn set_title(&mut self, name: &str) {
@@ -62,15 +64,12 @@ impl WindowRef {
 
 pub struct WindowSurface {
     texture: SurfaceTexture,
+    view: wgpu::TextureView,
 }
 
 impl WindowSurface {
     pub fn view(&self) -> TextureView {
-        TextureView(
-            self.texture
-                .texture
-                .create_view(&wgpu::TextureViewDescriptor::default()),
-        )
+        TextureView::Borrowed(&self.view)
     }
 
     pub fn present(self) {

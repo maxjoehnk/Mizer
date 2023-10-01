@@ -59,6 +59,7 @@ impl Texture {
         context: &WgpuContext,
         provider: &mut impl TextureProvider,
     ) -> anyhow::Result<()> {
+        profiling::scope!("Texture::render");
         let width = provider.width();
         let height = provider.height();
         if self.texture.width() != width || self.texture.height() != height {
@@ -87,6 +88,7 @@ impl Texture {
     }
 
     fn recreate_texture(&mut self, context: &WgpuContext, width: u32, height: u32) {
+        profiling::scope!("Texture::recreate_texture");
         self.texture.destroy();
         self.texture = context.create_texture(
             width,

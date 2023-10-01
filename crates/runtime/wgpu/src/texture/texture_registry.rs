@@ -16,6 +16,7 @@ impl TextureHandle {
 #[derive(Default)]
 pub struct TextureRegistry {
     textures: DashMap<TextureHandle, wgpu::Texture>,
+    texture_views: DashMap<TextureHandle, wgpu::TextureView>,
 }
 
 impl TextureRegistry {
@@ -40,23 +41,26 @@ impl TextureRegistry {
                 | wgpu::TextureUsages::COPY_SRC,
             label,
         );
+        let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         let handle = TextureHandle::new();
         self.textures.insert(handle, texture);
+        self.texture_views.insert(handle, view);
 
         handle
     }
 
     pub fn get(&self, handle: &TextureHandle) -> Option<TextureView> {
         profiling::scope!("TextureRegistry::get");
-        let texture = self.textures.get(handle)?;
-        let texture_view = texture.create_view(&wgpu::TextureViewDescriptor::default());
-        let texture_view = TextureView(texture_view);
+        let texture_view = self.texture_views.get(handle)?;
 
-        Some(texture_view)
+        Some(TextureView::MapRef(texture_view))
     }
 
     pub fn remove(&self, handle: TextureHandle) -> Option<()> {
-        self.textures.remove(&handle).map(|_| ())
+        self.textures.remove(&handle).map(|_| ())?;
+        self.texture_views.remove(&handle).map(|_| ())?;
+
+        Some(())
     }
 
     pub fn get_texture_ref<'a>(

@@ -1,5 +1,6 @@
 use std::ops::Deref;
 
+use dashmap::mapref::one::Ref;
 pub use wgpu;
 
 pub use context::WgpuContext;
@@ -18,13 +19,19 @@ mod texture_source_stage;
 mod vertex;
 pub mod window;
 
-pub struct TextureView(wgpu::TextureView);
+pub enum TextureView<'a> {
+    Borrowed(&'a wgpu::TextureView),
+    MapRef(Ref<'a, TextureHandle, wgpu::TextureView>),
+}
 
-impl Deref for TextureView {
+impl<'a> Deref for TextureView<'a> {
     type Target = wgpu::TextureView;
 
     fn deref(&self) -> &Self::Target {
-        &self.0
+        match self {
+            TextureView::Borrowed(view) => view,
+            TextureView::MapRef(view) => view,
+        }
     }
 }
 

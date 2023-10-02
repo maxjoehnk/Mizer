@@ -4323,6 +4323,7 @@ dependencies = [
  "mizer-node-templates",
  "mizer-nodes",
  "mizer-plan",
+ "mizer-protobuf-api",
  "mizer-runtime",
  "mizer-sequencer",
  "mizer-session",
@@ -5203,6 +5204,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-protobuf-api"
+version = "0.1.0"
+dependencies = [
+ "prost",
+ "prost-types",
+ "serde",
+ "tonic",
+ "tonic-build",
+]
+
+[[package]]
 name = "mizer-protocol-dmx"
 version = "0.1.0"
 dependencies = [
@@ -5564,7 +5576,6 @@ version = "0.1.0"
 dependencies = [
  "bitflags 2.4.0",
  "lazy_static",
- "mizer-api",
  "mizer-clock",
  "mizer-devices",
  "mizer-fixtures",
@@ -5572,6 +5583,7 @@ dependencies = [
  "mizer-layouts",
  "mizer-message-bus",
  "mizer-node",
+ "mizer-protobuf-api",
  "mizer-sequencer",
  "mizer-timecode",
  "mizer-util",

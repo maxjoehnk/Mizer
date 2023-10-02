@@ -4,10 +4,10 @@ use std::sync::Arc;
 
 use bitflags::bitflags;
 
-use mizer_api::proto::connections::PioneerCdjConnection;
-use mizer_api::Message;
 use mizer_devices::DeviceManager;
 use mizer_gamepads::{Axis, Button, GamepadRef, GamepadState};
+use mizer_protobuf_api::connections::*;
+use mizer_protobuf_api::Message;
 
 use crate::types::{Array, FFIFromPointer};
 
@@ -49,7 +49,7 @@ pub extern "C" fn read_cdj_state(ptr: *const ConnectionsRef, id: *const c_char) 
     let id = id.to_str().unwrap();
     let ffi = Arc::from_pointer(ptr);
     let cdj = ffi.0.get_cdj(id);
-    let state = cdj.map(|cdj_ref| PioneerCdjConnection::from(cdj_ref.clone()));
+    let state = cdj.map(|cdj_ref| PioneerCdjConnection::new_from_view(cdj_ref.clone()));
 
     std::mem::forget(ffi);
 
@@ -114,5 +114,31 @@ bitflags! {
         const RIGHT = 0b0010;
         const DOWN = 0b0100;
         const LEFT = 0b1000;
+    }
+}
+
+trait NewFromView {
+    fn new_from_view(cdj: mizer_devices::CDJView) -> Self;
+}
+
+impl NewFromView for PioneerCdjConnection {
+    fn new_from_view(cdj: mizer_devices::CDJView) -> Self {
+        Self {
+            id: cdj.id(),
+            playback: Some(CdjPlayback {
+                frame: cdj.beat as u32,
+                bpm: cdj.current_bpm(),
+                live: cdj.is_live(),
+                playback: (if cdj.is_playing() {
+                    cdj_playback::State::Playing
+                } else {
+                    cdj_playback::State::Cued
+                }) as i32,
+                track: None,
+            }),
+            address: cdj.device.ip_addr.to_string(),
+            model: cdj.device.name,
+            player_number: cdj.device.device_id as u32,
+        }
     }
 }

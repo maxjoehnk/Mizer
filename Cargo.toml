@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/api",
+    "crates/api/protobuf",
     "crates/components/connections",
     "crates/components/connections/devices",
     "crates/components/connections/devices/g13",

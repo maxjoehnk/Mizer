@@ -1,0 +1,15 @@
+[package]
+name = "mizer-protobuf-api"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+prost = "0.12"
+prost-types = "0.12"
+tonic = "0.10"
+
+[build-dependencies]
+tonic-build = "0.10"
+

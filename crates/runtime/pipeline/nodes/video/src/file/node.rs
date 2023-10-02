@@ -1,14 +1,12 @@
-use std::path::PathBuf;
-
 use anyhow::{anyhow, Context};
-use serde::{Deserialize, Serialize};
-
 use mizer_media::documents::MediaId;
 use mizer_media::MediaServer;
 use mizer_node::*;
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 
 use super::decoder::*;
 use super::texture::*;
@@ -19,12 +17,19 @@ const OUTPUT_PORT: &str = "Output";
 
 const FILE_SETTING: &str = "File";
 const SYNC_TRANSPORT_STATE_SETTING: &str = "Sync to Transport State";
+const RENDER_WHEN_STOPPED: &str = "Render when Stopped";
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoFileNode {
     pub file: String,
     #[serde(default)]
     pub sync_to_transport_state: bool,
+    #[serde(default = "default_render_when_stopped")]
+    pub render_when_stopped: bool,
+}
+
+fn default_render_when_stopped() -> bool {
+    true
 }
 
 impl ConfigurableNode for VideoFileNode {
@@ -32,12 +37,14 @@ impl ConfigurableNode for VideoFileNode {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video, MediaContentType::Image]),
             setting!(SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state),
+            setting!(RENDER_WHEN_STOPPED, self.render_when_stopped),
         ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(media setting, FILE_SETTING, self.file);
         update!(bool setting, SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state);
+        update!(bool setting, RENDER_WHEN_STOPPED, self.render_when_stopped);
 
         update_fallback!(setting)
     }
@@ -81,6 +88,10 @@ impl ProcessingNode for VideoFileNode {
         if let Some(value) = context.read_port::<_, f64>(PLAYBACK_INPUT) {
             let playback = value - f64::EPSILON > 0.0;
             node_state.playing = playback;
+        }
+
+        if !node_state.playing && !self.render_when_stopped {
+            return Ok(());
         }
 
         if self.file.is_empty() {

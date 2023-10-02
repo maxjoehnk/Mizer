@@ -195,31 +195,27 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - name: Cache vcpkg
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ github.workspace }}/vcpkg
-          key: vcpkg-${{ runner.os }}-x64-windows-static-md
-      - name: Build vcpkg
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          git clone https://github.com/microsoft/vcpkg --depth 1
-          ./vcpkg/bootstrap-vcpkg.bat
-
-      - name: Install Dependencies
-        run: |
-          ./vcpkg/vcpkg.exe install ffmpeg
-          ./vcpkg/vcpkg.exe install ffmpeg:x64-windows-static-md
+            #      - name: Cache vcpkg
+            #        id: cache
+            #        uses: actions/cache@v3
+            #        with:
+            #          path: |
+            #            ${{ github.workspace }}/vcpkg
+            #          key: vcpkg-${{ runner.os }}-x64-windows-static-md
+            #      - name: Build vcpkg
+            #        if: steps.cache.outputs.cache-hit != 'true'
+            #        run: |
+            #          git clone https://github.com/microsoft/vcpkg --depth 1
+            #          ./vcpkg/bootstrap-vcpkg.bat
+            #
+            #      - name: Install Dependencies
+            #        run: |
+            #          ./vcpkg/vcpkg.exe install ffmpeg
+            #          ./vcpkg/vcpkg.exe install ffmpeg:x64-windows-static-md
       - name: Build
         run: make build-release
-        env:
-          VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - name: Package
         run: make mizer.zip
-        env:
-          VCPKG_ROOT: ${{ github.workspace }}/vcpkg
       - uses: actions/upload-artifact@v3
         with:
           name: windows-full

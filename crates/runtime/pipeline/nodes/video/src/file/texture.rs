@@ -93,7 +93,7 @@ impl TextureProvider for VideoTexture {
             return Ok(None);
         }
         let frame = self.frame as f64;
-        let frame = frame * (self.metadata.fps / 60.0);
+        let frame = frame * (self.metadata.fps / 30.0);
         let frame = frame.floor() as usize;
         let mut frame_in_buffer = frame.saturating_sub(self.buffer_frame);
         while frame_in_buffer > 1 {

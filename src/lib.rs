@@ -38,7 +38,7 @@ mod api;
 mod fixture_libraries_loader;
 mod flags;
 
-const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
+const FRAME_DELAY_60FPS: Duration = Duration::from_millis(32);
 
 pub fn build_runtime(
     handle: tokio::runtime::Handle,

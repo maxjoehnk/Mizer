@@ -101,16 +101,19 @@ impl ProcessingNode for EnvelopeNode {
                 let release = if self.release == 0. {
                     0.0
                 } else {
-                    1. - state.beat.linear_extrapolate((0., self.release), (0., 1.))
+                    1. - state
+                        .beat
+                        .linear_extrapolate((0., self.release), (0., 1.))
+                        .min(1.)
                 };
                 from * release
             }
-            EnvelopePhase::Decay { to, .. } => {
+            EnvelopePhase::Decay { to, from } => {
                 if self.decay == 0. {
                     to
                 } else {
                     let beat = state.beat - self.attack;
-                    1. - to * beat.linear_extrapolate((0., self.decay), (0., 1.))
+                    beat.linear_extrapolate((0., self.decay), (from, to))
                 }
             }
             EnvelopePhase::Sustain { value } => value,
@@ -124,6 +127,13 @@ impl ProcessingNode for EnvelopeNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
+    }
+
+    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
+        ui.label(format!("Beat: {}", state.beat));
+        ui.label(format!("Phase: {:?}", state.phase));
+        ui.label(format!("Previous value: {}", state.previous_value));
+        ui.label(format!("Previous target: {}", state.previous_target));
     }
 }
 

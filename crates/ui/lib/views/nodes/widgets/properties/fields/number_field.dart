@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'field.dart';
 
 class NumberField extends StatefulWidget {
+  final String? node;
   final String label;
   final num value;
   final num? min;
@@ -29,7 +30,8 @@ class NumberField extends StatefulWidget {
       num? maxHint,
       this.fractions = false,
       num? step,
-      required this.onUpdate}) {
+      required this.onUpdate,
+      this.node}) {
     this.minHint = minHint ?? this.min ?? 0;
     this.maxHint = maxHint ?? this.max ?? 1;
     this.step = step ?? (this.fractions ? 0.1 : 1);
@@ -52,9 +54,9 @@ class _NumberFieldState extends State<NumberField> {
 
   @override
   void didUpdateWidget(NumberField oldWidget) {
-    if (oldWidget.value != widget.value && widget.value != this.value) {
-      this.controller.text = widget.value.toString();
+    if (oldWidget.node != widget.node) {
       setState(() {
+        this.controller.text = widget.value.toString();
         value = widget.value;
       });
     }

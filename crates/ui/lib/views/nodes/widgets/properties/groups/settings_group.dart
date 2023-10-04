@@ -15,12 +15,17 @@ import 'property_group.dart';
 
 class NodeSettingsPane extends StatelessWidget {
   final String title;
+  final String nodePath;
   final Node_NodeType type;
   final List<NodeSetting> settings;
   final Function(NodeSetting) onUpdate;
 
   NodeSettingsPane(
-      {required this.title, required this.type, required this.settings, required this.onUpdate});
+      {required this.title,
+      required this.type,
+      required this.settings,
+      required this.onUpdate,
+      required this.nodePath});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class NodeSettingsPane extends StatelessWidget {
       }
       if (setting.hasFloat()) {
         return NumberField(
+          node: nodePath,
           label: setting.label,
           value: setting.float.value,
           fractions: true,
@@ -65,6 +71,7 @@ class NodeSettingsPane extends StatelessWidget {
       }
       if (setting.hasInt_6()) {
         return NumberField(
+          node: nodePath,
           label: setting.label,
           value: setting.int_6.value,
           fractions: false,
@@ -81,6 +88,7 @@ class NodeSettingsPane extends StatelessWidget {
       }
       if (setting.hasUint()) {
         return NumberField(
+          node: nodePath,
           label: setting.label,
           value: setting.uint.value,
           fractions: false,

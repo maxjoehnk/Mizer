@@ -31,6 +31,7 @@ class NodePropertiesPane extends StatelessWidget {
     List<Widget> widgets = [
       NodeProperties(node: node),
       NodeSettingsPane(
+          nodePath: node.path,
           title: node.details.name,
           type: node.type,
           settings: node.settings,

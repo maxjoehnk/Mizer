@@ -1,19 +1,20 @@
-use rayon::prelude::*;
 use std::collections::HashMap;
 use std::io::Read;
 use std::path::Path;
-use strong_xml::XmlRead;
+
+use hard_xml::XmlRead;
+use rayon::prelude::*;
 use zip::ZipArchive;
 
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::find_path;
 
+pub use self::definition::GdtfFixtureDefinition;
+
 mod conversion;
 mod definition;
 mod types;
-
-pub use self::definition::GdtfFixtureDefinition;
 
 #[derive(Default)]
 pub struct GdtfProvider {

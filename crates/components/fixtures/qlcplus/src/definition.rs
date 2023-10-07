@@ -1,11 +1,13 @@
 // This happens in the XmlRead macro
 #![allow(clippy::needless_late_init)]
-use custom_derive::custom_derive;
-use enum_derive::*;
+
 use std::fmt::{Display, Formatter};
 use std::ops::Deref;
 use std::str::FromStr;
-use strong_xml::XmlRead;
+
+use custom_derive::custom_derive;
+use enum_derive::*;
+use hard_xml::XmlRead;
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "FixtureDefinition")]

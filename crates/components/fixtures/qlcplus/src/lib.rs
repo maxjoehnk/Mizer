@@ -6,8 +6,8 @@ use std::fs::{DirEntry, File};
 use std::io::Read;
 use std::path::Path;
 
+use hard_xml::XmlRead;
 use rayon::prelude::*;
-use strong_xml::XmlRead;
 
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
@@ -129,7 +129,7 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
 mod tests {
     use std::path::Path;
 
-    use strong_xml::XmlRead;
+    use hard_xml::XmlRead;
 
     use mizer_fixtures::definition::*;
 

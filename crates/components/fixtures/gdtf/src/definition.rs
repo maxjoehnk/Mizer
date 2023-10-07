@@ -1,5 +1,6 @@
+use hard_xml::XmlRead;
+
 use crate::types::*;
-use strong_xml::XmlRead;
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "GDTF")]

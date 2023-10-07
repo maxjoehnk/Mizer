@@ -1,23 +1,28 @@
+use image::Pixel;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
-use mizer_util::ConvertBytes;
+
+use crate::texture_to_pixels::TextureToPixelsConverter;
 
 const DMX_CHANNELS: u16 = 512;
-const CHANNELS_PER_PIXEL: u64 = 3; // RGB, add configuration later
+const CHANNELS_PER_PIXEL: u32 = 3; // RGB, add configuration later
 
 const OUTPUT_SETTING: &str = "Output";
 const WIDTH_SETTING: &str = "Width";
 const HEIGHT_SETTING: &str = "Height";
 const START_UNIVERSE_SETTING: &str = "Start Universe";
+const PIXELS_PER_UNIVERSE_SETTING: &str = "Pixels per Universe";
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PixelDmxNode {
-    pub width: u64,
-    pub height: u64,
+    pub width: u32,
+    pub height: u32,
     #[serde(default = "default_universe")]
     pub start_universe: u16,
+    #[serde(default = "default_pixels_per_universe")]
+    pub pixels_per_universe: u8,
     pub output: String,
 }
 
@@ -27,6 +32,7 @@ impl Default for PixelDmxNode {
             width: 100,
             height: 100,
             start_universe: default_universe(),
+            pixels_per_universe: default_pixels_per_universe(),
             output: "".into(),
         }
     }
@@ -48,19 +54,23 @@ impl ConfigurableNode for PixelDmxNode {
 
         vec![
             setting!(select OUTPUT_SETTING, &self.output, outputs),
-            setting!(WIDTH_SETTING, self.width as u32).min(1u32),
-            setting!(HEIGHT_SETTING, self.height as u32).min(1u32),
+            setting!(WIDTH_SETTING, self.width).min(1u32),
+            setting!(HEIGHT_SETTING, self.height).min(1u32),
             setting!(START_UNIVERSE_SETTING, self.start_universe as u32)
                 .min(1u32)
                 .max(32768u32),
+            setting!(PIXELS_PER_UNIVERSE_SETTING, self.pixels_per_universe as u32)
+                .min(1u32)
+                .max(170u32),
         ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(select setting, OUTPUT_SETTING, self.output);
-        update!(int setting, WIDTH_SETTING, self.width);
-        update!(int setting, HEIGHT_SETTING, self.height);
-        update!(int setting, START_UNIVERSE_SETTING, self.start_universe);
+        update!(uint setting, WIDTH_SETTING, self.width);
+        update!(uint setting, HEIGHT_SETTING, self.height);
+        update!(uint setting, START_UNIVERSE_SETTING, self.start_universe);
+        update!(uint setting, PIXELS_PER_UNIVERSE_SETTING, self.pixels_per_universe);
 
         update_fallback!(setting)
     }
@@ -69,7 +79,7 @@ impl ConfigurableNode for PixelDmxNode {
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Pixel to DMX".into(),
+            name: "DMX Pixels".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Pixel,
         }
@@ -77,7 +87,7 @@ impl PipelineNode for PixelDmxNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
-            INPUT_PORT, PortType::Multi, dimensions: (self.width, self.height)
+            INPUT_PORT, PortType::Texture, dimensions: (self.width as u64, self.height as u64)
         )]
     }
 
@@ -87,11 +97,27 @@ impl PipelineNode for PixelDmxNode {
 }
 
 impl ProcessingNode for PixelDmxNode {
-    type State = ();
+    type State = Option<TextureToPixelsConverter>;
 
-    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if state.is_none() {
+            *state = Some(TextureToPixelsConverter::new(context, INPUT_PORT)?);
+        }
+
+        if let Some(state) = state {
+            state.process(context)?;
+        }
+
+        Ok(())
+    }
+
+    fn post_process(
+        &self,
+        context: &impl NodeContext,
+        state: &mut Self::State,
+    ) -> anyhow::Result<()> {
         let channel_count = self.width * self.height * CHANNELS_PER_PIXEL;
-        let universe_count = (channel_count / DMX_CHANNELS as u64) as u16;
+        let universe_count = (channel_count / DMX_CHANNELS as u32) as u16;
         log::debug!("universes for pixels: {}", universe_count);
         let dmx_manager = context
             .inject::<DmxConnectionManager>()
@@ -100,17 +126,22 @@ impl ProcessingNode for PixelDmxNode {
             .get_output(&self.output)
             .ok_or_else(|| anyhow::anyhow!("unknown dmx output"))?;
 
-        if let Some(pixels) = context.read_port::<_, Vec<f64>>(INPUT_PORT) {
-            let data = pixels
-                .into_iter()
-                .map(ConvertBytes::to_8bit)
-                .collect::<Vec<_>>();
-            let data = data.chunks(512).enumerate();
-            for (universe, bulk) in data {
-                let universe = universe as u16 + self.start_universe;
-                output.write_bulk(universe, 1, bulk);
+        if let Some(state) = state.as_mut() {
+            if let Some(pixels) = state.post_process(context, self.width, self.height)? {
+                let data = pixels.chunks(self.pixels_per_universe as usize).enumerate();
+                tracing::trace!("Writing pixels to {} universes", data.len());
+                for (universe, pixels) in data {
+                    let universe = universe as u16 + self.start_universe;
+                    let pixels = pixels
+                        .iter()
+                        .copied()
+                        .flat_map(|pixel| pixel.to_rgb().0)
+                        .collect::<Vec<_>>();
+                    output.write_bulk(universe, 1, &pixels);
+                }
             }
         }
+
         Ok(())
     }
 
@@ -121,4 +152,8 @@ impl ProcessingNode for PixelDmxNode {
 
 fn default_universe() -> u16 {
     1
+}
+
+fn default_pixels_per_universe() -> u8 {
+    (DMX_CHANNELS as u32 / CHANNELS_PER_PIXEL) as u8
 }

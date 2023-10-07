@@ -5,6 +5,7 @@ use std::net::TcpStream;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
+use mizer_pixel_nodes::texture_to_pixels::TextureToPixelsConverter;
 
 use crate::protocol::SetColors;
 
@@ -20,8 +21,8 @@ pub struct OpcOutputNode {
     pub host: String,
     #[serde(default = "default_port")]
     pub port: u16,
-    pub width: u64,
-    pub height: u64,
+    pub width: u32,
+    pub height: u32,
 }
 
 impl Default for OpcOutputNode {
@@ -49,8 +50,8 @@ impl ConfigurableNode for OpcOutputNode {
             setting!(PORT_SETTING, self.port as u32)
                 .min(1u32)
                 .max(65535u32),
-            setting!(WIDTH_SETTING, self.width as u32).min(1u32),
-            setting!(HEIGHT_SETTING, self.height as u32).min(1u32),
+            setting!(WIDTH_SETTING, self.width).min(1u32),
+            setting!(HEIGHT_SETTING, self.height).min(1u32),
         ]
     }
 
@@ -74,7 +75,9 @@ impl PipelineNode for OpcOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!(PIXELS_INPUT, PortType::Multi, dimensions: (self.width, self.height))]
+        vec![
+            input_port!(PIXELS_INPUT, PortType::Texture, dimensions: (self.width as u64, self.height as u64)),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -83,12 +86,22 @@ impl PipelineNode for OpcOutputNode {
 }
 
 impl ProcessingNode for OpcOutputNode {
-    type State = OpcOutputState;
+    type State = (OpcOutputState, Option<TextureToPixelsConverter>);
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(
+        &self,
+        context: &impl NodeContext,
+        (state, converter): &mut Self::State,
+    ) -> anyhow::Result<()> {
         if matches!(state, OpcOutputState::Open) {
             let socket = TcpStream::connect((self.host.as_str(), self.port))?;
             *state = OpcOutputState::Connected(socket);
+        }
+        if converter.is_none() {
+            *converter = Some(TextureToPixelsConverter::new(context, PIXELS_INPUT)?);
+        }
+        if let Some(converter) = converter {
+            converter.process(context)?;
         }
         if let Some(pixels) = context.read_port::<_, Vec<f64>>(PIXELS_INPUT) {
             let pixels = pixels.try_into()?;
@@ -96,6 +109,25 @@ impl ProcessingNode for OpcOutputNode {
                 let msg = SetColors(1, pixels).into_buffer();
 
                 socket.write_all(&msg)?;
+            }
+        }
+
+        Ok(())
+    }
+
+    fn post_process(
+        &self,
+        context: &impl NodeContext,
+        (state, converter): &mut Self::State,
+    ) -> anyhow::Result<()> {
+        if let Some(converter) = converter.as_mut() {
+            if let Some(pixels) = converter.post_process(context, self.width, self.height)? {
+                let pixels = pixels.try_into()?;
+                if let OpcOutputState::Connected(socket) = state {
+                    let msg = SetColors(1, pixels).into_buffer();
+
+                    socket.write_all(&msg)?;
+                }
             }
         }
 

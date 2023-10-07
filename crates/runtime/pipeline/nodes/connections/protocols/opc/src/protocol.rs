@@ -1,6 +1,9 @@
-use bytes::{BufMut, BytesMut};
-use mizer_util::ConvertBytes;
 use std::convert::TryFrom;
+
+use bytes::{BufMut, BytesMut};
+use image::{Pixel, Rgba};
+
+use mizer_util::ConvertBytes;
 
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Color {
@@ -25,6 +28,27 @@ impl TryFrom<Vec<f64>> for PixelData {
             .chunks_exact(3)
             .map(|bytes| (bytes[0], bytes[1], bytes[2]))
             .map(convert_colors)
+            .collect();
+
+        Ok(PixelData(pixels))
+    }
+}
+
+impl TryFrom<Vec<Rgba<u8>>> for PixelData {
+    type Error = anyhow::Error;
+
+    fn try_from(data: Vec<Rgba<u8>>) -> Result<Self, Self::Error> {
+        let pixels = data
+            .into_iter()
+            .map(|pixel| {
+                let pixel = pixel.to_rgb();
+
+                Color {
+                    red: pixel[0],
+                    green: pixel[1],
+                    blue: pixel[2],
+                }
+            })
             .collect();
 
         Ok(PixelData(pixels))

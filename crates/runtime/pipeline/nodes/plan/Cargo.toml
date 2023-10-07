@@ -12,3 +12,5 @@ serde = { version = "1", features = ["derive"] }
 mizer-plan = { path = "../../../../components/plan" }
 mizer-fixtures = { path = "../../../../components/fixtures" }
 mizer-util = { path = "../../../../util" }
+mizer-pixel-nodes = { path = "../pixels" }
+image = "0.24"

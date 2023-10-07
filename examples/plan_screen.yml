@@ -1,16 +1,6 @@
 ---
-version: 1
+version: 4
 nodes:
-  - path: /fixture-2
-    type: fixture
-    config:
-      fixture: 3
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
   - path: /fixture-3
     type: fixture
     config:
@@ -31,39 +21,10 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /programmer-0
-    type: programmer
-    config: ~
-    designer:
-      position:
-        x: 0.25333333333333335
-        y: 1.72
-      scale: 0.0
-      hidden: false
-  - path: /fixture-0
+  - path: /fixture-11
     type: fixture
     config:
-      fixture: 1
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /pixel-pattern-0
-    type: pixel-pattern
-    config:
-      pattern: swirl
-    designer:
-      position:
-        x: 8.587454416655504
-        y: 2.0071323053915444
-      scale: 1.0
-      hidden: false
-  - path: /fixture-6
-    type: fixture
-    config:
-      fixture: 7
+      fixture: 12
     designer:
       position:
         x: 0.0
@@ -81,36 +42,6 @@ nodes:
         y: 1.96
       scale: 0.0
       hidden: false
-  - path: /fixture-4
-    type: fixture
-    config:
-      fixture: 5
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /fixture-7
-    type: fixture
-    config:
-      fixture: 8
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
-  - path: /fixture-11
-    type: fixture
-    config:
-      fixture: 12
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
   - path: /fixture-5
     type: fixture
     config:
@@ -131,16 +62,6 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /fixture-9
-    type: fixture
-    config:
-      fixture: 10
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
   - path: /fixture-10
     type: fixture
     config:
@@ -151,11 +72,111 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
+  - path: /video-file-0
+    type: video-file
+    config:
+      file: 9ae5bd1c-5f2a-415d-9568-2cb881a4b1e0
+      sync_to_transport_state: false
+      render_when_stopped: false
+    designer:
+      position:
+        x: 7.887005875986834
+        y: 2.0332751474969086
+      scale: 1.0
+      hidden: false
+  - path: /fixture-4
+    type: fixture
+    config:
+      fixture: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-7
+    type: fixture
+    config:
+      fixture: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-9
+    type: fixture
+    config:
+      fixture: 10
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.25333333333333335
+        y: 1.72
+      scale: 0.0
+      hidden: false
+  - path: /fixture-2
+    type: fixture
+    config:
+      fixture: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-6
+    type: fixture
+    config:
+      fixture: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
 channels:
-  - Output@/pixel-pattern-0 -> Input@/plan-screen-1
+  - Output@/video-file-0 -> Input@/plan-screen-1
 media:
   import_paths: []
-  files: []
+  files:
+    - id: 9ae5bd1c-5f2a-415d-9568-2cb881a4b1e0
+      filename: file_example_MP4_1920_18MG.mp4
+      name: file_example_MP4_1920_18MG.mp4
+      tags: []
+      content_type: video/mp4
+      media_type: Video
+      file_path: ".storage/media/file_example_MP4_1920_18MG.mp4"
+      source_path: ~
+      file_size: 17839845
+      metadata:
+        thumbnail_path: ~
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
   tags: []
 layouts:
   Default: []
@@ -163,56 +184,13 @@ connections:
   - id: dmx-0
     name: sACN (mizer)
     type: sacn
+    priority: 100
 fixtures:
-  - id: 9
-    name: LED Pixel Bar 12 RGBW 3
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 97
-    universe: 2
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
-  - id: 12
-    name: LED Pixel Bar 12 RGBW 6
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 241
-    universe: 2
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
   - id: 3
     name: LED Pixel Bar 12 RGBW 3
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
     channel: 97
     universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
-  - id: 5
-    name: LED Pixel Bar 12 RGBW 5
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 193
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
-  - id: 10
-    name: LED Pixel Bar 12 RGBW 4
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 145
-    universe: 2
     mode: 48 Channel
     output: ~
     configuration:
@@ -230,21 +208,10 @@ fixtures:
       invert_pan: false
       invert_tilt: false
       reverse_pixel_order: false
-  - id: 1
-    name: LED Pixel Bar 12 RGBW 1
+  - id: 9
+    name: LED Pixel Bar 12 RGBW 3
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 1
-    universe: 1
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
-  - id: 8
-    name: LED Pixel Bar 12 RGBW 2
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 49
+    channel: 97
     universe: 2
     mode: 48 Channel
     output: ~
@@ -252,21 +219,10 @@ fixtures:
       invert_pan: false
       invert_tilt: false
       reverse_pixel_order: false
-  - id: 7
-    name: LED Pixel Bar 12 RGBW 1
+  - id: 12
+    name: LED Pixel Bar 12 RGBW 6
     fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 1
-    universe: 2
-    mode: 48 Channel
-    output: ~
-    configuration:
-      invert_pan: false
-      invert_tilt: false
-      reverse_pixel_order: false
-  - id: 11
-    name: LED Pixel Bar 12 RGBW 5
-    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
-    channel: 193
+    channel: 241
     universe: 2
     mode: 48 Channel
     output: ~
@@ -296,56 +252,98 @@ fixtures:
       invert_pan: false
       invert_tilt: false
       reverse_pixel_order: false
+  - id: 11
+    name: LED Pixel Bar 12 RGBW 5
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 193
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 5
+    name: LED Pixel Bar 12 RGBW 5
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 193
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 7
+    name: LED Pixel Bar 12 RGBW 1
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 1
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 10
+    name: LED Pixel Bar 12 RGBW 4
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 145
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 8
+    name: LED Pixel Bar 12 RGBW 2
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 49
+    universe: 2
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+  - id: 1
+    name: LED Pixel Bar 12 RGBW 1
+    fixture: "qlc:Showtec:LED Pixel Bar 12 RGBW"
+    channel: 1
+    universe: 1
+    mode: 48 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
 groups: []
 presets:
   intensity:
-    - id: 4
-      label: 75%
-      value: 0.75
-    - id: 3
-      label: 50%
-      value: 0.5
-    - id: 1
-      label: 0%
-      value: 0.0
     - id: 2
       label: 25%
       value: 0.25
     - id: 5
       label: 100%
       value: 1.0
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 4
+      label: 75%
+      value: 0.75
   shutter: []
   color:
-    - id: 5
-      label: Yellow
-      value:
-        - 1.0
-        - 1.0
-        - 0.0
-    - id: 4
-      label: Blue
-      value:
-        - 0.0
-        - 0.0
-        - 1.0
     - id: 2
       label: Red
       value:
         - 1.0
         - 0.0
         - 0.0
-    - id: 7
-      label: Turquoise
-      value:
-        - 0.0
-        - 1.0
-        - 1.0
-    - id: 1
-      label: White
-      value:
-        - 1.0
-        - 1.0
-        - 1.0
     - id: 3
       label: Green
       value:
@@ -358,6 +356,30 @@ presets:
         - 1.0
         - 0.0
         - 1.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
   position: []
 sequences: []
 effects:
@@ -1445,6 +1467,7 @@ plans:
         y: 0
         width: 12
         height: 12
+    images: []
 timecodes:
   timecodes: []
   controls: []

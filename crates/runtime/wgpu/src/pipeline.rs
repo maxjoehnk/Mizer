@@ -191,4 +191,16 @@ impl BufferAccess<'_> {
 
         Some(data)
     }
+
+    pub fn read(&self) -> Option<wgpu::BufferView> {
+        profiling::scope!("BufferAccess::read");
+        if !self.mapped_buffers.contains(&self.handle) {
+            return None;
+        }
+        let buffer = self.transfer_buffers.get(&self.handle)?;
+        let buffer_slice = buffer.slice(..);
+        let data = buffer_slice.get_mapped_range();
+
+        Some(data)
+    }
 }

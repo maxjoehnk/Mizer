@@ -4980,8 +4980,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bytes 1.5.0",
+ "image",
  "log",
  "mizer-node",
+ "mizer-pixel-nodes",
  "mizer-util",
  "serde",
 ]
@@ -5073,13 +5075,16 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
+ "image",
  "log",
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
+ "mizer-wgpu",
  "num_enum 0.7.0",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5107,9 +5112,11 @@ name = "mizer-plan-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "image",
  "log",
  "mizer-fixtures",
  "mizer-node",
+ "mizer-pixel-nodes",
  "mizer-plan",
  "mizer-util",
  "serde",

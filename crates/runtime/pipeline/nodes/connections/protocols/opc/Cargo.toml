@@ -9,5 +9,7 @@ anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-util = { path = "../../../../../../util" }
 mizer-node = { path = "../../../../node" }
+mizer-pixel-nodes = { path = "../../../pixels" }
+image = "0.24"
 log = "0.4"
 bytes = "1.5"

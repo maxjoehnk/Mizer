@@ -1,11 +1,16 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
-use mizer_fixtures::manager::FixtureManager;
+use image::{Pixel, Rgba};
 use serde::{Deserialize, Serialize};
 
+use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
+use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
+use mizer_pixel_nodes::texture_to_pixels::TextureToPixelsConverter;
 use mizer_plan::{Plan, PlanScreen, PlanStorage, ScreenId};
+use mizer_util::ConvertBytes;
 
 const INPUT_PORT: &str = "Input";
+
+const SCREEN_SETTING: &str = "Screen";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlanScreenNode {
@@ -31,7 +36,32 @@ impl Default for PlanScreenNode {
     }
 }
 
-impl ConfigurableNode for PlanScreenNode {}
+impl ConfigurableNode for PlanScreenNode {
+    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+        let storage = injector.get::<PlanStorage>().unwrap();
+        let plans = storage.read();
+        let screens = plans
+            .into_iter()
+            .flat_map(|plan| {
+                plan.screens
+                    .into_iter()
+                    .map(move |screen| (plan.name.clone(), screen))
+            })
+            .map(|(plan, screen)| IdVariant {
+                value: screen.screen_id.0,
+                label: format!("{} / {}", plan, screen.screen_id.0),
+            })
+            .collect();
+
+        vec![setting!(id SCREEN_SETTING, self.screen_id.0, screens)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(id setting, SCREEN_SETTING, self.screen_id, ScreenId);
+
+        Ok(())
+    }
+}
 
 impl PlanScreenNode {
     fn get_plan(&self) -> Option<Plan> {
@@ -49,10 +79,17 @@ impl PlanScreenNode {
             .find(|s| s.screen_id == self.screen_id)
     }
 
-    fn convert_pixels(width: u32, pixels: Vec<f64>) -> Vec<Vec<Color>> {
+    fn convert_pixels(width: u32, pixels: Vec<Rgba<u8>>) -> Vec<Vec<Color>> {
         pixels
-            .chunks_exact(3)
-            .map(|bytes| Color::rgb(bytes[0], bytes[1], bytes[2]))
+            .into_iter()
+            .map(|pixel| {
+                let bytes = pixel.to_rgb();
+                Color::rgb(
+                    f64::from_8bit(bytes[0]),
+                    f64::from_8bit(bytes[1]),
+                    f64::from_8bit(bytes[2]),
+                )
+            })
             .collect::<Vec<Color>>()
             .chunks_exact(width as usize)
             .map(|row| row.to_vec())
@@ -72,7 +109,7 @@ impl PipelineNode for PlanScreenNode {
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
             INPUT_PORT,
-            PortType::Multi,
+            PortType::Texture,
             dimensions: self.get_screen()
                 .map(|screen| (screen.width as u64, screen.height as u64))
         )]
@@ -88,48 +125,66 @@ impl PipelineNode for PlanScreenNode {
 }
 
 impl ProcessingNode for PlanScreenNode {
-    type State = ();
+    type State = Option<TextureToPixelsConverter>;
 
-    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let Some(pixels) = context.read_port::<_, Vec<f64>>(INPUT_PORT) else {
-            return Ok(())
-        };
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if state.is_none() {
+            *state = Some(TextureToPixelsConverter::new(context, INPUT_PORT)?);
+        }
+
+        if let Some(state) = state {
+            state.process(context)?;
+        }
+
+        Ok(())
+    }
+
+    fn post_process(
+        &self,
+        context: &impl NodeContext,
+        state: &mut Self::State,
+    ) -> anyhow::Result<()> {
         let Some(manager) = context.inject::<FixtureManager>() else {
-            return Ok(())
+            return Ok(());
         };
         let Some(plan) = self.get_plan() else {
-            return Ok(())
+            return Ok(());
         };
         let Some(screen) = plan.screens.iter().find(|s| s.screen_id == self.screen_id) else {
-            return Ok(())
+            return Ok(());
         };
-        let pixel_data = Self::convert_pixels(screen.width, pixels);
-        for fixture in plan.fixtures.iter().filter(|f| screen.contains_fixture(f)) {
-            let (x, y) = screen.translate_position(fixture);
-            let Some(color) = pixel_data.get(x).and_then(|row| row.get(y)) else {
-                continue
-            };
-            manager.write_fixture_control(
-                fixture.fixture,
-                FixtureFaderControl::Intensity,
-                color.alpha,
-            );
-            manager.write_fixture_control(
-                fixture.fixture,
-                FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                color.red,
-            );
-            manager.write_fixture_control(
-                fixture.fixture,
-                FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                color.green,
-            );
-            manager.write_fixture_control(
-                fixture.fixture,
-                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                color.blue,
-            );
+        if let Some(state) = state.as_mut() {
+            if let Some(pixels) = state.post_process(context, screen.width, screen.height)? {
+                let pixel_data = Self::convert_pixels(screen.width, pixels);
+                for fixture in plan.fixtures.iter().filter(|f| screen.contains_fixture(f)) {
+                    let (x, y) = screen.translate_position(fixture);
+                    let Some(color) = pixel_data.get(y).and_then(|row| row.get(x)) else {
+                        continue;
+                    };
+                    manager.write_fixture_control(
+                        fixture.fixture,
+                        FixtureFaderControl::Intensity,
+                        color.alpha,
+                    );
+                    manager.write_fixture_control(
+                        fixture.fixture,
+                        FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                        color.red,
+                    );
+                    manager.write_fixture_control(
+                        fixture.fixture,
+                        FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                        color.green,
+                    );
+                    manager.write_fixture_control(
+                        fixture.fixture,
+                        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                        color.blue,
+                    );
+                }
+            }
         }
+
         Ok(())
     }
 

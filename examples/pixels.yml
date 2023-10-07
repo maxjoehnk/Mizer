@@ -1,31 +1,77 @@
+---
+version: 4
 nodes:
-  - type: programmer
-    path: /programmer
-    config: {}
-    designer:
-      position:
-        x: -5
-        y: 0
-      scale: 1
-  - type: pixel-pattern
-    path: /pixel-pattern-0
+  - path: /video-file-0
+    type: video-file
     config:
-      pattern: rgb-iterate
+      file: edf8b09b-d74c-4973-a624-6e6921a03870
+      sync_to_transport_state: false
+      render_when_stopped: false
     designer:
       position:
-        x: 0
-        y: 0
-      scale: 1
-  - type: opc-output
-    path: /opc-output-0
+        x: 3.2315550965161206
+        y: 1.30022563287738
+      scale: 1.0
+      hidden: false
+  - path: /opc-output-0
+    type: opc-output
     config:
       host: 127.0.0.1
+      port: 7890
       width: 25
       height: 50
     designer:
       position:
-        x: 5
-        y: 0
-      scale: 1
+        x: 9.077594958298638
+        y: 1.161821562879542
+      scale: 1.0
+      hidden: false
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -5.0
+        y: 0.0
+      scale: 1.0
+      hidden: false
 channels:
-  - Output@/pixel-pattern-0 -> pixels@/opc-output-0
+  - Output@/video-file-0 -> Pixels@/opc-output-0
+media:
+  import_paths: []
+  files:
+    - id: edf8b09b-d74c-4973-a624-6e6921a03870
+      filename: file_example_MP4_1920_18MG.mp4
+      name: file_example_MP4_1920_18MG.mp4
+      tags: []
+      content_type: video/mp4
+      media_type: Video
+      file_path: ".storage/media/file_example_MP4_1920_18MG.mp4"
+      source_path: ~
+      file_size: 17839845
+      metadata:
+        thumbnail_path: ~
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+  tags: []
+layouts: {}
+connections: []
+fixtures: []
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences: []
+effects: []
+plans: []
+timecodes:
+  timecodes: []
+  controls: []

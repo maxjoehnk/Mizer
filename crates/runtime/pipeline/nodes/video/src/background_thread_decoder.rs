@@ -27,10 +27,11 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
             .receiver
             .iter()
             .find_map(|event| match event {
-                VideoThreadEvent::Metadata(metadata) => Some(metadata),
+                VideoThreadEvent::Metadata(metadata) => Some(Ok(metadata)),
+                VideoThreadEvent::DecodeError(err) => Some(Err(err)),
                 _ => None,
             })
-            .ok_or_else(|| anyhow!("No metadata received"))?;
+            .ok_or_else(|| anyhow!("No metadata received"))??;
 
         Ok(metadata)
     }

@@ -430,7 +430,7 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
-        let mut node_metadata = HashMap::default();
+        let mut node_metadata = self.node_metadata.read();
         for (path, node) in nodes {
             let (context, state) =
                 self.get_context(path, frame, injector, clock, &mut node_metadata);
@@ -451,7 +451,7 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::post_process_nodes");
-        let mut node_metadata = HashMap::default();
+        let mut node_metadata = self.node_metadata.read();
         for (path, node) in nodes {
             let (context, state) =
                 self.get_context(path, frame, injector, clock, &mut node_metadata);

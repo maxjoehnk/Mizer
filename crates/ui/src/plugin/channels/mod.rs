@@ -1,3 +1,20 @@
+use anyhow::Error;
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+
+pub use event::history::*;
+pub use event::midi_monitor::*;
+pub use event::osc_monitor::*;
+pub use event::session::*;
+pub use event::settings::*;
+pub use event::status::*;
+pub use method::application::*;
+pub use method::connections::*;
+pub use method::mappings::*;
+pub use method::plans::*;
+pub use method::session::*;
+pub use method::status::*;
+pub use method::timecode::*;
+
 pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
@@ -6,20 +23,6 @@ pub use self::nodes::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
-use anyhow::Error;
-pub use event::application::*;
-pub use event::history::*;
-pub use event::midi_monitor::*;
-pub use event::osc_monitor::*;
-pub use event::session::*;
-pub use method::application::*;
-pub use method::connections::*;
-pub use method::mappings::*;
-pub use method::plans::*;
-pub use method::session::*;
-pub use method::status::*;
-pub use method::timecode::*;
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod effects;
 mod event;

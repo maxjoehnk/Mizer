@@ -27,6 +27,7 @@ use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::{Session, SessionState};
 use mizer_settings::{Settings, SettingsManager};
+use mizer_status_bus::StatusBus;
 use mizer_timecode::{TimecodeManager, TimecodeModule};
 use mizer_wgpu::{window::WindowModule, WgpuModule};
 
@@ -96,9 +97,9 @@ pub fn build_runtime(
 
     let media_server = register_media_module(&mut runtime, Arc::clone(&settings))?;
 
-    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
+    let status_bus = runtime.access().status_bus;
 
-    let fps_counter = MessageBus::new();
+    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
 
     let handlers = Handlers::new(
         api,
@@ -108,7 +109,7 @@ pub fn build_runtime(
         sequencer,
         effect_engine,
         timecode_manager,
-        fps_counter.clone(),
+        status_bus.clone(),
     );
 
     let remote_api_port = start_remote_api(handlers.clone())?;
@@ -124,7 +125,7 @@ pub fn build_runtime(
         media_server_api: media_server,
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
-        fps_sender: fps_counter,
+        status_bus,
     };
     if project_file.is_some() {
         mizer.load_project().context(format!(
@@ -146,7 +147,7 @@ pub struct Mizer {
     media_server_api: MediaServer,
     session_events: MessageBus<SessionState>,
     project_history: ProjectHistory,
-    fps_sender: MessageBus<f64>,
+    status_bus: StatusBus,
 }
 
 impl Mizer {
@@ -166,13 +167,15 @@ impl Mizer {
             profiling::finish_frame!();
             let after = std::time::Instant::now();
             let frame_time = after.duration_since(before);
-            self.fps_sender.send(1.0 / frame_time.as_secs_f64());
+            self.status_bus.send_fps(1.0 / frame_time.as_secs_f64());
         }
     }
 
     #[profiling::function]
     fn new_project(&mut self) {
         mizer_util::message!("New Project", 0);
+        self.runtime
+            .add_status_message("Creating new project...", None);
         self.close_project();
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
@@ -191,6 +194,8 @@ impl Mizer {
         osc_manager.new_project();
         self.runtime.new_project();
         self.send_session_update();
+        self.runtime
+            .add_status_message("Created new project", Some(Duration::from_secs(10)));
     }
 
     #[profiling::function]
@@ -206,6 +211,7 @@ impl Mizer {
     fn load_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Loading Project", 0);
         if let Some(ref path) = self.project_path {
+            self.runtime.add_status_message("Loading project...", None);
             log::info!("Loading project {:?}...", path);
             let project = Project::load_file(path)?;
             {
@@ -248,6 +254,10 @@ impl Mizer {
                 .add_project(path)
                 .context("updating history")?;
             self.send_session_update();
+            self.runtime.add_status_message(
+                format!("Project loaded ({path:?})"),
+                Some(Duration::from_secs(10)),
+            );
         }
 
         Ok(())
@@ -266,8 +276,9 @@ impl Mizer {
     #[profiling::function]
     fn save_project(&self) -> anyhow::Result<()> {
         mizer_util::message!("Saving Project", 0);
-        if let Some(ref file) = self.project_path {
-            log::info!("Saving project to {:?}...", file);
+        if let Some(ref path) = self.project_path {
+            self.runtime.add_status_message("Saving project...", None);
+            log::info!("Saving project to {:?}...", path);
             let mut project = Project::new();
             self.runtime.save(&mut project);
             let injector = self.runtime.injector();
@@ -286,8 +297,12 @@ impl Mizer {
             let effects_engine = injector.get::<EffectEngine>().unwrap();
             effects_engine.save(&mut project);
             self.media_server_api.save(&mut project);
-            project.save_file(file)?;
+            project.save_file(path)?;
             log::info!("Saving project...Done");
+            self.runtime.add_status_message(
+                format!("Project saved ({path:?})"),
+                Some(Duration::from_secs(10)),
+            );
         }
         Ok(())
     }
@@ -347,10 +362,11 @@ fn register_sequencer_module(runtime: &mut impl Runtime) -> anyhow::Result<Seque
 }
 
 fn register_media_module(
-    runtime: &mut impl Runtime,
+    runtime: &mut DefaultRuntime,
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
 ) -> anyhow::Result<MediaServer> {
-    let (media_module, media_server) = MediaModule::new(settings.read().settings)?;
+    let (media_module, media_server) =
+        MediaModule::new(runtime.access().status_bus, settings.read().settings)?;
     media_module.register(runtime)?;
 
     Ok(media_server)

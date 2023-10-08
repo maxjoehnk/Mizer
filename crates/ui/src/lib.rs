@@ -68,14 +68,16 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
             .event_channel(context.weak());
     let _application = ApplicationChannel::new(handlers.settings.clone(), lifecycle_handler)
         .channel(context.weak());
-    let _application_events =
-        MonitorApplicationChannel::new(handlers.settings, async_runtime, context.weak())
+    let _settings_events =
+        MonitorSettingsChannel::new(handlers.settings, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _effects = EffectsChannel::new(handlers.effects).channel(context.weak());
     let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
     let _mappings = MappingsChannel::new(handlers.mappings).channel(context.weak());
     let _timecode = TimecodeChannel::new(handlers.timecode).channel(context.weak());
-    let _status = StatusChannel::new(handlers.status).channel(context.weak());
+    let _status = StatusChannel::new(handlers.status.clone()).channel(context.weak());
+    let _status_events = MonitorStatusChannel::new(handlers.status, async_runtime, context.weak())
+        .event_channel(context.weak());
 
     context
         .window_manager

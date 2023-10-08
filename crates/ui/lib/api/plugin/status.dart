@@ -8,6 +8,7 @@ import 'ffi/bindings.dart' show FFIBindings;
 class StatusPluginApi implements StatusApi {
   final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/status");
+  final EventChannel statusEvents = const EventChannel("mizer.live/status/watch");
 
   StatusPluginApi(this.bindings);
 
@@ -16,5 +17,12 @@ class StatusPluginApi implements StatusApi {
     int pointer = await channel.invokeMethod("getStatusPointer");
 
     return this.bindings.openStatus(pointer);
+  }
+
+  @override
+  Stream<String?> getStatusMessages() {
+    return statusEvents.receiveBroadcastStream().map((buffer) {
+      return buffer as String?;
+    });
   }
 }

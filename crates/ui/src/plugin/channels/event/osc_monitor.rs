@@ -1,11 +1,14 @@
-use nativeshell::codec::Value;
-use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
 use std::collections::HashMap;
 
+use nativeshell::codec::Value;
+use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
+
 use mizer_api::handlers::ConnectionsHandler;
+use mizer_api::proto::connections::MonitorOscResponse;
 use mizer_api::RuntimeApi;
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
+use crate::impl_into_flutter_value;
 use crate::plugin::event_sink::EventSinkSubscriber;
 
 pub struct MonitorOscEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
@@ -14,6 +17,8 @@ pub struct MonitorOscEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
+
+impl_into_flutter_value!(MonitorOscResponse);
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     for MonitorOscEventChannel<R, AR>

@@ -1,3 +1,6 @@
+use std::collections::HashMap;
+use std::sync::Arc;
+
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{
     Context, EngineHandle, EventChannelHandler, EventSink, MethodCallHandler, MethodChannel,
@@ -8,13 +11,12 @@ use mizer_api::handlers::ProgrammerHandler;
 use mizer_api::proto::fixtures::FixtureId;
 use mizer_api::proto::programmer::*;
 use mizer_api::RuntimeApi;
-
-use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
-use crate::plugin::event_sink::EventSinkSubscriber;
 use mizer_ui_ffi::{FFIToPointer, Programmer};
 use mizer_util::{AsyncRuntime, StreamSubscription};
-use std::collections::HashMap;
-use std::sync::Arc;
+
+use crate::impl_into_flutter_value;
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use crate::plugin::event_sink::EventSinkSubscriber;
 
 pub struct ProgrammerChannel<R: RuntimeApi> {
     handler: ProgrammerHandler<R>,
@@ -291,6 +293,8 @@ pub struct ProgrammerEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
+
+impl_into_flutter_value!(ProgrammerState);
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     for ProgrammerEventChannel<R, AR>

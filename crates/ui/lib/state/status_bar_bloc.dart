@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+import 'package:mizer/api/contracts/status.dart';
 
 class StatusBarState {
   String? message;
@@ -18,23 +17,11 @@ class StatusBarState {
 }
 
 class StatusBarCubit extends Cubit<StatusBarState> {
-  StatusBarCubit() : super(StatusBarState.empty());
+  final StatusApi api;
 
-  void addMessage(String message) {
-    emit(StatusBarState(message));
-  }
-
-  void clearMessage() {
-    emit(StatusBarState.empty());
-  }
-}
-
-extension StatusBarExt on BuildContext {
-  void addStatus(String message) {
-    read<StatusBarCubit>().addMessage(message);
-  }
-
-  void clearStatus() {
-    read<StatusBarCubit>().clearMessage();
+  StatusBarCubit(this.api) : super(StatusBarState.empty()) {
+    api.getStatusMessages().listen((event) {
+      emit(StatusBarState(event));
+    });
   }
 }

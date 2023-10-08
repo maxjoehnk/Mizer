@@ -11,7 +11,6 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
-import 'package:mizer/state/status_bar_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/windows/preferences_window.dart';
 import 'package:mizer/windows/smart_window.dart';
@@ -95,7 +94,6 @@ class ApplicationMenu extends StatelessWidget {
 
   Future<void> _newProject(BuildContext context) async {
     await context.read<SessionApi>().newProject();
-    context.clearStatus();
     _refreshViews(context);
   }
 
@@ -103,7 +101,10 @@ class ApplicationMenu extends StatelessWidget {
     try {
       await ProjectFiles.openProject(context);
     } on PlatformException catch (err) {
-      showDialog(context: context, builder: (context) => ErrorDialog(title: "Unable to load project file".i18n, text: err.message ?? err.toString()));
+      showDialog(
+          context: context,
+          builder: (context) => ErrorDialog(
+              title: "Unable to load project file".i18n, text: err.message ?? err.toString()));
     }
   }
 
@@ -125,6 +126,8 @@ class ErrorDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ActionDialog(title: title, content: SizedBox(height: 768, child: SingleChildScrollView(child: Text(text))));
+    return ActionDialog(
+        title: title,
+        content: SizedBox(height: 768, child: SingleChildScrollView(child: Text(text))));
   }
 }

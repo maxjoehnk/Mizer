@@ -4,6 +4,7 @@ use std::sync::{Arc, RwLock};
 use uuid::Uuid;
 
 use mizer_settings::Settings;
+use mizer_status_bus::StatusBus;
 pub use module::MediaModule;
 
 use crate::data_access::DataAccess;
@@ -71,15 +72,17 @@ pub struct MediaServer {
     storage: FileStorage,
     db: DataAccess,
     import_paths: ImportPaths,
+    status_bus: StatusBus,
 }
 
 impl MediaServer {
-    pub fn new(settings: Settings) -> anyhow::Result<Self> {
+    pub fn new(status_bus: StatusBus, settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
         let storage = FileStorage::new(settings.paths.media_storage)?;
         let import_paths = ImportPaths::new();
 
         Ok(Self {
+            status_bus,
             storage,
             db,
             import_paths,
@@ -145,7 +148,11 @@ impl MediaServer {
         file_path: PathBuf,
         relative_to: Option<&Path>,
     ) -> anyhow::Result<Option<MediaDocument>> {
-        let file_handler = ImportFileHandler::new(self.db.clone(), self.storage.clone());
+        let file_handler = ImportFileHandler::new(
+            self.db.clone(),
+            self.storage.clone(),
+            self.status_bus.clone(),
+        );
 
         match file_handler
             .import_file(model, &file_path, relative_to)

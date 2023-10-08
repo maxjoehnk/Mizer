@@ -28,6 +28,7 @@ mizer-settings = { path = "../runtime/settings" }
 mizer-sequencer = { path = "../components/sequencer" }
 mizer-timecode = { path = "../components/timecode" }
 mizer-session = { path = "../runtime/session" }
+mizer-status-bus = { path = "../runtime/status" }
 mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-node-templates = { path = "../runtime/pipeline/templates" }
 mizer-message-bus = { path = "../util/bus" }

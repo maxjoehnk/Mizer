@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
+use std::time::Duration;
 
 use itertools::Itertools;
 use pinboard::NonEmptyPinboard;
@@ -19,6 +20,7 @@ use mizer_pipeline::*;
 use mizer_plan::PlanStorage;
 use mizer_processing::*;
 use mizer_project_files::{Channel, Project, ProjectManagerMut};
+use mizer_status_bus::StatusBus;
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
@@ -52,6 +54,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     layout_fader_view: LayoutsView,
     ui: Option<DebugUiImpl>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    status_bus: StatusBus,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -81,6 +84,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             layout_fader_view: Default::default(),
             ui: None,
             node_metadata,
+            status_bus: Default::default(),
         };
         runtime.bootstrap();
 
@@ -171,6 +175,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_recv: self.clock_recv.clone(),
             clock_snapshot: self.clock_snapshot.clone(),
             layouts_view: self.layout_fader_view.clone(),
+            status_bus: self.status_bus.clone(),
         }
     }
 
@@ -414,9 +419,11 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         }
         self.read_states_into_view();
     }
-}
 
-impl<TClock: Clock> CoordinatorRuntime<TClock> {}
+    fn add_status_message(&self, message: impl Into<String>, timeout: Option<Duration>) {
+        self.status_bus.add_status_message(message, timeout);
+    }
+}
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new_project(&mut self) {

@@ -22,6 +22,7 @@ ffmpeg-the-third = "1.2"
 dashmap = "5.5"
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
+mizer-status-bus = { path = "../../runtime/status" }
 
 [dev-dependencies]
 test-case = "3.2"

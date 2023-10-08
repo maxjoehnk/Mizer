@@ -1,16 +1,21 @@
-use mizer_message_bus::{MessageBus, Subscriber};
+use mizer_message_bus::Subscriber;
+use mizer_status_bus::StatusBus;
 
 #[derive(Clone)]
 pub struct StatusHandler {
-    fps_counter: MessageBus<f64>,
+    bus: StatusBus,
 }
 
 impl StatusHandler {
-    pub fn new(fps_counter: MessageBus<f64>) -> Self {
-        Self { fps_counter }
+    pub fn new(status_bus: StatusBus) -> Self {
+        Self { bus: status_bus }
     }
 
     pub fn get_fps_counter(&self) -> Subscriber<f64> {
-        self.fps_counter.subscribe()
+        self.bus.subscribe_fps()
+    }
+
+    pub fn observe_status_messages(&self) -> Subscriber<Option<String>> {
+        self.bus.subscribe_status_messages()
     }
 }

@@ -13,6 +13,7 @@ use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, Transport};
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
+use crate::impl_into_flutter_value;
 use crate::plugin::channels::MethodReplyExt;
 use crate::plugin::event_sink::EventSinkSubscriber;
 
@@ -90,6 +91,8 @@ pub struct TransportEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
+
+impl_into_flutter_value!(mizer_api::proto::transport::Transport);
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     for TransportEventChannel<R, AR>

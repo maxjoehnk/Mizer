@@ -3,30 +3,29 @@ use std::collections::HashMap;
 use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
 
-use mizer_api::handlers::SessionHandler;
-use mizer_api::proto::session::History;
+use mizer_api::handlers::SettingsHandler;
+use mizer_api::proto::settings::Settings;
 use mizer_api::RuntimeApi;
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
 use crate::impl_into_flutter_value;
 use crate::plugin::event_sink::EventSinkSubscriber;
 
-pub struct MonitorHistoryChannel<R: RuntimeApi, AR: AsyncRuntime> {
+pub struct MonitorSettingsChannel<R: RuntimeApi, AR: AsyncRuntime> {
     context: Context,
-    handler: SessionHandler<R>,
+    handler: SettingsHandler<R>,
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
 
-impl_into_flutter_value!(History);
+impl_into_flutter_value!(Settings);
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
-    for MonitorHistoryChannel<R, AR>
+    for MonitorSettingsChannel<R, AR>
 {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
-        log::debug!("register_event_sink {}", id);
-        let stream = self.handler.watch_history();
+        let stream = self.handler.watch_settings();
         let subscription = self
             .runtime
             .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));
@@ -34,16 +33,15 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     }
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
-        log::debug!("unregister_event_sink {}", sink_id);
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped history subscription");
+            log::trace!("Dropped settings subscription");
             subscription.unsubscribe();
         }
     }
 }
 
-impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MonitorHistoryChannel<R, AR> {
-    pub fn new(handler: SessionHandler<R>, runtime: AR, context: Context) -> Self {
+impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MonitorSettingsChannel<R, AR> {
+    pub fn new(handler: SettingsHandler<R>, runtime: AR, context: Context) -> Self {
         Self {
             handler,
             runtime,
@@ -53,6 +51,6 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MonitorHistoryChannel<
     }
 
     pub fn event_channel(self, context: Context) -> RegisteredEventChannel<Self> {
-        EventChannelHandler::register(self, context, "mizer.live/history/watch")
+        EventChannelHandler::register(self, context, "mizer.live/settings/watch")
     }
 }

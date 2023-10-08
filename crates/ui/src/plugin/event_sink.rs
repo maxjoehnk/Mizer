@@ -1,9 +1,11 @@
-use mizer_util::Subscriber;
+use std::fmt::Debug;
+use std::sync::{Arc, Mutex};
+
 use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventSink, RunLoopSender};
 use nativeshell::util::Capsule;
-use std::fmt::Debug;
-use std::sync::{Arc, Mutex};
+
+use mizer_util::Subscriber;
 
 pub struct EventSinkSubscriber {
     capsule: Arc<Mutex<Capsule<InnerSubscriber>>>,
@@ -14,17 +16,46 @@ struct InnerSubscriber {
     sink: EventSink,
 }
 
-impl<E: Send + Sync + mizer_api::Message + Debug> Subscriber<E> for EventSinkSubscriber {
+pub trait IntoFlutterValue {
+    fn into(self) -> Value;
+}
+
+impl IntoFlutterValue for Option<String> {
+    fn into(self) -> Value {
+        match self {
+            Some(s) => Value::String(s),
+            None => Value::Null,
+        }
+    }
+}
+
+// This is required as we cannot implement IntoFlutterValue for Option<String>
+// when we implement it for every T: mizer_api::Message as another crate could
+// implement mizer_api::Message for Option<String> causing conflicting implementations.
+#[macro_export]
+macro_rules! impl_into_flutter_value {
+    ($t: ty) => {
+        impl $crate::plugin::event_sink::IntoFlutterValue for $t {
+            fn into(self) -> Value {
+                use mizer_api::Message;
+
+                Value::U8List(Message::encode_to_vec(&self))
+            }
+        }
+    };
+}
+
+impl<E: Send + Sync + IntoFlutterValue + Debug> Subscriber<E> for EventSinkSubscriber {
     fn next(&self, event: E) {
         log::trace!("send msg {:?}", event);
-        let msg = event.encode_to_vec();
+        let msg = event.into();
         self.run_in_run_loop(move |inner| inner.send(msg));
     }
 }
 
 impl InnerSubscriber {
-    fn send(&self, msg: Vec<u8>) {
-        if let Err(err) = self.sink.send_message(&Value::U8List(msg)) {
+    fn send(&self, value: Value) {
+        if let Err(err) = self.sink.send_message(&value) {
             log::error!("{:?}", err);
         }
     }

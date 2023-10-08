@@ -18,7 +18,7 @@ import 'timecode_bloc.dart';
 class StateProvider extends StatelessWidget {
   final Widget child;
 
-  StateProvider({ required this.child });
+  StateProvider({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => PlansBloc(context.read())),
         BlocProvider(create: (context) => EffectsBloc(context.read())),
         BlocProvider(create: (context) => TimecodeBloc(context.read())),
-        BlocProvider(create: (context) => StatusBarCubit()),
+        BlocProvider(create: (context) => StatusBarCubit(context.read())),
       ],
     );
   }

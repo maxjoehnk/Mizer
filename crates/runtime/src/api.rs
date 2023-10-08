@@ -1,7 +1,10 @@
-use dashmap::mapref::one::Ref;
+use std::collections::HashMap;
+use std::sync::Arc;
 
-use crate::LayoutsView;
+use dashmap::mapref::one::Ref;
 use dashmap::DashMap;
+use pinboard::NonEmptyPinboard;
+
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
 use mizer_node::{
@@ -9,9 +12,9 @@ use mizer_node::{
 };
 use mizer_nodes::NodeDowncast;
 use mizer_plan::Plan;
-use pinboard::NonEmptyPinboard;
-use std::collections::HashMap;
-use std::sync::Arc;
+use mizer_status_bus::StatusBus;
+
+use crate::LayoutsView;
 
 #[derive(Clone)]
 pub struct RuntimeAccess {
@@ -25,6 +28,7 @@ pub struct RuntimeAccess {
     pub clock_recv: flume::Receiver<ClockSnapshot>,
     pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     pub layouts_view: LayoutsView,
+    pub status_bus: StatusBus,
 }
 
 pub struct NodeDescriptor<'a> {

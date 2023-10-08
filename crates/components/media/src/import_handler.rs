@@ -1,8 +1,11 @@
 use std::path::Path;
+use std::time::Duration;
 
 use anyhow::Context;
 use tokio::fs;
 use tokio::io::AsyncReadExt;
+
+use mizer_status_bus::StatusBus;
 
 use crate::data_access::DataAccess;
 use crate::documents::*;
@@ -14,6 +17,7 @@ use crate::MediaCreateModel;
 pub struct ImportFileHandler {
     db: DataAccess,
     file_storage: FileStorage,
+    status_bus: StatusBus,
     video_handler: VideoHandler,
     image_handler: ImageHandler,
     audio_handler: AudioHandler,
@@ -21,10 +25,11 @@ pub struct ImportFileHandler {
 }
 
 impl ImportFileHandler {
-    pub(crate) fn new(db: DataAccess, file_storage: FileStorage) -> Self {
+    pub(crate) fn new(db: DataAccess, file_storage: FileStorage, status_bus: StatusBus) -> Self {
         ImportFileHandler {
             db,
             file_storage,
+            status_bus,
             video_handler: VideoHandler,
             image_handler: ImageHandler,
             audio_handler: AudioHandler,
@@ -39,6 +44,8 @@ impl ImportFileHandler {
         relative_to: Option<&Path>,
     ) -> anyhow::Result<Option<MediaDocument>> {
         log::debug!("importing file {:?}", file_path);
+        self.status_bus
+            .add_status_message(format!("Importing file {file_path:?}"), None);
         let source_path = relative_to
             .map(|base_path| file_path.strip_prefix(base_path))
             .transpose()?
@@ -92,6 +99,11 @@ impl ImportFileHandler {
             source_path,
             file_size,
         })?;
+
+        self.status_bus.add_status_message(
+            format!("Imported file {file_path:?}"),
+            Some(Duration::from_secs(10)),
+        );
 
         Ok(Some(media))
     }

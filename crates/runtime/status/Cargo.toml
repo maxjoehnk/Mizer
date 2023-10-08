@@ -1,0 +1,10 @@
+[package]
+name = "mizer-status-bus"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+mizer-message-bus = { path = "../../util/bus" }

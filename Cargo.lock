@@ -4302,6 +4302,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-session",
  "mizer-settings",
+ "mizer-status-bus",
  "mizer-timecode",
  "mizer-ui",
  "mizer-util",
@@ -4352,6 +4353,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-session",
  "mizer-settings",
+ "mizer-status-bus",
  "mizer-timecode",
  "mizer-util",
  "pinboard",
@@ -4827,6 +4829,7 @@ dependencies = [
  "log",
  "mizer-module",
  "mizer-settings",
+ "mizer-status-bus",
  "resvg",
  "serde",
  "serde_json",
@@ -5390,6 +5393,7 @@ dependencies = [
  "mizer-processing",
  "mizer-project-files",
  "mizer-session",
+ "mizer-status-bus",
  "mizer-util",
  "pinboard",
  "profiling",
@@ -5499,6 +5503,15 @@ dependencies = [
  "log",
  "serde",
  "toml 0.8.0",
+]
+
+[[package]]
+name = "mizer-status-bus"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-message-bus",
 ]
 
 [[package]]

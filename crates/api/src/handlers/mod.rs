@@ -1,3 +1,12 @@
+use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_media::MediaServer;
+use mizer_sequencer::{EffectEngine, Sequencer};
+use mizer_status_bus::StatusBus;
+use mizer_timecode::TimecodeManager;
+
+use crate::RuntimeApi;
+
 pub use self::connections::*;
 pub use self::effects::*;
 pub use self::fixtures::*;
@@ -13,13 +22,6 @@ pub use self::settings::*;
 pub use self::status::*;
 pub use self::timecode::*;
 pub use self::transport::*;
-use crate::RuntimeApi;
-use mizer_fixtures::library::FixtureLibrary;
-use mizer_fixtures::manager::FixtureManager;
-use mizer_media::MediaServer;
-use mizer_message_bus::MessageBus;
-use mizer_sequencer::{EffectEngine, Sequencer};
-use mizer_timecode::TimecodeManager;
 
 mod connections;
 mod effects;
@@ -65,7 +67,7 @@ impl<R: RuntimeApi> Handlers<R> {
         sequencer: Sequencer,
         effect_engine: EffectEngine,
         timecode_manager: TimecodeManager,
-        fps_counter: MessageBus<f64>,
+        status_bus: StatusBus,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -86,7 +88,7 @@ impl<R: RuntimeApi> Handlers<R> {
             plans: PlansHandler::new(fixture_manager, runtime.clone()),
             mappings: MappingsHandler::new(runtime.clone()),
             timecode: TimecodeHandler::new(timecode_manager, runtime),
-            status: StatusHandler::new(fps_counter),
+            status: StatusHandler::new(status_bus),
         }
     }
 }

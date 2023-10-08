@@ -1,6 +1,7 @@
 use cgmath::{Matrix4, SquareMatrix};
-use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
+
+use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
 pub struct TransformWgpuPipeline {
     sampler: wgpu::Sampler,
@@ -123,7 +124,7 @@ impl TransformWgpuPipeline {
                             r: 0.0,
                             g: 0.0,
                             b: 0.0,
-                            a: 1.0,
+                            a: 0.0,
                         }),
                         store: true,
                     },

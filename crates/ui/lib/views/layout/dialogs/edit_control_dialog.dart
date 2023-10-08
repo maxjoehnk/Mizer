@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class EditControlDialog extends StatefulWidget {
   final LayoutControl control;
@@ -23,12 +24,9 @@ class _EditControlDialogState extends State<EditControlDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-        title: Text("Configure Control".i18n),
-        actions: [
-          ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(decorations), child: Text("Confirm".i18n))
-        ],
+    return ActionDialog(
+        title: "Configure Control".i18n,
+        actions: [PopupAction("Confirm".i18n, () => Navigator.of(context).pop(decorations))],
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

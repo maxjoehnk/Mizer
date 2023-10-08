@@ -12,13 +12,14 @@ import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/plan/dialogs/delete_plan_dialog.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
-import 'dialogs/name_layout_dialog.dart';
+import 'dialogs/name_plan_dialog.dart';
 import 'plan_layout.dart';
 
 const double fieldSize = 24;
@@ -113,24 +114,7 @@ class _PlanViewState extends State<PlanView>
 
   void _onDelete(BuildContext context, Plan plan, PlansBloc bloc) async {
     bool result = await showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text("Delete Plan"),
-              content: SingleChildScrollView(
-                child: Text("Delete Plan ${plan.name}?"),
-              ),
-              actions: [
-                TextButton(
-                  child: Text("Cancel"),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-                TextButton(
-                  autofocus: true,
-                  child: Text("Delete"),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
-              ],
-            ));
+        context: context, builder: (BuildContext context) => DeletePlanDialog(plan: plan));
     if (result) {
       bloc.add(RemovePlan(id: plan.name));
     }

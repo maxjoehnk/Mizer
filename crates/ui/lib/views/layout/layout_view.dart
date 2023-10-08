@@ -19,6 +19,7 @@ import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/views/layout/dialogs/delete_layout_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
@@ -121,24 +122,7 @@ class LayoutView extends StatelessWidget {
 
   void _onDelete(BuildContext context, Layout layout, LayoutsBloc bloc) async {
     bool result = await showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-              title: Text("Delete Layout".i18n),
-              content: SingleChildScrollView(
-                child: Text("Delete Layout ${layout.id}?".i18n),
-              ),
-              actions: [
-                TextButton(
-                  child: Text("Cancel".i18n),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-                TextButton(
-                  autofocus: true,
-                  child: Text("Delete".i18n),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
-              ],
-            ));
+        context: context, builder: (BuildContext context) => DeleteLayoutDialog(layout: layout));
     if (result) {
       bloc.add(RemoveLayout(id: layout.id));
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 
 class NamePlanDialog extends StatelessWidget {
   final String? name;
@@ -10,12 +11,13 @@ class NamePlanDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-        title: Text(name != null ? "Rename 2D Plan" : "Add 2D Plan"),
+    return ActionDialog(
+        title: name != null ? "Rename 2D Plan" : "Add 2D Plan",
         actions: [
-          ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(nameController.text),
-              child: Text(name != null ? "Rename" : "Add"))
+          PopupAction(
+            name != null ? "Rename" : "Add",
+            () => Navigator.of(context).pop(nameController.text),
+          )
         ],
         content: TextField(
           controller: nameController,

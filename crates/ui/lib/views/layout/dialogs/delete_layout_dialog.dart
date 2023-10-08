@@ -3,18 +3,18 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
-class DeleteControlDialog extends StatelessWidget {
-  final LayoutControl control;
+class DeleteLayoutDialog extends StatelessWidget {
+  final Layout layout;
 
-  const DeleteControlDialog({required this.control, Key? key}) : super(key: key);
+  const DeleteLayoutDialog({super.key, required this.layout});
 
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
       onConfirm: () => Navigator.of(context).pop(true),
-      title: "Delete Control".i18n,
+      title: "Delete Layout".i18n,
       content: SingleChildScrollView(
-        child: Text("Delete Control ${control.hasLabel() ? control.label : control.node}?".i18n),
+        child: Text("Delete Layout ${layout.id}?".i18n),
       ),
       actions: [
         PopupAction("Cancel".i18n, () => Navigator.of(context).pop(false)),

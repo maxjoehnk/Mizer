@@ -789,6 +789,249 @@ channels = ["Red 144", "Green 144", "Blue 144"]
 name = "Pixel 145"
 channels = ["Red 145", "Green 145", "Blue 145"]
 
+[[mode]]
+name = "60 Pixels"
+
+[[mode.pixel]]
+name = "Pixel 1"
+channels = ["Red 1", "Green 1", "Blue 1"]
+
+[[mode.pixel]]
+name = "Pixel 2"
+channels = ["Red 2", "Green 2", "Blue 2"]
+
+[[mode.pixel]]
+name = "Pixel 3"
+channels = ["Red 3", "Green 3", "Blue 3"]
+
+[[mode.pixel]]
+name = "Pixel 4"
+channels = ["Red 4", "Green 4", "Blue 4"]
+
+[[mode.pixel]]
+name = "Pixel 5"
+channels = ["Red 5", "Green 5", "Blue 5"]
+
+[[mode.pixel]]
+name = "Pixel 6"
+channels = ["Red 6", "Green 6", "Blue 6"]
+
+[[mode.pixel]]
+name = "Pixel 7"
+channels = ["Red 7", "Green 7", "Blue 7"]
+
+[[mode.pixel]]
+name = "Pixel 8"
+channels = ["Red 8", "Green 8", "Blue 8"]
+
+[[mode.pixel]]
+name = "Pixel 9"
+channels = ["Red 9", "Green 9", "Blue 9"]
+
+[[mode.pixel]]
+name = "Pixel 10"
+channels = ["Red 10", "Green 10", "Blue 10"]
+
+[[mode.pixel]]
+name = "Pixel 11"
+channels = ["Red 11", "Green 11", "Blue 11"]
+
+[[mode.pixel]]
+name = "Pixel 12"
+channels = ["Red 12", "Green 12", "Blue 12"]
+
+[[mode.pixel]]
+name = "Pixel 13"
+channels = ["Red 13", "Green 13", "Blue 13"]
+
+[[mode.pixel]]
+name = "Pixel 14"
+channels = ["Red 14", "Green 14", "Blue 14"]
+
+[[mode.pixel]]
+name = "Pixel 15"
+channels = ["Red 15", "Green 15", "Blue 15"]
+
+[[mode.pixel]]
+name = "Pixel 16"
+channels = ["Red 16", "Green 16", "Blue 16"]
+
+[[mode.pixel]]
+name = "Pixel 17"
+channels = ["Red 17", "Green 17", "Blue 17"]
+
+[[mode.pixel]]
+name = "Pixel 18"
+channels = ["Red 18", "Green 18", "Blue 18"]
+
+[[mode.pixel]]
+name = "Pixel 19"
+channels = ["Red 19", "Green 19", "Blue 19"]
+
+[[mode.pixel]]
+name = "Pixel 20"
+channels = ["Red 20", "Green 20", "Blue 20"]
+
+[[mode.pixel]]
+name = "Pixel 21"
+channels = ["Red 21", "Green 21", "Blue 21"]
+
+[[mode.pixel]]
+name = "Pixel 22"
+channels = ["Red 22", "Green 22", "Blue 22"]
+
+[[mode.pixel]]
+name = "Pixel 23"
+channels = ["Red 23", "Green 23", "Blue 23"]
+
+[[mode.pixel]]
+name = "Pixel 24"
+channels = ["Red 24", "Green 24", "Blue 24"]
+
+[[mode.pixel]]
+name = "Pixel 25"
+channels = ["Red 25", "Green 25", "Blue 25"]
+
+[[mode.pixel]]
+name = "Pixel 26"
+channels = ["Red 26", "Green 26", "Blue 26"]
+
+[[mode.pixel]]
+name = "Pixel 27"
+channels = ["Red 27", "Green 27", "Blue 27"]
+
+[[mode.pixel]]
+name = "Pixel 28"
+channels = ["Red 28", "Green 28", "Blue 28"]
+
+[[mode.pixel]]
+name = "Pixel 29"
+channels = ["Red 29", "Green 29", "Blue 29"]
+
+[[mode.pixel]]
+name = "Pixel 30"
+channels = ["Red 30", "Green 30", "Blue 30"]
+
+[[mode.pixel]]
+name = "Pixel 31"
+channels = ["Red 31", "Green 31", "Blue 31"]
+
+[[mode.pixel]]
+name = "Pixel 32"
+channels = ["Red 32", "Green 32", "Blue 32"]
+
+[[mode.pixel]]
+name = "Pixel 33"
+channels = ["Red 33", "Green 33", "Blue 33"]
+
+[[mode.pixel]]
+name = "Pixel 34"
+channels = ["Red 34", "Green 34", "Blue 34"]
+
+[[mode.pixel]]
+name = "Pixel 35"
+channels = ["Red 35", "Green 35", "Blue 35"]
+
+[[mode.pixel]]
+name = "Pixel 36"
+channels = ["Red 36", "Green 36", "Blue 36"]
+
+[[mode.pixel]]
+name = "Pixel 37"
+channels = ["Red 37", "Green 37", "Blue 37"]
+
+[[mode.pixel]]
+name = "Pixel 38"
+channels = ["Red 38", "Green 38", "Blue 38"]
+
+[[mode.pixel]]
+name = "Pixel 39"
+channels = ["Red 39", "Green 39", "Blue 39"]
+
+[[mode.pixel]]
+name = "Pixel 40"
+channels = ["Red 40", "Green 40", "Blue 40"]
+
+[[mode.pixel]]
+name = "Pixel 41"
+channels = ["Red 41", "Green 41", "Blue 41"]
+
+[[mode.pixel]]
+name = "Pixel 42"
+channels = ["Red 42", "Green 42", "Blue 42"]
+
+[[mode.pixel]]
+name = "Pixel 43"
+channels = ["Red 43", "Green 43", "Blue 43"]
+
+[[mode.pixel]]
+name = "Pixel 44"
+channels = ["Red 44", "Green 44", "Blue 44"]
+
+[[mode.pixel]]
+name = "Pixel 45"
+channels = ["Red 45", "Green 45", "Blue 45"]
+
+[[mode.pixel]]
+name = "Pixel 46"
+channels = ["Red 46", "Green 46", "Blue 46"]
+
+[[mode.pixel]]
+name = "Pixel 47"
+channels = ["Red 47", "Green 47", "Blue 47"]
+
+[[mode.pixel]]
+name = "Pixel 48"
+channels = ["Red 48", "Green 48", "Blue 48"]
+
+[[mode.pixel]]
+name = "Pixel 49"
+channels = ["Red 49", "Green 49", "Blue 49"]
+
+[[mode.pixel]]
+name = "Pixel 50"
+channels = ["Red 50", "Green 50", "Blue 50"]
+
+[[mode.pixel]]
+name = "Pixel 51"
+channels = ["Red 51", "Green 51", "Blue 51"]
+
+[[mode.pixel]]
+name = "Pixel 52"
+channels = ["Red 52", "Green 52", "Blue 52"]
+
+[[mode.pixel]]
+name = "Pixel 53"
+channels = ["Red 53", "Green 53", "Blue 53"]
+
+[[mode.pixel]]
+name = "Pixel 54"
+channels = ["Red 54", "Green 54", "Blue 54"]
+
+[[mode.pixel]]
+name = "Pixel 55"
+channels = ["Red 55", "Green 55", "Blue 55"]
+
+[[mode.pixel]]
+name = "Pixel 56"
+channels = ["Red 56", "Green 56", "Blue 56"]
+
+[[mode.pixel]]
+name = "Pixel 57"
+channels = ["Red 57", "Green 57", "Blue 57"]
+
+[[mode.pixel]]
+name = "Pixel 58"
+channels = ["Red 58", "Green 58", "Blue 58"]
+
+[[mode.pixel]]
+name = "Pixel 59"
+channels = ["Red 59", "Green 59", "Blue 59"]
+
+[[mode.pixel]]
+name = "Pixel 60"
+channels = ["Red 60", "Green 60", "Blue 60"]
+
 [[channel]]
 name = "Red 1"
 control = "color_red"
@@ -2528,4 +2771,3 @@ control = "color_green"
 [[channel]]
 name = "Blue 145"
 control = "color_blue"
-

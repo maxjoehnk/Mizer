@@ -5,7 +5,7 @@ use std::thread::JoinHandle;
 
 use artnet_protocol::{ArtCommand, Output, Poll};
 use dashmap::DashMap;
-use flume::{Receiver, Sender};
+use flume::{Receiver, Sender, TryRecvError};
 use tokio::net::UdpSocket;
 
 use super::DmxInput;
@@ -83,16 +83,25 @@ struct ThreadHandle {
 }
 
 impl ThreadHandle {
-    fn exit(self) -> anyhow::Result<()> {
-        self.sender.send(ThreadMessage::Exit)?;
-
-        Ok(())
-    }
-
     fn reconfigure(&self, config: ArtnetInputConfig) -> anyhow::Result<()> {
         self.sender.try_send(ThreadMessage::Reconfigure(config))?;
 
         Ok(())
+    }
+
+    fn exit(&self) -> anyhow::Result<()> {
+        self.sender.send(ThreadMessage::Exit)?;
+
+        Ok(())
+    }
+}
+
+impl Drop for ThreadHandle {
+    fn drop(&mut self) {
+        tracing::debug!("Dropping artnet input thread handle");
+        if let Err(err) = self.exit() {
+            tracing::error!(err = %err, "Unable to send exit message to artnet input thread");
+        }
     }
 }
 
@@ -142,11 +151,22 @@ impl ArtnetInputThread {
         runtime.block_on(runner.run())
     }
 
-    async fn run(self) -> anyhow::Result<()> {
+    async fn run(mut self) -> anyhow::Result<()> {
         tracing::debug!("Starting artnet input thread");
         let socket = UdpSocket::bind((self.config.host, self.config.port)).await?;
         socket.set_broadcast(true)?;
         loop {
+            match self.receiver.try_recv() {
+                Err(TryRecvError::Disconnected) => break,
+                Err(TryRecvError::Empty) => {}
+                Ok(ThreadMessage::Exit) => {
+                    tracing::debug!("Exiting artnet input background thread");
+                    break;
+                }
+                Ok(ThreadMessage::Reconfigure(config)) => {
+                    self.config = config;
+                }
+            }
             socket.readable().await?;
             let mut buffer = Vec::with_capacity(1024);
             tracing::trace!("Waiting for artnet message");
@@ -169,6 +189,8 @@ impl ArtnetInputThread {
                 },
             }
         }
+
+        Ok(())
     }
 
     async fn output(&self, mut msg: Output) -> anyhow::Result<()> {

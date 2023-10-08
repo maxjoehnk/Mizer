@@ -94,7 +94,7 @@ pub fn build_runtime(
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
-    let media_server = register_media_module(&mut runtime)?;
+    let media_server = register_media_module(&mut runtime, Arc::clone(&settings))?;
 
     let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
 
@@ -346,8 +346,11 @@ fn register_sequencer_module(runtime: &mut impl Runtime) -> anyhow::Result<Seque
     Ok(sequencer)
 }
 
-fn register_media_module(runtime: &mut impl Runtime) -> anyhow::Result<MediaServer> {
-    let (media_module, media_server) = MediaModule::new()?;
+fn register_media_module(
+    runtime: &mut impl Runtime,
+    settings: Arc<NonEmptyPinboard<SettingsManager>>,
+) -> anyhow::Result<MediaServer> {
+    let (media_module, media_server) = MediaModule::new(settings.read().settings)?;
     media_module.register(runtime)?;
 
     Ok(media_server)

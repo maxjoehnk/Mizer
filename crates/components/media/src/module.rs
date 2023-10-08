@@ -1,12 +1,13 @@
 use mizer_module::{Module, Runtime};
+use mizer_settings::Settings;
 
 use crate::MediaServer;
 
 pub struct MediaModule(MediaServer);
 
 impl MediaModule {
-    pub fn new() -> anyhow::Result<(Self, MediaServer)> {
-        let media_server = MediaServer::new()?;
+    pub fn new(settings: Settings) -> anyhow::Result<(Self, MediaServer)> {
+        let media_server = MediaServer::new(settings)?;
 
         Ok((Self(media_server.clone()), media_server))
     }

@@ -3,12 +3,14 @@ use std::sync::{Arc, RwLock};
 
 use uuid::Uuid;
 
+use mizer_settings::Settings;
+pub use module::MediaModule;
+
 use crate::data_access::DataAccess;
 pub use crate::discovery::MediaDiscovery;
 use crate::documents::*;
 use crate::file_storage::FileStorage;
 use crate::import_handler::ImportFileHandler;
-pub use module::MediaModule;
 
 mod data_access;
 mod discovery;
@@ -72,9 +74,9 @@ pub struct MediaServer {
 }
 
 impl MediaServer {
-    pub fn new() -> anyhow::Result<Self> {
+    pub fn new(settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
-        let storage = FileStorage::new()?;
+        let storage = FileStorage::new(settings.paths.media_storage)?;
         let import_paths = ImportPaths::new();
 
         Ok(Self {

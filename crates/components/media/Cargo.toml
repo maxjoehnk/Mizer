@@ -21,6 +21,7 @@ symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 ffmpeg-the-third = "1.2"
 dashmap = "5.5"
 mizer-module = { path = "../../runtime/module" }
+mizer-settings = { path = "../../runtime/settings" }
 
 [dev-dependencies]
 test-case = "3.2"

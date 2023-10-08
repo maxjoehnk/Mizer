@@ -29,6 +29,12 @@ pub struct General {
 pub struct FilePaths {
     pub midi_device_profiles: PathBuf,
     pub fixture_libraries: FixtureLibraryPaths,
+    #[serde(default = "default_media_storage")]
+    pub media_storage: PathBuf,
+}
+
+fn default_media_storage() -> PathBuf {
+    PathBuf::from(".storage")
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]

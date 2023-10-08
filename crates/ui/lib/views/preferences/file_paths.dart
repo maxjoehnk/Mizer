@@ -17,6 +17,17 @@ class PathSettings extends StatelessWidget {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return Column(mainAxisSize: MainAxisSize.min, children: [
         PathSetting(
+            label: "Media Storage".i18n,
+            value: settings.paths.mediaStorage,
+            update: (path) {
+              SettingsBloc bloc = context.read();
+              bloc.add(UpdateSettings((settings) {
+                settings.paths.mediaStorage = path;
+
+                return settings;
+              }));
+            }),
+        PathSetting(
             label: "Midi Device Profiles".i18n,
             value: settings.paths.midiDeviceProfiles,
             update: (path) {

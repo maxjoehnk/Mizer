@@ -3,6 +3,7 @@ language = "en"
 
 [paths]
 midi_device_profiles = "crates/components/connections/protocols/midi/device-profiles/profiles"
+media_storage = ".storage"
 
 [paths.fixture_libraries]
 open_fixture_library = "crates/components/fixtures/open-fixture-library/.fixtures"

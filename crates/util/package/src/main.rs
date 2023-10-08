@@ -31,6 +31,7 @@ fn main() -> anyhow::Result<()> {
         "device-profiles/midi",
     )?;
     artifact.copy_settings("settings.toml", |settings| {
+        settings.paths.media_storage = PathBuf::from("~/.mizer-media");
         settings.paths.midi_device_profiles = PathBuf::from("device-profiles/midi");
         settings.paths.fixture_libraries.open_fixture_library =
             Some(PathBuf::from("fixtures/open-fixture-library"));
@@ -66,6 +67,7 @@ fn main() -> anyhow::Result<()> {
         "Mizer.app/Contents/Resources/device-profiles/midi",
     )?;
     artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {
+        settings.paths.media_storage = PathBuf::from("~/.mizer-media");
         settings.paths.midi_device_profiles =
             PathBuf::from("Contents/Resources/device-profiles/midi");
         settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from(

@@ -43,6 +43,7 @@ impl From<settings::Hotkeys> for model::Hotkeys {
 impl From<settings::FilePaths> for model::PathSettings {
     fn from(paths: settings::FilePaths) -> Self {
         Self {
+            media_storage: paths.media_storage.to_string_lossy().to_string(),
             midi_device_profiles: paths.midi_device_profiles.to_string_lossy().to_string(),
             open_fixture_library: paths
                 .fixture_libraries
@@ -92,6 +93,7 @@ impl From<model::Hotkeys> for settings::Hotkeys {
 impl From<model::PathSettings> for settings::FilePaths {
     fn from(paths: model::PathSettings) -> Self {
         Self {
+            media_storage: PathBuf::from(paths.media_storage),
             fixture_libraries: settings::FixtureLibraryPaths {
                 gdtf: paths.gdtf.map(PathBuf::from),
                 open_fixture_library: paths.open_fixture_library.map(PathBuf::from),

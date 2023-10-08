@@ -1,29 +1,33 @@
 use std::fs;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+
 use uuid::Uuid;
 
-const DEFAULT_MEDIA_PATH: &str = ".storage/media";
-const DEFAULT_THUMBNAIL_PATH: &str = ".storage/thumbnails";
-const DEFAULT_TMP_PATH: &str = ".storage/tmp";
+const DEFAULT_MEDIA_PATH: &str = "media";
+const DEFAULT_THUMBNAIL_PATH: &str = "thumbnails";
+const DEFAULT_TMP_PATH: &str = "tmp";
 
 #[derive(Debug, Clone)]
 pub struct FileStorage {
-    temp_path: String,
-    media_path: String,
-    thumbnail_path: String,
+    temp_path: PathBuf,
+    media_path: PathBuf,
+    thumbnail_path: PathBuf,
 }
 
 impl FileStorage {
-    pub fn new() -> anyhow::Result<FileStorage> {
-        fs::create_dir_all(DEFAULT_MEDIA_PATH)?;
-        fs::create_dir_all(DEFAULT_THUMBNAIL_PATH)?;
-        fs::create_dir_all(DEFAULT_TMP_PATH)?;
+    pub fn new(base_path: PathBuf) -> anyhow::Result<FileStorage> {
+        let media_path = base_path.join(DEFAULT_MEDIA_PATH);
+        let thumbnail_path = base_path.join(DEFAULT_THUMBNAIL_PATH);
+        let temp_path = base_path.join(DEFAULT_TMP_PATH);
+        fs::create_dir_all(&media_path)?;
+        fs::create_dir_all(&thumbnail_path)?;
+        fs::create_dir_all(&temp_path)?;
 
         Ok(FileStorage {
-            media_path: String::from(DEFAULT_MEDIA_PATH),
-            thumbnail_path: String::from(DEFAULT_THUMBNAIL_PATH),
-            temp_path: String::from(DEFAULT_TMP_PATH),
+            media_path,
+            thumbnail_path,
+            temp_path,
         })
     }
 
@@ -41,26 +45,16 @@ impl FileStorage {
     }
 
     pub fn get_temp_file_path(&self, id: Uuid) -> PathBuf {
-        let mut target = PathBuf::new();
-        target.push(&self.temp_path);
-        target.push(id.to_string());
-
-        target
+        self.temp_path.join(id.to_string())
     }
 
     pub fn get_media_path<P: AsRef<Path>>(&self, path: P) -> PathBuf {
-        let mut target = PathBuf::new();
-        target.push(&self.media_path);
-        target.push(path.as_ref().file_name().unwrap());
-
-        target
+        self.media_path.join(path.as_ref().file_name().unwrap())
     }
 
     // TODO: use content hash as thumbnail filename
     pub fn get_thumbnail_path<P: AsRef<Path>>(&self, path: P) -> PathBuf {
-        let mut target = PathBuf::new();
-        target.push(&self.thumbnail_path);
-        target.push(path.as_ref().file_name().unwrap());
+        let mut target = self.thumbnail_path.join(path.as_ref().file_name().unwrap());
         target.set_extension("png");
 
         target

@@ -16,3 +16,5 @@ image = "0.24"
 profiling = "1"
 mizer-webcams = { path = "../../../../../components/connections/devices/webcams" }
 mizer-devices = { path = "../../../../../components/connections/devices" }
+mizer-video-nodes = { path = ".." }
+ringbuffer = "0.15"

@@ -1,10 +1,12 @@
 use std::borrow::Cow;
 
 use anyhow::{anyhow, Context};
+use ringbuffer::{AllocRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
 use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_node::*;
+use mizer_video_nodes::background_thread_decoder::*;
 use mizer_webcams::{Webcam, WebcamRef, WebcamSetting, WebcamSettingValue};
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
@@ -211,10 +213,11 @@ impl ProcessingNode for WebcamNode {
 
         let state = state.as_mut().unwrap();
         if &state.webcam_ref != webcam_ref.value() {
-            let webcam = webcam_ref.open().context("Opening webcam")?;
-            state.texture = WebcamTexture::new(webcam);
-            state.webcam_ref = webcam_ref.value().clone();
+            state
+                .change_webcam(webcam_ref.clone())
+                .context("Changing webcam")?;
         }
+        state.receive_frames();
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
             .get(&state.transfer_texture)
@@ -238,6 +241,7 @@ pub struct WebcamState {
     texture: WebcamTexture,
     pipeline: TextureSourceStage,
     transfer_texture: TextureHandle,
+    decode_handle: BackgroundDecoderThreadHandle<WebcamDecoder>,
 }
 
 impl WebcamState {
@@ -246,8 +250,9 @@ impl WebcamState {
         registry: &TextureRegistry,
         webcam_ref: WebcamRef,
     ) -> anyhow::Result<Self> {
-        let webcam = webcam_ref.open().context("Opening webcam")?;
-        let mut texture = WebcamTexture::new(webcam);
+        let mut decode_handle = BackgroundDecoderThread::spawn()?;
+        let metadata = decode_handle.decode(webcam_ref.clone())?;
+        let mut texture = WebcamTexture::new(metadata);
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
         let transfer_texture = registry.register(context, texture.width(), texture.height(), None);
@@ -257,34 +262,99 @@ impl WebcamState {
             texture,
             pipeline,
             transfer_texture,
+            decode_handle,
         })
+    }
+
+    fn receive_frames(&mut self) {
+        self.texture.receive_frames(&mut self.decode_handle);
+    }
+
+    fn change_webcam(&mut self, webcam_ref: WebcamRef) -> anyhow::Result<()> {
+        let metadata = self.decode_handle.decode(webcam_ref)?;
+        self.texture = WebcamTexture::new(metadata);
+
+        Ok(())
     }
 }
 
 struct WebcamTexture {
-    webcam: Webcam,
+    buffer: AllocRingBuffer<Vec<u8>>,
+    metadata: VideoMetadata,
 }
 
 impl WebcamTexture {
-    pub fn new(webcam: Webcam) -> Self {
-        Self { webcam }
+    pub fn new(metadata: VideoMetadata) -> Self {
+        Self {
+            buffer: AllocRingBuffer::new(10),
+            metadata,
+        }
+    }
+
+    pub fn receive_frames(&mut self, handle: &mut BackgroundDecoderThreadHandle<WebcamDecoder>) {
+        profiling::scope!("WebcamTexture::receive_frames");
+        while let Some(VideoThreadEvent::DecodedFrame(frame)) = handle.try_recv() {
+            self.buffer.push(frame);
+        }
     }
 }
 
 impl TextureProvider for WebcamTexture {
     fn width(&self) -> u32 {
-        self.webcam.width()
+        self.metadata.width
     }
 
     fn height(&self) -> u32 {
-        self.webcam.height()
+        self.metadata.height
     }
 
     fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
         profiling::scope!("WebcamTexture::data");
+        if self.buffer.is_empty() {
+            return Ok(None);
+        }
+
+        Ok(self
+            .buffer
+            .back()
+            .map(|data| Cow::Borrowed(data.as_slice())))
+    }
+}
+
+struct WebcamDecoder {
+    webcam: Webcam,
+}
+
+impl VideoDecoder for WebcamDecoder {
+    type CreateDecoder = WebcamRef;
+    type Commands = ();
+
+    fn new(webcam_ref: Self::CreateDecoder) -> anyhow::Result<Self>
+    where
+        Self: Sized,
+    {
+        let webcam = webcam_ref.open().context("Opening webcam")?;
+
+        Ok(Self { webcam })
+    }
+
+    fn handle(&mut self, command: Self::Commands) -> anyhow::Result<()> {
+        Ok(())
+    }
+
+    fn decode(&mut self) -> anyhow::Result<Option<Vec<u8>>> {
         let frame = self.webcam.frame()?;
         let data = frame.data()?;
 
-        Ok(Some(Cow::Owned(data)))
+        Ok(Some(data.to_vec()))
+    }
+
+    fn metadata(&self) -> anyhow::Result<VideoMetadata> {
+        Ok(VideoMetadata {
+            width: self.webcam.width(),
+            height: self.webcam.height(),
+            fps: self.webcam.frame_rate() as f64,
+            frames: 0,
+        })
     }
 }

@@ -17,3 +17,5 @@ mod output;
 mod rgb;
 mod rgb_split;
 mod transform;
+
+pub mod background_thread_decoder;

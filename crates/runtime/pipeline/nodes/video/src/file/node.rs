@@ -1,12 +1,14 @@
+use std::path::PathBuf;
+
 use anyhow::{anyhow, Context};
+use serde::{Deserialize, Serialize};
+
 use mizer_media::documents::MediaId;
 use mizer_media::MediaServer;
 use mizer_node::*;
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
-use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
 
 use super::decoder::*;
 use super::texture::*;
@@ -202,7 +204,7 @@ impl VideoFileState {
     ) -> anyhow::Result<Self> {
         log::debug!("Loading video file: {path:?}");
         let mut decode_handle = VideoDecodeThread::spawn()?;
-        let metadata = decode_handle.decode_file(path.clone())?;
+        let metadata = decode_handle.decode(path.clone())?;
         let mut texture =
             VideoTexture::new(path, metadata).context("Creating new video texture provider")?;
         let pipeline = TextureSourceStage::new(context, &mut texture)
@@ -218,7 +220,7 @@ impl VideoFileState {
     }
 
     fn change_file(&mut self, file_path: PathBuf) -> anyhow::Result<()> {
-        let metadata = self.decode_handle.decode_file(file_path.clone())?;
+        let metadata = self.decode_handle.decode(file_path.clone())?;
         self.texture = VideoTexture::new(file_path, metadata)
             .context("Creating new video texture provider")?;
 

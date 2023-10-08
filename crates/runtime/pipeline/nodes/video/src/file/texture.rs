@@ -6,6 +6,8 @@ use ringbuffer::{AllocRingBuffer, RingBuffer};
 use mizer_node::*;
 use mizer_wgpu::TextureProvider;
 
+use crate::background_thread_decoder::{VideoMetadata, VideoThreadEvent};
+
 use super::decoder::*;
 
 pub struct VideoTexture {

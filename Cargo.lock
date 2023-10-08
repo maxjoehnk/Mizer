@@ -5660,10 +5660,12 @@ dependencies = [
  "log",
  "mizer-devices",
  "mizer-node",
+ "mizer-video-nodes",
  "mizer-webcams",
  "mizer-wgpu",
  "num_enum 0.7.0",
  "profiling",
+ "ringbuffer 0.15.0",
  "serde",
 ]
 

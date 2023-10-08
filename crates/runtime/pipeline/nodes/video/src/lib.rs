@@ -1,21 +1,23 @@
 pub use self::border::*;
 pub use self::colorize::*;
-pub use self::file::*;
 pub use self::hsv::*;
+pub use self::image_file::*;
 pub use self::mixer::*;
 pub use self::output::*;
 pub use self::rgb::*;
 pub use self::rgb_split::*;
 pub use self::transform::*;
+pub use self::video_file::*;
 
 mod border;
 mod colorize;
-mod file;
 mod hsv;
+mod image_file;
 mod mixer;
 mod output;
 mod rgb;
 mod rgb_split;
 mod transform;
+mod video_file;
 
 pub mod background_thread_decoder;

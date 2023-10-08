@@ -37,7 +37,7 @@ fn default_render_when_stopped() -> bool {
 impl ConfigurableNode for VideoFileNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
-            setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video, MediaContentType::Image]),
+            setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video]),
             setting!(SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state),
             setting!(RENDER_WHEN_STOPPED, self.render_when_stopped),
         ]

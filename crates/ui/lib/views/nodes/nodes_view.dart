@@ -28,7 +28,7 @@ import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/properties_pane.dart';
 
 const double PathBreadcrumbHeight = 32;
-const bool EnableScreenshot = false;
+const bool EnableScreenshot = true;
 
 class FetchNodesView extends StatelessWidget {
   const FetchNodesView({Key? key}) : super(key: key);

@@ -1,0 +1,1 @@
+Reads an image file.

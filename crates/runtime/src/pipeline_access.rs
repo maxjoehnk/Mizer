@@ -100,6 +100,7 @@ impl PipelineAccess {
             OscInput(node) => self.add_node(path, node),
             OscOutput(node) => self.add_node(path, node),
             VideoFile(node) => self.add_node(path, node),
+            ImageFile(node) => self.add_node(path, node),
             VideoTransform(node) => self.add_node(path, node),
             VideoHsv(node) => self.add_node(path, node),
             VideoOutput(node) => self.add_node(path, node),

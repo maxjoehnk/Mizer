@@ -61,6 +61,7 @@ node_type_name! {
         OscInput,
         OscOutput,
         VideoFile,
+        ImageFile,
         VideoOutput,
         VideoHsv,
         VideoTransform,

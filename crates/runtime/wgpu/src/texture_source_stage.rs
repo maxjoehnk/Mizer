@@ -1,5 +1,6 @@
-use crate::{Texture, TextureProvider, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
+
+use crate::{Texture, TextureProvider, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
 pub struct TextureSourceStage {
     texture: Texture,
@@ -72,7 +73,7 @@ impl TextureSourceStage {
                             r: 0.0,
                             g: 0.0,
                             b: 0.0,
-                            a: 1.0,
+                            a: 0.0,
                         }),
                         store: true,
                     },

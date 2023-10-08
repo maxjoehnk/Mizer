@@ -158,6 +158,7 @@ message Node {
     NDI_OUTPUT = 88;
     SCREEN_CAPTURE = 89;
     COLORIZE_TEXTURE = 90;
+    IMAGE_FILE = 91;
     CONTAINER = 100;
   }
 

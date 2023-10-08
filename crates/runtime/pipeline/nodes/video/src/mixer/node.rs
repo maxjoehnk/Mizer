@@ -1,12 +1,15 @@
-use crate::mixer::wgpu_pipeline::MixerWgpuPipeline;
-use anyhow::anyhow;
-use enum_iterator::Sequence;
-use mizer_node::*;
-use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
-use num_enum::{IntoPrimitive, TryFromPrimitive};
-use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use std::ops::Deref;
+
+use anyhow::anyhow;
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
+use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+
+use crate::mixer::wgpu_pipeline::MixerWgpuPipeline;
 
 const INPUTS_PORT: &str = "Inputs";
 const OUTPUT_PORT: &str = "Output";
@@ -33,9 +36,17 @@ pub struct VideoMixerNode {
 #[repr(u8)]
 pub enum VideoMixerMode {
     #[default]
+    Normal,
     Add,
     Multiply,
     Subtract,
+    Overlay,
+    Screen,
+    SoftLight,
+    HardLight,
+    Difference,
+    Darken,
+    Lighten,
 }
 
 impl Display for VideoMixerMode {
@@ -102,10 +113,9 @@ impl ProcessingNode for VideoMixerNode {
         if inputs.is_empty() {
             return Ok(());
         }
-        state.pipeline.set_mode(wgpu_context, self.mode);
         let stage = state
             .pipeline
-            .render(wgpu_context, inputs.as_slice(), &output);
+            .render(wgpu_context, inputs.as_slice(), &output, self.mode);
         wgpu_pipeline.add_stage(stage);
 
         Ok(())

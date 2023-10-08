@@ -43,14 +43,12 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
             rgb = alpha_pixel;
             continue;
         }
-        if (mode == 0) { // ADD
-            rgb += alpha_pixel;
-        } else if (mode == 1) { // MULTIPLY
-            rgb *= alpha_pixel;
-        } else if (mode == 2) { // SUBTRACT
-            rgb -= alpha_pixel;
-        }
+        rgb = blendNormal(rgb, pixel.rgb, pixel.a);
     }
 
     return vec4<f32>(rgb, 1.0);
+}
+
+fn blendNormal(base: vec3<f32>, blend: vec3<f32>, opacity: f32) -> vec3<f32> {
+	return (blend * opacity + base * (1.0 - opacity));
 }

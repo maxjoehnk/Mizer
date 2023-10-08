@@ -1,12 +1,97 @@
-use crate::mixer::node::VideoMixerMode;
-use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use std::num::NonZeroU32;
+
 use wgpu::util::DeviceExt;
 use wgpu::BufferUsages;
 
+use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
+
+use crate::mixer::node::VideoMixerMode;
+
+pub struct Shaders {
+    add: wgpu::ShaderModule,
+    darken: wgpu::ShaderModule,
+    difference: wgpu::ShaderModule,
+    hard_light: wgpu::ShaderModule,
+    lighten: wgpu::ShaderModule,
+    multiply: wgpu::ShaderModule,
+    normal: wgpu::ShaderModule,
+    overlay: wgpu::ShaderModule,
+    screen: wgpu::ShaderModule,
+    soft_light: wgpu::ShaderModule,
+    subtract: wgpu::ShaderModule,
+}
+
+impl Shaders {
+    fn new(context: &WgpuContext) -> Self {
+        let add = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/add.wgsl"));
+        let darken = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/darken.wgsl"));
+        let difference = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/difference.wgsl"));
+        let hard_light = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/hard_light.wgsl"));
+        let lighten = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/lighten.wgsl"));
+        let normal = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/normal.wgsl"));
+        let multiply = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/multiply.wgsl"));
+        let overlay = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/overlay.wgsl"));
+        let screen = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/screen.wgsl"));
+        let soft_light = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/soft_light.wgsl"));
+        let subtract = context
+            .device
+            .create_shader_module(wgpu::include_wgsl!("shaders/subtract.wgsl"));
+
+        Self {
+            add,
+            darken,
+            difference,
+            hard_light,
+            lighten,
+            multiply,
+            normal,
+            overlay,
+            screen,
+            soft_light,
+            subtract,
+        }
+    }
+
+    fn get_shader(&self, mode: VideoMixerMode) -> &wgpu::ShaderModule {
+        match mode {
+            VideoMixerMode::Add => &self.add,
+            VideoMixerMode::Darken => &self.darken,
+            VideoMixerMode::Difference => &self.difference,
+            VideoMixerMode::HardLight => &self.hard_light,
+            VideoMixerMode::Lighten => &self.lighten,
+            VideoMixerMode::Multiply => &self.multiply,
+            VideoMixerMode::Normal => &self.normal,
+            VideoMixerMode::Overlay => &self.overlay,
+            VideoMixerMode::Screen => &self.screen,
+            VideoMixerMode::SoftLight => &self.soft_light,
+            VideoMixerMode::Subtract => &self.subtract,
+        }
+    }
+}
+
 pub struct MixerWgpuPipeline {
     sampler: wgpu::Sampler,
-    shader: wgpu::ShaderModule,
+    shaders: Shaders,
     texture_bind_group_layout: wgpu::BindGroupLayout,
     render_pipeline: wgpu::RenderPipeline,
     vertex_buffer: wgpu::Buffer,
@@ -15,9 +100,7 @@ pub struct MixerWgpuPipeline {
     texture_count_bind_group_layout: wgpu::BindGroupLayout,
     texture_count_bind_group: wgpu::BindGroup,
     texture_count_buffer: wgpu::Buffer,
-    mode_bind_group_layout: wgpu::BindGroupLayout,
-    mode_bind_group: wgpu::BindGroup,
-    mode_buffer: wgpu::Buffer,
+    mode: VideoMixerMode,
 }
 
 impl MixerWgpuPipeline {
@@ -57,9 +140,7 @@ impl MixerWgpuPipeline {
 
     pub fn new(context: &WgpuContext) -> Self {
         let sampler = context.create_sampler();
-        let shader = context
-            .device
-            .create_shader_module(wgpu::include_wgsl!("shader.wgsl"));
+        let shaders = Shaders::new(context);
         let texture_bind_group_layout = Self::create_texture_layout(context, 1);
         let texture_count_bind_group_layout =
             context
@@ -96,48 +177,12 @@ impl MixerWgpuPipeline {
                         resource: texture_count_buffer.as_entire_binding(),
                     }],
                 });
-        let mode_bind_group_layout =
-            context
-                .device
-                .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
-                    entries: &[wgpu::BindGroupLayoutEntry {
-                        binding: 0,
-                        visibility: wgpu::ShaderStages::FRAGMENT,
-                        ty: wgpu::BindingType::Buffer {
-                            ty: wgpu::BufferBindingType::Uniform,
-                            has_dynamic_offset: false,
-                            min_binding_size: None,
-                        },
-                        count: None,
-                    }],
-                    label: None,
-                });
-        let mode_buffer = context
-            .device
-            .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                usage: BufferUsages::COPY_DST | BufferUsages::UNIFORM,
-                contents: &(0 as u32).to_ne_bytes(),
-                label: Some("Mixer Mode Buffer"),
-            });
-        let mode_bind_group = context
-            .device
-            .create_bind_group(&wgpu::BindGroupDescriptor {
-                label: Some("Mixer Mode Bind Group"),
-                layout: &mode_bind_group_layout,
-                entries: &[wgpu::BindGroupEntry {
-                    binding: 0,
-                    resource: mode_buffer.as_entire_binding(),
-                }],
-            });
 
+        let mixer_mode = VideoMixerMode::Normal;
         let render_pipeline = Self::create_render_pipeline(
             context,
-            &[
-                &texture_bind_group_layout,
-                &texture_count_bind_group_layout,
-                &mode_bind_group_layout,
-            ],
-            &shader,
+            &[&texture_bind_group_layout, &texture_count_bind_group_layout],
+            shaders.get_shader(mixer_mode),
         );
 
         let vertex_buffer = context
@@ -158,7 +203,7 @@ impl MixerWgpuPipeline {
 
         Self {
             sampler,
-            shader,
+            shaders,
             texture_bind_group_layout,
             render_pipeline,
             vertex_buffer,
@@ -167,13 +212,16 @@ impl MixerWgpuPipeline {
             texture_count_buffer,
             texture_count_bind_group,
             texture_count_bind_group_layout,
-            mode_buffer,
-            mode_bind_group,
-            mode_bind_group_layout,
+            mode: mixer_mode,
         }
     }
 
-    fn rebuild_pipeline(&mut self, context: &WgpuContext, texture_count: usize) {
+    fn rebuild_pipeline(
+        &mut self,
+        context: &WgpuContext,
+        texture_count: usize,
+        mode: VideoMixerMode,
+    ) {
         profiling::scope!("MixerWgpuPipeline::rebuild_pipeline");
         self.texture_bind_group_layout = Self::create_texture_layout(context, texture_count);
         self.render_pipeline = Self::create_render_pipeline(
@@ -181,9 +229,8 @@ impl MixerWgpuPipeline {
             &[
                 &self.texture_bind_group_layout,
                 &self.texture_count_bind_group_layout,
-                &self.mode_bind_group_layout,
             ],
-            &self.shader,
+            &self.shaders.get_shader(mode),
         );
         self.texture_count = texture_count;
         context.queue.write_buffer(
@@ -193,23 +240,17 @@ impl MixerWgpuPipeline {
         );
     }
 
-    pub fn set_mode(&mut self, context: &WgpuContext, mode: VideoMixerMode) {
-        let mode = mode as i32;
-        context
-            .queue
-            .write_buffer(&self.mode_buffer, 0, &mode.to_ne_bytes());
-    }
-
     pub fn render(
         &mut self,
         context: &WgpuContext,
         sources: &[&wgpu::TextureView],
         target: &TextureView,
+        mode: VideoMixerMode,
     ) -> wgpu::CommandBuffer {
         profiling::scope!("MixerWgpuPipeline::render");
         let texture_count = sources.len();
-        if texture_count != self.texture_count {
-            self.rebuild_pipeline(context, texture_count);
+        if texture_count != self.texture_count || mode != self.mode {
+            self.rebuild_pipeline(context, texture_count, mode);
         }
         let texture_bind_group = context
             .device
@@ -255,7 +296,6 @@ impl MixerWgpuPipeline {
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             render_pass.set_bind_group(0, &texture_bind_group, &[]);
             render_pass.set_bind_group(1, &self.texture_count_bind_group, &[]);
-            render_pass.set_bind_group(2, &self.mode_bind_group, &[]);
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }
 

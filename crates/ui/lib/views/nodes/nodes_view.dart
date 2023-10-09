@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
@@ -28,7 +29,7 @@ import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/properties_pane.dart';
 
 const double PathBreadcrumbHeight = 32;
-const bool EnableScreenshot = true;
+const bool EnableScreenshot = !kReleaseMode;
 
 class FetchNodesView extends StatelessWidget {
   const FetchNodesView({Key? key}) : super(key: key);

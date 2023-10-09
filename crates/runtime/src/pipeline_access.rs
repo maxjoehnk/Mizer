@@ -112,6 +112,7 @@ impl PipelineAccess {
             Webcam(node) => self.add_node(path, node),
             ScreenCapture(node) => self.add_node(path, node),
             ColorizeTexture(node) => self.add_node(path, node),
+            TextureMask(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
             ColorConstant(node) => self.add_node(path, node),

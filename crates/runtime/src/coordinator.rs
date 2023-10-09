@@ -608,6 +608,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Webcam(node) => pipeline.register_node(path, &node),
         Node::ScreenCapture(node) => pipeline.register_node(path, &node),
         Node::ColorizeTexture(node) => pipeline.register_node(path, &node),
+        Node::TextureMask(node) => pipeline.register_node(path, &node),
         Node::ColorConstant(node) => pipeline.register_node(path, &node),
         Node::ColorBrightness(node) => pipeline.register_node(path, &node),
         Node::ColorRgb(node) => pipeline.register_node(path, &node),

@@ -159,6 +159,7 @@ message Node {
     SCREEN_CAPTURE = 89;
     COLORIZE_TEXTURE = 90;
     IMAGE_FILE = 91;
+    TEXTURE_MASK = 92;
     CONTAINER = 100;
   }
 

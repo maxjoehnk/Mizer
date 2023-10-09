@@ -220,6 +220,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::PioneerCdj => node::NodeType::PioneerCdj,
             NodeType::NdiOutput => node::NodeType::NdiOutput,
             NodeType::ColorizeTexture => node::NodeType::ColorizeTexture,
+            NodeType::TextureMask => node::NodeType::TextureMask,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -305,6 +306,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::PioneerCdj => NodeType::PioneerCdj,
             node::NodeType::NdiOutput => NodeType::NdiOutput,
             node::NodeType::ColorizeTexture => NodeType::ColorizeTexture,
+            node::NodeType::TextureMask => NodeType::TextureMask,
         }
     }
 }

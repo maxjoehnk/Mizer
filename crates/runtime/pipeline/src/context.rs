@@ -4,7 +4,7 @@ use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
-use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
+use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 
 use mizer_clock::{Clock, ClockFrame, ClockState};
 use mizer_node::*;

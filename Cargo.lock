@@ -5092,7 +5092,7 @@ dependencies = [
  "mizer-wgpu",
  "pinboard",
  "profiling",
- "ringbuffer 0.14.0",
+ "ringbuffer",
  "test-case",
  "tracing",
  "tracing-unwrap",
@@ -5415,7 +5415,7 @@ dependencies = [
  "mizer-wgpu",
  "num_enum 0.7.0",
  "profiling",
- "ringbuffer 0.15.0",
+ "ringbuffer",
  "screenshots",
  "serde",
  "tracing",
@@ -5662,7 +5662,7 @@ dependencies = [
  "mizer-wgpu",
  "num_enum 0.7.0",
  "profiling",
- "ringbuffer 0.15.0",
+ "ringbuffer",
  "serde",
 ]
 
@@ -5681,7 +5681,7 @@ dependencies = [
  "mizer-wgpu",
  "num_enum 0.7.0",
  "profiling",
- "ringbuffer 0.15.0",
+ "ringbuffer",
  "serde",
 ]
 
@@ -7409,12 +7409,6 @@ dependencies = [
  "web-sys",
  "winapi 0.3.9",
 ]
-
-[[package]]
-name = "ringbuffer"
-version = "0.14.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f4d2457fd775198df9ec68fef08ed8038cfb6f532c552d2946036a2432b7b81"
 
 [[package]]
 name = "ringbuffer"

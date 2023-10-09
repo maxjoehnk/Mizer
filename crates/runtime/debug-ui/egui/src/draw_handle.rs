@@ -1,3 +1,4 @@
+use egui::load::SizedTexture;
 use egui::{CollapsingHeader, ColorImage, Ui};
 
 use mizer_debug_ui::{DebugUiDrawHandle, DebugUiResponse};
@@ -108,7 +109,10 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
             }
         }
         if let Some(texture) = textures.0.get(&hash) {
-            self.ui.image(texture, texture.size_vec2());
+            self.ui.image(SizedTexture {
+                id: texture.id(),
+                size: texture.size_vec2(),
+            });
         }
     }
 }

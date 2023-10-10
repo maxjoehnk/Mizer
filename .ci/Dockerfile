@@ -1,4 +1,4 @@
-FROM rust:1.72 as build
+FROM rust:1.73 as build
 
 ARG FLUTTER_VERSION=3.13.2-stable
 

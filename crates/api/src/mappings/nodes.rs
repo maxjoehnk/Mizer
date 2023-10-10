@@ -221,6 +221,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::NdiOutput => node::NodeType::NdiOutput,
             NodeType::ColorizeTexture => node::NodeType::ColorizeTexture,
             NodeType::TextureMask => node::NodeType::TextureMask,
+            NodeType::TextureOpacity => node::NodeType::TextureOpacity,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -307,6 +308,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::NdiOutput => NodeType::NdiOutput,
             node::NodeType::ColorizeTexture => NodeType::ColorizeTexture,
             node::NodeType::TextureMask => NodeType::TextureMask,
+            node::NodeType::TextureOpacity => NodeType::TextureOpacity,
         }
     }
 }

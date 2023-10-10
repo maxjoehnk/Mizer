@@ -160,6 +160,7 @@ message Node {
     COLORIZE_TEXTURE = 90;
     IMAGE_FILE = 91;
     TEXTURE_MASK = 92;
+    TEXTURE_OPACITY = 93;
     CONTAINER = 100;
   }
 

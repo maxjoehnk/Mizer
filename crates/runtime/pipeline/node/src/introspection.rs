@@ -71,6 +71,7 @@ node_type_name! {
         VideoText,
         ColorizeTexture,
         TextureMask,
+        TextureOpacity,
         Webcam,
         ScreenCapture,
         TextureBorder,

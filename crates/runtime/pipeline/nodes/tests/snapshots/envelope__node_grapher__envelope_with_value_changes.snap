@@ -1,7 +1,7 @@
 ---
-source: runtime/pipeline/nodes/tests/node_grapher.rs
+source: crates/runtime/pipeline/nodes/tests/node_grapher.rs
+assertion_line: 94
 expression: values
-
 ---
 [
     0.00415,
@@ -64,7 +64,7 @@ expression: values
     0.24069999999999966,
     0.24484999999999965,
     0.24899999999999964,
-    0.9937000000000007,
+    0.2521625999999993,
     0.0083,
     0.0166,
     0.0249,

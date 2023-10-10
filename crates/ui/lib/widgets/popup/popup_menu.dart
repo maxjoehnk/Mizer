@@ -102,7 +102,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: buildWidgets(selected.items),
+                children: buildWidgets(selected.items.sortedBy((item) => item.label)),
               ),
             ),
           ),
@@ -124,7 +124,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 
   Widget searchView(String text) {
     var items =
-        widget.categories.map((e) => e.items).flattened.search([(item) => item.label], text);
+        widget.categories.map((e) => e.items).flattened.fuzzySearch([(item) => item.label], text);
     return Container(
       constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 300),
       child: SingleChildScrollView(
@@ -138,7 +138,6 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 
   List<Widget> buildWidgets(Iterable<PopupItem<T>> items) {
     return items
-        .sortedBy((item) => item.label)
         .map((item) => PopupItemButton(item.label,
             onTap: () {
               widget.onSelect(item.value);

@@ -125,14 +125,33 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
   Widget searchView(String text) {
     var items =
         widget.categories.map((e) => e.items).flattened.fuzzySearch([(item) => item.label], text);
-    return Container(
-      constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 300),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: buildWidgets(items),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: buildWidgets(items),
+            ),
+          ),
         ),
-      ),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 300, minWidth: 300, maxWidth: 300),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: hovered?.description != null
+                      ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
+                      : []),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

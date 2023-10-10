@@ -87,7 +87,14 @@ RUN apt-get update && \
       libmfx-dev \
       libvorbis-dev \
       libwavpack-dev \
-      yasm
+      yasm \
+      glslang-dev \
+      libzimg-dev \
+      libplacebo-dev \
+      libjxl-dev \
+      librist-dev \
+      librav1e-dev \
+      libsvtav1enc-dev
 
 FROM base as build
 

@@ -22,4 +22,4 @@ mizer-message-bus = { path = "../../util/bus" }
 mizer-api = { path = "../../api" }
 lazy_static = "1.4"
 parking_lot = "0.12"
-bitflags = "2.3"
+bitflags = "2.4"

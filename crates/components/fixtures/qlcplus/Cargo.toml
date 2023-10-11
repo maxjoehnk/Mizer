@@ -17,7 +17,7 @@ htmlentity = "1.3"
 cached = { version = "0.46", default-features = false, features = ["proc_macro"] }
 
 [build-dependencies]
-ureq = "2.7"
+ureq = "2.8"
 zip = "0.6"
 temp-dir = "0.1"
 fs_extra = "1.3"

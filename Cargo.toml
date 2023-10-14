@@ -25,6 +25,7 @@ members = [
     "crates/components/media",
     "crates/components/sequencer",
     "crates/components/sequencer/commands",
+    "crates/components/surfaces",
     "crates/components/timecode",
     "crates/projects",
     "crates/runtime",
@@ -74,6 +75,7 @@ members = [
     "crates/runtime/pipeline/nodes/transport",
     "crates/runtime/pipeline/nodes/video",
     "crates/runtime/pipeline/nodes/video/screen-capture",
+    "crates/runtime/pipeline/nodes/video/surfaces",
     "crates/runtime/pipeline/nodes/video/text",
     "crates/runtime/pipeline/nodes/video/webcams",
     "crates/runtime/pipeline/ports",
@@ -148,6 +150,7 @@ mizer-protocol-dmx = { path = "crates/components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "crates/components/connections/protocols/midi" }
 mizer-protocol-mqtt = { path = "crates/components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "crates/components/connections/protocols/osc" }
+mizer-surfaces = { path = "crates/components/surfaces" }
 mizer-processing = { path = "crates/runtime/processing" }
 mizer-module = { path = "crates/runtime/module" }
 mizer-ui = { path = "crates/ui", optional = true }

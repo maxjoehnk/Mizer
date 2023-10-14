@@ -5,8 +5,8 @@ use mizer_nodes::{MidiInputConfig, NodeDowncast};
 use mizer_runtime::commands::StaticNodeDescriptor;
 use mizer_runtime::NodeDescriptor;
 
-use crate::proto::nodes::node_setting::{spline_value, SplineValue};
 use crate::proto::nodes::*;
+use crate::proto::nodes::node_setting::{spline_value, SplineValue};
 
 impl TryFrom<mizer_nodes::Node> for node_config::Type {
     type Error = ();
@@ -222,6 +222,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::ColorizeTexture => node::NodeType::ColorizeTexture,
             NodeType::TextureMask => node::NodeType::TextureMask,
             NodeType::TextureOpacity => node::NodeType::TextureOpacity,
+            NodeType::SurfaceMapping => node::NodeType::SurfaceMapping,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -309,6 +310,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::ColorizeTexture => NodeType::ColorizeTexture,
             node::NodeType::TextureMask => NodeType::TextureMask,
             node::NodeType::TextureOpacity => NodeType::TextureOpacity,
+            node::NodeType::SurfaceMapping => NodeType::SurfaceMapping,
         }
     }
 }

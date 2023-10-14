@@ -13,6 +13,7 @@ pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_protocol_osc::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
+pub use mizer_surfaces::commands::*;
 pub use mizer_timecode::commands::*;
 
 pub use crate::aggregates::*;
@@ -145,6 +146,7 @@ command_impl! {
     AddTimecodeControlCommand,
     RenameTimecodeControlCommand,
     DeleteTimecodeControlCommand,
+    UpdateSurfaceSectionCommand,
 }
 
 impl CommandImpl {

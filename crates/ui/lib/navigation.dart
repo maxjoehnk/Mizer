@@ -4,7 +4,6 @@ import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
-import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -17,7 +16,9 @@ import 'package:mizer/views/plan/plan_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
+import 'package:mizer/views/surfaces/surfaces_view.dart';
 import 'package:mizer/views/timecode/timecode_view.dart';
+import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +42,7 @@ List<Route> routes = [
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets'.i18n, View.Presets),
   Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects),
   Route(() => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
-  Route(() => Container(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
+  Route(() => SurfacesView(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
   Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
   Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode),
@@ -95,7 +96,8 @@ class _HomeState extends State<Home> {
                       if (_showSelection)
                         SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
                       if (_showProgrammer)
-                        SizedBox(height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+                        SizedBox(
+                            height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
                       RepaintBoundary(
                           child: TransportControls(
                               showProgrammer: _showProgrammer,
@@ -153,6 +155,7 @@ class _HomeState extends State<Home> {
     return shortcuts;
   }
 }
+
 class Route {
   final WidgetFunction view;
   final IconData icon;

@@ -11,6 +11,7 @@ import '../fields/sequencer_field.dart';
 import '../fields/spline_field.dart';
 import '../fields/text_field.dart';
 import '../previews/envelope_preview.dart';
+import '../previews/surface_mapping_preview.dart';
 import 'property_group.dart';
 
 class NodeSettingsPane extends StatelessWidget {
@@ -32,6 +33,7 @@ class NodeSettingsPane extends StatelessWidget {
     var children = [
       ..._settings,
       if (type == Node_NodeType.ENVELOPE) EnvelopeSettingsPreview(settings),
+      if (type == Node_NodeType.SURFACE_MAPPING) SurfaceMappingSettingsPreview(settings),
     ];
     if (children.isEmpty) {
       return Container();

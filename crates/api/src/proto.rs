@@ -40,3 +40,6 @@ pub mod timecode {
 pub mod transport {
     tonic::include_proto!("mizer.transport");
 }
+pub mod surfaces {
+    tonic::include_proto!("mizer.surfaces");
+}

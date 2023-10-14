@@ -40,6 +40,7 @@ pub use mizer_screen_capture_nodes::ScreenCaptureNode;
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
+pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::DelayNode;
@@ -229,4 +230,5 @@ node_impl! {
     PioneerCdj(PioneerCdjNode),
     Template(TemplateNode),
     NdiOutput(NdiOutputNode),
+    SurfaceMapping(SurfaceMappingNode),
 }

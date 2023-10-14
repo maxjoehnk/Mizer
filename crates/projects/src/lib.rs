@@ -17,6 +17,7 @@ use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
 use mizer_sequencer::{Effect, Sequence};
+use mizer_surfaces::Surface;
 use mizer_timecode::{TimecodeControl, TimecodeTrack};
 
 use crate::fixtures::PresetsStore;
@@ -29,6 +30,7 @@ mod fixtures;
 pub mod history;
 mod media;
 mod sequencer;
+mod surfaces;
 mod timecode;
 mod versioning;
 
@@ -69,6 +71,8 @@ pub struct Project {
     pub plans: Vec<Plan>,
     #[serde(default)]
     pub timecodes: Timecodes,
+    #[serde(default)]
+    pub surfaces: Vec<Surface>,
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]

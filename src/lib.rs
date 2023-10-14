@@ -11,9 +11,9 @@ use mizer_command_executor::CommandExecutorModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUi;
 use mizer_devices::{DeviceManager, DeviceModule};
+use mizer_fixtures::FixtureModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::FixtureModule;
 use mizer_media::{MediaDiscovery, MediaModule, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
@@ -28,8 +28,9 @@ use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::{Session, SessionState};
 use mizer_settings::{Settings, SettingsManager};
 use mizer_status_bus::StatusBus;
+use mizer_surfaces::{SurfaceModule, SurfaceRegistry, SurfaceRegistryApi};
 use mizer_timecode::{TimecodeManager, TimecodeModule};
-use mizer_wgpu::{window::WindowModule, WgpuModule};
+use mizer_wgpu::{WgpuModule, window::WindowModule};
 
 pub use crate::api::*;
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -87,6 +88,7 @@ pub fn build_runtime(
             }
         }
     }
+    let surfaces_api = register_surfaces_module(&mut runtime)?;
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
             .context("Failed to register fixtures module")?;
@@ -110,6 +112,7 @@ pub fn build_runtime(
         effect_engine,
         timecode_manager,
         status_bus.clone(),
+        surfaces_api,
     );
 
     let remote_api_port = start_remote_api(handlers.clone())?;
@@ -192,6 +195,8 @@ impl Mizer {
         mqtt_manager.new_project();
         let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
         osc_manager.new_project();
+        let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
+        surface_registry.new_project();
         self.runtime.new_project();
         self.send_session_update();
         self.runtime
@@ -238,6 +243,10 @@ impl Mizer {
                 osc_manager
                     .load(&project)
                     .context("loading osc connections")?;
+                let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
+                surface_registry
+                    .load(&project)
+                    .context("loading surfaces")?;
             }
             self.media_server_api
                 .load(&project)
@@ -296,6 +305,8 @@ impl Mizer {
             timecode_manager.save(&mut project);
             let effects_engine = injector.get::<EffectEngine>().unwrap();
             effects_engine.save(&mut project);
+            let surface_registry = injector.get::<SurfaceRegistry>().unwrap();
+            surface_registry.save(&mut project);
             self.media_server_api.save(&mut project);
             project.save_file(path)?;
             log::info!("Saving project...Done");
@@ -446,6 +457,13 @@ async fn register_wgpu_module(runtime: &mut impl Runtime) -> anyhow::Result<()> 
     WindowModule.register(runtime)?;
 
     Ok(())
+}
+
+fn register_surfaces_module(runtime: &mut impl Runtime) -> anyhow::Result<SurfaceRegistryApi> {
+    let (module, api) = SurfaceModule::new();
+    module.register(runtime)?;
+
+    Ok(api)
 }
 
 // TODO: handle transparently by MediaServer

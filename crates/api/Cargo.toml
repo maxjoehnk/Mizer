@@ -19,6 +19,7 @@ mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }
 mizer-devices = { path = "../components/connections/devices" }
 mizer-gamepads = { path = "../components/connections/devices/gamepads" }
+mizer-surfaces = { path = "../components/surfaces" }
 mizer-node = { path = "../runtime/pipeline/node" }
 mizer-nodes = { path = "../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../runtime" }

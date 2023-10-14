@@ -646,6 +646,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::ProDjLinkClock(node) => pipeline.register_node(path, &node),
         Node::PioneerCdj(node) => pipeline.register_node(path, &node),
         Node::NdiOutput(node) => pipeline.register_node(path, &node),
+        Node::SurfaceMapping(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

@@ -36,6 +36,7 @@ mizer-pro-dj-link-nodes = { path = "connections/protocols/pro-dj-link" }
 mizer-video-nodes = { path = "video" }
 mizer-ndi-nodes = { path = "video/ndi" }
 mizer-screen-capture-nodes = { path = "video/screen-capture" }
+mizer-surface-nodes = { path = "video/surfaces" }
 mizer-text-nodes = { path = "video/text" }
 mizer-webcam-nodes = { path = "video/webcams" }
 mizer-data-nodes = { path = "data" }

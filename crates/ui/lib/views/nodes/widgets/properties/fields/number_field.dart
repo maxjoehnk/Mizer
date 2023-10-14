@@ -7,6 +7,11 @@ import 'package:flutter/services.dart';
 
 import 'field.dart';
 
+enum NumberFieldChangeDetection {
+  Node,
+  Value,
+}
+
 class NumberField extends StatefulWidget {
   final String? node;
   final String label;
@@ -18,6 +23,7 @@ class NumberField extends StatefulWidget {
   late final num maxHint;
   final bool fractions;
   final Function(num) onUpdate;
+  final NumberFieldChangeDetection changeDetection;
 
   static final floatsOnly = FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'));
 
@@ -31,7 +37,8 @@ class NumberField extends StatefulWidget {
       this.fractions = false,
       num? step,
       required this.onUpdate,
-      this.node}) {
+      this.node,
+      this.changeDetection = NumberFieldChangeDetection.Node}) {
     this.minHint = minHint ?? this.min ?? 0;
     this.maxHint = maxHint ?? this.max ?? 1;
     this.step = step ?? (this.fractions ? 0.1 : 1);
@@ -54,7 +61,10 @@ class _NumberFieldState extends State<NumberField> {
 
   @override
   void didUpdateWidget(NumberField oldWidget) {
-    if (oldWidget.node != widget.node) {
+    if ((widget.changeDetection == NumberFieldChangeDetection.Node &&
+            oldWidget.node != widget.node) ||
+        (widget.changeDetection == NumberFieldChangeDetection.Value &&
+            oldWidget.value != widget.value)) {
       setState(() {
         this.controller.text = widget.value.toString();
         value = widget.value;

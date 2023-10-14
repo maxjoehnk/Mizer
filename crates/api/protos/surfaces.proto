@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package mizer.surfaces;
+
+message Surface {
+  string id = 1;
+  string name = 2;
+  repeated SurfaceSection sections = 3;
+}
+
+message Surfaces {
+  repeated Surface surfaces = 1;
+}
+
+message SurfaceSection {
+  uint32 id = 1;
+  string name = 2;
+  SurfaceTransform input = 3;
+  SurfaceTransform output = 4;
+}
+
+message SurfaceTransform {
+  SurfaceTransformPoint top_left = 1;
+  SurfaceTransformPoint top_right = 2;
+  SurfaceTransformPoint bottom_left = 3;
+  SurfaceTransformPoint bottom_right = 4;
+}
+
+message SurfaceTransformPoint {
+  double x = 1;
+  double y = 2;
+}
+
+message UpdateSectionTransform {
+  string surface_id = 1;
+  uint32 section_id = 2;
+  SurfaceTransform transform = 3;
+}

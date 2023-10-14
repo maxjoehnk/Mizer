@@ -3,6 +3,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_status_bus::StatusBus;
+use mizer_surfaces::SurfaceRegistryApi;
 use mizer_timecode::TimecodeManager;
 
 use crate::RuntimeApi;
@@ -20,6 +21,7 @@ pub use self::sequencer::*;
 pub use self::session::*;
 pub use self::settings::*;
 pub use self::status::*;
+pub use self::surfaces::*;
 pub use self::timecode::*;
 pub use self::transport::*;
 
@@ -36,6 +38,7 @@ mod sequencer;
 mod session;
 mod settings;
 mod status;
+mod surfaces;
 mod timecode;
 mod transport;
 
@@ -56,6 +59,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub mappings: MappingsHandler<R>,
     pub timecode: TimecodeHandler<R>,
     pub status: StatusHandler,
+    pub surfaces: SurfacesHandler<R>,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -68,6 +72,7 @@ impl<R: RuntimeApi> Handlers<R> {
         effect_engine: EffectEngine,
         timecode_manager: TimecodeManager,
         status_bus: StatusBus,
+        surface_registry_api: SurfaceRegistryApi,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -87,8 +92,9 @@ impl<R: RuntimeApi> Handlers<R> {
             settings: SettingsHandler::new(runtime.clone()),
             plans: PlansHandler::new(fixture_manager, runtime.clone()),
             mappings: MappingsHandler::new(runtime.clone()),
-            timecode: TimecodeHandler::new(timecode_manager, runtime),
+            timecode: TimecodeHandler::new(timecode_manager, runtime.clone()),
             status: StatusHandler::new(status_bus),
+            surfaces: SurfacesHandler::new(runtime, surface_registry_api),
         }
     }
 }

@@ -8,8 +8,8 @@ use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_node::*;
-use mizer_nodes::NodeDowncast;
 use mizer_nodes::*;
+use mizer_nodes::NodeDowncast;
 use mizer_pipeline::*;
 
 pub struct PipelineAccess {
@@ -152,6 +152,7 @@ impl PipelineAccess {
             ProDjLinkClock(node) => self.add_node(path, node),
             PioneerCdj(node) => self.add_node(path, node),
             NdiOutput(node) => self.add_node(path, node),
+            SurfaceMapping(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

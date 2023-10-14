@@ -4268,6 +4268,7 @@ dependencies = [
  "mizer-session",
  "mizer-settings",
  "mizer-status-bus",
+ "mizer-surfaces",
  "mizer-timecode",
  "mizer-ui",
  "mizer-util",
@@ -4319,6 +4320,7 @@ dependencies = [
  "mizer-session",
  "mizer-settings",
  "mizer-status-bus",
+ "mizer-surfaces",
  "mizer-timecode",
  "mizer-util",
  "pinboard",
@@ -4400,6 +4402,7 @@ dependencies = [
  "mizer-protocol-osc",
  "mizer-runtime",
  "mizer-sequencer-commands",
+ "mizer-surfaces",
  "mizer-timecode",
  "serde",
  "serde_json",
@@ -4956,6 +4959,7 @@ dependencies = [
  "mizer-scripting-nodes",
  "mizer-sequencer-nodes",
  "mizer-step-sequencer-nodes",
+ "mizer-surface-nodes",
  "mizer-text-nodes",
  "mizer-timecode-nodes",
  "mizer-timing-nodes",
@@ -5194,6 +5198,7 @@ dependencies = [
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
  "mizer-sequencer",
+ "mizer-surfaces",
  "mizer-timecode",
  "profiling",
  "regex",
@@ -5486,6 +5491,44 @@ dependencies = [
  "anyhow",
  "mizer-node",
  "serde",
+]
+
+[[package]]
+name = "mizer-surface-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytemuck",
+ "cgmath",
+ "enum-iterator",
+ "ffmpeg-the-third",
+ "flume 0.11.0",
+ "image",
+ "log",
+ "mizer-node",
+ "mizer-surfaces",
+ "mizer-wgpu",
+ "num_enum 0.7.0",
+ "profiling",
+ "ringbuffer",
+ "serde",
+]
+
+[[package]]
+name = "mizer-surfaces"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dashmap",
+ "log",
+ "mizer-commander",
+ "mizer-message-bus",
+ "mizer-module",
+ "pinboard",
+ "profiling",
+ "serde",
+ "tracing",
+ "uuid 1.4.1",
 ]
 
 [[package]]

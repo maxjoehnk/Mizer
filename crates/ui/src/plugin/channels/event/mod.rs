@@ -4,3 +4,4 @@ pub mod osc_monitor;
 pub mod session;
 pub mod settings;
 pub mod status;
+pub mod surfaces;

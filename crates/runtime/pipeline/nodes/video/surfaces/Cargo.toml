@@ -1,0 +1,22 @@
+[package]
+name = "mizer-surface-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+mizer-node = { path = "../../../node" }
+serde = { version = "1", features = ["derive"] }
+enum-iterator = "1.4"
+num_enum = "0.7"
+mizer-wgpu = { path = "../../../../wgpu" }
+mizer-surfaces = { path = "../../../../../components/surfaces" }
+image = "0.24"
+ffmpeg-the-third = "1.2"
+profiling = "1"
+bytemuck = "1.14"
+cgmath = "0.18"
+flume = "0.11"
+ringbuffer = "0.15"

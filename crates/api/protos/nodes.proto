@@ -161,6 +161,7 @@ message Node {
     IMAGE_FILE = 91;
     TEXTURE_MASK = 92;
     TEXTURE_OPACITY = 93;
+    SURFACE_MAPPING = 94;
     CONTAINER = 100;
   }
 

@@ -24,5 +24,6 @@ mizer-protocol-dmx = { path  = "../../../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path  = "../../../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path  = "../../../components/connections/protocols/osc" }
 mizer-node-templates = { path = "../../pipeline/templates" }
+mizer-surfaces = { path = "../../../components/surfaces" }
 flume = "0.11"
 tracing = "0.1"

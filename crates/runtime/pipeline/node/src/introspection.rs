@@ -130,6 +130,7 @@ node_type_name! {
         ProDjLinkClock,
         PioneerCdj,
         NdiOutput,
+        SurfaceMapping,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

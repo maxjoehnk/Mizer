@@ -156,6 +156,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType IMAGE_FILE = Node_NodeType._(91, _omitEnumNames ? '' : 'IMAGE_FILE');
   static const Node_NodeType TEXTURE_MASK = Node_NodeType._(92, _omitEnumNames ? '' : 'TEXTURE_MASK');
   static const Node_NodeType TEXTURE_OPACITY = Node_NodeType._(93, _omitEnumNames ? '' : 'TEXTURE_OPACITY');
+  static const Node_NodeType SURFACE_MAPPING = Node_NodeType._(94, _omitEnumNames ? '' : 'SURFACE_MAPPING');
   static const Node_NodeType CONTAINER = Node_NodeType._(100, _omitEnumNames ? '' : 'CONTAINER');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
@@ -237,6 +238,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     IMAGE_FILE,
     TEXTURE_MASK,
     TEXTURE_OPACITY,
+    SURFACE_MAPPING,
     CONTAINER,
   ];
 

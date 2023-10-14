@@ -18,6 +18,7 @@ fn main() {
                 "protos/plans.proto",
                 "protos/mappings.proto",
                 "protos/timecode.proto",
+                "protos/surfaces.proto",
             ],
             &["protos/"],
         )

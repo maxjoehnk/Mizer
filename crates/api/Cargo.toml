@@ -11,6 +11,7 @@ default = []
 anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
+mizer-protobuf-api = { path = "protobuf" }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }
 mizer-docs = { path = "../../docs" }

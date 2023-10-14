@@ -1,5 +1,4 @@
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
@@ -35,16 +34,6 @@ impl<'a> Debug for PipelineContext<'a> {
             .field("receivers", &self.receivers)
             .finish()
     }
-}
-
-#[derive(Debug, Clone, Default)]
-pub struct NodeMetadata {
-    pub ports: HashMap<PortId, RuntimePortMetadata>,
-}
-
-#[derive(Debug, Clone, Default)]
-pub struct RuntimePortMetadata {
-    pub pushed_value: bool,
 }
 
 #[derive(Debug)]

@@ -12,7 +12,8 @@ use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
-use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
+pub use mizer_protocol_pro_dj_link::{CDJView, DJMView};
+use mizer_protocol_pro_dj_link::{ProDJLinkDevice, ProDJLinkDiscovery};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
 
 use crate::laser::LaserDevice;

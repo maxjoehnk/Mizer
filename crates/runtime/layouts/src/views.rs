@@ -30,7 +30,7 @@ impl LayoutsView {
         values.get(path).copied()
     }
 
-    pub(crate) fn write_fader_values(&self, values: HashMap<NodePath, f64>) {
+    pub fn write_fader_values(&self, values: HashMap<NodePath, f64>) {
         self.faders.set(values);
     }
 
@@ -40,7 +40,7 @@ impl LayoutsView {
         values.get(path).copied()
     }
 
-    pub(crate) fn write_button_values(&self, values: HashMap<NodePath, bool>) {
+    pub fn write_button_values(&self, values: HashMap<NodePath, bool>) {
         self.buttons.set(values);
     }
 
@@ -50,7 +50,7 @@ impl LayoutsView {
         values.get(path).cloned()
     }
 
-    pub(crate) fn write_label_values(&self, values: HashMap<NodePath, String>) {
+    pub fn write_label_values(&self, values: HashMap<NodePath, String>) {
         self.labels.set(values);
     }
 }

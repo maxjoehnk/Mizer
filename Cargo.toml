@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "crates/api",
+    "crates/api/protobuf",
     "crates/components/connections",
     "crates/components/connections/devices",
     "crates/components/connections/devices/g13",
@@ -169,7 +170,7 @@ rayon = "1.8"
 serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.31", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.31"
-ffmpeg-the-third = { version = "1.2", features = ["static"] }
+ffmpeg-the-third = { version = "1.2", features = ["build"] }
 rolling-file = "0.2"
 
 [dev-dependencies]

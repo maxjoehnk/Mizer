@@ -1,9 +1,12 @@
-use crate::pointer_inventory::PointerInventory;
-use crate::types::{drop_pointer, Array, FFIFromPointer};
-use mizer_runtime::NodeMetadataRef;
-use parking_lot::Mutex;
 use std::ffi::c_char;
 use std::sync::Arc;
+
+use parking_lot::Mutex;
+
+use mizer_node::NodeMetadataRef;
+
+use crate::pointer_inventory::PointerInventory;
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 
 pub struct NodesRef {
     metadata_ref: NodeMetadataRef,

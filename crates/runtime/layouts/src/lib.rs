@@ -1,12 +1,16 @@
+use std::fmt::{Display, Formatter};
+use std::sync::Arc;
+
+use pinboard::NonEmptyPinboard;
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
 use mizer_fixtures::programmer::PresetId;
 use mizer_fixtures::GroupId;
 use mizer_node::{Color, NodePath};
 use mizer_util::Base64Image;
-use pinboard::NonEmptyPinboard;
-use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
-use std::sync::Arc;
-use uuid::Uuid;
+
+pub mod views;
 
 pub type LayoutStorage = Arc<NonEmptyPinboard<Vec<Layout>>>;
 

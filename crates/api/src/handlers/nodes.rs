@@ -1,8 +1,7 @@
 use mizer_command_executor::*;
 use mizer_docs::get_node_description;
-use mizer_node::{NodePath, NodePreviewRef, NodeType};
+use mizer_node::{NodeMetadataRef, NodePath, NodePreviewRef, NodeType};
 use mizer_nodes::{ContainerNode, NodeDowncast};
-use mizer_runtime::NodeMetadataRef;
 
 use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::proto::nodes::*;

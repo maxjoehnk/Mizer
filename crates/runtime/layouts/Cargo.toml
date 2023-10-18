@@ -5,7 +5,7 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-uuid = { version = "1.4", features = ["serde", "v4"] }
+uuid = { version = "1.5", features = ["serde", "v4"] }
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../pipeline/node" }

@@ -14,5 +14,5 @@ mizer-commander = { path = "../../runtime/commander" }
 pinboard = "2.2"
 profiling = "1"
 dashmap = "5"
-uuid = { version = "1.4", features = ["v4", "serde"] }
+uuid = { version = "1.5", features = ["v4", "serde"] }
 tracing = "0.1"

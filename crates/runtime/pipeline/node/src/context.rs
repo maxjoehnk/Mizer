@@ -1,11 +1,13 @@
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
+use mizer_ports::port_types;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
+use std::marker::PhantomData;
 
 use crate::{PortMetadata, PreviewContext};
 
-pub trait NodeContext: PreviewContext {
+pub trait NodeContext: PreviewContext + Sized {
     fn clock(&self) -> ClockFrame;
     fn write_clock_tempo(&self, speed: f64);
     fn write_clock_state(&self, state: ClockState);
@@ -33,4 +35,54 @@ pub trait NodeContext: PreviewContext {
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView>;
     fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView>;
+
+    fn single_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::SINGLE, Self> {
+        self.input(port)
+    }
+    fn multi_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::MULTI, Self> {
+        self.input(port)
+    }
+    fn data_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::DATA, Self> {
+        self.input(port)
+    }
+
+    fn input<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> PortReader<V, Self> {
+        PortReader {
+            _value: Default::default(),
+            port_id: port.into(),
+            context: self,
+        }
+    }
+}
+
+pub struct PortReader<'a, V: PortValue + 'static, C: NodeContext> {
+    port_id: PortId,
+    context: &'a C,
+    _value: PhantomData<V>,
+}
+
+impl<'a, V: PortValue + 'static, C: NodeContext> PortReader<'a, V, C> {
+    pub fn read(&self) -> Option<V> {
+        self.context.read_port(self.port_id.clone())
+    }
+
+    pub fn read_changes(&self) -> Option<V> {
+        self.context.read_port_changes(self.port_id.clone())
+    }
+
+    pub fn read_multiple(&self) -> Vec<Option<V>> {
+        self.context.read_ports(self.port_id.clone())
+    }
+
+    pub fn read_multiple_changes(&self) -> Vec<Option<V>> {
+        self.context.read_changed_ports(self.port_id.clone())
+    }
+
+    pub fn read_link_count(&self) -> usize {
+        self.context.input_port_count(self.port_id.clone())
+    }
+
+    pub fn metadata(&self) -> PortMetadata {
+        self.context.input_port(self.port_id.clone())
+    }
 }

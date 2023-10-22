@@ -109,6 +109,15 @@ pub enum PortType {
     Clock,
 }
 
+pub mod port_types {
+    use mizer_util::StructuredData;
+
+    pub type SINGLE = f64;
+    pub type MULTI = Vec<f64>;
+    pub type COLOR = super::Color;
+    pub type DATA = StructuredData;
+}
+
 impl Display for PortType {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{:?}", self)

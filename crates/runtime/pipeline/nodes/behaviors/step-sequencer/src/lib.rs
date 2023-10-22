@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 
 const VALUE_OUTPUT: &str = "Output";
+const STEPS_INPUT: &str = "Steps";
 
 const STEPS_SETTING: &str = "Steps";
 const BAR_COUNT_SETTING: &str = "Bar Count";
@@ -53,7 +54,10 @@ impl PipelineNode for StepSequencerNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
+        vec![
+            output_port!(VALUE_OUTPUT, PortType::Single),
+            input_port!(STEPS_INPUT, PortType::Multi),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -68,13 +72,23 @@ impl ProcessingNode for StepSequencerNode {
         if self.steps.is_empty() {
             return Ok(());
         }
-        if self.steps.len() != state.already_hit.len() {
-            state.already_hit = self.steps.iter().map(|_| false).collect();
+        let steps = if let Some(steps) = context.multi_input(STEPS_INPUT).read() {
+            let mut steps: Vec<_> = steps
+                .into_iter()
+                .map(|step| step > 0f64 + f64::EPSILON)
+                .collect();
+            steps.resize(self.steps.len(), false);
+            steps
+        } else {
+            self.steps.clone()
+        };
+        if steps.len() != state.already_hit.len() {
+            state.already_hit = steps.iter().map(|_| false).collect();
         };
         let frame = context.clock();
 
         let mut value = false;
-        for (i, step) in self.steps.iter().enumerate() {
+        for (i, step) in steps.iter().enumerate() {
             let already_hit = state.already_hit[i];
             if !*step {
                 continue;

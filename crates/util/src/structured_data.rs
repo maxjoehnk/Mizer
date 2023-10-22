@@ -13,6 +13,12 @@ pub enum StructuredData {
     Object(HashMap<String, StructuredData>),
 }
 
+impl From<f64> for StructuredData {
+    fn from(value: f64) -> Self {
+        Self::Float(value)
+    }
+}
+
 impl Default for StructuredData {
     fn default() -> Self {
         // TODO: should this be the default?

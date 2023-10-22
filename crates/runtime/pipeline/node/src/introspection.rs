@@ -123,6 +123,7 @@ node_type_name! {
         MqttOutput,
         NumberToData,
         DataToNumber,
+        MultiToData,
         Value,
         Extract,
         PlanScreen,

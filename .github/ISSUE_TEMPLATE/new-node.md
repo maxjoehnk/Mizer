@@ -7,9 +7,11 @@ assignees: ''
 
 ---
 
-<short description of node purpose>
-
 # <node name>
+
+**Category**: <Node Category>
+
+<short description of node purpose>
 
 ## Properties
 * <Name> [<Type>]

@@ -34,6 +34,9 @@ macro_rules! output_port {
     ($name:expr, $port_type:expr) => {
         $crate::port!($name, PortDirection::Output, $port_type)
     };
+    ($name:expr, $port_type:expr, count: $count:expr) => {
+        $crate::port!($name, PortDirection::Output, $port_type, count: Some($count))
+    };
 }
 
 #[macro_export]

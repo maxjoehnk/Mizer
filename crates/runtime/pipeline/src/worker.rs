@@ -590,12 +590,14 @@ mod tests {
             multiple: None,
             direction: PortDirection::Output,
             dimensions: None,
+            count: None,
         };
         let dest = PortMetadata {
             port_type: PortType::Single,
             multiple: None,
             direction: PortDirection::Input,
             dimensions: None,
+            count: None,
         };
         let link = NodeLink {
             port_type: PortType::Single,
@@ -625,12 +627,14 @@ mod tests {
             multiple: None,
             direction: PortDirection::Output,
             dimensions: None,
+            count: None,
         };
         let dest = PortMetadata {
             port_type: PortType::Single,
             multiple: None,
             direction: PortDirection::Input,
             dimensions: None,
+            count: None,
         };
         let source_path: NodePath = "/source".into();
         let dest1: NodePath = "/dest1".into();

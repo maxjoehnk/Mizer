@@ -4,6 +4,7 @@ use mizer_node::*;
 
 const VALUE_OUTPUT: &str = "Output";
 const STEPS_INPUT: &str = "Steps";
+const STEPS_OUTPUT: &str = "Steps";
 
 const STEPS_SETTING: &str = "Steps";
 const BAR_COUNT_SETTING: &str = "Bar Count";
@@ -57,6 +58,7 @@ impl PipelineNode for StepSequencerNode {
         vec![
             output_port!(VALUE_OUTPUT, PortType::Single),
             input_port!(STEPS_INPUT, PortType::Multi),
+            output_port!(STEPS_OUTPUT, PortType::Multi, count: self.steps.len() as u64),
         ]
     }
 
@@ -109,6 +111,14 @@ impl ProcessingNode for StepSequencerNode {
 
         context.write_port(VALUE_OUTPUT, value);
         context.push_history_value(value);
+
+        context.write_port(
+            STEPS_OUTPUT,
+            steps
+                .into_iter()
+                .map(|step| step.into())
+                .collect::<port_types::MULTI>(),
+        );
 
         Ok(())
     }

@@ -108,6 +108,7 @@ node_type_name! {
         Gamepad,
         Select,
         Merge,
+        Combine,
         Threshold,
         Ramp,
         Encoder,

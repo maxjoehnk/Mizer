@@ -8,8 +8,8 @@ use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_node::*;
-use mizer_nodes::*;
 use mizer_nodes::NodeDowncast;
+use mizer_nodes::*;
 use mizer_pipeline::*;
 
 pub struct PipelineAccess {
@@ -81,6 +81,7 @@ impl PipelineAccess {
             StepSequencer(node) => self.add_node(path, node),
             Envelope(node) => self.add_node(path, node),
             Merge(node) => self.add_node(path, node),
+            Combine(node) => self.add_node(path, node),
             Select(node) => self.add_node(path, node),
             Threshold(node) => self.add_node(path, node),
             Encoder(node) => self.add_node(path, node),

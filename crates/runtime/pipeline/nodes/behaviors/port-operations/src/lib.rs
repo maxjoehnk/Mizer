@@ -1,3 +1,4 @@
+mod combine;
 mod conditional;
 mod encoder;
 mod merge;
@@ -6,6 +7,7 @@ mod ramp;
 mod select;
 mod threshold;
 
+pub use combine::*;
 pub use conditional::*;
 pub use encoder::*;
 pub use merge::*;

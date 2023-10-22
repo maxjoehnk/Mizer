@@ -1,0 +1,1 @@
+Consume multiple single value inputs and combines them in one multi value output.

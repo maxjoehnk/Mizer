@@ -38,7 +38,7 @@ class _ButtonInputState extends State<ButtonInput> {
                 child: Stack(
                   children: [
                     if (widget.image != null)
-                      Image(image: widget.image!, fit: BoxFit.cover, width: 75, height: 75),
+                      Positioned.fill(child: Image(image: widget.image!, fit: BoxFit.cover)),
                     Container(
                       margin: const EdgeInsets.all(4),
                       decoration: ShapeDecoration(

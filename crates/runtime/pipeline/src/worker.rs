@@ -109,6 +109,7 @@ pub struct PipelineWorker {
     dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    _node_metadata: HashMap<NodePath, NodeMetadata>,
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -132,6 +133,7 @@ impl PipelineWorker {
             dependencies: Default::default(),
             previews: Default::default(),
             node_metadata,
+            _node_metadata: Default::default(),
         }
     }
 
@@ -419,7 +421,7 @@ impl PipelineWorker {
                 log::error!("pre processing of node {} failed: {:?}", &path, e)
             }
         }
-        self.node_metadata.set(node_metadata);
+        self._node_metadata = node_metadata;
     }
 
     fn process_nodes(
@@ -430,7 +432,7 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
-        let mut node_metadata = self.node_metadata.read();
+        let mut node_metadata = self._node_metadata.clone();
         for (path, node) in nodes {
             let (context, state) =
                 self.get_context(path, frame, injector, clock, &mut node_metadata);
@@ -440,7 +442,7 @@ impl PipelineWorker {
                 log::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
-        self.node_metadata.set(node_metadata);
+        self._node_metadata = node_metadata;
     }
 
     fn post_process_nodes(
@@ -451,7 +453,7 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::post_process_nodes");
-        let mut node_metadata = self.node_metadata.read();
+        let mut node_metadata = self._node_metadata.clone();
         for (path, node) in nodes {
             let (context, state) =
                 self.get_context(path, frame, injector, clock, &mut node_metadata);

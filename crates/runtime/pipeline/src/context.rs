@@ -115,10 +115,12 @@ impl<'a> NodeContext for PipelineContext<'a> {
         } else {
             log::trace!("{}", dbg_msg);
         }
-        self.node_metadata
-            .borrow_mut()
-            .ports
-            .insert(port, RuntimePortMetadata { pushed_value });
+        if pushed_value {
+            self.node_metadata
+                .borrow_mut()
+                .ports
+                .insert(port, RuntimePortMetadata { pushed_value });
+        }
     }
 
     fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) {

@@ -261,36 +261,3 @@ jobs:
           name: android-remote
           path: crates/ui/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
-
-  publish-pre-release:
-    runs-on: ubuntu-latest
-    needs:
-      - build-linux
-      - bundle-flatpak
-      - build-android-remote
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: linux-headless
-          path: artifacts/linux/headless
-      - uses: actions/download-artifact@v3
-        with:
-          name: linux-full
-          path: artifacts/linux/full
-      - uses: actions/download-artifact@v3
-        with:
-          name: Flatpak
-          path: artifacts/linux/flatpak
-      - uses: actions/download-artifact@v3
-        with:
-          name: android-remote
-          path: artifacts/android/remote
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: pre-release/${{ github.run_number }}
-          name: Pre Release ${{ github.run_number }}
-          prerelease: true
-          files: |
-            artifacts/**/*

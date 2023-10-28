@@ -320,10 +320,14 @@ class Hotkeys extends $pb.GeneratedMessage {
 class General extends $pb.GeneratedMessage {
   factory General({
     $core.String? language,
+    $core.bool? autoLoadLastProject,
   }) {
     final $result = create();
     if (language != null) {
       $result.language = language;
+    }
+    if (autoLoadLastProject != null) {
+      $result.autoLoadLastProject = autoLoadLastProject;
     }
     return $result;
   }
@@ -333,6 +337,7 @@ class General extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'General', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'language')
+    ..aOB(2, _omitFieldNames ? '' : 'autoLoadLastProject')
     ..hasRequiredFields = false
   ;
 
@@ -365,6 +370,15 @@ class General extends $pb.GeneratedMessage {
   $core.bool hasLanguage() => $_has(0);
   @$pb.TagNumber(1)
   void clearLanguage() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get autoLoadLastProject => $_getBF(1);
+  @$pb.TagNumber(2)
+  set autoLoadLastProject($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAutoLoadLastProject() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAutoLoadLastProject() => clearField(2);
 }
 
 

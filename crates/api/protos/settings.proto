@@ -30,4 +30,5 @@ message Hotkeys {
 
 message General {
   string language = 1;
+  bool auto_load_last_project = 2;
 }

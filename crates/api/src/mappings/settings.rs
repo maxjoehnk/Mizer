@@ -19,7 +19,7 @@ impl From<settings::General> for model::General {
     fn from(general: settings::General) -> Self {
         Self {
             language: general.language,
-            ..Default::default()
+            auto_load_last_project: general.auto_load_last_project,
         }
     }
 }
@@ -35,7 +35,6 @@ impl From<settings::Hotkeys> for model::Hotkeys {
             sequencer: hotkeys.sequencer,
             plan: hotkeys.plan,
             effects: hotkeys.effects,
-            ..Default::default()
         }
     }
 }
@@ -71,6 +70,7 @@ impl From<model::General> for settings::General {
     fn from(general: model::General) -> Self {
         Self {
             language: general.language,
+            auto_load_last_project: general.auto_load_last_project,
         }
     }
 }

@@ -179,10 +179,12 @@ const General$json = {
   '1': 'General',
   '2': [
     {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
+    {'1': 'auto_load_last_project', '3': 2, '4': 1, '5': 8, '10': 'autoLoadLastProject'},
   ],
 };
 
 /// Descriptor for `General`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List generalDescriptor = $convert.base64Decode(
-    'CgdHZW5lcmFsEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZQ==');
+    'CgdHZW5lcmFsEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRIzChZhdXRvX2xvYWRfbGFzdF'
+    '9wcm9qZWN0GAIgASgIUhNhdXRvTG9hZExhc3RQcm9qZWN0');
 

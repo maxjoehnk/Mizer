@@ -23,6 +23,8 @@ pub struct SettingsManager {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct General {
     pub language: String,
+    #[serde(default)]
+    pub auto_load_last_project: bool,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]

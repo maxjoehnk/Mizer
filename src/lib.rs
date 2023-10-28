@@ -11,9 +11,9 @@ use mizer_command_executor::CommandExecutorModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUi;
 use mizer_devices::{DeviceManager, DeviceModule};
-use mizer_fixtures::FixtureModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixtureModule;
 use mizer_media::{MediaDiscovery, MediaModule, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
@@ -30,7 +30,7 @@ use mizer_settings::{Settings, SettingsManager};
 use mizer_status_bus::StatusBus;
 use mizer_surfaces::{SurfaceModule, SurfaceRegistry, SurfaceRegistryApi};
 use mizer_timecode::{TimecodeManager, TimecodeModule};
-use mizer_wgpu::{WgpuModule, window::WindowModule};
+use mizer_wgpu::{window::WindowModule, WgpuModule};
 
 pub use crate::api::*;
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -50,7 +50,8 @@ pub fn build_runtime(
     settings
         .load()
         .context("Failed to load settings from disk")?;
-    let settings = Arc::new(NonEmptyPinboard::new(settings));
+    let settings_manager = Arc::new(NonEmptyPinboard::new(settings));
+    let settings = settings_manager.read().settings;
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
 
@@ -65,8 +66,7 @@ pub fn build_runtime(
     register_dmx_module(&mut runtime).context("failed to register dmx module")?;
     register_mqtt_module(&mut runtime).context("failed to register mqtt module")?;
     register_osc_module(&mut runtime).context("failed to register osc module")?;
-    register_midi_module(&mut runtime, &settings.read().settings)
-        .context("Failed to register midi module")?;
+    register_midi_module(&mut runtime, &settings).context("Failed to register midi module")?;
     if let Err(err) = handle.block_on(register_wgpu_module(&mut runtime)) {
         log::warn!("Failed to register gpu module, video nodes unavailable.\n{err:?}");
     } else {
@@ -89,19 +89,23 @@ pub fn build_runtime(
         }
     }
     let surfaces_api = register_surfaces_module(&mut runtime)?;
-    let (fixture_manager, fixture_library) =
-        register_fixtures_module(&mut runtime, &settings.read().settings)
-            .context("Failed to register fixtures module")?;
+    let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime, &settings)
+        .context("Failed to register fixtures module")?;
     let (module, command_executor_api) = CommandExecutorModule::new();
     module.register(&mut runtime)?;
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
-    let media_server = register_media_module(&mut runtime, Arc::clone(&settings))?;
+    let media_server = register_media_module(&mut runtime, Arc::clone(&settings_manager))?;
 
     let status_bus = runtime.access().status_bus;
 
-    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings, device_manager);
+    let (api_handler, api) = Api::setup(
+        &runtime,
+        command_executor_api,
+        settings_manager,
+        device_manager,
+    );
 
     let handlers = Handlers::new(
         api,
@@ -119,9 +123,16 @@ pub fn build_runtime(
 
     Session::new(remote_api_port)?;
 
-    let project_file = flags.file.clone();
+    let mut project_file = flags.file.clone();
+    if project_file.is_none() && settings.general.auto_load_last_project {
+        let history = ProjectHistory.load()?;
+        if let Some(last_project) = history.first() {
+            log::info!("Loading last project {:?}", last_project);
+            project_file = Some(last_project.path.clone());
+        }
+    }
     let mut mizer = Mizer {
-        project_path: flags.file.clone(),
+        project_path: project_file.clone(),
         flags,
         runtime,
         handlers,

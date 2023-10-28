@@ -1,5 +1,6 @@
 [general]
 language = "en"
+auto_load_last_project = true
 
 [paths]
 midi_device_profiles = "crates/components/connections/protocols/midi/device-profiles/profiles"

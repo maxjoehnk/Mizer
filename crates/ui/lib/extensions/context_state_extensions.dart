@@ -15,7 +15,7 @@ extension ContextStateExtensions on BuildContext {
     this.read<FixturesBloc>().add(FetchFixtures());
     this.read<LayoutsBloc>().add(FetchLayouts());
     this.read<MediaBloc>().add(FetchMedia());
-    this.read<NodesBloc>().add(FetchNodes());
+    this.read<NodesBloc>().add(RefreshNodes());
     this.read<SequencerBloc>().add(FetchSequences());
     this.read<PresetsBloc>().add(FetchPresets());
     this.read<PlansBloc>().add(FetchPlans());

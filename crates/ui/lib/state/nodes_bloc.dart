@@ -36,6 +36,8 @@ abstract class NodesEvent {}
 
 class FetchNodes extends NodesEvent {}
 
+class RefreshNodes extends NodesEvent {}
+
 class FetchAvailableNodes extends NodesEvent {}
 
 class AddNode extends NodesEvent {
@@ -139,6 +141,10 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
   final NodesApi api;
 
   NodesBloc(this.api) : super(PipelineState.empty()) {
+    on<RefreshNodes>((event, emit) async {
+      emit(PipelineState.empty());
+      emit(await _fetchNodes());
+    });
     on<FetchNodes>((event, emit) async {
       emit(await _fetchNodes());
     });

@@ -30,6 +30,10 @@ class PipelineState {
       availableNodes ?? this.availableNodes,
     );
   }
+
+  PipelineState clear() {
+    return copyWith(nodes: [], allNodes: [], channels: []);
+  }
 }
 
 abstract class NodesEvent {}
@@ -142,7 +146,7 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
 
   NodesBloc(this.api) : super(PipelineState.empty()) {
     on<RefreshNodes>((event, emit) async {
-      emit(PipelineState.empty());
+      emit(state.clear());
       emit(await _fetchNodes());
     });
     on<FetchNodes>((event, emit) async {

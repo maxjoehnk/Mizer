@@ -25,6 +25,7 @@ pub enum Connection {
     Osc(OscView),
     G13(G13View),
     Webcam(WebcamView),
+    NdiSource(NdiSourceView),
     Cdj(CDJView),
     Djm(DJMView),
 }
@@ -42,6 +43,7 @@ impl Connection {
             Connection::Osc(connection) => connection.name.clone(),
             Connection::G13(_) => "Logitech G13".to_string(),
             Connection::Webcam(connection) => connection.name.clone(),
+            Connection::NdiSource(connection) => connection.name.clone(),
             Connection::Cdj(cdj) => cdj.device.name.clone(),
             Connection::Djm(djm) => djm.device.name.clone(),
         }
@@ -56,6 +58,7 @@ impl From<DeviceRef> for Connection {
             DeviceRef::Gamepad(view) => view.into(),
             DeviceRef::G13(view) => view.into(),
             DeviceRef::Webcam(view) => view.into(),
+            DeviceRef::NdiSource(view) => view.into(),
             DeviceRef::PioneerCDJ(view) => view.into(),
             DeviceRef::PioneerDJM(view) => view.into(),
         }

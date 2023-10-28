@@ -112,6 +112,7 @@ message Connection {
     WebcamConnection webcam = 19;
     PioneerCdjConnection cdj = 20;
     PioneerDjmConnection djm = 21;
+    NdiSourceConnection ndi_source = 22;
   }
 }
 
@@ -149,6 +150,11 @@ message G13Connection {
 }
 
 message WebcamConnection {
+  string id = 1;
+  string name = 2;
+}
+
+message NdiSourceConnection {
   string id = 1;
   string name = 2;
 }

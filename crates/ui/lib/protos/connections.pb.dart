@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -15,23 +19,24 @@ import 'connections.pbenum.dart';
 export 'connections.pbenum.dart';
 
 class MonitorDmxRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorDmxRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId')
-    ..hasRequiredFields = false
-  ;
-
-  MonitorDmxRequest._() : super();
   factory MonitorDmxRequest({
     $core.String? outputId,
   }) {
-    final _result = create();
+    final $result = create();
     if (outputId != null) {
-      _result.outputId = outputId;
+      $result.outputId = outputId;
     }
-    return _result;
+    return $result;
   }
+  MonitorDmxRequest._() : super();
   factory MonitorDmxRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorDmxRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorDmxRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'outputId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -41,8 +46,10 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxRequest copyWith(void Function(MonitorDmxRequest) updates) => super.copyWith((message) => updates(message as MonitorDmxRequest)) as MonitorDmxRequest; // ignore: deprecated_member_use
+  MonitorDmxRequest copyWith(void Function(MonitorDmxRequest) updates) => super.copyWith((message) => updates(message as MonitorDmxRequest)) as MonitorDmxRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorDmxRequest create() => MonitorDmxRequest._();
   MonitorDmxRequest createEmptyInstance() => create();
@@ -62,23 +69,24 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
 }
 
 class MonitorDmxResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorDmxResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..pc<MonitorDmxUniverse>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universes', $pb.PbFieldType.PM, subBuilder: MonitorDmxUniverse.create)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorDmxResponse._() : super();
   factory MonitorDmxResponse({
     $core.Iterable<MonitorDmxUniverse>? universes,
   }) {
-    final _result = create();
+    final $result = create();
     if (universes != null) {
-      _result.universes.addAll(universes);
+      $result.universes.addAll(universes);
     }
-    return _result;
+    return $result;
   }
+  MonitorDmxResponse._() : super();
   factory MonitorDmxResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorDmxResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorDmxResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..pc<MonitorDmxUniverse>(1, _omitFieldNames ? '' : 'universes', $pb.PbFieldType.PM, subBuilder: MonitorDmxUniverse.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -88,8 +96,10 @@ class MonitorDmxResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxResponse copyWith(void Function(MonitorDmxResponse) updates) => super.copyWith((message) => updates(message as MonitorDmxResponse)) as MonitorDmxResponse; // ignore: deprecated_member_use
+  MonitorDmxResponse copyWith(void Function(MonitorDmxResponse) updates) => super.copyWith((message) => updates(message as MonitorDmxResponse)) as MonitorDmxResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorDmxResponse create() => MonitorDmxResponse._();
   MonitorDmxResponse createEmptyInstance() => create();
@@ -103,28 +113,29 @@ class MonitorDmxResponse extends $pb.GeneratedMessage {
 }
 
 class MonitorDmxUniverse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorDmxUniverse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
-    ..a<$core.List<$core.int>>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorDmxUniverse._() : super();
   factory MonitorDmxUniverse({
     $core.int? universe,
     $core.List<$core.int>? channels,
   }) {
-    final _result = create();
+    final $result = create();
     if (universe != null) {
-      _result.universe = universe;
+      $result.universe = universe;
     }
     if (channels != null) {
-      _result.channels = channels;
+      $result.channels = channels;
     }
-    return _result;
+    return $result;
   }
+  MonitorDmxUniverse._() : super();
   factory MonitorDmxUniverse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorDmxUniverse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorDmxUniverse', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'channels', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -134,8 +145,10 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxUniverse copyWith(void Function(MonitorDmxUniverse) updates) => super.copyWith((message) => updates(message as MonitorDmxUniverse)) as MonitorDmxUniverse; // ignore: deprecated_member_use
+  MonitorDmxUniverse copyWith(void Function(MonitorDmxUniverse) updates) => super.copyWith((message) => updates(message as MonitorDmxUniverse)) as MonitorDmxUniverse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorDmxUniverse create() => MonitorDmxUniverse._();
   MonitorDmxUniverse createEmptyInstance() => create();
@@ -164,23 +177,24 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
 }
 
 class MonitorMidiRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  MonitorMidiRequest._() : super();
   factory MonitorMidiRequest({
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  MonitorMidiRequest._() : super();
   factory MonitorMidiRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorMidiRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorMidiRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -190,8 +204,10 @@ class MonitorMidiRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorMidiRequest copyWith(void Function(MonitorMidiRequest) updates) => super.copyWith((message) => updates(message as MonitorMidiRequest)) as MonitorMidiRequest; // ignore: deprecated_member_use
+  MonitorMidiRequest copyWith(void Function(MonitorMidiRequest) updates) => super.copyWith((message) => updates(message as MonitorMidiRequest)) as MonitorMidiRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorMidiRequest create() => MonitorMidiRequest._();
   MonitorMidiRequest createEmptyInstance() => create();
@@ -211,33 +227,34 @@ class MonitorMidiRequest extends $pb.GeneratedMessage {
 }
 
 class MonitorMidiResponse_NoteMsg extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse.NoteMsg', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'note', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorMidiResponse_NoteMsg._() : super();
   factory MonitorMidiResponse_NoteMsg({
     $core.int? channel,
     $core.int? note,
     $core.int? value,
   }) {
-    final _result = create();
+    final $result = create();
     if (channel != null) {
-      _result.channel = channel;
+      $result.channel = channel;
     }
     if (note != null) {
-      _result.note = note;
+      $result.note = note;
     }
     if (value != null) {
-      _result.value = value;
+      $result.value = value;
     }
-    return _result;
+    return $result;
   }
+  MonitorMidiResponse_NoteMsg._() : super();
   factory MonitorMidiResponse_NoteMsg.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorMidiResponse_NoteMsg.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorMidiResponse.NoteMsg', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'note', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -247,8 +264,10 @@ class MonitorMidiResponse_NoteMsg extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorMidiResponse_NoteMsg copyWith(void Function(MonitorMidiResponse_NoteMsg) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_NoteMsg)) as MonitorMidiResponse_NoteMsg; // ignore: deprecated_member_use
+  MonitorMidiResponse_NoteMsg copyWith(void Function(MonitorMidiResponse_NoteMsg) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_NoteMsg)) as MonitorMidiResponse_NoteMsg;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorMidiResponse_NoteMsg create() => MonitorMidiResponse_NoteMsg._();
   MonitorMidiResponse_NoteMsg createEmptyInstance() => create();
@@ -286,16 +305,6 @@ class MonitorMidiResponse_NoteMsg extends $pb.GeneratedMessage {
 }
 
 class MonitorMidiResponse_SysEx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse.SysEx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer1', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer2', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer3', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model', $pb.PbFieldType.OU3)
-    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorMidiResponse_SysEx._() : super();
   factory MonitorMidiResponse_SysEx({
     $core.int? manufacturer1,
     $core.int? manufacturer2,
@@ -303,26 +312,37 @@ class MonitorMidiResponse_SysEx extends $pb.GeneratedMessage {
     $core.int? model,
     $core.List<$core.int>? data,
   }) {
-    final _result = create();
+    final $result = create();
     if (manufacturer1 != null) {
-      _result.manufacturer1 = manufacturer1;
+      $result.manufacturer1 = manufacturer1;
     }
     if (manufacturer2 != null) {
-      _result.manufacturer2 = manufacturer2;
+      $result.manufacturer2 = manufacturer2;
     }
     if (manufacturer3 != null) {
-      _result.manufacturer3 = manufacturer3;
+      $result.manufacturer3 = manufacturer3;
     }
     if (model != null) {
-      _result.model = model;
+      $result.model = model;
     }
     if (data != null) {
-      _result.data = data;
+      $result.data = data;
     }
-    return _result;
+    return $result;
   }
+  MonitorMidiResponse_SysEx._() : super();
   factory MonitorMidiResponse_SysEx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorMidiResponse_SysEx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorMidiResponse.SysEx', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'manufacturer1', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'manufacturer2', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'manufacturer3', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'model', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -332,8 +352,10 @@ class MonitorMidiResponse_SysEx extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorMidiResponse_SysEx copyWith(void Function(MonitorMidiResponse_SysEx) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_SysEx)) as MonitorMidiResponse_SysEx; // ignore: deprecated_member_use
+  MonitorMidiResponse_SysEx copyWith(void Function(MonitorMidiResponse_SysEx) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_SysEx)) as MonitorMidiResponse_SysEx;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorMidiResponse_SysEx create() => MonitorMidiResponse_SysEx._();
   MonitorMidiResponse_SysEx createEmptyInstance() => create();
@@ -398,26 +420,6 @@ enum MonitorMidiResponse_Message {
 }
 
 class MonitorMidiResponse extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, MonitorMidiResponse_Message> _MonitorMidiResponse_MessageByTag = {
-    3 : MonitorMidiResponse_Message.cc,
-    4 : MonitorMidiResponse_Message.noteOff,
-    5 : MonitorMidiResponse_Message.noteOn,
-    6 : MonitorMidiResponse_Message.sysEx,
-    7 : MonitorMidiResponse_Message.unknown,
-    0 : MonitorMidiResponse_Message.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5, 6, 7])
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOM<MonitorMidiResponse_NoteMsg>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cc', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_NoteMsg>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_NoteMsg>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_SysEx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unknown', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorMidiResponse._() : super();
   factory MonitorMidiResponse({
     $fixnum.Int64? timestamp,
     MonitorMidiResponse_NoteMsg? cc,
@@ -426,29 +428,50 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
     MonitorMidiResponse_SysEx? sysEx,
     $core.List<$core.int>? unknown,
   }) {
-    final _result = create();
+    final $result = create();
     if (timestamp != null) {
-      _result.timestamp = timestamp;
+      $result.timestamp = timestamp;
     }
     if (cc != null) {
-      _result.cc = cc;
+      $result.cc = cc;
     }
     if (noteOff != null) {
-      _result.noteOff = noteOff;
+      $result.noteOff = noteOff;
     }
     if (noteOn != null) {
-      _result.noteOn = noteOn;
+      $result.noteOn = noteOn;
     }
     if (sysEx != null) {
-      _result.sysEx = sysEx;
+      $result.sysEx = sysEx;
     }
     if (unknown != null) {
-      _result.unknown = unknown;
+      $result.unknown = unknown;
     }
-    return _result;
+    return $result;
   }
+  MonitorMidiResponse._() : super();
   factory MonitorMidiResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorMidiResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, MonitorMidiResponse_Message> _MonitorMidiResponse_MessageByTag = {
+    3 : MonitorMidiResponse_Message.cc,
+    4 : MonitorMidiResponse_Message.noteOff,
+    5 : MonitorMidiResponse_Message.noteOn,
+    6 : MonitorMidiResponse_Message.sysEx,
+    7 : MonitorMidiResponse_Message.unknown,
+    0 : MonitorMidiResponse_Message.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorMidiResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..oo(0, [3, 4, 5, 6, 7])
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOM<MonitorMidiResponse_NoteMsg>(3, _omitFieldNames ? '' : 'cc', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(4, _omitFieldNames ? '' : 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(5, _omitFieldNames ? '' : 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_SysEx>(6, _omitFieldNames ? '' : 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'unknown', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -458,8 +481,10 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorMidiResponse copyWith(void Function(MonitorMidiResponse) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse)) as MonitorMidiResponse; // ignore: deprecated_member_use
+  MonitorMidiResponse copyWith(void Function(MonitorMidiResponse) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse)) as MonitorMidiResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorMidiResponse create() => MonitorMidiResponse._();
   MonitorMidiResponse createEmptyInstance() => create();
@@ -535,23 +560,24 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
 }
 
 class MonitorOscRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  MonitorOscRequest._() : super();
   factory MonitorOscRequest({
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  MonitorOscRequest._() : super();
   factory MonitorOscRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorOscRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorOscRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -561,8 +587,10 @@ class MonitorOscRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorOscRequest copyWith(void Function(MonitorOscRequest) updates) => super.copyWith((message) => updates(message as MonitorOscRequest)) as MonitorOscRequest; // ignore: deprecated_member_use
+  MonitorOscRequest copyWith(void Function(MonitorOscRequest) updates) => super.copyWith((message) => updates(message as MonitorOscRequest)) as MonitorOscRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorOscRequest create() => MonitorOscRequest._();
   MonitorOscRequest createEmptyInstance() => create();
@@ -582,38 +610,39 @@ class MonitorOscRequest extends $pb.GeneratedMessage {
 }
 
 class MonitorOscResponse_OscArgument_OscColor extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse.OscArgument.OscColor', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alpha', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorOscResponse_OscArgument_OscColor._() : super();
   factory MonitorOscResponse_OscArgument_OscColor({
     $core.int? red,
     $core.int? green,
     $core.int? blue,
     $core.int? alpha,
   }) {
-    final _result = create();
+    final $result = create();
     if (red != null) {
-      _result.red = red;
+      $result.red = red;
     }
     if (green != null) {
-      _result.green = green;
+      $result.green = green;
     }
     if (blue != null) {
-      _result.blue = blue;
+      $result.blue = blue;
     }
     if (alpha != null) {
-      _result.alpha = alpha;
+      $result.alpha = alpha;
     }
-    return _result;
+    return $result;
   }
+  MonitorOscResponse_OscArgument_OscColor._() : super();
   factory MonitorOscResponse_OscArgument_OscColor.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorOscResponse_OscArgument_OscColor.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorOscResponse.OscArgument.OscColor', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'red', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'green', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'blue', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'alpha', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -623,8 +652,10 @@ class MonitorOscResponse_OscArgument_OscColor extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorOscResponse_OscArgument_OscColor copyWith(void Function(MonitorOscResponse_OscArgument_OscColor) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument_OscColor)) as MonitorOscResponse_OscArgument_OscColor; // ignore: deprecated_member_use
+  MonitorOscResponse_OscArgument_OscColor copyWith(void Function(MonitorOscResponse_OscArgument_OscColor) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument_OscColor)) as MonitorOscResponse_OscArgument_OscColor;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorOscResponse_OscArgument_OscColor create() => MonitorOscResponse_OscArgument_OscColor._();
   MonitorOscResponse_OscArgument_OscColor createEmptyInstance() => create();
@@ -681,6 +712,39 @@ enum MonitorOscResponse_OscArgument_Argument {
 }
 
 class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
+  factory MonitorOscResponse_OscArgument({
+    $core.int? int_1,
+    $core.double? float,
+    $fixnum.Int64? long,
+    $core.double? double_4,
+    $core.bool? bool_5,
+    MonitorOscResponse_OscArgument_OscColor? color,
+  }) {
+    final $result = create();
+    if (int_1 != null) {
+      $result.int_1 = int_1;
+    }
+    if (float != null) {
+      $result.float = float;
+    }
+    if (long != null) {
+      $result.long = long;
+    }
+    if (double_4 != null) {
+      $result.double_4 = double_4;
+    }
+    if (bool_5 != null) {
+      $result.bool_5 = bool_5;
+    }
+    if (color != null) {
+      $result.color = color;
+    }
+    return $result;
+  }
+  MonitorOscResponse_OscArgument._() : super();
+  factory MonitorOscResponse_OscArgument.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorOscResponse_OscArgument.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
   static const $core.Map<$core.int, MonitorOscResponse_OscArgument_Argument> _MonitorOscResponse_OscArgument_ArgumentByTag = {
     1 : MonitorOscResponse_OscArgument_Argument.int_1,
     2 : MonitorOscResponse_OscArgument_Argument.float,
@@ -690,49 +754,17 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
     6 : MonitorOscResponse_OscArgument_Argument.color,
     0 : MonitorOscResponse_OscArgument_Argument.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse.OscArgument', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorOscResponse.OscArgument', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6])
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'int', $pb.PbFieldType.O3)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'float', $pb.PbFieldType.OF)
-    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'long')
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'double', $pb.PbFieldType.OD)
-    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bool')
-    ..aOM<MonitorOscResponse_OscArgument_OscColor>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: MonitorOscResponse_OscArgument_OscColor.create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'int', $pb.PbFieldType.O3)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'float', $pb.PbFieldType.OF)
+    ..aInt64(3, _omitFieldNames ? '' : 'long')
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'double', $pb.PbFieldType.OD)
+    ..aOB(5, _omitFieldNames ? '' : 'bool')
+    ..aOM<MonitorOscResponse_OscArgument_OscColor>(6, _omitFieldNames ? '' : 'color', subBuilder: MonitorOscResponse_OscArgument_OscColor.create)
     ..hasRequiredFields = false
   ;
 
-  MonitorOscResponse_OscArgument._() : super();
-  factory MonitorOscResponse_OscArgument({
-    $core.int? int_1,
-    $core.double? float,
-    $fixnum.Int64? long,
-    $core.double? double_4,
-    $core.bool? bool_5,
-    MonitorOscResponse_OscArgument_OscColor? color,
-  }) {
-    final _result = create();
-    if (int_1 != null) {
-      _result.int_1 = int_1;
-    }
-    if (float != null) {
-      _result.float = float;
-    }
-    if (long != null) {
-      _result.long = long;
-    }
-    if (double_4 != null) {
-      _result.double_4 = double_4;
-    }
-    if (bool_5 != null) {
-      _result.bool_5 = bool_5;
-    }
-    if (color != null) {
-      _result.color = color;
-    }
-    return _result;
-  }
-  factory MonitorOscResponse_OscArgument.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MonitorOscResponse_OscArgument.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -742,8 +774,10 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorOscResponse_OscArgument copyWith(void Function(MonitorOscResponse_OscArgument) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument)) as MonitorOscResponse_OscArgument; // ignore: deprecated_member_use
+  MonitorOscResponse_OscArgument copyWith(void Function(MonitorOscResponse_OscArgument) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument)) as MonitorOscResponse_OscArgument;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorOscResponse_OscArgument create() => MonitorOscResponse_OscArgument._();
   MonitorOscResponse_OscArgument createEmptyInstance() => create();
@@ -813,33 +847,34 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
 }
 
 class MonitorOscResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..pc<MonitorOscResponse_OscArgument>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'args', $pb.PbFieldType.PM, subBuilder: MonitorOscResponse_OscArgument.create)
-    ..hasRequiredFields = false
-  ;
-
-  MonitorOscResponse._() : super();
   factory MonitorOscResponse({
     $fixnum.Int64? timestamp,
     $core.String? path,
     $core.Iterable<MonitorOscResponse_OscArgument>? args,
   }) {
-    final _result = create();
+    final $result = create();
     if (timestamp != null) {
-      _result.timestamp = timestamp;
+      $result.timestamp = timestamp;
     }
     if (path != null) {
-      _result.path = path;
+      $result.path = path;
     }
     if (args != null) {
-      _result.args.addAll(args);
+      $result.args.addAll(args);
     }
-    return _result;
+    return $result;
   }
+  MonitorOscResponse._() : super();
   factory MonitorOscResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MonitorOscResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorOscResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(2, _omitFieldNames ? '' : 'path')
+    ..pc<MonitorOscResponse_OscArgument>(3, _omitFieldNames ? '' : 'args', $pb.PbFieldType.PM, subBuilder: MonitorOscResponse_OscArgument.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -849,8 +884,10 @@ class MonitorOscResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorOscResponse copyWith(void Function(MonitorOscResponse) updates) => super.copyWith((message) => updates(message as MonitorOscResponse)) as MonitorOscResponse; // ignore: deprecated_member_use
+  MonitorOscResponse copyWith(void Function(MonitorOscResponse) updates) => super.copyWith((message) => updates(message as MonitorOscResponse)) as MonitorOscResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MonitorOscResponse create() => MonitorOscResponse._();
   MonitorOscResponse createEmptyInstance() => create();
@@ -882,14 +919,15 @@ class MonitorOscResponse extends $pb.GeneratedMessage {
 }
 
 class GetConnectionsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetConnectionsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+  factory GetConnectionsRequest() => create();
+  GetConnectionsRequest._() : super();
+  factory GetConnectionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetConnectionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetConnectionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  GetConnectionsRequest._() : super();
-  factory GetConnectionsRequest() => create();
-  factory GetConnectionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetConnectionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -899,8 +937,10 @@ class GetConnectionsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetConnectionsRequest copyWith(void Function(GetConnectionsRequest) updates) => super.copyWith((message) => updates(message as GetConnectionsRequest)) as GetConnectionsRequest; // ignore: deprecated_member_use
+  GetConnectionsRequest copyWith(void Function(GetConnectionsRequest) updates) => super.copyWith((message) => updates(message as GetConnectionsRequest)) as GetConnectionsRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetConnectionsRequest create() => GetConnectionsRequest._();
   GetConnectionsRequest createEmptyInstance() => create();
@@ -911,14 +951,15 @@ class GetConnectionsRequest extends $pb.GeneratedMessage {
 }
 
 class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetDeviceProfilesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+  factory GetDeviceProfilesRequest() => create();
+  GetDeviceProfilesRequest._() : super();
+  factory GetDeviceProfilesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetDeviceProfilesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetDeviceProfilesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  GetDeviceProfilesRequest._() : super();
-  factory GetDeviceProfilesRequest() => create();
-  factory GetDeviceProfilesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetDeviceProfilesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -928,8 +969,10 @@ class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetDeviceProfilesRequest copyWith(void Function(GetDeviceProfilesRequest) updates) => super.copyWith((message) => updates(message as GetDeviceProfilesRequest)) as GetDeviceProfilesRequest; // ignore: deprecated_member_use
+  GetDeviceProfilesRequest copyWith(void Function(GetDeviceProfilesRequest) updates) => super.copyWith((message) => updates(message as GetDeviceProfilesRequest)) as GetDeviceProfilesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetDeviceProfilesRequest create() => GetDeviceProfilesRequest._();
   GetDeviceProfilesRequest createEmptyInstance() => create();
@@ -940,33 +983,34 @@ class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
 }
 
 class ArtnetOutputConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetOutputConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  ArtnetOutputConfig._() : super();
   factory ArtnetOutputConfig({
     $core.String? name,
     $core.String? host,
     $core.int? port,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (host != null) {
-      _result.host = host;
+      $result.host = host;
     }
     if (port != null) {
-      _result.port = port;
+      $result.port = port;
     }
-    return _result;
+    return $result;
   }
+  ArtnetOutputConfig._() : super();
   factory ArtnetOutputConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ArtnetOutputConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ArtnetOutputConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(2, _omitFieldNames ? '' : 'host')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -976,8 +1020,10 @@ class ArtnetOutputConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ArtnetOutputConfig copyWith(void Function(ArtnetOutputConfig) updates) => super.copyWith((message) => updates(message as ArtnetOutputConfig)) as ArtnetOutputConfig; // ignore: deprecated_member_use
+  ArtnetOutputConfig copyWith(void Function(ArtnetOutputConfig) updates) => super.copyWith((message) => updates(message as ArtnetOutputConfig)) as ArtnetOutputConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ArtnetOutputConfig create() => ArtnetOutputConfig._();
   ArtnetOutputConfig createEmptyInstance() => create();
@@ -1015,33 +1061,34 @@ class ArtnetOutputConfig extends $pb.GeneratedMessage {
 }
 
 class ArtnetInputConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetInputConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  ArtnetInputConfig._() : super();
   factory ArtnetInputConfig({
     $core.String? name,
     $core.String? host,
     $core.int? port,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (host != null) {
-      _result.host = host;
+      $result.host = host;
     }
     if (port != null) {
-      _result.port = port;
+      $result.port = port;
     }
-    return _result;
+    return $result;
   }
+  ArtnetInputConfig._() : super();
   factory ArtnetInputConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ArtnetInputConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ArtnetInputConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(2, _omitFieldNames ? '' : 'host')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1051,8 +1098,10 @@ class ArtnetInputConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ArtnetInputConfig copyWith(void Function(ArtnetInputConfig) updates) => super.copyWith((message) => updates(message as ArtnetInputConfig)) as ArtnetInputConfig; // ignore: deprecated_member_use
+  ArtnetInputConfig copyWith(void Function(ArtnetInputConfig) updates) => super.copyWith((message) => updates(message as ArtnetInputConfig)) as ArtnetInputConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ArtnetInputConfig create() => ArtnetInputConfig._();
   ArtnetInputConfig createEmptyInstance() => create();
@@ -1090,28 +1139,29 @@ class ArtnetInputConfig extends $pb.GeneratedMessage {
 }
 
 class SacnConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SacnConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  SacnConfig._() : super();
   factory SacnConfig({
     $core.String? name,
     $core.int? priority,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (priority != null) {
-      _result.priority = priority;
+      $result.priority = priority;
     }
-    return _result;
+    return $result;
   }
+  SacnConfig._() : super();
   factory SacnConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SacnConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SacnConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'priority', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1121,8 +1171,10 @@ class SacnConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SacnConfig copyWith(void Function(SacnConfig) updates) => super.copyWith((message) => updates(message as SacnConfig)) as SacnConfig; // ignore: deprecated_member_use
+  SacnConfig copyWith(void Function(SacnConfig) updates) => super.copyWith((message) => updates(message as SacnConfig)) as SacnConfig;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SacnConfig create() => SacnConfig._();
   SacnConfig createEmptyInstance() => create();
@@ -1151,23 +1203,24 @@ class SacnConfig extends $pb.GeneratedMessage {
 }
 
 class Connections extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connections', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..pc<Connection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connections', $pb.PbFieldType.PM, subBuilder: Connection.create)
-    ..hasRequiredFields = false
-  ;
-
-  Connections._() : super();
   factory Connections({
     $core.Iterable<Connection>? connections,
   }) {
-    final _result = create();
+    final $result = create();
     if (connections != null) {
-      _result.connections.addAll(connections);
+      $result.connections.addAll(connections);
     }
-    return _result;
+    return $result;
   }
+  Connections._() : super();
   factory Connections.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Connections.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Connections', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..pc<Connection>(1, _omitFieldNames ? '' : 'connections', $pb.PbFieldType.PM, subBuilder: Connection.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1177,8 +1230,10 @@ class Connections extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Connections copyWith(void Function(Connections) updates) => super.copyWith((message) => updates(message as Connections)) as Connections; // ignore: deprecated_member_use
+  Connections copyWith(void Function(Connections) updates) => super.copyWith((message) => updates(message as Connections)) as Connections;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Connections create() => Connections._();
   Connections createEmptyInstance() => create();
@@ -1204,44 +1259,11 @@ enum Connection_Connection {
   webcam, 
   cdj, 
   djm, 
+  ndiSource, 
   notSet
 }
 
 class Connection extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, Connection_Connection> _Connection_ConnectionByTag = {
-    10 : Connection_Connection.dmxOutput,
-    11 : Connection_Connection.dmxInput,
-    12 : Connection_Connection.midi,
-    13 : Connection_Connection.osc,
-    14 : Connection_Connection.helios,
-    15 : Connection_Connection.etherDream,
-    16 : Connection_Connection.gamepad,
-    17 : Connection_Connection.mqtt,
-    18 : Connection_Connection.g13,
-    19 : Connection_Connection.webcam,
-    20 : Connection_Connection.cdj,
-    21 : Connection_Connection.djm,
-    0 : Connection_Connection.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOM<DmxOutputConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
-    ..aOM<DmxInputConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
-    ..aOM<MidiConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
-    ..aOM<OscConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
-    ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
-    ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', subBuilder: EtherDreamConnection.create)
-    ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
-    ..aOM<MqttConnection>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
-    ..aOM<G13Connection>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13', subBuilder: G13Connection.create)
-    ..aOM<WebcamConnection>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'webcam', subBuilder: WebcamConnection.create)
-    ..aOM<PioneerCdjConnection>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cdj', subBuilder: PioneerCdjConnection.create)
-    ..aOM<PioneerDjmConnection>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'djm', subBuilder: PioneerDjmConnection.create)
-    ..hasRequiredFields = false
-  ;
-
-  Connection._() : super();
   factory Connection({
     $core.String? name,
     DmxOutputConnection? dmxOutput,
@@ -1256,51 +1278,92 @@ class Connection extends $pb.GeneratedMessage {
     WebcamConnection? webcam,
     PioneerCdjConnection? cdj,
     PioneerDjmConnection? djm,
+    NdiSourceConnection? ndiSource,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (dmxOutput != null) {
-      _result.dmxOutput = dmxOutput;
+      $result.dmxOutput = dmxOutput;
     }
     if (dmxInput != null) {
-      _result.dmxInput = dmxInput;
+      $result.dmxInput = dmxInput;
     }
     if (midi != null) {
-      _result.midi = midi;
+      $result.midi = midi;
     }
     if (osc != null) {
-      _result.osc = osc;
+      $result.osc = osc;
     }
     if (helios != null) {
-      _result.helios = helios;
+      $result.helios = helios;
     }
     if (etherDream != null) {
-      _result.etherDream = etherDream;
+      $result.etherDream = etherDream;
     }
     if (gamepad != null) {
-      _result.gamepad = gamepad;
+      $result.gamepad = gamepad;
     }
     if (mqtt != null) {
-      _result.mqtt = mqtt;
+      $result.mqtt = mqtt;
     }
     if (g13 != null) {
-      _result.g13 = g13;
+      $result.g13 = g13;
     }
     if (webcam != null) {
-      _result.webcam = webcam;
+      $result.webcam = webcam;
     }
     if (cdj != null) {
-      _result.cdj = cdj;
+      $result.cdj = cdj;
     }
     if (djm != null) {
-      _result.djm = djm;
+      $result.djm = djm;
     }
-    return _result;
+    if (ndiSource != null) {
+      $result.ndiSource = ndiSource;
+    }
+    return $result;
   }
+  Connection._() : super();
   factory Connection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Connection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, Connection_Connection> _Connection_ConnectionByTag = {
+    10 : Connection_Connection.dmxOutput,
+    11 : Connection_Connection.dmxInput,
+    12 : Connection_Connection.midi,
+    13 : Connection_Connection.osc,
+    14 : Connection_Connection.helios,
+    15 : Connection_Connection.etherDream,
+    16 : Connection_Connection.gamepad,
+    17 : Connection_Connection.mqtt,
+    18 : Connection_Connection.g13,
+    19 : Connection_Connection.webcam,
+    20 : Connection_Connection.cdj,
+    21 : Connection_Connection.djm,
+    22 : Connection_Connection.ndiSource,
+    0 : Connection_Connection.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Connection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22])
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOM<DmxOutputConnection>(10, _omitFieldNames ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
+    ..aOM<DmxInputConnection>(11, _omitFieldNames ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
+    ..aOM<MidiConnection>(12, _omitFieldNames ? '' : 'midi', subBuilder: MidiConnection.create)
+    ..aOM<OscConnection>(13, _omitFieldNames ? '' : 'osc', subBuilder: OscConnection.create)
+    ..aOM<HeliosConnection>(14, _omitFieldNames ? '' : 'helios', subBuilder: HeliosConnection.create)
+    ..aOM<EtherDreamConnection>(15, _omitFieldNames ? '' : 'etherDream', subBuilder: EtherDreamConnection.create)
+    ..aOM<GamepadConnection>(16, _omitFieldNames ? '' : 'gamepad', subBuilder: GamepadConnection.create)
+    ..aOM<MqttConnection>(17, _omitFieldNames ? '' : 'mqtt', subBuilder: MqttConnection.create)
+    ..aOM<G13Connection>(18, _omitFieldNames ? '' : 'g13', subBuilder: G13Connection.create)
+    ..aOM<WebcamConnection>(19, _omitFieldNames ? '' : 'webcam', subBuilder: WebcamConnection.create)
+    ..aOM<PioneerCdjConnection>(20, _omitFieldNames ? '' : 'cdj', subBuilder: PioneerCdjConnection.create)
+    ..aOM<PioneerDjmConnection>(21, _omitFieldNames ? '' : 'djm', subBuilder: PioneerDjmConnection.create)
+    ..aOM<NdiSourceConnection>(22, _omitFieldNames ? '' : 'ndiSource', subBuilder: NdiSourceConnection.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1310,8 +1373,10 @@ class Connection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Connection copyWith(void Function(Connection) updates) => super.copyWith((message) => updates(message as Connection)) as Connection; // ignore: deprecated_member_use
+  Connection copyWith(void Function(Connection) updates) => super.copyWith((message) => updates(message as Connection)) as Connection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Connection create() => Connection._();
   Connection createEmptyInstance() => create();
@@ -1463,6 +1528,17 @@ class Connection extends $pb.GeneratedMessage {
   void clearDjm() => clearField(21);
   @$pb.TagNumber(21)
   PioneerDjmConnection ensureDjm() => $_ensure(12);
+
+  @$pb.TagNumber(22)
+  NdiSourceConnection get ndiSource => $_getN(13);
+  @$pb.TagNumber(22)
+  set ndiSource(NdiSourceConnection v) { setField(22, v); }
+  @$pb.TagNumber(22)
+  $core.bool hasNdiSource() => $_has(13);
+  @$pb.TagNumber(22)
+  void clearNdiSource() => clearField(22);
+  @$pb.TagNumber(22)
+  NdiSourceConnection ensureNdiSource() => $_ensure(13);
 }
 
 enum DmxOutputConnection_Config {
@@ -1472,39 +1548,40 @@ enum DmxOutputConnection_Config {
 }
 
 class DmxOutputConnection extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, DmxOutputConnection_Config> _DmxOutputConnection_ConfigByTag = {
-    3 : DmxOutputConnection_Config.artnet,
-    4 : DmxOutputConnection_Config.sacn,
-    0 : DmxOutputConnection_Config.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxOutputConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [3, 4])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId')
-    ..aOM<ArtnetOutputConfig>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetOutputConfig.create)
-    ..aOM<SacnConfig>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sacn', subBuilder: SacnConfig.create)
-    ..hasRequiredFields = false
-  ;
-
-  DmxOutputConnection._() : super();
   factory DmxOutputConnection({
     $core.String? outputId,
     ArtnetOutputConfig? artnet,
     SacnConfig? sacn,
   }) {
-    final _result = create();
+    final $result = create();
     if (outputId != null) {
-      _result.outputId = outputId;
+      $result.outputId = outputId;
     }
     if (artnet != null) {
-      _result.artnet = artnet;
+      $result.artnet = artnet;
     }
     if (sacn != null) {
-      _result.sacn = sacn;
+      $result.sacn = sacn;
     }
-    return _result;
+    return $result;
   }
+  DmxOutputConnection._() : super();
   factory DmxOutputConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DmxOutputConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, DmxOutputConnection_Config> _DmxOutputConnection_ConfigByTag = {
+    3 : DmxOutputConnection_Config.artnet,
+    4 : DmxOutputConnection_Config.sacn,
+    0 : DmxOutputConnection_Config.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DmxOutputConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..oo(0, [3, 4])
+    ..aOS(1, _omitFieldNames ? '' : 'outputId')
+    ..aOM<ArtnetOutputConfig>(3, _omitFieldNames ? '' : 'artnet', subBuilder: ArtnetOutputConfig.create)
+    ..aOM<SacnConfig>(4, _omitFieldNames ? '' : 'sacn', subBuilder: SacnConfig.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1514,8 +1591,10 @@ class DmxOutputConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DmxOutputConnection copyWith(void Function(DmxOutputConnection) updates) => super.copyWith((message) => updates(message as DmxOutputConnection)) as DmxOutputConnection; // ignore: deprecated_member_use
+  DmxOutputConnection copyWith(void Function(DmxOutputConnection) updates) => super.copyWith((message) => updates(message as DmxOutputConnection)) as DmxOutputConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DmxOutputConnection create() => DmxOutputConnection._();
   DmxOutputConnection createEmptyInstance() => create();
@@ -1565,33 +1644,34 @@ enum DmxInputConnection_Config {
 }
 
 class DmxInputConnection extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, DmxInputConnection_Config> _DmxInputConnection_ConfigByTag = {
-    2 : DmxInputConnection_Config.artnet,
-    0 : DmxInputConnection_Config.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxInputConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [2])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOM<ArtnetInputConfig>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetInputConfig.create)
-    ..hasRequiredFields = false
-  ;
-
-  DmxInputConnection._() : super();
   factory DmxInputConnection({
     $core.String? id,
     ArtnetInputConfig? artnet,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (artnet != null) {
-      _result.artnet = artnet;
+      $result.artnet = artnet;
     }
-    return _result;
+    return $result;
   }
+  DmxInputConnection._() : super();
   factory DmxInputConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DmxInputConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static const $core.Map<$core.int, DmxInputConnection_Config> _DmxInputConnection_ConfigByTag = {
+    2 : DmxInputConnection_Config.artnet,
+    0 : DmxInputConnection_Config.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DmxInputConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..oo(0, [2])
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOM<ArtnetInputConfig>(2, _omitFieldNames ? '' : 'artnet', subBuilder: ArtnetInputConfig.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1601,8 +1681,10 @@ class DmxInputConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DmxInputConnection copyWith(void Function(DmxInputConnection) updates) => super.copyWith((message) => updates(message as DmxInputConnection)) as DmxInputConnection; // ignore: deprecated_member_use
+  DmxInputConnection copyWith(void Function(DmxInputConnection) updates) => super.copyWith((message) => updates(message as DmxInputConnection)) as DmxInputConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DmxInputConnection create() => DmxInputConnection._();
   DmxInputConnection createEmptyInstance() => create();
@@ -1636,28 +1718,29 @@ class DmxInputConnection extends $pb.GeneratedMessage {
 }
 
 class HeliosConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HeliosConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firmware', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  HeliosConnection._() : super();
   factory HeliosConnection({
     $core.String? name,
     $core.int? firmware,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (firmware != null) {
-      _result.firmware = firmware;
+      $result.firmware = firmware;
     }
-    return _result;
+    return $result;
   }
+  HeliosConnection._() : super();
   factory HeliosConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory HeliosConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HeliosConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'firmware', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1667,8 +1750,10 @@ class HeliosConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HeliosConnection copyWith(void Function(HeliosConnection) updates) => super.copyWith((message) => updates(message as HeliosConnection)) as HeliosConnection; // ignore: deprecated_member_use
+  HeliosConnection copyWith(void Function(HeliosConnection) updates) => super.copyWith((message) => updates(message as HeliosConnection)) as HeliosConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static HeliosConnection create() => HeliosConnection._();
   HeliosConnection createEmptyInstance() => create();
@@ -1697,23 +1782,24 @@ class HeliosConnection extends $pb.GeneratedMessage {
 }
 
 class EtherDreamConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EtherDreamConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  EtherDreamConnection._() : super();
   factory EtherDreamConnection({
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  EtherDreamConnection._() : super();
   factory EtherDreamConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EtherDreamConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'EtherDreamConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1723,8 +1809,10 @@ class EtherDreamConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EtherDreamConnection copyWith(void Function(EtherDreamConnection) updates) => super.copyWith((message) => updates(message as EtherDreamConnection)) as EtherDreamConnection; // ignore: deprecated_member_use
+  EtherDreamConnection copyWith(void Function(EtherDreamConnection) updates) => super.copyWith((message) => updates(message as EtherDreamConnection)) as EtherDreamConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static EtherDreamConnection create() => EtherDreamConnection._();
   EtherDreamConnection createEmptyInstance() => create();
@@ -1744,28 +1832,29 @@ class EtherDreamConnection extends $pb.GeneratedMessage {
 }
 
 class GamepadConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GamepadConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  GamepadConnection._() : super();
   factory GamepadConnection({
     $core.String? id,
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  GamepadConnection._() : super();
   factory GamepadConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GamepadConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GamepadConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1775,8 +1864,10 @@ class GamepadConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GamepadConnection copyWith(void Function(GamepadConnection) updates) => super.copyWith((message) => updates(message as GamepadConnection)) as GamepadConnection; // ignore: deprecated_member_use
+  GamepadConnection copyWith(void Function(GamepadConnection) updates) => super.copyWith((message) => updates(message as GamepadConnection)) as GamepadConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GamepadConnection create() => GamepadConnection._();
   GamepadConnection createEmptyInstance() => create();
@@ -1805,23 +1896,24 @@ class GamepadConnection extends $pb.GeneratedMessage {
 }
 
 class G13Connection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'G13Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..hasRequiredFields = false
-  ;
-
-  G13Connection._() : super();
   factory G13Connection({
     $core.String? id,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
-    return _result;
+    return $result;
   }
+  G13Connection._() : super();
   factory G13Connection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory G13Connection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'G13Connection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1831,8 +1923,10 @@ class G13Connection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  G13Connection copyWith(void Function(G13Connection) updates) => super.copyWith((message) => updates(message as G13Connection)) as G13Connection; // ignore: deprecated_member_use
+  G13Connection copyWith(void Function(G13Connection) updates) => super.copyWith((message) => updates(message as G13Connection)) as G13Connection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static G13Connection create() => G13Connection._();
   G13Connection createEmptyInstance() => create();
@@ -1852,28 +1946,29 @@ class G13Connection extends $pb.GeneratedMessage {
 }
 
 class WebcamConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WebcamConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  WebcamConnection._() : super();
   factory WebcamConnection({
     $core.String? id,
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  WebcamConnection._() : super();
   factory WebcamConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory WebcamConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WebcamConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1883,8 +1978,10 @@ class WebcamConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WebcamConnection copyWith(void Function(WebcamConnection) updates) => super.copyWith((message) => updates(message as WebcamConnection)) as WebcamConnection; // ignore: deprecated_member_use
+  WebcamConnection copyWith(void Function(WebcamConnection) updates) => super.copyWith((message) => updates(message as WebcamConnection)) as WebcamConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static WebcamConnection create() => WebcamConnection._();
   WebcamConnection createEmptyInstance() => create();
@@ -1912,24 +2009,89 @@ class WebcamConnection extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 }
 
-class MidiConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceProfile')
+class NdiSourceConnection extends $pb.GeneratedMessage {
+  factory NdiSourceConnection({
+    $core.String? id,
+    $core.String? name,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    return $result;
+  }
+  NdiSourceConnection._() : super();
+  factory NdiSourceConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NdiSourceConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NdiSourceConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false
   ;
 
-  MidiConnection._() : super();
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NdiSourceConnection clone() => NdiSourceConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NdiSourceConnection copyWith(void Function(NdiSourceConnection) updates) => super.copyWith((message) => updates(message as NdiSourceConnection)) as NdiSourceConnection;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static NdiSourceConnection create() => NdiSourceConnection._();
+  NdiSourceConnection createEmptyInstance() => create();
+  static $pb.PbList<NdiSourceConnection> createRepeated() => $pb.PbList<NdiSourceConnection>();
+  @$core.pragma('dart2js:noInline')
+  static NdiSourceConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NdiSourceConnection>(create);
+  static NdiSourceConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+}
+
+class MidiConnection extends $pb.GeneratedMessage {
   factory MidiConnection({
     $core.String? deviceProfile,
   }) {
-    final _result = create();
+    final $result = create();
     if (deviceProfile != null) {
-      _result.deviceProfile = deviceProfile;
+      $result.deviceProfile = deviceProfile;
     }
-    return _result;
+    return $result;
   }
+  MidiConnection._() : super();
   factory MidiConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'deviceProfile')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1939,8 +2101,10 @@ class MidiConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiConnection copyWith(void Function(MidiConnection) updates) => super.copyWith((message) => updates(message as MidiConnection)) as MidiConnection; // ignore: deprecated_member_use
+  MidiConnection copyWith(void Function(MidiConnection) updates) => super.copyWith((message) => updates(message as MidiConnection)) as MidiConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiConnection create() => MidiConnection._();
   MidiConnection createEmptyInstance() => create();
@@ -1960,23 +2124,24 @@ class MidiConnection extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfiles extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..pc<MidiDeviceProfile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
-    ..hasRequiredFields = false
-  ;
-
-  MidiDeviceProfiles._() : super();
   factory MidiDeviceProfiles({
     $core.Iterable<MidiDeviceProfile>? profiles,
   }) {
-    final _result = create();
+    final $result = create();
     if (profiles != null) {
-      _result.profiles.addAll(profiles);
+      $result.profiles.addAll(profiles);
     }
-    return _result;
+    return $result;
   }
+  MidiDeviceProfiles._() : super();
   factory MidiDeviceProfiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..pc<MidiDeviceProfile>(1, _omitFieldNames ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1986,8 +2151,10 @@ class MidiDeviceProfiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles; // ignore: deprecated_member_use
+  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfiles create() => MidiDeviceProfiles._();
   MidiDeviceProfiles createEmptyInstance() => create();
@@ -2001,33 +2168,34 @@ class MidiDeviceProfiles extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfile_Page extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Page', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<MidiDeviceProfile_Group>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Group.create)
-    ..pc<MidiDeviceProfile_Control>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
-    ..hasRequiredFields = false
-  ;
-
-  MidiDeviceProfile_Page._() : super();
   factory MidiDeviceProfile_Page({
     $core.String? name,
     $core.Iterable<MidiDeviceProfile_Group>? groups,
     $core.Iterable<MidiDeviceProfile_Control>? controls,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (groups != null) {
-      _result.groups.addAll(groups);
+      $result.groups.addAll(groups);
     }
     if (controls != null) {
-      _result.controls.addAll(controls);
+      $result.controls.addAll(controls);
     }
-    return _result;
+    return $result;
   }
+  MidiDeviceProfile_Page._() : super();
   factory MidiDeviceProfile_Page.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfile_Page.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile.Page', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..pc<MidiDeviceProfile_Group>(2, _omitFieldNames ? '' : 'groups', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Group.create)
+    ..pc<MidiDeviceProfile_Control>(3, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2037,8 +2205,10 @@ class MidiDeviceProfile_Page extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfile_Page copyWith(void Function(MidiDeviceProfile_Page) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Page)) as MidiDeviceProfile_Page; // ignore: deprecated_member_use
+  MidiDeviceProfile_Page copyWith(void Function(MidiDeviceProfile_Page) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Page)) as MidiDeviceProfile_Page;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfile_Page create() => MidiDeviceProfile_Page._();
   MidiDeviceProfile_Page createEmptyInstance() => create();
@@ -2064,28 +2234,29 @@ class MidiDeviceProfile_Page extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfile_Group extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Group', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<MidiDeviceProfile_Control>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
-    ..hasRequiredFields = false
-  ;
-
-  MidiDeviceProfile_Group._() : super();
   factory MidiDeviceProfile_Group({
     $core.String? name,
     $core.Iterable<MidiDeviceProfile_Control>? controls,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (controls != null) {
-      _result.controls.addAll(controls);
+      $result.controls.addAll(controls);
     }
-    return _result;
+    return $result;
   }
+  MidiDeviceProfile_Group._() : super();
   factory MidiDeviceProfile_Group.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfile_Group.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile.Group', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..pc<MidiDeviceProfile_Control>(2, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2095,8 +2266,10 @@ class MidiDeviceProfile_Group extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfile_Group copyWith(void Function(MidiDeviceProfile_Group) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Group)) as MidiDeviceProfile_Group; // ignore: deprecated_member_use
+  MidiDeviceProfile_Group copyWith(void Function(MidiDeviceProfile_Group) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Group)) as MidiDeviceProfile_Group;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfile_Group create() => MidiDeviceProfile_Group._();
   MidiDeviceProfile_Group createEmptyInstance() => create();
@@ -2119,38 +2292,39 @@ class MidiDeviceProfile_Group extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Control', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasInput')
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasOutput')
-    ..hasRequiredFields = false
-  ;
-
-  MidiDeviceProfile_Control._() : super();
   factory MidiDeviceProfile_Control({
     $core.String? id,
     $core.String? name,
     $core.bool? hasInput,
     $core.bool? hasOutput,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (hasInput != null) {
-      _result.hasInput = hasInput;
+      $result.hasInput = hasInput;
     }
     if (hasOutput != null) {
-      _result.hasOutput = hasOutput;
+      $result.hasOutput = hasOutput;
     }
-    return _result;
+    return $result;
   }
+  MidiDeviceProfile_Control._() : super();
   factory MidiDeviceProfile_Control.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfile_Control.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile.Control', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOB(3, _omitFieldNames ? '' : 'hasInput')
+    ..aOB(4, _omitFieldNames ? '' : 'hasOutput')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2160,8 +2334,10 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfile_Control copyWith(void Function(MidiDeviceProfile_Control) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Control)) as MidiDeviceProfile_Control; // ignore: deprecated_member_use
+  MidiDeviceProfile_Control copyWith(void Function(MidiDeviceProfile_Control) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Control)) as MidiDeviceProfile_Control;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfile_Control create() => MidiDeviceProfile_Control._();
   MidiDeviceProfile_Control createEmptyInstance() => create();
@@ -2208,16 +2384,6 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
 }
 
 class MidiDeviceProfile extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layout')
-    ..pc<MidiDeviceProfile_Page>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pages', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Page.create)
-    ..hasRequiredFields = false
-  ;
-
-  MidiDeviceProfile._() : super();
   factory MidiDeviceProfile({
     $core.String? id,
     $core.String? manufacturer,
@@ -2225,26 +2391,37 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
     $core.String? layout,
     $core.Iterable<MidiDeviceProfile_Page>? pages,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (manufacturer != null) {
-      _result.manufacturer = manufacturer;
+      $result.manufacturer = manufacturer;
     }
     if (model != null) {
-      _result.model = model;
+      $result.model = model;
     }
     if (layout != null) {
-      _result.layout = layout;
+      $result.layout = layout;
     }
     if (pages != null) {
-      _result.pages.addAll(pages);
+      $result.pages.addAll(pages);
     }
-    return _result;
+    return $result;
   }
+  MidiDeviceProfile._() : super();
   factory MidiDeviceProfile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiDeviceProfile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'manufacturer')
+    ..aOS(3, _omitFieldNames ? '' : 'model')
+    ..aOS(4, _omitFieldNames ? '' : 'layout')
+    ..pc<MidiDeviceProfile_Page>(5, _omitFieldNames ? '' : 'pages', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Page.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2254,8 +2431,10 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile; // ignore: deprecated_member_use
+  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MidiDeviceProfile create() => MidiDeviceProfile._();
   MidiDeviceProfile createEmptyInstance() => create();
@@ -2305,38 +2484,39 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
 }
 
 class OscConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', $pb.PbFieldType.OU3)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputAddress')
-    ..hasRequiredFields = false
-  ;
-
-  OscConnection._() : super();
   factory OscConnection({
     $core.String? connectionId,
     $core.int? inputPort,
     $core.int? outputPort,
     $core.String? outputAddress,
   }) {
-    final _result = create();
+    final $result = create();
     if (connectionId != null) {
-      _result.connectionId = connectionId;
+      $result.connectionId = connectionId;
     }
     if (inputPort != null) {
-      _result.inputPort = inputPort;
+      $result.inputPort = inputPort;
     }
     if (outputPort != null) {
-      _result.outputPort = outputPort;
+      $result.outputPort = outputPort;
     }
     if (outputAddress != null) {
-      _result.outputAddress = outputAddress;
+      $result.outputAddress = outputAddress;
     }
-    return _result;
+    return $result;
   }
+  OscConnection._() : super();
   factory OscConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory OscConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OscConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'connectionId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'inputPort', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'outputPort', $pb.PbFieldType.OU3)
+    ..aOS(4, _omitFieldNames ? '' : 'outputAddress')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2346,8 +2526,10 @@ class OscConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OscConnection copyWith(void Function(OscConnection) updates) => super.copyWith((message) => updates(message as OscConnection)) as OscConnection; // ignore: deprecated_member_use
+  OscConnection copyWith(void Function(OscConnection) updates) => super.copyWith((message) => updates(message as OscConnection)) as OscConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static OscConnection create() => OscConnection._();
   OscConnection createEmptyInstance() => create();
@@ -2394,16 +2576,6 @@ class OscConnection extends $pb.GeneratedMessage {
 }
 
 class PioneerCdjConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PioneerCdjConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
-    ..aOM<CdjPlayback>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', subBuilder: CdjPlayback.create)
-    ..hasRequiredFields = false
-  ;
-
-  PioneerCdjConnection._() : super();
   factory PioneerCdjConnection({
     $core.String? id,
     $core.String? address,
@@ -2411,26 +2583,37 @@ class PioneerCdjConnection extends $pb.GeneratedMessage {
     $core.int? playerNumber,
     CdjPlayback? playback,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (address != null) {
-      _result.address = address;
+      $result.address = address;
     }
     if (model != null) {
-      _result.model = model;
+      $result.model = model;
     }
     if (playerNumber != null) {
-      _result.playerNumber = playerNumber;
+      $result.playerNumber = playerNumber;
     }
     if (playback != null) {
-      _result.playback = playback;
+      $result.playback = playback;
     }
-    return _result;
+    return $result;
   }
+  PioneerCdjConnection._() : super();
   factory PioneerCdjConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PioneerCdjConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PioneerCdjConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'address')
+    ..aOS(3, _omitFieldNames ? '' : 'model')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'playerNumber', $pb.PbFieldType.OU3)
+    ..aOM<CdjPlayback>(5, _omitFieldNames ? '' : 'playback', subBuilder: CdjPlayback.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2440,8 +2623,10 @@ class PioneerCdjConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PioneerCdjConnection copyWith(void Function(PioneerCdjConnection) updates) => super.copyWith((message) => updates(message as PioneerCdjConnection)) as PioneerCdjConnection; // ignore: deprecated_member_use
+  PioneerCdjConnection copyWith(void Function(PioneerCdjConnection) updates) => super.copyWith((message) => updates(message as PioneerCdjConnection)) as PioneerCdjConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static PioneerCdjConnection create() => PioneerCdjConnection._();
   PioneerCdjConnection createEmptyInstance() => create();
@@ -2499,38 +2684,39 @@ class PioneerCdjConnection extends $pb.GeneratedMessage {
 }
 
 class PioneerDjmConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PioneerDjmConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  PioneerDjmConnection._() : super();
   factory PioneerDjmConnection({
     $core.String? id,
     $core.String? address,
     $core.String? model,
     $core.int? playerNumber,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (address != null) {
-      _result.address = address;
+      $result.address = address;
     }
     if (model != null) {
-      _result.model = model;
+      $result.model = model;
     }
     if (playerNumber != null) {
-      _result.playerNumber = playerNumber;
+      $result.playerNumber = playerNumber;
     }
-    return _result;
+    return $result;
   }
+  PioneerDjmConnection._() : super();
   factory PioneerDjmConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PioneerDjmConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PioneerDjmConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'address')
+    ..aOS(3, _omitFieldNames ? '' : 'model')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'playerNumber', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2540,8 +2726,10 @@ class PioneerDjmConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PioneerDjmConnection copyWith(void Function(PioneerDjmConnection) updates) => super.copyWith((message) => updates(message as PioneerDjmConnection)) as PioneerDjmConnection; // ignore: deprecated_member_use
+  PioneerDjmConnection copyWith(void Function(PioneerDjmConnection) updates) => super.copyWith((message) => updates(message as PioneerDjmConnection)) as PioneerDjmConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static PioneerDjmConnection create() => PioneerDjmConnection._();
   PioneerDjmConnection createEmptyInstance() => create();
@@ -2588,28 +2776,29 @@ class PioneerDjmConnection extends $pb.GeneratedMessage {
 }
 
 class CdjPlayback_Track extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CdjPlayback.Track', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artist')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
-    ..hasRequiredFields = false
-  ;
-
-  CdjPlayback_Track._() : super();
   factory CdjPlayback_Track({
     $core.String? artist,
     $core.String? title,
   }) {
-    final _result = create();
+    final $result = create();
     if (artist != null) {
-      _result.artist = artist;
+      $result.artist = artist;
     }
     if (title != null) {
-      _result.title = title;
+      $result.title = title;
     }
-    return _result;
+    return $result;
   }
+  CdjPlayback_Track._() : super();
   factory CdjPlayback_Track.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CdjPlayback_Track.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CdjPlayback.Track', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'artist')
+    ..aOS(2, _omitFieldNames ? '' : 'title')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2619,8 +2808,10 @@ class CdjPlayback_Track extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CdjPlayback_Track copyWith(void Function(CdjPlayback_Track) updates) => super.copyWith((message) => updates(message as CdjPlayback_Track)) as CdjPlayback_Track; // ignore: deprecated_member_use
+  CdjPlayback_Track copyWith(void Function(CdjPlayback_Track) updates) => super.copyWith((message) => updates(message as CdjPlayback_Track)) as CdjPlayback_Track;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CdjPlayback_Track create() => CdjPlayback_Track._();
   CdjPlayback_Track createEmptyInstance() => create();
@@ -2649,16 +2840,6 @@ class CdjPlayback_Track extends $pb.GeneratedMessage {
 }
 
 class CdjPlayback extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CdjPlayback', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'live')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bpm', $pb.PbFieldType.OD)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frame', $pb.PbFieldType.OU3)
-    ..e<CdjPlayback_State>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', $pb.PbFieldType.OE, defaultOrMaker: CdjPlayback_State.LOADING, valueOf: CdjPlayback_State.valueOf, enumValues: CdjPlayback_State.values)
-    ..aOM<CdjPlayback_Track>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'track', subBuilder: CdjPlayback_Track.create)
-    ..hasRequiredFields = false
-  ;
-
-  CdjPlayback._() : super();
   factory CdjPlayback({
     $core.bool? live,
     $core.double? bpm,
@@ -2666,26 +2847,37 @@ class CdjPlayback extends $pb.GeneratedMessage {
     CdjPlayback_State? playback,
     CdjPlayback_Track? track,
   }) {
-    final _result = create();
+    final $result = create();
     if (live != null) {
-      _result.live = live;
+      $result.live = live;
     }
     if (bpm != null) {
-      _result.bpm = bpm;
+      $result.bpm = bpm;
     }
     if (frame != null) {
-      _result.frame = frame;
+      $result.frame = frame;
     }
     if (playback != null) {
-      _result.playback = playback;
+      $result.playback = playback;
     }
     if (track != null) {
-      _result.track = track;
+      $result.track = track;
     }
-    return _result;
+    return $result;
   }
+  CdjPlayback._() : super();
   factory CdjPlayback.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CdjPlayback.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CdjPlayback', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'live')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'bpm', $pb.PbFieldType.OD)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'frame', $pb.PbFieldType.OU3)
+    ..e<CdjPlayback_State>(4, _omitFieldNames ? '' : 'playback', $pb.PbFieldType.OE, defaultOrMaker: CdjPlayback_State.LOADING, valueOf: CdjPlayback_State.valueOf, enumValues: CdjPlayback_State.values)
+    ..aOM<CdjPlayback_Track>(5, _omitFieldNames ? '' : 'track', subBuilder: CdjPlayback_Track.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2695,8 +2887,10 @@ class CdjPlayback extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CdjPlayback copyWith(void Function(CdjPlayback) updates) => super.copyWith((message) => updates(message as CdjPlayback)) as CdjPlayback; // ignore: deprecated_member_use
+  CdjPlayback copyWith(void Function(CdjPlayback) updates) => super.copyWith((message) => updates(message as CdjPlayback)) as CdjPlayback;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CdjPlayback create() => CdjPlayback._();
   CdjPlayback createEmptyInstance() => create();
@@ -2754,38 +2948,39 @@ class CdjPlayback extends $pb.GeneratedMessage {
 }
 
 class MqttConnection extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MqttConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'password')
-    ..hasRequiredFields = false
-  ;
-
-  MqttConnection._() : super();
   factory MqttConnection({
     $core.String? connectionId,
     $core.String? url,
     $core.String? username,
     $core.String? password,
   }) {
-    final _result = create();
+    final $result = create();
     if (connectionId != null) {
-      _result.connectionId = connectionId;
+      $result.connectionId = connectionId;
     }
     if (url != null) {
-      _result.url = url;
+      $result.url = url;
     }
     if (username != null) {
-      _result.username = username;
+      $result.username = username;
     }
     if (password != null) {
-      _result.password = password;
+      $result.password = password;
     }
-    return _result;
+    return $result;
   }
+  MqttConnection._() : super();
   factory MqttConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MqttConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MqttConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'connectionId')
+    ..aOS(2, _omitFieldNames ? '' : 'url')
+    ..aOS(3, _omitFieldNames ? '' : 'username')
+    ..aOS(4, _omitFieldNames ? '' : 'password')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2795,8 +2990,10 @@ class MqttConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MqttConnection copyWith(void Function(MqttConnection) updates) => super.copyWith((message) => updates(message as MqttConnection)) as MqttConnection; // ignore: deprecated_member_use
+  MqttConnection copyWith(void Function(MqttConnection) updates) => super.copyWith((message) => updates(message as MqttConnection)) as MqttConnection;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MqttConnection create() => MqttConnection._();
   MqttConnection createEmptyInstance() => create();
@@ -2851,6 +3048,31 @@ enum ConfigureConnectionRequest_Config {
 }
 
 class ConfigureConnectionRequest extends $pb.GeneratedMessage {
+  factory ConfigureConnectionRequest({
+    DmxOutputConnection? dmxOutput,
+    MqttConnection? mqtt,
+    OscConnection? osc,
+    DmxInputConnection? dmxInput,
+  }) {
+    final $result = create();
+    if (dmxOutput != null) {
+      $result.dmxOutput = dmxOutput;
+    }
+    if (mqtt != null) {
+      $result.mqtt = mqtt;
+    }
+    if (osc != null) {
+      $result.osc = osc;
+    }
+    if (dmxInput != null) {
+      $result.dmxInput = dmxInput;
+    }
+    return $result;
+  }
+  ConfigureConnectionRequest._() : super();
+  factory ConfigureConnectionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ConfigureConnectionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
   static const $core.Map<$core.int, ConfigureConnectionRequest_Config> _ConfigureConnectionRequest_ConfigByTag = {
     1 : ConfigureConnectionRequest_Config.dmxOutput,
     2 : ConfigureConnectionRequest_Config.mqtt,
@@ -2858,39 +3080,15 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
     4 : ConfigureConnectionRequest_Config.dmxInput,
     0 : ConfigureConnectionRequest_Config.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.connections'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
-    ..aOM<DmxOutputConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
-    ..aOM<MqttConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
-    ..aOM<OscConnection>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
-    ..aOM<DmxInputConnection>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
+    ..aOM<DmxOutputConnection>(1, _omitFieldNames ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
+    ..aOM<MqttConnection>(2, _omitFieldNames ? '' : 'mqtt', subBuilder: MqttConnection.create)
+    ..aOM<OscConnection>(3, _omitFieldNames ? '' : 'osc', subBuilder: OscConnection.create)
+    ..aOM<DmxInputConnection>(4, _omitFieldNames ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
     ..hasRequiredFields = false
   ;
 
-  ConfigureConnectionRequest._() : super();
-  factory ConfigureConnectionRequest({
-    DmxOutputConnection? dmxOutput,
-    MqttConnection? mqtt,
-    OscConnection? osc,
-    DmxInputConnection? dmxInput,
-  }) {
-    final _result = create();
-    if (dmxOutput != null) {
-      _result.dmxOutput = dmxOutput;
-    }
-    if (mqtt != null) {
-      _result.mqtt = mqtt;
-    }
-    if (osc != null) {
-      _result.osc = osc;
-    }
-    if (dmxInput != null) {
-      _result.dmxInput = dmxInput;
-    }
-    return _result;
-  }
-  factory ConfigureConnectionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ConfigureConnectionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2900,8 +3098,10 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ConfigureConnectionRequest copyWith(void Function(ConfigureConnectionRequest) updates) => super.copyWith((message) => updates(message as ConfigureConnectionRequest)) as ConfigureConnectionRequest; // ignore: deprecated_member_use
+  ConfigureConnectionRequest copyWith(void Function(ConfigureConnectionRequest) updates) => super.copyWith((message) => updates(message as ConfigureConnectionRequest)) as ConfigureConnectionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ConfigureConnectionRequest create() => ConfigureConnectionRequest._();
   ConfigureConnectionRequest createEmptyInstance() => create();
@@ -2958,3 +3158,6 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   DmxInputConnection ensureDmxInput() => $_ensure(3);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

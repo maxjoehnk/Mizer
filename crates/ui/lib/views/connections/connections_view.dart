@@ -353,6 +353,9 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasWebcam()) {
       return _tag("Webcam");
     }
+    if (connection.hasNdiSource()) {
+      return _tag("NDI");
+    }
     return Container();
   }
 

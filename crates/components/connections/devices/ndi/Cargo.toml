@@ -1,0 +1,15 @@
+[package]
+name = "mizer-ndi"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+tracing = "0.1"
+anyhow = "1"
+futures = "0.3"
+flume = "0.11"
+pinboard = "2.2"
+enum-iterator = "1.4"
+ndi = "0.1"
+image = "0.24"

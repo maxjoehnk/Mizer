@@ -5,6 +5,7 @@ members = [
     "crates/components/connections/devices",
     "crates/components/connections/devices/g13",
     "crates/components/connections/devices/gamepads",
+    "crates/components/connections/devices/ndi",
     "crates/components/connections/devices/webcams",
     "crates/components/connections/protocols/dmx",
     "crates/components/connections/protocols/laser",

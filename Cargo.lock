@@ -4514,6 +4514,7 @@ dependencies = [
  "mizer-g13",
  "mizer-gamepads",
  "mizer-module",
+ "mizer-ndi",
  "mizer-processing",
  "mizer-protocol-laser",
  "mizer-protocol-pro-dj-link",
@@ -4874,16 +4875,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-ndi"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "enum-iterator",
+ "flume 0.11.0",
+ "futures",
+ "image",
+ "ndi",
+ "pinboard",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-ndi-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
  "image",
+ "mizer-devices",
+ "mizer-ndi",
  "mizer-node",
+ "mizer-video-nodes",
  "mizer-wgpu",
  "ndi",
  "profiling",
+ "ringbuffer",
  "serde",
  "tracing",
 ]

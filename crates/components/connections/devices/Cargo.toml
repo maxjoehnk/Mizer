@@ -12,6 +12,7 @@ mizer-protocol-laser = { path = "../protocols/laser" }
 mizer-gamepads = { path = "./gamepads" }
 mizer-g13 = { path = "./g13" }
 mizer-webcams = { path = "./webcams" }
+mizer-ndi = { path = "./ndi" }
 mizer-module = { path = "../../../runtime/module" }
 mizer-processing = { path = "../../../runtime/processing" }
 mizer-protocol-pro-dj-link = { path = "../protocols/pro-dj-link" }

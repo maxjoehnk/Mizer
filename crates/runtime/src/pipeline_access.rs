@@ -155,6 +155,7 @@ impl PipelineAccess {
             ProDjLinkClock(node) => self.add_node(path, node),
             PioneerCdj(node) => self.add_node(path, node),
             NdiOutput(node) => self.add_node(path, node),
+            NdiInput(node) => self.add_node(path, node),
             SurfaceMapping(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }

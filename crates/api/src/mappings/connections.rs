@@ -73,6 +73,10 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 id: webcam.id,
                 name: webcam.name,
             }),
+            NdiSource(ndi_source) => Self::NdiSource(NdiSourceConnection {
+                id: ndi_source.id,
+                name: ndi_source.name,
+            }),
             Cdj(cdj) => Self::Cdj(cdj.into()),
             Djm(djm) => Self::Djm(djm.into()),
         }

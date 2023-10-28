@@ -11,6 +11,7 @@ use futures::StreamExt;
 use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
+use mizer_ndi::{NdiSourceDiscovery, NdiSourceRef};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
@@ -20,6 +21,7 @@ use crate::laser::LaserDevice;
 pub mod g13;
 pub mod gamepads;
 pub mod laser;
+pub mod ndi;
 pub mod pro_dj_link;
 pub mod webcams;
 
@@ -44,6 +46,7 @@ enum DiscoveredDevice {
     Gamepad(GamepadRef),
     G13(G13Ref),
     Webcam(WebcamRef),
+    NdiSource(NdiSourceRef),
     PioneerCDJ(CDJView),
     PioneerDJM(DJMView),
 }
@@ -65,6 +68,7 @@ pub struct DeviceManager {
     g13_id_counter: Arc<AtomicUsize>,
     g13s: Arc<DashMap<String, G13Ref>>,
     webcams: Arc<DashMap<String, WebcamRef>>,
+    ndi_sources: Arc<DashMap<String, NdiSourceRef>>,
     cdjs: Arc<DashMap<String, CDJView>>,
     djms: Arc<DashMap<String, DJMView>>,
 }
@@ -88,10 +92,20 @@ impl DeviceManager {
         let webcams = WebcamDiscovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
+        let ndi_sources = NdiSourceDiscovery::discover()
+            .map(DiscoveredDevice::from)
+            .boxed_local();
         let pro_dj_link_devices = ProDJLinkDiscovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let mut devices = select_all([lasers, gamepads, g13s, webcams, pro_dj_link_devices]);
+        let mut devices = select_all([
+            lasers,
+            gamepads,
+            g13s,
+            webcams,
+            ndi_sources,
+            pro_dj_link_devices,
+        ]);
         while let Some(device) = devices.next().await {
             match device {
                 DiscoveredDevice::Laser(laser) => {
@@ -117,6 +131,14 @@ impl DeviceManager {
                     let id = format!("webcam-{}", id);
                     log::debug!("Discovered device {webcam:?} => {id}");
                     self.webcams.insert(id, webcam);
+                }
+                DiscoveredDevice::NdiSource(ndi_source) => {
+                    let name = ndi_source.name();
+                    let id = format!("ndi-source-{}", name);
+                    if !self.ndi_sources.contains_key(&id) {
+                        log::debug!("Discovered device {name} => {id}");
+                        self.ndi_sources.insert(id, ndi_source);
+                    }
                 }
                 DiscoveredDevice::PioneerCDJ(cdj) => {
                     let id = cdj.id();
@@ -146,6 +168,10 @@ impl DeviceManager {
 
     pub fn get_webcam(&self, id: &str) -> Option<Ref<'_, String, WebcamRef>> {
         self.webcams.get(id)
+    }
+
+    pub fn get_ndi_source(&self, id: &str) -> Option<Ref<'_, String, NdiSourceRef>> {
+        self.ndi_sources.get(id)
     }
 
     pub fn get_g13_mut(&self, id: &str) -> Option<RefMut<'_, String, G13Ref>> {
@@ -183,6 +209,13 @@ impl DeviceManager {
             }
             .into()
         });
+        let ndi_sources = self.ndi_sources.iter().map(|source| {
+            NdiSourceView {
+                id: source.key().clone(),
+                name: source.name(),
+            }
+            .into()
+        });
         let cdjs = self.cdjs.iter().map(|cdj| cdj.value().clone().into());
         let djms = self.djms.iter().map(|djm| djm.value().clone().into());
 
@@ -190,6 +223,7 @@ impl DeviceManager {
             .chain(gamepads)
             .chain(g13s)
             .chain(webcams)
+            .chain(ndi_sources)
             .chain(cdjs)
             .chain(djms)
             .collect()
@@ -239,6 +273,7 @@ pub enum DeviceRef {
     Gamepad(GamepadView),
     G13(G13View),
     Webcam(WebcamView),
+    NdiSource(NdiSourceView),
     PioneerCDJ(CDJView),
     PioneerDJM(DJMView),
 }
@@ -250,6 +285,12 @@ pub struct G13View {
 
 #[derive(Debug, Clone)]
 pub struct WebcamView {
+    pub id: String,
+    pub name: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct NdiSourceView {
     pub id: String,
     pub name: String,
 }

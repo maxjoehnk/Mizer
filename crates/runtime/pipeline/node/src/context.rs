@@ -1,11 +1,15 @@
+use std::marker::PhantomData;
+
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
 use mizer_ports::port_types;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
-use std::marker::PhantomData;
 
 use crate::{PortMetadata, PreviewContext};
+
+pub const SINGLE_HIGH: f64 = 1.0;
+pub const SINGLE_LOW: f64 = 0.0;
 
 pub trait NodeContext: PreviewContext + Sized {
     fn clock(&self) -> ClockFrame;
@@ -84,5 +88,11 @@ impl<'a, V: PortValue + 'static, C: NodeContext> PortReader<'a, V, C> {
 
     pub fn metadata(&self) -> PortMetadata {
         self.context.input_port(self.port_id.clone())
+    }
+}
+
+impl<'a, C: NodeContext> PortReader<'a, port_types::SINGLE, C> {
+    pub fn is_high(&self) -> Option<bool> {
+        self.read().map(|value| value > 0f64 + f64::EPSILON)
     }
 }

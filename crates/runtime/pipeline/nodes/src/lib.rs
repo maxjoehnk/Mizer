@@ -43,7 +43,7 @@ pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
-pub use mizer_timing_nodes::DelayNode;
+pub use mizer_timing_nodes::{CountdownNode, DelayNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
 pub use mizer_video_nodes::{
     ColorizeTextureNode, ImageFileNode, TextureBorderNode, TextureMaskNode, TextureOpacityNode,
@@ -212,6 +212,7 @@ node_impl! {
     Value(ValueNode),
     Extract(ExtractNode),
     Delay(DelayNode),
+    Countdown(CountdownNode),
     Ramp(RampNode),
     Transport(TransportNode),
     Beats(BeatsNode),

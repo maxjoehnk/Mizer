@@ -134,6 +134,7 @@ impl PipelineAccess {
             Extract(node) => self.add_node(path, node),
             PlanScreen(node) => self.add_node(path, node),
             Delay(node) => self.add_node(path, node),
+            Countdown(node) => self.add_node(path, node),
             Ramp(node) => self.add_node(path, node),
             Noise(node) => self.add_node(path, node),
             Transport(node) => self.add_node(path, node),

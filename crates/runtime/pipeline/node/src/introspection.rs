@@ -128,6 +128,7 @@ node_type_name! {
         Extract,
         PlanScreen,
         Delay,
+        Countdown,
         Noise,
         Transport,
         Beats,

@@ -233,6 +233,7 @@ impl MixerWgpuPipeline {
             &self.shaders.get_shader(mode),
         );
         self.texture_count = texture_count;
+        self.mode = mode;
         context.queue.write_buffer(
             &self.texture_count_buffer,
             0,
@@ -250,6 +251,11 @@ impl MixerWgpuPipeline {
         profiling::scope!("MixerWgpuPipeline::render");
         let texture_count = sources.len();
         if texture_count != self.texture_count || mode != self.mode {
+            log::debug!(
+                "Rebuilding Mixer Wgpu Pipeline because texture_count: {} mode: {}",
+                texture_count != self.texture_count,
+                mode != self.mode
+            );
             self.rebuild_pipeline(context, texture_count, mode);
         }
         let texture_bind_group = context

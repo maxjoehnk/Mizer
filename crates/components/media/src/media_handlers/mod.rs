@@ -1,12 +1,13 @@
-use anyhow::Context;
 use std::path::Path;
 
-use crate::documents::{MediaMetadata, MediaType};
+use anyhow::Context;
+
 pub use audio_handler::AudioHandler;
 pub use image_handler::ImageHandler;
 pub use svg_handler::SvgHandler;
 pub use video_handler::VideoHandler;
 
+use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 
 mod audio_handler;
@@ -14,7 +15,7 @@ mod image_handler;
 mod svg_handler;
 mod video_handler;
 
-pub const THUMBNAIL_SIZE: u32 = 200;
+pub const THUMBNAIL_SIZE: u32 = 512;
 
 pub trait MediaHandler {
     const MEDIA_TYPE: MediaType;

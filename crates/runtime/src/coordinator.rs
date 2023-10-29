@@ -629,6 +629,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::PlanScreen(node) => pipeline.register_node(path, &node),
         Node::Delay(node) => pipeline.register_node(path, &node),
         Node::Countdown(node) => pipeline.register_node(path, &node),
+        Node::TimeTrigger(node) => pipeline.register_node(path, &node),
         Node::Ramp(node) => pipeline.register_node(path, &node),
         Node::Noise(node) => pipeline.register_node(path, &node),
         Node::Transport(node) => pipeline.register_node(path, &node),

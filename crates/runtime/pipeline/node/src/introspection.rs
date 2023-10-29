@@ -129,6 +129,7 @@ node_type_name! {
         PlanScreen,
         Delay,
         Countdown,
+        TimeTrigger,
         Noise,
         Transport,
         Beats,

@@ -26,6 +26,7 @@ message Hotkeys {
   map<string, string> sequencer = 6;
   map<string, string> plan = 7;
   map<string, string> effects = 8;
+  map<string, string> media = 9;
 }
 
 message General {

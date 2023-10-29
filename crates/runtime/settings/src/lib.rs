@@ -139,6 +139,7 @@ pub struct Hotkeys {
     pub patch: HotkeyGroup,
     pub sequencer: HotkeyGroup,
     pub effects: HotkeyGroup,
+    pub media: HotkeyGroup,
 }
 
 pub type HotkeyGroup = HashMap<String, String>;

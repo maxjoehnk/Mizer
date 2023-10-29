@@ -227,6 +227,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? sequencer,
     $core.Map<$core.String, $core.String>? plan,
     $core.Map<$core.String, $core.String>? effects,
+    $core.Map<$core.String, $core.String>? media,
   }) {
     final $result = create();
     if (global != null) {
@@ -253,6 +254,9 @@ class Hotkeys extends $pb.GeneratedMessage {
     if (effects != null) {
       $result.effects.addAll(effects);
     }
+    if (media != null) {
+      $result.media.addAll(media);
+    }
     return $result;
   }
   Hotkeys._() : super();
@@ -268,6 +272,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(6, _omitFieldNames ? '' : 'sequencer', entryClassName: 'Hotkeys.SequencerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(7, _omitFieldNames ? '' : 'plan', entryClassName: 'Hotkeys.PlanEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(8, _omitFieldNames ? '' : 'effects', entryClassName: 'Hotkeys.EffectsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..m<$core.String, $core.String>(9, _omitFieldNames ? '' : 'media', entryClassName: 'Hotkeys.MediaEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..hasRequiredFields = false
   ;
 
@@ -315,6 +320,9 @@ class Hotkeys extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(8)
   $core.Map<$core.String, $core.String> get effects => $_getMap(7);
+
+  @$pb.TagNumber(9)
+  $core.Map<$core.String, $core.String> get media => $_getMap(8);
 }
 
 class General extends $pb.GeneratedMessage {

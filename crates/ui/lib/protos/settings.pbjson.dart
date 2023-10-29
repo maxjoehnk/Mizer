@@ -69,8 +69,9 @@ const Hotkeys$json = {
     {'1': 'sequencer', '3': 6, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.SequencerEntry', '10': 'sequencer'},
     {'1': 'plan', '3': 7, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.PlanEntry', '10': 'plan'},
     {'1': 'effects', '3': 8, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.EffectsEntry', '10': 'effects'},
+    {'1': 'media', '3': 9, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.MediaEntry', '10': 'media'},
   ],
-  '3': [Hotkeys_GlobalEntry$json, Hotkeys_LayoutsEntry$json, Hotkeys_ProgrammerEntry$json, Hotkeys_NodesEntry$json, Hotkeys_PatchEntry$json, Hotkeys_SequencerEntry$json, Hotkeys_PlanEntry$json, Hotkeys_EffectsEntry$json],
+  '3': [Hotkeys_GlobalEntry$json, Hotkeys_LayoutsEntry$json, Hotkeys_ProgrammerEntry$json, Hotkeys_NodesEntry$json, Hotkeys_PatchEntry$json, Hotkeys_SequencerEntry$json, Hotkeys_PlanEntry$json, Hotkeys_EffectsEntry$json, Hotkeys_MediaEntry$json],
 };
 
 @$core.Deprecated('Use hotkeysDescriptor instead')
@@ -153,6 +154,16 @@ const Hotkeys_EffectsEntry$json = {
   '7': {'7': true},
 };
 
+@$core.Deprecated('Use hotkeysDescriptor instead')
+const Hotkeys_MediaEntry$json = {
+  '1': 'MediaEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': {'7': true},
+};
+
 /// Descriptor for `Hotkeys`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode(
     'CgdIb3RrZXlzEjsKBmdsb2JhbBgBIAMoCzIjLm1pemVyLnNldHRpbmdzLkhvdGtleXMuR2xvYm'
@@ -164,15 +175,17 @@ final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode(
     'Y2VyGAYgAygLMiYubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5TZXF1ZW5jZXJFbnRyeVIJc2VxdW'
     'VuY2VyEjUKBHBsYW4YByADKAsyIS5taXplci5zZXR0aW5ncy5Ib3RrZXlzLlBsYW5FbnRyeVIE'
     'cGxhbhI+CgdlZmZlY3RzGAggAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5FZmZlY3RzRW'
-    '50cnlSB2VmZmVjdHMaOQoLR2xvYmFsRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUY'
-    'AiABKAlSBXZhbHVlOgI4ARo6CgxMYXlvdXRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdm'
-    'FsdWUYAiABKAlSBXZhbHVlOgI4ARo9Cg9Qcm9ncmFtbWVyRW50cnkSEAoDa2V5GAEgASgJUgNr'
-    'ZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo4CgpOb2Rlc0VudHJ5EhAKA2tleRgBIAEoCV'
-    'IDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaOAoKUGF0Y2hFbnRyeRIQCgNrZXkYASAB'
-    'KAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjwKDlNlcXVlbmNlckVudHJ5EhAKA2'
-    'tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaNwoJUGxhbkVudHJ5EhAK'
-    'A2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaOgoMRWZmZWN0c0VudH'
-    'J5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
+    '50cnlSB2VmZmVjdHMSOAoFbWVkaWEYCSADKAsyIi5taXplci5zZXR0aW5ncy5Ib3RrZXlzLk1l'
+    'ZGlhRW50cnlSBW1lZGlhGjkKC0dsb2JhbEVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbH'
+    'VlGAIgASgJUgV2YWx1ZToCOAEaOgoMTGF5b3V0c0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQK'
+    'BXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaPQoPUHJvZ3JhbW1lckVudHJ5EhAKA2tleRgBIAEoCV'
+    'IDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaOAoKTm9kZXNFbnRyeRIQCgNrZXkYASAB'
+    'KAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKClBhdGNoRW50cnkSEAoDa2V5GA'
+    'EgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo8Cg5TZXF1ZW5jZXJFbnRyeRIQ'
+    'CgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjcKCVBsYW5FbnRyeR'
+    'IQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjoKDEVmZmVjdHNF'
+    'bnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKCk1lZG'
+    'lhRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
 
 @$core.Deprecated('Use generalDescriptor instead')
 const General$json = {

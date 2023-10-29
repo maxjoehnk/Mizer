@@ -35,6 +35,7 @@ impl From<settings::Hotkeys> for model::Hotkeys {
             sequencer: hotkeys.sequencer,
             plan: hotkeys.plan,
             effects: hotkeys.effects,
+            media: hotkeys.media,
         }
     }
 }
@@ -51,7 +52,6 @@ impl From<settings::FilePaths> for model::PathSettings {
             qlcplus: paths.fixture_libraries.qlcplus.map(path_to_string),
             gdtf: paths.fixture_libraries.gdtf.map(path_to_string),
             mizer: paths.fixture_libraries.mizer.map(path_to_string),
-            ..Default::default()
         }
     }
 }
@@ -86,6 +86,7 @@ impl From<model::Hotkeys> for settings::Hotkeys {
             sequencer: hotkeys.sequencer,
             plan: hotkeys.plan,
             effects: hotkeys.effects,
+            media: hotkeys.media,
         }
     }
 }

@@ -6,6 +6,7 @@ import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/number_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/media.pb.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/views/media/dialogs/media_folders.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -35,36 +36,55 @@ class _MediaListState extends State<MediaList> {
 
   @override
   Widget build(BuildContext context) {
-    return Panel(
-      label: "Files",
-      child: SingleChildScrollView(
-          child: MizerTable(
-        columns: [
-          Container(),
-          Text("Name"),
-          Text("Duration"),
-          Text("Resolution"),
-          Text("FPS"),
-        ],
-        rows: widget.files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
-        columnWidths: {
-          0: FixedColumnWidth(thumbnailWidth),
-          1: FlexColumnWidth(3),
-          2: FlexColumnWidth(2),
-          3: FlexColumnWidth(2),
-          4: FlexColumnWidth(1),
+    return HotkeyConfiguration(
+      hotkeySelector: (hotkeys) => hotkeys.media,
+      hotkeyMap: {
+        "add_media": () => _addFiles(context),
+        "delete": () {
+          if (widget.selectedFile == null) {
+            return;
+          }
+          context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id));
         },
-      )),
-      onSearch: (query) => setState(() => this.searchQuery = query),
-      actions: [
-        PanelActionModel(label: "Add File(s)", onClick: () => _addFiles(context)),
-        PanelActionModel(
-          label: "Delete",
-          disabled: widget.selectedFile == null,
-          onClick: () => context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id)),
-        ),
-        PanelActionModel(label: "Media Folders", onClick: () => _manageMediaFolders(context)),
-      ],
+        "media_folders": () => _manageMediaFolders(context),
+      },
+      child: Panel(
+        label: "Files",
+        child: SingleChildScrollView(
+            child: MizerTable(
+          columns: [
+            Container(),
+            Text("Name"),
+            Text("Duration"),
+            Text("Resolution"),
+            Text("FPS"),
+          ],
+          rows:
+              widget.files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
+          columnWidths: {
+            0: FixedColumnWidth(thumbnailWidth),
+            1: FlexColumnWidth(3),
+            2: FlexColumnWidth(2),
+            3: FlexColumnWidth(2),
+            4: FlexColumnWidth(1),
+          },
+        )),
+        onSearch: (query) => setState(() => this.searchQuery = query),
+        actions: [
+          PanelActionModel(
+              label: "Add File(s)", onClick: () => _addFiles(context), hotkeyId: "add_media"),
+          PanelActionModel(
+            label: "Delete",
+            disabled: widget.selectedFile == null,
+            onClick: () => context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id)),
+            hotkeyId: "delete",
+          ),
+          PanelActionModel(
+              label: "Media Folders",
+              onClick: () => _manageMediaFolders(context),
+              hotkeyId: "media_folders"),
+        ],
+      ),
     );
   }
 

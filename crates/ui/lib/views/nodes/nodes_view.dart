@@ -28,7 +28,7 @@ import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/properties_pane.dart';
 
-const double SidebarWidth = 256;
+const double SidebarWidth = 300;
 const double PathBreadcrumbHeight = 32;
 const bool EnableScreenshot = !kReleaseMode;
 

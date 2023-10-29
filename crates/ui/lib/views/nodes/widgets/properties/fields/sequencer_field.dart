@@ -19,18 +19,21 @@ class StepSequencerField extends StatefulWidget {
 class _StepSequencerFieldState extends State<StepSequencerField> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: widget.value.steps
-            .slices(16)
-            .mapIndexed((i, bar) => Row(
-                children: bar
-                    .mapIndexed((j, e) => SequencerStep(
-                          index: j,
-                          step: e,
-                          onToggle: () => _onToggle((i + 1) * j),
-                        ))
-                    .toList()))
-            .toList());
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
+          children: widget.value.steps
+              .slices(16)
+              .mapIndexed((i, bar) => Row(
+                  children: bar
+                      .mapIndexed((j, e) => SequencerStep(
+                            index: j,
+                            step: e,
+                            onToggle: () => _onToggle((i + 1) * j),
+                            size: constraints.maxWidth / 16,
+                          ))
+                      .toList()))
+              .toList());
+    });
   }
 
   _onToggle(int i) {
@@ -44,18 +47,24 @@ class SequencerStep extends StatelessWidget {
   final int index;
   final bool step;
   final Function() onToggle;
+  final double size;
 
-  const SequencerStep({required this.step, super.key, required this.onToggle, required this.index});
+  const SequencerStep(
+      {required this.step,
+      super.key,
+      required this.onToggle,
+      required this.index,
+      required this.size});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: size,
+      height: size,
       color: index < 4 || (index >= 8 && index < 12) ? Colors.grey.shade800 : Colors.grey.shade900,
       child: Hoverable(
           onTap: onToggle,
           builder: (hovered) => Container(
-                width: STEP_SIZE,
-                height: STEP_SIZE,
                 margin: EdgeInsets.all(1),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(1),

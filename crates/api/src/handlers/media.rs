@@ -1,6 +1,7 @@
-use mizer_media::documents::MediaId;
-use mizer_media::{MediaCreateModel, MediaServer};
 use std::path::PathBuf;
+
+use mizer_media::documents::{MediaId, TagId};
+use mizer_media::{MediaCreateModel, MediaServer};
 
 use crate::proto::media::*;
 
@@ -24,14 +25,28 @@ impl MediaHandler {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
-        let tags = self.api.get_tags()?;
-        let tags = tags.into_iter().map(MediaTagWithFiles::from).collect();
+    pub fn remove_tag(&self, tag_id: String) -> anyhow::Result<()> {
+        self.api.remove_tag(TagId::try_from(tag_id)?);
 
-        Ok(GroupedMediaFiles {
-            tags,
-            ..Default::default()
-        })
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_tag_to_media(&self, media_id: String, tag_id: String) -> anyhow::Result<()> {
+        self.api
+            .add_tag_to_media(MediaId::try_from(media_id)?, TagId::try_from(tag_id)?)?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn remove_tag_from_media(&self, media_id: String, tag_id: String) -> anyhow::Result<()> {
+        self.api
+            .remove_tag_from_media(MediaId::try_from(media_id)?, TagId::try_from(tag_id)?)?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
@@ -44,10 +59,13 @@ impl MediaHandler {
             .into_iter()
             .flat_map(|p| p.to_str().map(|p| p.to_string()))
             .collect();
+        let tags = self.api.get_tags()?;
+        let tags = tags.into_iter().map(MediaTag::from).collect();
 
         Ok(MediaFiles {
             files,
             folders: Some(MediaFolders { paths: folders }),
+            tags,
         })
     }
 

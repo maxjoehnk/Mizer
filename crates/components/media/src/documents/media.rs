@@ -1,14 +1,15 @@
-use crate::documents::MediaId;
-use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use uuid::Uuid;
+
+use serde::{Deserialize, Serialize};
+
+use crate::documents::{MediaId, MediaTag};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MediaDocument {
     pub id: MediaId,
     pub filename: String,
     pub name: String,
-    pub tags: Vec<AttachedTag>,
+    pub tags: Vec<MediaTag>,
     pub content_type: String,
     pub media_type: MediaType,
     pub file_path: PathBuf,
@@ -28,12 +29,6 @@ pub struct MediaMetadata {
     pub name: Option<String>,
     pub artist: Option<String>,
     pub album: Option<String>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct AttachedTag {
-    pub id: Uuid,
-    pub name: String,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]

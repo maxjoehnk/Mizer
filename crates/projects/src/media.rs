@@ -1,7 +1,8 @@
-use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-use mizer_media::documents::{MediaDocument, TagDocument};
+use serde::{Deserialize, Serialize};
+
+use mizer_media::documents::{MediaDocument, MediaTag};
 use mizer_media::MediaServer;
 
 use crate::{Project, ProjectManager};
@@ -11,7 +12,7 @@ use crate::{Project, ProjectManager};
 pub struct Media {
     pub import_paths: Vec<PathBuf>,
     pub files: Vec<MediaDocument>,
-    pub tags: Vec<TagDocument>,
+    pub tags: Vec<MediaTag>,
 }
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -21,7 +22,7 @@ enum BackwardsCompatibleMedia {
     Media {
         import_paths: Vec<PathBuf>,
         files: Vec<MediaDocument>,
-        tags: Vec<TagDocument>,
+        tags: Vec<MediaTag>,
     },
 }
 

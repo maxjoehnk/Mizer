@@ -13,15 +13,19 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
+import 'dialogs/manage_tags.dart';
+
 const double thumbnailWidth = 100;
 
 class MediaList extends StatefulWidget {
   final List<MediaFile> files;
+  final List<MediaTag> tags;
   final MediaFile? selectedFile;
   final Function(MediaFile) onSelectFile;
 
   const MediaList(
-    this.files, {
+    this.files,
+    this.tags, {
     super.key,
     this.selectedFile,
     required this.onSelectFile,
@@ -33,6 +37,7 @@ class MediaList extends StatefulWidget {
 
 class _MediaListState extends State<MediaList> {
   String? searchQuery;
+  List<MediaTag> _selectedTags = [];
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +52,56 @@ class _MediaListState extends State<MediaList> {
           context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id));
         },
         "media_folders": () => _manageMediaFolders(context),
+        "manage_tags": () => _manageMediaTags(context),
       },
       child: Panel(
         label: "Files",
-        child: SingleChildScrollView(
-            child: MizerTable(
-          columns: [
-            Container(),
-            Text("Name"),
-            Text("Duration"),
-            Text("Resolution"),
-            Text("FPS"),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0, right: 8.0),
+              child: Wrap(
+                  direction: Axis.horizontal,
+                  runSpacing: 4.0,
+                  spacing: 4.0,
+                  children: widget.tags
+                      .map((e) => FilterChip(
+                          label: Text(e.name),
+                          selectedColor: Colors.blueGrey.shade500,
+                          selected: _selectedTags.contains(e),
+                          onSelected: (selected) => setState(() {
+                                if (selected) {
+                                  _selectedTags.add(e);
+                                } else {
+                                  _selectedTags.remove(e);
+                                }
+                              })))
+                      .toList()),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                  child: MizerTable(
+                columns: [
+                  Container(),
+                  Text("Name"),
+                  Text("Duration"),
+                  Text("Resolution"),
+                  Text("FPS"),
+                ],
+                rows:
+                    _files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
+                columnWidths: {
+                  0: FixedColumnWidth(thumbnailWidth),
+                  1: FlexColumnWidth(3),
+                  2: FlexColumnWidth(2),
+                  3: FlexColumnWidth(2),
+                  4: FlexColumnWidth(1),
+                },
+              )),
+            ),
           ],
-          rows:
-              widget.files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
-          columnWidths: {
-            0: FixedColumnWidth(thumbnailWidth),
-            1: FlexColumnWidth(3),
-            2: FlexColumnWidth(2),
-            3: FlexColumnWidth(2),
-            4: FlexColumnWidth(1),
-          },
-        )),
+        ),
         onSearch: (query) => setState(() => this.searchQuery = query),
         actions: [
           PanelActionModel(
@@ -83,6 +116,10 @@ class _MediaListState extends State<MediaList> {
               label: "Media Folders",
               onClick: () => _manageMediaFolders(context),
               hotkeyId: "media_folders"),
+          PanelActionModel(
+              label: "Manage Tags",
+              onClick: () => _manageMediaTags(context),
+              hotkeyId: "manage_tags")
         ],
       ),
     );
@@ -128,6 +165,20 @@ class _MediaListState extends State<MediaList> {
   _manageMediaFolders(BuildContext context) {
     MediaBloc bloc = context.read();
     showDialog(context: context, builder: (context) => MediaFoldersDialog(bloc: bloc));
+  }
+
+  _manageMediaTags(BuildContext context) {
+    MediaBloc bloc = context.read();
+    showDialog(context: context, builder: (context) => ManageTagsDialog(bloc: bloc));
+  }
+
+  List<MediaFile> get _files {
+    return widget.files.where((element) {
+      if (_selectedTags.isEmpty) {
+        return true;
+      }
+      return _selectedTags.every((tag) => element.metadata.tags.contains(tag));
+    }).toList();
   }
 }
 

@@ -1,8 +1,6 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
-use uuid::Uuid;
-
 use mizer_settings::Settings;
 use mizer_status_bus::StatusBus;
 pub use module::MediaModule;
@@ -113,10 +111,14 @@ impl MediaServer {
         self.import_paths.remove_path(path);
     }
 
-    pub fn create_tag(&self, name: String) -> anyhow::Result<TagDocument> {
+    pub fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
         let document = self.db.add_tag(TagCreateModel { name })?;
 
         Ok(document)
+    }
+
+    pub fn remove_tag(&self, id: TagId) {
+        self.db.remove_tag(id);
     }
 
     pub fn clear(&self) {
@@ -126,7 +128,7 @@ impl MediaServer {
         self.import_paths.clear();
     }
 
-    pub fn import_tags(&self, tags: Vec<TagDocument>) -> anyhow::Result<()> {
+    pub fn import_tags(&self, tags: Vec<MediaTag>) -> anyhow::Result<()> {
         self.db.import_tags(tags)
     }
 
@@ -134,7 +136,7 @@ impl MediaServer {
         self.db.import_media(files)
     }
 
-    pub fn get_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
+    pub fn get_tags(&self) -> anyhow::Result<Vec<MediaTag>> {
         self.db.list_tags()
     }
 
@@ -173,12 +175,20 @@ impl MediaServer {
     pub fn remove_file(&self, id: MediaId) {
         self.db.remove_media(id);
     }
+
+    pub fn add_tag_to_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
+        self.db.add_tag_to_media(media_id, tag_id)
+    }
+
+    pub fn remove_tag_from_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
+        self.db.remove_tag_from_media(media_id, tag_id)
+    }
 }
 
 #[derive(Debug, Clone)]
 pub struct MediaCreateModel {
     pub name: String,
-    pub tags: Vec<AttachedTag>,
+    pub tags: Vec<MediaTag>,
 }
 
 #[derive(Debug, Clone)]
@@ -186,12 +196,11 @@ pub struct TagCreateModel {
     pub name: String,
 }
 
-impl From<TagCreateModel> for TagDocument {
+impl From<TagCreateModel> for MediaTag {
     fn from(model: TagCreateModel) -> Self {
-        TagDocument {
-            id: Uuid::new_v4(),
+        MediaTag {
+            id: TagId::new(),
             name: model.name,
-            media: Vec::new(),
         }
     }
 }

@@ -1,8 +1,10 @@
-use crate::plugin::channels::MethodReplyExt;
 use mizer_api::handlers::MediaHandler;
+use mizer_api::proto::media::*;
 use mizer_util::AsyncRuntime;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
 pub struct MediaChannel<AR> {
     handler: MediaHandler,
@@ -24,13 +26,29 @@ impl<AR: AsyncRuntime + 'static> MethodCallHandler for MediaChannel<AR> {
                     resp.respond_result(response);
                 }
             }
+            "removeTag" => {
+                if let Value::String(id) = call.args {
+                    let response = self.handler.remove_tag(id);
+
+                    resp.respond_unit_result(response);
+                }
+            }
+            "addTagToMedia" => {
+                let response = call.arguments().and_then(|req: AddTagToMediaRequest| {
+                    self.handler.add_tag_to_media(req.media_id, req.tag_id)
+                });
+
+                resp.respond_unit_result(response);
+            }
+            "removeTagFromMedia" => {
+                let response = call.arguments().and_then(|req: RemoveTagFromMediaRequest| {
+                    self.handler.remove_tag_from_media(req.media_id, req.tag_id)
+                });
+
+                resp.respond_unit_result(response);
+            }
             "getMedia" => {
                 let response = self.handler.get_media();
-
-                resp.respond_result(response);
-            }
-            "getTagsWithMedia" => {
-                let response = self.handler.get_tags_with_media();
 
                 resp.respond_result(response);
             }

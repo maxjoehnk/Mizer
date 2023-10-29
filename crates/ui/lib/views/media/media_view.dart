@@ -21,7 +21,7 @@ class _MediaViewState extends State<MediaView> {
     context.read<MediaBloc>().add(FetchMedia());
     return BlocBuilder<MediaBloc, MediaFiles>(
         builder: (context, data) => MediaLayout(
-              list: MediaList(data.files,
+              list: MediaList(data.files, data.tags,
                   selectedFile: selectedFile,
                   onSelectFile: (file) => setState(() => this.selectedFile = file)),
               preview: Panel(

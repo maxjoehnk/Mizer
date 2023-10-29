@@ -98,8 +98,11 @@ class _MediaFieldState extends State<MediaField> {
     var files = bloc.state.files
         .where((element) => widget.value.allowedTypes.contains(element.type))
         .toList();
-    MediaFile? result =
-        await showDialog(context: context, builder: (context) => MediaDialog(mediaFiles: files));
+    var tags = bloc.state.tags
+        .where((tag) => files.any((file) => file.metadata.tags.contains(tag)))
+        .toList();
+    MediaFile? result = await showDialog(
+        context: context, builder: (context) => MediaDialog(mediaFiles: files, tags: tags));
     if (result == null) {
       return;
     }
@@ -107,37 +110,79 @@ class _MediaFieldState extends State<MediaField> {
   }
 }
 
-class MediaDialog extends StatelessWidget {
+class MediaDialog extends StatefulWidget {
   final List<MediaFile> mediaFiles;
+  final List<MediaTag> tags;
 
-  const MediaDialog({required this.mediaFiles, super.key});
+  const MediaDialog({required this.mediaFiles, super.key, required this.tags});
+
+  @override
+  State<MediaDialog> createState() => _MediaDialogState();
+}
+
+class _MediaDialogState extends State<MediaDialog> {
+  List<MediaTag> _selectedTags = [];
 
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
       title: "Select media",
-      content: Container(
-        width: MAX_DIALOG_WIDTH,
-        height: MAX_DIALOG_HEIGHT,
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-            crossAxisSpacing: 4,
-            mainAxisSpacing: 4,
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Wrap(
+                direction: Axis.horizontal,
+                runSpacing: 4.0,
+                spacing: 4.0,
+                children: widget.tags
+                    .map((e) => FilterChip(
+                        label: Text(e.name),
+                        selectedColor: Colors.blueGrey.shade500,
+                        selected: _selectedTags.contains(e),
+                        onSelected: (selected) => setState(() {
+                              if (selected) {
+                                _selectedTags.add(e);
+                              } else {
+                                _selectedTags.remove(e);
+                              }
+                            })))
+                    .toList()),
           ),
-          itemCount: mediaFiles.length,
-          itemBuilder: (context, index) {
-            MediaFile file = mediaFiles[index];
-            return Tile(
-              child: MediaTile(file: file),
-              onClick: () {
-                Navigator.of(context).pop(file);
+          Container(
+            width: MAX_DIALOG_WIDTH,
+            height: MAX_DIALOG_HEIGHT,
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4,
+              ),
+              itemCount: _files.length,
+              itemBuilder: (context, index) {
+                MediaFile file = _files[index];
+                return Tile(
+                  child: MediaTile(file: file),
+                  onClick: () {
+                    Navigator.of(context).pop(file);
+                  },
+                );
               },
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
+  }
+
+  List<MediaFile> get _files {
+    return widget.mediaFiles.where((element) {
+      if (_selectedTags.isEmpty) {
+        return true;
+      }
+      return _selectedTags.every((tag) => element.metadata.tags.contains(tag));
+    }).toList();
   }
 }
 

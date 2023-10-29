@@ -30,6 +30,39 @@ class AddFolder extends MediaEvent {
   AddFolder(this.folder);
 }
 
+class RemoveTag extends MediaEvent {
+  final String tagId;
+
+  RemoveTag(this.tagId);
+}
+
+class AddTag extends MediaEvent {
+  final String tagName;
+
+  AddTag(this.tagName);
+}
+
+class RenameTag extends MediaEvent {
+  final String tagId;
+  final String tagName;
+
+  RenameTag({required this.tagId, required this.tagName});
+}
+
+class AddTagToMedia extends MediaEvent {
+  final String mediaId;
+  final String tagId;
+
+  AddTagToMedia({required this.mediaId, required this.tagId});
+}
+
+class RemoveTagFromMedia extends MediaEvent {
+  final String mediaId;
+  final String tagId;
+
+  RemoveTagFromMedia({required this.mediaId, required this.tagId});
+}
+
 class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
   final MediaApi api;
 
@@ -51,6 +84,22 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
     });
     on<RemoveFolder>((event, emit) async {
       await api.removeMediaFolder(event.folder);
+      emit(await _fetch());
+    });
+    on<AddTag>((event, emit) async {
+      await api.createTag(event.tagName);
+      emit(await _fetch());
+    });
+    on<RemoveTag>((event, emit) async {
+      await api.removeTag(event.tagId);
+      emit(await _fetch());
+    });
+    on<AddTagToMedia>((event, emit) async {
+      await api.addTagToMedia(event.mediaId, event.tagId);
+      emit(await _fetch());
+    });
+    on<RemoveTagFromMedia>((event, emit) async {
+      await api.removeTagFromMedia(event.mediaId, event.tagId);
       emit(await _fetch());
     });
     this.add(FetchMedia());

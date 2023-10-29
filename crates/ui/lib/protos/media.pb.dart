@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: media.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -14,117 +18,158 @@ import 'media.pbenum.dart';
 
 export 'media.pbenum.dart';
 
-class CreateMediaTag extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateMediaTag', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+class AddTagToMediaRequest extends $pb.GeneratedMessage {
+  factory AddTagToMediaRequest({
+    $core.String? mediaId,
+    $core.String? tagId,
+  }) {
+    final $result = create();
+    if (mediaId != null) {
+      $result.mediaId = mediaId;
+    }
+    if (tagId != null) {
+      $result.tagId = tagId;
+    }
+    return $result;
+  }
+  AddTagToMediaRequest._() : super();
+  factory AddTagToMediaRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddTagToMediaRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddTagToMediaRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'mediaId')
+    ..aOS(2, _omitFieldNames ? '' : 'tagId')
     ..hasRequiredFields = false
   ;
 
-  CreateMediaTag._() : super();
-  factory CreateMediaTag({
-    $core.String? name,
-  }) {
-    final _result = create();
-    if (name != null) {
-      _result.name = name;
-    }
-    return _result;
-  }
-  factory CreateMediaTag.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CreateMediaTag.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  CreateMediaTag clone() => CreateMediaTag()..mergeFromMessage(this);
+  AddTagToMediaRequest clone() => AddTagToMediaRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CreateMediaTag copyWith(void Function(CreateMediaTag) updates) => super.copyWith((message) => updates(message as CreateMediaTag)) as CreateMediaTag; // ignore: deprecated_member_use
+  AddTagToMediaRequest copyWith(void Function(AddTagToMediaRequest) updates) => super.copyWith((message) => updates(message as AddTagToMediaRequest)) as AddTagToMediaRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
-  static CreateMediaTag create() => CreateMediaTag._();
-  CreateMediaTag createEmptyInstance() => create();
-  static $pb.PbList<CreateMediaTag> createRepeated() => $pb.PbList<CreateMediaTag>();
+  static AddTagToMediaRequest create() => AddTagToMediaRequest._();
+  AddTagToMediaRequest createEmptyInstance() => create();
+  static $pb.PbList<AddTagToMediaRequest> createRepeated() => $pb.PbList<AddTagToMediaRequest>();
   @$core.pragma('dart2js:noInline')
-  static CreateMediaTag getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CreateMediaTag>(create);
-  static CreateMediaTag? _defaultInstance;
+  static AddTagToMediaRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddTagToMediaRequest>(create);
+  static AddTagToMediaRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $core.String get mediaId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) { $_setString(0, v); }
+  set mediaId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasMediaId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearMediaId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get tagId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set tagId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTagId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTagId() => clearField(2);
 }
 
-class MediaTags extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaTags', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..pc<MediaTag>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
+class RemoveTagFromMediaRequest extends $pb.GeneratedMessage {
+  factory RemoveTagFromMediaRequest({
+    $core.String? mediaId,
+    $core.String? tagId,
+  }) {
+    final $result = create();
+    if (mediaId != null) {
+      $result.mediaId = mediaId;
+    }
+    if (tagId != null) {
+      $result.tagId = tagId;
+    }
+    return $result;
+  }
+  RemoveTagFromMediaRequest._() : super();
+  factory RemoveTagFromMediaRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RemoveTagFromMediaRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveTagFromMediaRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'mediaId')
+    ..aOS(2, _omitFieldNames ? '' : 'tagId')
     ..hasRequiredFields = false
   ;
 
-  MediaTags._() : super();
-  factory MediaTags({
-    $core.Iterable<MediaTag>? tags,
-  }) {
-    final _result = create();
-    if (tags != null) {
-      _result.tags.addAll(tags);
-    }
-    return _result;
-  }
-  factory MediaTags.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MediaTags.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  MediaTags clone() => MediaTags()..mergeFromMessage(this);
+  RemoveTagFromMediaRequest clone() => RemoveTagFromMediaRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaTags copyWith(void Function(MediaTags) updates) => super.copyWith((message) => updates(message as MediaTags)) as MediaTags; // ignore: deprecated_member_use
+  RemoveTagFromMediaRequest copyWith(void Function(RemoveTagFromMediaRequest) updates) => super.copyWith((message) => updates(message as RemoveTagFromMediaRequest)) as RemoveTagFromMediaRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
-  static MediaTags create() => MediaTags._();
-  MediaTags createEmptyInstance() => create();
-  static $pb.PbList<MediaTags> createRepeated() => $pb.PbList<MediaTags>();
+  static RemoveTagFromMediaRequest create() => RemoveTagFromMediaRequest._();
+  RemoveTagFromMediaRequest createEmptyInstance() => create();
+  static $pb.PbList<RemoveTagFromMediaRequest> createRepeated() => $pb.PbList<RemoveTagFromMediaRequest>();
   @$core.pragma('dart2js:noInline')
-  static MediaTags getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaTags>(create);
-  static MediaTags? _defaultInstance;
+  static RemoveTagFromMediaRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveTagFromMediaRequest>(create);
+  static RemoveTagFromMediaRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<MediaTag> get tags => $_getList(0);
+  $core.String get mediaId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set mediaId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMediaId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMediaId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get tagId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set tagId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTagId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTagId() => clearField(2);
 }
 
 class MediaTag extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaTag', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  MediaTag._() : super();
   factory MediaTag({
     $core.String? id,
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  MediaTag._() : super();
   factory MediaTag.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaTag.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaTag', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -134,8 +179,10 @@ class MediaTag extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaTag copyWith(void Function(MediaTag) updates) => super.copyWith((message) => updates(message as MediaTag)) as MediaTag; // ignore: deprecated_member_use
+  MediaTag copyWith(void Function(MediaTag) updates) => super.copyWith((message) => updates(message as MediaTag)) as MediaTag;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaTag create() => MediaTag._();
   MediaTag createEmptyInstance() => create();
@@ -164,28 +211,34 @@ class MediaTag extends $pb.GeneratedMessage {
 }
 
 class MediaFiles extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..pc<MediaFile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: MediaFile.create)
-    ..aOM<MediaFolders>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'folders', subBuilder: MediaFolders.create)
-    ..hasRequiredFields = false
-  ;
-
-  MediaFiles._() : super();
   factory MediaFiles({
     $core.Iterable<MediaFile>? files,
     MediaFolders? folders,
+    $core.Iterable<MediaTag>? tags,
   }) {
-    final _result = create();
+    final $result = create();
     if (files != null) {
-      _result.files.addAll(files);
+      $result.files.addAll(files);
     }
     if (folders != null) {
-      _result.folders = folders;
+      $result.folders = folders;
     }
-    return _result;
+    if (tags != null) {
+      $result.tags.addAll(tags);
+    }
+    return $result;
   }
+  MediaFiles._() : super();
   factory MediaFiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaFiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaFiles', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..pc<MediaFile>(1, _omitFieldNames ? '' : 'files', $pb.PbFieldType.PM, subBuilder: MediaFile.create)
+    ..aOM<MediaFolders>(2, _omitFieldNames ? '' : 'folders', subBuilder: MediaFolders.create)
+    ..pc<MediaTag>(3, _omitFieldNames ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -195,8 +248,10 @@ class MediaFiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaFiles copyWith(void Function(MediaFiles) updates) => super.copyWith((message) => updates(message as MediaFiles)) as MediaFiles; // ignore: deprecated_member_use
+  MediaFiles copyWith(void Function(MediaFiles) updates) => super.copyWith((message) => updates(message as MediaFiles)) as MediaFiles;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaFiles create() => MediaFiles._();
   MediaFiles createEmptyInstance() => create();
@@ -218,19 +273,12 @@ class MediaFiles extends $pb.GeneratedMessage {
   void clearFolders() => clearField(2);
   @$pb.TagNumber(2)
   MediaFolders ensureFolders() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.List<MediaTag> get tags => $_getList(2);
 }
 
 class MediaFile extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<MediaType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
-    ..aOM<MediaMetadata>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata', subBuilder: MediaMetadata.create)
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailPath')
-    ..hasRequiredFields = false
-  ;
-
-  MediaFile._() : super();
   factory MediaFile({
     $core.String? id,
     $core.String? name,
@@ -238,26 +286,37 @@ class MediaFile extends $pb.GeneratedMessage {
     MediaMetadata? metadata,
     $core.String? thumbnailPath,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (type != null) {
-      _result.type = type;
+      $result.type = type;
     }
     if (metadata != null) {
-      _result.metadata = metadata;
+      $result.metadata = metadata;
     }
     if (thumbnailPath != null) {
-      _result.thumbnailPath = thumbnailPath;
+      $result.thumbnailPath = thumbnailPath;
     }
-    return _result;
+    return $result;
   }
+  MediaFile._() : super();
   factory MediaFile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaFile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaFile', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..e<MediaType>(3, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
+    ..aOM<MediaMetadata>(4, _omitFieldNames ? '' : 'metadata', subBuilder: MediaMetadata.create)
+    ..aOS(5, _omitFieldNames ? '' : 'thumbnailPath')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -267,8 +326,10 @@ class MediaFile extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaFile copyWith(void Function(MediaFile) updates) => super.copyWith((message) => updates(message as MediaFile)) as MediaFile; // ignore: deprecated_member_use
+  MediaFile copyWith(void Function(MediaFile) updates) => super.copyWith((message) => updates(message as MediaFile)) as MediaFile;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaFile create() => MediaFile._();
   MediaFile createEmptyInstance() => create();
@@ -326,28 +387,29 @@ class MediaFile extends $pb.GeneratedMessage {
 }
 
 class MediaMetadata_Dimensions extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaMetadata.Dimensions', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
-
-  MediaMetadata_Dimensions._() : super();
   factory MediaMetadata_Dimensions({
     $fixnum.Int64? width,
     $fixnum.Int64? height,
   }) {
-    final _result = create();
+    final $result = create();
     if (width != null) {
-      _result.width = width;
+      $result.width = width;
     }
     if (height != null) {
-      _result.height = height;
+      $result.height = height;
     }
-    return _result;
+    return $result;
   }
+  MediaMetadata_Dimensions._() : super();
   factory MediaMetadata_Dimensions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaMetadata_Dimensions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaMetadata.Dimensions', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -357,8 +419,10 @@ class MediaMetadata_Dimensions extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaMetadata_Dimensions copyWith(void Function(MediaMetadata_Dimensions) updates) => super.copyWith((message) => updates(message as MediaMetadata_Dimensions)) as MediaMetadata_Dimensions; // ignore: deprecated_member_use
+  MediaMetadata_Dimensions copyWith(void Function(MediaMetadata_Dimensions) updates) => super.copyWith((message) => updates(message as MediaMetadata_Dimensions)) as MediaMetadata_Dimensions;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaMetadata_Dimensions create() => MediaMetadata_Dimensions._();
   MediaMetadata_Dimensions createEmptyInstance() => create();
@@ -387,19 +451,6 @@ class MediaMetadata_Dimensions extends $pb.GeneratedMessage {
 }
 
 class MediaMetadata extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaMetadata', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePath')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..pc<MediaTag>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
-    ..aOM<MediaMetadata_Dimensions>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dimensions', subBuilder: MediaMetadata_Dimensions.create)
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'duration', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'framerate', $pb.PbFieldType.OD)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'album')
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artist')
-    ..hasRequiredFields = false
-  ;
-
-  MediaMetadata._() : super();
   factory MediaMetadata({
     $core.String? sourcePath,
     $fixnum.Int64? fileSize,
@@ -410,35 +461,49 @@ class MediaMetadata extends $pb.GeneratedMessage {
     $core.String? album,
     $core.String? artist,
   }) {
-    final _result = create();
+    final $result = create();
     if (sourcePath != null) {
-      _result.sourcePath = sourcePath;
+      $result.sourcePath = sourcePath;
     }
     if (fileSize != null) {
-      _result.fileSize = fileSize;
+      $result.fileSize = fileSize;
     }
     if (tags != null) {
-      _result.tags.addAll(tags);
+      $result.tags.addAll(tags);
     }
     if (dimensions != null) {
-      _result.dimensions = dimensions;
+      $result.dimensions = dimensions;
     }
     if (duration != null) {
-      _result.duration = duration;
+      $result.duration = duration;
     }
     if (framerate != null) {
-      _result.framerate = framerate;
+      $result.framerate = framerate;
     }
     if (album != null) {
-      _result.album = album;
+      $result.album = album;
     }
     if (artist != null) {
-      _result.artist = artist;
+      $result.artist = artist;
     }
-    return _result;
+    return $result;
   }
+  MediaMetadata._() : super();
   factory MediaMetadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaMetadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaMetadata', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sourcePath')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'fileSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..pc<MediaTag>(3, _omitFieldNames ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
+    ..aOM<MediaMetadata_Dimensions>(4, _omitFieldNames ? '' : 'dimensions', subBuilder: MediaMetadata_Dimensions.create)
+    ..a<$fixnum.Int64>(5, _omitFieldNames ? '' : 'duration', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'framerate', $pb.PbFieldType.OD)
+    ..aOS(7, _omitFieldNames ? '' : 'album')
+    ..aOS(8, _omitFieldNames ? '' : 'artist')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -448,8 +513,10 @@ class MediaMetadata extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaMetadata copyWith(void Function(MediaMetadata) updates) => super.copyWith((message) => updates(message as MediaMetadata)) as MediaMetadata; // ignore: deprecated_member_use
+  MediaMetadata copyWith(void Function(MediaMetadata) updates) => super.copyWith((message) => updates(message as MediaMetadata)) as MediaMetadata;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaMetadata create() => MediaMetadata._();
   MediaMetadata createEmptyInstance() => create();
@@ -527,122 +594,25 @@ class MediaMetadata extends $pb.GeneratedMessage {
   void clearArtist() => clearField(8);
 }
 
-class GroupedMediaFiles extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupedMediaFiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..pc<MediaTagWithFiles>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTagWithFiles.create)
-    ..hasRequiredFields = false
-  ;
-
-  GroupedMediaFiles._() : super();
-  factory GroupedMediaFiles({
-    $core.Iterable<MediaTagWithFiles>? tags,
-  }) {
-    final _result = create();
-    if (tags != null) {
-      _result.tags.addAll(tags);
-    }
-    return _result;
-  }
-  factory GroupedMediaFiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GroupedMediaFiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GroupedMediaFiles clone() => GroupedMediaFiles()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GroupedMediaFiles copyWith(void Function(GroupedMediaFiles) updates) => super.copyWith((message) => updates(message as GroupedMediaFiles)) as GroupedMediaFiles; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static GroupedMediaFiles create() => GroupedMediaFiles._();
-  GroupedMediaFiles createEmptyInstance() => create();
-  static $pb.PbList<GroupedMediaFiles> createRepeated() => $pb.PbList<GroupedMediaFiles>();
-  @$core.pragma('dart2js:noInline')
-  static GroupedMediaFiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupedMediaFiles>(create);
-  static GroupedMediaFiles? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<MediaTagWithFiles> get tags => $_getList(0);
-}
-
-class MediaTagWithFiles extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaTagWithFiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..aOM<MediaTag>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tag', subBuilder: MediaTag.create)
-    ..pc<MediaFile>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files', $pb.PbFieldType.PM, subBuilder: MediaFile.create)
-    ..hasRequiredFields = false
-  ;
-
-  MediaTagWithFiles._() : super();
-  factory MediaTagWithFiles({
-    MediaTag? tag,
-    $core.Iterable<MediaFile>? files,
-  }) {
-    final _result = create();
-    if (tag != null) {
-      _result.tag = tag;
-    }
-    if (files != null) {
-      _result.files.addAll(files);
-    }
-    return _result;
-  }
-  factory MediaTagWithFiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MediaTagWithFiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  MediaTagWithFiles clone() => MediaTagWithFiles()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MediaTagWithFiles copyWith(void Function(MediaTagWithFiles) updates) => super.copyWith((message) => updates(message as MediaTagWithFiles)) as MediaTagWithFiles; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static MediaTagWithFiles create() => MediaTagWithFiles._();
-  MediaTagWithFiles createEmptyInstance() => create();
-  static $pb.PbList<MediaTagWithFiles> createRepeated() => $pb.PbList<MediaTagWithFiles>();
-  @$core.pragma('dart2js:noInline')
-  static MediaTagWithFiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaTagWithFiles>(create);
-  static MediaTagWithFiles? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  MediaTag get tag => $_getN(0);
-  @$pb.TagNumber(1)
-  set tag(MediaTag v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasTag() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTag() => clearField(1);
-  @$pb.TagNumber(1)
-  MediaTag ensureTag() => $_ensure(0);
-
-  @$pb.TagNumber(2)
-  $core.List<MediaFile> get files => $_getList(1);
-}
-
 class MediaFolders extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFolders', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths')
-    ..hasRequiredFields = false
-  ;
-
-  MediaFolders._() : super();
   factory MediaFolders({
     $core.Iterable<$core.String>? paths,
   }) {
-    final _result = create();
+    final $result = create();
     if (paths != null) {
-      _result.paths.addAll(paths);
+      $result.paths.addAll(paths);
     }
-    return _result;
+    return $result;
   }
+  MediaFolders._() : super();
   factory MediaFolders.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MediaFolders.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MediaFolders', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'paths')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -652,8 +622,10 @@ class MediaFolders extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaFolders copyWith(void Function(MediaFolders) updates) => super.copyWith((message) => updates(message as MediaFolders)) as MediaFolders; // ignore: deprecated_member_use
+  MediaFolders copyWith(void Function(MediaFolders) updates) => super.copyWith((message) => updates(message as MediaFolders)) as MediaFolders;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MediaFolders create() => MediaFolders._();
   MediaFolders createEmptyInstance() => create();
@@ -667,23 +639,24 @@ class MediaFolders extends $pb.GeneratedMessage {
 }
 
 class ImportMediaRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ImportMediaRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.media'), createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files')
-    ..hasRequiredFields = false
-  ;
-
-  ImportMediaRequest._() : super();
   factory ImportMediaRequest({
     $core.Iterable<$core.String>? files,
   }) {
-    final _result = create();
+    final $result = create();
     if (files != null) {
-      _result.files.addAll(files);
+      $result.files.addAll(files);
     }
-    return _result;
+    return $result;
   }
+  ImportMediaRequest._() : super();
   factory ImportMediaRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ImportMediaRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ImportMediaRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'files')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -693,8 +666,10 @@ class ImportMediaRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ImportMediaRequest copyWith(void Function(ImportMediaRequest) updates) => super.copyWith((message) => updates(message as ImportMediaRequest)) as ImportMediaRequest; // ignore: deprecated_member_use
+  ImportMediaRequest copyWith(void Function(ImportMediaRequest) updates) => super.copyWith((message) => updates(message as ImportMediaRequest)) as ImportMediaRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ImportMediaRequest create() => ImportMediaRequest._();
   ImportMediaRequest createEmptyInstance() => create();
@@ -707,3 +682,6 @@ class ImportMediaRequest extends $pb.GeneratedMessage {
   $core.List<$core.String> get files => $_getList(0);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

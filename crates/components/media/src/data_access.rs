@@ -1,14 +1,14 @@
-use dashmap::DashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
-use uuid::Uuid;
+
+use dashmap::DashMap;
 
 use crate::documents::*;
 use crate::TagCreateModel;
 
 #[derive(Clone, Default)]
 pub struct DataAccess {
-    tags: Arc<DashMap<Uuid, TagDocument>>,
+    tags: Arc<DashMap<TagId, MediaTag>>,
     media: Arc<DashMap<MediaId, MediaDocument>>,
 }
 
@@ -31,7 +31,7 @@ impl DataAccess {
         self.media.get(&id).map(|entry| entry.value().clone())
     }
 
-    pub fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
+    pub fn list_tags(&self) -> anyhow::Result<Vec<MediaTag>> {
         let tags = self
             .tags
             .iter()
@@ -41,23 +41,29 @@ impl DataAccess {
         Ok(tags)
     }
 
-    pub fn add_tag<D: Into<TagCreateModel>>(&self, document: D) -> anyhow::Result<TagDocument> {
+    pub fn add_tag<D: Into<TagCreateModel>>(&self, document: D) -> anyhow::Result<MediaTag> {
         let tag_document = document.into();
-        let tag_document: TagDocument = tag_document.into();
+        let tag_document: MediaTag = tag_document.into();
         self.tags.insert(tag_document.id, tag_document.clone());
 
         Ok(tag_document)
     }
 
+    pub fn remove_tag(&self, id: TagId) {
+        self.tags.remove(&id);
+        for mut media in self.media.iter_mut() {
+            media.tags.retain(|tag| tag.id != id);
+        }
+    }
+
     pub fn add_media<D: Into<MediaDocument>>(&self, document: D) -> anyhow::Result<MediaDocument> {
         let media_document = document.into();
         self.insert_media(&media_document)?;
-        self.update_tags(&media_document)?;
 
         Ok(media_document)
     }
 
-    pub fn import_tags(&self, tags: Vec<TagDocument>) -> anyhow::Result<()> {
+    pub fn import_tags(&self, tags: Vec<MediaTag>) -> anyhow::Result<()> {
         for tag in tags {
             self.tags.insert(tag.id, tag);
         }
@@ -95,26 +101,31 @@ impl DataAccess {
         Ok(())
     }
 
-    fn update_tags(&self, document: &MediaDocument) -> anyhow::Result<()> {
-        let attached_media: AttachedMediaDocument = document.into();
-        let ids = document.tags.iter().map(|t| t.id);
-
-        for id in ids {
-            self.update_tag_document(id, attached_media.clone())?;
-        }
-
-        Ok(())
-    }
-
-    fn update_tag_document(&self, id: Uuid, document: AttachedMediaDocument) -> anyhow::Result<()> {
-        if let Some(mut tag) = self.tags.get_mut(&id) {
-            tag.media.push(document);
-        }
-
-        Ok(())
-    }
-
     pub fn remove_media(&self, id: MediaId) {
         self.media.remove(&id);
+    }
+
+    pub fn add_tag_to_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
+        let mut media = self
+            .media
+            .get_mut(&media_id)
+            .ok_or_else(|| anyhow::anyhow!("Media with id {media_id} does not exist"))?;
+        let tag = self
+            .tags
+            .get(&tag_id)
+            .ok_or_else(|| anyhow::anyhow!("Tag with id {tag_id} does not exist"))?;
+        media.tags.push(tag.clone());
+
+        Ok(())
+    }
+
+    pub fn remove_tag_from_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
+        let mut media = self
+            .media
+            .get_mut(&media_id)
+            .ok_or_else(|| anyhow::anyhow!("Media with id {media_id} does not exist"))?;
+        media.tags.retain(|tag| tag.id != tag_id);
+
+        Ok(())
     }
 }

@@ -2,12 +2,14 @@ syntax = "proto3";
 
 package mizer.media;
 
-message CreateMediaTag {
-  string name = 1;
+message AddTagToMediaRequest {
+  string media_id = 1;
+  string tag_id = 2;
 }
 
-message MediaTags {
-  repeated MediaTag tags = 1;
+message RemoveTagFromMediaRequest {
+  string media_id = 1;
+  string tag_id = 2;
 }
 
 message MediaTag {
@@ -18,6 +20,7 @@ message MediaTag {
 message MediaFiles {
   repeated MediaFile files = 1;
   MediaFolders folders = 2;
+  repeated MediaTag tags = 3;
 }
 
 message MediaFile {
@@ -49,15 +52,6 @@ enum MediaType {
   AUDIO = 1;
   VIDEO = 2;
   VECTOR = 3;
-}
-
-message GroupedMediaFiles {
-  repeated MediaTagWithFiles tags = 1;
-}
-
-message MediaTagWithFiles {
-  MediaTag tag = 1;
-  repeated MediaFile files = 2;
 }
 
 message MediaFolders {

@@ -2,7 +2,11 @@ import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/number_extensions.dart';
 import 'package:mizer/protos/media.pb.dart';
+import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/views/media/dialogs/media_tags.dart';
+import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/table/table.dart';
+import 'package:provider/provider.dart';
 
 class MediaMetadataPanel extends StatelessWidget {
   final MediaFile file;
@@ -35,9 +39,39 @@ class MediaMetadataPanel extends StatelessWidget {
       MizerTableRow(
           cells: [Text("File Size", style: titleTheme), Text(filesize(file.metadata.fileSize))]),
       MizerTableRow(cells: [Text("File Path", style: titleTheme), Text(file.metadata.sourcePath)]),
+      MizerTableRow(cells: [
+        Text("Tags", style: titleTheme),
+        Hoverable(
+          builder: (hovered) {
+            return Container(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Wrap(
+                        direction: Axis.horizontal,
+                        runSpacing: 4.0,
+                        spacing: 4.0,
+                        children:
+                            file.metadata.tags.map((e) => Chip(label: Text(e.name))).toList()),
+                  ),
+                  Icon(Icons.edit),
+                ],
+              ),
+            );
+          },
+          onTap: () => _manageTags(context, file),
+        )
+      ])
     ], columnWidths: {
       0: FlexColumnWidth(1),
       1: FlexColumnWidth(3),
     });
+  }
+
+  _manageTags(BuildContext context, MediaFile file) {
+    MediaBloc mediaBloc = context.read();
+    showDialog(
+        context: context,
+        builder: (context) => MediaFileTagsDialog(bloc: mediaBloc, fileId: file.id));
   }
 }

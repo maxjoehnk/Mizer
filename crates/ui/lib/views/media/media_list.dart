@@ -113,15 +113,16 @@ class _MediaListState extends State<MediaList> {
 
 class MediaThumbnail extends StatelessWidget {
   final MediaFile file;
+  final double width;
 
-  MediaThumbnail(this.file);
+  MediaThumbnail(this.file, {this.width = thumbnailWidth});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
         child: file.hasThumbnailPath()
-            ? Image.file(File(file.thumbnailPath), fit: BoxFit.cover, width: thumbnailWidth)
+            ? Image.file(File(file.thumbnailPath), fit: BoxFit.cover, width: width)
             : Container());
   }
 }

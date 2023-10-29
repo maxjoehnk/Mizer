@@ -28,6 +28,7 @@ import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/properties_pane.dart';
 
+const double SidebarWidth = 256;
 const double PathBreadcrumbHeight = 32;
 const bool EnableScreenshot = !kReleaseMode;
 
@@ -170,7 +171,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             ),
           ),
           Container(
-            width: 256,
+            width: SidebarWidth,
             child: Column(children: [
               Flexible(flex: 1, child: HiddenNodeList(nodes: model.hidden)),
               if (model.selectedNode != null)

@@ -41,19 +41,35 @@ class _MediaFieldState extends State<MediaField> {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     var bloc = context.read<MediaBloc>();
     var file = bloc.state.files.firstWhereOrNull((element) => element.id == widget.value.value);
-    return Field(
-      label: this.widget.label,
-      child: Hoverable(
-          onTap: () => _selectMedia(context),
-          builder: (hovered) => Text(
-                file?.name ?? "",
-                style: textStyle,
-                textAlign: TextAlign.center,
-              )),
-      suffix: Hoverable(
-        onTap: () => _selectMedia(context),
-        builder: (hovered) => _mediaSelector(context),
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Field(
+          label: this.widget.label,
+          child: Hoverable(
+              onTap: () => _selectMedia(context),
+              builder: (hovered) => Text(
+                    file?.name ?? "",
+                    style: textStyle,
+                    textAlign: TextAlign.center,
+                  )),
+          suffix: Hoverable(
+            onTap: () => _selectMedia(context),
+            builder: (hovered) => _mediaSelector(context),
+          ),
+        ),
+        if (file != null)
+          Container(
+            margin: const EdgeInsets.only(top: 8.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: LayoutBuilder(
+                builder: (context, constraints) =>
+                    MediaThumbnail(file, width: constraints.maxWidth)),
+          ),
+      ],
     );
   }
 

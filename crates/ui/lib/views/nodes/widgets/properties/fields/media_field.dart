@@ -41,32 +41,32 @@ class _MediaFieldState extends State<MediaField> {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     var bloc = context.read<MediaBloc>();
     var file = bloc.state.files.firstWhereOrNull((element) => element.id == widget.value.value);
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Field(
-        label: this.widget.label,
-        child: Text(
-          file?.name ?? "",
-          style: textStyle,
-          textAlign: TextAlign.center,
-        ),
-        suffix: _mediaSelector(context),
+    return Field(
+      label: this.widget.label,
+      child: Hoverable(
+          onTap: () => _selectMedia(context),
+          builder: (hovered) => Text(
+                file?.name ?? "",
+                style: textStyle,
+                textAlign: TextAlign.center,
+              )),
+      suffix: Hoverable(
+        onTap: () => _selectMedia(context),
+        builder: (hovered) => _mediaSelector(context),
       ),
     );
   }
 
   Widget _mediaSelector(BuildContext context) {
-    return Hoverable(
-        builder: (hovered) => Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(2),
-                color: Colors.grey.shade700,
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Icon(Icons.perm_media_outlined, size: 16),
-            ),
-        onTap: () => _selectMedia(context));
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(2),
+        color: Colors.grey.shade700,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Icon(Icons.perm_media_outlined, size: 16),
+    );
   }
 
   void _setValue(String value) {

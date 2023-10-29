@@ -77,10 +77,16 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
     TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
     return Field(
       label: this.widget.label,
-      child: Text(
-        controller.text,
-        style: textStyle,
-        textAlign: TextAlign.center,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+          color: Colors.grey.shade700,
+        ),
+        child: Text(
+          controller.text,
+          style: textStyle,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -92,11 +98,18 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(widget.label),
-        Text(
-          controller.text,
-          style: textStyle,
-          maxLines: 10,
-          textAlign: TextAlign.start,
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: Colors.grey.shade700,
+          ),
+          child: Text(
+            controller.text,
+            style: textStyle,
+            maxLines: 10,
+            textAlign: TextAlign.start,
+          ),
         )
       ],
     );
@@ -113,17 +126,23 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
 
     return Field(
         label: this.widget.label,
-        child: EditableText(
-          focusNode: focusNode,
-          controller: controller,
-          cursorColor: Colors.black87,
-          backgroundCursorColor: Colors.black12,
-          style: textStyle,
-          textAlign: TextAlign.center,
-          selectionColor: Colors.black38,
-          keyboardType: TextInputType.text,
-          autofocus: true,
-          inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: Colors.grey.shade700,
+          ),
+          child: EditableText(
+            focusNode: focusNode,
+            controller: controller,
+            cursorColor: Colors.black87,
+            backgroundCursorColor: Colors.black12,
+            style: textStyle,
+            textAlign: TextAlign.center,
+            selectionColor: Colors.black38,
+            keyboardType: TextInputType.text,
+            autofocus: true,
+            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+          ),
         ));
   }
 
@@ -135,17 +154,24 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget.label),
-          EditableText(
-            focusNode: focusNode,
-            controller: controller,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            style: textStyle,
-            textAlign: TextAlign.start,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.multiline,
-            autofocus: true,
-            maxLines: null,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              color: Colors.grey.shade700,
+            ),
+            child: EditableText(
+              focusNode: focusNode,
+              controller: controller,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              style: textStyle,
+              textAlign: TextAlign.start,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.multiline,
+              autofocus: true,
+              maxLines: null,
+            ),
           )
         ]);
   }

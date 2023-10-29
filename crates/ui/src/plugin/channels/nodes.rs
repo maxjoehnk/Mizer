@@ -6,7 +6,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 use mizer_api::handlers::{NodesHandler, TimecodeHandler};
 use mizer_api::proto::nodes::*;
 use mizer_api::RuntimeApi;
-use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview, NodesRef};
+use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodesRef};
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
@@ -65,15 +65,6 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     match self.get_history_pointer(path) {
                         Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                         Err(err) => resp.respond_error(err),
-                    }
-                }
-            }
-            "getPreviewPointer" => {
-                if let Value::String(path) = call.args {
-                    let error_msg = anyhow::anyhow!("Missing preview for node {path}");
-                    match self.get_preview_pointer(path) {
-                        Some(ptr) => resp.send_ok(Value::I64(ptr)),
-                        None => resp.respond_error(error_msg),
                     }
                 }
             }
@@ -197,28 +188,6 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
             Ok(preview.to_pointer() as i64)
         } else {
             anyhow::bail!("{}", err_msg)
-        }
-    }
-
-    fn get_preview_pointer(&self, path: String) -> Option<i64> {
-        let node = self.handler.get_node(path)?;
-        if node.r#type == "timecode-control" {
-            let timecode_id = node.settings.into_iter().find_map(|setting| {
-                if let Some(node_setting::Value::Id(id)) = setting.value {
-                    Some(id)
-                } else {
-                    None
-                }
-            });
-            let timecode = self
-                .timecode_handler
-                .get_timecode_state_ref(timecode_id?.value)?;
-            let preview = NodePreview { timecode };
-            let preview = Arc::new(preview);
-
-            Some(preview.to_pointer() as i64)
-        } else {
-            None
         }
     }
 

@@ -9,28 +9,28 @@ class TimecodeRenderer extends StatefulWidget {
   const TimecodeRenderer(this.pluginApi, this.path) : super();
 
   @override
-  State<TimecodeRenderer> createState() => _TimecodeRendererState(this.pluginApi.getPreviewPointer(path));
+  State<TimecodeRenderer> createState() =>
+      _TimecodeRendererState(this.pluginApi.getHistoryPointer(path));
 }
 
 class _TimecodeRendererState extends State<TimecodeRenderer> {
-  final Future<NodePreviewPointer> _pointer;
+  final Future<NodeHistoryPointer> _pointer;
 
   _TimecodeRendererState(this._pointer);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _pointer,
-      builder: (context, AsyncSnapshot<NodePreviewPointer> snapshot) {
-        if (!snapshot.hasData) {
-          return Container();
-        }
+        future: _pointer,
+        builder: (context, AsyncSnapshot<NodeHistoryPointer> snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          }
 
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FFITimeControl(pointer: snapshot.data!),
-        );
-      }
-    );
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FFITimeControl(pointer: snapshot.requireData),
+          );
+        });
   }
 }

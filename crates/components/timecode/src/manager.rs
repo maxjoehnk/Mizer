@@ -3,9 +3,10 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::Arc;
 
 use dashmap::DashMap;
+use pinboard::NonEmptyPinboard;
+
 use mizer_clock::Timecode;
 use mizer_module::ClockFrame;
-use pinboard::NonEmptyPinboard;
 
 use crate::model::*;
 
@@ -287,6 +288,3 @@ impl TimecodeStateAccess {
             .map(|state| Timecode::from_i128(state.timestamp))
     }
 }
-
-#[cfg(test)]
-mod tests {}

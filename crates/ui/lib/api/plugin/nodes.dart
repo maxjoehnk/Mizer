@@ -6,10 +6,8 @@ import 'ffi/api.dart';
 import 'ffi/bindings.dart';
 import 'ffi/history.dart';
 import 'ffi/nodes.dart';
-import 'ffi/preview.dart';
 
 export 'ffi/history.dart' show NodeHistoryPointer;
-export 'ffi/preview.dart' show NodePreviewPointer;
 
 class NodesPluginApi implements NodesApi {
   final FFIBindings bindings;
@@ -78,12 +76,6 @@ class NodesPluginApi implements NodesApi {
     int pointer = await channel.invokeMethod("getHistoryPointer", path);
 
     return this.bindings.openNodeHistory(pointer);
-  }
-
-  Future<NodePreviewPointer> getPreviewPointer(String path) async {
-    int pointer = await channel.invokeMethod("getPreviewPointer", path);
-
-    return this.bindings.openNodePreview(pointer);
   }
 
   @override

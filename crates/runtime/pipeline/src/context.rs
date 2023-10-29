@@ -6,7 +6,7 @@ use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 
-use mizer_clock::{Clock, ClockFrame, ClockState};
+use mizer_clock::{Clock, ClockFrame, ClockState, Timecode};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
@@ -55,6 +55,7 @@ pub enum NodePreviewState {
     ),
     Data(Arc<NonEmptyPinboard<Option<StructuredData>>>),
     Color(Arc<NonEmptyPinboard<Option<Color>>>),
+    Timecode(Arc<NonEmptyPinboard<Option<Timecode>>>),
     None,
 }
 
@@ -75,6 +76,12 @@ impl NodePreviewState {
     fn push_color_value(&mut self, color: Color) {
         if let Self::Color(snapshot) = self {
             snapshot.set(Some(color));
+        }
+    }
+
+    fn push_timecode_value(&mut self, timecode: Timecode) {
+        if let Self::Timecode(snapshot) = self {
+            snapshot.set(Some(timecode));
         }
     }
 }
@@ -243,5 +250,10 @@ impl<'a> PreviewContext for PipelineContext<'a> {
     fn write_color_preview(&self, data: Color) {
         profiling::scope!("PipelineContext::write_color_preview");
         self.preview.borrow_mut().push_color_value(data);
+    }
+
+    fn write_timecode_preview(&self, timecode: Timecode) {
+        profiling::scope!("PipelineContext::write_timecode_preview");
+        self.preview.borrow_mut().push_timecode_value(timecode);
     }
 }

@@ -81,6 +81,12 @@ impl ProcessingNode for TimecodeControlNode {
                 manager.stop_timecode_track(self.timecode_id);
             }
         }
+        if let Some(timecode) = manager
+            .get_state_access(self.timecode_id)
+            .and_then(|access| access.get_timecode())
+        {
+            context.write_timecode_preview(timecode);
+        }
         Ok(())
     }
 

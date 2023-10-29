@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 
-use mizer_clock::ClockState;
+use mizer_clock::{ClockState, Timecode};
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
@@ -109,4 +109,6 @@ impl PreviewContext for NodeContextMock {
     }
 
     fn write_color_preview(&self, _color: Color) {}
+
+    fn write_timecode_preview(&self, _timecode: Timecode) {}
 }

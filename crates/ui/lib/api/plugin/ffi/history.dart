@@ -2,12 +2,13 @@ import 'dart:developer';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/widgets/inputs/color.dart';
 
 import 'api.dart';
 import 'bindings.dart';
 
-class NodeHistoryPointer {
+class NodeHistoryPointer implements TimecodeReader {
   final FFIBindings _bindings;
   final ffi.Pointer<NodeHistory> _ptr;
 
@@ -60,6 +61,12 @@ class NodeHistoryPointer {
     var result = this._bindings.read_node_color_preview(_ptr);
 
     return ColorValue(red: result.red, green: result.green, blue: result.blue);
+  }
+
+  Timecode readTimecode() {
+    var result = this._bindings.read_node_timecode_preview(_ptr);
+
+    return result;
   }
 
   void dispose() {

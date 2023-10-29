@@ -2,6 +2,7 @@ use std::time::{Duration, Instant};
 
 use serde::{Deserialize, Serialize};
 
+use mizer_clock::Timecode;
 use mizer_node::*;
 
 const START_INPUT: &str = "Start";
@@ -92,6 +93,8 @@ impl ProcessingNode for CountdownNode {
         if let Some(start) = state {
             let elapsed = start.elapsed();
             let duration = self.duration();
+            let timecode = get_timecode(elapsed, duration);
+            context.write_timecode_preview(timecode);
             if elapsed >= duration {
                 self.stop_timer(state);
                 context.write_port(FINISHED_OUTPUT, SINGLE_HIGH);
@@ -103,6 +106,7 @@ impl ProcessingNode for CountdownNode {
         } else {
             context.write_port(ACTIVE_OUTPUT, SINGLE_LOW);
             context.write_port(FINISHED_OUTPUT, SINGLE_LOW);
+            context.write_timecode_preview(Timecode::default());
         }
 
         Ok(())
@@ -125,4 +129,13 @@ impl CountdownNode {
     fn stop_timer(&self, state: &mut Option<Instant>) {
         *state = None;
     }
+}
+
+fn get_timecode(elapsed: Duration, duration: Duration) -> Timecode {
+    let timecode = Timecode::from(duration - elapsed);
+    let timecode = Timecode {
+        negative: true,
+        ..timecode
+    };
+    timecode
 }

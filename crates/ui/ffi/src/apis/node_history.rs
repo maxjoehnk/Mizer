@@ -1,13 +1,15 @@
+use std::ffi::c_char;
+use std::sync::Arc;
+
+use parking_lot::Mutex;
+
+use mizer_node::NodePreviewRef;
+use mizer_util::StructuredData;
+
 use crate::apis::programmer::FFIColorValue;
 use crate::apis::transport::Timecode;
 use crate::pointer_inventory::PointerInventory;
 use crate::types::{drop_pointer, Array, FFIFromPointer};
-use mizer_node::NodePreviewRef;
-use mizer_timecode::TimecodeStateAccess;
-use mizer_util::StructuredData;
-use parking_lot::Mutex;
-use std::ffi::c_char;
-use std::sync::Arc;
 
 pub struct NodeHistory {
     preview_ref: NodePreviewRef,
@@ -53,10 +55,6 @@ fn convert_with_inventory(
                 .collect(),
         ),
     }
-}
-
-pub struct NodePreview {
-    pub timecode: TimecodeStateAccess,
 }
 
 #[derive(Clone, Copy)]
@@ -182,21 +180,17 @@ pub extern "C" fn read_node_color_preview(ptr: *const NodeHistory) -> FFIColorVa
 }
 
 #[no_mangle]
-pub extern "C" fn read_node_timecode(ptr: *const NodePreview) -> Timecode {
+pub extern "C" fn read_node_timecode_preview(ptr: *const NodeHistory) -> Timecode {
     let ffi = Arc::from_pointer(ptr);
-    let timecode = ffi.timecode.get_timecode();
+
+    let data = ffi.preview_ref.read_timecode().unwrap_or_default();
 
     std::mem::forget(ffi);
 
-    timecode.unwrap_or_default().into()
+    data.into()
 }
 
 #[no_mangle]
 pub extern "C" fn drop_node_history_pointer(ptr: *const NodeHistory) {
-    drop_pointer(ptr);
-}
-
-#[no_mangle]
-pub extern "C" fn drop_node_preview_pointer(ptr: *const NodePreview) {
     drop_pointer(ptr);
 }

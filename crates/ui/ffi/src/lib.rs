@@ -1,7 +1,7 @@
 pub use apis::connections::{ConnectionsRef, GamepadConnectionRef};
 pub use apis::fixture::FixturesRef;
 pub use apis::layout::LayoutRef;
-pub use apis::node_history::{NodeHistory, NodePreview};
+pub use apis::node_history::NodeHistory;
 pub use apis::nodes::NodesRef;
 pub use apis::programmer::Programmer;
 pub use apis::sequencer::Sequencer;

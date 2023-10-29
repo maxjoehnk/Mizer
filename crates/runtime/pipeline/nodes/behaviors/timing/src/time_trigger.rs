@@ -84,7 +84,8 @@ impl ProcessingNode for TimeTriggerNode {
         *state = self.now();
         if let Some(next_time) = next_time {
             let duration = next_time.signed_duration_since(state);
-            let timecode = Self::to_timecode(duration);
+            let timecode = to_timecode(duration);
+            context.write_timecode_preview(timecode);
 
             let has_passed = duration <= Duration::zero();
 
@@ -116,20 +117,20 @@ impl TimeTriggerNode {
     fn now(&self) -> DateTime<Utc> {
         DateTime::<Utc>::from_naive_utc_and_offset(Utc::now().naive_utc(), Utc)
     }
+}
 
-    fn to_timecode(duration: Duration) -> Timecode {
-        let seconds = duration.num_seconds() as u64;
-        let hours = seconds / HOUR;
-        let seconds = seconds - (hours * HOUR);
-        let minutes = seconds / MINUTE;
-        let seconds = seconds - (minutes * MINUTE);
+fn to_timecode(duration: Duration) -> Timecode {
+    let seconds = duration.num_seconds() as u64;
+    let hours = seconds / HOUR;
+    let seconds = seconds - (hours * HOUR);
+    let minutes = seconds / MINUTE;
+    let seconds = seconds - (minutes * MINUTE);
 
-        Timecode {
-            frames: 0,
-            seconds,
-            minutes,
-            hours,
-            negative: true,
-        }
+    Timecode {
+        frames: 0,
+        seconds,
+        minutes,
+        hours,
+        negative: true,
     }
 }

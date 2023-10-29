@@ -1,5 +1,8 @@
 use std::fmt::{Display, Formatter};
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
+const MINUTE: u64 = 60;
+const HOUR: u64 = 60 * MINUTE;
 
 fn now() -> u128 {
     let time = SystemTime::now();
@@ -201,6 +204,24 @@ impl Timecode {
             seconds,
             frames,
             negative,
+        }
+    }
+}
+
+impl From<Duration> for Timecode {
+    fn from(duration: Duration) -> Self {
+        let seconds = duration.as_secs();
+        let hours = seconds / HOUR;
+        let seconds = seconds - (hours * HOUR);
+        let minutes = seconds / MINUTE;
+        let seconds = seconds - (minutes * MINUTE);
+
+        Self {
+            frames: 0,
+            seconds,
+            minutes,
+            hours,
+            negative: false,
         }
     }
 }

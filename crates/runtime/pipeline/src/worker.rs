@@ -166,6 +166,12 @@ impl PipelineWorker {
                     NodePreviewState::Color(NonEmptyPinboard::new(None).into()),
                 );
             }
+            PreviewType::Timecode => {
+                self.previews.insert(
+                    path.clone(),
+                    NodePreviewState::Timecode(NonEmptyPinboard::new(None).into()),
+                );
+            }
             _ => {
                 self.previews.insert(path.clone(), NodePreviewState::None);
             }
@@ -537,6 +543,7 @@ impl PipelineWorker {
                 NodePreviewState::History(_, buf) => Some(NodePreviewRef::History(buf.clone())),
                 NodePreviewState::Data(buf) => Some(NodePreviewRef::Data(buf.clone())),
                 NodePreviewState::Color(buf) => Some(NodePreviewRef::Color(buf.clone())),
+                NodePreviewState::Timecode(buf) => Some(NodePreviewRef::Timecode(buf.clone())),
                 _ => None,
             }
         } else {

@@ -9,7 +9,6 @@ import 'history.dart';
 import 'layout.dart';
 import 'nodes.dart';
 import 'plans.dart';
-import 'preview.dart';
 import 'programmer.dart';
 import 'sequencer.dart';
 import 'transport.dart';
@@ -34,12 +33,6 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<NodeHistory>.fromAddress(pointerAddress);
 
     return NodeHistoryPointer(this, pointer);
-  }
-
-  NodePreviewPointer openNodePreview(int pointerAddress) {
-    var pointer = ffi.Pointer<NodePreview>.fromAddress(pointerAddress);
-
-    return NodePreviewPointer(this, pointer);
   }
 
   TransportPointer openTransport(int pointerAddress) {

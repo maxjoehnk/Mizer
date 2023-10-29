@@ -115,6 +115,7 @@ impl PipelineAccess {
             ColorizeTexture(node) => self.add_node(path, node),
             TextureMask(node) => self.add_node(path, node),
             TextureOpacity(node) => self.add_node(path, node),
+            LumaKey(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
             ColorConstant(node) => self.add_node(path, node),

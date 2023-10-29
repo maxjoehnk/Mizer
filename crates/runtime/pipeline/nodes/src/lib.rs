@@ -46,9 +46,9 @@ pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
 pub use mizer_video_nodes::{
-    ColorizeTextureNode, ImageFileNode, TextureBorderNode, TextureMaskNode, TextureOpacityNode,
-    VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode, VideoRgbSplitNode,
-    VideoTransformNode,
+    ColorizeTextureNode, ImageFileNode, LumaKeyNode, TextureBorderNode, TextureMaskNode,
+    TextureOpacityNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
+    VideoRgbSplitNode, VideoTransformNode,
 };
 pub use mizer_webcam_nodes::WebcamNode;
 
@@ -193,6 +193,7 @@ node_impl! {
     TextureBorder(TextureBorderNode),
     TextureMask(TextureMaskNode),
     TextureOpacity(TextureOpacityNode),
+    LumaKey(LumaKeyNode),
     Webcam(WebcamNode),
     ScreenCapture(ScreenCaptureNode),
     Gamepad(GamepadNode),

@@ -51,7 +51,7 @@ impl VideoDecoder for VideoFileDecoder {
             width: decoder.width(),
             height: decoder.height(),
             fps: stream.rate().into(),
-            frames: stream.frames() as usize - 1,
+            frames: (stream.frames() as usize).saturating_sub(1),
         };
 
         Ok(Self {

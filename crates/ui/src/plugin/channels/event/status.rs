@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use futures::StreamExt;
 use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
 
@@ -18,7 +19,11 @@ pub struct MonitorStatusChannel<AR: AsyncRuntime> {
 impl<AR: AsyncRuntime + 'static> EventChannelHandler for MonitorStatusChannel<AR> {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
-        let stream = self.handler.observe_status_messages().into_stream();
+        let stream = self
+            .handler
+            .observe_status_messages()
+            .into_stream()
+            .map(|message| message.map(|message| message.to_string()));
         let subscription = self
             .runtime
             .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));

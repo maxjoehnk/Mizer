@@ -1,5 +1,5 @@
 use mizer_message_bus::Subscriber;
-use mizer_status_bus::StatusBus;
+use mizer_status_bus::{StatusBus, StatusMessage};
 
 #[derive(Clone)]
 pub struct StatusHandler {
@@ -15,7 +15,7 @@ impl StatusHandler {
         self.bus.subscribe_fps()
     }
 
-    pub fn observe_status_messages(&self) -> Subscriber<Option<String>> {
+    pub fn observe_status_messages(&self) -> Subscriber<Option<StatusMessage>> {
         self.bus.subscribe_status_messages()
     }
 }

@@ -9,7 +9,7 @@ benchmarks:
 	cargo bench --workspace
 
 build-headless:
-	cargo build --release --no-default-features
+	cargo build --release --no-default-features --features build-ffmpeg
 
 build:
 	cd crates/ui && make
@@ -17,7 +17,7 @@ build:
 
 build-release:
 	cd crates/ui && make release
-	cargo build --no-default-features --features ui --release -p mizer
+	cargo build --no-default-features --features ui --features build-ffmpeg --release -p mizer
 
 run: build
 	target/debug/mizer

@@ -16,28 +16,48 @@ use super::texture::*;
 const PLAYBACK_INPUT: &str = "Playback";
 const PLAYBACK_OUTPUT: &str = "Playback";
 const OUTPUT_PORT: &str = "Output";
+const PLAYBACK_SPEED_INPUT: &str = "Playback Speed";
 
 const FILE_SETTING: &str = "File";
+const PLAYBACK_SPEED_SETTING: &str = "Playback Speed";
 const SYNC_TRANSPORT_STATE_SETTING: &str = "Sync to Transport State";
 const RENDER_WHEN_STOPPED: &str = "Render when Stopped";
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoFileNode {
     pub file: String,
+    #[serde(default = "default_playback_speed")]
+    pub playback_speed: f64,
     #[serde(default)]
     pub sync_to_transport_state: bool,
     #[serde(default = "default_render_when_stopped")]
     pub render_when_stopped: bool,
 }
 
+impl Default for VideoFileNode {
+    fn default() -> Self {
+        Self {
+            file: Default::default(),
+            playback_speed: default_playback_speed(),
+            sync_to_transport_state: Default::default(),
+            render_when_stopped: default_render_when_stopped(),
+        }
+    }
+}
+
 fn default_render_when_stopped() -> bool {
     true
+}
+
+fn default_playback_speed() -> f64 {
+    1.0
 }
 
 impl ConfigurableNode for VideoFileNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Video]),
+            setting!(PLAYBACK_SPEED_SETTING, self.playback_speed),
             setting!(SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state),
             setting!(RENDER_WHEN_STOPPED, self.render_when_stopped),
         ]
@@ -45,6 +65,7 @@ impl ConfigurableNode for VideoFileNode {
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(media setting, FILE_SETTING, self.file);
+        update!(float setting, PLAYBACK_SPEED_SETTING, self.playback_speed);
         update!(bool setting, SYNC_TRANSPORT_STATE_SETTING, self.sync_to_transport_state);
         update!(bool setting, RENDER_WHEN_STOPPED, self.render_when_stopped);
 
@@ -64,6 +85,7 @@ impl PipelineNode for VideoFileNode {
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(PLAYBACK_INPUT, PortType::Single),
+            input_port!(PLAYBACK_SPEED_INPUT, PortType::Single),
             output_port!(OUTPUT_PORT, PortType::Texture),
             output_port!(PLAYBACK_OUTPUT, PortType::Single),
         ]
@@ -131,6 +153,9 @@ impl ProcessingNode for VideoFileNode {
         if clock_state != state.texture.clock_state {
             state.set_clock_state(clock_state)?;
         }
+        state.texture.playback_speed = context
+            .read_port(PLAYBACK_SPEED_INPUT)
+            .unwrap_or(self.playback_speed);
         state.receive_frames();
         state.texture.set_fps(context.fps());
         context.write_port::<_, f64>(

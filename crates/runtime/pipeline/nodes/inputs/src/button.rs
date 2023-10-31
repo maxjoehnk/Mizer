@@ -9,20 +9,54 @@ const SET_PORT: &str = "Set";
 const RESET_PORT: &str = "Reset";
 
 const TOGGLE_SETTING: &str = "Toggle";
+const HIGH_VALUE_SETTING: &str = "High Value";
+const LOW_VALUE_SETTING: &str = "Low Value";
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct ButtonNode {
     #[serde(default)]
     pub toggle: bool,
+    #[serde(default = "default_high_value")]
+    pub high_value: f64,
+    #[serde(default = "default_low_value")]
+    pub low_value: f64,
+}
+
+impl Default for ButtonNode {
+    fn default() -> Self {
+        Self {
+            toggle: false,
+            high_value: default_high_value(),
+            low_value: default_low_value(),
+        }
+    }
+}
+
+fn default_high_value() -> f64 {
+    1f64
+}
+
+fn default_low_value() -> f64 {
+    0f64
 }
 
 impl ConfigurableNode for ButtonNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(TOGGLE_SETTING, self.toggle)]
+        vec![
+            setting!(TOGGLE_SETTING, self.toggle),
+            setting!(HIGH_VALUE_SETTING, self.high_value)
+                .min_hint(0f64)
+                .max_hint(1f64),
+            setting!(LOW_VALUE_SETTING, self.low_value)
+                .min_hint(0f64)
+                .max_hint(1f64),
+        ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(bool setting, TOGGLE_SETTING, self.toggle);
+        update!(float setting, HIGH_VALUE_SETTING, self.high_value);
+        update!(float setting, LOW_VALUE_SETTING, self.low_value);
 
         update_fallback!(setting)
     }
@@ -83,7 +117,11 @@ impl ProcessingNode for ButtonNode {
                 *state = false;
             }
         }
-        let output_value = if *state { 1f64 } else { 0f64 };
+        let output_value = if *state {
+            self.high_value
+        } else {
+            self.low_value
+        };
         context.write_port(OUTPUT_PORT, output_value);
         context.push_history_value(output_value);
 
@@ -108,6 +146,12 @@ impl ProcessingNode for ButtonNode {
             ui.columns(2, |columns| {
                 columns[0].label("Toggle");
                 columns[1].label(self.toggle.to_string());
+
+                columns[0].label("High Value");
+                columns[1].label(self.high_value.to_string());
+
+                columns[0].label("Low Value");
+                columns[1].label(self.low_value.to_string());
             });
         });
         ui.collapsing_header("State", |ui| {

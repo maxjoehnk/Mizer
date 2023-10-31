@@ -257,6 +257,8 @@ impl TimecodeManager {
             if let Some(start_frame) = state.start_frame {
                 state.timestamp =
                     (frame.frames as i128 - start_frame as i128) * (TIMECODE_FPS / fps) as i128;
+                // TODO: only apply diffed fps to new frames
+                // This is only relevant when the fps changes during playback
             }
         }
     }

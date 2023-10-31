@@ -1,17 +1,19 @@
+use std::vec::IntoIter;
+
 use dasp::frame::Stereo;
 use dasp::signal::{from_interleaved_samples_iter, FromInterleavedSamplesIterator};
 use dasp::Signal;
+
 pub use file::*;
 pub use input::*;
 pub use meter::*;
 pub use mix::*;
 use mizer_node::{NodeContext, PortId};
 pub use output::*;
-use std::vec::IntoIter;
 pub use volume::*;
 
 pub(crate) const SAMPLE_RATE: u32 = 48_000;
-pub(crate) const TRANSFER_SIZE: usize = (SAMPLE_RATE / 60) as usize;
+pub(crate) const TRANSFER_SIZE: usize = (SAMPLE_RATE / 60) as usize; // TODO: should be dependent on the fps
 
 mod file;
 mod input;

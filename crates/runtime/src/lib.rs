@@ -10,6 +10,7 @@ pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
 
 mod api;
 pub mod commands;
+mod context;
 mod coordinator;
 mod debug_ui;
 mod node_metadata;

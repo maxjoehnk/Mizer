@@ -21,7 +21,7 @@ impl CommandProcessor {
 
 impl Processor for CommandProcessor {
     #[tracing::instrument]
-    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame) {
+    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame, _fps: f64) {
         if let Err(err) = self.worker.process_callbacks(&mut self.executor, injector) {
             log::error!("Error processing commands {:?}", err);
         }

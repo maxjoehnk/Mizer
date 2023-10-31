@@ -18,6 +18,7 @@ pub enum ApiCommand {
     GetNodeMetadataRef(flume::Sender<NodeMetadataRef>),
     SetClockState(ClockState),
     SetBpm(f64),
+    SetFps(f64),
     GetConnections(flume::Sender<Vec<Connection>>),
     GetMidiDeviceProfiles(flume::Sender<Vec<DeviceProfile>>),
     GetDmxMonitor(

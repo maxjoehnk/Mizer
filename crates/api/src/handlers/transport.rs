@@ -1,10 +1,13 @@
-use crate::proto::transport::{Transport, TransportState};
-use crate::RuntimeApi;
+use std::sync::Arc;
+
 use futures::stream::Stream;
 use futures::StreamExt;
-use mizer_clock::ClockSnapshot;
 use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
+
+use mizer_clock::ClockSnapshot;
+
+use crate::proto::transport::{Transport, TransportState};
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct TransportHandler<R: RuntimeApi> {
@@ -35,6 +38,14 @@ impl<R: RuntimeApi> TransportHandler<R> {
     #[profiling::function]
     pub fn set_bpm(&self, bpm: f64) -> anyhow::Result<()> {
         self.runtime.set_bpm(bpm)?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn set_fps(&self, fps: f64) -> anyhow::Result<()> {
+        self.runtime.set_fps(fps)?;
 
         Ok(())
     }

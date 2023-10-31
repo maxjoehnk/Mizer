@@ -10,7 +10,7 @@ use mizer_clock::{Clock, ClockFrame, ClockState, Timecode};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
-use mizer_processing::Injector;
+use mizer_processing::ProcessingContext;
 use mizer_util::StructuredData;
 use mizer_wgpu::{TextureRegistry, TextureView};
 
@@ -18,10 +18,9 @@ use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
 /// Context for execution of a single node
 pub struct PipelineContext<'a> {
-    pub(crate) frame: ClockFrame,
+    pub(crate) processing_context: RefCell<&'a dyn ProcessingContext>,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
-    pub(crate) injector: &'a Injector,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
     pub(crate) node_metadata: RefCell<&'a mut NodeMetadata>,
@@ -30,9 +29,10 @@ pub struct PipelineContext<'a> {
 impl<'a> Debug for PipelineContext<'a> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("PipelineContext")
-            .field("frame", &self.frame)
+            .field("processing_context", &self.processing_context)
             .field("senders", &self.senders)
             .field("receivers", &self.receivers)
+            .field("node_metadata", &self.node_metadata)
             .finish()
     }
 }
@@ -88,7 +88,7 @@ impl NodePreviewState {
 
 impl<'a> NodeContext for PipelineContext<'a> {
     fn clock(&self) -> ClockFrame {
-        self.frame
+        self.processing_context.borrow().master_clock()
     }
 
     fn write_clock_tempo(&self, new_speed: f64) {
@@ -104,6 +104,10 @@ impl<'a> NodeContext for PipelineContext<'a> {
 
     fn clock_state(&self) -> ClockState {
         self.clock.borrow().state()
+    }
+
+    fn fps(&self) -> f64 {
+        self.processing_context.borrow().fps()
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {
@@ -214,20 +218,20 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn inject<T: 'static>(&self) -> Option<&T> {
-        self.injector.get::<T>()
+        self.processing_context.borrow().injector().get::<T>()
     }
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
         profiling::scope!("PipelineContext::read_texture");
         let handle = self.read_port(port)?;
-        let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
+        let texture_registry = self.inject::<TextureRegistry>().unwrap();
         texture_registry.get(&handle)
     }
 
     fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
         profiling::scope!("PipelineContext::read_textures");
         let handles = self.read_ports(port);
-        let texture_registry = self.injector.get::<TextureRegistry>().unwrap();
+        let texture_registry = self.inject::<TextureRegistry>().unwrap();
 
         handles
             .into_iter()

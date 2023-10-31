@@ -8,13 +8,13 @@ use std::sync::Arc;
 use downcast::*;
 use pinboard::NonEmptyPinboard;
 
-use mizer_clock::{Clock, ClockFrame};
+use mizer_clock::Clock;
 use mizer_debug_ui_impl::{DebugUi, DebugUiImpl};
 use mizer_node::*;
 use mizer_nodes::NodeDowncast;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
-use mizer_processing::{DebugUiDrawHandle, Injector};
+use mizer_processing::{DebugUiDrawHandle, ProcessingContext};
 use mizer_protocol_laser::LaserFrame;
 use mizer_util::{HashMapExtension, StructuredData};
 use mizer_wgpu::TextureHandle;
@@ -335,40 +335,37 @@ impl PipelineWorker {
     pub fn pre_process<'a>(
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
+        context: &impl ProcessingContext,
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::pre_process");
         self.check_node_receivers(&nodes);
         self.order_nodes_by_dependencies(&mut nodes);
-        self.pre_process_nodes(&mut nodes, frame, injector, clock)
+        self.pre_process_nodes(&mut nodes, clock, context);
     }
 
     pub fn process<'a>(
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
+        context: &impl ProcessingContext,
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process");
         self.check_node_receivers(&nodes);
         self.order_nodes_by_dependencies(&mut nodes);
-        self.process_nodes(&mut nodes, frame, injector, clock)
+        self.process_nodes(&mut nodes, clock, context);
     }
 
     pub fn post_process<'a>(
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
+        context: &impl ProcessingContext,
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::post_process");
         self.check_node_receivers(&nodes);
         self.order_nodes_by_dependencies(&mut nodes);
-        self.post_process_nodes(&mut nodes, frame, injector, clock)
+        self.post_process_nodes(&mut nodes, clock, context);
     }
 
     fn check_node_receivers(&mut self, nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)]) {
@@ -412,15 +409,14 @@ impl PipelineWorker {
     fn pre_process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
         clock: &mut impl Clock,
+        processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::pre_process_nodes");
         let mut node_metadata = HashMap::default();
         for (path, node) in nodes {
             let (context, state) =
-                self.get_context(path, frame, injector, clock, &mut node_metadata);
+                self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::pre_process", node.node_type());
             profiling::scope!(&_scope);
             if let Err(e) = node.pre_process(&context, state) {
@@ -433,15 +429,14 @@ impl PipelineWorker {
     fn process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
         clock: &mut impl Clock,
+        processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
         let mut node_metadata = self._node_metadata.clone();
         for (path, node) in nodes {
             let (context, state) =
-                self.get_context(path, frame, injector, clock, &mut node_metadata);
+                self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::process", node.node_type());
             profiling::scope!(&_scope);
             if let Err(e) = node.process(&context, state) {
@@ -454,15 +449,14 @@ impl PipelineWorker {
     fn post_process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        frame: ClockFrame,
-        injector: &Injector,
         clock: &mut impl Clock,
+        processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::post_process_nodes");
         let mut node_metadata = self._node_metadata.clone();
         for (path, node) in nodes {
             let (context, state) =
-                self.get_context(path, frame, injector, clock, &mut node_metadata);
+                self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::post_process", node.node_type());
             profiling::scope!(&_scope);
             if let Err(e) = node.post_process(&context, state) {
@@ -475,14 +469,12 @@ impl PipelineWorker {
     fn get_context<'a>(
         &'a mut self,
         path: &NodePath,
-        frame: ClockFrame,
-        injector: &'a Injector,
+        processing_context: &'a impl ProcessingContext,
         clock: &'a mut impl Clock,
         node_metadata: &'a mut HashMap<NodePath, NodeMetadata>,
     ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
         let context = PipelineContext {
-            frame,
-            injector,
+            processing_context: RefCell::new(processing_context),
             preview: RefCell::new(
                 self.previews
                     .get_mut(path)

@@ -50,8 +50,9 @@ impl Clock for TestClock {
     fn snapshot(&self) -> ClockSnapshot {
         ClockSnapshot {
             speed: 1.0,
-            time: Timecode::new(1),
+            time: Timecode::new(1, 60.),
             state: ClockState::Playing,
+            fps: 60.,
         }
     }
 
@@ -61,5 +62,13 @@ impl Clock for TestClock {
 
     fn state(&self) -> ClockState {
         unimplemented!()
+    }
+
+    fn fps(&self) -> f64 {
+        60.0
+    }
+
+    fn fps_mut(&mut self) -> &mut f64 {
+        todo!()
     }
 }

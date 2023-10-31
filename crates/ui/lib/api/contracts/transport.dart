@@ -8,5 +8,7 @@ abstract class TransportApi {
 
   Future<void> setBPM(double bpm);
 
+  Future<void> setFPS(double fps);
+
   Future<TransportPointer?> getTransportPointer();
 }

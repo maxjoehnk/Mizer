@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
+import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 
@@ -67,6 +68,28 @@ class _TransportControlsState extends State<TransportControls> {
           ),
           RepaintBoundary(
               child: TransportControl(transportStream.map((event) => event.state).distinct())),
+          SizedBox(width: 8),
+          RepaintBoundary(
+            child: StreamBuilder<double>(
+                stream: transportStream.map((event) => event.fps).distinct(),
+                builder: (context, snapshot) {
+                  return Container(
+                    color: Colors.grey.shade900,
+                    width: 96,
+                    height: 32,
+                    padding: const EdgeInsets.all(4),
+                    child: MizerSelect<double>(
+                      openTop: true,
+                      options: [
+                        SelectOption(label: "30 FPS", value: 30),
+                        SelectOption(label: "60 FPS", value: 60),
+                      ],
+                      onChanged: (fps) => context.read<TransportApi>().setFPS(fps),
+                      value: snapshot.data ?? 60,
+                    ),
+                  );
+                }),
+          ),
           Spacer(),
           PanelAction(
               width: 80,

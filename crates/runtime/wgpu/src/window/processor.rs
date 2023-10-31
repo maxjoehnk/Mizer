@@ -9,7 +9,7 @@ use super::{EventLoopHandle, WindowEventSenders};
 pub struct WindowProcessor;
 
 impl Processor for WindowProcessor {
-    fn pre_process(&mut self, injector: &mut Injector, _frame: ClockFrame) {
+    fn pre_process(&mut self, injector: &mut Injector, _frame: ClockFrame, _fps: f64) {
         let event_loop = injector.get_mut::<EventLoopHandle>().unwrap();
         event_loop
             .event_loop

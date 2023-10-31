@@ -132,6 +132,7 @@ impl ProcessingNode for VideoFileNode {
             state.set_clock_state(clock_state)?;
         }
         state.receive_frames();
+        state.texture.set_fps(context.fps());
         context.write_port::<_, f64>(
             PLAYBACK_OUTPUT,
             match state.texture.clock_state {

@@ -48,6 +48,8 @@ pub struct Project {
     #[serde(default)]
     pub version: usize,
     #[serde(default)]
+    pub playback: PlaybackSettings,
+    #[serde(default)]
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub channels: Vec<Channel>,
@@ -73,6 +75,17 @@ pub struct Project {
     pub timecodes: Timecodes,
     #[serde(default)]
     pub surfaces: Vec<Surface>,
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
+pub struct PlaybackSettings {
+    pub fps: f64,
+}
+
+impl Default for PlaybackSettings {
+    fn default() -> Self {
+        Self { fps: 60. }
+    }
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]

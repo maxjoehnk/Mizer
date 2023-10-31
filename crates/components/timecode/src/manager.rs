@@ -10,6 +10,8 @@ use mizer_module::ClockFrame;
 
 use crate::model::*;
 
+const TIMECODE_FPS: f64 = 60.0; // TODO: use context framerate here or run timecode always at 60fps?
+
 #[derive(Debug, Clone)]
 pub struct TimecodeManager {
     timecode_counter: Arc<AtomicU32>,
@@ -250,10 +252,11 @@ impl TimecodeManager {
         }
     }
 
-    pub(crate) fn advance_timecodes(&self, frame: ClockFrame) {
+    pub(crate) fn advance_timecodes(&self, frame: ClockFrame, fps: f64) {
         for mut state in self.timecode_states.iter_mut() {
             if let Some(start_frame) = state.start_frame {
-                state.timestamp = frame.frames as i128 - start_frame as i128;
+                state.timestamp =
+                    (frame.frames as i128 - start_frame as i128) * (TIMECODE_FPS / fps) as i128;
             }
         }
     }
@@ -285,6 +288,6 @@ impl TimecodeStateAccess {
     pub fn get_timecode(&self) -> Option<Timecode> {
         self.states
             .get(&self.id)
-            .map(|state| Timecode::from_i128(state.timestamp))
+            .map(|state| Timecode::from_i128(state.timestamp, TIMECODE_FPS))
     }
 }

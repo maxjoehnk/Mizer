@@ -7,9 +7,15 @@ class MizerSelect<T> extends StatefulWidget {
   final T? value;
   final Function(T) onChanged;
   final bool disabled;
+  final bool openTop;
 
   const MizerSelect(
-      {required this.options, this.disabled = false, this.value, required this.onChanged, Key? key})
+      {required this.options,
+      this.disabled = false,
+      this.value,
+      required this.onChanged,
+      this.openTop = false,
+      Key? key})
       : super(key: key);
 
   @override
@@ -27,6 +33,7 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
           renderBox: renderBox,
           options: widget.options,
           onChanged: widget.onChanged,
+          openTop: widget.openTop,
         ));
       },
       builder: (hovered) => Container(
@@ -63,8 +70,13 @@ class _MizerSelectRoute<T> extends PopupRoute {
   final List<SelectItem<T>> options;
   final Function(T) onChanged;
   final RenderBox renderBox;
+  final bool openTop;
 
-  _MizerSelectRoute({required this.options, required this.onChanged, required this.renderBox})
+  _MizerSelectRoute(
+      {required this.options,
+      required this.onChanged,
+      required this.renderBox,
+      required this.openTop})
       : super();
 
   @override
@@ -79,7 +91,8 @@ class _MizerSelectRoute<T> extends PopupRoute {
   @override
   Widget buildPage(
       BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-    return MizerSelectContainer<T>(options: options, onChanged: onChanged, renderBox: renderBox);
+    return MizerSelectContainer<T>(
+        options: options, onChanged: onChanged, renderBox: renderBox, openTop: openTop);
   }
 
   @override
@@ -90,9 +103,14 @@ class MizerSelectContainer<T> extends StatefulWidget {
   final List<SelectItem<T>> options;
   final Function(T) onChanged;
   final RenderBox renderBox;
+  final bool openTop;
 
   const MizerSelectContainer(
-      {required this.options, required this.onChanged, required this.renderBox, Key? key})
+      {required this.options,
+      required this.onChanged,
+      required this.renderBox,
+      required this.openTop,
+      Key? key})
       : super(key: key);
 
   @override
@@ -106,12 +124,14 @@ class _MizerSelectContainerState<T> extends State<MizerSelectContainer<T>> {
   Widget build(BuildContext context) {
     var size = widget.renderBox.size;
     var offset = widget.renderBox.localToGlobal(Offset.zero);
+    var globalSize = MediaQuery.of(context).size;
 
     return Stack(
       children: [
         Positioned(
           width: size.width,
-          top: offset.dy + size.height,
+          top: widget.openTop ? null : offset.dy + size.height,
+          bottom: widget.openTop ? globalSize.height - offset.dy : null,
           left: offset.dx,
           child: _MizerSelectList<T>(
             options: widget.options,
@@ -125,11 +145,13 @@ class _MizerSelectContainerState<T> extends State<MizerSelectContainer<T>> {
   }
 
   List<Widget> _getLists(Size size, Offset offset) {
+    var globalSize = MediaQuery.of(context).size;
     return this
         .tree
         .mapIndexed((index, element) => Positioned(
               width: size.width,
-              top: offset.dy + size.height,
+              top: widget.openTop ? null : offset.dy + size.height,
+              bottom: widget.openTop ? globalSize.height - offset.dy : null,
               left: offset.dx - ((index + 1) * size.width),
               child: _MizerSelectList<T>(
                 options: element.options,

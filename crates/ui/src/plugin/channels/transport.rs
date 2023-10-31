@@ -48,6 +48,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
                     }
                 }
             }
+            "setFPS" => {
+                if let Value::F64(fps) = call.args {
+                    if let Err(err) = self.handler.set_fps(fps) {
+                        resp.respond_error(err)
+                    } else {
+                        resp.send_ok(Value::Null);
+                    }
+                }
+            }
             "getTransportPointer" => match self.get_transport_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),

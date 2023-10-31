@@ -6,6 +6,7 @@ message Transport {
   TransportState state = 1;
   double speed = 2;
   Timecode timecode = 3;
+  double fps = 4;
 }
 
 message Timecode {

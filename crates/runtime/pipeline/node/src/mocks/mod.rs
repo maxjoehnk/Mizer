@@ -46,6 +46,10 @@ impl NodeContext for NodeContextMock {
         todo!()
     }
 
+    fn fps(&self) -> f64 {
+        todo!()
+    }
+
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {
         self.write_port_fn.call(port, value)
     }

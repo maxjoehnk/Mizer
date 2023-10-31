@@ -34,7 +34,6 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
         AllTimecodes {
             timecodes,
             controls,
-            ..Default::default()
         }
     }
 

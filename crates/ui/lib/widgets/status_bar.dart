@@ -56,13 +56,20 @@ class StatusBarFps extends StatefulWidget {
 class _StatusBarFpsState extends State<StatusBarFps> with SingleTickerProviderStateMixin {
   StatusPointer? _statusPointer;
   late final Ticker ticker;
+  double? _fps;
 
   @override
   void initState() {
     super.initState();
-    context.read<StatusApi>().getStatusPointer()
-        .then((value) => _statusPointer = value);
-    ticker = createTicker((elapsed) => setState(() {}));
+    context.read<StatusApi>().getStatusPointer().then((value) => _statusPointer = value);
+    ticker = createTicker((elapsed) => setState(() {
+      if (_statusPointer != null) {
+        var fps = _statusPointer!.readFps();
+        if (fps > 0) {
+          this._fps = fps;
+        }
+      }
+    }));
     ticker.start();
   }
 
@@ -75,10 +82,10 @@ class _StatusBarFpsState extends State<StatusBarFps> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    if (_statusPointer == null) {
+    if (_fps == null) {
       return Container();
     }
-    var fps = _statusPointer!.readFps().toStringAsFixed(2);
+    var fps = _fps!.toStringAsFixed(2);
     return Text('FPS $fps'.i18n, style: Theme.of(context).textTheme.bodySmall);
   }
 }
@@ -101,7 +108,6 @@ class _StatusBarClockState extends State<StatusBarClock> {
     timer = new Timer.periodic(Duration(seconds: 1), (timer) => setState(() {}));
   }
 
-
   @override
   void dispose() {
     timer.cancel();
@@ -110,7 +116,7 @@ class _StatusBarClockState extends State<StatusBarClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(DateFormat('Hms').format(DateTime.now()), style: Theme.of(context).textTheme.bodySmall);
+    return Text(DateFormat('Hms').format(DateTime.now()),
+        style: Theme.of(context).textTheme.bodySmall);
   }
 }
-

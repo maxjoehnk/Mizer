@@ -65,6 +65,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
     fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>>;
+    fn set_fps(&self, fps: f64) -> anyhow::Result<()>;
 
     fn get_connections(&self) -> Vec<Connection>;
 

@@ -40,8 +40,6 @@ mod api;
 mod fixture_libraries_loader;
 mod flags;
 
-const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
-
 pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
@@ -169,19 +167,20 @@ impl Mizer {
         profiling::register_thread!("Main Loop");
         log::trace!("Entering main loop...");
         loop {
+            let frame_delay = Duration::from_secs_f64(1f64 / self.runtime.fps());
             let before = std::time::Instant::now();
             api_handler.handle(self);
             self.runtime.process();
             let after = std::time::Instant::now();
             let frame_time = after.duration_since(before);
             metrics::histogram!("mizer.frame_time", frame_time);
-            if frame_time <= FRAME_DELAY_60FPS {
-                std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
+            if frame_time <= frame_delay {
+                std::thread::sleep(frame_delay - frame_time);
             }
-            profiling::finish_frame!();
             let after = std::time::Instant::now();
             let frame_time = after.duration_since(before);
-            self.status_bus.send_fps(1.0 / frame_time.as_secs_f64());
+            self.status_bus.send_fps(1f64 / frame_time.as_secs_f64());
+            profiling::finish_frame!();
         }
     }
 

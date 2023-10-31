@@ -23,6 +23,7 @@ pub struct SystemClock {
     /// Total frame count
     frames: u64,
     state: ClockState,
+    fps: f64,
 }
 
 impl Default for SystemClock {
@@ -34,6 +35,7 @@ impl Default for SystemClock {
             beat: 0.,
             frames: 0,
             state: ClockState::Playing,
+            fps: 60.,
         }
     }
 }
@@ -80,7 +82,8 @@ impl Clock for SystemClock {
         ClockSnapshot {
             speed: self.speed,
             state: self.state,
-            time: Timecode::new(self.frames),
+            fps: self.fps,
+            time: Timecode::new(self.frames, self.fps),
         }
     }
 
@@ -95,6 +98,14 @@ impl Clock for SystemClock {
 
     fn state(&self) -> ClockState {
         self.state
+    }
+
+    fn fps(&self) -> f64 {
+        self.fps
+    }
+
+    fn fps_mut(&mut self) -> &mut f64 {
+        &mut self.fps
     }
 }
 
@@ -136,6 +147,9 @@ pub trait Clock {
 
     fn set_state(&mut self, state: ClockState);
     fn state(&self) -> ClockState;
+
+    fn fps(&self) -> f64;
+    fn fps_mut(&mut self) -> &mut f64;
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -150,6 +164,7 @@ pub struct ClockSnapshot {
     pub speed: f64,
     pub time: Timecode,
     pub state: ClockState,
+    pub fps: f64,
 }
 
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq)]
@@ -176,25 +191,26 @@ impl Display for Timecode {
 }
 
 impl Timecode {
-    pub fn new(frames: u64) -> Self {
-        Self::build(frames, false)
+    pub fn new(frames: u64, fps: f64) -> Self {
+        Self::build(frames, false, fps)
     }
 
-    pub fn from_i128(frames: i128) -> Self {
+    pub fn from_i128(frames: i128, fps: f64) -> Self {
         if frames >= 0 {
-            Self::build(frames.min(u64::MAX as i128) as u64, false)
+            Self::build(frames.min(u64::MAX as i128) as u64, false, fps)
         } else {
             let frames = frames.abs();
-            Self::build(frames.min(u64::MAX as i128) as u64, true)
+            Self::build(frames.min(u64::MAX as i128) as u64, true, fps)
         }
     }
 
-    fn build(frames: u64, negative: bool) -> Self {
-        let seconds = frames / 60;
+    fn build(frames: u64, negative: bool, fps: f64) -> Self {
+        let fps = fps.floor() as u64;
+        let seconds = frames / fps;
         let minutes = seconds / 60;
         let hours = minutes / 60;
 
-        let frames = frames - (seconds * 60);
+        let frames = frames - (seconds * fps);
         let seconds = seconds - (minutes * 60);
         let minutes = minutes - (hours * 60);
 

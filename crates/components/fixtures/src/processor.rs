@@ -14,7 +14,7 @@ pub struct FixtureProcessor;
 
 impl Processor for FixtureProcessor {
     #[tracing::instrument]
-    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame) {
+    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame, _fps: f64) {
         profiling::scope!("FixtureProcessor::pre_process");
         let fixture_manager = injector
             .get::<FixtureManager>()

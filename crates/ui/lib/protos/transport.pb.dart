@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: transport.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -15,33 +19,39 @@ import 'transport.pbenum.dart';
 export 'transport.pbenum.dart';
 
 class Transport extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Transport', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.transport'), createEmptyInstance: create)
-    ..e<TransportState>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: TransportState.STOPPED, valueOf: TransportState.valueOf, enumValues: TransportState.values)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'speed', $pb.PbFieldType.OD)
-    ..aOM<Timecode>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecode', subBuilder: Timecode.create)
-    ..hasRequiredFields = false
-  ;
-
-  Transport._() : super();
   factory Transport({
     TransportState? state,
     $core.double? speed,
     Timecode? timecode,
+    $core.double? fps,
   }) {
-    final _result = create();
+    final $result = create();
     if (state != null) {
-      _result.state = state;
+      $result.state = state;
     }
     if (speed != null) {
-      _result.speed = speed;
+      $result.speed = speed;
     }
     if (timecode != null) {
-      _result.timecode = timecode;
+      $result.timecode = timecode;
     }
-    return _result;
+    if (fps != null) {
+      $result.fps = fps;
+    }
+    return $result;
   }
+  Transport._() : super();
   factory Transport.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Transport.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transport', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.transport'), createEmptyInstance: create)
+    ..e<TransportState>(1, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: TransportState.STOPPED, valueOf: TransportState.valueOf, enumValues: TransportState.values)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.OD)
+    ..aOM<Timecode>(3, _omitFieldNames ? '' : 'timecode', subBuilder: Timecode.create)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'fps', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -51,8 +61,10 @@ class Transport extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Transport copyWith(void Function(Transport) updates) => super.copyWith((message) => updates(message as Transport)) as Transport; // ignore: deprecated_member_use
+  Transport copyWith(void Function(Transport) updates) => super.copyWith((message) => updates(message as Transport)) as Transport;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Transport create() => Transport._();
   Transport createEmptyInstance() => create();
@@ -89,41 +101,51 @@ class Transport extends $pb.GeneratedMessage {
   void clearTimecode() => clearField(3);
   @$pb.TagNumber(3)
   Timecode ensureTimecode() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.double get fps => $_getN(3);
+  @$pb.TagNumber(4)
+  set fps($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasFps() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearFps() => clearField(4);
 }
 
 class Timecode extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Timecode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.transport'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frames', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'seconds', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minutes', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hours', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
-
-  Timecode._() : super();
   factory Timecode({
     $fixnum.Int64? frames,
     $fixnum.Int64? seconds,
     $fixnum.Int64? minutes,
     $fixnum.Int64? hours,
   }) {
-    final _result = create();
+    final $result = create();
     if (frames != null) {
-      _result.frames = frames;
+      $result.frames = frames;
     }
     if (seconds != null) {
-      _result.seconds = seconds;
+      $result.seconds = seconds;
     }
     if (minutes != null) {
-      _result.minutes = minutes;
+      $result.minutes = minutes;
     }
     if (hours != null) {
-      _result.hours = hours;
+      $result.hours = hours;
     }
-    return _result;
+    return $result;
   }
+  Timecode._() : super();
   factory Timecode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Timecode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Timecode', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.transport'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'frames', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'seconds', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'minutes', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(4, _omitFieldNames ? '' : 'hours', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -133,8 +155,10 @@ class Timecode extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Timecode copyWith(void Function(Timecode) updates) => super.copyWith((message) => updates(message as Timecode)) as Timecode; // ignore: deprecated_member_use
+  Timecode copyWith(void Function(Timecode) updates) => super.copyWith((message) => updates(message as Timecode)) as Timecode;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Timecode create() => Timecode._();
   Timecode createEmptyInstance() => create();
@@ -181,23 +205,24 @@ class Timecode extends $pb.GeneratedMessage {
 }
 
 class SetTransportRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetTransportRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.transport'), createEmptyInstance: create)
-    ..e<TransportState>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: TransportState.STOPPED, valueOf: TransportState.valueOf, enumValues: TransportState.values)
-    ..hasRequiredFields = false
-  ;
-
-  SetTransportRequest._() : super();
   factory SetTransportRequest({
     TransportState? state,
   }) {
-    final _result = create();
+    final $result = create();
     if (state != null) {
-      _result.state = state;
+      $result.state = state;
     }
-    return _result;
+    return $result;
   }
+  SetTransportRequest._() : super();
   factory SetTransportRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetTransportRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetTransportRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.transport'), createEmptyInstance: create)
+    ..e<TransportState>(1, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: TransportState.STOPPED, valueOf: TransportState.valueOf, enumValues: TransportState.values)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -207,8 +232,10 @@ class SetTransportRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetTransportRequest copyWith(void Function(SetTransportRequest) updates) => super.copyWith((message) => updates(message as SetTransportRequest)) as SetTransportRequest; // ignore: deprecated_member_use
+  SetTransportRequest copyWith(void Function(SetTransportRequest) updates) => super.copyWith((message) => updates(message as SetTransportRequest)) as SetTransportRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetTransportRequest create() => SetTransportRequest._();
   SetTransportRequest createEmptyInstance() => create();
@@ -228,23 +255,24 @@ class SetTransportRequest extends $pb.GeneratedMessage {
 }
 
 class SetBpmRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetBpmRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.transport'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bpm', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  SetBpmRequest._() : super();
   factory SetBpmRequest({
     $core.double? bpm,
   }) {
-    final _result = create();
+    final $result = create();
     if (bpm != null) {
-      _result.bpm = bpm;
+      $result.bpm = bpm;
     }
-    return _result;
+    return $result;
   }
+  SetBpmRequest._() : super();
   factory SetBpmRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetBpmRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetBpmRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.transport'), createEmptyInstance: create)
+    ..a<$core.double>(1, _omitFieldNames ? '' : 'bpm', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -254,8 +282,10 @@ class SetBpmRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetBpmRequest copyWith(void Function(SetBpmRequest) updates) => super.copyWith((message) => updates(message as SetBpmRequest)) as SetBpmRequest; // ignore: deprecated_member_use
+  SetBpmRequest copyWith(void Function(SetBpmRequest) updates) => super.copyWith((message) => updates(message as SetBpmRequest)) as SetBpmRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetBpmRequest create() => SetBpmRequest._();
   SetBpmRequest createEmptyInstance() => create();
@@ -274,3 +304,6 @@ class SetBpmRequest extends $pb.GeneratedMessage {
   void clearBpm() => clearField(1);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

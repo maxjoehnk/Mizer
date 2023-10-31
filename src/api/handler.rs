@@ -77,6 +77,10 @@ impl ApiHandler {
                 let speed = mizer.runtime.clock.speed_mut();
                 *speed = bpm;
             }
+            ApiCommand::SetFps(fps) => {
+                profiling::scope!("ApiCommand::SetFps");
+                mizer.runtime.set_fps(fps);
+            }
             ApiCommand::SaveProject(sender) => {
                 profiling::scope!("ApiCommand::SaveProject");
                 let result = mizer.save_project();

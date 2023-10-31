@@ -3,8 +3,8 @@ import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
 
 import 'ffi/api.dart';
-import 'ffi/transport.dart';
 import 'ffi/bindings.dart' show FFIBindings;
+import 'ffi/transport.dart';
 
 class TransportPluginApi implements TransportApi {
   final FFIBindings bindings;
@@ -16,6 +16,11 @@ class TransportPluginApi implements TransportApi {
   @override
   Future<void> setBPM(double bpm) async {
     await channel.invokeMethod("setBPM", bpm);
+  }
+
+  @override
+  Future<void> setFPS(double fps) async {
+    await channel.invokeMethod("setFPS", fps);
   }
 
   @override

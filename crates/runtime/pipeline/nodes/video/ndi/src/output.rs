@@ -55,7 +55,7 @@ impl NdiOutputState {
         Ok(())
     }
 
-    fn queue_frame(&mut self, buffer: &mut [u8]) {
+    fn queue_frame(&mut self, fps: f64, buffer: &mut [u8]) {
         profiling::scope!("NdiOutputState::queue_frame");
         tracing::trace!("sending frame via ndi");
         let video_data = {
@@ -64,7 +64,7 @@ impl NdiOutputState {
                 1920,
                 1080,
                 FourCCVideoType::BGRA,
-                60,
+                fps.floor() as i32,
                 1,
                 ndi::FrameFormatType::Progressive,
                 0,
@@ -157,7 +157,7 @@ impl ProcessingNode for NdiOutputNode {
                 if texture_registry.get_texture_ref(&texture_handle).is_some() {
                     let buffer_access = wgpu_pipeline.get_buffer(&state.buffer_handle);
                     if let Some(mut buffer_slice) = buffer_access.read_mut() {
-                        state.queue_frame(&mut buffer_slice);
+                        state.queue_frame(context.fps(), &mut buffer_slice);
                     };
                 }
             }

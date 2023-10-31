@@ -16,6 +16,7 @@ pub trait NodeContext: PreviewContext + Sized {
     fn write_clock_tempo(&self, speed: f64);
     fn write_clock_state(&self, state: ClockState);
     fn clock_state(&self) -> ClockState;
+    fn fps(&self) -> f64;
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V);
     fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P);

@@ -10,7 +10,6 @@ impl From<mizer_timecode::TimecodeTrack> for Timecode {
                 .into_iter()
                 .map(TimecodeControlValues::from)
                 .collect(),
-            ..Default::default()
         }
     }
 }
@@ -25,7 +24,6 @@ impl From<mizer_timecode::TimecodeControlValues> for TimecodeControlValues {
                 .into_iter()
                 .map(timecode_control_values::Step::from)
                 .collect(),
-            ..Default::default()
         }
     }
 }
@@ -39,7 +37,6 @@ impl From<mizer_util::SplineStep> for timecode_control_values::Step {
             c0b: value.c0b,
             c1a: value.c1a,
             c1b: value.c1b,
-            ..Default::default()
         }
     }
 }
@@ -49,7 +46,6 @@ impl From<mizer_timecode::TimecodeControl> for TimecodeControl {
         Self {
             id: value.id.into(),
             name: value.name,
-            ..Default::default()
         }
     }
 }

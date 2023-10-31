@@ -17,6 +17,7 @@ pub struct VideoTexture {
     buffer_frame: usize,
     frame: usize,
     metadata: VideoMetadata,
+    playback_fps: f64,
 }
 
 impl VideoTexture {
@@ -28,6 +29,7 @@ impl VideoTexture {
             buffer_frame: 0,
             frame: 0,
             metadata,
+            playback_fps: 60f64,
         })
     }
 
@@ -72,6 +74,10 @@ impl VideoTexture {
             self.buffer_frame = 0;
         }
     }
+
+    pub fn set_fps(&mut self, fps: f64) {
+        self.playback_fps = fps;
+    }
 }
 
 impl TextureProvider for VideoTexture {
@@ -95,7 +101,7 @@ impl TextureProvider for VideoTexture {
             return Ok(None);
         }
         let frame = self.frame as f64;
-        let frame = frame * (self.metadata.fps / 60.0);
+        let frame = frame * (self.metadata.fps / self.playback_fps);
         let frame = frame.floor() as usize;
         let mut frame_in_buffer = frame.saturating_sub(self.buffer_frame);
         while frame_in_buffer > 1 {

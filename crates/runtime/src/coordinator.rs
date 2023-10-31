@@ -23,8 +23,11 @@ use mizer_project_files::{Channel, Project, ProjectManagerMut};
 use mizer_status_bus::StatusBus;
 
 use crate::api::RuntimeAccess;
+use crate::context::CoordinatorRuntimeContext;
 use crate::pipeline_access::PipelineAccess;
 use crate::{LayoutsView, NodeMetadataRef};
+
+const DEFAULT_FPS: f64 = 60.0;
 
 trait ProcessorExt: Processor {
     fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>);
@@ -119,25 +122,37 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     fn pre_process_pipeline(&mut self, frame: ClockFrame) {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+        let context = CoordinatorRuntimeContext {
+            fps: self.clock.fps(),
+            master_clock: frame,
+            injector: &self.injector,
+        };
 
-        self.pipeline
-            .pre_process(nodes, frame, &self.injector, &mut self.clock);
+        self.pipeline.pre_process(nodes, &context, &mut self.clock);
     }
 
     fn process_pipeline(&mut self, frame: ClockFrame) {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+        let context = CoordinatorRuntimeContext {
+            fps: self.clock.fps(),
+            master_clock: frame,
+            injector: &self.injector,
+        };
 
-        self.pipeline
-            .process(nodes, frame, &self.injector, &mut self.clock);
+        self.pipeline.process(nodes, &context, &mut self.clock);
     }
 
     fn post_process_pipeline(&mut self, frame: ClockFrame) {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+        let context = CoordinatorRuntimeContext {
+            fps: self.clock.fps(),
+            master_clock: frame,
+            injector: &self.injector,
+        };
 
-        self.pipeline
-            .post_process(nodes, frame, &self.injector, &mut self.clock);
+        self.pipeline.post_process(nodes, &context, &mut self.clock);
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
@@ -386,7 +401,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         self.pre_process_pipeline(frame);
         log::trace!("pre_process");
         for processor in self.processors.iter_mut() {
-            processor.pre_process(&mut self.injector, frame);
+            processor.pre_process(&mut self.injector, frame, self.clock.fps());
         }
         self.plan();
         log::trace!("process_pipeline");
@@ -423,11 +438,20 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     fn add_status_message(&self, message: impl Into<String>, timeout: Option<Duration>) {
         self.status_bus.add_status_message(message, timeout);
     }
+
+    fn fps(&self) -> f64 {
+        self.clock.fps()
+    }
+
+    fn set_fps(&mut self, fps: f64) {
+        *self.clock.fps_mut() = fps;
+    }
 }
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new_project(&mut self) {
         profiling::scope!("CoordinatorRuntime::new_project");
+        self.set_fps(DEFAULT_FPS);
         let preset_ids = self.get_preset_ids();
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
         let mut paths = Vec::new();
@@ -465,6 +489,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         profiling::scope!("CoordinatorRuntime::load");
+        self.set_fps(project.playback.fps);
         for node in &project.nodes {
             let mut node_config: Node = node.config.clone();
             node_config.prepare(&self.injector);
@@ -514,6 +539,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn save(&self, project: &mut Project) {
         profiling::scope!("CoordinatorRuntime::save");
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        project.playback.fps = self.fps();
         project.channels = pipeline_access
             .links
             .read()
@@ -548,6 +574,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     }
 
     fn clear(&mut self) {
+        self.set_fps(DEFAULT_FPS);
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
         pipeline_access.designer.set(Default::default());
         pipeline_access.nodes.clear();

@@ -1,5 +1,6 @@
-use crate::proto::transport::{Timecode, Transport, TransportState};
 use mizer_clock::{ClockSnapshot, ClockState};
+
+use crate::proto::transport::{Timecode, Transport, TransportState};
 
 impl From<ClockSnapshot> for Transport {
     fn from(snapshot: ClockSnapshot) -> Self {
@@ -7,7 +8,7 @@ impl From<ClockSnapshot> for Transport {
             speed: snapshot.speed,
             state: TransportState::from(snapshot.state) as i32,
             timecode: Some(snapshot.time.into()),
-            ..Default::default()
+            fps: snapshot.fps,
         }
     }
 }
@@ -19,7 +20,6 @@ impl From<mizer_clock::Timecode> for Timecode {
             hours: timecode.hours,
             minutes: timecode.minutes,
             seconds: timecode.seconds,
-            ..Default::default()
         }
     }
 }

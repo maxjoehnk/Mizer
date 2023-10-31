@@ -1,11 +1,12 @@
-use flume::r#async::RecvStream;
-use flume::TryRecvError;
-use futures::Stream;
-use parking_lot::RwLock;
 use std::ops::Deref;
 use std::pin::Pin;
 use std::sync::{Arc, Weak};
 use std::task::{Context, Poll};
+
+use flume::r#async::RecvStream;
+use flume::TryRecvError;
+use futures::Stream;
+use parking_lot::RwLock;
 
 #[derive(Clone)]
 pub struct MessageBus<T: Clone + Send + Sync> {
@@ -91,6 +92,10 @@ impl<T: Clone + Send + Sync + 'static> Subscriber<T> {
                 None
             }
         }
+    }
+
+    pub fn read_last(&self) -> Option<T> {
+        self.recv.try_iter().last()
     }
 
     pub async fn read_async(&self) -> anyhow::Result<T> {

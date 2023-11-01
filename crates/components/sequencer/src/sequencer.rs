@@ -1,4 +1,3 @@
-use indexmap::IndexSet;
 use std::cell::{RefCell, RefMut};
 use std::collections::HashMap;
 use std::ops::Deref;
@@ -6,15 +5,16 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::mpsc;
 use std::sync::Arc;
 
+use indexmap::IndexSet;
 use pinboard::NonEmptyPinboard;
 
+use mizer_fixtures::manager::FixtureManager;
+use mizer_module::ClockFrame;
 use mizer_util::ThreadPinned;
 
 use crate::contracts::StdClock;
 use crate::state::SequenceState;
 use crate::{EffectEngine, Sequence};
-use mizer_fixtures::manager::FixtureManager;
-use mizer_module::ClockFrame;
 
 #[derive(Clone)]
 pub struct Sequencer {
@@ -276,11 +276,11 @@ impl Sequencer {
 
     pub fn sequences(&self) -> Vec<Sequence> {
         profiling::scope!("Sequencer::sequences");
-        self.sequences.read().values().cloned().collect()
+        self.sequences.read().into_values().collect()
     }
 
     pub fn sequence(&self, sequence_id: u32) -> Option<Sequence> {
-        self.sequences.read().get(&sequence_id).cloned()
+        self.sequences.read().remove(&sequence_id)
     }
 
     /// Override all existing sequences

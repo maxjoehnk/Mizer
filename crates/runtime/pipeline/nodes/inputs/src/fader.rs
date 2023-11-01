@@ -1,14 +1,58 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
+use mizer_util::LerpExt;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
-pub struct FaderNode;
+const START_VALUE_SETTING: &str = "Start Value";
+const END_VALUE_SETTING: &str = "End Value";
 
-impl ConfigurableNode for FaderNode {}
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
+pub struct FaderNode {
+    #[serde(default = "default_start_value")]
+    pub start_value: f64,
+    #[serde(default = "default_end_value")]
+    pub end_value: f64,
+}
+
+impl Default for FaderNode {
+    fn default() -> Self {
+        Self {
+            start_value: default_start_value(),
+            end_value: default_end_value(),
+        }
+    }
+}
+
+fn default_start_value() -> f64 {
+    0f64
+}
+
+fn default_end_value() -> f64 {
+    1f64
+}
+
+impl ConfigurableNode for FaderNode {
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+        vec![
+            setting!(START_VALUE_SETTING, self.start_value)
+                .min_hint(0f64)
+                .max_hint(1f64),
+            setting!(END_VALUE_SETTING, self.end_value)
+                .min_hint(0f64)
+                .max_hint(1f64),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, START_VALUE_SETTING, self.start_value);
+        update!(float setting, END_VALUE_SETTING, self.end_value);
+
+        update_fallback!(setting)
+    }
+}
 
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
@@ -38,8 +82,10 @@ impl ProcessingNode for FaderNode {
         if let Some(value) = context.read_port_changes::<_, f64>(INPUT_PORT) {
             *state = value;
         }
-        context.write_port(OUTPUT_PORT, *state);
-        context.push_history_value(*state);
+        let value = *state;
+        let value: f64 = value.linear_extrapolate((0., 1.), (self.start_value, self.end_value));
+        context.write_port(OUTPUT_PORT, value);
+        context.push_history_value(value);
 
         Ok(())
     }

@@ -4741,6 +4741,7 @@ dependencies = [
  "anyhow",
  "log",
  "mizer-node",
+ "mizer-util",
  "serde",
 ]
 

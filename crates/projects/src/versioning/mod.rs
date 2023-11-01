@@ -1,7 +1,8 @@
-use self::migrations::*;
 use enum_iterator::all;
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
+
+use self::migrations::*;
 
 #[macro_use]
 mod migration;
@@ -12,6 +13,7 @@ migrations! {
     ReworkMidiConfig,
     ReworkLayoutControlsToNotUseNodes,
     MigratePositionPresets,
+    AdaptFaderConfig,
 }
 
 impl Migrations {

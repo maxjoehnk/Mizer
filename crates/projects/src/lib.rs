@@ -399,7 +399,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/fader-0".into(),
-                config: mizer_nodes::Node::Fader(mizer_nodes::FaderNode {}),
+                config: mizer_nodes::Node::Fader(mizer_nodes::FaderNode::default()),
                 designer: Default::default(),
             }
         );

@@ -161,6 +161,8 @@ class _DirectTimeInputState extends State<DirectTimeInput> {
       LogicalKeyboardKey.clear: (context) => setState(() => _ast.clear()),
       LogicalKeyboardKey.enter: _build,
       LogicalKeyboardKey.numpadEnter: _build,
+      LogicalKeyboardKey.keyB: (context) => setState(() => _ast.isBeats = true),
+      LogicalKeyboardKey.keyS: (context) => setState(() => _ast.isBeats = false),
       LogicalKeyboardKey.escape: (context) => Navigator.of(context).pop(),
     };
   }

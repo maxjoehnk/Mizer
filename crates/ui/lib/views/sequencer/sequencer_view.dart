@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
@@ -76,6 +76,12 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           if (bloc.state.selectedSequenceId != null) {
             _duplicateSequence(bloc.state.selectedSequenceId!);
           }
+        },
+        "stop": () {
+          SequencerBloc bloc = context.read();
+          if (bloc.state.selectedSequenceId != null) {
+            _sequenceStop(bloc.state.selectedSequenceId!);
+          }
         }
       },
       child: BlocBuilder<SequencerBloc, SequencerState>(builder: (context, state) {
@@ -101,6 +107,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                             action: () => _addMidiMappingForGo(context, state))
                       ])),
                   PanelActionModel(
+                      hotkeyId: "stop",
                       label: "Stop",
                       onClick: () => _sequenceStop(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null,

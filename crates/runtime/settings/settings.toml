@@ -70,6 +70,7 @@ add_sequence = "alt+a"
 delete = "delete"
 duplicate = "ctrl+d"
 go_forward = "ctrl+g"
+stop = "ctrl+s"
 
 [hotkeys.effects]
 delete = "delete"

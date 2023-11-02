@@ -122,11 +122,13 @@ pub fn build_runtime(
     Session::new(remote_api_port)?;
 
     let mut project_file = flags.file.clone();
+    let mut auto_loading_file = false;
     if project_file.is_none() && settings.general.auto_load_last_project {
         let history = ProjectHistory.load()?;
         if let Some(last_project) = history.first() {
             log::info!("Loading last project {:?}", last_project);
             project_file = Some(last_project.path.clone());
+            auto_loading_file = true;
         }
     }
     let mut mizer = Mizer {
@@ -139,11 +141,17 @@ pub fn build_runtime(
         project_history: ProjectHistory,
         status_bus,
     };
-    if project_file.is_some() {
-        mizer.load_project().context(format!(
-            "Failed to load project file {:?}",
-            project_file.unwrap()
-        ))?;
+    if let Some(project_file) = project_file {
+        if let Err(err) = mizer
+            .load_project()
+            .context(format!("Failed to load project file {project_file:?}"))
+        {
+            if auto_loading_file {
+                log::error!("Failed to load last project: {:?}", err);
+            } else {
+                return Err(err);
+            }
+        }
     } else {
         mizer.new_project();
     }

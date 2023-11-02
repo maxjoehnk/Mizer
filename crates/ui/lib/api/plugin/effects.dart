@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/effects.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 
 class EffectsPluginApi implements EffectsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/effects");
@@ -35,7 +34,7 @@ class EffectsPluginApi implements EffectsApi {
   }
 
   @override
-  Future<void> addEffectChannel(int id, FixtureFaderControl control) async {
+  Future<void> addEffectChannel(int id, EffectControl control) async {
     var request = new AddEffectChannelRequest(effectId: id, control: control);
     await channel.invokeMethod("addEffectChannel", request.writeToBuffer());
   }
@@ -54,7 +53,8 @@ class EffectsPluginApi implements EffectsApi {
 
   @override
   Future<void> removeEffectStep(int id, int channelIndex, int stepIndex) async {
-    var request = new DeleteEffectStepRequest(effectId: id, channelIndex: channelIndex, stepIndex: stepIndex);
+    var request =
+        new DeleteEffectStepRequest(effectId: id, channelIndex: channelIndex, stepIndex: stepIndex);
     await channel.invokeMethod("deleteEffectStep", request.writeToBuffer());
   }
 }

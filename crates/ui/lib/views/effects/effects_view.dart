@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/effects_bloc.dart';
@@ -179,7 +178,7 @@ class _EffectsViewState extends State<EffectsView> {
     bloc.add(RemoveEffectChannel(effectId: effect!.id, channelIndex: channelIndex));
   }
 
-  void _onAddEffectChannel(EffectsBloc bloc, FixtureFaderControl control) {
+  void _onAddEffectChannel(EffectsBloc bloc, EffectControl control) {
     if (effect == null) {
       return;
     }

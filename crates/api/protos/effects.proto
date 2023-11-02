@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package mizer.effects;
 
-import "fixtures.proto";
 import "sequencer.proto";
 
 message AddEffectRequest {
@@ -17,7 +16,7 @@ message UpdateEffectStepRequest {
 
 message AddEffectChannelRequest {
   uint32 effect_id = 1;
-  mizer.fixtures.FixtureFaderControl control = 2;
+  EffectControl control = 2;
 }
 
 message DeleteEffectChannelRequest {
@@ -48,8 +47,26 @@ message Effect {
 }
 
 message EffectChannel {
-  mizer.fixtures.FixtureControl control = 1;
+  EffectControl control = 1;
   repeated EffectStep steps = 2;
+}
+
+enum EffectControl {
+  INTENSITY = 0;
+  SHUTTER = 1;
+  COLOR_MIXER_RED = 2;
+  COLOR_MIXER_GREEN = 3;
+  COLOR_MIXER_BLUE = 4;
+  COLOR_WHEEL = 5;
+  PAN = 6;
+  TILT = 7;
+  FOCUS = 8;
+  ZOOM = 9;
+  PRISM = 10;
+  IRIS = 11;
+  FROST = 12;
+  GOBO = 13;
+  GENERIC = 14;
 }
 
 message EffectStep {

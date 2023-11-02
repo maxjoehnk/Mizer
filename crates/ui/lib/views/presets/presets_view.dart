@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/protos/fixtures.pbenum.dart';
+import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 
@@ -19,13 +19,13 @@ class PresetsView extends StatelessWidget {
           PresetGroup(label: "Dimmer", children: [
             ...state.presets.intensities.map((preset) =>
                 ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
-            ...effects.getEffectsForControls([FixtureControl.INTENSITY]).map(
+            ...effects.getEffectsForControls([EffectControl.INTENSITY]).map(
                 (effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Shutter", children: [
             ...state.presets.shutters.map((preset) =>
                 ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
-            ...effects.getEffectsForControls([FixtureControl.SHUTTER]).map(
+            ...effects.getEffectsForControls([EffectControl.SHUTTER]).map(
                 (effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Color", children: [
@@ -34,8 +34,10 @@ class PresetsView extends StatelessWidget {
                     (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
                 preset: preset)),
             ...effects.getEffectsForControls([
-              FixtureControl.COLOR_MIXER,
-              FixtureControl.COLOR_WHEEL
+              EffectControl.COLOR_MIXER_BLUE,
+              EffectControl.COLOR_MIXER_GREEN,
+              EffectControl.COLOR_MIXER_RED,
+              EffectControl.COLOR_WHEEL
             ]).map((effect) => EffectButton(effect: effect))
           ]),
           PresetGroup(label: "Position", children: [
@@ -43,7 +45,7 @@ class PresetsView extends StatelessWidget {
                 pan: preset.position.hasPan() ? preset.position.pan : null,
                 tilt: preset.position.hasTilt() ? preset.position.tilt : null,
                 preset: preset)),
-            ...effects.getEffectsForControls([FixtureControl.PAN, FixtureControl.TILT]).map(
+            ...effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]).map(
                 (effect) => EffectButton(effect: effect))
           ]),
         ]);

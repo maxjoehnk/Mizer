@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/protos/fixtures.pbenum.dart';
 import 'package:mizer/widgets/panel.dart';
 
 import 'preset_button.dart';
@@ -23,7 +22,7 @@ class PresetGroup extends StatelessWidget {
       return PresetGroup(label: "Dimmer", children: [
         ...presets.intensities.map(
             (preset) => ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
-        ...effects.getEffectsForControls([FixtureControl.INTENSITY]).map(
+        ...effects.getEffectsForControls([EffectControl.INTENSITY]).map(
             (effect) => EffectButton(effect: effect))
       ]);
     }
@@ -33,14 +32,17 @@ class PresetGroup extends StatelessWidget {
             color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
                 (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
             preset: preset)),
-        ...effects
-            .getEffectsForControls([FixtureControl.COLOR_MIXER, FixtureControl.COLOR_WHEEL]).map(
-                (effect) => EffectButton(effect: effect))
+        ...effects.getEffectsForControls([
+          EffectControl.COLOR_MIXER_BLUE,
+          EffectControl.COLOR_MIXER_GREEN,
+          EffectControl.COLOR_MIXER_RED,
+          EffectControl.COLOR_WHEEL
+        ]).map((effect) => EffectButton(effect: effect))
       ]);
     }
     if (type == PresetType.Position) {
       return PresetGroup(label: "Position", children: [
-        ...effects.getEffectsForControls([FixtureControl.PAN, FixtureControl.TILT]).map(
+        ...effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]).map(
             (effect) => EffectButton(effect: effect))
       ]);
     }
@@ -62,7 +64,7 @@ class PresetGroup extends StatelessWidget {
 }
 
 extension PresetEffects on List<Effect> {
-  List<Effect> getEffectsForControls(List<FixtureControl> controls) {
+  List<Effect> getEffectsForControls(List<EffectControl> controls) {
     return this
         .where((effect) => effect.channels.any((c) => controls.contains(c.control)))
         .toList();

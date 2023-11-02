@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'frame_editor.dart';
 import 'movement_editor.dart';
@@ -12,21 +11,20 @@ class EffectEditor extends StatelessWidget {
   final Function(int, int) onFinishInteraction;
   final Function(int, int) onRemoveStep;
   final Function(int) onRemoveChannel;
-  final Function(FixtureFaderControl) onAddChannel;
+  final Function(EffectControl) onAddChannel;
   final Function(int, EffectStep) onAddStep;
 
-  const EffectEditor(
-      {Key? key,
-        required this.effect,
-        required this.onUpdateStepValue,
-        required this.onUpdateStepCubicPosition,
-        required this.onFinishInteraction,
-        required this.onRemoveStep,
-        required this.onRemoveChannel,
-        required this.onAddChannel,
-        required this.onAddStep,
-      })
-      : super(key: key);
+  const EffectEditor({
+    Key? key,
+    required this.effect,
+    required this.onUpdateStepValue,
+    required this.onUpdateStepCubicPosition,
+    required this.onFinishInteraction,
+    required this.onRemoveStep,
+    required this.onRemoveChannel,
+    required this.onAddChannel,
+    required this.onAddStep,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +39,15 @@ class EffectEditor extends StatelessWidget {
           ),
           Expanded(
               child: FrameEditor(
-                  effect: effect,
-                  onUpdateStepValue: onUpdateStepValue,
-                  onUpdateStepCubicPosition: onUpdateStepCubicPosition,
-                  onFinishInteraction: onFinishInteraction,
-                  onRemoveStep: onRemoveStep,
-                  onRemoveChannel: onRemoveChannel,
-                  onAddChannel: onAddChannel,
-                  onAddStep: onAddStep,
-              ))
+            effect: effect,
+            onUpdateStepValue: onUpdateStepValue,
+            onUpdateStepCubicPosition: onUpdateStepCubicPosition,
+            onFinishInteraction: onFinishInteraction,
+            onRemoveStep: onRemoveStep,
+            onRemoveChannel: onRemoveChannel,
+            onAddChannel: onAddChannel,
+            onAddStep: onAddStep,
+          ))
         ]);
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
-import 'package:mizer/extensions/fixture_fader_control_extensions.dart';
+import 'package:mizer/extensions/effect_control_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
@@ -37,6 +37,23 @@ List<FixtureFaderControl> faderControls = [
       colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.BLUE),
 ];
 
+List<EffectControl> effectControls = [
+  EffectControl.INTENSITY,
+  EffectControl.SHUTTER,
+  EffectControl.COLOR_MIXER_RED,
+  EffectControl.COLOR_MIXER_GREEN,
+  EffectControl.COLOR_MIXER_BLUE,
+  EffectControl.COLOR_WHEEL,
+  EffectControl.PAN,
+  EffectControl.TILT,
+  EffectControl.FOCUS,
+  EffectControl.ZOOM,
+  EffectControl.PRISM,
+  EffectControl.IRIS,
+  EffectControl.FROST,
+  EffectControl.GOBO,
+];
+
 class FrameEditor extends StatelessWidget {
   final Effect effect;
   final Function(int, int, double) onUpdateStepValue;
@@ -44,7 +61,7 @@ class FrameEditor extends StatelessWidget {
   final Function(int, int) onFinishInteraction;
   final Function(int, int) onRemoveStep;
   final Function(int) onRemoveChannel;
-  final Function(FixtureFaderControl) onAddChannel;
+  final Function(EffectControl) onAddChannel;
   final Function(int, EffectStep) onAddStep;
 
   const FrameEditor(
@@ -69,7 +86,7 @@ class FrameEditor extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
-                SizedBox(child: Text(channel.control.name), width: 128),
+                SizedBox(child: Text(channel.control.toDisplay()), width: 128),
                 MizerIconButton(
                     icon: Icons.close,
                     label: "Remove Channel",
@@ -92,18 +109,18 @@ class FrameEditor extends StatelessWidget {
   }
 
   _addChannel(BuildContext context) async {
-    FixtureFaderControl? control = await showDialog(
+    EffectControl? control = await showDialog(
         context: context,
         builder: (context) => ActionDialog(
             title: "Add Channel",
             content: Column(
-                children: faderControls
+                children: effectControls
                     .whereNot((faderControl) =>
-                        effect.channels.any((channel) => faderControl.control == channel.control))
-                    .sortedBy((faderControl) => faderControl.toDisplay())
-                    .map((faderControl) => ListTile(
-                        title: Text(faderControl.toDisplay()),
-                        onTap: () => Navigator.of(context).pop(faderControl)))
+                        effect.channels.any((channel) => faderControl == channel.control))
+                    .sortedBy((effectControl) => effectControl.toDisplay())
+                    .map((effectControl) => ListTile(
+                        title: Text(effectControl.toDisplay()),
+                        onTap: () => Navigator.of(context).pop(effectControl)))
                     .toList()),
             actions: [PopupAction("Cancel", () => Navigator.of(context).pop())]));
     if (control == null) {

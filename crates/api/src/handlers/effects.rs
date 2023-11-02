@@ -1,7 +1,8 @@
-use crate::proto::effects::*;
-use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_sequencer::effects::EffectEngine;
+
+use crate::proto::effects::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct EffectsHandler<R> {
@@ -42,7 +43,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
         self.runtime
             .run_command(AddEffectChannelCommand {
                 effect_id: request.effect_id,
-                control: request.control.unwrap().into(),
+                control: EffectControl::try_from(request.control).unwrap().into(),
             })
             .unwrap();
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
@@ -99,10 +100,10 @@ class PortDot extends StatelessWidget {
     var color = getColorForProtocol(port.protocol);
 
     if (input) {
-      return Dot(input: input, color: color, multiple: port.multiple);
+      return _disconnectClickHandler(
+          context, Dot(input: input, color: color, multiple: port.multiple));
     }
-
-    return Consumer<NodeEditorModel>(
+    return _disconnectClickHandler(context, Consumer<NodeEditorModel>(
       builder: (context, model, _) {
         return Draggable<ConnectionRequest>(
           hitTestBehavior: HitTestBehavior.translucent,
@@ -127,6 +128,21 @@ class PortDot extends StatelessWidget {
           child: Dot(input: input, color: color, multiple: port.multiple),
         );
       },
+    ));
+  }
+
+  GestureDetector _disconnectClickHandler(BuildContext context, Widget child) {
+    return GestureDetector(
+      onTap: () {
+        if (RawKeyboard.instance.keysPressed.any((key) => [
+              LogicalKeyboardKey.control,
+              LogicalKeyboardKey.controlLeft,
+              LogicalKeyboardKey.controlRight,
+            ].contains(key))) {
+          context.read<NodesBloc>().add(DisconnectPort(node.path, port.name));
+        }
+      },
+      child: child,
     );
   }
 }
@@ -136,7 +152,8 @@ class Dot extends StatelessWidget {
   final bool input;
   final bool multiple;
 
-  const Dot({required this.color, this.input = false, this.multiple = false, Key? key}) : super(key: key);
+  const Dot({required this.color, this.input = false, this.multiple = false, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +163,8 @@ class Dot extends StatelessWidget {
           shadows: [
             BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
           ],
-          shape: RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.circular(DOT_SIZE))),
+          shape: RoundedRectangleBorder(
+              side: BorderSide.none, borderRadius: BorderRadius.circular(DOT_SIZE))),
       width: DOT_SIZE,
       height: multiple ? DOT_SIZE * 2 : DOT_SIZE,
     );

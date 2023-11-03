@@ -162,6 +162,70 @@ class DuplicateNodeRequest extends $pb.GeneratedMessage {
   void clearParent() => clearField(2);
 }
 
+class DisconnectPortRequest extends $pb.GeneratedMessage {
+  factory DisconnectPortRequest({
+    $core.String? path,
+    $core.String? port,
+  }) {
+    final $result = create();
+    if (path != null) {
+      $result.path = path;
+    }
+    if (port != null) {
+      $result.port = port;
+    }
+    return $result;
+  }
+  DisconnectPortRequest._() : super();
+  factory DisconnectPortRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DisconnectPortRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DisconnectPortRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..aOS(2, _omitFieldNames ? '' : 'port')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DisconnectPortRequest clone() => DisconnectPortRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DisconnectPortRequest copyWith(void Function(DisconnectPortRequest) updates) => super.copyWith((message) => updates(message as DisconnectPortRequest)) as DisconnectPortRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static DisconnectPortRequest create() => DisconnectPortRequest._();
+  DisconnectPortRequest createEmptyInstance() => create();
+  static $pb.PbList<DisconnectPortRequest> createRepeated() => $pb.PbList<DisconnectPortRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DisconnectPortRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DisconnectPortRequest>(create);
+  static DisconnectPortRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get port => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set port($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPort() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPort() => clearField(2);
+}
+
 class WriteControl extends $pb.GeneratedMessage {
   factory WriteControl({
     $core.String? path,

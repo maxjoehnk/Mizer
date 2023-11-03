@@ -97,6 +97,13 @@ class DisconnectPorts extends NodesEvent {
   DisconnectPorts(this.node);
 }
 
+class DisconnectPort extends NodesEvent {
+  final String node;
+  final String port;
+
+  DisconnectPort(this.node, this.port);
+}
+
 class DuplicateNode extends NodesEvent {
   final String node;
   final String? parent;
@@ -207,6 +214,10 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
     });
     on<DisconnectPorts>((event, emit) async {
       await api.disconnectPorts(event.node);
+      emit(await _fetchNodes());
+    });
+    on<DisconnectPort>((event, emit) async {
+      await api.disconnectPort(event.node, event.port);
       emit(await _fetchNodes());
     });
     on<DuplicateNode>((event, emit) async {

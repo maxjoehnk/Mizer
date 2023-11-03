@@ -83,6 +83,7 @@ command_impl! {
     AddLinkCommand,
     RemoveLinkCommand,
     DisconnectPortsCommand,
+    DisconnectPortCommand,
     AddPlanCommand,
     RemovePlanCommand,
     RenamePlanCommand,

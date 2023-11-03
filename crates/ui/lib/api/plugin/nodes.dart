@@ -94,6 +94,13 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
+  Future<void> disconnectPort(String path, String port) async {
+    var request = DisconnectPortRequest(path: path, port: port);
+
+    await channel.invokeMethod("disconnectPort", request.writeToBuffer());
+  }
+
+  @override
   Future<void> duplicateNode(DuplicateNodeRequest request) async {
     await channel.invokeMethod("duplicateNode", request.writeToBuffer());
   }

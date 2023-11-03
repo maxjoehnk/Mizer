@@ -99,6 +99,20 @@ final $typed_data.Uint8List duplicateNodeRequestDescriptor = $convert.base64Deco
     'ChREdXBsaWNhdGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhsKBnBhcmVudBgCIA'
     'EoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
 
+@$core.Deprecated('Use disconnectPortRequestDescriptor instead')
+const DisconnectPortRequest$json = {
+  '1': 'DisconnectPortRequest',
+  '2': [
+    {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    {'1': 'port', '3': 2, '4': 1, '5': 9, '10': 'port'},
+  ],
+};
+
+/// Descriptor for `DisconnectPortRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List disconnectPortRequestDescriptor = $convert.base64Decode(
+    'ChVEaXNjb25uZWN0UG9ydFJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBISCgRwb3J0GAIgAS'
+    'gJUgRwb3J0');
+
 @$core.Deprecated('Use writeControlDescriptor instead')
 const WriteControl$json = {
   '1': 'WriteControl',

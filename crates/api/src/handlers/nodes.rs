@@ -1,8 +1,9 @@
 use mizer_command_executor::*;
 use mizer_docs::get_node_description;
-use mizer_node::{NodePath, NodePreviewRef, NodeType};
+use mizer_node::{NodePath, NodePreviewRef, NodeType, PortId};
 use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::NodeMetadataRef;
+use std::fmt::Debug;
 
 use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::proto::nodes::*;
@@ -259,6 +260,21 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[profiling::function]
     pub fn disconnect_ports(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(DisconnectPortsCommand { path })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn disconnect_port(
+        &self,
+        path: impl Into<NodePath> + Debug,
+        port: impl Into<PortId> + Debug,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(DisconnectPortCommand {
+            path: path.into(),
+            port: port.into(),
+        })?;
 
         Ok(())
     }

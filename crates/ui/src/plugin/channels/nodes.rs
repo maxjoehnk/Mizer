@@ -133,6 +133,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     }
                 }
             }
+            "disconnectPort" => match call.arguments().and_then(|args: DisconnectPortRequest| {
+                self.handler.disconnect_port(args.path, args.port)
+            }) {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(err) => resp.respond_error(err),
+            },
             "duplicateNode" => match call.arguments() {
                 Ok(args) => match self.handler.duplicate_node(args) {
                     Ok(()) => resp.send_ok(Value::Null),

@@ -418,7 +418,7 @@ impl PipelineWorker {
             let (context, state) =
                 self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::pre_process", node.node_type());
-            profiling::scope!(&_scope);
+            profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.pre_process(&context, state) {
                 log::error!("pre processing of node {} failed: {:?}", &path, e)
             }
@@ -438,7 +438,7 @@ impl PipelineWorker {
             let (context, state) =
                 self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::process", node.node_type());
-            profiling::scope!(&_scope);
+            profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.process(&context, state) {
                 log::error!("processing of node {} failed: {:?}", &path, e)
             }
@@ -458,7 +458,7 @@ impl PipelineWorker {
             let (context, state) =
                 self.get_context(path, processing_context, clock, &mut node_metadata);
             let _scope = format!("{:?}Node::post_process", node.node_type());
-            profiling::scope!(&_scope);
+            profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.post_process(&context, state) {
                 log::error!("post processing of node {} failed: {:?}", &path, e)
             }

@@ -109,7 +109,7 @@ impl TimeTriggerNode {
             "{} {} {} * * * *",
             self.seconds,
             self.minutes,
-            self.hours - 1
+            self.hours.saturating_sub(1)
         );
         Schedule::from_str(&expression).unwrap()
     }
@@ -122,9 +122,9 @@ impl TimeTriggerNode {
 fn to_timecode(duration: Duration) -> Timecode {
     let seconds = duration.num_seconds() as u64;
     let hours = seconds / HOUR;
-    let seconds = seconds - (hours * HOUR);
+    let seconds = seconds.saturating_sub(hours * HOUR);
     let minutes = seconds / MINUTE;
-    let seconds = seconds - (minutes * MINUTE);
+    let seconds = seconds.saturating_sub(minutes * MINUTE);
 
     Timecode {
         frames: 0,

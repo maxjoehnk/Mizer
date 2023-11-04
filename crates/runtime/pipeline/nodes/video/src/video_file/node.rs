@@ -46,7 +46,7 @@ impl Default for VideoFileNode {
 }
 
 fn default_render_when_stopped() -> bool {
-    true
+    false
 }
 
 fn default_playback_speed() -> f64 {
@@ -114,10 +114,6 @@ impl ProcessingNode for VideoFileNode {
             node_state.playing = playback;
         }
 
-        if !node_state.playing && !self.render_when_stopped {
-            return Ok(());
-        }
-
         if self.file.is_empty() {
             return Ok(());
         }
@@ -156,8 +152,12 @@ impl ProcessingNode for VideoFileNode {
         state.texture.playback_speed = context
             .read_port(PLAYBACK_SPEED_INPUT)
             .unwrap_or(self.playback_speed);
-        state.receive_frames();
         state.texture.set_fps(context.fps());
+
+        if !node_state.playing && !self.render_when_stopped {
+            return Ok(());
+        }
+        state.receive_frames();
         context.write_port::<_, f64>(
             PLAYBACK_OUTPUT,
             match state.texture.clock_state {

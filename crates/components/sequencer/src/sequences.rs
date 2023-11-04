@@ -1,9 +1,10 @@
 use std::cmp::Ordering;
 use std::ops::Deref;
 
+use serde::{Deserialize, Serialize};
+
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
-use serde::{Deserialize, Serialize};
 
 use crate::contracts::*;
 use crate::cue::*;
@@ -51,7 +52,7 @@ impl Sequence {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
-        profiling::scope!("Sequence::run");
+        profiling::scope!("Sequence::run", &self.name);
         if !state.active {
             return;
         }

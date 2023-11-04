@@ -132,7 +132,7 @@ impl CountdownNode {
 }
 
 fn get_timecode(elapsed: Duration, duration: Duration) -> Timecode {
-    let timecode = Timecode::from(duration - elapsed);
+    let timecode = Timecode::from(duration.saturating_sub(elapsed));
     let timecode = Timecode {
         negative: true,
         ..timecode

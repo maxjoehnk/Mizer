@@ -449,9 +449,9 @@ checksum = "d468802bab17cbc0cc575e9b053f41e72aa36bfa6b7f55e3529ffa43161b97fa"
 [[package]]
 name = "avahi-sys"
 version = "0.10.0"
-source = "git+https://github.com/maxjoehnk/avahi-sys.git?branch=update-bindgen-0.64#2ee675a2ff7c756195bd17e0b0547a3918a50136"
+source = "git+https://github.com/maxjoehnk/avahi-sys.git?branch=update-bindgen-0.64#6dc6090d6fe8c2dee6a62d662c28251c2b367cda"
 dependencies = [
- "bindgen 0.64.0",
+ "bindgen 0.69.1",
  "libc",
 ]
 
@@ -596,7 +596,6 @@ dependencies = [
  "clang-sys",
  "lazy_static",
  "lazycell",
- "log",
  "peeking_take_while",
  "proc-macro2",
  "quote",
@@ -604,7 +603,6 @@ dependencies = [
  "rustc-hash",
  "shlex 1.2.0",
  "syn 1.0.109",
- "which 4.4.2",
 ]
 
 [[package]]
@@ -648,6 +646,29 @@ dependencies = [
  "rustc-hash",
  "shlex 1.2.0",
  "syn 2.0.38",
+]
+
+[[package]]
+name = "bindgen"
+version = "0.69.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9ffcebc3849946a7170a05992aac39da343a90676ab392c51a4280981d6379c2"
+dependencies = [
+ "bitflags 2.4.0",
+ "cexpr 0.6.0",
+ "clang-sys",
+ "lazy_static",
+ "lazycell",
+ "log",
+ "peeking_take_while",
+ "prettyplease",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash",
+ "shlex 1.2.0",
+ "syn 2.0.38",
+ "which 4.4.2",
 ]
 
 [[package]]

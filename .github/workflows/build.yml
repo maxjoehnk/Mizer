@@ -172,6 +172,8 @@ jobs:
       - name: Build
         run: make build-release
         continue-on-error: true
+        env:
+          LIBUSB_STATIC: "true"
       - name: Package
         run: make artifact
         continue-on-error: true

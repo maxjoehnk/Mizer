@@ -12,7 +12,7 @@ serde = { version = "1", features = ["derive"] }
 mizer-wgpu = { path = "../../../../wgpu" }
 image = "0.24"
 profiling = "1"
-ndi = "0.1"
+ndi = { git = "https://github.com/maxjoehnk/ndi-rs.git", branch = "feature/ndi-5" }
 futures = "0.3"
 mizer-ndi = { path = "../../../../../components/connections/devices/ndi" }
 mizer-devices = { path = "../../../../../components/connections/devices" }

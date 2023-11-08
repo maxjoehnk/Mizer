@@ -49,6 +49,10 @@ fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.link("Mizer.app")?;
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
+    artifact.link_to(
+        "deps/libndi.dylib",
+        "Mizer.app/Contents/Frameworks/libndi.dylib",
+    )?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
     artifact.link_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",

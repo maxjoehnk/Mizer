@@ -51,10 +51,11 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
     Ok(LoggingGuard(logging_guard))
 }
 
+#[derive(Default)]
 pub struct LoggingGuard(Option<WorkerGuard>);
 
 #[cfg(target_os = "macos")]
-pub fn init() -> anyhow::Result<()> {
+pub fn init() -> anyhow::Result<LoggingGuard> {
     use log::LevelFilter;
     use oslog::*;
 
@@ -62,7 +63,7 @@ pub fn init() -> anyhow::Result<()> {
         .level_filter(LevelFilter::Debug)
         .init()?;
 
-    Ok(())
+    Ok(Default::default())
 }
 
 fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {

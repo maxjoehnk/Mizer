@@ -6180,7 +6180,7 @@ dependencies = [
 [[package]]
 name = "ndi"
 version = "0.1.2"
-source = "git+https://github.com/maxjoehnk/ndi-rs.git?branch=feature/ndi-5#93c73748573868af604d0c3219c3b5802e0b47c6"
+source = "git+https://github.com/maxjoehnk/ndi-rs.git?branch=feature/ndi-5#c7ffd4163eb7ee6cc585fcdd6eff7df21fc474be"
 
 [[package]]
 name = "ndk"

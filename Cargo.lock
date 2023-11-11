@@ -4302,6 +4302,7 @@ dependencies = [
  "sentry",
  "sentry-tracing",
  "serde",
+ "spin_sleep",
  "structopt",
  "test-case",
  "tokio",
@@ -8162,6 +8163,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 dependencies = [
  "lock_api",
+]
+
+[[package]]
+name = "spin_sleep"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cafa7900db085f4354dbc7025e25d7a839a14360ea13b5fc4fd717f2d3b23134"
+dependencies = [
+ "once_cell",
+ "winapi 0.3.9",
 ]
 
 [[package]]

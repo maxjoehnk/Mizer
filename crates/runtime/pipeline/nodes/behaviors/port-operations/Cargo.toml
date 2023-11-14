@@ -9,7 +9,7 @@ anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
-itertools = "0.11"
+itertools = "0.12"
 rand = "0.8"
 mizer-util = { path = "../../../../../util" }
 enum-iterator = "1.4"

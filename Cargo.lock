@@ -3672,6 +3672,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25db6b064527c5d482d0423354fcd07a89a2dfe07b67892e62411946db7f07b0"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4309,7 +4318,7 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.0",
  "futures",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "lazy_static",
  "log",
  "mizer-clock",
@@ -4570,7 +4579,7 @@ dependencies = [
 name = "mizer-execution-planner"
 version = "0.1.0"
 dependencies = [
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-node",
  "mizer-util",
@@ -4638,7 +4647,7 @@ dependencies = [
  "dashmap",
  "futures",
  "indexmap 2.1.0",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-commander",
  "mizer-module",
@@ -5123,7 +5132,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-commander",
  "mizer-fixtures",
@@ -5158,7 +5167,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-node",
  "mizer-protocol-laser",
@@ -5378,7 +5387,7 @@ dependencies = [
  "downcast",
  "flume 0.11.0",
  "insta",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-clock",
  "mizer-commander",
@@ -5442,7 +5451,7 @@ dependencies = [
  "dashmap",
  "geo-nd",
  "indexmap 2.1.0",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "log",
  "mizer-fixtures",
  "mizer-module",

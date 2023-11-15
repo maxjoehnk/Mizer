@@ -1,22 +1,18 @@
-use mizer_module::{Module, Runtime};
-use mizer_settings::Settings;
-use mizer_status_bus::StatusBus;
+use mizer_module::*;
 
 use crate::MediaServer;
 
-pub struct MediaModule(MediaServer);
+pub struct MediaModule;
 
-impl MediaModule {
-    pub fn new(status_bus: StatusBus, settings: Settings) -> anyhow::Result<(Self, MediaServer)> {
-        let media_server = MediaServer::new(status_bus, settings)?;
-
-        Ok((Self(media_server.clone()), media_server))
-    }
-}
+module_name!(MediaModule);
 
 impl Module for MediaModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        runtime.injector_mut().provide(self.0);
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        let media_server = MediaServer::new(context.status_handle(), context.settings().clone())?;
+        context.provide_api(media_server.clone());
+        context.provide(media_server);
 
         Ok(())
     }

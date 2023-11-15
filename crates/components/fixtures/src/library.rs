@@ -1,25 +1,54 @@
-use crate::definition::FixtureDefinition;
-use parking_lot::RwLock;
 use std::sync::Arc;
 
-#[derive(Clone, Default)]
+use parking_lot::RwLock;
+
+use mizer_module::FixtureLibraryPaths;
+
+use crate::definition::FixtureDefinition;
+use crate::FixtureLibraryLoader;
+
+#[derive(Clone)]
 pub struct FixtureLibrary {
     providers: Arc<RwLock<Vec<Box<dyn FixtureLibraryProvider>>>>,
+    library_loader: Arc<Box<dyn FixtureLibraryLoader>>,
 }
 
 impl FixtureLibrary {
-    pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> Self {
+    pub fn new(
+        providers: Vec<Box<dyn FixtureLibraryProvider>>,
+        loader: impl FixtureLibraryLoader + 'static,
+    ) -> Self {
         FixtureLibrary {
             providers: Arc::new(RwLock::new(providers)),
+            library_loader: Arc::new(Box::new(loader)),
         }
     }
 
-    pub fn replace_providers(&self, new_providers: Vec<Box<dyn FixtureLibraryProvider>>) {
+    pub fn reload(&self, paths: FixtureLibraryPaths) -> anyhow::Result<()> {
+        let new_providers = self.library_loader.get_providers(&paths);
         let mut providers = self.providers.write();
         *providers = new_providers;
+        self.queue_load();
+
+        Ok(())
     }
 
-    pub fn load_libraries(&self) -> anyhow::Result<()> {
+    pub(crate) fn queue_load(&self) {
+        let library = self.clone();
+        std::thread::Builder::new()
+            .name("Background Fixture Library Loader".into())
+            .spawn(move || {
+                log::info!("Loading fixture libraries...");
+                if let Err(err) = library.load_libraries() {
+                    log::error!("Loading of fixture libraries failed: {:?}", err);
+                } else {
+                    log::info!("Loaded fixture libraries successfully.");
+                }
+            })
+            .unwrap();
+    }
+
+    fn load_libraries(&self) -> anyhow::Result<()> {
         let mut providers = self.providers.write();
         providers
             .iter_mut()
@@ -54,4 +83,25 @@ pub trait FixtureLibraryProvider: Send + Sync {
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;
 
     fn list_definitions(&self) -> Vec<FixtureDefinition>;
+}
+
+/// A fixture library loader that does not load any libraries.
+///
+/// Only used for testing.
+#[derive(Default)]
+struct EmptyLibraryLoader;
+
+impl FixtureLibraryLoader for EmptyLibraryLoader {
+    fn get_providers(&self, _paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+        Default::default()
+    }
+}
+
+impl Default for FixtureLibrary {
+    fn default() -> Self {
+        FixtureLibrary {
+            providers: Arc::new(RwLock::new(Vec::new())),
+            library_loader: Arc::new(Box::new(EmptyLibraryLoader::default())),
+        }
+    }
 }

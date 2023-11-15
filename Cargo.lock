@@ -4333,6 +4333,7 @@ dependencies = [
  "mizer-layouts",
  "mizer-media",
  "mizer-message-bus",
+ "mizer-module",
  "mizer-node",
  "mizer-node-templates",
  "mizer-nodes",
@@ -4511,6 +4512,7 @@ dependencies = [
  "image",
  "log",
  "mizer-debug-ui",
+ "mizer-module",
  "mizer-wgpu",
  "profiling",
  "winit",
@@ -4884,6 +4886,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "mizer-processing",
+ "mizer-settings",
+ "mizer-status-bus",
+ "test-case",
+ "tracing",
 ]
 
 [[package]]

@@ -16,3 +16,4 @@ profiling = "1"
 futures = { version = "0.3", features = ["executor"] }
 mizer-wgpu = { path = "../../wgpu" }
 mizer-debug-ui = { path = ".." }
+mizer-module = { path = "../../module" }

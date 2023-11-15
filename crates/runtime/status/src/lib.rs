@@ -6,6 +6,17 @@ use serde::{Deserialize, Serialize};
 
 use mizer_message_bus::{MessageBus, Subscriber};
 
+#[derive(Clone)]
+pub struct StatusHandle {
+    bus: StatusBus,
+}
+
+impl StatusHandle {
+    pub fn add_message(&self, message: impl Into<String>, timeout: Option<Duration>) {
+        self.bus.add_status_message(message, timeout);
+    }
+}
+
 #[derive(Clone, Default)]
 pub struct StatusBus {
     fps_bus: MessageBus<f64>,
@@ -33,6 +44,10 @@ impl Display for StatusMessage {
 impl StatusBus {
     pub fn new() -> Self {
         Self::default()
+    }
+
+    pub fn handle(&self) -> StatusHandle {
+        StatusHandle { bus: self.clone() }
     }
 
     pub fn add_status_message(&self, message: impl Into<String>, timeout: Option<Duration>) {

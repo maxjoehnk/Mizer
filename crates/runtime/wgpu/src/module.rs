@@ -1,27 +1,22 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
 use crate::processor::WgpuPipelineProcessor;
 use crate::{TextureRegistry, WgpuContext, WgpuPipeline};
 
-pub struct WgpuModule {
-    context: WgpuContext,
-}
+pub struct WgpuModule;
 
-impl WgpuModule {
-    pub async fn new() -> anyhow::Result<Self> {
-        let context = WgpuContext::new().await?;
-
-        Ok(Self { context })
-    }
-}
+module_name!(WgpuModule);
 
 impl Module for WgpuModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        let injector = runtime.injector_mut();
-        injector.provide(self.context);
-        injector.provide(WgpuPipeline::new());
-        injector.provide(TextureRegistry::new());
-        runtime.add_processor(WgpuPipelineProcessor);
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        let wgpu_context = context.block_on(WgpuContext::new())?;
+
+        context.provide(wgpu_context);
+        context.provide(WgpuPipeline::new());
+        context.provide(TextureRegistry::new());
+        context.add_processor(WgpuPipelineProcessor);
 
         Ok(())
     }

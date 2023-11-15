@@ -1,14 +1,18 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
 use super::processor::WindowProcessor;
 use super::EventLoopHandle;
 
 pub struct WindowModule;
 
+module_name!(WindowModule);
+
 impl Module for WindowModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        runtime.add_processor(WindowProcessor);
-        runtime.injector_mut().provide(EventLoopHandle::new());
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        context.add_processor(WindowProcessor);
+        context.provide(EventLoopHandle::new());
 
         Ok(())
     }

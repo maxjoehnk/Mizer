@@ -55,7 +55,6 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
-    ui: Option<DebugUiImpl>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
     status_bus: StatusBus,
     last_nodes_update: Option<Instant>,
@@ -86,7 +85,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
             layout_fader_view: Default::default(),
-            ui: None,
             node_metadata,
             status_bus: Default::default(),
             last_nodes_update: None,
@@ -94,10 +92,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         runtime.bootstrap();
 
         runtime
-    }
-
-    pub fn setup_debug_ui(&mut self, debug_ui: DebugUiImpl) {
-        self.ui = Some(debug_ui);
     }
 
     fn bootstrap(&mut self) {
@@ -426,7 +420,9 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             processor.post_process(&self.injector, frame);
         }
         self.read_node_settings();
-        if let Some(ui) = self.ui.as_mut() {
+        // TODO: add safe way to access mutable and immutable parts of the injector
+        let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
+        if let Some(ui) = injector.get_mut::<DebugUiImpl>() {
             log::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
             render_handle.draw(|ui, texture_map| {

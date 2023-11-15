@@ -10,9 +10,11 @@ use mizer_debug_ui::*;
 use mizer_wgpu::window::{EventLoopHandle, RawWindowRef};
 
 use crate::draw_handle::EguiDrawHandle;
+pub use crate::module::EguiDebugUiModule;
 use crate::render_handle::EguiRenderHandle;
 
 mod draw_handle;
+mod module;
 mod render_handle;
 
 #[derive(Default)]

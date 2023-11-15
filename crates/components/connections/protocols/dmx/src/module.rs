@@ -5,12 +5,15 @@ use crate::DmxConnectionManager;
 
 pub struct DmxModule;
 
+module_name!(DmxModule);
+
 impl Module for DmxModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
+    const IS_REQUIRED: bool = true;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
         let dmx_manager = DmxConnectionManager::new();
-        runtime.injector_mut().provide(dmx_manager);
-        runtime.add_processor(DmxProcessor);
+        context.provide(dmx_manager);
+        context.add_processor(DmxProcessor);
 
         Ok(())
     }

@@ -10,6 +10,7 @@ use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
+use mizer_module::ApiInjector;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, NodeSetting, PortId};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
@@ -28,6 +29,7 @@ pub struct Api {
     settings_bus: MessageBus<Settings>,
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
     device_manager: DeviceManager,
+    api_injector: ApiInjector,
 }
 
 impl RuntimeApi for Api {
@@ -296,22 +298,29 @@ impl RuntimeApi for Api {
     fn layouts_view(&self) -> LayoutsView {
         self.access.layouts_view.clone()
     }
+
+    #[profiling::function]
+    fn get_service<T: 'static + Send + Sync + Clone>(&self) -> Option<&T> {
+        self.api_injector.get()
+    }
 }
 
 impl Api {
     pub fn setup(
         runtime: &DefaultRuntime,
-        command_executor_api: CommandExecutorApi,
+        api_injector: ApiInjector,
         settings: Arc<NonEmptyPinboard<SettingsManager>>,
-        device_manager: DeviceManager,
     ) -> (ApiHandler, Api) {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
+        let command_executor_api = api_injector.require_service();
+        let device_manager = api_injector.require_service();
 
         (
             ApiHandler { recv: rx },
             Api {
                 sender: tx,
+                api_injector,
                 command_executor_api,
                 access,
                 settings,

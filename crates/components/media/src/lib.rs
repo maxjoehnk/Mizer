@@ -2,7 +2,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
 use mizer_settings::Settings;
-use mizer_status_bus::StatusBus;
+use mizer_status_bus::StatusHandle;
 pub use module::MediaModule;
 
 use crate::data_access::DataAccess;
@@ -70,11 +70,11 @@ pub struct MediaServer {
     storage: FileStorage,
     db: DataAccess,
     import_paths: ImportPaths,
-    status_bus: StatusBus,
+    status_bus: StatusHandle,
 }
 
 impl MediaServer {
-    pub fn new(status_bus: StatusBus, settings: Settings) -> anyhow::Result<Self> {
+    pub fn new(status_bus: StatusHandle, settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
         let storage = FileStorage::new(settings.paths.media_storage)?;
         let import_paths = ImportPaths::new();

@@ -1,9 +1,10 @@
 pub use mizer_commander::Command;
-use mizer_module::{Injector, Module, Runtime};
+use mizer_processing::Injector;
 
 pub use crate::executor::CommandExecutor;
 pub use crate::history::CommandHistory;
 use crate::in_main_loop_executor::{InMainLoopExecutionWorker, InMainLoopExecutor};
+pub use crate::module::CommandExecutorModule;
 pub use crate::processor::CommandProcessor;
 
 pub use self::commands::*;
@@ -13,28 +14,8 @@ mod commands;
 mod executor;
 mod history;
 mod in_main_loop_executor;
+mod module;
 mod processor;
-
-pub struct CommandExecutorModule(InMainLoopExecutionWorker);
-
-impl CommandExecutorModule {
-    pub fn new() -> (Self, CommandExecutorApi) {
-        let (executor, worker) = InMainLoopExecutor::new();
-
-        (Self(worker), CommandExecutorApi(executor))
-    }
-}
-
-impl Module for CommandExecutorModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        let executor = CommandExecutor::new();
-        let history = CommandHistory::new();
-        runtime.injector_mut().provide(history);
-        runtime.add_processor(CommandProcessor::new(executor, self.0));
-
-        Ok(())
-    }
-}
 
 #[derive(Clone)]
 pub struct CommandExecutorApi(InMainLoopExecutor);

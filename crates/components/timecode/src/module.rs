@@ -1,22 +1,20 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
 use crate::processor::TimecodeProcessor;
 use crate::TimecodeManager;
 
-pub struct TimecodeModule(TimecodeManager);
+pub struct TimecodeModule;
 
-impl TimecodeModule {
-    pub fn new() -> (Self, TimecodeManager) {
-        let manager = TimecodeManager::new();
-
-        (Self(manager.clone()), manager)
-    }
-}
+module_name!(TimecodeModule);
 
 impl Module for TimecodeModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        runtime.add_processor(TimecodeProcessor::new(self.0.clone()));
-        runtime.injector_mut().provide(self.0);
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        let manager = TimecodeManager::new();
+        context.provide_api(manager.clone());
+        context.add_processor(TimecodeProcessor::new(manager.clone()));
+        context.provide(manager);
 
         Ok(())
     }

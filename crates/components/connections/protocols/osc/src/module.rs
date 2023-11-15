@@ -1,14 +1,16 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
 use crate::connections::OscConnectionManager;
 
 pub struct OscModule;
 
+module_name!(OscModule);
+
 impl Module for OscModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
-        let injector = runtime.injector_mut();
-        injector.provide(OscConnectionManager::new());
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        context.provide(OscConnectionManager::new());
 
         Ok(())
     }

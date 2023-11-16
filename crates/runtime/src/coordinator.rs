@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use itertools::Itertools;
 use pinboard::NonEmptyPinboard;
@@ -57,7 +57,6 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     layout_fader_view: LayoutsView,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
     status_bus: StatusBus,
-    last_nodes_update: Option<Instant>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -87,7 +86,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             layout_fader_view: Default::default(),
             node_metadata,
             status_bus: Default::default(),
-            last_nodes_update: None,
         };
         runtime.bootstrap();
 
@@ -202,7 +200,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         log::debug!("Rebuilding pipeline");
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
-        self.last_nodes_update = None;
 
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
@@ -344,12 +341,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     #[profiling::function]
-    pub(crate) fn read_node_settings(&mut self) {
-        if let Some(last_nodes_update) = self.last_nodes_update {
-            if last_nodes_update.elapsed() <= Duration::from_secs(10) {
-                return;
-            }
-        }
+    pub(crate) fn read_node_settings(&self) {
         let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
         let settings = pipeline_access
             .nodes
@@ -363,7 +355,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             })
             .collect();
         pipeline_access.settings.set(settings);
-        self.last_nodes_update = Some(Instant::now());
     }
 
     /// Should only be used for testing purposes

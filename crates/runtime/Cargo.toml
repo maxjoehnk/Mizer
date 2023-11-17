@@ -36,5 +36,5 @@ itertools = "0.12"
 
 [dev-dependencies]
 insta = "1.34"
-test-case = "3.2"
+test-case = "3.3"
 mizer-util = { path = "../util", features = ["test"] }

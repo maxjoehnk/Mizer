@@ -13,5 +13,5 @@ profiling = "1"
 enum-iterator = "1.4"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"
 mizer-node = { path = "../../../node", features = ["test"] }

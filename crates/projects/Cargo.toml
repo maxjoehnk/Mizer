@@ -32,5 +32,5 @@ enum-iterator = "1.4"
 profiling = "1.0"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"
 mizer-pixel-nodes = { path = "../runtime/pipeline/nodes/pixels" }

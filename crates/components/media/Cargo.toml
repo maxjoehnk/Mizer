@@ -25,4 +25,4 @@ mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

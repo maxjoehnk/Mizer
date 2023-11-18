@@ -13,4 +13,4 @@ enum-iterator = "1.4"
 num_enum = "0.7"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

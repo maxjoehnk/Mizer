@@ -20,4 +20,4 @@ itertools = "0.12"
 uuid = { version = "1.5", features = ["serde"] }
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

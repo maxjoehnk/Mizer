@@ -22,4 +22,4 @@ uuid = { version = "1.5", features = ["v4"] }
 base64 = "0.21"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

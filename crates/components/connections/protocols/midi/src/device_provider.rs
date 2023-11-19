@@ -1,7 +1,9 @@
-use std::collections::HashMap;
 use std::path::Path;
+use std::sync::Arc;
 
-use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
+use dashmap::DashMap;
+use midir::{MidiInputPort, MidiOutputPort};
+use parking_lot::RwLock;
 use regex::Regex;
 
 use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
@@ -38,8 +40,8 @@ impl std::fmt::Debug for MidiDeviceIdentifier {
 
 #[derive(Default)]
 pub struct MidiDeviceProvider {
-    profiles: Vec<DeviceProfile>,
-    devices: Vec<MidiDeviceIdentifier>,
+    pub(crate) profiles: Arc<RwLock<Vec<DeviceProfile>>>,
+    pub(crate) available_devices: Arc<DashMap<String, MidiDeviceIdentifier>>,
 }
 
 impl MidiDeviceProvider {
@@ -48,86 +50,32 @@ impl MidiDeviceProvider {
     }
 
     pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
-        self.profiles = load_profiles(path)?;
+        let mut profiles = self.profiles.write();
+        *profiles = load_profiles(path)?;
 
         Ok(())
     }
 
     pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
-        self.profiles.clone()
+        self.profiles.read().clone()
     }
 
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
         profiling::scope!("MidiDeviceProvider::find_device");
 
         Ok(self
-            .devices
-            .iter()
-            .find(|device| device.name == name)
-            .cloned())
-    }
-
-    pub(crate) fn load_available_devices(&mut self) -> anyhow::Result<()> {
-        profiling::scope!("MidiDeviceProvider::load_available_devices");
-        let input_provider = MidiInput::new("mizer")?;
-        let output_provider = MidiOutput::new("mizer")?;
-
-        let input_ports = input_provider.ports();
-        let output_ports = output_provider.ports();
-
-        let mut ports = HashMap::new();
-
-        for input in input_ports {
-            let name = input_provider.port_name(&input)?;
-            ports.insert(name, (Some(input), None));
-        }
-        for output in output_ports {
-            let name = output_provider.port_name(&output)?;
-            if let Some((_, output_port)) = ports.get_mut(&name) {
-                output_port.replace(output);
-            } else {
-                ports.insert(name, (None, Some(output)));
-            }
-        }
-
-        self.devices = ports
-            .into_iter()
-            .map(|(name, (input, output))| MidiDeviceIdentifier {
-                profile: self.search_profile(&name),
-                name: cleanup_name(name),
-                input,
-                output,
-            })
-            .collect();
-
-        Ok(())
+            .available_devices
+            .get(name)
+            .map(|entry| entry.value().clone()))
     }
 
     pub(crate) fn list_devices(&self) -> anyhow::Result<Vec<MidiDeviceIdentifier>> {
         profiling::scope!("MidiDeviceProvider::list_devices");
 
-        Ok(self.devices.clone())
-    }
-
-    fn search_profile(&self, name: &str) -> Option<DeviceProfile> {
-        profiling::scope!("MidiDeviceProvider::search_profile");
-        self.profiles
+        Ok(self
+            .available_devices
             .iter()
-            .find(|profile| profile.matches(name))
-            .cloned()
+            .map(|entry| entry.value().clone())
+            .collect())
     }
-}
-
-#[cfg(target_os = "linux")]
-fn cleanup_name(name: String) -> String {
-    LINUX_MIDI_PORT_NAME
-        .captures_iter(&name)
-        .next()
-        .map(|s| s[1].to_string())
-        .unwrap_or(name)
-}
-
-#[cfg(not(target_os = "linux"))]
-fn cleanup_name(name: String) -> String {
-    name
 }

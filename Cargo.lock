@@ -5305,6 +5305,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-util",
+ "parking_lot",
  "profiling",
  "regex",
  "tracing",

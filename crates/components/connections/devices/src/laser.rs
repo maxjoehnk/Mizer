@@ -1,6 +1,8 @@
-use crate::{Device, DeviceDiscovery, DeviceStatus};
 use futures::stream::{self, BoxStream, StreamExt};
+
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser, Laser, LaserFrame};
+
+use crate::{Device, DeviceDiscovery, DeviceStatus};
 
 #[derive(Debug)]
 pub enum LaserDevice {
@@ -22,16 +24,20 @@ impl LaserDevice {
     fn discover_ether_dream() -> BoxStream<'static, LaserDevice> {
         let handle = tokio::runtime::Handle::current();
         let (sender, receiver) = tokio::sync::mpsc::channel(5);
-        handle.spawn_blocking(move || {
-            let ether_dreams = EtherDreamLaser::find_devices().unwrap();
-            for device in ether_dreams {
-                match device {
-                    Ok(device) => sender.try_send(LaserDevice::EtherDream(device)).unwrap(),
-                    Err(err) => {
-                        log::error!("ether dream discovery failed: {:?}", err);
-                        return;
+        handle.spawn_blocking(move || match EtherDreamLaser::find_devices() {
+            Ok(ether_dreams) => {
+                for device in ether_dreams {
+                    match device {
+                        Ok(device) => sender.try_send(LaserDevice::EtherDream(device)).unwrap(),
+                        Err(err) => {
+                            log::error!("ether dream discovery failed: {:?}", err);
+                            return;
+                        }
                     }
                 }
+            }
+            Err(err) => {
+                log::error!("ether dream discovery failed: {:?}", err);
             }
         });
 

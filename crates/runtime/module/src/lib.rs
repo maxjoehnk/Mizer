@@ -15,7 +15,10 @@ pub trait Module: Sized + Display {
 
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()>;
 
-    fn try_load(self, context: &mut impl ModuleContext) {
+    fn try_load<TContext: ModuleContext>(
+        self,
+        context: &mut TContext,
+    ) -> ModuleLoadResult<TContext> {
         let span = tracing::info_span!("{module}::try_load");
         let _ = span.enter();
         let module = self.to_string();
@@ -25,8 +28,27 @@ pub trait Module: Sized + Display {
             if Self::IS_REQUIRED {
                 panic!("Failed to load required module: {module}: {err:?}");
             }
+
+            ModuleLoadResult::Failed
         } else {
             tracing::info!("Registered {module}.");
+
+            ModuleLoadResult::Loaded(context)
+        }
+    }
+}
+
+#[derive(Debug)]
+pub enum ModuleLoadResult<'a, T: ModuleContext> {
+    Loaded(&'a mut T),
+    Failed,
+}
+
+impl<'a, T: ModuleContext> ModuleLoadResult<'a, T> {
+    pub fn then(self, other: impl Module) -> ModuleLoadResult<'a, T> {
+        match self {
+            ModuleLoadResult::Loaded(context) => other.try_load(context),
+            ModuleLoadResult::Failed => ModuleLoadResult::Failed,
         }
     }
 }

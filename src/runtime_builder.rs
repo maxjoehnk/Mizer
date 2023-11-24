@@ -41,8 +41,7 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     MqttModule.try_load(context);
     OscModule.try_load(context);
     MidiModule.try_load(context);
-    WgpuModule.try_load(context);
-    WindowModule.try_load(context);
+    WgpuModule.try_load(context).then(WindowModule);
 
     #[cfg(feature = "debug-ui")]
     if flags.debug {

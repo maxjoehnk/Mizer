@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 
 class PopupInput extends StatefulWidget {
   final String title;
@@ -27,11 +28,13 @@ class _PopupInputState extends State<PopupInput> {
       },
       child: PopupContainer(
           title: widget.title,
-          child: TextField(
-            controller: _controller,
-            autofocus: true,
-            textInputAction: TextInputAction.done,
-            onSubmitted: (_) => _confirm(context),
+          child: TextFieldFocus(
+            child: TextField(
+              controller: _controller,
+              autofocus: true,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _confirm(context),
+            ),
           ),
           actions: [
             PopupAction("Cancel", () => Navigator.of(context).pop()),

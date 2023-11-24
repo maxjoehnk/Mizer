@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 
 import 'field.dart';
 
@@ -131,17 +132,19 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
             borderRadius: BorderRadius.circular(2),
             color: Colors.grey.shade700,
           ),
-          child: EditableText(
-            focusNode: focusNode,
-            controller: controller,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            style: textStyle,
-            textAlign: TextAlign.center,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.text,
-            autofocus: true,
-            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+          child: TextFieldFocus(
+            child: EditableText(
+              focusNode: focusNode,
+              controller: controller,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              style: textStyle,
+              textAlign: TextAlign.center,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.text,
+              autofocus: true,
+              inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+            ),
           ),
         ));
   }
@@ -160,17 +163,19 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
               borderRadius: BorderRadius.circular(2),
               color: Colors.grey.shade700,
             ),
-            child: EditableText(
-              focusNode: focusNode,
-              controller: controller,
-              cursorColor: Colors.black87,
-              backgroundCursorColor: Colors.black12,
-              style: textStyle,
-              textAlign: TextAlign.start,
-              selectionColor: Colors.black38,
-              keyboardType: TextInputType.multiline,
-              autofocus: true,
-              maxLines: null,
+            child: TextFieldFocus(
+              child: EditableText(
+                focusNode: focusNode,
+                controller: controller,
+                cursorColor: Colors.black87,
+                backgroundCursorColor: Colors.black12,
+                style: textStyle,
+                textAlign: TextAlign.start,
+                selectionColor: Colors.black38,
+                keyboardType: TextInputType.multiline,
+                autofocus: true,
+                maxLines: null,
+              ),
             ),
           )
         ]);

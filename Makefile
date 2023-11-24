@@ -17,7 +17,7 @@ build:
 
 build-release:
 	cd crates/ui && make release
-	cargo build --no-default-features --features ui --features build-ffmpeg --release -p mizer
+	cargo build --no-default-features --features ui --release -p mizer
 
 run: build
 	target/debug/mizer
@@ -50,3 +50,9 @@ flatpak-install:
 
 mizer.flatpak: flatpak-install
 	flatpak build-bundle ~/.local/share/flatpak/repo mizer.flatpak me.maxjoehnk.Mizer
+
+benchmarks:
+	cargo bench --no-default-features --benches --workspace
+
+oscillator_nodes_benchmarks:
+	cargo bench --no-default-features --bench oscillator_nodes

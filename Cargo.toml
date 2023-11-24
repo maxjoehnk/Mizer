@@ -183,7 +183,7 @@ test-case = "3.3"
 criterion = { version = "0.5", features = ["html_reports"] }
 
 [[bench]]
-name = "dmx_pixel_pushing"
+name = "oscillator_nodes"
 harness = false
 
 [profile.bench]

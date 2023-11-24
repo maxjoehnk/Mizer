@@ -21,7 +21,7 @@ bezier-nd = "0.5"
 geo-nd = "0.5"
 itertools = "0.12"
 num-traits = "0.2"
-uuid = { version = "1.5", features = ["v4"] }
+uuid = { version = "1.6", features = ["v4"] }
 tracing = "0.1"
 indexmap = "2.1"
 

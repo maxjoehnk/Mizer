@@ -6,7 +6,10 @@ test:
 	cargo nextest run --workspace
 
 benchmarks:
-	cargo bench --workspace
+	cargo bench --no-default-features --benches --workspace
+
+oscillator_nodes_benchmarks:
+	cargo bench --no-default-features --bench oscillator_nodes
 
 build-headless:
 	cargo build --release --no-default-features --features build-ffmpeg
@@ -50,9 +53,3 @@ flatpak-install:
 
 mizer.flatpak: flatpak-install
 	flatpak build-bundle ~/.local/share/flatpak/repo mizer.flatpak me.maxjoehnk.Mizer
-
-benchmarks:
-	cargo bench --no-default-features --benches --workspace
-
-oscillator_nodes_benchmarks:
-	cargo bench --no-default-features --bench oscillator_nodes

@@ -13,6 +13,7 @@ import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/patch/fixture_patch.dart';
 import 'package:mizer/views/plan/plan_view.dart';
+import 'package:mizer/views/preferences/preferences.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
@@ -48,6 +49,7 @@ List<Route> routes = [
   Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode),
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
+  Route(() => PreferencesView(), Icons.settings, 'Preferences'.i18n, View.Preferences),
 ];
 
 class Home extends StatefulWidget {

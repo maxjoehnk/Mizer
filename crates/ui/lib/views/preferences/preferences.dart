@@ -2,9 +2,8 @@ import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
-import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
-import 'package:nativeshell/nativeshell.dart';
 
 import 'file_paths.dart';
 import 'general.dart';
@@ -18,19 +17,20 @@ class PreferencesView extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: Tabs(children: [
-            Tab(label: "General".i18n, child: GeneralSettings()),
-            Tab(label: "File Paths".i18n, child: PathSettings()),
-            Tab(label: "Hotkeys".i18n, child: HotkeySettings()),
-          ]),
+          child: Panel(
+            label: "Preferences".i18n,
+            tabs: [
+              Tab(label: "General".i18n, child: GeneralSettings()),
+              Tab(label: "File Paths".i18n, child: PathSettings()),
+              Tab(label: "Hotkeys".i18n, child: HotkeySettings()),
+            ],
+            actions: [
+              PanelActionModel(
+                  label: "Save".i18n,
+                  onClick: () => context.read<SettingsBloc>().add(SaveSettings())),
+            ],
+          ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            MizerButton(child: Text("Cancel".i18n), onClick: () => Window.of(context).close()),
-            MizerButton(child: Text("Save".i18n), onClick: () => context.read<SettingsBloc>().add(SaveSettings(Window.of(context)))),
-          ]),
-        )
       ],
     );
   }

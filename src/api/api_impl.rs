@@ -15,7 +15,7 @@ use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, NodeSetting, 
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
-use mizer_session::SessionState;
+use mizer_session::{SessionManager, SessionState};
 use mizer_settings::{Settings, SettingsManager};
 
 use crate::{ApiCommand, ApiHandler};
@@ -140,10 +140,13 @@ impl RuntimeApi for Api {
     }
 
     fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::ObserveSession(tx))?;
+        let session_manager = self
+            .api_injector
+            .get::<SessionManager>()
+            .ok_or_else(|| anyhow::anyhow!("Session Module not available"))?;
+        let subscriber = session_manager.subscribe();
 
-        Ok(rx.recv()?)
+        Ok(subscriber)
     }
 
     fn new_project(&self) -> anyhow::Result<()> {

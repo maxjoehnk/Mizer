@@ -1,34 +1,54 @@
 use serde::{Deserialize, Serialize};
 
+pub use manager::SessionManager;
+pub use module::SessionModule;
+
 #[cfg(unix)]
 mod discovery;
+mod manager;
+mod module;
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct SessionState {
+// TODO: this should be moved into it's own module as it's only partially related to sessions
+#[derive(Default, Debug, Clone, Deserialize, Serialize)]
+pub struct ProjectInfo {
     pub project_path: Option<String>,
     pub project_history: Vec<String>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct SessionState {
+    pub session: Session,
+    pub project_info: ProjectInfo,
+    pub available_sessions: Vec<DiscoveredSession>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Session {
+    pub role: ClientRole,
     pub clients: Vec<SessionClient>,
 }
 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct DiscoveredSession {
+    pub name: String,
+    pub file_name: Option<String>,
+    pub hostname: String,
+    pub port: u16,
+    pub addrs: Vec<String>,
+}
+
 impl Session {
-    pub fn new(port: u16) -> anyhow::Result<Self> {
-        #[cfg(unix)]
-        discovery::announce_device(port);
+    pub(crate) fn new_orchestrator() -> anyhow::Result<Self> {
         Ok(Session {
-            clients: vec![SessionClient::get_self()?],
+            clients: vec![SessionClient::get_self(ClientRole::Orchestrator)?],
+            role: ClientRole::Orchestrator,
         })
     }
 
-    // TODO: discover and connect to remote session
-    pub fn discover() -> anyhow::Result<Self> {
-        #[cfg(unix)]
-        discovery::discover_sessions()?;
+    pub(crate) fn new_remote() -> anyhow::Result<Self> {
         Ok(Session {
-            clients: vec![SessionClient::get_self()?],
+            clients: vec![SessionClient::get_self(ClientRole::Remote)?],
+            role: ClientRole::Remote,
         })
     }
 }
@@ -37,25 +57,35 @@ impl Session {
 pub struct SessionClient {
     pub name: String,
     pub ips: Vec<String>,
-    pub orchestrator: bool,
+    pub role: ClientRole,
 }
 
 impl SessionClient {
-    pub fn get_self() -> anyhow::Result<Self> {
+    pub fn get_self(role: ClientRole) -> anyhow::Result<Self> {
         let name = hostname::get()?.into_string().unwrap();
+        let ips = match default_net::get_default_interface() {
+            Ok(default_interface) => default_interface
+                .ipv4
+                .into_iter()
+                .map(|ip| ip.to_string())
+                .collect(),
+            Err(err) => {
+                log::error!("Unable to get default network interface: {err}");
+                Default::default()
+            }
+        };
 
-        Ok(SessionClient {
-            name,
-            ips: vec![],
-            orchestrator: true,
-        })
+        Ok(SessionClient { name, ips, role })
     }
 }
 
-#[allow(dead_code)]
-enum ClientRole {
-    Orchestrator, // single point of truth, only client which can directly modify session
-    Replica,      // may take over the orchestrator role when it leaves the session
-    Worker,       // raw number cruncher
-    Edge,         // outputs video, controls dmx universe etc
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize)]
+pub enum ClientRole {
+    /// single point of truth, only client which can directly modify session
+    #[default]
+    Orchestrator,
+    /// mobile app used to view fixture patch and highlight fixtures
+    Mobile,
+    /// secondary instance of Mizer joined to the session capable of interacting with fixtures system
+    Remote,
 }

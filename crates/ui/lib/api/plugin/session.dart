@@ -10,9 +10,9 @@ class SessionPluginApi implements SessionApi {
   final EventChannel historyEvents = const EventChannel("mizer.live/history/watch");
 
   @override
-  Stream<Session> watchSession() {
+  Stream<SessionState> watchSession() {
     return sessionEvents.receiveBroadcastStream().map((buffer) {
-      return Session.fromBuffer(_convertBuffer(buffer));
+      return SessionState.fromBuffer(_convertBuffer(buffer));
     });
   }
 

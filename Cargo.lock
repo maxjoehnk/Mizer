@@ -5507,8 +5507,12 @@ name = "mizer-session"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "default-net",
  "hostname",
  "log",
+ "mizer-message-bus",
+ "mizer-module",
+ "parking_lot",
  "serde",
  "zeroconf",
 ]

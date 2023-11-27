@@ -11,7 +11,6 @@ use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::FixtureModule;
 use mizer_media::MediaModule;
-use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext};
 use mizer_project_files::history::ProjectHistory;
 use mizer_protocol_dmx::*;
@@ -20,7 +19,7 @@ use mizer_protocol_mqtt::MqttModule;
 use mizer_protocol_osc::module::OscModule;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectsModule, SequencerModule};
-use mizer_session::Session;
+use mizer_session::{SessionManager, SessionModule};
 use mizer_settings::{Settings, SettingsManager};
 use mizer_surfaces::SurfaceModule;
 use mizer_timecode::TimecodeModule;
@@ -52,6 +51,8 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     CommandExecutorModule.try_load(context);
     MediaModule.try_load(context);
+
+    SessionModule.try_load(context);
 }
 
 pub fn build_runtime(
@@ -81,10 +82,11 @@ pub fn build_runtime(
     );
 
     let handlers = Handlers::new(api, context.api_injector.clone(), status_bus.clone());
+    let session_manager: SessionManager = context.api_injector.require_service();
 
     let remote_api_port = start_remote_api(handlers.clone())?;
 
-    Session::new(remote_api_port)?;
+    session_manager.announce(remote_api_port)?;
 
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
@@ -92,7 +94,7 @@ pub fn build_runtime(
         runtime: context.runtime,
         handlers,
         media_server_api: context.api_injector.require_service(),
-        session_events: MessageBus::new(),
+        session_manager,
         project_history: ProjectHistory,
         status_bus,
     };

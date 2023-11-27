@@ -24,7 +24,7 @@ class ApplicationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SessionBloc, Session>(
+    return BlocBuilder<SessionBloc, SessionState>(
       builder: (context, state) => MenuBar(
           child: child,
           menu: Menu(items: [
@@ -43,7 +43,7 @@ class ApplicationMenu extends StatelessWidget {
                     .toList(),
               ),
               MenuItem(
-                  disabled: state.filePath.isEmpty,
+                  disabled: state.currentSession.filePath.isEmpty,
                   label: 'Save Project'.i18n,
                   action: () => ProjectFiles.saveProject(context)),
               MenuItem(

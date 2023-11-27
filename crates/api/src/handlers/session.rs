@@ -1,39 +1,71 @@
+use futures::{Stream, StreamExt};
+
+use mizer_session::SessionManager;
+
 use crate::proto::session::*;
 use crate::RuntimeApi;
-use futures::{Stream, StreamExt};
 
 #[derive(Clone)]
 pub struct SessionHandler<R: RuntimeApi> {
     runtime: R,
+    session_manager: SessionManager,
 }
 
 impl<R: RuntimeApi> SessionHandler<R> {
-    pub fn new(runtime: R) -> Self {
-        Self { runtime }
+    pub fn new(runtime: R, session_manager: SessionManager) -> Self {
+        Self {
+            runtime,
+            session_manager,
+        }
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn watch_session(&self) -> anyhow::Result<impl Stream<Item = Session>> {
+    pub fn watch_session(&self) -> anyhow::Result<impl Stream<Item = SessionState>> {
         let stream = self
             .runtime
             .observe_session()?
             .into_stream()
-            .map(|state| Session {
-                file_path: state.project_path,
-                project_history: state.project_history,
-                devices: vec![SessionDevice {
-                    name: "max-arch".into(),
-                    ping: 0f64,
-                    ips: vec!["192.168.1.13".to_string()],
-                    clock: Some(DeviceClock {
-                        drift: 0f64,
-                        master: true,
-                    }),
-                }],
+            .map(|state| SessionState {
+                current_session: Some(Session {
+                    file_path: state.project_info.project_path,
+                    devices: state
+                        .session
+                        .clients
+                        .into_iter()
+                        .map(|client| SessionDevice {
+                            name: client.name,
+                            ips: client.ips,
+                            role: ClientRole::from(client.role) as i32,
+                            clock: Some(DeviceClock { drift: 0f64 }),
+                            ping: 0.,
+                        })
+                        .collect(),
+                }),
+                role: ClientRole::from(state.session.role) as i32,
+                available_sessions: state
+                    .available_sessions
+                    .into_iter()
+                    .map(|session| DiscoveredSession {
+                        name: session.name,
+                        file_name: session.file_name,
+                        hostname: session.hostname,
+                        ips: session.addrs,
+                        port: session.port as u32,
+                    })
+                    .collect(),
+                project_history: state.project_info.project_history,
             });
 
         Ok(stream)
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn join_session(&self, session: DiscoveredSession) -> anyhow::Result<()> {
+        self.session_manager.join_session(session.into())?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
@@ -91,7 +123,6 @@ impl<R: RuntimeApi> SessionHandler<R> {
                 History {
                     items,
                     pointer: cursor as u64,
-                    ..Default::default()
                 }
             })
     }

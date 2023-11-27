@@ -4,7 +4,6 @@ use structopt::StructOpt;
 
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
-use mizer_session::Session;
 
 use crate::logger::LoggingGuard;
 
@@ -87,9 +86,6 @@ fn start_runtime(
     flags: Flags,
     handler_out: Option<mpsc::Sender<Handlers<Api>>>,
 ) -> anyhow::Result<()> {
-    // TODO: integrate discovery mode
-    Session::discover()?;
-
     let _guard = runtime.enter();
 
     let (mut mizer, api_handler) = build_runtime(runtime.clone(), flags)?;

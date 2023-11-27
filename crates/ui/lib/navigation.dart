@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart' hide View;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
+import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -21,7 +24,6 @@ import 'package:mizer/views/surfaces/surfaces_view.dart';
 import 'package:mizer/views/timecode/timecode_view.dart';
 import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
-import 'package:provider/provider.dart';
 
 import 'actions/actions.dart';
 import 'panes/programmer/programmer_view.dart';
@@ -34,21 +36,21 @@ const double PROGRAMMER_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT +
 const double SELECTION_SHEET_CONTAINER_HEIGHT = 196;
 
 List<Route> routes = [
-  Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
+  Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout, orchestratorExclusive: true),
   Route(() => PlanView(), MdiIcons.viewComfy, '2D Plan'.i18n, View.Plan),
-  Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes),
+  Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz, orchestratorExclusive: true),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes, orchestratorExclusive: true),
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer'.i18n, View.Sequencer),
   Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures'.i18n, View.Programmer),
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets'.i18n, View.Presets),
-  Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects),
-  Route(() => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
-  Route(() => SurfacesView(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
+  Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects, orchestratorExclusive: true),
+  Route(() => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media, orchestratorExclusive: true),
+  Route(() => SurfacesView(), Icons.tv, 'Surfaces'.i18n, View.Surfaces, orchestratorExclusive: true),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections, orchestratorExclusive: true),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
-  Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode),
+  Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode, orchestratorExclusive: true),
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
-  Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
+  Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History, orchestratorExclusive: true),
   Route(() => PreferencesView(), Icons.settings, 'Preferences'.i18n, View.Preferences),
 ];
 
@@ -163,8 +165,9 @@ class Route {
   final IconData icon;
   final String label;
   final View viewKey;
+  final bool orchestratorExclusive;
 
-  Route(this.view, this.icon, this.label, this.viewKey);
+  Route(this.view, this.icon, this.label, this.viewKey, { this.orchestratorExclusive = false });
 }
 
 typedef WidgetFunction = Widget Function();
@@ -179,15 +182,19 @@ class NavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HotkeyMapping mapping = context.read();
-    return Container(
-        color: Colors.grey.shade800,
-        width: 64,
-        child: ListView(
-            children: this
-                .routes
-                .mapEnumerated((route, i) => NavigationItem(
-                    route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
-                .toList()));
+    return BlocBuilder<SessionBloc, SessionState>(
+      builder: (context, sessionState) {
+        return Container(
+            color: Colors.grey.shade800,
+            width: 64,
+            child: ListView(
+                children: this
+                    .routes
+                    .mapEnumerated((route, i) => NavigationItem(
+                        route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings, sessionState.role == ClientRole.ORCHESTRATOR))
+                    .toList()));
+      }
+    );
   }
 }
 
@@ -202,8 +209,9 @@ class NavigationItem extends StatefulWidget {
   final bool selected;
   final void Function() onSelect;
   final Map<String, String> hotkeys;
+  final bool isOrchestrator;
 
-  NavigationItem(this.route, this.selected, this.onSelect, this.hotkeys);
+  NavigationItem(this.route, this.selected, this.onSelect, this.hotkeys, this.isOrchestrator);
 
   @override
   _NavigationItemState createState() => _NavigationItemState();
@@ -212,11 +220,14 @@ class NavigationItem extends StatefulWidget {
 class _NavigationItemState extends State<NavigationItem> {
   bool hovering = false;
 
+  bool get _disabled => widget.route.orchestratorExclusive && !widget.isOrchestrator;
+
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    var color = this.widget.selected ? theme.colorScheme.secondary : theme.hintColor;
+
+    if (_disabled) {
+      return _item();
+    }
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -225,44 +236,65 @@ class _NavigationItemState extends State<NavigationItem> {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: this.widget.onSelect,
-        child: Container(
-          height: 64,
-          color: backgroundColor,
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Stack(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      this.widget.route.icon,
-                      color: color,
-                      size: 24,
-                    ),
-                    Text(this.widget.route.label,
-                        style: textTheme.subtitle2!.copyWith(color: color, fontSize: 10)),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
-              ),
-              if (hotkeyLabel != null)
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Text(hotkeyLabel!.toCapitalCase(),
-                        style: textTheme.caption!.copyWith(fontSize: 9))),
-            ],
-          ),
-        ),
+        child: _item(),
       ),
     );
+  }
+
+  Container _item() {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+
+    return Container(
+        height: 64,
+        color: backgroundColor,
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Icon(
+                    this.widget.route.icon,
+                    color: textColor,
+                    size: 24,
+                  ),
+                  Text(this.widget.route.label,
+                      style: textTheme.subtitle2!.copyWith(color: textColor, fontSize: 10)),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+            ),
+            if (hotkeyLabel != null)
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Text(hotkeyLabel!.toCapitalCase(),
+                      style: textTheme.caption!.copyWith(fontSize: 9))),
+          ],
+        ),
+      );
   }
 
   String? get hotkeyLabel {
     return widget.hotkeys[widget.route.viewKey.toHotkeyString()];
   }
 
+  Color? get textColor {
+    var theme = Theme.of(context);
+    if (this._disabled) {
+      return theme.disabledColor;
+    }
+    if (this.widget.selected) {
+      return theme.colorScheme.secondary;
+    }
+    return theme.hintColor;
+  }
+
   Color? get backgroundColor {
+    if (_disabled) {
+      return Colors.black12;
+    }
     if (widget.selected) {
       return Colors.black26;
     }

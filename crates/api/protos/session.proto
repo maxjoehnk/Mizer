@@ -13,11 +13,25 @@ message ClientAnnouncement {
   string name = 1;
 }
 
+message SessionState {
+  Session current_session = 1;
+  ClientRole role = 2;
+  repeated DiscoveredSession available_sessions = 3;
+  // protolint:disable:next REPEATED_FIELD_NAMES_PLURALIZED
+  repeated string project_history = 4;
+}
+
 message Session {
   optional string file_path = 1;
   repeated SessionDevice devices = 2;
-  // protolint:disable:next REPEATED_FIELD_NAMES_PLURALIZED
-  repeated string project_history = 3;
+}
+
+message DiscoveredSession {
+  string name = 1;
+  optional string file_name = 2;
+  string hostname = 3;
+  repeated string ips = 4;
+  uint32 port = 5;
 }
 
 message SessionDevice {
@@ -25,11 +39,11 @@ message SessionDevice {
   repeated string ips = 2;
   DeviceClock clock = 3;
   double ping = 4;
+  ClientRole role = 5;
 }
 
 message DeviceClock {
-  bool master = 1;
-  double drift = 2;
+  double drift = 1;
 }
 
 message History {
@@ -40,4 +54,10 @@ message History {
 message HistoryItem {
   string label = 1;
   uint64 timestamp = 2;
+}
+
+enum ClientRole {
+  ORCHESTRATOR = 0;
+  MOBILE = 1;
+  REMOTE = 2;
 }

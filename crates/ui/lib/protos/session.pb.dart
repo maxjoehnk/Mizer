@@ -10,6 +10,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'session.pbenum.dart';
+
+export 'session.pbenum.dart';
+
 class LoadProjectRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -151,11 +155,89 @@ class ClientAnnouncement extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 }
 
+class SessionState extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SessionState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
+    ..aOM<Session>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentSession', subBuilder: Session.create)
+    ..e<ClientRole>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'role', $pb.PbFieldType.OE, defaultOrMaker: ClientRole.ORCHESTRATOR, valueOf: ClientRole.valueOf, enumValues: ClientRole.values)
+    ..pc<DiscoveredSession>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'availableSessions', $pb.PbFieldType.PM, subBuilder: DiscoveredSession.create)
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'projectHistory')
+    ..hasRequiredFields = false
+  ;
+
+  SessionState._() : super();
+  factory SessionState({
+    Session? currentSession,
+    ClientRole? role,
+    $core.Iterable<DiscoveredSession>? availableSessions,
+    $core.Iterable<$core.String>? projectHistory,
+  }) {
+    final _result = create();
+    if (currentSession != null) {
+      _result.currentSession = currentSession;
+    }
+    if (role != null) {
+      _result.role = role;
+    }
+    if (availableSessions != null) {
+      _result.availableSessions.addAll(availableSessions);
+    }
+    if (projectHistory != null) {
+      _result.projectHistory.addAll(projectHistory);
+    }
+    return _result;
+  }
+  factory SessionState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SessionState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SessionState clone() => SessionState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SessionState copyWith(void Function(SessionState) updates) => super.copyWith((message) => updates(message as SessionState)) as SessionState; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SessionState create() => SessionState._();
+  SessionState createEmptyInstance() => create();
+  static $pb.PbList<SessionState> createRepeated() => $pb.PbList<SessionState>();
+  @$core.pragma('dart2js:noInline')
+  static SessionState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionState>(create);
+  static SessionState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Session get currentSession => $_getN(0);
+  @$pb.TagNumber(1)
+  set currentSession(Session v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCurrentSession() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCurrentSession() => clearField(1);
+  @$pb.TagNumber(1)
+  Session ensureCurrentSession() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  ClientRole get role => $_getN(1);
+  @$pb.TagNumber(2)
+  set role(ClientRole v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRole() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRole() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<DiscoveredSession> get availableSessions => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.String> get projectHistory => $_getList(3);
+}
+
 class Session extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Session', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath')
     ..pc<SessionDevice>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'projectHistory')
     ..hasRequiredFields = false
   ;
 
@@ -163,7 +245,6 @@ class Session extends $pb.GeneratedMessage {
   factory Session({
     $core.String? filePath,
     $core.Iterable<SessionDevice>? devices,
-    $core.Iterable<$core.String>? projectHistory,
   }) {
     final _result = create();
     if (filePath != null) {
@@ -171,9 +252,6 @@ class Session extends $pb.GeneratedMessage {
     }
     if (devices != null) {
       _result.devices.addAll(devices);
-    }
-    if (projectHistory != null) {
-      _result.projectHistory.addAll(projectHistory);
     }
     return _result;
   }
@@ -209,9 +287,103 @@ class Session extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<SessionDevice> get devices => $_getList(1);
+}
+
+class DiscoveredSession extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DiscoveredSession', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileName')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hostname')
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ips')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  DiscoveredSession._() : super();
+  factory DiscoveredSession({
+    $core.String? name,
+    $core.String? fileName,
+    $core.String? hostname,
+    $core.Iterable<$core.String>? ips,
+    $core.int? port,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (fileName != null) {
+      _result.fileName = fileName;
+    }
+    if (hostname != null) {
+      _result.hostname = hostname;
+    }
+    if (ips != null) {
+      _result.ips.addAll(ips);
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    return _result;
+  }
+  factory DiscoveredSession.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DiscoveredSession.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DiscoveredSession clone() => DiscoveredSession()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DiscoveredSession copyWith(void Function(DiscoveredSession) updates) => super.copyWith((message) => updates(message as DiscoveredSession)) as DiscoveredSession; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DiscoveredSession create() => DiscoveredSession._();
+  DiscoveredSession createEmptyInstance() => create();
+  static $pb.PbList<DiscoveredSession> createRepeated() => $pb.PbList<DiscoveredSession>();
+  @$core.pragma('dart2js:noInline')
+  static DiscoveredSession getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DiscoveredSession>(create);
+  static DiscoveredSession? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get fileName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set fileName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFileName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFileName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$core.String> get projectHistory => $_getList(2);
+  $core.String get hostname => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set hostname($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHostname() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHostname() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.String> get ips => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.int get port => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set port($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPort() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPort() => clearField(5);
 }
 
 class SessionDevice extends $pb.GeneratedMessage {
@@ -220,6 +392,7 @@ class SessionDevice extends $pb.GeneratedMessage {
     ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ips')
     ..aOM<DeviceClock>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clock', subBuilder: DeviceClock.create)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ping', $pb.PbFieldType.OD)
+    ..e<ClientRole>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'role', $pb.PbFieldType.OE, defaultOrMaker: ClientRole.ORCHESTRATOR, valueOf: ClientRole.valueOf, enumValues: ClientRole.values)
     ..hasRequiredFields = false
   ;
 
@@ -229,6 +402,7 @@ class SessionDevice extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? ips,
     DeviceClock? clock,
     $core.double? ping,
+    ClientRole? role,
   }) {
     final _result = create();
     if (name != null) {
@@ -242,6 +416,9 @@ class SessionDevice extends $pb.GeneratedMessage {
     }
     if (ping != null) {
       _result.ping = ping;
+    }
+    if (role != null) {
+      _result.role = role;
     }
     return _result;
   }
@@ -297,24 +474,28 @@ class SessionDevice extends $pb.GeneratedMessage {
   $core.bool hasPing() => $_has(3);
   @$pb.TagNumber(4)
   void clearPing() => clearField(4);
+
+  @$pb.TagNumber(5)
+  ClientRole get role => $_getN(4);
+  @$pb.TagNumber(5)
+  set role(ClientRole v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRole() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRole() => clearField(5);
 }
 
 class DeviceClock extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeviceClock', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'master')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'drift', $pb.PbFieldType.OD)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'drift', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
   DeviceClock._() : super();
   factory DeviceClock({
-    $core.bool? master,
     $core.double? drift,
   }) {
     final _result = create();
-    if (master != null) {
-      _result.master = master;
-    }
     if (drift != null) {
       _result.drift = drift;
     }
@@ -342,22 +523,13 @@ class DeviceClock extends $pb.GeneratedMessage {
   static DeviceClock? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.bool get master => $_getBF(0);
+  $core.double get drift => $_getN(0);
   @$pb.TagNumber(1)
-  set master($core.bool v) { $_setBool(0, v); }
+  set drift($core.double v) { $_setDouble(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasMaster() => $_has(0);
+  $core.bool hasDrift() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMaster() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.double get drift => $_getN(1);
-  @$pb.TagNumber(2)
-  set drift($core.double v) { $_setDouble(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasDrift() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearDrift() => clearField(2);
+  void clearDrift() => clearField(1);
 }
 
 class History extends $pb.GeneratedMessage {

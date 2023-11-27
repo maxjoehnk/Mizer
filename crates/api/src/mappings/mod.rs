@@ -7,6 +7,7 @@ pub(crate) mod nodes;
 mod plans;
 mod programmer;
 mod sequencer;
+mod session;
 mod settings;
 mod surfaces;
 mod timecode;

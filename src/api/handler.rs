@@ -143,12 +143,6 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::ObserveSession(sender) => {
-                profiling::scope!("ApiCommand::ObserveSession");
-                sender
-                    .send(mizer.session_events.subscribe())
-                    .expect("api command sender disconnected");
-            }
             ApiCommand::ReloadFixtureLibraries(paths, sender) => {
                 profiling::scope!("ApiCommand::ReloadFixtureLibraries");
                 let injector = mizer.runtime.injector();

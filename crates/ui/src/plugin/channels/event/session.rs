@@ -4,7 +4,7 @@ use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
 
 use mizer_api::handlers::SessionHandler;
-use mizer_api::proto::session::Session;
+use mizer_api::proto::session::SessionState;
 use mizer_api::RuntimeApi;
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
@@ -18,7 +18,7 @@ pub struct MonitorSessionChannel<R: RuntimeApi, AR: AsyncRuntime> {
     subscriptions: HashMap<i64, AR::Subscription>,
 }
 
-impl_into_flutter_value!(Session);
+impl_into_flutter_value!(SessionState);
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     for MonitorSessionChannel<R, AR>

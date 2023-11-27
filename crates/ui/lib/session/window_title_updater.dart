@@ -11,8 +11,8 @@ class WindowTitleUpdater extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SessionBloc, Session>(builder: (context, state) {
-      _updateTitle(context, state.filePath);
+    return BlocBuilder<SessionBloc, SessionState>(builder: (context, state) {
+      _updateTitle(context, state.currentSession.filePath);
       return child;
     });
   }

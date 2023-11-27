@@ -72,6 +72,7 @@ impl<R: RuntimeApi> Handlers<R> {
         let effect_engine: EffectEngine = api_injector.require_service();
         let timecode_manager: TimecodeManager = api_injector.require_service();
         let surface_registry_api: SurfaceRegistryApi = api_injector.require_service();
+        let session_manager: FixtureManager = api_injector.require_service();
 
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -83,7 +84,7 @@ impl<R: RuntimeApi> Handlers<R> {
             layouts: LayoutsHandler::new(runtime.clone()),
             media: MediaHandler::new(media_server),
             nodes: NodesHandler::new(runtime.clone()),
-            session: SessionHandler::new(runtime.clone()),
+            session: SessionHandler::new(runtime.clone(), session_manager),
             transport: TransportHandler::new(runtime.clone()),
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
             effects: EffectsHandler::new(effect_engine, runtime.clone()),

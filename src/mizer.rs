@@ -6,7 +6,6 @@ use anyhow::Context;
 use mizer_api::handlers::Handlers;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
-use mizer_message_bus::MessageBus;
 use mizer_module::Runtime;
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
@@ -14,7 +13,7 @@ use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, Sequencer};
-use mizer_session::SessionState;
+use mizer_session::SessionManager;
 use mizer_status_bus::StatusBus;
 use mizer_surfaces::SurfaceRegistry;
 use mizer_timecode::TimecodeManager;
@@ -28,9 +27,9 @@ pub struct Mizer {
     pub handlers: Handlers<Api>,
     pub project_path: Option<PathBuf>,
     pub media_server_api: MediaServer,
-    pub session_events: MessageBus<SessionState>,
     pub project_history: ProjectHistory,
     pub status_bus: StatusBus,
+    pub session_manager: SessionManager,
 }
 
 impl Mizer {
@@ -234,17 +233,17 @@ impl Mizer {
                 Default::default()
             }
         };
-        self.session_events.send(SessionState {
-            project_path: self.project_path.clone().map(|path| {
+        self.session_manager.change_project(
+            self.project_path.clone().map(|path| {
                 path.into_os_string()
                     .into_string()
                     .expect("Could not convert path to string")
             }),
-            project_history: history
+            history
                 .into_iter()
                 .map(|history| history.path.to_string_lossy().to_string())
                 .collect(),
-        });
+        );
     }
 }
 

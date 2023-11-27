@@ -8,7 +8,11 @@ use zeroconf::{
     MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord,
 };
 
+use crate::{DiscoveredSession, SessionManager};
+
 const POLL_TIMEOUT: u64 = 1;
+
+const PROJECT_RECORD: &str = "project";
 
 pub(crate) fn announce_device(port: u16) {
     let service_type = build_service_type().unwrap();
@@ -18,7 +22,7 @@ pub(crate) fn announce_device(port: u16) {
             log::info!("Announcing api on mdns");
             let mut service = MdnsService::new(service_type, port);
             let mut txt_record = TxtRecord::new();
-            txt_record.insert("project", "video.yml").unwrap();
+            txt_record.insert(PROJECT_RECORD, "video.yml").unwrap();
             service.set_name("Mizer");
             service.set_txt_record(txt_record);
             service.set_registered_callback(Box::new(on_service_registered));
@@ -33,12 +37,13 @@ pub(crate) fn announce_device(port: u16) {
         .unwrap();
 }
 
-pub fn discover_sessions() -> anyhow::Result<()> {
+pub fn discover_sessions(session_manager: SessionManager) -> anyhow::Result<()> {
     let service_type = build_service_type()?;
     thread::Builder::new()
         .name("Session MDNS Discovery".into())
         .spawn(|| {
             let mut browser = MdnsBrowser::new(service_type);
+            browser.set_context(Box::new(session_manager));
 
             browser.set_service_discovered_callback(Box::new(on_service_discovered));
 
@@ -60,9 +65,26 @@ fn build_service_type() -> anyhow::Result<ServiceType> {
 
 fn on_service_discovered(
     result: zeroconf::Result<ServiceDiscovery>,
-    _context: Option<Arc<dyn Any>>,
+    context: Option<Arc<dyn Any>>,
 ) {
     log::debug!("service discovered: {:?}", result);
+    if let Some(session_manager) = context
+        .as_ref()
+        .and_then(|c| c.downcast_ref::<SessionManager>())
+    {
+        if let Ok(service) = result {
+            session_manager.add_discovered_session(DiscoveredSession {
+                addrs: vec![service.address().clone()],
+                hostname: service.host_name().clone(),
+                port: *service.port(),
+                name: service.name().clone(),
+                file_name: service
+                    .txt()
+                    .clone()
+                    .and_then(|txt| txt.get(PROJECT_RECORD)),
+            });
+        }
+    }
 }
 
 pub fn on_service_registered(

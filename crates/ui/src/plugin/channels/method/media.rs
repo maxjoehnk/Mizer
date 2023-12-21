@@ -1,8 +1,9 @@
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::MediaHandler;
 use mizer_api::proto::media::*;
 use mizer_util::AsyncRuntime;
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 

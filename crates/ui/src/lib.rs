@@ -43,8 +43,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
         MonitorOscEventChannel::new(handlers.connections, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.weak());
-    let _nodes =
-        NodesChannel::new(handlers.nodes, handlers.timecode.clone()).channel(context.weak());
+    let _nodes = NodesChannel::new(handlers.nodes).channel(context.weak());
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.weak());
     let _media = MediaChannel::new(handlers.media, async_runtime.clone()).channel(context.weak());
     let _transport = TransportChannel::new(handlers.transport.clone()).channel(context.weak());

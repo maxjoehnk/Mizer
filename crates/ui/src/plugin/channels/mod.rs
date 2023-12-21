@@ -1,41 +1,11 @@
 use anyhow::Error;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
-pub use event::history::*;
-pub use event::midi_monitor::*;
-pub use event::osc_monitor::*;
-pub use event::session::*;
-pub use event::settings::*;
-pub use event::status::*;
-pub use event::surfaces::*;
-pub use method::application::*;
-pub use method::connections::*;
-pub use method::mappings::*;
-pub use method::plans::*;
-pub use method::session::*;
-pub use method::status::*;
-pub use method::surfaces::*;
-pub use method::timecode::*;
+pub use event::*;
+pub use method::*;
 
-pub use self::effects::*;
-pub use self::fixtures::*;
-pub use self::layouts::*;
-pub use self::media::*;
-pub use self::nodes::*;
-pub use self::programmer::*;
-pub use self::sequencer::*;
-pub use self::transport::*;
-
-mod effects;
 mod event;
-mod fixtures;
-mod layouts;
-mod media;
 mod method;
-mod nodes;
-mod programmer;
-mod sequencer;
-mod transport;
 
 pub trait MethodCallExt {
     fn arguments<T: mizer_api::Message + Default>(&self) -> anyhow::Result<T>;

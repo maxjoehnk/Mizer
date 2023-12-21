@@ -1,6 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
+use mizer_message_bus::Subscriber;
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
 pub use module::MediaModule;
@@ -182,6 +183,10 @@ impl MediaServer {
 
     pub fn remove_tag_from_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
         self.db.remove_tag_from_media(media_id, tag_id)
+    }
+
+    pub fn subscribe(&self) -> Subscriber<DataAccess> {
+        self.db.bus.subscribe()
     }
 }
 

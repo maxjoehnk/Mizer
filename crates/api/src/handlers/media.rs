@@ -1,6 +1,8 @@
 use std::path::PathBuf;
 
-use mizer_media::documents::{MediaId, TagId};
+use futures::{Stream, StreamExt};
+
+use mizer_media::documents::{MediaDocument, MediaId, TagId};
 use mizer_media::{MediaCreateModel, MediaServer};
 
 use crate::proto::media::*;
@@ -52,8 +54,7 @@ impl MediaHandler {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_media(&self) -> anyhow::Result<MediaFiles> {
-        let files = self.api.get_media()?;
-        let files = files.into_iter().map(MediaFile::from).collect();
+        let files = Self::map_files(self.api.get_media()?);
         let folders = self.api.get_import_paths();
         let folders = folders
             .into_iter()
@@ -75,6 +76,9 @@ impl MediaHandler {
         for file in files {
             let path = PathBuf::from(file);
             let name = path.file_name().unwrap().to_str().unwrap().to_string();
+            // TODO: queue import in background
+            // * report progress to status bar and
+            // * display failed imports in list with error message
             self.api
                 .import_file(
                     MediaCreateModel {
@@ -125,5 +129,30 @@ impl MediaHandler {
         self.api.remove_import_path(PathBuf::from(path));
 
         Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn subscribe(&self) -> impl Stream<Item = MediaFiles> {
+        self.api.subscribe().into_stream().map(|db| {
+            let files = Self::map_files(db.list_media().unwrap());
+            let tags = db
+                .list_tags()
+                .unwrap()
+                .into_iter()
+                .map(MediaTag::from)
+                .collect();
+
+            MediaFiles {
+                files,
+                folders: None,
+                tags,
+            }
+        })
+    }
+
+    fn map_files(mut files: Vec<MediaDocument>) -> Vec<MediaFile> {
+        files.sort_by(|lhs, rhs| lhs.name.cmp(&rhs.name));
+        files.into_iter().map(MediaFile::from).collect()
     }
 }

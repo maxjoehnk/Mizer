@@ -1,6 +1,8 @@
 import 'package:mizer/protos/media.pb.dart';
 
 abstract class MediaApi {
+  Stream<MediaFiles> watchMedia();
+
   Future<void> createTag(String name);
   Future<void> removeTag(String tagId);
 

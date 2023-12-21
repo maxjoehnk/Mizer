@@ -4821,6 +4821,7 @@ dependencies = [
  "image",
  "infer",
  "log",
+ "mizer-message-bus",
  "mizer-module",
  "mizer-settings",
  "mizer-status-bus",

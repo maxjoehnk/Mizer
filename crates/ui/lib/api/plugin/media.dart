@@ -4,6 +4,14 @@ import 'package:mizer/protos/media.pb.dart';
 
 class MediaPluginApi implements MediaApi {
   final MethodChannel channel = const MethodChannel("mizer.live/media");
+  final EventChannel events = const EventChannel("mizer.live/media/watch");
+
+  @override
+  Stream<MediaFiles> watchMedia() {
+    return events.receiveBroadcastStream().map((buffer) {
+      return MediaFiles.fromBuffer(_convertBuffer(buffer));
+    });
+  }
 
   @override
   Future<void> createTag(String name) async {

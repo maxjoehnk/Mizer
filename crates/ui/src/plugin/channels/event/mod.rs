@@ -1,4 +1,5 @@
 pub use self::history::*;
+pub use self::media::*;
 pub use self::midi_monitor::*;
 pub use self::osc_monitor::*;
 pub use self::programmer::*;
@@ -9,6 +10,7 @@ pub use self::surfaces::*;
 pub use self::transport::*;
 
 mod history;
+mod media;
 mod midi_monitor;
 mod osc_monitor;
 mod programmer;

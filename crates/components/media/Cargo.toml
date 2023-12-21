@@ -23,6 +23,7 @@ dashmap = "5.5"
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
+mizer-message-bus = { path = "../../util/bus" }
 
 [dev-dependencies]
 test-case = "3.3"

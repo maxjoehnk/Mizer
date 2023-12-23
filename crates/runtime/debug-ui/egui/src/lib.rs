@@ -67,7 +67,7 @@ impl EguiDebugUi {
     }
 
     #[cfg(not(target_os = "linux"))]
-    pub fn new() -> anyhow::Result<Self> {
+    pub fn new(_event_loop: &EventLoopHandle) -> anyhow::Result<Self> {
         anyhow::bail!("Debug UI is not available on non Linux platforms")
     }
 

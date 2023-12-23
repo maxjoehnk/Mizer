@@ -111,11 +111,12 @@ edition = "2021"
 license = "GNU AGPLv3"
 
 [features]
-default = ["ui", "debug-ui"]
+default = ["ui", "debug-ui", "feature-ndi"]
 build-ffmpeg = ["ffmpeg-the-third/build"]
 ui = ["mizer-ui"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
+feature-ndi = ["mizer-ndi/enable"]
 
 [dependencies]
 derive_more = "0.99"
@@ -148,6 +149,7 @@ mizer-node = { path = "crates/runtime/pipeline/node" }
 mizer-nodes = { path = "crates/runtime/pipeline/nodes" }
 mizer-layouts = { path = "crates/runtime/layouts" }
 mizer-clock = { path = "crates/runtime/clock" }
+mizer-ndi = { path = "crates/components/connections/devices/ndi" }
 mizer-protocol-dmx = { path = "crates/components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "crates/components/connections/protocols/midi" }
 mizer-protocol-mqtt = { path = "crates/components/connections/protocols/mqtt" }

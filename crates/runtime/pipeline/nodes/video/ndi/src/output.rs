@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
-use ndi::{FourCCVideoType, VideoData};
 use serde::{Deserialize, Serialize};
+use mizer_ndi::NdiSender;
 
 use mizer_node::*;
 use mizer_wgpu::{BufferHandle, TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
@@ -25,60 +25,19 @@ impl Default for NdiOutputNode {
 
 pub struct NdiOutputState {
     buffer_handle: Arc<BufferHandle>,
-    send: ndi::Send,
-    name: String,
-    frame: Option<VideoData>,
+    sender: NdiSender,
 }
 
 impl NdiOutputState {
     fn new(name: String, context: &WgpuContext, pipeline: &WgpuPipeline) -> anyhow::Result<Self> {
         let buffer_handle = pipeline.create_export_buffer(context, 1920, 1080);
 
-        let send = ndi::SendBuilder::new().ndi_name(name.clone()).build()?;
+        let sender = NdiSender::new(name)?;
 
         Ok(Self {
             buffer_handle,
-            send,
-            name,
-            frame: None,
+            sender,
         })
-    }
-
-    fn change_name(&mut self, name: String) -> anyhow::Result<()> {
-        if self.name == name {
-            return Ok(());
-        }
-        tracing::debug!("Changing name to {name}");
-        self.send = ndi::SendBuilder::new().ndi_name(name.clone()).build()?;
-        self.name = name;
-
-        Ok(())
-    }
-
-    fn queue_frame(&mut self, fps: f64, buffer: &mut [u8]) {
-        profiling::scope!("NdiOutputState::queue_frame");
-        tracing::trace!("sending frame via ndi");
-        let video_data = {
-            profiling::scope!("ndi::VideoData::from_buffer");
-            VideoData::from_buffer(
-                1920,
-                1080,
-                FourCCVideoType::BGRA,
-                fps.floor() as i32,
-                1,
-                ndi::FrameFormatType::Progressive,
-                0,
-                0,
-                None,
-                buffer,
-            )
-        };
-        {
-            profiling::scope!("ndi::Send::send_video");
-            self.send.send_video_async(&video_data);
-        }
-        // Keep frame in memory until next frame is sent as they will be processed in the background
-        self.frame = Some(video_data);
     }
 }
 
@@ -128,7 +87,7 @@ impl ProcessingNode for NdiOutputNode {
         }
 
         let state = state.as_mut().unwrap();
-        state.change_name(self.name.clone())?;
+        state.sender.set_name(&self.name)?;
 
         if let Some(texture_handle) = context.read_port::<_, TextureHandle>(INPUT_PORT) {
             tracing::trace!("got texture handle");
@@ -157,7 +116,7 @@ impl ProcessingNode for NdiOutputNode {
                 if texture_registry.get_texture_ref(&texture_handle).is_some() {
                     let buffer_access = wgpu_pipeline.get_buffer(&state.buffer_handle);
                     if let Some(mut buffer_slice) = buffer_access.read_mut() {
-                        state.queue_frame(context.fps(), &mut buffer_slice);
+                        state.sender.queue_frame(1920, 1080, context.fps(), &mut buffer_slice);
                     };
                 }
             }

@@ -1,12 +1,34 @@
 use image::{DynamicImage, ImageBuffer, Pixel};
+#[cfg(feature = "enable")]
 use ndi::{FourCCVideoType, FrameType, Recv, RecvColorFormat, Source, VideoData};
 
+#[cfg(feature = "enable")]
 pub use discovery::NdiSourceDiscovery;
 
+#[cfg(not(feature = "enable"))]
+pub use discovery_noop::NdiSourceDiscovery;
+
+#[cfg(feature = "enable")]
+pub use sender::NdiSender;
+
+#[cfg(not(feature = "enable"))]
+pub use sender_noop::NdiSender;
+
+#[cfg(feature = "enable")]
 mod discovery;
+
+#[cfg(not(feature = "enable"))]
+mod discovery_noop;
+
+#[cfg(feature = "enable")]
+mod sender;
+
+#[cfg(not(feature = "enable"))]
+mod sender_noop;
 
 #[derive(Debug, Clone)]
 pub struct NdiSourceRef {
+    #[cfg(feature = "ndi")]
     source: Source,
     name: String,
 }
@@ -20,6 +42,7 @@ impl PartialEq for NdiSourceRef {
 impl Eq for NdiSourceRef {}
 
 impl NdiSourceRef {
+    #[cfg(feature = "enable")]
     pub(crate) fn new(source: Source) -> Self {
         Self {
             name: source.get_name(),
@@ -35,6 +58,7 @@ impl NdiSourceRef {
         self.name.clone()
     }
 
+    #[cfg(feature = "enable")]
     pub fn open(&self) -> anyhow::Result<NdiSource> {
         tracing::debug!("Setting up NDI receiver");
         let recv = ndi::recv::RecvBuilder::new()
@@ -44,8 +68,17 @@ impl NdiSourceRef {
 
         Ok(source)
     }
+
+    #[cfg(not(feature = "enable"))]
+    pub fn open(&self) -> anyhow::Result<NdiSource> {
+        anyhow::bail!("NDI support not enabled")
+    }
 }
 
+#[cfg(not(feature = "enable"))]
+pub struct NdiSource;
+
+#[cfg(feature = "enable")]
 pub struct NdiSource {
     recv: Recv,
     width: u32,
@@ -54,6 +87,7 @@ pub struct NdiSource {
     _source: Source,
 }
 
+#[cfg(feature = "enable")]
 impl NdiSource {
     fn new(mut recv: Recv, source: &Source) -> anyhow::Result<Self> {
         tracing::debug!("Connecting to source: {source:?}");
@@ -123,9 +157,38 @@ impl NdiSource {
     }
 }
 
+#[cfg(not(feature = "enable"))]
+impl NdiSource {
+    pub fn width(&self) -> u32 {
+        0
+    }
+
+    pub fn height(&self) -> u32 {
+        0
+    }
+
+    pub fn frame_rate(&self) -> f32 {
+        0f32
+    }
+
+    pub fn frame(&mut self) -> anyhow::Result<NdiFrame> {
+        anyhow::bail!("NDI support is not enabled")
+    }
+}
+
+#[cfg(feature = "enable")]
 pub struct NdiFrame(VideoData);
 
+#[cfg(not(feature = "enable"))]
+pub struct NdiFrame;
+
 impl NdiFrame {
+    #[cfg(not(feature = "enable"))]
+    pub fn data(self) -> anyhow::Result<Vec<u8>> {
+        anyhow::bail!("NDI support is not enabled")
+    }
+
+    #[cfg(feature = "enable")]
     pub fn data(self) -> anyhow::Result<Vec<u8>> {
         let size = self.0.height() * self.0.line_stride_in_bytes().unwrap_or_default();
         anyhow::ensure!(!self.0.p_data().is_null(), "Video data was null");
@@ -143,6 +206,7 @@ impl NdiFrame {
     }
 }
 
+#[cfg(feature = "enable")]
 fn decode<T: Pixel<Subpixel = u8> + 'static>(
     frame: Vec<u8>,
     video_data: VideoData,

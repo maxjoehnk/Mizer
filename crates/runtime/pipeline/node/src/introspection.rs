@@ -7,7 +7,7 @@ use crate::PreviewType;
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct NodeDetails {
-    pub name: String,
+    pub node_type_name: String,
     pub preview_type: PreviewType,
     pub category: NodeCategory,
 }
@@ -184,5 +184,17 @@ impl Hash for NodePosition {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.x.to_bits().hash(state);
         self.y.to_bits().hash(state);
+    }
+}
+
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+pub struct NodeMetadata {
+    pub display_name: String,
+    pub custom_name: Option<String>,
+}
+
+impl NodeMetadata {
+    pub fn display_name(&self) -> &str {
+        self.custom_name.as_deref().unwrap_or(&self.display_name)
     }
 }

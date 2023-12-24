@@ -70,7 +70,7 @@ impl ConfigurableNode for VideoMixerNode {
 impl PipelineNode for VideoMixerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video Mixer".into(),
+            node_type_name: "Video Mixer".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

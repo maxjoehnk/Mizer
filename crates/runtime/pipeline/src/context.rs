@@ -23,7 +23,7 @@ pub struct PipelineContext<'a> {
     pub(crate) receivers: Option<&'a NodeReceivers>,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
-    pub(crate) node_metadata: RefCell<&'a mut NodeMetadata>,
+    pub(crate) node_metadata: RefCell<&'a mut NodeRuntimeMetadata>,
 }
 
 impl<'a> Debug for PipelineContext<'a> {
@@ -38,7 +38,7 @@ impl<'a> Debug for PipelineContext<'a> {
 }
 
 #[derive(Debug, Clone, Default)]
-pub struct NodeMetadata {
+pub struct NodeRuntimeMetadata {
     pub ports: HashMap<PortId, RuntimePortMetadata>,
 }
 

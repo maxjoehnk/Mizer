@@ -1,16 +1,20 @@
-use mizer_node::NodePath;
-use mizer_pipeline::{NodeMetadata, RuntimePortMetadata};
-use mizer_ports::PortId;
-use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use pinboard::NonEmptyPinboard;
+
+use mizer_node::NodePath;
+use mizer_pipeline::{NodeRuntimeMetadata, RuntimePortMetadata};
+use mizer_ports::PortId;
+
 pub struct NodeMetadataRef {
-    metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
 }
 
 impl NodeMetadataRef {
-    pub(crate) fn new(metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>) -> Self {
+    pub(crate) fn new(
+        metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
+    ) -> Self {
         Self { metadata }
     }
 

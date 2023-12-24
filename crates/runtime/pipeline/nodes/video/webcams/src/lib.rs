@@ -169,7 +169,7 @@ fn webcam_to_node_setting(value: WebcamSettingValue, setting: &'static str) -> N
 impl PipelineNode for WebcamNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Webcam".into(),
+            node_type_name: "Webcam".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

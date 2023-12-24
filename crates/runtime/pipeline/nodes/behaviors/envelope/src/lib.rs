@@ -60,7 +60,7 @@ impl ConfigurableNode for EnvelopeNode {
 impl PipelineNode for EnvelopeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Envelope".into(),
+            node_type_name: "Envelope".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

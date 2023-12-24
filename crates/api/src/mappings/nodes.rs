@@ -31,10 +31,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
 impl From<mizer_nodes::Node> for NodeConfig {
     fn from(node: mizer_nodes::Node) -> Self {
         let config: Option<node_config::Type> = node.try_into().ok();
-        NodeConfig {
-            r#type: config,
-            ..Default::default()
-        }
+        NodeConfig { r#type: config }
     }
 }
 
@@ -121,7 +118,6 @@ impl From<mizer_util::Spline> for SplineValue {
                 .into_iter()
                 .map(spline_value::SplineStep::from)
                 .collect(),
-            ..Default::default()
         }
     }
 }
@@ -135,7 +131,6 @@ impl From<mizer_util::SplineStep> for spline_value::SplineStep {
             c0b: step.c0b,
             c1a: step.c1a,
             c1b: step.c1b,
-            ..Default::default()
         }
     }
 }
@@ -162,7 +157,9 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
         designer: Some(descriptor.designer.into()),
         preview: node::NodePreviewType::from(details.preview_type) as i32,
         details: Some(NodeDetails {
-            name: details.name,
+            node_type_name: details.node_type_name,
+            display_name: descriptor.metadata.display_name().to_string(),
+            has_custom_name: descriptor.metadata.custom_name.is_some(),
             category: NodeCategory::from(details.category) as i32,
         }),
         inputs: vec![],
@@ -199,7 +196,9 @@ impl From<StaticNodeDescriptor> for Node {
             designer: Some(descriptor.designer.into()),
             preview: node::NodePreviewType::from(descriptor.details.preview_type) as i32,
             details: Some(NodeDetails {
-                name: descriptor.details.name,
+                node_type_name: descriptor.details.node_type_name,
+                display_name: Default::default(),
+                has_custom_name: false,
                 category: NodeCategory::from(descriptor.details.category) as i32,
             }),
             inputs: vec![],
@@ -230,7 +229,6 @@ impl From<mizer_node::NodeSetting> for NodeSetting {
             description: setting.description,
             disabled: setting.disabled,
             value: Some(setting.value.into()),
-            ..Default::default()
         }
     }
 }
@@ -252,11 +250,7 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
         use mizer_node::NodeSettingValue::*;
 
         match value {
-            Text { value, multiline } => Self::Text(node_setting::TextValue {
-                value,
-                multiline,
-                ..Default::default()
-            }),
+            Text { value, multiline } => Self::Text(node_setting::TextValue { value, multiline }),
             Float {
                 value,
                 min,
@@ -269,7 +263,6 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
-                ..Default::default()
             }),
             Uint {
                 value,
@@ -283,7 +276,6 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
-                ..Default::default()
             }),
             Int {
                 value,
@@ -297,19 +289,14 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint: min_hint.map(|v| v as i32),
                 max: max.map(|v| v as i32),
                 max_hint: max_hint.map(|v| v as i32),
-                ..Default::default()
             }),
-            Bool { value } => Self::Bool(node_setting::BoolValue {
-                value,
-                ..Default::default()
-            }),
+            Bool { value } => Self::Bool(node_setting::BoolValue { value }),
             Select { value, variants } => Self::Select(node_setting::SelectValue {
                 value,
                 variants: variants
                     .into_iter()
                     .map(node_setting::SelectVariant::from)
                     .collect(),
-                ..Default::default()
             }),
             Enum { value, variants } => Self::Enum(node_setting::EnumValue {
                 value: value as u32,
@@ -317,7 +304,6 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                     .into_iter()
                     .map(node_setting::EnumVariant::from)
                     .collect(),
-                ..Default::default()
             }),
             Id { value, variants } => Self::Id(node_setting::IdValue {
                 value,
@@ -325,13 +311,9 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                     .into_iter()
                     .map(node_setting::IdVariant::from)
                     .collect(),
-                ..Default::default()
             }),
             Spline(spline) => Self::Spline(spline.into()),
-            Steps(steps) => Self::StepSequencer(node_setting::StepSequencerValue {
-                steps,
-                ..Default::default()
-            }),
+            Steps(steps) => Self::StepSequencer(node_setting::StepSequencerValue { steps }),
             Media {
                 value,
                 content_types,
@@ -342,7 +324,6 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                     .map(crate::proto::media::MediaType::from)
                     .map(|variant| variant as i32)
                     .collect(),
-                ..Default::default()
             }),
         }
     }
@@ -422,7 +403,6 @@ impl From<mizer_node::EnumVariant> for node_setting::EnumVariant {
         Self {
             value: variant.value as u32,
             label: variant.label,
-            ..Default::default()
         }
     }
 }
@@ -441,7 +421,6 @@ impl From<mizer_node::IdVariant> for node_setting::IdVariant {
         Self {
             value: variant.value,
             label: variant.label,
-            ..Default::default()
         }
     }
 }
@@ -463,10 +442,8 @@ impl From<mizer_node::SelectVariant> for node_setting::SelectVariant {
                     node_setting::select_variant::SelectItem {
                         label: label.to_string(),
                         value: value.to_string(),
-                        ..Default::default()
                     },
                 )),
-                ..Default::default()
             },
             mizer_node::SelectVariant::Group { children, label } => Self {
                 variant: Some(node_setting::select_variant::Variant::Group(
@@ -476,10 +453,8 @@ impl From<mizer_node::SelectVariant> for node_setting::SelectVariant {
                             .into_iter()
                             .map(node_setting::SelectVariant::from)
                             .collect(),
-                        ..Default::default()
                     },
                 )),
-                ..Default::default()
             },
         }
     }

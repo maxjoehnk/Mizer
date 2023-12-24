@@ -57,7 +57,7 @@ impl ConfigurableNode for FaderNode {
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Fader".into(),
+            node_type_name: "Fader".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Controls,
         }

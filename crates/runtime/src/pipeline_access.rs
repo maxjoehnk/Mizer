@@ -16,6 +16,7 @@ pub struct PipelineAccess {
     pub(crate) nodes: HashMap<NodePath, Box<dyn ProcessingNodeExt>>,
     pub nodes_view: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
+    pub metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub(crate) settings: Arc<NonEmptyPinboard<HashMap<NodePath, Vec<NodeSetting>>>>,
 }
@@ -26,6 +27,7 @@ impl Default for PipelineAccess {
             nodes: Default::default(),
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
+            metadata: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
             settings: NonEmptyPinboard::new(Default::default()).into(),
         }

@@ -62,7 +62,7 @@ impl ConfigurableNode for VideoHsvNode {
 impl PipelineNode for VideoHsvNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video HSV".into(),
+            node_type_name: "Video HSV".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

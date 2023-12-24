@@ -1,8 +1,10 @@
-use crate::AudioContextExt;
 use dasp::frame::Stereo;
 use dasp::Signal;
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
+
+use crate::AudioContextExt;
 
 const VOLUME_INPUT: &str = "Volume";
 const AUDIO_INPUT: &str = "Stereo";
@@ -16,7 +18,7 @@ impl ConfigurableNode for AudioVolumeNode {}
 impl PipelineNode for AudioVolumeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Audio Volume".to_string(),
+            node_type_name: "Audio Volume".to_string(),
             preview_type: PreviewType::Waveform,
             category: NodeCategory::Audio,
         }

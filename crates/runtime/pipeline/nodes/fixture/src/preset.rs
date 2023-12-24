@@ -57,9 +57,21 @@ impl ConfigurableNode for PresetNode {
 impl PipelineNode for PresetNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Preset".into(),
+            node_type_name: "Preset".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(label) = injector
+            .get::<FixtureManager>()
+            .and_then(|manager| manager.presets.get(&self.id))
+            .and_then(|preset| preset.label().cloned())
+        {
+            format!("Preset ({label})")
+        } else {
+            format!("Preset (ID {})", self.id)
         }
     }
 

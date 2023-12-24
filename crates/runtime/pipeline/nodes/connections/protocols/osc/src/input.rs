@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{OscArgumentType, OscInjectorExt};
 use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertPercentages;
+
+use crate::{OscArgumentType, OscInjectorExt};
 
 const CONNECTION_SETTING: &str = "Connection";
 const ARGUMENT_TYPE_SETTING: &str = "Argument Type";
@@ -54,7 +55,7 @@ impl ConfigurableNode for OscInputNode {
 impl PipelineNode for OscInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OSC Input".into(),
+            node_type_name: "OSC Input".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Connections,
         }

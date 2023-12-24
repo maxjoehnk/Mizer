@@ -1,5 +1,6 @@
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 const AUDIO_INPUT: &str = "Stereo";
 const AUDIO_OUTPUT: &str = "Stereo";
@@ -12,7 +13,7 @@ impl ConfigurableNode for AudioMixNode {}
 impl PipelineNode for AudioMixNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Audio Mixer".to_string(),
+            node_type_name: "Audio Mixer".to_string(),
             preview_type: PreviewType::Waveform,
             category: NodeCategory::Audio,
         }

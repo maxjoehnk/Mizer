@@ -23,7 +23,7 @@ impl ConfigurableNode for ColorizeTextureNode {}
 impl PipelineNode for ColorizeTextureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Colorize Texture".into(),
+            node_type_name: "Colorize Texture".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

@@ -47,7 +47,7 @@ impl ConfigurableNode for LaserNode {
 impl PipelineNode for LaserNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Laser Output".into(),
+            node_type_name: "Laser Output".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Laser,
         }

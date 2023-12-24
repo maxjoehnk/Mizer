@@ -65,7 +65,7 @@ impl ConfigurableNode for ButtonNode {
 impl PipelineNode for ButtonNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Button".into(),
+            node_type_name: "Button".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Controls,
         }

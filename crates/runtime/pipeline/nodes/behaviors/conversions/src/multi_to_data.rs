@@ -14,7 +14,7 @@ impl ConfigurableNode for MultiToDataNode {}
 impl PipelineNode for MultiToDataNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Multi to Data".into(),
+            node_type_name: "Multi to Data".into(),
             preview_type: PreviewType::Data,
             category: NodeCategory::Conversions,
         }

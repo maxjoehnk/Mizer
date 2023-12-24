@@ -11,7 +11,9 @@ use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, NodeSetting, PortId};
+use mizer_node::{
+    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePreviewRef, NodeSetting, PortId,
+};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
@@ -64,13 +66,14 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn nodes(&self) -> Vec<NodeDescriptor> {
+        let metadata = self.access.metadata.read();
         let designer = self.access.designer.read();
         let settings = self.access.settings.read();
         self.access
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .map(|path| self.get_descriptor(path, &designer, &settings))
+            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
             .collect()
     }
 
@@ -117,6 +120,7 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
+        let metadata = self.access.metadata.read();
         let designer = self.access.designer.read();
         let settings = self.access.settings.read();
         self.access
@@ -124,7 +128,7 @@ impl RuntimeApi for Api {
             .iter()
             .map(|entry| entry.key().clone())
             .find(|node_path| node_path == path)
-            .map(|path| self.get_descriptor(path, &designer, &settings))
+            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -335,16 +339,19 @@ impl Api {
     fn get_descriptor(
         &self,
         path: NodePath,
+        metadata: &HashMap<NodePath, NodeMetadata>,
         designer: &HashMap<NodePath, NodeDesigner>,
         settings: &HashMap<NodePath, Vec<NodeSetting>>,
     ) -> NodeDescriptor {
         let node = self.access.nodes.get(&path).unwrap();
         let ports = node.list_ports();
+        let metadata = metadata.get(&path).cloned().unwrap_or_default();
         let settings = settings.get(&path).cloned().unwrap_or_default();
         let designer = designer[&path].clone();
 
         NodeDescriptor {
             path,
+            metadata,
             node,
             designer,
             ports,

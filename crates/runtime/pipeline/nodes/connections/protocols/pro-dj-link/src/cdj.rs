@@ -50,7 +50,7 @@ impl ConfigurableNode for PioneerCdjNode {
 impl PipelineNode for PioneerCdjNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Pioneer CDJ".into(),
+            node_type_name: "Pioneer CDJ".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Connections,
         }

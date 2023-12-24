@@ -1,9 +1,10 @@
 use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 
-use crate::rgb::wgpu_pipeline::RgbWgpuPipeline;
 use mizer_node::*;
 use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+
+use crate::rgb::wgpu_pipeline::RgbWgpuPipeline;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
@@ -58,7 +59,7 @@ impl ConfigurableNode for VideoRgbNode {
 impl PipelineNode for VideoRgbNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video RGB".into(),
+            node_type_name: "Video RGB".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

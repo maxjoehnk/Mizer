@@ -9,11 +9,16 @@ import 'field.dart';
 class TextPropertyField extends StatefulWidget {
   final String label;
   final String value;
+  final String? placeholder;
   final Function(String) onUpdate;
   final bool multiline;
 
   TextPropertyField(
-      {required this.label, required this.value, required this.onUpdate, this.multiline = false});
+      {required this.label,
+      required this.value,
+      this.placeholder,
+      required this.onUpdate,
+      this.multiline = false});
 
   @override
   _TextPropertyFieldState createState() => _TextPropertyFieldState(value);
@@ -76,6 +81,8 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
 
   Widget _readSinglelineView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle placeholderStyle = textStyle.copyWith(color: Colors.grey.shade400);
+    bool hasValue = controller.text.isNotEmpty;
     return Field(
       label: this.widget.label,
       child: Container(
@@ -84,8 +91,8 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
           color: Colors.grey.shade700,
         ),
         child: Text(
-          controller.text,
-          style: textStyle,
+          hasValue ? controller.text : widget.placeholder ?? "",
+          style: hasValue ? textStyle : placeholderStyle,
           textAlign: TextAlign.center,
         ),
       ),

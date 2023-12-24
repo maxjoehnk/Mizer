@@ -1,8 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::MqttInjectorExt;
 use mizer_node::*;
 use mizer_protocol_mqtt::{MqttConnectionManager, MqttSubscription};
+
+use crate::MqttInjectorExt;
 
 const VALUE_PORT: &str = "Output";
 
@@ -45,7 +46,7 @@ impl ConfigurableNode for MqttInputNode {
 impl PipelineNode for MqttInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MQTT Input".into(),
+            node_type_name: "MQTT Input".into(),
             preview_type: PreviewType::Data,
             category: NodeCategory::Connections,
         }

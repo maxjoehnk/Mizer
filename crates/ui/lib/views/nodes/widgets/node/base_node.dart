@@ -129,7 +129,8 @@ class BaseNodeState extends State<BaseNode> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      NodeHeader(this.node.path, this.node.details.category,
+                      NodeHeader(
+                          this.node.path, this.node.details.displayName, this.node.details.category,
                           collapsed: widget.collapsed),
                       if (!widget.collapsed)
                         Stack(children: [
@@ -247,18 +248,9 @@ const NON_DUPLICATABLE_NODE_TYPES = [
   "container"
 ];
 
-const NON_RENAMEABLE_NODE_TYPES = [
-  "programmer",
-  "transport"
-];
+const NON_RENAMEABLE_NODE_TYPES = ["programmer", "transport"];
 
-const UNDELETABLE_NODE_TYPES = [
-  "programmer",
-  "transport",
-  "fixture",
-  "sequencer",
-  "group"
-];
+const UNDELETABLE_NODE_TYPES = ["programmer", "transport", "fixture", "sequencer", "group"];
 
 extension NodeOptionExtensions on Node {
   bool get canRename {

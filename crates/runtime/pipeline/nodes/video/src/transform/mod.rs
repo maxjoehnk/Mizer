@@ -1,12 +1,13 @@
-mod wgpu_pipeline;
-
 use anyhow::anyhow;
 use cgmath::{Deg, Matrix4, Vector3};
 use serde::{Deserialize, Serialize};
 
-use crate::transform::wgpu_pipeline::TransformWgpuPipeline;
 use mizer_node::*;
 use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+
+use crate::transform::wgpu_pipeline::TransformWgpuPipeline;
+
+mod wgpu_pipeline;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
@@ -100,7 +101,7 @@ impl ConfigurableNode for VideoTransformNode {
 impl PipelineNode for VideoTransformNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video Transform".into(),
+            node_type_name: "Video Transform".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

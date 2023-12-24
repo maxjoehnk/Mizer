@@ -45,7 +45,7 @@ impl ConfigurableNode for NoiseNode {
 impl PipelineNode for NoiseNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Noise".into(),
+            node_type_name: "Noise".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }
@@ -123,8 +123,9 @@ impl NoiseNodeState {
 
 #[cfg(test)]
 mod tests {
-    use crate::{NoiseNode, NoiseNodeState};
     use test_case::test_case;
+
+    use crate::{NoiseNode, NoiseNodeState};
 
     #[test_case(1f64, 2, 0, 0)]
     #[test_case(0f64, 2, 0, 0)]

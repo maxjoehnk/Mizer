@@ -59,7 +59,7 @@ impl ConfigurableNode for CountdownNode {
 impl PipelineNode for CountdownNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Countdown".into(),
+            node_type_name: "Countdown".into(),
             preview_type: PreviewType::Timecode,
             category: NodeCategory::Standard,
         }

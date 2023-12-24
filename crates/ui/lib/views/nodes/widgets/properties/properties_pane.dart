@@ -32,7 +32,7 @@ class NodePropertiesPane extends StatelessWidget {
       NodeProperties(node: node),
       NodeSettingsPane(
           nodePath: node.path,
-          title: node.details.name,
+          title: node.details.nodeTypeName,
           type: node.type,
           settings: node.settings,
           onUpdate: (updated) {

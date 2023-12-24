@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 use mizer_node::edge::Edge;
 use mizer_node::*;
-use serde::{Deserialize, Serialize};
 
 const INCREASE_INPUT: &str = "Increase";
 const DECREASE_INPUT: &str = "Decrease";
@@ -51,7 +52,7 @@ impl ConfigurableNode for EncoderNode {
 impl PipelineNode for EncoderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Encoder".into(),
+            node_type_name: "Encoder".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

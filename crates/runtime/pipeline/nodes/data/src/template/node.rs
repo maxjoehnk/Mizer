@@ -30,7 +30,7 @@ impl ConfigurableNode for TemplateNode {
 impl PipelineNode for TemplateNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Template".into(),
+            node_type_name: "Template".into(),
             preview_type: PreviewType::Data,
             category: NodeCategory::Data,
         }

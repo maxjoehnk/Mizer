@@ -345,15 +345,19 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
 const NodeDetails$json = {
   '1': 'NodeDetails',
   '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'category', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
+    {'1': 'node_type_name', '3': 1, '4': 1, '5': 9, '10': 'nodeTypeName'},
+    {'1': 'display_name', '3': 2, '4': 1, '5': 9, '10': 'displayName'},
+    {'1': 'has_custom_name', '3': 3, '4': 1, '5': 8, '10': 'hasCustomName'},
+    {'1': 'category', '3': 4, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
   ],
 };
 
 /// Descriptor for `NodeDetails`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodeDetailsDescriptor = $convert.base64Decode(
-    'CgtOb2RlRGV0YWlscxISCgRuYW1lGAEgASgJUgRuYW1lEjUKCGNhdGVnb3J5GAIgASgOMhkubW'
-    'l6ZXIubm9kZXMuTm9kZUNhdGVnb3J5UghjYXRlZ29yeQ==');
+    'CgtOb2RlRGV0YWlscxIkCg5ub2RlX3R5cGVfbmFtZRgBIAEoCVIMbm9kZVR5cGVOYW1lEiEKDG'
+    'Rpc3BsYXlfbmFtZRgCIAEoCVILZGlzcGxheU5hbWUSJgoPaGFzX2N1c3RvbV9uYW1lGAMgASgI'
+    'Ug1oYXNDdXN0b21OYW1lEjUKCGNhdGVnb3J5GAQgASgOMhkubWl6ZXIubm9kZXMuTm9kZUNhdG'
+    'Vnb3J5UghjYXRlZ29yeQ==');
 
 @$core.Deprecated('Use nodeConfigDescriptor instead')
 const NodeConfig$json = {

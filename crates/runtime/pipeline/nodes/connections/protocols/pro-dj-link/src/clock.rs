@@ -56,7 +56,7 @@ impl ConfigurableNode for ProDjLinkClockNode {
 impl PipelineNode for ProDjLinkClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Pro DJ Link Clock".into(),
+            node_type_name: "Pro DJ Link Clock".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Connections,
         }

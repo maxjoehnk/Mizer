@@ -21,7 +21,7 @@ impl ConfigurableNode for IldaFileNode {}
 impl PipelineNode for IldaFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ILDA File".into(),
+            node_type_name: "ILDA File".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Laser,
         }

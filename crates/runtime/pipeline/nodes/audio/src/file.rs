@@ -93,9 +93,21 @@ impl ConfigurableNode for AudioFileNode {
 impl PipelineNode for AudioFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Audio File".to_string(),
+            node_type_name: "Audio File".to_string(),
             preview_type: PreviewType::Waveform,
             category: NodeCategory::Audio,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(document) = injector
+            .get::<MediaServer>()
+            .zip(MediaId::try_from(self.file.clone()).ok())
+            .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
+        {
+            format!("Audio File ({})", document.name)
+        } else {
+            format!("Audio File (ID {})", self.file)
         }
     }
 

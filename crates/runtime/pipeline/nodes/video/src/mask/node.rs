@@ -23,7 +23,7 @@ impl ConfigurableNode for TextureMaskNode {}
 impl PipelineNode for TextureMaskNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Mask".into(),
+            node_type_name: "Mask".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

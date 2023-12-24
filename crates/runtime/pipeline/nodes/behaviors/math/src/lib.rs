@@ -1,9 +1,11 @@
-use enum_iterator::Sequence;
-use mizer_node::*;
-use num_enum::{IntoPrimitive, TryFromPrimitive};
-use serde::{Deserialize, Serialize};
 use std::f64::consts::PI;
 use std::fmt::{Display, Formatter};
+
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
+use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 const LHS_INPUT: &str = "LHS";
 const RHS_INPUT: &str = "RHS";
@@ -32,9 +34,19 @@ impl ConfigurableNode for MathNode {
 impl PipelineNode for MathNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Math".into(),
+            node_type_name: "Math".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
+        }
+    }
+
+    fn display_name(&self, _injector: &Injector) -> String {
+        match self.mode {
+            MathMode::Addition => "Add".into(),
+            MathMode::Subtraction => "Subtract".into(),
+            MathMode::Multiplication => "Multiply".into(),
+            MathMode::Division => "Divide".into(),
+            mode => mode.to_string(),
         }
     }
 

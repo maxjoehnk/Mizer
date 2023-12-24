@@ -45,7 +45,7 @@ impl ConfigurableNode for LumaKeyNode {
 impl PipelineNode for LumaKeyNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Luma Key".into(),
+            node_type_name: "Luma Key".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

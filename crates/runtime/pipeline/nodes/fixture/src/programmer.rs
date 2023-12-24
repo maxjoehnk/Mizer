@@ -1,7 +1,7 @@
-use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 
+use mizer_fixtures::definition::FixtureControlValue;
+use mizer_fixtures::manager::FixtureManager;
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
@@ -13,7 +13,7 @@ impl ConfigurableNode for ProgrammerNode {}
 impl PipelineNode for ProgrammerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Programmer".into(),
+            node_type_name: "Programmer".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
         }

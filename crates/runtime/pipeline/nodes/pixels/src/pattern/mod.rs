@@ -39,7 +39,7 @@ impl ConfigurableNode for PixelPatternGeneratorNode {
 impl PipelineNode for PixelPatternGeneratorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Pattern Generator".into(),
+            node_type_name: "Pattern Generator".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Pixel,
         }
@@ -61,7 +61,10 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     type State = PatternState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some((width, height)) = context.output_port(OUTPUT_PORT).and_then(|port| port.dimensions) else {
+        let Some((width, height)) = context
+            .output_port(OUTPUT_PORT)
+            .and_then(|port| port.dimensions)
+        else {
             return Ok(());
         };
         let width = width as usize;

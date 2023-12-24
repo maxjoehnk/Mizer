@@ -20,7 +20,7 @@ use mizer_util::{HashMapExtension, StructuredData};
 use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
-use crate::{NodeMetadata, NodePreviewState, PipelineContext};
+use crate::{NodePreviewState, NodeRuntimeMetadata, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn pre_process(
@@ -108,8 +108,8 @@ pub struct PipelineWorker {
     receivers: HashMap<NodePath, NodeReceivers>,
     dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
-    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
-    _node_metadata: HashMap<NodePath, NodeMetadata>,
+    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
+    _node_metadata: HashMap<NodePath, NodeRuntimeMetadata>,
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -125,7 +125,9 @@ impl std::fmt::Debug for PipelineWorker {
 }
 
 impl PipelineWorker {
-    pub fn new(node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>) -> Self {
+    pub fn new(
+        node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
+    ) -> Self {
         Self {
             states: Default::default(),
             senders: Default::default(),
@@ -471,7 +473,7 @@ impl PipelineWorker {
         path: &NodePath,
         processing_context: &'a impl ProcessingContext,
         clock: &'a mut impl Clock,
-        node_metadata: &'a mut HashMap<NodePath, NodeMetadata>,
+        node_metadata: &'a mut HashMap<NodePath, NodeRuntimeMetadata>,
     ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
         let context = PipelineContext {
             processing_context: RefCell::new(processing_context),

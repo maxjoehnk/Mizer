@@ -56,7 +56,7 @@ impl ConfigurableNode for NdiInputNode {
 impl PipelineNode for NdiInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "NDI Input".into(),
+            node_type_name: "NDI Input".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

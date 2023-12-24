@@ -178,7 +178,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 Flexible(
                     flex: 2,
                     child: Panel(
-                        label: model.selectedNode!.node.details.name,
+                        label: model.selectedNode!.node.details.nodeTypeName,
                         child: NodePropertiesPane(
                             node: model.selectedNode!.node, onUpdate: _refresh))),
             ]),

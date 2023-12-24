@@ -1,7 +1,8 @@
+use std::fmt::{Display, Formatter};
+
 use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
 
 use mizer_node::*;
 
@@ -30,7 +31,7 @@ impl ConfigurableNode for MergeNode {
 impl PipelineNode for MergeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Merge".into(),
+            node_type_name: "Merge".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

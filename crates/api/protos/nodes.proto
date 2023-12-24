@@ -110,8 +110,10 @@ message Node {
 }
 
 message NodeDetails {
-  string name = 1;
-  NodeCategory category = 2;
+  string node_type_name = 1;
+  string display_name = 2;
+  bool has_custom_name = 3;
+  NodeCategory category = 4;
 }
 
 enum NodeCategory {

@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
 use std::time::Instant;
+
+use serde::{Deserialize, Serialize};
 
 use mizer_node::edge::Edge;
 use mizer_node::*;
@@ -20,7 +21,7 @@ impl ConfigurableNode for TransportNode {}
 impl PipelineNode for TransportNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Transport".into(),
+            node_type_name: "Transport".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
         }

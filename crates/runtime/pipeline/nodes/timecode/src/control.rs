@@ -39,9 +39,25 @@ impl ConfigurableNode for TimecodeControlNode {
 impl PipelineNode for TimecodeControlNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Timecode Control".into(),
+            node_type_name: "Timecode Control".into(),
             preview_type: PreviewType::Timecode,
             category: NodeCategory::Standard,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(timecode) = injector
+            .get::<TimecodeManager>()
+            .and_then(|timecode_manager| {
+                timecode_manager
+                    .timecodes()
+                    .into_iter()
+                    .find(|timecode| timecode.id == self.timecode_id)
+            })
+        {
+            format!("Timecode Control ({})", timecode.name)
+        } else {
+            format!("Timecode Control (ID {})", self.timecode_id)
         }
     }
 

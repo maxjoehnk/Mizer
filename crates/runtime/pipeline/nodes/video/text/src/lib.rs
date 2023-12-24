@@ -1,9 +1,10 @@
+use std::fmt::Display;
+
 use anyhow::{anyhow, Context};
 use enum_iterator::Sequence;
 use font_kit::source::SystemSource;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::Display;
 use wgpu_glyph::ab_glyph::FontArc;
 use wgpu_glyph::{FontId, GlyphBrush, GlyphBrushBuilder, Section, Text};
 
@@ -135,7 +136,7 @@ impl ConfigurableNode for VideoTextNode {
 impl PipelineNode for VideoTextNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Render Text".into(),
+            node_type_name: "Render Text".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

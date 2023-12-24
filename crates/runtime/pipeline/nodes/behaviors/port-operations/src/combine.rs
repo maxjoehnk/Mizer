@@ -13,7 +13,7 @@ impl ConfigurableNode for CombineNode {}
 impl PipelineNode for CombineNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Combine".into(),
+            node_type_name: "Combine".into(),
             preview_type: PreviewType::Multiple,
             category: NodeCategory::Standard,
         }

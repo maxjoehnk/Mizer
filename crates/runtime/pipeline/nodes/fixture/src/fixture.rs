@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use crate::fixture_ports::{write_ports, FixtureControlPorts};
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
+
+use crate::fixture_ports::{write_ports, FixtureControlPorts};
 
 const FIXTURE_SETTING: &str = "Fixture";
 
@@ -48,9 +49,20 @@ impl ConfigurableNode for FixtureNode {
 impl PipelineNode for FixtureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Fixture".into(),
+            node_type_name: "Fixture".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(fixture) = injector
+            .get::<FixtureManager>()
+            .and_then(|manager| manager.get_fixture(self.fixture_id))
+        {
+            format!("Fixture ({})", fixture.name)
+        } else {
+            format!("Fixture (ID {})", self.fixture_id)
         }
     }
 

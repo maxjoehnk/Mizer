@@ -97,10 +97,14 @@ impl ConfigurableNode for OscillatorNode {
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Oscillator".into(),
+            node_type_name: "Oscillator".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }
+    }
+
+    fn display_name(&self, _injector: &Injector) -> String {
+        format!("{} Wave", self.oscillator_type)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {

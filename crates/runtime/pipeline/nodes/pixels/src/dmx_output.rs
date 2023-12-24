@@ -79,7 +79,7 @@ impl ConfigurableNode for PixelDmxNode {
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "DMX Pixels".into(),
+            node_type_name: "DMX Pixels".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Pixel,
         }

@@ -55,7 +55,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
-    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     status_bus: StatusBus,
 }
 
@@ -177,6 +177,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         RuntimeAccess {
             nodes: pipeline_access.nodes_view.clone(),
             designer: pipeline_access.designer.clone(),
+            metadata: pipeline_access.metadata.clone(),
             links: pipeline_access.links.clone(),
             settings: pipeline_access.settings.clone(),
             layouts: self.layouts.clone(),
@@ -357,6 +358,27 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         pipeline_access.settings.set(settings);
     }
 
+    #[profiling::function]
+    pub(crate) fn read_node_metadata(&self) {
+        let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
+        let metadata = pipeline_access
+            .nodes
+            .iter()
+            .map(|(path, node)| {
+                let _scope = format!("{:?}Node::display_name", node.node_type());
+                profiling::scope!(&_scope);
+                let display_name = node.display_name(&self.injector);
+                let metadata = NodeMetadata {
+                    display_name,
+                    custom_name: None,
+                };
+
+                (path.clone(), metadata)
+            })
+            .collect();
+        pipeline_access.metadata.set(metadata);
+    }
+
     /// Should only be used for testing purposes
     #[doc(hidden)]
     pub fn plan(&mut self) {
@@ -411,6 +433,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             processor.post_process(&self.injector, frame);
         }
         self.read_node_settings();
+        self.read_node_metadata();
         // TODO: add safe way to access mutable and immutable parts of the injector
         let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
         if let Some(ui) = injector.get_mut::<DebugUiImpl>() {

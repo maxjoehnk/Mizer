@@ -85,7 +85,14 @@ impl TimecodeManager {
         let timecode = TimecodeTrack {
             id: self.timecode_counter.fetch_add(1, Ordering::Relaxed).into(),
             name,
-            controls: Default::default(),
+            controls: self
+                .controls()
+                .into_iter()
+                .map(|c| TimecodeControlValues {
+                    id: c.id,
+                    spline: Default::default(),
+                })
+                .collect(),
             labels: Default::default(),
         };
         let mut timecodes = self.timecodes.read();

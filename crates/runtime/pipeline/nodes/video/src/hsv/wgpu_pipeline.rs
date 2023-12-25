@@ -1,5 +1,7 @@
-use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
+
+use mizer_wgpu::wgpu::StoreOp;
+use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
 pub struct HsvWgpuPipeline {
     sampler: wgpu::Sampler,
@@ -124,10 +126,12 @@ impl HsvWgpuPipeline {
                             b: 0.0,
                             a: 1.0,
                         }),
-                        store: true,
+                        store: StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                timestamp_writes: None,
+                occlusion_query_set: None,
             });
             render_pass.set_pipeline(&self.render_pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));

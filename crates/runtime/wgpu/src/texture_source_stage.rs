@@ -1,4 +1,5 @@
 use wgpu::util::DeviceExt;
+use wgpu::StoreOp;
 
 use crate::{Texture, TextureProvider, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
@@ -75,10 +76,12 @@ impl TextureSourceStage {
                             b: 0.0,
                             a: 0.0,
                         }),
-                        store: true,
+                        store: StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                occlusion_query_set: None,
+                timestamp_writes: None,
             });
             render_pass.set_pipeline(&self.pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));

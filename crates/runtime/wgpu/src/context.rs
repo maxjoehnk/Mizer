@@ -1,3 +1,5 @@
+use wgpu::StoreOp;
+
 use crate::Vertex;
 
 pub struct WgpuContext {
@@ -230,10 +232,12 @@ impl WgpuContext {
                             b: 0.0,
                             a: 1.0,
                         }),
-                        store: true,
+                        store: StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                occlusion_query_set: None,
+                timestamp_writes: None,
             });
 
             command_builder(render_pass);

@@ -155,6 +155,21 @@ jobs:
           path: mizer.flatpak
           if-no-files-found: error
 
+  verify-linux:
+    runs-on: ubuntu-latest
+    needs:
+      - build-linux
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-full
+      - name: Verify ffmpeg is statically linked
+        run: nm mizer | grep ff_mpeg
+
   build-macos:
     runs-on: macos-latest
     steps:

@@ -168,6 +168,7 @@ jobs:
         with:
           name: linux-full
       - name: Verify ffmpeg is statically linked
+        working-directory: artifact
         run: nm mizer | grep ff_mpeg
 
   build-macos:

@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::hash::{Hash, Hasher};
 use std::str::FromStr;
@@ -62,7 +63,7 @@ impl SubFixtureDefinition {
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureMode {
     pub name: String,
-    pub channels: Vec<FixtureChannelDefinition>,
+    pub(crate) channels: HashMap<String, FixtureChannelDefinition>,
     pub controls: FixtureControls<FixtureControlChannel>,
     pub sub_fixtures: Vec<SubFixtureDefinition>,
     pub(crate) color_mixer: Option<ColorMixer>,
@@ -108,7 +109,7 @@ impl FixtureMode {
 
         Self {
             name,
-            channels,
+            channels: channels.into_iter().map(|c| (c.name.clone(), c)).collect(),
             controls,
             sub_fixtures,
             color_mixer,
@@ -116,7 +117,10 @@ impl FixtureMode {
     }
 
     pub fn dmx_channels(&self) -> u16 {
-        self.channels.iter().map(|c| c.channels() as u16).sum()
+        self.get_channels()
+            .iter()
+            .map(|c| c.channels() as u16)
+            .sum()
     }
 
     pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
@@ -130,11 +134,27 @@ impl FixtureMode {
                     None
                 }
             })
-            .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
+            .and_then(|channel| self.get_channel(channel).cloned())
     }
 
     pub fn color(&self) -> Option<ColorGroup<FixtureControlChannel>> {
         self.controls.color_mixer.clone()
+    }
+
+    pub fn get_channel(&self, name: &str) -> Option<&FixtureChannelDefinition> {
+        self.channels.get(name)
+    }
+
+    pub fn get_channels(&self) -> Vec<&FixtureChannelDefinition> {
+        self.channels.values().collect()
+    }
+
+    /// This clears the channels in the mode and should only be used for the api mapping
+    pub fn take_channels(&mut self) -> Vec<FixtureChannelDefinition> {
+        let mut channels = HashMap::new();
+        std::mem::swap(&mut channels, &mut self.channels);
+
+        channels.into_values().collect()
     }
 }
 

@@ -129,13 +129,13 @@ mod tests {
         assert_eq!(definition.manufacturer, "Max Jöhnk");
         assert_eq!(definition.modes.len(), 3);
         assert_eq!(definition.modes[0].name, "50 Pixels");
-        assert_eq!(definition.modes[0].channels.len(), 150);
+        assert_eq!(definition.modes[0].get_channels().len(), 150);
         assert_eq!(definition.modes[0].sub_fixtures.len(), 50);
         assert_eq!(definition.modes[1].name, "145 Pixels");
-        assert_eq!(definition.modes[1].channels.len(), 435);
+        assert_eq!(definition.modes[1].get_channels().len(), 435);
         assert_eq!(definition.modes[1].sub_fixtures.len(), 145);
         assert_eq!(definition.modes[2].name, "60 Pixels");
-        assert_eq!(definition.modes[2].channels.len(), 180);
+        assert_eq!(definition.modes[2].get_channels().len(), 180);
         assert_eq!(definition.modes[2].sub_fixtures.len(), 60);
     }
 }

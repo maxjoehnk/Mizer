@@ -58,7 +58,7 @@ fn should_expose_sub_channels() {
     let fixture = FixtureDefinition::from(definition);
 
     let mode = &fixture.modes[0];
-    assert_eq!(mode.channels.len(), 9);
+    assert_eq!(mode.get_channels().len(), 9);
 }
 
 #[test]

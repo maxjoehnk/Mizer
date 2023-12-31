@@ -149,15 +149,15 @@ mod tests {
         assert_eq!(definition.name, "Generic RGB");
         assert_eq!(definition.modes.len(), 5);
         assert_eq!(definition.modes[0].name, "RGB");
-        assert_eq!(definition.modes[0].channels.len(), 3);
+        assert_eq!(definition.modes[0].get_channels().len(), 3);
         assert_eq!(definition.modes[1].name, "GRB");
-        assert_eq!(definition.modes[1].channels.len(), 3);
+        assert_eq!(definition.modes[1].get_channels().len(), 3);
         assert_eq!(definition.modes[2].name, "BGR");
-        assert_eq!(definition.modes[2].channels.len(), 3);
+        assert_eq!(definition.modes[2].get_channels().len(), 3);
         assert_eq!(definition.modes[3].name, "RGB Dimmer");
-        assert_eq!(definition.modes[3].channels.len(), 4);
+        assert_eq!(definition.modes[3].get_channels().len(), 4);
         assert_eq!(definition.modes[4].name, "Dimmer RGB");
-        assert_eq!(definition.modes[4].channels.len(), 4);
+        assert_eq!(definition.modes[4].get_channels().len(), 4);
         for mode in &definition.modes {
             assert_eq!(
                 mode.controls.color_mixer,
@@ -189,17 +189,17 @@ mod tests {
         assert_eq!(definition.name, "Generic RGBW");
         assert_eq!(definition.modes.len(), 6);
         assert_eq!(definition.modes[0].name, "RGBW");
-        assert_eq!(definition.modes[0].channels.len(), 4);
+        assert_eq!(definition.modes[0].get_channels().len(), 4);
         assert_eq!(definition.modes[1].name, "WRGB");
-        assert_eq!(definition.modes[1].channels.len(), 4);
+        assert_eq!(definition.modes[1].get_channels().len(), 4);
         assert_eq!(definition.modes[2].name, "RGBW Dimmer");
-        assert_eq!(definition.modes[2].channels.len(), 5);
+        assert_eq!(definition.modes[2].get_channels().len(), 5);
         assert_eq!(definition.modes[3].name, "WRGB Dimmer");
-        assert_eq!(definition.modes[3].channels.len(), 5);
+        assert_eq!(definition.modes[3].get_channels().len(), 5);
         assert_eq!(definition.modes[4].name, "Dimmer RGBW");
-        assert_eq!(definition.modes[4].channels.len(), 5);
+        assert_eq!(definition.modes[4].get_channels().len(), 5);
         assert_eq!(definition.modes[5].name, "Dimmer WRGB");
-        assert_eq!(definition.modes[5].channels.len(), 5);
+        assert_eq!(definition.modes[5].get_channels().len(), 5);
         for mode in &definition.modes {
             assert_eq!(
                 mode.controls.color_mixer,
@@ -239,7 +239,7 @@ mod tests {
         assert_eq!(definition.name, "Generic CMY");
         assert_eq!(definition.modes.len(), 1);
         assert_eq!(definition.modes[0].name, "CMY");
-        assert_eq!(definition.modes[0].channels.len(), 3);
+        assert_eq!(definition.modes[0].get_channels().len(), 3);
         for mode in &definition.modes {
             assert_eq!(
                 mode.controls.color_mixer,

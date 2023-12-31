@@ -74,7 +74,7 @@ impl NdiOutputState {
             )
         };
         {
-            profiling::scope!("ndi::Send::send_video");
+            profiling::scope!("ndi::Send::send_video_async");
             self.send.send_video_async(&video_data);
         }
         // Keep frame in memory until next frame is sent as they will be processed in the background

@@ -4,7 +4,7 @@ use glyphon::{
 };
 
 use mizer_node::Color;
-use mizer_wgpu::wgpu::{CommandBuffer, MultisampleState, StoreOp};
+use mizer_wgpu::wgpu::{CommandBuffer, MultisampleState};
 use mizer_wgpu::{wgpu, TextureHandle, TextureRegistry, TextureView, WgpuContext};
 
 use crate::node::FontWeight;
@@ -144,36 +144,13 @@ impl TextTextureState {
         target: &TextureView,
     ) -> anyhow::Result<CommandBuffer> {
         profiling::scope!("TextTextureState::render");
-        let mut encoder = context
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Text Render Encoder"),
-            });
+        let mut buffer = context.create_command_buffer("Text Render Pass");
         {
-            let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Text Render Pass"),
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: StoreOp::Store,
-                    },
-                })],
-                depth_stencil_attachment: None,
-                timestamp_writes: None,
-                occlusion_query_set: None,
-            });
-
+            let mut pass = buffer.start_render_pass(target);
             self.text_renderer.render(&self.atlas, &mut pass)?;
         }
 
-        Ok(encoder.finish())
+        Ok(buffer.finish())
     }
 
     pub fn cleanup(&mut self) {

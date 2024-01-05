@@ -94,7 +94,7 @@ impl ProcessingNode for VideoRgbNode {
         let blue = context.read_port::<_, f64>(BLUE_PORT).unwrap_or(self.blue);
 
         if state.is_none() {
-            *state = Some(RgbState::new(wgpu_context, texture_registry));
+            *state = Some(RgbState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -106,7 +106,7 @@ impl ProcessingNode for VideoRgbNode {
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &input, &output);
+            let stage = state.pipeline.render(wgpu_context, &input, &output)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -120,10 +120,10 @@ impl ProcessingNode for VideoRgbNode {
 }
 
 impl RgbState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: RgbWgpuPipeline::new(context, &[1.0, 1.0, 1.0]),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: RgbWgpuPipeline::new(context, &[1.0, 1.0, 1.0])?,
             target_texture: texture_registry.register(context, 1920, 1080, Some("RGB target")),
-        }
+        })
     }
 }

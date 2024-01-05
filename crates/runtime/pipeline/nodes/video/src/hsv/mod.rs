@@ -102,19 +102,19 @@ impl ProcessingNode for VideoHsvNode {
             .unwrap_or(self.saturation);
 
         if state.is_none() {
-            *state = Some(VideoHsvState::new(wgpu_context, texture_registry));
+            *state = Some(VideoHsvState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
         context.write_port(OUTPUT_PORT, state.target_texture);
         state
             .pipeline
-            .write_params(wgpu_context, hue as f32, saturation as f32, value as f32);
+            .write_hsv_uniform(wgpu_context, hue as f32, saturation as f32, value as f32);
         let output = texture_registry
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -128,15 +128,15 @@ impl ProcessingNode for VideoHsvNode {
 }
 
 impl VideoHsvState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: wgpu_pipeline::HsvWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: wgpu_pipeline::HsvWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("Color balance target"),
             ),
-        }
+        })
     }
 }

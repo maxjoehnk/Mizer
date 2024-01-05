@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+use anyhow::{anyhow, Context};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -51,7 +51,7 @@ impl ProcessingNode for TextureMaskNode {
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
 
         if state.is_none() {
-            *state = Some(TextureMaskState::new(wgpu_context, texture_registry));
+            *state = Some(TextureMaskState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -63,7 +63,10 @@ impl ProcessingNode for TextureMaskNode {
             .read_texture(INPUT_PORT)
             .zip(context.read_texture(MASK_PORT))
         {
-            let stage = state.pipeline.render(wgpu_context, &output, &input, &mask);
+            let stage = state
+                .pipeline
+                .render(wgpu_context, &output, &input, &mask)
+                .context("Queuing Texture Mask Pipeline")?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -77,15 +80,16 @@ impl ProcessingNode for TextureMaskNode {
 }
 
 impl TextureMaskState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: TextureMaskWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: TextureMaskWgpuPipeline::new(context)
+                .context("Creating Texture Mask Render Pipeline")?,
             target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("Colorize texture target"),
             ),
-        }
+        })
     }
 }

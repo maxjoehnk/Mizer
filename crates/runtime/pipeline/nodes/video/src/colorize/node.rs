@@ -54,7 +54,7 @@ impl ProcessingNode for ColorizeTextureNode {
             .unwrap_or(Color::WHITE);
 
         if state.is_none() {
-            *state = Some(ColorizeTextureState::new(wgpu_context, texture_registry));
+            *state = Some(ColorizeTextureState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -69,7 +69,7 @@ impl ProcessingNode for ColorizeTextureNode {
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -83,15 +83,15 @@ impl ProcessingNode for ColorizeTextureNode {
 }
 
 impl ColorizeTextureState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: ColorizeTextureWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: ColorizeTextureWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("Colorize texture target"),
             ),
-        }
+        })
     }
 }

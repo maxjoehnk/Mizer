@@ -1,4 +1,5 @@
-use wgpu::StoreOp;
+use std::ops::{Deref, DerefMut};
+use wgpu::{CommandEncoder, StoreOp};
 
 use crate::Vertex;
 
@@ -209,39 +210,75 @@ impl WgpuContext {
             })
     }
 
-    pub fn create_command_buffer<TCommandBuilder: FnOnce(wgpu::RenderPass)>(
-        &self,
-        label: Option<&str>,
-        target: &wgpu::TextureView,
-        command_builder: TCommandBuilder,
-    ) -> wgpu::CommandBuffer {
-        profiling::scope!("WgpuContext::create_command_buffer");
-        let mut encoder = self
+    pub fn create_command_buffer<'label>(&self, label: &'label str) -> CommandBuffer<'label> {
+        profiling::scope!("WgpuContext::start_render_pass");
+        let encoder = self
             .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor { label });
-        {
-            let render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label,
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: StoreOp::Store,
-                    },
-                })],
-                depth_stencil_attachment: None,
-                occlusion_query_set: None,
-                timestamp_writes: None,
-            });
+            .create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some(label) });
 
-            command_builder(render_pass);
-        }
-        encoder.finish()
+        CommandBuffer { encoder, label }
+    }
+}
+
+pub struct CommandBuffer<'label> {
+    encoder: CommandEncoder,
+    label: &'label str,
+}
+
+impl<'label> CommandBuffer<'label> {
+    pub fn start_render_pass<'pass>(
+        &'pass mut self,
+        target: &'pass wgpu::TextureView,
+    ) -> WgpuRenderPass<'pass> {
+        profiling::scope!("CommandBuffer::start_render_pass");
+        let pass = self.encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            label: Some(self.label),
+            color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                view: target,
+                resolve_target: None,
+                ops: wgpu::Operations {
+                    load: wgpu::LoadOp::Clear(wgpu::Color {
+                        r: 0.0,
+                        g: 0.0,
+                        b: 0.0,
+                        a: 0.0,
+                    }),
+                    store: StoreOp::Store,
+                },
+            })],
+            depth_stencil_attachment: None,
+            occlusion_query_set: None,
+            timestamp_writes: None,
+        });
+
+        WgpuRenderPass::new(pass)
+    }
+
+    pub fn finish(self) -> wgpu::CommandBuffer {
+        self.encoder.finish()
+    }
+}
+
+pub struct WgpuRenderPass<'pass> {
+    render_pass: wgpu::RenderPass<'pass>,
+}
+
+impl<'pass> WgpuRenderPass<'pass> {
+    fn new(render_pass: wgpu::RenderPass<'pass>) -> Self {
+        Self { render_pass }
+    }
+}
+
+impl<'pass> Deref for WgpuRenderPass<'pass> {
+    type Target = wgpu::RenderPass<'pass>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.render_pass
+    }
+}
+
+impl<'pass> DerefMut for WgpuRenderPass<'pass> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.render_pass
     }
 }

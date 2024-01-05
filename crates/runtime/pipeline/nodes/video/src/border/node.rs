@@ -105,7 +105,7 @@ impl ProcessingNode for TextureBorderNode {
             .unwrap_or(Color::BLACK);
 
         if state.is_none() {
-            *state = Some(TextureBorderState::new(wgpu_context, texture_registry));
+            *state = Some(TextureBorderState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -125,7 +125,7 @@ impl ProcessingNode for TextureBorderNode {
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -139,10 +139,10 @@ impl ProcessingNode for TextureBorderNode {
 }
 
 impl TextureBorderState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: wgpu_pipeline::BorderWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: wgpu_pipeline::BorderWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(context, 1920, 1080, Some("Border target")),
-        }
+        })
     }
 }

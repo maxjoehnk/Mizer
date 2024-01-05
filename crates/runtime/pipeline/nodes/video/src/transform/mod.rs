@@ -135,7 +135,7 @@ impl ProcessingNode for VideoTransformNode {
         let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
         if state.is_none() {
-            *state = Some(VideoTransformState::new(wgpu_context, texture_registry));
+            *state = Some(VideoTransformState::new(wgpu_context, texture_registry)?);
         }
 
         let rotation_x = context
@@ -178,7 +178,7 @@ impl ProcessingNode for VideoTransformNode {
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -197,15 +197,15 @@ pub struct VideoTransformState {
 }
 
 impl VideoTransformState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: TransformWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: TransformWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("Transform target"),
             ),
-        }
+        })
     }
 }

@@ -48,6 +48,7 @@ impl ImportFileHandler {
             .add_message(format!("Importing file {file_path:?}"), None);
         let source_path = relative_to
             .map(|base_path| file_path.strip_prefix(base_path))
+            .or(Some(Ok(file_path)))
             .transpose()?
             .map(|path| path.to_path_buf());
         if let Some(source_path) = source_path.as_ref() {

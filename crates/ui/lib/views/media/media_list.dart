@@ -147,15 +147,17 @@ class _MediaListState extends State<MediaList> {
     final audioGroup = XTypeGroup(
         label: 'Audio'.i18n,
         extensions: ['wav', 'mp3', 'ogg', 'flac', 'm4a', 'aac', 'wma', 'opus']);
+    final vectorGroup = XTypeGroup(label: 'Vector Files'.i18n, extensions: ['svg']);
     final allSupportedGroup = XTypeGroup(
         label: 'All Supported'.i18n,
         extensions: <String>[
           ...videoGroup.extensions ?? [],
           ...imageGroup.extensions ?? [],
-          ...audioGroup.extensions ?? []
+          ...audioGroup.extensions ?? [],
+          ...vectorGroup.extensions ?? [],
         ].distinct().toList());
     var files = await openFiles(
-        acceptedTypeGroups: [allSupportedGroup, videoGroup, imageGroup, audioGroup]);
+        acceptedTypeGroups: [allSupportedGroup, videoGroup, imageGroup, audioGroup, vectorGroup]);
     if (files.isEmpty) {
       return;
     }

@@ -38,7 +38,8 @@ class MediaMetadataPanel extends StatelessWidget {
         ]),
       MizerTableRow(
           cells: [Text("File Size", style: titleTheme), Text(filesize(file.metadata.fileSize))]),
-      MizerTableRow(cells: [Text("File Path", style: titleTheme), Text(file.metadata.sourcePath)]),
+      MizerTableRow(
+          cells: [Text("Source Path", style: titleTheme), Text(file.metadata.sourcePath)]),
       MizerTableRow(cells: [
         Text("Tags", style: titleTheme),
         Hoverable(

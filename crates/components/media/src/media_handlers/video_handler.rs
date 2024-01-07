@@ -1,12 +1,14 @@
+use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command};
+
+use ffmpeg::error::EAGAIN;
+use ffmpeg_the_third as ffmpeg;
+use image::DynamicImage;
 
 use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use ffmpeg_the_third as ffmpeg;
-use image::DynamicImage;
-use std::ffi::OsStr;
 
 #[derive(Clone)]
 pub struct VideoHandler;
@@ -134,7 +136,10 @@ impl VideoHandler {
             if stream_index == stream.index() {
                 decoder.send_packet(&packet)?;
                 let mut decoded = ffmpeg::frame::Video::empty();
-                decoder.receive_frame(&mut decoded)?;
+                let decode_result = decoder.receive_frame(&mut decoded);
+                if let Err(ffmpeg::Error::Other { errno: EAGAIN }) = decode_result {
+                    continue;
+                }
                 let mut frame = ffmpeg::frame::Video::empty();
                 converter.run(&decoded, &mut frame)?;
 

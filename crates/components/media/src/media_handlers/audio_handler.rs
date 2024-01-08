@@ -2,7 +2,6 @@ use std::fs::File;
 use std::io::Cursor;
 use std::path::Path;
 
-use crate::documents::{MediaMetadata, MediaType};
 use anyhow::Context;
 use id3::frame::PictureType;
 use id3::{Tag, TagLike};
@@ -12,6 +11,7 @@ use symphonia::core::io::{MediaSourceStream, ReadOnlySource};
 use symphonia::core::meta::MetadataOptions;
 use symphonia::core::probe::Hint;
 
+use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 use crate::media_handlers::image_handler::parse_image_content_type;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
@@ -39,7 +39,7 @@ impl MediaHandler for AudioHandler {
             .find(|p| p.picture_type == PictureType::CoverFront)
         {
             let cursor = Cursor::new(&cover.data);
-            let image = image::load(cursor, parse_image_content_type(&cover.mime_type))
+            let image = image::load(cursor, parse_image_content_type(&cover.mime_type)?)
                 .context("Unable to read cover image")?;
             let image = image.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Nearest);
             image.save(target).context("Unable to save thumbnail")?;

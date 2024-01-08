@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/media.pb.dart';
 
+import 'previews/image.dart';
+import 'previews/svg.dart';
+
 class MediaPreview extends StatelessWidget {
   final MediaFile file;
 
@@ -11,7 +14,11 @@ class MediaPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (file.type == MediaType.IMAGE) {
-      return Image.file(File(this.file.metadata.sourcePath));
+      return ImagePreview(file: file);
+    }
+
+    if (file.type == MediaType.VECTOR) {
+      return SvgPreview(file: file);
     }
 
     if (!file.hasThumbnailPath()) {

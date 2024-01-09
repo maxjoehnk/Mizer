@@ -25,6 +25,12 @@ impl MediaId {
     }
 }
 
+impl AsRef<MediaId> for MediaId {
+    fn as_ref(&self) -> &MediaId {
+        self
+    }
+}
+
 impl TryFrom<String> for MediaId {
     type Error = uuid::Error;
 

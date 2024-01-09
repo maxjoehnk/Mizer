@@ -10,6 +10,7 @@ crossbeam = "0.8"
 serde = { version = "1", features = ["derive"] }
 bincode = "1.3"
 mizer-util = { path = "../../../util" }
+mizer-vector = { path = "../../../components/vector" }
 enum-iterator = "1.4"
 num_enum = "0.7"
 

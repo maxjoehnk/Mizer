@@ -21,6 +21,8 @@ mod texture_source_stage;
 mod vertex;
 pub mod window;
 
+const TEXTURE_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Bgra8UnormSrgb;
+
 pub enum TextureView<'a> {
     Borrowed(&'a wgpu::TextureView),
     MapRef(Ref<'a, TextureHandle, wgpu::TextureView>),

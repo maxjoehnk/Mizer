@@ -45,6 +45,7 @@ pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
+pub use mizer_vector_nodes::{RasterizeVectorNode, VectorFileNode};
 pub use mizer_video_nodes::{
     ColorizeTextureNode, ImageFileNode, LumaKeyNode, TextureBorderNode, TextureMaskNode,
     TextureOpacityNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
@@ -237,4 +238,6 @@ node_impl! {
     NdiOutput(NdiOutputNode),
     NdiInput(NdiInputNode),
     SurfaceMapping(SurfaceMappingNode),
+    RasterizeVector(RasterizeVectorNode),
+    VectorFile(VectorFileNode),
 }

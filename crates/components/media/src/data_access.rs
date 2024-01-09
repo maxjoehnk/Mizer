@@ -30,8 +30,8 @@ impl DataAccess {
         Ok(media)
     }
 
-    pub fn get_media(&self, id: MediaId) -> Option<MediaDocument> {
-        self.media.get(&id).map(|entry| entry.value().clone())
+    pub fn get_media(&self, id: &MediaId) -> Option<MediaDocument> {
+        self.media.get(id).map(|entry| entry.value().clone())
     }
 
     pub fn list_tags(&self) -> anyhow::Result<Vec<MediaTag>> {

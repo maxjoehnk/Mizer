@@ -128,6 +128,7 @@ enum NodeCategory {
   NODE_CATEGORY_VIDEO = 8;
   NODE_CATEGORY_LASER = 9;
   NODE_CATEGORY_PIXEL = 10;
+  NODE_CATEGORY_VECTOR = 11;
 }
 
 message NodeConfig {

@@ -1,4 +1,5 @@
 use std::ops::{Deref, DerefMut};
+
 use wgpu::{CommandEncoder, StoreOp};
 
 use crate::Vertex;
@@ -186,7 +187,7 @@ impl WgpuContext {
                     module: shader,
                     entry_point: "fs_main",
                     targets: &[Some(wgpu::ColorTargetState {
-                        format: wgpu::TextureFormat::Bgra8UnormSrgb,
+                        format: crate::TEXTURE_FORMAT,
                         blend: Some(wgpu::BlendState::REPLACE),
                         write_mask: wgpu::ColorWrites::ALL,
                     })],

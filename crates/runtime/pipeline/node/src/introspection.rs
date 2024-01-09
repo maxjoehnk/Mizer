@@ -62,6 +62,7 @@ pub enum NodeCategory {
     Video,
     Laser,
     Pixel,
+    Vector,
 }
 
 node_type_name! {
@@ -152,6 +153,8 @@ node_type_name! {
         NdiOutput,
         NdiInput,
         SurfaceMapping,
+        RasterizeVector,
+        VectorFile,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

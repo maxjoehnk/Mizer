@@ -28,6 +28,7 @@ members = [
     "crates/components/sequencer/commands",
     "crates/components/surfaces",
     "crates/components/timecode",
+    "crates/components/vector",
     "crates/projects",
     "crates/runtime",
     "crates/runtime/clock",
@@ -74,6 +75,7 @@ members = [
     "crates/runtime/pipeline/nodes/plan",
     "crates/runtime/pipeline/nodes/timecode",
     "crates/runtime/pipeline/nodes/transport",
+    "crates/runtime/pipeline/nodes/vector",
     "crates/runtime/pipeline/nodes/video",
     "crates/runtime/pipeline/nodes/video/screen-capture",
     "crates/runtime/pipeline/nodes/video/surfaces",
@@ -163,6 +165,7 @@ mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
 mizer-status-bus = { path = "crates/runtime/status" }
 mizer-command-executor = { path = "crates/runtime/commander/executor" }
+mizer-vector = { path = "crates/components/vector" }
 mizer-wgpu = { path = "crates/runtime/wgpu" }
 tokio = { version = "1.35", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"

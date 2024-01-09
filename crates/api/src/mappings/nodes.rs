@@ -620,6 +620,7 @@ impl From<mizer_node::NodeCategory> for NodeCategory {
             Video => Self::Video,
             Laser => Self::Laser,
             Pixel => Self::Pixel,
+            Vector => Self::Vector,
         }
     }
 }

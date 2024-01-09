@@ -111,11 +111,13 @@ pub enum PortType {
 
 pub mod port_types {
     use mizer_util::StructuredData;
+    use mizer_vector::VectorData;
 
     pub type SINGLE = f64;
     pub type MULTI = Vec<f64>;
     pub type COLOR = super::Color;
     pub type DATA = StructuredData;
+    pub type VECTOR = VectorData;
 }
 
 impl Display for PortType {

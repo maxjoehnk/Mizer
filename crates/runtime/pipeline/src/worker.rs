@@ -16,7 +16,7 @@ use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
 use mizer_processing::{DebugUiDrawHandle, ProcessingContext};
 use mizer_protocol_laser::LaserFrame;
-use mizer_util::{HashMapExtension, StructuredData};
+use mizer_util::HashMapExtension;
 use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
@@ -249,20 +249,27 @@ impl PipelineWorker {
         target_meta: PortMetadata,
     ) -> anyhow::Result<()> {
         match link.port_type {
-            PortType::Single => self.connect_memory_ports::<f64>(link, source_meta, target_meta),
+            PortType::Single => {
+                self.connect_memory_ports::<port_types::SINGLE>(link, source_meta, target_meta)
+            }
             PortType::Clock => self.connect_memory_ports::<u64>(link, source_meta, target_meta),
-            PortType::Color => self.connect_memory_ports::<Color>(link, source_meta, target_meta),
+            PortType::Color => {
+                self.connect_memory_ports::<port_types::COLOR>(link, source_meta, target_meta)
+            }
             PortType::Multi => {
-                self.connect_memory_ports::<Vec<f64>>(link, source_meta, target_meta)
+                self.connect_memory_ports::<port_types::MULTI>(link, source_meta, target_meta)
             }
             PortType::Laser => {
                 self.connect_memory_ports::<Vec<LaserFrame>>(link, source_meta, target_meta)
             }
             PortType::Data => {
-                self.connect_memory_ports::<StructuredData>(link, source_meta, target_meta)
+                self.connect_memory_ports::<port_types::DATA>(link, source_meta, target_meta)
             }
             PortType::Texture => {
                 self.connect_memory_ports::<TextureHandle>(link, source_meta, target_meta)
+            }
+            PortType::Vector => {
+                self.connect_memory_ports::<port_types::VECTOR>(link, source_meta, target_meta)
             }
             _ => todo!(),
         }
@@ -277,13 +284,14 @@ impl PipelineWorker {
 
     pub fn disconnect_port(&mut self, link: &NodeLink) {
         match link.port_type {
-            PortType::Single => self.disconnect_memory_ports::<f64>(link),
+            PortType::Single => self.disconnect_memory_ports::<port_types::SINGLE>(link),
             PortType::Clock => self.disconnect_memory_ports::<u64>(link),
-            PortType::Color => self.disconnect_memory_ports::<Color>(link),
-            PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
+            PortType::Color => self.disconnect_memory_ports::<port_types::COLOR>(link),
+            PortType::Multi => self.disconnect_memory_ports::<port_types::MULTI>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
-            PortType::Data => self.disconnect_memory_ports::<StructuredData>(link),
+            PortType::Data => self.disconnect_memory_ports::<port_types::DATA>(link),
             PortType::Texture => self.disconnect_memory_ports::<TextureHandle>(link),
+            PortType::Vector => self.disconnect_memory_ports::<port_types::VECTOR>(link),
             _ => unimplemented!(),
         }
     }
@@ -554,13 +562,14 @@ fn register_receiver(
 ) {
     log::debug!("Registering port receiver for {:?} {:?}", path, &port_id);
     match metadata.port_type {
-        PortType::Single => receivers.register::<f64>(port_id, metadata),
-        PortType::Color => receivers.register::<Color>(port_id, metadata),
-        PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
+        PortType::Single => receivers.register::<port_types::SINGLE>(port_id, metadata),
+        PortType::Color => receivers.register::<port_types::COLOR>(port_id, metadata),
+        PortType::Multi => receivers.register::<port_types::MULTI>(port_id, metadata),
         PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
-        PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
+        PortType::Data => receivers.register::<port_types::DATA>(port_id, metadata),
         PortType::Clock => receivers.register::<u64>(port_id, metadata),
         PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
+        PortType::Vector => receivers.register::<port_types::VECTOR>(port_id, metadata),
         port_type => log::debug!("TODO: implement port type {:?}", port_type),
     }
 }

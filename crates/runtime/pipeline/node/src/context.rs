@@ -50,6 +50,9 @@ pub trait NodeContext: PreviewContext + Sized {
     fn data_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::DATA, Self> {
         self.input(port)
     }
+    fn vector_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::VECTOR, Self> {
+        self.input(port)
+    }
 
     fn input<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> PortReader<V, Self> {
         PortReader {

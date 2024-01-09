@@ -169,8 +169,8 @@ impl MediaServer {
         }
     }
 
-    pub fn get_media_file(&self, id: MediaId) -> Option<MediaDocument> {
-        self.db.get_media(id)
+    pub fn get_media_file(&self, id: impl AsRef<MediaId>) -> Option<MediaDocument> {
+        self.db.get_media(id.as_ref())
     }
 
     pub fn remove_file(&self, id: MediaId) {

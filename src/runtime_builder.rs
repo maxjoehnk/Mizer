@@ -24,6 +24,7 @@ use mizer_session::Session;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_surfaces::SurfaceModule;
 use mizer_timecode::TimecodeModule;
+use mizer_vector::VectorModule;
 use mizer_wgpu::{window::WindowModule, WgpuModule};
 
 use crate::api::*;
@@ -42,6 +43,7 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     OscModule.try_load(context);
     MidiModule.try_load(context);
     WgpuModule.try_load(context).then(WindowModule);
+    VectorModule.try_load(context);
 
     #[cfg(feature = "debug-ui")]
     if flags.debug {

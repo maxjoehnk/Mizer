@@ -36,6 +36,17 @@ impl WgpuContext {
                 None,
             )
             .await?;
+        device.on_uncaptured_error(Box::new(|error| match error {
+            wgpu::Error::OutOfMemory { source } => {
+                tracing::error!(source, "wgpu out of memory");
+            }
+            wgpu::Error::Validation {
+                description,
+                source,
+            } => {
+                tracing::error!(source, "wgpu validation error: {}", description);
+            }
+        }));
 
         Ok(Self {
             instance,

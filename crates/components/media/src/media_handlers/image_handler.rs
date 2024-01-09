@@ -16,7 +16,7 @@ impl MediaHandler for ImageHandler {
     const MEDIA_TYPE: MediaType = MediaType::Image;
 
     fn supported(content_type: &str) -> bool {
-        content_type.starts_with("image")
+        content_type.starts_with("image") && !content_type.starts_with("image/svg")
     }
 
     fn generate_thumbnail<P: AsRef<Path>>(

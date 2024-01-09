@@ -61,11 +61,22 @@ impl ImportFileHandler {
         let id = MediaId::new();
         let mut file = fs::File::open(file_path).await?;
         let file_size = file.metadata().await?.len();
-        let mut buffer = [0u8; 256];
-        file.read_exact(&mut buffer).await?;
-        let content_type = infer::get(&buffer)
-            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?
-            .mime_type();
+        let content_type = if file_size < 256 {
+            let mut buffer = vec![0u8; file_size as usize];
+            file.read_to_end(&mut buffer).await?;
+
+            infer::get(&buffer)
+        } else {
+            let mut buffer = [0u8; 256];
+            file.read_exact(&mut buffer).await?;
+
+            infer::get(&buffer)
+        };
+        let mime = mime_guess::from_path(file_path).first();
+        let content_type = content_type
+            .map(|content_type| content_type.mime_type())
+            .or_else(|| mime.as_ref().map(|mime| mime.essence_str()))
+            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?;
         log::debug!("got {} content type for {:?}", content_type, model);
 
         let (media_type, metadata) = if VideoHandler::supported(content_type) {

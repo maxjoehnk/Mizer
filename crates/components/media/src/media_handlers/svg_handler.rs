@@ -1,10 +1,12 @@
+use std::io::{Read, Write};
+use std::path::{Path, PathBuf};
+
+use resvg::tiny_skia::{self, Pixmap};
+use resvg::usvg::{self, Options, TreeParsing};
+
 use crate::documents::MediaType;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use resvg::tiny_skia::{self, Pixmap};
-use resvg::usvg::{self, Options, TreeParsing};
-use std::io::{Read, Write};
-use std::path::{Path, PathBuf};
 
 #[derive(Clone)]
 pub struct SvgHandler;
@@ -13,7 +15,7 @@ impl MediaHandler for SvgHandler {
     const MEDIA_TYPE: MediaType = MediaType::Vector;
 
     fn supported(content_type: &str) -> bool {
-        content_type == "text/xml"
+        content_type == "text/xml" || content_type == "image/svg+xml"
     }
 
     fn generate_thumbnail<P: AsRef<Path>>(

@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Tab;
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -17,6 +17,7 @@ import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
+import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
@@ -55,8 +56,8 @@ class NodesView extends StatefulWidget {
 
 class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   Offset? addMenuPosition;
-  bool showHiddenNodes = false;
   SelectionState? _selectionState;
+  String? nodeSearch;
 
   NodeEditorModel get model {
     return widget.nodeEditorModel;
@@ -172,16 +173,18 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           ),
           Container(
             width: SidebarWidth,
-            child: Column(children: [
-              Flexible(flex: 1, child: HiddenNodeList(nodes: model.hidden)),
-              if (model.selectedNode != null)
-                Flexible(
-                    flex: 2,
-                    child: Panel(
-                        label: model.selectedNode!.node.details.nodeTypeName,
-                        child: NodePropertiesPane(
-                            node: model.selectedNode!.node, onUpdate: _refresh))),
-            ]),
+            child: Panel(
+              padding: false,
+              onSearch: (search) => setState(() => nodeSearch = search),
+              tabs: [
+                Tab(
+                    label: "Properties".i18n,
+                    child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
+                Tab(
+                    label: "Hidden".i18n,
+                    child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+              ],
+            ),
           )
         ],
       ),

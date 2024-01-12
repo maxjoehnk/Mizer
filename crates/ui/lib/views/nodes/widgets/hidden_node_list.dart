@@ -15,7 +15,7 @@ class HiddenNodeList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: ListView(
           children: nodes
-              .search([(n) => n.node.path], search)
+              .search([(n) => n.node.path, (n) => n.node.details.displayName], search)
               .map((node) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
                     child: NodeControl(node, collapsed: true),

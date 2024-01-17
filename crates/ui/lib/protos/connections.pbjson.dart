@@ -151,6 +151,7 @@ const MonitorOscResponse_OscArgument$json = {
     {'1': 'double', '3': 4, '4': 1, '5': 1, '9': 0, '10': 'double'},
     {'1': 'bool', '3': 5, '4': 1, '5': 8, '9': 0, '10': 'bool'},
     {'1': 'color', '3': 6, '4': 1, '5': 11, '6': '.mizer.connections.MonitorOscResponse.OscArgument.OscColor', '9': 0, '10': 'color'},
+    {'1': 'string', '3': 7, '4': 1, '5': 9, '9': 0, '10': 'string'},
   ],
   '3': [MonitorOscResponse_OscArgument_OscColor$json],
   '8': [
@@ -173,13 +174,13 @@ const MonitorOscResponse_OscArgument_OscColor$json = {
 final $typed_data.Uint8List monitorOscResponseDescriptor = $convert.base64Decode(
     'ChJNb25pdG9yT3NjUmVzcG9uc2USHAoJdGltZXN0YW1wGAEgASgEUgl0aW1lc3RhbXASEgoEcG'
     'F0aBgCIAEoCVIEcGF0aBJFCgRhcmdzGAMgAygLMjEubWl6ZXIuY29ubmVjdGlvbnMuTW9uaXRv'
-    'ck9zY1Jlc3BvbnNlLk9zY0FyZ3VtZW50UgRhcmdzGr0CCgtPc2NBcmd1bWVudBISCgNpbnQYAS'
+    'ck9zY1Jlc3BvbnNlLk9zY0FyZ3VtZW50UgRhcmdzGtcCCgtPc2NBcmd1bWVudBISCgNpbnQYAS'
     'ABKAVIAFIDaW50EhYKBWZsb2F0GAIgASgCSABSBWZsb2F0EhQKBGxvbmcYAyABKANIAFIEbG9u'
     'ZxIYCgZkb3VibGUYBCABKAFIAFIGZG91YmxlEhQKBGJvb2wYBSABKAhIAFIEYm9vbBJSCgVjb2'
     'xvchgGIAEoCzI6Lm1pemVyLmNvbm5lY3Rpb25zLk1vbml0b3JPc2NSZXNwb25zZS5Pc2NBcmd1'
-    'bWVudC5Pc2NDb2xvckgAUgVjb2xvchpcCghPc2NDb2xvchIQCgNyZWQYASABKA1SA3JlZBIUCg'
-    'VncmVlbhgCIAEoDVIFZ3JlZW4SEgoEYmx1ZRgDIAEoDVIEYmx1ZRIUCgVhbHBoYRgEIAEoDVIF'
-    'YWxwaGFCCgoIYXJndW1lbnQ=');
+    'bWVudC5Pc2NDb2xvckgAUgVjb2xvchIYCgZzdHJpbmcYByABKAlIAFIGc3RyaW5nGlwKCE9zY0'
+    'NvbG9yEhAKA3JlZBgBIAEoDVIDcmVkEhQKBWdyZWVuGAIgASgNUgVncmVlbhISCgRibHVlGAMg'
+    'ASgNUgRibHVlEhQKBWFscGhhGAQgASgNUgVhbHBoYUIKCghhcmd1bWVudA==');
 
 @$core.Deprecated('Use getConnectionsRequestDescriptor instead')
 const GetConnectionsRequest$json = {

@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 use mizer_protocol_osc::*;
-use mizer_util::ConvertBytes;
+use mizer_util::{ConvertBytes, StructuredData};
 
 use crate::argument_type::OscArgumentType;
 use crate::OscInjectorExt;
@@ -63,9 +63,17 @@ impl PipelineNode for OscOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             node_type_name: "OSC Output".into(),
-            preview_type: PreviewType::History,
+            preview_type: match self.argument_type {
+                OscArgumentType::Color => PreviewType::Color,
+                OscArgumentType::String => PreviewType::Data,
+                _ => PreviewType::History,
+            },
             category: NodeCategory::Connections,
         }
+    }
+
+    fn display_name(&self, _injector: &Injector) -> String {
+        format!("OSC Output ({})", self.path)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
@@ -124,6 +132,7 @@ impl ProcessingNode for OscOutputNode {
                 context.read_port_changes::<_, Color>(self.argument_type.get_port_id())
             };
             if let Some(color) = value {
+                context.write_color_preview(color);
                 let color = OscColor {
                     red: color.red.to_8bit(),
                     green: color.green.to_8bit(),
@@ -136,10 +145,44 @@ impl ProcessingNode for OscOutputNode {
                 })?;
             }
         }
+        if self.argument_type.is_data() {
+            let value = if self.only_emit_changes {
+                context.read_port::<_, port_types::DATA>(self.argument_type.get_port_id())
+            } else {
+                context.read_port_changes::<_, port_types::DATA>(self.argument_type.get_port_id())
+            };
+            if let Some(data) = value {
+                context.write_data_preview(data.clone());
+                output.write(OscMessage {
+                    addr: self.path.clone(),
+                    args: map_data_to_osc(data),
+                })?;
+            }
+        }
+
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
         Default::default()
+    }
+}
+
+fn map_data_to_osc(data: StructuredData) -> Vec<OscType> {
+    match data {
+        StructuredData::Text(text) => vec![OscType::String(text)],
+        StructuredData::Boolean(boolean) => vec![OscType::Bool(boolean)],
+        StructuredData::Float(number) => vec![OscType::Double(number)],
+        StructuredData::Int(number) => vec![OscType::Long(number)],
+        StructuredData::Array(items) => items.into_iter().map(map_data_to_osc).flatten().collect(),
+        StructuredData::Object(items) => items
+            .into_iter()
+            .map(|(key, value)| {
+                let mut result = map_data_to_osc(value);
+                result.insert(0, OscType::String(key));
+                result
+            })
+            .flatten()
+            .collect(),
     }
 }

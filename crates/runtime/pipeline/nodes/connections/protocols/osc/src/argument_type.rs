@@ -1,11 +1,14 @@
+use std::fmt::{Display, Formatter};
+
 use enum_iterator::Sequence;
-use mizer_node::{PortId, PortType};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
+
+use mizer_node::{PortId, PortType};
 
 const NUMBER_PORT: &str = "Number";
 const COLOR_PORT: &str = "Color";
+const DATA_PORT: &str = "Data";
 
 #[derive(
     Debug,
@@ -28,6 +31,7 @@ pub enum OscArgumentType {
     Double,
     Bool,
     Color,
+    String,
 }
 
 impl OscArgumentType {
@@ -35,6 +39,7 @@ impl OscArgumentType {
         match self {
             Self::Int | Self::Float | Self::Long | Self::Double | Self::Bool => NUMBER_PORT.into(),
             Self::Color => COLOR_PORT.into(),
+            Self::String => DATA_PORT.into(),
         }
     }
 
@@ -46,6 +51,7 @@ impl OscArgumentType {
             Self::Double => PortType::Single,
             Self::Bool => PortType::Single,
             Self::Color => PortType::Color,
+            Self::String => PortType::Data,
         }
     }
 
@@ -58,6 +64,10 @@ impl OscArgumentType {
 
     pub(crate) fn is_color(&self) -> bool {
         matches!(self, Self::Color)
+    }
+
+    pub(crate) fn is_data(&self) -> bool {
+        matches!(self, Self::String)
     }
 }
 

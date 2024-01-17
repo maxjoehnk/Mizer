@@ -236,15 +236,12 @@ impl From<mizer_connections::OscType> for monitor_osc_response::OscArgument {
                 green: value.green as u32,
                 blue: value.blue as u32,
                 alpha: value.alpha as u32,
-                ..Default::default()
             })),
+            String(value) => Some(Argument::String(value)),
             _ => None,
         };
 
-        Self {
-            argument,
-            ..Default::default()
-        }
+        Self { argument }
     }
 }
 

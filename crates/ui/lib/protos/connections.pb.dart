@@ -708,6 +708,7 @@ enum MonitorOscResponse_OscArgument_Argument {
   double_4, 
   bool_5, 
   color, 
+  string, 
   notSet
 }
 
@@ -719,6 +720,7 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
     $core.double? double_4,
     $core.bool? bool_5,
     MonitorOscResponse_OscArgument_OscColor? color,
+    $core.String? string,
   }) {
     final $result = create();
     if (int_1 != null) {
@@ -739,6 +741,9 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
     if (color != null) {
       $result.color = color;
     }
+    if (string != null) {
+      $result.string = string;
+    }
     return $result;
   }
   MonitorOscResponse_OscArgument._() : super();
@@ -752,16 +757,18 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
     4 : MonitorOscResponse_OscArgument_Argument.double_4,
     5 : MonitorOscResponse_OscArgument_Argument.bool_5,
     6 : MonitorOscResponse_OscArgument_Argument.color,
+    7 : MonitorOscResponse_OscArgument_Argument.string,
     0 : MonitorOscResponse_OscArgument_Argument.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MonitorOscResponse.OscArgument', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7])
     ..a<$core.int>(1, _omitFieldNames ? '' : 'int', $pb.PbFieldType.O3)
     ..a<$core.double>(2, _omitFieldNames ? '' : 'float', $pb.PbFieldType.OF)
     ..aInt64(3, _omitFieldNames ? '' : 'long')
     ..a<$core.double>(4, _omitFieldNames ? '' : 'double', $pb.PbFieldType.OD)
     ..aOB(5, _omitFieldNames ? '' : 'bool')
     ..aOM<MonitorOscResponse_OscArgument_OscColor>(6, _omitFieldNames ? '' : 'color', subBuilder: MonitorOscResponse_OscArgument_OscColor.create)
+    ..aOS(7, _omitFieldNames ? '' : 'string')
     ..hasRequiredFields = false
   ;
 
@@ -844,6 +851,15 @@ class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
   void clearColor() => clearField(6);
   @$pb.TagNumber(6)
   MonitorOscResponse_OscArgument_OscColor ensureColor() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  $core.String get string => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set string($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasString() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearString() => clearField(7);
 }
 
 class MonitorOscResponse extends $pb.GeneratedMessage {

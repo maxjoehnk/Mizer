@@ -60,6 +60,7 @@ message MonitorOscResponse {
       double double = 4;
       bool bool = 5;
       OscColor color = 6;
+      string string = 7;
     }
 
     message OscColor {

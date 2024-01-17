@@ -3,35 +3,36 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 
 import 'bindings.dart';
+import 'ffi_pointer.dart';
 
-class LayoutsRefPointer {
+class LayoutsRefPointer extends FFIPointer<LayoutRef> {
   final FFIBindings _bindings;
-  final ffi.Pointer<LayoutRef> _ptr;
 
-  LayoutsRefPointer(this._bindings, this._ptr);
+  LayoutsRefPointer(this._bindings, ffi.Pointer<LayoutRef> ptr) : super(ptr);
 
   double readFaderValue(String path) {
     var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_fader_value(_ptr, ffiPath.cast<ffi.Char>());
+    var result = this._bindings.read_fader_value(ptr, ffiPath.cast<ffi.Char>());
 
     return result;
   }
 
   bool readButtonValue(String path) {
     var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_button_value(_ptr, ffiPath.cast<ffi.Char>());
+    var result = this._bindings.read_button_value(ptr, ffiPath.cast<ffi.Char>());
 
     return result == 1;
   }
 
   String readLabelValue(String path) {
     var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_label_value(_ptr, ffiPath.cast<ffi.Char>());
+    var result = this._bindings.read_label_value(ptr, ffiPath.cast<ffi.Char>());
 
     return result.cast<Utf8>().toDartString();
   }
 
-  void dispose() {
+  @override
+  void disposePointer(ffi.Pointer<LayoutRef> _ptr) {
     this._bindings.drop_layout_pointer(_ptr);
   }
 }

@@ -5,6 +5,7 @@ import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
 import 'bindings.dart';
+import 'ffi_pointer.dart';
 
 Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Intensity: FixtureControl.INTENSITY,
@@ -21,14 +22,13 @@ Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Gobo: FixtureControl.GOBO,
 };
 
-class ProgrammerStatePointer {
+class ProgrammerStatePointer extends FFIPointer<Programmer> {
   final FFIBindings _bindings;
-  final ffi.Pointer<Programmer> _ptr;
 
-  ProgrammerStatePointer(this._bindings, this._ptr);
+  ProgrammerStatePointer(this._bindings, ffi.Pointer<Programmer> ptr) : super(ptr);
 
   ProgrammerState readState() {
-    var state = this._bindings.read_programmer_state(_ptr);
+    var state = this._bindings.read_programmer_state(ptr);
     var activeFixtures = _readFixtureSelection(state.active_fixtures);
     var fixtures = _readFixtureSelection(state.fixtures);
     var selection = _readGroupedFixtureSelection(state.selection);
@@ -117,7 +117,8 @@ class ProgrammerStatePointer {
     }).toList();
   }
 
-  void dispose() {
+  @override
+  void disposePointer(ffi.Pointer<Programmer> _ptr) {
     this._bindings.drop_programmer_pointer(_ptr);
   }
 }

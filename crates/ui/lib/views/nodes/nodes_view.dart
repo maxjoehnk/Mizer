@@ -27,6 +27,7 @@ import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
+import 'widgets/node/preview.dart';
 import 'widgets/properties/properties_pane.dart';
 
 const double SidebarWidth = 300;
@@ -173,16 +174,32 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           ),
           Container(
             width: SidebarWidth,
-            child: Panel(
-              padding: false,
-              onSearch: (search) => setState(() => nodeSearch = search),
-              tabs: [
-                Tab(
-                    label: "Properties".i18n,
-                    child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
-                Tab(
-                    label: "Hidden".i18n,
-                    child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Panel(
+                    padding: false,
+                    onSearch: (search) => setState(() => nodeSearch = search),
+                    tabs: [
+                      Tab(
+                          label: "Properties".i18n,
+                          child: NodePropertiesPane(
+                              node: model.selectedNode?.node, onUpdate: _refresh)),
+                      Tab(
+                          label: "Hidden".i18n,
+                          child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Panel(
+                    label: "Preview".i18n,
+                    child: model.selectedNode == null
+                        ? Container()
+                        : NodePreview(model.selectedNode!.node),
+                  ),
+                )
               ],
             ),
           )

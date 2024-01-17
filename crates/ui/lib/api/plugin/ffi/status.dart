@@ -1,20 +1,21 @@
 import 'dart:ffi' as ffi;
 
 import 'bindings.dart';
+import 'ffi_pointer.dart';
 
-class StatusPointer {
+class StatusPointer extends FFIPointer<StatusApi> {
   final FFIBindings _bindings;
-  final ffi.Pointer<StatusApi> _ptr;
 
-  StatusPointer(this._bindings, this._ptr);
+  StatusPointer(this._bindings, ffi.Pointer<StatusApi> ptr) : super(ptr);
 
   double readFps() {
-    var result = this._bindings.read_fps(_ptr);
+    var result = this._bindings.read_fps(ptr);
 
     return result;
   }
 
-  void dispose() {
+  @override
+  void disposePointer(ffi.Pointer<StatusApi> _ptr) {
     this._bindings.drop_status_pointer(_ptr);
   }
 }

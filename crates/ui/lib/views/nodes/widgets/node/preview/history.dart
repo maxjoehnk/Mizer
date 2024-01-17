@@ -9,13 +9,48 @@ class HistoryRenderer extends StatefulWidget {
   HistoryRenderer(this.pluginApi, this.path);
 
   @override
-  State<HistoryRenderer> createState() => _HistoryRendererState(pluginApi.getHistoryPointer(path));
+  State<HistoryRenderer> createState() => _HistoryRendererState();
 }
 
 class _HistoryRendererState extends State<HistoryRenderer> {
-  final Future<NodeHistoryPointer> history;
+  NodeHistoryPointer? pointer;
 
-  _HistoryRendererState(this.history);
+  _HistoryRendererState();
+
+  @override
+  void initState() {
+    super.initState();
+    _updatePointer();
+  }
+
+  @override
+  void didUpdateWidget(HistoryRenderer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.path != widget.path) {
+      _updatePointer();
+    }
+  }
+
+  void _updatePointer() {
+    widget.pluginApi.getHistoryPointer(widget.path).then((ptr) {
+      if (pointer != null) {
+        pointer!.dispose();
+        pointer = null;
+      }
+      setState(() {
+        pointer = ptr;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (pointer != null) {
+      pointer!.dispose();
+      pointer = null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +59,7 @@ class _HistoryRendererState extends State<HistoryRenderer> {
         height: 200,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(2)),
         clipBehavior: Clip.antiAlias,
-        child: FutureBuilder(
-          future: history,
-          builder: (context, AsyncSnapshot<NodeHistoryPointer> snapshot) {
-            if (!snapshot.hasData) {
-              return Container();
-            }
-
-            return HistoryPaint(pointer: snapshot.data!);
-          },
-        ));
+        child: pointer == null ? Container() : HistoryPaint(pointer: pointer!));
   }
 }
 
@@ -43,20 +69,23 @@ class HistoryPaint extends StatefulWidget {
   const HistoryPaint({required this.pointer, Key? key}) : super(key: key);
 
   @override
-  State<HistoryPaint> createState() => _HistoryPaintState(pointer);
+  State<HistoryPaint> createState() => _HistoryPaintState();
 }
 
 class _HistoryPaintState extends State<HistoryPaint> with SingleTickerProviderStateMixin {
-  final NodeHistoryPointer pointer;
   List<double> history = [];
   late final Ticker ticker;
-
-  _HistoryPaintState(this.pointer);
 
   @override
   void initState() {
     super.initState();
-    ticker = createTicker((elapsed) => setState(() => history = pointer.readHistory()));
+    ticker = createTicker((elapsed) => setState(() {
+          if (widget.pointer.isDisposed) {
+            history = [];
+            return;
+          }
+          history = widget.pointer.readHistory();
+        }));
     ticker.start();
   }
 
@@ -68,7 +97,6 @@ class _HistoryPaintState extends State<HistoryPaint> with SingleTickerProviderSt
   @override
   void dispose() {
     ticker.dispose();
-    pointer.dispose();
     super.dispose();
   }
 }

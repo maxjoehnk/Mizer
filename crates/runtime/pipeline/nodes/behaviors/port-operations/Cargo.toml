@@ -12,7 +12,7 @@ serde = { version = "1", features = ["derive"] }
 itertools = "0.12"
 rand = "0.8"
 mizer-util = { path = "../../../../../util" }
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"
 mizer-wgpu = { path = "../../../../wgpu" }
 mizer-protocol-laser = { path = "../../../../../components/connections/protocols/laser" }

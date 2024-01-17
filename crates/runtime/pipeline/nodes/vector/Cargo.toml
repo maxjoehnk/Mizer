@@ -9,7 +9,7 @@ anyhow = "1"
 tracing = "0.1"
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"
 mizer-wgpu = { path = "../../../wgpu" }
 profiling = "1"

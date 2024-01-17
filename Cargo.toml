@@ -128,7 +128,7 @@ tracing-appender = "0.2"
 log = "0.4"
 anyhow = "1"
 structopt = "0.3"
-metrics = "0.21"
+metrics = "0.22"
 mizer-media = { path = "crates/components/media" }
 mizer-project-files = { path = "crates/projects" }
 mizer-fixtures = { path = "crates/components/fixtures" }

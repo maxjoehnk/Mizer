@@ -27,7 +27,7 @@ use mizer::{build_runtime, Flags};
 #[test_case("timecode"; "timecode")]
 #[test_case("video"; "video")]
 fn test_build_project_pipeline(project: &str) {
-    let _ = tracing::subscriber::set_default(
+    let _ = tracing::subscriber::set_global_default(
         tracing_subscriber::fmt()
             .with_max_level(Level::DEBUG)
             .with_test_writer()

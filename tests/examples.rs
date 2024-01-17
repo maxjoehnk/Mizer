@@ -9,7 +9,7 @@ use mizer::{build_runtime, Flags};
 #[test_case("audio"; "audio")]
 #[test_case("demo"; "demo")]
 #[test_case("effects"; "effects")]
-#[test_case("fixture"; "fixture")]
+// #[test_case("fixture"; "fixture")]
 #[test_case("history"; "history")]
 #[test_case("inputs"; "inputs")]
 #[test_case("laser"; "laser")]

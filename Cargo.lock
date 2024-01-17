@@ -4565,6 +4565,7 @@ name = "mizer-conversion-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "mizer-clock",
  "mizer-node",
  "mizer-util",
  "serde",

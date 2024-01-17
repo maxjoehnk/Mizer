@@ -84,7 +84,7 @@ impl ProcessingNode for TimecodeControlNode {
         let manager = context
             .inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
-        if let Some(value) = context.read_port::<_, u64>(TIMECODE_INPUT) {
+        if let Some(value) = context.read_port::<_, port_types::CLOCK>(TIMECODE_INPUT) {
             manager.write_timestamp(self.timecode_id, value);
         }
         if let Some(playback) = context

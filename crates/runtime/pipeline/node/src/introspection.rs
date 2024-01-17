@@ -126,6 +126,7 @@ node_type_name! {
         NumberToData,
         DataToNumber,
         MultiToData,
+        NumberToClock,
         Value,
         Extract,
         PlanScreen,

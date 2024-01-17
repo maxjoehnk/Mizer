@@ -118,6 +118,7 @@ pub mod port_types {
     pub type COLOR = super::Color;
     pub type DATA = StructuredData;
     pub type VECTOR = VectorData;
+    pub type CLOCK = u64;
 }
 
 impl Display for PortType {

@@ -24,7 +24,7 @@ pub trait Module: Sized + Display {
         let module = self.to_string();
         tracing::debug!("Registering {module}...");
         if let Err(err) = self.register(context) {
-            tracing::error!("Failed to load required module: {module}: {err:?}");
+            tracing::error!("Failed to load module: {module}: {err:?}");
             if Self::IS_REQUIRED {
                 panic!("Failed to load required module: {module}: {err:?}");
             }

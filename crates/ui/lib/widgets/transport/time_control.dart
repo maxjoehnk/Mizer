@@ -55,8 +55,9 @@ class _StreamTimeControl extends StatelessWidget {
 
 class FFITimeControl extends StatefulWidget {
   final TimecodeReader pointer;
+  final TextStyle? textStyle;
 
-  const FFITimeControl({required this.pointer, Key? key}) : super(key: key);
+  const FFITimeControl({required this.pointer, Key? key, this.textStyle}) : super(key: key);
 
   @override
   _FFITimeControlState createState() => _FFITimeControlState(pointer);
@@ -81,7 +82,13 @@ class _FFITimeControlState extends State<FFITimeControl> with SingleTickerProvid
     if (timecode == null) {
       return Container();
     }
-    return _TimeFormat(hours: timecode!.hours, minutes: timecode!.minutes, seconds: timecode!.seconds, frames: timecode!.frames, negative: timecode!.is_negative > 0);
+    return _TimeFormat(
+        hours: timecode!.hours,
+        minutes: timecode!.minutes,
+        seconds: timecode!.seconds,
+        frames: timecode!.frames,
+        negative: timecode!.is_negative > 0,
+        textStyle: widget.textStyle);
   }
 
   @override
@@ -98,14 +105,23 @@ class _TimeFormat extends StatelessWidget {
   final int seconds;
   final int frames;
   final bool negative;
+  final TextStyle? textStyle;
 
-  const _TimeFormat({Key? key, required this.hours, required this.minutes, required this.seconds, required this.frames, this.negative = false}) : super(key: key);
+  const _TimeFormat(
+      {Key? key,
+      required this.hours,
+      required this.minutes,
+      required this.seconds,
+      required this.frames,
+      this.negative = false,
+      this.textStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
 
-    return Text(_formatTime(), textAlign: TextAlign.center, style: style.headline5);
+    return Text(_formatTime(), textAlign: TextAlign.center, style: textStyle ?? style.headline5);
   }
 
   String _formatTime() {

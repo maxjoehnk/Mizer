@@ -1,12 +1,16 @@
-use crate::types::{drop_pointer, FFIFromPointer};
-use mizer_clock::ClockSnapshot;
-use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+
+use pinboard::NonEmptyPinboard;
+
+use mizer_clock::ClockSnapshot;
+
+use crate::types::{drop_pointer, FFIFromPointer};
 
 pub struct Transport {
     pub clock_ref: Arc<NonEmptyPinboard<ClockSnapshot>>,
 }
 
+#[derive(Default)]
 #[repr(C)]
 pub struct Timecode {
     pub hours: u64,

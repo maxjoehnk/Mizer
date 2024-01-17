@@ -1,7 +1,9 @@
-use mizer_util::Spline;
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
+
+use serde::{Deserialize, Serialize};
+
+use mizer_util::Spline;
 
 // TODO: rename to something more fitting
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
@@ -37,7 +39,7 @@ impl TimecodeControlValues {
         self.spline.sample(timestamp as f64, max_frame)
     }
 
-    pub fn out_of_bounds(&self, timestamp: u64) -> bool {
+    pub fn is_out_of_bounds(&self, timestamp: u64) -> bool {
         let max_frame = self
             .spline
             .steps

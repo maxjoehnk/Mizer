@@ -20,6 +20,6 @@ extension ContextStateExtensions on BuildContext {
     this.read<PresetsBloc>().add(FetchPresets());
     this.read<PlansBloc>().add(FetchPlans());
     this.read<EffectsBloc>().add(FetchEffects());
-    this.read<TimecodeBloc>().fetch();
+    this.read<TimecodeBloc>().add(FetchTimecodes());
   }
 }

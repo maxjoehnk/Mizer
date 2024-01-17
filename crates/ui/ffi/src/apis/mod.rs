@@ -6,4 +6,5 @@ pub mod nodes;
 pub mod programmer;
 pub mod sequencer;
 pub mod status;
+pub mod timecode;
 pub mod transport;

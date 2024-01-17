@@ -6,6 +6,7 @@ use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::Timecode;
+use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ClockFrame;
 
 use crate::model::*;
@@ -19,6 +20,7 @@ pub struct TimecodeManager {
     control_counter: Arc<AtomicU32>,
     controls: Arc<NonEmptyPinboard<HashMap<TimecodeControlId, TimecodeControl>>>,
     timecode_states: Arc<DashMap<TimecodeId, TimecodeState>>,
+    timecode_bus: Arc<MessageBus<Vec<TimecodeTrack>>>,
 }
 
 #[derive(Default, Debug, Copy, Clone, PartialEq)]
@@ -41,6 +43,7 @@ impl Default for TimecodeManager {
             control_counter: Arc::new(AtomicU32::new(1)),
             controls: Arc::new(NonEmptyPinboard::new(Default::default())),
             timecode_states: Arc::new(Default::default()),
+            timecode_bus: Arc::new(Default::default()),
         }
     }
 }
@@ -56,6 +59,7 @@ impl TimecodeManager {
         self.control_counter.store(1, Ordering::Relaxed);
         self.controls.set(Default::default());
         self.timecode_states.clear();
+        self.emit_bus();
     }
 
     pub fn load_timecodes(&self, timecodes: Vec<TimecodeTrack>, controls: Vec<TimecodeControl>) {
@@ -71,10 +75,15 @@ impl TimecodeManager {
         self.controls
             .set(controls.into_iter().map(|c| (c.id, c)).collect());
         self.control_counter.store(control_id.0, Ordering::Relaxed);
+        self.emit_bus();
     }
 
     pub fn timecodes(&self) -> Vec<TimecodeTrack> {
         self.timecodes.read().into_values().collect()
+    }
+
+    pub fn observe_timecodes(&self) -> Subscriber<Vec<TimecodeTrack>> {
+        self.timecode_bus.subscribe()
     }
 
     pub fn controls(&self) -> Vec<TimecodeControl> {
@@ -99,6 +108,7 @@ impl TimecodeManager {
         timecodes.insert(timecode.id, timecode.clone());
         self.timecode_states.insert(timecode.id, Default::default());
         self.timecodes.set(timecodes);
+        self.emit_bus();
 
         timecode
     }
@@ -108,12 +118,14 @@ impl TimecodeManager {
         self.timecode_states.insert(timecode.id, Default::default());
         timecodes.insert(timecode.id, timecode);
         self.timecodes.set(timecodes);
+        self.emit_bus();
     }
 
     pub(crate) fn remove_timecode(&self, timecode_id: TimecodeId) -> Option<TimecodeTrack> {
         let mut timecodes = self.timecodes.read();
         let timecode = timecodes.remove(&timecode_id);
         self.timecodes.set(timecodes);
+        self.emit_bus();
 
         timecode
     }
@@ -129,6 +141,7 @@ impl TimecodeManager {
             .ok_or_else(|| anyhow::anyhow!("Unknown timecode {}", timecode_id))?;
         update(timecode);
         self.timecodes.set(timecodes);
+        self.emit_bus();
 
         Ok(())
     }
@@ -149,6 +162,7 @@ impl TimecodeManager {
             });
         }
         self.timecodes.set(timecodes);
+        self.emit_bus();
 
         timecode_control
     }
@@ -176,6 +190,7 @@ impl TimecodeManager {
             timecode.controls.push(control_value);
         }
         self.timecodes.set(timecodes);
+        self.emit_bus();
     }
 
     pub(crate) fn remove_timecode_control(
@@ -198,6 +213,7 @@ impl TimecodeManager {
             }
         }
         self.timecodes.set(timecodes);
+        self.emit_bus();
 
         timecode_control.map(|control| (control, values))
     }
@@ -213,6 +229,7 @@ impl TimecodeManager {
             .ok_or_else(|| anyhow::anyhow!("Unknown Timecode Control {}", timecode_control_id))?;
         update(timecode_control);
         self.controls.set(timecode_controls);
+        self.emit_bus();
 
         Ok(())
     }
@@ -231,7 +248,7 @@ impl TimecodeManager {
         }
 
         let timestamp = state.timestamp.max(0) as u64;
-        if control.out_of_bounds(timestamp) {
+        if control.is_out_of_bounds(timestamp) {
             return None;
         }
 
@@ -271,12 +288,14 @@ impl TimecodeManager {
     }
 
     pub fn get_state_access(&self, id: TimecodeId) -> Option<TimecodeStateAccess> {
-        let timecodes = self.timecodes.read();
-
-        timecodes.get(&id).map(|_| TimecodeStateAccess {
+        self.timecode_states.get(&id).map(|_| TimecodeStateAccess {
             id,
             states: Arc::clone(&self.timecode_states),
         })
+    }
+
+    fn emit_bus(&self) {
+        self.timecode_bus.send(self.timecodes());
     }
 }
 

@@ -5708,6 +5708,7 @@ dependencies = [
  "log",
  "mizer-clock",
  "mizer-commander",
+ "mizer-message-bus",
  "mizer-module",
  "mizer-util",
  "pinboard",

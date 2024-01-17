@@ -7,6 +7,7 @@ pub use self::session::*;
 pub use self::settings::*;
 pub use self::status::*;
 pub use self::surfaces::*;
+pub use self::timecode::*;
 pub use self::transport::*;
 
 mod history;
@@ -18,4 +19,5 @@ mod session;
 mod settings;
 mod status;
 mod surfaces;
+mod timecode;
 mod transport;

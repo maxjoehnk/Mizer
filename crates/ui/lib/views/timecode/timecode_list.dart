@@ -1,22 +1,47 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/api/contracts/timecode.dart';
+import 'package:mizer/api/plugin/ffi/timecode.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
+import 'package:mizer/widgets/transport/time_control.dart';
 import 'package:provider/provider.dart';
 
 import 'dialogs/add_timecode_dialog.dart';
 
-class TimecodeList extends StatelessWidget {
+class TimecodeList extends StatefulWidget {
   final List<Timecode> timecodes;
   final Function(Timecode) onSelect;
   final Timecode? selectedTimecode;
 
   TimecodeList({required this.timecodes, required this.onSelect, this.selectedTimecode, Key? key})
       : super(key: key);
+
+  @override
+  State<TimecodeList> createState() => _TimecodeListState();
+}
+
+class _TimecodeListState extends State<TimecodeList> {
+  TimecodePointer? _timecodePointer;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<TimecodeApi>().getTimecodePointer().then((value) => setState(() {
+          _timecodePointer = value;
+        }));
+  }
+
+  @override
+  void dispose() {
+    _timecodePointer?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +51,7 @@ class TimecodeList extends StatelessWidget {
           PanelActionModel(label: "Add Timecode", onClick: () => _addTimecode(context)),
           PanelActionModel(
               label: "Delete",
-              disabled: selectedTimecode == null,
+              disabled: widget.selectedTimecode == null,
               onClick: () => _deleteTimecode(context))
         ],
         child: GridView(
@@ -38,11 +63,12 @@ class TimecodeList extends StatelessWidget {
               mainAxisSpacing: 4,
               childAspectRatio: 1,
             ),
-            children: timecodes
+            children: widget.timecodes
                 .map((t) => TimecodePane(
                     timecode: t,
-                    selected: t.id == this.selectedTimecode?.id,
-                    onSelect: () => onSelect(t)))
+                    selected: t.id == this.widget.selectedTimecode?.id,
+                    onSelect: () => widget.onSelect(t),
+                    reader: _timecodePointer?.getTrackReader(t.id)))
                 .toList()));
   }
 
@@ -58,7 +84,7 @@ class TimecodeList extends StatelessWidget {
 
   void _deleteTimecode(BuildContext context) {
     TimecodeBloc bloc = context.read();
-    bloc.deleteTimecode(selectedTimecode!.id);
+    bloc.deleteTimecode(widget.selectedTimecode!.id);
   }
 }
 
@@ -66,12 +92,19 @@ class TimecodePane extends StatelessWidget {
   final Timecode timecode;
   final bool selected;
   final Function() onSelect;
+  final TimecodeReader? reader;
 
-  TimecodePane({required this.timecode, required this.selected, required this.onSelect, Key? key})
+  TimecodePane(
+      {required this.timecode,
+      required this.selected,
+      required this.onSelect,
+      Key? key,
+      this.reader})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var style = Theme.of(context).textTheme;
     return GestureDetector(
       onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
           position: details.globalPosition,
@@ -96,6 +129,11 @@ class TimecodePane extends StatelessWidget {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                   Text(timecode.id.toString(), textAlign: TextAlign.start),
                   AutoSizeText(timecode.name, textAlign: TextAlign.center, maxLines: 2),
+                  if (reader != null)
+                    FFITimeControl(
+                      pointer: reader!,
+                      textStyle: style.bodyMedium,
+                    ),
                 ]),
               )),
     );

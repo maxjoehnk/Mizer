@@ -10,9 +10,17 @@ const OUTPUT_PORT: &str = "Output";
 
 const TEMPLATE_SETTING: &str = "Template";
 
-#[derive(Default, Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct TemplateNode {
     pub template: String,
+}
+
+impl Default for TemplateNode {
+    fn default() -> Self {
+        Self {
+            template: "values".to_string(),
+        }
+    }
 }
 
 impl ConfigurableNode for TemplateNode {

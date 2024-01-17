@@ -37,6 +37,7 @@ impl Mizer {
     pub fn run(&mut self, api_handler: &ApiHandler) {
         profiling::register_thread!("Main Loop");
         log::trace!("Entering main loop...");
+        let histogram = metrics::histogram!("mizer.frame_time");
         let mut last_start = std::time::Instant::now();
         loop {
             let frame_delay = Duration::from_secs_f64(1f64 / self.runtime.fps());
@@ -49,7 +50,7 @@ impl Mizer {
             last_start = before;
             let after = std::time::Instant::now();
             let frame_time = after.duration_since(before);
-            metrics::histogram!("mizer.frame_time", frame_time);
+            histogram.record(frame_time);
             if frame_time <= frame_delay {
                 spin_sleep::sleep(frame_delay - frame_time);
             }

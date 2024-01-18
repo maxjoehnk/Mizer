@@ -12,7 +12,7 @@ serde = { version = "1", features = ["derive"] }
 mizer-protocol-dmx = { path = "../../../../components/connections/protocols/dmx" }
 mizer-util = { path = "../../../../util" }
 test-case = "3.3"
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"
 tracing = "0.1"
 image = "0.24"

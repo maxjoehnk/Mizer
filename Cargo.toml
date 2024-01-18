@@ -177,7 +177,7 @@ rayon = "1.8"
 serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.32", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.32"
-spin_sleep = "1.1"
+spin_sleep = "1.2"
 ffmpeg-the-third = { version = "1.2", features = ["static"] }
 rolling-file = "0.2"
 

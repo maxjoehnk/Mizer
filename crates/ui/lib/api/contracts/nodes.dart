@@ -35,4 +35,7 @@ abstract class NodesApi {
   Future<void> groupNodes(List<String> nodes, {String? parent});
 
   Future<NodesPointer> getNodesPointer();
+
+  Future<void> openNodesView();
+  Future<void> closeNodesView();
 }

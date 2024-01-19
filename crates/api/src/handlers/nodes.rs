@@ -301,4 +301,16 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         Ok(())
     }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn open_nodes_view(&self) {
+        self.runtime.open_nodes_view();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn close_nodes_view(&self) {
+        self.runtime.close_nodes_view();
+    }
 }

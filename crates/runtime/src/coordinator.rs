@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::io::Write;
+use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -57,6 +58,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     layout_fader_view: LayoutsView,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     status_bus: StatusBus,
+    read_node_settings: Arc<AtomicBool>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -86,6 +88,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             layout_fader_view: Default::default(),
             node_metadata,
             status_bus: Default::default(),
+            read_node_settings: Arc::new(AtomicBool::new(false)),
         };
         runtime.bootstrap();
 
@@ -186,6 +189,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_snapshot: self.clock_snapshot.clone(),
             layouts_view: self.layout_fader_view.clone(),
             status_bus: self.status_bus.clone(),
+            read_node_settings: self.read_node_settings.clone(),
         }
     }
 
@@ -240,6 +244,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         } else {
             self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         }
+        self.read_node_settings();
     }
 
     #[profiling::function]
@@ -432,7 +437,12 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
-        self.read_node_settings();
+        if self
+            .read_node_settings
+            .load(std::sync::atomic::Ordering::Relaxed)
+        {
+            self.read_node_settings();
+        }
         self.read_node_metadata();
         // TODO: add safe way to access mutable and immutable parts of the injector
         let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };

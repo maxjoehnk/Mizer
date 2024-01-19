@@ -88,6 +88,9 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn layouts_view(&self) -> LayoutsView;
 
     fn get_service<T: 'static + Send + Sync + Clone>(&self) -> Option<&T>;
+
+    fn open_nodes_view(&self);
+    fn close_nodes_view(&self);
 }
 
 pub fn start_remote_api<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<u16> {

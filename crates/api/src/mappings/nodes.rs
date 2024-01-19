@@ -177,7 +177,7 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
         node.outputs.push(output.into());
     }
 
-    log::debug!("{:?}", node);
+    log::trace!("{node:?}");
 
     node
 }

@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
+import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -296,7 +297,20 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       WidgetsBinding.instance.addObserver(this);
       afterLayout(context);
     });
+    context.read<NodesApi>().openNodesView();
     super.initState();
+  }
+
+  @override
+  void activate() {
+    context.read<NodesApi>().openNodesView();
+    super.activate();
+  }
+
+  @override
+  void deactivate() {
+    context.read<NodesApi>().closeNodesView();
+    super.deactivate();
   }
 
   @override

@@ -122,4 +122,14 @@ class NodesPluginApi implements NodesApi {
 
     return this.bindings.openNodesRef(pointer);
   }
+
+  @override
+  Future<void> closeNodesView() async {
+    await channel.invokeMethod("closeNodesView");
+  }
+
+  @override
+  Future<void> openNodesView() async {
+    await channel.invokeMethod("openNodesView");
+  }
 }

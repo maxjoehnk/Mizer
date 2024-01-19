@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::sync::atomic::AtomicU8;
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
@@ -32,6 +33,7 @@ pub struct Api {
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
     device_manager: DeviceManager,
     api_injector: ApiInjector,
+    open_node_views: Arc<AtomicU8>,
 }
 
 impl RuntimeApi for Api {
@@ -307,6 +309,22 @@ impl RuntimeApi for Api {
     fn get_service<T: 'static + Send + Sync + Clone>(&self) -> Option<&T> {
         self.api_injector.get()
     }
+
+    #[profiling::function]
+    fn open_nodes_view(&self) {
+        tracing::debug!("Opening nodes view");
+        self.open_node_views
+            .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        self.update_read_node_settings();
+    }
+
+    #[profiling::function]
+    fn close_nodes_view(&self) {
+        tracing::debug!("Closing nodes view");
+        self.open_node_views
+            .fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+        self.update_read_node_settings();
+    }
 }
 
 impl Api {
@@ -331,6 +349,7 @@ impl Api {
                 settings_bus: MessageBus::new(),
                 history_bus: MessageBus::new(),
                 device_manager,
+                open_node_views: Arc::new(AtomicU8::new(0)),
             },
         )
     }
@@ -374,5 +393,15 @@ impl Api {
         self.device_manager
             .get_gamepad(&id)
             .map(|gamepad| gamepad.value().clone())
+    }
+
+    fn update_read_node_settings(&self) {
+        let open_views = self
+            .open_node_views
+            .load(std::sync::atomic::Ordering::SeqCst);
+        tracing::debug!("Open views: {open_views}");
+        self.access
+            .read_node_settings
+            .store(open_views > 0, std::sync::atomic::Ordering::SeqCst);
     }
 }

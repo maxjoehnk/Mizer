@@ -155,6 +155,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
+            "openNodesView" => {
+                self.handler.open_nodes_view();
+                resp.send_ok(Value::Null);
+            },
+            "closeNodesView" => {
+                self.handler.close_nodes_view();
+                resp.send_ok(Value::Null);
+            },
             _ => resp.not_implemented(),
         }
     }

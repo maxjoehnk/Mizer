@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 
 use dashmap::mapref::one::Ref;
@@ -31,6 +32,7 @@ pub struct RuntimeAccess {
     pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     pub layouts_view: LayoutsView,
     pub status_bus: StatusBus,
+    pub read_node_settings: Arc<AtomicBool>,
 }
 
 pub struct NodeDescriptor<'a> {

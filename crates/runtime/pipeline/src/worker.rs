@@ -252,7 +252,9 @@ impl PipelineWorker {
             PortType::Single => {
                 self.connect_memory_ports::<port_types::SINGLE>(link, source_meta, target_meta)
             }
-            PortType::Clock => self.connect_memory_ports::<u64>(link, source_meta, target_meta),
+            PortType::Clock => {
+                self.connect_memory_ports::<port_types::CLOCK>(link, source_meta, target_meta)
+            }
             PortType::Color => {
                 self.connect_memory_ports::<port_types::COLOR>(link, source_meta, target_meta)
             }
@@ -285,7 +287,7 @@ impl PipelineWorker {
     pub fn disconnect_port(&mut self, link: &NodeLink) {
         match link.port_type {
             PortType::Single => self.disconnect_memory_ports::<port_types::SINGLE>(link),
-            PortType::Clock => self.disconnect_memory_ports::<u64>(link),
+            PortType::Clock => self.disconnect_memory_ports::<port_types::CLOCK>(link),
             PortType::Color => self.disconnect_memory_ports::<port_types::COLOR>(link),
             PortType::Multi => self.disconnect_memory_ports::<port_types::MULTI>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
@@ -567,7 +569,7 @@ fn register_receiver(
         PortType::Multi => receivers.register::<port_types::MULTI>(port_id, metadata),
         PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
         PortType::Data => receivers.register::<port_types::DATA>(port_id, metadata),
-        PortType::Clock => receivers.register::<u64>(port_id, metadata),
+        PortType::Clock => receivers.register::<port_types::CLOCK>(port_id, metadata),
         PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
         PortType::Vector => receivers.register::<port_types::VECTOR>(port_id, metadata),
         port_type => log::debug!("TODO: implement port type {:?}", port_type),

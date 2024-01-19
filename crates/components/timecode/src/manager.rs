@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::Arc;
+use std::time::{Duration, Instant};
 
 use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::Timecode;
 use mizer_message_bus::{MessageBus, Subscriber};
-use mizer_module::ClockFrame;
 
 use crate::model::*;
 
@@ -25,13 +25,13 @@ pub struct TimecodeManager {
 
 #[derive(Default, Debug, Copy, Clone, PartialEq)]
 struct TimecodeState {
-    start_frame: Option<u64>,
-    timestamp: i128,
+    start_point: Option<Instant>,
+    timestamp: Duration,
 }
 
 impl TimecodeState {
     fn is_running(&self) -> bool {
-        self.timestamp > 0 || self.start_frame.is_some()
+        self.timestamp > Duration::ZERO || self.start_point.is_some()
     }
 }
 
@@ -247,42 +247,37 @@ impl TimecodeManager {
             return None;
         }
 
-        let timestamp = state.timestamp.max(0) as u64;
-        if control.is_out_of_bounds(timestamp) {
-            return None;
-        }
+        let timestamp = state.timestamp.as_secs_f64().max(0.0);
 
         let value = control.sample(timestamp);
 
         Some(value)
     }
 
-    pub fn write_timestamp(&self, timecode_id: TimecodeId, timestamp: u64) {
+    pub fn write_timestamp(&self, timecode_id: TimecodeId, timestamp: Duration) {
         if let Some(mut state) = self.timecode_states.get_mut(&timecode_id) {
-            state.timestamp = timestamp as i128;
+            state.timestamp = timestamp;
+            state.start_point = Some(Instant::now() - timestamp);
         }
     }
 
-    pub fn start_timecode_track(&self, timecode_id: TimecodeId, frame: ClockFrame) {
+    pub fn start_timecode_track(&self, timecode_id: TimecodeId) {
         if let Some(mut state) = self.timecode_states.get_mut(&timecode_id) {
-            state.start_frame = Some(frame.frames);
+            state.start_point = Some(Instant::now());
         }
     }
 
     pub fn stop_timecode_track(&self, timecode_id: TimecodeId) {
         if let Some(mut state) = self.timecode_states.get_mut(&timecode_id) {
-            state.start_frame = None;
-            state.timestamp = 0;
+            state.start_point = None;
+            state.timestamp = Duration::ZERO;
         }
     }
 
-    pub(crate) fn advance_timecodes(&self, frame: ClockFrame, fps: f64) {
+    pub(crate) fn advance_timecodes(&self) {
         for mut state in self.timecode_states.iter_mut() {
-            if let Some(start_frame) = state.start_frame {
-                state.timestamp =
-                    (frame.frames as i128 - start_frame as i128) * (TIMECODE_FPS / fps) as i128;
-                // TODO: only apply diffed fps to new frames
-                // This is only relevant when the fps changes during playback
+            if let Some(start_frame) = state.start_point {
+                state.timestamp = start_frame.elapsed();
             }
         }
     }
@@ -309,13 +304,13 @@ impl TimecodeStateAccess {
     pub fn is_playing(&self) -> bool {
         self.states
             .get(&self.id)
-            .map(|state| state.start_frame.is_some())
+            .map(|state| state.start_point.is_some())
             .unwrap_or_default()
     }
 
     pub fn get_timecode(&self) -> Option<Timecode> {
         self.states
             .get(&self.id)
-            .map(|state| Timecode::from_i128(state.timestamp, TIMECODE_FPS))
+            .map(|state| Timecode::from_duration(state.timestamp, TIMECODE_FPS))
     }
 }

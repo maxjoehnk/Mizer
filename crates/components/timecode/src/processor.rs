@@ -11,8 +11,8 @@ impl TimecodeProcessor {
 }
 
 impl Processor for TimecodeProcessor {
-    fn pre_process(&mut self, _: &mut Injector, frame: ClockFrame, fps: f64) {
-        self.0.advance_timecodes(frame, fps);
+    fn pre_process(&mut self, _: &mut Injector, _frame: ClockFrame, _fps: f64) {
+        self.0.advance_timecodes();
     }
 }
 

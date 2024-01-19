@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use serde::{Deserialize, Serialize};
 
 use mizer_clock::Timecode;
@@ -39,9 +41,9 @@ impl ProcessingNode for NumberToClockNode {
         let value = context.read_port::<_, port_types::SINGLE>(VALUE_INPUT);
 
         if let Some(value) = value {
-            let value = value.round() as port_types::CLOCK;
+            let value: port_types::CLOCK = Duration::from_secs_f64(value);
             context.write_port(VALUE_OUTPUT, value);
-            context.write_timecode_preview(Timecode::new(value, context.fps()));
+            context.write_timecode_preview(Timecode::from_duration(value, context.fps()));
         }
 
         Ok(())

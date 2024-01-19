@@ -84,15 +84,19 @@ impl ProcessingNode for TimecodeControlNode {
         let manager = context
             .inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
-        if let Some(value) = context.read_port::<_, port_types::CLOCK>(TIMECODE_INPUT) {
-            manager.write_timestamp(self.timecode_id, value);
+        if let Some(value) = context.read_port_changes::<_, port_types::CLOCK>(TIMECODE_INPUT) {
+            if let Some(state) = manager.get_state_access(self.timecode_id) {
+                if state.is_playing() {
+                    manager.write_timestamp(self.timecode_id, value);
+                }
+            }
         }
         if let Some(playback) = context
             .read_port(PLAYBACK_INPUT)
             .and_then(|value| playback_edge.update(value))
         {
             if playback {
-                manager.start_timecode_track(self.timecode_id, context.clock());
+                manager.start_timecode_track(self.timecode_id);
             } else {
                 manager.stop_timecode_track(self.timecode_id);
             }

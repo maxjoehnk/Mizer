@@ -17,6 +17,7 @@ tracing = "0.1"
 dashmap = "5.5"
 mizer-util = { path = "../../util" }
 mizer-message-bus = { path = "../../util/bus" }
+splines = "4.3"
 
 [dev-dependencies]
 test-case = "3.3"

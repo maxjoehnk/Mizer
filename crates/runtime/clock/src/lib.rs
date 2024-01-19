@@ -191,11 +191,15 @@ impl Display for Timecode {
 }
 
 impl Timecode {
+    pub const ZERO: Timecode = Timecode::build(0, false, 60);
+
     pub fn new(frames: u64, fps: f64) -> Self {
+        let fps = fps.round() as u64;
         Self::build(frames, false, fps)
     }
 
     pub fn from_i128(frames: i128, fps: f64) -> Self {
+        let fps = fps.round() as u64;
         if frames >= 0 {
             Self::build(frames.min(u64::MAX as i128) as u64, false, fps)
         } else {
@@ -204,8 +208,13 @@ impl Timecode {
         }
     }
 
-    fn build(frames: u64, negative: bool, fps: f64) -> Self {
-        let fps = fps.floor() as u64;
+    pub fn from_duration(duration: Duration, fps: f64) -> Self {
+        let frames = duration.as_secs_f64() * fps;
+        let frames = frames.round() as u64;
+        Self::build(frames, false, fps as u64)
+    }
+
+    const fn build(frames: u64, negative: bool, fps: u64) -> Self {
         let seconds = frames / fps;
         let minutes = seconds / 60;
         let hours = minutes / 60;
@@ -220,24 +229,6 @@ impl Timecode {
             seconds,
             frames,
             negative,
-        }
-    }
-}
-
-impl From<Duration> for Timecode {
-    fn from(duration: Duration) -> Self {
-        let seconds = duration.as_secs();
-        let hours = seconds / HOUR;
-        let seconds = seconds - (hours * HOUR);
-        let minutes = seconds / MINUTE;
-        let seconds = seconds - (minutes * MINUTE);
-
-        Self {
-            frames: 0,
-            seconds,
-            minutes,
-            hours,
-            negative: false,
         }
     }
 }

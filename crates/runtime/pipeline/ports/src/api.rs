@@ -105,11 +105,13 @@ pub enum PortType {
     // TODO: figure out what kind's of data should be transmitted here
     /// Materials and Shaders for 3D Objects
     Material,
-    /// Time signal measured in frames
+    /// Time signal using Duration
     Clock,
 }
 
 pub mod port_types {
+    use std::time::Duration;
+
     use mizer_util::StructuredData;
     use mizer_vector::VectorData;
 
@@ -118,7 +120,7 @@ pub mod port_types {
     pub type COLOR = super::Color;
     pub type DATA = StructuredData;
     pub type VECTOR = VectorData;
-    pub type CLOCK = u64;
+    pub type CLOCK = Duration;
 }
 
 impl Display for PortType {

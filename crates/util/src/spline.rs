@@ -1,8 +1,9 @@
-use bezier_rs::{Identifier, ManipulatorGroup, Subpath, SubpathTValue};
-use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq)]
+use bezier_rs::{Identifier, ManipulatorGroup, Subpath, SubpathTValue};
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
 pub struct SplineStep {
     pub x: f64,
     pub y: f64,
@@ -54,6 +55,9 @@ impl Spline {
             false,
         );
 
+        if path.len_segments() == 0 {
+            return 0.;
+        }
         let point = path.evaluate(SubpathTValue::GlobalParametric(value));
 
         point.y

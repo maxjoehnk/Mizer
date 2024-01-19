@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/timecode.pb.dart';
@@ -14,34 +13,14 @@ import 'package:provider/provider.dart';
 
 import 'dialogs/add_timecode_dialog.dart';
 
-class TimecodeList extends StatefulWidget {
+class TimecodeList extends StatelessWidget {
   final List<Timecode> timecodes;
   final Function(Timecode) onSelect;
   final Timecode? selectedTimecode;
+  final TimecodePointer? timecodePointer;
 
-  TimecodeList({required this.timecodes, required this.onSelect, this.selectedTimecode, Key? key})
+  TimecodeList({required this.timecodes, required this.onSelect, this.selectedTimecode, Key? key, this.timecodePointer})
       : super(key: key);
-
-  @override
-  State<TimecodeList> createState() => _TimecodeListState();
-}
-
-class _TimecodeListState extends State<TimecodeList> {
-  TimecodePointer? _timecodePointer;
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<TimecodeApi>().getTimecodePointer().then((value) => setState(() {
-          _timecodePointer = value;
-        }));
-  }
-
-  @override
-  void dispose() {
-    _timecodePointer?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +30,7 @@ class _TimecodeListState extends State<TimecodeList> {
           PanelActionModel(label: "Add Timecode", onClick: () => _addTimecode(context)),
           PanelActionModel(
               label: "Delete",
-              disabled: widget.selectedTimecode == null,
+              disabled: selectedTimecode == null,
               onClick: () => _deleteTimecode(context))
         ],
         child: GridView(
@@ -63,12 +42,12 @@ class _TimecodeListState extends State<TimecodeList> {
               mainAxisSpacing: 4,
               childAspectRatio: 1,
             ),
-            children: widget.timecodes
+            children: timecodes
                 .map((t) => TimecodePane(
                     timecode: t,
-                    selected: t.id == this.widget.selectedTimecode?.id,
-                    onSelect: () => widget.onSelect(t),
-                    reader: _timecodePointer?.getTrackReader(t.id)))
+                    selected: t.id == selectedTimecode?.id,
+                    onSelect: () => onSelect(t),
+                    reader: timecodePointer?.getTrackReader(t.id)))
                 .toList()));
   }
 
@@ -84,7 +63,7 @@ class _TimecodeListState extends State<TimecodeList> {
 
   void _deleteTimecode(BuildContext context) {
     TimecodeBloc bloc = context.read();
-    bloc.deleteTimecode(widget.selectedTimecode!.id);
+    bloc.deleteTimecode(selectedTimecode!.id);
   }
 }
 

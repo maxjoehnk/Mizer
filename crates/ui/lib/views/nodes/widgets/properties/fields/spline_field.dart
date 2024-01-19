@@ -142,15 +142,22 @@ class SplineFieldPainter<TData, TPoint extends PointState<TData>,
   final List<TData> steps;
   final List<TPoint> points;
   final List<THandle> handles;
+  final bool square;
 
-  SplineFieldPainter(this.steps, this.points, this.handles);
+  SplineFieldPainter(this.steps, this.points, this.handles, { this.square = true });
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.translate(0, size.height);
-    canvas.scale(size.height, -1 * size.height);
-    _drawAxis(canvas);
-    _drawSecondaryAxis(canvas);
+    if (square) {
+      canvas.scale(size.height, -1 * size.height);
+    }else {
+      canvas.scale(1, -1 * size.height);
+    }
+    if (square) {
+      _drawAxis(canvas);
+      _drawSecondaryAxis(canvas);
+    }
     _drawMovement(canvas);
   }
 

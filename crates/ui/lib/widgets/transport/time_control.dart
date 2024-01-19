@@ -78,6 +78,13 @@ class _FFITimeControlState extends State<FFITimeControl> with SingleTickerProvid
   }
 
   @override
+  void dispose() {
+    ticker.dispose();
+    pointer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (timecode == null) {
       return Container();
@@ -89,13 +96,6 @@ class _FFITimeControlState extends State<FFITimeControl> with SingleTickerProvid
         frames: timecode!.frames,
         negative: timecode!.is_negative > 0,
         textStyle: widget.textStyle);
-  }
-
-  @override
-  void dispose() {
-    ticker.dispose();
-    pointer.dispose();
-    super.dispose();
   }
 }
 

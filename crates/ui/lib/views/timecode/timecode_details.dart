@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/spline_field.dart';
@@ -8,17 +9,17 @@ import 'package:mizer/widgets/splines/point_state.dart';
 import 'package:mizer/widgets/splines/spline_editor.dart';
 import 'package:provider/provider.dart';
 
+import 'consts.dart';
 import 'dialogs/add_timecode_control_dialog.dart';
-
-const double firstColumnWidth = 128;
-const double firstRowHeight = 32;
-const double rowHeight = 48;
+import 'editor/timecode_playback_handle.dart';
+import 'editor/timecode_strip.dart';
 
 class TimecodeDetail extends StatelessWidget {
   final Timecode timecode;
   final List<TimecodeControl> controls;
+  final TimecodeReader? reader;
 
-  const TimecodeDetail({required this.timecode, required this.controls, Key? key})
+  const TimecodeDetail({required this.timecode, required this.controls, Key? key, this.reader})
       : super(key: key);
 
   @override
@@ -28,58 +29,69 @@ class TimecodeDetail extends StatelessWidget {
       actions: [
         PanelActionModel(label: "Add Control", onClick: () => _addTimecodeControl(context))
       ],
-      child: InteractiveViewer(
-        scaleEnabled: false,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: firstRowHeight,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(width: firstColumnWidth, child: Container()),
-                    Expanded(child: TimecodeStrip()),
-                  ]),
-            ),
-            ...timecode.controls.map((control) {
-              var c = controls.firstWhere((c) => c.id == control.controlId);
-              return Container(
-                  height: rowHeight,
-                  child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    Container(width: firstColumnWidth, child: Text(c.name)),
-                    LayoutBuilder(
-                      builder: (context, constraints) => SplineEditor<TimecodeControlValues_Step,
-                          TimecodePointState, TimecodeHandleState>(
-                        points: control.steps,
-                        builder: (context, points, handles) => Padding(
-                            padding: const EdgeInsets.all(8.0),
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: titleRowHeight,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(width: firstColumnWidth, child: Container()),
+                      Expanded(child: TimecodeStrip()),
+                    ]),
+              ),
+              ...timecode.controls.map((control) {
+                var c = controls.firstWhere((c) => c.id == control.controlId);
+                return Container(
+                    height: rowHeight,
+                    child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Container(width: firstColumnWidth, child: Text(c.name)),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          var steps = control.steps.map((e) => TimecodeControlValues_Step()
+                              ..x = e.x * pixelsPerSecond
+                              ..y = e.y
+                              ..c0a = e.c0a * pixelsPerSecond
+                              ..c0b = e.c0b
+                              ..c1a = e.c1a * pixelsPerSecond
+                              ..c1b = e.c1b).toList();
+                          return SplineEditor<TimecodeControlValues_Step,
+                            TimecodePointState, TimecodeHandleState>(
+                          points: steps,
+                          builder: (context, points, handles) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
                             child: CustomPaint(
-                              painter: SplineFieldPainter(control.steps, points, handles),
+                              painter: SplineFieldPainter(steps, points, handles, square: false),
                               size: Size(rowHeight, constraints.maxWidth),
-                            )),
-                        createPoint: (step, index) => TimecodePointState(step, index),
-                        createHandle: (step, index, first) =>
-                            TimecodeHandleState(step, first, index),
-                        onAddPoint: (_, x, y) {},
-                        onRemovePoint: (_) {},
-                        onFinishInteraction: ({point, handle}) {},
-                        onUpdateHandle: (_, x, y) {},
-                        onUpdatePoint: (_, x, y) {},
-                        translatePosition: (position) {
-                          double x = position.dx;
-                          double y = (rowHeight - position.dy) / rowHeight;
+                            ),
+                          ),
+                          createPoint: (step, index) => TimecodePointState(step, index),
+                          createHandle: (step, index, first) => TimecodeHandleState(step, first, index),
+                          onAddPoint: (_, x, y) {},
+                          onRemovePoint: (_) {},
+                          onFinishInteraction: ({point, handle}) {},
+                          onUpdateHandle: (_, x, y) {},
+                          onUpdatePoint: (_, x, y) {},
+                          translatePosition: (position) {
+                            double x = position.dx;
+                            double y = (rowHeight - position.dy) / rowHeight;
 
-                          return Offset(x, y);
+                            return Offset(x, y);
+                          },
+                        );
                         },
-                      ),
-                    )
-                  ]));
-            })
-          ],
-        ),
+                      )
+                    ]));
+              })
+            ],
+          ),
+          Positioned(left: 0, right: 0, top: 0, bottom: 0, child: TimecodePlaybackIndicator(reader: reader)),
+        ],
       ),
     );
   }
@@ -92,32 +104,6 @@ class TimecodeDetail extends StatelessWidget {
     }
     TimecodeBloc bloc = context.read();
     bloc.addTimecodeControl(name);
-  }
-}
-
-class TimecodeStrip extends StatelessWidget {
-  const TimecodeStrip({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("00:00:00");
-    // return CustomPaint(painter: TimecodeStripPainter());
-  }
-}
-
-class TimecodeStripPainter extends CustomPainter {
-  final TextPainter textPainter = TextPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    TextPainter textPainter = TextPainter(text: new TextSpan(text: "00:00:00"));
-    textPainter.layout(maxWidth: size.width);
-    textPainter.paint(canvas, Offset.zero);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }
 

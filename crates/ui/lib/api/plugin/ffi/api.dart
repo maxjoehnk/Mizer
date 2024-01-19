@@ -96,3 +96,9 @@ extension FFIBindingsExt on FFIBindings {
     return TimecodePointer(this, pointer);
   }
 }
+
+extension TimecodeExt on Timecode {
+  double get totalSeconds {
+    return hours * 3600 + minutes * 60 + seconds + (frames / 60);
+  }
+}

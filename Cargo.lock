@@ -476,9 +476,9 @@ dependencies = [
 
 [[package]]
 name = "bezier-rs"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d6228d36f205328c4633194f55592b4bee584f4e1651b41210485c07e89bc85b"
+checksum = "cd6f5f5b14b03e61ca2e0deda76e7323e4ff53046e1d796fe785c8a106b4ecb5"
 dependencies = [
  "glam",
 ]
@@ -2996,9 +2996,9 @@ dependencies = [
 
 [[package]]
 name = "glam"
-version = "0.22.0"
+version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12f597d56c1bd55a811a1be189459e8fad2bbc272616375602443bdfb37fa774"
+checksum = "b5418c17512bdf42730f9032c74e1ae39afc408745ebb2acf72fbc4691c17945"
 dependencies = [
  "serde",
 ]

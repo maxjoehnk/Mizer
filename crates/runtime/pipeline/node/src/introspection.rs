@@ -142,6 +142,7 @@ node_type_name! {
         Conditional,
         TimecodeControl,
         TimecodeOutput,
+        TimecodeRecorder,
         AudioFile,
         AudioOutput,
         AudioVolume,

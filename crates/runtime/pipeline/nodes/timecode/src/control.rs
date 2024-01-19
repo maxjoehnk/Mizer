@@ -6,6 +6,7 @@ use mizer_timecode::{TimecodeId, TimecodeManager};
 
 const TIMECODE_INPUT: &str = "Clock";
 const PLAYBACK_INPUT: &str = "Playback";
+const RECORDING_INPUT: &str = "Recording";
 
 const TIMECODE_ID_SETTING: &str = "Timecode";
 
@@ -65,6 +66,7 @@ impl PipelineNode for TimecodeControlNode {
         vec![
             input_port!(TIMECODE_INPUT, PortType::Clock),
             input_port!(PLAYBACK_INPUT, PortType::Single),
+            input_port!(RECORDING_INPUT, PortType::Single),
         ]
     }
 
@@ -74,13 +76,9 @@ impl PipelineNode for TimecodeControlNode {
 }
 
 impl ProcessingNode for TimecodeControlNode {
-    type State = Edge;
+    type State = TimecodeControlState;
 
-    fn process(
-        &self,
-        context: &impl NodeContext,
-        playback_edge: &mut Self::State,
-    ) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let manager = context
             .inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
@@ -93,12 +91,22 @@ impl ProcessingNode for TimecodeControlNode {
         }
         if let Some(playback) = context
             .read_port(PLAYBACK_INPUT)
-            .and_then(|value| playback_edge.update(value))
+            .and_then(|value| state.playback_edge.update(value))
         {
             if playback {
                 manager.start_timecode_track(self.timecode_id);
             } else {
                 manager.stop_timecode_track(self.timecode_id);
+            }
+        }
+        if let Some(recording) = context
+            .read_port(PLAYBACK_INPUT)
+            .and_then(|value| state.recording_edge.update(value))
+        {
+            if recording {
+                manager.start_timecode_track_recording(self.timecode_id);
+            } else {
+                manager.stop_timecode_track_recording(self.timecode_id);
             }
         }
         if let Some(timecode) = manager
@@ -113,4 +121,10 @@ impl ProcessingNode for TimecodeControlNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
+
+#[derive(Default)]
+pub struct TimecodeControlState {
+    playback_edge: Edge,
+    recording_edge: Edge,
 }

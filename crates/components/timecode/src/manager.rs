@@ -3,7 +3,7 @@ use std::sync::atomic::{AtomicU32, Ordering};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
-use dashmap::DashMap;
+use dashmap::{DashMap, DashSet};
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::Timecode;
@@ -21,6 +21,7 @@ pub struct TimecodeManager {
     controls: Arc<NonEmptyPinboard<HashMap<TimecodeControlId, TimecodeControl>>>,
     timecode_states: Arc<DashMap<TimecodeId, TimecodeState>>,
     timecode_bus: Arc<MessageBus<Vec<TimecodeTrack>>>,
+    recording: Arc<DashSet<TimecodeId>>,
 }
 
 #[derive(Default, Debug, Copy, Clone, PartialEq)]
@@ -44,6 +45,7 @@ impl Default for TimecodeManager {
             controls: Arc::new(NonEmptyPinboard::new(Default::default())),
             timecode_states: Arc::new(Default::default()),
             timecode_bus: Arc::new(Default::default()),
+            recording: Arc::new(Default::default()),
         }
     }
 }
@@ -59,6 +61,7 @@ impl TimecodeManager {
         self.control_counter.store(1, Ordering::Relaxed);
         self.controls.set(Default::default());
         self.timecode_states.clear();
+        self.recording.clear();
         self.emit_bus();
     }
 
@@ -88,6 +91,31 @@ impl TimecodeManager {
 
     pub fn controls(&self) -> Vec<TimecodeControl> {
         self.controls.read().into_values().collect()
+    }
+
+    pub fn record_control_value(
+        &self,
+        control_id: TimecodeControlId,
+        value: f64,
+    ) -> anyhow::Result<()> {
+        for timecode_id in self.recording.iter() {
+            let timecode_id = timecode_id.to_owned();
+            let Some(state) = self.timecode_states.get(&timecode_id) else {
+                continue;
+            };
+            let Some(start_point) = state.start_point else {
+                continue;
+            };
+            let frame = start_point.elapsed();
+            let frame = frame.as_secs_f64();
+            self.update_timecode(timecode_id, |timecode| {
+                if let Some(control) = timecode.controls.iter_mut().find(|c| c.id == control_id) {
+                    control.spline.add_simple_step(frame, value);
+                }
+            })?;
+        }
+
+        Ok(())
     }
 
     pub(crate) fn add_timecode(&self, name: String) -> TimecodeTrack {
@@ -274,6 +302,18 @@ impl TimecodeManager {
         }
     }
 
+    pub fn start_timecode_track_recording(&self, timecode_id: TimecodeId) {
+        if self.timecode_states.contains_key(&timecode_id) {
+            self.recording.insert(timecode_id);
+        }
+    }
+
+    pub fn stop_timecode_track_recording(&self, timecode_id: TimecodeId) {
+        if self.timecode_states.contains_key(&timecode_id) {
+            self.recording.remove(&timecode_id);
+        }
+    }
+
     pub(crate) fn advance_timecodes(&self) {
         for mut state in self.timecode_states.iter_mut() {
             if let Some(start_frame) = state.start_point {
@@ -287,6 +327,19 @@ impl TimecodeManager {
             id,
             states: Arc::clone(&self.timecode_states),
         })
+    }
+
+    pub fn get_running_timecodes(&self) -> Vec<TimecodeId> {
+        self.timecode_states
+            .iter()
+            .filter_map(|state| {
+                if state.is_running() {
+                    Some(*state.key())
+                } else {
+                    None
+                }
+            })
+            .collect()
     }
 
     fn emit_bus(&self) {

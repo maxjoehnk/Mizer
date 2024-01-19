@@ -44,7 +44,7 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
-pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
+pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode, TimecodeRecorderNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
 pub use mizer_vector_nodes::{RasterizeVectorNode, VectorFileNode};
@@ -229,6 +229,7 @@ node_impl! {
     Conditional(ConditionalNode),
     TimecodeControl(TimecodeControlNode),
     TimecodeOutput(TimecodeOutputNode),
+    TimecodeRecorder(TimecodeRecorderNode),
     AudioFile(AudioFileNode),
     AudioOutput(AudioOutputNode),
     AudioVolume(AudioVolumeNode),

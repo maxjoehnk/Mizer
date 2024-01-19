@@ -3,16 +3,16 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_timecode::{TimecodeControlId, TimecodeManager};
 
-const VALUE_OUTPUT: &str = "Value";
+const VALUE_INPUT: &str = "Value";
 
 const CONTROL_ID_SETTING: &str = "Control";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
-pub struct TimecodeOutputNode {
+pub struct TimecodeRecorderNode {
     pub control_id: TimecodeControlId,
 }
 
-impl ConfigurableNode for TimecodeOutputNode {
+impl ConfigurableNode for TimecodeRecorderNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let manager = injector.get::<TimecodeManager>().unwrap();
         let controls = manager
@@ -34,10 +34,10 @@ impl ConfigurableNode for TimecodeOutputNode {
     }
 }
 
-impl PipelineNode for TimecodeOutputNode {
+impl PipelineNode for TimecodeRecorderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            node_type_name: "Timecode Output".into(),
+            node_type_name: "Timecode Recorder".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }
@@ -53,32 +53,33 @@ impl PipelineNode for TimecodeOutputNode {
                     .find(|control| control.id == self.control_id)
             })
         {
-            format!("Timecode Output ({})", control.name)
+            format!("Timecode Recorder ({})", control.name)
         } else {
-            "Timecode Output".to_string()
+            "Timecode Recorder".to_string()
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
+        vec![input_port!(VALUE_INPUT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
-        NodeType::TimecodeOutput
+        NodeType::TimecodeRecorder
     }
 }
 
-impl ProcessingNode for TimecodeOutputNode {
+impl ProcessingNode for TimecodeRecorderNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let timecode = context
+        let manager = context
             .inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
-        if let Some(value) = timecode.get_control_value(self.control_id) {
-            context.write_port(VALUE_OUTPUT, value);
-            context.push_history_value(value);
+
+        if let Some(value) = context.read_port_changes(VALUE_INPUT) {
+            manager.record_control_value(self.control_id, value)?;
         }
+
         Ok(())
     }
 

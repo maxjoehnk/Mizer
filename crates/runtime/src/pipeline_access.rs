@@ -149,6 +149,7 @@ impl PipelineAccess {
             Conditional(node) => self.add_node(path, node),
             TimecodeControl(node) => self.add_node(path, node),
             TimecodeOutput(node) => self.add_node(path, node),
+            TimecodeRecorder(node) => self.add_node(path, node),
             AudioFile(node) => self.add_node(path, node),
             AudioOutput(node) => self.add_node(path, node),
             AudioVolume(node) => self.add_node(path, node),

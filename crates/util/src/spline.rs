@@ -63,6 +63,47 @@ impl Spline {
         point.y
     }
 
+    pub fn add_simple_step(&mut self, frame: f64, value: f64) {
+        let last_step_index =
+            self.steps.iter().enumerate().rev().find_map(
+                |(i, s)| {
+                    if s.x < frame {
+                        Some(i)
+                    } else {
+                        None
+                    }
+                },
+            );
+        let mut last_step = if let Some(last_step_index) = last_step_index {
+            self.steps.truncate(last_step_index + 1);
+            self.steps[last_step_index]
+        } else {
+            self.steps.last().copied().unwrap_or_default()
+        };
+        let frame_diff = frame - last_step.x;
+        if frame_diff > 0.1 {
+            let step = SplineStep {
+                x: frame,
+                y: last_step.y,
+                c0a: last_step.x,
+                c0b: last_step.y,
+                c1a: frame,
+                c1b: last_step.y,
+            };
+            last_step = step;
+            self.steps.push(step);
+        }
+        let step = SplineStep {
+            x: frame,
+            y: value,
+            c0a: last_step.x,
+            c0b: last_step.y,
+            c1a: frame,
+            c1b: value,
+        };
+        self.steps.push(step);
+    }
+
     pub fn is_empty(&self) -> bool {
         self.steps.is_empty()
     }

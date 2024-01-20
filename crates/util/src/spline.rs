@@ -74,9 +74,22 @@ impl Spline {
                     }
                 },
             );
+        let first_step_index =
+            self.steps.iter().enumerate().find_map(
+                |(i, s)| {
+                    if s.x > frame {
+                        Some(i)
+                    } else {
+                        None
+                    }
+                },
+            );
         let mut last_step = if let Some(last_step_index) = last_step_index {
             self.steps.truncate(last_step_index + 1);
             self.steps[last_step_index]
+        } else if let Some(first_step_index) = first_step_index {
+            self.steps.truncate(first_step_index);
+            self.steps.last().copied().unwrap_or_default()
         } else {
             self.steps.last().copied().unwrap_or_default()
         };

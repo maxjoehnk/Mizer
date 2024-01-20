@@ -100,7 +100,7 @@ impl ProcessingNode for TimecodeControlNode {
             }
         }
         if let Some(recording) = context
-            .read_port(PLAYBACK_INPUT)
+            .read_port(RECORDING_INPUT)
             .and_then(|value| state.recording_edge.update(value))
         {
             if recording {

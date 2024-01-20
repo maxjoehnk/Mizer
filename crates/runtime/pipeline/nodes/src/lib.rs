@@ -34,8 +34,8 @@ pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_plan_nodes::PlanScreenNode;
 pub use mizer_port_operation_nodes::{
-    CombineNode, ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode, RampNode,
-    SelectNode, ThresholdNode,
+    CombineNode, ComparisonNode, ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode,
+    RampNode, SelectNode, ThresholdNode,
 };
 pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
 pub use mizer_screen_capture_nodes::ScreenCaptureNode;
@@ -244,4 +244,5 @@ node_impl! {
     SurfaceMapping(SurfaceMappingNode),
     RasterizeVector(RasterizeVectorNode),
     VectorFile(VectorFileNode),
+    Comparison(ComparisonNode),
 }

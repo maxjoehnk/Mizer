@@ -165,6 +165,7 @@ impl PipelineAccess {
             SurfaceMapping(node) => self.add_node(path, node),
             VectorFile(node) => self.add_node(path, node),
             RasterizeVector(node) => self.add_node(path, node),
+            Comparison(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

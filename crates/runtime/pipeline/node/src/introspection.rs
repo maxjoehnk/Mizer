@@ -157,6 +157,7 @@ node_type_name! {
         SurfaceMapping,
         RasterizeVector,
         VectorFile,
+        Comparison,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

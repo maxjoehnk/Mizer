@@ -12,7 +12,7 @@ bytemuck = { version = "1.14", features = ["derive"] }
 raw-window-handle = "0.5"
 log = "0.4"
 tracing = "0.1"
-uuid = { version = "1.6", features = ["v4"] }
+uuid = { version = "1.7", features = ["v4"] }
 image = "0.24"
 mizer-module = { path = "../module" }
 profiling = "1"

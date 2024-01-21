@@ -897,7 +897,7 @@ checksum = "d38f2da7a0a2c4ccf0065be06397cc26a81f4e528be095826eee9d4adbb8c60f"
 dependencies = [
  "byteorder",
  "fnv",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -1831,7 +1831,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef552e6f588e446098f6ba40d89ac146c8c7b64aade83c051ee00bb5d2bc18d"
 dependencies = [
  "serde",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -2960,7 +2960,7 @@ dependencies = [
  "fnv",
  "gilrs-core",
  "log",
- "uuid 1.6.1",
+ "uuid 1.7.0",
  "vec_map",
 ]
 
@@ -2977,7 +2977,7 @@ dependencies = [
  "libudev-sys",
  "log",
  "nix 0.26.4",
- "uuid 1.6.1",
+ "uuid 1.7.0",
  "vec_map",
  "wasm-bindgen",
  "web-sys",
@@ -4812,7 +4812,7 @@ dependencies = [
  "log",
  "pinboard",
  "rusb",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -4924,7 +4924,7 @@ dependencies = [
  "mizer-util",
  "pinboard",
  "serde",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -4963,7 +4963,7 @@ dependencies = [
  "symphonia",
  "test-case",
  "tokio",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -5284,7 +5284,7 @@ dependencies = [
  "profiling",
  "serde",
  "test-case",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -5608,7 +5608,7 @@ dependencies = [
  "serde",
  "test-case",
  "tracing",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -5714,7 +5714,7 @@ dependencies = [
  "profiling",
  "serde",
  "tracing",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -5840,7 +5840,7 @@ dependencies = [
  "serde",
  "test-case",
  "tracy-client",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -5940,7 +5940,7 @@ dependencies = [
  "profiling",
  "raw-window-handle 0.5.2",
  "tracing",
- "uuid 1.6.1",
+ "uuid 1.7.0",
  "weak-table",
  "wgpu",
  "winit",
@@ -8098,7 +8098,7 @@ dependencies = [
  "thiserror",
  "time",
  "url",
- "uuid 1.6.1",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -9656,9 +9656,9 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "1.6.1"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5e395fcf16a7a3d8127ec99782007af141946b4795001f876d54fb0d55978560"
+checksum = "f00cc9702ca12d3c81455259621e676d0f7251cec66a21e98fe2e9a37db93b2a"
 dependencies = [
  "getrandom",
  "serde",

@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 egui = "0.24"
 egui-winit = "0.24"
-egui-wgpu = { version = "0.24", features = ["winit"] }
+egui-wgpu = { version = "0.25", features = ["winit"] }
 winit = "0.28"
 image = "0.24"
 log = "0.4"

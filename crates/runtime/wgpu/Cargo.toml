@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 wgpu = { version = "0.18", features = ["trace"] }
 anyhow = "1"
-winit = "0.28"
+winit = "0.29"
 bytemuck = { version = "1.14", features = ["derive"] }
 raw-window-handle = "0.5"
 log = "0.4"

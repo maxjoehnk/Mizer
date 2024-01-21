@@ -82,10 +82,16 @@ impl EguiDebugUi {
         let events = self.window.get_events();
         for event in events {
             if self.egui_state.is_none() {
-                self.egui_state = Some(State::new(self.viewport_id, &self.window, None, None));
+                self.egui_state = Some(State::new(
+                    self.egui_context.clone(),
+                    self.viewport_id,
+                    &self.window,
+                    None,
+                    None,
+                ));
             }
             let state = self.egui_state.as_mut().unwrap();
-            let response = state.on_window_event(&self.egui_context, &event);
+            let response = state.on_window_event(&self.window, &event);
             if response.repaint {
                 repaint = true;
             }
@@ -105,7 +111,7 @@ impl EguiDebugUi {
     fn paint(&mut self) {
         if let Some(state) = self.egui_state.as_mut() {
             let output = self.egui_context.end_frame();
-            state.handle_platform_output(&self.window, &self.egui_context, output.platform_output);
+            state.handle_platform_output(&self.window, output.platform_output);
 
             let clipped_primitives = self
                 .egui_context

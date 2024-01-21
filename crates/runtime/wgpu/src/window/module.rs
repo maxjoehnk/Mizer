@@ -12,7 +12,7 @@ impl Module for WindowModule {
 
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
         context.add_processor(WindowProcessor);
-        context.provide(EventLoopHandle::new());
+        context.provide(EventLoopHandle::new()?);
 
         Ok(())
     }

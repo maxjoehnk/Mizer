@@ -12,12 +12,12 @@ use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePreviewRef, NodeSetting, PortId,
-};
+use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
-use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
+use mizer_runtime::{
+    DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
+};
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 

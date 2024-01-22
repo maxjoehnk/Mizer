@@ -21,6 +21,7 @@ mizer-wgpu = { path = "../../wgpu" }
 downcast = "0.11"
 pinboard = "2.2"
 enum-iterator = "1.5"
+parking_lot = "0.12"
 
 [dev-dependencies]
 test-case = "3.3"

@@ -20,6 +20,7 @@ use mizer_util::HashMapExtension;
 use mizer_wgpu::TextureHandle;
 
 use crate::ports::{NodeReceivers, NodeSenders};
+use crate::preview_ref::NodePreviewRef;
 use crate::{NodePreviewState, NodeRuntimeMetadata, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
@@ -148,31 +149,20 @@ impl PipelineWorker {
         let state = node.create_state();
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
-                self.previews.insert(
-                    path.clone(),
-                    NodePreviewState::History(
-                        Default::default(),
-                        NonEmptyPinboard::new(Vec::new()).into(),
-                    ),
-                );
+                self.previews
+                    .insert(path.clone(), NodePreviewState::History(Default::default()));
             }
             PreviewType::Data => {
-                self.previews.insert(
-                    path.clone(),
-                    NodePreviewState::Data(NonEmptyPinboard::new(None).into()),
-                );
+                self.previews
+                    .insert(path.clone(), NodePreviewState::Data(Default::default()));
             }
             PreviewType::Color => {
-                self.previews.insert(
-                    path.clone(),
-                    NodePreviewState::Color(NonEmptyPinboard::new(None).into()),
-                );
+                self.previews
+                    .insert(path.clone(), NodePreviewState::Color(Default::default()));
             }
             PreviewType::Timecode => {
-                self.previews.insert(
-                    path.clone(),
-                    NodePreviewState::Timecode(NonEmptyPinboard::new(None).into()),
-                );
+                self.previews
+                    .insert(path.clone(), NodePreviewState::Timecode(Default::default()));
             }
             _ => {
                 self.previews.insert(path.clone(), NodePreviewState::None);
@@ -544,7 +534,7 @@ impl PipelineWorker {
     pub fn get_preview_ref(&self, path: &NodePath) -> Option<NodePreviewRef> {
         if let Some(preview) = self.previews.get(path) {
             match preview {
-                NodePreviewState::History(_, buf) => Some(NodePreviewRef::History(buf.clone())),
+                NodePreviewState::History(buf) => Some(NodePreviewRef::History(buf.clone())),
                 NodePreviewState::Data(buf) => Some(NodePreviewRef::Data(buf.clone())),
                 NodePreviewState::Color(buf) => Some(NodePreviewRef::Color(buf.clone())),
                 NodePreviewState::Timecode(buf) => Some(NodePreviewRef::Timecode(buf.clone())),

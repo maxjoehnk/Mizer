@@ -1,5 +1,6 @@
 use mizer_clock::SystemClock;
 pub use mizer_execution_planner::*;
+pub use mizer_pipeline::NodePreviewRef;
 pub use node_metadata::NodeMetadataRef;
 
 pub use self::api::*;

@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use parking_lot::Mutex;
 
-use mizer_node::NodePreviewRef;
+use mizer_runtime::NodePreviewRef;
 use mizer_util::StructuredData;
 
 use crate::apis::programmer::FFIColorValue;

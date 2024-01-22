@@ -2,9 +2,9 @@ use std::fmt::Debug;
 
 use mizer_command_executor::*;
 use mizer_docs::get_node_description;
-use mizer_node::{NodePath, NodePreviewRef, NodeType, PortId};
+use mizer_node::{NodePath, NodeType, PortId};
 use mizer_nodes::{ContainerNode, NodeDowncast};
-use mizer_runtime::NodeMetadataRef;
+use mizer_runtime::{NodeMetadataRef, NodePreviewRef};
 
 use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::proto::nodes::*;

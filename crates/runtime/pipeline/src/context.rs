@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
-use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 
 use mizer_clock::{Clock, ClockFrame, ClockState, Timecode};
@@ -13,6 +12,7 @@ use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::ProcessingContext;
 use mizer_util::StructuredData;
 use mizer_wgpu::{TextureRegistry, TextureView};
+use parking_lot::RwLock;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
@@ -49,39 +49,39 @@ pub struct RuntimePortMetadata {
 
 #[derive(Debug)]
 pub enum NodePreviewState {
-    History(
-        ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>,
-        Arc<NonEmptyPinboard<Vec<f64>>>,
-    ),
-    Data(Arc<NonEmptyPinboard<Option<StructuredData>>>),
-    Color(Arc<NonEmptyPinboard<Option<Color>>>),
-    Timecode(Arc<NonEmptyPinboard<Option<Timecode>>>),
+    History(Arc<RwLock<ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>>>),
+    Data(Arc<RwLock<Option<StructuredData>>>),
+    Color(Arc<RwLock<Option<Color>>>),
+    Timecode(Arc<RwLock<Option<Timecode>>>),
     None,
 }
 
 impl NodePreviewState {
     fn push_history_value(&mut self, value: f64) {
-        if let Self::History(history, history_snapshot) = self {
-            history.push(value);
-            history_snapshot.set(history.to_vec());
+        if let Self::History(history) = self {
+            let mut guard = history.write();
+            guard.push(value);
         }
     }
 
     fn push_data_value(&mut self, value: StructuredData) {
-        if let Self::Data(snapshot) = self {
-            snapshot.set(Some(value));
+        if let Self::Data(history) = self {
+            let mut guard = history.write();
+            *guard = Some(value);
         }
     }
 
     fn push_color_value(&mut self, color: Color) {
-        if let Self::Color(snapshot) = self {
-            snapshot.set(Some(color));
+        if let Self::Color(history) = self {
+            let mut guard = history.write();
+            *guard = Some(color);
         }
     }
 
     fn push_timecode_value(&mut self, timecode: Timecode) {
-        if let Self::Timecode(snapshot) = self {
-            snapshot.set(Some(timecode));
+        if let Self::Timecode(history) = self {
+            let mut guard = history.write();
+            *guard = Some(timecode);
         }
     }
 }

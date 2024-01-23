@@ -442,8 +442,8 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             .load(std::sync::atomic::Ordering::Relaxed)
         {
             self.read_node_settings();
+            self.read_node_metadata();
         }
-        self.read_node_metadata();
         // TODO: add safe way to access mutable and immutable parts of the injector
         let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
         if let Some(ui) = injector.get_mut::<DebugUiImpl>() {

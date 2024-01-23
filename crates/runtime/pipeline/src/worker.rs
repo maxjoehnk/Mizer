@@ -371,6 +371,7 @@ impl PipelineWorker {
     }
 
     fn check_node_receivers(&mut self, nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)]) {
+        profiling::scope!("PipelineWorker::check_node_receivers");
         for (path, node) in nodes {
             let receivers = self.receivers.entry((*path).clone()).or_default();
             for (port_id, metadata) in node.list_ports() {
@@ -475,6 +476,7 @@ impl PipelineWorker {
         clock: &'a mut impl Clock,
         node_metadata: &'a mut HashMap<NodePath, NodeRuntimeMetadata>,
     ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
+        profiling::scope!("PipelineWorker::get_context");
         let context = PipelineContext {
             processing_context: RefCell::new(processing_context),
             preview: RefCell::new(

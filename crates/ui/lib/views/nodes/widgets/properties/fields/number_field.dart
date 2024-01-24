@@ -4,6 +4,7 @@ import 'dart:math' hide log;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 
 import 'field.dart';
 
@@ -159,21 +160,23 @@ class _NumberFieldState extends State<NumberField> {
       label: this.widget.label,
       child: _Bar(
         value: this._valueHint,
-        child: EditableText(
-          focusNode: focusNode,
-          controller: controller,
-          cursorColor: Colors.black87,
-          backgroundCursorColor: Colors.black12,
-          style: textStyle,
-          textAlign: TextAlign.center,
-          selectionColor: Colors.black38,
-          keyboardType: TextInputType.number,
-          autofocus: true,
-          inputFormatters: [
-            if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
-            if (widget.fractions) NumberField.floatsOnly,
-            FilteringTextInputFormatter.singleLineFormatter,
-          ],
+        child: TextFieldFocus(
+          child: EditableText(
+            focusNode: focusNode,
+            controller: controller,
+            cursorColor: Colors.black87,
+            backgroundCursorColor: Colors.black12,
+            style: textStyle,
+            textAlign: TextAlign.center,
+            selectionColor: Colors.black38,
+            keyboardType: TextInputType.number,
+            autofocus: true,
+            inputFormatters: [
+              if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
+              if (widget.fractions) NumberField.floatsOnly,
+              FilteringTextInputFormatter.singleLineFormatter,
+            ],
+          ),
         ),
       ),
     );

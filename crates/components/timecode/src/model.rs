@@ -1,7 +1,11 @@
-use mizer_util::Spline;
-use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
+
+use serde::{Deserialize, Serialize};
+
+use mizer_util::Spline;
+
+use crate::spline::TimecodeSpline;
 
 // TODO: rename to something more fitting
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
@@ -25,19 +29,11 @@ pub struct TimecodeControlValues {
 }
 
 impl TimecodeControlValues {
-    pub fn sample(&self, timestamp: u64) -> f64 {
-        let max_frame = self
-            .spline
-            .steps
-            .iter()
-            .map(|s| s.x)
-            .last()
-            .unwrap_or_default();
-
-        self.spline.sample(timestamp as f64, max_frame)
+    pub fn sample(&self, timestamp: f64) -> f64 {
+        self.spline.timecode_sample(timestamp)
     }
 
-    pub fn out_of_bounds(&self, timestamp: u64) -> bool {
+    pub fn is_out_of_bounds(&self, timestamp: f64) -> bool {
         let max_frame = self
             .spline
             .steps
@@ -46,7 +42,7 @@ impl TimecodeControlValues {
             .last()
             .unwrap_or_default();
 
-        timestamp as f64 > max_frame
+        timestamp > max_frame
     }
 }
 

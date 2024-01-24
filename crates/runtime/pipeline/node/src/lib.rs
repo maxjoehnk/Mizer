@@ -30,6 +30,11 @@ pub mod mocks;
 pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;
 
+    #[allow(unused_variables)]
+    fn display_name(&self, injector: &Injector) -> String {
+        self.details().node_type_name
+    }
+
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
         self.list_ports()

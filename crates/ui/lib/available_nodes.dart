@@ -11,8 +11,9 @@ const Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_COLOR: Colors.green,
   NodeCategory.NODE_CATEGORY_AUDIO: Colors.green,
   NodeCategory.NODE_CATEGORY_VIDEO: Colors.red,
-  NodeCategory.NODE_CATEGORY_LASER: Colors.purple,
+  NodeCategory.NODE_CATEGORY_LASER: Colors.purpleAccent,
   NodeCategory.NODE_CATEGORY_PIXEL: Colors.red,
+  NodeCategory.NODE_CATEGORY_VECTOR: Colors.purple,
 };
 
 const Map<NodeCategory, String> CATEGORY_NAMES = {
@@ -26,4 +27,5 @@ const Map<NodeCategory, String> CATEGORY_NAMES = {
   NodeCategory.NODE_CATEGORY_VIDEO: "Video",
   NodeCategory.NODE_CATEGORY_LASER: "Laser",
   NodeCategory.NODE_CATEGORY_PIXEL: "Pixel",
+  NodeCategory.NODE_CATEGORY_VECTOR: "Vector",
 };

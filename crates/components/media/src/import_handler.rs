@@ -5,7 +5,7 @@ use anyhow::Context;
 use tokio::fs;
 use tokio::io::AsyncReadExt;
 
-use mizer_status_bus::StatusBus;
+use mizer_status_bus::StatusHandle;
 
 use crate::data_access::DataAccess;
 use crate::documents::*;
@@ -17,7 +17,7 @@ use crate::MediaCreateModel;
 pub struct ImportFileHandler {
     db: DataAccess,
     file_storage: FileStorage,
-    status_bus: StatusBus,
+    status_bus: StatusHandle,
     video_handler: VideoHandler,
     image_handler: ImageHandler,
     audio_handler: AudioHandler,
@@ -25,7 +25,7 @@ pub struct ImportFileHandler {
 }
 
 impl ImportFileHandler {
-    pub(crate) fn new(db: DataAccess, file_storage: FileStorage, status_bus: StatusBus) -> Self {
+    pub(crate) fn new(db: DataAccess, file_storage: FileStorage, status_bus: StatusHandle) -> Self {
         ImportFileHandler {
             db,
             file_storage,
@@ -45,9 +45,10 @@ impl ImportFileHandler {
     ) -> anyhow::Result<Option<MediaDocument>> {
         log::debug!("importing file {:?}", file_path);
         self.status_bus
-            .add_status_message(format!("Importing file {file_path:?}"), None);
+            .add_message(format!("Importing file {file_path:?}"), None);
         let source_path = relative_to
             .map(|base_path| file_path.strip_prefix(base_path))
+            .or(Some(Ok(file_path)))
             .transpose()?
             .map(|path| path.to_path_buf());
         if let Some(source_path) = source_path.as_ref() {
@@ -60,11 +61,22 @@ impl ImportFileHandler {
         let id = MediaId::new();
         let mut file = fs::File::open(file_path).await?;
         let file_size = file.metadata().await?.len();
-        let mut buffer = [0u8; 256];
-        file.read_exact(&mut buffer).await?;
-        let content_type = infer::get(&buffer)
-            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?
-            .mime_type();
+        let content_type = if file_size < 256 {
+            let mut buffer = vec![0u8; file_size as usize];
+            file.read_to_end(&mut buffer).await?;
+
+            infer::get(&buffer)
+        } else {
+            let mut buffer = [0u8; 256];
+            file.read_exact(&mut buffer).await?;
+
+            infer::get(&buffer)
+        };
+        let mime = mime_guess::from_path(file_path).first();
+        let content_type = content_type
+            .map(|content_type| content_type.mime_type())
+            .or_else(|| mime.as_ref().map(|mime| mime.essence_str()))
+            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?;
         log::debug!("got {} content type for {:?}", content_type, model);
 
         let (media_type, metadata) = if VideoHandler::supported(content_type) {
@@ -100,7 +112,7 @@ impl ImportFileHandler {
             file_size,
         })?;
 
-        self.status_bus.add_status_message(
+        self.status_bus.add_message(
             format!("Imported file {file_path:?}"),
             Some(Duration::from_secs(10)),
         );

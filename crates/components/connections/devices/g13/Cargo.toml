@@ -11,5 +11,5 @@ g13 = "0.1"
 futures = "0.3"
 flume = "0.11"
 pinboard = "2.2"
-uuid = { version = "1.5", features = ["v4"] }
+uuid = { version = "1.7", features = ["v4"] }
 rusb = "*"

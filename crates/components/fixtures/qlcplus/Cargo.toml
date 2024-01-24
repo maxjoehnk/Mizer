@@ -10,14 +10,14 @@ anyhow = "1"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
 rayon = "1.8"
-hard-xml = "1.27"
+hard-xml = "1.34"
 custom_derive = "0.1"
 enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch = "feature/better-error-reporting" }
 htmlentity = "1.3"
-cached = { version = "0.46", default-features = false, features = ["proc_macro"] }
+cached = { version = "0.47", default-features = false, features = ["proc_macro"] }
 
 [build-dependencies]
-ureq = "2.8"
+ureq = "2.9"
 zip = "0.6"
 temp-dir = "0.1"
 fs_extra = "1.3"

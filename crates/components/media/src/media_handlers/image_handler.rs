@@ -1,12 +1,13 @@
+use std::io::BufReader;
 use std::path::Path;
+
+use anyhow::Context;
+use image::imageops::FilterType;
+use image::ImageFormat;
 
 use crate::documents::{MediaMetadata, MediaType};
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use anyhow::Context;
-use image::imageops::FilterType;
-use image::ImageFormat;
-use std::io::BufReader;
 
 #[derive(Clone)]
 pub struct ImageHandler;
@@ -15,7 +16,7 @@ impl MediaHandler for ImageHandler {
     const MEDIA_TYPE: MediaType = MediaType::Image;
 
     fn supported(content_type: &str) -> bool {
-        content_type.starts_with("image")
+        content_type.starts_with("image") && !content_type.starts_with("image/svg")
     }
 
     fn generate_thumbnail<P: AsRef<Path>>(
@@ -28,7 +29,7 @@ impl MediaHandler for ImageHandler {
         let source = std::fs::File::open(file)?;
         let source = BufReader::new(source);
 
-        let image = image::load(source, parse_image_content_type(content_type))
+        let image = image::load(source, parse_image_content_type(content_type)?)
             .context("thumbnail generation failed")?;
         let image = image.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Nearest);
         image.save(target)?;
@@ -43,7 +44,7 @@ impl MediaHandler for ImageHandler {
     ) -> anyhow::Result<MediaMetadata> {
         let source = std::fs::File::open(file)?;
         let source = BufReader::new(source);
-        let image = image::load(source, parse_image_content_type(content_type))
+        let image = image::load(source, parse_image_content_type(content_type)?)
             .context("thumbnail generation failed")?;
 
         let width = image.width();
@@ -57,13 +58,14 @@ impl MediaHandler for ImageHandler {
     }
 }
 
-pub fn parse_image_content_type(content_type: &str) -> ImageFormat {
-    match content_type {
+pub fn parse_image_content_type(content_type: &str) -> anyhow::Result<ImageFormat> {
+    Ok(match content_type {
         "image/png" => ImageFormat::Png,
         "image/jpg" | "image/jpeg" => ImageFormat::Jpeg,
         "image/bmp" => ImageFormat::Bmp,
         "image/webp" => ImageFormat::WebP,
         "image/tiff" => ImageFormat::Tiff,
-        _ => unimplemented!("{}", content_type),
-    }
+        "image/gif" => ImageFormat::Gif,
+        _ => anyhow::bail!("Unsupported image type: {}", content_type),
+    })
 }

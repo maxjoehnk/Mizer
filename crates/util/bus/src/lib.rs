@@ -1,3 +1,4 @@
+use std::fmt::{Debug, Formatter};
 use std::ops::Deref;
 use std::pin::Pin;
 use std::sync::{Arc, Weak};
@@ -12,6 +13,14 @@ use parking_lot::RwLock;
 pub struct MessageBus<T: Clone + Send + Sync> {
     senders: Arc<RwLock<Vec<Weak<flume::Sender<T>>>>>,
     last_event: Arc<RwLock<Option<T>>>,
+}
+
+impl<T: Clone + Send + Sync + Debug> Debug for MessageBus<T> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("MessageBus")
+            .field("last_event", &self.last_event)
+            .finish()
+    }
 }
 
 impl<T: Clone + Send + Sync + 'static> Default for MessageBus<T> {

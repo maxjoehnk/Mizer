@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use std::io::Write;
+use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use itertools::Itertools;
 use pinboard::NonEmptyPinboard;
@@ -55,10 +56,9 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
-    ui: Option<DebugUiImpl>,
-    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     status_bus: StatusBus,
-    last_nodes_update: Option<Instant>,
+    read_node_settings: Arc<AtomicBool>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -86,18 +86,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
             layout_fader_view: Default::default(),
-            ui: None,
             node_metadata,
             status_bus: Default::default(),
-            last_nodes_update: None,
+            read_node_settings: Arc::new(AtomicBool::new(false)),
         };
         runtime.bootstrap();
 
         runtime
-    }
-
-    pub fn setup_debug_ui(&mut self, debug_ui: DebugUiImpl) {
-        self.ui = Some(debug_ui);
     }
 
     fn bootstrap(&mut self) {
@@ -185,6 +180,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         RuntimeAccess {
             nodes: pipeline_access.nodes_view.clone(),
             designer: pipeline_access.designer.clone(),
+            metadata: pipeline_access.metadata.clone(),
             links: pipeline_access.links.clone(),
             settings: pipeline_access.settings.clone(),
             layouts: self.layouts.clone(),
@@ -193,6 +189,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_snapshot: self.clock_snapshot.clone(),
             layouts_view: self.layout_fader_view.clone(),
             status_bus: self.status_bus.clone(),
+            read_node_settings: self.read_node_settings.clone(),
         }
     }
 
@@ -208,7 +205,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         log::debug!("Rebuilding pipeline");
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
-        self.last_nodes_update = None;
 
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
@@ -248,6 +244,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         } else {
             self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         }
+        self.read_node_settings();
     }
 
     #[profiling::function]
@@ -350,12 +347,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     #[profiling::function]
-    pub(crate) fn read_node_settings(&mut self) {
-        if let Some(last_nodes_update) = self.last_nodes_update {
-            if last_nodes_update.elapsed() <= Duration::from_secs(10) {
-                return;
-            }
-        }
+    pub(crate) fn read_node_settings(&self) {
         let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
         let settings = pipeline_access
             .nodes
@@ -369,7 +361,27 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             })
             .collect();
         pipeline_access.settings.set(settings);
-        self.last_nodes_update = Some(Instant::now());
+    }
+
+    #[profiling::function]
+    pub(crate) fn read_node_metadata(&self) {
+        let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
+        let metadata = pipeline_access
+            .nodes
+            .iter()
+            .map(|(path, node)| {
+                let _scope = format!("{:?}Node::display_name", node.node_type());
+                profiling::scope!(&_scope);
+                let display_name = node.display_name(&self.injector);
+                let metadata = NodeMetadata {
+                    display_name,
+                    custom_name: None,
+                };
+
+                (path.clone(), metadata)
+            })
+            .collect();
+        pipeline_access.metadata.set(metadata);
     }
 
     /// Should only be used for testing purposes
@@ -425,8 +437,16 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
-        self.read_node_settings();
-        if let Some(ui) = self.ui.as_mut() {
+        if self
+            .read_node_settings
+            .load(std::sync::atomic::Ordering::Relaxed)
+        {
+            self.read_node_settings();
+        }
+        self.read_node_metadata();
+        // TODO: add safe way to access mutable and immutable parts of the injector
+        let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
+        if let Some(ui) = injector.get_mut::<DebugUiImpl>() {
             log::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
             render_handle.draw(|ui, texture_map| {
@@ -661,6 +681,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::NumberToData(node) => pipeline.register_node(path, &node),
         Node::DataToNumber(node) => pipeline.register_node(path, &node),
         Node::MultiToData(node) => pipeline.register_node(path, &node),
+        Node::NumberToClock(node) => pipeline.register_node(path, &node),
         Node::Value(node) => pipeline.register_node(path, &node),
         Node::Extract(node) => pipeline.register_node(path, &node),
         Node::PlanScreen(node) => pipeline.register_node(path, &node),
@@ -676,6 +697,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Conditional(node) => pipeline.register_node(path, &node),
         Node::TimecodeControl(node) => pipeline.register_node(path, &node),
         Node::TimecodeOutput(node) => pipeline.register_node(path, &node),
+        Node::TimecodeRecorder(node) => pipeline.register_node(path, &node),
         Node::AudioFile(node) => pipeline.register_node(path, &node),
         Node::AudioOutput(node) => pipeline.register_node(path, &node),
         Node::AudioVolume(node) => pipeline.register_node(path, &node),
@@ -689,6 +711,9 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::NdiOutput(node) => pipeline.register_node(path, &node),
         Node::NdiInput(node) => pipeline.register_node(path, &node),
         Node::SurfaceMapping(node) => pipeline.register_node(path, &node),
+        Node::VectorFile(node) => pipeline.register_node(path, &node),
+        Node::RasterizeVector(node) => pipeline.register_node(path, &node),
+        Node::Comparison(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

@@ -128,6 +128,8 @@ jobs:
           args: --all-features
       - uses: taiki-e/install-action@nextest
       - name: Tests
+        env:
+          RUST_BACKTRACE: "1"
         run: make test
   test-android:
     runs-on: ubuntu-latest

@@ -1,17 +1,17 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
 import 'bindings.dart';
 
-class NodesPointer {
+class NodesPointer extends FFIPointer<NodesRef> {
   final FFIBindings _bindings;
-  final ffi.Pointer<NodesRef> _ptr;
 
-  NodesPointer(this._bindings, this._ptr);
+  NodesPointer(this._bindings, ffi.Pointer<NodesRef> _ptr) : super(_ptr);
 
   List<NodePortMetadata> readPortMetadata() {
-    var state = this._bindings.read_node_port_metadata(_ptr);
+    var state = this._bindings.read_node_port_metadata(ptr);
     var metadata = new List.generate(state.len, (index) => state.array.elementAt(index).ref);
 
     return metadata.map((metadata) {
@@ -20,8 +20,9 @@ class NodesPointer {
     }).toList();
   }
 
-  void dispose() {
-    this._bindings.drop_nodes_pointer(_ptr);
+  @override
+  void disposePointer(ffi.Pointer<NodesRef> ptr) {
+    this._bindings.drop_nodes_pointer(ptr);
   }
 }
 

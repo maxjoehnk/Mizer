@@ -43,11 +43,11 @@ class _OscMonitorState extends State<OscMonitor> {
   void initState() {
     super.initState();
     var connections = context.read<ConnectionsApi>();
-    subscription = connections.monitorOscConnection(widget.connection.osc.connectionId).listen((event) {
+    subscription =
+        connections.monitorOscConnection(widget.connection.osc.connectionId).listen((event) {
       setState(() => events.add(event));
     });
   }
-
 
   @override
   void dispose() {
@@ -57,42 +57,47 @@ class _OscMonitorState extends State<OscMonitor> {
 
   @override
   Widget build(BuildContext context) {
-    return Panel(label: "Osc Messages".i18n, child: SingleChildScrollView(
-      child: MizerTable(
-        columnWidths: {
-          1: FixedColumnWidth(128),
-          2: FixedColumnWidth(512),
-        },
-        columns: [
-          Text("Path".i18n),
-          Text("Arguments".i18n),
-        ],
-        rows: events.reversed.map((event) => MizerTableRow(
-          cells: [
-            Text(event.path),
-            Text(event.args.map((e) {
-              if (e.hasFloat()) {
-                return e.float.toString();
-              }
-              if (e.hasDouble_4()) {
-                return e.double_4.toString();
-              }
-              if (e.hasBool_5()) {
-                return e.bool_5.toString();
-              }
-              if (e.hasColor()) {
-                return "RGB(${e.color.red}, ${e.color.green}, ${e.color.blue})";
-              }
-              if (e.hasInt_1()) {
-                return e.int_1.toString();
-              }
-              if (e.hasLong()) {
-                return e.long.toString();
-              }
-            }).join(", ")),
-          ]
-        )).toList(),
-      ),
-    ));
+    return Panel(
+        label: "Osc Messages".i18n,
+        child: SingleChildScrollView(
+          child: MizerTable(
+            columnWidths: {
+              1: FixedColumnWidth(128),
+              2: FixedColumnWidth(512),
+            },
+            columns: [
+              Text("Path".i18n),
+              Text("Arguments".i18n),
+            ],
+            rows: events.reversed
+                .map((event) => MizerTableRow(cells: [
+                      Text(event.path),
+                      Text(event.args.map((e) {
+                        if (e.hasFloat()) {
+                          return e.float.toString();
+                        }
+                        if (e.hasDouble_4()) {
+                          return e.double_4.toString();
+                        }
+                        if (e.hasBool_5()) {
+                          return e.bool_5.toString();
+                        }
+                        if (e.hasColor()) {
+                          return "RGB(${e.color.red}, ${e.color.green}, ${e.color.blue})";
+                        }
+                        if (e.hasInt_1()) {
+                          return e.int_1.toString();
+                        }
+                        if (e.hasLong()) {
+                          return e.long.toString();
+                        }
+                        if (e.hasString()) {
+                          return e.string;
+                        }
+                      }).join(", ")),
+                    ]))
+                .toList(),
+          ),
+        ));
   }
 }

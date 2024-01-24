@@ -10,13 +10,13 @@ use futures::StreamExt;
 
 use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
-use mizer_module::{Module, Runtime};
 use mizer_ndi::{NdiSourceDiscovery, NdiSourceRef};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
 
 use crate::laser::LaserDevice;
+pub use crate::module::*;
 
 pub mod g13;
 pub mod gamepads;
@@ -24,6 +24,8 @@ pub mod laser;
 pub mod ndi;
 pub mod pro_dj_link;
 pub mod webcams;
+
+mod module;
 
 pub trait Device {
     fn status(&self) -> DeviceStatus;
@@ -293,24 +295,4 @@ pub struct WebcamView {
 pub struct NdiSourceView {
     pub id: String,
     pub name: String,
-}
-
-pub struct DeviceModule(DeviceManager);
-
-impl DeviceModule {
-    pub fn new() -> (Self, DeviceManager) {
-        let manager = DeviceManager::new();
-
-        (DeviceModule(manager.clone()), manager)
-    }
-}
-
-impl Module for DeviceModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
-        let injector = runtime.injector_mut();
-        injector.provide(self.0);
-
-        Ok(())
-    }
 }

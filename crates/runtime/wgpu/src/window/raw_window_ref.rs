@@ -6,7 +6,7 @@ use winit::event::WindowEvent;
 
 pub struct RawWindowRef {
     pub(crate) window: winit::window::Window,
-    pub(crate) events: Receiver<WindowEvent<'static>>,
+    pub(crate) events: Receiver<WindowEvent>,
 }
 
 impl Deref for RawWindowRef {
@@ -31,7 +31,7 @@ impl Drop for RawWindowRef {
 }
 
 impl RawWindowRef {
-    pub fn get_events(&mut self) -> Vec<WindowEvent<'static>> {
+    pub fn get_events(&mut self) -> Vec<WindowEvent> {
         let mut events = Vec::new();
         while let Ok(event) = self.events.try_recv() {
             events.push(event);

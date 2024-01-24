@@ -211,7 +211,8 @@ class _SpeedEditorState extends State<SpeedEditor> {
             _dragValue(double.parse(next.toStringAsFixed(3)));
           },
           onTap: () => setState(() => this.isEditing = true),
-          child: Text(value.toString(), textAlign: TextAlign.center, style: style.headline5),
+          child:
+              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headline5),
         ),
       ),
     );

@@ -31,16 +31,29 @@ impl TextureRegistry {
         height: u32,
         label: Option<&str>,
     ) -> TextureHandle {
-        profiling::scope!("TextureRegistry::register");
-        let texture = context.create_texture(
+        self.register_with(
+            context,
             width,
             height,
-            wgpu::TextureFormat::Bgra8UnormSrgb,
+            crate::TEXTURE_FORMAT,
             wgpu::TextureUsages::RENDER_ATTACHMENT
                 | wgpu::TextureUsages::TEXTURE_BINDING
                 | wgpu::TextureUsages::COPY_SRC,
             label,
-        );
+        )
+    }
+
+    pub fn register_with(
+        &self,
+        context: &WgpuContext,
+        width: u32,
+        height: u32,
+        format: wgpu::TextureFormat,
+        usages: wgpu::TextureUsages,
+        label: Option<&str>,
+    ) -> TextureHandle {
+        profiling::scope!("TextureRegistry::register_with_usages");
+        let texture = context.create_texture(width, height, format, usages, label);
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         let handle = TextureHandle::new();
         self.textures.insert(handle, texture);

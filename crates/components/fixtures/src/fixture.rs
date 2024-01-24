@@ -72,7 +72,11 @@ impl Fixture {
     }
 
     pub fn get_channels(&self) -> Vec<FixtureChannelDefinition> {
-        self.current_mode.channels.clone()
+        self.current_mode
+            .get_channels()
+            .into_iter()
+            .cloned()
+            .collect()
     }
 
     pub fn write<S: Into<String>>(&mut self, name: S, value: f64) {
@@ -116,7 +120,7 @@ impl Fixture {
     }
 
     pub(crate) fn set_to_default(&mut self) {
-        for channel in self.current_mode.channels.iter() {
+        for channel in self.current_mode.get_channels() {
             self.channel_values.insert(channel.name.clone(), 0f64);
         }
         if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
@@ -148,12 +152,7 @@ impl Fixture {
         let mut buffer = [0; DMX_END_ADDRESS];
 
         for (channel_name, value) in self.channel_values.iter() {
-            if let Some(channel) = self
-                .current_mode
-                .channels
-                .iter()
-                .find(|channel| &channel.name == channel_name)
-            {
+            if let Some(channel) = self.current_mode.get_channel(channel_name) {
                 let base_channel = self.channel as usize;
                 match channel.resolution {
                     ChannelResolution::Coarse(coarse) => {

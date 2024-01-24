@@ -1,15 +1,30 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
+use crate::background_discovery::MidiBackgroundDiscovery;
 use crate::connections::MidiConnectionManager;
-use crate::processor::MidiProcessor;
+use crate::MidiDeviceProvider;
 
 pub struct MidiModule;
 
+module_name!(MidiModule);
+
 impl Module for MidiModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
-        runtime.injector_mut().provide(MidiConnectionManager::new());
-        runtime.add_processor(MidiProcessor);
+    const IS_REQUIRED: bool = false;
+
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        let provider = MidiDeviceProvider::new();
+        let background_discovery = MidiBackgroundDiscovery::new(&provider);
+        let mut connection_manager = MidiConnectionManager::new(provider);
+        background_discovery.start()?;
+        let device_profile_path = &context.settings().paths.midi_device_profiles;
+        tracing::info!(
+            "Loading MIDI device profiles from {}",
+            device_profile_path.display()
+        );
+        if let Err(err) = connection_manager.load_device_profiles(device_profile_path) {
+            tracing::error!("Failed to load MIDI device profiles: {}", err);
+        }
+        context.provide(connection_manager);
 
         Ok(())
     }

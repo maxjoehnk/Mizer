@@ -1,9 +1,10 @@
 use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 
-use super::wgpu_pipeline;
 use mizer_node::*;
 use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+
+use super::wgpu_pipeline;
 
 const INPUT_PORT: &str = "Input";
 const OUTPUT_PORT: &str = "Output";
@@ -45,7 +46,9 @@ pub struct TextureBorderState {
 impl ConfigurableNode for TextureBorderNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
-            setting!(BORDER_WIDTH_SETTING, self.border_width).min(0.0).max_hint(1000.0),
+            setting!(BORDER_WIDTH_SETTING, self.border_width)
+                .min(0.0)
+                .max_hint(1000.0),
             setting!(TOP_BORDER_SETTING, self.top_border),
             setting!(RIGHT_BORDER_SETTING, self.right_border),
             setting!(BOTTOM_BORDER_SETTING, self.bottom_border),
@@ -67,7 +70,7 @@ impl ConfigurableNode for TextureBorderNode {
 impl PipelineNode for TextureBorderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Texture Border".into(),
+            node_type_name: "Texture Border".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }
@@ -102,19 +105,27 @@ impl ProcessingNode for TextureBorderNode {
             .unwrap_or(Color::BLACK);
 
         if state.is_none() {
-            *state = Some(TextureBorderState::new(wgpu_context, texture_registry));
+            *state = Some(TextureBorderState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
         context.write_port(OUTPUT_PORT, state.target_texture);
-        state
-            .pipeline
-            .write_params(wgpu_context, color, border_width, (self.top_border, self.right_border, self.bottom_border, self.left_border));
+        state.pipeline.write_params(
+            wgpu_context,
+            color,
+            border_width,
+            (
+                self.top_border,
+                self.right_border,
+                self.bottom_border,
+                self.left_border,
+            ),
+        );
         let output = texture_registry
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -128,10 +139,10 @@ impl ProcessingNode for TextureBorderNode {
 }
 
 impl TextureBorderState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: wgpu_pipeline::BorderWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: wgpu_pipeline::BorderWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(context, 1920, 1080, Some("Border target")),
-        }
+        })
     }
 }

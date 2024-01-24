@@ -1,6 +1,8 @@
-use mizer_node::*;
-use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
+
+use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct TestSink {
@@ -18,7 +20,7 @@ impl ConfigurableNode for TestSink {}
 impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: stringify!(TestSink).into(),
+            node_type_name: stringify!(TestSink).into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
         }

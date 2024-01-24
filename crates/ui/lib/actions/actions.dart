@@ -22,6 +22,7 @@ enum View {
   Session,
   History,
   Timecode,
+  Preferences,
 }
 
 const ViewHotkeyLabels = {
@@ -40,6 +41,7 @@ const ViewHotkeyLabels = {
   View.Session: "session_view",
   View.History: "history_view",
   View.Timecode: "timecode_view",
+  View.Preferences: "preferences_view",
 };
 
 extension ViewToHotkey on View {
@@ -48,5 +50,4 @@ extension ViewToHotkey on View {
   }
 }
 
-class OpenProjectIntent extends Intent {
-}
+class OpenProjectIntent extends Intent {}

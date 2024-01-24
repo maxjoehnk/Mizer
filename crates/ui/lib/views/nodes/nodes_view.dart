@@ -5,7 +5,8 @@ import 'dart:ui' as ui;
 import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Tab;
+import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -17,6 +18,7 @@ import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
+import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
@@ -26,6 +28,7 @@ import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
+import 'widgets/node/preview.dart';
 import 'widgets/properties/properties_pane.dart';
 
 const double SidebarWidth = 300;
@@ -55,8 +58,8 @@ class NodesView extends StatefulWidget {
 
 class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   Offset? addMenuPosition;
-  bool showHiddenNodes = false;
   SelectionState? _selectionState;
+  String? nodeSearch;
 
   NodeEditorModel get model {
     return widget.nodeEditorModel;
@@ -172,16 +175,34 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           ),
           Container(
             width: SidebarWidth,
-            child: Column(children: [
-              Flexible(flex: 1, child: HiddenNodeList(nodes: model.hidden)),
-              if (model.selectedNode != null)
-                Flexible(
-                    flex: 2,
-                    child: Panel(
-                        label: model.selectedNode!.node.details.name,
-                        child: NodePropertiesPane(
-                            node: model.selectedNode!.node, onUpdate: _refresh))),
-            ]),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Panel(
+                    padding: false,
+                    onSearch: (search) => setState(() => nodeSearch = search),
+                    tabs: [
+                      Tab(
+                          label: "Properties".i18n,
+                          child: NodePropertiesPane(
+                              node: model.selectedNode?.node, onUpdate: _refresh)),
+                      Tab(
+                          label: "Hidden".i18n,
+                          child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Panel(
+                    label: "Preview".i18n,
+                    child: model.selectedNode == null
+                        ? Container()
+                        : NodePreview(model.selectedNode!.node),
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -276,7 +297,20 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       WidgetsBinding.instance.addObserver(this);
       afterLayout(context);
     });
+    context.read<NodesApi>().openNodesView();
     super.initState();
+  }
+
+  @override
+  void activate() {
+    context.read<NodesApi>().openNodesView();
+    super.activate();
+  }
+
+  @override
+  void deactivate() {
+    context.read<NodesApi>().closeNodesView();
+    super.deactivate();
   }
 
   @override

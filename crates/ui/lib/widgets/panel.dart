@@ -4,6 +4,7 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
+import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
 
 import 'hoverable.dart';
@@ -161,7 +162,12 @@ class _PanelState extends State<Panel> {
                                   constraints: BoxConstraints(maxWidth: 200),
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: TextField(controller: searchController, autofocus: true),
+                                    child: TextFieldFocus(
+                                      child: TextField(
+                                        controller: searchController,
+                                        autofocus: true,
+                                      ),
+                                    ),
                                   ))),
                         MizerIconButton(
                             icon: Icons.search,

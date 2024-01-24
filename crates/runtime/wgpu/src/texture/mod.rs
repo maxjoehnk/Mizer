@@ -8,8 +8,6 @@ mod static_texture;
 mod texture_provider;
 mod texture_registry;
 
-const TEXTURE_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Rgba8UnormSrgb;
-
 pub struct Texture {
     pub texture: wgpu::Texture,
     pub view: wgpu::TextureView,
@@ -25,7 +23,7 @@ impl Texture {
         let texture = context.create_texture(
             provider.width(),
             provider.height(),
-            TEXTURE_FORMAT,
+            crate::TEXTURE_FORMAT,
             wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
             None,
         );
@@ -93,7 +91,7 @@ impl Texture {
         self.texture = context.create_texture(
             width,
             height,
-            TEXTURE_FORMAT,
+            crate::TEXTURE_FORMAT,
             wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
             None,
         );

@@ -12,7 +12,7 @@ cpal = "0.15"
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 rb = "0.4"
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"
 mizer-media = { path = "../../../../components/media" }
 dasp = { version = "0.11", features = ["signal", "signal-rms", "interpolate", "interpolate-sinc", "ring_buffer"] }

@@ -1,5 +1,6 @@
-use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 use wgpu::util::DeviceExt;
+
+use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
 pub struct OutputWgpuPipeline {
     sampler: wgpu::Sampler,
@@ -61,29 +62,9 @@ impl OutputWgpuPipeline {
             &self.sampler,
             "Output Texture Bind Group",
         );
-        let mut encoder = context
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Output Pipeline Render Encoder"),
-            });
+        let mut command_buffer = context.create_command_buffer("Output Render Pass");
         {
-            let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Output Render Pass"),
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: true,
-                    },
-                })],
-                depth_stencil_attachment: None,
-            });
+            let mut render_pass = command_buffer.start_render_pass(target);
             render_pass.set_pipeline(&self.render_pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
@@ -91,36 +72,16 @@ impl OutputWgpuPipeline {
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }
 
-        encoder.finish()
+        command_buffer.finish()
     }
 
     pub(crate) fn clear(&self, context: &WgpuContext, target: &TextureView) -> wgpu::CommandBuffer {
         profiling::scope!("OutputWgpuPipeline::clear");
-        let mut encoder = context
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Output Pipeline Render Encoder"),
-            });
+        let mut command_buffer = context.create_command_buffer("Output Clear Render Pass");
         {
-            let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Output Clear Render Pass"),
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: true,
-                    },
-                })],
-                depth_stencil_attachment: None,
-            });
+            command_buffer.start_render_pass(target);
         }
 
-        encoder.finish()
+        command_buffer.finish()
     }
 }

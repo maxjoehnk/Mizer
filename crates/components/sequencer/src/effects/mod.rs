@@ -1,24 +1,27 @@
+pub use self::effect::*;
+pub use self::engine::*;
+pub use self::module::*;
+pub(crate) use self::processor::*;
+pub use self::spline::*;
+
 mod default_effects;
 mod effect;
 mod engine;
 mod instance;
+mod module;
 mod processor;
 mod spline;
 
 #[cfg(test)]
 mod effect_grapher;
 
-pub use self::effect::*;
-pub use self::engine::*;
-pub(crate) use self::processor::*;
-pub use self::spline::*;
-
 #[cfg(test)]
 mod tests {
+    use mizer_fixtures::definition::FixtureFaderControl;
+
     use crate::effects::default_effects::{EffectChannelTemplate, CIRCLE};
     use crate::effects::effect_grapher::{graph_effect, graph_position_effect};
     use crate::{Effect, EffectStep};
-    use mizer_fixtures::definition::FixtureFaderControl;
 
     #[test]
     fn circle() -> anyhow::Result<()> {

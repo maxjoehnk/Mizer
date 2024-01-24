@@ -2,6 +2,7 @@ import 'dart:ffi' as ffi;
 import 'dart:io' as io;
 
 import 'package:mizer/api/plugin/ffi/status.dart';
+import 'package:mizer/api/plugin/ffi/timecode.dart';
 
 import 'bindings.dart';
 import 'connections.dart';
@@ -87,5 +88,17 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<StatusApi>.fromAddress(pointerAddress);
 
     return StatusPointer(this, pointer);
+  }
+
+  TimecodePointer openTimecode(int pointerAddress) {
+    var pointer = ffi.Pointer<TimecodeApi>.fromAddress(pointerAddress);
+
+    return TimecodePointer(this, pointer);
+  }
+}
+
+extension TimecodeExt on Timecode {
+  double get totalSeconds {
+    return hours * 3600 + minutes * 60 + seconds + (frames / 60);
   }
 }

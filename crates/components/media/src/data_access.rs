@@ -3,6 +3,8 @@ use std::sync::Arc;
 
 use dashmap::DashMap;
 
+use mizer_message_bus::MessageBus;
+
 use crate::documents::*;
 use crate::TagCreateModel;
 
@@ -10,6 +12,7 @@ use crate::TagCreateModel;
 pub struct DataAccess {
     tags: Arc<DashMap<TagId, MediaTag>>,
     media: Arc<DashMap<MediaId, MediaDocument>>,
+    pub(crate) bus: MessageBus<DataAccess>,
 }
 
 impl DataAccess {
@@ -27,8 +30,8 @@ impl DataAccess {
         Ok(media)
     }
 
-    pub fn get_media(&self, id: MediaId) -> Option<MediaDocument> {
-        self.media.get(&id).map(|entry| entry.value().clone())
+    pub fn get_media(&self, id: &MediaId) -> Option<MediaDocument> {
+        self.media.get(id).map(|entry| entry.value().clone())
     }
 
     pub fn list_tags(&self) -> anyhow::Result<Vec<MediaTag>> {
@@ -45,6 +48,7 @@ impl DataAccess {
         let tag_document = document.into();
         let tag_document: MediaTag = tag_document.into();
         self.tags.insert(tag_document.id, tag_document.clone());
+        self.bus.send(self.clone());
 
         Ok(tag_document)
     }
@@ -54,11 +58,13 @@ impl DataAccess {
         for mut media in self.media.iter_mut() {
             media.tags.retain(|tag| tag.id != id);
         }
+        self.bus.send(self.clone());
     }
 
     pub fn add_media<D: Into<MediaDocument>>(&self, document: D) -> anyhow::Result<MediaDocument> {
         let media_document = document.into();
         self.insert_media(&media_document)?;
+        self.bus.send(self.clone());
 
         Ok(media_document)
     }
@@ -67,6 +73,7 @@ impl DataAccess {
         for tag in tags {
             self.tags.insert(tag.id, tag);
         }
+        self.bus.send(self.clone());
 
         Ok(())
     }
@@ -75,6 +82,7 @@ impl DataAccess {
         for media in medias {
             self.media.insert(media.id, media);
         }
+        self.bus.send(self.clone());
 
         Ok(())
     }
@@ -82,6 +90,7 @@ impl DataAccess {
     pub fn clear(&self) -> anyhow::Result<()> {
         self.media.clear();
         self.tags.clear();
+        self.bus.send(self.clone());
 
         Ok(())
     }
@@ -97,12 +106,14 @@ impl DataAccess {
 
     fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {
         self.media.insert(document.id, document.clone());
+        self.bus.send(self.clone());
 
         Ok(())
     }
 
     pub fn remove_media(&self, id: MediaId) {
         self.media.remove(&id);
+        self.bus.send(self.clone());
     }
 
     pub fn add_tag_to_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
@@ -115,6 +126,7 @@ impl DataAccess {
             .get(&tag_id)
             .ok_or_else(|| anyhow::anyhow!("Tag with id {tag_id} does not exist"))?;
         media.tags.push(tag.clone());
+        self.bus.send(self.clone());
 
         Ok(())
     }
@@ -125,6 +137,7 @@ impl DataAccess {
             .get_mut(&media_id)
             .ok_or_else(|| anyhow::anyhow!("Media with id {media_id} does not exist"))?;
         media.tags.retain(|tag| tag.id != tag_id);
+        self.bus.send(self.clone());
 
         Ok(())
     }

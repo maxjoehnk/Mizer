@@ -13,7 +13,6 @@ use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
 
-use crate::fixture_libraries_loader::FixtureLibrariesLoader;
 use crate::{ApiCommand, Mizer};
 
 pub struct ApiHandler {
@@ -154,7 +153,7 @@ impl ApiHandler {
                 profiling::scope!("ApiCommand::ReloadFixtureLibraries");
                 let injector = mizer.runtime.injector();
                 let library = injector.get::<FixtureLibrary>().unwrap();
-                let result = FixtureLibrariesLoader(library.clone()).reload(paths);
+                let result = library.reload(paths);
 
                 sender
                     .send(result)

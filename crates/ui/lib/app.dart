@@ -25,7 +25,7 @@ class MizerApp extends StatelessWidget {
   }
 
   static ThemeData getTheme() {
-    final theme = ThemeData.dark();
+    final theme = ThemeData.dark(useMaterial3: false);
     return theme.copyWith(
         colorScheme: theme.colorScheme
             .copyWith(primary: Colors.blueGrey, secondary: Colors.deepOrangeAccent),

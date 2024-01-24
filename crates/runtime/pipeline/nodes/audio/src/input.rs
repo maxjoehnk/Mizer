@@ -4,8 +4,9 @@ use cpal::{Device, SampleFormat, SampleRate, Stream};
 use rb::{RbConsumer, RbProducer, SpscRb, RB};
 use serde::{Deserialize, Serialize};
 
-use crate::{SAMPLE_RATE, TRANSFER_SIZE};
 use mizer_node::*;
+
+use crate::{SAMPLE_RATE, TRANSFER_SIZE};
 
 const AUDIO_OUTPUT: &str = "Stereo";
 
@@ -17,7 +18,7 @@ impl ConfigurableNode for AudioInputNode {}
 impl PipelineNode for AudioInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Audio Input".to_string(),
+            node_type_name: "Audio Input".to_string(),
             preview_type: PreviewType::Waveform,
             category: NodeCategory::Audio,
         }

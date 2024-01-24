@@ -59,7 +59,7 @@ impl ConfigurableNode for CountdownNode {
 impl PipelineNode for CountdownNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Countdown".into(),
+            node_type_name: "Countdown".into(),
             preview_type: PreviewType::Timecode,
             category: NodeCategory::Standard,
         }
@@ -93,7 +93,7 @@ impl ProcessingNode for CountdownNode {
         if let Some(start) = state {
             let elapsed = start.elapsed();
             let duration = self.duration();
-            let timecode = get_timecode(elapsed, duration);
+            let timecode = get_timecode(elapsed, duration, context.fps());
             context.write_timecode_preview(timecode);
             if elapsed >= duration {
                 self.stop_timer(state);
@@ -131,11 +131,11 @@ impl CountdownNode {
     }
 }
 
-fn get_timecode(elapsed: Duration, duration: Duration) -> Timecode {
-    let timecode = Timecode::from(duration.saturating_sub(elapsed));
-    let timecode = Timecode {
+fn get_timecode(elapsed: Duration, duration: Duration, fps: f64) -> Timecode {
+    let timecode = Timecode::from_duration(duration.saturating_sub(elapsed), fps);
+
+    Timecode {
         negative: true,
         ..timecode
-    };
-    timecode
+    }
 }

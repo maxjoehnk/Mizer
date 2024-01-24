@@ -12,7 +12,6 @@ import 'package:mizer/project_files.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/windows/preferences_window.dart';
 import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
@@ -50,12 +49,6 @@ class ApplicationMenu extends StatelessWidget {
               MenuItem(
                   label: 'Save Project as'.i18n, action: () => ProjectFiles.saveProjectAs(context)),
               MenuDivider(),
-              MenuItem(
-                  label: 'Preferences'.i18n,
-                  action: () {
-                    return Window.create(PreferencesWindow.toInitData())
-                        .then((window) => window.showModal());
-                  }),
               MenuItem(
                   label: "Exit".i18n,
                   action: () => context.read<ApplicationPluginApi>().exit(),

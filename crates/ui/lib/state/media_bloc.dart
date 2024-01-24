@@ -63,6 +63,13 @@ class RemoveTagFromMedia extends MediaEvent {
   RemoveTagFromMedia({required this.mediaId, required this.tagId});
 }
 
+class MediaChanged extends MediaEvent {
+  final List<MediaFile> files;
+  final List<MediaTag> tags;
+
+  MediaChanged({required this.files, required this.tags});
+}
+
 class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
   final MediaApi api;
 
@@ -72,11 +79,9 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
     });
     on<ImportMedia>((event, emit) async {
       await api.importMedia(event.files);
-      emit(await _fetch());
     });
     on<RemoveMedia>((event, emit) async {
       await api.removeMedia(event.mediaId);
-      emit(await _fetch());
     });
     on<AddFolder>((event, emit) async {
       await api.addMediaFolder(event.folder);
@@ -88,26 +93,26 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
     });
     on<AddTag>((event, emit) async {
       await api.createTag(event.tagName);
-      emit(await _fetch());
     });
     on<RemoveTag>((event, emit) async {
       await api.removeTag(event.tagId);
-      emit(await _fetch());
     });
     on<AddTagToMedia>((event, emit) async {
       await api.addTagToMedia(event.mediaId, event.tagId);
-      emit(await _fetch());
     });
     on<RemoveTagFromMedia>((event, emit) async {
       await api.removeTagFromMedia(event.mediaId, event.tagId);
-      emit(await _fetch());
+    });
+    on<MediaChanged>((event, emit) async {
+      emit(MediaFiles(files: event.files, tags: event.tags, folders: state.folders));
+    });
+    this.api.watchMedia().listen((value) {
+      this.add(MediaChanged(files: value.files, tags: value.tags));
     });
     this.add(FetchMedia());
   }
 
   Future<MediaFiles> _fetch() async {
-    var mediaFiles = await api.getMedia();
-    mediaFiles.files.sort((lhs, rhs) => lhs.name.compareTo(rhs.name));
-    return mediaFiles;
+    return await api.getMedia();
   }
 }

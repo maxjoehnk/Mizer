@@ -44,12 +44,13 @@ mizer-plan-nodes = { path = "plan" }
 mizer-timing-nodes = { path = "behaviors/timing" }
 mizer-timecode-nodes = { path = "timecode" }
 mizer-transport-nodes = { path = "transport" }
+mizer-vector-nodes = { path = "vector" }
 derive_more = "0.99"
 dashmap = "5.5"
 
 [dev-dependencies]
 mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
-test-case = "3.2"
+test-case = "3.3"
 insta = "1.34"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "area_series"] }

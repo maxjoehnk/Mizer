@@ -1,22 +1,51 @@
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 
-class TimecodeBloc extends Bloc<dynamic, AllTimecodes> {
+class TimecodeState {
+  List<Timecode> timecodes;
+  List<TimecodeControl> controls;
+
+  int? selectedTimecodeId;
+
+  TimecodeState({required this.timecodes, required this.controls, this.selectedTimecodeId});
+
+  factory TimecodeState.empty() {
+    return TimecodeState(timecodes: [], controls: []);
+  }
+
+  Timecode? get selectedTimecode {
+    return timecodes.firstWhereOrNull((t) => t.id == selectedTimecodeId);
+  }
+}
+
+class FetchTimecodes {}
+
+class SelectTimecode {
+  final int timecodeId;
+
+  SelectTimecode({required this.timecodeId});
+}
+
+class TimecodeUpdated {
+  final AllTimecodes timecodes;
+
+  TimecodeUpdated(this.timecodes);
+}
+
+class TimecodeBloc extends Bloc<dynamic, TimecodeState> {
   final TimecodeApi api;
 
-  TimecodeBloc(this.api) : super(AllTimecodes(timecodes: [], controls: [])) {
+  TimecodeBloc(this.api) : super(TimecodeState.empty()) {
     on<AddTimecodeRequest>((event, emit) async {
       await api.addTimecode(event);
-      emit(await _fetch());
     });
     on<RenameTimecodeRequest>((event, emit) async {
       await api.renameTimecode(event);
-      emit(await _fetch());
     });
     on<DeleteTimecodeRequest>((event, emit) async {
       await api.deleteTimecode(event);
-      emit(await _fetch());
     });
     on<AddTimecodeControlRequest>((event, emit) async {
       await api.addTimecodeControl(event);
@@ -30,15 +59,39 @@ class TimecodeBloc extends Bloc<dynamic, AllTimecodes> {
       await api.deleteTimecodeControl(event);
       emit(await _fetch());
     });
-    this.fetch();
+    on<FetchTimecodes>((event, emit) async {
+      emit(await _fetch());
+    });
+    on<SelectTimecode>((event, emit) async {
+      emit(TimecodeState(
+        timecodes: state.timecodes,
+        controls: state.controls,
+        selectedTimecodeId: event.timecodeId,
+      ));
+    });
+    on<TimecodeUpdated>((event, emit) async {
+      emit(TimecodeState(
+        timecodes: event.timecodes.timecodes,
+        controls: state.controls,
+        selectedTimecodeId: state.selectedTimecodeId,
+      ));
+    });
+    this.add(FetchTimecodes());
+    this.api.watchTimecodes().listen((event) => this.add(TimecodeUpdated(event)));
   }
 
-  Future<AllTimecodes> _fetch() {
-    return api.getTimecodes();
+  Future<TimecodeState> _fetch() async {
+    var timecodes = await api.getTimecodes();
+
+    return TimecodeState(
+      timecodes: timecodes.timecodes,
+      controls: timecodes.controls,
+      selectedTimecodeId: state.selectedTimecodeId,
+    );
   }
 
-  fetch() {
-    _fetch().then((timecodes) => this.emit(timecodes));
+  selectTimecode(int id) {
+    this.add(SelectTimecode(timecodeId: id));
   }
 
   addTimecode(String name) {

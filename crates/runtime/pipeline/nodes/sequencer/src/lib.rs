@@ -39,9 +39,20 @@ impl ConfigurableNode for SequencerNode {
 impl PipelineNode for SequencerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Sequencer".into(),
+            node_type_name: "Sequencer".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(sequence) = injector
+            .get::<Sequencer>()
+            .and_then(|sequencer| sequencer.sequence(self.sequence_id))
+        {
+            format!("Sequencer ({})", sequence.name)
+        } else {
+            format!("Sequencer (ID {})", self.sequence_id)
         }
     }
 

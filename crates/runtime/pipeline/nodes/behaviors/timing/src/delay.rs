@@ -1,5 +1,6 @@
-use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
+
+use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
@@ -36,7 +37,7 @@ impl ConfigurableNode for DelayNode {
 impl PipelineNode for DelayNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Delay".into(),
+            node_type_name: "Delay".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

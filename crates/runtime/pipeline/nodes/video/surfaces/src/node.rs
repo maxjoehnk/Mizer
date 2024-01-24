@@ -44,7 +44,7 @@ impl ConfigurableNode for SurfaceMappingNode {
 impl PipelineNode for SurfaceMappingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Surface".into(),
+            node_type_name: "Surface".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

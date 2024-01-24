@@ -1,6 +1,7 @@
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
+use mizer_module::ApiInjector;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_status_bus::StatusBus;
 use mizer_surfaces::SurfaceRegistryApi;
@@ -63,17 +64,15 @@ pub struct Handlers<R: RuntimeApi> {
 }
 
 impl<R: RuntimeApi> Handlers<R> {
-    pub fn new(
-        runtime: R,
-        fixture_manager: FixtureManager,
-        fixture_library: FixtureLibrary,
-        media_server: MediaServer,
-        sequencer: Sequencer,
-        effect_engine: EffectEngine,
-        timecode_manager: TimecodeManager,
-        status_bus: StatusBus,
-        surface_registry_api: SurfaceRegistryApi,
-    ) -> Self {
+    pub fn new(runtime: R, api_injector: ApiInjector, status_bus: StatusBus) -> Self {
+        let fixture_manager: FixtureManager = api_injector.require_service();
+        let fixture_library: FixtureLibrary = api_injector.require_service();
+        let media_server: MediaServer = api_injector.require_service();
+        let sequencer: Sequencer = api_injector.require_service();
+        let effect_engine: EffectEngine = api_injector.require_service();
+        let timecode_manager: TimecodeManager = api_injector.require_service();
+        let surface_registry_api: SurfaceRegistryApi = api_injector.require_service();
+
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
             fixtures: FixturesHandler::new(

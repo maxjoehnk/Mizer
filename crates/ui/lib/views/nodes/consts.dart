@@ -14,14 +14,7 @@ const double INNER_RADIUS = 2;
 
 const double DOT_SIZE = 16;
 
-const _GENERATED_TYPES = [
-  "programmer",
-  "transport",
-  "sequencer",
-  "fixture",
-  "group",
-  "preset"
-];
+const _GENERATED_TYPES = ["programmer", "transport", "sequencer", "fixture", "group", "preset"];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {
@@ -33,6 +26,7 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
     case ChannelProtocol.COLOR:
       return Colors.red;
     case ChannelProtocol.LASER:
+    case ChannelProtocol.VECTOR:
       return Colors.purple;
     case ChannelProtocol.DATA:
       return Colors.blue;

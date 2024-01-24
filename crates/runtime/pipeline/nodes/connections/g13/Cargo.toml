@@ -11,5 +11,5 @@ serde = { version = "1", features = ["derive"] }
 mizer-g13 = { path = "../../../../../components/connections/devices/g13" }
 mizer-devices = { path = "../../../../../components/connections/devices" }
 mizer-node = { path = "../../../node" }
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"

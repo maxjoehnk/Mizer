@@ -1,9 +1,10 @@
 use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 
-use crate::rgb::wgpu_pipeline::RgbWgpuPipeline;
 use mizer_node::*;
 use mizer_wgpu::{TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
+
+use crate::rgb::wgpu_pipeline::RgbWgpuPipeline;
 
 const INPUT_PORT: &str = "Input";
 const RED_PORT: &str = "Red";
@@ -27,7 +28,7 @@ impl ConfigurableNode for VideoRgbSplitNode {}
 impl PipelineNode for VideoRgbSplitNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video RGB Split".into(),
+            node_type_name: "Video RGB Split".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }
@@ -56,7 +57,7 @@ impl ProcessingNode for VideoRgbSplitNode {
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
 
         if state.is_none() {
-            *state = Some(RgbSplitState::new(wgpu_context, texture_registry));
+            *state = Some(RgbSplitState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -67,7 +68,9 @@ impl ProcessingNode for VideoRgbSplitNode {
             let red_output = texture_registry
                 .get(&state.red_target_texture)
                 .ok_or_else(|| anyhow!("Missing target texture"))?;
-            let stage = state.red_pipeline.render(wgpu_context, &input, &red_output);
+            let stage = state
+                .red_pipeline
+                .render(wgpu_context, &input, &red_output)?;
             wgpu_pipeline.add_stage(stage);
 
             let green_output = texture_registry
@@ -75,7 +78,7 @@ impl ProcessingNode for VideoRgbSplitNode {
                 .ok_or_else(|| anyhow!("Missing target texture"))?;
             let stage = state
                 .green_pipeline
-                .render(wgpu_context, &input, &green_output);
+                .render(wgpu_context, &input, &green_output)?;
             wgpu_pipeline.add_stage(stage);
 
             let blue_output = texture_registry
@@ -83,7 +86,7 @@ impl ProcessingNode for VideoRgbSplitNode {
                 .ok_or_else(|| anyhow!("Missing target texture"))?;
             let stage = state
                 .blue_pipeline
-                .render(wgpu_context, &input, &blue_output);
+                .render(wgpu_context, &input, &blue_output)?;
             wgpu_pipeline.add_stage(stage);
         }
 
@@ -96,29 +99,29 @@ impl ProcessingNode for VideoRgbSplitNode {
 }
 
 impl RgbSplitState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            red_pipeline: RgbWgpuPipeline::new(context, &[1.0, 0.0, 0.0]),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            red_pipeline: RgbWgpuPipeline::new(context, &[1.0, 0.0, 0.0])?,
             red_target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("RGB Split Red target"),
             ),
-            green_pipeline: RgbWgpuPipeline::new(context, &[0.0, 1.0, 0.0]),
+            green_pipeline: RgbWgpuPipeline::new(context, &[0.0, 1.0, 0.0])?,
             green_target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("RGB Split Green target"),
             ),
-            blue_pipeline: RgbWgpuPipeline::new(context, &[0.0, 0.0, 1.0]),
+            blue_pipeline: RgbWgpuPipeline::new(context, &[0.0, 0.0, 1.0])?,
             blue_target_texture: texture_registry.register(
                 context,
                 1920,
                 1080,
                 Some("RGB Split Blue target"),
             ),
-        }
+        })
     }
 }

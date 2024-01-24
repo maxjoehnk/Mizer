@@ -13,7 +13,7 @@ use crate::WgpuContext;
 
 use super::{RawWindowRef, WindowRef};
 
-pub(crate) type WindowEventSenders = DashMap<WindowId, Sender<WindowEvent<'static>>>;
+pub(crate) type WindowEventSenders = DashMap<WindowId, Sender<WindowEvent>>;
 
 pub struct EventLoopHandle {
     pub(crate) event_loop: EventLoop<()>,
@@ -21,16 +21,16 @@ pub struct EventLoopHandle {
 }
 
 impl EventLoopHandle {
-    pub fn new() -> Self {
+    pub fn new() -> anyhow::Result<Self> {
         let mut builder = EventLoopBuilder::new();
         #[cfg(target_os = "linux")]
         builder.with_any_thread(true);
-        let event_loop = builder.build();
+        let event_loop = builder.build()?;
 
-        Self {
+        Ok(Self {
             event_loop,
             window_event_sender: DashMap::new(),
-        }
+        })
     }
 
     pub fn new_window(

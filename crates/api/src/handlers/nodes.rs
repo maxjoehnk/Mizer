@@ -1,9 +1,10 @@
+use std::fmt::Debug;
+
 use mizer_command_executor::*;
 use mizer_docs::get_node_description;
 use mizer_node::{NodePath, NodePreviewRef, NodeType, PortId};
 use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::NodeMetadataRef;
-use std::fmt::Debug;
 
 use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::proto::nodes::*;
@@ -113,7 +114,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
                     .unwrap_or_default(); // TODO: remove this
 
                 AvailableNode {
-                    name: details.name,
+                    name: details.node_type_name,
                     category: NodeCategory::from(details.category) as i32,
                     r#type: node_type.get_name(),
                     description,
@@ -299,5 +300,17 @@ impl<R: RuntimeApi> NodesHandler<R> {
         })?;
 
         Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn open_nodes_view(&self) {
+        self.runtime.open_nodes_view();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn close_nodes_view(&self) {
+        self.runtime.close_nodes_view();
     }
 }

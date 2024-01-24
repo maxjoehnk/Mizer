@@ -6,7 +6,10 @@ test:
 	cargo nextest run --workspace
 
 benchmarks:
-	cargo bench --workspace
+	cargo bench --no-default-features --benches --workspace
+
+oscillator_nodes_benchmarks:
+	cargo bench --no-default-features --bench oscillator_nodes
 
 build-headless:
 	cargo build --release --no-default-features --features build-ffmpeg --features all-features

@@ -65,7 +65,7 @@ impl ConfigurableNode for DmxInputNode {
 impl PipelineNode for DmxInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "DMX Input".into(),
+            node_type_name: "DMX Input".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Connections,
         }

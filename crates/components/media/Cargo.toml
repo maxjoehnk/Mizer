@@ -9,20 +9,22 @@ anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-uuid = { version = "1.5", features = ["v4", "serde"] }
-id3 = "1.9"
+uuid = { version = "1.7", features = ["v4", "serde"] }
+id3 = "1.12"
 infer = "0.15"
+mime_guess = "2"
 image = "0.24"
 futures = "0.3"
-tokio = { version = "1.33", features = ["fs", "rt", "io-util"] }
-async-walkdir = "0.2"
-resvg = "0.36"
+tokio = { version = "1.35", features = ["fs", "rt", "io-util"] }
+async-walkdir = "1.0"
+resvg = "0.37"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 ffmpeg-the-third = "1.2"
 dashmap = "5.5"
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
+mizer-message-bus = { path = "../../util/bus" }
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

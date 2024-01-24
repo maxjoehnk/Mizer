@@ -397,14 +397,18 @@ impl CueControl {
         values: &mut HashMap<FixtureId, Option<f64>>,
     ) {
         for fixture_id in self.fixtures.get_fixtures().iter().flatten().copied() {
-            let cue_state = sequence_state.channel_state[&(fixture_id, self.control.clone())];
+            let Some(cue_state) = sequence_state
+                .channel_state
+                .get(&(fixture_id, self.control.clone()))
+            else {
+                continue;
+            };
             if cue_state.state != CueChannelState::Fading {
                 continue;
             }
-            if values[&fixture_id].is_none() {
+            let Some(Some(value)) = values.get(&fixture_id).copied() else {
                 continue;
-            }
-            let value = values[&fixture_id].unwrap();
+            };
             let previous_value = sequence_state
                 .get_fixture_value(fixture_id, &self.control)
                 .unwrap_or_default();

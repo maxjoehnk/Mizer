@@ -3,7 +3,7 @@ use std::sync::Arc;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
-use mizer_api::handlers::{NodesHandler, TimecodeHandler};
+use mizer_api::handlers::NodesHandler;
 use mizer_api::proto::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodesRef};
@@ -13,7 +13,6 @@ use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {
     handler: NodesHandler<R>,
-    timecode_handler: TimecodeHandler<R>,
 }
 
 impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
@@ -156,17 +155,22 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
+            "openNodesView" => {
+                self.handler.open_nodes_view();
+                resp.send_ok(Value::Null);
+            },
+            "closeNodesView" => {
+                self.handler.close_nodes_view();
+                resp.send_ok(Value::Null);
+            },
             _ => resp.not_implemented(),
         }
     }
 }
 
 impl<R: RuntimeApi + 'static> NodesChannel<R> {
-    pub fn new(handler: NodesHandler<R>, timecode_handler: TimecodeHandler<R>) -> Self {
-        Self {
-            handler,
-            timecode_handler,
-        }
+    pub fn new(handler: NodesHandler<R>) -> Self {
+        Self { handler }
     }
 
     pub fn channel(self, context: Context) -> MethodChannel {

@@ -43,7 +43,7 @@ impl ConfigurableNode for TextureOpacityNode {
 impl PipelineNode for TextureOpacityNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Texture Opacity".into(),
+            node_type_name: "Texture Opacity".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

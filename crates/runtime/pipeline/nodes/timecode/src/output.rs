@@ -1,6 +1,7 @@
+use serde::{Deserialize, Serialize};
+
 use mizer_node::*;
 use mizer_timecode::{TimecodeControlId, TimecodeManager};
-use serde::{Deserialize, Serialize};
 
 const VALUE_OUTPUT: &str = "Value";
 
@@ -36,9 +37,25 @@ impl ConfigurableNode for TimecodeOutputNode {
 impl PipelineNode for TimecodeOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Timecode Output".into(),
+            node_type_name: "Timecode Output".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(control) = injector
+            .get::<TimecodeManager>()
+            .and_then(|timecode_manager| {
+                timecode_manager
+                    .controls()
+                    .into_iter()
+                    .find(|control| control.id == self.control_id)
+            })
+        {
+            format!("Timecode Output ({})", control.name)
+        } else {
+            "Timecode Output".to_string()
         }
     }
 

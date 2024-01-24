@@ -28,8 +28,6 @@ var t_diffuse: binding_array<texture_2d<f32>>;
 var s_diffuse: sampler;
 @group(1) @binding(0)
 var<uniform> texture_count: i32;
-@group(2) @binding(0)
-var<uniform> mode: i32;
 
 @fragment
 fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {

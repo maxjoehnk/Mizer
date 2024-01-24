@@ -39,15 +39,20 @@ impl VideoOutputState {
 
 impl ConfigurableNode for VideoOutputNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let event_loop = injector.get::<EventLoopHandle>().unwrap();
-        let screens = event_loop.available_screens();
-        let mut screens: Vec<_> = screens
-            .into_iter()
-            .map(|screen| SelectVariant::Item {
-                label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1).into(),
-                value: screen.id.into(),
-            })
-            .collect();
+        let mut screens = if let Some(event_loop) = injector.get::<EventLoopHandle>() {
+            let screens = event_loop.available_screens();
+            let screens: Vec<_> = screens
+                .into_iter()
+                .map(|screen| SelectVariant::Item {
+                    label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1).into(),
+                    value: screen.id.into(),
+                })
+                .collect();
+
+            screens
+        } else {
+            vec![]
+        };
         screens.insert(0, SelectVariant::from(String::default())); // No selection
 
         vec![
@@ -69,7 +74,7 @@ impl ConfigurableNode for VideoOutputNode {
 impl PipelineNode for VideoOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video Output".into(),
+            node_type_name: "Video Output".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

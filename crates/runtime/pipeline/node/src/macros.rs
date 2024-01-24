@@ -151,9 +151,12 @@ macro_rules! update {
         }
     };
     (media $setting:expr, $name:expr, $field:expr) => {
+        update!(media $setting, $name, $field, |value: String| value)
+    };
+    (media $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
         if matches!($setting.value, NodeSettingValue::Media { .. }) && $setting.label == $name {
             if let NodeSettingValue::Media { value, .. } = $setting.value {
-                $field = value;
+                $field = $conversion(value);
                 return Ok(());
             }
         }

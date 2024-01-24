@@ -49,7 +49,7 @@ impl ConfigurableNode for StepSequencerNode {
 impl PipelineNode for StepSequencerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Step Sequencer".into(),
+            node_type_name: "Step Sequencer".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

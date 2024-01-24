@@ -32,7 +32,7 @@ impl ConfigurableNode for SelectNode {
 impl PipelineNode for SelectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Select".into(),
+            node_type_name: "Select".into(),
             preview_type: match self.port_type {
                 PortType::Single => PreviewType::History,
                 PortType::Multi => PreviewType::Multiple,

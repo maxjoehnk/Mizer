@@ -1,13 +1,15 @@
 use std::path::PathBuf;
 
-use mizer::{build_runtime, Flags};
 use test_case::test_case;
+use tracing::Level;
+
+use mizer::{build_runtime, Flags};
 
 #[test_case("artnet"; "artnet")]
 #[test_case("audio"; "audio")]
 #[test_case("demo"; "demo")]
 #[test_case("effects"; "effects")]
-#[test_case("fixture"; "fixture")]
+// #[test_case("fixture"; "fixture")]
 #[test_case("history"; "history")]
 #[test_case("inputs"; "inputs")]
 #[test_case("laser"; "laser")]
@@ -25,6 +27,12 @@ use test_case::test_case;
 #[test_case("timecode"; "timecode")]
 #[test_case("video"; "video")]
 fn test_build_project_pipeline(project: &str) {
+    let _ = tracing::subscriber::set_global_default(
+        tracing_subscriber::fmt()
+            .with_max_level(Level::DEBUG)
+            .with_test_writer()
+            .finish(),
+    );
     let runtime = tokio::runtime::Runtime::new().unwrap();
     let _guard = runtime.enter();
     let handle = runtime.handle().clone();

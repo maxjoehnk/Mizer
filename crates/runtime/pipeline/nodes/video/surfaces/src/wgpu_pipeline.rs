@@ -1,7 +1,8 @@
 use wgpu::util::DeviceExt;
 
 use mizer_surfaces::{SurfaceTransform, SurfaceTransformPoint};
-use mizer_wgpu::{RECT_INDICES, RECT_VERTICES, TextureView, Vertex, wgpu, WgpuContext};
+use mizer_wgpu::wgpu::StoreOp;
+use mizer_wgpu::{wgpu, TextureView, Vertex, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
 pub struct SurfaceMappingWgpuPipeline {
     sampler: wgpu::Sampler,
@@ -111,10 +112,12 @@ impl SurfaceMappingWgpuPipeline {
                             b: 0.0,
                             a: 0.0,
                         }),
-                        store: true,
+                        store: StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                timestamp_writes: None,
+                occlusion_query_set: None,
             });
             render_pass.set_pipeline(&self.render_pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));

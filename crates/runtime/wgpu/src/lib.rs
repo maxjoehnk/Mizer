@@ -5,6 +5,7 @@ pub use wgpu;
 
 pub use context::WgpuContext;
 pub use module::WgpuModule;
+pub use node_pipeline::{NodePipeline, NodePipelineBuilder};
 pub use pipeline::{BufferHandle, WgpuPipeline};
 pub use texture::*;
 pub use texture_source_stage::TextureSourceStage;
@@ -12,12 +13,15 @@ pub use vertex::Vertex;
 
 mod context;
 mod module;
+mod node_pipeline;
 mod pipeline;
 mod processor;
 mod texture;
 mod texture_source_stage;
 mod vertex;
 pub mod window;
+
+const TEXTURE_FORMAT: wgpu::TextureFormat = wgpu::TextureFormat::Bgra8UnormSrgb;
 
 pub enum TextureView<'a> {
     Borrowed(&'a wgpu::TextureView),

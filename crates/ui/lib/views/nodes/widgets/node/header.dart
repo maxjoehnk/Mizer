@@ -5,11 +5,12 @@ import 'package:mizer/protos/nodes.pb.dart';
 import '../../consts.dart';
 
 class NodeHeader extends StatelessWidget {
+  final String path;
   final String name;
   final NodeCategory category;
   final bool collapsed;
 
-  NodeHeader(this.name, this.category, {this.collapsed = false});
+  NodeHeader(this.path, this.name, this.category, {this.collapsed = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,14 @@ class NodeHeader extends StatelessWidget {
         color: CATEGORY_COLORS[category] ?? Colors.black,
       ),
       clipBehavior: Clip.none,
-      padding: const EdgeInsets.all(4),
-      child: Text(name, style: textTheme.bodyText2),
+      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(name, style: textTheme.bodyMedium),
+          Text(path, style: textTheme.bodySmall),
+        ],
+      ),
     );
   }
 }

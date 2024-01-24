@@ -1,7 +1,6 @@
 use std::num::NonZeroU32;
 
 use wgpu::util::DeviceExt;
-use wgpu::BufferUsages;
 
 use mizer_wgpu::{wgpu, TextureView, WgpuContext, RECT_INDICES, RECT_VERTICES};
 
@@ -162,7 +161,7 @@ impl MixerWgpuPipeline {
             context
                 .device
                 .create_buffer_init(&wgpu::util::BufferInitDescriptor {
-                    usage: BufferUsages::COPY_DST | BufferUsages::UNIFORM,
+                    usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::UNIFORM,
                     contents: &(1 as u32).to_ne_bytes(),
                     label: Some("Mixer Texture Count Buffer"),
                 });
@@ -230,7 +229,7 @@ impl MixerWgpuPipeline {
                 &self.texture_bind_group_layout,
                 &self.texture_count_bind_group_layout,
             ],
-            &self.shaders.get_shader(mode),
+            self.shaders.get_shader(mode),
         );
         self.texture_count = texture_count;
         self.mode = mode;
@@ -274,29 +273,9 @@ impl MixerWgpuPipeline {
                 ],
                 label: None,
             });
-        let mut encoder = context
-            .device
-            .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-                label: Some("Mixer Render Encoder"),
-            });
+        let mut command_buffer = context.create_command_buffer("Mixer Render Pass");
         {
-            let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
-                label: Some("Mixer Render Pass"),
-                color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                    view: target,
-                    resolve_target: None,
-                    ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.0,
-                            g: 0.0,
-                            b: 0.0,
-                            a: 1.0,
-                        }),
-                        store: true,
-                    },
-                })],
-                depth_stencil_attachment: None,
-            });
+            let mut render_pass = command_buffer.start_render_pass(target);
             render_pass.set_pipeline(&self.render_pipeline);
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
@@ -305,6 +284,6 @@ impl MixerWgpuPipeline {
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }
 
-        encoder.finish()
+        command_buffer.finish()
     }
 }

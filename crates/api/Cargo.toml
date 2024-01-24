@@ -15,6 +15,7 @@ mizer-fixtures = { path = "../components/fixtures" }
 mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }
 mizer-docs = { path = "../../docs" }
 mizer-plan = { path = "../components/plan" }
+mizer-module = { path = "../runtime/module" }
 mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }
 mizer-devices = { path = "../components/connections/devices" }
@@ -41,12 +42,12 @@ pinboard = "2.2"
 regex = "1.10"
 lazy_static = "1.4"
 tracing = "0.1"
-enum-iterator = "1.4"
-itertools = "0.11"
+enum-iterator = "1.5"
+itertools = "0.12"
 prost = "0.12"
 prost-types = "0.12"
 tonic = "0.10"
-tokio = "1.33"
+tokio = "1.35"
 
 [build-dependencies]
 tonic-build = "0.10"

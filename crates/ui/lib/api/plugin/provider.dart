@@ -63,7 +63,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<EffectsApi>(create: (_) => EffectsPluginApi()),
         RepositoryProvider<PlansApi>(create: (_) => PlansPluginApi(bindings)),
         RepositoryProvider<MappingsApi>(create: (_) => MappingsPluginApi()),
-        RepositoryProvider<TimecodeApi>(create: (_) => TimecodePluginApi()),
+        RepositoryProvider<TimecodeApi>(create: (_) => TimecodePluginApi(bindings)),
         RepositoryProvider<StatusApi>(create: (_) => StatusPluginApi(bindings)),
         RepositoryProvider<SurfacesApi>(create: (_) => SurfacesPluginApi()),
       ],

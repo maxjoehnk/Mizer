@@ -100,7 +100,7 @@ impl PlanScreenNode {
 impl PipelineNode for PlanScreenNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Plan Screen".into(),
+            node_type_name: "Plan Screen".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
         }

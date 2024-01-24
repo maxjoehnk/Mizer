@@ -10,8 +10,8 @@ mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
 mizer-util = { path = "../../../../../util" }
 profiling = "1"
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"
 mizer-node = { path = "../../../node", features = ["test"] }

@@ -6,6 +6,7 @@ pub use apis::nodes::NodesRef;
 pub use apis::programmer::Programmer;
 pub use apis::sequencer::Sequencer;
 pub use apis::status::StatusApi;
+pub use apis::timecode::TimecodeApi;
 pub use apis::transport::Transport;
 pub use types::FFIToPointer;
 

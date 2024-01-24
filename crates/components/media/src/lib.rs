@@ -1,8 +1,9 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
+use mizer_message_bus::Subscriber;
 use mizer_settings::Settings;
-use mizer_status_bus::StatusBus;
+use mizer_status_bus::StatusHandle;
 pub use module::MediaModule;
 
 use crate::data_access::DataAccess;
@@ -70,11 +71,11 @@ pub struct MediaServer {
     storage: FileStorage,
     db: DataAccess,
     import_paths: ImportPaths,
-    status_bus: StatusBus,
+    status_bus: StatusHandle,
 }
 
 impl MediaServer {
-    pub fn new(status_bus: StatusBus, settings: Settings) -> anyhow::Result<Self> {
+    pub fn new(status_bus: StatusHandle, settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
         let storage = FileStorage::new(settings.paths.media_storage)?;
         let import_paths = ImportPaths::new();
@@ -168,8 +169,8 @@ impl MediaServer {
         }
     }
 
-    pub fn get_media_file(&self, id: MediaId) -> Option<MediaDocument> {
-        self.db.get_media(id)
+    pub fn get_media_file(&self, id: impl AsRef<MediaId>) -> Option<MediaDocument> {
+        self.db.get_media(id.as_ref())
     }
 
     pub fn remove_file(&self, id: MediaId) {
@@ -182,6 +183,10 @@ impl MediaServer {
 
     pub fn remove_tag_from_media(&self, media_id: MediaId, tag_id: TagId) -> anyhow::Result<()> {
         self.db.remove_tag_from_media(media_id, tag_id)
+    }
+
+    pub fn subscribe(&self) -> Subscriber<DataAccess> {
+        self.db.bus.subscribe()
     }
 }
 

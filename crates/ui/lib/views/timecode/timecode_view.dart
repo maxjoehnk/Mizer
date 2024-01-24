@@ -1,7 +1,7 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/protos/timecode.pb.dart';
+import 'package:mizer/api/contracts/timecode.dart';
+import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 
 import 'timecode_details.dart';
@@ -15,28 +15,43 @@ class TimecodeView extends StatefulWidget {
 }
 
 class _TimecodeViewState extends State<TimecodeView> {
-  int? selectedTimecodeId;
+  TimecodePointer? _timecodePointer;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<TimecodeApi>().getTimecodePointer().then((value) => setState(() {
+          _timecodePointer = value;
+        }));
+  }
+
+  @override
+  void dispose() {
+    _timecodePointer?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TimecodeBloc, AllTimecodes>(
+    return BlocBuilder<TimecodeBloc, TimecodeState>(
       builder: (context, state) {
-        Timecode? selectedTimecode =
-            state.timecodes.firstWhereOrNull((t) => t.id == selectedTimecodeId);
         return Column(
           children: [
             Flexible(
                 flex: 1,
                 child: TimecodeList(
-                    timecodes: state.timecodes,
-                    onSelect: (timecode) => setState(() {
-                          selectedTimecodeId = timecode.id;
-                        }),
-                    selectedTimecode: selectedTimecode)),
-            if (selectedTimecode != null)
+                  timecodes: state.timecodes,
+                  onSelect: (timecode) => context.read<TimecodeBloc>().selectTimecode(timecode.id),
+                  selectedTimecode: state.selectedTimecode,
+                  timecodePointer: _timecodePointer,
+                )),
+            if (state.selectedTimecode != null)
               Flexible(
                 flex: 2,
-                child: TimecodeDetail(timecode: selectedTimecode, controls: state.controls),
+                child: TimecodeDetail(
+                    timecode: state.selectedTimecode!,
+                    controls: state.controls,
+                    reader: _timecodePointer?.getTrackReader(state.selectedTimecodeId!)),
               ),
           ],
         );

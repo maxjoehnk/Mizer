@@ -6,13 +6,14 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-egui = "0.23"
-egui-winit = "0.23"
-egui-wgpu = { version = "0.23", features = ["winit"] }
-winit = "0.28"
+egui = "0.25"
+egui-winit = "0.25"
+egui-wgpu = { version = "0.25", features = ["winit"] }
+winit = "0.29"
 image = "0.24"
 log = "0.4"
 profiling = "1"
 futures = { version = "0.3", features = ["executor"] }
 mizer-wgpu = { path = "../../wgpu" }
 mizer-debug-ui = { path = ".." }
+mizer-module = { path = "../../module" }

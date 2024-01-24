@@ -1,37 +1,16 @@
 use mizer_fixture_definition_provider::MizerDefinitionsProvider;
-use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
+use mizer_fixtures::library::FixtureLibraryProvider;
+use mizer_fixtures::FixtureLibraryLoader;
 use mizer_gdtf_provider::GdtfProvider;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_qlcplus_provider::QlcPlusProvider;
 use mizer_settings::FixtureLibraryPaths;
 
-pub struct FixtureLibrariesLoader(pub(crate) FixtureLibrary);
+#[derive(Default)]
+pub struct MizerFixtureLoader;
 
-impl FixtureLibrariesLoader {
-    pub fn queue_load(self) {
-        std::thread::spawn(move || {
-            self.load();
-        });
-    }
-
-    pub fn reload(&self, paths: FixtureLibraryPaths) -> anyhow::Result<()> {
-        let providers = Self::get_providers(&paths);
-        self.0.replace_providers(providers);
-        self.load();
-
-        Ok(())
-    }
-
-    fn load(&self) {
-        log::info!("Loading fixture libraries...");
-        if let Err(err) = self.0.load_libraries() {
-            log::error!("Loading of fixture libraries failed: {:?}", err);
-        } else {
-            log::info!("Loaded fixture libraries successfully.");
-        }
-    }
-
-    pub fn get_providers(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+impl FixtureLibraryLoader for MizerFixtureLoader {
+    fn get_providers(&self, paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
         [
             load_ofl_provider,
             load_gdtf_provider,

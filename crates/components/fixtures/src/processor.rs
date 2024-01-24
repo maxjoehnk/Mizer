@@ -111,7 +111,7 @@ impl DebuggableProcessor for FixtureProcessor {
                                 ui.collapsing_header(&mode.name, |ui| {
                                     ui.collapsing_header("Channels", |ui| {
                                         ui.columns(2, |columns| {
-                                            for channel in &mode.channels {
+                                            for channel in mode.get_channels() {
                                                 columns[0].label(&channel.name);
                                                 columns[1]
                                                     .label(format!("{:?}", channel.resolution));

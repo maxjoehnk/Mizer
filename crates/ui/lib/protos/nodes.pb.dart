@@ -1197,12 +1197,20 @@ class Node extends $pb.GeneratedMessage {
 
 class NodeDetails extends $pb.GeneratedMessage {
   factory NodeDetails({
-    $core.String? name,
+    $core.String? nodeTypeName,
+    $core.String? displayName,
+    $core.bool? hasCustomName,
     NodeCategory? category,
   }) {
     final $result = create();
-    if (name != null) {
-      $result.name = name;
+    if (nodeTypeName != null) {
+      $result.nodeTypeName = nodeTypeName;
+    }
+    if (displayName != null) {
+      $result.displayName = displayName;
+    }
+    if (hasCustomName != null) {
+      $result.hasCustomName = hasCustomName;
     }
     if (category != null) {
       $result.category = category;
@@ -1214,8 +1222,10 @@ class NodeDetails extends $pb.GeneratedMessage {
   factory NodeDetails.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeDetails', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..e<NodeCategory>(2, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
+    ..aOS(1, _omitFieldNames ? '' : 'nodeTypeName')
+    ..aOS(2, _omitFieldNames ? '' : 'displayName')
+    ..aOB(3, _omitFieldNames ? '' : 'hasCustomName')
+    ..e<NodeCategory>(4, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
     ..hasRequiredFields = false
   ;
 
@@ -1241,22 +1251,40 @@ class NodeDetails extends $pb.GeneratedMessage {
   static NodeDetails? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $core.String get nodeTypeName => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) { $_setString(0, v); }
+  set nodeTypeName($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasNodeTypeName() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearNodeTypeName() => clearField(1);
 
   @$pb.TagNumber(2)
-  NodeCategory get category => $_getN(1);
+  $core.String get displayName => $_getSZ(1);
   @$pb.TagNumber(2)
-  set category(NodeCategory v) { setField(2, v); }
+  set displayName($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasCategory() => $_has(1);
+  $core.bool hasDisplayName() => $_has(1);
   @$pb.TagNumber(2)
-  void clearCategory() => clearField(2);
+  void clearDisplayName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get hasCustomName => $_getBF(2);
+  @$pb.TagNumber(3)
+  set hasCustomName($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHasCustomName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHasCustomName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  NodeCategory get category => $_getN(3);
+  @$pb.TagNumber(4)
+  set category(NodeCategory v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCategory() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCategory() => clearField(4);
 }
 
 enum NodeConfig_Type {

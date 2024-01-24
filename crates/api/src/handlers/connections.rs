@@ -29,10 +29,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             .map(Connection::from)
             .collect();
 
-        Connections {
-            connections,
-            ..Default::default()
-        }
+        Connections { connections }
     }
 
     #[tracing::instrument(skip(self))]

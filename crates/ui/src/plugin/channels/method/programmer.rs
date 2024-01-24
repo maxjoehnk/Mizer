@@ -1,22 +1,15 @@
-use std::collections::HashMap;
 use std::sync::Arc;
 
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{
-    Context, EngineHandle, EventChannelHandler, EventSink, MethodCallHandler, MethodChannel,
-    RegisteredEventChannel,
-};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::ProgrammerHandler;
 use mizer_api::proto::fixtures::FixtureId;
 use mizer_api::proto::programmer::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, Programmer};
-use mizer_util::{AsyncRuntime, StreamSubscription};
 
-use crate::impl_into_flutter_value;
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
-use crate::plugin::event_sink::EventSinkSubscriber;
 
 pub struct ProgrammerChannel<R: RuntimeApi> {
     handler: ProgrammerHandler<R>,
@@ -284,48 +277,5 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn assign_fixture_selection_to_group(&self, group_id: u32) {
         self.handler.assign_fixture_selection_to_group(group_id);
-    }
-}
-
-pub struct ProgrammerEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
-    context: Context,
-    handler: ProgrammerHandler<R>,
-    runtime: AR,
-    subscriptions: HashMap<i64, AR::Subscription>,
-}
-
-impl_into_flutter_value!(ProgrammerState);
-
-impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
-    for ProgrammerEventChannel<R, AR>
-{
-    fn register_event_sink(&mut self, sink: EventSink, _: Value) {
-        let id = sink.id();
-        let stream = self.handler.state_stream();
-        let subscription = self
-            .runtime
-            .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));
-        self.subscriptions.insert(id, subscription);
-    }
-
-    fn unregister_event_sink(&mut self, sink_id: i64) {
-        if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            subscription.unsubscribe();
-        }
-    }
-}
-
-impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> ProgrammerEventChannel<R, AR> {
-    pub fn new(handler: ProgrammerHandler<R>, runtime: AR, context: Context) -> Self {
-        Self {
-            handler,
-            runtime,
-            subscriptions: Default::default(),
-            context,
-        }
-    }
-
-    pub fn event_channel(self, context: Context) -> RegisteredEventChannel<Self> {
-        EventChannelHandler::register(self, context, "mizer.live/programmer/watch")
     }
 }

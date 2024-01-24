@@ -1,6 +1,7 @@
+use std::sync::Arc;
+
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::sync::Arc;
 
 use mizer_api::handlers::SequencerHandler;
 use mizer_api::proto::sequencer::*;

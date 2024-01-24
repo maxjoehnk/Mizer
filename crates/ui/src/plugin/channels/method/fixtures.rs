@@ -1,9 +1,11 @@
-use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::FixturesHandler;
 use mizer_api::proto::fixtures::*;
 use mizer_api::RuntimeApi;
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
 #[derive(Clone)]
 pub struct FixturesChannel<R: RuntimeApi> {

@@ -25,7 +25,7 @@ impl ConfigurableNode for LabelNode {
 impl PipelineNode for LabelNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Label".into(),
+            node_type_name: "Label".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Controls,
         }

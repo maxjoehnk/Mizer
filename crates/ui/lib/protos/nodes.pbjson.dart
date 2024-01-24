@@ -28,6 +28,7 @@ const NodeCategory$json = {
     {'1': 'NODE_CATEGORY_VIDEO', '2': 8},
     {'1': 'NODE_CATEGORY_LASER', '2': 9},
     {'1': 'NODE_CATEGORY_PIXEL', '2': 10},
+    {'1': 'NODE_CATEGORY_VECTOR', '2': 11},
   ],
 };
 
@@ -38,7 +39,7 @@ final $typed_data.Uint8List nodeCategoryDescriptor = $convert.base64Decode(
     'T1JZX0NPTlZFUlNJT05TEAMSGgoWTk9ERV9DQVRFR09SWV9DT05UUk9MUxAEEhYKEk5PREVfQ0'
     'FURUdPUllfREFUQRAFEhcKE05PREVfQ0FURUdPUllfQ09MT1IQBhIXChNOT0RFX0NBVEVHT1JZ'
     'X0FVRElPEAcSFwoTTk9ERV9DQVRFR09SWV9WSURFTxAIEhcKE05PREVfQ0FURUdPUllfTEFTRV'
-    'IQCRIXChNOT0RFX0NBVEVHT1JZX1BJWEVMEAo=');
+    'IQCRIXChNOT0RFX0NBVEVHT1JZX1BJWEVMEAoSGAoUTk9ERV9DQVRFR09SWV9WRUNUT1IQCw==');
 
 @$core.Deprecated('Use channelProtocolDescriptor instead')
 const ChannelProtocol$json = {
@@ -345,15 +346,19 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
 const NodeDetails$json = {
   '1': 'NodeDetails',
   '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'category', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
+    {'1': 'node_type_name', '3': 1, '4': 1, '5': 9, '10': 'nodeTypeName'},
+    {'1': 'display_name', '3': 2, '4': 1, '5': 9, '10': 'displayName'},
+    {'1': 'has_custom_name', '3': 3, '4': 1, '5': 8, '10': 'hasCustomName'},
+    {'1': 'category', '3': 4, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
   ],
 };
 
 /// Descriptor for `NodeDetails`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodeDetailsDescriptor = $convert.base64Decode(
-    'CgtOb2RlRGV0YWlscxISCgRuYW1lGAEgASgJUgRuYW1lEjUKCGNhdGVnb3J5GAIgASgOMhkubW'
-    'l6ZXIubm9kZXMuTm9kZUNhdGVnb3J5UghjYXRlZ29yeQ==');
+    'CgtOb2RlRGV0YWlscxIkCg5ub2RlX3R5cGVfbmFtZRgBIAEoCVIMbm9kZVR5cGVOYW1lEiEKDG'
+    'Rpc3BsYXlfbmFtZRgCIAEoCVILZGlzcGxheU5hbWUSJgoPaGFzX2N1c3RvbV9uYW1lGAMgASgI'
+    'Ug1oYXNDdXN0b21OYW1lEjUKCGNhdGVnb3J5GAQgASgOMhkubWl6ZXIubm9kZXMuTm9kZUNhdG'
+    'Vnb3J5UghjYXRlZ29yeQ==');
 
 @$core.Deprecated('Use nodeConfigDescriptor instead')
 const NodeConfig$json = {

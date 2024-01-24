@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
@@ -7,21 +6,21 @@ import 'package:mizer/widgets/inputs/color.dart';
 
 import 'api.dart';
 import 'bindings.dart';
+import 'ffi_pointer.dart';
 
-class NodeHistoryPointer implements TimecodeReader {
+class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeReader {
   final FFIBindings _bindings;
-  final ffi.Pointer<NodeHistory> _ptr;
 
-  NodeHistoryPointer(this._bindings, this._ptr);
+  NodeHistoryPointer(this._bindings, ffi.Pointer<NodeHistory> _ptr) : super(_ptr);
 
   List<double> readHistory() {
-    var result = this._bindings.read_node_history(_ptr);
+    var result = this._bindings.read_node_history(ptr);
 
     return result.toList();
   }
 
   StructuredData readData() {
-    var result = this._bindings.read_node_data_preview(_ptr);
+    var result = this._bindings.read_node_data_preview(ptr);
 
     return _convertData(result);
   }
@@ -58,20 +57,20 @@ class NodeHistoryPointer implements TimecodeReader {
   }
 
   ColorValue? readColor() {
-    var result = this._bindings.read_node_color_preview(_ptr);
+    var result = this._bindings.read_node_color_preview(ptr);
 
     return ColorValue(red: result.red, green: result.green, blue: result.blue);
   }
 
   Timecode readTimecode() {
-    var result = this._bindings.read_node_timecode_preview(_ptr);
+    var result = this._bindings.read_node_timecode_preview(ptr);
 
     return result;
   }
 
-  void dispose() {
-    log("TODO: dispose node history pointer");
-    this._bindings.drop_node_history_pointer(_ptr);
+  @override
+  void disposePointer(ffi.Pointer<NodeHistory> ptr) {
+    this._bindings.drop_node_history_pointer(ptr);
   }
 }
 

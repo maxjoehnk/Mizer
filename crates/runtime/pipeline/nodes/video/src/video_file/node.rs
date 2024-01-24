@@ -76,9 +76,21 @@ impl ConfigurableNode for VideoFileNode {
 impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Video File".into(),
+            node_type_name: "Video File".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(document) = injector
+            .get::<MediaServer>()
+            .zip(MediaId::try_from(self.file.clone()).ok())
+            .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
+        {
+            format!("Video File ({})", document.name)
+        } else {
+            format!("Video File (ID {})", self.file)
         }
     }
 

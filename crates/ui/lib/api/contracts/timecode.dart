@@ -1,6 +1,9 @@
+import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 
 abstract class TimecodeApi {
+  Stream<AllTimecodes> watchTimecodes();
+
   Future<AllTimecodes> getTimecodes();
 
   Future<void> addTimecode(AddTimecodeRequest request);
@@ -14,4 +17,6 @@ abstract class TimecodeApi {
   Future<void> renameTimecodeControl(RenameTimecodeControlRequest request);
 
   Future<void> deleteTimecodeControl(DeleteTimecodeControlRequest request);
+
+  Future<TimecodePointer?> getTimecodePointer();
 }

@@ -10,7 +10,9 @@ pub use mizer_color_nodes::{
     ColorBrightnessNode, ColorToHsvNode, ConstantColorNode, HsvColorNode, RgbColorNode,
 };
 pub use mizer_constant_nodes::ConstantNumberNode;
-pub use mizer_conversion_nodes::{DataToNumberNode, MultiToDataNode, NumberToDataNode};
+pub use mizer_conversion_nodes::{
+    DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
+};
 pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
@@ -32,8 +34,8 @@ pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_plan_nodes::PlanScreenNode;
 pub use mizer_port_operation_nodes::{
-    CombineNode, ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode, RampNode,
-    SelectNode, ThresholdNode,
+    CombineNode, ComparisonNode, ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode,
+    RampNode, SelectNode, ThresholdNode,
 };
 pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
 pub use mizer_screen_capture_nodes::ScreenCaptureNode;
@@ -42,9 +44,10 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
-pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode};
+pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode, TimecodeRecorderNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
+pub use mizer_vector_nodes::{RasterizeVectorNode, VectorFileNode};
 pub use mizer_video_nodes::{
     ColorizeTextureNode, ImageFileNode, LumaKeyNode, TextureBorderNode, TextureMaskNode,
     TextureOpacityNode, VideoFileNode, VideoHsvNode, VideoMixerNode, VideoOutputNode, VideoRgbNode,
@@ -209,6 +212,7 @@ node_impl! {
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
     MultiToData(MultiToDataNode),
+    NumberToClock(NumberToClockNode),
     PlanScreen(PlanScreenNode),
     Value(ValueNode),
     Extract(ExtractNode),
@@ -225,6 +229,7 @@ node_impl! {
     Conditional(ConditionalNode),
     TimecodeControl(TimecodeControlNode),
     TimecodeOutput(TimecodeOutputNode),
+    TimecodeRecorder(TimecodeRecorderNode),
     AudioFile(AudioFileNode),
     AudioOutput(AudioOutputNode),
     AudioVolume(AudioVolumeNode),
@@ -237,4 +242,7 @@ node_impl! {
     NdiOutput(NdiOutputNode),
     NdiInput(NdiInputNode),
     SurfaceMapping(SurfaceMappingNode),
+    RasterizeVector(RasterizeVectorNode),
+    VectorFile(VectorFileNode),
+    Comparison(ComparisonNode),
 }

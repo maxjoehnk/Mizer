@@ -37,7 +37,7 @@ class NodeFooter extends StatelessWidget {
         Spacer(),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(node.details.name, style: textTheme.bodySmall))
+            child: Text(node.details.nodeTypeName, style: textTheme.bodySmall))
       ]),
     );
   }

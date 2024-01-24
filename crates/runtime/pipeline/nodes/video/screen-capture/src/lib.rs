@@ -70,7 +70,7 @@ impl ConfigurableNode for ScreenCaptureNode {
 impl PipelineNode for ScreenCaptureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Screen Capture".into(),
+            node_type_name: "Screen Capture".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }

@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_devices::DeviceManager;
+use mizer_node::*;
 
 use crate::G13InjectorExt;
-use mizer_node::*;
 
 const KEY_COLOR: &str = "Key Color";
 const M1: &str = "M1";
@@ -36,7 +36,7 @@ impl ConfigurableNode for G13OutputNode {
 impl PipelineNode for G13OutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "G13 Output".into(),
+            node_type_name: "G13 Output".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Connections,
         }

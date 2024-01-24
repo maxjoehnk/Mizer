@@ -21,7 +21,7 @@ class NodePropertiesPane extends StatelessWidget {
     var nodesApi = context.read<NodesApi>();
 
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 4),
+        padding: EdgeInsets.all(4),
         child: ListView(
           children: _getPropertyPanes(node, nodesApi),
         ));
@@ -32,7 +32,7 @@ class NodePropertiesPane extends StatelessWidget {
       NodeProperties(node: node),
       NodeSettingsPane(
           nodePath: node.path,
-          title: node.details.name,
+          title: node.details.nodeTypeName,
           type: node.type,
           settings: node.settings,
           onUpdate: (updated) {

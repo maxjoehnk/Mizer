@@ -19,7 +19,6 @@ impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
             tags: definition.tags,
             physical: Some(physical),
             provider: definition.provider.to_string(),
-            ..Default::default()
         }
     }
 }
@@ -41,14 +40,14 @@ impl From<mizer_fixtures::definition::PhysicalFixtureData> for FixturePhysicalDa
 }
 
 impl From<mizer_fixtures::definition::FixtureMode> for FixtureMode {
-    fn from(mode: mizer_fixtures::definition::FixtureMode) -> Self {
+    fn from(mut mode: mizer_fixtures::definition::FixtureMode) -> Self {
         FixtureMode {
-            name: mode.name,
             channels: mode
-                .channels
+                .take_channels()
                 .into_iter()
                 .map(FixtureChannel::from)
                 .collect(),
+            name: mode.name,
         }
     }
 }

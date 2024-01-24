@@ -1,43 +1,20 @@
-use mizer_module::{Module, Runtime};
+use mizer_module::*;
 
 use crate::processor::SequenceProcessor;
 use crate::sequencer::Sequencer;
-use crate::{EffectEngine, EffectsProcessor};
 
-pub struct SequencerModule(Sequencer);
+pub struct SequencerModule;
 
-impl SequencerModule {
-    pub fn new() -> (Self, Sequencer) {
-        let sequencer = Sequencer::new();
-
-        (Self(sequencer.clone()), sequencer)
-    }
-}
+module_name!(SequencerModule);
 
 impl Module for SequencerModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        runtime.injector_mut().provide(self.0);
-        runtime.injector_mut().provide(EffectEngine::new());
-        runtime.add_processor(SequenceProcessor);
+    const IS_REQUIRED: bool = true;
 
-        Ok(())
-    }
-}
-
-pub struct EffectsModule(EffectEngine);
-
-impl EffectsModule {
-    pub fn new() -> (Self, EffectEngine) {
-        let engine = EffectEngine::new();
-
-        (Self(engine.clone()), engine)
-    }
-}
-
-impl Module for EffectsModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        runtime.injector_mut().provide(self.0);
-        runtime.add_processor(EffectsProcessor);
+    fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
+        let sequencer = Sequencer::new();
+        context.provide_api(sequencer.clone());
+        context.provide(sequencer);
+        context.add_processor(SequenceProcessor);
 
         Ok(())
     }

@@ -68,7 +68,7 @@ impl ConfigurableNode for OpcOutputNode {
 impl PipelineNode for OpcOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OPC Output".into(),
+            node_type_name: "OPC Output".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Connections,
         }

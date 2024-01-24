@@ -91,6 +91,24 @@ impl Presets {
         }
     }
 
+    pub fn get(&self, id: &PresetId) -> Option<GenericPreset> {
+        match id {
+            PresetId::Intensity(id) => self
+                .intensity
+                .get(id)
+                .map(|p| GenericPreset::Intensity(p.clone())),
+            PresetId::Shutter(id) => self
+                .shutter
+                .get(id)
+                .map(|p| GenericPreset::Shutter(p.clone())),
+            PresetId::Color(id) => self.color.get(id).map(|p| GenericPreset::Color(p.clone())),
+            PresetId::Position(id) => self
+                .position
+                .get(id)
+                .map(|p| GenericPreset::Position(p.clone())),
+        }
+    }
+
     pub fn get_mut(&self, id: &PresetId) -> Option<GenericPresetMut> {
         match id {
             PresetId::Intensity(id) => self.intensity.get_mut(id).map(GenericPresetMut::Intensity),
@@ -235,6 +253,15 @@ impl GenericPreset {
             GenericPreset::Shutter(preset) => PresetId::Shutter(preset.id),
             GenericPreset::Color(preset) => PresetId::Color(preset.id),
             GenericPreset::Position(preset) => PresetId::Position(preset.id),
+        }
+    }
+
+    pub fn label(&self) -> Option<&String> {
+        match self {
+            GenericPreset::Intensity(preset) => preset.label.as_ref(),
+            GenericPreset::Shutter(preset) => preset.label.as_ref(),
+            GenericPreset::Color(preset) => preset.label.as_ref(),
+            GenericPreset::Position(preset) => preset.label.as_ref(),
         }
     }
 }

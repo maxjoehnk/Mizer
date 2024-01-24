@@ -16,6 +16,7 @@ pub struct PipelineAccess {
     pub(crate) nodes: HashMap<NodePath, Box<dyn ProcessingNodeExt>>,
     pub nodes_view: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
+    pub metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub(crate) settings: Arc<NonEmptyPinboard<HashMap<NodePath, Vec<NodeSetting>>>>,
 }
@@ -26,6 +27,7 @@ impl Default for PipelineAccess {
             nodes: Default::default(),
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
+            metadata: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
             settings: NonEmptyPinboard::new(Default::default()).into(),
         }
@@ -131,6 +133,7 @@ impl PipelineAccess {
             NumberToData(node) => self.add_node(path, node),
             DataToNumber(node) => self.add_node(path, node),
             MultiToData(node) => self.add_node(path, node),
+            NumberToClock(node) => self.add_node(path, node),
             Value(node) => self.add_node(path, node),
             Extract(node) => self.add_node(path, node),
             PlanScreen(node) => self.add_node(path, node),
@@ -146,6 +149,7 @@ impl PipelineAccess {
             Conditional(node) => self.add_node(path, node),
             TimecodeControl(node) => self.add_node(path, node),
             TimecodeOutput(node) => self.add_node(path, node),
+            TimecodeRecorder(node) => self.add_node(path, node),
             AudioFile(node) => self.add_node(path, node),
             AudioOutput(node) => self.add_node(path, node),
             AudioVolume(node) => self.add_node(path, node),
@@ -159,6 +163,9 @@ impl PipelineAccess {
             NdiOutput(node) => self.add_node(path, node),
             NdiInput(node) => self.add_node(path, node),
             SurfaceMapping(node) => self.add_node(path, node),
+            VectorFile(node) => self.add_node(path, node),
+            RasterizeVector(node) => self.add_node(path, node),
+            Comparison(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

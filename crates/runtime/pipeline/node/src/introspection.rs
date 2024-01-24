@@ -7,7 +7,7 @@ use crate::PreviewType;
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct NodeDetails {
-    pub name: String,
+    pub node_type_name: String,
     pub preview_type: PreviewType,
     pub category: NodeCategory,
 }
@@ -62,6 +62,7 @@ pub enum NodeCategory {
     Video,
     Laser,
     Pixel,
+    Vector,
 }
 
 node_type_name! {
@@ -125,6 +126,7 @@ node_type_name! {
         NumberToData,
         DataToNumber,
         MultiToData,
+        NumberToClock,
         Value,
         Extract,
         PlanScreen,
@@ -140,6 +142,7 @@ node_type_name! {
         Conditional,
         TimecodeControl,
         TimecodeOutput,
+        TimecodeRecorder,
         AudioFile,
         AudioOutput,
         AudioVolume,
@@ -152,6 +155,9 @@ node_type_name! {
         NdiOutput,
         NdiInput,
         SurfaceMapping,
+        RasterizeVector,
+        VectorFile,
+        Comparison,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,
@@ -184,5 +190,17 @@ impl Hash for NodePosition {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.x.to_bits().hash(state);
         self.y.to_bits().hash(state);
+    }
+}
+
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+pub struct NodeMetadata {
+    pub display_name: String,
+    pub custom_name: Option<String>,
+}
+
+impl NodeMetadata {
+    pub fn display_name(&self) -> &str {
+        self.custom_name.as_deref().unwrap_or(&self.display_name)
     }
 }

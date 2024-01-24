@@ -1,5 +1,6 @@
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 const OUTPUT_4_4_PORT: &str = "4/4";
 const OUTPUT_2_4_PORT: &str = "2/4";
@@ -15,7 +16,7 @@ impl ConfigurableNode for BeatsNode {}
 impl PipelineNode for BeatsNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Beats".into(),
+            node_type_name: "Beats".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Standard,
         }

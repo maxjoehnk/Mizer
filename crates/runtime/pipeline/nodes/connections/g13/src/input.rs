@@ -1,7 +1,8 @@
+use std::fmt::{Display, Formatter};
+
 use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
-use std::fmt::{Display, Formatter};
 
 use mizer_devices::DeviceManager;
 use mizer_g13::Keys;
@@ -42,7 +43,7 @@ impl ConfigurableNode for G13InputNode {
 impl PipelineNode for G13InputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "G13 Input".into(),
+            node_type_name: "G13 Input".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Connections,
         }

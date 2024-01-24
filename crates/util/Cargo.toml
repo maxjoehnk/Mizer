@@ -17,9 +17,9 @@ palette = "0.7"
 profiling = "1"
 tracy-client = { version = "0.16", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
 serde = { version = "1", features = ["derive"] }
-bezier-rs = "0.2"
-uuid = { version = "1.5", features = ["v4"] }
+bezier-rs = "0.3"
+uuid = { version = "1.7", features = ["v4"] }
 base64 = "0.21"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"

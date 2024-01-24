@@ -1,5 +1,6 @@
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
 
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
@@ -66,7 +67,7 @@ impl ConfigurableNode for ThresholdNode {
 impl PipelineNode for ThresholdNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Threshold".into(),
+            node_type_name: "Threshold".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Standard,
         }

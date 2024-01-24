@@ -1,8 +1,9 @@
+use serde::{Deserialize, Serialize};
+
 use mizer_node::{
     ConfigurableNode, NodeCategory, NodeContext, NodeDetails, NodePath, NodeType, PipelineNode,
     PreviewType, ProcessingNode,
 };
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ContainerNode {
@@ -14,7 +15,7 @@ impl ConfigurableNode for ContainerNode {}
 impl PipelineNode for ContainerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Container".into(),
+            node_type_name: "Container".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::Standard,
         }

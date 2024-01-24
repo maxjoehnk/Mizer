@@ -1,3 +1,6 @@
+use futures::Stream;
+use futures::StreamExt;
+
 use mizer_timecode::commands::*;
 use mizer_timecode::TimecodeManager;
 pub use mizer_timecode::TimecodeStateAccess;
@@ -14,6 +17,20 @@ pub struct TimecodeHandler<R: RuntimeApi> {
 impl<R: RuntimeApi> TimecodeHandler<R> {
     pub fn new(manager: TimecodeManager, runtime: R) -> Self {
         Self { manager, runtime }
+    }
+
+    pub fn observe_timecodes(&self) -> impl Stream<Item = AllTimecodes> {
+        self.manager
+            .observe_timecodes()
+            .into_stream()
+            .map(|timecodes| {
+                let timecodes = timecodes.into_iter().map(Timecode::from).collect();
+
+                AllTimecodes {
+                    timecodes,
+                    controls: Default::default(),
+                }
+            })
     }
 
     #[profiling::function]
@@ -92,5 +109,10 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
     #[profiling::function]
     pub fn get_timecode_state_ref(&self, id: u32) -> Option<TimecodeStateAccess> {
         self.manager.get_state_access(id.into())
+    }
+
+    #[profiling::function]
+    pub fn get_timecode_manager(&self) -> TimecodeManager {
+        self.manager.clone()
     }
 }

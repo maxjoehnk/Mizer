@@ -15,7 +15,7 @@ impl ConfigurableNode for RgbColorNode {}
 impl PipelineNode for RgbColorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "RGB Color".into(),
+            node_type_name: "RGB Color".into(),
             preview_type: PreviewType::Color,
             category: NodeCategory::Color,
         }

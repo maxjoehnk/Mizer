@@ -4,15 +4,15 @@ import 'package:ffi/ffi.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
 import 'bindings.dart';
+import 'ffi_pointer.dart';
 
-class GamepadStatePointer {
+class GamepadStatePointer extends FFIPointer<GamepadConnectionRef> {
   final FFIBindings _bindings;
-  final ffi.Pointer<GamepadConnectionRef> _ptr;
 
-  GamepadStatePointer(this._bindings, this._ptr);
+  GamepadStatePointer(this._bindings, ffi.Pointer<GamepadConnectionRef> ptr) : super(ptr);
 
   GamepadState readState() {
-    var state = this._bindings.read_gamepad_state(_ptr);
+    var state = this._bindings.read_gamepad_state(ptr);
 
     return GamepadState(
       leftStick: GamepadStickState(
@@ -34,7 +34,8 @@ class GamepadStatePointer {
     );
   }
 
-  void dispose() {
+  @override
+  void disposePointer(ffi.Pointer<GamepadConnectionRef> _ptr) {
     // this._bindings.drop_gamepad_pointer(_ptr);
   }
 }

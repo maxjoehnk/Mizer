@@ -60,7 +60,7 @@ impl ConfigurableNode for TimeTriggerNode {
 impl PipelineNode for TimeTriggerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Time Trigger".into(),
+            node_type_name: "Time Trigger".into(),
             preview_type: PreviewType::Timecode,
             category: NodeCategory::Standard,
         }

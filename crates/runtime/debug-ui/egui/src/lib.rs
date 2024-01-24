@@ -1,6 +1,7 @@
 use std::collections::HashMap;
+use std::num::NonZeroU32;
 
-use egui::{Context, TextureHandle};
+use egui::{Context, TextureHandle, ViewportId};
 use egui_wgpu::winit::Painter;
 use egui_wgpu::WgpuConfiguration;
 use egui_winit::State;
@@ -10,9 +11,11 @@ use mizer_debug_ui::*;
 use mizer_wgpu::window::{EventLoopHandle, RawWindowRef};
 
 use crate::draw_handle::EguiDrawHandle;
+pub use crate::module::EguiDebugUiModule;
 use crate::render_handle::EguiRenderHandle;
 
 mod draw_handle;
+mod module;
 mod render_handle;
 
 #[derive(Default)]
@@ -20,6 +23,7 @@ mod render_handle;
 pub struct EguiTextureMap(pub(crate) HashMap<u64, TextureHandle>);
 
 pub struct EguiDebugUi {
+    viewport_id: ViewportId,
     window: RawWindowRef,
     egui_context: Context,
     egui_state: Option<State>,
@@ -53,11 +57,13 @@ impl EguiDebugUi {
     pub fn new(event_loop: &EventLoopHandle) -> anyhow::Result<Self> {
         let window = event_loop.new_raw_window(Some("Mizer Debug UI"))?;
         let context = Context::default();
+        let viewport_id = ViewportId::default();
 
         let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
-        futures::executor::block_on(painter.set_window(Some(&window)))?;
+        futures::executor::block_on(painter.set_window(viewport_id, Some(&window)))?;
 
         Ok(EguiDebugUi {
+            viewport_id,
             egui_context: context,
             egui_state: None,
             window,
@@ -76,15 +82,25 @@ impl EguiDebugUi {
         let events = self.window.get_events();
         for event in events {
             if self.egui_state.is_none() {
-                self.egui_state = Some(State::new(&self.window));
+                self.egui_state = Some(State::new(
+                    self.egui_context.clone(),
+                    self.viewport_id,
+                    &self.window,
+                    None,
+                    None,
+                ));
             }
             let state = self.egui_state.as_mut().unwrap();
-            let response = state.on_event(&self.egui_context, &event);
+            let response = state.on_window_event(&self.window, &event);
             if response.repaint {
                 repaint = true;
             }
             if let WindowEvent::Resized(size) = event {
-                self.painter.on_window_resized(size.width, size.height);
+                self.painter.on_window_resized(
+                    self.viewport_id,
+                    NonZeroU32::new(size.width).unwrap(),
+                    NonZeroU32::new(size.height).unwrap(),
+                );
                 repaint = true;
             }
         }
@@ -95,11 +111,14 @@ impl EguiDebugUi {
     fn paint(&mut self) {
         if let Some(state) = self.egui_state.as_mut() {
             let output = self.egui_context.end_frame();
-            state.handle_platform_output(&self.window, &self.egui_context, output.platform_output);
+            state.handle_platform_output(&self.window, output.platform_output);
 
-            let clipped_primitives = self.egui_context.tessellate(output.shapes);
+            let clipped_primitives = self
+                .egui_context
+                .tessellate(output.shapes, self.egui_context.pixels_per_point());
 
             self.painter.paint_and_update_textures(
+                self.viewport_id,
                 self.egui_context.pixels_per_point(),
                 [0., 0., 0., 1.],
                 &clipped_primitives,

@@ -1,9 +1,11 @@
-use crate::{AudioContextExt, TRANSFER_SIZE};
 use dasp::ring_buffer::Fixed;
 use dasp::signal::rms::SignalRms;
 use dasp::Signal;
-use mizer_node::*;
 use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
+
+use crate::{AudioContextExt, TRANSFER_SIZE};
 
 const AUDIO_INPUT: &str = "Stereo";
 const VOLUME_OUTPUT: &str = "Volume";
@@ -18,7 +20,7 @@ impl ConfigurableNode for AudioMeterNode {}
 impl PipelineNode for AudioMeterNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Audio Meter".to_string(),
+            node_type_name: "Audio Meter".to_string(),
             preview_type: PreviewType::History,
             category: NodeCategory::Audio,
         }

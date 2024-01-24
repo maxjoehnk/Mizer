@@ -12,7 +12,7 @@ pub struct WindowRef {
     pub(crate) window: winit::window::Window,
     pub(crate) surface: wgpu::Surface,
     pub(crate) surface_config: wgpu::SurfaceConfiguration,
-    pub(crate) events: Receiver<WindowEvent<'static>>,
+    pub(crate) events: Receiver<WindowEvent>,
 }
 
 impl Drop for WindowRef {

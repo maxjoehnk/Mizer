@@ -9,10 +9,10 @@ anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 num_enum = "0.7"
 mizer-wgpu = { path = "../../../../wgpu" }
 image = "0.24"
 profiling = "1"
-wgpu_glyph = "0.21"
-font-kit = "0.11"
+glyphon = { git = "https://github.com/grovesNL/glyphon", rev = "941309a" }
+font-kit = "0.12"

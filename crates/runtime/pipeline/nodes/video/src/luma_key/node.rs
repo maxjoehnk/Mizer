@@ -45,7 +45,7 @@ impl ConfigurableNode for LumaKeyNode {
 impl PipelineNode for LumaKeyNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Luma Key".into(),
+            node_type_name: "Luma Key".into(),
             preview_type: PreviewType::Texture,
             category: NodeCategory::Video,
         }
@@ -76,7 +76,7 @@ impl ProcessingNode for LumaKeyNode {
             .unwrap_or(self.threshold);
 
         if state.is_none() {
-            *state = Some(LumaKeyState::new(wgpu_context, texture_registry));
+            *state = Some(LumaKeyState::new(wgpu_context, texture_registry)?);
         }
 
         let state = state.as_mut().unwrap();
@@ -86,7 +86,7 @@ impl ProcessingNode for LumaKeyNode {
             .get(&state.target_texture)
             .ok_or_else(|| anyhow!("Missing target texture"))?;
         if let Some(input) = context.read_texture(INPUT_PORT) {
-            let stage = state.pipeline.render(wgpu_context, &output, &input);
+            let stage = state.pipeline.render(wgpu_context, &output, &input)?;
 
             wgpu_pipeline.add_stage(stage);
         }
@@ -100,10 +100,10 @@ impl ProcessingNode for LumaKeyNode {
 }
 
 impl LumaKeyState {
-    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> Self {
-        Self {
-            pipeline: LumaKeyWgpuPipeline::new(context),
+    fn new(context: &WgpuContext, texture_registry: &TextureRegistry) -> anyhow::Result<Self> {
+        Ok(Self {
+            pipeline: LumaKeyWgpuPipeline::new(context)?,
             target_texture: texture_registry.register(context, 1920, 1080, Some("Luma Key target")),
-        }
+        })
     }
 }

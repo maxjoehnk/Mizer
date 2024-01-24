@@ -5,12 +5,8 @@ use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
 
-use mizer_module::{Module, Runtime};
-
 use crate::fixture::Fixture;
-use crate::library::{FixtureLibrary, FixtureLibraryProvider};
-use crate::manager::FixtureManager;
-use crate::processor::FixtureProcessor;
+pub use crate::module::*;
 use crate::programmer::Color;
 
 mod contracts;
@@ -22,6 +18,7 @@ mod processor;
 mod sub_fixture;
 // TODO: should probably find a better name
 mod color_mixer;
+mod module;
 pub mod programmer;
 pub mod selection;
 
@@ -72,29 +69,6 @@ impl From<u32> for GroupId {
 impl From<GroupId> for u32 {
     fn from(group_id: GroupId) -> Self {
         group_id.0
-    }
-}
-
-pub struct FixtureModule(FixtureLibrary, FixtureManager);
-
-impl FixtureModule {
-    pub fn new(
-        providers: Vec<Box<dyn FixtureLibraryProvider>>,
-    ) -> (Self, FixtureManager, FixtureLibrary) {
-        let library = FixtureLibrary::new(providers);
-        let manager = FixtureManager::new(library.clone());
-        (Self(library.clone(), manager.clone()), manager, library)
-    }
-}
-
-impl Module for FixtureModule {
-    fn register(self, runtime: &mut impl Runtime) -> anyhow::Result<()> {
-        log::debug!("Registering...");
-        let injector = runtime.injector_mut();
-        injector.provide(self.0);
-        injector.provide(self.1);
-        runtime.add_processor(FixtureProcessor);
-        Ok(())
     }
 }
 

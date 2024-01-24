@@ -1,0 +1,15 @@
+[package]
+name = "mizer-vector"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+vello = { git = "https://github.com/linebender/vello", features = ["wgpu"] }
+vello_svg = { git = "https://github.com/linebender/vello" }
+mizer-wgpu = { path = "../../runtime/wgpu" }
+mizer-module = { path = "../../runtime/module"}
+mizer-processing = { path = "../../runtime/processing"}
+parking_lot = "0.12"
+usvg = "0.33"

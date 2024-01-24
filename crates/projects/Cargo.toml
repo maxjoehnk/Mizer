@@ -28,9 +28,9 @@ directories-next = "2.0"
 fs2 = "0.4"
 indexmap = { version = "2.1", features = ["serde"] }
 enum_dispatch = "0.3"
-enum-iterator = "1.4"
+enum-iterator = "1.5"
 profiling = "1.0"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"
 mizer-pixel-nodes = { path = "../runtime/pipeline/nodes/pixels" }

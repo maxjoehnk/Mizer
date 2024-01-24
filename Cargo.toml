@@ -28,6 +28,7 @@ members = [
     "crates/components/sequencer/commands",
     "crates/components/surfaces",
     "crates/components/timecode",
+    "crates/components/vector",
     "crates/projects",
     "crates/runtime",
     "crates/runtime/clock",
@@ -74,6 +75,7 @@ members = [
     "crates/runtime/pipeline/nodes/plan",
     "crates/runtime/pipeline/nodes/timecode",
     "crates/runtime/pipeline/nodes/transport",
+    "crates/runtime/pipeline/nodes/vector",
     "crates/runtime/pipeline/nodes/video",
     "crates/runtime/pipeline/nodes/video/screen-capture",
     "crates/runtime/pipeline/nodes/video/surfaces",
@@ -129,7 +131,7 @@ tracing-appender = "0.2"
 log = "0.4"
 anyhow = "1"
 structopt = "0.3"
-metrics = "0.21"
+metrics = "0.22"
 mizer-media = { path = "crates/components/media" }
 mizer-project-files = { path = "crates/projects" }
 mizer-fixtures = { path = "crates/components/fixtures" }
@@ -168,8 +170,9 @@ mizer-message-bus = { path = "crates/util/bus" }
 mizer-settings = { path = "crates/runtime/settings" }
 mizer-status-bus = { path = "crates/runtime/status" }
 mizer-command-executor = { path = "crates/runtime/commander/executor" }
+mizer-vector = { path = "crates/components/vector" }
 mizer-wgpu = { path = "crates/runtime/wgpu" }
-tokio = { version = "1.33", features = ["rt-multi-thread", "macros", "time", "rt"] }
+tokio = { version = "1.35", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"
 dashmap = "5"
@@ -177,21 +180,28 @@ flume = "0.11"
 profiling = "1.0"
 rayon = "1.8"
 serde = { version = "1", features = ["rc"] }
-sentry = { version = "0.31", features = ["anyhow", "tracing", "debug-images"] }
-sentry-tracing = "0.31"
+sentry = { version = "0.32", features = ["anyhow", "tracing", "debug-images"] }
+sentry-tracing = "0.32"
+spin_sleep = "1.2"
 ffmpeg-the-third = { version = "1.2", features = ["static"] }
 rolling-file = "0.2"
 
 [dev-dependencies]
-test-case = "3.2"
+test-case = "3.3"
 criterion = { version = "0.5", features = ["html_reports"] }
 
 [[bench]]
-name = "dmx_pixel_pushing"
+name = "oscillator_nodes"
 harness = false
 
 [profile.bench]
 lto = true
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
 
 [target.'cfg(target_os = "macos")'.dependencies]
 oslog = "0.2"

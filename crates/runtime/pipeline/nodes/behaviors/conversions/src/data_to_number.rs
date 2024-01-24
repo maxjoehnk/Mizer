@@ -14,7 +14,7 @@ impl ConfigurableNode for DataToNumberNode {}
 impl PipelineNode for DataToNumberNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Data to Number".into(),
+            node_type_name: "Data to Number".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Conversions,
         }

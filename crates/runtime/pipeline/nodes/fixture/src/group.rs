@@ -1,9 +1,11 @@
-use crate::fixture_ports::*;
+use serde::{Deserialize, Serialize};
+
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::GroupId;
 use mizer_node::edge::Edge;
 use mizer_node::*;
-use serde::{Deserialize, Serialize};
+
+use crate::fixture_ports::*;
 
 const CALL_PORT: &str = "Call";
 const ACTIVE_PORT: &str = "Active";
@@ -50,9 +52,20 @@ impl ConfigurableNode for GroupNode {
 impl PipelineNode for GroupNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Group".into(),
+            node_type_name: "Group".into(),
             preview_type: PreviewType::None,
             category: NodeCategory::None,
+        }
+    }
+
+    fn display_name(&self, injector: &Injector) -> String {
+        if let Some(group) = injector
+            .get::<FixtureManager>()
+            .and_then(|manager| manager.groups.get(&self.id))
+        {
+            format!("Group ({})", group.name)
+        } else {
+            format!("Group (ID {})", self.id)
         }
     }
 

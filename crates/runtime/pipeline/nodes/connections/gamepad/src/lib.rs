@@ -57,7 +57,7 @@ impl ConfigurableNode for GamepadNode {
 impl PipelineNode for GamepadNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "Gamepad".into(),
+            node_type_name: "Gamepad".into(),
             preview_type: PreviewType::History,
             category: NodeCategory::Connections,
         }
@@ -79,7 +79,7 @@ impl ProcessingNode for GamepadNode {
         let Some(device_manager) = context.inject::<DeviceManager>() else {
             log::error!("Gamepad node is missing DeviceManager");
 
-            return Ok(())
+            return Ok(());
         };
 
         if let Some(gamepad) = device_manager.get_gamepad(&self.device_id) {

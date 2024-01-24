@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::sync::atomic::AtomicU8;
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
@@ -10,7 +11,10 @@ use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, NodeSetting, PortId};
+use mizer_module::ApiInjector;
+use mizer_node::{
+    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodePreviewRef, NodeSetting, PortId,
+};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
@@ -28,6 +32,8 @@ pub struct Api {
     settings_bus: MessageBus<Settings>,
     history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
     device_manager: DeviceManager,
+    api_injector: ApiInjector,
+    open_node_views: Arc<AtomicU8>,
 }
 
 impl RuntimeApi for Api {
@@ -62,13 +68,14 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn nodes(&self) -> Vec<NodeDescriptor> {
+        let metadata = self.access.metadata.read();
         let designer = self.access.designer.read();
         let settings = self.access.settings.read();
         self.access
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .map(|path| self.get_descriptor(path, &designer, &settings))
+            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
             .collect()
     }
 
@@ -115,6 +122,7 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
+        let metadata = self.access.metadata.read();
         let designer = self.access.designer.read();
         let settings = self.access.settings.read();
         self.access
@@ -122,7 +130,7 @@ impl RuntimeApi for Api {
             .iter()
             .map(|entry| entry.key().clone())
             .find(|node_path| node_path == path)
-            .map(|path| self.get_descriptor(path, &designer, &settings))
+            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -296,28 +304,52 @@ impl RuntimeApi for Api {
     fn layouts_view(&self) -> LayoutsView {
         self.access.layouts_view.clone()
     }
+
+    #[profiling::function]
+    fn get_service<T: 'static + Send + Sync + Clone>(&self) -> Option<&T> {
+        self.api_injector.get()
+    }
+
+    #[profiling::function]
+    fn open_nodes_view(&self) {
+        tracing::debug!("Opening nodes view");
+        self.open_node_views
+            .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        self.update_read_node_settings();
+    }
+
+    #[profiling::function]
+    fn close_nodes_view(&self) {
+        tracing::debug!("Closing nodes view");
+        self.open_node_views
+            .fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
+        self.update_read_node_settings();
+    }
 }
 
 impl Api {
     pub fn setup(
         runtime: &DefaultRuntime,
-        command_executor_api: CommandExecutorApi,
+        api_injector: ApiInjector,
         settings: Arc<NonEmptyPinboard<SettingsManager>>,
-        device_manager: DeviceManager,
     ) -> (ApiHandler, Api) {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
+        let command_executor_api = api_injector.require_service();
+        let device_manager = api_injector.require_service();
 
         (
             ApiHandler { recv: rx },
             Api {
                 sender: tx,
+                api_injector,
                 command_executor_api,
                 access,
                 settings,
                 settings_bus: MessageBus::new(),
                 history_bus: MessageBus::new(),
                 device_manager,
+                open_node_views: Arc::new(AtomicU8::new(0)),
             },
         )
     }
@@ -326,16 +358,19 @@ impl Api {
     fn get_descriptor(
         &self,
         path: NodePath,
+        metadata: &HashMap<NodePath, NodeMetadata>,
         designer: &HashMap<NodePath, NodeDesigner>,
         settings: &HashMap<NodePath, Vec<NodeSetting>>,
     ) -> NodeDescriptor {
         let node = self.access.nodes.get(&path).unwrap();
         let ports = node.list_ports();
+        let metadata = metadata.get(&path).cloned().unwrap_or_default();
         let settings = settings.get(&path).cloned().unwrap_or_default();
         let designer = designer[&path].clone();
 
         NodeDescriptor {
             path,
+            metadata,
             node,
             designer,
             ports,
@@ -358,5 +393,15 @@ impl Api {
         self.device_manager
             .get_gamepad(&id)
             .map(|gamepad| gamepad.value().clone())
+    }
+
+    fn update_read_node_settings(&self) {
+        let open_views = self
+            .open_node_views
+            .load(std::sync::atomic::Ordering::SeqCst);
+        tracing::debug!("Open views: {open_views}");
+        self.access
+            .read_node_settings
+            .store(open_views > 0, std::sync::atomic::Ordering::SeqCst);
     }
 }

@@ -113,7 +113,7 @@ edition = "2021"
 license = "GNU AGPLv3"
 
 [features]
-default = ["ui", "debug-ui", "feature-ndi", "feature-webcams"]
+default = ["ui", "debug-ui", "all-features"]
 build-ffmpeg = ["ffmpeg-the-third/build"]
 ui = ["mizer-ui"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]

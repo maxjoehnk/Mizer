@@ -20,7 +20,7 @@ build:
 
 build-release:
 	cd crates/ui && make release
-	cargo build --no-default-features --features ui --features build-ffmpeg  --features all-features--release -p mizer
+	cargo build --no-default-features --features ui --features build-ffmpeg  --features all-features --release -p mizer
 
 run: build
 	target/debug/mizer

@@ -116,6 +116,7 @@ build-ffmpeg = ["ffmpeg-the-third/build"]
 ui = ["mizer-ui"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
+all-features = ["feature-ndi", "feature-webcams"]
 feature-ndi = ["mizer-ndi/enable"]
 feature-webcams = ["mizer-webcams/enable"]
 

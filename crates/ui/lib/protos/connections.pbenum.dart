@@ -32,5 +32,24 @@ class CdjPlayback_State extends $pb.ProtobufEnum {
   const CdjPlayback_State._($core.int v, $core.String n) : super(v, n);
 }
 
+class CitpConnection_CitpKind extends $pb.ProtobufEnum {
+  static const CitpConnection_CitpKind CITP_KIND_LIGHTING_CONSOLE = CitpConnection_CitpKind._(0, _omitEnumNames ? '' : 'CITP_KIND_LIGHTING_CONSOLE');
+  static const CitpConnection_CitpKind CITP_KIND_MEDIA_SERVER = CitpConnection_CitpKind._(1, _omitEnumNames ? '' : 'CITP_KIND_MEDIA_SERVER');
+  static const CitpConnection_CitpKind CITP_KIND_VISUALIZER = CitpConnection_CitpKind._(2, _omitEnumNames ? '' : 'CITP_KIND_VISUALIZER');
+  static const CitpConnection_CitpKind CITP_KIND_UNKNOWN = CitpConnection_CitpKind._(3, _omitEnumNames ? '' : 'CITP_KIND_UNKNOWN');
+
+  static const $core.List<CitpConnection_CitpKind> values = <CitpConnection_CitpKind> [
+    CITP_KIND_LIGHTING_CONSOLE,
+    CITP_KIND_MEDIA_SERVER,
+    CITP_KIND_VISUALIZER,
+    CITP_KIND_UNKNOWN,
+  ];
+
+  static final $core.Map<$core.int, CitpConnection_CitpKind> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static CitpConnection_CitpKind? valueOf($core.int value) => _byValue[value];
+
+  const CitpConnection_CitpKind._($core.int v, $core.String n) : super(v, n);
+}
+
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

@@ -5,7 +5,6 @@ impl From<mizer_connections::Connection> for Connection {
         Self {
             name: connection.name(),
             connection: Some(connection.into()),
-            ..Default::default()
         }
     }
 }
@@ -79,6 +78,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
             }),
             Cdj(cdj) => Self::Cdj(cdj.into()),
             Djm(djm) => Self::Djm(djm.into()),
+            Citp(citp) => Self::Citp(citp.into()),
         }
     }
 }
@@ -278,6 +278,28 @@ impl From<mizer_connections::MidiMessage> for monitor_midi_response::Message {
                 })
             }
             Unknown(data) => Self::Unknown(data),
+        }
+    }
+}
+
+impl From<mizer_connections::CitpView> for CitpConnection {
+    fn from(value: mizer_connections::CitpView) -> Self {
+        Self {
+            connection_id: value.connection_id.to_string(),
+            name: value.name,
+            kind: citp_connection::CitpKind::from(value.kind) as i32,
+            state: value.state,
+        }
+    }
+}
+
+impl From<mizer_connections::CitpKind> for citp_connection::CitpKind {
+    fn from(value: mizer_connections::CitpKind) -> Self {
+        match value {
+            mizer_connections::CitpKind::LightingConsole => Self::LightingConsole,
+            mizer_connections::CitpKind::MediaServer => Self::MediaServer,
+            mizer_connections::CitpKind::Visualizer => Self::Visualizer,
+            mizer_connections::CitpKind::Unknown => Self::Unknown,
         }
     }
 }

@@ -982,6 +982,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "citp"
+version = "0.2.1"
+source = "git+https://github.com/maxjoehnk/citp.git?branch=master#82527c9915d72d65f0f709caab1b6a5b30c6e4ce"
+dependencies = [
+ "byteorder",
+ "ucs2",
+]
+
+[[package]]
 name = "clang-sys"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4378,6 +4387,7 @@ dependencies = [
  "mizer-plan",
  "mizer-processing",
  "mizer-project-files",
+ "mizer-protocol-citp",
  "mizer-protocol-dmx",
  "mizer-protocol-midi",
  "mizer-protocol-mqtt",
@@ -4550,6 +4560,7 @@ dependencies = [
  "derive_more",
  "log",
  "mizer-devices",
+ "mizer-protocol-citp",
  "mizer-protocol-dmx",
  "mizer-protocol-midi",
  "mizer-protocol-osc",
@@ -5361,6 +5372,26 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "test-case",
+]
+
+[[package]]
+name = "mizer-protocol-citp"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-stream",
+ "citp",
+ "flume 0.11.0",
+ "futures",
+ "mizer-commander",
+ "mizer-fixtures",
+ "mizer-module",
+ "mizer-processing",
+ "mizer-status-bus",
+ "profiling",
+ "tokio",
+ "tracing",
+ "uuid 1.7.0",
 ]
 
 [[package]]
@@ -9332,6 +9363,15 @@ name = "typenum"
 version = "1.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825"
+
+[[package]]
+name = "ucs2"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bad643914094137d475641b6bab89462505316ec2ce70907ad20102d28a79ab8"
+dependencies = [
+ "bit_field",
+]
 
 [[package]]
 name = "uname"

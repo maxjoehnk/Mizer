@@ -15,7 +15,7 @@ use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_session::SessionState;
-use mizer_status_bus::StatusBus;
+use mizer_status_bus::{ProjectStatus, StatusBus};
 use mizer_surfaces::SurfaceRegistry;
 use mizer_timecode::TimecodeManager;
 
@@ -85,6 +85,7 @@ impl Mizer {
         self.send_session_update();
         self.runtime
             .add_status_message("Created new project", Some(Duration::from_secs(10)));
+        self.status_bus.send_current_project(ProjectStatus::New);
     }
 
     #[profiling::function]
@@ -151,6 +152,11 @@ impl Mizer {
                 format!("Project loaded ({path:?})"),
                 Some(Duration::from_secs(10)),
             );
+            self.status_bus.send_current_project(ProjectStatus::Loaded(
+                path.file_name()
+                    .map(|name| name.to_string_lossy().to_string())
+                    .unwrap_or_default(),
+            ));
         }
 
         Ok(())
@@ -224,6 +230,7 @@ impl Mizer {
         let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
         effects_engine.clear();
         self.send_session_update();
+        self.status_bus.send_current_project(ProjectStatus::None);
     }
 
     #[profiling::function]

@@ -114,6 +114,7 @@ message Connection {
     PioneerCdjConnection cdj = 20;
     PioneerDjmConnection djm = 21;
     NdiSourceConnection ndi_source = 22;
+    CitpConnection citp = 23;
   }
 }
 
@@ -241,6 +242,20 @@ message MqttConnection {
   string url = 2;
   optional string username = 3;
   optional string password = 4;
+}
+
+message CitpConnection {
+  string connection_id = 1;
+  string name = 2;
+  CitpKind kind = 3;
+  string state = 4;
+
+  enum CitpKind {
+    CITP_KIND_LIGHTING_CONSOLE = 0;
+    CITP_KIND_MEDIA_SERVER = 1;
+    CITP_KIND_VISUALIZER = 2;
+    CITP_KIND_UNKNOWN = 3;
+  }
 }
 
 message ConfigureConnectionRequest {

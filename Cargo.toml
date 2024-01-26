@@ -7,6 +7,7 @@ members = [
     "crates/components/connections/devices/gamepads",
     "crates/components/connections/devices/ndi",
     "crates/components/connections/devices/webcams",
+    "crates/components/connections/protocols/citp",
     "crates/components/connections/protocols/dmx",
     "crates/components/connections/protocols/laser",
     "crates/components/connections/protocols/midi",
@@ -150,6 +151,7 @@ mizer-node = { path = "crates/runtime/pipeline/node" }
 mizer-nodes = { path = "crates/runtime/pipeline/nodes" }
 mizer-layouts = { path = "crates/runtime/layouts" }
 mizer-clock = { path = "crates/runtime/clock" }
+mizer-protocol-citp = { path = "crates/components/connections/protocols/citp" }
 mizer-protocol-dmx = { path = "crates/components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "crates/components/connections/protocols/midi" }
 mizer-protocol-mqtt = { path = "crates/components/connections/protocols/mqtt" }
@@ -204,3 +206,4 @@ oslog = "0.2"
 [patch.crates-io]
 avahi-sys = { git = "https://github.com/maxjoehnk/avahi-sys.git", branch = "update-bindgen-0.64" }
 nokhwa = { git = "https://github.com/l1npengtul/nokhwa.git", rev = "3be9227" }
+citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }

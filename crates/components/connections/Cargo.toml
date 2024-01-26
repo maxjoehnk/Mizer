@@ -9,6 +9,7 @@ anyhow = "1"
 log = "0.4"
 dashmap = "5"
 derive_more = "0.99"
+mizer-protocol-citp = { path = "./protocols/citp" }
 mizer-protocol-dmx = { path = "./protocols/dmx" }
 mizer-protocol-midi = { path = "./protocols/midi" }
 mizer-protocol-osc = { path = "./protocols/osc" }

@@ -8,6 +8,7 @@ use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
+use mizer_protocol_citp::CitpConnectionManager;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxInput, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_mqtt::MqttConnectionManager;
@@ -267,6 +268,7 @@ impl ApiHandler {
                 input_port: connection.address.input_port,
             })
             .map(Connection::from);
+        let citp_connections = Self::get_citp_connections(mizer);
         let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
         let devices = device_manager
             .current_devices()
@@ -279,9 +281,27 @@ impl ApiHandler {
         connections.extend(dmx_inputs);
         connections.extend(mqtt_connections);
         connections.extend(osc_connections);
+        connections.extend(citp_connections);
         connections.extend(devices);
 
         connections
+    }
+
+    fn get_citp_connections(mizer: &Mizer) -> Vec<Connection> {
+        let Some(citp_manager) = mizer.runtime.injector().get::<CitpConnectionManager>() else {
+            return Vec::default();
+        };
+        citp_manager
+            .list_connections()
+            .into_iter()
+            .map(|handle| CitpView {
+                connection_id: handle.id,
+                name: handle.name.to_string(),
+                kind: handle.kind,
+                state: handle.state.clone(),
+            })
+            .map(Connection::from)
+            .collect()
     }
 
     fn get_midi_device_profiles(&self, mizer: &mut Mizer) -> Vec<DeviceProfile> {

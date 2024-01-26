@@ -275,6 +275,7 @@ const Connection$json = {
     {'1': 'cdj', '3': 20, '4': 1, '5': 11, '6': '.mizer.connections.PioneerCdjConnection', '9': 0, '10': 'cdj'},
     {'1': 'djm', '3': 21, '4': 1, '5': 11, '6': '.mizer.connections.PioneerDjmConnection', '9': 0, '10': 'djm'},
     {'1': 'ndi_source', '3': 22, '4': 1, '5': 11, '6': '.mizer.connections.NdiSourceConnection', '9': 0, '10': 'ndiSource'},
+    {'1': 'citp', '3': 23, '4': 1, '5': 11, '6': '.mizer.connections.CitpConnection', '9': 0, '10': 'citp'},
   ],
   '8': [
     {'1': 'connection'},
@@ -298,7 +299,8 @@ final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode(
     'OwoDY2RqGBQgASgLMicubWl6ZXIuY29ubmVjdGlvbnMuUGlvbmVlckNkakNvbm5lY3Rpb25IAF'
     'IDY2RqEjsKA2RqbRgVIAEoCzInLm1pemVyLmNvbm5lY3Rpb25zLlBpb25lZXJEam1Db25uZWN0'
     'aW9uSABSA2RqbRJHCgpuZGlfc291cmNlGBYgASgLMiYubWl6ZXIuY29ubmVjdGlvbnMuTmRpU2'
-    '91cmNlQ29ubmVjdGlvbkgAUgluZGlTb3VyY2VCDAoKY29ubmVjdGlvbg==');
+    '91cmNlQ29ubmVjdGlvbkgAUgluZGlTb3VyY2USNwoEY2l0cBgXIAEoCzIhLm1pemVyLmNvbm5l'
+    'Y3Rpb25zLkNpdHBDb25uZWN0aW9uSABSBGNpdHBCDAoKY29ubmVjdGlvbg==');
 
 @$core.Deprecated('Use dmxOutputConnectionDescriptor instead')
 const DmxOutputConnection$json = {
@@ -621,6 +623,38 @@ final $typed_data.Uint8List mqttConnectionDescriptor = $convert.base64Decode(
     'Cg5NcXR0Q29ubmVjdGlvbhIjCg1jb25uZWN0aW9uX2lkGAEgASgJUgxjb25uZWN0aW9uSWQSEA'
     'oDdXJsGAIgASgJUgN1cmwSHwoIdXNlcm5hbWUYAyABKAlIAFIIdXNlcm5hbWWIAQESHwoIcGFz'
     'c3dvcmQYBCABKAlIAVIIcGFzc3dvcmSIAQFCCwoJX3VzZXJuYW1lQgsKCV9wYXNzd29yZA==');
+
+@$core.Deprecated('Use citpConnectionDescriptor instead')
+const CitpConnection$json = {
+  '1': 'CitpConnection',
+  '2': [
+    {'1': 'connection_id', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'kind', '3': 3, '4': 1, '5': 14, '6': '.mizer.connections.CitpConnection.CitpKind', '10': 'kind'},
+    {'1': 'state', '3': 4, '4': 1, '5': 9, '10': 'state'},
+  ],
+  '4': [CitpConnection_CitpKind$json],
+};
+
+@$core.Deprecated('Use citpConnectionDescriptor instead')
+const CitpConnection_CitpKind$json = {
+  '1': 'CitpKind',
+  '2': [
+    {'1': 'CITP_KIND_LIGHTING_CONSOLE', '2': 0},
+    {'1': 'CITP_KIND_MEDIA_SERVER', '2': 1},
+    {'1': 'CITP_KIND_VISUALIZER', '2': 2},
+    {'1': 'CITP_KIND_UNKNOWN', '2': 3},
+  ],
+};
+
+/// Descriptor for `CitpConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List citpConnectionDescriptor = $convert.base64Decode(
+    'Cg5DaXRwQ29ubmVjdGlvbhIjCg1jb25uZWN0aW9uX2lkGAEgASgJUgxjb25uZWN0aW9uSWQSEg'
+    'oEbmFtZRgCIAEoCVIEbmFtZRI+CgRraW5kGAMgASgOMioubWl6ZXIuY29ubmVjdGlvbnMuQ2l0'
+    'cENvbm5lY3Rpb24uQ2l0cEtpbmRSBGtpbmQSFAoFc3RhdGUYBCABKAlSBXN0YXRlIncKCENpdH'
+    'BLaW5kEh4KGkNJVFBfS0lORF9MSUdIVElOR19DT05TT0xFEAASGgoWQ0lUUF9LSU5EX01FRElB'
+    'X1NFUlZFUhABEhgKFENJVFBfS0lORF9WSVNVQUxJWkVSEAISFQoRQ0lUUF9LSU5EX1VOS05PV0'
+    '4QAw==');
 
 @$core.Deprecated('Use configureConnectionRequestDescriptor instead')
 const ConfigureConnectionRequest$json = {

@@ -14,6 +14,7 @@ use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext};
 use mizer_project_files::history::ProjectHistory;
+use mizer_protocol_citp::CitpModule;
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::MidiModule;
 use mizer_protocol_mqtt::MqttModule;
@@ -54,6 +55,7 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     CommandExecutorModule.try_load(context);
     MediaModule.try_load(context);
+    CitpModule.try_load(context);
 }
 
 pub fn build_runtime(

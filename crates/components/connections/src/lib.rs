@@ -3,6 +3,8 @@ use std::net::Ipv4Addr;
 use derive_more::From;
 
 use mizer_devices::*;
+use mizer_protocol_citp::CitpConnectionId;
+pub use mizer_protocol_citp::CitpKind;
 pub use mizer_protocol_midi::{MidiEvent, MidiMessage};
 pub use mizer_protocol_osc::{OscMessage, OscType};
 pub use mizer_protocol_pro_dj_link::{CDJView, DJMView};
@@ -28,6 +30,7 @@ pub enum Connection {
     NdiSource(NdiSourceView),
     Cdj(CDJView),
     Djm(DJMView),
+    Citp(CitpView),
 }
 
 impl Connection {
@@ -46,6 +49,7 @@ impl Connection {
             Connection::NdiSource(connection) => connection.name.clone(),
             Connection::Cdj(cdj) => cdj.device.name.clone(),
             Connection::Djm(djm) => djm.device.name.clone(),
+            Connection::Citp(citp) => citp.name.clone(),
         }
     }
 }
@@ -112,4 +116,12 @@ pub struct OscView {
     pub output_host: String,
     pub output_port: u16,
     pub input_port: u16,
+}
+
+#[derive(Debug, Clone)]
+pub struct CitpView {
+    pub name: String,
+    pub connection_id: CitpConnectionId,
+    pub kind: CitpKind,
+    pub state: String,
 }

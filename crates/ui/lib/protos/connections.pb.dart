@@ -1276,6 +1276,7 @@ enum Connection_Connection {
   cdj, 
   djm, 
   ndiSource, 
+  citp, 
   notSet
 }
 
@@ -1295,6 +1296,7 @@ class Connection extends $pb.GeneratedMessage {
     PioneerCdjConnection? cdj,
     PioneerDjmConnection? djm,
     NdiSourceConnection? ndiSource,
+    CitpConnection? citp,
   }) {
     final $result = create();
     if (name != null) {
@@ -1339,6 +1341,9 @@ class Connection extends $pb.GeneratedMessage {
     if (ndiSource != null) {
       $result.ndiSource = ndiSource;
     }
+    if (citp != null) {
+      $result.citp = citp;
+    }
     return $result;
   }
   Connection._() : super();
@@ -1359,10 +1364,11 @@ class Connection extends $pb.GeneratedMessage {
     20 : Connection_Connection.cdj,
     21 : Connection_Connection.djm,
     22 : Connection_Connection.ndiSource,
+    23 : Connection_Connection.citp,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Connection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23])
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOM<DmxOutputConnection>(10, _omitFieldNames ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
     ..aOM<DmxInputConnection>(11, _omitFieldNames ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
@@ -1377,6 +1383,7 @@ class Connection extends $pb.GeneratedMessage {
     ..aOM<PioneerCdjConnection>(20, _omitFieldNames ? '' : 'cdj', subBuilder: PioneerCdjConnection.create)
     ..aOM<PioneerDjmConnection>(21, _omitFieldNames ? '' : 'djm', subBuilder: PioneerDjmConnection.create)
     ..aOM<NdiSourceConnection>(22, _omitFieldNames ? '' : 'ndiSource', subBuilder: NdiSourceConnection.create)
+    ..aOM<CitpConnection>(23, _omitFieldNames ? '' : 'citp', subBuilder: CitpConnection.create)
     ..hasRequiredFields = false
   ;
 
@@ -1555,6 +1562,17 @@ class Connection extends $pb.GeneratedMessage {
   void clearNdiSource() => clearField(22);
   @$pb.TagNumber(22)
   NdiSourceConnection ensureNdiSource() => $_ensure(13);
+
+  @$pb.TagNumber(23)
+  CitpConnection get citp => $_getN(14);
+  @$pb.TagNumber(23)
+  set citp(CitpConnection v) { setField(23, v); }
+  @$pb.TagNumber(23)
+  $core.bool hasCitp() => $_has(14);
+  @$pb.TagNumber(23)
+  void clearCitp() => clearField(23);
+  @$pb.TagNumber(23)
+  CitpConnection ensureCitp() => $_ensure(14);
 }
 
 enum DmxOutputConnection_Config {
@@ -3053,6 +3071,98 @@ class MqttConnection extends $pb.GeneratedMessage {
   $core.bool hasPassword() => $_has(3);
   @$pb.TagNumber(4)
   void clearPassword() => clearField(4);
+}
+
+class CitpConnection extends $pb.GeneratedMessage {
+  factory CitpConnection({
+    $core.String? connectionId,
+    $core.String? name,
+    CitpConnection_CitpKind? kind,
+    $core.String? state,
+  }) {
+    final $result = create();
+    if (connectionId != null) {
+      $result.connectionId = connectionId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (kind != null) {
+      $result.kind = kind;
+    }
+    if (state != null) {
+      $result.state = state;
+    }
+    return $result;
+  }
+  CitpConnection._() : super();
+  factory CitpConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CitpConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CitpConnection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'connectionId')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..e<CitpConnection_CitpKind>(3, _omitFieldNames ? '' : 'kind', $pb.PbFieldType.OE, defaultOrMaker: CitpConnection_CitpKind.CITP_KIND_LIGHTING_CONSOLE, valueOf: CitpConnection_CitpKind.valueOf, enumValues: CitpConnection_CitpKind.values)
+    ..aOS(4, _omitFieldNames ? '' : 'state')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CitpConnection clone() => CitpConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CitpConnection copyWith(void Function(CitpConnection) updates) => super.copyWith((message) => updates(message as CitpConnection)) as CitpConnection;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static CitpConnection create() => CitpConnection._();
+  CitpConnection createEmptyInstance() => create();
+  static $pb.PbList<CitpConnection> createRepeated() => $pb.PbList<CitpConnection>();
+  @$core.pragma('dart2js:noInline')
+  static CitpConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CitpConnection>(create);
+  static CitpConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get connectionId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set connectionId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasConnectionId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearConnectionId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  CitpConnection_CitpKind get kind => $_getN(2);
+  @$pb.TagNumber(3)
+  set kind(CitpConnection_CitpKind v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasKind() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearKind() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get state => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set state($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasState() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearState() => clearField(4);
 }
 
 enum ConfigureConnectionRequest_Config {

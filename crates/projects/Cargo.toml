@@ -26,7 +26,7 @@ mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
 directories-next = "2.0"
 fs2 = "0.4"
-indexmap = { version = "2.1", features = ["serde"] }
+indexmap = { version = "2.2", features = ["serde"] }
 enum_dispatch = "0.3"
 enum-iterator = "1.5"
 profiling = "1.0"

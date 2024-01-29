@@ -14,6 +14,9 @@ const double INNER_RADIUS = 2;
 
 const double DOT_SIZE = 16;
 
+const double MIN_ZOOM = 0.1;
+const double MAX_ZOOM = 1;
+
 const _GENERATED_TYPES = ["programmer", "transport", "sequencer", "fixture", "group", "preset"];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {

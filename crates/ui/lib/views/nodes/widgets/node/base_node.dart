@@ -10,6 +10,7 @@ import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/widgets/node_preview.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
@@ -179,16 +180,15 @@ class BaseNodeState extends State<BaseNode> {
   }
 
   Widget _containerEditor(BuildContext context) {
-    // TODO: show preview of child nodes
-    return Center(
-        child: Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: ElevatedButton(
-          onPressed: () {
+    return Container(
+      height: 200,
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+          onTap: () {
             context.read<NodeEditorModel>().openContainer(widget.nodeModel);
           },
-          child: Text("Open")),
-    ));
+          child: ContainerPreview(node: widget.nodeModel)),
+    );
   }
 
   void _onHideNode(BuildContext context) async {

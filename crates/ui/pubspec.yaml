@@ -36,6 +36,7 @@ dependencies:
   multicast_dns: ^0.3.0
   intl: ^0.18.1
   fuzzywuzzy: ^1.1.6
+  vector_math: ^2.1.4
 
 dev_dependencies:
   flutter_test:

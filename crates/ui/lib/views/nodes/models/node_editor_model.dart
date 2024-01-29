@@ -102,6 +102,17 @@ class NodeEditorModel extends ChangeNotifier {
         (portModel) => portModel.port.name == port.name && portModel.input == input);
   }
 
+  List<Node> getContainerNodes(NodeModel container) {
+    return container.node.config.containerConfig.nodes;
+  }
+
+  List<NodeConnection> getContainerConnections(NodeModel container) {
+    var containerNodes = getContainerNodes(container);
+
+    return this._channels.where((channel) => containerNodes.any((n) => n.path == channel.sourceNode || n.path == channel.targetNode))
+        .toList();
+  }
+
   /// Returns the [Node] with the given path
   Node? getNode(String path) {
     return nodes.firstWhereOrNull((nodeModel) => nodeModel.node.path == path)?.node;

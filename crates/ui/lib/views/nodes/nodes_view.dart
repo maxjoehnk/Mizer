@@ -12,7 +12,8 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/views/layout/layout_view.dart';
+import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -101,8 +102,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                                 child: InteractiveViewer(
                                     transformationController: model.transformationController,
                                     boundaryMargin: EdgeInsets.all(double.infinity),
-                                    minScale: 0.1,
-                                    maxScale: 10.0,
+                                    minScale: MIN_ZOOM,
+                                    maxScale: MAX_ZOOM,
                                     child: SizedBox.expand())),
                             Transform(
                                 transform: model.transformationController.value,
@@ -124,6 +125,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                             CanvasDropLayer(),
                             NodesTarget(),
                             if (_selectionState != null) SelectionIndicator(_selectionState!),
+                            Positioned(bottom: 8 + PathBreadcrumbHeight, right: 8, child: Minimap(transformationController: model.transformationController)),
                           ]),
                         )
                       ])),

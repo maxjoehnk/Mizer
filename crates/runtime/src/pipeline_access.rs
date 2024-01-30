@@ -265,9 +265,18 @@ impl PipelineAccess {
         Ok((source_port, target_port))
     }
 
+    pub(crate) fn try_get_input_port_metadata(
+        &self,
+        path: &NodePath,
+        port: &PortId,
+    ) -> Option<PortMetadata> {
+        let node = self.nodes_view.get(path)?;
+        node.introspect_input_port(port)
+    }
+
     pub(crate) fn get_input_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
-        let node = self.nodes_view.get(path).unwrap();
-        node.introspect_input_port(port).unwrap_or_default()
+        self.try_get_input_port_metadata(path, port)
+            .unwrap_or_default()
     }
 
     pub(crate) fn get_output_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {

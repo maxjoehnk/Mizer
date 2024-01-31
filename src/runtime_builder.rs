@@ -39,7 +39,6 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     EffectsModule.try_load(context);
     TimecodeModule.try_load(context);
     DeviceModule.try_load(context);
-    DmxModule.try_load(context);
     MqttModule.try_load(context);
     OscModule.try_load(context);
     MidiModule.try_load(context);
@@ -56,6 +55,7 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     CommandExecutorModule.try_load(context);
     MediaModule.try_load(context);
     CitpModule.try_load(context);
+    DmxModule.try_load(context);
 }
 
 pub fn build_runtime(

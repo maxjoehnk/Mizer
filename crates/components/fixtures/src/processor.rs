@@ -28,11 +28,7 @@ impl Processor for FixtureProcessor {
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
-        let dmx_manager = injector
-            .get::<DmxConnectionManager>()
-            .expect("fixture processor without dmx module");
         fixture_manager.execute_programmers();
-        fixture_manager.write_outputs(dmx_manager);
     }
 
     #[tracing::instrument]
@@ -41,6 +37,10 @@ impl Processor for FixtureProcessor {
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
+        let dmx_manager = injector
+            .get::<DmxConnectionManager>()
+            .expect("fixture processor without dmx module");
+        fixture_manager.write_outputs(dmx_manager);
         let mut state = fixture_manager.states.read();
         for fixture in fixture_manager.get_fixtures().iter() {
             update_state(&mut state, FixtureId::Fixture(fixture.id), fixture.deref());

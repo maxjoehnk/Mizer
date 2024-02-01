@@ -1,10 +1,9 @@
-use crate::color_mixer::{update_color_mixer, ColorMixer};
+use crate::{Fixture, FixturePriority};
+use crate::color_mixer::{ColorMixer, update_color_mixer};
 use crate::definition::{
     ColorChannel, FixtureFaderControl, SubFixtureControlChannel, SubFixtureDefinition,
 };
-use crate::fixture::{IFixture, IFixtureMut};
-use crate::Fixture;
-use std::collections::HashMap;
+use crate::fixture::{ChannelValues, IFixture, IFixtureMut};
 
 #[derive(Debug)]
 pub struct SubFixtureMut<'a> {
@@ -38,7 +37,7 @@ impl<'a> SubFixtureMut<'a> {
             .sub_fixtures
             .iter()
             .find(|s| s.id == definition_id)
-            .and_then(|definition| definition.color_mixer)
+            .and_then(|definition| definition.color_mixer.clone())
     }
 }
 
@@ -49,7 +48,12 @@ pub struct SubFixture<'a> {
 }
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
-    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+    fn write_fader_control(
+        &mut self,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    ) {
         profiling::scope!("SubFixtureMut::write_fader_control");
         if let Some(channel) = self.definition.controls.get_channel(&control) {
             match channel {
@@ -58,14 +62,14 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                         let color_mixer = self.color_mixer_mut();
                         if let Some(color_mixer) = color_mixer {
                             match color_channel {
-                                ColorChannel::Red => color_mixer.set_red(value),
-                                ColorChannel::Green => color_mixer.set_green(value),
-                                ColorChannel::Blue => color_mixer.set_blue(value),
+                                ColorChannel::Red => color_mixer.set_red(value, priority),
+                                ColorChannel::Green => color_mixer.set_green(value, priority),
+                                ColorChannel::Blue => color_mixer.set_blue(value, priority),
                             }
                         }
                         self.update_color_mixer();
                     } else {
-                        self.fixture.write(channel, value)
+                        self.fixture.write_priority(channel, value, priority)
                     }
                 }
                 SubFixtureControlChannel::VirtualDimmer => {
@@ -75,7 +79,7 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                     );
                     let color_mixer = self.color_mixer_mut();
                     if let Some(color_mixer) = color_mixer {
-                        color_mixer.set_virtual_dimmer(value);
+                        color_mixer.set_virtual_dimmer(value, priority);
                     }
                     self.update_color_mixer();
                 }
@@ -99,12 +103,12 @@ impl<'a> IFixture for SubFixture<'a> {
 }
 
 fn read_control(
-    channel_values: &HashMap<String, f64>,
+    channel_values: &ChannelValues,
     definition: &SubFixtureDefinition,
     control: FixtureFaderControl,
 ) -> Option<f64> {
     if let FixtureFaderControl::ColorMixer(channel) = control {
-        let color_mixer = definition.color_mixer?;
+        let color_mixer = definition.color_mixer.as_ref()?;
         let rgb = color_mixer.rgb();
 
         return match channel {
@@ -114,11 +118,10 @@ fn read_control(
         };
     }
     match definition.controls.get_channel(&control) {
-        Some(SubFixtureControlChannel::Channel(ref channel)) => {
-            channel_values.get(channel).copied()
-        }
+        Some(SubFixtureControlChannel::Channel(ref channel)) => channel_values.get(channel),
         Some(SubFixtureControlChannel::VirtualDimmer) => definition
             .color_mixer
+            .as_ref()
             .and_then(|mixer| mixer.virtual_dimmer()),
         _ => None,
     }

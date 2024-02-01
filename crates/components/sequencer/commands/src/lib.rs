@@ -12,6 +12,7 @@ pub use update_cue_effect_offset::*;
 pub use update_cue_trigger::*;
 pub use update_cue_trigger_time::*;
 pub use update_cue_value::*;
+pub use update_priority::*;
 pub use update_stop_on_last_cue::*;
 pub use update_wrap_around::*;
 
@@ -28,6 +29,7 @@ mod update_cue_effect_offset;
 mod update_cue_trigger;
 mod update_cue_trigger_time;
 mod update_cue_value;
+mod update_priority;
 mod update_stop_on_last_cue;
 mod update_wrap_around;
 

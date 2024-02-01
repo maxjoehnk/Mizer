@@ -120,6 +120,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                 let result = call.arguments().map(|req| self.update_sequence_name(req));
                 resp.respond_result(result);
             }
+            "updateSequencePriority" => {
+                let result = call
+                    .arguments()
+                    .map(|req| self.handler.update_sequence_priority(req));
+                resp.respond_result(result);
+            }
             "getSequencerPointer" => match self.get_sequencer_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),

@@ -148,6 +148,14 @@ class SequencerPluginApi implements SequencerApi {
     return Sequences.fromBuffer(_convertBuffer(response));
   }
 
+  @override
+  Future<Sequences> updatePriority(int sequence, FixturePriority priority) async {
+    var request = SequencePriorityRequest(sequence: sequence, priority: priority);
+    var response = await channel.invokeMethod("updateSequencePriority", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

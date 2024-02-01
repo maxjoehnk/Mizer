@@ -4760,6 +4760,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
+ "enum-iterator",
  "futures",
  "indexmap 2.2.1",
  "itertools 0.12.0",

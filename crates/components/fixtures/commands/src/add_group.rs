@@ -1,11 +1,12 @@
-use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, Ref, sub_command, SubCommand, SubCommandRunner};
+use mizer_fixtures::GroupId;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
-use mizer_fixtures::GroupId;
 use mizer_node::{NodeDesigner, NodeType};
 use mizer_nodes::GroupNode;
 use mizer_runtime::commands::AddNodeCommand;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct AddGroupCommand {
@@ -35,6 +36,7 @@ impl<'a> Command<'a> for AddGroupCommand {
         let node = GroupNode {
             id: group_id,
             fixture_manager: Some(fixture_manager.clone()),
+            ..Default::default()
         };
         let sub_cmd = AddNodeCommand {
             node_type: NodeType::Group,

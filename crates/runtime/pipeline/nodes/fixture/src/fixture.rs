@@ -2,11 +2,14 @@ use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixturePriority;
 use mizer_node::*;
 
 use crate::fixture_ports::{write_ports, FixtureControlPorts};
 
 const FIXTURE_SETTING: &str = "Fixture";
+const PRIORITY_SETTING: &str = "Priority";
+const SEND_ZERO_SETTING: &str = "Send Zero";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
@@ -14,12 +17,22 @@ pub struct FixtureNode {
     pub fixture_id: u32,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
+    #[serde(default)]
+    pub priority: FixturePriority,
+    #[serde(default = "default_send_zero")]
+    pub send_zero: bool,
+}
+
+fn default_send_zero() -> bool {
+    true
 }
 
 impl std::fmt::Debug for FixtureNode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         f.debug_struct(stringify!(FixtureNode))
             .field("fixture_id", &self.fixture_id)
+            .field("priority", &self.priority)
+            .field("send_zero", &self.send_zero)
             .finish()
     }
 }
@@ -27,6 +40,8 @@ impl std::fmt::Debug for FixtureNode {
 impl PartialEq<Self> for FixtureNode {
     fn eq(&self, other: &FixtureNode) -> bool {
         self.fixture_id == other.fixture_id
+            && self.priority == other.priority
+            && self.send_zero == other.send_zero
     }
 }
 
@@ -42,7 +57,18 @@ impl ConfigurableNode for FixtureNode {
             })
             .collect();
 
-        vec![setting!(id FIXTURE_SETTING, self.fixture_id, fixtures).disabled()]
+        vec![
+            setting!(id FIXTURE_SETTING, self.fixture_id, fixtures).disabled(),
+            setting!(enum PRIORITY_SETTING, self.priority),
+            setting!(SEND_ZERO_SETTING, self.send_zero),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, PRIORITY_SETTING, self.priority);
+        update!(bool setting, SEND_ZERO_SETTING, self.send_zero);
+
+        update_fallback!(setting)
     }
 }
 
@@ -112,8 +138,8 @@ impl ProcessingNode for FixtureNode {
         if let Some(manager) = context.inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
                 let ports = fixture.current_mode.controls.controls().get_ports();
-                write_ports(ports, context, |control, value| {
-                    fixture.write_fader_control(control, value)
+                write_ports(ports, context, self.send_zero, |control, value| {
+                    fixture.write_fader_control(control, value, self.priority)
                 });
             } else {
                 log::error!("could not find fixture for id {}", self.fixture_id);

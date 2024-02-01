@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::GroupId;
+use mizer_fixtures::{FixturePriority, GroupId};
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
@@ -11,25 +11,37 @@ const CALL_PORT: &str = "Call";
 const ACTIVE_PORT: &str = "Active";
 
 const GROUP_ID_SETTING: &str = "Group";
+const PRIORITY_SETTING: &str = "Priority";
+const SEND_ZERO_SETTING: &str = "Send Zero";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct GroupNode {
     pub id: GroupId,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
+    #[serde(default)]
+    pub priority: FixturePriority,
+    #[serde(default = "default_send_zero")]
+    pub send_zero: bool,
+}
+
+fn default_send_zero() -> bool {
+    true
 }
 
 impl std::fmt::Debug for GroupNode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         f.debug_struct(stringify!(GroupNode))
             .field("id", &self.id)
+            .field("priority", &self.priority)
+            .field("send_zero", &self.send_zero)
             .finish()
     }
 }
 
 impl PartialEq for GroupNode {
     fn eq(&self, other: &Self) -> bool {
-        self.id == other.id
+        self.id == other.id && self.priority == other.priority && self.send_zero == other.send_zero
     }
 }
 
@@ -45,7 +57,18 @@ impl ConfigurableNode for GroupNode {
             })
             .collect();
 
-        vec![setting!(id GROUP_ID_SETTING, self.id, groups).disabled()]
+        vec![
+            setting!(id GROUP_ID_SETTING, self.id, groups).disabled(),
+            setting!(enum PRIORITY_SETTING, self.priority),
+            setting!(SEND_ZERO_SETTING, self.send_zero),
+        ]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(enum setting, PRIORITY_SETTING, self.priority);
+        update!(bool setting, SEND_ZERO_SETTING, self.send_zero);
+
+        update_fallback!(setting)
     }
 }
 
@@ -140,8 +163,8 @@ impl GroupNode {
             .get_group_fixture_controls(self.id)
             .get_ports();
 
-        write_ports(ports, context, |control, value| {
-            fixture_manager.write_group_control(self.id, control, value)
+        write_ports(ports, context, self.send_zero, |control, value| {
+            fixture_manager.write_group_control(self.id, control, value, self.priority)
         });
     }
 }

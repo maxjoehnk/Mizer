@@ -165,21 +165,25 @@ impl ProcessingNode for PlanScreenNode {
                         fixture.fixture,
                         FixtureFaderControl::Intensity,
                         color.alpha,
+                        Default::default(),
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Red),
                         color.red,
+                        Default::default(),
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Green),
                         color.green,
+                        Default::default(),
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                         color.blue,
+                        Default::default(),
                     );
                 }
             }

@@ -1,14 +1,16 @@
-use mizer_commander::{sub_command, Command, Ref, RefMut};
+use std::str::FromStr;
+
+use regex::Regex;
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, Ref, RefMut, sub_command};
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::{NodeDesigner, NodeType};
 use mizer_nodes::FixtureNode;
 use mizer_runtime::commands::AddNodeCommand;
-use mizer_runtime::pipeline_access::PipelineAccess;
 use mizer_runtime::ExecutionPlanner;
-use regex::Regex;
-use serde::{Deserialize, Serialize};
-use std::str::FromStr;
+use mizer_runtime::pipeline_access::PipelineAccess;
 
 lazy_static::lazy_static! {
     static ref FIXTURE_NAME_REGEX: Regex = Regex::new("^(?P<name>.*?)(?P<counter>[0-9]+)?$").unwrap();
@@ -92,6 +94,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
             let node = FixtureNode {
                 fixture_id,
                 fixture_manager: Some(fixture_manager.clone()),
+                ..Default::default()
             };
             let sub_cmd = AddNodeCommand {
                 node_type: NodeType::Fixture,
@@ -148,8 +151,9 @@ fn calculate_address(universe: u16, start_channel: u16, channel_count: u16, i: u
 
 #[cfg(test)]
 mod tests {
-    use crate::patch_fixtures::calculate_address;
     use test_case::test_case;
+
+    use crate::patch_fixtures::calculate_address;
 
     #[test_case(1, 1, 1, 0, (1, 1))]
     #[test_case(2, 1, 1, 0, (2, 1))]

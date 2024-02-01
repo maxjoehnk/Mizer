@@ -1,54 +1,65 @@
 use palette::{FromColor, Hsv, Srgb};
 
 use crate::definition::ColorGroup;
-use crate::fixture::IChannelType;
+use crate::fixture::{ChannelValue, IChannelType};
+use crate::FixturePriority;
 
-#[derive(Debug, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq)]
 pub struct ColorMixer {
-    red: f64,
-    green: f64,
-    blue: f64,
-    virtual_dimmer: Option<f64>,
+    red: ChannelValue,
+    green: ChannelValue,
+    blue: ChannelValue,
+    virtual_dimmer: Option<ChannelValue>,
 }
 
 impl ColorMixer {
     pub fn new(virtual_dimmer: bool) -> Self {
         Self {
-            virtual_dimmer: virtual_dimmer.then_some(0f64),
+            virtual_dimmer: virtual_dimmer.then(|| {
+                let mut value = ChannelValue::default();
+                value.insert(0.0, FixturePriority::LOWEST);
+
+                value
+            }),
             ..Default::default()
         }
     }
 
-    pub fn set_red(&mut self, red: f64) {
-        self.red = red;
-    }
-
-    pub fn set_green(&mut self, green: f64) {
-        self.green = green;
-    }
-
-    pub fn set_blue(&mut self, blue: f64) {
-        self.blue = blue;
-    }
-
-    pub fn set_virtual_dimmer(&mut self, value: f64) {
+    pub fn clear(&mut self) {
+        self.red.clear();
+        self.green.clear();
+        self.blue.clear();
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
-            *virtual_dimmer = value;
+            virtual_dimmer.clear();
+            virtual_dimmer.insert(0.0, FixturePriority::LOWEST);
+        }
+    }
+
+    pub fn set_red(&mut self, red: f64, priority: FixturePriority) {
+        self.red.insert(red, priority);
+    }
+
+    pub fn set_green(&mut self, green: f64, priority: FixturePriority) {
+        self.green.insert(green, priority);
+    }
+
+    pub fn set_blue(&mut self, blue: f64, priority: FixturePriority) {
+        self.blue.insert(blue, priority);
+    }
+
+    pub fn set_virtual_dimmer(&mut self, value: f64, priority: FixturePriority) {
+        if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
+            virtual_dimmer.insert(value, priority);
         }
     }
 
     pub fn virtual_dimmer(&self) -> Option<f64> {
-        self.virtual_dimmer
+        self.virtual_dimmer.as_ref().and_then(|v| v.get())
     }
 
     pub fn rgb(&self) -> Rgb {
         profiling::scope!("ColorMixer::rgb");
-        let rgb = Srgb::new(self.red, self.green, self.blue);
-        let mut hsv = Hsv::from_color(rgb);
-        if let Some(virtual_dimmer) = self.virtual_dimmer {
-            hsv.value *= virtual_dimmer;
-        }
-        let rgb = Srgb::from_color(hsv);
+        let (rgb, _) = self.get_srgb();
 
         Rgb {
             red: rgb.red,
@@ -59,12 +70,7 @@ impl ColorMixer {
 
     pub fn rgbw(&self) -> Rgbw {
         profiling::scope!("ColorMixer::rgbw");
-        let rgb = Srgb::new(self.red, self.green, self.blue);
-        let mut hsv = Hsv::from_color(rgb);
-        if let Some(virtual_dimmer) = self.virtual_dimmer {
-            hsv.value *= virtual_dimmer;
-        }
-        let rgb = Srgb::from_color(hsv);
+        let (rgb, hsv) = self.get_srgb();
 
         Rgbw {
             red: rgb.red * hsv.saturation,
@@ -72,6 +78,20 @@ impl ColorMixer {
             blue: rgb.blue * hsv.saturation,
             white: hsv.value - hsv.saturation,
         }
+    }
+
+    fn get_srgb(&self) -> (Srgb<f64>, Hsv<palette::encoding::Srgb, f64>) {
+        let red = self.red.get().unwrap_or_default();
+        let green = self.green.get().unwrap_or_default();
+        let blue = self.blue.get().unwrap_or_default();
+        let rgb = Srgb::new(red, green, blue);
+        let mut hsv = Hsv::from_color(rgb);
+        if let Some(virtual_dimmer) = self.virtual_dimmer.as_ref().and_then(|v| v.get()) {
+            hsv.value *= virtual_dimmer;
+        }
+        let rgb = Srgb::from_color(hsv);
+
+        (rgb, hsv)
     }
 
     pub fn cmy(&self) -> Cmy {
@@ -187,9 +207,9 @@ mod tests {
     #[test_case(1f64, 1f64, 0f64)]
     fn rgb_should_return_rgb_values(red: f64, green: f64, blue: f64) {
         let mut mixer = ColorMixer::new(false);
-        mixer.set_red(red);
-        mixer.set_green(green);
-        mixer.set_blue(blue);
+        mixer.set_red(red, Default::default());
+        mixer.set_green(green, Default::default());
+        mixer.set_blue(blue, Default::default());
 
         let result = mixer.rgb();
 
@@ -216,9 +236,9 @@ mod tests {
         w: f64,
     ) {
         let mut mixer = ColorMixer::new(false);
-        mixer.set_red(red);
-        mixer.set_green(green);
-        mixer.set_blue(blue);
+        mixer.set_red(red, Default::default());
+        mixer.set_green(green, Default::default());
+        mixer.set_blue(blue, Default::default());
 
         let result = mixer.rgbw();
 
@@ -245,10 +265,10 @@ mod tests {
         b: f64,
     ) {
         let mut mixer = ColorMixer::new(true);
-        mixer.set_red(red);
-        mixer.set_green(green);
-        mixer.set_blue(blue);
-        mixer.set_virtual_dimmer(dimmer);
+        mixer.set_red(red, Default::default());
+        mixer.set_green(green, Default::default());
+        mixer.set_blue(blue, Default::default());
+        mixer.set_virtual_dimmer(dimmer, Default::default());
 
         let result = mixer.rgb();
 
@@ -276,10 +296,10 @@ mod tests {
         w: f64,
     ) {
         let mut mixer = ColorMixer::new(true);
-        mixer.set_red(red);
-        mixer.set_green(green);
-        mixer.set_blue(blue);
-        mixer.set_virtual_dimmer(dimmer);
+        mixer.set_red(red, Default::default());
+        mixer.set_green(green, Default::default());
+        mixer.set_blue(blue, Default::default());
+        mixer.set_virtual_dimmer(dimmer, Default::default());
 
         let result = mixer.rgbw();
 

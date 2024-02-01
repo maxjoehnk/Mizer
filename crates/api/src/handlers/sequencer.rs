@@ -201,6 +201,17 @@ impl<R: RuntimeApi> SequencerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn update_sequence_priority(&self, request: SequencePriorityRequest) {
+        self.runtime
+            .run_command(UpdateSequencePriorityCommand {
+                sequence_id: request.sequence,
+                priority: request.priority().into(),
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn sequencer_view(&self) -> SequencerView {
         self.sequencer.get_sequencer_view()
     }

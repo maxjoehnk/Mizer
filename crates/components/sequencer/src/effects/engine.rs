@@ -1,16 +1,21 @@
-use super::Effect;
-use crate::effects::default_effects::CIRCLE;
-use crate::effects::instance::EffectInstance;
-use crate::SequencerTime;
+use std::collections::HashMap;
+use std::ops::{Deref, DerefMut};
+use std::sync::{Arc, Mutex};
+
 use dashmap::DashMap;
 use itertools::Itertools;
+
+use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
 use mizer_fixtures::selection::FixtureSelection;
 use mizer_module::ClockFrame;
-use std::collections::HashMap;
-use std::ops::{Deref, DerefMut};
-use std::sync::{Arc, Mutex};
+
+use crate::effects::default_effects::CIRCLE;
+use crate::effects::instance::EffectInstance;
+use crate::SequencerTime;
+
+use super::Effect;
 
 #[derive(Default, Clone)]
 pub struct EffectEngine {
@@ -110,6 +115,7 @@ impl EffectEngine {
                 effect.fixtures.clone(),
                 effect.rate,
                 effect.offset.map(SequencerTime::Beats),
+                Default::default(),
             ) {
                 effects.insert(effect, instance_id);
             }
@@ -142,10 +148,11 @@ impl EffectEngine {
         fixtures: FixtureSelection,
         rate: f64,
         fixture_offset: Option<SequencerTime>,
+        priority: FixturePriority,
     ) -> Option<EffectInstanceId> {
         profiling::scope!("EffectEngine::run_effect");
         if let Some(effect) = self.effects.get(&effect) {
-            let instance = EffectInstance::new(&effect, fixtures, rate, fixture_offset);
+            let instance = EffectInstance::new(&effect, fixtures, rate, fixture_offset, priority);
             let id = EffectInstanceId::new();
             let mut instances = self.instances.lock().unwrap();
             instances.insert(id, instance);

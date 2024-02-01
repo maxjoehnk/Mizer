@@ -23,7 +23,7 @@ fn write_fader_control_should_output_given_value(
     let mode = single_channel_mode(name, controls);
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(control, value);
+    fixture.write_fader_control(control, value, Default::default());
     let result = fixture.get_dmx_values();
 
     assert_eq!(expected, result[0]);
@@ -65,13 +65,22 @@ fn write_fader_control_should_output_mixed_colors(value: (f64, f64, f64), expect
     );
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64);
-    fixture.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), value.0);
+    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64, Default::default());
+    fixture.write_fader_control(
+        FixtureFaderControl::ColorMixer(ColorChannel::Red),
+        value.0,
+        Default::default(),
+    );
     fixture.write_fader_control(
         FixtureFaderControl::ColorMixer(ColorChannel::Green),
         value.1,
+        Default::default(),
     );
-    fixture.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), value.2);
+    fixture.write_fader_control(
+        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+        value.2,
+        Default::default(),
+    );
     let result = fixture.get_dmx_values();
 
     assert_eq!(expected.0, result[0]);
@@ -109,7 +118,7 @@ fn write_fader_control_should_output_given_value_for_sub_fixture(
         .sub_fixture_mut(1)
         .expect("Sub fixture with id 1 should exist");
 
-    sub_fixture.write_fader_control(control, value);
+    sub_fixture.write_fader_control(control, value, Default::default());
     let result = fixture.get_dmx_values();
 
     assert_eq!(expected, result[0]);
@@ -143,7 +152,7 @@ fn write_fader_control_should_delegate_to_sub_fixtures(
     );
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(control, value);
+    fixture.write_fader_control(control, value, Default::default());
     let result = fixture.get_dmx_values();
 
     assert_eq!(expected, result[0]);
@@ -175,7 +184,7 @@ fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u16) {
     let mode = FixtureMode::new(Default::default(), channels, controls, sub_fixtures);
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64);
+    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64, Default::default());
     let result = fixture.get_dmx_values();
 
     for i in 0..count {
@@ -233,13 +242,22 @@ fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
     let mode = FixtureMode::new(Default::default(), channels, controls, sub_fixtures);
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64);
-    fixture.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), value.0);
+    fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64, Default::default());
+    fixture.write_fader_control(
+        FixtureFaderControl::ColorMixer(ColorChannel::Red),
+        value.0,
+        Default::default(),
+    );
     fixture.write_fader_control(
         FixtureFaderControl::ColorMixer(ColorChannel::Green),
         value.1,
+        Default::default(),
     );
-    fixture.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), value.2);
+    fixture.write_fader_control(
+        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+        value.2,
+        Default::default(),
+    );
     let result = fixture.get_dmx_values();
 
     for i in 0..count {
@@ -264,7 +282,7 @@ fn write_fader_control_should_support_fine_values(value: f64, first_bytes: u8, s
     );
     let mut fixture = create_test_fixture([mode]);
 
-    fixture.write_fader_control(FixtureFaderControl::Intensity, value);
+    fixture.write_fader_control(FixtureFaderControl::Intensity, value, Default::default());
     let result = fixture.get_dmx_values();
 
     assert_eq!(first_bytes, result[0]);
@@ -297,7 +315,7 @@ fn write_fader_control_should_support_fine_values_for_sub_fixtures(
         .sub_fixture_mut(1)
         .expect("Sub fixture with id 1 should exist");
 
-    sub_fixture.write_fader_control(FixtureFaderControl::Intensity, value);
+    sub_fixture.write_fader_control(FixtureFaderControl::Intensity, value, Default::default());
     let result = fixture.get_dmx_values();
 
     assert_eq!(first_bytes, result[0]);

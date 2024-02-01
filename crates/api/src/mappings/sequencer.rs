@@ -10,6 +10,7 @@ impl From<mizer_sequencer::Sequence> for Sequence {
             fixtures: sequence.fixtures.into_iter().map(FixtureId::from).collect(),
             wrap_around: sequence.wrap_around,
             stop_on_last_cue: sequence.stop_on_last_cue,
+            priority: FixturePriority::from(sequence.priority) as i32,
         }
     }
 }
@@ -240,6 +241,36 @@ impl From<mizer_sequencer::CueEffect> for CueEffect {
                 .map(FixtureId::from)
                 .collect(),
             effect_rate: None,
+        }
+    }
+}
+
+impl From<mizer_fixtures::FixturePriority> for FixturePriority {
+    fn from(priority: mizer_fixtures::FixturePriority) -> Self {
+        use mizer_fixtures::LTPPriority::*;
+
+        match priority {
+            mizer_fixtures::FixturePriority::HTP => Self::PriorityHtp,
+            mizer_fixtures::FixturePriority::LTP(Highest) => Self::PriorityLtpHighest,
+            mizer_fixtures::FixturePriority::LTP(High) => Self::PriorityLtpHigh,
+            mizer_fixtures::FixturePriority::LTP(Normal) => Self::PriorityLtpNormal,
+            mizer_fixtures::FixturePriority::LTP(Low) => Self::PriorityLtpLow,
+            mizer_fixtures::FixturePriority::LTP(Lowest) => Self::PriorityLtpLowest,
+        }
+    }
+}
+
+impl From<FixturePriority> for mizer_fixtures::FixturePriority {
+    fn from(priority: FixturePriority) -> Self {
+        use mizer_fixtures::LTPPriority::*;
+
+        match priority {
+            FixturePriority::PriorityHtp => Self::HTP,
+            FixturePriority::PriorityLtpHighest => Self::LTP(Highest),
+            FixturePriority::PriorityLtpHigh => Self::LTP(High),
+            FixturePriority::PriorityLtpNormal => Self::LTP(Normal),
+            FixturePriority::PriorityLtpLow => Self::LTP(Low),
+            FixturePriority::PriorityLtpLowest => Self::LTP(Lowest),
         }
     }
 }

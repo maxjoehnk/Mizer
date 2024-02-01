@@ -7,6 +7,7 @@ use std::collections::HashMap;
 pub(crate) fn write_ports(
     ports: HashMap<PortId, PortMetadata>,
     context: &impl NodeContext,
+    send_zero: bool,
     mut write_fader_control: impl FnMut(FixtureFaderControl, f64),
 ) {
     for port in context.input_ports() {
@@ -30,6 +31,11 @@ pub(crate) fn write_ports(
                 }
                 PortType::Single => {
                     if let Some(value) = context.read_port(port.clone()) {
+                        let is_zero = value < f64::EPSILON && value > -f64::EPSILON;
+                        dbg!((value, is_zero));
+                        if is_zero && !send_zero {
+                            continue;
+                        }
                         let control = FixtureControl::from(port.as_str());
                         write_fader_control(control.try_into().unwrap(), value);
                     }

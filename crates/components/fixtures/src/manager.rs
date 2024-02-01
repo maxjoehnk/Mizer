@@ -6,15 +6,15 @@ use itertools::Itertools;
 
 use mizer_protocol_dmx::DmxConnectionManager;
 
+use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
 };
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{
-    GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
+    GenericPreset, Group, Position, Preset, PresetId, Presets, PresetType, Programmer,
 };
-use crate::{FixtureId, FixtureStates, GroupId};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -306,18 +306,19 @@ impl FixtureManager {
         fixture_id: FixtureId,
         control: FixtureFaderControl,
         value: f64,
+        priority: FixturePriority,
     ) {
         profiling::scope!("FixtureManager::write_fixture_control");
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
-                    fixture.write_fader_control(control, value);
+                    fixture.write_fader_control(control, value, priority);
                 }
             }
             FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
-                        sub_fixture.write_fader_control(control, value);
+                        sub_fixture.write_fader_control(control, value, priority);
                     }
                 }
             }
@@ -366,10 +367,16 @@ impl FixtureManager {
         }
     }
 
-    pub fn write_group_control(&self, group_id: GroupId, control: FixtureFaderControl, value: f64) {
+    pub fn write_group_control(
+        &self,
+        group_id: GroupId,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    ) {
         if let Some(group) = self.groups.get(&group_id) {
             for fixture_id in &group.fixtures {
-                self.write_fixture_control(*fixture_id, control.clone(), value);
+                self.write_fixture_control(*fixture_id, control.clone(), value, priority);
             }
         }
     }

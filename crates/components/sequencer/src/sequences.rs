@@ -3,7 +3,7 @@ use std::ops::Deref;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::FixtureId;
+use mizer_fixtures::{FixtureId, FixturePriority};
 use mizer_module::ClockFrame;
 
 use crate::contracts::*;
@@ -23,6 +23,8 @@ pub struct Sequence {
     /// Auto stop after last cue
     #[serde(default)]
     pub stop_on_last_cue: bool,
+    #[serde(default)]
+    pub priority: FixturePriority,
 }
 
 #[cfg(test)]
@@ -41,6 +43,7 @@ impl Sequence {
             fixtures: Default::default(),
             wrap_around: false,
             stop_on_last_cue: false,
+            priority: FixturePriority::default(),
         }
     }
 
@@ -71,7 +74,12 @@ impl Sequence {
         for control in &cue.controls {
             for (fixture_id, value) in control.values(cue, state) {
                 if let Some(value) = value {
-                    fixture_controller.write(fixture_id, control.control.clone(), value);
+                    fixture_controller.write(
+                        fixture_id,
+                        control.control.clone(),
+                        value,
+                        self.priority,
+                    );
                     state.set_fixture_value(fixture_id, control.control.clone(), value);
                 }
             }
@@ -87,6 +95,7 @@ impl Sequence {
                 effect.fixtures.deref().clone(),
                 state.rate,
                 effect.effect_offset,
+                self.priority,
             ) {
                 state.running_effects.insert(effect.clone(), id);
             }

@@ -16,7 +16,7 @@ pub(crate) trait FixtureController {
 impl FixtureController for Arc<DashMap<u32, Fixture>> {
     fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64) {
         act_on_fixture(fixture_id, self, |fixture| {
-            fixture.write_fader_control(control, value)
+            fixture.write_fader_control(control, value, Default::default())
         });
     }
 

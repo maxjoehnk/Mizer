@@ -6,6 +6,7 @@ use mizer_protocol_dmx::DmxOutput;
 
 use crate::color_mixer::update_color_mixer;
 use crate::definition::*;
+pub use crate::priority::*;
 pub use crate::sub_fixture::*;
 
 const U24_MAX: u32 = 16_777_215;
@@ -23,8 +24,57 @@ pub struct Fixture {
     pub channel: u16,
     pub output: Option<String>,
     /// Contains values for all dmx channels including sub-fixtures
-    pub channel_values: HashMap<String, f64>,
+    pub(crate) channel_values: ChannelValues,
     pub configuration: FixtureConfiguration,
+}
+
+#[derive(Debug, Default, Clone)]
+pub(crate) struct ChannelValues {
+    values: HashMap<String, ChannelValue>,
+}
+
+#[derive(Default, Debug, Clone, PartialEq)]
+pub(crate) struct ChannelValue {
+    values: Vec<(FixturePriority, f64)>,
+}
+
+impl ChannelValue {
+    pub fn insert(&mut self, value: f64, priority: FixturePriority) {
+        self.values.push((priority, value));
+    }
+
+    pub fn get(&self) -> Option<f64> {
+        // TODO: find highest htp value before ltp values
+        self.values
+            .iter()
+            .max_by_key(|(priority, _)| *priority)
+            .map(|(_, value)| *value)
+    }
+
+    pub fn clear(&mut self) {
+        self.values.clear();
+    }
+}
+
+impl ChannelValues {
+    pub fn insert(&mut self, channel: String, value: f64, priority: FixturePriority) {
+        let values = self.values.entry(channel).or_default();
+        values.insert(value, priority);
+    }
+
+    pub fn get(&self, channel: &str) -> Option<f64> {
+        self.values.get(channel).and_then(|values| values.get())
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = (&str, f64)> {
+        self.values
+            .iter()
+            .filter_map(|(channel, values)| values.get().map(|value| (channel.as_str(), value)))
+    }
+
+    pub fn clear(&mut self) {
+        self.values.clear();
+    }
 }
 
 #[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
@@ -80,9 +130,18 @@ impl Fixture {
     }
 
     pub fn write<S: Into<String>>(&mut self, name: S, value: f64) {
+        self.write_priority(name, value, Default::default());
+    }
+
+    pub fn write_priority<S: Into<String>>(
+        &mut self,
+        name: S,
+        value: f64,
+        priority: FixturePriority,
+    ) {
         let name = name.into();
-        log::trace!("write {} -> {}", name, value);
-        self.channel_values.insert(name, value);
+        log::trace!("write {name} -> {value} ({priority:?})");
+        self.channel_values.insert(name, value, priority);
     }
 
     pub fn sub_fixture(&self, id: u32) -> Option<SubFixture> {
@@ -120,18 +179,21 @@ impl Fixture {
     }
 
     pub(crate) fn set_to_default(&mut self) {
+        self.channel_values.clear();
         for channel in self.current_mode.get_channels() {
-            self.channel_values.insert(channel.name.clone(), 0f64);
+            self.channel_values
+                .insert(channel.name.clone(), 0f64, FixturePriority::LOWEST);
         }
         if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
+            mixer.clear();
             if mixer.virtual_dimmer().is_some() {
-                mixer.set_virtual_dimmer(0f64);
+                mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST);
             }
         }
         for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
             if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
                 if mixer.virtual_dimmer().is_some() {
-                    mixer.set_virtual_dimmer(0f64);
+                    mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST);
                 }
             }
         }
@@ -157,10 +219,10 @@ impl Fixture {
                 match channel.resolution {
                     ChannelResolution::Coarse(coarse) => {
                         let channel = base_channel + coarse as usize;
-                        buffer[channel] = convert_value(*value);
+                        buffer[channel] = convert_value(value);
                     }
                     ChannelResolution::Fine(coarse, fine) => {
-                        let value = convert_value_16bit(*value);
+                        let value = convert_value_16bit(value);
                         let coarse_value = (value >> 8) & 0xff;
                         #[allow(clippy::identity_op)]
                         let fine_value = (value >> 0) & 0xff;
@@ -170,7 +232,7 @@ impl Fixture {
                         buffer[fine_channel] = fine_value as u8;
                     }
                     ChannelResolution::Finest(coarse, fine, finest) => {
-                        let value = convert_value_24bit(*value);
+                        let value = convert_value_24bit(value);
                         let coarse_value = (value >> 16) & 0xff;
                         let fine_value = (value >> 8) & 0xff;
                         #[allow(clippy::identity_op)]
@@ -191,7 +253,7 @@ impl Fixture {
 
     fn update_color_mixer(&mut self) {
         update_color_mixer(
-            self.current_mode.color_mixer,
+            self.current_mode.color_mixer.clone(),
             self.current_mode.controls.color_mixer.clone(),
             |channel, value| self.write(channel, value),
         );
@@ -199,7 +261,12 @@ impl Fixture {
 }
 
 impl IFixtureMut for Fixture {
-    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+    fn write_fader_control(
+        &mut self,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    ) {
         profiling::scope!("Fixture::write_fader_control");
         let value = self.configuration.adapt(&control, value);
         match self.current_mode.controls.get_channel(&control) {
@@ -207,15 +274,15 @@ impl IFixtureMut for Fixture {
                 if let FixtureFaderControl::ColorMixer(color_channel) = control {
                     if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
                         match color_channel {
-                            ColorChannel::Red => color_mixer.set_red(value),
-                            ColorChannel::Green => color_mixer.set_green(value),
-                            ColorChannel::Blue => color_mixer.set_blue(value),
+                            ColorChannel::Red => color_mixer.set_red(value, priority),
+                            ColorChannel::Green => color_mixer.set_green(value, priority),
+                            ColorChannel::Blue => color_mixer.set_blue(value, priority),
                         }
                     }
                     self.update_color_mixer();
                 } else {
                     let channel = channel.to_string();
-                    self.write(channel, value)
+                    self.write_priority(channel, value, priority)
                 }
             }
             Some(FixtureControlChannel::Delegate) => {
@@ -225,7 +292,7 @@ impl IFixtureMut for Fixture {
                         fixture: self,
                         definition,
                     };
-                    fixture.write_fader_control(control.clone(), value);
+                    fixture.write_fader_control(control.clone(), value, priority);
                 }
             }
             Some(FixtureControlChannel::VirtualDimmer) => {
@@ -234,7 +301,7 @@ impl IFixtureMut for Fixture {
                     "Trying to write non intensity channel to virtual dimmer"
                 );
                 if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
-                    color_mixer.set_virtual_dimmer(value);
+                    color_mixer.set_virtual_dimmer(value, priority);
                 }
                 self.update_color_mixer();
             }
@@ -247,7 +314,7 @@ impl IFixture for Fixture {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         profiling::scope!("Fixture::read_control");
         if let FixtureFaderControl::ColorMixer(channel) = control {
-            let color_mixer = self.current_mode.color_mixer?;
+            let color_mixer = self.current_mode.color_mixer.as_ref()?;
             let rgb = color_mixer.rgb();
 
             return match channel {
@@ -260,11 +327,11 @@ impl IFixture for Fixture {
             Some(FixtureControlChannel::Channel(ref channel)) => self
                 .channel_values
                 .get(channel)
-                .copied()
                 .map(|value| self.configuration.adapt(&control, value)),
             Some(FixtureControlChannel::VirtualDimmer) => self
                 .current_mode
                 .color_mixer
+                .as_ref()
                 .and_then(|mixer| mixer.virtual_dimmer()),
             _ => None,
         }
@@ -280,12 +347,30 @@ pub trait IFixture {
 }
 
 pub trait IFixtureMut: IFixture {
-    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64);
+    fn write_fader_control(
+        &mut self,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    );
+
     fn highlight(&mut self) {
-        self.write_fader_control(FixtureFaderControl::Intensity, 1f64);
-        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), 1f64);
-        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Green), 1f64);
-        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), 1f64);
+        self.write_fader_control(FixtureFaderControl::Intensity, 1f64, FixturePriority::HTP);
+        self.write_fader_control(
+            FixtureFaderControl::ColorMixer(ColorChannel::Red),
+            1f64,
+            FixturePriority::HTP,
+        );
+        self.write_fader_control(
+            FixtureFaderControl::ColorMixer(ColorChannel::Green),
+            1f64,
+            FixturePriority::HTP,
+        );
+        self.write_fader_control(
+            FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+            1f64,
+            FixturePriority::HTP,
+        );
     }
 }
 
@@ -378,6 +463,7 @@ mod tests {
 
     use crate::definition::FixtureFaderControl;
     use crate::fixture::FixtureConfiguration;
+    use crate::LTPPriority;
 
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
 
@@ -447,5 +533,24 @@ mod tests {
         let result = config.adapt(&control, 1.0);
 
         assert_eq!(1.0, result);
+    }
+
+    #[test_case(LTPPriority::Lowest, 0.5, LTPPriority::High, 1.0, 1.0)]
+    #[test_case(LTPPriority::Normal, 0.5, LTPPriority::Low, 1.0, 0.5)]
+    #[test_case(LTPPriority::Low, 1.25, LTPPriority::High, 0.75, 0.75)]
+    fn channel_value_should_return_value_with_highest_priority(
+        level_a: LTPPriority,
+        value_a: f64,
+        level_b: LTPPriority,
+        value_b: f64,
+        expected: f64,
+    ) {
+        let mut channel_value = super::ChannelValue::default();
+        channel_value.insert(value_a, level_a.into());
+        channel_value.insert(value_b, level_b.into());
+
+        let result = channel_value.get();
+
+        assert_eq!(expected, result.unwrap());
     }
 }

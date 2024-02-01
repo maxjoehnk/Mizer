@@ -1,9 +1,12 @@
-use crate::{Effect, SequencerTime, Spline};
+use std::collections::HashMap;
+
 use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
 use mizer_module::ClockFrame;
-use std::collections::HashMap;
+
+use crate::{Effect, SequencerTime, Spline};
 
 #[derive(Debug)]
 pub(crate) struct EffectInstance {
@@ -14,6 +17,7 @@ pub(crate) struct EffectInstance {
     splines: HashMap<FixtureFaderControl, Spline>,
     pub rate: f64,
     pub(crate) fixture_offset: Option<SequencerTime>,
+    pub priority: FixturePriority,
 }
 
 impl EffectInstance {
@@ -22,6 +26,7 @@ impl EffectInstance {
         fixtures: FixtureSelection,
         rate: f64,
         fixture_offset: Option<SequencerTime>,
+        priority: FixturePriority,
     ) -> Self {
         Self {
             effect_id: effect.id,
@@ -31,6 +36,7 @@ impl EffectInstance {
             splines: effect.build_splines(),
             rate,
             fixture_offset,
+            priority,
         }
     }
 
@@ -59,7 +65,12 @@ impl EffectInstance {
                 if let Some(value) = spline.sample(group_frame) {
                     let values = value.fixture_values(group_count);
                     for id in ids {
-                        fixture_manager.write_fixture_control(id, control.clone(), values[i]);
+                        fixture_manager.write_fixture_control(
+                            id,
+                            control.clone(),
+                            values[i],
+                            self.priority,
+                        );
                     }
                 } else {
                     println!("no sample");

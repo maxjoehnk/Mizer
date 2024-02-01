@@ -68,6 +68,11 @@ message SequenceStopOnLastCueRequest {
   bool stop_on_last_cue = 2;
 }
 
+message SequencePriorityRequest {
+  uint32 sequence = 1;
+  FixturePriority priority = 2;
+}
+
 message SequenceNameRequest {
   uint32 sequence = 1;
   string name = 2;
@@ -84,6 +89,7 @@ message Sequence {
   repeated mizer.fixtures.FixtureId fixtures = 4;
   bool wrap_around = 5;
   bool stop_on_last_cue = 6;
+  FixturePriority priority = 7;
 }
 
 message Cue {
@@ -121,7 +127,6 @@ message CueTrigger {
     BEATS = 3;
     TIMECODE = 4;
   }
-
 }
 
 message CueControl {
@@ -147,7 +152,6 @@ message CueControl {
     GENERIC = 14;
   }
 }
-
 
 message CueValue {
   oneof value {
@@ -179,4 +183,13 @@ message CueTime {
 message CueTimerRange {
   CueTime from = 1;
   CueTime to = 2;
+}
+
+enum FixturePriority {
+  PRIORITY_HTP = 0;
+  PRIORITY_LTP_HIGHEST = 1;
+  PRIORITY_LTP_HIGH = 2;
+  PRIORITY_LTP_NORMAL = 3;
+  PRIORITY_LTP_LOW = 4;
+  PRIORITY_LTP_LOWEST = 5;
 }

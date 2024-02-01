@@ -1,21 +1,23 @@
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
-use super::instance::EffectInstance;
-use super::*;
 use itertools::Itertools;
+use plotters::coord::Shift;
+use plotters::prelude::*;
+
 use mizer_fixtures::definition::{
     AxisGroup, ChannelResolution, FixtureChannelDefinition, FixtureControls, FixtureDefinition,
     FixtureFaderControl, FixtureMode,
 };
 use mizer_fixtures::fixture::IFixture;
-use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureId;
+use mizer_fixtures::manager::FixtureManager;
 use mizer_util::clock::{Clock, TestClock};
-use plotters::coord::Shift;
-use plotters::prelude::*;
-use std::collections::HashMap;
+
+use super::*;
+use super::instance::EffectInstance;
 
 const FRAMES_PER_STEP: usize = 60;
 
@@ -53,6 +55,7 @@ fn run_effect(
             .into(),
         1f64,
         None,
+        Default::default(),
     );
     let frames = effect
         .channels

@@ -93,6 +93,13 @@ class UpdateStopOnLastCue extends SequencerCommand {
   UpdateStopOnLastCue({required this.sequence, required this.stopOnLastCue});
 }
 
+class UpdatePriority extends SequencerCommand {
+  final int sequence;
+  final FixturePriority priority;
+
+  UpdatePriority({required this.sequence, required this.priority});
+}
+
 class SelectSequence extends SequencerCommand {
   final int sequence;
 
@@ -153,6 +160,7 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     on<UpdateCueDelay>((event, emit) async => emit(await _updateCueDelayTime(event)));
     on<UpdateWrapAround>((event, emit) async => emit(await _updateSequenceWrapAround(event)));
     on<UpdateStopOnLastCue>((event, emit) async => emit(await _updateSequenceStopOnLastCue(event)));
+    on<UpdatePriority>((event, emit) async => emit(await _updatePriority(event)));
     on<UpdateSequenceName>((event, emit) async => emit(await _updateSequenceName(event)));
     on<SelectSequence>((event, emit) => emit(_selectSequence(event)));
     on<SelectCue>((event, emit) => emit(_selectCue(event)));
@@ -239,6 +247,15 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     log("update sequence stop on last cue ${event.sequence} ${event.stopOnLastCue}",
         name: "SequencerBloc");
     var sequences = await api.updateStopOnLastCue(event.sequence, event.stopOnLastCue);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updatePriority(UpdatePriority event) async {
+    log("update sequence priority ${event.sequence} ${event.priority}",
+        name: "SequencerBloc");
+    var sequences = await api.updatePriority(event.sequence, event.priority);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);

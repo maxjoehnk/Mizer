@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::fixture::Fixture;
 pub use crate::module::*;
+pub use crate::priority::*;
 use crate::programmer::Color;
 
 mod contracts;
@@ -19,6 +20,7 @@ mod sub_fixture;
 // TODO: should probably find a better name
 mod color_mixer;
 mod module;
+mod priority;
 pub mod programmer;
 pub mod selection;
 

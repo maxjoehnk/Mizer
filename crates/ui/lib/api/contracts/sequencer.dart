@@ -28,6 +28,7 @@ abstract class SequencerApi {
   Future<Sequences> updateWrapAround(int sequence, bool wrapAround);
   Future<Sequences> updateStopOnLastCue(int sequence, bool stopOnLastCue);
   Future<Sequences> updateSequenceName(int sequence, String name);
+  Future<Sequences> updatePriority(int sequence, FixturePriority priority);
 
   Future<SequencerPointer?> getSequencerPointer();
 }

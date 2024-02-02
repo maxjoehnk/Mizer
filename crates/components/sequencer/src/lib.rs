@@ -1,8 +1,8 @@
 pub use self::cue::*;
 pub use self::effects::*;
 pub use self::module::*;
-pub use self::sequencer::{Sequencer, SequencerView, SequenceView};
-pub use self::sequences::*;
+pub use self::sequence::*;
+pub use self::sequencer::{SequenceView, Sequencer, SequencerView};
 pub use self::value::*;
 
 mod contracts;
@@ -10,8 +10,8 @@ mod cue;
 pub mod effects;
 mod module;
 mod processor;
+mod sequence;
 mod sequencer;
-mod sequences;
 mod state;
 mod value;
 
@@ -26,9 +26,9 @@ mod tests {
     use mizer_fixtures::FixtureId;
     use mizer_module::ClockFrame;
 
-    use crate::{Cue, CueControl, EffectEngine, Sequence, SequencerTime, SequencerValue};
     use crate::contracts::*;
     use crate::state::SequenceState;
+    use crate::{Cue, CueControl, EffectEngine, Sequence, SequencerTime, SequencerValue};
 
     #[test_case(FixtureId::Fixture(1), 1f64, FixtureFaderControl::Intensity)]
     #[test_case(FixtureId::SubFixture(1, 1), 1f64, FixtureFaderControl::Shutter)]

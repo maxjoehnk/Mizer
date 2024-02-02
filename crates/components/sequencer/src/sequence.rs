@@ -68,8 +68,12 @@ impl Sequence {
         if state.get_next_cue(self).is_none() && state.is_cue_finished() && self.stop_on_last_cue {
             state.go(self, clock, effect_engine, frame);
         }
-        // TODO: the sequence state should ensure active_cue_index is always in the proper range
-        let cue = self.current_cue(state);
+        if state.active_cue_index >= self.cues.len() {
+            state.go(self, clock, effect_engine, frame);
+        }
+        let Some(cue) = self.current_cue(state) else {
+            return;
+        };
         cue.update_state(self, state, clock, frame);
         for control in &cue.controls {
             for (fixture_id, value) in control.values(cue, state) {
@@ -102,8 +106,8 @@ impl Sequence {
         }
     }
 
-    fn current_cue(&self, state: &mut SequenceState) -> &Cue {
-        &self.cues[state.active_cue_index]
+    fn current_cue(&self, state: &mut SequenceState) -> Option<&Cue> {
+        self.cues.get(state.active_cue_index)
     }
 
     /// Returns cue id

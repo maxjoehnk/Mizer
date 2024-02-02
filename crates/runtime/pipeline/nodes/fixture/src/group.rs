@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::manager::FixtureManager;
@@ -99,8 +101,6 @@ impl PipelineNode for GroupNode {
             fixture_manager
                 .get_group_fixture_controls(self.id)
                 .get_ports()
-                .into_iter()
-                .collect()
         } else {
             Default::default()
         };
@@ -161,7 +161,9 @@ impl GroupNode {
     fn write_to_fixtures(&self, context: &impl NodeContext, fixture_manager: &FixtureManager) {
         let ports = fixture_manager
             .get_group_fixture_controls(self.id)
-            .get_ports();
+            .get_ports()
+            .into_iter()
+            .collect::<HashMap<_, _>>();
 
         write_ports(ports, context, self.send_zero, |control, value| {
             fixture_manager.write_group_control(self.id, control, value, self.priority)

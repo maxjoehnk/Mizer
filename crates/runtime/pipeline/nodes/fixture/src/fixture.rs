@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::fixture::IFixtureMut;
@@ -102,6 +104,8 @@ impl PipelineNode for FixtureNode {
                     .controls
                     .controls()
                     .get_ports()
+                    .into_iter()
+                    .collect::<HashMap<_, _>>()
                     .remove(port)
             })
     }
@@ -110,15 +114,7 @@ impl PipelineNode for FixtureNode {
         self.fixture_manager
             .as_ref()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
-            .map(|fixture| {
-                fixture
-                    .current_mode
-                    .controls
-                    .controls()
-                    .get_ports()
-                    .into_iter()
-                    .collect()
-            })
+            .map(|fixture| fixture.current_mode.controls.controls().get_ports())
             .unwrap_or_default()
     }
 
@@ -137,7 +133,13 @@ impl ProcessingNode for FixtureNode {
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(manager) = context.inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
-                let ports = fixture.current_mode.controls.controls().get_ports();
+                let ports = fixture
+                    .current_mode
+                    .controls
+                    .controls()
+                    .get_ports()
+                    .into_iter()
+                    .collect::<HashMap<_, _>>();
                 write_ports(ports, context, self.send_zero, |control, value| {
                     fixture.write_fader_control(control, value, self.priority)
                 });

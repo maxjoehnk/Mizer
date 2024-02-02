@@ -1,8 +1,9 @@
+use std::collections::HashMap;
+
 use mizer_fixtures::definition::{
     ColorChannel, FixtureControl, FixtureControlType, FixtureFaderControl,
 };
 use mizer_node::*;
-use std::collections::HashMap;
 
 pub(crate) fn write_ports(
     ports: HashMap<PortId, PortMetadata>,
@@ -47,11 +48,11 @@ pub(crate) fn write_ports(
 }
 
 pub(crate) trait FixtureControlPorts {
-    fn get_ports(self) -> HashMap<PortId, PortMetadata>;
+    fn get_ports(self) -> Vec<(PortId, PortMetadata)>;
 }
 
 impl FixtureControlPorts for Vec<(FixtureControl, FixtureControlType)> {
-    fn get_ports(self) -> HashMap<PortId, PortMetadata> {
+    fn get_ports(self) -> Vec<(PortId, PortMetadata)> {
         self.into_iter()
             .map(|(name, control_type)| {
                 input_port!(

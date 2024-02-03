@@ -44,6 +44,10 @@ impl ChannelValue {
     }
 
     pub fn get(&self) -> Option<f64> {
+        profiling::scope!(
+            "ChannelValue::get",
+            &format!("values: {}", self.values.len())
+        );
         // TODO: find highest htp value before ltp values
         self.values
             .iter()
@@ -192,6 +196,7 @@ impl Fixture {
         }
         for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
             if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
+                mixer.clear();
                 if mixer.virtual_dimmer().is_some() {
                     mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST);
                 }
@@ -252,6 +257,7 @@ impl Fixture {
     }
 
     fn update_color_mixer(&mut self) {
+        profiling::scope!("Fixture::update_color_mixer");
         update_color_mixer(
             self.current_mode.color_mixer.clone(),
             self.current_mode.controls.color_mixer.clone(),

@@ -1,9 +1,9 @@
-use crate::{Fixture, FixturePriority};
-use crate::color_mixer::{ColorMixer, update_color_mixer};
+use crate::color_mixer::{update_color_mixer, ColorMixer};
 use crate::definition::{
     ColorChannel, FixtureFaderControl, SubFixtureControlChannel, SubFixtureDefinition,
 };
 use crate::fixture::{ChannelValues, IFixture, IFixtureMut};
+use crate::{Fixture, FixturePriority};
 
 #[derive(Debug)]
 pub struct SubFixtureMut<'a> {
@@ -13,6 +13,7 @@ pub struct SubFixtureMut<'a> {
 
 impl<'a> SubFixtureMut<'a> {
     fn update_color_mixer(&mut self) {
+        profiling::scope!("SubFixture::update_color_mixer");
         update_color_mixer(
             self.color_mixer(),
             self.definition.controls.color_mixer.clone(),

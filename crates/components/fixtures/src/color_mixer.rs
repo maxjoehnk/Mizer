@@ -132,6 +132,7 @@ pub struct Cmy {
     pub yellow: f64,
 }
 
+#[profiling::function]
 pub(crate) fn update_color_mixer<TChannel: IChannelType>(
     color_mixer: Option<ColorMixer>,
     color_group: Option<ColorGroup<TChannel>>,

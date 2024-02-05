@@ -47,7 +47,7 @@ itertools = "0.12"
 prost = "0.12"
 prost-types = "0.12"
 tonic = "0.10"
-tokio = "1.35"
+tokio = "1.36"
 
 [build-dependencies]
 tonic-build = "0.10"

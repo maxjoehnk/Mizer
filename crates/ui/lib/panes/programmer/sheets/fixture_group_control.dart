@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:from_css_color/from_css_color.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/state/presets_bloc.dart';
+import 'package:mizer/views/presets/preset_button.dart';
+import 'package:mizer/views/presets/preset_group.dart';
 import 'package:mizer/widgets/inputs/color.dart';
-import 'package:mizer/widgets/inputs/decoration.dart';
-import 'package:mizer/widgets/inputs/fader.dart';
+import 'package:mizer/widgets/inputs/encoder.dart';
 import 'package:provider/provider.dart';
 
 class Control {
@@ -21,9 +23,11 @@ class Control {
   final GenericChannel? generic;
   final ProgrammerChannel? channel;
   final List<ControlPreset>? presets;
+  final FixtureControl control;
 
   Control(this.label,
       {required this.update,
+      required this.control,
       this.fader,
       this.generic,
       this.colorMixer,
@@ -61,7 +65,7 @@ class ControlPreset {
   ControlPreset(this.value, {required this.name, this.image, List<String>? colors}) {
     if (colors != null) {
       this.colors = colors.map(fromCssColor).toList();
-    }else {
+    } else {
       this.colors = null;
     }
   }
@@ -90,38 +94,76 @@ class FixtureGroupControl extends StatelessWidget {
   Widget build(BuildContext context) {
     ProgrammerApi api = context.read();
     Widget widget = Container();
+    var presets = getPresets(context);
     if (control.hasFader || control.hasGeneric) {
-      double? generic = control.channel?.hasGeneric() == true ? control.channel?.generic.value : null;
+      double? generic =
+          control.channel?.hasGeneric() == true ? control.channel?.generic.value : null;
       widget = Container(
-          width: 64,
-          child: FaderInput(
-              // highlight: modifiedChannels.contains(group.name),
+          width: 150,
+          child: EncoderInput(
               label: control.label,
+              globalPresets: presets,
+              controlPresets: control.presets,
               value: control.channel?.fader ?? generic ?? 0,
               onValue: (v) => api.writeControl(control.update(v))));
     }
     if (control.hasColor) {
-      widget = ColorInput(
-        label: control.label,
-        value: ColorValue(
-            red: control.channel?.color.red ?? 0,
-            green: control.channel?.color.green ?? 0,
-            blue: control.channel?.color.blue ?? 0),
-        onChange: (v) => api.writeControl(control.update(v)),
-      );
+      ColorMixerChannel? color = control.channel?.color;
+      widget = Row(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+            width: 150,
+            margin: const EdgeInsets.only(right: 8),
+            child: EncoderInput(
+                label: "Red",
+                globalPresets: presets,
+                controlPresets: control.presets,
+                value: color?.red ?? 0,
+                onValue: (v) => api.writeControl(control.update(
+                    ColorValue(red: v, green: color?.green ?? 0, blue: color?.blue ?? 0))))),
+        Container(
+            width: 150,
+            margin: const EdgeInsets.only(right: 8),
+            child: EncoderInput(
+                label: "Green",
+                globalPresets: presets,
+                controlPresets: control.presets,
+                value: color?.green ?? 0,
+                onValue: (v) => api.writeControl(control
+                    .update(ColorValue(red: color?.red ?? 0, green: v, blue: color?.blue ?? 0))))),
+        Container(
+            width: 150,
+            margin: const EdgeInsets.only(right: 8),
+            child: EncoderInput(
+                label: "Blue",
+                globalPresets: presets,
+                controlPresets: control.presets,
+                value: color?.blue ?? 0,
+                onValue: (v) => api.writeControl(control
+                    .update(ColorValue(red: color?.red ?? 0, green: color?.green ?? 0, blue: v))))),
+      ]);
     }
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          widget,
-          if (control.hasPresets)
-            FixtureControlPresets(control.presets!,
-                onSelect: (v) => api.writeControl(control.update(v)))
-        ],
-      ),
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 8.0),
+      child: widget,
     );
+  }
+
+  List<Preset>? getPresets(BuildContext context) {
+    PresetsBloc presets = context.read();
+    if (control.control == FixtureControl.INTENSITY) {
+      return presets.state.getByPresetType(PresetType.Intensity);
+    }
+    if (control.control == FixtureControl.SHUTTER) {
+      return presets.state.getByPresetType(PresetType.Shutter);
+    }
+    if (control.control == FixtureControl.COLOR_MIXER) {
+      return presets.state.getByPresetType(PresetType.Color);
+    }
+    if (control.control == FixtureControl.PAN || control.control == FixtureControl.TILT) {
+      return presets.state.getByPresetType(PresetType.Position);
+    }
+
+    return null;
   }
 }
 
@@ -133,27 +175,14 @@ class FixtureControlPresets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: GridView.count(
-        scrollDirection: Axis.horizontal,
-        crossAxisCount: 4,
-        shrinkWrap: true,
-        childAspectRatio: 1,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        children: presets
-            .map((p) => Hoverable(
-                  onTap: () => onSelect(p.value),
-                  builder: (hovered) => Container(
-                    decoration: ControlDecoration(
-                            color: hovered ? Colors.grey.shade900 : Colors.grey.shade700),
-                    padding: const EdgeInsets.all(8),
-                    child: _child(context, p),
-                  ),
-                ))
-            .toList(),
-      ),
+    return PresetButtonList(
+      children: presets
+          .map((p) => PresetButton(
+                label: p.name,
+                onTap: () => onSelect(p.value),
+                child: _child(context, p),
+              ))
+          .toList(),
     );
   }
 
@@ -172,16 +201,16 @@ class FixtureControlPresets extends StatelessWidget {
           .toList();
       var gradient = SweepGradient(colors: colors, stops: stops);
       return Container(
-          decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(4)));
+          decoration: BoxDecoration(gradient: gradient, shape: BoxShape.circle));
     }
-    return Center(child: Text(preset.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall));
+    return Container();
   }
 
   Widget _image(ControlPresetImage image) {
     if (image.raster != null) {
       return Image.memory(image.raster!);
     } else {
-      return SvgPicture.string(image.svg!);
+      return SvgPicture.string(image.svg!, color: Colors.white);
     }
   }
 }

@@ -41,10 +41,7 @@ class PopupContainer extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 color: BORDER_COLOR,
                 child: Text(title, textAlign: TextAlign.center)),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: child,
-            ),
+            _child,
             if (actions != null) Container(
               padding: const EdgeInsets.all(8),
               child: Row(
@@ -55,6 +52,17 @@ class PopupContainer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget get _child {
+    var innerChild = Container(
+      padding: const EdgeInsets.all(8.0),
+      child: child,
+    );
+    if (height != null) {
+      return Expanded(child: innerChild);
+    }
+    return innerChild;
   }
 
   Widget _action(PopupAction action) {

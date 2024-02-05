@@ -27,11 +27,11 @@ import 'actions/actions.dart';
 import 'panes/programmer/programmer_view.dart';
 import 'panes/selection/selection_pane.dart';
 
-const double SHEET_SIZE = 320;
-const double SHEET_PADDING = 16;
+const double SHEET_SIZE = 150;
+const double SHEET_PADDING = 0;
 const double TAB_STRIP_HEIGHT = 32;
 const double PROGRAMMER_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
-const double SELECTION_SHEET_CONTAINER_HEIGHT = 196;
+const double SELECTION_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
 List<Route> routes = [
   Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
@@ -60,7 +60,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget? _currentWidget;
-  bool _showProgrammer = false;
+  bool _showProgrammer = true;
   bool _showSelection = false;
 
   _HomeState() {

@@ -44,6 +44,7 @@ class DimmerSheet extends StatelessWidget {
         .map((control) {
           var channel = channels.firstWhereOrNull((channel) => channel.control == control.control);
           return Control(NAMES[control.control],
+            control: control.control,
             fader: control.fader,
             channel: channel,
             update: (v) => WriteControlRequest(

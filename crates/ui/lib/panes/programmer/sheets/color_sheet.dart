@@ -38,6 +38,7 @@ class ColorSheet extends StatelessWidget {
         .map((control) {
       if (control.control == FixtureControl.COLOR_MIXER) {
         return Control("Color",
+            control: control.control,
             colorMixer: control.colorMixer,
             channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) {
@@ -50,6 +51,7 @@ class ColorSheet extends StatelessWidget {
       }
       if (control.control == FixtureControl.COLOR_WHEEL) {
         return Control("Color Wheel",
+            control: control.control,
             fader: control.fader,
             presets: control.colorWheel.colors
                 .map((color) => ControlPreset(color.value,

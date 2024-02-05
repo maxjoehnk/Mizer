@@ -37,11 +37,13 @@ class GoboSheet extends StatelessWidget {
     if (fixtures.isEmpty) {
       return [];
     }
-    return fixtures.first.controls
-        .where((e) => CONTROLS.contains(e.control))
-        .map((control) => Control(NAMES[control.control],
+    return fixtures.first.controls.where((e) => CONTROLS.contains(e.control)).map((control) =>
+        Control(NAMES[control.control],
             fader: control.fader,
-            presets: control.gobo.gobos.map((gobo) => ControlPreset(gobo.value, name: gobo.name, image: _goboImage(gobo))).toList(),
+            control: control.control,
+            presets: control.gobo.gobos
+                .map((gobo) => ControlPreset(gobo.value, name: gobo.name, image: _goboImage(gobo)))
+                .toList(),
             channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) => WriteControlRequest(
                   control: control.control,

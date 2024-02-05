@@ -28,8 +28,7 @@ class PositionSheet extends StatelessWidget {
       child: controls.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children:
-                  controls.map((control) => FixtureGroupControl(control)).toList())
+              children: controls.map((control) => FixtureGroupControl(control)).toList())
           : null,
     );
   }
@@ -41,6 +40,7 @@ class PositionSheet extends StatelessWidget {
     return fixtures.first.controls
         .where((e) => CONTROLS.contains(e.control))
         .map((control) => Control(NAMES[control.control],
+            control: control.control,
             fader: control.fader,
             channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) => WriteControlRequest(

@@ -10,46 +10,43 @@ import 'preset_group.dart';
 class PresetsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EffectsBloc, EffectState>(builder: (context, effects) {
-      return BlocBuilder<PresetsBloc, PresetsState>(builder: (context, state) {
-        return Column(children: [
-          PresetGroup(
-              label: "Groups",
-              children: state.groups.map((group) => GroupButton(group: group)).toList()),
-          PresetGroup(label: "Dimmer", children: [
-            ...state.presets.intensities.map((preset) =>
-                ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
-            ...effects.getEffectsForControls([EffectControl.INTENSITY]).map(
-                (effect) => EffectButton(effect: effect))
-          ]),
-          PresetGroup(label: "Shutter", children: [
-            ...state.presets.shutters.map((preset) =>
-                ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset)),
-            ...effects.getEffectsForControls([EffectControl.SHUTTER]).map(
-                (effect) => EffectButton(effect: effect))
-          ]),
-          PresetGroup(label: "Color", children: [
-            ...state.presets.colors.map((preset) => ColorButton(
-                color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
-                    (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
-                preset: preset)),
-            ...effects.getEffectsForControls([
-              EffectControl.COLOR_MIXER_BLUE,
-              EffectControl.COLOR_MIXER_GREEN,
-              EffectControl.COLOR_MIXER_RED,
-              EffectControl.COLOR_WHEEL
-            ]).map((effect) => EffectButton(effect: effect))
-          ]),
-          PresetGroup(label: "Position", children: [
-            ...state.presets.positions.map((preset) => PositionButton(
-                pan: preset.position.hasPan() ? preset.position.pan : null,
-                tilt: preset.position.hasTilt() ? preset.position.tilt : null,
-                preset: preset)),
-            ...effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]).map(
-                (effect) => EffectButton(effect: effect))
-          ]),
-        ]);
-      });
-    });
+    return BlocBuilder<EffectsBloc, EffectState>(
+        builder: (context, effects) => BlocBuilder<PresetsBloc, PresetsState>(
+            builder: (context, state) => Column(children: [
+                  PresetGroup(
+                      label: "Groups",
+                      child: PresetButtonList(
+                          children:
+                              state.groups.map((group) => GroupButton(group: group)).toList())),
+                  PresetGroup(
+                      label: "Dimmer",
+                      child: PresetList(
+                        presets: state.presets.intensities,
+                        effects: effects.getEffectsForControls([EffectControl.INTENSITY]),
+                      )),
+                  PresetGroup(
+                      label: "Shutter",
+                      child: PresetList(
+                        presets: state.presets.shutters,
+                        effects: effects.getEffectsForControls([EffectControl.SHUTTER]),
+                      )),
+                  PresetGroup(
+                      label: "Color",
+                      child: PresetList(
+                          presets: state.presets.colors,
+                          effects: effects.getEffectsForControls([
+                            EffectControl.COLOR_MIXER_BLUE,
+                            EffectControl.COLOR_MIXER_GREEN,
+                            EffectControl.COLOR_MIXER_RED,
+                            EffectControl.COLOR_WHEEL
+                          ]))),
+                  PresetGroup(
+                      label: "Position",
+                      child: PresetList(
+                        presets: state.presets.positions,
+                        effects:
+                            effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]),
+                      ))
+                ])));
   }
 }

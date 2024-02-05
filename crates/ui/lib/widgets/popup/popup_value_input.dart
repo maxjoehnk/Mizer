@@ -1,112 +1,17 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
-class ValueAst {
-  List<ValueAstNode> nodes;
-
-  ValueAst(this.nodes);
-
-  String toDisplay() {
-    return nodes.map((node) => node.toDisplay()).join(" ");
-  }
-
-  void push(ValueAstNode node) {
-    if (nodes.isNotEmpty && nodes.last.canJoin(node)) {
-      nodes.last.join(node);
-    } else {
-      nodes.add(node);
-    }
-  }
-
-  void clear() {
-    nodes = [];
-  }
-
-  CueValue? build() {
-    if (nodes.firstWhereOrNull((node) => node is Thru) != null && nodes.length == 3) {
-      var from = nodes[0] as Value;
-      var to = nodes[2] as Value;
-      return CueValue(range: CueValueRange(from: from.val, to: to.val));
-    } else if (nodes.length == 1) {
-      var value = nodes[0] as Value;
-      return CueValue(direct: value.val);
-    }
-
-    return null;
-  }
-}
-
-abstract class ValueAstNode {
-  String toDisplay();
-
-  bool canJoin(ValueAstNode node);
-
-  void join(covariant ValueAstNode node);
-}
-
-class Value implements ValueAstNode {
-  int? value;
-  int? fractions;
-  bool dot;
-
-  Value(this.value, {this.dot = false});
-
-  factory Value.dot() {
-    return Value(null, dot: true);
-  }
-
-  double get val {
-    return double.parse(toDisplay()) / 100.0;
-  }
-
-  @override
-  String toDisplay() {
-    return "$value${dot ? "." : ""}${fractions ?? ""}";
-  }
-
-  @override
-  bool canJoin(ValueAstNode node) {
-    return node is Value;
-  }
-
-  @override
-  void join(covariant Value node) {
-    if (node.dot) {
-      dot = true;
-    }
-    if (node.value != null) {
-      if (dot) {
-        fractions = int.parse("${fractions ?? ""}${node.value}").toInt();
-      } else {
-        value = int.parse("${value ?? ""}${node.value}").toInt();
-      }
-    }
-  }
-}
-
-class Thru implements ValueAstNode {
-  @override
-  String toDisplay() {
-    return "..";
-  }
-
-  @override
-  bool canJoin(ValueAstNode node) {
-    return false;
-  }
-
-  @override
-  void join(ValueAstNode node) {}
-}
+import 'ast.dart';
 
 class PopupValueInput extends StatefulWidget {
+  final CueValue? value;
   final void Function(CueValue)? onEnter;
+  final bool allowRange;
 
-  const PopupValueInput({this.onEnter, Key? key}) : super(key: key);
+  const PopupValueInput({this.value, this.onEnter, this.allowRange = false, Key? key}) : super(key: key);
 
   @override
   State<PopupValueInput> createState() => _PopupValueInputState();
@@ -139,7 +44,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
       LogicalKeyboardKey.digit8: (context) => _push(Value(8)),
       LogicalKeyboardKey.numpad9: (context) => _push(Value(9)),
       LogicalKeyboardKey.digit9: (context) => _push(Value(9)),
-      LogicalKeyboardKey.numpadDivide: (context) => _push(Thru()),
+      LogicalKeyboardKey.numpadDivide: (context) => widget.allowRange ? _push(Thru()) : null,
       LogicalKeyboardKey.numpadComma: (context) => _push(Value.dot()),
       LogicalKeyboardKey.comma: (context) => _push(Value.dot()),
       LogicalKeyboardKey.period: (context) => _push(Value.dot()),
@@ -149,6 +54,16 @@ class _PopupValueInputState extends State<PopupValueInput> {
       LogicalKeyboardKey.numpadEnter: _build,
       LogicalKeyboardKey.escape: (context) => Navigator.of(context).pop(),
     };
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.value != null) {
+      if (widget.value!.hasDirect()) {
+        _ast.push(Value(widget.value!.direct.toInt()));
+      }
+    }
   }
 
   @override
@@ -178,7 +93,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
             Pad("7", () => _push(Value(7))),
             Pad("8", () => _push(Value(8))),
             Pad("0", () => _push(Value(0))),
-            Pad("Thru", () => _push(Thru()), wide: true),
+            if (widget.allowRange) Pad("Thru", () => _push(Thru()), wide: true),
           ]),
           Row(children: [
             Pad("4", () => _push(Value(4))),

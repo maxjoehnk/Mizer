@@ -19,7 +19,7 @@ class EffectButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PresetButton(
+    return PresetButton.effect(
         child: Container(
           width: 48,
           height: 48,
@@ -47,7 +47,7 @@ class _GroupButtonState extends State<GroupButton>
         MenuItem(label: "Rename", action: () => _renameGroup()),
         MenuItem(label: "Delete", action: () => _deleteGroup()),
       ]),
-      child: PresetButton(
+      child: PresetButton.group(
         child: Container(
           width: 48,
           height: 48,
@@ -88,7 +88,7 @@ class ColorButton extends StatelessWidget {
         MenuItem(label: "Rename", action: () => _renamePreset(context)),
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
-      child: PresetButton(
+      child: PresetButton.preset(
           child: Container(
             width: 48,
             height: 48,
@@ -129,7 +129,7 @@ class PositionButton extends StatelessWidget {
         MenuItem(label: "Rename", action: () => _renamePreset(context)),
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
-      child: PresetButton(
+      child: PresetButton.preset(
           child: Container(
             margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
             width: pan == null ? 24 : 48,
@@ -186,93 +186,137 @@ class PositionPainter extends CustomPainter {
 class PresetButton extends StatelessWidget {
   final Widget child;
   final bool? active;
+  final String label;
   final Group? group;
   final Preset? preset;
   final Effect? effect;
+  late final void Function(BuildContext context) onTap;
 
-  PresetButton({required this.child, this.active, this.preset, this.effect, this.group, Key? key})
-      : super(key: key) {
-    assert(effect != null || preset != null || group != null);
+  PresetButton(
+      {required this.child,
+      required this.label,
+      required void Function() onTap,
+      this.active,
+      Key? key})
+      : effect = null,
+        group = null,
+        preset = null,
+        super(key: key) {
+    this.onTap = (context) => onTap();
+  }
+
+  PresetButton.preset({required this.child, required this.preset, this.active, Key? key})
+      : label = preset!.label,
+        effect = null,
+        group = null {
+    this.onTap = (BuildContext context) {
+      var programmerApi = context.read<ProgrammerApi>();
+      programmerApi.callPreset(preset!.id);
+    };
+  }
+
+  PresetButton.effect({required this.child, required this.effect, this.active, Key? key})
+      : label = effect!.name,
+        preset = null,
+        group = null {
+    this.onTap = (BuildContext context) {
+      var programmerApi = context.read<ProgrammerApi>();
+      programmerApi.callEffect(effect!.id);
+    };
+  }
+
+  PresetButton.group({required this.child, required this.group, this.active, Key? key})
+      : label = group!.name,
+        preset = null,
+        effect = null {
+    this.onTap = (BuildContext context) {
+      var programmerApi = context.read<ProgrammerApi>();
+      programmerApi.selectGroup(group!.id);
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    var programmerApi = context.read<ProgrammerApi>();
     var textTheme = Theme.of(context).textTheme;
 
-    return Hoverable(onTap: () {
-      if (preset != null) {
-        programmerApi.callPreset(preset!.id);
-      }
-      if (effect != null) {
-        programmerApi.callEffect(effect!.id);
-      }
-      if (group != null) {
-        programmerApi.selectGroup(group!.id);
-      }
-    }, builder: (hovered) {
-      return Container(
-        width: 72,
-        height: 80,
-        decoration:
-            ControlDecoration(color: hovered ? Colors.grey.shade900 : Colors.black, hover: hovered),
-        child: Stack(
-          children: [
-            if (active == true)
-              Align(
-                  child: Container(
-                    height: 30,
-                    width: 72,
-                    decoration: BoxDecoration(
-                      color: Colors.deepOrange.shade900,
-                      borderRadius: BorderRadius.circular(2),
+    return Hoverable(
+        onTap: () => this.onTap(context),
+        builder: (hovered) {
+          return Container(
+            width: 72,
+            height: 80,
+            decoration: ControlDecoration(
+                color: hovered ? Colors.grey.shade900 : Colors.black, hover: hovered),
+            child: Stack(
+              children: [
+                if (active == true)
+                  Align(
+                      child: Container(
+                        height: 30,
+                        width: 72,
+                        decoration: BoxDecoration(
+                          color: Colors.deepOrange.shade900,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 2),
+                      ),
+                      alignment: Alignment.bottomCenter),
+                Container(
+                  margin: const EdgeInsets.only(top: 4, left: 4, right: 4),
+                  alignment: Alignment.topCenter,
+                  child: Container(width: 48, height: 48, child: child),
+                ),
+                Align(
+                    child: Stack(
+                      children: [
+                        Text(label,
+                            style: textTheme.bodySmall!.copyWith(
+                              foreground: Paint()
+                                ..color = Colors.black
+                                ..strokeWidth = 3
+                                ..style = PaintingStyle.stroke,
+                            ),
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            maxLines: 2),
+                        Text(label,
+                            style: textTheme.bodySmall!,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            maxLines: 2),
+                      ],
                     ),
-                    margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 2),
-                  ),
-                  alignment: Alignment.bottomCenter),
-            Container(
-              padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
-              alignment: Alignment.topCenter,
-              child: child,
+                    alignment: Alignment.bottomCenter),
+                if (id != null)
+                  Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+              ],
             ),
-            Align(
-                child: Text(label,
-                    style: textTheme.bodySmall,
-                    overflow: TextOverflow.clip,
-                    textAlign: TextAlign.center,
-                    maxLines: 2),
-                alignment: Alignment.bottomCenter),
-            Align(child: Text(id, style: textTheme.bodySmall), alignment: Alignment.topLeft),
-          ],
-        ),
-      );
-    });
+          );
+        });
   }
 
-  String get label {
-    return group?.name ?? effect?.name ?? preset!.label;
-  }
-
-  String get id {
+  String? get id {
     if (effect != null) {
       return "E${effect!.id}";
     }
     if (group != null) {
       return "G${group!.id}";
     }
-    if (preset!.id.type == PresetId_PresetType.COLOR) {
-      return "C${preset!.id.id}";
+    if (preset != null) {
+      if (preset!.id.type == PresetId_PresetType.COLOR) {
+        return "C${preset!.id.id}";
+      }
+      if (preset!.id.type == PresetId_PresetType.INTENSITY) {
+        // Panel is actually called Dimmer
+        return "D${preset!.id.id}";
+      }
+      if (preset!.id.type == PresetId_PresetType.SHUTTER) {
+        return "S${preset!.id.id}";
+      }
+      if (preset!.id.type == PresetId_PresetType.POSITION) {
+        return "P${preset!.id.id}";
+      }
     }
-    if (preset!.id.type == PresetId_PresetType.INTENSITY) {
-      // Panel is actually called Dimmer
-      return "D${preset!.id.id}";
-    }
-    if (preset!.id.type == PresetId_PresetType.SHUTTER) {
-      return "S${preset!.id.id}";
-    }
-    if (preset!.id.type == PresetId_PresetType.POSITION) {
-      return "P${preset!.id.id}";
-    }
-    return "Missing Implementation for PresetButton Id";
+    return null;
   }
 }

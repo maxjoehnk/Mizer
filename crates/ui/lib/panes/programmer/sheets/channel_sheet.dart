@@ -32,6 +32,7 @@ class ChannelSheet extends StatelessWidget {
           channels.firstWhereOrNull((channel) => channel.generic.name == control.generic.name);
       return Control(control.generic.name,
           generic: control.generic,
+          control: control.control,
           channel: value,
           update: (v) => WriteControlRequest(
                 control: control.control,

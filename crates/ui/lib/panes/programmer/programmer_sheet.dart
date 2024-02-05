@@ -59,46 +59,55 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
         "highlight": () => _highlight(),
         "clear": () => _clear(),
       },
-      child: Panel.tabs(label: "Programmer", tabs: [
-        Tab(
-            label: "Dimmer",
-            child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(
-            label: "Position",
-            child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(
-            label: "Color",
-            child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(
-            label: "Channels",
-            child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
-        Tab(
-          label: "Effects",
-          child: EffectsSheet(effects: widget.effects),
-        )
-      ], actions: [
-        PanelActionModel(
-            hotkeyId: "highlight",
-            label: "Highlight",
-            activated: widget.highlight,
-            onClick: _highlight,
-            menu: Menu(items: [
-              MenuItem(
-                  label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
-            ])),
-        PanelActionModel(
-            hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
-        PanelActionModel(
-            hotkeyId: "clear",
-            label: "Clear",
-            onClick: () => _clear(),
-            disabled: widget.isEmpty,
-            menu: Menu(items: [
-              MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
-            ])),
-      ]),
+      child: Panel.tabs(
+        label: "Programmer",
+        tabs: [
+          Tab(
+              label: "Dimmer",
+              child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+              label: "Position",
+              child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+              label: "Gobo",
+              child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+              label: "Color",
+              child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+              label: "Beam",
+              child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+              label: "Channels",
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          Tab(
+            label: "Effects",
+            child: EffectsSheet(effects: widget.effects),
+          )
+        ],
+        actions: [
+          PanelActionModel(
+              hotkeyId: "highlight",
+              label: "Highlight",
+              activated: widget.highlight,
+              onClick: _highlight,
+              menu: Menu(items: [
+                MenuItem(
+                    label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
+              ])),
+          PanelActionModel(
+              hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
+          PanelActionModel(
+              hotkeyId: "clear",
+              label: "Clear",
+              onClick: () => _clear(),
+              disabled: widget.isEmpty,
+              menu: Menu(items: [
+                MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+              ])),
+        ],
+        padding: false,
+      ),
     );
   }
 

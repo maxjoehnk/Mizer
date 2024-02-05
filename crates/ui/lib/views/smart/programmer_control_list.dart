@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/presets/preset_group.dart';
 
 const PRESET_TYPES = {
-  FixtureControl.INTENSITY: PresetType.Dimmer,
+  FixtureControl.INTENSITY: PresetType.Intensity,
+  FixtureControl.SHUTTER: PresetType.Shutter,
   FixtureControl.COLOR_WHEEL: PresetType.Color,
   FixtureControl.COLOR_MIXER: PresetType.Color,
   FixtureControl.PAN: PresetType.Position,
@@ -33,6 +35,7 @@ class ProgrammerControlList extends StatelessWidget {
         children: controls
             .where((control) => [
                   FixtureControl.INTENSITY,
+                  FixtureControl.SHUTTER,
                   FixtureControl.COLOR_MIXER,
                   FixtureControl.COLOR_WHEEL,
                   FixtureControl.PAN,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const double screenSaveArea = 300;
+
 class MizerPopupRoute extends PopupRoute {
   final Offset position;
   final Widget? child;
@@ -19,10 +21,25 @@ class MizerPopupRoute extends PopupRoute {
   Widget buildPage(
       BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
     var theme = Theme.of(context).textTheme;
+    double? left = position.dx;
+    double? top = position.dy;
+    double? right;
+    double? bottom;
+    if (MediaQuery.of(context).size.height - screenSaveArea < position.dy) {
+      bottom = MediaQuery.of(context).size.height - position.dy;
+      top = null;
+    }
+    if (MediaQuery.of(context).size.width - screenSaveArea < position.dx) {
+      right = MediaQuery.of(context).size.width - position.dx;
+      left = null;
+    }
+
     return Stack(children: [
       Positioned(
-        top: position.dy,
-        left: position.dx,
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom,
         child: Material(textStyle: theme.bodyText2, child: child, color: Colors.transparent),
       )
     ]);

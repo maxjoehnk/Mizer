@@ -189,6 +189,9 @@ class _PanelState extends State<Panel> {
     if (widget.tabs?.isEmpty ?? true) {
       return null;
     }
+    if (activeIndex >= widget.tabs!.length) {
+      return null;
+    }
     return Padding(
       padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
       child: widget.tabs![activeIndex].child,

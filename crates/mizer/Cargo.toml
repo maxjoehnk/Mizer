@@ -1,0 +1,97 @@
+[lib]
+name = "mizer"
+path = "src/lib.rs"
+bench = false
+
+[[bin]]
+name = "mizer"
+path = "src/main.rs"
+bench = false
+
+[package]
+name = "mizer"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+license = "GNU AGPLv3"
+
+[features]
+default = ["ui", "debug-ui"]
+build-ffmpeg = ["ffmpeg-the-third/build"]
+ui = ["mizer-ui"]
+debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
+tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
+
+[dependencies]
+derive_more = "0.99"
+directories-next = "2.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-appender = "0.2"
+log = "0.4"
+anyhow = "1"
+structopt = "0.3"
+metrics = "0.22"
+mizer-media = { path = "../components/media" }
+mizer-project-files = { path = "../projects" }
+mizer-fixtures = { path = "../components/fixtures" }
+mizer-gdtf-provider = { path = "../components/fixtures/gdtf" }
+mizer-open-fixture-library-provider = { path = "../components/fixtures/open-fixture-library" }
+mizer-qlcplus-provider = { path = "../components/fixtures/qlcplus" }
+mizer-fixture-definition-provider = { path = "../components/fixtures/mizer-definitions" }
+mizer-plan = { path = "../components/plan" }
+mizer-pipeline = { path = "../runtime/pipeline" }
+mizer-api = { path = "../api" }
+mizer-session = { path = "../runtime/session" }
+mizer-connections = { path = "../components/connections" }
+mizer-devices = { path = "../components/connections/devices" }
+mizer-sequencer = { path = "../components/sequencer" }
+mizer-timecode = { path = "../components/timecode" }
+mizer-runtime = { path = "../runtime" }
+mizer-execution-planner = { path = "../runtime/execution-planner" }
+mizer-node = { path = "../runtime/pipeline/node" }
+mizer-nodes = { path = "../runtime/pipeline/nodes" }
+mizer-layouts = { path = "../runtime/layouts" }
+mizer-clock = { path = "../runtime/clock" }
+mizer-protocol-citp = { path = "../components/connections/protocols/citp" }
+mizer-protocol-dmx = { path = "../components/connections/protocols/dmx" }
+mizer-protocol-midi = { path = "../components/connections/protocols/midi" }
+mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
+mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
+mizer-surfaces = { path = "../components/surfaces" }
+mizer-processing = { path = "../runtime/processing" }
+mizer-module = { path = "../runtime/module" }
+mizer-ui = { path = "../ui", optional = true }
+mizer-debug-ui-impl = { path = "../runtime/debug-ui/impl" }
+mizer-debug-ui-egui = { path = "../runtime/debug-ui/egui", optional = true }
+mizer-util = { path = "../util" }
+mizer-message-bus = { path = "../util/bus" }
+mizer-settings = { path = "../runtime/settings" }
+mizer-status-bus = { path = "../runtime/status" }
+mizer-command-executor = { path = "../runtime/commander/executor" }
+mizer-vector = { path = "../components/vector" }
+mizer-wgpu = { path = "../runtime/wgpu" }
+tokio = { version = "1.36", features = ["rt-multi-thread", "macros", "time", "rt"] }
+futures = "0.3"
+pinboard = "2.2"
+dashmap = "5"
+flume = "0.11"
+profiling = "1.0"
+rayon = "1.8"
+serde = { version = "1", features = ["rc"] }
+sentry = { version = "0.32", features = ["anyhow", "tracing", "debug-images"] }
+sentry-tracing = "0.32"
+spin_sleep = "1.2"
+ffmpeg-the-third = { version = "1.2", features = ["static"] }
+rolling-file = "0.2"
+
+[dev-dependencies]
+test-case = "3.3"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "oscillator_nodes"
+harness = false
+
+[target.'cfg(target_os = "macos")'.dependencies]
+oslog = "0.2"

@@ -39,7 +39,7 @@ fn test_build_project_pipeline(project: &str) {
     let flags = Flags {
         join: false,
         generate_graph: false,
-        file: Some(PathBuf::from(format!("examples/{}.yml", project))),
+        file: Some(PathBuf::from(format!("../../examples/{}.yml", project))),
         headless: true,
         ..Default::default()
     };

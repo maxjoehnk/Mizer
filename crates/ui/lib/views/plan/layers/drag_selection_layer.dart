@@ -162,10 +162,11 @@ class SelectionState {
     positions.sort((a, b) {
       var verticalOrder = direction!.vertical == AxisDirection.up ? b.y - a.y : a.y - b.y;
       if (verticalOrder != 0) {
-        return verticalOrder;
+        return (verticalOrder * 10).round();
       }
 
-      return direction!.horizontal == AxisDirection.right ? b.x - a.x : a.x - b.x;
+      var result = direction!.horizontal == AxisDirection.right ? b.x - a.x : a.x - b.x;
+      return (result * 10).round();
     });
   }
 
@@ -173,10 +174,11 @@ class SelectionState {
     positions.sort((a, b) {
       var horizontalOrder = direction!.horizontal == AxisDirection.right ? b.x - a.x : a.x - b.x;
       if (horizontalOrder != 0) {
-        return horizontalOrder;
+        return (horizontalOrder * 10).round();
       }
 
-      return direction!.vertical == AxisDirection.up ? b.y - a.y : a.y - b.y;
+      var result = direction!.vertical == AxisDirection.up ? b.y - a.y : a.y - b.y;
+      return (result * 10).round();
     });
   }
 }

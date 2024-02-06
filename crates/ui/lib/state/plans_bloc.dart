@@ -158,7 +158,7 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
     on<MoveFixture>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       await api.moveFixture(MoveFixtureRequest(
-          planId: plan.name, fixtureId: event.id, x: event.x.round(), y: event.y.round()));
+          planId: plan.name, fixtureId: event.id, x: event.x, y: event.y));
       await _refreshPlans(emit);
     });
     on<AlignFixtures>((event, emit) async {

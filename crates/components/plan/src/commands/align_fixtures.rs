@@ -27,7 +27,7 @@ pub enum AlignFixturesDirection {
 
 impl<'a> Command<'a> for AlignFixturesInPlanCommand {
     type Dependencies = Ref<PlanStorage>;
-    type State = HashMap<FixtureId, (i32, i32)>;
+    type State = HashMap<FixtureId, (f64, f64)>;
     type Result = ();
 
     fn label(&self) -> String {
@@ -56,13 +56,17 @@ impl<'a> Command<'a> for AlignFixturesInPlanCommand {
                 {
                     for (fixture_index, position) in group.into_iter().enumerate() {
                         let (x, y) = if self.direction == AlignFixturesDirection::LeftToRight {
-                            let x = initial_position.x + (fixture_index * column_gap) as i32;
-                            let y = initial_position.y + (group_index * row_gap) as i32;
+                            let x = initial_position.x
+                                + (fixture_index * column_gap) as f64 * position.width;
+                            let y = initial_position.y
+                                + (group_index * row_gap) as f64 * position.height;
 
                             (x, y)
                         } else {
-                            let x = initial_position.x + (group_index * column_gap) as i32;
-                            let y = initial_position.y + (fixture_index * row_gap) as i32;
+                            let x = initial_position.x
+                                + (group_index * column_gap) as f64 * position.width;
+                            let y = initial_position.y
+                                + (fixture_index * row_gap) as f64 * position.height;
 
                             (x, y)
                         };

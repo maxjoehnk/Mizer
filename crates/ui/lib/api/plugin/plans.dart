@@ -59,7 +59,7 @@ class PlansPluginApi implements PlansApi {
 
   @override
   Future<void> moveSelection(String planId, double dx, double dy) async {
-    var request = MoveFixturesRequest(planId: planId, x: dx.round(), y: dy.round());
+    var request = MoveFixturesRequest(planId: planId, x: dx, y: dy);
     await channel.invokeMethod("moveSelection", request.writeToBuffer());
   }
 

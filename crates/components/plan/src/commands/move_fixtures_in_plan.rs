@@ -4,17 +4,27 @@ use mizer_commander::{Command, Ref};
 use mizer_fixtures::FixtureId;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MoveFixturesInPlanCommand {
     pub id: String,
     pub fixture_ids: Vec<FixtureId>,
-    pub offset: (i32, i32),
+    pub offset: (f64, f64),
+}
+
+impl Hash for MoveFixturesInPlanCommand {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.id.hash(state);
+        self.fixture_ids.hash(state);
+        self.offset.0.to_bits().hash(state);
+        self.offset.1.to_bits().hash(state);
+    }
 }
 
 impl<'a> Command<'a> for MoveFixturesInPlanCommand {
     type Dependencies = Ref<PlanStorage>;
-    type State = HashMap<FixtureId, (i32, i32)>;
+    type State = HashMap<FixtureId, (f64, f64)>;
     type Result = ();
 
     fn label(&self) -> String {

@@ -31,19 +31,19 @@ impl Plan {
     }
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub struct FixturePosition {
     pub fixture: FixtureId,
-    pub x: i32,
-    pub y: i32,
+    pub x: f64,
+    pub y: f64,
     #[serde(default = "default_size")]
-    pub width: u32,
+    pub width: f64,
     #[serde(default = "default_size")]
-    pub height: u32,
+    pub height: f64,
 }
 
-fn default_size() -> u32 {
-    1
+fn default_size() -> f64 {
+    1.0
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -74,19 +74,21 @@ pub struct PlanScreen {
 
 impl PlanScreen {
     pub fn contains_fixture(&self, fixture: &FixturePosition) -> bool {
-        let x_1 = self.x;
+        let x_1 = self.x as f64;
         let x_2 = self.x + (self.width as i32);
-        let y_1 = self.y;
+        let x_2 = x_2 as f64;
+        let y_1 = self.y as f64;
         let y_2 = self.y + (self.height as i32);
+        let y_2 = y_2 as f64;
 
         x_1 <= fixture.x && fixture.x <= x_2 && y_1 <= fixture.y && fixture.y <= y_2
     }
 
-    pub fn translate_position(&self, fixture: &FixturePosition) -> (usize, usize) {
-        let x = fixture.x - self.x;
-        let y = fixture.y - self.y;
+    pub fn translate_position(&self, fixture: &FixturePosition) -> (f64, f64) {
+        let x = fixture.x - self.x as f64;
+        let y = fixture.y - self.y as f64;
 
-        (x as usize, y as usize)
+        (x, y)
     }
 }
 
@@ -154,10 +156,10 @@ mod tests {
         };
         let fixture = FixturePosition {
             fixture: FixtureId::Fixture(0),
-            x: fixture_x,
-            y: fixture_y,
-            width: 1,
-            height: 1,
+            x: fixture_x as f64,
+            y: fixture_y as f64,
+            width: 1.0,
+            height: 1.0,
         };
 
         let result = screen.contains_fixture(&fixture);
@@ -188,10 +190,10 @@ mod tests {
         };
         let fixture = FixturePosition {
             fixture: FixtureId::Fixture(0),
-            x: fixture_x,
-            y: fixture_y,
-            width: 1,
-            height: 1,
+            x: fixture_x as f64,
+            y: fixture_y as f64,
+            width: 1.0,
+            height: 1.0,
         };
 
         let result = screen.contains_fixture(&fixture);
@@ -219,15 +221,15 @@ mod tests {
         };
         let fixture = FixturePosition {
             fixture: FixtureId::Fixture(0),
-            x: fixture_x,
-            y: fixture_y,
-            width: 1,
-            height: 1,
+            x: fixture_x as f64,
+            y: fixture_y as f64,
+            width: 1.0,
+            height: 1.0,
         };
 
         let (x, y) = screen.translate_position(&fixture);
 
-        assert_eq!(expected_x, x);
-        assert_eq!(expected_y, y);
+        assert_eq!(expected_x as f64, x);
+        assert_eq!(expected_y as f64, y);
     }
 }

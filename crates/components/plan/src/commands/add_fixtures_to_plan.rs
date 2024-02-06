@@ -24,10 +24,10 @@ impl<'a> Command<'a> for AddFixturesToPlanCommand {
             for (i, fixture_id) in self.fixture_ids.iter().enumerate() {
                 plan.fixtures.push(FixturePosition {
                     fixture: *fixture_id,
-                    x: i as i32,
-                    y: 0,
-                    width: 1,
-                    height: 1,
+                    x: i as f64,
+                    y: 0.0,
+                    width: 1.0,
+                    height: 1.0,
                 });
             }
 

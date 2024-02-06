@@ -19,8 +19,8 @@ message RenamePlanRequest {
 
 message MoveFixturesRequest {
   string plan_id = 1;
-  int32 x = 2;
-  int32 y = 3;
+  double x = 2;
+  double y = 3;
 }
 
 message AlignFixturesRequest {
@@ -39,8 +39,8 @@ message AlignFixturesRequest {
 message MoveFixtureRequest {
   string plan_id = 1;
   mizer.fixtures.FixtureId fixture_id = 2;
-  int32 x = 3;
-  int32 y = 4;
+  double x = 3;
+  double y = 4;
 }
 
 message AddImageRequest {
@@ -85,10 +85,10 @@ message Plan {
 
 message FixturePosition {
   mizer.fixtures.FixtureId id = 1;
-  int32 x = 2;
-  int32 y = 3;
-  uint32 width = 4;
-  uint32 height = 5;
+  double x = 2;
+  double y = 3;
+  double width = 4;
+  double height = 5;
 }
 
 message PlanScreen {

@@ -158,6 +158,10 @@ impl ProcessingNode for PlanScreenNode {
                 let pixel_data = Self::convert_pixels(screen.width, pixels);
                 for fixture in plan.fixtures.iter().filter(|f| screen.contains_fixture(f)) {
                     let (x, y) = screen.translate_position(fixture);
+                    // TODO: the downsampling of the input texture does not take into account that pixels can be smaller than 1 pixel
+                    // in the future we should probably sample the picture for each pixel instead of down sampling it and then using the nearest pixel
+                    let x = x.round() as usize;
+                    let y = y.round() as usize;
                     let Some(color) = pixel_data.get(y).and_then(|row| row.get(x)) else {
                         continue;
                     };

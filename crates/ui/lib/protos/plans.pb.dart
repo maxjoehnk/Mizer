@@ -1,38 +1,42 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: plans.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
-
 import 'plans.pbenum.dart';
 
 export 'plans.pbenum.dart';
 
 class AddPlanRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddPlanRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  AddPlanRequest._() : super();
   factory AddPlanRequest({
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  AddPlanRequest._() : super();
   factory AddPlanRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddPlanRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddPlanRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -42,8 +46,10 @@ class AddPlanRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddPlanRequest copyWith(void Function(AddPlanRequest) updates) => super.copyWith((message) => updates(message as AddPlanRequest)) as AddPlanRequest; // ignore: deprecated_member_use
+  AddPlanRequest copyWith(void Function(AddPlanRequest) updates) => super.copyWith((message) => updates(message as AddPlanRequest)) as AddPlanRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddPlanRequest create() => AddPlanRequest._();
   AddPlanRequest createEmptyInstance() => create();
@@ -63,23 +69,24 @@ class AddPlanRequest extends $pb.GeneratedMessage {
 }
 
 class RemovePlanRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemovePlanRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..hasRequiredFields = false
-  ;
-
-  RemovePlanRequest._() : super();
   factory RemovePlanRequest({
     $core.String? id,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
-    return _result;
+    return $result;
   }
+  RemovePlanRequest._() : super();
   factory RemovePlanRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemovePlanRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemovePlanRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -89,8 +96,10 @@ class RemovePlanRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemovePlanRequest copyWith(void Function(RemovePlanRequest) updates) => super.copyWith((message) => updates(message as RemovePlanRequest)) as RemovePlanRequest; // ignore: deprecated_member_use
+  RemovePlanRequest copyWith(void Function(RemovePlanRequest) updates) => super.copyWith((message) => updates(message as RemovePlanRequest)) as RemovePlanRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemovePlanRequest create() => RemovePlanRequest._();
   RemovePlanRequest createEmptyInstance() => create();
@@ -110,28 +119,29 @@ class RemovePlanRequest extends $pb.GeneratedMessage {
 }
 
 class RenamePlanRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenamePlanRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
-  RenamePlanRequest._() : super();
   factory RenamePlanRequest({
     $core.String? id,
     $core.String? name,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
-    return _result;
+    return $result;
   }
+  RenamePlanRequest._() : super();
   factory RenamePlanRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RenamePlanRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RenamePlanRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -141,8 +151,10 @@ class RenamePlanRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenamePlanRequest copyWith(void Function(RenamePlanRequest) updates) => super.copyWith((message) => updates(message as RenamePlanRequest)) as RenamePlanRequest; // ignore: deprecated_member_use
+  RenamePlanRequest copyWith(void Function(RenamePlanRequest) updates) => super.copyWith((message) => updates(message as RenamePlanRequest)) as RenamePlanRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RenamePlanRequest create() => RenamePlanRequest._();
   RenamePlanRequest createEmptyInstance() => create();
@@ -171,33 +183,34 @@ class RenamePlanRequest extends $pb.GeneratedMessage {
 }
 
 class MoveFixturesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
+  factory MoveFixturesRequest({
+    $core.String? planId,
+    $core.double? x,
+    $core.double? y,
+  }) {
+    final $result = create();
+    if (planId != null) {
+      $result.planId = planId;
+    }
+    if (x != null) {
+      $result.x = x;
+    }
+    if (y != null) {
+      $result.y = y;
+    }
+    return $result;
+  }
+  MoveFixturesRequest._() : super();
+  factory MoveFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MoveFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
-  MoveFixturesRequest._() : super();
-  factory MoveFixturesRequest({
-    $core.String? planId,
-    $core.int? x,
-    $core.int? y,
-  }) {
-    final _result = create();
-    if (planId != null) {
-      _result.planId = planId;
-    }
-    if (x != null) {
-      _result.x = x;
-    }
-    if (y != null) {
-      _result.y = y;
-    }
-    return _result;
-  }
-  factory MoveFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MoveFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -207,8 +220,10 @@ class MoveFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveFixturesRequest copyWith(void Function(MoveFixturesRequest) updates) => super.copyWith((message) => updates(message as MoveFixturesRequest)) as MoveFixturesRequest; // ignore: deprecated_member_use
+  MoveFixturesRequest copyWith(void Function(MoveFixturesRequest) updates) => super.copyWith((message) => updates(message as MoveFixturesRequest)) as MoveFixturesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MoveFixturesRequest create() => MoveFixturesRequest._();
   MoveFixturesRequest createEmptyInstance() => create();
@@ -227,18 +242,18 @@ class MoveFixturesRequest extends $pb.GeneratedMessage {
   void clearPlanId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get x => $_getIZ(1);
+  $core.double get x => $_getN(1);
   @$pb.TagNumber(2)
-  set x($core.int v) { $_setSignedInt32(1, v); }
+  set x($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasX() => $_has(1);
   @$pb.TagNumber(2)
   void clearX() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get y => $_getIZ(2);
+  $core.double get y => $_getN(2);
   @$pb.TagNumber(3)
-  set y($core.int v) { $_setSignedInt32(2, v); }
+  set y($core.double v) { $_setDouble(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
@@ -246,16 +261,6 @@ class MoveFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class AlignFixturesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AlignFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..e<AlignFixturesRequest_AlignDirection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'direction', $pb.PbFieldType.OE, defaultOrMaker: AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT, valueOf: AlignFixturesRequest_AlignDirection.valueOf, enumValues: AlignFixturesRequest_AlignDirection.values)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rowGap', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'columnGap', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  AlignFixturesRequest._() : super();
   factory AlignFixturesRequest({
     $core.String? planId,
     AlignFixturesRequest_AlignDirection? direction,
@@ -263,26 +268,37 @@ class AlignFixturesRequest extends $pb.GeneratedMessage {
     $core.int? rowGap,
     $core.int? columnGap,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (direction != null) {
-      _result.direction = direction;
+      $result.direction = direction;
     }
     if (groups != null) {
-      _result.groups = groups;
+      $result.groups = groups;
     }
     if (rowGap != null) {
-      _result.rowGap = rowGap;
+      $result.rowGap = rowGap;
     }
     if (columnGap != null) {
-      _result.columnGap = columnGap;
+      $result.columnGap = columnGap;
     }
-    return _result;
+    return $result;
   }
+  AlignFixturesRequest._() : super();
   factory AlignFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AlignFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AlignFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..e<AlignFixturesRequest_AlignDirection>(2, _omitFieldNames ? '' : 'direction', $pb.PbFieldType.OE, defaultOrMaker: AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT, valueOf: AlignFixturesRequest_AlignDirection.valueOf, enumValues: AlignFixturesRequest_AlignDirection.values)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'groups', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'rowGap', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'columnGap', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -292,8 +308,10 @@ class AlignFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AlignFixturesRequest copyWith(void Function(AlignFixturesRequest) updates) => super.copyWith((message) => updates(message as AlignFixturesRequest)) as AlignFixturesRequest; // ignore: deprecated_member_use
+  AlignFixturesRequest copyWith(void Function(AlignFixturesRequest) updates) => super.copyWith((message) => updates(message as AlignFixturesRequest)) as AlignFixturesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AlignFixturesRequest create() => AlignFixturesRequest._();
   AlignFixturesRequest createEmptyInstance() => create();
@@ -349,38 +367,39 @@ class AlignFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class MoveFixtureRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveFixtureRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..aOM<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', subBuilder: $0.FixtureId.create)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
-
-  MoveFixtureRequest._() : super();
   factory MoveFixtureRequest({
     $core.String? planId,
     $0.FixtureId? fixtureId,
-    $core.int? x,
-    $core.int? y,
+    $core.double? x,
+    $core.double? y,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (fixtureId != null) {
-      _result.fixtureId = fixtureId;
+      $result.fixtureId = fixtureId;
     }
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
-    return _result;
+    return $result;
   }
+  MoveFixtureRequest._() : super();
   factory MoveFixtureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MoveFixtureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveFixtureRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..aOM<$0.FixtureId>(2, _omitFieldNames ? '' : 'fixtureId', subBuilder: $0.FixtureId.create)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -390,8 +409,10 @@ class MoveFixtureRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveFixtureRequest copyWith(void Function(MoveFixtureRequest) updates) => super.copyWith((message) => updates(message as MoveFixtureRequest)) as MoveFixtureRequest; // ignore: deprecated_member_use
+  MoveFixtureRequest copyWith(void Function(MoveFixtureRequest) updates) => super.copyWith((message) => updates(message as MoveFixtureRequest)) as MoveFixtureRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MoveFixtureRequest create() => MoveFixtureRequest._();
   MoveFixtureRequest createEmptyInstance() => create();
@@ -421,18 +442,18 @@ class MoveFixtureRequest extends $pb.GeneratedMessage {
   $0.FixtureId ensureFixtureId() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.int get x => $_getIZ(2);
+  $core.double get x => $_getN(2);
   @$pb.TagNumber(3)
-  set x($core.int v) { $_setSignedInt32(2, v); }
+  set x($core.double v) { $_setDouble(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasX() => $_has(2);
   @$pb.TagNumber(3)
   void clearX() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get y => $_getIZ(3);
+  $core.double get y => $_getN(3);
   @$pb.TagNumber(4)
-  set y($core.int v) { $_setSignedInt32(3, v); }
+  set y($core.double v) { $_setDouble(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasY() => $_has(3);
   @$pb.TagNumber(4)
@@ -440,18 +461,6 @@ class MoveFixtureRequest extends $pb.GeneratedMessage {
 }
 
 class AddImageRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddImageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OD)
-    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OD)
-    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transparency', $pb.PbFieldType.OD)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  AddImageRequest._() : super();
   factory AddImageRequest({
     $core.String? planId,
     $core.double? x,
@@ -461,32 +470,45 @@ class AddImageRequest extends $pb.GeneratedMessage {
     $core.double? transparency,
     $core.List<$core.int>? data,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
     if (width != null) {
-      _result.width = width;
+      $result.width = width;
     }
     if (height != null) {
-      _result.height = height;
+      $result.height = height;
     }
     if (transparency != null) {
-      _result.transparency = transparency;
+      $result.transparency = transparency;
     }
     if (data != null) {
-      _result.data = data;
+      $result.data = data;
     }
-    return _result;
+    return $result;
   }
+  AddImageRequest._() : super();
   factory AddImageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddImageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddImageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'transparency', $pb.PbFieldType.OD)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -496,8 +518,10 @@ class AddImageRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddImageRequest copyWith(void Function(AddImageRequest) updates) => super.copyWith((message) => updates(message as AddImageRequest)) as AddImageRequest; // ignore: deprecated_member_use
+  AddImageRequest copyWith(void Function(AddImageRequest) updates) => super.copyWith((message) => updates(message as AddImageRequest)) as AddImageRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddImageRequest create() => AddImageRequest._();
   AddImageRequest createEmptyInstance() => create();
@@ -571,38 +595,39 @@ class AddImageRequest extends $pb.GeneratedMessage {
 }
 
 class MoveImageRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveImageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageId')
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  MoveImageRequest._() : super();
   factory MoveImageRequest({
     $core.String? planId,
     $core.String? imageId,
     $core.double? x,
     $core.double? y,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (imageId != null) {
-      _result.imageId = imageId;
+      $result.imageId = imageId;
     }
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
-    return _result;
+    return $result;
   }
+  MoveImageRequest._() : super();
   factory MoveImageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MoveImageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveImageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..aOS(2, _omitFieldNames ? '' : 'imageId')
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -612,8 +637,10 @@ class MoveImageRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveImageRequest copyWith(void Function(MoveImageRequest) updates) => super.copyWith((message) => updates(message as MoveImageRequest)) as MoveImageRequest; // ignore: deprecated_member_use
+  MoveImageRequest copyWith(void Function(MoveImageRequest) updates) => super.copyWith((message) => updates(message as MoveImageRequest)) as MoveImageRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MoveImageRequest create() => MoveImageRequest._();
   MoveImageRequest createEmptyInstance() => create();
@@ -660,38 +687,39 @@ class MoveImageRequest extends $pb.GeneratedMessage {
 }
 
 class ResizeImageRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResizeImageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageId')
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
-  ResizeImageRequest._() : super();
   factory ResizeImageRequest({
     $core.String? planId,
     $core.String? imageId,
     $core.double? width,
     $core.double? height,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (imageId != null) {
-      _result.imageId = imageId;
+      $result.imageId = imageId;
     }
     if (width != null) {
-      _result.width = width;
+      $result.width = width;
     }
     if (height != null) {
-      _result.height = height;
+      $result.height = height;
     }
-    return _result;
+    return $result;
   }
+  ResizeImageRequest._() : super();
   factory ResizeImageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ResizeImageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResizeImageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..aOS(2, _omitFieldNames ? '' : 'imageId')
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -701,8 +729,10 @@ class ResizeImageRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ResizeImageRequest copyWith(void Function(ResizeImageRequest) updates) => super.copyWith((message) => updates(message as ResizeImageRequest)) as ResizeImageRequest; // ignore: deprecated_member_use
+  ResizeImageRequest copyWith(void Function(ResizeImageRequest) updates) => super.copyWith((message) => updates(message as ResizeImageRequest)) as ResizeImageRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ResizeImageRequest create() => ResizeImageRequest._();
   ResizeImageRequest createEmptyInstance() => create();
@@ -749,28 +779,29 @@ class ResizeImageRequest extends $pb.GeneratedMessage {
 }
 
 class RemoveImageRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveImageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageId')
-    ..hasRequiredFields = false
-  ;
-
-  RemoveImageRequest._() : super();
   factory RemoveImageRequest({
     $core.String? planId,
     $core.String? imageId,
   }) {
-    final _result = create();
+    final $result = create();
     if (planId != null) {
-      _result.planId = planId;
+      $result.planId = planId;
     }
     if (imageId != null) {
-      _result.imageId = imageId;
+      $result.imageId = imageId;
     }
-    return _result;
+    return $result;
   }
+  RemoveImageRequest._() : super();
   factory RemoveImageRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveImageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveImageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..aOS(2, _omitFieldNames ? '' : 'imageId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -780,8 +811,10 @@ class RemoveImageRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveImageRequest copyWith(void Function(RemoveImageRequest) updates) => super.copyWith((message) => updates(message as RemoveImageRequest)) as RemoveImageRequest; // ignore: deprecated_member_use
+  RemoveImageRequest copyWith(void Function(RemoveImageRequest) updates) => super.copyWith((message) => updates(message as RemoveImageRequest)) as RemoveImageRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemoveImageRequest create() => RemoveImageRequest._();
   RemoveImageRequest createEmptyInstance() => create();
@@ -810,23 +843,24 @@ class RemoveImageRequest extends $pb.GeneratedMessage {
 }
 
 class Plans extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Plans', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..pc<Plan>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'plans', $pb.PbFieldType.PM, subBuilder: Plan.create)
-    ..hasRequiredFields = false
-  ;
-
-  Plans._() : super();
   factory Plans({
     $core.Iterable<Plan>? plans,
   }) {
-    final _result = create();
+    final $result = create();
     if (plans != null) {
-      _result.plans.addAll(plans);
+      $result.plans.addAll(plans);
     }
-    return _result;
+    return $result;
   }
+  Plans._() : super();
   factory Plans.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Plans.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Plans', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..pc<Plan>(1, _omitFieldNames ? '' : 'plans', $pb.PbFieldType.PM, subBuilder: Plan.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -836,8 +870,10 @@ class Plans extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Plans copyWith(void Function(Plans) updates) => super.copyWith((message) => updates(message as Plans)) as Plans; // ignore: deprecated_member_use
+  Plans copyWith(void Function(Plans) updates) => super.copyWith((message) => updates(message as Plans)) as Plans;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Plans create() => Plans._();
   Plans createEmptyInstance() => create();
@@ -851,38 +887,39 @@ class Plans extends $pb.GeneratedMessage {
 }
 
 class Plan extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Plan', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<FixturePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positions', $pb.PbFieldType.PM, subBuilder: FixturePosition.create)
-    ..pc<PlanScreen>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'screens', $pb.PbFieldType.PM, subBuilder: PlanScreen.create)
-    ..pc<PlanImage>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'images', $pb.PbFieldType.PM, subBuilder: PlanImage.create)
-    ..hasRequiredFields = false
-  ;
-
-  Plan._() : super();
   factory Plan({
     $core.String? name,
     $core.Iterable<FixturePosition>? positions,
     $core.Iterable<PlanScreen>? screens,
     $core.Iterable<PlanImage>? images,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (positions != null) {
-      _result.positions.addAll(positions);
+      $result.positions.addAll(positions);
     }
     if (screens != null) {
-      _result.screens.addAll(screens);
+      $result.screens.addAll(screens);
     }
     if (images != null) {
-      _result.images.addAll(images);
+      $result.images.addAll(images);
     }
-    return _result;
+    return $result;
   }
+  Plan._() : super();
   factory Plan.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Plan.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Plan', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..pc<FixturePosition>(2, _omitFieldNames ? '' : 'positions', $pb.PbFieldType.PM, subBuilder: FixturePosition.create)
+    ..pc<PlanScreen>(3, _omitFieldNames ? '' : 'screens', $pb.PbFieldType.PM, subBuilder: PlanScreen.create)
+    ..pc<PlanImage>(4, _omitFieldNames ? '' : 'images', $pb.PbFieldType.PM, subBuilder: PlanImage.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -892,8 +929,10 @@ class Plan extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Plan copyWith(void Function(Plan) updates) => super.copyWith((message) => updates(message as Plan)) as Plan; // ignore: deprecated_member_use
+  Plan copyWith(void Function(Plan) updates) => super.copyWith((message) => updates(message as Plan)) as Plan;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Plan create() => Plan._();
   Plan createEmptyInstance() => create();
@@ -922,43 +961,44 @@ class Plan extends $pb.GeneratedMessage {
 }
 
 class FixturePosition extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixturePosition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOM<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: $0.FixtureId.create)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU3)
+  factory FixturePosition({
+    $0.FixtureId? id,
+    $core.double? x,
+    $core.double? y,
+    $core.double? width,
+    $core.double? height,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (x != null) {
+      $result.x = x;
+    }
+    if (y != null) {
+      $result.y = y;
+    }
+    if (width != null) {
+      $result.width = width;
+    }
+    if (height != null) {
+      $result.height = height;
+    }
+    return $result;
+  }
+  FixturePosition._() : super();
+  factory FixturePosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixturePosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixturePosition', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOM<$0.FixtureId>(1, _omitFieldNames ? '' : 'id', subBuilder: $0.FixtureId.create)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
-  FixturePosition._() : super();
-  factory FixturePosition({
-    $0.FixtureId? id,
-    $core.int? x,
-    $core.int? y,
-    $core.int? width,
-    $core.int? height,
-  }) {
-    final _result = create();
-    if (id != null) {
-      _result.id = id;
-    }
-    if (x != null) {
-      _result.x = x;
-    }
-    if (y != null) {
-      _result.y = y;
-    }
-    if (width != null) {
-      _result.width = width;
-    }
-    if (height != null) {
-      _result.height = height;
-    }
-    return _result;
-  }
-  factory FixturePosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FixturePosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -968,8 +1008,10 @@ class FixturePosition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixturePosition copyWith(void Function(FixturePosition) updates) => super.copyWith((message) => updates(message as FixturePosition)) as FixturePosition; // ignore: deprecated_member_use
+  FixturePosition copyWith(void Function(FixturePosition) updates) => super.copyWith((message) => updates(message as FixturePosition)) as FixturePosition;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static FixturePosition create() => FixturePosition._();
   FixturePosition createEmptyInstance() => create();
@@ -990,36 +1032,36 @@ class FixturePosition extends $pb.GeneratedMessage {
   $0.FixtureId ensureId() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.int get x => $_getIZ(1);
+  $core.double get x => $_getN(1);
   @$pb.TagNumber(2)
-  set x($core.int v) { $_setSignedInt32(1, v); }
+  set x($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasX() => $_has(1);
   @$pb.TagNumber(2)
   void clearX() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get y => $_getIZ(2);
+  $core.double get y => $_getN(2);
   @$pb.TagNumber(3)
-  set y($core.int v) { $_setSignedInt32(2, v); }
+  set y($core.double v) { $_setDouble(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
   void clearY() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get width => $_getIZ(3);
+  $core.double get width => $_getN(3);
   @$pb.TagNumber(4)
-  set width($core.int v) { $_setUnsignedInt32(3, v); }
+  set width($core.double v) { $_setDouble(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasWidth() => $_has(3);
   @$pb.TagNumber(4)
   void clearWidth() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.int get height => $_getIZ(4);
+  $core.double get height => $_getN(4);
   @$pb.TagNumber(5)
-  set height($core.int v) { $_setUnsignedInt32(4, v); }
+  set height($core.double v) { $_setDouble(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasHeight() => $_has(4);
   @$pb.TagNumber(5)
@@ -1027,16 +1069,6 @@ class FixturePosition extends $pb.GeneratedMessage {
 }
 
 class PlanScreen extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlanScreen', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU3)
-    ..hasRequiredFields = false
-  ;
-
-  PlanScreen._() : super();
   factory PlanScreen({
     $core.int? id,
     $core.int? x,
@@ -1044,26 +1076,37 @@ class PlanScreen extends $pb.GeneratedMessage {
     $core.int? width,
     $core.int? height,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
     if (width != null) {
-      _result.width = width;
+      $result.width = width;
     }
     if (height != null) {
-      _result.height = height;
+      $result.height = height;
     }
-    return _result;
+    return $result;
   }
+  PlanScreen._() : super();
   factory PlanScreen.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PlanScreen.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PlanScreen', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1073,8 +1116,10 @@ class PlanScreen extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PlanScreen copyWith(void Function(PlanScreen) updates) => super.copyWith((message) => updates(message as PlanScreen)) as PlanScreen; // ignore: deprecated_member_use
+  PlanScreen copyWith(void Function(PlanScreen) updates) => super.copyWith((message) => updates(message as PlanScreen)) as PlanScreen;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static PlanScreen create() => PlanScreen._();
   PlanScreen createEmptyInstance() => create();
@@ -1130,18 +1175,6 @@ class PlanScreen extends $pb.GeneratedMessage {
 }
 
 class PlanImage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlanImage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plans'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OD)
-    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OD)
-    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transparency', $pb.PbFieldType.OD)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  PlanImage._() : super();
   factory PlanImage({
     $core.String? id,
     $core.double? x,
@@ -1151,32 +1184,45 @@ class PlanImage extends $pb.GeneratedMessage {
     $core.double? transparency,
     $core.List<$core.int>? data,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (x != null) {
-      _result.x = x;
+      $result.x = x;
     }
     if (y != null) {
-      _result.y = y;
+      $result.y = y;
     }
     if (width != null) {
-      _result.width = width;
+      $result.width = width;
     }
     if (height != null) {
-      _result.height = height;
+      $result.height = height;
     }
     if (transparency != null) {
-      _result.transparency = transparency;
+      $result.transparency = transparency;
     }
     if (data != null) {
-      _result.data = data;
+      $result.data = data;
     }
-    return _result;
+    return $result;
   }
+  PlanImage._() : super();
   factory PlanImage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PlanImage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PlanImage', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'transparency', $pb.PbFieldType.OD)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1186,8 +1232,10 @@ class PlanImage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PlanImage copyWith(void Function(PlanImage) updates) => super.copyWith((message) => updates(message as PlanImage)) as PlanImage; // ignore: deprecated_member_use
+  PlanImage copyWith(void Function(PlanImage) updates) => super.copyWith((message) => updates(message as PlanImage)) as PlanImage;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static PlanImage create() => PlanImage._();
   PlanImage createEmptyInstance() => create();
@@ -1260,3 +1308,6 @@ class PlanImage extends $pb.GeneratedMessage {
   void clearData() => clearField(7);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -80,7 +80,7 @@ impl<R: RuntimeApi> PlansHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn move_fixture_selection(&self, plan_id: String, offset: (i32, i32)) {
+    pub fn move_fixture_selection(&self, plan_id: String, offset: (f64, f64)) {
         let view = self.fixture_manager.get_programmer().view();
         let state = view.read();
         self.runtime
@@ -94,7 +94,7 @@ impl<R: RuntimeApi> PlansHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn move_fixture(&self, plan_id: String, fixture_id: FixtureId, offset: (i32, i32)) {
+    pub fn move_fixture(&self, plan_id: String, fixture_id: FixtureId, offset: (f64, f64)) {
         self.runtime
             .run_command(MoveFixturesInPlanCommand {
                 fixture_ids: vec![fixture_id.into()],

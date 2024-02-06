@@ -65,7 +65,7 @@ class PlansFixturesLayer extends StatelessWidget {
     var textStyle = Theme.of(context).textTheme.bodyMedium;
     if (programmerState?.fixtures.isEmpty ?? true) {
       return Fixture2DView(
-          position: position, ref: fixturesPointer!, selected: true, textStyle: textStyle);
+          position: position, ref: fixturesPointer, selected: true, textStyle: textStyle);
     }
 
     var selectedFixtures =
@@ -75,7 +75,7 @@ class PlansFixturesLayer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: selectedFixtures
           .map((p) => Fixture2DView(
-              position: p, ref: fixturesPointer!, selected: true, textStyle: textStyle))
+              position: p, ref: fixturesPointer, selected: true, textStyle: textStyle))
           .toList(),
     );
   }
@@ -176,9 +176,9 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
                   ),
                   color: state.getColor(),
                 ),
-                child: Align(
+                child: widget.position.width >= 1 && widget.position.height >= 1 ? Align(
                     alignment: Alignment.topLeft,
-                    child: Text(widget.position.id.toDisplay(), style: textStyle)))),
+                    child: Text(widget.position.id.toDisplay(), style: textStyle)) : null)),
       ),
     );
   }

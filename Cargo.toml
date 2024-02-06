@@ -108,6 +108,5 @@ opt-level = 1
 opt-level = 3
 
 [patch.crates-io]
-avahi-sys = { git = "https://github.com/maxjoehnk/avahi-sys.git", branch = "update-bindgen-0.64" }
 nokhwa = { git = "https://github.com/l1npengtul/nokhwa.git", rev = "3be9227" }
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }

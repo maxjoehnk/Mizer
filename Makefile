@@ -53,3 +53,6 @@ flatpak-install:
 
 mizer.flatpak: flatpak-install
 	flatpak build-bundle ~/.local/share/flatpak/repo mizer.flatpak me.maxjoehnk.Mizer
+
+bdd-tests: mizer.zip
+	cd tests && pipenv run behave

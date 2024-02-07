@@ -12,7 +12,7 @@ oscillator_nodes_benchmarks:
 	cargo bench --no-default-features --bench oscillator_nodes
 
 build-headless:
-	cargo build --release --no-default-features --features build-ffmpeg
+	cargo build --release --no-default-features --features build-ffmpeg -p mizer
 
 build:
 	cd crates/ui && make

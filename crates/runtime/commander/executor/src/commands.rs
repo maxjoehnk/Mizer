@@ -90,6 +90,7 @@ command_impl! {
     MoveFixturesInPlanCommand,
     AddFixturesToPlanCommand,
     AlignFixturesInPlanCommand,
+    SpreadFixturesInPlanCommand,
     AddPlanImageCommand,
     MovePlanImageCommand,
     ResizePlanImageCommand,

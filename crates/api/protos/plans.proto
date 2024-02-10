@@ -36,6 +36,16 @@ message AlignFixturesRequest {
   }
 }
 
+message SpreadFixturesRequest {
+  string plan_id = 1;
+  SpreadGeometry geometry = 2;
+
+  enum SpreadGeometry {
+    SQUARE = 0;
+    TRIANGLE = 1;
+  }
+}
+
 message MoveFixtureRequest {
   string plan_id = 1;
   mizer.fixtures.FixtureId fixture_id = 2;

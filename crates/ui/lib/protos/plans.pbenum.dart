@@ -28,5 +28,20 @@ class AlignFixturesRequest_AlignDirection extends $pb.ProtobufEnum {
   const AlignFixturesRequest_AlignDirection._($core.int v, $core.String n) : super(v, n);
 }
 
+class SpreadFixturesRequest_SpreadGeometry extends $pb.ProtobufEnum {
+  static const SpreadFixturesRequest_SpreadGeometry SQUARE = SpreadFixturesRequest_SpreadGeometry._(0, _omitEnumNames ? '' : 'SQUARE');
+  static const SpreadFixturesRequest_SpreadGeometry TRIANGLE = SpreadFixturesRequest_SpreadGeometry._(1, _omitEnumNames ? '' : 'TRIANGLE');
+
+  static const $core.List<SpreadFixturesRequest_SpreadGeometry> values = <SpreadFixturesRequest_SpreadGeometry> [
+    SQUARE,
+    TRIANGLE,
+  ];
+
+  static final $core.Map<$core.int, SpreadFixturesRequest_SpreadGeometry> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static SpreadFixturesRequest_SpreadGeometry? valueOf($core.int value) => _byValue[value];
+
+  const SpreadFixturesRequest_SpreadGeometry._($core.int v, $core.String n) : super(v, n);
+}
+
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

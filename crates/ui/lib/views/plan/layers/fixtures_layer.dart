@@ -170,7 +170,7 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
                     borderRadius: BorderRadius.circular(2),
                     side: BorderSide(
                       color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
-                      width: 2,
+                      width: 2 * widget.position.width,
                       style: BorderStyle.solid,
                     ),
                   ),

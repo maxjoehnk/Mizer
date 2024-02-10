@@ -69,6 +69,13 @@ class AlignFixtures implements PlansEvent {
         );
 }
 
+class SpreadFixtures implements PlansEvent {
+  final SpreadFixturesRequest request;
+
+  SpreadFixtures({required SpreadFixturesRequest_SpreadGeometry geometry})
+      : request = SpreadFixturesRequest(geometry: geometry);
+}
+
 class AddImage implements PlansEvent {
   final double x;
   final double y;
@@ -165,6 +172,12 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
       var plan = state.plans[state.tabIndex];
       event.request.planId = plan.name;
       await api.alignFixtures(event.request);
+      await _refreshPlans(emit);
+    });
+    on<SpreadFixtures>((event, emit) async {
+      var plan = state.plans[state.tabIndex];
+      event.request.planId = plan.name;
+      await api.spreadFixtures(event.request);
       await _refreshPlans(emit);
     });
     on<AddImage>((event, emit) async {

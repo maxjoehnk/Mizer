@@ -12,6 +12,7 @@ pub use remove_image::*;
 pub use remove_plan::*;
 pub use rename_plan::*;
 pub use resize_image::*;
+pub use spread_fixtures::*;
 
 use crate::{ImageId, Plan, PlanImage};
 
@@ -25,6 +26,7 @@ mod remove_image;
 mod remove_plan;
 mod rename_plan;
 mod resize_image;
+mod spread_fixtures;
 
 pub(crate) fn update_plan<Cb: FnOnce(&mut Plan) -> anyhow::Result<R>, R>(
     plans_access: &Arc<NonEmptyPinboard<Vec<Plan>>>,

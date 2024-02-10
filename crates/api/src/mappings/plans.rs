@@ -1,5 +1,5 @@
 use crate::proto::plans::*;
-use mizer_plan::commands::AlignFixturesDirection;
+use mizer_plan::commands::{AlignFixturesDirection, SpreadFixturesGeometry};
 
 impl From<mizer_plan::Plan> for Plan {
     fn from(plan: mizer_plan::Plan) -> Self {
@@ -55,6 +55,17 @@ impl From<align_fixtures_request::AlignDirection> for AlignFixturesDirection {
         match direction {
             LeftToRight => Self::LeftToRight,
             TopToBottom => Self::TopToBottom,
+        }
+    }
+}
+
+impl From<spread_fixtures_request::SpreadGeometry> for SpreadFixturesGeometry {
+    fn from(geometry: spread_fixtures_request::SpreadGeometry) -> Self {
+        use spread_fixtures_request::SpreadGeometry;
+
+        match geometry {
+            SpreadGeometry::Square => Self::Square,
+            SpreadGeometry::Triangle => Self::Triangle,
         }
     }
 }

@@ -244,6 +244,9 @@ class _AlignToolbarState extends State<AlignToolbar> {
           ),
         ),
         MizerButton(child: Text("Apply"), onClick: () => _align()),
+        Spacer(),
+        MizerButton(child: Text("Square"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
+        MizerButton(child: Text("Triangle"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
       ]),
     );
   }
@@ -256,5 +259,10 @@ class _AlignToolbarState extends State<AlignToolbar> {
 
     bloc.add(
         AlignFixtures(direction: direction, groups: groups, rowGap: rowGap, columnGap: columnGap));
+  }
+  
+  _spread(SpreadFixturesRequest_SpreadGeometry geometry) {
+    PlansBloc bloc = context.read();
+    bloc.add(SpreadFixtures(geometry: geometry));
   }
 }

@@ -366,6 +366,70 @@ class AlignFixturesRequest extends $pb.GeneratedMessage {
   void clearColumnGap() => clearField(5);
 }
 
+class SpreadFixturesRequest extends $pb.GeneratedMessage {
+  factory SpreadFixturesRequest({
+    $core.String? planId,
+    SpreadFixturesRequest_SpreadGeometry? geometry,
+  }) {
+    final $result = create();
+    if (planId != null) {
+      $result.planId = planId;
+    }
+    if (geometry != null) {
+      $result.geometry = geometry;
+    }
+    return $result;
+  }
+  SpreadFixturesRequest._() : super();
+  factory SpreadFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SpreadFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpreadFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..e<SpreadFixturesRequest_SpreadGeometry>(2, _omitFieldNames ? '' : 'geometry', $pb.PbFieldType.OE, defaultOrMaker: SpreadFixturesRequest_SpreadGeometry.SQUARE, valueOf: SpreadFixturesRequest_SpreadGeometry.valueOf, enumValues: SpreadFixturesRequest_SpreadGeometry.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SpreadFixturesRequest clone() => SpreadFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SpreadFixturesRequest copyWith(void Function(SpreadFixturesRequest) updates) => super.copyWith((message) => updates(message as SpreadFixturesRequest)) as SpreadFixturesRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SpreadFixturesRequest create() => SpreadFixturesRequest._();
+  SpreadFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<SpreadFixturesRequest> createRepeated() => $pb.PbList<SpreadFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SpreadFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpreadFixturesRequest>(create);
+  static SpreadFixturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get planId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set planId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlanId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlanId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  SpreadFixturesRequest_SpreadGeometry get geometry => $_getN(1);
+  @$pb.TagNumber(2)
+  set geometry(SpreadFixturesRequest_SpreadGeometry v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGeometry() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGeometry() => clearField(2);
+}
+
 class MoveFixtureRequest extends $pb.GeneratedMessage {
   factory MoveFixtureRequest({
     $core.String? planId,

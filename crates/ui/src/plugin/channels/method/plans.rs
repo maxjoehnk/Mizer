@@ -83,6 +83,16 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "spreadFixtures" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.handler.spread_fixtures(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "addImage" => {
                 if let Err(err) = call.arguments().and_then(|req| self.handler.add_image(req)) {
                     resp.respond_error(err);

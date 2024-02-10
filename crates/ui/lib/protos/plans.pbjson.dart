@@ -96,6 +96,32 @@ final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Deco
     'gNUgZyb3dHYXASHQoKY29sdW1uX2dhcBgFIAEoDVIJY29sdW1uR2FwIjYKDkFsaWduRGlyZWN0'
     'aW9uEhEKDUxFRlRfVE9fUklHSFQQABIRCg1UT1BfVE9fQk9UVE9NEAE=');
 
+@$core.Deprecated('Use spreadFixturesRequestDescriptor instead')
+const SpreadFixturesRequest$json = {
+  '1': 'SpreadFixturesRequest',
+  '2': [
+    {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    {'1': 'geometry', '3': 2, '4': 1, '5': 14, '6': '.mizer.plans.SpreadFixturesRequest.SpreadGeometry', '10': 'geometry'},
+  ],
+  '4': [SpreadFixturesRequest_SpreadGeometry$json],
+};
+
+@$core.Deprecated('Use spreadFixturesRequestDescriptor instead')
+const SpreadFixturesRequest_SpreadGeometry$json = {
+  '1': 'SpreadGeometry',
+  '2': [
+    {'1': 'SQUARE', '2': 0},
+    {'1': 'TRIANGLE', '2': 1},
+  ],
+};
+
+/// Descriptor for `SpreadFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List spreadFixturesRequestDescriptor = $convert.base64Decode(
+    'ChVTcHJlYWRGaXh0dXJlc1JlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEk0KCGdlb2'
+    '1ldHJ5GAIgASgOMjEubWl6ZXIucGxhbnMuU3ByZWFkRml4dHVyZXNSZXF1ZXN0LlNwcmVhZEdl'
+    'b21ldHJ5UghnZW9tZXRyeSIqCg5TcHJlYWRHZW9tZXRyeRIKCgZTUVVBUkUQABIMCghUUklBTk'
+    'dMRRAB');
+
 @$core.Deprecated('Use moveFixtureRequestDescriptor instead')
 const MoveFixtureRequest$json = {
   '1': 'MoveFixtureRequest',

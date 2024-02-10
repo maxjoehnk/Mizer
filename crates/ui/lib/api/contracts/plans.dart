@@ -11,6 +11,7 @@ abstract class PlansApi {
   Future<void> moveSelection(String planId, double dx, double dy);
   Future<void> moveFixture(MoveFixtureRequest request);
   Future<void> alignFixtures(AlignFixturesRequest request);
+  Future<void> spreadFixtures(SpreadFixturesRequest request);
 
   Future<void> addImage(AddImageRequest request);
   Future<void> moveImage(MoveImageRequest request);

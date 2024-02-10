@@ -130,6 +130,20 @@ impl<R: RuntimeApi> PlansHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn spread_fixtures(&self, req: SpreadFixturesRequest) {
+        let view = self.fixture_manager.get_programmer().view();
+        let state = view.read();
+        self.runtime
+            .run_command(SpreadFixturesInPlanCommand {
+                geometry: req.geometry().into(),
+                plan_id: req.plan_id,
+                fixture_ids: state.all_fixtures(),
+            })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn add_image(&self, request: AddImageRequest) -> anyhow::Result<()> {
         self.runtime.run_command(AddPlanImageCommand {
             plan: request.plan_id,

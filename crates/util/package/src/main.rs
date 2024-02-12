@@ -85,6 +85,28 @@ fn main() -> anyhow::Result<()> {
             Some(PathBuf::from("Contents/Resources/fixtures/mizer"));
     })?;
 
+    change_rpath(&artifact.artifact_dir, "@executable_path", "@executable_path/../Frameworks")?;
+
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn change_rpath(artifact_dir: &Path, from: &str, to: &str) -> anyhow::Result<()> {
+    let path = artifact_dir.join("Mizer.app/Contents/MacOS/mizer");
+    let output = std::process::Command::new("install_name_tool")
+        .arg("-rpath")
+        .arg(from)
+        .arg(to)
+        .arg(&path)
+        .output()?;
+    if !output.status.success() {
+        println!("Failed to change rpath for {:?}", path);
+        println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+        println!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+
+        anyhow::bail!("Failed to change rpath for {:?}", path);
+    }
+
     Ok(())
 }
 

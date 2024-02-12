@@ -14,13 +14,18 @@ mod plugin;
 
 nativeshell::include_flutter_plugins!();
 
+pub fn init() -> anyhow::Result<()> {
+    exec_bundle();
+
+    Ok(())
+}
+
 pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHandler + 'static>(
     handlers: Handlers<R>,
     async_runtime: AR,
     lifecycle_handler: LH,
 ) -> anyhow::Result<()> {
     profiling::register_thread!("UI Thread");
-    exec_bundle();
     register_observatory_listener("mizer".into());
 
     let context = Context::new(ContextOptions {

@@ -51,7 +51,7 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
 
         #[cfg(not(target_os = "macos"))]
         {
-            subscriber
+            registry
                 .try_init()
                 .context("Initializing logger")?;
         }

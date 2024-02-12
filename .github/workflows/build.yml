@@ -174,7 +174,7 @@ jobs:
         run: nm mizer | grep ff_mpeg
 
   build-macos:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Install build dependencies
         run: brew install protobuf ffmpeg pkg-config yasm

@@ -2,7 +2,9 @@ use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command};
 
+#[cfg(feature = "ffmpeg")]
 use ffmpeg::error::EAGAIN;
+#[cfg(feature = "ffmpeg")]
 use ffmpeg_the_third as ffmpeg;
 use image::DynamicImage;
 
@@ -70,6 +72,7 @@ impl MediaHandler for VideoHandler {
         content_type.starts_with("video")
     }
 
+    #[cfg(feature = "ffmpeg")]
     fn generate_thumbnail<P: AsRef<Path>>(
         &self,
         file: P,
@@ -82,6 +85,17 @@ impl MediaHandler for VideoHandler {
         Ok(())
     }
 
+    #[cfg(not(feature = "ffmpeg"))]
+    fn generate_thumbnail<P: AsRef<Path>>(
+        &self,
+        _file: P,
+        _storage: &FileStorage,
+        _content_type: &str,
+    ) -> anyhow::Result<()> {
+        Ok(())
+    }
+
+    #[cfg(feature = "ffmpeg")]
     fn read_metadata<P: AsRef<Path>>(
         &self,
         file: P,
@@ -112,9 +126,19 @@ impl MediaHandler for VideoHandler {
 
         Ok(metadata)
     }
+
+    #[cfg(not(feature = "ffmpeg"))]
+    fn read_metadata<P: AsRef<Path>>(
+        &self,
+        _file: P,
+        _content_type: &str,
+    ) -> anyhow::Result<MediaMetadata> {
+        Ok(Default::default())
+    }
 }
 
 impl VideoHandler {
+    #[cfg(feature = "ffmpeg")]
     fn generate_thumbnail<P: AsRef<Path>>(file: P, target: PathBuf) -> anyhow::Result<()> {
         let file = file.as_ref();
         let mut input_context = ffmpeg::format::input(&file)?;

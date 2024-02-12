@@ -61,11 +61,13 @@ fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     let guard = logger::init()?;
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
+    #[cfg(feature = "feature-ffmpeg")]
     init_ffmpeg()?;
 
     Ok((flags, guard))
 }
 
+#[cfg(feature = "feature-ffmpeg")]
 fn init_ffmpeg() -> anyhow::Result<()> {
     ffmpeg_the_third::init()?;
     ffmpeg_the_third::log::set_level(ffmpeg_the_third::log::Level::Warning);

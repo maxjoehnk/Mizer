@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
+[features]
+ffmpeg = ["ffmpeg-the-third"]
+
 [dependencies]
 anyhow = "1"
 log = "0.4"
@@ -19,7 +22,7 @@ tokio = { version = "1.35", features = ["fs", "rt", "io-util"] }
 async-walkdir = "1.0"
 resvg = "0.37"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
-ffmpeg-the-third = "1.2"
+ffmpeg-the-third = { version = "1.2", optional = true }
 dashmap = "5.5"
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }

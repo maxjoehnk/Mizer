@@ -24,6 +24,7 @@ mod presets;
 
 pub struct Programmer {
     highlight: bool,
+    offline: bool,
     active_selection: FixtureSelection,
     active_channels: FixtureProgrammer,
     running_effects: Vec<ProgrammedEffect>,
@@ -66,6 +67,7 @@ pub struct ProgrammerState {
     pub fixture_effects: Vec<FixtureId>,
     pub active_groups: Vec<GroupId>,
     pub highlight: bool,
+    pub offline: bool,
     pub channels: Vec<ProgrammerChannel>,
     pub selection_block_size: Option<usize>,
     pub selection_wings: Option<usize>,
@@ -285,6 +287,7 @@ impl Default for Programmer {
         Self {
             active_selection: Default::default(),
             active_channels: Default::default(),
+            offline: false,
             highlight: false,
             running_effects: Default::default(),
             tracked_selections: Default::default(),
@@ -305,6 +308,9 @@ impl Programmer {
     pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
         profiling::scope!("Programmer::run");
         log::trace!("Programmer::run");
+        if self.offline {
+            return;
+        }
         let mut values = HashMap::new();
         for (selection, state) in self.get_selections().into_iter() {
             log::trace!("{:?} => {:?}", selection, state);
@@ -390,6 +396,10 @@ impl Programmer {
     pub fn set_wings(&mut self, wings: usize) {
         self.active_selection.wings = if wings == 0 { None } else { Some(wings) };
         self.clamp_x();
+    }
+
+    pub fn set_offline(&mut self, offline: bool) {
+        self.offline = offline;
     }
 
     pub fn next(&mut self) {
@@ -610,6 +620,7 @@ impl Programmer {
                 })
                 .collect(),
             highlight: self.highlight,
+            offline: self.offline,
             channels: self.get_channels(),
             selection_block_size: self.active_selection.block_size,
             selection_groups: self.active_selection.groups,

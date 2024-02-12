@@ -91,22 +91,18 @@ impl From<mizer_fixtures::programmer::PresetId> for PresetId {
             Intensity(id) => Self {
                 id,
                 r#type: preset_id::PresetType::Intensity as i32,
-                ..Default::default()
             },
             Shutter(id) => Self {
                 id,
                 r#type: preset_id::PresetType::Shutter as i32,
-                ..Default::default()
             },
             Color(id) => Self {
                 id,
                 r#type: preset_id::PresetType::Color as i32,
-                ..Default::default()
             },
             Position(id) => Self {
                 id,
                 r#type: preset_id::PresetType::Position as i32,
-                ..Default::default()
             },
         }
     }
@@ -139,7 +135,6 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Fader(preset.value)),
             label: preset.label,
-            ..Default::default()
         }
     }
 }
@@ -160,19 +155,13 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Color(preset.value.into())),
             label: preset.label,
-            ..Default::default()
         }
     }
 }
 
 impl From<mizer_fixtures::programmer::Color> for preset::Color {
     fn from((red, green, blue): mizer_fixtures::programmer::Color) -> Self {
-        Self {
-            red,
-            green,
-            blue,
-            ..Default::default()
-        }
+        Self { red, green, blue }
     }
 }
 
@@ -192,7 +181,6 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Position(preset.value.into())),
             label: preset.label,
-            ..Default::default()
         }
     }
 }
@@ -213,7 +201,6 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
             PanTilt(pan, tilt) => Self {
                 pan: Some(pan),
                 tilt: Some(tilt),
-                ..Default::default()
             },
         }
     }
@@ -224,7 +211,6 @@ impl From<mizer_fixtures::programmer::Group> for Group {
         Self {
             id: group.id.into(),
             name: group.name,
-            ..Default::default()
         }
     }
 }
@@ -288,7 +274,6 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                 programmer_channel::Value::Generic(programmer_channel::GenericValue {
                     value,
                     name,
-                    ..Default::default()
                 }),
             ),
         };
@@ -297,7 +282,6 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
             fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
             control: control.into(),
             value: Some(value),
-            ..Default::default()
         }
     }
 }

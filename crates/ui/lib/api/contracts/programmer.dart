@@ -56,4 +56,6 @@ abstract class ProgrammerApi {
 
   Future<void> writeEffectRate(int effectId, double effectRate);
   Future<void> writeEffectOffset(int effectId, double? effectOffset);
+
+  Future<void> setOffline(bool offline);
 }

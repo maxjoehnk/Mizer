@@ -25,6 +25,7 @@ class _ProgrammerViewState extends State<ProgrammerView>
           channels: programmerState.controls
               .where((c) => c.fixtures.any((fixtureId) => selectedIds.contains(fixtureId)))
               .toList(),
+          offline: programmerState.offline,
           isEmpty: selectedIds.isEmpty && trackedIds.isEmpty,
           fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
           effects: programmerState.effects,

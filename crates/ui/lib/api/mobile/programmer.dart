@@ -181,4 +181,10 @@ class ProgrammerMobileApi extends ProgrammerApi {
     // TODO: implement writeEffectRate
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> setOffline(bool offline) {
+    // TODO: implement setOffline
+    throw UnimplementedError();
+  }
 }

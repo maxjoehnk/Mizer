@@ -191,4 +191,13 @@ class ProgrammerPluginApi implements ProgrammerApi {
     var req = RenamePresetRequest(id: id, label: name);
     await channel.invokeMethod("renamePreset", req.writeToBuffer());
   }
+
+  @override
+  Future<void> setOffline(bool offline) {
+    if (offline) {
+      return channel.invokeMethod("markOffline");
+    } else {
+      return channel.invokeMethod("markOnline");
+    }
+  }
 }

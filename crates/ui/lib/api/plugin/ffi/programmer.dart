@@ -43,6 +43,7 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
       selection: selection,
       controls: channels,
       highlight: state.highlight == 1,
+      offline: state.offline == 1,
       blockSize: state.block_size,
       groups: state.groups,
       wings: state.wings,

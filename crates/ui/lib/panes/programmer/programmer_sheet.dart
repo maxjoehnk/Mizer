@@ -12,6 +12,7 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/switch.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class ProgrammerSheet extends StatefulWidget {
   final bool isEmpty;
   final ProgrammerApi api;
   final bool highlight;
+  final bool offline;
 
   const ProgrammerSheet(
       {required this.fixtures,
@@ -42,6 +44,7 @@ class ProgrammerSheet extends StatefulWidget {
       required this.api,
       required this.isEmpty,
       required this.highlight,
+      required this.offline,
       Key? key})
       : super(key: key);
 
@@ -107,6 +110,16 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
               ])),
         ],
         padding: false,
+        trailingHeader: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 2.0),
+            child: MizerSwitch(
+                onText: "Live",
+                offText: "Offline",
+                value: !widget.offline,
+                onChanged: (bool value) => context.read<ProgrammerApi>().setOffline(!value)),
+          ),
+        ],
       ),
     );
   }

@@ -74,6 +74,7 @@ pub struct FFIProgrammerState {
     pub block_size: u32,
     pub groups: u32,
     pub wings: u32,
+    pub offline: u8,
 }
 
 impl FFIProgrammerState {
@@ -116,6 +117,7 @@ impl FFIProgrammerState {
                 .collect::<Vec<_>>()
                 .into(),
             highlight: u8::from(state.highlight),
+            offline: u8::from(state.offline),
             block_size: state.selection_block_size.unwrap_or_default() as u32,
             groups: state.selection_groups.unwrap_or_default() as u32,
             wings: state.selection_wings.unwrap_or_default() as u32,

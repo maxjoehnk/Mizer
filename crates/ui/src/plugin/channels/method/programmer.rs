@@ -169,6 +169,16 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
+            "markOffline" => {
+                self.handler.mark_offline();
+
+                reply.send_ok(Value::Null)
+            }
+            "markOnline" => {
+                self.handler.mark_online();
+
+                reply.send_ok(Value::Null)
+            }
             "next" => {
                 self.handler.next();
 

@@ -284,6 +284,18 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn mark_offline(&self) {
+        self.fixture_manager.get_programmer().set_offline(true);
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn mark_online(&self) {
+        self.fixture_manager.get_programmer().set_offline(false);
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn write_effect_rate(&self, request: WriteEffectRateRequest) {
         self.fixture_manager
             .get_programmer()

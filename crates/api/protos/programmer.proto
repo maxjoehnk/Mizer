@@ -26,6 +26,7 @@ message ProgrammerState {
   uint32 groups = 8;
   uint32 wings = 9;
   repeated EffectProgrammerState effects = 10;
+  bool offline = 11;
 }
 
 message FixtureSelection {

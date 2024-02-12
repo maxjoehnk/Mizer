@@ -9,7 +9,6 @@ use tracing_subscriber::filter::{EnvFilter, LevelFilter};
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::Layer;
 
-#[cfg(not(target_os = "macos"))]
 pub fn init() -> anyhow::Result<LoggingGuard> {
     let stdout_layer = tracing_subscriber::fmt::layer()
         .with_file(true)
@@ -40,10 +39,23 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
             .with_filter(LevelFilter::from_level(Level::DEBUG))
             .boxed();
 
-        registry
-            .with(file_layer)
-            .try_init()
-            .context("Initializing logger")?;
+        let registry = registry.with(file_layer);
+
+        #[cfg(target_os = "macos")]
+        {
+            registry
+                .with(tracing_oslog::OsLogger::new("live.mizer", "default"))
+                .try_init()
+                .context("Initializing logger")?;
+        }
+
+        #[cfg(not(target_os = "macos"))]
+        {
+            subscriber
+                .try_init()
+                .context("Initializing logger")?;
+        }
+
     } else {
         registry.try_init().context("Initializing logger")?;
     }
@@ -53,18 +65,6 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
 
 #[derive(Default)]
 pub struct LoggingGuard(Option<WorkerGuard>);
-
-#[cfg(target_os = "macos")]
-pub fn init() -> anyhow::Result<LoggingGuard> {
-    use log::LevelFilter;
-    use oslog::*;
-
-    OsLogger::new("live.mizer")
-        .level_filter(LevelFilter::Debug)
-        .init()?;
-
-    Ok(Default::default())
-}
 
 fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
     let path = if let Some(dir) = ProjectDirs::from("me", "maxjoehnk", "Mizer") {

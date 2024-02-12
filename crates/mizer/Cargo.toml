@@ -95,4 +95,4 @@ name = "oscillator_nodes"
 harness = false
 
 [target.'cfg(target_os = "macos")'.dependencies]
-oslog = "0.2"
+tracing-oslog = "0.1"

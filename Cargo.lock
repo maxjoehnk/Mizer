@@ -202,7 +202,7 @@ dependencies = [
  "objc",
  "objc-foundation",
  "objc_id",
- "parking_lot",
+ "parking_lot 0.12.1",
  "thiserror",
  "winapi 0.3.9",
  "x11rb 0.10.1",
@@ -506,6 +506,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b1f45e9417d87227c7a56d22e471c6206462cba514c7590c09aff4cf6d1ddcad"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "bindgen"
+version = "0.59.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2bd2a9a458e8f4304c52c43ebb0cfbd520289f8379a52e329a38afda99bf8eb8"
+dependencies = [
+ "bitflags 1.3.2",
+ "cexpr",
+ "clang-sys",
+ "clap 2.34.0",
+ "env_logger",
+ "lazy_static",
+ "lazycell",
+ "log",
+ "peeking_take_while",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash",
+ "shlex",
+ "which",
 ]
 
 [[package]]
@@ -1417,7 +1440,7 @@ dependencies = [
  "ndk-context",
  "oboe",
  "once_cell",
- "parking_lot",
+ "parking_lot 0.12.1",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -1685,7 +1708,7 @@ dependencies = [
  "hashbrown 0.14.1",
  "lock_api",
  "once_cell",
- "parking_lot_core",
+ "parking_lot_core 0.9.8",
  "serde",
 ]
 
@@ -2216,6 +2239,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "env_logger"
+version = "0.9.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a12e6657c4c97ebab115a42dcee77225f7f482cdd841cf7088c657a42e9e00e7"
+dependencies = [
+ "atty",
+ "humantime",
+ "log",
+ "regex",
+ "termcolor",
+]
+
+[[package]]
 name = "epaint"
 version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2228,7 +2264,7 @@ dependencies = [
  "emath",
  "log",
  "nohash-hasher",
- "parking_lot",
+ "parking_lot 0.12.1",
 ]
 
 [[package]]
@@ -2748,7 +2784,7 @@ checksum = "1d930c203dd0b6ff06e0201a4a2fe9149b43c684fd4420555b26d21b1a02956f"
 dependencies = [
  "futures-core",
  "lock_api",
- "parking_lot",
+ "parking_lot 0.12.1",
 ]
 
 [[package]]
@@ -3512,6 +3548,12 @@ name = "httpdate"
 version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9"
+
+[[package]]
+name = "humantime"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
 name = "hyper"
@@ -4460,7 +4502,6 @@ dependencies = [
  "mizer-util",
  "mizer-vector",
  "mizer-wgpu",
- "oslog",
  "pinboard",
  "profiling",
  "rayon",
@@ -4474,6 +4515,7 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-appender",
+ "tracing-oslog",
  "tracing-subscriber",
 ]
 
@@ -4828,7 +4870,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mockall",
  "palette",
- "parking_lot",
+ "parking_lot 0.12.1",
  "pinboard",
  "postage",
  "profiling",
@@ -5013,7 +5055,7 @@ dependencies = [
  "flume 0.11.0",
  "futures",
  "log",
- "parking_lot",
+ "parking_lot 0.12.1",
 ]
 
 [[package]]
@@ -5123,7 +5165,7 @@ dependencies = [
  "mizer-ports",
  "mizer-util",
  "mizer-wgpu",
- "parking_lot",
+ "parking_lot 0.12.1",
  "pinboard",
  "serde",
  "test-case",
@@ -5282,7 +5324,7 @@ dependencies = [
  "mizer-util",
  "mizer-video-nodes",
  "mizer-wgpu",
- "parking_lot",
+ "parking_lot 0.12.1",
  "pinboard",
  "profiling",
  "ringbuffer",
@@ -5503,7 +5545,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-util",
- "parking_lot",
+ "parking_lot 0.12.1",
  "profiling",
  "regex",
  "tracing",
@@ -5884,7 +5926,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-timecode",
  "mizer-util",
- "parking_lot",
+ "parking_lot 0.12.1",
  "pinboard",
 ]
 
@@ -5914,7 +5956,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-wgpu",
- "parking_lot",
+ "parking_lot 0.12.1",
  "usvg 0.33.0",
  "vello",
  "vello_svg",
@@ -5999,7 +6041,7 @@ dependencies = [
  "image",
  "log",
  "mizer-module",
- "parking_lot",
+ "parking_lot 0.12.1",
  "profiling",
  "raw-window-handle 0.5.2",
  "tracing",
@@ -6799,17 +6841,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "oslog"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "80d2043d1f61d77cb2f4b1f7b7b2295f40507f5f8e9d1c8bf10a1ca5f97a3969"
-dependencies = [
- "cc",
- "dashmap",
- "log",
-]
-
-[[package]]
 name = "overload"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6880,12 +6911,37 @@ checksum = "bb813b8af86854136c6922af0598d719255ecb2179515e6e7730d468f05c9cae"
 
 [[package]]
 name = "parking_lot"
+version = "0.11.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d17b78036a60663b797adeaee46f5c9dfebb86948d1255007a1d6be0271ff99"
+dependencies = [
+ "instant",
+ "lock_api",
+ "parking_lot_core 0.8.6",
+]
+
+[[package]]
+name = "parking_lot"
 version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3742b2c103b9f06bc9fff0a37ff4912935851bee6d36f3c02bcc755bcfec228f"
 dependencies = [
  "lock_api",
- "parking_lot_core",
+ "parking_lot_core 0.9.8",
+]
+
+[[package]]
+name = "parking_lot_core"
+version = "0.8.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "60a2cfe6f0ad2bfc16aefa463b497d5c7a5ecd44a23efa72aa342d90177356dc"
+dependencies = [
+ "cfg-if 1.0.0",
+ "instant",
+ "libc",
+ "redox_syscall 0.2.16",
+ "smallvec",
+ "winapi 0.3.9",
 ]
 
 [[package]]
@@ -7207,7 +7263,7 @@ dependencies = [
  "crossbeam-queue",
  "futures",
  "log",
- "parking_lot",
+ "parking_lot 0.12.1",
  "pin-project",
  "pollster",
  "static_assertions",
@@ -9428,6 +9484,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "tracing-oslog"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9bc58223383423483e4bc056c7e7b3f77bdee924a9d33834112c69ead06dc847"
+dependencies = [
+ "bindgen 0.59.2",
+ "cc",
+ "cfg-if 1.0.0",
+ "fnv",
+ "once_cell",
+ "parking_lot 0.11.2",
+ "tracing-core",
+ "tracing-subscriber",
+]
+
+[[package]]
 name = "tracing-serde"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10284,7 +10356,7 @@ dependencies = [
  "js-sys",
  "log",
  "naga",
- "parking_lot",
+ "parking_lot 0.12.1",
  "profiling",
  "raw-window-handle 0.5.2",
  "serde",
@@ -10310,7 +10382,7 @@ dependencies = [
  "codespan-reporting",
  "log",
  "naga",
- "parking_lot",
+ "parking_lot 0.12.1",
  "profiling",
  "raw-window-handle 0.5.2",
  "ron",
@@ -10352,7 +10424,7 @@ dependencies = [
  "naga",
  "objc",
  "once_cell",
- "parking_lot",
+ "parking_lot 0.12.1",
  "profiling",
  "range-alloc",
  "raw-window-handle 0.5.2",

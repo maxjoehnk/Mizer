@@ -89,6 +89,7 @@ node_type_name! {
         TextureMask,
         TextureOpacity,
         LumaKey,
+        StaticColor,
         Webcam,
         ScreenCapture,
         TextureBorder,

@@ -44,6 +44,9 @@ pub trait NodeContext: PreviewContext + Sized {
     fn single_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::SINGLE, Self> {
         self.input(port)
     }
+    fn color_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::COLOR, Self> {
+        self.input(port)
+    }
     fn multi_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::MULTI, Self> {
         self.input(port)
     }

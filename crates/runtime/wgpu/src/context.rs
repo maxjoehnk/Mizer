@@ -242,6 +242,17 @@ impl<'label> CommandBuffer<'label> {
         &'pass mut self,
         target: &'pass wgpu::TextureView,
     ) -> WgpuRenderPass<'pass> {
+        self.create_clear_pass(target, 0.0, 0.0, 0.0, 0.0)
+    }
+
+    pub fn create_clear_pass<'pass>(
+        &'pass mut self,
+        target: &'pass wgpu::TextureView,
+        red: f64,
+        green: f64,
+        blue: f64,
+        alpha: f64,
+    ) -> WgpuRenderPass<'pass> {
         profiling::scope!("CommandBuffer::start_render_pass");
         let pass = self.encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some(self.label),
@@ -250,10 +261,10 @@ impl<'label> CommandBuffer<'label> {
                 resolve_target: None,
                 ops: wgpu::Operations {
                     load: wgpu::LoadOp::Clear(wgpu::Color {
-                        r: 0.0,
-                        g: 0.0,
-                        b: 0.0,
-                        a: 0.0,
+                        r: red,
+                        g: green,
+                        b: blue,
+                        a: alpha,
                     }),
                     store: StoreOp::Store,
                 },

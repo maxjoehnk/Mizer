@@ -9,6 +9,7 @@ pub use self::opacity::*;
 pub use self::output::*;
 pub use self::rgb::*;
 pub use self::rgb_split::*;
+pub use self::static_color::*;
 pub use self::transform::*;
 pub use self::video_file::*;
 
@@ -23,6 +24,7 @@ mod opacity;
 mod output;
 mod rgb;
 mod rgb_split;
+mod static_color;
 mod transform;
 mod video_file;
 

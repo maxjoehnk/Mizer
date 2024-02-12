@@ -10,6 +10,7 @@ fn build_flutter() -> BuildResult<()> {
             icon_file: "icons/AppIcon.icns".into(),
             executable_path: "mizer".into(),
             bundle_identifier: "live.mizer".into(),
+            info_plist_template: Some("resources/Info.plist".into()),
             ..Default::default()
         };
         let resources = MacOSBundle::build(options)?;

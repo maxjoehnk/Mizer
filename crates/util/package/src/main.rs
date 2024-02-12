@@ -64,7 +64,7 @@ fn main() -> anyhow::Result<()> {
     )?;
     artifact.link_source(
         "crates/components/fixtures/mizer-definitions/.fixtures",
-        "fixtures/mizer",
+        "Mizer.app/Contents/Resources/fixtures/mizer",
     )?;
     artifact.link_source(
         "crates/components/connections/protocols/midi/device-profiles/profiles",

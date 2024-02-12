@@ -1,4 +1,5 @@
 use std::fs;
+use std::fs::File;
 use std::path::{Path, PathBuf};
 
 use mizer_settings::Settings;
@@ -86,6 +87,24 @@ fn main() -> anyhow::Result<()> {
     })?;
 
     change_rpath(&artifact.artifact_dir, "@executable_path", "@executable_path/../Frameworks")?;
+    generate_icns(&artifact.cwd, &artifact.artifact_dir)?;
+
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn generate_icns(source_dir: &Path, artifact_dir: &Path) -> anyhow::Result<()> {
+    use icns::*;
+
+    let mut icns = IconFamily::new();
+    let path = source_dir.join("assets/logo@512.png");
+    let file = File::open(path)?;
+    let image = Image::read_png(file)?;
+    icns.add_icon(&image)?;
+
+    let output_path = artifact_dir.join("Mizer.app/Contents/Resources/AppIcon.icns");
+    let output_file = File::create(output_path)?;
+    icns.write(output_file)?;
 
     Ok(())
 }

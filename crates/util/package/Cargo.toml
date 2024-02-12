@@ -11,3 +11,6 @@ ui = []
 [dependencies]
 anyhow = "1"
 mizer-settings = { path = "../../runtime/settings" }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+icns = "0.3.1"

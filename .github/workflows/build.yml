@@ -177,7 +177,7 @@ jobs:
     runs-on: macos-14
     steps:
       - name: Install build dependencies
-        run: brew install protobuf ffmpeg pkg-config yasm
+        run: brew install protobuf ffmpeg pkg-config yasm cbindgen
       - uses: actions/checkout@v4
         with:
           submodules: recursive

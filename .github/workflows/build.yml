@@ -189,16 +189,17 @@ jobs:
           channel: stable
       - name: Build
         run: make build-release
-        continue-on-error: true
         env:
           LIBUSB_STATIC: "true"
       - name: Package
-        run: make artifact
-        continue-on-error: true
+        run: make mizer.zip
+        env:
+          LIBUSB_STATIC: "true"
       - uses: actions/upload-artifact@v3
         with:
           name: macos-full
-          path: artifact
+          path: mizer.zip
+          if-no-files-found: error
 
   build-windows:
     runs-on: windows-latest

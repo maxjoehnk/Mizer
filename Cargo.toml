@@ -94,8 +94,9 @@ members = [
     "crates/util/bus",
     "crates/util/package",
     "crates/mizer",
-    "docs"
+    "docs",
 ]
+default-members = ["crates/mizer"]
 resolver = "2"
 
 [profile.bench]

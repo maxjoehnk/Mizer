@@ -17,6 +17,7 @@ pub struct FileStorage {
 
 impl FileStorage {
     pub fn new(base_path: PathBuf) -> anyhow::Result<FileStorage> {
+        let base_path = PathBuf::from(shellexpand::full(base_path.to_str().unwrap())?.into_owned());
         let media_path = base_path.join(DEFAULT_MEDIA_PATH);
         let thumbnail_path = base_path.join(DEFAULT_THUMBNAIL_PATH);
         let temp_path = base_path.join(DEFAULT_TMP_PATH);

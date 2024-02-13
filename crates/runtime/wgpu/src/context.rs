@@ -14,7 +14,7 @@ pub struct WgpuContext {
 impl WgpuContext {
     pub async fn new() -> anyhow::Result<Self> {
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
-            backends: wgpu::Backends::VULKAN,
+            backends: wgpu::Backends::VULKAN | wgpu::Backends::METAL,
             ..Default::default()
         });
         let adapter = instance

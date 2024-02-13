@@ -18,6 +18,7 @@ license = "GNU AGPLv3"
 [features]
 default = ["ui", "debug-ui"]
 build-ffmpeg = ["ffmpeg-the-third/build"]
+static-link-ffmpeg = ["ffmpeg-the-third/static"]
 ui = ["mizer-ui"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
@@ -82,7 +83,7 @@ serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.32", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.32"
 spin_sleep = "1.2"
-ffmpeg-the-third = { version = "1.2", features = ["static"] }
+ffmpeg-the-third = { version = "1.2" }
 rolling-file = "0.2"
 
 [dev-dependencies]
@@ -94,4 +95,4 @@ name = "oscillator_nodes"
 harness = false
 
 [target.'cfg(target_os = "macos")'.dependencies]
-oslog = "0.2"
+tracing-oslog = "0.1"

@@ -1,4 +1,5 @@
 use std::fs;
+use std::fs::File;
 use std::path::{Path, PathBuf};
 
 use mizer_settings::Settings;
@@ -13,7 +14,7 @@ fn main() -> anyhow::Result<()> {
     artifact.link("lib")?;
     #[cfg(feature = "ui")]
     artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
-    artifact.link_to("deps/libndi.so.4", "lib/libndi.so.4")?;
+    artifact.link_to("deps/libndi.so.5", "lib/libndi.so.5")?;
     artifact.link_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",
@@ -49,6 +50,10 @@ fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.link("Mizer.app")?;
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
+    artifact.link_to(
+        "deps/libndi.dylib",
+        "Mizer.app/Contents/Frameworks/libndi.dylib",
+    )?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
     artifact.link_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
@@ -60,7 +65,7 @@ fn main() -> anyhow::Result<()> {
     )?;
     artifact.link_source(
         "crates/components/fixtures/mizer-definitions/.fixtures",
-        "fixtures/mizer",
+        "Mizer.app/Contents/Resources/fixtures/mizer",
     )?;
     artifact.link_source(
         "crates/components/connections/protocols/midi/device-profiles/profiles",
@@ -80,6 +85,46 @@ fn main() -> anyhow::Result<()> {
         settings.paths.fixture_libraries.mizer =
             Some(PathBuf::from("Contents/Resources/fixtures/mizer"));
     })?;
+
+    change_rpath(&artifact.artifact_dir, "@executable_path", "@executable_path/../Frameworks")?;
+    generate_icns(&artifact.cwd, &artifact.artifact_dir)?;
+
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn generate_icns(source_dir: &Path, artifact_dir: &Path) -> anyhow::Result<()> {
+    use icns::*;
+
+    let mut icns = IconFamily::new();
+    let path = source_dir.join("assets/logo@512.png");
+    let file = File::open(path)?;
+    let image = Image::read_png(file)?;
+    icns.add_icon(&image)?;
+
+    let output_path = artifact_dir.join("Mizer.app/Contents/Resources/AppIcon.icns");
+    let output_file = File::create(output_path)?;
+    icns.write(output_file)?;
+
+    Ok(())
+}
+
+#[cfg(target_os = "macos")]
+fn change_rpath(artifact_dir: &Path, from: &str, to: &str) -> anyhow::Result<()> {
+    let path = artifact_dir.join("Mizer.app/Contents/MacOS/mizer");
+    let output = std::process::Command::new("install_name_tool")
+        .arg("-rpath")
+        .arg(from)
+        .arg(to)
+        .arg(&path)
+        .output()?;
+    if !output.status.success() {
+        println!("Failed to change rpath for {:?}", path);
+        println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
+        println!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+
+        anyhow::bail!("Failed to change rpath for {:?}", path);
+    }
 
     Ok(())
 }

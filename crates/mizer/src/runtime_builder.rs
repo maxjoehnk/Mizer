@@ -127,6 +127,8 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
             if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
                 log::error!("Failed to load last project: {:?}", err);
             }
+        } else {
+            mizer.new_project();
         }
     } else {
         mizer.new_project();

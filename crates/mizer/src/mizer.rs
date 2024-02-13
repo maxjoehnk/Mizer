@@ -60,6 +60,7 @@ impl Mizer {
 
     #[profiling::function]
     pub fn new_project(&mut self) {
+        tracing::info!("Creating new project...");
         mizer_util::message!("New Project", 0);
         self.runtime
             .add_status_message("Creating new project...", None);

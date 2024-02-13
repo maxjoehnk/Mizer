@@ -30,17 +30,14 @@ impl<'a> Command<'a> for ConfigureArtnetInputCommand {
         let input = dmx_manager
             .get_input_mut(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
-        if let DmxInputConnection::Artnet(input) = input {
-            let previous_config = input.reconfigure(ArtnetInputConfig::new(
-                self.host,
-                self.port,
-                self.name.clone(),
-            ))?;
+        let DmxInputConnection::Artnet(input) = input;
+        let previous_config = input.reconfigure(ArtnetInputConfig::new(
+            self.host,
+            self.port,
+            self.name.clone(),
+        ))?;
 
-            Ok(((), previous_config))
-        } else {
-            anyhow::bail!("Invalid input type");
-        }
+        Ok(((), previous_config))
     }
 
     fn revert(
@@ -51,12 +48,9 @@ impl<'a> Command<'a> for ConfigureArtnetInputCommand {
         let input = dmx_manager
             .get_input_mut(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown input {}", self.id))?;
-        if let DmxInputConnection::Artnet(input) = input {
-            input.reconfigure(config)?;
+        let DmxInputConnection::Artnet(input) = input;
+        input.reconfigure(config)?;
 
-            Ok(())
-        } else {
-            anyhow::bail!("Invalid input type");
-        }
+        Ok(())
     }
 }

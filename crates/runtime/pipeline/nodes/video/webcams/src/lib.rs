@@ -338,7 +338,7 @@ impl VideoDecoder for WebcamDecoder {
         Ok(Self { webcam })
     }
 
-    fn handle(&mut self, command: Self::Commands) -> anyhow::Result<()> {
+    fn handle(&mut self, _command: Self::Commands) -> anyhow::Result<()> {
         Ok(())
     }
 

@@ -8,7 +8,6 @@ pub use mizer_ports::{port_types, Color, PortId, PortType};
 
 pub use self::context::*;
 pub use self::introspection::*;
-pub use self::macros::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
@@ -92,6 +91,7 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
         PipelineNode::details(self)
     }
 
+    #[allow(unused_variables)]
     fn pre_process(
         &self,
         context: &impl NodeContext,
@@ -102,6 +102,7 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()>;
 
+    #[allow(unused_variables)]
     fn post_process(
         &self,
         context: &impl NodeContext,

@@ -133,11 +133,11 @@ impl Fixture {
             .collect()
     }
 
-    pub fn write<S: Into<String>>(&mut self, name: S, value: f64) {
+    pub(crate) fn write<S: Into<String>>(&mut self, name: S, value: f64) {
         self.write_priority(name, value, Default::default());
     }
 
-    pub fn write_priority<S: Into<String>>(
+    pub(crate) fn write_priority<S: Into<String>>(
         &mut self,
         name: S,
         value: f64,

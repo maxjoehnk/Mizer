@@ -1,9 +1,6 @@
 use std::fmt::{Display, Formatter};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-const MINUTE: u64 = 60;
-const HOUR: u64 = 60 * MINUTE;
-
 fn now() -> u128 {
     let time = SystemTime::now();
     let time = time

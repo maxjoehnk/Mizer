@@ -1,4 +1,4 @@
-use std::thread::{self, ThreadId};
+use std::thread;
 
 use mizer_module::*;
 

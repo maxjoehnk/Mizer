@@ -152,7 +152,7 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             green,
             blue,
             white,
-            amber,
+            ..
         }) = color_group
         {
             let rgb = if let Some(white_channel) = white.and_then(|c| c.into_channel()) {

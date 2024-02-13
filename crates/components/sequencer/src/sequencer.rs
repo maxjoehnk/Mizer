@@ -107,7 +107,7 @@ impl Sequencer {
                         state.go(sequence.value(), &self.clock, effect_engine, frame);
                         let is_active = state.active;
                         if !is_active {
-                            sequence_orders.remove(&sequence_id);
+                            sequence_orders.shift_remove(&sequence_id);
                         }
                         if is_active && !was_active {
                             sequence_orders.insert(sequence_id);
@@ -121,7 +121,7 @@ impl Sequencer {
                         state.go_to(sequence.value(), cue_id, &self.clock, effect_engine, frame);
                         let is_active = state.active;
                         if !is_active {
-                            sequence_orders.remove(&sequence_id);
+                            sequence_orders.shift_remove(&sequence_id);
                         } else if is_active && !was_active {
                             sequence_orders.insert(sequence_id);
                         }
@@ -132,7 +132,7 @@ impl Sequencer {
                     if let Some(sequence) = sequences.get(&sequence_id) {
                         state.stop(sequence.value(), effect_engine, &self.clock, frame);
                     }
-                    sequence_orders.remove(&sequence_id);
+                    sequence_orders.shift_remove(&sequence_id);
                 }
                 SequencerCommands::SetRate(sequence_id, rate) => {
                     if let Some(state) = states.get_mut(&sequence_id) {
@@ -145,7 +145,7 @@ impl Sequencer {
                         state.stop(sequence.value(), effect_engine, &self.clock, frame);
                     }
                     states.remove(&sequence_id);
-                    sequence_orders.remove(&sequence_id);
+                    sequence_orders.shift_remove(&sequence_id);
                 }
             }
         }

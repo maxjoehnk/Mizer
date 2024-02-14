@@ -14,6 +14,7 @@ pub struct Texture {
     pub sampler: wgpu::Sampler,
     pub bind_group: wgpu::BindGroup,
     pub bind_group_layout: wgpu::BindGroupLayout,
+    texture_format: wgpu::TextureFormat,
 }
 
 const BIND_GROUP_LABEL: &str = "Texture Source Stage Bind Group";
@@ -23,7 +24,7 @@ impl Texture {
         let texture = context.create_texture(
             provider.width(),
             provider.height(),
-            crate::TEXTURE_FORMAT,
+            provider.texture_format(),
             wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
             None,
         );
@@ -44,6 +45,7 @@ impl Texture {
             sampler,
             bind_group,
             bind_group_layout,
+            texture_format: provider.texture_format(),
         };
         if let Err(err) = texture.render(context, provider) {
             log::error!("Failed initially render texture: {err:?}");
@@ -91,7 +93,7 @@ impl Texture {
         self.texture = context.create_texture(
             width,
             height,
-            crate::TEXTURE_FORMAT,
+            self.texture_format,
             wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
             None,
         );

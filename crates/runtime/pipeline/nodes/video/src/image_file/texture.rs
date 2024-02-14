@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use image::RgbaImage;
 
 use mizer_node::*;
+use mizer_wgpu::wgpu::TextureFormat;
 use mizer_wgpu::TextureProvider;
 
 pub struct ImageTexture {
@@ -31,6 +32,10 @@ impl ImageTexture {
 }
 
 impl TextureProvider for ImageTexture {
+    fn texture_format(&self) -> TextureFormat {
+        TextureFormat::Rgba8UnormSrgb
+    }
+
     fn width(&self) -> u32 {
         self.image.width()
     }

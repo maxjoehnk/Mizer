@@ -1,5 +1,6 @@
 use crate::texture::texture_provider::TextureProvider;
 use std::borrow::Cow;
+use wgpu::TextureFormat;
 
 pub struct StaticTexture {
     img: image::DynamicImage,
@@ -12,6 +13,10 @@ impl StaticTexture {
 }
 
 impl TextureProvider for StaticTexture {
+    fn texture_format(&self) -> TextureFormat {
+        TextureFormat::Rgba8UnormSrgb
+    }
+
     fn width(&self) -> u32 {
         self.img.width()
     }

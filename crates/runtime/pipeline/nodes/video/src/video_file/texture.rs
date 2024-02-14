@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use ringbuffer::{AllocRingBuffer, RingBuffer};
 
 use mizer_node::*;
+use mizer_wgpu::wgpu::TextureFormat;
 use mizer_wgpu::TextureProvider;
 
 use crate::background_thread_decoder::{VideoMetadata, VideoThreadEvent};
@@ -90,6 +91,10 @@ impl VideoTexture {
 }
 
 impl TextureProvider for VideoTexture {
+    fn texture_format(&self) -> TextureFormat {
+        TextureFormat::Rgba8UnormSrgb
+    }
+
     fn width(&self) -> u32 {
         self.metadata.width
     }

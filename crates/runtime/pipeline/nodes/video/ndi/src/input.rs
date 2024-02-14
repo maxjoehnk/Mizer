@@ -8,6 +8,7 @@ use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_ndi::{NdiSource, NdiSourceRef};
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
+use mizer_wgpu::wgpu::TextureFormat;
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
@@ -191,6 +192,10 @@ impl NdiSourceTexture {
 }
 
 impl TextureProvider for NdiSourceTexture {
+    fn texture_format(&self) -> TextureFormat {
+        TextureFormat::Rgba8UnormSrgb
+    }
+
     fn width(&self) -> u32 {
         self.metadata.width
     }

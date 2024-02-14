@@ -115,7 +115,7 @@ jobs:
         run: rm -rf target/release/lib target/release/deps/libflutter_linux_gtk.so
       - name: Build Headless
         run: make build-headless
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: linux-headless
           path: target/release/mizer
@@ -124,7 +124,7 @@ jobs:
         run: make build-release
       - name: Package
         run: make mizer.zip
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: linux-full
           path: mizer.zip
@@ -149,7 +149,7 @@ jobs:
           name: linux-full
       - name: Bundle
         run: make mizer.flatpak
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Flatpak
           path: mizer.flatpak
@@ -195,7 +195,7 @@ jobs:
         run: make mizer.zip
         env:
           LIBUSB_STATIC: "true"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: macos-full
           path: mizer.zip
@@ -222,7 +222,7 @@ jobs:
       - name: Package
         run: make mizer.zip
         continue-on-error: true
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: windows-full
           path: mizer.zip
@@ -277,7 +277,7 @@ jobs:
       - name: Build
         run: flutter build apk -t lib/mobile/main.dart
         working-directory: crates/ui
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: android-remote
           path: crates/ui/build/app/outputs/flutter-apk/app-release.apk

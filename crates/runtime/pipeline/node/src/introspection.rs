@@ -90,6 +90,7 @@ node_type_name! {
         TextureOpacity,
         LumaKey,
         StaticColor,
+        Invert,
         Webcam,
         ScreenCapture,
         TextureBorder,

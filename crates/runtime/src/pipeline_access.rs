@@ -112,6 +112,7 @@ impl PipelineAccess {
             VideoRgbSplit(node) => self.add_node(path, node),
             TextureBorder(node) => self.add_node(path, node),
             StaticColor(node) => self.add_node(path, node),
+            Invert(node) => self.add_node(path, node),
             VideoText(node) => self.add_node(path, node),
             Webcam(node) => self.add_node(path, node),
             ScreenCapture(node) => self.add_node(path, node),

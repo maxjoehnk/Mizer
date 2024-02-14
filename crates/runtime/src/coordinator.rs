@@ -663,6 +663,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::TextureBorder(node) => pipeline.register_node(path, &node),
         Node::VideoText(node) => pipeline.register_node(path, &node),
         Node::StaticColor(node) => pipeline.register_node(path, &node),
+        Node::Invert(node) => pipeline.register_node(path, &node),
         Node::Webcam(node) => pipeline.register_node(path, &node),
         Node::ScreenCapture(node) => pipeline.register_node(path, &node),
         Node::ColorizeTexture(node) => pipeline.register_node(path, &node),

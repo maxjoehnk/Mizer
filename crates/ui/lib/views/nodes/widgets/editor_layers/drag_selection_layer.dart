@@ -90,7 +90,7 @@ class _DragAreaSelectionState extends State<DragAreaSelection> {
       behavior: HitTestBehavior.translucent,
       gestures: {
         PanGestureRecognizer: GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
-            () => PanGestureRecognizer(), (PanGestureRecognizer recognizer) {
+            () => PanGestureRecognizer(supportedDevices: [PointerDeviceKind.mouse].toSet()), (PanGestureRecognizer recognizer) {
           recognizer
             ..onStart = onStart
             ..onEnd = onEnd

@@ -69,7 +69,7 @@ impl PipelineNode for OscInputNode {
         format!("OSC Input ({})", self.path)
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(
             self.argument_type.get_port_id(),
             self.argument_type.get_port_type()

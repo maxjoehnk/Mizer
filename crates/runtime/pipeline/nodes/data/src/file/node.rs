@@ -1,10 +1,10 @@
-use std::fs::File;
-use std::path::PathBuf;
-use serde::{Deserialize, Serialize};
 use mizer_media::documents::{MediaDocument, MediaId};
 use mizer_media::MediaServer;
 use mizer_node::*;
 use mizer_util::StructuredData;
+use serde::{Deserialize, Serialize};
+use std::fs::File;
+use std::path::PathBuf;
 
 const FILE_SETTING: &str = "File";
 
@@ -25,7 +25,7 @@ impl ConfigurableNode for DataFileNode {
         vec![
             setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Data]),
             setting!(CSV_HEADER_SETTING, self.csv_settings.header),
-            setting!(CSV_DELIMITER, self.csv_settings.delimiter.to_string())
+            setting!(CSV_DELIMITER, self.csv_settings.delimiter.to_string()),
         ]
     }
 
@@ -57,10 +57,8 @@ impl PipelineNode for DataFileNode {
         NodeType::DataFile
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            output_port!(OUTPUT_DATA_PORT, PortType::Data),
-        ]
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+        vec![output_port!(OUTPUT_DATA_PORT, PortType::Data)]
     }
 }
 
@@ -102,7 +100,11 @@ pub struct DataFileNodeState {
 }
 
 impl DataFileNodeState {
-    fn load_if_necessary(&mut self, file: MediaDocument, settings: CsvLoadSettings) -> anyhow::Result<()> {
+    fn load_if_necessary(
+        &mut self,
+        file: MediaDocument,
+        settings: CsvLoadSettings,
+    ) -> anyhow::Result<()> {
         self.loader.load_if_necessary(file, settings)?;
         if let Some(data) = self.loader.handle_loaded_data() {
             let data = data?;
@@ -150,8 +152,13 @@ impl Default for CsvLoadSettings {
 }
 
 impl BackgroundLoader {
-    fn load_if_necessary(&mut self, file: MediaDocument, settings: CsvLoadSettings) -> anyhow::Result<()> {
-        if !matches!(self.loaded_file.as_ref(), Some((path, s)) if path == &file.file_path && settings == *s) {
+    fn load_if_necessary(
+        &mut self,
+        file: MediaDocument,
+        settings: CsvLoadSettings,
+    ) -> anyhow::Result<()> {
+        if !matches!(self.loaded_file.as_ref(), Some((path, s)) if path == &file.file_path && settings == *s)
+        {
             self.queue_loading(file, settings);
         }
 
@@ -186,7 +193,11 @@ impl BackgroundLoader {
             .delimiter(settings.delimiter as u8)
             .from_reader(file);
         let mut errors = Vec::new();
-        let headers = reader.headers()?.into_iter().map(|h| h.to_string()).collect::<Vec<_>>();
+        let headers = reader
+            .headers()?
+            .into_iter()
+            .map(|h| h.to_string())
+            .collect::<Vec<_>>();
         let rows = reader
             .into_records()
             .flat_map(|record| match record {
@@ -202,14 +213,19 @@ impl BackgroundLoader {
                         let cells = record
                             .into_iter()
                             .enumerate()
-                            .map(|(i, cell)| (
-                                headers.get(i).map(|name| name.to_string()).unwrap_or_else(|| format!("Column {}", i + 1)),
-                                StructuredData::Text(cell.to_string())))
+                            .map(|(i, cell)| {
+                                (
+                                    headers
+                                        .get(i)
+                                        .map(|name| name.to_string())
+                                        .unwrap_or_else(|| format!("Column {}", i + 1)),
+                                    StructuredData::Text(cell.to_string()),
+                                )
+                            })
                             .collect();
 
                         Some(StructuredData::Object(cells))
                     }
-
                 }
                 Err(err) => {
                     errors.push(err);

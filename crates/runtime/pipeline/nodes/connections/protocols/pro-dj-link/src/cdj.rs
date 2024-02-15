@@ -56,7 +56,7 @@ impl PipelineNode for PioneerCdjNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(ORIGINAL_TEMPO_OUTPUT, PortType::Single),
             output_port!(CURRENT_TEMPO_OUTPUT, PortType::Single),

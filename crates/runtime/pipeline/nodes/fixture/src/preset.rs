@@ -75,7 +75,7 @@ impl PipelineNode for PresetNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         let mut ports = vec![input_port!(CALL_PORT, PortType::Single)];
 
         match self.id {

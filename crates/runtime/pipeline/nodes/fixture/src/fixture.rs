@@ -17,8 +17,6 @@ const SEND_ZERO_SETTING: &str = "Send Zero";
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
     pub fixture_id: u32,
-    #[serde(skip)]
-    pub fixture_manager: Option<FixtureManager>,
     #[serde(default)]
     pub priority: FixturePriority,
     #[serde(default = "default_send_zero")]
@@ -94,25 +92,9 @@ impl PipelineNode for FixtureNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        self.fixture_manager
-            .as_ref()
-            .and_then(|manager| manager.get_fixture(self.fixture_id))
-            .and_then(|fixture| {
-                fixture
-                    .current_mode
-                    .controls
-                    .controls()
-                    .get_ports()
-                    .into_iter()
-                    .collect::<HashMap<_, _>>()
-                    .remove(port)
-            })
-    }
-
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        self.fixture_manager
-            .as_ref()
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+        let fixture_manager = injector.get::<FixtureManager>();
+        fixture_manager
             .and_then(|manager| manager.get_fixture(self.fixture_id))
             .map(|fixture| fixture.current_mode.controls.controls().get_ports())
             .unwrap_or_default()
@@ -120,10 +102,6 @@ impl PipelineNode for FixtureNode {
 
     fn node_type(&self) -> NodeType {
         NodeType::Fixture
-    }
-
-    fn prepare(&mut self, injector: &Injector) {
-        self.fixture_manager = injector.get().cloned();
     }
 }
 

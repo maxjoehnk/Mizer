@@ -201,7 +201,7 @@ impl PipelineNode for MidiOutputNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
             input_port!(COLOR_PORT, PortType::Color),

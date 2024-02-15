@@ -50,7 +50,7 @@ impl PipelineNode for MathNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         let mut ports = vec![output_port!(VALUE_OUTPUT, PortType::Single)];
         if self.mode.single_parameter() {
             ports.push(input_port!(VALUE_INPUT, PortType::Single));

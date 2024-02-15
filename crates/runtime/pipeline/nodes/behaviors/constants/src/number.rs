@@ -32,7 +32,7 @@ impl PipelineNode for ConstantNumberNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Single)]
     }
 

@@ -19,8 +19,6 @@ const SEND_ZERO_SETTING: &str = "Send Zero";
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct GroupNode {
     pub id: GroupId,
-    #[serde(skip)]
-    pub fixture_manager: Option<FixtureManager>,
     #[serde(default)]
     pub priority: FixturePriority,
     #[serde(default = "default_send_zero")]
@@ -95,15 +93,15 @@ impl PipelineNode for GroupNode {
     }
 
     // TODO: nodes need a way to notify the pipeline of new ports
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        let fixture_channels: Vec<_> = if let Some(fixture_manager) = self.fixture_manager.as_ref()
-        {
-            fixture_manager
-                .get_group_fixture_controls(self.id)
-                .get_ports()
-        } else {
-            Default::default()
-        };
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+        let fixture_channels: Vec<_> =
+            if let Some(fixture_manager) = injector.get::<FixtureManager>() {
+                fixture_manager
+                    .get_group_fixture_controls(self.id)
+                    .get_ports()
+            } else {
+                Default::default()
+            };
         fixture_channels
             .into_iter()
             .chain(vec![
@@ -115,10 +113,6 @@ impl PipelineNode for GroupNode {
 
     fn node_type(&self) -> NodeType {
         NodeType::Group
-    }
-
-    fn prepare(&mut self, injector: &Injector) {
-        self.fixture_manager = injector.get().cloned();
     }
 }
 

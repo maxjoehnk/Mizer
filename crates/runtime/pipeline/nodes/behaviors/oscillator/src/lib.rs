@@ -107,7 +107,7 @@ impl PipelineNode for OscillatorNode {
         format!("{} Wave", self.oscillator_type)
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(VALUE_OUTPUT_PORT, PortType::Single),
             input_port!(INTERVAL_INPUT_PORT, PortType::Single),

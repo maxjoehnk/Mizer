@@ -58,7 +58,7 @@ impl PipelineNode for EncoderNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INCREASE_INPUT, PortType::Single),
             input_port!(DECREASE_INPUT, PortType::Single),

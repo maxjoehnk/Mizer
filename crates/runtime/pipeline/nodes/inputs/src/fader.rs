@@ -63,7 +63,7 @@ impl PipelineNode for FaderNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
             output_port!(OUTPUT_PORT, PortType::Single),

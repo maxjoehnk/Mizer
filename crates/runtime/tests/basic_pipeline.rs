@@ -13,7 +13,7 @@ fn main() {
     let sink = utils::TestSink::new();
     let mut runtime = CoordinatorRuntime::with_clock(clock);
     add_node(
-        runtime.injector_mut(),
+        &mut runtime,
         NodeType::Oscillator,
         None,
         sink.clone(),

@@ -125,6 +125,10 @@ impl std::fmt::Debug for PipelineWorker {
     }
 }
 
+pub trait NodePortReader {
+    fn list_ports(&self, path: &NodePath) -> Option<Vec<(PortId, PortMetadata)>>;
+}
+
 impl PipelineWorker {
     pub fn new(
         node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
@@ -144,6 +148,7 @@ impl PipelineWorker {
         &mut self,
         path: NodePath,
         node: &T,
+        pipeline_access: &impl NodePortReader,
     ) {
         log::debug!("register_node {:?} ({:?})", path, node);
         let state = node.create_state();
@@ -171,7 +176,7 @@ impl PipelineWorker {
         let state: Box<S> = Box::new(state);
         self.states.insert(path.clone(), state);
         let mut receivers = NodeReceivers::default();
-        for (port_id, metadata) in node.list_ports() {
+        for (port_id, metadata) in pipeline_access.list_ports(&path).unwrap_or_default() {
             if metadata.is_input() {
                 register_receiver(&mut receivers, &path, port_id, metadata);
             }
@@ -339,9 +344,10 @@ impl PipelineWorker {
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
         clock: &mut impl Clock,
+        port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::pre_process");
-        self.check_node_receivers(&nodes);
+        self.check_node_receivers(&nodes, port_reader);
         self.order_nodes_by_dependencies(&mut nodes);
         self.pre_process_nodes(&mut nodes, clock, context);
     }
@@ -351,9 +357,10 @@ impl PipelineWorker {
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
         clock: &mut impl Clock,
+        port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::process");
-        self.check_node_receivers(&nodes);
+        self.check_node_receivers(&nodes, port_reader);
         self.order_nodes_by_dependencies(&mut nodes);
         self.process_nodes(&mut nodes, clock, context);
     }
@@ -363,18 +370,23 @@ impl PipelineWorker {
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
         clock: &mut impl Clock,
+        port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::post_process");
-        self.check_node_receivers(&nodes);
+        self.check_node_receivers(&nodes, port_reader);
         self.order_nodes_by_dependencies(&mut nodes);
         self.post_process_nodes(&mut nodes, clock, context);
     }
 
-    fn check_node_receivers(&mut self, nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)]) {
+    fn check_node_receivers(
+        &mut self,
+        nodes: &[(&NodePath, &Box<dyn ProcessingNodeExt>)],
+        port_reader: &impl NodePortReader,
+    ) {
         profiling::scope!("PipelineWorker::check_node_receivers");
-        for (path, node) in nodes {
+        for (path, _) in nodes {
             let receivers = self.receivers.entry((*path).clone()).or_default();
-            for (port_id, metadata) in node.list_ports() {
+            for (port_id, metadata) in port_reader.list_ports(path).unwrap_or_default() {
                 if !metadata.is_input() {
                     continue;
                 }

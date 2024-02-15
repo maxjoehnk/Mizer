@@ -141,7 +141,7 @@ impl PipelineNode for VideoTextNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(COLOR_PORT, PortType::Color),
             input_port!(FONT_SIZE_PORT, PortType::Single),

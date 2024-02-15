@@ -26,7 +26,7 @@ impl PipelineNode for AudioMeterNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(VOLUME_OUTPUT, PortType::Single),
             output_port!(VOLUME_L_OUTPUT, PortType::Single),

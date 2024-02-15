@@ -59,7 +59,7 @@ impl PipelineNode for TimecodeRecorderNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(VALUE_INPUT, PortType::Single)]
     }
 

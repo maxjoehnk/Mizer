@@ -48,7 +48,6 @@ impl<'a> Command<'a> for DuplicateNodeCommand {
         add_path_to_container(pipeline, self.parent.as_ref(), &new_path)?;
 
         let node = pipeline.nodes_view.get(&new_path).unwrap();
-        let ports = node.list_ports();
         let details = node.value().details();
 
         let descriptor = StaticNodeDescriptor {
@@ -56,7 +55,7 @@ impl<'a> Command<'a> for DuplicateNodeCommand {
             path: new_path.clone(),
             designer,
             details,
-            ports,
+            ports: Default::default(),
             settings: pipeline.get_settings(&self.path).unwrap_or_default(),
             config: node.downcast(),
         };

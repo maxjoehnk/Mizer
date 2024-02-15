@@ -27,7 +27,10 @@ pub use mizer_midi_nodes::{
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
-use mizer_node::{ConfigurableNode, Injector, NodeDetails, NodeSetting, NodeType, PipelineNode};
+use mizer_node::{
+    ConfigurableNode, Injector, NodeDetails, NodeSetting, NodeType, PipelineNode, PortId,
+    PortMetadata,
+};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -118,6 +121,13 @@ macro_rules! node_impl {
                 match self {
                     $(Node::$node_type(node) => node.details(),)*
                     Node::TestSink(node) => node.details(),
+                }
+            }
+
+            pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+                match self {
+                    $(Node::$node_type(node) => node.list_ports(injector),)*
+                    Node::TestSink(_) => vec![],
                 }
             }
 

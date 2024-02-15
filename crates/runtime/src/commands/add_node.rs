@@ -47,7 +47,6 @@ impl<'a> Command<'a> for AddNodeCommand {
         add_path_to_container(pipeline, self.parent.as_ref(), &path)?;
 
         let node = pipeline.nodes_view.get(&path).unwrap();
-        let ports = node.list_ports();
         let details = node.value().details();
 
         let descriptor = StaticNodeDescriptor {
@@ -55,7 +54,7 @@ impl<'a> Command<'a> for AddNodeCommand {
             path: path.clone(),
             designer: self.designer.clone(),
             details,
-            ports,
+            ports: Default::default(),
             settings: Default::default(),
             config: node.downcast(),
         };

@@ -24,6 +24,7 @@ pub struct RuntimeAccess {
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub settings: Arc<NonEmptyPinboard<HashMap<NodePath, Vec<NodeSetting>>>>,
     pub metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
+    pub ports: Arc<DashMap<NodePath, Vec<(PortId, PortMetadata)>>>,
     pub links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     pub plans: Arc<NonEmptyPinboard<Vec<Plan>>>,

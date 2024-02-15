@@ -46,7 +46,7 @@ impl PipelineNode for SelectNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(CHANNEL_PORT, PortType::Single),
             input_port!(INPUT_PORT, self.port_type, multiple),

@@ -12,7 +12,9 @@ use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId};
+use mizer_node::{
+    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId, PortMetadata,
+};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{
@@ -75,7 +77,16 @@ impl RuntimeApi for Api {
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
+            .map(|path| {
+                let ports = self
+                    .access
+                    .ports
+                    .get(&path)
+                    .map(|ports| ports.clone())
+                    .unwrap_or_default();
+
+                self.get_descriptor(path, &metadata, &designer, &settings, ports)
+            })
             .collect()
     }
 
@@ -130,7 +141,16 @@ impl RuntimeApi for Api {
             .iter()
             .map(|entry| entry.key().clone())
             .find(|node_path| node_path == path)
-            .map(|path| self.get_descriptor(path, &metadata, &designer, &settings))
+            .map(|path| {
+                let ports = self
+                    .access
+                    .ports
+                    .get(&path)
+                    .map(|ports| ports.clone())
+                    .unwrap_or_default();
+
+                self.get_descriptor(path, &metadata, &designer, &settings, ports)
+            })
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -361,9 +381,9 @@ impl Api {
         metadata: &HashMap<NodePath, NodeMetadata>,
         designer: &HashMap<NodePath, NodeDesigner>,
         settings: &HashMap<NodePath, Vec<NodeSetting>>,
+        ports: Vec<(PortId, PortMetadata)>,
     ) -> NodeDescriptor {
         let node = self.access.nodes.get(&path).unwrap();
-        let ports = node.list_ports();
         let metadata = metadata.get(&path).cloned().unwrap_or_default();
         let settings = settings.get(&path).cloned().unwrap_or_default();
         let designer = designer[&path].clone();

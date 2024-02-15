@@ -125,7 +125,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             injector: &self.injector,
         };
 
-        self.pipeline.pre_process(nodes, &context, &mut self.clock);
+        self.pipeline
+            .pre_process(nodes, &context, &mut self.clock, pipeline_access);
     }
 
     fn process_pipeline(&mut self, frame: ClockFrame) {
@@ -137,7 +138,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             injector: &self.injector,
         };
 
-        self.pipeline.process(nodes, &context, &mut self.clock);
+        self.pipeline
+            .process(nodes, &context, &mut self.clock, pipeline_access);
     }
 
     fn post_process_pipeline(&mut self, frame: ClockFrame) {
@@ -149,7 +151,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             injector: &self.injector,
         };
 
-        self.pipeline.post_process(nodes, &context, &mut self.clock);
+        self.pipeline
+            .post_process(nodes, &context, &mut self.clock, pipeline_access);
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
@@ -181,6 +184,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             nodes: pipeline_access.nodes_view.clone(),
             designer: pipeline_access.designer.clone(),
             metadata: pipeline_access.metadata.clone(),
+            ports: pipeline_access.ports.clone(),
             links: pipeline_access.links.clone(),
             settings: pipeline_access.settings.clone(),
             layouts: self.layouts.clone(),
@@ -207,6 +211,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         tracing::trace!(plan = debug(&plan));
 
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        self.read_node_ports();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
             for command in executor.commands {
                 log::debug!("Updating pipeline worker: {:?}", command);
@@ -217,7 +222,12 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                             .get(&execution_node.path)
                             .unwrap();
                         let node = node.downcast();
-                        register_node(&mut self.pipeline, execution_node.path, node);
+                        register_node(
+                            &mut self.pipeline,
+                            execution_node.path,
+                            node,
+                            pipeline_access,
+                        );
                     }
                     ExecutorCommand::RemoveNode(path) => {
                         self.pipeline.remove_node(&path, &[]);
@@ -245,6 +255,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         }
         self.read_node_settings();
+        self.read_node_metadata();
     }
 
     #[profiling::function]
@@ -385,6 +396,22 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     /// Should only be used for testing purposes
+    // TODO: this should be private, the implementation of the nodes test is such a huge smell regarding app architecture
+    #[doc(hidden)]
+    #[profiling::function]
+    pub fn read_node_ports(&self) {
+        let pipeline_access: &PipelineAccess = self.injector.get().unwrap();
+        pipeline_access.ports.clear();
+        for (path, node) in pipeline_access.nodes.iter() {
+            let _scope = format!("{:?}Node::list_ports", node.node_type());
+            profiling::scope!(&_scope);
+            let ports = node.list_ports(&self.injector);
+
+            pipeline_access.ports.insert(path.clone(), ports);
+        }
+    }
+
+    /// Should only be used for testing purposes
     #[doc(hidden)]
     pub fn plan(&mut self) {
         log::trace!("plan");
@@ -443,6 +470,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         {
             self.read_node_settings();
             self.read_node_metadata();
+            self.read_node_ports();
         }
         // TODO: add safe way to access mutable and immutable parts of the injector
         let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
@@ -534,6 +562,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
                 attached_executor: None,
             });
         }
+        self.read_node_ports();
         for link in &project.channels {
             let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
             let source_port =
@@ -621,103 +650,108 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     }
 }
 
-fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
+fn register_node(
+    pipeline: &mut PipelineWorker,
+    path: NodePath,
+    node: Node,
+    pipeline_access: &PipelineAccess,
+) {
     match node {
-        Node::Clock(node) => pipeline.register_node(path, &node),
-        Node::Oscillator(node) => pipeline.register_node(path, &node),
-        Node::DmxOutput(node) => pipeline.register_node(path, &node),
-        Node::DmxInput(node) => pipeline.register_node(path, &node),
-        Node::Scripting(node) => pipeline.register_node(path, &node),
-        Node::StepSequencer(node) => pipeline.register_node(path, &node),
-        Node::Envelope(node) => pipeline.register_node(path, &node),
-        Node::Select(node) => pipeline.register_node(path, &node),
-        Node::Merge(node) => pipeline.register_node(path, &node),
-        Node::Combine(node) => pipeline.register_node(path, &node),
-        Node::Threshold(node) => pipeline.register_node(path, &node),
-        Node::Encoder(node) => pipeline.register_node(path, &node),
-        Node::Fixture(node) => pipeline.register_node(path, &node),
-        Node::Programmer(node) => pipeline.register_node(path, &node),
-        Node::Group(node) => pipeline.register_node(path, &node),
-        Node::Preset(node) => pipeline.register_node(path, &node),
-        Node::Sequencer(node) => pipeline.register_node(path, &node),
-        Node::IldaFile(node) => pipeline.register_node(path, &node),
-        Node::Laser(node) => pipeline.register_node(path, &node),
-        Node::Fader(node) => pipeline.register_node(path, &node),
-        Node::Button(node) => pipeline.register_node(path, &node),
-        Node::Label(node) => pipeline.register_node(path, &node),
-        Node::MidiInput(node) => pipeline.register_node(path, &node),
-        Node::MidiOutput(node) => pipeline.register_node(path, &node),
-        Node::OpcOutput(node) => pipeline.register_node(path, &node),
-        Node::PixelPattern(node) => pipeline.register_node(path, &node),
-        Node::PixelDmx(node) => pipeline.register_node(path, &node),
-        Node::OscInput(node) => pipeline.register_node(path, &node),
-        Node::OscOutput(node) => pipeline.register_node(path, &node),
-        Node::VideoFile(node) => pipeline.register_node(path, &node),
-        Node::ImageFile(node) => pipeline.register_node(path, &node),
-        Node::VideoHsv(node) => pipeline.register_node(path, &node),
-        Node::VideoOutput(node) => pipeline.register_node(path, &node),
-        Node::VideoTransform(node) => pipeline.register_node(path, &node),
-        Node::VideoMixer(node) => pipeline.register_node(path, &node),
-        Node::VideoRgb(node) => pipeline.register_node(path, &node),
-        Node::VideoRgbSplit(node) => pipeline.register_node(path, &node),
-        Node::TextureBorder(node) => pipeline.register_node(path, &node),
-        Node::VideoText(node) => pipeline.register_node(path, &node),
-        Node::StaticColor(node) => pipeline.register_node(path, &node),
-        Node::Invert(node) => pipeline.register_node(path, &node),
-        Node::Webcam(node) => pipeline.register_node(path, &node),
-        Node::ScreenCapture(node) => pipeline.register_node(path, &node),
-        Node::ColorizeTexture(node) => pipeline.register_node(path, &node),
-        Node::TextureMask(node) => pipeline.register_node(path, &node),
-        Node::TextureOpacity(node) => pipeline.register_node(path, &node),
-        Node::LumaKey(node) => pipeline.register_node(path, &node),
-        Node::ColorConstant(node) => pipeline.register_node(path, &node),
-        Node::ColorBrightness(node) => pipeline.register_node(path, &node),
-        Node::ColorRgb(node) => pipeline.register_node(path, &node),
-        Node::ColorHsv(node) => pipeline.register_node(path, &node),
-        Node::ColorToHsv(node) => pipeline.register_node(path, &node),
-        Node::Gamepad(node) => pipeline.register_node(path, &node),
-        Node::Container(node) => pipeline.register_node(path, &node),
-        Node::Math(node) => pipeline.register_node(path, &node),
-        Node::MqttInput(node) => pipeline.register_node(path, &node),
-        Node::MqttOutput(node) => pipeline.register_node(path, &node),
-        Node::NumberToData(node) => pipeline.register_node(path, &node),
-        Node::DataToNumber(node) => pipeline.register_node(path, &node),
-        Node::MultiToData(node) => pipeline.register_node(path, &node),
-        Node::DataFile(node) => pipeline.register_node(path, &node),
-        Node::NumberToClock(node) => pipeline.register_node(path, &node),
-        Node::Value(node) => pipeline.register_node(path, &node),
-        Node::Extract(node) => pipeline.register_node(path, &node),
-        Node::PlanScreen(node) => pipeline.register_node(path, &node),
-        Node::Delay(node) => pipeline.register_node(path, &node),
-        Node::Countdown(node) => pipeline.register_node(path, &node),
-        Node::TimeTrigger(node) => pipeline.register_node(path, &node),
-        Node::Ramp(node) => pipeline.register_node(path, &node),
-        Node::Noise(node) => pipeline.register_node(path, &node),
-        Node::Transport(node) => pipeline.register_node(path, &node),
-        Node::G13Input(node) => pipeline.register_node(path, &node),
-        Node::G13Output(node) => pipeline.register_node(path, &node),
-        Node::ConstantNumber(node) => pipeline.register_node(path, &node),
-        Node::Conditional(node) => pipeline.register_node(path, &node),
-        Node::TimecodeControl(node) => pipeline.register_node(path, &node),
-        Node::TimecodeOutput(node) => pipeline.register_node(path, &node),
-        Node::TimecodeRecorder(node) => pipeline.register_node(path, &node),
-        Node::AudioFile(node) => pipeline.register_node(path, &node),
-        Node::AudioOutput(node) => pipeline.register_node(path, &node),
-        Node::AudioVolume(node) => pipeline.register_node(path, &node),
-        Node::AudioInput(node) => pipeline.register_node(path, &node),
-        Node::AudioMix(node) => pipeline.register_node(path, &node),
-        Node::AudioMeter(node) => pipeline.register_node(path, &node),
-        Node::Template(node) => pipeline.register_node(path, &node),
-        Node::Beats(node) => pipeline.register_node(path, &node),
-        Node::ProDjLinkClock(node) => pipeline.register_node(path, &node),
-        Node::PioneerCdj(node) => pipeline.register_node(path, &node),
-        Node::NdiOutput(node) => pipeline.register_node(path, &node),
-        Node::NdiInput(node) => pipeline.register_node(path, &node),
-        Node::SurfaceMapping(node) => pipeline.register_node(path, &node),
-        Node::VectorFile(node) => pipeline.register_node(path, &node),
-        Node::RasterizeVector(node) => pipeline.register_node(path, &node),
-        Node::Comparison(node) => pipeline.register_node(path, &node),
-        Node::TestSink(node) => pipeline.register_node(path, &node),
+        Node::Clock(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Oscillator(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DmxOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DmxInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Scripting(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::StepSequencer(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Envelope(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Select(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Merge(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Combine(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Threshold(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Encoder(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Fixture(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Programmer(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Group(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Preset(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Sequencer(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::IldaFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Laser(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Fader(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Button(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Label(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::MidiInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::MidiOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::OpcOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::PixelPattern(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::PixelDmx(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::OscInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::OscOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ImageFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoHsv(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoTransform(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoMixer(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoRgb(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoRgbSplit(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TextureBorder(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VideoText(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::StaticColor(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Invert(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Webcam(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ScreenCapture(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorizeTexture(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TextureMask(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TextureOpacity(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::LumaKey(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorConstant(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorBrightness(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorRgb(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorHsv(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ColorToHsv(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Gamepad(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Container(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Math(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::MqttInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::MqttOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::NumberToData(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DataToNumber(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::MultiToData(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DataFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::NumberToClock(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Value(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Extract(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::PlanScreen(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Delay(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Countdown(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TimeTrigger(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Ramp(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Noise(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Transport(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::G13Input(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::G13Output(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ConstantNumber(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Conditional(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TimecodeControl(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TimecodeOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TimecodeRecorder(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioVolume(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioMix(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::AudioMeter(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Template(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Beats(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::ProDjLinkClock(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::PioneerCdj(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::NdiOutput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::NdiInput(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::SurfaceMapping(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::VectorFile(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::RasterizeVector(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Comparison(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::TestSink(node) => pipeline.register_node(path, &node, pipeline_access),
     }
 }
 

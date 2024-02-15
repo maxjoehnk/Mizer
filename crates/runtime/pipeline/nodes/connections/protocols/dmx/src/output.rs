@@ -59,7 +59,7 @@ impl PipelineNode for DmxOutputNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Single)]
     }
 

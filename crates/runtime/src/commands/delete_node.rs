@@ -157,6 +157,11 @@ mod tests {
             FaderNode::default().into(),
             Default::default(),
         );
+        let injector = Injector::default();
+        let ports = pipeline_access.nodes[&path1].list_ports(&injector);
+        pipeline_access.ports.insert(path1.clone(), ports);
+        let ports = pipeline_access.nodes[&path2].list_ports(&injector);
+        pipeline_access.ports.insert(path2.clone(), ports);
         pipeline_access
             .add_link(NodeLink {
                 source: path1.clone(),

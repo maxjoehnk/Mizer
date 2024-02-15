@@ -23,7 +23,7 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
     let mut runtime = CoordinatorRuntime::with_clock(clock);
     let node_type = node.node_type();
     add_node(
-        runtime.injector_mut(),
+        &mut runtime,
         node_type,
         Some(node.into()),
         sink.clone(),

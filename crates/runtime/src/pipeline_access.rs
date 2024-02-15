@@ -19,6 +19,7 @@ pub struct PipelineAccess {
     pub metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub(crate) settings: Arc<NonEmptyPinboard<HashMap<NodePath, Vec<NodeSetting>>>>,
+    pub(crate) ports: Arc<DashMap<NodePath, Vec<(PortId, PortMetadata)>>>,
 }
 
 impl Default for PipelineAccess {
@@ -30,7 +31,14 @@ impl Default for PipelineAccess {
             metadata: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
             settings: NonEmptyPinboard::new(Default::default()).into(),
+            ports: Default::default(),
         }
+    }
+}
+
+impl NodePortReader for PipelineAccess {
+    fn list_ports(&self, path: &NodePath) -> Option<Vec<(PortId, PortMetadata)>> {
+        self.ports.get(path).map(|ports| ports.clone())
     }
 }
 
@@ -240,14 +248,14 @@ impl PipelineAccess {
     }
 
     fn get_ports(&self, link: &NodeLink) -> anyhow::Result<(PortMetadata, PortMetadata)> {
-        let source_node = self.nodes.get(&link.source).ok_or_else(|| {
+        let _source_node = self.nodes.get(&link.source).ok_or_else(|| {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.source)
         })?;
-        let target_node = self.nodes.get(&link.target).ok_or_else(|| {
+        let _target_node = self.nodes.get(&link.target).ok_or_else(|| {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.target)
         })?;
-        let source_port = source_node
-            .introspect_output_port(&link.source_port)
+        let source_port = self
+            .try_get_output_port_metadata(&link.source, &link.source_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",
@@ -255,8 +263,8 @@ impl PipelineAccess {
                     link.source
                 )
             })?;
-        let target_port = target_node
-            .introspect_input_port(&link.target_port)
+        let target_port = self
+            .try_get_input_port_metadata(&link.target, &link.target_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",
@@ -273,8 +281,7 @@ impl PipelineAccess {
         path: &NodePath,
         port: &PortId,
     ) -> Option<PortMetadata> {
-        let node = self.nodes_view.get(path)?;
-        node.introspect_input_port(port)
+        self.get_port_metadata(path, port, PortDirection::Input)
     }
 
     pub(crate) fn get_input_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
@@ -282,9 +289,32 @@ impl PipelineAccess {
             .unwrap_or_default()
     }
 
+    pub(crate) fn try_get_output_port_metadata(
+        &self,
+        path: &NodePath,
+        port: &PortId,
+    ) -> Option<PortMetadata> {
+        self.get_port_metadata(path, port, PortDirection::Output)
+    }
+
     pub(crate) fn get_output_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
-        let node = self.nodes_view.get(path).unwrap();
-        node.introspect_output_port(port).unwrap_or_default()
+        self.try_get_output_port_metadata(path, port)
+            .unwrap_or_default()
+    }
+
+    fn get_port_metadata(
+        &self,
+        path: &NodePath,
+        port: &PortId,
+        direction: PortDirection,
+    ) -> Option<PortMetadata> {
+        self.ports.get(path).and_then(|ports| {
+            ports
+                .iter()
+                .filter(|(_, port)| port.direction == direction)
+                .find(|(id, _)| id == port)
+                .map(|(_, port)| *port)
+        })
     }
 
     pub fn get_settings(&self, path: &NodePath) -> Option<Vec<NodeSetting>> {

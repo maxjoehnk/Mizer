@@ -44,7 +44,7 @@ impl PipelineNode for TemplateNode {
         }
     }
 
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Data, multiple),
             output_port!(OUTPUT_PORT, PortType::Data),

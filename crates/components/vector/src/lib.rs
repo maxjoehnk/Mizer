@@ -20,7 +20,7 @@ impl fmt::Debug for VectorData {
 
 impl PartialEq for VectorData {
     fn eq(&self, other: &Self) -> bool {
-        self.0.data().path_data == other.0.data().path_data
+        self.0.encoding().path_data == other.0.encoding().path_data
     }
 }
 

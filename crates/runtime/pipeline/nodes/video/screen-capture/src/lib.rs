@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use anyhow::{anyhow, Context};
 use ringbuffer::{AllocRingBuffer, RingBuffer};
-use screenshots::Screen;
+use screenshots::Monitor;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -24,11 +24,11 @@ pub struct ScreenCaptureNode {
 
 impl Default for ScreenCaptureNode {
     fn default() -> Self {
-        let primary_screen = Screen::all()
+        let primary_screen = Monitor::all()
             .unwrap_or_default()
             .into_iter()
-            .find(|screen| screen.display_info.is_primary)
-            .map(|screen| screen.display_info.id)
+            .find(|screen| screen.is_primary())
+            .map(|screen| screen.id())
             .unwrap_or_default();
 
         Self {
@@ -39,7 +39,7 @@ impl Default for ScreenCaptureNode {
 
 impl ConfigurableNode for ScreenCaptureNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        let screens = match Screen::all() {
+        let screens = match Monitor::all() {
             Ok(screens) => screens,
             Err(err) => {
                 tracing::error!(error = ?err, "Failed to list screens");
@@ -50,10 +50,12 @@ impl ConfigurableNode for ScreenCaptureNode {
         let screens = screens
             .into_iter()
             .map(|screen| IdVariant {
-                value: screen.display_info.id,
+                value: screen.id(),
                 label: format!(
                     "Screen {} ({}x{})",
-                    screen.display_info.id, screen.display_info.width, screen.display_info.height
+                    screen.name(),
+                    screen.width(),
+                    screen.height()
                 ),
             })
             .collect();
@@ -106,7 +108,7 @@ impl ProcessingNode for ScreenCaptureNode {
         }
 
         if let Some(state) = state.as_mut() {
-            if state.screen.display_info.id != self.screen_id {
+            if state.screen.id() != self.screen_id {
                 if let Some(screen) = self.get_screen()? {
                     state.change_screen(screen)?;
                 }
@@ -132,11 +134,11 @@ impl ProcessingNode for ScreenCaptureNode {
 }
 
 impl ScreenCaptureNode {
-    fn get_screen(&self) -> anyhow::Result<Option<Screen>> {
-        if let Some(screen) = Screen::all()
+    fn get_screen(&self) -> anyhow::Result<Option<Monitor>> {
+        if let Some(screen) = Monitor::all()
             .context("Listing screens")?
             .into_iter()
-            .find(|screen| screen.display_info.id == self.screen_id)
+            .find(|screen| screen.id() == self.screen_id)
         {
             Ok(Some(screen))
         } else {
@@ -146,7 +148,7 @@ impl ScreenCaptureNode {
 }
 
 pub struct ScreenCaptureState {
-    screen: Screen,
+    screen: Monitor,
     texture: ScreenCaptureTexture,
     pipeline: TextureSourceStage,
     transfer_texture: TextureHandle,
@@ -157,10 +159,10 @@ impl ScreenCaptureState {
     fn new(
         context: &WgpuContext,
         registry: &TextureRegistry,
-        screen: Screen,
+        screen: Monitor,
     ) -> anyhow::Result<Self> {
         let mut decode_handle = BackgroundDecoderThread::spawn()?;
-        let metadata = decode_handle.decode(screen)?;
+        let metadata = decode_handle.decode(screen.clone())?;
         let mut texture = ScreenCaptureTexture::new(metadata);
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
@@ -179,8 +181,8 @@ impl ScreenCaptureState {
         self.texture.receive_frames(&mut self.decode_handle);
     }
 
-    fn change_screen(&mut self, screen: Screen) -> anyhow::Result<()> {
-        self.screen = screen;
+    fn change_screen(&mut self, screen: Monitor) -> anyhow::Result<()> {
+        self.screen = screen.clone();
         let metadata = self.decode_handle.decode(screen)?;
         self.texture = ScreenCaptureTexture::new(metadata);
 
@@ -247,12 +249,12 @@ struct CaptureArea {
 }
 
 struct ScreenCaptureDecoder {
-    screen: Screen,
+    screen: Monitor,
     area: Option<CaptureArea>,
 }
 
 impl VideoDecoder for ScreenCaptureDecoder {
-    type CreateDecoder = Screen;
+    type CreateDecoder = Monitor;
     type Commands = ();
 
     fn new(args: Self::CreateDecoder) -> anyhow::Result<Self>
@@ -271,10 +273,12 @@ impl VideoDecoder for ScreenCaptureDecoder {
 
     fn decode(&mut self) -> anyhow::Result<Option<Vec<u8>>> {
         let image = if let Some(area) = self.area {
-            self.screen
-                .capture_area(area.x, area.y, area.width, area.height)?
+            // TODO: calculate monitor area, take screenshots of all screens and combine into single picture
+            // self.screen
+            //     .capture_area(area.x, area.y, area.width, area.height)?
+            anyhow::bail!("Capture area not implemented")
         } else {
-            self.screen.capture()?
+            self.screen.capture_image()?
         };
         let data = image.into_flat_samples().samples;
 
@@ -283,8 +287,8 @@ impl VideoDecoder for ScreenCaptureDecoder {
 
     fn metadata(&self) -> anyhow::Result<VideoMetadata> {
         Ok(VideoMetadata {
-            width: self.screen.display_info.width,
-            height: self.screen.display_info.height,
+            width: self.screen.width(),
+            height: self.screen.height(),
             fps: 60.,
             frames: 0,
         })

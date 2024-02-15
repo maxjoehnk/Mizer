@@ -10,7 +10,8 @@ use mizer_util::Spline;
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
 pub struct NodeSetting {
-    pub label: Cow<'static, str>,
+    pub id: Cow<'static, str>,
+    pub label: Option<Cow<'static, str>>,
     pub description: String,
     pub disabled: bool,
     pub value: NodeSettingValue,
@@ -18,6 +19,12 @@ pub struct NodeSetting {
 }
 
 impl NodeSetting {
+    pub fn label(mut self, label: impl Into<Cow<'static, str>>) -> Self {
+        self.label = Some(label.into());
+
+        self
+    }
+
     pub fn description(mut self, description: String) -> Self {
         self.description = description;
 

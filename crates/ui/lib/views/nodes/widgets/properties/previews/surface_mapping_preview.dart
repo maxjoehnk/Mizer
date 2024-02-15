@@ -15,12 +15,12 @@ class SurfaceMappingSettingsPreview extends StatelessWidget {
     return MizerButton(child: Text("Open Surface"), onClick: () => _openSurface(context));
   }
 
-  String _getSetting(String label) {
+  String _getSetting(String id) {
     return settings
         .firstWhere((element) {
-          return element.hasSelect() && element.label == label;
+          return element.hasSelectValue() && element.id == id;
         })
-        .select
+        .selectValue
         .value;
   }
 

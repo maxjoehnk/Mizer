@@ -2558,38 +2558,42 @@ class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
 }
 
 enum NodeSetting_Value {
-  text, 
-  float, 
-  int_6, 
-  bool_7, 
-  select, 
-  enum_9, 
-  id, 
-  spline, 
-  media, 
-  uint, 
-  stepSequencer, 
+  textValue, 
+  floatValue, 
+  intValue, 
+  boolValue, 
+  selectValue, 
+  enumValue, 
+  idValue, 
+  splineValue, 
+  mediaValue, 
+  uintValue, 
+  stepSequencerValue, 
   notSet
 }
 
 class NodeSetting extends $pb.GeneratedMessage {
   factory NodeSetting({
+    $core.String? id,
     $core.String? label,
     $core.String? description,
     $core.bool? disabled,
-    NodeSetting_TextValue? text,
-    NodeSetting_FloatValue? float,
-    NodeSetting_IntValue? int_6,
-    NodeSetting_BoolValue? bool_7,
-    NodeSetting_SelectValue? select,
-    NodeSetting_EnumValue? enum_9,
-    NodeSetting_IdValue? id,
-    NodeSetting_SplineValue? spline,
-    NodeSetting_MediaValue? media,
-    NodeSetting_UintValue? uint,
-    NodeSetting_StepSequencerValue? stepSequencer,
+    NodeSetting_TextValue? textValue,
+    NodeSetting_FloatValue? floatValue,
+    NodeSetting_IntValue? intValue,
+    NodeSetting_BoolValue? boolValue,
+    NodeSetting_SelectValue? selectValue,
+    NodeSetting_EnumValue? enumValue,
+    NodeSetting_IdValue? idValue,
+    NodeSetting_SplineValue? splineValue,
+    NodeSetting_MediaValue? mediaValue,
+    NodeSetting_UintValue? uintValue,
+    NodeSetting_StepSequencerValue? stepSequencerValue,
   }) {
     final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
     if (label != null) {
       $result.label = label;
     }
@@ -2599,38 +2603,38 @@ class NodeSetting extends $pb.GeneratedMessage {
     if (disabled != null) {
       $result.disabled = disabled;
     }
-    if (text != null) {
-      $result.text = text;
+    if (textValue != null) {
+      $result.textValue = textValue;
     }
-    if (float != null) {
-      $result.float = float;
+    if (floatValue != null) {
+      $result.floatValue = floatValue;
     }
-    if (int_6 != null) {
-      $result.int_6 = int_6;
+    if (intValue != null) {
+      $result.intValue = intValue;
     }
-    if (bool_7 != null) {
-      $result.bool_7 = bool_7;
+    if (boolValue != null) {
+      $result.boolValue = boolValue;
     }
-    if (select != null) {
-      $result.select = select;
+    if (selectValue != null) {
+      $result.selectValue = selectValue;
     }
-    if (enum_9 != null) {
-      $result.enum_9 = enum_9;
+    if (enumValue != null) {
+      $result.enumValue = enumValue;
     }
-    if (id != null) {
-      $result.id = id;
+    if (idValue != null) {
+      $result.idValue = idValue;
     }
-    if (spline != null) {
-      $result.spline = spline;
+    if (splineValue != null) {
+      $result.splineValue = splineValue;
     }
-    if (media != null) {
-      $result.media = media;
+    if (mediaValue != null) {
+      $result.mediaValue = mediaValue;
     }
-    if (uint != null) {
-      $result.uint = uint;
+    if (uintValue != null) {
+      $result.uintValue = uintValue;
     }
-    if (stepSequencer != null) {
-      $result.stepSequencer = stepSequencer;
+    if (stepSequencerValue != null) {
+      $result.stepSequencerValue = stepSequencerValue;
     }
     return $result;
   }
@@ -2639,35 +2643,36 @@ class NodeSetting extends $pb.GeneratedMessage {
   factory NodeSetting.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static const $core.Map<$core.int, NodeSetting_Value> _NodeSetting_ValueByTag = {
-    4 : NodeSetting_Value.text,
-    5 : NodeSetting_Value.float,
-    6 : NodeSetting_Value.int_6,
-    7 : NodeSetting_Value.bool_7,
-    8 : NodeSetting_Value.select,
-    9 : NodeSetting_Value.enum_9,
-    10 : NodeSetting_Value.id,
-    11 : NodeSetting_Value.spline,
-    12 : NodeSetting_Value.media,
-    13 : NodeSetting_Value.uint,
-    14 : NodeSetting_Value.stepSequencer,
+    5 : NodeSetting_Value.textValue,
+    6 : NodeSetting_Value.floatValue,
+    7 : NodeSetting_Value.intValue,
+    8 : NodeSetting_Value.boolValue,
+    9 : NodeSetting_Value.selectValue,
+    10 : NodeSetting_Value.enumValue,
+    11 : NodeSetting_Value.idValue,
+    12 : NodeSetting_Value.splineValue,
+    13 : NodeSetting_Value.mediaValue,
+    14 : NodeSetting_Value.uintValue,
+    15 : NodeSetting_Value.stepSequencerValue,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
-    ..aOS(1, _omitFieldNames ? '' : 'label')
-    ..aOS(2, _omitFieldNames ? '' : 'description')
-    ..aOB(3, _omitFieldNames ? '' : 'disabled')
-    ..aOM<NodeSetting_TextValue>(4, _omitFieldNames ? '' : 'text', subBuilder: NodeSetting_TextValue.create)
-    ..aOM<NodeSetting_FloatValue>(5, _omitFieldNames ? '' : 'float', subBuilder: NodeSetting_FloatValue.create)
-    ..aOM<NodeSetting_IntValue>(6, _omitFieldNames ? '' : 'int', subBuilder: NodeSetting_IntValue.create)
-    ..aOM<NodeSetting_BoolValue>(7, _omitFieldNames ? '' : 'bool', subBuilder: NodeSetting_BoolValue.create)
-    ..aOM<NodeSetting_SelectValue>(8, _omitFieldNames ? '' : 'select', subBuilder: NodeSetting_SelectValue.create)
-    ..aOM<NodeSetting_EnumValue>(9, _omitFieldNames ? '' : 'enum', subBuilder: NodeSetting_EnumValue.create)
-    ..aOM<NodeSetting_IdValue>(10, _omitFieldNames ? '' : 'id', subBuilder: NodeSetting_IdValue.create)
-    ..aOM<NodeSetting_SplineValue>(11, _omitFieldNames ? '' : 'spline', subBuilder: NodeSetting_SplineValue.create)
-    ..aOM<NodeSetting_MediaValue>(12, _omitFieldNames ? '' : 'media', subBuilder: NodeSetting_MediaValue.create)
-    ..aOM<NodeSetting_UintValue>(13, _omitFieldNames ? '' : 'uint', subBuilder: NodeSetting_UintValue.create)
-    ..aOM<NodeSetting_StepSequencerValue>(14, _omitFieldNames ? '' : 'stepSequencer', subBuilder: NodeSetting_StepSequencerValue.create)
+    ..oo(0, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'label')
+    ..aOS(3, _omitFieldNames ? '' : 'description')
+    ..aOB(4, _omitFieldNames ? '' : 'disabled')
+    ..aOM<NodeSetting_TextValue>(5, _omitFieldNames ? '' : 'textValue', subBuilder: NodeSetting_TextValue.create)
+    ..aOM<NodeSetting_FloatValue>(6, _omitFieldNames ? '' : 'floatValue', subBuilder: NodeSetting_FloatValue.create)
+    ..aOM<NodeSetting_IntValue>(7, _omitFieldNames ? '' : 'intValue', subBuilder: NodeSetting_IntValue.create)
+    ..aOM<NodeSetting_BoolValue>(8, _omitFieldNames ? '' : 'boolValue', subBuilder: NodeSetting_BoolValue.create)
+    ..aOM<NodeSetting_SelectValue>(9, _omitFieldNames ? '' : 'selectValue', subBuilder: NodeSetting_SelectValue.create)
+    ..aOM<NodeSetting_EnumValue>(10, _omitFieldNames ? '' : 'enumValue', subBuilder: NodeSetting_EnumValue.create)
+    ..aOM<NodeSetting_IdValue>(11, _omitFieldNames ? '' : 'idValue', subBuilder: NodeSetting_IdValue.create)
+    ..aOM<NodeSetting_SplineValue>(12, _omitFieldNames ? '' : 'splineValue', subBuilder: NodeSetting_SplineValue.create)
+    ..aOM<NodeSetting_MediaValue>(13, _omitFieldNames ? '' : 'mediaValue', subBuilder: NodeSetting_MediaValue.create)
+    ..aOM<NodeSetting_UintValue>(14, _omitFieldNames ? '' : 'uintValue', subBuilder: NodeSetting_UintValue.create)
+    ..aOM<NodeSetting_StepSequencerValue>(15, _omitFieldNames ? '' : 'stepSequencerValue', subBuilder: NodeSetting_StepSequencerValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -2696,152 +2701,161 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearValue() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.String get label => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set label($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasLabel() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLabel() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get description => $_getSZ(1);
+  $core.String get label => $_getSZ(1);
   @$pb.TagNumber(2)
-  set description($core.String v) { $_setString(1, v); }
+  set label($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasDescription() => $_has(1);
+  $core.bool hasLabel() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDescription() => clearField(2);
+  void clearLabel() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.bool get disabled => $_getBF(2);
+  $core.String get description => $_getSZ(2);
   @$pb.TagNumber(3)
-  set disabled($core.bool v) { $_setBool(2, v); }
+  set description($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasDisabled() => $_has(2);
+  $core.bool hasDescription() => $_has(2);
   @$pb.TagNumber(3)
-  void clearDisabled() => clearField(3);
+  void clearDescription() => clearField(3);
 
   @$pb.TagNumber(4)
-  NodeSetting_TextValue get text => $_getN(3);
+  $core.bool get disabled => $_getBF(3);
   @$pb.TagNumber(4)
-  set text(NodeSetting_TextValue v) { setField(4, v); }
+  set disabled($core.bool v) { $_setBool(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasText() => $_has(3);
+  $core.bool hasDisabled() => $_has(3);
   @$pb.TagNumber(4)
-  void clearText() => clearField(4);
-  @$pb.TagNumber(4)
-  NodeSetting_TextValue ensureText() => $_ensure(3);
+  void clearDisabled() => clearField(4);
 
   @$pb.TagNumber(5)
-  NodeSetting_FloatValue get float => $_getN(4);
+  NodeSetting_TextValue get textValue => $_getN(4);
   @$pb.TagNumber(5)
-  set float(NodeSetting_FloatValue v) { setField(5, v); }
+  set textValue(NodeSetting_TextValue v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasFloat() => $_has(4);
+  $core.bool hasTextValue() => $_has(4);
   @$pb.TagNumber(5)
-  void clearFloat() => clearField(5);
+  void clearTextValue() => clearField(5);
   @$pb.TagNumber(5)
-  NodeSetting_FloatValue ensureFloat() => $_ensure(4);
+  NodeSetting_TextValue ensureTextValue() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  NodeSetting_IntValue get int_6 => $_getN(5);
+  NodeSetting_FloatValue get floatValue => $_getN(5);
   @$pb.TagNumber(6)
-  set int_6(NodeSetting_IntValue v) { setField(6, v); }
+  set floatValue(NodeSetting_FloatValue v) { setField(6, v); }
   @$pb.TagNumber(6)
-  $core.bool hasInt_6() => $_has(5);
+  $core.bool hasFloatValue() => $_has(5);
   @$pb.TagNumber(6)
-  void clearInt_6() => clearField(6);
+  void clearFloatValue() => clearField(6);
   @$pb.TagNumber(6)
-  NodeSetting_IntValue ensureInt_6() => $_ensure(5);
+  NodeSetting_FloatValue ensureFloatValue() => $_ensure(5);
 
   @$pb.TagNumber(7)
-  NodeSetting_BoolValue get bool_7 => $_getN(6);
+  NodeSetting_IntValue get intValue => $_getN(6);
   @$pb.TagNumber(7)
-  set bool_7(NodeSetting_BoolValue v) { setField(7, v); }
+  set intValue(NodeSetting_IntValue v) { setField(7, v); }
   @$pb.TagNumber(7)
-  $core.bool hasBool_7() => $_has(6);
+  $core.bool hasIntValue() => $_has(6);
   @$pb.TagNumber(7)
-  void clearBool_7() => clearField(7);
+  void clearIntValue() => clearField(7);
   @$pb.TagNumber(7)
-  NodeSetting_BoolValue ensureBool_7() => $_ensure(6);
+  NodeSetting_IntValue ensureIntValue() => $_ensure(6);
 
   @$pb.TagNumber(8)
-  NodeSetting_SelectValue get select => $_getN(7);
+  NodeSetting_BoolValue get boolValue => $_getN(7);
   @$pb.TagNumber(8)
-  set select(NodeSetting_SelectValue v) { setField(8, v); }
+  set boolValue(NodeSetting_BoolValue v) { setField(8, v); }
   @$pb.TagNumber(8)
-  $core.bool hasSelect() => $_has(7);
+  $core.bool hasBoolValue() => $_has(7);
   @$pb.TagNumber(8)
-  void clearSelect() => clearField(8);
+  void clearBoolValue() => clearField(8);
   @$pb.TagNumber(8)
-  NodeSetting_SelectValue ensureSelect() => $_ensure(7);
+  NodeSetting_BoolValue ensureBoolValue() => $_ensure(7);
 
   @$pb.TagNumber(9)
-  NodeSetting_EnumValue get enum_9 => $_getN(8);
+  NodeSetting_SelectValue get selectValue => $_getN(8);
   @$pb.TagNumber(9)
-  set enum_9(NodeSetting_EnumValue v) { setField(9, v); }
+  set selectValue(NodeSetting_SelectValue v) { setField(9, v); }
   @$pb.TagNumber(9)
-  $core.bool hasEnum_9() => $_has(8);
+  $core.bool hasSelectValue() => $_has(8);
   @$pb.TagNumber(9)
-  void clearEnum_9() => clearField(9);
+  void clearSelectValue() => clearField(9);
   @$pb.TagNumber(9)
-  NodeSetting_EnumValue ensureEnum_9() => $_ensure(8);
+  NodeSetting_SelectValue ensureSelectValue() => $_ensure(8);
 
   @$pb.TagNumber(10)
-  NodeSetting_IdValue get id => $_getN(9);
+  NodeSetting_EnumValue get enumValue => $_getN(9);
   @$pb.TagNumber(10)
-  set id(NodeSetting_IdValue v) { setField(10, v); }
+  set enumValue(NodeSetting_EnumValue v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasId() => $_has(9);
+  $core.bool hasEnumValue() => $_has(9);
   @$pb.TagNumber(10)
-  void clearId() => clearField(10);
+  void clearEnumValue() => clearField(10);
   @$pb.TagNumber(10)
-  NodeSetting_IdValue ensureId() => $_ensure(9);
+  NodeSetting_EnumValue ensureEnumValue() => $_ensure(9);
 
   @$pb.TagNumber(11)
-  NodeSetting_SplineValue get spline => $_getN(10);
+  NodeSetting_IdValue get idValue => $_getN(10);
   @$pb.TagNumber(11)
-  set spline(NodeSetting_SplineValue v) { setField(11, v); }
+  set idValue(NodeSetting_IdValue v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasSpline() => $_has(10);
+  $core.bool hasIdValue() => $_has(10);
   @$pb.TagNumber(11)
-  void clearSpline() => clearField(11);
+  void clearIdValue() => clearField(11);
   @$pb.TagNumber(11)
-  NodeSetting_SplineValue ensureSpline() => $_ensure(10);
+  NodeSetting_IdValue ensureIdValue() => $_ensure(10);
 
   @$pb.TagNumber(12)
-  NodeSetting_MediaValue get media => $_getN(11);
+  NodeSetting_SplineValue get splineValue => $_getN(11);
   @$pb.TagNumber(12)
-  set media(NodeSetting_MediaValue v) { setField(12, v); }
+  set splineValue(NodeSetting_SplineValue v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasMedia() => $_has(11);
+  $core.bool hasSplineValue() => $_has(11);
   @$pb.TagNumber(12)
-  void clearMedia() => clearField(12);
+  void clearSplineValue() => clearField(12);
   @$pb.TagNumber(12)
-  NodeSetting_MediaValue ensureMedia() => $_ensure(11);
+  NodeSetting_SplineValue ensureSplineValue() => $_ensure(11);
 
   @$pb.TagNumber(13)
-  NodeSetting_UintValue get uint => $_getN(12);
+  NodeSetting_MediaValue get mediaValue => $_getN(12);
   @$pb.TagNumber(13)
-  set uint(NodeSetting_UintValue v) { setField(13, v); }
+  set mediaValue(NodeSetting_MediaValue v) { setField(13, v); }
   @$pb.TagNumber(13)
-  $core.bool hasUint() => $_has(12);
+  $core.bool hasMediaValue() => $_has(12);
   @$pb.TagNumber(13)
-  void clearUint() => clearField(13);
+  void clearMediaValue() => clearField(13);
   @$pb.TagNumber(13)
-  NodeSetting_UintValue ensureUint() => $_ensure(12);
+  NodeSetting_MediaValue ensureMediaValue() => $_ensure(12);
 
   @$pb.TagNumber(14)
-  NodeSetting_StepSequencerValue get stepSequencer => $_getN(13);
+  NodeSetting_UintValue get uintValue => $_getN(13);
   @$pb.TagNumber(14)
-  set stepSequencer(NodeSetting_StepSequencerValue v) { setField(14, v); }
+  set uintValue(NodeSetting_UintValue v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasStepSequencer() => $_has(13);
+  $core.bool hasUintValue() => $_has(13);
   @$pb.TagNumber(14)
-  void clearStepSequencer() => clearField(14);
+  void clearUintValue() => clearField(14);
   @$pb.TagNumber(14)
-  NodeSetting_StepSequencerValue ensureStepSequencer() => $_ensure(13);
+  NodeSetting_UintValue ensureUintValue() => $_ensure(13);
+
+  @$pb.TagNumber(15)
+  NodeSetting_StepSequencerValue get stepSequencerValue => $_getN(14);
+  @$pb.TagNumber(15)
+  set stepSequencerValue(NodeSetting_StepSequencerValue v) { setField(15, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasStepSequencerValue() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearStepSequencerValue() => clearField(15);
+  @$pb.TagNumber(15)
+  NodeSetting_StepSequencerValue ensureStepSequencerValue() => $_ensure(14);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

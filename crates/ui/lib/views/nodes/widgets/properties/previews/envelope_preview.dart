@@ -22,9 +22,9 @@ class EnvelopeSettingsPreview extends StatelessWidget {
   double _getSetting(String label) {
     return settings
         .firstWhere((element) {
-          return element.hasFloat() && element.label == label;
+          return element.hasFloatValue() && element.label == label;
         })
-        .float
+        .floatValue
         .value;
   }
 }

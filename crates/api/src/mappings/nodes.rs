@@ -225,7 +225,8 @@ impl From<StaticNodeDescriptor> for Node {
 impl From<mizer_node::NodeSetting> for NodeSetting {
     fn from(setting: mizer_node::NodeSetting) -> Self {
         Self {
-            label: setting.label.into(),
+            id: setting.id.into(),
+            label: setting.label.map(|label| label.into()),
             description: setting.description,
             disabled: setting.disabled,
             value: Some(setting.value.into()),
@@ -236,7 +237,8 @@ impl From<mizer_node::NodeSetting> for NodeSetting {
 impl From<NodeSetting> for mizer_node::NodeSetting {
     fn from(setting: NodeSetting) -> Self {
         Self {
-            label: setting.label.into(),
+            id: setting.id.into(),
+            label: setting.label.map(|label| label.into()),
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),
@@ -250,14 +252,16 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
         use mizer_node::NodeSettingValue::*;
 
         match value {
-            Text { value, multiline } => Self::Text(node_setting::TextValue { value, multiline }),
+            Text { value, multiline } => {
+                Self::TextValue(node_setting::TextValue { value, multiline })
+            }
             Float {
                 value,
                 min,
                 min_hint,
                 max,
                 max_hint,
-            } => Self::Float(node_setting::FloatValue {
+            } => Self::FloatValue(node_setting::FloatValue {
                 value,
                 min,
                 min_hint,
@@ -270,7 +274,7 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
-            } => Self::Uint(node_setting::UintValue {
+            } => Self::UintValue(node_setting::UintValue {
                 value,
                 min,
                 min_hint,
@@ -283,41 +287,41 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
-            } => Self::Int(node_setting::IntValue {
+            } => Self::IntValue(node_setting::IntValue {
                 value: value as i32,
                 min: min.map(|v| v as i32),
                 min_hint: min_hint.map(|v| v as i32),
                 max: max.map(|v| v as i32),
                 max_hint: max_hint.map(|v| v as i32),
             }),
-            Bool { value } => Self::Bool(node_setting::BoolValue { value }),
-            Select { value, variants } => Self::Select(node_setting::SelectValue {
+            Bool { value } => Self::BoolValue(node_setting::BoolValue { value }),
+            Select { value, variants } => Self::SelectValue(node_setting::SelectValue {
                 value,
                 variants: variants
                     .into_iter()
                     .map(node_setting::SelectVariant::from)
                     .collect(),
             }),
-            Enum { value, variants } => Self::Enum(node_setting::EnumValue {
+            Enum { value, variants } => Self::EnumValue(node_setting::EnumValue {
                 value: value as u32,
                 variants: variants
                     .into_iter()
                     .map(node_setting::EnumVariant::from)
                     .collect(),
             }),
-            Id { value, variants } => Self::Id(node_setting::IdValue {
+            Id { value, variants } => Self::IdValue(node_setting::IdValue {
                 value,
                 variants: variants
                     .into_iter()
                     .map(node_setting::IdVariant::from)
                     .collect(),
             }),
-            Spline(spline) => Self::Spline(spline.into()),
-            Steps(steps) => Self::StepSequencer(node_setting::StepSequencerValue { steps }),
+            Spline(spline) => Self::SplineValue(spline.into()),
+            Steps(steps) => Self::StepSequencerValue(node_setting::StepSequencerValue { steps }),
             Media {
                 value,
                 content_types,
-            } => Self::Media(node_setting::MediaValue {
+            } => Self::MediaValue(node_setting::MediaValue {
                 value,
                 allowed_types: content_types
                     .into_iter()
@@ -331,36 +335,36 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
 
 impl From<node_setting::Value> for mizer_node::NodeSettingValue {
     fn from(value: node_setting::Value) -> Self {
-        use node_setting::Value::*;
+        use node_setting::Value;
 
         match value {
-            Text(value) => Self::Text {
+            Value::TextValue(value) => Self::Text {
                 value: value.value,
                 multiline: value.multiline,
             },
-            Float(value) => Self::Float {
+            Value::FloatValue(value) => Self::Float {
                 value: value.value,
                 min: value.min,
                 min_hint: value.min_hint,
                 max: value.max,
                 max_hint: value.max_hint,
             },
-            Int(value) => Self::Int {
+            Value::IntValue(value) => Self::Int {
                 value: value.value as i64,
                 min: value.min.map(|v| v as i64),
                 min_hint: value.min_hint.map(|v| v as i64),
                 max: value.max.map(|v| v as i64),
                 max_hint: value.max_hint.map(|v| v as i64),
             },
-            Uint(value) => Self::Uint {
+            Value::UintValue(value) => Self::Uint {
                 value: value.value,
                 min: value.min,
                 min_hint: value.min_hint,
                 max: value.max,
                 max_hint: value.max_hint,
             },
-            Bool(value) => Self::Bool { value: value.value },
-            Select(value) => Self::Select {
+            Value::BoolValue(value) => Self::Bool { value: value.value },
+            Value::SelectValue(value) => Self::Select {
                 value: value.value,
                 variants: value
                     .variants
@@ -368,7 +372,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .map(mizer_node::SelectVariant::from)
                     .collect(),
             },
-            Enum(value) => Self::Enum {
+            Value::EnumValue(value) => Self::Enum {
                 value: value.value as u8,
                 variants: value
                     .variants
@@ -376,7 +380,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .map(mizer_node::EnumVariant::from)
                     .collect(),
             },
-            Id(value) => Self::Id {
+            Value::IdValue(value) => Self::Id {
                 value: value.value,
                 variants: value
                     .variants
@@ -384,9 +388,9 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .map(mizer_node::IdVariant::from)
                     .collect(),
             },
-            Spline(value) => Self::Spline(value.into()),
-            StepSequencer(value) => Self::Steps(value.steps),
-            Media(value) => Self::Media {
+            Value::SplineValue(value) => Self::Spline(value.into()),
+            Value::StepSequencerValue(value) => Self::Steps(value.steps),
+            Value::MediaValue(value) => Self::Media {
                 content_types: value
                     .allowed_types()
                     .into_iter()

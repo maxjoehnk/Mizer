@@ -43,143 +43,144 @@ class NodeSettingsPane extends StatelessWidget {
 
   Iterable<Widget> get _settings {
     return settings.map((setting) {
-      if (setting.hasText()) {
+      String label = setting.hasLabel() ? setting.label : setting.id;
+      if (setting.hasTextValue()) {
         return TextPropertyField(
-            label: setting.label,
-            value: setting.text.value,
-            multiline: setting.text.multiline,
+            label: label,
+            value: setting.textValue.value,
+            multiline: setting.textValue.multiline,
             onUpdate: (v) {
               var updated = setting.deepCopy();
-              updated.text.value = v;
+              updated.textValue.value = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasFloat()) {
+      if (setting.hasFloatValue()) {
         return NumberField(
           node: nodePath,
-          label: setting.label,
-          value: setting.float.value,
+          label: label,
+          value: setting.floatValue.value,
           fractions: true,
-          min: setting.float.hasMin() ? setting.float.min : null,
-          minHint: setting.float.hasMinHint() ? setting.float.minHint : null,
-          max: setting.float.hasMax() ? setting.float.max : null,
-          maxHint: setting.float.hasMaxHint() ? setting.float.maxHint : null,
+          min: setting.floatValue.hasMin() ? setting.floatValue.min : null,
+          minHint: setting.floatValue.hasMinHint() ? setting.floatValue.minHint : null,
+          max: setting.floatValue.hasMax() ? setting.floatValue.max : null,
+          maxHint: setting.floatValue.hasMaxHint() ? setting.floatValue.maxHint : null,
           onUpdate: (v) {
             var updated = setting.deepCopy();
-            updated.float.value = v.toDouble();
+            updated.floatValue.value = v.toDouble();
             onUpdate(updated);
           },
         );
       }
-      if (setting.hasInt_6()) {
+      if (setting.hasIntValue()) {
         return NumberField(
           node: nodePath,
-          label: setting.label,
-          value: setting.int_6.value,
+          label: label,
+          value: setting.intValue.value,
           fractions: false,
-          min: setting.int_6.hasMin() ? setting.int_6.min : null,
-          minHint: setting.int_6.hasMinHint() ? setting.int_6.minHint : null,
-          max: setting.int_6.hasMax() ? setting.int_6.max : null,
-          maxHint: setting.int_6.hasMaxHint() ? setting.int_6.maxHint : null,
+          min: setting.intValue.hasMin() ? setting.intValue.min : null,
+          minHint: setting.intValue.hasMinHint() ? setting.intValue.minHint : null,
+          max: setting.intValue.hasMax() ? setting.intValue.max : null,
+          maxHint: setting.intValue.hasMaxHint() ? setting.intValue.maxHint : null,
           onUpdate: (v) {
             var updated = setting.deepCopy();
-            updated.int_6.value = v.toInt();
+            updated.intValue.value = v.toInt();
             onUpdate(updated);
           },
         );
       }
-      if (setting.hasUint()) {
+      if (setting.hasUintValue()) {
         return NumberField(
           node: nodePath,
-          label: setting.label,
-          value: setting.uint.value,
+          label: label,
+          value: setting.uintValue.value,
           fractions: false,
-          min: setting.uint.hasMin() ? setting.uint.min : null,
-          minHint: setting.uint.hasMinHint() ? setting.uint.minHint : null,
-          max: setting.uint.hasMax() ? setting.uint.max : null,
-          maxHint: setting.uint.hasMaxHint() ? setting.uint.maxHint : null,
+          min: setting.uintValue.hasMin() ? setting.uintValue.min : null,
+          minHint: setting.uintValue.hasMinHint() ? setting.uintValue.minHint : null,
+          max: setting.uintValue.hasMax() ? setting.uintValue.max : null,
+          maxHint: setting.uintValue.hasMaxHint() ? setting.uintValue.maxHint : null,
           onUpdate: (v) {
             var updated = setting.deepCopy();
-            updated.uint.value = v.toInt();
+            updated.uintValue.value = v.toInt();
             onUpdate(updated);
           },
         );
       }
-      if (setting.hasBool_7()) {
+      if (setting.hasBoolValue()) {
         return CheckboxField(
-            label: setting.label,
-            value: setting.bool_7.value,
+            label: label,
+            value: setting.boolValue.value,
             onUpdate: (v) {
               var updated = setting.deepCopy();
-              updated.bool_7.value = v;
+              updated.boolValue.value = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasSelect()) {
+      if (setting.hasSelectValue()) {
         return EnumField(
             disabled: setting.disabled,
-            label: setting.label,
-            initialValue: setting.select.value,
-            items: setting.select.variants.map(mapVariant).toList(),
+            label: label,
+            initialValue: setting.selectValue.value,
+            items: setting.selectValue.variants.map(mapVariant).toList(),
             onUpdate: (String v) {
               var updated = setting.deepCopy();
-              updated.select.value = v;
+              updated.selectValue.value = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasEnum_9()) {
+      if (setting.hasEnumValue()) {
         return EnumField(
             disabled: setting.disabled,
-            label: setting.label,
-            initialValue: setting.enum_9.value,
-            items: setting.enum_9.variants
+            label: label,
+            initialValue: setting.enumValue.value,
+            items: setting.enumValue.variants
                 .map((variant) => SelectOption(value: variant.value, label: variant.label))
                 .toList(),
             onUpdate: (int v) {
               var updated = setting.deepCopy();
-              updated.enum_9.value = v;
+              updated.enumValue.value = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasId()) {
+      if (setting.hasIdValue()) {
         return EnumField(
             disabled: setting.disabled,
-            label: setting.label,
-            initialValue: setting.id.value,
-            items: setting.id.variants
+            label: label,
+            initialValue: setting.idValue.value,
+            items: setting.idValue.variants
                 .map((variant) => SelectOption(value: variant.value, label: variant.label))
                 .toList(),
             onUpdate: (int v) {
               var updated = setting.deepCopy();
-              updated.id.value = v;
+              updated.idValue.value = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasSpline()) {
+      if (setting.hasSplineValue()) {
         return SplineField(
-            value: setting.spline,
+            value: setting.splineValue,
             onUpdate: (v) {
               var updated = setting.deepCopy();
-              updated.spline = v;
+              updated.splineValue = v;
               onUpdate(updated);
             });
       }
-      if (setting.hasMedia()) {
+      if (setting.hasMediaValue()) {
         return MediaField(
-            value: setting.media,
-            label: setting.label,
+            value: setting.mediaValue,
+            label: label,
             onUpdate: (v) {
               var updated = setting.deepCopy();
-              updated.media.value = v.value;
+              updated.mediaValue.value = v.value;
               onUpdate(updated);
             });
       }
-      if (setting.hasStepSequencer()) {
+      if (setting.hasStepSequencerValue()) {
         return StepSequencerField(
-            value: setting.stepSequencer,
+            value: setting.stepSequencerValue,
             onUpdate: (v) {
               var updated = setting.deepCopy();
-              updated.stepSequencer = v;
+              updated.stepSequencerValue = v;
               onUpdate(updated);
             });
       }

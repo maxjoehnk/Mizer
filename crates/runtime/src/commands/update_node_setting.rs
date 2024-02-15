@@ -27,38 +27,38 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
             NodeSettingValue::Float { value, .. } => {
                 format!(
                     "Update Node {} setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Uint { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Int { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Bool { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Text { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Enum { value, variants } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
                     self.path,
-                    self.setting.label,
+                    self.setting.id,
                     variants
                         .into_iter()
                         .find(|v| v.value == *value)
@@ -70,7 +70,7 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                 format!(
                     "Update Node '{}' setting {} to {}",
                     self.path,
-                    self.setting.label,
+                    self.setting.id,
                     variants
                         .iter()
                         .find(|v| v.value == *value)
@@ -82,7 +82,7 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                 format!(
                     "Update Node '{}' setting {} to {}",
                     self.path,
-                    self.setting.label,
+                    self.setting.id,
                     variants
                         .iter()
                         .find_map(|v| if let SelectVariant::Item { value: v, label } = v {
@@ -98,16 +98,16 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
                 )
             }
             NodeSettingValue::Spline(_) => {
-                format!("Update Node '{}' setting {}", self.path, self.setting.label)
+                format!("Update Node '{}' setting {}", self.path, self.setting.id)
             }
             NodeSettingValue::Media { value, .. } => {
                 format!(
                     "Update Node '{}' setting {} to {}",
-                    self.path, self.setting.label, value
+                    self.path, self.setting.id, value
                 )
             }
             NodeSettingValue::Steps(_) => {
-                format!("Update Node '{}' setting {}", self.path, self.setting.label)
+                format!("Update Node '{}' setting {}", self.path, self.setting.id)
             }
         }
     }

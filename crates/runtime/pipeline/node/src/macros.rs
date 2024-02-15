@@ -43,8 +43,9 @@ macro_rules! output_port {
 macro_rules! setting {
     ($name:expr, $value:expr) => {
         NodeSetting {
-            label: $name.into(),
+            id: $name.into(),
             value: $value.into(),
+            label: Default::default(),
             description: Default::default(),
             disabled: Default::default(),
             optional: Default::default(),
@@ -73,7 +74,7 @@ macro_rules! setting {
 #[macro_export]
 macro_rules! update {
     (enum $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Enum { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Enum { .. }) && $setting.id == $name {
             if let NodeSettingValue::Enum { value, .. } = $setting.value {
                 $field = value.try_into()?;
                 return Ok(());
@@ -81,7 +82,7 @@ macro_rules! update {
         }
     };
     (id $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
-        if matches!($setting.value, NodeSettingValue::Id { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Id { .. }) && $setting.id == $name {
             if let NodeSettingValue::Id { value, .. } = $setting.value {
                 $field = $conversion(value);
                 return Ok(());
@@ -92,7 +93,7 @@ macro_rules! update {
         update!(id $setting, $name, $field, |value: u32| value.into())
     };
     (select $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
-        if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Select { .. }) && $setting.id == $name {
             if let NodeSettingValue::Select { value, .. } = $setting.value {
                 $field = $conversion(value)?;
                 return Ok(());
@@ -103,7 +104,7 @@ macro_rules! update {
         update!(select $setting, $name, $field, |value: String| value.try_into())
     };
     (text $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
-        if matches!($setting.value, NodeSettingValue::Text { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Text { .. }) && $setting.id == $name {
             if let NodeSettingValue::Text { value, .. } = $setting.value {
                 $field = $conversion(value)?;
                 return Ok(());
@@ -114,7 +115,7 @@ macro_rules! update {
         update!(text $setting, $name, $field, |value: String| value.try_into())
     };
     (float $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Float { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Float { .. }) && $setting.id == $name {
             if let NodeSettingValue::Float { value, .. } = $setting.value {
                 $field = value.try_into()?;
                 return Ok(());
@@ -122,7 +123,7 @@ macro_rules! update {
         }
     };
     (int $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Int { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Int { .. }) && $setting.id == $name {
             if let NodeSettingValue::Int { value, .. } = $setting.value {
                 $field = value.try_into()?;
                 return Ok(());
@@ -130,7 +131,7 @@ macro_rules! update {
         }
     };
     (uint $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Uint { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Uint { .. }) && $setting.id == $name {
             if let NodeSettingValue::Uint { value, .. } = $setting.value {
                 $field = value.try_into()?;
                 return Ok(());
@@ -138,7 +139,7 @@ macro_rules! update {
         }
     };
     (bool $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Bool { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Bool { .. }) && $setting.id == $name {
             if let NodeSettingValue::Bool { value, .. } = $setting.value {
                 $field = value;
                 return Ok(());
@@ -146,7 +147,7 @@ macro_rules! update {
         }
     };
     (spline $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Spline(_)) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Spline(_)) && $setting.id == $name {
             if let NodeSettingValue::Spline(value) = $setting.value {
                 $field = value;
                 return Ok(());
@@ -157,7 +158,7 @@ macro_rules! update {
         update!(media $setting, $name, $field, |value: String| value)
     };
     (media $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
-        if matches!($setting.value, NodeSettingValue::Media { .. }) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Media { .. }) && $setting.id == $name {
             if let NodeSettingValue::Media { value, .. } = $setting.value {
                 $field = $conversion(value);
                 return Ok(());
@@ -165,7 +166,7 @@ macro_rules! update {
         }
     };
     (steps $setting:expr, $name:expr, $field:expr) => {
-        if matches!($setting.value, NodeSettingValue::Steps(_)) && $setting.label == $name {
+        if matches!($setting.value, NodeSettingValue::Steps(_)) && $setting.id == $name {
             if let NodeSettingValue::Steps(value) = $setting.value {
                 $field = value;
                 return Ok(());

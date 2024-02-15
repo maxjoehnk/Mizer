@@ -138,22 +138,23 @@ message NodeConfig {
 }
 
 message NodeSetting {
-  string label = 1;
-  string description = 2;
-  bool disabled = 3;
+  string id = 1;
+  optional string label = 2;
+  string description = 3;
+  bool disabled = 4;
 
   oneof value {
-    TextValue text = 4;
-    FloatValue float = 5;
-    IntValue int = 6;
-    BoolValue bool = 7;
-    SelectValue select = 8;
-    EnumValue enum = 9;
-    IdValue id = 10;
-    SplineValue spline = 11;
-    MediaValue media = 12;
-    UintValue uint = 13;
-    StepSequencerValue step_sequencer = 14;
+    TextValue text_value = 5;
+    FloatValue float_value = 6;
+    IntValue int_value = 7;
+    BoolValue bool_value = 8;
+    SelectValue select_value = 9;
+    EnumValue enum_value = 10;
+    IdValue id_value = 11;
+    SplineValue spline_value = 12;
+    MediaValue media_value = 13;
+    UintValue uint_value = 14;
+    StepSequencerValue step_sequencer_value = 15;
   }
 
   message TextValue {

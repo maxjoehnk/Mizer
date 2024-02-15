@@ -45,7 +45,7 @@ impl ConfigurableNode for EnvelopeNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        match (setting.label.as_ref(), &setting.value) {
+        match (setting.id.as_ref(), &setting.value) {
             (ATTACK_SETTING, NodeSettingValue::Float { value, .. }) => self.attack = *value,
             (DECAY_SETTING, NodeSettingValue::Float { value, .. }) => self.decay = *value,
             (RELEASE_SETTING, NodeSettingValue::Float { value, .. }) => self.release = *value,

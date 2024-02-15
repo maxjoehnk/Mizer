@@ -39,6 +39,14 @@ impl TryFrom<String> for MediaId {
     }
 }
 
+impl TryFrom<&str> for MediaId {
+    type Error = uuid::Error;
+
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        uuid::Uuid::parse_str(value).map(MediaId)
+    }
+}
+
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
 #[repr(transparent)]
 #[serde(transparent)]

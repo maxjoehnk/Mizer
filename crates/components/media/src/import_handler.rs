@@ -22,6 +22,7 @@ pub struct ImportFileHandler {
     image_handler: ImageHandler,
     audio_handler: AudioHandler,
     svg_handler: SvgHandler,
+    data_handler: DataHandler,
 }
 
 impl ImportFileHandler {
@@ -34,6 +35,7 @@ impl ImportFileHandler {
             image_handler: ImageHandler,
             audio_handler: AudioHandler,
             svg_handler: SvgHandler,
+            data_handler: DataHandler,
         }
     }
 
@@ -93,6 +95,10 @@ impl ImportFileHandler {
                 .context(format!("Handling file {file_path:?}"))?
         } else if SvgHandler::supported(content_type) {
             self.svg_handler
+                .handle_file(file_path, &self.file_storage, content_type)
+                .context(format!("Handling file {file_path:?}"))?
+        } else if DataHandler::supported(content_type) {
+            self.data_handler
                 .handle_file(file_path, &self.file_storage, content_type)
                 .context(format!("Handling file {file_path:?}"))?
         } else {

@@ -13,7 +13,7 @@ pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{
     DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
 };
-pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode};
+pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode, DataFileNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
@@ -214,6 +214,7 @@ node_impl! {
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
     MultiToData(MultiToDataNode),
+    DataFile(DataFileNode),
     NumberToClock(NumberToClockNode),
     PlanScreen(PlanScreenNode),
     Value(ValueNode),

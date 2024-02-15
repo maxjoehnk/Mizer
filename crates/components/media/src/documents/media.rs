@@ -37,4 +37,5 @@ pub enum MediaType {
     Audio,
     Video,
     Vector,
+    Data,
 }

@@ -18,12 +18,14 @@ class MediaType extends $pb.ProtobufEnum {
   static const MediaType AUDIO = MediaType._(1, _omitEnumNames ? '' : 'AUDIO');
   static const MediaType VIDEO = MediaType._(2, _omitEnumNames ? '' : 'VIDEO');
   static const MediaType VECTOR = MediaType._(3, _omitEnumNames ? '' : 'VECTOR');
+  static const MediaType DATA = MediaType._(4, _omitEnumNames ? '' : 'DATA');
 
   static const $core.List<MediaType> values = <MediaType> [
     IMAGE,
     AUDIO,
     VIDEO,
     VECTOR,
+    DATA,
   ];
 
   static final $core.Map<$core.int, MediaType> _byValue = $pb.ProtobufEnum.initByValue(values);

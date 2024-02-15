@@ -49,6 +49,7 @@ impl From<mizer_media::documents::MediaType> for MediaType {
             Audio => Self::Audio,
             Video => Self::Video,
             Vector => Self::Vector,
+            Data => Self::Data,
         }
     }
 }

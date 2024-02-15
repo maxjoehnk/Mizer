@@ -128,6 +128,7 @@ node_type_name! {
         NumberToData,
         DataToNumber,
         MultiToData,
+        DataFile,
         NumberToClock,
         Value,
         Extract,

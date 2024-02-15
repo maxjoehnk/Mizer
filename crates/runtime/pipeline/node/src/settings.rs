@@ -198,6 +198,7 @@ pub enum MediaContentType {
     Audio,
     Video,
     Vector,
+    Data,
 }
 
 #[allow(clippy::derive_hash_xor_eq)]

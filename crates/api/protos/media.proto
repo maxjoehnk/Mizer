@@ -52,6 +52,7 @@ enum MediaType {
   AUDIO = 1;
   VIDEO = 2;
   VECTOR = 3;
+  DATA = 4;
 }
 
 message MediaFolders {

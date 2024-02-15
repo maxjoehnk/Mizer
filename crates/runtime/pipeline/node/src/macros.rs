@@ -102,13 +102,16 @@ macro_rules! update {
     (select $setting:expr, $name:expr, $field:expr) => {
         update!(select $setting, $name, $field, |value: String| value.try_into())
     };
-    (text $setting:expr, $name:expr, $field:expr) => {
+    (text $setting:expr, $name:expr, $field:expr, $conversion:expr) => {
         if matches!($setting.value, NodeSettingValue::Text { .. }) && $setting.label == $name {
             if let NodeSettingValue::Text { value, .. } = $setting.value {
-                $field = value;
+                $field = $conversion(value)?;
                 return Ok(());
             }
         }
+    };
+    (text $setting:expr, $name:expr, $field:expr) => {
+        update!(text $setting, $name, $field, |value: String| value.try_into())
     };
     (float $setting:expr, $name:expr, $field:expr) => {
         if matches!($setting.value, NodeSettingValue::Float { .. }) && $setting.label == $name {

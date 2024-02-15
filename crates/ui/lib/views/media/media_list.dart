@@ -148,6 +148,7 @@ class _MediaListState extends State<MediaList> {
         label: 'Audio'.i18n,
         extensions: ['wav', 'mp3', 'ogg', 'flac', 'm4a', 'aac', 'wma', 'opus']);
     final vectorGroup = XTypeGroup(label: 'Vector Files'.i18n, extensions: ['svg']);
+    final dataGroup = XTypeGroup(label: 'Data'.i18n, extensions: ['csv']);
     final allSupportedGroup = XTypeGroup(
         label: 'All Supported'.i18n,
         extensions: <String>[
@@ -155,9 +156,10 @@ class _MediaListState extends State<MediaList> {
           ...imageGroup.extensions ?? [],
           ...audioGroup.extensions ?? [],
           ...vectorGroup.extensions ?? [],
+          ...dataGroup.extensions ?? [],
         ].distinct().toList());
     var files = await openFiles(
-        acceptedTypeGroups: [allSupportedGroup, videoGroup, imageGroup, audioGroup, vectorGroup]);
+        acceptedTypeGroups: [allSupportedGroup, videoGroup, imageGroup, audioGroup, vectorGroup, dataGroup]);
     if (files.isEmpty) {
       return;
     }

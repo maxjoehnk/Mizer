@@ -486,6 +486,7 @@ impl From<mizer_node::MediaContentType> for crate::proto::media::MediaType {
             mizer_node::MediaContentType::Image => Self::Image,
             mizer_node::MediaContentType::Video => Self::Video,
             mizer_node::MediaContentType::Vector => Self::Vector,
+            mizer_node::MediaContentType::Data => Self::Data,
         }
     }
 }
@@ -497,6 +498,7 @@ impl From<crate::proto::media::MediaType> for mizer_node::MediaContentType {
             crate::proto::media::MediaType::Image => Self::Image,
             crate::proto::media::MediaType::Video => Self::Video,
             crate::proto::media::MediaType::Vector => Self::Vector,
+            crate::proto::media::MediaType::Data => Self::Data,
         }
     }
 }

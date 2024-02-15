@@ -21,13 +21,14 @@ const MediaType$json = {
     {'1': 'AUDIO', '2': 1},
     {'1': 'VIDEO', '2': 2},
     {'1': 'VECTOR', '2': 3},
+    {'1': 'DATA', '2': 4},
   ],
 };
 
 /// Descriptor for `MediaType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List mediaTypeDescriptor = $convert.base64Decode(
     'CglNZWRpYVR5cGUSCQoFSU1BR0UQABIJCgVBVURJTxABEgkKBVZJREVPEAISCgoGVkVDVE9SEA'
-    'M=');
+    'MSCAoEREFUQRAE');
 
 @$core.Deprecated('Use addTagToMediaRequestDescriptor instead')
 const AddTagToMediaRequest$json = {

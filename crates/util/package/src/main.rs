@@ -74,16 +74,16 @@ fn main() -> anyhow::Result<()> {
     artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {
         settings.paths.media_storage = PathBuf::from("~/.mizer-media");
         settings.paths.midi_device_profiles =
-            PathBuf::from("Contents/Resources/device-profiles/midi");
+            PathBuf::from("../Resources/device-profiles/midi");
         settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from(
-            "Contents/Resources/fixtures/open-fixture-library",
+            "../Resources/fixtures/open-fixture-library",
         ));
         settings.paths.fixture_libraries.qlcplus =
-            Some(PathBuf::from("Contents/Resources/fixtures/qlcplus"));
+            Some(PathBuf::from("../Resources/fixtures/qlcplus"));
         settings.paths.fixture_libraries.gdtf =
-            Some(PathBuf::from("Contents/Resources/fixtures/gdtf"));
+            Some(PathBuf::from("../Resources/fixtures/gdtf"));
         settings.paths.fixture_libraries.mizer =
-            Some(PathBuf::from("Contents/Resources/fixtures/mizer"));
+            Some(PathBuf::from("../Resources/fixtures/mizer"));
     })?;
 
     change_rpath(&artifact.artifact_dir, "@executable_path", "@executable_path/../Frameworks")?;

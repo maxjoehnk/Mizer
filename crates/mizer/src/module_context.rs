@@ -22,6 +22,10 @@ impl ModuleContext for SetupContext {
         self.runtime.injector().get()
     }
 
+    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        self.runtime.injector_mut().get_mut()
+    }
+
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T) {
         self.api_injector.provide(api);
     }

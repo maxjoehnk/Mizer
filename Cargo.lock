@@ -3100,6 +3100,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "glsl"
+version = "7.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "577ac945ce66a4b7004c6e2807f517f94ef027dda89df578abe1fbb979d22f49"
+dependencies = [
+ "nom",
+]
+
+[[package]]
 name = "glutin_wgl_sys"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3782,6 +3791,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "isf"
+version = "0.1.0"
+source = "git+https://github.com/nannou-org/isf.git?branch=master#99424e5b5b1fc6bb4c72a4e8cc64867ac06160be"
+dependencies = [
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "itertools"
 version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4406,6 +4425,7 @@ dependencies = [
  "mizer-fixture-definition-provider",
  "mizer-fixtures",
  "mizer-gdtf-provider",
+ "mizer-isf-shaders",
  "mizer-layouts",
  "mizer-media",
  "mizer-message-bus",
@@ -4427,6 +4447,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-session",
  "mizer-settings",
+ "mizer-shaders",
  "mizer-status-bus",
  "mizer-surfaces",
  "mizer-timecode",
@@ -4904,6 +4925,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-isf-shaders"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "glsl",
+ "isf",
+ "mizer-module",
+ "mizer-shaders",
+ "mizer-wgpu",
+ "naga",
+ "profiling",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-laser-nodes"
 version = "0.1.0"
 dependencies = [
@@ -5156,6 +5193,7 @@ dependencies = [
  "mizer-screen-capture-nodes",
  "mizer-scripting-nodes",
  "mizer-sequencer-nodes",
+ "mizer-shader-nodes",
  "mizer-step-sequencer-nodes",
  "mizer-surface-nodes",
  "mizer-text-nodes",
@@ -5700,6 +5738,37 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-shader-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bytemuck",
+ "chrono",
+ "futures",
+ "itertools 0.12.1",
+ "mizer-isf-shaders",
+ "mizer-node",
+ "mizer-shaders",
+ "mizer-wgpu",
+ "profiling",
+ "serde",
+ "tracing",
+]
+
+[[package]]
+name = "mizer-shaders"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "mizer-module",
+ "mizer-wgpu",
+ "naga",
+ "profiling",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-status-bus"
 version = "0.1.0"
 dependencies = [
@@ -5976,6 +6045,7 @@ dependencies = [
  "image",
  "log",
  "mizer-module",
+ "naga",
  "parking_lot 0.12.1",
  "profiling",
  "raw-window-handle 0.5.2",
@@ -6104,6 +6174,7 @@ dependencies = [
  "indexmap 2.2.3",
  "log",
  "num-traits",
+ "pp-rs",
  "rustc-hash",
  "serde",
  "spirv",
@@ -7202,6 +7273,15 @@ name = "powerfmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391"
+
+[[package]]
+name = "pp-rs"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bb458bb7f6e250e6eb79d5026badc10a3ebb8f9a15d1fff0f13d17c71f4d6dee"
+dependencies = [
+ "unicode-xid",
+]
 
 [[package]]
 name = "ppv-lite86"

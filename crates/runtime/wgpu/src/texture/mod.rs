@@ -31,7 +31,7 @@ impl Texture {
 
         let view = texture.create_view(&wgpu::TextureViewDescriptor::default());
         let sampler = context.create_sampler();
-        let bind_group_layout = context.create_texture_bind_group_layout(Some("Texture"));
+        let bind_group_layout = context.create_single_texture_bind_group_layout(Some("Texture"));
         let bind_group = context.create_texture_bind_group(
             &bind_group_layout,
             &view,

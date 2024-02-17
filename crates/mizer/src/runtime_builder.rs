@@ -10,6 +10,7 @@ use mizer_command_executor::CommandExecutorModule;
 use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::FixtureModule;
+use mizer_isf_shaders::IsfShaderModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext};
@@ -23,6 +24,7 @@ use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectsModule, SequencerModule};
 use mizer_session::Session;
 use mizer_settings::{Settings, SettingsManager};
+use mizer_shaders::ShaderModule;
 use mizer_surfaces::SurfaceModule;
 use mizer_timecode::TimecodeModule;
 use mizer_vector::VectorModule;
@@ -43,6 +45,7 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     OscModule.try_load(context);
     MidiModule.try_load(context);
     WgpuModule.try_load(context).then(WindowModule);
+    ShaderModule.try_load(context).then(IsfShaderModule);
     VectorModule.try_load(context);
 
     #[cfg(feature = "debug-ui")]

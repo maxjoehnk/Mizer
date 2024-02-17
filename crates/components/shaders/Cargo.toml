@@ -1,0 +1,17 @@
+[package]
+name = "mizer-shaders"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+mizer-wgpu = { path = "../../runtime/wgpu" }
+mizer-module = { path = "../../runtime/module" }
+profiling = "1"
+futures = "0.3"
+naga = "0.14"
+
+[build-dependencies]
+anyhow = "1"

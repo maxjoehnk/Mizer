@@ -157,6 +157,7 @@ node_type_name! {
         PioneerCdj,
         NdiOutput,
         NdiInput,
+        IsfShader,
         SurfaceMapping,
         RasterizeVector,
         VectorFile,

@@ -23,9 +23,9 @@ fn vs_main(
 // Fragment shader
 
 @group(0) @binding(0)
-var t_diffuse: texture_2d<f32>;
-@group(0) @binding(1)
 var s_diffuse: sampler;
+@group(0) @binding(1)
+var t_diffuse: texture_2d<f32>;
 
 @group(1) @binding(0)
 var<uniform> threshold: f32;

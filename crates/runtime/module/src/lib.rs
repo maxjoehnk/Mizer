@@ -83,6 +83,7 @@ pub trait Runtime {
 pub trait ModuleContext {
     fn provide<T: 'static>(&mut self, service: T);
     fn try_get<T: 'static>(&self) -> Option<&T>;
+    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T>;
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T);
 
     fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static);

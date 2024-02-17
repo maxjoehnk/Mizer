@@ -5,7 +5,7 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-wgpu = { version = "0.18", features = ["trace"] }
+wgpu = { version = "0.18", features = ["trace", "glsl"] }
 anyhow = "1"
 winit = { version = "0.29", features = ["rwh_05"] }
 bytemuck = { version = "1.14", features = ["derive"] }
@@ -19,3 +19,4 @@ profiling = "1"
 dashmap = "5.5"
 weak-table = "0.3"
 parking_lot = "0.12"
+naga = "0.14"

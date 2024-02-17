@@ -11,6 +11,31 @@ pub struct WgpuContext {
     pub queue: wgpu::Queue,
 }
 
+pub trait StandardShader {
+    fn vertex_shader(&self) -> &wgpu::ShaderModule;
+    fn vertex_entry_point(&self) -> &str;
+    fn fragment_shader(&self) -> &wgpu::ShaderModule;
+    fn fragment_entry_point(&self) -> &str;
+}
+
+impl StandardShader for wgpu::ShaderModule {
+    fn vertex_shader(&self) -> &wgpu::ShaderModule {
+        self
+    }
+
+    fn vertex_entry_point(&self) -> &str {
+        "vs_main"
+    }
+
+    fn fragment_shader(&self) -> &wgpu::ShaderModule {
+        self
+    }
+
+    fn fragment_entry_point(&self) -> &str {
+        "fs_main"
+    }
+}
+
 impl WgpuContext {
     pub async fn new() -> anyhow::Result<Self> {
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
@@ -123,7 +148,10 @@ impl WgpuContext {
         );
     }
 
-    pub fn create_texture_bind_group_layout(&self, label: Option<&str>) -> wgpu::BindGroupLayout {
+    pub fn create_single_texture_bind_group_layout(
+        &self,
+        label: Option<&str>,
+    ) -> wgpu::BindGroupLayout {
         profiling::scope!("WgpuContext::create_texture_bind_group_layout");
         self.device
             .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
@@ -131,17 +159,17 @@ impl WgpuContext {
                     wgpu::BindGroupLayoutEntry {
                         binding: 0,
                         visibility: wgpu::ShaderStages::FRAGMENT,
-                        ty: wgpu::BindingType::Texture {
-                            multisampled: false,
-                            view_dimension: wgpu::TextureViewDimension::D2,
-                            sample_type: wgpu::TextureSampleType::Float { filterable: true },
-                        },
+                        ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
                         count: None,
                     },
                     wgpu::BindGroupLayoutEntry {
                         binding: 1,
                         visibility: wgpu::ShaderStages::FRAGMENT,
-                        ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering),
+                        ty: wgpu::BindingType::Texture {
+                            multisampled: false,
+                            view_dimension: wgpu::TextureViewDimension::D2,
+                            sample_type: wgpu::TextureSampleType::Float { filterable: true },
+                        },
                         count: None,
                     },
                 ],
@@ -161,11 +189,11 @@ impl WgpuContext {
             entries: &[
                 wgpu::BindGroupEntry {
                     binding: 0,
-                    resource: wgpu::BindingResource::TextureView(source),
+                    resource: wgpu::BindingResource::Sampler(sampler),
                 },
                 wgpu::BindGroupEntry {
                     binding: 1,
-                    resource: wgpu::BindingResource::Sampler(sampler),
+                    resource: wgpu::BindingResource::TextureView(source),
                 },
             ],
             label: Some(label),
@@ -175,7 +203,7 @@ impl WgpuContext {
     pub fn create_standard_pipeline(
         &self,
         bind_group_layouts: &[&wgpu::BindGroupLayout],
-        shader: &wgpu::ShaderModule,
+        shader: &impl StandardShader,
         label: Option<&str>,
     ) -> wgpu::RenderPipeline {
         let pipeline_layout = self
@@ -190,13 +218,13 @@ impl WgpuContext {
                 label,
                 layout: Some(&pipeline_layout),
                 vertex: wgpu::VertexState {
-                    module: shader,
-                    entry_point: "vs_main",
+                    module: shader.vertex_shader(),
+                    entry_point: shader.vertex_entry_point(),
                     buffers: &[Vertex::desc()],
                 },
                 fragment: Some(wgpu::FragmentState {
-                    module: shader,
-                    entry_point: "fs_main",
+                    module: shader.fragment_shader(),
+                    entry_point: shader.fragment_entry_point(),
                     targets: &[Some(wgpu::ColorTargetState {
                         format: crate::TEXTURE_FORMAT,
                         blend: Some(wgpu::BlendState::REPLACE),

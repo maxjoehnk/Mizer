@@ -13,7 +13,7 @@ pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{
     DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
 };
-pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode, DataFileNode};
+pub use mizer_data_nodes::{DataFileNode, ExtractNode, TemplateNode, ValueNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
@@ -44,6 +44,7 @@ pub use mizer_pro_dj_link_nodes::{PioneerCdjNode, ProDjLinkClockNode};
 pub use mizer_screen_capture_nodes::ScreenCaptureNode;
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequencer_nodes::SequencerNode;
+pub use mizer_shader_nodes::IsfShaderNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
@@ -254,6 +255,7 @@ node_impl! {
     Template(TemplateNode),
     NdiOutput(NdiOutputNode),
     NdiInput(NdiInputNode),
+    IsfShader(IsfShaderNode),
     SurfaceMapping(SurfaceMappingNode),
     RasterizeVector(RasterizeVectorNode),
     VectorFile(VectorFileNode),

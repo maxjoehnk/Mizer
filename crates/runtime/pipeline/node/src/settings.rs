@@ -404,6 +404,15 @@ pub enum SelectVariant {
     },
 }
 
+impl SelectVariant {
+    pub fn label(&self) -> Arc<String> {
+        match self {
+            Self::Group { label, .. } => Arc::clone(label),
+            Self::Item { label, .. } => Arc::clone(label),
+        }
+    }
+}
+
 impl From<String> for SelectVariant {
     fn from(value: String) -> Self {
         let value = Arc::new(value);

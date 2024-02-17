@@ -1,0 +1,20 @@
+[package]
+name = "mizer-isf-shaders"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+mizer-wgpu = { path = "../../../runtime/wgpu" }
+mizer-module = { path = "../../../runtime/module" }
+mizer-shaders = { path = ".." }
+profiling = "1"
+futures = "0.3"
+isf = { git = "https://github.com/nannou-org/isf.git", branch = "master" }
+naga = "0.14"
+glsl = "7"
+
+[build-dependencies]
+anyhow = "1"

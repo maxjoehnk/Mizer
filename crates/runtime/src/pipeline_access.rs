@@ -173,6 +173,7 @@ impl PipelineAccess {
             PioneerCdj(node) => self.add_node(path, node),
             NdiOutput(node) => self.add_node(path, node),
             NdiInput(node) => self.add_node(path, node),
+            IsfShader(node) => self.add_node(path, node),
             SurfaceMapping(node) => self.add_node(path, node),
             VectorFile(node) => self.add_node(path, node),
             RasterizeVector(node) => self.add_node(path, node),

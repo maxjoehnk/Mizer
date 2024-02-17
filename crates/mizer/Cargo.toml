@@ -71,6 +71,8 @@ mizer-settings = { path = "../runtime/settings" }
 mizer-status-bus = { path = "../runtime/status" }
 mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-vector = { path = "../components/vector" }
+mizer-shaders = { path = "../components/shaders" }
+mizer-isf-shaders = { path = "../components/shaders/isf" }
 mizer-wgpu = { path = "../runtime/wgpu" }
 tokio = { version = "1.36", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"

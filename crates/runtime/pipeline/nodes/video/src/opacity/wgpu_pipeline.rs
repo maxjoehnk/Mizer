@@ -15,8 +15,8 @@ pub struct TextureOpacityWgpuPipeline {
 impl TextureOpacityWgpuPipeline {
     pub fn new(context: &WgpuContext) -> Self {
         let sampler = context.create_sampler();
-        let texture_bind_group_layout =
-            context.create_texture_bind_group_layout(Some("Texture Opacity Texture Bind Group"));
+        let texture_bind_group_layout = context
+            .create_single_texture_bind_group_layout(Some("Texture Opacity Texture Bind Group"));
         let uniform_bind_group_layout =
             context
                 .device

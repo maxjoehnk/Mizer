@@ -1,0 +1,19 @@
+[package]
+name = "mizer-shader-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+mizer-node = { path = "../../../node" }
+serde = { version = "1", features = ["derive"] }
+mizer-wgpu = { path = "../../../../wgpu" }
+profiling = "1"
+futures = "0.3"
+mizer-shaders = { path = "../../../../../components/shaders" }
+mizer-isf-shaders = { path = "../../../../../components/shaders/isf" }
+bytemuck = "1.14"
+itertools = "0.12"
+chrono = "0.4"

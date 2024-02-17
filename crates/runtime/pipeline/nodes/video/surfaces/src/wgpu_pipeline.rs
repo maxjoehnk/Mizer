@@ -15,8 +15,8 @@ pub struct SurfaceMappingWgpuPipeline {
 impl SurfaceMappingWgpuPipeline {
     pub fn new(context: &WgpuContext) -> Self {
         let sampler = context.create_sampler();
-        let texture_bind_group_layout =
-            context.create_texture_bind_group_layout(Some("Surface Mapping Texture Bind Group"));
+        let texture_bind_group_layout = context
+            .create_single_texture_bind_group_layout(Some("Surface Mapping Texture Bind Group"));
         let shader = context
             .device
             .create_shader_module(wgpu::include_wgsl!("shader.wgsl"));

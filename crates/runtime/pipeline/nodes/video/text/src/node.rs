@@ -13,8 +13,9 @@ use crate::state::{TextStyle, TextTextureState};
 
 const OUTPUT_PORT: &str = "Output";
 
-const COLOR_PORT: &str = "Color";
-const FONT_SIZE_PORT: &str = "Font Size";
+const INPUT_COLOR_PORT: &str = "Color";
+const INPUT_FONT_SIZE_PORT: &str = "Font Size";
+const INPUT_TEXT_PORT: &str = "Text";
 
 const TEXT_SETTING: &str = "Text";
 const FONT_SETTING: &str = "Font";
@@ -143,8 +144,9 @@ impl PipelineNode for VideoTextNode {
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
-            input_port!(COLOR_PORT, PortType::Color),
-            input_port!(FONT_SIZE_PORT, PortType::Single),
+            input_port!(INPUT_COLOR_PORT, PortType::Color),
+            input_port!(INPUT_FONT_SIZE_PORT, PortType::Single),
+            input_port!(INPUT_TEXT_PORT, PortType::Text),
             output_port!(OUTPUT_PORT, PortType::Texture),
         ]
     }
@@ -162,8 +164,8 @@ impl ProcessingNode for VideoTextNode {
         let texture_registry = context.inject::<TextureRegistry>().unwrap();
         let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
 
-        let color = context.read_port(COLOR_PORT).unwrap_or(Color::WHITE);
-        let font_size = context.read_port(FONT_SIZE_PORT).unwrap_or(self.font_size);
+        let color = context.read_port(INPUT_COLOR_PORT).unwrap_or(Color::WHITE);
+        let font_size = context.read_port(INPUT_FONT_SIZE_PORT).unwrap_or(self.font_size);
 
         if state.is_none() {
             *state = Some(
@@ -186,8 +188,13 @@ impl ProcessingNode for VideoTextNode {
             italic: self.italic,
         };
 
+        let option = context.text_input(INPUT_TEXT_PORT).read();
+        let text = option.as_ref()
+            .map(|text| text.as_str())
+            .unwrap_or(&self.text);
+
         state
-            .draw_text(wgpu_context, &self.text, style)
+            .draw_text(wgpu_context, text, style)
             .context("preparing text")?;
 
         let stage = state

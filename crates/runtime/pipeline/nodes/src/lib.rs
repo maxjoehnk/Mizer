@@ -11,7 +11,7 @@ pub use mizer_color_nodes::{
 };
 pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{
-    DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
+    DataToTextNode, DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
 };
 pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode, DataFileNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
@@ -223,6 +223,7 @@ node_impl! {
     MqttOutput(MqttOutputNode),
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
+    DataToText(DataToTextNode),
     MultiToData(MultiToDataNode),
     DataFile(DataFileNode),
     NumberToClock(NumberToClockNode),

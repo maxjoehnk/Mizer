@@ -57,6 +57,7 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
     let ffi = Arc::from_pointer(ptr);
 
     let value = ffi.view.get_label_value(&node_path).unwrap_or_default();
+    let value = value.to_string();
     let value = CString::new(value).unwrap();
     let value_pointer = value.as_ptr();
     {

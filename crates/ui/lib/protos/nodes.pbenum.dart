@@ -59,6 +59,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol MATERIAL = ChannelProtocol._(7, _omitEnumNames ? '' : 'MATERIAL');
   static const ChannelProtocol COLOR = ChannelProtocol._(9, _omitEnumNames ? '' : 'COLOR');
   static const ChannelProtocol CLOCK = ChannelProtocol._(10, _omitEnumNames ? '' : 'CLOCK');
+  static const ChannelProtocol TEXT = ChannelProtocol._(11, _omitEnumNames ? '' : 'TEXT');
 
   static const $core.List<ChannelProtocol> values = <ChannelProtocol> [
     SINGLE,
@@ -71,6 +72,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
     MATERIAL,
     COLOR,
     CLOCK,
+    TEXT,
   ];
 
   static final $core.Map<$core.int, ChannelProtocol> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -268,6 +268,9 @@ impl PipelineWorker {
             PortType::Vector => {
                 self.connect_memory_ports::<port_types::VECTOR>(link, source_meta, target_meta)
             }
+            PortType::Text => {
+                self.connect_memory_ports::<port_types::TEXT>(link, source_meta, target_meta)
+            }
             _ => todo!(),
         }
         Ok(())
@@ -289,6 +292,7 @@ impl PipelineWorker {
             PortType::Data => self.disconnect_memory_ports::<port_types::DATA>(link),
             PortType::Texture => self.disconnect_memory_ports::<TextureHandle>(link),
             PortType::Vector => self.disconnect_memory_ports::<port_types::VECTOR>(link),
+            PortType::Text => self.disconnect_memory_ports::<port_types::TEXT>(link),
             _ => unimplemented!(),
         }
     }
@@ -576,6 +580,7 @@ fn register_receiver(
         PortType::Clock => receivers.register::<port_types::CLOCK>(port_id, metadata),
         PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
         PortType::Vector => receivers.register::<port_types::VECTOR>(port_id, metadata),
+        PortType::Text => receivers.register::<port_types::TEXT>(port_id, metadata),
         port_type => log::debug!("TODO: implement port type {:?}", port_type),
     }
 }

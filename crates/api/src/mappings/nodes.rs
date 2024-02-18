@@ -549,6 +549,7 @@ impl From<PortType> for ChannelProtocol {
             PortType::Laser => ChannelProtocol::Laser,
             PortType::Poly => ChannelProtocol::Poly,
             PortType::Data => ChannelProtocol::Data,
+            PortType::Text => ChannelProtocol::Text,
             PortType::Material => ChannelProtocol::Material,
             PortType::Clock => ChannelProtocol::Clock,
         }
@@ -566,6 +567,7 @@ impl From<ChannelProtocol> for PortType {
             ChannelProtocol::Laser => PortType::Laser,
             ChannelProtocol::Poly => PortType::Poly,
             ChannelProtocol::Data => PortType::Data,
+            ChannelProtocol::Text => PortType::Text,
             ChannelProtocol::Material => PortType::Material,
             ChannelProtocol::Clock => PortType::Clock,
         }

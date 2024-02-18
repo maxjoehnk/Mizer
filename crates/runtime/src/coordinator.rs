@@ -716,6 +716,7 @@ fn register_node(
         Node::MqttOutput(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::NumberToData(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::DataToNumber(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DataToText(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::MultiToData(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::DataFile(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::NumberToClock(node) => pipeline.register_node(path, &node, pipeline_access),

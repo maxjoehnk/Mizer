@@ -55,6 +55,7 @@ const ChannelProtocol$json = {
     {'1': 'MATERIAL', '2': 7},
     {'1': 'COLOR', '2': 9},
     {'1': 'CLOCK', '2': 10},
+    {'1': 'TEXT', '2': 11},
   ],
 };
 
@@ -62,7 +63,7 @@ const ChannelProtocol$json = {
 final $typed_data.Uint8List channelProtocolDescriptor = $convert.base64Decode(
     'Cg9DaGFubmVsUHJvdG9jb2wSCgoGU0lOR0xFEAASCQoFTVVMVEkQARILCgdURVhUVVJFEAISCg'
     'oGVkVDVE9SEAMSCQoFTEFTRVIQBBIICgRQT0xZEAUSCAoEREFUQRAGEgwKCE1BVEVSSUFMEAcS'
-    'CQoFQ09MT1IQCRIJCgVDTE9DSxAK');
+    'CQoFQ09MT1IQCRIJCgVDTE9DSxAKEggKBFRFWFQQCw==');
 
 @$core.Deprecated('Use addNodeRequestDescriptor instead')
 const AddNodeRequest$json = {

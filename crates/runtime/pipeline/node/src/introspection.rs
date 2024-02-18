@@ -127,6 +127,7 @@ node_type_name! {
         MqttOutput,
         NumberToData,
         DataToNumber,
+        DataToText,
         MultiToData,
         DataFile,
         NumberToClock,

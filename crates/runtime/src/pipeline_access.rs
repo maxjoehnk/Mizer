@@ -142,6 +142,7 @@ impl PipelineAccess {
             MqttOutput(node) => self.add_node(path, node),
             NumberToData(node) => self.add_node(path, node),
             DataToNumber(node) => self.add_node(path, node),
+            DataToText(node) => self.add_node(path, node),
             MultiToData(node) => self.add_node(path, node),
             DataFile(node) => self.add_node(path, node),
             NumberToClock(node) => self.add_node(path, node),

@@ -102,6 +102,8 @@ pub enum PortType {
     ///
     /// e.g. Text, Lists, Objects, Numbers
     Data,
+    /// Plaintext
+    Text,
     // TODO: figure out what kind's of data should be transmitted here
     /// Materials and Shaders for 3D Objects
     Material,
@@ -110,6 +112,7 @@ pub enum PortType {
 }
 
 pub mod port_types {
+    use std::sync::Arc;
     use std::time::Duration;
 
     use mizer_util::StructuredData;
@@ -121,6 +124,7 @@ pub mod port_types {
     pub type DATA = StructuredData;
     pub type VECTOR = VectorData;
     pub type CLOCK = Duration;
+    pub type TEXT = Arc<String>;
 }
 
 impl Display for PortType {

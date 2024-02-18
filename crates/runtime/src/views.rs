@@ -10,7 +10,7 @@ use mizer_node::NodePath;
 pub struct LayoutsView {
     faders: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
-    labels: Arc<NonEmptyPinboard<HashMap<NodePath, String>>>,
+    labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
 }
 
 impl Default for LayoutsView {
@@ -44,13 +44,13 @@ impl LayoutsView {
         self.buttons.set(values);
     }
 
-    pub fn get_label_value(&self, path: &NodePath) -> Option<String> {
+    pub fn get_label_value(&self, path: &NodePath) -> Option<Arc<String>> {
         let values = self.labels.read();
 
         values.get(path).cloned()
     }
 
-    pub(crate) fn write_label_values(&self, values: HashMap<NodePath, String>) {
+    pub(crate) fn write_label_values(&self, values: HashMap<NodePath, Arc<String>>) {
         self.labels.set(values);
     }
 }

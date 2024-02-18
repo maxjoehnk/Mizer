@@ -307,6 +307,7 @@ enum ChannelProtocol {
   MATERIAL = 7;
   COLOR = 9;
   CLOCK = 10;
+  TEXT = 11;
 }
 
 message Port {

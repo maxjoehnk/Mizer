@@ -27,7 +27,7 @@ ffi: generate_bindings
 	cp ../../target/debug/libmizer_ui_ffi.* ../../target/debug/lib/
 
 ffi_release: generate_bindings
-	cargo build --release -p mizer-ui-ffi
+	cargo build --release -p mizer-ui-ffi --feature build-ffmpeg
 
 generate_header:
 	cbindgen --config ffi/cbindgen.toml --crate mizer-ui-ffi --output ffi.h --lang c

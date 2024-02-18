@@ -7,6 +7,9 @@ edition = "2021"
 name = "mizer_ui_ffi"
 crate-type = ["cdylib", "lib"]
 
+[features]
+build-ffmpeg = ["ffmpeg-the-third/build"]
+
 [dependencies]
 pinboard = "2.2"
 mizer-sequencer = { path = "../../components/sequencer" }
@@ -23,3 +26,4 @@ mizer-api = { path = "../../api" }
 lazy_static = "1.4"
 parking_lot = "0.12"
 bitflags = "2.4"
+ffmpeg-the-third = "1.2"

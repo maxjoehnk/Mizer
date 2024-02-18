@@ -5849,6 +5849,7 @@ name = "mizer-ui-ffi"
 version = "0.1.0"
 dependencies = [
  "bitflags 2.4.2",
+ "ffmpeg-the-third",
  "lazy_static",
  "mizer-api",
  "mizer-clock",

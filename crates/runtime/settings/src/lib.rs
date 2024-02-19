@@ -6,6 +6,12 @@ use directories_next::ProjectDirs;
 use serde::{Deserialize, Serialize};
 
 const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
+#[cfg(target_os = "linux")]
+const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-linux.toml");
+#[cfg(target_os = "macos")]
+const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-macos.toml");
+#[cfg(target_os = "windows")]
+const DEFAULT_HOTKEYS: &str = include_str!("../hotkeys-windows.toml");
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Settings {
@@ -54,7 +60,7 @@ impl Settings {
             let mut file = std::fs::File::open("settings.toml")?;
             file.read_to_string(&mut buffer)?;
         } else {
-            buffer = DEFAULT_SETTINGS.to_string();
+            buffer = [DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat();
         }
         let settings = toml::from_str(&buffer)?;
 
@@ -77,7 +83,7 @@ impl Settings {
 
 impl SettingsManager {
     pub fn new() -> anyhow::Result<Self> {
-        let settings = toml::from_str(DEFAULT_SETTINGS)?;
+        let settings = toml::from_str(&[DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat())?;
 
         Ok(Self {
             settings,

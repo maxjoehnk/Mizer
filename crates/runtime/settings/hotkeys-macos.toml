@@ -1,0 +1,67 @@
+[hotkeys.global]
+layout_view = "f1"
+plan_view = "f2"
+previz_view = "f3"
+nodes_view = "f4"
+sequencer_view = "f5"
+programmer_view = "f6"
+presets_view = "f7"
+effects_view = "f8"
+media_view = "f9"
+surfaces_view = "f10"
+connections_view = "f11"
+fixture_patch_view = "f12"
+programmer_pane = "shift+p"
+selection_pane = "shift+s"
+undo = "cmd+z"
+redo = "cmd+shift+z"
+open = "cmd+o"
+save = "cmd+s"
+save_as = "cmd+shift+s"
+
+[hotkeys.layouts]
+add_layout = "alt+a"
+
+[hotkeys.plan]
+store = "insert"
+highlight = "home"
+clear = "backspace"
+
+[hotkeys.programmer]
+select_all = "cmd+a"
+clear = "backspace"
+store = "insert"
+highlight = "home"
+assign_group = "cmd+g"
+next = "right"
+prev = "left"
+shuffle = "cmd+r"
+
+[hotkeys.patch]
+add_fixture = "alt+a"
+select_all = "cmd+a"
+clear = "backspace"
+delete = "cmd+backspace"
+assign_group = "cmd+g"
+
+[hotkeys.nodes]
+add_node = "alt+a"
+duplicate_node = "cmd+d"
+group_nodes = "cmd+g"
+delete_node = "cmd+backspace"
+rename_node = "cmd+r"
+
+[hotkeys.sequencer]
+add_sequence = "alt+a"
+delete = "cmd+backspace"
+duplicate = "cmd+d"
+go_forward = "cmd+g"
+stop = "alt+s"
+
+[hotkeys.effects]
+delete = "cmd+backspace"
+add_effect = "alt+a"
+
+[hotkeys.media]
+add_media = "alt+a"
+delete = "cmd+backspace"

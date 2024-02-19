@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
+import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
@@ -278,7 +278,7 @@ class PanelAction extends StatelessWidget {
               if (hotkey != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(hotkey.toCapitalCase(),
+                  child: Text(formatHotkey(hotkey),
                       style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(), fontSize: 10)),
                 ),
             ],

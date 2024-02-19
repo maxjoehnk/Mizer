@@ -21,4 +21,4 @@ uuid = { version = "1.7", features = ["serde"] }
 
 [dev-dependencies]
 test-case = "3.3"
-spectral = "0.6"
+spectral = { version = "0.6", default-features = false }

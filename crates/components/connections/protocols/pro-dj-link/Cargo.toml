@@ -15,5 +15,5 @@ mizer-commander = { path = "../../../../runtime/commander" }
 tokio = { version = "1.36", features = ["net", "rt", "sync", "time"] }
 serde = { version = "1", features = ["derive"] }
 pro-dj-link = { git = "https://github.com/maxjoehnk/pro-dj-link-rs.git", features = ["tokio"], default-features = false }
-default-net = "0.21.0"
+default-net = "0.22.0"
 enum_dispatch = "0.3"

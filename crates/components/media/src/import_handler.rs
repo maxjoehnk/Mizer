@@ -34,7 +34,7 @@ impl ImportFileHandler {
             video_handler: VideoHandler,
             image_handler: ImageHandler,
             audio_handler: AudioHandler,
-            svg_handler: SvgHandler,
+            svg_handler: SvgHandler::new(),
             data_handler: DataHandler,
         }
     }

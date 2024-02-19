@@ -4972,6 +4972,7 @@ dependencies = [
  "async-walkdir",
  "dashmap",
  "ffmpeg-the-third",
+ "fontdb 0.16.1",
  "futures",
  "id3",
  "image",

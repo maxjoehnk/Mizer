@@ -21,7 +21,7 @@ struct ProDJLinkDiscoveryService {
 impl ProDJLinkDiscoveryService {
     async fn new(sender: Sender<ProDJLinkDevice>) -> anyhow::Result<Self> {
         let network_interface =
-            default_net::get_default_interface().map_err(|err| anyhow::anyhow!("{err}"))?;
+            netdev::get_default_interface().map_err(|err| anyhow::anyhow!("{err}"))?;
         let ip = network_interface
             .ipv4
             .first()

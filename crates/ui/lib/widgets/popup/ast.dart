@@ -18,6 +18,18 @@ class ValueAst {
     }
   }
 
+  void pop() {
+    if (nodes.isEmpty) {
+      return;
+    }
+    var last = nodes.last.pop();
+    if (last == null) {
+      nodes.removeLast();
+    }else {
+      nodes.last = last;
+    }
+  }
+
   void clear() {
     nodes = [];
   }
@@ -42,6 +54,8 @@ abstract class ValueAstNode {
   bool canJoin(ValueAstNode node);
 
   void join(covariant ValueAstNode node);
+
+  ValueAstNode? pop();
 }
 
 class Value implements ValueAstNode {
@@ -88,6 +102,23 @@ class Value implements ValueAstNode {
       }
     }
   }
+
+  @override
+  ValueAstNode? pop() {
+    if ((fractions ?? "").isNotEmpty) {
+      fractions = fractions!.substring(0, fractions!.length - 1);
+      return this;
+    }
+    if (dot) {
+      dot = false;
+      return this;
+    }
+    if (value != null) {
+      value = value! ~/ 10;
+      return this;
+    }
+    return null;
+  }
 }
 
 class Thru implements ValueAstNode {
@@ -103,5 +134,10 @@ class Thru implements ValueAstNode {
 
   @override
   void join(ValueAstNode node) {}
+
+  @override
+  ValueAstNode? pop() {
+    return null;
+  }
 }
 

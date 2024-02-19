@@ -62,8 +62,9 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
       LogicalKeyboardKey.numpadComma: (context) => _push(Value.dot()),
       LogicalKeyboardKey.comma: (context) => _push(Value.dot()),
       LogicalKeyboardKey.period: (context) => _push(Value.dot()),
-      LogicalKeyboardKey.delete: (context) => setState(() => _ast.clear()),
-      LogicalKeyboardKey.clear: (context) => setState(() => _ast.clear()),
+      LogicalKeyboardKey.delete: (context) => _clear(),
+      LogicalKeyboardKey.clear: (context) => _clear(),
+      LogicalKeyboardKey.backspace: (context) => _pop(),
       LogicalKeyboardKey.enter: _build,
       LogicalKeyboardKey.numpadEnter: _build,
       LogicalKeyboardKey.escape: (context) => Navigator.of(context).pop(),
@@ -88,6 +89,10 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
       child: Focus(
         autofocus: true,
         onKey: (node, event) {
+          if (event.isShiftPressed && event.logicalKey == LogicalKeyboardKey.backspace) {
+            _clear();
+            return KeyEventResult.ignored;
+          }
           if (keyMappings.containsKey(event.logicalKey) && event.isKeyPressed(event.logicalKey)) {
             keyMappings[event.logicalKey]!(context);
             return KeyEventResult.handled;
@@ -156,6 +161,16 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
     setState(() {
       _ast.push(node);
     });
+  }
+
+  _pop() {
+    setState(() {
+      _ast.pop();
+    });
+  }
+
+  _clear() {
+    setState(() => _ast.clear());
   }
 
   _build(BuildContext context) {

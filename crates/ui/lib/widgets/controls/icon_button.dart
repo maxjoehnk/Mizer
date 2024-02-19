@@ -11,6 +11,6 @@ class MizerIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(message: this.label, child: MizerButton(child: Icon(icon), onClick: onClick));
+    return MizerButton(child: Icon(icon), onClick: onClick);
   }
 }

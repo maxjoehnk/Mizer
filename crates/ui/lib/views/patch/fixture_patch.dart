@@ -1,5 +1,5 @@
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -10,10 +10,12 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/tabs.dart';
 
 import 'dialogs/assign_fixtures_to_group_dialog.dart';
 import 'dialogs/delete_fixture_dialog.dart';
 import 'dialogs/patch_fixture_dialog.dart';
+import 'fixture_channel_limits.dart';
 import 'fixture_table.dart';
 
 class FixturePatchView extends StatefulWidget {
@@ -44,6 +46,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
         child: Column(
           children: [
             Expanded(
+              flex: 2,
               child: Panel(
                 label: "Fixtures",
                 child: FixtureTable(
@@ -93,6 +96,19 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                 onSearch: (query) => setState(() => searchQuery = query),
               ),
             ),
+            Flexible(
+              flex: 1,
+              child: Panel(
+                label: "Fixture Configuration",
+                tabs: [
+                  Tab(
+                    label: "Channel Limits",
+                    child: FixtureChannelLimits(selectedIds: selectedIds, onUpdateFixture: (fixtureId, updateRequest) =>
+                      fixturesBloc.add(UpdateFixture(fixtureId, updateRequest))),
+                  )
+                ]
+              )
+            )
           ],
         ),
       );

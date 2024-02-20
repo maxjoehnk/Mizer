@@ -201,7 +201,7 @@ pub struct Node {
     pub designer: NodeDesigner,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {
     pub id: u32,
     pub name: String,

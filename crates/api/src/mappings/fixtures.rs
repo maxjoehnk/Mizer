@@ -358,6 +358,7 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
         });
 
         match control.control() {
+            None => unreachable!("Control without control type"),
             Intensity => Self::Intensity,
             Shutter => Self::Shutter,
             Focus => Self::Focus,
@@ -384,5 +385,46 @@ impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
             }
             Iris => Self::Iris,
         }
+    }
+}
+
+impl From<definition::FixtureFaderControl> for models::FixtureFaderControl {
+    fn from(control: definition::FixtureFaderControl) -> Self {
+        use definition::FixtureFaderControl::*;
+
+        match control {
+            Intensity => build_fader_control(FixtureControl::Intensity),
+            Shutter => build_fader_control(FixtureControl::Shutter),
+            ColorMixer(color_channel) => Self {
+                control: FixtureControl::ColorMixer.into(),
+                color_mixer_channel: Some(match color_channel {
+                    definition::ColorChannel::Red => fixture_fader_control::ColorMixerControlChannel::Red,
+                    definition::ColorChannel::Green => fixture_fader_control::ColorMixerControlChannel::Green,
+                    definition::ColorChannel::Blue => fixture_fader_control::ColorMixerControlChannel::Blue,
+                }.into()),
+                ..Default::default()
+            },
+            ColorWheel => build_fader_control(FixtureControl::ColorWheel),
+            Pan => build_fader_control(FixtureControl::Pan),
+            Tilt => build_fader_control(FixtureControl::Tilt),
+            Prism => build_fader_control(FixtureControl::Prism),
+            Iris => build_fader_control(FixtureControl::Iris),
+            Frost => build_fader_control(FixtureControl::Frost),
+            Zoom => build_fader_control(FixtureControl::Zoom),
+            Focus => build_fader_control(FixtureControl::Focus),
+            Gobo => build_fader_control(FixtureControl::Gobo),
+            Generic(name) => Self {
+                control: FixtureControl::Generic.into(),
+                generic_channel: Some(name),
+                ..Default::default()
+            },
+        }
+    }
+}
+
+fn build_fader_control(fixture_control: FixtureControl) -> FixtureFaderControl {
+    FixtureFaderControl {
+        control: fixture_control.into(),
+        ..Default::default()
     }
 }

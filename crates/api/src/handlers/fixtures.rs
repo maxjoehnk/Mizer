@@ -4,6 +4,7 @@ use regex::Regex;
 
 use mizer_command_executor::*;
 use mizer_fixture_patch_export::PatchExporter;
+use mizer_fixtures::fixture::ChannelLimit;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 
@@ -69,6 +70,11 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                     invert_pan: fixture.configuration.invert_pan,
                     invert_tilt: fixture.configuration.invert_tilt,
                     reverse_pixel_order: fixture.configuration.reverse_pixel_order,
+                    channel_limits: fixture.configuration.limits.iter().map(|(control, limits)| FixtureChannelLimit {
+                        control: Some(control.clone().into()),
+                        min: limits.min,
+                        max: limits.max,
+                    }).collect()
                 }),
             };
             fixtures.fixtures.push(fixture_model);
@@ -125,6 +131,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             invert_pan: request.invert_pan,
             invert_tilt: request.invert_tilt,
             reverse_pixel_order: request.reverse_pixel_order,
+            limit: request.limit.map(|limit| (limit.control.unwrap().into(), ChannelLimit {
+                min: limit.min,
+                max: limit.max,
+            })),
             name: request.name,
             address: request
                 .address

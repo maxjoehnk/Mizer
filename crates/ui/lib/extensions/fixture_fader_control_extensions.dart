@@ -9,6 +9,9 @@ extension FixtureFaderControlExtensions on FixtureFaderControl {
     if (this.control == FixtureControl.COLOR_WHEEL) {
       return "Color Wheel";
     }
+    if (this.control == FixtureControl.GENERIC) {
+      return this.genericChannel;
+    }
     return this.control.name.toCapitalCase();
   }
 }

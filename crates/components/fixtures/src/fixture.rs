@@ -1,8 +1,10 @@
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
 use mizer_protocol_dmx::DmxOutput;
+use mizer_util::LerpExt;
 
 use crate::color_mixer::update_color_mixer;
 use crate::definition::*;
@@ -81,7 +83,7 @@ impl ChannelValues {
     }
 }
 
-#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct FixtureConfiguration {
     #[serde(default)]
     pub invert_pan: bool,
@@ -89,14 +91,85 @@ pub struct FixtureConfiguration {
     pub invert_tilt: bool,
     #[serde(default)]
     pub reverse_pixel_order: bool,
+    #[serde(default)]
+    pub limits: HashMap<FixtureFaderControl, ChannelLimit>,
+}
+
+#[derive(Debug, Default, Copy, Clone, Deserialize, Serialize, PartialEq)]
+pub struct ChannelLimit {
+    #[serde(default)]
+    pub min: Option<f64>,
+    #[serde(default)]
+    pub max: Option<f64>,
+}
+
+impl Hash for ChannelLimit {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        if let Some(min) = self.min {
+            min.to_bits().hash(state);
+        }else {
+            0u64.hash(state);
+        }
+        if let Some(max) = self.max {
+            max.to_bits().hash(state);
+        }else {
+            0u64.hash(state);
+        }
+    }
+}
+
+impl ChannelLimit {
+    fn adapt_read(&self, value: f64) -> f64 {
+        let min = self.min.unwrap_or(0.);
+        let max = self.max.unwrap_or(1.);
+
+        value.linear_extrapolate((min, max), (0., 1.))
+    }
+
+    fn adapt_write(&self, value: f64) -> f64 {
+        let min = self.min.unwrap_or(0.);
+        let max = self.max.unwrap_or(1.);
+
+        value.linear_extrapolate((0., 1.), (min, max))
+    }
 }
 
 impl FixtureConfiguration {
-    pub(crate) fn adapt(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+    pub(crate) fn adapt_write(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        let value = self.adapt_pan_tilt(control, value);
+        let value = self.adapt_write_limits(control, value);
+
+        value
+    }
+
+    pub(crate) fn adapt_read(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        let value = self.adapt_pan_tilt(control, value);
+        let value = self.adapt_read_limits(control, value);
+
+        value
+    }
+
+    fn adapt_pan_tilt(&self, control: &FixtureFaderControl, value: f64) -> f64 {
         match control {
             FixtureFaderControl::Pan if self.invert_pan => (1. - value).abs(),
             FixtureFaderControl::Tilt if self.invert_tilt => (1. - value).abs(),
             _ => value,
+        }
+    }
+
+    fn adapt_write_limits(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        if let Some(limits) = self.limits.get(control) {
+            limits.adapt_write(value)
+        }else {
+            value
+        }
+    }
+
+    fn adapt_read_limits(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        if let Some(limits) = self.limits.get(control) {
+            limits.adapt_read(value)
+        }else {
+            value
         }
     }
 }
@@ -274,7 +347,7 @@ impl IFixtureMut for Fixture {
         priority: FixturePriority,
     ) {
         profiling::scope!("Fixture::write_fader_control");
-        let value = self.configuration.adapt(&control, value);
+        let value = self.configuration.adapt_write(&control, value);
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 if let FixtureFaderControl::ColorMixer(color_channel) = control {
@@ -333,7 +406,7 @@ impl IFixture for Fixture {
             Some(FixtureControlChannel::Channel(ref channel)) => self
                 .channel_values
                 .get(channel)
-                .map(|value| self.configuration.adapt(&control, value)),
+                .map(|value| self.configuration.adapt_read(&control, value)),
             Some(FixtureControlChannel::VirtualDimmer) => self
                 .current_mode
                 .color_mixer
@@ -468,7 +541,7 @@ mod tests {
     use test_case::test_case;
 
     use crate::definition::FixtureFaderControl;
-    use crate::fixture::FixtureConfiguration;
+    use crate::fixture::{ChannelLimit, FixtureConfiguration};
     use crate::LTPPriority;
 
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
@@ -503,13 +576,13 @@ mod tests {
     #[test_case(0., 1.)]
     #[test_case(1., 0.)]
     #[test_case(0.5, 0.5)]
-    fn fixture_configuration_adapt_should_invert_pan(input: f64, expected: f64) {
+    fn fixture_configuration_adapt_read_should_invert_pan(input: f64, expected: f64) {
         let config = FixtureConfiguration {
             invert_pan: true,
             ..Default::default()
         };
 
-        let result = config.adapt(&FixtureFaderControl::Pan, input);
+        let result = config.adapt_read(&FixtureFaderControl::Pan, input);
 
         assert_eq!(expected, result);
     }
@@ -517,13 +590,13 @@ mod tests {
     #[test_case(0., 1.)]
     #[test_case(1., 0.)]
     #[test_case(0.5, 0.5)]
-    fn fixture_configuration_adapt_should_invert_tilt(input: f64, expected: f64) {
+    fn fixture_configuration_adapt_read_should_invert_tilt(input: f64, expected: f64) {
         let config = FixtureConfiguration {
             invert_tilt: true,
             ..Default::default()
         };
 
-        let result = config.adapt(&FixtureFaderControl::Tilt, input);
+        let result = config.adapt_read(&FixtureFaderControl::Tilt, input);
 
         assert_eq!(expected, result);
     }
@@ -531,14 +604,58 @@ mod tests {
     #[test_case(FixtureFaderControl::Pan)]
     #[test_case(FixtureFaderControl::Tilt)]
     #[test_case(FixtureFaderControl::Intensity)]
-    fn fixture_configuration_adapt_should_passthrough_unrelated_values(
+    fn fixture_configuration_adapt_read_should_passthrough_unrelated_values(
         control: FixtureFaderControl,
     ) {
         let config = FixtureConfiguration::default();
 
-        let result = config.adapt(&control, 1.0);
+        let result = config.adapt_read(&control, 1.0);
 
         assert_eq!(1.0, result);
+    }
+
+    #[test_case(1.0, None, None, 1.0)]
+    #[test_case(0.5, None, None, 0.5)]
+    #[test_case(1.0, None, Some(0.5), 0.5)]
+    #[test_case(0.5, Some(0.5), None, 0.75)]
+    #[test_case(0.5, Some(0.25), Some(0.75), 0.5)]
+    fn fixture_configuration_adapt_write_should_limit_channel_value(
+        input: f64,
+        min: Option<f64>,
+        max: Option<f64>,
+        expected: f64,
+    ) {
+        let mut config = FixtureConfiguration::default();
+        config.limits.insert(FixtureFaderControl::Intensity, ChannelLimit {
+            min,
+            max,
+        });
+
+        let result = config.adapt_write(&FixtureFaderControl::Intensity, input);
+
+        assert_eq!(expected, result);
+    }
+
+    #[test_case(1.0, None, None, 1.0)]
+    #[test_case(0.5, None, None, 0.5)]
+    #[test_case(1.0, None, Some(0.5), 0.5)]
+    #[test_case(0.5, Some(0.5), None, 0.75)]
+    #[test_case(0.5, Some(0.25), Some(0.75), 0.5)]
+    fn fixture_configuration_adapt_read_should_limit_channel_value(
+        expected: f64,
+        min: Option<f64>,
+        max: Option<f64>,
+        input: f64,
+    ) {
+        let mut config = FixtureConfiguration::default();
+        config.limits.insert(FixtureFaderControl::Intensity, ChannelLimit {
+            min,
+            max,
+        });
+
+        let result = config.adapt_read(&FixtureFaderControl::Intensity, input);
+
+        assert_eq!(expected, result);
     }
 
     #[test_case(LTPPriority::Lowest, 0.5, LTPPriority::High, 1.0, 1.0)]

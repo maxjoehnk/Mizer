@@ -1,7 +1,8 @@
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::fixture::FixtureConfiguration;
+use mizer_fixtures::fixture::{ChannelLimit, FixtureConfiguration};
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::definition::FixtureFaderControl;
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct UpdateFixtureCommand {
@@ -11,6 +12,7 @@ pub struct UpdateFixtureCommand {
     pub reverse_pixel_order: Option<bool>,
     pub name: Option<String>,
     pub address: Option<(u16, u16)>,
+    pub limit: Option<(FixtureFaderControl, ChannelLimit)>,
 }
 
 impl<'a> Command<'a> for UpdateFixtureCommand {
@@ -30,7 +32,7 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
             .get_fixture_mut(self.fixture_id)
             .ok_or_else(|| anyhow::anyhow!("Missing fixture"))?;
 
-        let config = fixture.configuration;
+        let config = fixture.configuration.clone();
         let name = fixture.name.clone();
         let address = (fixture.universe, fixture.channel);
 
@@ -49,6 +51,9 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
         if let Some((universe, channel)) = self.address {
             fixture.universe = universe;
             fixture.channel = channel;
+        }
+        if let Some((control, limits)) = self.limit.clone() {
+            fixture.configuration.limits.insert(control, limits);
         }
 
         Ok(((), (config, name, address)))

@@ -34,6 +34,13 @@ message UpdateFixtureRequest {
   optional bool reverse_pixel_order = 4;
   optional string name = 5;
   optional FixtureAddress address = 6;
+  optional UpdateFixtureLimit limit = 7;
+
+  message UpdateFixtureLimit {
+    FixtureFaderControl control = 1;
+    optional double min = 2;
+    optional double max = 3;
+  }
 }
 
 message FixtureAddress {
@@ -75,6 +82,13 @@ message FixtureConfig {
   bool invert_pan = 1;
   bool invert_tilt = 2;
   bool reverse_pixel_order = 3;
+  repeated FixtureChannelLimit channel_limits = 4;
+}
+
+message FixtureChannelLimit {
+  FixtureFaderControl control = 1;
+  optional double min = 2;
+  optional double max = 3;
 }
 
 message SubFixture {
@@ -84,19 +98,20 @@ message SubFixture {
 }
 
 enum FixtureControl {
-  INTENSITY = 0;
-  SHUTTER = 1;
-  COLOR_MIXER = 2;
-  COLOR_WHEEL = 3;
-  PAN = 4;
-  TILT = 5;
-  FOCUS = 6;
-  ZOOM = 7;
-  PRISM = 8;
-  IRIS = 9;
-  FROST = 10;
-  GOBO = 11;
-  GENERIC = 12;
+  NONE = 0;
+  INTENSITY = 1;
+  SHUTTER = 2;
+  COLOR_MIXER = 3;
+  COLOR_WHEEL = 4;
+  PAN = 5;
+  TILT = 6;
+  FOCUS = 7;
+  ZOOM = 8;
+  PRISM = 9;
+  IRIS = 10;
+  FROST = 11;
+  GOBO = 12;
+  GENERIC = 13;
 }
 
 message FixtureControls {

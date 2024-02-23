@@ -41,7 +41,7 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
 
         let registry = registry.with(file_layer);
 
-        #[cfg(target_os = "macos")]
+        #[cfg(all(target_os = "macos", feature = "oslog"))]
         {
             registry
                 .with(tracing_oslog::OsLogger::new("live.mizer", "default"))
@@ -49,13 +49,10 @@ pub fn init() -> anyhow::Result<LoggingGuard> {
                 .context("Initializing logger")?;
         }
 
-        #[cfg(not(target_os = "macos"))]
+        #[cfg(not(all(target_os = "macos", feature = "oslog")))]
         {
-            registry
-                .try_init()
-                .context("Initializing logger")?;
+            registry.try_init().context("Initializing logger")?;
         }
-
     } else {
         registry.try_init().context("Initializing logger")?;
     }

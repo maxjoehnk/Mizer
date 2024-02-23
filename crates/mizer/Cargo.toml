@@ -22,6 +22,7 @@ static-link-ffmpeg = ["ffmpeg-the-third/static"]
 ui = ["mizer-ui"]
 debug-ui = ["mizer-debug-ui-egui", "mizer-debug-ui-impl/active"]
 tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
+oslog = ["tracing-oslog"]
 
 [dependencies]
 derive_more = "0.99"
@@ -95,4 +96,4 @@ name = "oscillator_nodes"
 harness = false
 
 [target.'cfg(target_os = "macos")'.dependencies]
-tracing-oslog = "0.1"
+tracing-oslog = { version = "0.1", optional = true }

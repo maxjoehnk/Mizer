@@ -76,6 +76,12 @@ message AvailableNode {
   string name = 2;
   NodeCategory category = 3;
   string description = 4;
+  repeated NodeSettingDescription settings = 5;
+}
+
+message NodeSettingDescription {
+  string name = 1;
+  string description = 2;
 }
 
 message NodeConnection {

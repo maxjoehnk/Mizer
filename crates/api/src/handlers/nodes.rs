@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 
 use mizer_command_executor::*;
-use mizer_docs::get_node_description;
+use mizer_docs::{get_node_description, list_node_settings};
 use mizer_node::{NodePath, NodeType, PortId};
 use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::{NodeMetadataRef, NodePreviewRef};
@@ -109,15 +109,25 @@ impl<R: RuntimeApi> NodesHandler<R> {
             .map(|node_type| {
                 let node: mizer_nodes::Node = node_type.into();
                 let details = node.details();
-                let description = get_node_description(&node_type.get_name())
+                let node_type_name = node_type.get_name();
+                let description = get_node_description(&node_type_name)
                     .map(|desc| desc.to_string())
-                    .unwrap_or_default(); // TODO: remove this
+                    .unwrap_or_default();
+                let settings = list_node_settings(&node_type_name)
+                    .map(|settings| settings
+                        .map(|(setting, description)| NodeSettingDescription {
+                            name: setting.to_string(),
+                            description: description.to_string(),
+                        })
+                        .collect::<Vec<_>>())
+                    .unwrap_or_default();
 
                 AvailableNode {
                     name: details.node_type_name,
                     category: NodeCategory::from(details.category) as i32,
-                    r#type: node_type.get_name(),
+                    r#type: node_type_name,
                     description,
+                    settings,
                 }
             })
             .collect();

@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/widgets/properties/groups/help_group.dart';
 
 import 'groups/node_group.dart';
 import 'groups/settings_group.dart';
 
-class NodePropertiesPane extends StatelessWidget {
+class NodePropertiesPane extends StatefulWidget {
   final Node? node;
   final Function() onUpdate;
 
   NodePropertiesPane({this.node, required this.onUpdate});
 
   @override
+  State<NodePropertiesPane> createState() => _NodePropertiesPaneState();
+}
+
+class _NodePropertiesPaneState extends State<NodePropertiesPane> {
+  String? hoveredSetting;
+
+  @override
   Widget build(BuildContext context) {
-    if (this.node == null) {
+    if (this.widget.node == null) {
       return Container();
     }
-    Node node = this.node!;
+    Node node = this.widget.node!;
     var nodesApi = context.read<NodesApi>();
 
     return Container(
@@ -37,8 +45,12 @@ class NodePropertiesPane extends StatelessWidget {
           settings: node.settings,
           onUpdate: (updated) {
             nodesApi.updateNodeSetting(UpdateNodeSettingRequest(path: node.path, setting: updated));
-            onUpdate();
-          }),
+            widget.onUpdate();
+          },
+          onHover: (setting) => setState(() {
+                hoveredSetting = setting?.id;
+              })),
+      HelpGroup(nodeType: node.type, hoveredSetting: hoveredSetting)
     ];
     return widgets;
   }

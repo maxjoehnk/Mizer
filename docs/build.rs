@@ -7,8 +7,15 @@ fn main() -> anyhow::Result<()> {
     let nodes = list_nodes()?;
     println!("{nodes:?}");
     let path = Path::new(&std::env::var("OUT_DIR")?).join("docs.rs");
-    let mut file = BufWriter::new(File::create(&path)?);
+    let mut file = BufWriter::new(File::create(path)?);
 
+    generate_descriptions(&mut file, &nodes)?;
+    generate_settings(&mut file, &nodes)?;
+
+    Ok(())
+}
+
+fn generate_descriptions(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Result<()> {
     let mut codegen = phf_codegen::Map::new();
     for node in nodes {
         let name = node.file_stem().unwrap().to_str().unwrap();
@@ -21,8 +28,45 @@ fn main() -> anyhow::Result<()> {
     }
 
     write!(
-        &mut file,
+        file,
         "static NODE_DESCRIPTIONS: phf::Map<&'static str, &'static str> = {};",
+        codegen.build()
+    )?;
+
+    Ok(())
+}
+
+fn generate_settings(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Result<()> {
+    let mut codegen = phf_codegen::Map::new();
+
+    for node in nodes {
+        let name = node.file_stem().unwrap().to_str().unwrap();
+        let mut settings_codegen = phf_codegen::Map::new();
+        for dir in node.read_dir()? {
+            match dir {
+                Ok(entry) => {
+                    let file_name = entry.file_name();
+                    let file_name = file_name.to_string_lossy();
+                    let is_setting_file = entry.file_type()?.is_file() && file_name.starts_with("setting");
+                    if is_setting_file {
+                        let setting_name = file_name.replace("setting_", "").replace(".adoc", "");
+                        let settings = fs::read_to_string(entry.path())?;
+                        let settings = settings.lines()
+                            .skip(1)
+                            .collect::<String>();
+                        let settings = settings.trim();
+                        settings_codegen.entry(setting_name.to_string(), &format!("\"{settings}\""));
+                    }
+                }
+                Err(err) => eprintln!("Error reading file in directory {}: {err:?}", node.display())
+            }
+        }
+        codegen.entry(name.to_string(), &format!("{}", settings_codegen.build()));
+    }
+
+    write!(
+        file,
+        "static NODE_SETTINGS: phf::Map<&'static str, phf::Map<&'static str, &'static str>> = {};",
         codegen.build()
     )?;
 

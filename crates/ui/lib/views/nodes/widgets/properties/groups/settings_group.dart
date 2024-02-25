@@ -20,18 +20,20 @@ class NodeSettingsPane extends StatelessWidget {
   final String type;
   final List<NodeSetting> settings;
   final Function(NodeSetting) onUpdate;
+  final Function(NodeSetting?) onHover;
 
   NodeSettingsPane(
       {required this.title,
       required this.type,
       required this.settings,
       required this.onUpdate,
+      required this.onHover,
       required this.nodePath});
 
   @override
   Widget build(BuildContext context) {
     var children = [
-      ..._settings,
+      ...getSettings(context),
       if (type == "envelope") EnvelopeSettingsPreview(settings),
       if (type == "surface-mapping") SurfaceMappingSettingsPreview(settings),
     ];
@@ -41,11 +43,12 @@ class NodeSettingsPane extends StatelessWidget {
     return PropertyGroup(title: title, children: children);
   }
 
-  Iterable<Widget> get _settings {
+  Iterable<Widget> getSettings(BuildContext context) {
     return settings.map((setting) {
       String label = setting.hasLabel() ? setting.label : setting.id;
+      Widget child = Container();
       if (setting.hasTextValue()) {
-        return TextPropertyField(
+        child = TextPropertyField(
             label: label,
             value: setting.textValue.value,
             multiline: setting.textValue.multiline,
@@ -56,7 +59,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasFloatValue()) {
-        return NumberField(
+        child = NumberField(
           node: nodePath,
           label: label,
           value: setting.floatValue.value,
@@ -73,7 +76,7 @@ class NodeSettingsPane extends StatelessWidget {
         );
       }
       if (setting.hasIntValue()) {
-        return NumberField(
+        child = NumberField(
           node: nodePath,
           label: label,
           value: setting.intValue.value,
@@ -90,7 +93,7 @@ class NodeSettingsPane extends StatelessWidget {
         );
       }
       if (setting.hasUintValue()) {
-        return NumberField(
+        child = NumberField(
           node: nodePath,
           label: label,
           value: setting.uintValue.value,
@@ -107,7 +110,7 @@ class NodeSettingsPane extends StatelessWidget {
         );
       }
       if (setting.hasBoolValue()) {
-        return CheckboxField(
+        child = CheckboxField(
             label: label,
             value: setting.boolValue.value,
             onUpdate: (v) {
@@ -117,7 +120,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasSelectValue()) {
-        return EnumField(
+        child = EnumField(
             disabled: setting.disabled,
             label: label,
             initialValue: setting.selectValue.value,
@@ -129,7 +132,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasEnumValue()) {
-        return EnumField(
+        child = EnumField(
             disabled: setting.disabled,
             label: label,
             initialValue: setting.enumValue.value,
@@ -143,7 +146,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasIdValue()) {
-        return EnumField(
+        child = EnumField(
             disabled: setting.disabled,
             label: label,
             initialValue: setting.idValue.value,
@@ -157,7 +160,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasSplineValue()) {
-        return SplineField(
+        child = SplineField(
             value: setting.splineValue,
             onUpdate: (v) {
               var updated = setting.deepCopy();
@@ -166,7 +169,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasMediaValue()) {
-        return MediaField(
+        child = MediaField(
             value: setting.mediaValue,
             label: label,
             onUpdate: (v) {
@@ -176,7 +179,7 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
       if (setting.hasStepSequencerValue()) {
-        return StepSequencerField(
+        child = StepSequencerField(
             value: setting.stepSequencerValue,
             onUpdate: (v) {
               var updated = setting.deepCopy();
@@ -185,7 +188,11 @@ class NodeSettingsPane extends StatelessWidget {
             });
       }
 
-      return Container();
+      return MouseRegion(
+        onEnter: (event) => onHover(setting),
+        onExit: (event) => onHover(null),
+        child: child,
+      );
     });
   }
 }

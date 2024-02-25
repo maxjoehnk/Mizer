@@ -13,6 +13,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/node_documenter.dart';
 import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
@@ -169,9 +170,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     hotkeyId: "rename_node"),
                 if (EnableScreenshot)
                   PanelActionModel(
-                      label: "Screenshot Node",
+                      label: "Document Node",
                       disabled: model.selectedNode == null,
-                      onClick: () => _screenshotNode(context)),
+                      onClick: () => _documentNode(context)),
               ],
             ),
           ),
@@ -279,18 +280,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         parent: widget.nodeEditorModel.parent?.node.path));
   }
 
-  void _screenshotNode(BuildContext context) async {
+  void _documentNode(BuildContext context) async {
     BaseNodeState nodeState = model.selectedNode!.key.currentState!;
-    final typeGroup = XTypeGroup(label: 'Images'.i18n, extensions: ['png']);
-    final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
-    if (location == null) {
-      return;
-    }
-    final ui.Image image = await nodeState.screenshot();
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    final Uint8List pngBytes = byteData!.buffer.asUint8List();
-    final File file = File(location.path);
-    await file.writeAsBytes(pngBytes);
+    await documentNode(context, nodeState);
   }
 
   @override

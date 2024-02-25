@@ -1,0 +1,3 @@
+= Hours
+
+How many hours the countdown should run.

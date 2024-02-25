@@ -1,4 +1,4 @@
-= LabelNode
+= Label
 :toc:
 :toclevels: 3
 ifndef::imagesdir[:imagesdir: ../../../]
@@ -10,3 +10,12 @@ include::description.adoc[]
 == Settings
 
 include::setting_text.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+
+
+=== Inputs
+
+include::port_input_text.adoc[leveloffset=+3]

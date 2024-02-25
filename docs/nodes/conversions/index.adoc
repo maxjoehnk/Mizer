@@ -2,4 +2,7 @@
 ifndef::imagesdir[:imagesdir: ../../]
 
 include::data-to-number/index.adoc[leveloffset=+1]
+include::data-to-text/index.adoc[leveloffset=+1]
+include::multi-to-data/index.adoc[leveloffset=+1]
+include::number-to-clock/index.adoc[leveloffset=+1]
 include::number-to-data/index.adoc[leveloffset=+1]

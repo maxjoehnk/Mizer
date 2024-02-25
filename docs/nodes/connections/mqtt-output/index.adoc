@@ -3,7 +3,7 @@
 :toclevels: 3
 ifndef::imagesdir[:imagesdir: ../../../]
 
-image::nodes/connections/mqtt-input/images/node.png[Node Preview,300]
+image::nodes/connections/mqtt-output/images/node.png[Node Preview,300]
 
 include::description.adoc[]
 
@@ -15,3 +15,9 @@ include::setting_retain.adoc[leveloffset=+2]
 
 == Ports
 === Outputs
+
+
+
+=== Inputs
+
+include::port_input_input.adoc[leveloffset=+3]

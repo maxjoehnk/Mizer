@@ -1,0 +1,10 @@
+= Active
+
+Indicates if the countdown is running.
+
+`1` if it is running.
+
+`0` if it is not running.
+
+
+*Type*: Single

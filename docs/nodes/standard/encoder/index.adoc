@@ -1,0 +1,24 @@
+= Encoder
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/standard/encoder/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_hold_rate.adoc[leveloffset=+2]
+include::setting_hold.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+include::port_output_value.adoc[leveloffset=+3]
+
+=== Inputs
+
+include::port_input_increase.adoc[leveloffset=+3]
+include::port_input_decrease.adoc[leveloffset=+3]
+include::port_input_reset.adoc[leveloffset=+3]

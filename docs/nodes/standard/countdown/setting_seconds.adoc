@@ -1,0 +1,3 @@
+= Seconds
+
+How many seconds the countdown should run.

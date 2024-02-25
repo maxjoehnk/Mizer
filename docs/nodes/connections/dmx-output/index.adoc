@@ -13,4 +13,10 @@ include::setting_universe.adoc[leveloffset=+2]
 include::setting_channel.adoc[leveloffset=+2]
 
 == Ports
+=== Outputs
+
+
+
 === Inputs
+
+include::port_input_input.adoc[leveloffset=+3]

@@ -1,0 +1,33 @@
+= Programmer
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/none/programmer/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+
+
+== Ports
+=== Outputs
+
+
+
+=== Inputs
+
+include::port_input_intensity.adoc[leveloffset=+3]
+include::port_input_shutter.adoc[leveloffset=+3]
+include::port_input_color.adoc[leveloffset=+3]
+include::port_input_pan.adoc[leveloffset=+3]
+include::port_input_tilt.adoc[leveloffset=+3]
+include::port_input_focus.adoc[leveloffset=+3]
+include::port_input_zoom.adoc[leveloffset=+3]
+include::port_input_prism.adoc[leveloffset=+3]
+include::port_input_iris.adoc[leveloffset=+3]
+include::port_input_frost.adoc[leveloffset=+3]
+include::port_input_gobo.adoc[leveloffset=+3]
+include::port_input_highlight.adoc[leveloffset=+3]
+include::port_input_clear.adoc[leveloffset=+3]

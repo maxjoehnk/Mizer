@@ -1,0 +1,3 @@
+= Stereo
+  
+Type: MULTI

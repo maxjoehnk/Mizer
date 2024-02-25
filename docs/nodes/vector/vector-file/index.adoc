@@ -1,0 +1,21 @@
+= Vector File
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/vector/vector-file/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_file.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+include::port_output_vector.adoc[leveloffset=+3]
+
+=== Inputs
+
+

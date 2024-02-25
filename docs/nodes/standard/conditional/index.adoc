@@ -9,7 +9,14 @@ include::description.adoc[]
 
 == Settings
 
+include::setting_threshold.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
 
+include::port_output_value.adoc[leveloffset=+3]
+
 === Inputs
+
+include::port_input_condition.adoc[leveloffset=+3]
+include::port_input_value.adoc[leveloffset=+3]

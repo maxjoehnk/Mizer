@@ -1,0 +1,21 @@
+= Timecode Recorder
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/standard/timecode-recorder/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_control.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+
+
+=== Inputs
+
+include::port_input_value.adoc[leveloffset=+3]

@@ -1,0 +1,5 @@
+= Finished
+
+Will pulse to `1` once the countdown is finished.
+
+Type: Single

@@ -1,0 +1,25 @@
+= DMX Pixels
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/pixel/dmx-pixels/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_output.adoc[leveloffset=+2]
+include::setting_width.adoc[leveloffset=+2]
+include::setting_height.adoc[leveloffset=+2]
+include::setting_start_universe.adoc[leveloffset=+2]
+include::setting_pixels_per_universe.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+
+
+=== Inputs
+
+include::port_input_input.adoc[leveloffset=+3]

@@ -1,0 +1,1 @@
+Compare two Data Values and Output `1` to `Result` Port if they are Equal, Otherwise Output `0`.

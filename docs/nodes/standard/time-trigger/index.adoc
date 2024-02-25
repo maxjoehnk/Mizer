@@ -1,0 +1,23 @@
+= Time Trigger
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/standard/time-trigger/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+include::setting_second.adoc[leveloffset=+2]
+include::setting_minute.adoc[leveloffset=+2]
+include::setting_hour.adoc[leveloffset=+2]
+
+== Ports
+=== Outputs
+
+include::port_output_value.adoc[leveloffset=+3]
+
+=== Inputs
+
+

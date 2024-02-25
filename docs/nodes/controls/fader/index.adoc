@@ -1,4 +1,4 @@
-= FaderNode
+= Fader
 :toc:
 :toclevels: 3
 ifndef::imagesdir[:imagesdir: ../../../]
@@ -7,9 +7,16 @@ image::nodes/controls/fader/images/node.png[Node Preview,300]
 
 include::description.adoc[]
 
+== Settings
+
+include::setting_start_value.adoc[leveloffset=+2]
+include::setting_end_value.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
+
 include::port_output_output.adoc[leveloffset=+3]
 
 === Inputs
+
 include::port_input_input.adoc[leveloffset=+3]

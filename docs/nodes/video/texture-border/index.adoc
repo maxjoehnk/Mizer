@@ -9,7 +9,19 @@ include::description.adoc[]
 
 == Settings
 
+include::setting_border_width.adoc[leveloffset=+2]
+include::setting_top_border.adoc[leveloffset=+2]
+include::setting_right_border.adoc[leveloffset=+2]
+include::setting_bottom_border.adoc[leveloffset=+2]
+include::setting_left_border.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
 
+include::port_output_output.adoc[leveloffset=+3]
+
 === Inputs
+
+include::port_input_input.adoc[leveloffset=+3]
+include::port_input_color.adoc[leveloffset=+3]
+include::port_input_border_width.adoc[leveloffset=+3]

@@ -1,0 +1,5 @@
+= Vector
+ifndef::imagesdir[:imagesdir: ../../]
+
+include::rasterize-vector/index.adoc[leveloffset=+1]
+include::vector-file/index.adoc[leveloffset=+1]

@@ -1,0 +1,1 @@
+Countdown from a configured time. Will pulse the `Finished` Port when done.

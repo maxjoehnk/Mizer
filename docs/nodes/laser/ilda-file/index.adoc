@@ -9,7 +9,13 @@ include::description.adoc[]
 
 == Settings
 
+
+
 == Ports
 === Outputs
 
+include::port_output_frames.adoc[leveloffset=+3]
+
 === Inputs
+
+

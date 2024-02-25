@@ -1,0 +1,3 @@
+Create a sub-graph in the node pipeline.
+
+It is not guaranteed that all nodes in the sub-graph will be executed after each other.

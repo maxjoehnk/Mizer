@@ -9,8 +9,14 @@ include::description.adoc[]
 
 == Settings
 
-include::setting_device.adoc[leveloffset=+2]
 include::setting_key.adoc[leveloffset=+2]
+include::setting_device.adoc[leveloffset=+2]
 
 == Ports
 === Outputs
+
+include::port_output_value.adoc[leveloffset=+3]
+
+=== Inputs
+
+

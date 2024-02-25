@@ -9,7 +9,17 @@ include::description.adoc[]
 
 == Settings
 
+include::setting_player_number.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
 
+include::port_output_original_tempo.adoc[leveloffset=+3]
+include::port_output_current_tempo.adoc[leveloffset=+3]
+include::port_output_pitch.adoc[leveloffset=+3]
+include::port_output_playing.adoc[leveloffset=+3]
+include::port_output_live.adoc[leveloffset=+3]
+
 === Inputs
+
+

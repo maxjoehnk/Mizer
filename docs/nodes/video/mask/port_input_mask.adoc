@@ -1,0 +1,3 @@
+= Mask
+  
+Type: TEXTURE

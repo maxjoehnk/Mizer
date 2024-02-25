@@ -8,7 +8,18 @@ image::nodes/connections/g13-output/images/node.png[Node Preview,300]
 include::description.adoc[]
 
 == Settings
+
 include::setting_device.adoc[leveloffset=+2]
 
 == Ports
+=== Outputs
+
+
+
 === Inputs
+
+include::port_input_key_color.adoc[leveloffset=+3]
+include::port_input_m1.adoc[leveloffset=+3]
+include::port_input_m2.adoc[leveloffset=+3]
+include::port_input_m3.adoc[leveloffset=+3]
+include::port_input_mr.adoc[leveloffset=+3]

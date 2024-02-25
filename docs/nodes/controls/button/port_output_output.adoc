@@ -1,3 +1,5 @@
 = Output
 
+Type: Single
+
 The current value of the button.

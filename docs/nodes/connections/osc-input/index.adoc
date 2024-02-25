@@ -9,7 +9,15 @@ include::description.adoc[]
 
 == Settings
 
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_argument_type.adoc[leveloffset=+2]
+include::setting_path.adoc[leveloffset=+2]
+
 == Ports
 === Outputs
 
+include::port_output_number.adoc[leveloffset=+3]
+
 === Inputs
+
+

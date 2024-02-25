@@ -1,0 +1,1 @@
+Delays the input signal by `x` frames where `x` is configured via the `Buffer Size` setting.

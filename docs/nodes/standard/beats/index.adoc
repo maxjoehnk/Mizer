@@ -1,0 +1,25 @@
+= Beats
+:toc:
+:toclevels: 3
+ifndef::imagesdir[:imagesdir: ../../../]
+
+image::nodes/standard/beats/images/node.png[Node Preview,300]
+
+include::description.adoc[]
+
+== Settings
+
+
+
+== Ports
+=== Outputs
+
+include::port_output_4_4.adoc[leveloffset=+2]
+include::port_output_2_4.adoc[leveloffset=+2]
+include::port_output_1_4.adoc[leveloffset=+2]
+include::port_output_1_8.adoc[leveloffset=+2]
+include::port_output_1_16.adoc[leveloffset=+2]
+
+=== Inputs
+
+

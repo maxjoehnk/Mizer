@@ -1,0 +1,3 @@
+= Buffer Size
+
+Configures how many frames should be passed until the input is passed through.

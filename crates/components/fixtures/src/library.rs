@@ -1,6 +1,6 @@
-use std::sync::Arc;
+use std::sync::{Arc};
 
-use parking_lot::RwLock;
+use parking_lot::{RwLock, Mutex, Condvar};
 
 use mizer_module::FixtureLibraryPaths;
 
@@ -11,6 +11,30 @@ use crate::FixtureLibraryLoader;
 pub struct FixtureLibrary {
     providers: Arc<RwLock<Vec<Box<dyn FixtureLibraryProvider>>>>,
     library_loader: Arc<Box<dyn FixtureLibraryLoader>>,
+    is_loading: FixtureLibraryLoadingIndicator,
+}
+
+#[derive(Clone, Default)]
+struct FixtureLibraryLoadingIndicator {
+    is_loading: Arc<Mutex<bool>>,
+    event: Arc<Condvar>,
+}
+
+impl FixtureLibraryLoadingIndicator {
+    pub fn wait_for_load(&self) {
+        let mut is_loading = self.is_loading.lock();
+        if *is_loading {
+            self.event.wait(&mut is_loading)
+        }
+    }
+
+    pub fn set_loading(&self, loading: bool) {
+        let mut is_loading = self.is_loading.lock();
+        *is_loading = loading;
+        if !loading {
+            self.event.notify_all();
+        }
+    }
 }
 
 impl FixtureLibrary {
@@ -21,6 +45,7 @@ impl FixtureLibrary {
         FixtureLibrary {
             providers: Arc::new(RwLock::new(providers)),
             library_loader: Arc::new(Box::new(loader)),
+            is_loading: Default::default(),
         }
     }
 
@@ -33,7 +58,13 @@ impl FixtureLibrary {
         Ok(())
     }
 
+    pub fn wait_for_load(&self) {
+        log::debug!("Waiting for fixture libraries to load...");
+        self.is_loading.wait_for_load()
+    }
+
     pub(crate) fn queue_load(&self) {
+        self.is_loading.set_loading(true);
         let library = self.clone();
         std::thread::Builder::new()
             .name("Background Fixture Library Loader".into())
@@ -50,10 +81,14 @@ impl FixtureLibrary {
 
     fn load_libraries(&self) -> anyhow::Result<()> {
         let mut providers = self.providers.write();
-        providers
+        let result = providers
             .iter_mut()
             .map(|provider| provider.load())
-            .collect::<anyhow::Result<Vec<_>>>()?;
+            .collect::<anyhow::Result<Vec<_>>>();
+
+        self.is_loading.set_loading(false);
+
+        result?;
 
         Ok(())
     }
@@ -102,6 +137,7 @@ impl Default for FixtureLibrary {
         FixtureLibrary {
             providers: Arc::new(RwLock::new(Vec::new())),
             library_loader: Arc::new(Box::new(EmptyLibraryLoader::default())),
+            is_loading: Default::default(),
         }
     }
 }

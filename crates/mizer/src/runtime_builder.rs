@@ -10,9 +10,10 @@ use mizer_command_executor::CommandExecutorModule;
 use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::FixtureModule;
+use mizer_fixtures::library::FixtureLibrary;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
-use mizer_module::{ApiInjector, Module, ModuleContext};
+use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
 use mizer_project_files::history::ProjectHistory;
 use mizer_protocol_citp::CitpModule;
 use mizer_protocol_dmx::*;
@@ -35,6 +36,7 @@ use crate::module_context::SetupContext;
 use crate::Mizer;
 
 fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
+    FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     SequencerModule.try_load(context);
     EffectsModule.try_load(context);
     TimecodeModule.try_load(context);
@@ -51,7 +53,6 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     }
 
     SurfaceModule.try_load(context);
-    FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     CommandExecutorModule.try_load(context);
     MediaModule.try_load(context);
     CitpModule.try_load(context);
@@ -100,6 +101,11 @@ pub fn build_runtime(
         project_history: ProjectHistory,
         status_bus,
     };
+
+    if let Some(fixture_library) = mizer.runtime.injector().get::<FixtureLibrary>() {
+        fixture_library.wait_for_load();
+    }
+
     open_project(&mut mizer, settings_manager.read().settings)?;
 
     Ok((mizer, api_handler))

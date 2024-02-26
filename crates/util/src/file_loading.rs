@@ -1,5 +1,7 @@
 use std::path::{Path, PathBuf};
 
+const IMPORT_BASE_PATH_ENV: &str = "MIZER_IMPORT_PATH";
+
 pub fn find_path<P: AsRef<Path>>(file: P) -> Option<PathBuf> {
     let file = file.as_ref();
     let mut paths = vec![PathBuf::from(file)];
@@ -10,6 +12,14 @@ pub fn find_path<P: AsRef<Path>>(file: P) -> Option<PathBuf> {
     {
         paths.push(path);
     }
+    if let Some(path) = std::env::var(IMPORT_BASE_PATH_ENV)
+        .ok()
+        .map(|path| PathBuf::from(path).join(file))
+    {
+        paths.push(path);
+    }
+
+    tracing::trace!("Looking for file: {}. Found: {:?}", file.display(), paths);
 
     paths.into_iter().find(|path| path.exists())
 }

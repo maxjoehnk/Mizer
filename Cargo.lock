@@ -6280,9 +6280,9 @@ dependencies = [
 
 [[package]]
 name = "netdev"
-version = "0.23.1"
+version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f91f8c2faa59a88a20640ee806f53b485e7d2943c3293c91b97fbb3cbdedccdf"
+checksum = "3cb81882c2170b1d7594eb8c9c806e29eb831a4d6be829aea01ccfd26f13f496"
 dependencies = [
  "dlopen2",
  "libc",
@@ -6292,7 +6292,7 @@ dependencies = [
  "netlink-sys",
  "once_cell",
  "system-configuration 0.6.0",
- "windows 0.48.0",
+ "windows 0.52.0",
 ]
 
 [[package]]

@@ -20,7 +20,7 @@ mizer-util = { path = "../../../util" }
 mizer-wgpu = { path = "../../wgpu" }
 downcast = "0.11"
 pinboard = "2.2"
-enum-iterator = "1.5"
+enum-iterator = "2.0"
 parking_lot = "0.12"
 
 [dev-dependencies]

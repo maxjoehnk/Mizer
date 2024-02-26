@@ -28,7 +28,7 @@ tracing = "0.1"
 palette = "0.7"
 rand = "0.8"
 itertools = "0.12"
-enum-iterator = "1.5"
+enum-iterator = "2.0"
 
 [dev-dependencies]
 test-case = "3.3"

@@ -81,17 +81,14 @@ pub enum PortType {
     ///
     /// e.g. Audio
     Multi,
-    // TODO: should this actually be a texture?
     /// RGBA Colors
     Color,
     /// 2D Image and Video
     Texture,
-    // TODO: maybe merge Vector and Poly?
     /// Vector Data
     ///
     /// e.g. SVG
     Vector,
-    // TODO: maybe merge into vector?
     /// Laser Frames
     Laser,
     /// 3D Data

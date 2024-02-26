@@ -66,10 +66,18 @@ impl ProcessingNode for SurfaceMappingNode {
     type State = Option<SurfaceMappingState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
-        let surface_registry = context.inject::<SurfaceRegistry>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
+        let Some(surface_registry) = context.inject::<SurfaceRegistry>() else {
+            return Ok(());
+        };
         if state.is_none() {
             *state = Some(SurfaceMappingState::new(wgpu_context, texture_registry));
         }

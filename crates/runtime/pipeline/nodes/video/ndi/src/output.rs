@@ -116,9 +116,16 @@ impl ProcessingNode for NdiOutputNode {
     type State = Option<NdiOutputState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
+
         if state.is_none() {
             *state = Some(NdiOutputState::new(
                 self.name.clone(),

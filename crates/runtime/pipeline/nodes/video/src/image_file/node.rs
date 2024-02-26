@@ -67,10 +67,18 @@ impl ProcessingNode for ImageFileNode {
     type State = Option<ImageFileState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
-        let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let media_server = context.inject::<MediaServer>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
+        let Some(video_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(media_server) = context.inject::<MediaServer>() else {
+            return Ok(());
+        };
 
         if self.file.is_empty() {
             return Ok(());

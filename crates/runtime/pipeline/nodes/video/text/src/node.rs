@@ -160,9 +160,15 @@ impl ProcessingNode for VideoTextNode {
     type State = Option<TextTextureState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
-        let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
 
         let color = context.read_port(INPUT_COLOR_PORT).unwrap_or(Color::WHITE);
         let font_size = context.read_port(INPUT_FONT_SIZE_PORT).unwrap_or(self.font_size);
@@ -200,7 +206,7 @@ impl ProcessingNode for VideoTextNode {
         let stage = state
             .render(wgpu_context, &texture)
             .context("Rendering texture source pipeline")?;
-        video_pipeline.add_stage(stage);
+        wgpu_pipeline.add_stage(stage);
 
         Ok(())
     }

@@ -84,9 +84,16 @@ impl ProcessingNode for VideoRgbNode {
     type State = Option<RgbState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
+
         let red = context.read_port::<_, f64>(RED_PORT).unwrap_or(self.red);
         let green = context
             .read_port::<_, f64>(GREEN_PORT)

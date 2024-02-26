@@ -116,10 +116,18 @@ impl ProcessingNode for VideoFileNode {
         context: &impl NodeContext,
         (node_state, state): &mut Self::State,
     ) -> anyhow::Result<()> {
-        let wgpu_context = context.inject::<WgpuContext>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
-        let video_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let media_server = context.inject::<MediaServer>().unwrap();
+        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+            return Ok(());
+        };
+        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+            return Ok(());
+        };
+        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+            return Ok(());
+        };
+        let Some(media_server) = context.inject::<MediaServer>() else {
+            return Ok(());
+        };
 
         if let Some(value) = context.read_port::<_, f64>(PLAYBACK_INPUT) {
             let playback = value - f64::EPSILON > 0.0;
@@ -186,7 +194,7 @@ impl ProcessingNode for VideoFileNode {
             .pipeline
             .render(wgpu_context, &texture, &mut state.texture)
             .context("Rendering texture source pipeline")?;
-        video_pipeline.add_stage(stage);
+        wgpu_pipeline.add_stage(stage);
 
         Ok(())
     }

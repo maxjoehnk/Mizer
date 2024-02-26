@@ -11,12 +11,14 @@ pub use mizer_color_nodes::{
 };
 pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{
-    DataToTextNode, DataToNumberNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
+    DataToNumberNode, DataToTextNode, MultiToDataNode, NumberToClockNode, NumberToDataNode,
 };
-pub use mizer_data_nodes::{ExtractNode, TemplateNode, ValueNode, DataFileNode};
+pub use mizer_data_nodes::{DataFileNode, ExtractNode, TemplateNode, ValueNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
-pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
+pub use mizer_fixture_nodes::{
+    FixtureControlNode, FixtureNode, GroupNode, PresetNode, ProgrammerNode,
+};
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
 pub use mizer_input_nodes::{ButtonNode, FaderNode, LabelNode};
@@ -177,6 +179,7 @@ node_impl! {
     Threshold(ThresholdNode),
     Encoder(EncoderNode),
     Fixture(FixtureNode),
+    FixtureControl(FixtureControlNode),
     Programmer(ProgrammerNode),
     Sequencer(SequencerNode),
     Group(GroupNode),

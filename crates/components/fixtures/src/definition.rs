@@ -829,6 +829,10 @@ impl FixtureControl {
             Generic(generic) => vec![FixtureFaderControl::Generic(generic)],
         }
     }
+
+    pub fn is_color(&self) -> bool {
+        matches!(self, Self::ColorMixer)
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Deserialize, Serialize)]

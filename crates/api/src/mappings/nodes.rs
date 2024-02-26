@@ -629,6 +629,7 @@ impl From<mizer_node::NodeCategory> for NodeCategory {
             Laser => Self::Laser,
             Pixel => Self::Pixel,
             Vector => Self::Vector,
+            Fixtures => Self::Fixtures,
         }
     }
 }

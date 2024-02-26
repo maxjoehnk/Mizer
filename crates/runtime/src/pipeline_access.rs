@@ -96,6 +96,7 @@ impl PipelineAccess {
             Threshold(node) => self.add_node(path, node),
             Encoder(node) => self.add_node(path, node),
             Fixture(node) => self.add_node(path, node),
+            FixtureControl(node) => self.add_node(path, node),
             Programmer(node) => self.add_node(path, node),
             Group(node) => self.add_node(path, node),
             Preset(node) => self.add_node(path, node),

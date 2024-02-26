@@ -14,6 +14,7 @@ const Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_LASER: Colors.purpleAccent,
   NodeCategory.NODE_CATEGORY_PIXEL: Colors.red,
   NodeCategory.NODE_CATEGORY_VECTOR: Colors.purple,
+  NodeCategory.NODE_CATEGORY_FIXTURES: Colors.blueGrey,
 };
 
 const Map<NodeCategory, String> CATEGORY_NAMES = {
@@ -28,4 +29,5 @@ const Map<NodeCategory, String> CATEGORY_NAMES = {
   NodeCategory.NODE_CATEGORY_LASER: "Laser",
   NodeCategory.NODE_CATEGORY_PIXEL: "Pixel",
   NodeCategory.NODE_CATEGORY_VECTOR: "Vector",
+  NodeCategory.NODE_CATEGORY_FIXTURES: "Fixtures",
 };

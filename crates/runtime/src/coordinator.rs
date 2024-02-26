@@ -670,6 +670,7 @@ fn register_node(
         Node::Threshold(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Encoder(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Fixture(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::FixtureControl(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Programmer(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Group(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Preset(node) => pipeline.register_node(path, &node, pipeline_access),

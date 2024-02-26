@@ -44,7 +44,7 @@ impl DeviceProfile {
         match script.write_rgb(&self.engine, control, Color(color)) {
             Ok(msg) => Some(msg),
             Err(err) => {
-                log::error!("Unable to write rgb to control {control:?}: {err:?}");
+                tracing::error!("Unable to write rgb to control {control:?}: {err:?}");
                 None
             }
         }

@@ -37,7 +37,7 @@ impl CommandExecutor {
         injector: &'a mut Injector,
         command: &T,
     ) -> anyhow::Result<T::Result> {
-        log::debug!("Applying command {:?}", command);
+        tracing::debug!("Applying command {:?}", command);
         let dependencies = T::Dependencies::extract(injector);
         let (result, state) = command.apply(dependencies)?;
         self.states
@@ -51,7 +51,7 @@ impl CommandExecutor {
         injector: &'a mut Injector,
         command: &T,
     ) -> anyhow::Result<()> {
-        log::debug!("Reverting command {:?}", command);
+        tracing::debug!("Reverting command {:?}", command);
         let dependencies = T::Dependencies::extract(injector);
         let state = self
             .states

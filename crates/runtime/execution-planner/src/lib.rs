@@ -137,13 +137,13 @@ impl ExecutionPlanner {
     }
 
     pub fn add_node(&mut self, node: ExecutionNode) {
-        log::trace!("add_node {:?}", node);
+        tracing::trace!("add_node {:?}", node);
         self.commands.push(ExecutorCommand::AddNode(node.clone()));
         self.nodes.insert(node.path.clone(), node);
     }
 
     pub fn rename_node(&mut self, from: &NodePath, to: NodePath) {
-        log::trace!("rename_node {from} to {to}");
+        tracing::trace!("rename_node {from} to {to}");
         let node = self.nodes.get_mut(from).unwrap();
         node.path = to.clone();
         self.nodes
@@ -163,7 +163,7 @@ impl ExecutionPlanner {
     }
 
     pub fn add_link(&mut self, link: NodeLink) {
-        log::trace!("add_link {:?}", link);
+        tracing::trace!("add_link {:?}", link);
         self.commands.push(ExecutorCommand::AddLink(link.clone()));
         self.links.push(link);
     }
@@ -175,14 +175,14 @@ impl ExecutionPlanner {
     }
 
     pub fn remove_node(&mut self, path: &NodePath) {
-        log::trace!("remove_node {:?}", path);
+        tracing::trace!("remove_node {:?}", path);
         self.commands
             .push(ExecutorCommand::RemoveNode(path.clone()));
         self.nodes.remove(path);
     }
 
     pub fn clear(&mut self) {
-        log::trace!("clear");
+        tracing::trace!("clear");
         self.nodes.clear();
         self.links.clear();
         self.commands.clear();

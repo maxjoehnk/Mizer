@@ -22,7 +22,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::trace!("mizer.live/layouts -> {}", call.method);
+        tracing::trace!("mizer.live/layouts -> {}", call.method);
         match call.method.as_str() {
             "getLayouts" => {
                 let response = self.get_layouts();

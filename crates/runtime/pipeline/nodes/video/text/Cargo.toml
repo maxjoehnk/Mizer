@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
 enum-iterator = "2.0"

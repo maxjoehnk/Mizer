@@ -114,7 +114,7 @@ impl OscInputNode {
     }
 
     fn handle_msg(&self, mut msg: OscMessage, context: &impl NodeContext) {
-        log::trace!("{:?}", msg);
+        tracing::trace!("{:?}", msg);
         if msg.args.is_empty() {
             return;
         }

@@ -19,7 +19,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for MappingsChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::trace!("mizer.live/mappings -> {}", call.method);
+        tracing::trace!("mizer.live/mappings -> {}", call.method);
         match call.method.as_str() {
             "addMapping" => match call
                 .arguments()

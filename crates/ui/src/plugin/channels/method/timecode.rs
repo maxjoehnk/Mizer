@@ -22,7 +22,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TimecodeChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::trace!("mizer.live/timecode -> {}", call.method);
+        tracing::trace!("mizer.live/timecode -> {}", call.method);
         match call.method.as_str() {
             "getTimecodes" => {
                 let response = self.handler.get_timecodes();

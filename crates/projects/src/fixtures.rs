@@ -25,7 +25,7 @@ impl ProjectManager for FixtureManager {
                     fixture.configuration.clone(),
                 );
             } else {
-                log::warn!("No fixture definition for fixture id {}", fixture.fixture);
+                tracing::warn!("No fixture definition for fixture id {}", fixture.fixture);
             }
         }
         for group in &project.groups {

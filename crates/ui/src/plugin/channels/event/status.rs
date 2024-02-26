@@ -32,7 +32,7 @@ impl<AR: AsyncRuntime + 'static> EventChannelHandler for MonitorStatusChannel<AR
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped status subscription");
+            tracing::trace!("Dropped status subscription");
             subscription.unsubscribe();
         }
     }

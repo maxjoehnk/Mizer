@@ -107,12 +107,12 @@ impl Hash for ChannelLimit {
     fn hash<H: Hasher>(&self, state: &mut H) {
         if let Some(min) = self.min {
             min.to_bits().hash(state);
-        }else {
+        } else {
             0u64.hash(state);
         }
         if let Some(max) = self.max {
             max.to_bits().hash(state);
-        }else {
+        } else {
             0u64.hash(state);
         }
     }
@@ -160,7 +160,7 @@ impl FixtureConfiguration {
     fn adapt_write_limits(&self, control: &FixtureFaderControl, value: f64) -> f64 {
         if let Some(limits) = self.limits.get(control) {
             limits.adapt_write(value)
-        }else {
+        } else {
             value
         }
     }
@@ -168,7 +168,7 @@ impl FixtureConfiguration {
     fn adapt_read_limits(&self, control: &FixtureFaderControl, value: f64) -> f64 {
         if let Some(limits) = self.limits.get(control) {
             limits.adapt_read(value)
-        }else {
+        } else {
             value
         }
     }
@@ -217,7 +217,7 @@ impl Fixture {
         priority: FixturePriority,
     ) {
         let name = name.into();
-        log::trace!("write {name} -> {value} ({priority:?})");
+        tracing::trace!("write {name} -> {value} ({priority:?})");
         self.channel_values.insert(name, value, priority);
     }
 
@@ -626,10 +626,9 @@ mod tests {
         expected: f64,
     ) {
         let mut config = FixtureConfiguration::default();
-        config.limits.insert(FixtureFaderControl::Intensity, ChannelLimit {
-            min,
-            max,
-        });
+        config
+            .limits
+            .insert(FixtureFaderControl::Intensity, ChannelLimit { min, max });
 
         let result = config.adapt_write(&FixtureFaderControl::Intensity, input);
 
@@ -648,10 +647,9 @@ mod tests {
         input: f64,
     ) {
         let mut config = FixtureConfiguration::default();
-        config.limits.insert(FixtureFaderControl::Intensity, ChannelLimit {
-            min,
-            max,
-        });
+        config
+            .limits
+            .insert(FixtureFaderControl::Intensity, ChannelLimit { min, max });
 
         let result = config.adapt_read(&FixtureFaderControl::Intensity, input);
 

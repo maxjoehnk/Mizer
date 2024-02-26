@@ -9,7 +9,7 @@ pub struct DmxBuffer {
 impl DmxBuffer {
     pub fn write_single(&self, universe: u16, channel: u16, value: u8) {
         assert!(channel < 512, "DMX Channel is above 512");
-        log::trace!("writing {}:{} => {}", universe, channel, value);
+        tracing::trace!("writing {}:{} => {}", universe, channel, value);
         let mut universe_buffer = self.buffers.lock().unwrap();
         universe_buffer.entry(universe).or_insert_with(|| [0; 512]);
         let buffer = universe_buffer.get_mut(&universe).unwrap();

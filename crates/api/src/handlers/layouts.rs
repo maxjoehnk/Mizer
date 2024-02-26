@@ -60,7 +60,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn remove_control(&self, layout_id: String, control_id: String) {
-        log::debug!("Removing control {} in layout {}", control_id, layout_id);
+        tracing::debug!("Removing control {} in layout {}", control_id, layout_id);
         self.runtime
             .run_command(DeleteLayoutControlCommand {
                 layout_id,
@@ -73,7 +73,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     #[profiling::function]
     pub fn move_control(&self, layout_id: String, control_id: String, position: ControlPosition) {
         let position = position.into();
-        log::debug!(
+        tracing::debug!(
             "Moving control {} in layout {} to {:?}",
             control_id,
             layout_id,
@@ -92,7 +92,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     #[profiling::function]
     pub fn resize_control(&self, layout_id: String, control_id: String, size: ControlSize) {
         let size = size.into();
-        log::debug!(
+        tracing::debug!(
             "Moving control {} in layout {} to {:?}",
             control_id,
             layout_id,
@@ -116,7 +116,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         decorations: ControlDecorations,
     ) {
         let decorations = decorations.into();
-        log::debug!(
+        tracing::debug!(
             "Updating control {} in layout {} with {:?}",
             control_id,
             layout_id,
@@ -140,7 +140,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         behavior: ControlBehavior,
     ) {
         let behavior = behavior.into();
-        log::debug!(
+        tracing::debug!(
             "Updating control {} in layout {} with {:?}",
             control_id,
             layout_id,
@@ -158,7 +158,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
-        log::debug!(
+        tracing::debug!(
             "Renaming control {} in layout {} to {}",
             control_id,
             layout_id,

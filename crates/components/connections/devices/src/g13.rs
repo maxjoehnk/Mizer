@@ -9,7 +9,7 @@ impl DeviceDiscovery for G13Discovery {
     fn discover() -> BoxStream<'static, Self::Device> {
         match G13Discovery::new() {
             Err(err) => {
-                log::error!("Discovery of G13 devices failed: {err:?}");
+                tracing::error!("Discovery of G13 devices failed: {err:?}");
 
                 stream::empty().boxed()
             }

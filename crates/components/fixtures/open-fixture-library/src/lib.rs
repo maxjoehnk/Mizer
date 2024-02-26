@@ -50,13 +50,13 @@ impl OpenFixtureLibraryProvider {
 
 impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
     fn load(&mut self) -> anyhow::Result<()> {
-        log::info!("Loading open fixture library...");
+        tracing::info!("Loading open fixture library...");
         if let Some(path) = find_path(&self.file_path) {
             let files = std::fs::read_dir(&path)?;
             for file in files {
                 let file = file?;
                 if file.metadata()?.is_file() {
-                    log::trace!("Loading ofl library from '{:?}'...", file);
+                    tracing::trace!("Loading ofl library from '{:?}'...", file);
                     let mut ag_library_file = std::fs::File::open(&file.path())?;
                     let ag_library: AgLibraryFile =
                         simd_json::serde::from_reader(&mut ag_library_file)?;
@@ -65,7 +65,7 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
                         let manufacturer = fixture.manufacturer.name.to_slug();
                         self.add_fixture_definition(&manufacturer, fixture);
                     }
-                    log::debug!("Loaded ofl library from '{:?}'.", file);
+                    tracing::debug!("Loaded ofl library from '{:?}'.", file);
                 }
             }
         }
@@ -555,7 +555,7 @@ fn group_controls(
             .iter()
             .all(|c| matches!(c, Capability::NoFunction))
         {
-            log::trace!("skipping capability {} as it has no functions", name);
+            tracing::trace!("skipping capability {} as it has no functions", name);
             continue;
         }
         if channel

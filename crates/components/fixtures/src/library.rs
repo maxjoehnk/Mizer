@@ -1,6 +1,6 @@
-use std::sync::{Arc};
+use std::sync::Arc;
 
-use parking_lot::{RwLock, Mutex, Condvar};
+use parking_lot::{Condvar, Mutex, RwLock};
 
 use mizer_module::FixtureLibraryPaths;
 
@@ -59,7 +59,7 @@ impl FixtureLibrary {
     }
 
     pub fn wait_for_load(&self) {
-        log::debug!("Waiting for fixture libraries to load...");
+        tracing::debug!("Waiting for fixture libraries to load...");
         self.is_loading.wait_for_load()
     }
 
@@ -69,11 +69,11 @@ impl FixtureLibrary {
         std::thread::Builder::new()
             .name("Background Fixture Library Loader".into())
             .spawn(move || {
-                log::info!("Loading fixture libraries...");
+                tracing::info!("Loading fixture libraries...");
                 if let Err(err) = library.load_libraries() {
-                    log::error!("Loading of fixture libraries failed: {:?}", err);
+                    tracing::error!("Loading of fixture libraries failed: {:?}", err);
                 } else {
-                    log::info!("Loaded fixture libraries successfully.");
+                    tracing::info!("Loaded fixture libraries successfully.");
                 }
             })
             .unwrap();

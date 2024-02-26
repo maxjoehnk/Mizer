@@ -15,7 +15,7 @@ impl DeviceDiscovery for NdiSourceDiscovery {
                 .flat_map(futures::stream::iter)
                 .boxed(),
             Err(err) => {
-                log::error!("ndi discovery failed: {err:?}");
+                tracing::error!("ndi discovery failed: {err:?}");
 
                 futures::stream::empty().boxed()
             }

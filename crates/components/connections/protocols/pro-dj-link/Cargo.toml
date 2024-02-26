@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 flume = "0.11"
 mizer-message-bus = { path = "../../../../util/bus" }
 futures = "0.3"

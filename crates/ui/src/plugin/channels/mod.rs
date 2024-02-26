@@ -57,7 +57,7 @@ impl MethodReplyExt for MethodCallReply<Value> {
     }
 
     fn respond_error(self, err: Error) {
-        log::error!("{:?}", err);
+        tracing::error!("{:?}", err);
         self.send_error("", Some(format!("{err:?}").as_str()), Value::Null);
     }
 

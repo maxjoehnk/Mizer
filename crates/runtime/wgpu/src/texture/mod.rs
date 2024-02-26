@@ -48,7 +48,7 @@ impl Texture {
             texture_format: provider.texture_format(),
         };
         if let Err(err) = texture.render(context, provider) {
-            log::error!("Failed initially render texture: {err:?}");
+            tracing::error!("Failed initially render texture: {err:?}");
         }
 
         Ok(texture)
@@ -63,7 +63,7 @@ impl Texture {
         let width = provider.width();
         let height = provider.height();
         if self.texture.width() != width || self.texture.height() != height {
-            log::debug!(
+            tracing::debug!(
                 "Texture size changed from {}x{} to {}x{}",
                 self.texture.width(),
                 self.texture.height(),

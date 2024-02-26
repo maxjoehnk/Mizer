@@ -9,8 +9,8 @@ use mizer_command_executor::CommandExecutorModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
-use mizer_fixtures::FixtureModule;
 use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::FixtureModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
@@ -63,7 +63,7 @@ pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
-    log::trace!("Building mizer runtime...");
+    tracing::trace!("Building mizer runtime...");
     let settings_manager = load_settings()?;
     let runtime = DefaultRuntime::new();
     let mut api_injector = ApiInjector::new();
@@ -129,9 +129,9 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
     } else if settings.general.auto_load_last_project {
         let history = ProjectHistory.load()?;
         if let Some(last_project) = history.first() {
-            log::info!("Loading last project {:?}", last_project);
+            tracing::info!("Loading last project {:?}", last_project);
             if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
-                log::error!("Failed to load last project: {:?}", err);
+                tracing::error!("Failed to load last project: {:?}", err);
             }
         } else {
             mizer.new_project();

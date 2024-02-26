@@ -41,7 +41,7 @@ impl ProcessingNode for IldaFileNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if state.frames.is_none() {
-            log::debug!("reading laser frames from {}", &self.file);
+            tracing::debug!("reading laser frames from {}", &self.file);
             let mut reader = IldaMediaReader::open_file(&self.file)?;
             let frames = reader.read_frames()?;
             state.frames = Some(frames);

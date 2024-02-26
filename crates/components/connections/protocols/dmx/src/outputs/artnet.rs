@@ -54,7 +54,7 @@ impl DmxOutput for ArtnetOutput {
         let broadcast_addr = match self.parse_addr() {
             Ok(addr) => addr,
             Err(err) => {
-                log::error!("Unable to parse artnet address: {:?}", err);
+                tracing::error!("Unable to parse artnet address: {:?}", err);
                 return;
             }
         };
@@ -72,7 +72,7 @@ impl DmxOutput for ArtnetOutput {
                 .unwrap();
 
             if let Err(err) = self.socket.send_to(&msg, broadcast_addr) {
-                log::error!("Unable to send to artnet server {:?}", err);
+                tracing::error!("Unable to send to artnet server {:?}", err);
             }
         }
     }

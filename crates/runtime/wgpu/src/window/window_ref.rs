@@ -17,7 +17,7 @@ pub struct WindowRef {
 
 impl Drop for WindowRef {
     fn drop(&mut self) {
-        log::debug!("Dropping window");
+        tracing::debug!("Dropping window");
         self.window.set_visible(false);
     }
 }

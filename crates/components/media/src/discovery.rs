@@ -28,7 +28,7 @@ impl MediaDiscovery {
 
     // TODO: watch path for file changes
     pub async fn discover(&self) -> anyhow::Result<()> {
-        log::info!("Discovering media files in {:?}", &self.walker.path);
+        tracing::info!("Discovering media files in {:?}", &self.walker.path);
         let paths = self.walker.scan().await?;
         let mut receivers = Vec::new();
 
@@ -53,8 +53,8 @@ impl MediaDiscovery {
         let results = futures::future::join_all(receivers).await;
         for result in results {
             match result {
-                Err(err) => log::error!("Importing media file failed: {err:?}"),
-                Ok(Some(document)) => log::debug!("Imported media file: {document:?}"),
+                Err(err) => tracing::error!("Importing media file failed: {err:?}"),
+                Ok(Some(document)) => tracing::debug!("Imported media file: {document:?}"),
                 _ => {}
             }
         }

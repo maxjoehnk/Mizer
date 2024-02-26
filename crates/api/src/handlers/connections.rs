@@ -49,7 +49,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             .get_midi_monitor(name)?
             .into_stream()
             .map(|event| {
-                log::warn!("event: {:?}", event);
+                tracing::warn!("event: {:?}", event);
 
                 event
             })
@@ -69,7 +69,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             .get_osc_monitor(connection_id)?
             .into_stream()
             .map(|event| {
-                log::debug!("osc event: {:?}", event);
+                tracing::debug!("osc event: {:?}", event);
 
                 event
             })

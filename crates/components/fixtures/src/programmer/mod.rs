@@ -307,13 +307,13 @@ impl Programmer {
 
     pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
         profiling::scope!("Programmer::run");
-        log::trace!("Programmer::run");
+        tracing::trace!("Programmer::run");
         if self.offline {
             return;
         }
         let mut values = HashMap::new();
         for (selection, state) in self.get_selections().into_iter() {
-            log::trace!("{:?} => {:?}", selection, state);
+            tracing::trace!("{:?} => {:?}", selection, state);
             for fixture_id in selection.get_fixtures().iter().flatten() {
                 for (control, value) in state.fader_controls() {
                     values.insert((*fixture_id, control), value);
@@ -628,9 +628,9 @@ impl Programmer {
             effects: self.running_effects.clone(),
         };
         self.programmer_view.set(state.clone());
-        log::trace!("sending programmer msg");
+        tracing::trace!("sending programmer msg");
         if let Err(err) = self.message_bus.try_send(state) {
-            log::error!("Error sending programmer msg {:?}", err);
+            tracing::error!("Error sending programmer msg {:?}", err);
         }
     }
 

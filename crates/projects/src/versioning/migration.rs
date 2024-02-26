@@ -51,7 +51,7 @@ impl<T: ProjectFileMigration> ObjectSafeProjectMigration for T {
 
     fn migrate(&self, project: &mut String) -> anyhow::Result<()> {
         let version = get_version(project)?;
-        log::info!("Migrating project file from {} to {}", version, T::VERSION);
+        tracing::info!("Migrating project file from {} to {}", version, T::VERSION);
         self.migrate(project)?;
         write_version(project, T::VERSION)?;
 

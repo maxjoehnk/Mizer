@@ -30,7 +30,7 @@ impl ProDJLinkDiscoveryService {
         let mac_addr = network_interface
             .mac_addr
             .ok_or(anyhow::anyhow!("No MAC address found"))?;
-        log::info!("Starting ProDJLink discovery service on ip {ip} ({mac_addr})...");
+        tracing::info!("Starting ProDJLink discovery service on ip {ip} ({mac_addr})...");
         let virtual_cdj = AsyncVirtualCdj::new(ip, mac_addr.octets()).await?;
         let search = AsyncSearchService::new().await?;
         let tempo = AsyncTrackBpmService::new().await?;
@@ -45,18 +45,18 @@ impl ProDJLinkDiscoveryService {
     }
 
     async fn run(mut self) {
-        log::debug!("Discovering ProDJLink devices...");
+        tracing::debug!("Discovering ProDJLink devices...");
         let devices = self.devices.clone();
         let sender = self.sender.clone();
         let virtual_cdj_handle = tokio::spawn(async move {
             loop {
                 if let Err(err) = self.virtual_cdj.send_keep_alive().await {
-                    log::error!("Failed to send keep alive: {err:?}");
+                    tracing::error!("Failed to send keep alive: {err:?}");
                 }
                 tokio::time::sleep(std::time::Duration::from_millis(150)).await;
                 match self.virtual_cdj.recv().await {
                     Ok(Some(StatusPacket::CdjStatus(packet))) => {
-                        log::trace!("Virtual CDJ Packet: {packet:?}");
+                        tracing::trace!("Virtual CDJ Packet: {packet:?}");
                         let mut devices = devices.lock().await;
                         if let Some(ProDJLinkDevice::CDJ(cdj)) = devices.get_mut(&packet.device_id)
                         {
@@ -65,10 +65,10 @@ impl ProDJLinkDiscoveryService {
                         }
                     }
                     Ok(Some(StatusPacket::MixerStatus(packet))) => {
-                        log::trace!("Virtual CDJ Packet: {packet:?}");
+                        tracing::trace!("Virtual CDJ Packet: {packet:?}");
                     }
                     Ok(None) => continue,
-                    Err(err) => log::error!("Virtual CDJ error: {err:?}"),
+                    Err(err) => tracing::error!("Virtual CDJ error: {err:?}"),
                 }
             }
         });
@@ -79,19 +79,19 @@ impl ProDJLinkDiscoveryService {
                 match self.tempo.recv().await {
                     Ok(None) => continue,
                     Ok(Some(packet)) => {
-                        log::trace!("Tempo Packet: {packet:?}");
+                        tracing::trace!("Tempo Packet: {packet:?}");
                         let mut devices = devices.lock().await;
                         if let Some(device) = devices.get_mut(&packet.device_id) {
                             if let ProDJLinkDevice::CDJ(cdj) = device {
                                 cdj.speed = packet.speed;
                                 cdj.beat = packet.beat;
                                 if let Err(err) = sender.send(ProDJLinkDevice::CDJ(cdj.clone())) {
-                                    log::error!("Failed to send CDJ device: {err:?}");
+                                    tracing::error!("Failed to send CDJ device: {err:?}");
                                 }
                             }
                         }
                     }
-                    Err(err) => log::error!("Virtual CDJ error: {err:?}"),
+                    Err(err) => tracing::error!("Virtual CDJ error: {err:?}"),
                 }
             }
         });
@@ -101,15 +101,15 @@ impl ProDJLinkDiscoveryService {
             loop {
                 match self.search.recv().await {
                     Ok(None) => {
-                        log::warn!("Ignoring invalid search packet");
+                        tracing::warn!("Ignoring invalid search packet");
                         continue;
                     }
                     Ok(Some(keep_alive)) => {
-                        log::trace!("Search Packet: {keep_alive:?}");
+                        tracing::trace!("Search Packet: {keep_alive:?}");
                         if keep_alive.device_type == DeviceType::Rekordbox
                             || keep_alive.is_virtual_cdj()
                         {
-                            log::trace!("Ignoring rekordbox and virtual cdj packets");
+                            tracing::trace!("Ignoring rekordbox and virtual cdj packets");
                             continue;
                         }
                         let mut devices = devices.lock().await;
@@ -134,22 +134,22 @@ impl ProDJLinkDiscoveryService {
                         });
                         entry.last_ping = std::time::Instant::now();
                         if let Err(err) = sender.send(entry.clone()) {
-                            log::error!("Failed to send ProDJ Link device: {err:?}");
+                            tracing::error!("Failed to send ProDJ Link device: {err:?}");
                         }
                     }
-                    Err(err) => log::error!("Search error: {err:?}"),
+                    Err(err) => tracing::error!("Search error: {err:?}"),
                 }
             }
         });
 
         if let Err(err) = search_handle.await {
-            log::error!("Search handle error: {err:?}");
+            tracing::error!("Search handle error: {err:?}");
         }
         if let Err(err) = tempo_handle.await {
-            log::error!("Tempo handle error: {err:?}");
+            tracing::error!("Tempo handle error: {err:?}");
         }
         if let Err(err) = virtual_cdj_handle.await {
-            log::error!("Virtual CDJ handle error: {err:?}");
+            tracing::error!("Virtual CDJ handle error: {err:?}");
         }
     }
 }

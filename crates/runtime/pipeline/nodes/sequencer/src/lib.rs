@@ -126,7 +126,7 @@ impl ProcessingNode for SequencerNode {
                 }
             }
         } else {
-            log::warn!("missing fixture module");
+            tracing::warn!("missing fixture module");
         }
 
         Ok(())

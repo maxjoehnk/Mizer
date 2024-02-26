@@ -62,7 +62,7 @@ impl MqttConnectionManager {
         id: &str,
         address: MqttAddress,
     ) -> anyhow::Result<MqttAddress> {
-        log::debug!("reconfigure_connection {id}");
+        tracing::debug!("reconfigure_connection {id}");
         let connection = self
             .connections
             .get_mut(id)
@@ -191,14 +191,14 @@ impl MqttBackgroundClient {
             if let Some(cmd) = cmd {
                 match self.handle_command(cmd).await {
                     Ok(true) => break,
-                    Err(err) => log::error!("Error handling mqtt background command {:?}", err),
+                    Err(err) => tracing::error!("Error handling mqtt background command {:?}", err),
                     _ => {}
                 }
             }
 
             if let Some(event) = event {
                 if let Err(err) = self.handle_event(event).await {
-                    log::error!("Error handling mqtt event {:?}", err)
+                    tracing::error!("Error handling mqtt event {:?}", err)
                 }
             }
         }
@@ -206,7 +206,7 @@ impl MqttBackgroundClient {
 
     async fn connect(&mut self) {
         while let Err(err) = self.client.connect().await {
-            log::error!("Error connecting to mqtt broker: {:?}", err);
+            tracing::error!("Error connecting to mqtt broker: {:?}", err);
         }
     }
 
@@ -215,10 +215,10 @@ impl MqttBackgroundClient {
         command: Result<MqttClientCommand, flume::RecvError>,
     ) -> anyhow::Result<bool> {
         let command = command?;
-        log::trace!("handle_command {:?}", command);
+        tracing::trace!("handle_command {:?}", command);
         match command {
             MqttClientCommand::Publish(publish) => {
-                log::debug!("Publishing message to {}", publish.topic());
+                tracing::debug!("Publishing message to {}", publish.topic());
                 self.client.publish(&publish).await?;
 
                 Ok(false)
@@ -229,7 +229,7 @@ impl MqttBackgroundClient {
                         topic_path: path.clone(),
                         qos: QoS::AtLeastOnce,
                     }]);
-                    log::debug!("Subscribing to {path}");
+                    tracing::debug!("Subscribing to {path}");
                     let result = self.client.subscribe(subscribe).await?;
                     result.any_failures()?;
                     self.subscriptions.push(path);
@@ -257,7 +257,7 @@ impl MqttBackgroundClient {
         let topic = result.topic().to_string();
         let payload = serde_json::from_slice(result.payload())?;
 
-        log::trace!("Received MQTT message {} - {:?}", topic, payload);
+        tracing::trace!("Received MQTT message {} - {:?}", topic, payload);
         self.event_publisher.send(MqttEvent { topic, payload });
 
         Ok(())

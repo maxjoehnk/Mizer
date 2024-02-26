@@ -248,7 +248,7 @@ impl VideoFileState {
         registry: &TextureRegistry,
         path: PathBuf,
     ) -> anyhow::Result<Self> {
-        log::debug!("Loading video file: {path:?}");
+        tracing::debug!("Loading video file: {path:?}");
         let mut decode_handle = VideoDecodeThread::spawn()?;
         let metadata = decode_handle.decode(path.clone())?;
         let mut texture =

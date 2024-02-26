@@ -67,7 +67,7 @@ impl VideoDecoder for VideoFileDecoder {
         match command {
             Self::Commands::Seek(ts) => {
                 if let Err(err) = self.context.seek(ts as i64, i64::MIN..i64::MAX) {
-                    log::error!("Error seeking video: {err:?}");
+                    tracing::error!("Error seeking video: {err:?}");
                 }
             }
         }

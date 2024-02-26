@@ -250,7 +250,7 @@ impl MixerWgpuPipeline {
         profiling::scope!("MixerWgpuPipeline::render");
         let texture_count = sources.len();
         if texture_count != self.texture_count || mode != self.mode {
-            log::debug!(
+            tracing::debug!(
                 "Rebuilding Mixer Wgpu Pipeline because texture_count: {} mode: {}",
                 texture_count != self.texture_count,
                 mode != self.mode

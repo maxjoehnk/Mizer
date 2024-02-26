@@ -118,7 +118,7 @@ impl ProcessingNode for PixelDmxNode {
     ) -> anyhow::Result<()> {
         let channel_count = self.width * self.height * CHANNELS_PER_PIXEL;
         let universe_count = (channel_count / DMX_CHANNELS as u32) as u16;
-        log::debug!("universes for pixels: {}", universe_count);
+        tracing::debug!("universes for pixels: {}", universe_count);
         let dmx_manager = context
             .inject::<DmxConnectionManager>()
             .ok_or_else(|| anyhow::anyhow!("missing dmx module"))?;

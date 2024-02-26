@@ -28,7 +28,7 @@ impl DebuggableProcessor for WindowProcessor {}
 fn send_window_event(window_events: &WindowEventSenders, window_id: WindowId, event: WindowEvent) {
     if let Some(window) = window_events.get(&window_id) {
         if let Err(err) = window.send(event) {
-            log::error!("Failed to send window event: {err:?}");
+            tracing::error!("Failed to send window event: {err:?}");
             // TODO: drop the window from the map here?
         }
     }

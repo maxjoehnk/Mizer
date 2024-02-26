@@ -48,7 +48,7 @@ impl DmxOutput for SacnOutput {
                 .source
                 .send_with_priority(*universe, buffer, self.priority)
             {
-                log::error!("Unable to send dmx universe {:?}", err);
+                tracing::error!("Unable to send dmx universe {:?}", err);
             }
         }
     }

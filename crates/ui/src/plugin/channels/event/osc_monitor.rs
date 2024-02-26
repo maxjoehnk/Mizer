@@ -33,14 +33,14 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
                         .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));
                     self.subscriptions.insert(id, subscription);
                 }
-                Err(err) => log::error!("Monitoring osc device failed {:?}", err),
+                Err(err) => tracing::error!("Monitoring osc device failed {:?}", err),
             }
         }
     }
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped monitor osc subscription");
+            tracing::trace!("Dropped monitor osc subscription");
             subscription.unsubscribe();
         }
     }

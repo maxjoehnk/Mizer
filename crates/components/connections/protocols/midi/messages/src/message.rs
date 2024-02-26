@@ -136,7 +136,7 @@ impl TryFrom<&[u8]> for MidiMessage {
                 data.to_vec(),
             )),
             _ => {
-                log::warn!("unimplemented: {:?}", data);
+                tracing::warn!("unimplemented: {:?}", data);
                 Ok(MidiMessage::Unknown(data.to_vec()))
             }
         }

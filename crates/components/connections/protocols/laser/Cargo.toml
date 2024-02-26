@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 helios-dac = { version = "0.2", features = ["native"], default-features = false }
 ether-dream = "0.2"

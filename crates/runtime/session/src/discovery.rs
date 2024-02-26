@@ -15,7 +15,7 @@ pub(crate) fn announce_device(port: u16) {
     thread::Builder::new()
         .name("Session MDNS Broadcast".into())
         .spawn(move || {
-            log::info!("Announcing api on mdns");
+            tracing::info!("Announcing api on mdns");
             let mut service = MdnsService::new(service_type, port);
             let mut txt_record = TxtRecord::new();
             txt_record.insert("project", "video.yml").unwrap();
@@ -62,12 +62,12 @@ fn on_service_discovered(
     result: zeroconf::Result<ServiceDiscovery>,
     _context: Option<Arc<dyn Any>>,
 ) {
-    log::debug!("service discovered: {:?}", result);
+    tracing::debug!("service discovered: {:?}", result);
 }
 
 pub fn on_service_registered(
     result: zeroconf::Result<ServiceRegistration>,
     _context: Option<Arc<dyn Any>>,
 ) {
-    log::info!("service registered: {:?}", result);
+    tracing::info!("service registered: {:?}", result);
 }

@@ -9,7 +9,7 @@ anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../../node" }
 mizer-protocol-osc = { path = "../../../../../../components/connections/protocols/osc" }
-log = "0.4"
+tracing = "0.1"
 mizer-util = { path = "../../../../../../util" }
 enum-iterator = "2.0"
 num_enum = "0.7"

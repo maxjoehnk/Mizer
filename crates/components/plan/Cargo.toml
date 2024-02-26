@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 dashmap = { version = "5", features = ["serde"] }
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }

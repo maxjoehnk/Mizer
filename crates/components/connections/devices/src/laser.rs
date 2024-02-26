@@ -30,14 +30,14 @@ impl LaserDevice {
                     match device {
                         Ok(device) => sender.try_send(LaserDevice::EtherDream(device)).unwrap(),
                         Err(err) => {
-                            log::error!("ether dream discovery failed: {:?}", err);
+                            tracing::error!("ether dream discovery failed: {:?}", err);
                             return;
                         }
                     }
                 }
             }
             Err(err) => {
-                log::error!("ether dream discovery failed: {:?}", err);
+                tracing::error!("ether dream discovery failed: {:?}", err);
             }
         });
 

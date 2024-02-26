@@ -150,7 +150,7 @@ impl PipelineWorker {
         node: &T,
         pipeline_access: &impl NodePortReader,
     ) {
-        log::debug!("register_node {:?} ({:?})", path, node);
+        tracing::debug!("register_node {:?} ({:?})", path, node);
         let state = node.create_state();
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
@@ -185,7 +185,7 @@ impl PipelineWorker {
     }
 
     pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
-        log::debug!("remove_node {path:?} and links {links:?}");
+        tracing::debug!("remove_node {path:?} and links {links:?}");
         self.disconnect_ports(links);
         self.states.remove(path);
         self.receivers.remove(path);
@@ -439,7 +439,7 @@ impl PipelineWorker {
             let _scope = format!("{:?}Node::pre_process", node.node_type());
             profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.pre_process(&context, state) {
-                log::error!("pre processing of node {} failed: {:?}", &path, e)
+                tracing::error!("pre processing of node {} failed: {:?}", &path, e)
             }
         }
         self._node_metadata = node_metadata;
@@ -459,7 +459,7 @@ impl PipelineWorker {
             let _scope = format!("{:?}Node::process", node.node_type());
             profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.process(&context, state) {
-                log::error!("processing of node {} failed: {:?}", &path, e)
+                tracing::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
         self._node_metadata = node_metadata;
@@ -479,7 +479,7 @@ impl PipelineWorker {
             let _scope = format!("{:?}Node::post_process", node.node_type());
             profiling::scope!(&_scope, path.as_str());
             if let Err(e) = node.post_process(&context, state) {
-                log::error!("post processing of node {} failed: {:?}", &path, e)
+                tracing::error!("post processing of node {} failed: {:?}", &path, e)
             }
         }
         self.node_metadata.set(node_metadata);
@@ -505,7 +505,7 @@ impl PipelineWorker {
             node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),
             clock: RefCell::new(clock),
         };
-        log::trace!("process_node {} with context {:?}", &path, &context);
+        tracing::trace!("process_node {} with context {:?}", &path, &context);
         let state = self.states.get_mut(path);
         let state = state.unwrap();
 
@@ -535,14 +535,14 @@ impl PipelineWorker {
             if let Some(receiver) = receivers.get(&port) {
                 receiver.set_value(value);
             } else {
-                log::warn!(
+                tracing::warn!(
                     "trying to write value to unknown port {:?} on path {:?}",
                     &port,
                     &path
                 );
             }
         } else {
-            log::warn!(
+            tracing::warn!(
                 "trying to write value to unknown receiver for node {:?}",
                 &path
             );
@@ -570,7 +570,7 @@ fn register_receiver(
     port_id: PortId,
     metadata: PortMetadata,
 ) {
-    log::debug!("Registering port receiver for {:?} {:?}", path, &port_id);
+    tracing::debug!("Registering port receiver for {:?} {:?}", path, &port_id);
     match metadata.port_type {
         PortType::Single => receivers.register::<port_types::SINGLE>(port_id, metadata),
         PortType::Color => receivers.register::<port_types::COLOR>(port_id, metadata),
@@ -581,7 +581,7 @@ fn register_receiver(
         PortType::Texture => receivers.register::<TextureHandle>(port_id, metadata),
         PortType::Vector => receivers.register::<port_types::VECTOR>(port_id, metadata),
         PortType::Text => receivers.register::<port_types::TEXT>(port_id, metadata),
-        port_type => log::debug!("TODO: implement port type {:?}", port_type),
+        port_type => tracing::debug!("TODO: implement port type {:?}", port_type),
     }
 }
 

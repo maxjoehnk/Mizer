@@ -65,9 +65,9 @@ pub struct LoggingGuard(Option<WorkerGuard>);
 
 fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
     let path = if let Some(dir) = ProjectDirs::from("live", "mizer", "Mizer") {
-        dir.data_dir().join("mizer.log")
+        dir.data_dir().join("mizer.tracing")
     } else {
-        PathBuf::from("mizer.log")
+        PathBuf::from("mizer.tracing")
     };
     let file_appender = BasicRollingFileAppender::new(
         path,
@@ -76,7 +76,7 @@ fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
             .max_size(1024 * 1024 * 10),
         4,
     )
-    .context("Creating log file appender")?;
+    .context("Creating tracing file appender")?;
 
     Ok(file_appender)
 }

@@ -150,7 +150,7 @@ impl ImageFileState {
         registry: &TextureRegistry,
         path: PathBuf,
     ) -> anyhow::Result<Self> {
-        log::debug!("Loading video file: {path:?}");
+        tracing::debug!("Loading video file: {path:?}");
         let mut texture = ImageTexture::new(path).context("Creating new image texture provider")?;
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;

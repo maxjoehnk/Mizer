@@ -44,7 +44,7 @@ impl NodeReceivers {
             );
             receiver.add_transport(sender, source);
         } else {
-            log::warn!("trying to add transport to unknown port '{}'", port_id);
+            tracing::warn!("trying to add transport to unknown port '{}'", port_id);
         }
     }
 

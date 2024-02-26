@@ -98,7 +98,7 @@ impl ProcessingNode for PioneerCdjNode {
             context.write_port(PLAYING_OUTPUT, if cdj.is_playing() { 1f64 } else { 0f64 });
             context.write_port(LIVE_OUTPUT, if cdj.is_live() { 1f64 } else { 0f64 });
         } else {
-            log::trace!("No CDJ found with player number {}", self.device_id)
+            tracing::trace!("No CDJ found with player number {}", self.device_id)
         }
 
         Ok(())

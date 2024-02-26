@@ -65,7 +65,7 @@ impl ApiHandler {
             ApiCommand::GetNodeMetadataRef(sender) => {
                 profiling::scope!("ApiCommand::GetNodeMetadataRef");
                 if let Err(err) = sender.send(mizer.runtime.get_node_metadata_ref()) {
-                    log::error!("Unable to respond to ApiCommand::GetNodeMetadataRef: {err:?}");
+                    tracing::error!("Unable to respond to ApiCommand::GetNodeMetadataRef: {err:?}");
                 }
             }
             ApiCommand::SetClockState(state) => {

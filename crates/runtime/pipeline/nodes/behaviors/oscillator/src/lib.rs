@@ -210,7 +210,7 @@ impl OscillatorContext {
                     + offset
                     + min;
                 let value = value.clamp(min, max);
-                log::trace!(
+                tracing::trace!(
                     "min: {}, max: {}, offset: {}, result: {}",
                     min,
                     max,

@@ -206,7 +206,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn rebuild_pipeline(&mut self, plan: ExecutionPlan) {
-        log::debug!("Rebuilding pipeline");
+        tracing::debug!("Rebuilding pipeline");
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
 
@@ -214,7 +214,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.read_node_ports();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
             for command in executor.commands {
-                log::debug!("Updating pipeline worker: {:?}", command);
+                tracing::debug!("Updating pipeline worker: {:?}", command);
                 match command {
                     ExecutorCommand::AddNode(execution_node) => {
                         let node = pipeline_access
@@ -246,7 +246,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                     }
                     ExecutorCommand::RenameNode(from, to) => {
                         if let Err(err) = self.pipeline.rename_node(from, to) {
-                            log::error!("Renaming node failed: {err:?}");
+                            tracing::error!("Renaming node failed: {err:?}");
                         }
                     }
                 }
@@ -414,7 +414,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     /// Should only be used for testing purposes
     #[doc(hidden)]
     pub fn plan(&mut self) {
-        log::trace!("plan");
+        tracing::trace!("plan");
         let planner = self.injector.get_mut::<ExecutionPlanner>().unwrap();
         if planner.should_rebuild() {
             let plan = planner.plan();
@@ -438,29 +438,29 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
     fn process(&mut self) {
         profiling::scope!("CoordinatorRuntime::process");
-        log::trace!("tick");
+        tracing::trace!("tick");
         let frame = self.clock.tick();
         let snapshot = self.clock.snapshot();
         if let Err(err) = self.clock_sender.send(snapshot) {
-            log::error!("Could not send clock snapshot {:?}", err);
+            tracing::error!("Could not send clock snapshot {:?}", err);
         }
         self.clock_snapshot.set(snapshot);
-        log::trace!("pre_process_pipeline");
+        tracing::trace!("pre_process_pipeline");
         self.pre_process_pipeline(frame);
-        log::trace!("pre_process");
+        tracing::trace!("pre_process");
         for processor in self.processors.iter_mut() {
             processor.pre_process(&mut self.injector, frame, self.clock.fps());
         }
         self.plan();
-        log::trace!("process_pipeline");
+        tracing::trace!("process_pipeline");
         self.process_pipeline(frame);
-        log::trace!("process");
+        tracing::trace!("process");
         for processor in self.processors.iter_mut() {
             processor.process(&self.injector, frame);
         }
-        log::trace!("post_process_pipeline");
+        tracing::trace!("post_process_pipeline");
         self.post_process_pipeline(frame);
-        log::trace!("post_process");
+        tracing::trace!("post_process");
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
@@ -475,7 +475,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         // TODO: add safe way to access mutable and immutable parts of the injector
         let injector: &mut Injector = unsafe { std::mem::transmute_copy(&&mut self.injector) };
         if let Some(ui) = injector.get_mut::<DebugUiImpl>() {
-            log::trace!("Update Debug UI");
+            tracing::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
             render_handle.draw(|ui, texture_map| {
                 let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();

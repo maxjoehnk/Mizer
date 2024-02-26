@@ -132,21 +132,23 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                                         if let Err(err) =
                                             self.sender.send(VideoThreadEvent::Metadata(metadata))
                                         {
-                                            log::error!("Error sending video metadata: {err:?}");
+                                            tracing::error!(
+                                                "Error sending video metadata: {err:?}"
+                                            );
                                         }
                                     }
                                     Err(err) => {
-                                        log::error!("Error getting video metadata: {err:?}");
+                                        tracing::error!("Error getting video metadata: {err:?}");
                                     }
                                 }
                                 self.decoder = Some(decoder);
                             }
                             Err(err) => {
-                                log::error!("Error creating video decoder: {err:?}");
+                                tracing::error!("Error creating video decoder: {err:?}");
                                 if let Err(err) =
                                     self.sender.send(VideoThreadEvent::DecodeError(err))
                                 {
-                                    log::error!("Error sending video decode error: {err:?}");
+                                    tracing::error!("Error sending video decode error: {err:?}");
                                 }
                                 continue;
                             }
@@ -158,7 +160,7 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                         }
                         if let Some(decoder) = self.decoder.as_mut() {
                             if let Err(err) = decoder.handle(command) {
-                                log::error!("Error seeking video: {err:?}");
+                                tracing::error!("Error seeking video: {err:?}");
                             }
                         }
                     }
@@ -175,11 +177,11 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                 match decoder.decode() {
                     Ok(Some(frame)) => {
                         if let Err(err) = self.sender.send(VideoThreadEvent::DecodedFrame(frame)) {
-                            log::error!("Error sending decoded frame: {err:?}");
+                            tracing::error!("Error sending decoded frame: {err:?}");
                         }
                     }
                     Ok(None) => {}
-                    Err(err) => log::error!("Error decoding video: {err:?}"),
+                    Err(err) => tracing::error!("Error decoding video: {err:?}"),
                 }
             }
         }

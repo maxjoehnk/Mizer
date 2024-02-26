@@ -22,7 +22,7 @@ impl GamepadDiscoveryService {
 
         loop {
             while let Some(event) = self.gilrs.next_event_blocking(None) {
-                log::trace!("{:?}", event);
+                tracing::trace!("{:?}", event);
                 if event.event == EventType::Connected {
                     self.add_gamepad(event.id);
                 }

@@ -39,7 +39,7 @@ impl QlcPlusProvider {
 
 impl FixtureLibraryProvider for QlcPlusProvider {
     fn load(&mut self) -> anyhow::Result<()> {
-        log::info!("Loading QLC+ fixture library...");
+        tracing::info!("Loading QLC+ fixture library...");
         if let Some(path) = find_path(&self.file_path) {
             let files = std::fs::read_dir(path.join("fixtures"))?;
             let definitions = files
@@ -60,7 +60,7 @@ impl FixtureLibraryProvider for QlcPlusProvider {
                 })
                 .filter_map(|file| {
                     let path = file.path();
-                    log::trace!(
+                    tracing::trace!(
                         "Loading QLC+ Fixture from '{:?}'...",
                         path.file_name().unwrap()
                     );
@@ -70,7 +70,7 @@ impl FixtureLibraryProvider for QlcPlusProvider {
                             definition,
                         )),
                         Err(err) => {
-                            log::error!(
+                            tracing::error!(
                                 "Could not load QLC+ Fixture from '{:?}': {:?}",
                                 path.file_name().unwrap(),
                                 err
@@ -81,7 +81,7 @@ impl FixtureLibraryProvider for QlcPlusProvider {
                 })
                 .collect::<HashMap<_, _>>();
 
-            log::info!("Loaded {} QLC+ Fixture Definitions", definitions.len());
+            tracing::info!("Loaded {} QLC+ Fixture Definitions", definitions.len());
             self.definitions = definitions;
         }
 
@@ -117,7 +117,7 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
     file.read_to_string(&mut content)?;
 
     let definition = QlcPlusFixtureDefinition::from_str(&content)?;
-    log::debug!(
+    tracing::debug!(
         "Loaded QLC+ Fixture from '{:?}'.",
         path.file_name().unwrap()
     );

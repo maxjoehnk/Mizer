@@ -45,7 +45,7 @@ impl ImportFileHandler {
         file_path: &Path,
         relative_to: Option<&Path>,
     ) -> anyhow::Result<Option<MediaDocument>> {
-        log::debug!("importing file {:?}", file_path);
+        tracing::debug!("importing file {:?}", file_path);
         self.status_bus
             .add_message(format!("Importing file {file_path:?}"), None);
         let source_path = relative_to
@@ -55,7 +55,7 @@ impl ImportFileHandler {
             .map(|path| path.to_path_buf());
         if let Some(source_path) = source_path.as_ref() {
             if self.db.contains_source(source_path)? {
-                log::debug!("File already imported {file_path:?}");
+                tracing::debug!("File already imported {file_path:?}");
 
                 return Ok(None);
             }
@@ -79,7 +79,7 @@ impl ImportFileHandler {
             .map(|content_type| content_type.mime_type())
             .or_else(|| mime.as_ref().map(|mime| mime.essence_str()))
             .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?;
-        log::debug!("got {} content type for {:?}", content_type, model);
+        tracing::debug!("got {} content type for {:?}", content_type, model);
 
         let (media_type, metadata) = if VideoHandler::supported(content_type) {
             self.video_handler

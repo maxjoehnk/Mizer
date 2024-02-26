@@ -34,7 +34,7 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped timecode subscription");
+            tracing::trace!("Dropped timecode subscription");
             subscription.unsubscribe();
         }
     }

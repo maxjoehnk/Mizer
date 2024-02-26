@@ -47,7 +47,7 @@ macro_rules! impl_into_flutter_value {
 
 impl<E: Send + Sync + IntoFlutterValue + Debug> Subscriber<E> for EventSinkSubscriber {
     fn next(&self, event: E) {
-        log::trace!("send msg {:?}", event);
+        tracing::trace!("send msg {:?}", event);
         let msg = event.into();
         self.run_in_run_loop(move |inner| inner.send(msg));
     }
@@ -56,7 +56,7 @@ impl<E: Send + Sync + IntoFlutterValue + Debug> Subscriber<E> for EventSinkSubsc
 impl InnerSubscriber {
     fn send(&self, value: Value) {
         if let Err(err) = self.sink.send_message(&value) {
-            log::error!("{:?}", err);
+            tracing::error!("{:?}", err);
         }
     }
 }
@@ -84,10 +84,10 @@ impl EventSinkSubscriber {
                 if let Some(inner) = capsule.get_ref() {
                     cb(inner);
                 } else {
-                    log::error!("Could not acquire subscriber")
+                    tracing::error!("Could not acquire subscriber")
                 }
             } else {
-                log::error!("Could not acquire capsule lock")
+                tracing::error!("Could not acquire capsule lock")
             }
         });
     }

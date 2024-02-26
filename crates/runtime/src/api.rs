@@ -54,7 +54,7 @@ impl<'a> NodeDowncast for NodeDescriptor<'a> {
         match self.node.value().downcast_ref::<T>() {
             Ok(node) => Some(node.clone()),
             Err(err) => {
-                log::error!(
+                tracing::error!(
                     "Could not downcast {} ({:?}): {:?}",
                     self.path,
                     node_type,

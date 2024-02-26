@@ -177,7 +177,7 @@ pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: N
         node.outputs.push(output.into());
     }
 
-    log::trace!("{node:?}");
+    tracing::trace!("{node:?}");
 
     node
 }
@@ -216,7 +216,7 @@ impl From<StaticNodeDescriptor> for Node {
             node.outputs.push(output.into());
         }
 
-        log::debug!("{:?}", node);
+        tracing::debug!("{:?}", node);
 
         node
     }

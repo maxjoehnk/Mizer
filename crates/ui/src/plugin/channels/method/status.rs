@@ -37,7 +37,7 @@ impl StatusChannel {
     }
 
     fn get_status_pointer(&self) -> i64 {
-        log::debug!("Acquiring state pointer for status");
+        tracing::debug!("Acquiring state pointer for status");
         let fps_counter = self.handler.get_fps_counter();
         let status = StatusApi::new(fps_counter);
         let status = Arc::new(status);

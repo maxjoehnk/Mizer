@@ -103,7 +103,7 @@ impl MediaServer {
         tokio::spawn(async move {
             let discovery = MediaDiscovery::new(api, path).discover().await;
             if let Err(err) = discovery {
-                log::error!("Error discovering media files: {err:?}");
+                tracing::error!("Error discovering media files: {err:?}");
             }
         });
     }
@@ -124,7 +124,7 @@ impl MediaServer {
 
     pub fn clear(&self) {
         if let Err(err) = self.db.clear() {
-            log::error!("Error clearing files: {err:?}");
+            tracing::error!("Error clearing files: {err:?}");
         }
         self.import_paths.clear();
     }
@@ -163,7 +163,7 @@ impl MediaServer {
         {
             Ok(document) => Ok(document),
             Err(err) => {
-                log::error!("Error importing file {err:?}");
+                tracing::error!("Error importing file {err:?}");
                 Err(err)
             }
         }

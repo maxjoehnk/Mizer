@@ -86,7 +86,7 @@ impl Sequencer {
         self.update_views(&self.sequences, &states);
         let active_sequences = states.values().filter(|state| state.active).count();
         mizer_util::plot!("Running Sequences", active_sequences as f64);
-        log::trace!("{:?}", states);
+        tracing::trace!("{:?}", states);
     }
 
     fn handle_commands(
@@ -292,7 +292,7 @@ impl Sequencer {
         for sequence in sequences.into_iter() {
             self.sequences.insert(sequence.id, sequence);
         }
-        log::debug!("Sequences: {:?}", self.sequences);
+        tracing::debug!("Sequences: {:?}", self.sequences);
     }
 
     pub fn get_sequencer_view(&self) -> SequencerView {

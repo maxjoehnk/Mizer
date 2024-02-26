@@ -15,7 +15,7 @@ impl EtherDreamLaser {
 
         Ok(broadcasts.into_iter().map(|dac_broadcast| {
             let (dac_broadcast, addr) = dac_broadcast?;
-            log::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
+            tracing::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
             let device = stream::connect(&dac_broadcast, addr.ip())?;
 
             Ok(EtherDreamLaser { device })

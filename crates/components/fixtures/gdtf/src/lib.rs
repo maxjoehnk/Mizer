@@ -33,7 +33,7 @@ impl GdtfProvider {
 
 impl FixtureLibraryProvider for GdtfProvider {
     fn load(&mut self) -> anyhow::Result<()> {
-        log::info!("Loading GDTF fixture library...");
+        tracing::info!("Loading GDTF fixture library...");
         if let Some(path) = find_path(&self.file_path) {
             let files = std::fs::read_dir(path)?;
             let definitions = files
@@ -47,9 +47,9 @@ impl FixtureLibraryProvider for GdtfProvider {
                             .to_string()
                             .ends_with(".gdtf")
                     {
-                        log::trace!("Loading GDTF Fixture from '{:?}'...", file);
+                        tracing::trace!("Loading GDTF Fixture from '{:?}'...", file);
                         let gdtf_archive = GdtfArchive::read(&file.path())?;
-                        log::debug!("Loaded GDTF Fixture from '{:?}'.", file);
+                        tracing::debug!("Loaded GDTF Fixture from '{:?}'.", file);
 
                         Ok(Some(gdtf_archive))
                     } else {
@@ -67,7 +67,7 @@ impl FixtureLibraryProvider for GdtfProvider {
                 .filter_map(|archive| match archive {
                     Ok(archive) => Some(archive),
                     Err(err) => {
-                        log::error!("Error parsing gdtf definition {err:?}");
+                        tracing::error!("Error parsing gdtf definition {err:?}");
                         None
                     }
                 })

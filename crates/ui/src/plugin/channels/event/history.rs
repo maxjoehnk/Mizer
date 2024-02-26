@@ -25,7 +25,7 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
 {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
-        log::debug!("register_event_sink {}", id);
+        tracing::debug!("register_event_sink {}", id);
         let stream = self.handler.watch_history();
         let subscription = self
             .runtime
@@ -34,9 +34,9 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     }
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
-        log::debug!("unregister_event_sink {}", sink_id);
+        tracing::debug!("unregister_event_sink {}", sink_id);
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped history subscription");
+            tracing::trace!("Dropped history subscription");
             subscription.unsubscribe();
         }
     }

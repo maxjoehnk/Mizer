@@ -11,5 +11,5 @@ mizer-util = { path = "../../../../../../util" }
 mizer-node = { path = "../../../../node" }
 mizer-pixel-nodes = { path = "../../../pixels" }
 image = "0.24"
-log = "0.4"
+tracing = "0.1"
 bytes = "1.5"

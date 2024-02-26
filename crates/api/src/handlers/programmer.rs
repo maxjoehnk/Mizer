@@ -43,7 +43,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
-        log::debug!("select_fixtures {:?}", fixture_ids);
+        tracing::debug!("select_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.select_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
     }
@@ -51,7 +51,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
-        log::debug!("unselect_fixtures {:?}", fixture_ids);
+        tracing::debug!("unselect_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.unselect_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
     }
@@ -59,7 +59,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn select_group(&self, group_id: u32) {
-        log::debug!("select_group {:?}", group_id);
+        tracing::debug!("select_group {:?}", group_id);
         if let Some(group) = self.fixture_manager.get_group(GroupId(group_id)) {
             let mut programmer = self.fixture_manager.get_programmer();
             programmer.select_group(&group);
@@ -144,7 +144,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn call_preset(&self, preset_id: PresetId) {
-        log::debug!("call_preset {:?}", preset_id);
+        tracing::debug!("call_preset {:?}", preset_id);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.call_preset(&self.fixture_manager.presets, preset_id.into());
     }
@@ -152,7 +152,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn call_effect(&self, effect_id: u32) {
-        log::debug!("call_effect {:?}", effect_id);
+        tracing::debug!("call_effect {:?}", effect_id);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.call_effect(effect_id);
     }

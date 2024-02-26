@@ -121,10 +121,10 @@ impl<'a> NodeContext for PipelineContext<'a> {
                 .expect("can't downcast sender to proper type");
             pushed_value = true;
             if let Err(e) = port.send(value) {
-                log::error!("Sending data via port failed: {:?}", e);
+                tracing::error!("Sending data via port failed: {:?}", e);
             }
         } else {
-            log::trace!("{}", dbg_msg);
+            tracing::trace!("{}", dbg_msg);
         }
         if pushed_value {
             self.node_metadata
@@ -142,7 +142,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
                 .downcast_ref::<MemorySender<V>>()
                 .expect("can't downcast sender to proper type");
             if let Err(e) = port.clear() {
-                log::error!("clearing data from port failed: {e:?}");
+                tracing::error!("clearing data from port failed: {e:?}");
             }
         }
     }

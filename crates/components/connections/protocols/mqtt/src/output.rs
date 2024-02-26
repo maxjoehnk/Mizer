@@ -13,7 +13,7 @@ impl<'a> MqttOutput<'a> {
     }
 
     pub fn write(&self, path: String, data: StructuredData, retain: bool) -> anyhow::Result<()> {
-        log::trace!(
+        tracing::trace!(
             "Sending publish command to {} with payload {:?}",
             path,
             data

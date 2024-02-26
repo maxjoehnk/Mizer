@@ -169,7 +169,7 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
     }
 
     fn get_gamepad_pointer(&self, id: String) -> anyhow::Result<i64> {
-        log::debug!("Acquiring state pointer for gamepad {id}");
+        tracing::debug!("Acquiring state pointer for gamepad {id}");
         let gamepad = self
             .handler
             .get_gamepad_ref(id.clone())?
@@ -181,7 +181,7 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
     }
 
     fn get_connections_pointer(&self) -> i64 {
-        log::debug!("Acquiring pointer for connections");
+        tracing::debug!("Acquiring pointer for connections");
         let device_manager = self.handler.get_device_manager();
         let connections_ref = ConnectionsRef(device_manager);
         let connections_ref = Arc::new(connections_ref);

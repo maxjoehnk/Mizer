@@ -81,7 +81,7 @@ impl DeviceManager {
     }
 
     pub async fn start_discovery(self) {
-        log::debug!("Starting device discovery...");
+        tracing::debug!("Starting device discovery...");
         let lasers = LaserDevice::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
@@ -113,46 +113,46 @@ impl DeviceManager {
                 DiscoveredDevice::Laser(laser) => {
                     let id = self.laser_id_counter.fetch_add(1, Ordering::Relaxed);
                     let id = format!("laser-{}", id);
-                    log::debug!("Discovered device {:?} => {}", &laser, &id);
+                    tracing::debug!("Discovered device {:?} => {}", &laser, &id);
                     self.lasers.insert(id, laser);
                 }
                 DiscoveredDevice::Gamepad(gamepad) => {
                     let id = gamepad.id();
                     let id = format!("gamepad-{}", id);
-                    log::debug!("Discovered device {:?} => {}", &gamepad, &id);
+                    tracing::debug!("Discovered device {:?} => {}", &gamepad, &id);
                     self.gamepads.insert(id, gamepad);
                 }
                 DiscoveredDevice::G13(g13) => {
                     let id = self.g13_id_counter.fetch_add(1, Ordering::Relaxed);
                     let id = format!("g13-{}", id);
-                    log::debug!("Discovered device {g13:?} => {id}");
+                    tracing::debug!("Discovered device {g13:?} => {id}");
                     self.g13s.insert(id, g13);
                 }
                 DiscoveredDevice::Webcam(webcam) => {
                     let id = webcam.id();
                     let id = format!("webcam-{}", id);
-                    log::debug!("Discovered device {webcam:?} => {id}");
+                    tracing::debug!("Discovered device {webcam:?} => {id}");
                     self.webcams.insert(id, webcam);
                 }
                 DiscoveredDevice::NdiSource(ndi_source) => {
                     let name = ndi_source.name();
                     let id = format!("ndi-source-{}", name);
                     if !self.ndi_sources.contains_key(&id) {
-                        log::debug!("Discovered device {name} => {id}");
+                        tracing::debug!("Discovered device {name} => {id}");
                         self.ndi_sources.insert(id, ndi_source);
                     }
                 }
                 DiscoveredDevice::PioneerCDJ(cdj) => {
                     let id = cdj.id();
                     if !self.cdjs.contains_key(&id) {
-                        log::debug!("Discovered Pioneer CDJ {cdj:?}");
+                        tracing::debug!("Discovered Pioneer CDJ {cdj:?}");
                     }
                     self.cdjs.insert(id, cdj);
                 }
                 DiscoveredDevice::PioneerDJM(djm) => {
                     let id = djm.id();
                     if !self.djms.contains_key(&id) {
-                        log::debug!("Discovered Pioneer DJM {djm:?}");
+                        tracing::debug!("Discovered Pioneer DJM {djm:?}");
                     }
                     self.djms.insert(id, djm);
                 }

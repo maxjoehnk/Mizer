@@ -33,14 +33,14 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
                         .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));
                     self.subscriptions.insert(id, subscription);
                 }
-                Err(err) => log::error!("Monitoring midi device failed {:?}", err),
+                Err(err) => tracing::error!("Monitoring midi device failed {:?}", err),
             }
         }
     }
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped monitor midi subscription");
+            tracing::trace!("Dropped monitor midi subscription");
             subscription.unsubscribe();
         }
     }

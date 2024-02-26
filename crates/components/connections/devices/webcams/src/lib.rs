@@ -31,7 +31,7 @@ impl WebcamRef {
                 Resolution::new(1920, 1080),
             )),
         )?;
-        log::info!(
+        tracing::info!(
             "Opening camera {} with resolution {} and fps {}",
             self.name(),
             camera.resolution(),

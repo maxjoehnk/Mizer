@@ -23,7 +23,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::trace!("mizer.live/plans -> {}", call.method);
+        tracing::trace!("mizer.live/plans -> {}", call.method);
         match call.method.as_str() {
             "getPlans" => {
                 let response = self.get_plans();
@@ -172,19 +172,19 @@ impl<R: RuntimeApi + 'static> PlansChannel<R> {
     }
 
     fn move_fixture_selection(&self, req: MoveFixturesRequest) {
-        log::debug!("move_fixture_selection {req:?}");
+        tracing::debug!("move_fixture_selection {req:?}");
         self.handler
             .move_fixture_selection(req.plan_id, (req.x, req.y));
     }
 
     fn move_fixture(&self, req: MoveFixtureRequest) {
-        log::debug!("move_fixture {req:?}");
+        tracing::debug!("move_fixture {req:?}");
         self.handler
             .move_fixture(req.plan_id, req.fixture_id.unwrap(), (req.x, req.y));
     }
 
     fn align_fixtures(&self, req: AlignFixturesRequest) {
-        log::debug!("align_fixtures {req:?}");
+        tracing::debug!("align_fixtures {req:?}");
         let direction = req.direction();
         self.handler.align_fixtures(
             req.plan_id,

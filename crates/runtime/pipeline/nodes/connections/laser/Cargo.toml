@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-protocol-laser = { path = "../../../../../components/connections/protocols/laser" }
 mizer-devices = { path = "../../../../../components/connections/devices" }

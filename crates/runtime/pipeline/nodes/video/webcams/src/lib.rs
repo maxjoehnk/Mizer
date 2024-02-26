@@ -127,7 +127,7 @@ fn collect_webcam_settings(webcam_ref: Option<&WebcamRef>) -> Vec<NodeSetting> {
                     }
                 }
             }
-            Err(err) => log::error!("Failed to open webcam to read settings: {err:?}"),
+            Err(err) => tracing::error!("Failed to open webcam to read settings: {err:?}"),
         }
     }
 

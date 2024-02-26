@@ -14,7 +14,7 @@ impl DeviceDiscovery for ProDJLinkDiscovery {
             .flat_map(|discovery| match discovery {
                 Ok(discovery) => discovery.into_stream().boxed(),
                 Err(err) => {
-                    log::error!("pro dj link discovery failed: {err:?}");
+                    tracing::error!("pro dj link discovery failed: {err:?}");
 
                     stream::empty().boxed()
                 }

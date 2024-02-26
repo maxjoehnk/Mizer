@@ -96,10 +96,10 @@ impl G13DiscoveryService {
     }
 
     fn run(mut self) {
-        log::trace!("Discovering attached G13 devices...");
+        tracing::trace!("Discovering attached G13 devices...");
         match self.manager.discover() {
             Ok(devices) => {
-                log::debug!("Found {} G13 devices", devices.len());
+                tracing::debug!("Found {} G13 devices", devices.len());
                 for g13 in devices {
                     let (sender, receiver) = unbounded();
                     let id = G13InternalId::new();
@@ -112,22 +112,22 @@ impl G13DiscoveryService {
                         sender,
                     };
                     if let Err(err) = self.device_sender.send(g13_ref) {
-                        log::error!("Unable to notify of new device {err:?}");
+                        tracing::error!("Unable to notify of new device {err:?}");
                     }
                 }
             }
             Err(err) => {
-                log::error!("Unable to discover G13 devices: {err:?}");
+                tracing::error!("Unable to discover G13 devices: {err:?}");
                 return;
             }
         }
         loop {
             for (_, state) in self.g13_states.iter_mut() {
                 if let Err(err) = state.update() {
-                    log::error!("Unable to update g13 state: {err:?}");
+                    tracing::error!("Unable to update g13 state: {err:?}");
                 }
                 if let Err(err) = state.handle_commands() {
-                    log::error!("Unable to handle g13 commands: {err:?}");
+                    tracing::error!("Unable to handle g13 commands: {err:?}");
                 }
             }
             std::thread::sleep(Duration::from_millis(50));

@@ -6,6 +6,6 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 profiling = "1"
 futures = { version = "0.3", features = ["executor"] }

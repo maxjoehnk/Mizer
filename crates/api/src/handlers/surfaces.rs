@@ -60,14 +60,14 @@ impl<R: RuntimeApi> SurfacesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn observe_surfaces(&self) -> impl Stream<Item = Surfaces> {
-        log::debug!("Observing surfaces");
+        tracing::debug!("Observing surfaces");
         self.api
             .bus
             .subscribe()
             .into_stream()
             .map(|surfaces| surfaces.into_iter().map(|surface| surface.into()).collect())
             .map(|surfaces| {
-                log::debug!("Emitting new surfaces");
+                tracing::debug!("Emitting new surfaces");
                 Surfaces { surfaces }
             })
     }

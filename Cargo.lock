@@ -4386,7 +4386,6 @@ dependencies = [
  "ffmpeg-the-third",
  "flume 0.11.0",
  "futures",
- "log",
  "metrics",
  "mizer-api",
  "mizer-clock",
@@ -4454,7 +4453,6 @@ dependencies = [
  "futures",
  "itertools 0.12.1",
  "lazy_static",
- "log",
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
@@ -4543,7 +4541,6 @@ dependencies = [
  "anyhow",
  "derive_more",
  "flume 0.11.0",
- "log",
  "mizer-commander",
  "mizer-fixture-commands",
  "mizer-layout-commands",
@@ -4581,13 +4578,13 @@ dependencies = [
  "anyhow",
  "dashmap",
  "derive_more",
- "log",
  "mizer-devices",
  "mizer-protocol-citp",
  "mizer-protocol-dmx",
  "mizer-protocol-midi",
  "mizer-protocol-osc",
  "mizer-protocol-pro-dj-link",
+ "tracing",
 ]
 
 [[package]]
@@ -4634,8 +4631,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
- "log",
  "profiling",
+ "tracing",
 ]
 
 [[package]]
@@ -4648,11 +4645,11 @@ dependencies = [
  "egui-winit",
  "futures",
  "image",
- "log",
  "mizer-debug-ui",
  "mizer-module",
  "mizer-wgpu",
  "profiling",
+ "tracing",
  "winit",
 ]
 
@@ -4672,7 +4669,6 @@ dependencies = [
  "dashmap",
  "derive_more",
  "futures",
- "log",
  "mizer-g13",
  "mizer-gamepads",
  "mizer-module",
@@ -4684,6 +4680,7 @@ dependencies = [
  "profiling",
  "tokio",
  "tokio-stream",
+ "tracing",
 ]
 
 [[package]]
@@ -4721,12 +4718,12 @@ name = "mizer-execution-planner"
 version = "0.1.0"
 dependencies = [
  "itertools 0.12.1",
- "log",
  "mizer-node",
  "mizer-util",
  "profiling",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -4753,12 +4750,12 @@ dependencies = [
  "anyhow",
  "base64 0.21.7",
  "indexmap 2.2.3",
- "log",
  "mizer-fixtures",
  "mizer-util",
  "rayon",
  "serde",
  "toml 0.8.10",
+ "tracing",
 ]
 
 [[package]]
@@ -4766,10 +4763,10 @@ name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-fixtures",
  "mizer-node",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4790,7 +4787,6 @@ dependencies = [
  "futures",
  "indexmap 2.2.3",
  "itertools 0.12.1",
- "log",
  "mizer-commander",
  "mizer-module",
  "mizer-node",
@@ -4818,9 +4814,9 @@ dependencies = [
  "flume 0.11.0",
  "futures",
  "g13",
- "log",
  "pinboard",
  "rusb",
+ "tracing",
  "uuid 1.7.0",
 ]
 
@@ -4830,12 +4826,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-devices",
  "mizer-g13",
  "mizer-node",
  "num_enum 0.7.2",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4844,13 +4840,13 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-devices",
  "mizer-gamepads",
  "mizer-node",
  "mizer-util",
  "num_enum 0.7.2",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4862,8 +4858,8 @@ dependencies = [
  "flume 0.11.0",
  "futures",
  "gilrs",
- "log",
  "pinboard",
+ "tracing",
 ]
 
 [[package]]
@@ -4872,10 +4868,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "hard-xml",
- "log",
  "mizer-fixtures",
  "mizer-util",
  "rayon",
+ "tracing",
  "zip",
 ]
 
@@ -4891,10 +4887,10 @@ name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-node",
  "mizer-util",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4902,11 +4898,11 @@ name = "mizer-laser-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-devices",
  "mizer-node",
  "mizer-protocol-laser",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4942,10 +4938,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-node",
  "num_enum 0.7.2",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -4961,7 +4957,6 @@ dependencies = [
  "id3",
  "image",
  "infer",
- "log",
  "mime_guess",
  "mizer-message-bus",
  "mizer-module",
@@ -4974,6 +4969,7 @@ dependencies = [
  "symphonia",
  "test-case",
  "tokio",
+ "tracing",
  "uuid 1.7.0",
 ]
 
@@ -4984,8 +4980,8 @@ dependencies = [
  "anyhow",
  "flume 0.11.0",
  "futures",
- "log",
  "parking_lot 0.12.1",
+ "tracing",
 ]
 
 [[package]]
@@ -4993,20 +4989,20 @@ name = "mizer-midi-device-profiles"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-midi-messages",
  "mizer-util",
  "rhai",
  "serde",
  "serde_yaml",
+ "tracing",
 ]
 
 [[package]]
 name = "mizer-midi-messages"
 version = "0.1.0"
 dependencies = [
- "log",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5015,13 +5011,13 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-message-bus",
  "mizer-node",
  "mizer-protocol-midi",
  "mizer-util",
  "num_enum 0.7.2",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5088,7 +5084,6 @@ dependencies = [
  "downcast",
  "enum-iterator",
  "heck 0.4.1",
- "log",
  "mizer-clock",
  "mizer-debug-ui",
  "mizer-injector",
@@ -5099,6 +5094,7 @@ dependencies = [
  "pinboard",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5122,7 +5118,6 @@ dependencies = [
  "dashmap",
  "derive_more",
  "insta",
- "log",
  "mizer-audio-nodes",
  "mizer-clock-nodes",
  "mizer-color-nodes",
@@ -5164,6 +5159,7 @@ dependencies = [
  "plotters",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5173,11 +5169,11 @@ dependencies = [
  "anyhow",
  "bytes 1.5.0",
  "image",
- "log",
  "mizer-node",
  "mizer-pixel-nodes",
  "mizer-util",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5186,12 +5182,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
- "log",
  "mizer-fixtures",
  "mizer-util",
  "serde",
  "serde_json",
  "simd-json",
+ "tracing",
  "ureq",
 ]
 
@@ -5201,12 +5197,12 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-node",
  "mizer-protocol-osc",
  "mizer-util",
  "num_enum 0.7.2",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5215,11 +5211,11 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "log",
  "mizer-node",
  "num_enum 0.7.2",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5239,7 +5235,6 @@ dependencies = [
  "dashmap",
  "downcast",
  "flume 0.11.0",
- "log",
  "metrics",
  "mizer-clock",
  "mizer-debug-ui-impl",
@@ -5270,7 +5265,6 @@ dependencies = [
  "anyhow",
  "enum-iterator",
  "image",
- "log",
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
@@ -5288,7 +5282,6 @@ dependencies = [
  "anyhow",
  "dashmap",
  "itertools 0.12.1",
- "log",
  "mizer-commander",
  "mizer-fixtures",
  "mizer-module",
@@ -5299,6 +5292,7 @@ dependencies = [
  "serde",
  "spectral",
  "test-case",
+ "tracing",
  "uuid 1.7.0",
 ]
 
@@ -5308,13 +5302,13 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "image",
- "log",
  "mizer-fixtures",
  "mizer-node",
  "mizer-pixel-nodes",
  "mizer-plan",
  "mizer-util",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5324,7 +5318,6 @@ dependencies = [
  "anyhow",
  "enum-iterator",
  "itertools 0.12.1",
- "log",
  "mizer-node",
  "mizer-protocol-laser",
  "mizer-util",
@@ -5333,6 +5326,7 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5355,12 +5349,12 @@ name = "mizer-pro-dj-link-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-devices",
  "mizer-node",
  "mizer-protocol-pro-dj-link",
  "mizer-util",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5384,7 +5378,6 @@ dependencies = [
  "fs2",
  "indexmap 2.2.3",
  "lazy_static",
- "log",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
@@ -5404,6 +5397,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "test-case",
+ "tracing",
 ]
 
 [[package]]
@@ -5435,7 +5429,6 @@ dependencies = [
  "dashmap",
  "enum_dispatch",
  "flume 0.11.0",
- "log",
  "mizer-commander",
  "mizer-module",
  "mizer-processing",
@@ -5455,9 +5448,9 @@ dependencies = [
  "helios-dac",
  "ilda-idtf",
  "lasy",
- "log",
  "pinboard",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5467,7 +5460,6 @@ dependencies = [
  "anyhow",
  "dashmap",
  "lazy_static",
- "log",
  "midir",
  "mizer-message-bus",
  "mizer-midi-device-profiles",
@@ -5488,7 +5480,6 @@ dependencies = [
  "anyhow",
  "flume 0.11.0",
  "futures",
- "log",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",
@@ -5509,13 +5500,13 @@ dependencies = [
  "anyhow",
  "flume 0.11.0",
  "futures",
- "log",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",
  "rosc",
  "serde",
  "tokio",
+ "tracing",
 ]
 
 [[package]]
@@ -5526,7 +5517,6 @@ dependencies = [
  "enum_dispatch",
  "flume 0.11.0",
  "futures",
- "log",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",
@@ -5534,6 +5524,7 @@ dependencies = [
  "pro-dj-link",
  "serde",
  "tokio",
+ "tracing",
 ]
 
 [[package]]
@@ -5547,11 +5538,11 @@ dependencies = [
  "fs_extra",
  "hard-xml",
  "htmlentity",
- "log",
  "mizer-fixtures",
  "mizer-util",
  "rayon",
  "temp-dir",
+ "tracing",
  "ureq",
  "zip",
 ]
@@ -5566,7 +5557,6 @@ dependencies = [
  "flume 0.11.0",
  "insta",
  "itertools 0.12.1",
- "log",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -5630,7 +5620,6 @@ dependencies = [
  "geo-nd",
  "indexmap 2.2.3",
  "itertools 0.12.1",
- "log",
  "mizer-fixtures",
  "mizer-module",
  "mizer-util",
@@ -5666,10 +5655,10 @@ name = "mizer-sequencer-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-node",
  "mizer-sequencer",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5678,8 +5667,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "hostname",
- "log",
  "serde",
+ "tracing",
  "zeroconf",
 ]
 
@@ -5689,9 +5678,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "directories-next",
- "log",
  "serde",
  "toml 0.8.10",
+ "tracing",
 ]
 
 [[package]]
@@ -5700,9 +5689,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "chrono",
- "log",
  "mizer-message-bus",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5725,7 +5714,6 @@ dependencies = [
  "ffmpeg-the-third",
  "flume 0.11.0",
  "image",
- "log",
  "mizer-node",
  "mizer-surfaces",
  "mizer-wgpu",
@@ -5733,6 +5721,7 @@ dependencies = [
  "profiling",
  "ringbuffer",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5741,7 +5730,6 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "log",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",
@@ -5761,12 +5749,12 @@ dependencies = [
  "font-kit",
  "glyphon",
  "image",
- "log",
  "mizer-node",
  "mizer-wgpu",
  "num_enum 0.7.2",
  "profiling",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5775,7 +5763,6 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "log",
  "mizer-clock",
  "mizer-commander",
  "mizer-message-bus",
@@ -5795,10 +5782,10 @@ name = "mizer-timecode-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-node",
  "mizer-timecode",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5818,9 +5805,9 @@ name = "mizer-transport-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "log",
  "mizer-node",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5829,7 +5816,6 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
- "log",
  "mizer-api",
  "mizer-ui-ffi",
  "mizer-util",
@@ -5837,6 +5823,7 @@ dependencies = [
  "nativeshell_build",
  "pinboard",
  "profiling",
+ "tracing",
 ]
 
 [[package]]
@@ -5869,12 +5856,12 @@ dependencies = [
  "base64 0.21.7",
  "bezier-rs",
  "futures",
- "log",
  "mizer-clock",
  "palette",
  "profiling",
  "serde",
  "test-case",
+ "tracing",
  "tracy-client",
  "uuid 1.7.0",
 ]
@@ -5920,7 +5907,6 @@ dependencies = [
  "ffmpeg-the-third",
  "flume 0.11.0",
  "image",
- "log",
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
@@ -5928,6 +5914,7 @@ dependencies = [
  "profiling",
  "ringbuffer",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5937,7 +5924,6 @@ dependencies = [
  "anyhow",
  "enum-iterator",
  "image",
- "log",
  "mizer-devices",
  "mizer-node",
  "mizer-video-nodes",
@@ -5947,6 +5933,7 @@ dependencies = [
  "profiling",
  "ringbuffer",
  "serde",
+ "tracing",
 ]
 
 [[package]]
@@ -5957,9 +5944,9 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.0",
  "futures",
- "log",
  "nokhwa",
  "pinboard",
+ "tracing",
 ]
 
 [[package]]
@@ -5970,7 +5957,6 @@ dependencies = [
  "bytemuck",
  "dashmap",
  "image",
- "log",
  "mizer-module",
  "parking_lot 0.12.1",
  "profiling",

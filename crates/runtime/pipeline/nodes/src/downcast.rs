@@ -10,7 +10,7 @@ impl<'a> NodeDowncast for dashmap::mapref::one::Ref<'a, NodePath, Box<dyn Pipeli
         match self.value().downcast_ref::<T>() {
             Ok(node) => Some(node.clone()),
             Err(err) => {
-                log::error!("Could not downcast node type {:?}: {:?}", node_type, err);
+                tracing::error!("Could not downcast node type {:?}: {:?}", node_type, err);
                 None
             }
         }
@@ -26,7 +26,7 @@ impl<'a> NodeDowncast for dashmap::mapref::multiple::RefMulti<'a, NodePath, Box<
         match self.value().downcast_ref::<T>() {
             Ok(node) => Some(node.clone()),
             Err(err) => {
-                log::error!("Could not downcast node type {:?}: {:?}", node_type, err);
+                tracing::error!("Could not downcast node type {:?}: {:?}", node_type, err);
                 None
             }
         }

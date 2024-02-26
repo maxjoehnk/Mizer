@@ -25,7 +25,7 @@ unsafe impl HasRawDisplayHandle for RawWindowRef {
 
 impl Drop for RawWindowRef {
     fn drop(&mut self) {
-        log::debug!("Dropping window");
+        tracing::debug!("Dropping window");
         self.window.set_visible(false);
     }
 }

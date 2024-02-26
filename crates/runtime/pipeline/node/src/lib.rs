@@ -36,7 +36,7 @@ pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
 
     #[allow(unused_variables)]
     fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        log::trace!("Returning default ports");
+        tracing::trace!("Returning default ports");
         Default::default()
     }
 

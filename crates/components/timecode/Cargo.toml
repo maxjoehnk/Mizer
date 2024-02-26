@@ -6,7 +6,6 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
 serde = { version = "1", features = ["derive"] }
 mizer-commander = { path = "../../runtime/commander" }
 mizer-module = { path = "../../runtime/module" }

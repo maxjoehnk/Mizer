@@ -403,7 +403,7 @@ impl Api {
         self.sender.send(ApiCommand::GetHistory(tx))?;
 
         let history = rx.recv()?;
-        log::debug!("Emitting history {:?}", history);
+        tracing::debug!("Emitting history {:?}", history);
         self.history_bus.send(history);
 
         Ok(())

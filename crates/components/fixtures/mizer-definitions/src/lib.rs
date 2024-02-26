@@ -32,7 +32,7 @@ impl MizerDefinitionsProvider {
 
 impl FixtureLibraryProvider for MizerDefinitionsProvider {
     fn load(&mut self) -> anyhow::Result<()> {
-        log::info!("Loading Mizer fixture library...");
+        tracing::info!("Loading Mizer fixture library...");
         if let Some(path) = find_path(&self.file_path) {
             let files = std::fs::read_dir(path)?;
             let definitions = files
@@ -48,7 +48,7 @@ impl FixtureLibraryProvider for MizerDefinitionsProvider {
                 })
                 .filter_map(|file| {
                     let path = file.path();
-                    log::trace!(
+                    tracing::trace!(
                         "Loading Mizer Fixture from '{:?}'...",
                         path.file_name().unwrap()
                     );
@@ -61,7 +61,7 @@ impl FixtureLibraryProvider for MizerDefinitionsProvider {
                             definition,
                         )),
                         Err(err) => {
-                            log::error!(
+                            tracing::error!(
                                 "Could not load Mizer Fixture from '{:?}': {:?}",
                                 path.file_name().unwrap(),
                                 err
@@ -72,7 +72,7 @@ impl FixtureLibraryProvider for MizerDefinitionsProvider {
                 })
                 .collect::<HashMap<_, _>>();
 
-            log::info!("Loaded {} Mizer Fixture Definitions", definitions.len());
+            tracing::info!("Loaded {} Mizer Fixture Definitions", definitions.len());
             self.definitions = definitions;
         }
 
@@ -105,7 +105,7 @@ fn read_definition(path: &Path) -> anyhow::Result<MizerFixtureDefinition> {
     file.read_to_string(&mut content)?;
 
     let definition = toml::from_str(&content)?;
-    log::debug!(
+    tracing::debug!(
         "Loaded Mizer Fixture from '{:?}'.",
         path.file_name().unwrap()
     );

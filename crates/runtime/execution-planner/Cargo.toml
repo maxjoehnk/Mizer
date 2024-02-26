@@ -10,5 +10,5 @@ test-case = "3.3"
 itertools = "0.12"
 mizer-node = { path = "../pipeline/node" }
 mizer-util = { path = "../../util" }
-log = "0.4"
+tracing = "0.1"
 profiling = "1"

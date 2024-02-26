@@ -88,7 +88,7 @@ impl OscConnectionManager {
         id: &str,
         address: OscAddress,
     ) -> anyhow::Result<OscAddress> {
-        log::debug!("reconfigure_connection {id}");
+        tracing::debug!("reconfigure_connection {id}");
         let connection = self
             .connections
             .get_mut(id)
@@ -175,7 +175,7 @@ impl OscConnection {
 impl Drop for OscConnection {
     fn drop(&mut self) {
         if let Err(err) = self.command_publisher.send(OscClientCommand::Close) {
-            log::error!("Unable to close osc client thread: {err:?}");
+            tracing::error!("Unable to close osc client thread: {err:?}");
         }
     }
 }
@@ -209,7 +209,7 @@ impl OscBackgroundClient {
                     Either::Left((cmd, _)) => (Some(cmd), None),
                     Either::Right((Ok(buffer_size), _)) => (None, Some(buffer_size)),
                     Either::Right((Err(err), _)) => {
-                        log::error!("Error reading from udp socket: {err:?}");
+                        tracing::error!("Error reading from udp socket: {err:?}");
 
                         (None, None)
                     }
@@ -219,14 +219,14 @@ impl OscBackgroundClient {
             if let Some(cmd) = cmd {
                 match self.handle_command(cmd).await {
                     Ok(true) => break,
-                    Err(err) => log::error!("Error handling osc background command {:?}", err),
+                    Err(err) => tracing::error!("Error handling osc background command {:?}", err),
                     _ => {}
                 }
             }
 
             if let Some(buffer_size) = event {
                 if let Err(err) = self.handle_event(&buffer[..buffer_size]) {
-                    log::error!("Error handling osc packet {:?}", err)
+                    tracing::error!("Error handling osc packet {:?}", err)
                 }
             }
         }
@@ -237,10 +237,10 @@ impl OscBackgroundClient {
         command: Result<OscClientCommand, flume::RecvError>,
     ) -> anyhow::Result<bool> {
         let command = command?;
-        log::trace!("handle_command {:?}", command);
+        tracing::trace!("handle_command {:?}", command);
         match command {
             OscClientCommand::Publish(msg) => {
-                log::debug!("Publishing osc packet {msg:?}");
+                tracing::debug!("Publishing osc packet {msg:?}");
                 let packet = rosc::encoder::encode(&OscPacket::Message(msg))?;
                 self.output_socket
                     .send_to(&packet, self.addr.output_addr())

@@ -23,7 +23,7 @@ impl_into_flutter_value!(MediaFiles);
 impl<AR: AsyncRuntime + 'static> EventChannelHandler for MediaEventChannel<AR> {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
-        log::debug!("register_event_sink {}", id);
+        tracing::debug!("register_event_sink {}", id);
         let stream = self.handler.subscribe();
         let subscription = self
             .runtime
@@ -32,9 +32,9 @@ impl<AR: AsyncRuntime + 'static> EventChannelHandler for MediaEventChannel<AR> {
     }
 
     fn unregister_event_sink(&mut self, sink_id: i64) {
-        log::debug!("unregister_event_sink {}", sink_id);
+        tracing::debug!("unregister_event_sink {}", sink_id);
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            log::trace!("Dropped history subscription");
+            tracing::trace!("Dropped history subscription");
             subscription.unsubscribe();
         }
     }

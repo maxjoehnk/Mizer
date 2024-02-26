@@ -80,7 +80,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "moveNode" => match call.arguments() {
                 Ok(args) => {
-                    log::debug!("moveNode {:?}", args);
+                    tracing::debug!("moveNode {:?}", args);
                     match self.handler.move_node(args) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
@@ -90,7 +90,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "showNode" => match call.arguments() {
                 Ok(args) => {
-                    log::debug!("showNode {:?}", args);
+                    tracing::debug!("showNode {:?}", args);
                     match self.handler.show_node(args) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
@@ -100,7 +100,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "renameNode" => match call.arguments() {
                 Ok(args) => {
-                    log::debug!("renameNode {:?}", args);
+                    tracing::debug!("renameNode {:?}", args);
                     match self.handler.rename_node(args) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
@@ -147,7 +147,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "groupNodes" => match call.arguments() {
                 Ok(args) => {
-                    log::debug!("groupNodes {:?}", args);
+                    tracing::debug!("groupNodes {:?}", args);
                     match self.handler.group_nodes(args) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
@@ -158,11 +158,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             "openNodesView" => {
                 self.handler.open_nodes_view();
                 resp.send_ok(Value::Null);
-            },
+            }
             "closeNodesView" => {
                 self.handler.close_nodes_view();
                 resp.send_ok(Value::Null);
-            },
+            }
             _ => resp.not_implemented(),
         }
     }

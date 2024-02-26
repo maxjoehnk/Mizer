@@ -75,7 +75,7 @@ impl PipelineAccess {
             .filter_map(|path| path.0.strip_prefix(&node_type_prefix))
             .filter_map(|suffix| u32::from_str(suffix).ok())
             .collect::<Vec<_>>();
-        log::trace!("found ids for prefix {}: {:?}", node_type_prefix, ids);
+        tracing::trace!("found ids for prefix {}: {:?}", node_type_prefix, ids);
         ids.sort_unstable();
         ids.last().map(|last_id| last_id + 1).unwrap_or_default()
     }
@@ -188,7 +188,7 @@ impl PipelineAccess {
         path: NodePath,
         node: T,
     ) {
-        log::debug!("adding node {}: {:?}", &path, node);
+        tracing::debug!("adding node {}: {:?}", &path, node);
         self.nodes_view.insert(path.clone(), Box::new(node.clone()));
         let node = Box::new(node);
         self.nodes.insert(path, node);

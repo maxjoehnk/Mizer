@@ -19,7 +19,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for EffectsChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::debug!("mizer.live/layouts -> {}", call.method);
+        tracing::debug!("mizer.live/layouts -> {}", call.method);
         match call.method.as_str() {
             "getEffects" => {
                 let effects = self.get_effects();

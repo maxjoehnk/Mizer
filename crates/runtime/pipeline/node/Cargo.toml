@@ -9,7 +9,7 @@ test = []
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 heck = "0.4"
 serde = { version = "1", features = ["derive", "rc"] }
 mizer-clock = { path = "../../clock" }

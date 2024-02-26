@@ -106,7 +106,7 @@ impl SettingsManager {
             paths.push(dir);
         }
         if let Some(path) = paths.iter().find(|path| path.exists()) {
-            log::trace!("Loading settings from {path:?}");
+            tracing::trace!("Loading settings from {path:?}");
             let mut file = std::fs::File::open(path)?;
             let mut buffer = String::new();
             file.read_to_string(&mut buffer)?;
@@ -114,7 +114,7 @@ impl SettingsManager {
             self.settings = toml::from_str(&buffer)?;
             self.file_path = Some(path.to_path_buf());
         } else {
-            log::trace!("Loading default settings");
+            tracing::trace!("Loading default settings");
         }
 
         Ok(())

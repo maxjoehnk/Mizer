@@ -17,18 +17,18 @@ impl DiscoveryService {
     }
 
     fn run(&self) {
-        log::trace!("Discovering attached webcams...");
+        tracing::trace!("Discovering attached webcams...");
         match nokhwa::query(self.backend) {
             Ok(cameras) => {
                 for camera in cameras {
-                    log::trace!("Found webcam: {camera:?}");
+                    tracing::trace!("Found webcam: {camera:?}");
                     let camera = WebcamRef::new(camera);
                     if let Err(err) = self.sender.send(camera) {
-                        log::error!("Unable to notify of new device {err:?}");
+                        tracing::error!("Unable to notify of new device {err:?}");
                     }
                 }
             }
-            Err(err) => log::error!("Error querying cameras: {err:?}"),
+            Err(err) => tracing::error!("Error querying cameras: {err:?}"),
         }
     }
 }

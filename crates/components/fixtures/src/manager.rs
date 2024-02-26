@@ -6,15 +6,15 @@ use itertools::Itertools;
 
 use mizer_protocol_dmx::DmxConnectionManager;
 
-use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
 };
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{
-    GenericPreset, Group, Position, Preset, PresetId, Presets, PresetType, Programmer,
+    GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
 };
+use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -54,7 +54,7 @@ impl FixtureManager {
         universe: Option<u16>,
         configuration: FixtureConfiguration,
     ) {
-        log::trace!(
+        tracing::trace!(
             "Adding fixture {} with address {}.{}",
             fixture_id,
             universe.unwrap_or(1),
@@ -399,13 +399,13 @@ impl FixtureManager {
     }
 
     pub fn get_programmer(&self) -> impl DerefMut<Target = Programmer> + '_ {
-        log::trace!("Locking programmer");
+        tracing::trace!("Locking programmer");
         let programmer = self.programmer.lock().unwrap().log_wrap();
         programmer
     }
 
     pub(crate) fn execute_programmers(&self) {
-        log::trace!("Locking programmer");
+        tracing::trace!("Locking programmer");
         let programmer = self.programmer.lock().unwrap().log_wrap();
         programmer.run(&self.fixtures);
     }
@@ -445,6 +445,6 @@ impl<'a, T> DerefMut for MutexLogWrapper<'a, T> {
 
 impl<'a, T> Drop for MutexLogWrapper<'a, T> {
     fn drop(&mut self) {
-        log::trace!("Dropping lock");
+        tracing::trace!("Dropping lock");
     }
 }

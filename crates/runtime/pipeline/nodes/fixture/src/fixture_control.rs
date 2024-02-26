@@ -137,12 +137,12 @@ impl ProcessingNode for FixtureControlNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let Some(manager) = context.inject::<FixtureManager>() else {
-            log::warn!("missing fixture module");
+            tracing::warn!("missing fixture module");
             return Ok(());
         };
 
         let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) else {
-            log::error!("could not find fixture for id {}", self.fixture_id);
+            tracing::error!("could not find fixture for id {}", self.fixture_id);
             return Ok(());
         };
 

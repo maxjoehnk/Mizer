@@ -122,10 +122,10 @@ impl ProcessingNode for FixtureNode {
                     fixture.write_fader_control(control, value, self.priority)
                 });
             } else {
-                log::error!("could not find fixture for id {}", self.fixture_id);
+                tracing::error!("could not find fixture for id {}", self.fixture_id);
             }
         } else {
-            log::warn!("missing fixture module");
+            tracing::warn!("missing fixture module");
         }
 
         Ok(())

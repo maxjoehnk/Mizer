@@ -29,7 +29,7 @@ impl HeliosLaser {
 
 impl Laser for HeliosLaser {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()> {
-        log::debug!("Queuing frame");
+        tracing::debug!("Queuing frame");
         self.current_frame.set(frame);
         let (lock, cvar) = &*self.lock;
         let mut frame_available = lock.lock().unwrap();
@@ -89,7 +89,7 @@ impl TryFrom<helios_dac::NativeHeliosDac> for HeliosLaser {
 
                 loop {
                     let frame = context.wait_for_frame();
-                    log::debug!("Writing frame");
+                    tracing::debug!("Writing frame");
                     device.write_frame(frame.into()).unwrap();
                     thread::sleep(Duration::from_millis(100));
                 }

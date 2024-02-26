@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 mizer-node = { path = "../../node" }
-log = "0.4"
+tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-plan = { path = "../../../../components/plan" }
 mizer-fixtures = { path = "../../../../components/fixtures" }

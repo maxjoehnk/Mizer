@@ -61,7 +61,7 @@ fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     mizer_util::tracing::init();
     let guard = logger::init()?;
     let flags = Flags::from_args();
-    log::debug!("flags: {:?}", flags);
+    tracing::debug!("flags: {:?}", flags);
     init_ffmpeg()?;
 
     Ok((flags, guard))
@@ -75,7 +75,7 @@ fn init_ffmpeg() -> anyhow::Result<()> {
 }
 
 fn build_tokio_runtime() -> tokio::runtime::Runtime {
-    log::trace!("Starting tokio runtime");
+    tracing::trace!("Starting tokio runtime");
     tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .thread_name("mizer-tokio-runtime")
@@ -139,7 +139,7 @@ mod ui {
             .name("Pipeline Runtime".into())
             .spawn(move || {
                 if let Err(err) = super::start_runtime(&handle, flags, Some(tx)) {
-                    log::error!("{err:?}");
+                    tracing::error!("{err:?}");
                     std::process::exit(1);
                 }
             })?;

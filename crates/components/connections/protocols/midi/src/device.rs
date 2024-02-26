@@ -40,7 +40,7 @@ impl MidiDevice {
                             timestamp: time,
                             msg: MidiMessage::try_from(data).expect("could not parse midi message"),
                         };
-                        log::trace!("{:?}", event);
+                        tracing::trace!("{:?}", event);
                         bus.send(event);
                     },
                     (),
@@ -65,7 +65,7 @@ impl MidiDevice {
 
     pub fn write(&mut self, msg: MidiMessage) -> anyhow::Result<()> {
         if let Some(ref mut output) = self.output {
-            log::trace!("{:?}", msg);
+            tracing::trace!("{:?}", msg);
             let data: Vec<u8> = msg.into();
             output.send(&data)?;
         }

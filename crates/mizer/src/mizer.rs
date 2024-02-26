@@ -36,7 +36,7 @@ pub struct Mizer {
 impl Mizer {
     pub fn run(&mut self, api_handler: &ApiHandler) {
         profiling::register_thread!("Main Loop");
-        log::trace!("Entering main loop...");
+        tracing::trace!("Entering main loop...");
         let histogram = metrics::histogram!("mizer.frame_time");
         let mut last_start = std::time::Instant::now();
         loop {
@@ -103,7 +103,7 @@ impl Mizer {
         mizer_util::message!("Loading Project", 0);
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Loading project...", None);
-            log::info!("Loading project {:?}...", path);
+            tracing::info!("Loading project {:?}...", path);
             let project = Project::load_file(path)?;
             {
                 let injector = self.runtime.injector_mut();
@@ -140,7 +140,7 @@ impl Mizer {
             start_media_discovery(&project.media.import_paths, &self.media_server_api)
                 .context("starting media discovery")?;
             self.runtime.load(&project).context("loading project")?;
-            log::info!("Loading project...Done");
+            tracing::info!("Loading project...Done");
 
             if self.flags.generate_graph {
                 self.runtime.generate_pipeline_graph()?;
@@ -178,7 +178,7 @@ impl Mizer {
         mizer_util::message!("Saving Project", 0);
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Saving project...", None);
-            log::info!("Saving project to {:?}...", path);
+            tracing::info!("Saving project to {:?}...", path);
             let mut project = Project::new();
             self.runtime.save(&mut project);
             let injector = self.runtime.injector();
@@ -200,7 +200,7 @@ impl Mizer {
             surface_registry.save(&mut project);
             self.media_server_api.save(&mut project);
             project.save_file(path)?;
-            log::info!("Saving project...Done");
+            tracing::info!("Saving project...Done");
             self.runtime.add_status_message(
                 format!("Project saved ({path:?})"),
                 Some(Duration::from_secs(10)),
@@ -239,7 +239,7 @@ impl Mizer {
         let history = match self.project_history.load() {
             Ok(history) => history,
             Err(err) => {
-                log::error!("Error loading project history {:?}", err);
+                tracing::error!("Error loading project history {:?}", err);
                 Default::default()
             }
         };

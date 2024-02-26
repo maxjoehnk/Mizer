@@ -49,14 +49,14 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
         for sender in active {
             let sender = sender.unwrap();
             if let Err(err) = sender.send(msg.clone()) {
-                log::error!("Sending message to subscriber failed: {:?}", err);
+                tracing::error!("Sending message to subscriber failed: {:?}", err);
             }
         }
 
         let mut last_event = self.last_event.write();
         *last_event = Some(msg);
 
-        log::trace!(
+        tracing::trace!(
             "Send msg to {} / {} subscribers. {} dropped subscribers remaining",
             active_count,
             senders.len(),
@@ -68,7 +68,7 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
         let mut senders = self.senders.write();
         let (tx, rx) = flume::unbounded();
         if let Some(last_event) = self.last_event.read().deref() {
-            log::trace!("Informing about last event");
+            tracing::trace!("Informing about last event");
             tx.send(last_event.clone()).unwrap();
         }
         let sender = Arc::new(tx);
@@ -96,7 +96,7 @@ impl<T: Clone + Send + Sync + 'static> Subscriber<T> {
             Ok(value) => Some(value),
             Err(TryRecvError::Empty) => None,
             Err(_) => {
-                log::error!("Bus Subscriber has disconnected");
+                tracing::error!("Bus Subscriber has disconnected");
 
                 None
             }

@@ -116,7 +116,7 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
         &self,
         pipeline_access: &mut PipelineAccess,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        log::debug!("Updating {:?} with {:?}", self.path, self.setting);
+        tracing::debug!("Updating {:?} with {:?}", self.path, self.setting);
 
         let node = pipeline_access
             .nodes

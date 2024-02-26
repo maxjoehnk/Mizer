@@ -12,7 +12,7 @@ impl<'a> OscOutput<'a> {
     }
 
     pub fn write(&self, msg: OscMessage) -> anyhow::Result<()> {
-        log::trace!("Writing osc message {msg:?}");
+        tracing::trace!("Writing osc message {msg:?}");
         let command = OscClientCommand::Publish(msg);
         self.command_publisher.send(command)?;
 

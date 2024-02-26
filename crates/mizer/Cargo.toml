@@ -27,10 +27,9 @@ oslog = ["tracing-oslog"]
 [dependencies]
 derive_more = "0.99"
 directories-next = "2.0"
-tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
-log = "0.4"
+tracing = "0.1"
 anyhow = "1"
 structopt = "0.3"
 metrics = "0.22"

@@ -22,7 +22,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
         reply: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::trace!("ProgrammerChannel::{} ({:?})", call.method, call.args);
+        tracing::trace!("ProgrammerChannel::{} ({:?})", call.method, call.args);
         match call.method.as_str() {
             "writeControl" => {
                 if let Err(err) = call.arguments().map(|req| self.write_control(req)) {
@@ -228,38 +228,38 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     }
 
     fn write_control(&self, req: WriteControlRequest) {
-        log::trace!("ProgrammerChannel::write_control({:?})", req);
+        tracing::trace!("ProgrammerChannel::write_control({:?})", req);
         self.handler.write_control(req);
     }
 
     fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
-        log::trace!("ProgrammerChannel::select_fixtures({:?})", fixture_ids);
+        tracing::trace!("ProgrammerChannel::select_fixtures({:?})", fixture_ids);
         self.handler.select_fixtures(fixture_ids);
     }
 
     fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
-        log::trace!("ProgrammerChannel::unselect_fixtures({:?})", fixture_ids);
+        tracing::trace!("ProgrammerChannel::unselect_fixtures({:?})", fixture_ids);
         self.handler.unselect_fixtures(fixture_ids);
     }
 
     fn clear(&self) {
-        log::trace!("ProgrammerChannel::clear");
+        tracing::trace!("ProgrammerChannel::clear");
         self.handler.clear();
     }
 
     fn highlight(&self, highlight: bool) {
-        log::trace!("ProgrammerChannel::highlight({})", highlight);
+        tracing::trace!("ProgrammerChannel::highlight({})", highlight);
         self.handler.highlight(highlight);
     }
 
     fn store(&self, req: StoreRequest) {
-        log::trace!("ProgrammerChannel::store({:?})", req);
+        tracing::trace!("ProgrammerChannel::store({:?})", req);
         self.handler
             .store(req.sequence_id, req.store_mode(), req.cue_id);
     }
 
     fn store_preset(&self, req: StorePresetRequest) -> anyhow::Result<()> {
-        log::trace!("ProgrammerChannel::store_preset({req:?})");
+        tracing::trace!("ProgrammerChannel::store_preset({req:?})");
         match req.target {
             Some(store_preset_request::Target::Existing(preset_id)) => {
                 self.handler.store_programmer_to_preset(preset_id)?;

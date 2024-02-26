@@ -10,7 +10,7 @@ tracing = ["profiling/profile-with-tracy", "tracy-client"]
 
 [dependencies]
 anyhow = "1"
-log = "0.4"
+tracing = "0.1"
 mizer-clock = { path = "../runtime/clock", optional = true }
 futures = "0.3"
 palette = "0.7"

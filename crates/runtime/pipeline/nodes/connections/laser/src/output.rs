@@ -67,7 +67,7 @@ impl ProcessingNode for LaserNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(frames) = context.read_port::<_, Vec<LaserFrame>>(INPUT_PORT) {
-            log::trace!("LaserNode got frames: {:?}", frames);
+            tracing::trace!("LaserNode got frames: {:?}", frames);
             state.frames = frames;
             state.current_frame = 0;
         }
@@ -83,7 +83,7 @@ impl ProcessingNode for LaserNode {
                 state.current_frame += 1;
             }
         } else {
-            log::warn!("Laser node is missing DeviceManager");
+            tracing::warn!("Laser node is missing DeviceManager");
         }
         Ok(())
     }

@@ -77,7 +77,7 @@ impl ProcessingNode for GamepadNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let Some(device_manager) = context.inject::<DeviceManager>() else {
-            log::error!("Gamepad node is missing DeviceManager");
+            tracing::error!("Gamepad node is missing DeviceManager");
 
             return Ok(());
         };

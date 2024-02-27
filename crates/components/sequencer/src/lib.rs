@@ -19,7 +19,7 @@ mod value;
 mod tests {
     use std::time::{Duration, Instant};
 
-    use mockall::predicate;
+    use predicates::prelude::*;
     use test_case::test_case;
 
     use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};

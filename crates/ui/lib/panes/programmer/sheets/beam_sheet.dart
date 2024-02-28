@@ -14,7 +14,7 @@ const CONTROLS = [
   FixtureControl.IRIS,
 ];
 
-const NAMES = {
+final NAMES = {
   FixtureControl.ZOOM: "Zoom",
   FixtureControl.FOCUS: "Focus",
   FixtureControl.PRISM: "Prism",

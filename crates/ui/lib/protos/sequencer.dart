@@ -2,7 +2,7 @@ import 'sequencer.pb.dart';
 
 export 'sequencer.pb.dart';
 
-const CueTriggerLabels = {
+final CueTriggerLabels = {
   CueTrigger_Type.GO: "Go",
   CueTrigger_Type.FOLLOW: "Follow",
   CueTrigger_Type.TIME: "Time",

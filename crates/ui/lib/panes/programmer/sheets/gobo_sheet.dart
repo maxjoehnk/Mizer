@@ -12,7 +12,7 @@ const CONTROLS = [
   FixtureControl.GOBO,
 ];
 
-const NAMES = {
+final NAMES = {
   FixtureControl.GOBO: "Gobo",
 };
 

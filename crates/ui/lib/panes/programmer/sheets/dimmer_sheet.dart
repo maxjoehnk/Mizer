@@ -11,7 +11,7 @@ const CONTROLS = [
   FixtureControl.SHUTTER,
 ];
 
-const NAMES = {
+final NAMES = {
   FixtureControl.INTENSITY: "Dimmer",
   FixtureControl.SHUTTER: "Shutter",
 };

@@ -4,7 +4,7 @@ import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
-const Map<FixturePriority, String> PriorityLabels = {
+Map<FixturePriority, String> PriorityLabels = {
   FixturePriority.PRIORITY_HTP: "HTP",
   FixturePriority.PRIORITY_LTP_HIGHEST: "Highest",
   FixturePriority.PRIORITY_LTP_HIGH: "High",

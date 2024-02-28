@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-const Map<NodeCategory, Color> CATEGORY_COLORS = {
+final Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_NONE: Colors.blueGrey,
   NodeCategory.NODE_CATEGORY_STANDARD: Colors.green,
   NodeCategory.NODE_CATEGORY_CONNECTIONS: Colors.orange,
@@ -17,7 +17,7 @@ const Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_FIXTURES: Colors.blueGrey,
 };
 
-const Map<NodeCategory, String> CATEGORY_NAMES = {
+final Map<NodeCategory, String> CATEGORY_NAMES = {
   NodeCategory.NODE_CATEGORY_STANDARD: "Standard",
   NodeCategory.NODE_CATEGORY_CONNECTIONS: "Connections",
   NodeCategory.NODE_CATEGORY_CONVERSIONS: "Conversions",

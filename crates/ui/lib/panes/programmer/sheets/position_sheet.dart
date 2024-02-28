@@ -11,7 +11,7 @@ const CONTROLS = [
   FixtureControl.TILT,
 ];
 
-const NAMES = {
+final NAMES = {
   FixtureControl.PAN: "Pan",
   FixtureControl.TILT: "Tilt",
 };

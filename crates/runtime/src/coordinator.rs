@@ -673,6 +673,7 @@ fn register_node(
         Node::FixtureControl(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Programmer(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Group(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::GroupControl(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Preset(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Sequencer(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::IldaFile(node) => pipeline.register_node(path, &node, pipeline_access),

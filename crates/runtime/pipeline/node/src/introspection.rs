@@ -104,6 +104,7 @@ node_type_name! {
         Programmer,
         Sequencer,
         Group,
+        GroupControl,
         Preset,
         Envelope,
         StepSequencer,

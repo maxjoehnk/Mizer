@@ -99,6 +99,7 @@ impl PipelineAccess {
             FixtureControl(node) => self.add_node(path, node),
             Programmer(node) => self.add_node(path, node),
             Group(node) => self.add_node(path, node),
+            GroupControl(node) => self.add_node(path, node),
             Preset(node) => self.add_node(path, node),
             Sequencer(node) => self.add_node(path, node),
             IldaFile(node) => self.add_node(path, node),

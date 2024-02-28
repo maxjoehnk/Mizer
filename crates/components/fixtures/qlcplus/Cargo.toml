@@ -9,7 +9,7 @@ tracing = "0.1"
 anyhow = "1"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
-rayon = "1.8"
+rayon = "1.9"
 hard-xml = "1.34"
 custom_derive = "0.1"
 enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch = "feature/better-error-reporting" }

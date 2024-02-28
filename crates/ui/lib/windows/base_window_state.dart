@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:i18n_extension/i18n_widget.dart';
+import 'package:i18n_extension/i18n_extension.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/plugin/provider.dart';
 import 'package:mizer/platform/integrated/platform.dart';

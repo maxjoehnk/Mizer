@@ -3,7 +3,7 @@ import 'package:i18n_extension/i18n_extension.dart';
 // import 'package:i18n_extension/io/import.dart';
 
 class MizerI18n {
-  static TranslationsByLocale translations = Translations.byLocale("en");
+  static var translations = Translations.byLocale("en");
 
   static Future<void> loadTranslations() async {
     Translations.missingKeyCallback = (key, locale) {};

@@ -9,7 +9,7 @@ import 'package:mizer/widgets/popup/popup_direct_time_input.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-const LABELS = {
+final LABELS = {
   CueControl_Type.INTENSITY: 'Dimmer',
   CueControl_Type.SHUTTER: 'Shutter',
   CueControl_Type.COLOR_RED: 'Red',

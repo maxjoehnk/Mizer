@@ -6,7 +6,7 @@ import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/presets/preset_group.dart';
 
-const PRESET_TYPES = {
+final PRESET_TYPES = {
   FixtureControl.INTENSITY: PresetType.Intensity,
   FixtureControl.SHUTTER: PresetType.Shutter,
   FixtureControl.COLOR_WHEEL: PresetType.Color,

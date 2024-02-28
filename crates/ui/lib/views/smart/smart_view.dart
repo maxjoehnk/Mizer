@@ -10,7 +10,7 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'programmer_control_list.dart';
 import 'programmer_fixture_list.dart';
 
-const NAMES = {
+final NAMES = {
   FixtureControl.INTENSITY: "Dimmer",
   FixtureControl.SHUTTER: "Shutter",
   FixtureControl.COLOR_MIXER: "Color",

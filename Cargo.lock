@@ -4765,7 +4765,12 @@ dependencies = [
  "anyhow",
  "mizer-fixtures",
  "mizer-node",
+ "mockall",
+ "mockall_double",
+ "predicates",
+ "ringbuffer",
  "serde",
+ "test-case",
  "tracing",
 ]
 

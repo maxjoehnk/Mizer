@@ -12,3 +12,4 @@ mod group;
 mod group_control;
 mod preset;
 mod programmer;
+mod contracts;

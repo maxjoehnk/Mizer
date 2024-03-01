@@ -10,3 +10,10 @@ tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../node" }
 mizer-fixtures = { path = "../../../../components/fixtures" }
+ringbuffer = "0.15"
+
+[dev-dependencies]
+mockall = "0.12"
+mockall_double = "0.3"
+predicates = "3.1"
+test-case = "3.3"

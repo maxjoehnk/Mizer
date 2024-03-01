@@ -103,6 +103,16 @@ impl<'a, V: PortValue + 'static, C: NodeContext> PortReader<'a, V, C> {
 
 impl<'a, C: NodeContext> PortReader<'a, port_types::SINGLE, C> {
     pub fn is_high(&self) -> Option<bool> {
-        self.read().map(|value| value > 0f64 + f64::EPSILON)
+        self.read().map(|value| value.is_high())
+    }
+}
+
+pub trait PortValueExt {
+    fn is_high(&self) -> bool;
+}
+
+impl PortValueExt for port_types::SINGLE {
+    fn is_high(&self) -> bool {
+        *self > (0f64 + f64::EPSILON)
     }
 }

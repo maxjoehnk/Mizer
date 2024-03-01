@@ -1495,6 +1495,7 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
     $core.double? minHint,
     $core.double? max,
     $core.double? maxHint,
+    $core.double? stepSize,
   }) {
     final $result = create();
     if (value != null) {
@@ -1512,6 +1513,9 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
     if (maxHint != null) {
       $result.maxHint = maxHint;
     }
+    if (stepSize != null) {
+      $result.stepSize = stepSize;
+    }
     return $result;
   }
   NodeSetting_FloatValue._() : super();
@@ -1524,6 +1528,7 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
     ..a<$core.double>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.OD)
     ..a<$core.double>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OD)
     ..a<$core.double>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'stepSize', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -1592,6 +1597,15 @@ class NodeSetting_FloatValue extends $pb.GeneratedMessage {
   $core.bool hasMaxHint() => $_has(4);
   @$pb.TagNumber(5)
   void clearMaxHint() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.double get stepSize => $_getN(5);
+  @$pb.TagNumber(6)
+  set stepSize($core.double v) { $_setDouble(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasStepSize() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStepSize() => clearField(6);
 }
 
 class NodeSetting_IntValue extends $pb.GeneratedMessage {
@@ -1601,6 +1615,7 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
     $core.int? minHint,
     $core.int? max,
     $core.int? maxHint,
+    $core.int? stepSize,
   }) {
     final $result = create();
     if (value != null) {
@@ -1618,6 +1633,9 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
     if (maxHint != null) {
       $result.maxHint = maxHint;
     }
+    if (stepSize != null) {
+      $result.stepSize = stepSize;
+    }
     return $result;
   }
   NodeSetting_IntValue._() : super();
@@ -1630,6 +1648,7 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.O3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'stepSize', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1698,6 +1717,15 @@ class NodeSetting_IntValue extends $pb.GeneratedMessage {
   $core.bool hasMaxHint() => $_has(4);
   @$pb.TagNumber(5)
   void clearMaxHint() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get stepSize => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set stepSize($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasStepSize() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStepSize() => clearField(6);
 }
 
 class NodeSetting_UintValue extends $pb.GeneratedMessage {
@@ -1707,6 +1735,7 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
     $core.int? minHint,
     $core.int? max,
     $core.int? maxHint,
+    $core.int? stepSize,
   }) {
     final $result = create();
     if (value != null) {
@@ -1724,6 +1753,9 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
     if (maxHint != null) {
       $result.maxHint = maxHint;
     }
+    if (stepSize != null) {
+      $result.stepSize = stepSize;
+    }
     return $result;
   }
   NodeSetting_UintValue._() : super();
@@ -1736,6 +1768,7 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'minHint', $pb.PbFieldType.OU3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'max', $pb.PbFieldType.OU3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'maxHint', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'stepSize', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -1804,6 +1837,15 @@ class NodeSetting_UintValue extends $pb.GeneratedMessage {
   $core.bool hasMaxHint() => $_has(4);
   @$pb.TagNumber(5)
   void clearMaxHint() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get stepSize => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set stepSize($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasStepSize() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStepSize() => clearField(6);
 }
 
 class NodeSetting_BoolValue extends $pb.GeneratedMessage {

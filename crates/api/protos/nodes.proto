@@ -175,6 +175,7 @@ message NodeSetting {
     optional double min_hint = 3;
     optional double max = 4;
     optional double max_hint = 5;
+    optional double step_size = 6;
   }
 
   message IntValue {
@@ -183,6 +184,7 @@ message NodeSetting {
     optional int32 min_hint = 3;
     optional int32 max = 4;
     optional int32 max_hint = 5;
+    optional int32 step_size = 6;
   }
 
   message UintValue {
@@ -191,6 +193,7 @@ message NodeSetting {
     optional uint32 min_hint = 3;
     optional uint32 max = 4;
     optional uint32 max_hint = 5;
+    optional uint32 step_size = 6;
   }
 
   message BoolValue {

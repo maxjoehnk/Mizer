@@ -27,7 +27,7 @@ impl Default for ClockNode {
 
 impl ConfigurableNode for ClockNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(BPM_SETTING, self.speed).min(1.).max_hint(200.)]
+        vec![setting!(BPM_SETTING, self.speed).min(1.).max_hint(200.).step_size(5.)]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {

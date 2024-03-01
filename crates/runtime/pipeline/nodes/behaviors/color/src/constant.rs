@@ -67,7 +67,7 @@ impl ConfigurableNode for ConstantColorNode {
             } => {
                 vec![
                     mode_setting,
-                    setting!(HUE_SETTING, hue).min(0.).max(360.),
+                    setting!(HUE_SETTING, hue).min(0.).max(360.).step_size(1.),
                     setting!(SATURATION_SETTING, saturation).min(0.).max(1.),
                     setting!(VALUE_SETTING, value).min(0.).max(1.),
                 ]

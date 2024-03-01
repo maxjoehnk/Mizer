@@ -261,12 +261,14 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             } => Self::FloatValue(node_setting::FloatValue {
                 value,
                 min,
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             }),
             Uint {
                 value,
@@ -274,12 +276,14 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             } => Self::UintValue(node_setting::UintValue {
                 value,
                 min,
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             }),
             Int {
                 value,
@@ -287,12 +291,14 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             } => Self::IntValue(node_setting::IntValue {
                 value: value as i32,
                 min: min.map(|v| v as i32),
                 min_hint: min_hint.map(|v| v as i32),
                 max: max.map(|v| v as i32),
                 max_hint: max_hint.map(|v| v as i32),
+                step_size: step_size.map(|v| v as i32),
             }),
             Bool { value } => Self::BoolValue(node_setting::BoolValue { value }),
             Select { value, variants } => Self::SelectValue(node_setting::SelectValue {
@@ -348,6 +354,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                 min_hint: value.min_hint,
                 max: value.max,
                 max_hint: value.max_hint,
+                step_size: value.step_size,
             },
             Value::IntValue(value) => Self::Int {
                 value: value.value as i64,
@@ -355,6 +362,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                 min_hint: value.min_hint.map(|v| v as i64),
                 max: value.max.map(|v| v as i64),
                 max_hint: value.max_hint.map(|v| v as i64),
+                step_size: value.step_size.map(|v| v as i64),
             },
             Value::UintValue(value) => Self::Uint {
                 value: value.value,
@@ -362,6 +370,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                 min_hint: value.min_hint,
                 max: value.max,
                 max_hint: value.max_hint,
+                step_size: value.step_size,
             },
             Value::BoolValue(value) => Self::Bool { value: value.value },
             Value::SelectValue(value) => Self::Select {

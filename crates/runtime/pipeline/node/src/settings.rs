@@ -57,6 +57,7 @@ pub trait NumericSettings<T> {
     fn max(self, max: T) -> Self;
     fn min_hint(self, min_hint: T) -> Self;
     fn max_hint(self, max_hint: T) -> Self;
+    fn step_size(self, step_size: T) -> Self;
 }
 
 impl NumericSettings<f64> for NodeSetting {
@@ -84,6 +85,13 @@ impl NumericSettings<f64> for NodeSetting {
     fn max_hint(mut self, value: f64) -> Self {
         if let NodeSettingValue::Float { max_hint, .. } = &mut self.value {
             *max_hint = Some(value);
+        }
+        self
+    }
+
+    fn step_size(mut self, value: f64) -> Self {
+        if let NodeSettingValue::Float { step_size, .. } = &mut self.value {
+            *step_size = Some(value);
         }
         self
     }
@@ -117,6 +125,13 @@ impl NumericSettings<u32> for NodeSetting {
         }
         self
     }
+
+    fn step_size(mut self, value: u32) -> Self {
+        if let NodeSettingValue::Uint { step_size, .. } = &mut self.value {
+            *step_size = Some(value);
+        }
+        self
+    }
 }
 
 impl NumericSettings<i64> for NodeSetting {
@@ -147,6 +162,13 @@ impl NumericSettings<i64> for NodeSetting {
         }
         self
     }
+
+    fn step_size(mut self, value: i64) -> Self {
+        if let NodeSettingValue::Int { step_size, .. } = &mut self.value {
+            *step_size = Some(value);
+        }
+        self
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
@@ -161,6 +183,7 @@ pub enum NodeSettingValue {
         min_hint: Option<f64>,
         max: Option<f64>,
         max_hint: Option<f64>,
+        step_size: Option<f64>,
     },
     Uint {
         value: u32,
@@ -168,6 +191,7 @@ pub enum NodeSettingValue {
         min_hint: Option<u32>,
         max: Option<u32>,
         max_hint: Option<u32>,
+        step_size: Option<u32>,
     },
     Int {
         value: i64,
@@ -175,6 +199,7 @@ pub enum NodeSettingValue {
         min_hint: Option<i64>,
         max: Option<i64>,
         max_hint: Option<i64>,
+        step_size: Option<i64>,
     },
     Bool {
         value: bool,
@@ -227,6 +252,7 @@ impl Hash for NodeSettingValue {
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             } => {
                 state.write_u8(2);
                 value.hash(state);
@@ -234,6 +260,7 @@ impl Hash for NodeSettingValue {
                 min_hint.hash(state);
                 max.hash(state);
                 max_hint.hash(state);
+                step_size.hash(state);
             }
             Self::Int {
                 value,
@@ -241,6 +268,7 @@ impl Hash for NodeSettingValue {
                 min_hint,
                 max,
                 max_hint,
+                step_size,
             } => {
                 state.write_u8(2);
                 value.hash(state);
@@ -248,6 +276,7 @@ impl Hash for NodeSettingValue {
                 min_hint.hash(state);
                 max.hash(state);
                 max_hint.hash(state);
+                step_size.hash(state);
             }
             Self::Bool { value } => {
                 state.write_u8(3);
@@ -346,6 +375,7 @@ impl From<f64> for NodeSettingValue {
             min: None,
             max_hint: None,
             min_hint: None,
+            step_size: None,
         }
     }
 }
@@ -358,6 +388,7 @@ impl From<u32> for NodeSettingValue {
             min: None,
             max_hint: None,
             min_hint: None,
+            step_size: None,
         }
     }
 }
@@ -370,6 +401,7 @@ impl From<i64> for NodeSettingValue {
             min: None,
             max_hint: None,
             min_hint: None,
+            step_size: None,
         }
     }
 }

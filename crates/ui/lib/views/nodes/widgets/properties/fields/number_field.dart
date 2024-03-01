@@ -172,8 +172,8 @@ class _NumberFieldState extends State<NumberField> {
             keyboardType: TextInputType.number,
             autofocus: true,
             inputFormatters: [
-              if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
-              if (widget.fractions) NumberField.floatsOnly,
+              if (!widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
+              if (widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-.]')),
               FilteringTextInputFormatter.singleLineFormatter,
             ],
           ),

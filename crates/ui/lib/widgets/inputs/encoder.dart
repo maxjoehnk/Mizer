@@ -55,9 +55,22 @@ class _EncoderInputState extends State<EncoderInput> {
     ProgrammerApi programmerApi = context.read();
     return LayoutBuilder(
       builder: (context, constraints) => Listener(
+        onPointerPanZoomUpdate: (event) {
+          var multiplier = 0.01;
+          if (HardwareKeyboard.instance.logicalKeysPressed.any((key) => [
+            LogicalKeyboardKey.shift,
+            LogicalKeyboardKey.shiftLeft,
+            LogicalKeyboardKey.shiftRight,
+          ].contains(key))) {
+            multiplier = 0.001;
+          }
+          if (event.kind == PointerDeviceKind.trackpad) {
+            _onScroll(1, event.panDelta.dy * multiplier);
+          }
+        },
         onPointerSignal: (event) {
           var delta = 0.1;
-          if (RawKeyboard.instance.keysPressed.any((key) => [
+          if (HardwareKeyboard.instance.logicalKeysPressed.any((key) => [
             LogicalKeyboardKey.shift,
             LogicalKeyboardKey.shiftLeft,
             LogicalKeyboardKey.shiftRight,

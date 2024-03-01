@@ -1,0 +1,5 @@
+= Send Zero
+
+If enabled every input value will be sent to the fixtures.
+
+If disabled only values above zero will be sent.

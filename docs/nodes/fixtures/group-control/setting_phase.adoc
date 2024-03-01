@@ -1,0 +1,7 @@
+= Phase
+
+Spread the last values across all fixtures in the group.
+
+* 0 = All fixtures in the group will be set to the same value.
+* >0 = The first fixture will get the current value, the last fixture will get the oldest value according to the Phase.
+* <0 = The last fixture will get the current value, the first fixture will get the oldest value according to the Phase.

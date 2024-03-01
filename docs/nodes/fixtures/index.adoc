@@ -1,0 +1,4 @@
+= Fixtures
+ifndef::imagesdir[:imagesdir: ../../]
+
+include::group-control/index.adoc[leveloffset=+1]

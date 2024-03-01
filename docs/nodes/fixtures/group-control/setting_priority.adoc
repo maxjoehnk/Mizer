@@ -1,0 +1,3 @@
+= Priority
+
+The priority the value should be written with to the fixtures.

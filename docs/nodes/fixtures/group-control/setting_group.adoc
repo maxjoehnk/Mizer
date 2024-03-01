@@ -1,0 +1,3 @@
+= Group
+
+Which fixture group should be controlled.

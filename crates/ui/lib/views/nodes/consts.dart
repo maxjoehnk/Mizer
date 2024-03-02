@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
@@ -16,8 +14,6 @@ const double DOT_SIZE = 16;
 
 const double MIN_ZOOM = 0.1;
 const double MAX_ZOOM = 1;
-
-const _GENERATED_TYPES = ["programmer", "transport", "sequencer", "fixture", "group", "preset"];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {

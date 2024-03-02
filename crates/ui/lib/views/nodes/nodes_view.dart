@@ -14,6 +14,7 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/node_documenter.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/canvas_background.dart';
 import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
@@ -99,6 +100,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       child: Overlay(initialEntries: [
                         OverlayEntry(
                           builder: (context) => Stack(children: [
+                            CanvasBackgroundLayer(),
                             SizedBox.expand(
                                 child: InteractiveViewer(
                                     transformationController: model.transformationController,

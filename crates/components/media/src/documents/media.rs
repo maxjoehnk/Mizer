@@ -26,6 +26,8 @@ pub struct MediaMetadata {
     /// Playback length in seconds
     pub duration: Option<u64>,
     pub framerate: Option<f64>,
+    pub sample_rate: Option<u32>,
+    pub audio_channels: Option<u32>,
     pub name: Option<String>,
     pub artist: Option<String>,
     pub album: Option<String>,

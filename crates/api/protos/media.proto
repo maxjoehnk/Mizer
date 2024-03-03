@@ -40,6 +40,8 @@ message MediaMetadata {
   optional double framerate = 6;
   optional string album = 7;
   optional string artist = 8;
+  optional uint32 sample_rate = 9;
+  optional uint32 audio_channel_count = 10;
 
   message Dimensions {
     uint64 width = 1;

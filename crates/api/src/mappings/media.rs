@@ -28,6 +28,8 @@ impl From<mizer_media::documents::MediaDocument> for MediaFile {
                     .into(),
                 duration: media.metadata.duration,
                 framerate: media.metadata.framerate,
+                sample_rate: media.metadata.sample_rate,
+                audio_channel_count: media.metadata.audio_channels,
                 album: media.metadata.album,
                 artist: media.metadata.artist,
             }),

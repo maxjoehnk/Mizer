@@ -54,14 +54,17 @@ impl MediaHandler for AudioHandler {
         _content_type: &str,
     ) -> anyhow::Result<MediaMetadata> {
         let mut metadata = self.read_tag_metadata(&file).unwrap_or_default();
-        metadata.duration = self.read_duration(&file)?.or(metadata.duration);
+        let probe_result = self.probe_file(&file)?;
+        metadata.duration = Self::get_duration(&probe_result.format).or(metadata.duration);
+        metadata.sample_rate = Self::get_sample_rate(&probe_result.format);
+        metadata.audio_channels = Self::get_channel_count(&probe_result.format);
 
         Ok(metadata)
     }
 }
 
 impl AudioHandler {
-    fn read_duration<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<Option<u64>> {
+    fn probe_file<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<symphonia::core::probe::ProbeResult> {
         let mut hint = Hint::new();
         if let Some(extension) = file.as_ref().extension().and_then(|e| e.to_str()) {
             hint.with_extension(extension);
@@ -74,18 +77,29 @@ impl AudioHandler {
         let metadata_opts = MetadataOptions::default();
         let probed =
             symphonia::default::get_probe().format(&hint, mss, &format_opts, &metadata_opts)?;
-        let duration = AudioHandler::get_duration(probed.format);
-
-        Ok(duration)
+        
+        Ok(probed)
     }
-
-    fn get_duration(format: Box<dyn FormatReader>) -> Option<u64> {
+    
+    fn get_duration(format: &Box<dyn FormatReader>) -> Option<u64> {
         let track = format.default_track()?;
         let timebase = track.codec_params.time_base?;
         let n_frames = track.codec_params.n_frames?;
         let time = timebase.calc_time(n_frames);
 
         Some(time.seconds)
+    }
+
+    fn get_sample_rate(format: &Box<dyn FormatReader>) -> Option<u32> {
+        let track = format.default_track()?;
+
+        track.codec_params.sample_rate
+    }
+
+    fn get_channel_count(format: &Box<dyn FormatReader>) -> Option<u32> {
+        let track = format.default_track()?;
+
+        Some(track.codec_params.channels?.count() as u32)
     }
 
     fn read_tag_metadata<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<MediaMetadata> {

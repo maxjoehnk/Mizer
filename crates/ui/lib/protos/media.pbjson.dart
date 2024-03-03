@@ -121,6 +121,8 @@ const MediaMetadata$json = {
     {'1': 'framerate', '3': 6, '4': 1, '5': 1, '9': 2, '10': 'framerate', '17': true},
     {'1': 'album', '3': 7, '4': 1, '5': 9, '9': 3, '10': 'album', '17': true},
     {'1': 'artist', '3': 8, '4': 1, '5': 9, '9': 4, '10': 'artist', '17': true},
+    {'1': 'sample_rate', '3': 9, '4': 1, '5': 13, '9': 5, '10': 'sampleRate', '17': true},
+    {'1': 'audio_channel_count', '3': 10, '4': 1, '5': 13, '9': 6, '10': 'audioChannelCount', '17': true},
   ],
   '3': [MediaMetadata_Dimensions$json],
   '8': [
@@ -129,6 +131,8 @@ const MediaMetadata$json = {
     {'1': '_framerate'},
     {'1': '_album'},
     {'1': '_artist'},
+    {'1': '_sample_rate'},
+    {'1': '_audio_channel_count'},
   ],
 };
 
@@ -148,9 +152,12 @@ final $typed_data.Uint8List mediaMetadataDescriptor = $convert.base64Decode(
     'VGFnUgR0YWdzEkoKCmRpbWVuc2lvbnMYBCABKAsyJS5taXplci5tZWRpYS5NZWRpYU1ldGFkYX'
     'RhLkRpbWVuc2lvbnNIAFIKZGltZW5zaW9uc4gBARIfCghkdXJhdGlvbhgFIAEoBEgBUghkdXJh'
     'dGlvbogBARIhCglmcmFtZXJhdGUYBiABKAFIAlIJZnJhbWVyYXRliAEBEhkKBWFsYnVtGAcgAS'
-    'gJSANSBWFsYnVtiAEBEhsKBmFydGlzdBgIIAEoCUgEUgZhcnRpc3SIAQEaOgoKRGltZW5zaW9u'
-    'cxIUCgV3aWR0aBgBIAEoBFIFd2lkdGgSFgoGaGVpZ2h0GAIgASgEUgZoZWlnaHRCDQoLX2RpbW'
-    'Vuc2lvbnNCCwoJX2R1cmF0aW9uQgwKCl9mcmFtZXJhdGVCCAoGX2FsYnVtQgkKB19hcnRpc3Q=');
+    'gJSANSBWFsYnVtiAEBEhsKBmFydGlzdBgIIAEoCUgEUgZhcnRpc3SIAQESJAoLc2FtcGxlX3Jh'
+    'dGUYCSABKA1IBVIKc2FtcGxlUmF0ZYgBARIzChNhdWRpb19jaGFubmVsX2NvdW50GAogASgNSA'
+    'ZSEWF1ZGlvQ2hhbm5lbENvdW50iAEBGjoKCkRpbWVuc2lvbnMSFAoFd2lkdGgYASABKARSBXdp'
+    'ZHRoEhYKBmhlaWdodBgCIAEoBFIGaGVpZ2h0Qg0KC19kaW1lbnNpb25zQgsKCV9kdXJhdGlvbk'
+    'IMCgpfZnJhbWVyYXRlQggKBl9hbGJ1bUIJCgdfYXJ0aXN0Qg4KDF9zYW1wbGVfcmF0ZUIWChRf'
+    'YXVkaW9fY2hhbm5lbF9jb3VudA==');
 
 @$core.Deprecated('Use mediaFoldersDescriptor instead')
 const MediaFolders$json = {

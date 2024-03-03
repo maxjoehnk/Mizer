@@ -36,6 +36,16 @@ class MediaMetadataPanel extends StatelessWidget {
           Text("Duration", style: titleTheme),
           Text(file.metadata.duration.toInt().toTimeString())
         ]),
+      if (file.metadata.hasSampleRate())
+        MizerTableRow(cells: [
+          Text("Sample Rate", style: titleTheme),
+          Text("${file.metadata.sampleRate} Hz")
+        ]),
+      if (file.metadata.hasAudioChannelCount())
+        MizerTableRow(cells: [
+          Text("Channels", style: titleTheme),
+          Text(file.metadata.audioChannelCount.toString())
+        ]),
       MizerTableRow(
           cells: [Text("File Size", style: titleTheme), Text(filesize(file.metadata.fileSize))]),
       MizerTableRow(

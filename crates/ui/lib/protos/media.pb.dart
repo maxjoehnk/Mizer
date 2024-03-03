@@ -460,6 +460,8 @@ class MediaMetadata extends $pb.GeneratedMessage {
     $core.double? framerate,
     $core.String? album,
     $core.String? artist,
+    $core.int? sampleRate,
+    $core.int? audioChannelCount,
   }) {
     final $result = create();
     if (sourcePath != null) {
@@ -486,6 +488,12 @@ class MediaMetadata extends $pb.GeneratedMessage {
     if (artist != null) {
       $result.artist = artist;
     }
+    if (sampleRate != null) {
+      $result.sampleRate = sampleRate;
+    }
+    if (audioChannelCount != null) {
+      $result.audioChannelCount = audioChannelCount;
+    }
     return $result;
   }
   MediaMetadata._() : super();
@@ -501,6 +509,8 @@ class MediaMetadata extends $pb.GeneratedMessage {
     ..a<$core.double>(6, _omitFieldNames ? '' : 'framerate', $pb.PbFieldType.OD)
     ..aOS(7, _omitFieldNames ? '' : 'album')
     ..aOS(8, _omitFieldNames ? '' : 'artist')
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'sampleRate', $pb.PbFieldType.OU3)
+    ..a<$core.int>(10, _omitFieldNames ? '' : 'audioChannelCount', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -592,6 +602,24 @@ class MediaMetadata extends $pb.GeneratedMessage {
   $core.bool hasArtist() => $_has(7);
   @$pb.TagNumber(8)
   void clearArtist() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get sampleRate => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set sampleRate($core.int v) { $_setUnsignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasSampleRate() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearSampleRate() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get audioChannelCount => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set audioChannelCount($core.int v) { $_setUnsignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasAudioChannelCount() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearAudioChannelCount() => clearField(10);
 }
 
 class MediaFolders extends $pb.GeneratedMessage {

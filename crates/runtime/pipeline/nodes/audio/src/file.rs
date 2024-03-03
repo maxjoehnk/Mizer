@@ -206,12 +206,17 @@ impl ProcessingNode for AudioFileNode {
                     }
                 }
                 let signal = player.by_ref();
-                let ring_buffer = Fixed::from([[0.0; 2]; 100]);
-                let sinc = Sinc::new(ring_buffer);
-                let signal = signal.from_hz_to_hz(sinc, sample_rate as f64, SAMPLE_RATE as f64);
+                if sample_rate == SAMPLE_RATE {
+                    context.output_signal(AUDIO_OUTPUT, signal);
+                }else {
+                    let ring_buffer = Fixed::from(vec![[0.0; 2]; 100]);
+                    let sinc = Sinc::new(ring_buffer);
+                    let signal = signal.from_hz_to_hz(sinc, sample_rate as f64, SAMPLE_RATE as f64);
 
-                context.output_signal(AUDIO_OUTPUT, signal);
-                if player.next.is_some() {
+                    context.output_signal(AUDIO_OUTPUT, signal);
+                }
+                
+                if player.playing {
                     1.0
                 } else {
                     0.0
@@ -262,18 +267,24 @@ struct DecodedFile {
     sample_rate: u32,
     next: Option<Stereo<f64>>,
     playback_mode: PlaybackMode,
+    playing: bool,
 }
 
 impl Signal for DecodedFile {
     type Frame = Stereo<f64>;
 
     fn next(&mut self) -> Self::Frame {
-        match self.next {
+        match self.next.take() {
             Some(frame) => {
                 self.get_next_frame();
                 frame
             }
-            None => Stereo::<f64>::EQUILIBRIUM,
+            None => {
+                if self.playing {
+                    tracing::warn!("Missed next frame");
+                }
+                Stereo::<f64>::EQUILIBRIUM 
+            }
         }
     }
 }
@@ -286,6 +297,7 @@ impl DecodedFile {
             offset: 0,
             next: None,
             playback_mode: PlaybackMode::OneShot,
+            playing: false,
         }
     }
 
@@ -300,7 +312,7 @@ impl DecodedFile {
             match self.playback_mode {
                 PlaybackMode::Loop => self.seek_to(0),
                 PlaybackMode::OneShot => {
-                    self.next = None;
+                    self.stop();
                 }
             }
         } else {
@@ -314,11 +326,13 @@ impl DecodedFile {
         tracing::debug!("Stopping playback");
         self.offset = 0;
         self.next = None;
+        self.playing = false;
     }
 
     fn play(&mut self) {
         tracing::debug!("Starting playback");
         self.get_next_frame();
+        self.playing = true;
     }
 }
 

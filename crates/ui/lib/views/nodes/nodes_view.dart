@@ -1,9 +1,4 @@
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-
 import 'package:collection/collection.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
 import 'package:mizer/api/contracts/nodes.dart';
@@ -14,10 +9,10 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/node_documenter.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/canvas_background.dart';
 import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
@@ -101,13 +96,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                         OverlayEntry(
                           builder: (context) => Stack(children: [
                             CanvasBackgroundLayer(model.transformationController.value),
-                            SizedBox.expand(
-                                child: InteractiveViewer(
-                                    transformationController: model.transformationController,
-                                    boundaryMargin: EdgeInsets.all(double.infinity),
-                                    minScale: MIN_ZOOM,
-                                    maxScale: MAX_ZOOM,
-                                    child: SizedBox.expand())),
+                            TransformLayer(transformationController: model.transformationController),
                             Transform(
                                 transform: model.transformationController.value,
                                 child: IgnorePointer(child: GraphPaintLayer(model: model))),
@@ -118,7 +107,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                                     globalPosition: event.globalPosition,
                                     localPosition: event.localPosition);
                               },
-                              child: DragSelectionLayer(
+                              child: NodesDragSelectionLayer(
                                   nodes: model.nodes,
                                   transformation: model.transformationController.value,
                                   selectionState: _selectionState,

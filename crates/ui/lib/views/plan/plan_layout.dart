@@ -8,12 +8,11 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/state/plans_bloc.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/canvas_background.dart';
+import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/views/plan/layers/drag_selection_layer.dart';
 import 'package:mizer/views/plan/layers/fixtures_layer.dart';
 import 'package:mizer/views/plan/layers/image_layer.dart';
 import 'package:mizer/views/plan/layers/screens_layer.dart';
-import 'package:mizer/views/plan/layers/transform_layer.dart';
 
 const double fieldSize = 24;
 
@@ -88,8 +87,8 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         fit: StackFit.expand,
         children: [
           CanvasBackgroundLayer(_transformationController.value, gridSize: fieldSize,),
-          TransformLayer(transformationController: _transformationController),
-          DragSelectionLayer(
+          TransformLayer(transformationController: _transformationController, minScale: 0.1, maxScale: 5, scaleFactor: 500),
+          PlanDragSelectionLayer(
             plan: widget.plan,
             transformation: _transformationController.value,
             selectionState: _selectionState,

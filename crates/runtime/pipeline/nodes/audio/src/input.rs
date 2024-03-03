@@ -71,7 +71,7 @@ impl AudioInputNodeState {
             tracing::trace!("Supported Input Configs: {configs:?}");
             if let Some(config) = configs
                 .into_iter()
-                .find(|c| c.channels() == 2 && c.sample_format() == SampleFormat::F32)
+                .find(|c| c.channels() == 2 && c.sample_format() == SampleFormat::F32 && c.min_sample_rate() <= SampleRate(SAMPLE_RATE) && c.max_sample_rate() >= SampleRate(SAMPLE_RATE))
             {
                 let config = config.with_sample_rate(SampleRate(SAMPLE_RATE));
 

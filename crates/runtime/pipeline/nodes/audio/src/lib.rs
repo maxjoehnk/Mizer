@@ -12,7 +12,7 @@ use mizer_node::{NodeContext, PortId};
 pub use output::*;
 pub use volume::*;
 
-pub(crate) const SAMPLE_RATE: u32 = 48_000;
+pub(crate) const SAMPLE_RATE: u32 = 44_100;
 pub(crate) const TRANSFER_SIZE: usize = (SAMPLE_RATE / 60) as usize; // TODO: should be dependent on the fps
 
 mod file;

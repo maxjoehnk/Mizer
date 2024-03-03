@@ -101,7 +101,7 @@ impl AudioInputNodeState {
                     stream,
                 }))
             } else {
-                tracing::warn!("Unable to find supported stream config for Audio Output");
+                tracing::warn!("Unable to find supported stream config for Audio Input");
 
                 Ok(None)
             }

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
+import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
@@ -16,7 +17,6 @@ import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
-import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
@@ -29,7 +29,7 @@ import 'widgets/hidden_node_list.dart';
 import 'widgets/node/preview.dart';
 import 'widgets/properties/properties_pane.dart';
 
-const double SidebarWidth = 300;
+const double SidebarWidth = 550;
 const double PathBreadcrumbHeight = 32;
 const bool EnableScreenshot = !kReleaseMode;
 
@@ -172,22 +172,34 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             child: Column(
               children: [
                 Expanded(
-                  child: Panel(
-                    padding: false,
-                    onSearch: (search) => setState(() => nodeSearch = search),
-                    tabs: [
-                      Tab(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 4,
+                        child: Panel(
+                          padding: false,
                           label: "Properties".i18n,
-                          child: NodePropertiesPane(
-                              node: model.selectedNode?.node, onUpdate: _refresh)),
-                      Tab(
-                          label: "Hidden".i18n,
-                          child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+                          child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Panel(
+                                padding: false,
+                                label: "Hidden".i18n,
+                                onSearch: (search) => setState(() => nodeSearch = search),
+                                child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: 200,
+                  height: 240,
                   child: Panel(
                     label: "Preview".i18n,
                     child: model.selectedNode == null

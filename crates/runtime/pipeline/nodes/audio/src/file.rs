@@ -135,7 +135,7 @@ impl ProcessingNode for AudioFileNode {
         context: &impl NodeContext,
         (node_state, decode_state): &mut Self::State,
     ) -> anyhow::Result<()> {
-        let media_server = context.inject::<MediaServer>().unwrap();
+        let media_server = context.try_inject::<MediaServer>().unwrap();
         if let Some(value) = context.read_port(PAUSE_INPUT) {
             if let Some(paused) = node_state.paused_edge.update(value) {
                 node_state.paused = paused;

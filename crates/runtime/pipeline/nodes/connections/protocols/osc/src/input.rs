@@ -108,7 +108,7 @@ impl OscInputNode {
         &self,
         context: &'a impl NodeContext,
     ) -> &'a OscConnectionManager {
-        let connection_manager = context.inject::<OscConnectionManager>();
+        let connection_manager = context.try_inject::<OscConnectionManager>();
 
         connection_manager.expect("Missing osc module")
     }

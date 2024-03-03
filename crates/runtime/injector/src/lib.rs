@@ -1,4 +1,4 @@
-use std::any::{Any, TypeId};
+use std::any::{Any, type_name, TypeId};
 use std::collections::HashMap;
 use std::fmt::Formatter;
 
@@ -6,6 +6,14 @@ use std::fmt::Formatter;
 pub struct Injector {
     // TODO: maybe use RefCell here
     services: HashMap<TypeId, Box<dyn Any>>,
+}
+
+pub trait Inject {
+    fn try_inject<T: 'static>(&self) -> Option<&T>;
+    
+    fn inject<T: 'static>(&self) -> &T {
+        self.try_inject().unwrap_or_else(|| panic!("Unable to inject {}", type_name::<T>()))
+    }
 }
 
 impl std::fmt::Debug for Injector {
@@ -24,7 +32,7 @@ impl Injector {
         let service = Box::new(service);
         self.services.insert(id, service);
     }
-
+    
     pub fn get<T: 'static>(&self) -> Option<&T> {
         let id = TypeId::of::<T>();
         self.services
@@ -37,6 +45,15 @@ impl Injector {
         self.services
             .get_mut(&id)
             .and_then(|service| service.downcast_mut())
+    }
+}
+
+impl Inject for Injector {
+    fn try_inject<T: 'static>(&self) -> Option<&T> {
+        let id = TypeId::of::<T>();
+        self.services
+            .get(&id)
+            .and_then(|service| service.downcast_ref())
     }
 }
 

@@ -136,7 +136,7 @@ impl ProcessingNode for FixtureControlNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let Some(manager) = context.inject::<FixtureManager>() else {
+        let Some(manager) = context.try_inject::<FixtureManager>() else {
             tracing::warn!("missing fixture module");
             return Ok(());
         };

@@ -147,7 +147,7 @@ impl ProcessingNode for GroupControlNode {
     type State = ControlBuffer<1024>;
 
     fn process(&self, context: &impl NodeContext, buffer: &mut Self::State) -> anyhow::Result<()> {
-        let Some(manager) = context.inject::<FixtureManager>() else {
+        let Some(manager) = context.try_inject::<FixtureManager>() else {
             tracing::warn!("missing fixture module");
             return Ok(());
         };

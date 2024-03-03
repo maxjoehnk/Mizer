@@ -217,7 +217,7 @@ impl ProcessingNode for MidiOutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        let connection_manager = context.inject::<MidiConnectionManager>().unwrap();
+        let connection_manager = context.try_inject::<MidiConnectionManager>().unwrap();
         if let Some(mut device) = connection_manager.request_device(&self.device)? {
             let device: &mut MidiDevice = device.deref_mut();
             let msg = match &self.config {

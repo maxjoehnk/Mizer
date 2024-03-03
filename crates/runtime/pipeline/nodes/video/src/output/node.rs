@@ -93,13 +93,13 @@ impl ProcessingNode for VideoOutputNode {
     type State = Option<VideoOutputState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some(event_loop) = context.inject::<EventLoopHandle>() else {
+        let Some(event_loop) = context.try_inject::<EventLoopHandle>() else {
             return Ok(());
         };
-        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+        let Some(wgpu_context) = context.try_inject::<WgpuContext>() else {
             return Ok(());
         };
-        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+        let Some(wgpu_pipeline) = context.try_inject::<WgpuPipeline>() else {
             return Ok(());
         };
         if state.is_none() {

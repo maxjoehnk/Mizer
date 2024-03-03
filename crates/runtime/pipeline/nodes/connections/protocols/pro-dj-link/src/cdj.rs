@@ -75,7 +75,7 @@ impl ProcessingNode for PioneerCdjNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let device_manager = context.inject::<DeviceManager>().unwrap();
+        let device_manager = context.try_inject::<DeviceManager>().unwrap();
         let cdj = device_manager
             .current_devices()
             .into_iter()

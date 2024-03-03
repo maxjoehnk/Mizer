@@ -71,7 +71,7 @@ impl ProcessingNode for LaserNode {
             state.frames = frames;
             state.current_frame = 0;
         }
-        if let Some(device_manager) = context.inject::<DeviceManager>() {
+        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
             if let Some(mut laser) = device_manager.get_laser_mut(&self.device_id) {
                 if state.current_frame >= state.frames.len() {
                     state.current_frame = 0;

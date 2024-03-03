@@ -64,16 +64,16 @@ impl ConfigurableNode for PlanScreenNode {
 }
 
 impl PlanScreenNode {
-    fn get_plan(&self) -> Option<Plan> {
-        let storage = self.plan_storage.as_ref()?;
+    fn get_plan(&self, injector: &impl Inject) -> Option<Plan> {
+        let storage = injector.try_inject::<PlanStorage>()?;
         let plans = storage.read();
         let plan = plans.into_iter().find(|p| p.name == self.plan)?;
 
         Some(plan)
     }
 
-    fn get_screen(&self) -> Option<PlanScreen> {
-        let plan = self.get_plan()?;
+    fn get_screen(&self, injector: &impl Inject) -> Option<PlanScreen> {
+        let plan = self.get_plan(injector)?;
         plan.screens
             .into_iter()
             .find(|s| s.screen_id == self.screen_id)
@@ -106,21 +106,17 @@ impl PipelineNode for PlanScreenNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
             INPUT_PORT,
             PortType::Texture,
-            dimensions: self.get_screen()
+            dimensions: self.get_screen(injector)
                 .map(|screen| (screen.width as u64, screen.height as u64))
         )]
     }
 
     fn node_type(&self) -> NodeType {
         NodeType::PlanScreen
-    }
-
-    fn prepare(&mut self, injector: &Injector) {
-        self.plan_storage = injector.get().cloned();
     }
 }
 
@@ -144,10 +140,10 @@ impl ProcessingNode for PlanScreenNode {
         context: &impl NodeContext,
         state: &mut Self::State,
     ) -> anyhow::Result<()> {
-        let Some(manager) = context.inject::<FixtureManager>() else {
+        let Some(manager) = context.try_inject::<FixtureManager>() else {
             return Ok(());
         };
-        let Some(plan) = self.get_plan() else {
+        let Some(plan) = self.get_plan(context) else {
             return Ok(());
         };
         let Some(screen) = plan.screens.iter().find(|s| s.screen_id == self.screen_id) else {

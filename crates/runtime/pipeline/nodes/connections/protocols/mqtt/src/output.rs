@@ -73,7 +73,7 @@ impl ProcessingNode for MqttOutputNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let value = context.read_port_changes::<_, StructuredData>(VALUE_PORT);
-        let connection_manager = context.inject::<MqttConnectionManager>();
+        let connection_manager = context.try_inject::<MqttConnectionManager>();
         if connection_manager.is_none() {
             anyhow::bail!("Missing mqtt module");
         }

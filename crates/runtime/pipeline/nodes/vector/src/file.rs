@@ -76,7 +76,7 @@ impl ProcessingNode for VectorFileNode {
         };
 
         if state.vector_data.is_none() {
-            let Some(media_server) = context.inject::<MediaServer>() else {
+            let Some(media_server) = context.try_inject::<MediaServer>() else {
                 tracing::warn!("Media server not available");
                 return Ok(());
             };

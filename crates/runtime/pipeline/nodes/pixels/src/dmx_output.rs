@@ -120,7 +120,7 @@ impl ProcessingNode for PixelDmxNode {
         let universe_count = (channel_count / DMX_CHANNELS as u32) as u16;
         tracing::debug!("universes for pixels: {}", universe_count);
         let dmx_manager = context
-            .inject::<DmxConnectionManager>()
+            .try_inject::<DmxConnectionManager>()
             .ok_or_else(|| anyhow::anyhow!("missing dmx module"))?;
         let output = dmx_manager
             .get_output(&self.output)

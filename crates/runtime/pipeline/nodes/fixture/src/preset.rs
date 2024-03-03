@@ -98,7 +98,7 @@ impl ProcessingNode for PresetNode {
     type State = Edge;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(fixture_manager) = context.inject::<FixtureManager>() {
+        if let Some(fixture_manager) = context.try_inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
             if let Some(value) = context.read_port("Call") {
                 if let Some(true) = state.update(value) {

@@ -42,9 +42,6 @@ pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
 
     // This can't be an associated function because it has to be object safe
     fn node_type(&self) -> NodeType;
-
-    #[allow(unused_variables)]
-    fn prepare(&mut self, injector: &Injector) {}
 }
 
 pub trait ConfigurableNode {

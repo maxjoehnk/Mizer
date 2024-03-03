@@ -189,16 +189,16 @@ impl ProcessingNode for WebcamNode {
     type State = Option<WebcamState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+        let Some(wgpu_context) = context.try_inject::<WgpuContext>() else {
             return Ok(());
         };
-        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+        let Some(texture_registry) = context.try_inject::<TextureRegistry>() else {
             return Ok(());
         };
-        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+        let Some(wgpu_pipeline) = context.try_inject::<WgpuPipeline>() else {
             return Ok(());
         };
-        let Some(device_manager) = context.inject::<DeviceManager>() else {
+        let Some(device_manager) = context.try_inject::<DeviceManager>() else {
             return Ok(());
         };
 

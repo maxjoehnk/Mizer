@@ -559,8 +559,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
         profiling::scope!("CoordinatorRuntime::load");
         self.set_fps(project.playback.fps);
         for node in &project.nodes {
-            let mut node_config: Node = node.config.clone();
-            node_config.prepare(&self.injector);
+            let node_config: Node = node.config.clone();
             let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
             pipeline_access.internal_add_node(
                 node.path.clone(),

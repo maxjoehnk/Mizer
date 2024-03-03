@@ -112,13 +112,6 @@ macro_rules! node_impl {
                 Ok(())
             }
 
-            pub fn prepare(&mut self, injector: &Injector) {
-                match self {
-                    $(Node::$node_type(node) => node.prepare(injector),)*
-                    Node::TestSink(_) => {},
-                }
-            }
-
             pub fn details(&self) -> NodeDetails {
                 match self {
                     $(Node::$node_type(node) => node.details(),)*

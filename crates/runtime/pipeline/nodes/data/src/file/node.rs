@@ -66,7 +66,7 @@ impl ProcessingNode for DataFileNode {
     type State = DataFileNodeState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some(media_server) = context.inject::<MediaServer>() else {
+        let Some(media_server) = context.try_inject::<MediaServer>() else {
             return Ok(());
         };
 

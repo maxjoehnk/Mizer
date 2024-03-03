@@ -78,7 +78,7 @@ impl ProcessingNode for SequencerNode {
     type State = SequencerState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(sequencer) = context.inject::<Sequencer>() {
+        if let Some(sequencer) = context.try_inject::<Sequencer>() {
             if let Some(value) = context.read_port(PLAYBACK) {
                 if (state.playback > 0f64) != (value > 0f64) {
                     if value > 0f64 {

@@ -37,15 +37,15 @@ impl ProcessingNode for RasterizeVectorNode {
     type State = Option<TextureHandle>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+        let Some(wgpu_context) = context.try_inject::<WgpuContext>() else {
             tracing::warn!("Wgpu context not available");
             return Ok(());
         };
-        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+        let Some(texture_registry) = context.try_inject::<TextureRegistry>() else {
             tracing::warn!("Texture registry not available");
             return Ok(());
         };
-        let Some(vector_renderer) = context.inject::<VectorWgpuRenderer>() else {
+        let Some(vector_renderer) = context.try_inject::<VectorWgpuRenderer>() else {
             tracing::warn!("Vector renderer not available");
             return Ok(());
         };

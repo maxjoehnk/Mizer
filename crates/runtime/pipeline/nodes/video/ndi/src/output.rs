@@ -116,13 +116,13 @@ impl ProcessingNode for NdiOutputNode {
     type State = Option<NdiOutputState>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let Some(wgpu_context) = context.inject::<WgpuContext>() else {
+        let Some(wgpu_context) = context.try_inject::<WgpuContext>() else {
             return Ok(());
         };
-        let Some(wgpu_pipeline) = context.inject::<WgpuPipeline>() else {
+        let Some(wgpu_pipeline) = context.try_inject::<WgpuPipeline>() else {
             return Ok(());
         };
-        let Some(texture_registry) = context.inject::<TextureRegistry>() else {
+        let Some(texture_registry) = context.try_inject::<TextureRegistry>() else {
             return Ok(());
         };
 
@@ -157,8 +157,8 @@ impl ProcessingNode for NdiOutputNode {
         context: &impl NodeContext,
         state: &mut Self::State,
     ) -> anyhow::Result<()> {
-        let wgpu_pipeline = context.inject::<WgpuPipeline>().unwrap();
-        let texture_registry = context.inject::<TextureRegistry>().unwrap();
+        let wgpu_pipeline = context.try_inject::<WgpuPipeline>().unwrap();
+        let texture_registry = context.try_inject::<TextureRegistry>().unwrap();
         if let Some(state) = state.as_mut() {
             if let Some(texture_handle) = context.read_port::<_, TextureHandle>(INPUT_PORT) {
                 if texture_registry.get_texture_ref(&texture_handle).is_some() {

@@ -165,7 +165,7 @@ impl ProcessingNode for MidiInputNode {
     type State = Option<Subscriber<MidiEvent>>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let connection_manager = context.inject::<MidiConnectionManager>().unwrap();
+        let connection_manager = context.try_inject::<MidiConnectionManager>().unwrap();
         if let Some(device) = connection_manager.request_device(&self.device)? {
             let device: &MidiDevice = device.deref();
             if state.is_none() {

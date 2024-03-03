@@ -1,6 +1,7 @@
 use std::cell::RefCell;
 
 use mizer_clock::{ClockState, Timecode};
+use mizer_injector::Inject;
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
@@ -90,15 +91,17 @@ impl NodeContext for NodeContextMock {
         todo!()
     }
 
-    fn inject<T: 'static>(&self) -> Option<&T> {
-        todo!()
-    }
-
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
         todo!()
     }
 
     fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
+        todo!()
+    }
+}
+
+impl Inject for NodeContextMock {
+    fn try_inject<T: 'static>(&self) -> Option<&T> {
         todo!()
     }
 }

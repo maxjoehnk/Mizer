@@ -120,7 +120,7 @@ impl ProcessingNode for GroupNode {
     type State = Edge;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(fixture_manager) = context.inject::<FixtureManager>() {
+        if let Some(fixture_manager) = context.try_inject::<FixtureManager>() {
             self.call_group(context, state, fixture_manager);
             self.write_to_fixtures(context, fixture_manager);
         }

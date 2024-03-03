@@ -109,7 +109,7 @@ impl ProcessingNode for FixtureNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(manager) = context.inject::<FixtureManager>() {
+        if let Some(manager) = context.try_inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
                 let ports = fixture
                     .current_mode

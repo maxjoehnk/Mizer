@@ -86,6 +86,12 @@ impl NodePreviewState {
     }
 }
 
+impl<'a> Inject for PipelineContext<'a> {
+    fn try_inject<T: 'static>(&self) -> Option<&T> {
+        self.processing_context.borrow().injector().get::<T>()
+    }
+}
+
 impl<'a> NodeContext for PipelineContext<'a> {
     fn clock(&self) -> ClockFrame {
         self.processing_context.borrow().master_clock()
@@ -217,21 +223,18 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .unwrap_or_default()
     }
 
-    fn inject<T: 'static>(&self) -> Option<&T> {
-        self.processing_context.borrow().injector().get::<T>()
-    }
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
         profiling::scope!("PipelineContext::read_texture");
         let handle = self.read_port(port)?;
-        let texture_registry = self.inject::<TextureRegistry>().unwrap();
+        let texture_registry = self.inject::<TextureRegistry>();
         texture_registry.get(&handle)
     }
 
     fn read_textures<P: Into<PortId>>(&self, port: P) -> Vec<TextureView> {
         profiling::scope!("PipelineContext::read_textures");
         let handles = self.read_ports(port);
-        let texture_registry = self.inject::<TextureRegistry>().unwrap();
+        let texture_registry = self.inject::<TextureRegistry>();
 
         handles
             .into_iter()

@@ -84,7 +84,7 @@ impl ProcessingNode for DmxInputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let dmx_connections = context.inject::<DmxConnectionManager>();
+        let dmx_connections = context.try_inject::<DmxConnectionManager>();
         if dmx_connections.is_none() {
             anyhow::bail!("Missing dmx module");
         }

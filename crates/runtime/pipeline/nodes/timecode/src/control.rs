@@ -80,7 +80,7 @@ impl ProcessingNode for TimecodeControlNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let manager = context
-            .inject::<TimecodeManager>()
+            .try_inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
         if let Some(value) = context.read_port_changes::<_, port_types::CLOCK>(TIMECODE_INPUT) {
             if let Some(state) = manager.get_state_access(self.timecode_id) {

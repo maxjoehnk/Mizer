@@ -61,7 +61,7 @@ impl ProcessingNode for G13OutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(device_manager) = context.inject::<DeviceManager>() {
+        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
             if let Some(g13) = device_manager.get_g13_mut(&self.device_id) {
                 if let Some(color) = context.read_port::<_, Color>(KEY_COLOR) {
                     g13.write_key_color(color.red, color.green, color.blue)?;

@@ -62,7 +62,7 @@ impl ProcessingNode for G13InputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(device_manager) = context.inject::<DeviceManager>() {
+        if let Some(device_manager) = context.try_inject::<DeviceManager>() {
             if let Some(g13) = device_manager.get_g13_mut(&self.device_id) {
                 let value: Option<f32> = match self.key {
                     G13Key::JoystickX => g13.joystick_x(),

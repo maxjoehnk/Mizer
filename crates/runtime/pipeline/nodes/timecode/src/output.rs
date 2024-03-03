@@ -73,7 +73,7 @@ impl ProcessingNode for TimecodeOutputNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let timecode = context
-            .inject::<TimecodeManager>()
+            .try_inject::<TimecodeManager>()
             .ok_or_else(|| anyhow::anyhow!("Missing Timecode Module"))?;
         if let Some(value) = timecode.get_control_value(self.control_id) {
             context.write_port(VALUE_OUTPUT, value);

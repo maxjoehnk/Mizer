@@ -86,7 +86,7 @@ impl MqttInputNode {
         &self,
         context: &'a impl NodeContext,
     ) -> &'a MqttConnectionManager {
-        let connection_manager = context.inject::<MqttConnectionManager>();
+        let connection_manager = context.try_inject::<MqttConnectionManager>();
 
         connection_manager.expect("Missing mqtt module")
     }

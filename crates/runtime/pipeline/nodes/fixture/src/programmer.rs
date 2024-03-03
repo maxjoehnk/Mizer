@@ -50,7 +50,7 @@ impl ProcessingNode for ProgrammerNode {
         context: &impl NodeContext,
         (highlight_edge, clear_edge): &mut Self::State,
     ) -> anyhow::Result<()> {
-        if let Some(fixture_manager) = context.inject::<FixtureManager>() {
+        if let Some(fixture_manager) = context.try_inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
             if let Some(intensity) = context.read_port_changes::<_, f64>("Intensity") {
                 programmer.write_control(FixtureControlValue::Intensity(intensity));

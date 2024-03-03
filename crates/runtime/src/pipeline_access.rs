@@ -105,6 +105,7 @@ impl PipelineAccess {
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),
+            Dial(node) => self.add_node(path, node),
             Button(node) => self.add_node(path, node),
             Label(node) => self.add_node(path, node),
             OpcOutput(node) => self.add_node(path, node),

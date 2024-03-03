@@ -289,6 +289,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_fader_values(fader_values);
+
+        let dial_values = nodes
+            .iter()
+            .filter_map(|path| {
+                let value = self.pipeline.get_state::<f64>(path).copied();
+
+                value.map(|value| (path.clone(), value))
+            })
+            .collect::<HashMap<_, _>>();
+        self.layout_fader_view.write_dial_values(dial_values);
+        
         let button_values = nodes
             .iter()
             .filter_map(|path| {
@@ -679,6 +690,7 @@ fn register_node(
         Node::IldaFile(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Laser(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Fader(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Dial(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Button(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Label(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::MidiInput(node) => pipeline.register_node(path, &node, pipeline_access),

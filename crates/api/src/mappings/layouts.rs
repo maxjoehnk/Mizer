@@ -191,8 +191,10 @@ impl From<sequencer_control_behavior::ClickBehavior>
 impl From<ControlType> for mizer_node::NodeType {
     fn from(value: ControlType) -> Self {
         match value {
+            ControlType::None => todo!("convert to try from to handle misbehaving clients"),
             ControlType::Button => Self::Button,
             ControlType::Fader => Self::Fader,
+            ControlType::Dial => Self::Dial,
             ControlType::Label => Self::Label,
         }
     }

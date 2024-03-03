@@ -82,6 +82,10 @@ fn get_default_size_for_node_type(node_type: NodeType) -> ControlSize {
             height: 1,
             width: 1,
         },
+        NodeType::Dial => ControlSize {
+            height: 2,
+            width: 2,
+        },
         _ => ControlSize::default(),
     }
 }

@@ -14,13 +14,17 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ControlType extends $pb.ProtobufEnum {
-  static const ControlType BUTTON = ControlType._(0, _omitEnumNames ? '' : 'BUTTON');
-  static const ControlType FADER = ControlType._(1, _omitEnumNames ? '' : 'FADER');
-  static const ControlType LABEL = ControlType._(2, _omitEnumNames ? '' : 'LABEL');
+  static const ControlType NONE = ControlType._(0, _omitEnumNames ? '' : 'NONE');
+  static const ControlType BUTTON = ControlType._(1, _omitEnumNames ? '' : 'BUTTON');
+  static const ControlType FADER = ControlType._(2, _omitEnumNames ? '' : 'FADER');
+  static const ControlType DIAL = ControlType._(3, _omitEnumNames ? '' : 'DIAL');
+  static const ControlType LABEL = ControlType._(4, _omitEnumNames ? '' : 'LABEL');
 
   static const $core.List<ControlType> values = <ControlType> [
+    NONE,
     BUTTON,
     FADER,
+    DIAL,
     LABEL,
   ];
 

@@ -17,6 +17,13 @@ class LayoutsRefPointer extends FFIPointer<LayoutRef> {
     return result;
   }
 
+  double readDialValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    var result = this._bindings.read_dial_value(ptr, ffiPath.cast<ffi.Char>());
+
+    return result;
+  }
+
   bool readButtonValue(String path) {
     var ffiPath = path.toNativeUtf8();
     var result = this._bindings.read_button_value(ptr, ffiPath.cast<ffi.Char>());

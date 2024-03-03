@@ -10,6 +10,7 @@ use mizer_node::NodePath;
 pub struct LayoutsView {
     faders: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
+    dials: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
 }
 
@@ -18,6 +19,7 @@ impl Default for LayoutsView {
         Self {
             faders: Arc::new(NonEmptyPinboard::new(Default::default())),
             buttons: Arc::new(NonEmptyPinboard::new(Default::default())),
+            dials: Arc::new(NonEmptyPinboard::new(Default::default())),
             labels: Arc::new(NonEmptyPinboard::new(Default::default())),
         }
     }
@@ -32,6 +34,16 @@ impl LayoutsView {
 
     pub(crate) fn write_fader_values(&self, values: HashMap<NodePath, f64>) {
         self.faders.set(values);
+    }
+
+    pub fn get_dial_value(&self, path: &NodePath) -> Option<f64> {
+        let values = self.dials.read();
+
+        values.get(path).copied()
+    }
+
+    pub(crate) fn write_dial_values(&self, values: HashMap<NodePath, f64>) {
+        self.dials.set(values);
     }
 
     pub fn get_button_value(&self, path: &NodePath) -> Option<bool> {

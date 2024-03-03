@@ -17,15 +17,18 @@ import 'dart:typed_data' as $typed_data;
 const ControlType$json = {
   '1': 'ControlType',
   '2': [
-    {'1': 'BUTTON', '2': 0},
-    {'1': 'FADER', '2': 1},
-    {'1': 'LABEL', '2': 2},
+    {'1': 'NONE', '2': 0},
+    {'1': 'BUTTON', '2': 1},
+    {'1': 'FADER', '2': 2},
+    {'1': 'DIAL', '2': 3},
+    {'1': 'LABEL', '2': 4},
   ],
 };
 
 /// Descriptor for `ControlType`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List controlTypeDescriptor = $convert.base64Decode(
-    'CgtDb250cm9sVHlwZRIKCgZCVVRUT04QABIJCgVGQURFUhABEgkKBUxBQkVMEAI=');
+    'CgtDb250cm9sVHlwZRIICgROT05FEAASCgoGQlVUVE9OEAESCQoFRkFERVIQAhIICgRESUFMEA'
+    'MSCQoFTEFCRUwQBA==');
 
 @$core.Deprecated('Use addLayoutRequestDescriptor instead')
 const AddLayoutRequest$json = {

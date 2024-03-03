@@ -669,7 +669,7 @@ class AddControlRequest extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..e<ControlType>(2, _omitFieldNames ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: ControlType.BUTTON, valueOf: ControlType.valueOf, enumValues: ControlType.values)
+    ..e<ControlType>(2, _omitFieldNames ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: ControlType.NONE, valueOf: ControlType.valueOf, enumValues: ControlType.values)
     ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
     ..hasRequiredFields = false
   ;

@@ -18,6 +18,7 @@ import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
 import 'controls/button.dart';
+import 'controls/dial.dart';
 import 'controls/fader.dart';
 import 'controls/group.dart';
 import 'controls/label.dart';
@@ -129,6 +130,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
     }
     if (node?.type == "fader") {
       return FaderControl(pointer: widget.pointer, control: widget.control, color: _color);
+    } else if (node?.type == "dial") {
+      return DialControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == "button") {
       return ButtonControl(
         pointer: widget.pointer,

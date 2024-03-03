@@ -167,7 +167,9 @@ message FaderValueResponse {
 }
 
 enum ControlType {
-  BUTTON = 0;
-  FADER = 1;
-  LABEL = 2;
+  NONE = 0;
+  BUTTON = 1;
+  FADER = 2;
+  DIAL = 3;
+  LABEL = 4;
 }

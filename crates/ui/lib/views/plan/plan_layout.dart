@@ -8,6 +8,7 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/state/plans_bloc.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/canvas_background.dart';
 import 'package:mizer/views/plan/layers/drag_selection_layer.dart';
 import 'package:mizer/views/plan/layers/fixtures_layer.dart';
 import 'package:mizer/views/plan/layers/image_layer.dart';
@@ -86,6 +87,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
       builder: (context, candidates, rejects) => Stack(
         fit: StackFit.expand,
         children: [
+          CanvasBackgroundLayer(_transformationController.value, gridSize: fieldSize,),
           TransformLayer(transformationController: _transformationController),
           DragSelectionLayer(
             plan: widget.plan,

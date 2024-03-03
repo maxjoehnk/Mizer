@@ -100,7 +100,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       child: Overlay(initialEntries: [
                         OverlayEntry(
                           builder: (context) => Stack(children: [
-                            CanvasBackgroundLayer(),
+                            CanvasBackgroundLayer(model.transformationController.value),
                             SizedBox.expand(
                                 child: InteractiveViewer(
                                     transformationController: model.transformationController,

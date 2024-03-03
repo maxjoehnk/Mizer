@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/views/nodes/models/node_editor_model.dart';
-import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 const double GRID_SIZE = 50;
@@ -10,23 +8,25 @@ final Paint _gridPaint = Paint()
   ..color = Colors.white10;
 
 class CanvasBackgroundLayer extends StatelessWidget {
-  const CanvasBackgroundLayer({super.key});
+  final Matrix4 transform;
+  final double gridSize;
+
+  const CanvasBackgroundLayer(this.transform, {this.gridSize = GRID_SIZE, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<NodeEditorModel>(builder: (context, model, _) {
-      return CustomPaint(painter: BackgroundPainter(model.transformationController.value), size: Size.infinite);
-    });
+    return CustomPaint(painter: BackgroundPainter(transform, gridSize), size: Size.infinite);
   }
 }
 
 class BackgroundPainter extends CustomPainter {
   final Matrix4 transform;
+  final double gridSize;
 
   late final Vector3 translation;
   late final double scale;
 
-  BackgroundPainter(this.transform) {
+  BackgroundPainter(this.transform, this.gridSize) {
     translation = transform.getTranslation();
     scale = transform.getMaxScaleOnAxis();
   }
@@ -34,7 +34,7 @@ class BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.transform(transform.storage);
-    var gridSize = GRID_SIZE;
+    var gridSize = this.gridSize;
     while ((gridSize * scale) < 10) {
       gridSize *= 5;
     }

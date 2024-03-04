@@ -52,5 +52,5 @@ dashmap = "5.5"
 mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
 test-case = "3.3"
-insta = "1.35"
+insta = "1.36"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "area_series"] }

@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-use crate::{SAMPLE_RATE, TRANSFER_SIZE};
+use crate::AudioContext;
 
 const AUDIO_OUTPUT: &str = "Stereo";
 
@@ -38,10 +38,10 @@ impl ProcessingNode for AudioInputNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if state.is_none() {
-            *state = AudioInputNodeState::new().context("Creating audio input state")?;
+            *state = AudioInputNodeState::new(context).context("Creating audio input state")?;
         }
         if let Some(state) = state {
-            let buffer = state.read()?;
+            let buffer = state.read(context)?;
 
             context.write_port(AUDIO_OUTPUT, buffer);
         }
@@ -61,19 +61,21 @@ pub struct AudioInputNodeState {
 }
 
 impl AudioInputNodeState {
-    fn new() -> anyhow::Result<Option<Self>> {
+    fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio input device");
         if let Some(device) = cpal::default_host().default_input_device() {
-            let buffer = SpscRb::new(TRANSFER_SIZE * 2);
+            let buffer = SpscRb::new(audio_context.transfer_size() * 2);
 
             let config = device.supported_input_configs()?;
             let configs = config.collect::<Vec<_>>();
             tracing::trace!("Supported Input Configs: {configs:?}");
-            if let Some(config) = configs
-                .into_iter()
-                .find(|c| c.channels() == 2 && c.sample_format() == SampleFormat::F32 && c.min_sample_rate() <= SampleRate(SAMPLE_RATE) && c.max_sample_rate() >= SampleRate(SAMPLE_RATE))
-            {
-                let config = config.with_sample_rate(SampleRate(SAMPLE_RATE));
+            if let Some(config) = configs.into_iter().find(|c| {
+                c.channels() == 2
+                    && c.sample_format() == SampleFormat::F32
+                    && c.min_sample_rate() <= SampleRate(audio_context.sample_rate())
+                    && c.max_sample_rate() >= SampleRate(audio_context.sample_rate())
+            }) {
+                let config = config.with_sample_rate(SampleRate(audio_context.sample_rate()));
 
                 tracing::debug!("Selected stream config: {config:?}");
 
@@ -110,8 +112,8 @@ impl AudioInputNodeState {
         }
     }
 
-    fn read(&mut self) -> anyhow::Result<Vec<f64>> {
-        let mut buffer = vec![0.; TRANSFER_SIZE];
+    fn read(&mut self, audio_context: &impl AudioContext) -> anyhow::Result<Vec<f64>> {
+        let mut buffer = vec![0.; audio_context.transfer_size()];
         let count = self
             .buffer
             .consumer()

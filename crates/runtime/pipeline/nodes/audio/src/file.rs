@@ -27,7 +27,7 @@ use mizer_media::MediaServer;
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
-use crate::{AudioContextExt, SAMPLE_RATE};
+use crate::AudioContext;
 
 const PLAYBACK_INPUT: &str = "Playback";
 const PAUSE_INPUT: &str = "Pause";
@@ -206,16 +206,20 @@ impl ProcessingNode for AudioFileNode {
                     }
                 }
                 let signal = player.by_ref();
-                if sample_rate == SAMPLE_RATE {
+                if sample_rate == context.sample_rate() {
                     context.output_signal(AUDIO_OUTPUT, signal);
-                }else {
+                } else {
                     let ring_buffer = Fixed::from(vec![[0.0; 2]; 100]);
                     let sinc = Sinc::new(ring_buffer);
-                    let signal = signal.from_hz_to_hz(sinc, sample_rate as f64, SAMPLE_RATE as f64);
+                    let signal = signal.from_hz_to_hz(
+                        sinc,
+                        sample_rate as f64,
+                        context.sample_rate() as f64,
+                    );
 
                     context.output_signal(AUDIO_OUTPUT, signal);
                 }
-                
+
                 if player.playing {
                     1.0
                 } else {
@@ -306,7 +310,7 @@ impl Signal for DecodedFile {
                 if self.playing {
                     tracing::warn!("Missed next frame");
                 }
-                Stereo::<f64>::EQUILIBRIUM 
+                Stereo::<f64>::EQUILIBRIUM
             }
         }
     }

@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-use crate::AudioContextExt;
+use crate::AudioContext;
 
 const VOLUME_INPUT: &str = "Volume";
 const AUDIO_INPUT: &str = "Stereo";

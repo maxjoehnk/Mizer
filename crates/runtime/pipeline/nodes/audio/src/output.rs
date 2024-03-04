@@ -1,12 +1,12 @@
 use anyhow::Context;
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use cpal::{Device, SampleFormat, SampleRate, Stream};
-use rb::{RbConsumer, RbProducer, SpscRb, RB};
+use rb::{RbConsumer, RbInspector, RbProducer, SpscRb, RB};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-use crate::{SAMPLE_RATE, TRANSFER_SIZE};
+use crate::AudioContext;
 
 const AUDIO_INPUT: &str = "Stereo";
 
@@ -38,7 +38,7 @@ impl ProcessingNode for AudioOutputNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if state.is_none() {
-            *state = AudioOutputNodeState::new().context("Creating audio output state")?;
+            *state = AudioOutputNodeState::new(context).context("Creating audio output state")?;
         }
         if let Some(state) = state {
             if let Some(buffer) = context.read_port::<_, Vec<f64>>(AUDIO_INPUT) {
@@ -84,19 +84,21 @@ pub struct AudioOutputNodeState {
 }
 
 impl AudioOutputNodeState {
-    fn new() -> anyhow::Result<Option<Self>> {
+    fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio output device");
         if let Some(device) = cpal::default_host().default_output_device() {
-            let buffer = SpscRb::new(TRANSFER_SIZE * 4);
+            let buffer = SpscRb::new(audio_context.transfer_size() * 8);
 
             let config = device.supported_output_configs()?;
             let configs = config.collect::<Vec<_>>();
             tracing::trace!("Supported Output Configs: {configs:?}");
-            if let Some(config) = configs
-                .into_iter()
-                .find(|c| c.channels() == 2 && c.sample_format() == SampleFormat::F32 && c.min_sample_rate() <= SampleRate(SAMPLE_RATE) && c.max_sample_rate() >= SampleRate(SAMPLE_RATE))
-            {
-                let config = config.with_sample_rate(SampleRate(SAMPLE_RATE));
+            if let Some(config) = configs.into_iter().find(|c| {
+                c.channels() == 2
+                    && c.sample_format() == SampleFormat::F32
+                    && c.min_sample_rate() <= SampleRate(audio_context.sample_rate())
+                    && c.max_sample_rate() >= SampleRate(audio_context.sample_rate())
+            }) {
+                let config = config.with_sample_rate(SampleRate(audio_context.sample_rate()));
 
                 tracing::debug!("Selected stream config: {config:?}");
 

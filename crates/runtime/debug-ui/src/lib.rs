@@ -47,6 +47,10 @@ pub trait DebugUiDrawHandle<'a> {
 
     fn columns(&mut self, count: usize, add_contents: impl FnOnce(&mut [Self::DrawHandle<'_>]));
 
+    fn progress_bar(&mut self, progress: f32);
+
+    fn plot(&mut self, id: &'static str, min: f64, max: f64, values: &[f64]);
+
     fn image<I: std::hash::Hash>(
         &mut self,
         image_id: I,

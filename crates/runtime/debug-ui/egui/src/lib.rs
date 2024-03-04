@@ -1,5 +1,7 @@
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::num::NonZeroU32;
+use std::rc::Rc;
 
 use egui::{Context, TextureHandle, ViewportId};
 use egui_wgpu::winit::Painter;
@@ -29,6 +31,23 @@ pub struct EguiDebugUi {
     egui_state: Option<State>,
     painter: Painter,
     textures: EguiTextureMap,
+    state: Rc<RefCell<EguiState>>,
+}
+
+#[derive(Default)]
+struct EguiState {
+    contexts: HashMap<egui::Id, EguiStateContext>,
+}
+
+#[derive(Default)]
+struct EguiStateContext {
+    plots: HashMap<&'static str, PlotState>,
+}
+
+struct PlotState {
+    data: Vec<f64>,
+    min: f64,
+    max: f64,
 }
 
 impl DebugUi for EguiDebugUi {
@@ -44,7 +63,11 @@ impl DebugUi for EguiDebugUi {
             self.egui_context.begin_frame(input);
         }
 
-        EguiRenderHandle::new(&self.egui_context, &mut self.textures)
+        EguiRenderHandle::new(
+            &self.egui_context,
+            &mut self.textures,
+            Rc::clone(&self.state),
+        )
     }
 
     fn render(&mut self) {
@@ -69,6 +92,7 @@ impl EguiDebugUi {
             window,
             painter,
             textures: Default::default(),
+            state: Default::default(),
         })
     }
 

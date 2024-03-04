@@ -1,17 +1,30 @@
 use egui::load::SizedTexture;
 use egui::{CollapsingHeader, ColorImage, Ui};
+use egui_plot::PlotBounds;
+use std::cell::RefCell;
+use std::rc::Rc;
 
 use mizer_debug_ui::{DebugUiDrawHandle, DebugUiResponse};
 
-use crate::EguiTextureMap;
+use crate::{EguiState, EguiTextureMap, PlotState};
 
 pub struct EguiDrawHandle<'a> {
     ui: &'a mut Ui,
+    state: Rc<RefCell<EguiState>>,
+    context: Option<egui::Id>,
 }
 
 impl<'a> EguiDrawHandle<'a> {
-    pub(crate) fn new(ui: &'a mut Ui) -> Self {
-        Self { ui }
+    pub(crate) fn new(ui: &'a mut Ui, state: Rc<RefCell<EguiState>>) -> Self {
+        Self {
+            ui,
+            state,
+            context: None,
+        }
+    }
+
+    pub fn in_context(&mut self, context: &String) {
+        self.context = Some(egui::Id::new(context));
     }
 }
 
@@ -37,7 +50,7 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
 
     fn horizontal(&mut self, cb: impl FnOnce(&mut Self::DrawHandle<'_>)) {
         self.ui.horizontal(|ui| {
-            let mut handle = EguiDrawHandle::new(ui);
+            let mut handle = EguiDrawHandle::new(ui, Rc::clone(&self.state));
 
             cb(&mut handle);
         });
@@ -65,7 +78,7 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
     ) {
         let title = title.into();
         CollapsingHeader::new(title).show(self.ui, |ui| {
-            let mut handle = EguiDrawHandle::new(ui);
+            let mut handle = EguiDrawHandle::new(ui, Rc::clone(&self.state));
 
             add_content(&mut handle);
         });
@@ -75,11 +88,48 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
         self.ui.columns(count, |columns| {
             let mut cols = columns
                 .iter_mut()
-                .map(EguiDrawHandle::new)
+                .map(|ui| EguiDrawHandle::new(ui, Rc::clone(&self.state)))
                 .collect::<Vec<_>>();
 
             add_contents(&mut cols);
         });
+    }
+
+    fn progress_bar(&mut self, progress: f32) {
+        self.ui.add(egui::ProgressBar::new(progress));
+    }
+
+    fn plot(&mut self, id: &'static str, min: f64, max: f64, values: &[f64]) {
+        let mut state = self.state.borrow_mut();
+        let state = state
+            .contexts
+            .entry(self.context.unwrap_or(self.ui.id()))
+            .or_default();
+        let plot_data = state.plots.entry(id).or_insert_with(|| PlotState {
+            data: Vec::new(),
+            min,
+            max,
+        });
+
+        plot_data.data.extend_from_slice(values);
+        if plot_data.data.len() > 500 {
+            plot_data.data.drain(0..(plot_data.data.len() - 500));
+        }
+
+        egui_plot::Plot::new(id)
+            .allow_zoom(false)
+            .allow_drag(false)
+            .allow_scroll(false)
+            .legend(egui_plot::Legend::default())
+            .show(self.ui, |plot_ui| {
+                plot_ui.set_plot_bounds(PlotBounds::from_min_max(
+                    [0.0, plot_data.min],
+                    [plot_data.data.len() as f64, plot_data.max],
+                ));
+                plot_ui.line(egui_plot::Line::new(egui_plot::PlotPoints::from_ys_f64(
+                    &plot_data.data,
+                )));
+            });
     }
 
     fn image<I: std::hash::Hash>(

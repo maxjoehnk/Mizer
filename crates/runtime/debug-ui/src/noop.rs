@@ -47,6 +47,10 @@ impl DebugUiDrawHandle<'_> for () {
 
     fn columns(&mut self, _count: usize, _add_contents: impl FnOnce(&mut [Self::DrawHandle<'_>])) {}
 
+    fn progress_bar(&mut self, _progress: f32) {}
+
+    fn plot(&mut self, _id: &'static str, _min: f64, _max: f64, _values: &[f64]) {}
+
     fn image<I: Hash>(&mut self, _image_id: I, _data: &[u8], _textures: &mut Self::TextureMap) {}
 }
 

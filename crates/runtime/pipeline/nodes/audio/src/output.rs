@@ -52,6 +52,29 @@ impl ProcessingNode for AudioOutputNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
+        if let Some(state) = state {
+            ui.label(format!(
+                "Device: {:?}",
+                state
+                    .device
+                    .name()
+                    .unwrap_or_else(|err| format!("Unable to get device name: {err:?}"))
+            ));
+            ui.label(format!(
+                "Buffer: {}/{}",
+                state.buffer.count(),
+                state.buffer.capacity()
+            ));
+            ui.plot(
+                "buffer",
+                0.,
+                state.buffer.capacity() as f64,
+                &[state.buffer.count() as f64],
+            );
+        }
+    }
 }
 
 pub struct AudioOutputNodeState {

@@ -236,6 +236,29 @@ impl ProcessingNode for AudioFileNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn debug_ui<'a>(
+        &self,
+        ui: &mut impl DebugUiDrawHandle<'a>,
+        (node_state, decode_state): &Self::State,
+    ) {
+        if let Some(decode_state) = decode_state {
+            ui.collapsing_header("Audio File", |ui| {
+                ui.label(format!("File: {:?}", decode_state.path));
+                ui.label(format!("Playing: {:?}", node_state.playing));
+                ui.label(format!("Paused: {:?}", node_state.paused));
+                if let Some(ref player) = decode_state.player {
+                    ui.label(format!("Sample Rate: {:?}", player.sample_rate));
+                    ui.label(format!(
+                        "Buffer: {}/{}",
+                        player.offset,
+                        player.samples.len() / 2
+                    ));
+                    ui.progress_bar(player.offset as f32 / (player.samples.len() / 2) as f32);
+                }
+            });
+        }
+    }
 }
 
 pub struct AudioFileNodeState {

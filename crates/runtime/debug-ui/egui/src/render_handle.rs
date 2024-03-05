@@ -1,11 +1,12 @@
-use egui::{CentralPanel, ScrollArea};
+use egui::panel::Side;
+use egui::{CentralPanel, ScrollArea, SidePanel};
 use std::cell::RefCell;
 use std::rc::Rc;
 
 use mizer_debug_ui::DebugUiRenderHandle;
 
 use crate::draw_handle::EguiDrawHandle;
-use crate::{EguiState, EguiTextureMap};
+use crate::{get_tracing_collector, EguiState, EguiTextureMap};
 
 pub struct EguiRenderHandle<'a> {
     context: &'a egui::Context,
@@ -23,6 +24,9 @@ impl<'a> DebugUiRenderHandle<'a> for EguiRenderHandle<'a> {
                 let mut draw_handle = EguiDrawHandle::new(ui, Rc::clone(&self.state));
                 call(&mut draw_handle, self.textures);
             });
+        });
+        SidePanel::new(Side::Right, "Logs").show(self.context, |ui| {
+            ui.add(egui_tracing::Logs::new(get_tracing_collector()))
         });
     }
 }

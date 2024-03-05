@@ -59,8 +59,8 @@ fn run_headless(flags: Flags) -> anyhow::Result<()> {
 
 fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     mizer_util::tracing::init();
-    let guard = logger::init()?;
     let flags = Flags::from_args();
+    let guard = logger::init(&flags)?;
     tracing::debug!("flags: {:?}", flags);
     init_ffmpeg()?;
 

@@ -2,11 +2,17 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::num::NonZeroU32;
 use std::rc::Rc;
+use std::sync::OnceLock;
 
 use egui::{Context, TextureHandle, ViewportId};
+use egui_tracing::tracing::collector::AllowedTargets;
+use egui_tracing::EventCollector;
 use egui_wgpu::winit::Painter;
 use egui_wgpu::WgpuConfiguration;
 use egui_winit::State;
+use tracing::Subscriber;
+use tracing_subscriber::registry::LookupSpan;
+use tracing_subscriber::Layer;
 use winit::event::WindowEvent;
 
 use mizer_debug_ui::*;
@@ -19,6 +25,25 @@ use crate::render_handle::EguiRenderHandle;
 mod draw_handle;
 mod module;
 mod render_handle;
+
+static LOGGING_COLLECTOR: OnceLock<EventCollector> = OnceLock::new();
+
+pub fn add_tracing_collector<S>() -> impl Layer<S>
+where
+    S: Subscriber + for<'a> LookupSpan<'a>,
+{
+    get_tracing_collector()
+}
+
+pub(crate) fn get_tracing_collector() -> EventCollector {
+    LOGGING_COLLECTOR
+        .get_or_init(|| {
+            EventCollector::new()
+                .with_level(tracing::Level::DEBUG)
+                .allowed_targets(AllowedTargets::Selected(vec!["mizer".to_string()]))
+        })
+        .clone()
+}
 
 #[derive(Default)]
 #[repr(transparent)]

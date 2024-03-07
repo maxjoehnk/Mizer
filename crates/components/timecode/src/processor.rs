@@ -1,4 +1,4 @@
-use mizer_module::{ClockFrame, DebuggableProcessor, Injector, Processor};
+use mizer_module::{ClockFrame, Injector, Processor};
 
 use crate::TimecodeManager;
 
@@ -15,5 +15,3 @@ impl Processor for TimecodeProcessor {
         self.0.advance_timecodes();
     }
 }
-
-impl DebuggableProcessor for TimecodeProcessor {}

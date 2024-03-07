@@ -9,3 +9,4 @@ anyhow = "1"
 tracing = "0.1"
 profiling = "1"
 futures = { version = "0.3", features = ["executor"] }
+mizer-injector = { path = "../injector" }

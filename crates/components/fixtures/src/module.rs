@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 
+use crate::debug_ui_pane::FixturesDebugUiPane;
 use mizer_module::*;
 
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
@@ -35,6 +36,7 @@ impl<TLibraryLoader: FixtureLibraryLoader + Default + 'static> Module
         context.provide_api(manager.clone());
         context.provide(manager);
         context.add_processor(FixtureProcessor);
+        context.add_debug_ui_pane(FixturesDebugUiPane);
 
         Ok(())
     }

@@ -4,6 +4,7 @@ pub use self::module::*;
 pub(crate) use self::processor::*;
 pub use self::spline::*;
 
+mod debug_ui_pane;
 mod default_effects;
 mod effect;
 mod engine;

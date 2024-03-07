@@ -19,6 +19,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c71b1793ee61086797f5c80b6efa2b8ffa6d5dd703f118545808a7f2e27f7046"
 
 [[package]]
+name = "accesskit"
+version = "0.12.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6cb10ed32c63247e4e39a8f42e8e30fb9442fbf7878c8e4a9849e7e381619bea"
+dependencies = [
+ "enumn",
+ "serde",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -60,6 +70,7 @@ dependencies = [
  "const-random",
  "getrandom",
  "once_cell",
+ "serde",
  "version_check",
  "zerocopy 0.7.32",
 ]
@@ -2093,6 +2104,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57539aabcdbb733b6806ef421b66dec158dc1582107ad6d51913db3600303354"
 dependencies = [
  "bytemuck",
+ "serde",
 ]
 
 [[package]]
@@ -2101,10 +2113,12 @@ version = "0.25.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e0bf640ed7f3bf3d14ebf00d73bacc09c886443ee84ca6494bde37953012c9e3"
 dependencies = [
+ "accesskit",
  "ahash",
  "epaint",
  "log",
  "nohash-hasher",
+ "serde",
 ]
 
 [[package]]
@@ -2149,6 +2163,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "egui_tiles"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0255c0209b349b1a4a67a344556501e75accae669f3a25be6e07deb30fefa91"
+dependencies = [
+ "ahash",
+ "egui",
+ "itertools 0.12.1",
+ "log",
+ "serde",
+]
+
+[[package]]
 name = "egui_tracing"
 version = "0.2.2"
 source = "git+https://github.com/zakarumych/egui_tracing.git?rev=f35ee86#f35ee867110789fad5ad3632afc285253e97b2e4"
@@ -2176,6 +2203,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3ee58355767587db7ba3738930d93cad3052cd834c2b48b9ef6ef26fe4823b7e"
 dependencies = [
  "bytemuck",
+ "serde",
 ]
 
 [[package]]
@@ -2231,6 +2259,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "enumn"
+version = "0.1.13"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fd000fd6988e73bbe993ea3db9b1aa64906ab88766d654973924340c8cddb42"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.48",
+]
+
+[[package]]
 name = "env_logger"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2257,6 +2296,7 @@ dependencies = [
  "log",
  "nohash-hasher",
  "parking_lot 0.12.1",
+ "serde",
 ]
 
 [[package]]
@@ -4679,6 +4719,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
+ "mizer-injector",
  "profiling",
  "tracing",
 ]
@@ -4692,6 +4733,7 @@ dependencies = [
  "egui-wgpu",
  "egui-winit",
  "egui_plot",
+ "egui_tiles",
  "egui_tracing",
  "futures",
  "image",
@@ -4980,7 +5022,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "base64 0.21.7",
+ "mizer-debug-ui",
  "mizer-fixtures",
+ "mizer-module",
  "mizer-node",
  "mizer-util",
  "pinboard",

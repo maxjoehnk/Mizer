@@ -4,7 +4,7 @@ use winit::event::{Event, WindowEvent};
 use winit::platform::pump_events::EventLoopExtPumpEvents;
 use winit::window::WindowId;
 
-use mizer_module::{ClockFrame, DebuggableProcessor, Injector, Processor};
+use mizer_module::{ClockFrame, Injector, Processor};
 
 use super::{EventLoopHandle, WindowEventSenders};
 
@@ -22,8 +22,6 @@ impl Processor for WindowProcessor {
             });
     }
 }
-
-impl DebuggableProcessor for WindowProcessor {}
 
 fn send_window_event(window_events: &WindowEventSenders, window_id: WindowId, event: WindowEvent) {
     if let Some(window) = window_events.get(&window_id) {

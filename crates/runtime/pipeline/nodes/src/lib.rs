@@ -1,3 +1,5 @@
+use std::any::Any;
+
 use derive_more::From;
 use serde::{Deserialize, Serialize};
 
@@ -17,11 +19,11 @@ pub use mizer_data_nodes::{DataFileNode, ExtractNode, TemplateNode, ValueNode};
 pub use mizer_dmx_nodes::{DmxInputNode, DmxOutputNode};
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{
-    FixtureControlNode, FixtureNode, GroupNode, GroupControlNode, PresetNode, ProgrammerNode,
+    FixtureControlNode, FixtureNode, GroupControlNode, GroupNode, PresetNode, ProgrammerNode,
 };
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
-pub use mizer_input_nodes::{ButtonNode, FaderNode, DialNode, LabelNode};
+pub use mizer_input_nodes::{ButtonNode, DialNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{
@@ -30,8 +32,8 @@ pub use mizer_midi_nodes::{
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
 use mizer_node::{
-    ConfigurableNode, Injector, NodeDetails, NodeSetting, NodeType, PipelineNode, PortId,
-    PortMetadata,
+    ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeType,
+    PipelineNode, PortId, PortMetadata,
 };
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
@@ -137,6 +139,19 @@ macro_rules! node_impl {
                 match self {
                     $(Node::$node_type(node) => node.update_setting(setting),)*
                     Node::TestSink(_) => Ok(()),
+                }
+            }
+
+            pub fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Box<dyn Any>) {
+                use mizer_node::ProcessingNode;
+
+                match self {
+                    $(Node::$node_type(node) => {
+                        if let Some(state) = state.downcast_ref() {
+                            node.debug_ui(ui, state);
+                        }
+                    },)*
+                    Node::TestSink(_) => {},
                 }
             }
         }

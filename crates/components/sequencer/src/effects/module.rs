@@ -1,5 +1,6 @@
 use mizer_module::*;
 
+use crate::effects::debug_ui_pane::EffectsDebugUiPane;
 use crate::effects::{EffectEngine, EffectsProcessor};
 
 pub struct EffectsModule;
@@ -14,6 +15,7 @@ impl Module for EffectsModule {
         context.provide_api(engine.clone());
         context.provide(engine);
         context.add_processor(EffectsProcessor);
+        context.add_debug_ui_pane(EffectsDebugUiPane);
 
         Ok(())
     }

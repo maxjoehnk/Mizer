@@ -1,5 +1,6 @@
 use mizer_fixtures::FixtureId;
 use mizer_util::Base64Image;
+pub use module::PlansModule;
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
@@ -7,6 +8,8 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 pub mod commands;
+mod debug_ui_pane;
+mod module;
 
 pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 

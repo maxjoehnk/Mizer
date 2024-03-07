@@ -1,7 +1,8 @@
+use mizer_debug_ui_impl::{DebugUiImpl, DebugUiPane};
 use std::future::Future;
 
 use mizer_module::{ApiInjector, ModuleContext, Runtime};
-use mizer_processing::DebuggableProcessor;
+use mizer_processing::Processor;
 use mizer_runtime::DefaultRuntime;
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
@@ -11,9 +12,12 @@ pub struct SetupContext {
     pub api_injector: ApiInjector,
     pub settings: Settings,
     pub handle: tokio::runtime::Handle,
+    pub debug_ui_panes: Vec<Box<dyn DebugUiPane<DebugUiImpl>>>,
 }
 
 impl ModuleContext for SetupContext {
+    type DebugUiImpl = DebugUiImpl;
+
     fn provide<T: 'static>(&mut self, service: T) {
         self.runtime.injector_mut().provide(service);
     }
@@ -26,7 +30,11 @@ impl ModuleContext for SetupContext {
         self.api_injector.provide(api);
     }
 
-    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static) {
+    fn add_debug_ui_pane(&mut self, pane: impl DebugUiPane<Self::DebugUiImpl> + 'static) {
+        self.debug_ui_panes.push(Box::new(pane));
+    }
+
+    fn add_processor(&mut self, processor: impl Processor + 'static) {
         self.runtime.add_processor(processor);
     }
 
@@ -54,5 +62,11 @@ impl ModuleContext for SetupContext {
 
     fn status_handle(&self) -> StatusHandle {
         self.runtime.access().status_bus.handle()
+    }
+}
+
+impl SetupContext {
+    pub(crate) fn take_debug_ui_panes(&mut self) -> Vec<Box<dyn DebugUiPane<DebugUiImpl>>> {
+        self.debug_ui_panes.drain(..).collect()
     }
 }

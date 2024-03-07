@@ -1,10 +1,18 @@
+pub use mizer_injector::Injector;
+use std::any::Any;
+
 pub mod noop;
 
 pub trait DebugUiRenderHandle<'a> {
     type DrawHandle<'b>: DebugUiDrawHandle<'b>;
     type TextureMap;
 
-    fn draw(&mut self, call: impl FnOnce(&mut Self::DrawHandle<'_>, &mut Self::TextureMap));
+    fn draw(&mut self, injector: &Injector, state_access: &dyn NodeStateAccess);
+}
+
+/// This trait is a hack, so we can access the state of nodes in a debug ui pane.
+pub trait NodeStateAccess {
+    fn get(&self, path: &str) -> Option<&Box<dyn Any>>;
 }
 
 pub trait DebugUi {
@@ -61,4 +69,16 @@ pub trait DebugUiDrawHandle<'a> {
 
 pub trait DebugUiResponse {
     fn clicked(&self) -> bool;
+}
+
+pub trait DebugUiPane<TUi: DebugUi> {
+    fn title(&self) -> &'static str;
+
+    fn render<'a>(
+        &mut self,
+        injector: &Injector,
+        state_access: &dyn NodeStateAccess,
+        ui: &mut TUi::DrawHandle<'a>,
+        textures: &mut <TUi::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,
+    );
 }

@@ -69,7 +69,7 @@ pub trait Runtime {
 
     fn injector(&self) -> &Injector;
 
-    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static);
+    fn add_processor(&mut self, processor: impl Processor + 'static);
 
     fn process(&mut self);
 
@@ -81,11 +81,15 @@ pub trait Runtime {
 }
 
 pub trait ModuleContext {
+    type DebugUiImpl: DebugUi;
+
     fn provide<T: 'static>(&mut self, service: T);
     fn try_get<T: 'static>(&self) -> Option<&T>;
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T);
 
-    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static);
+    fn add_debug_ui_pane(&mut self, pane: impl DebugUiPane<Self::DebugUiImpl> + 'static);
+
+    fn add_processor(&mut self, processor: impl Processor + 'static);
 
     fn settings(&self) -> &Settings;
 

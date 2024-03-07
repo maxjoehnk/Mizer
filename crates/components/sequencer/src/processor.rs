@@ -19,5 +19,3 @@ impl Processor for SequenceProcessor {
         sequencer.run_sequences(fixture_manager, effect_engine, frame);
     }
 }
-
-impl DebuggableProcessor for SequenceProcessor {}

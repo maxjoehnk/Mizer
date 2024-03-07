@@ -25,6 +25,8 @@ struct BenchModuleContext<'a> {
 
 #[allow(unused_variables)]
 impl<'a> ModuleContext for BenchModuleContext<'a> {
+    type DebugUiImpl = ();
+
     fn provide<T: 'static>(&mut self, service: T) {
         self.runtime.injector_mut().provide(service);
     }
@@ -35,7 +37,9 @@ impl<'a> ModuleContext for BenchModuleContext<'a> {
 
     fn provide_api<T: 'static + Clone + Send + Sync>(&mut self, api: T) {}
 
-    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static) {
+    fn add_debug_ui_pane(&mut self, pane: impl DebugUiPane<Self::DebugUiImpl>) {}
+
+    fn add_processor(&mut self, processor: impl Processor + 'static) {
         self.runtime.add_processor(processor);
     }
 

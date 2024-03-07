@@ -20,3 +20,4 @@ mizer-debug-ui = { path = ".." }
 mizer-module = { path = "../../module" }
 egui_plot = "0.25"
 egui_tracing = { git = "https://github.com/zakarumych/egui_tracing.git", rev = "f35ee86" }
+egui_tiles = "0.6"

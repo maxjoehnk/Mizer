@@ -19,6 +19,7 @@ mod processor;
 mod sub_fixture;
 // TODO: should probably find a better name
 mod color_mixer;
+mod debug_ui_pane;
 mod module;
 mod priority;
 pub mod programmer;

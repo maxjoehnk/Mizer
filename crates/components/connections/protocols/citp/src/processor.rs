@@ -1,5 +1,5 @@
 use mizer_module::{ClockFrame, Injector};
-use mizer_processing::{DebuggableProcessor, Processor};
+use mizer_processing::Processor;
 
 use crate::CitpConnectionManager;
 
@@ -13,5 +13,3 @@ impl Processor for UpdatedCitpConnectionProcessor {
         manager.process_updates();
     }
 }
-
-impl DebuggableProcessor for UpdatedCitpConnectionProcessor {}

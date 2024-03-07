@@ -27,5 +27,3 @@ impl Processor for CommandProcessor {
         }
     }
 }
-
-impl DebuggableProcessor for CommandProcessor {}

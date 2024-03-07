@@ -9,7 +9,7 @@ use downcast::*;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::Clock;
-use mizer_debug_ui_impl::{DebugUi, DebugUiImpl};
+use mizer_debug_ui_impl::{DebugUi, DebugUiImpl, NodeStateAccess};
 use mizer_node::*;
 use mizer_nodes::NodeDowncast;
 use mizer_ports::memory::MemorySender;
@@ -35,8 +35,6 @@ pub trait ProcessingNodeExt: PipelineNode {
         context: &PipelineContext,
         state: &mut Box<dyn Any>,
     ) -> anyhow::Result<()>;
-
-    fn debug_ui(&self, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>, state: &Box<dyn Any>);
 
     fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode;
 }
@@ -79,14 +77,6 @@ where
         }
     }
 
-    fn debug_ui(&self, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>, state: &Box<dyn Any>) {
-        if let Some(state) = state.downcast_ref() {
-            self.debug_ui(ui, state)
-        } else {
-            unreachable!()
-        }
-    }
-
     fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode {
         self
     }
@@ -111,6 +101,14 @@ pub struct PipelineWorker {
     previews: HashMap<NodePath, NodePreviewState>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     _node_metadata: HashMap<NodePath, NodeRuntimeMetadata>,
+}
+
+impl NodeStateAccess for PipelineWorker {
+    fn get(&self, path: &str) -> Option<&Box<dyn Any>> {
+        let path = NodePath(path.to_string());
+
+        self.states.get(&path)
+    }
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -512,19 +510,19 @@ impl PipelineWorker {
         (context, state)
     }
 
-    pub fn debug_ui(
-        &self,
-        ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
-        nodes: &Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-    ) {
-        ui.collapsing_header("Nodes", |ui| {
-            for (path, node) in nodes {
-                let state = self.states.get(path);
-                let state = state.unwrap();
-                ui.collapsing_header(path.as_str(), |ui| node.debug_ui(ui, state));
-            }
-        });
-    }
+    // pub fn debug_ui(
+    //     &self,
+    //     ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
+    //     nodes: &Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
+    // ) {
+    //     ui.collapsing_header("Nodes", |ui| {
+    //         for (path, node) in nodes {
+    //             let state = self.states.get(path);
+    //             let state = state.unwrap();
+    //             ui.collapsing_header(path.as_str(), |ui| node.debug_ui(ui, state));
+    //         }
+    //     });
+    // }
 
     pub fn get_state<S: 'static>(&self, path: &NodePath) -> Option<&S> {
         self.states.get(path).and_then(|state| state.downcast_ref())

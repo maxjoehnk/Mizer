@@ -1,5 +1,5 @@
 use egui::load::SizedTexture;
-use egui::{CollapsingHeader, ColorImage, Ui};
+use egui::{CollapsingHeader, ColorImage, Ui, Widget};
 use egui_plot::PlotBounds;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -164,5 +164,15 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
                 size: texture.size_vec2(),
             });
         }
+    }
+}
+
+pub(crate) trait DebugUiDrawHandleExt {
+    fn add(&mut self, widget: impl Widget);
+}
+
+impl DebugUiDrawHandleExt for EguiDrawHandle<'_> {
+    fn add(&mut self, widget: impl Widget) {
+        self.ui.add(widget);
     }
 }

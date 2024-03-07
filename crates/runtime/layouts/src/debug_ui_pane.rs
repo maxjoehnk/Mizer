@@ -1,12 +1,22 @@
-use mizer_debug_ui_impl::*;
-use mizer_layouts::LayoutStorage;
+use crate::LayoutStorage;
+use mizer_debug_ui::*;
+use mizer_node::Inject;
 
-pub(super) fn layouts_debug_ui(
-    ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
-    textures: &mut <DebugUiImpl as DebugUi>::TextureMap,
-    layouts: &LayoutStorage,
-) {
-    ui.collapsing_header("Layouts", |ui| {
+pub struct LayoutsDebugUiPane;
+
+impl<S: DebugUi> DebugUiPane<S> for LayoutsDebugUiPane {
+    fn title(&self) -> &'static str {
+        "Layouts"
+    }
+
+    fn render<'a>(
+        &mut self,
+        injector: &Injector,
+        _state_access: &dyn NodeStateAccess,
+        ui: &mut S::DrawHandle<'a>,
+        _textures: &mut <S::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,
+    ) {
+        let layouts = injector.inject::<LayoutStorage>();
         let layouts = layouts.read();
         for layout in layouts {
             ui.collapsing_header(layout.id, |ui| {
@@ -30,11 +40,12 @@ pub(super) fn layouts_debug_ui(
 
                                 columns[0].label("Image");
                                 if let Some(image) = control.decoration.image {
-                                    columns[1].image(
-                                        &image,
-                                        image.try_to_buffer().unwrap_or_default().as_slice(),
-                                        textures,
-                                    );
+                                    // TODO: fix type issue with texture map
+                                    // columns[1].image(
+                                    //     &image,
+                                    //     image.try_to_buffer().unwrap_or_default().as_slice(),
+                                    //     textures,
+                                    // );
                                 }
                             });
                         });
@@ -49,5 +60,5 @@ pub(super) fn layouts_debug_ui(
                 }
             });
         }
-    });
+    }
 }

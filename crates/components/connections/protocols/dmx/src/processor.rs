@@ -5,8 +5,6 @@ use crate::DmxConnectionManager;
 #[derive(Debug)]
 pub(crate) struct DmxProcessor;
 
-impl DebuggableProcessor for DmxProcessor {}
-
 impl Processor for DmxProcessor {
     #[tracing::instrument]
     fn post_process(&mut self, injector: &Injector, _: ClockFrame) {

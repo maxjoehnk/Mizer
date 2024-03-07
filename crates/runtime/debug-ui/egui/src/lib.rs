@@ -20,10 +20,11 @@ use mizer_wgpu::window::{EventLoopHandle, RawWindowRef};
 
 use crate::draw_handle::EguiDrawHandle;
 pub use crate::module::EguiDebugUiModule;
-use crate::render_handle::EguiRenderHandle;
+use crate::render_handle::{EguiRenderHandle, Pane};
 
 mod draw_handle;
 mod module;
+mod panes;
 mod render_handle;
 
 static LOGGING_COLLECTOR: OnceLock<EventCollector> = OnceLock::new();
@@ -57,6 +58,7 @@ pub struct EguiDebugUi {
     painter: Painter,
     textures: EguiTextureMap,
     state: Rc<RefCell<EguiState>>,
+    tree: egui_tiles::Tree<Pane>,
 }
 
 #[derive(Default)]
@@ -91,6 +93,7 @@ impl DebugUi for EguiDebugUi {
         EguiRenderHandle::new(
             &self.egui_context,
             &mut self.textures,
+            &mut self.tree,
             Rc::clone(&self.state),
         )
     }
@@ -102,13 +105,23 @@ impl DebugUi for EguiDebugUi {
 
 impl EguiDebugUi {
     #[cfg(target_os = "linux")]
-    pub fn new(event_loop: &EventLoopHandle) -> anyhow::Result<Self> {
+    pub fn new(event_loop: &EventLoopHandle, panes: Vec<Pane>) -> anyhow::Result<Self> {
         let window = event_loop.new_raw_window(Some("Mizer Debug UI"))?;
         let context = Context::default();
         let viewport_id = ViewportId::default();
 
         let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
         futures::executor::block_on(painter.set_window(viewport_id, Some(&window)))?;
+
+        let mut tiles = egui_tiles::Tiles::<Pane>::default();
+        let mut tabs = vec![];
+        tabs.push(tiles.insert_pane(Box::new(panes::LoggingPane::new())));
+        for pane in panes {
+            tabs.push(tiles.insert_pane(pane));
+        }
+
+        let root = tiles.insert_tab_tile(tabs);
+        let tree = egui_tiles::Tree::new("tree", root, tiles);
 
         Ok(EguiDebugUi {
             viewport_id,
@@ -118,11 +131,12 @@ impl EguiDebugUi {
             painter,
             textures: Default::default(),
             state: Default::default(),
+            tree,
         })
     }
 
     #[cfg(not(target_os = "linux"))]
-    pub fn new(_event_loop: &EventLoopHandle) -> anyhow::Result<Self> {
+    pub fn new(_event_loop: &EventLoopHandle, panes: Vec<Pane>) -> anyhow::Result<Self> {
         anyhow::bail!("Debug UI is not available on non Linux platforms")
     }
 

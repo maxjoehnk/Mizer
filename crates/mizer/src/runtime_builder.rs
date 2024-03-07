@@ -11,16 +11,18 @@ use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::FixtureModule;
+use mizer_layouts::LayoutsModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
-use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
+use mizer_module::{ApiInjector, Module, Runtime};
+use mizer_plan::PlansModule;
 use mizer_project_files::history::ProjectHistory;
 use mizer_protocol_citp::CitpModule;
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::MidiModule;
 use mizer_protocol_mqtt::MqttModule;
 use mizer_protocol_osc::module::OscModule;
-use mizer_runtime::DefaultRuntime;
+use mizer_runtime::{DefaultRuntime, RuntimeModule};
 use mizer_sequencer::{EffectsModule, SequencerModule};
 use mizer_session::Session;
 use mizer_settings::{Settings, SettingsManager};
@@ -35,7 +37,7 @@ use crate::flags::Flags;
 use crate::module_context::SetupContext;
 use crate::Mizer;
 
-fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
+fn load_modules(context: &mut SetupContext, flags: &Flags) {
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     SequencerModule.try_load(context);
     EffectsModule.try_load(context);
@@ -46,17 +48,19 @@ fn load_modules(context: &mut impl ModuleContext, flags: &Flags) {
     MidiModule.try_load(context);
     WgpuModule.try_load(context).then(WindowModule);
     VectorModule.try_load(context);
-
-    #[cfg(feature = "debug-ui")]
-    if flags.debug {
-        EguiDebugUiModule.try_load(context);
-    }
-
+    LayoutsModule.try_load(context);
+    PlansModule.try_load(context);
     SurfaceModule.try_load(context);
     CommandExecutorModule.try_load(context);
     MediaModule.try_load(context);
     CitpModule.try_load(context);
     DmxModule.try_load(context);
+    RuntimeModule.try_load(context);
+
+    #[cfg(feature = "debug-ui")]
+    if flags.debug {
+        EguiDebugUiModule(context.take_debug_ui_panes()).try_load(context);
+    }
 }
 
 pub fn build_runtime(
@@ -73,6 +77,7 @@ pub fn build_runtime(
         api_injector,
         settings: settings_manager.read().settings,
         handle: handle.clone(),
+        debug_ui_panes: Vec::new(),
     };
 
     load_modules(&mut context, &flags);

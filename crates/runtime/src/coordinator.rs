@@ -30,19 +30,6 @@ use crate::{LayoutsView, NodeMetadataRef};
 
 const DEFAULT_FPS: f64 = 60.0;
 
-trait ProcessorExt: Processor {
-    fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>);
-}
-
-impl<T> ProcessorExt for T
-where
-    T: DebuggableProcessor,
-{
-    fn debug_ui(&mut self, injector: &Injector, ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>) {
-        self.debug_ui(injector, ui);
-    }
-}
-
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
     layouts: LayoutStorage,
@@ -51,7 +38,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     pub pipeline: PipelineWorker,
     pub clock: TClock,
     injector: Injector,
-    processors: Vec<Box<dyn ProcessorExt>>,
+    processors: Vec<Box<dyn Processor>>,
     clock_recv: flume::Receiver<ClockSnapshot>,
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
@@ -299,7 +286,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             })
             .collect::<HashMap<_, _>>();
         self.layout_fader_view.write_dial_values(dial_values);
-        
+
         let button_values = nodes
             .iter()
             .filter_map(|path| {
@@ -443,7 +430,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         &self.injector
     }
 
-    fn add_processor(&mut self, processor: impl DebuggableProcessor + 'static) {
+    fn add_processor(&mut self, processor: impl Processor + 'static) {
         self.processors.push(Box::new(processor));
     }
 
@@ -488,15 +475,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         if let Some(ui) = injector.get_mut::<DebugUiImpl>() {
             tracing::trace!("Update Debug UI");
             let mut render_handle = ui.pre_render();
-            render_handle.draw(|ui, texture_map| {
-                let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
-                let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
-                self.pipeline.debug_ui(ui, &nodes);
-                Self::debug_ui(ui, texture_map, &self.layouts, &self.plans);
-                for processor in self.processors.iter_mut() {
-                    processor.debug_ui(&self.injector, ui);
-                }
-            });
+            render_handle.draw(&self.injector, &self.pipeline);
 
             ui.render();
         }

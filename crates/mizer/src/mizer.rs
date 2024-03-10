@@ -52,6 +52,12 @@ impl Mizer {
             let frame_time = after.duration_since(before);
             histogram.record(frame_time);
             if frame_time <= frame_delay {
+                // MacOS seems to have really inaccurate timers, so we increase the accuracy of spin_sleep
+                #[cfg(target_os = "macos")] {
+                    let sleeper = spin_sleep::SpinSleeper::new(5_000_000);
+                    sleeper.sleep(frame_delay - frame_time);
+                }
+                #[cfg(not(target_os = "macos"))]
                 spin_sleep::sleep(frame_delay - frame_time);
             }
             profiling::finish_frame!();

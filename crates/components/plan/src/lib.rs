@@ -49,7 +49,7 @@ fn default_size() -> f64 {
     1.0
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 #[repr(transparent)]
 pub struct ScreenId(pub u32);
 

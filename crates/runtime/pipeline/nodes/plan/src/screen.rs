@@ -2,6 +2,7 @@ use image::{Pixel, Rgba};
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
+use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
 use mizer_pixel_nodes::texture_to_pixels::TextureToPixelsConverter;
@@ -11,13 +12,14 @@ use mizer_util::ConvertBytes;
 const INPUT_PORT: &str = "Input";
 
 const SCREEN_SETTING: &str = "Screen";
+const PRIORITY_SETTING: &str = "Priority";
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PlanScreenNode {
     pub plan: String,
     pub screen_id: ScreenId,
-    #[serde(skip)]
-    pub plan_storage: Option<PlanStorage>,
+    #[serde(default)]
+    pub priority: FixturePriority,
 }
 
 impl PartialEq for PlanScreenNode {
@@ -26,19 +28,9 @@ impl PartialEq for PlanScreenNode {
     }
 }
 
-impl Default for PlanScreenNode {
-    fn default() -> Self {
-        Self {
-            plan: Default::default(),
-            screen_id: ScreenId(0),
-            plan_storage: None,
-        }
-    }
-}
-
 impl ConfigurableNode for PlanScreenNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let storage = injector.get::<PlanStorage>().unwrap();
+        let storage = injector.inject::<PlanStorage>();
         let plans = storage.read();
         let screens = plans
             .into_iter()
@@ -53,11 +45,15 @@ impl ConfigurableNode for PlanScreenNode {
             })
             .collect();
 
-        vec![setting!(id SCREEN_SETTING, self.screen_id.0, screens)]
+        vec![
+            setting!(id SCREEN_SETTING, self.screen_id.0, screens),
+            setting!(enum PRIORITY_SETTING, self.priority),
+        ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(id setting, SCREEN_SETTING, self.screen_id, ScreenId);
+        update!(enum setting, PRIORITY_SETTING, self.priority);
 
         Ok(())
     }
@@ -165,25 +161,25 @@ impl ProcessingNode for PlanScreenNode {
                         fixture.fixture,
                         FixtureFaderControl::Intensity,
                         color.alpha,
-                        Default::default(),
+                        self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Red),
                         color.red,
-                        Default::default(),
+                        self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Green),
                         color.green,
-                        Default::default(),
+                        self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                         color.blue,
-                        Default::default(),
+                        self.priority,
                     );
                 }
             }

@@ -104,6 +104,18 @@ impl<'a> NodePipelineBuilder<'a> {
             self.context,
             initial_value,
             &format!("{} Uniform Buffer ({})", self.label, label),
+            wgpu::ShaderStages::FRAGMENT,
+        ));
+
+        self
+    }
+
+    pub fn vertex_uniform(mut self, label: &str, initial_value: &[u8]) -> Self {
+        self.uniforms.push(Uniform::new(
+            self.context,
+            initial_value,
+            &format!("{} Uniform Buffer ({})", self.label, label),
+            wgpu::ShaderStages::VERTEX,
         ));
 
         self
@@ -165,14 +177,19 @@ struct Uniform {
 }
 
 impl Uniform {
-    fn new(context: &WgpuContext, initial_value: &[u8], label: &str) -> Self {
+    fn new(
+        context: &WgpuContext,
+        initial_value: &[u8],
+        label: &str,
+        stage: wgpu::ShaderStages,
+    ) -> Self {
         let uniform_bind_group_layout =
             context
                 .device
                 .create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
                     entries: &[wgpu::BindGroupLayoutEntry {
                         binding: 0,
-                        visibility: wgpu::ShaderStages::FRAGMENT,
+                        visibility: stage,
                         ty: wgpu::BindingType::Buffer {
                             ty: wgpu::BufferBindingType::Uniform,
                             has_dynamic_offset: false,

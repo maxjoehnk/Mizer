@@ -12,7 +12,7 @@ impl TransformWgpuPipeline {
         let node_pipeline = NodePipelineBuilder::new(context, "Transform")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .uniform(
+            .vertex_uniform(
                 "Transform Identity Matrix",
                 bytemuck::cast_slice(&[identity]),
             )

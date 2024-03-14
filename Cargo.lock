@@ -272,6 +272,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "async-executor"
+version = "1.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "17ae5ebefcc48e7452b4987947920dac9450be1110cadf34d1b8c116bdbaf97c"
+dependencies = [
+ "async-lock",
+ "async-task",
+ "concurrent-queue",
+ "fastrand",
+ "futures-lite",
+ "slab",
+]
+
+[[package]]
 name = "async-fs"
 version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -482,6 +496,129 @@ name = "base64ct"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8c3c1a368f70d6cf7302d78f8f7093da241fb8e8807c05cc9e51a125895a6d5b"
+
+[[package]]
+name = "bevy_ecs"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b85406d5febbbdbcac4444ef61cd9a816f2f025ed692a3fc5439a32153070304"
+dependencies = [
+ "async-channel",
+ "bevy_ecs_macros",
+ "bevy_ptr",
+ "bevy_reflect",
+ "bevy_tasks",
+ "bevy_utils",
+ "downcast-rs",
+ "fixedbitset 0.4.2",
+ "rustc-hash",
+ "serde",
+ "thiserror",
+ "thread_local",
+]
+
+[[package]]
+name = "bevy_ecs_macros"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a3ce4b65d7c5f1990e729df75cec2ea6e2241b4a0c37b31c281a04c59c11b7b"
+dependencies = [
+ "bevy_macro_utils",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.48",
+]
+
+[[package]]
+name = "bevy_macro_utils"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ac4401c25b197e7c1455a4875a90b61bba047a9e8d290ce029082c818ab1a21c"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "rustc-hash",
+ "syn 2.0.48",
+ "toml_edit 0.21.1",
+]
+
+[[package]]
+name = "bevy_ptr"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "86afa4a88ee06b10fe1e6f28a796ba2eedd16804717cbbb911df0cbb0cd6677b"
+
+[[package]]
+name = "bevy_reflect"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "133dfab8d403d0575eeed9084e85780bbb449dcf75dd687448439117789b40a2"
+dependencies = [
+ "bevy_ptr",
+ "bevy_reflect_derive",
+ "bevy_utils",
+ "downcast-rs",
+ "erased-serde",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
+name = "bevy_reflect_derive"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ce1679a4dfdb2c9ff24ca590914c3cec119d7c9e1b56fa637776913acc030386"
+dependencies = [
+ "bevy_macro_utils",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.48",
+ "uuid 1.7.0",
+]
+
+[[package]]
+name = "bevy_tasks"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b20f243f6fc4c4ba10c2dbff891e947ddae947bb20b263f43e023558b35294bd"
+dependencies = [
+ "async-channel",
+ "async-executor",
+ "async-task",
+ "concurrent-queue",
+ "futures-lite",
+ "wasm-bindgen-futures",
+]
+
+[[package]]
+name = "bevy_utils"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94a06aca1c1863606416b892f4c79e300dbc6211b6690953269051a431c2cca0"
+dependencies = [
+ "ahash",
+ "bevy_utils_proc_macros",
+ "getrandom",
+ "hashbrown 0.14.3",
+ "nonmax",
+ "petgraph 0.6.4",
+ "smallvec",
+ "thiserror",
+ "tracing",
+ "uuid 1.7.0",
+ "web-time",
+]
+
+[[package]]
+name = "bevy_utils_proc_macros"
+version = "0.13.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "31ae98e9c0c08b0f5c90e22cd713201f759b98d4fd570b99867a695f8641859a"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.48",
+]
 
 [[package]]
 name = "bezier-nd"
@@ -2306,6 +2443,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5443807d6dff69373d433ab9ef5378ad8df50ca6298caf15de6e52e24aaf54d5"
 
 [[package]]
+name = "erased-serde"
+version = "0.4.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b73807008a3c7f171cc40312f37d95ef0396e048b5848d775f54b1a4dd4a0d3"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "errno"
 version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3407,6 +3553,7 @@ checksum = "290f1a1d9242c78d09ce40a5e87e7554ee637af1351968159f4952f028f75604"
 dependencies = [
  "ahash",
  "allocator-api2",
+ "serde",
 ]
 
 [[package]]
@@ -4796,6 +4943,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-ecs"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bevy_ecs",
+ "flume 0.11.0",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-envelope-nodes"
 version = "0.1.0"
 dependencies = [
@@ -5058,6 +5215,7 @@ dependencies = [
  "image",
  "infer",
  "mime_guess",
+ "mizer-ecs",
  "mizer-message-bus",
  "mizer-module",
  "mizer-settings",
@@ -5070,6 +5228,7 @@ dependencies = [
  "test-case",
  "tokio",
  "tracing",
+ "tracing-subscriber",
  "uuid 1.7.0",
 ]
 
@@ -6528,6 +6687,12 @@ dependencies = [
  "memchr",
  "minimal-lexical",
 ]
+
+[[package]]
+name = "nonmax"
+version = "0.5.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "610a5acd306ec67f907abe5567859a3c693fb9886eb1f012ab8f2a47bef3db51"
 
 [[package]]
 name = "normalize-line-endings"
@@ -8434,6 +8599,9 @@ name = "smallvec"
 version = "1.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e6ecd384b10a64542d77071bd64bd7b231f4ed5940fba55e98c3de13824cf3d7"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "smartstring"

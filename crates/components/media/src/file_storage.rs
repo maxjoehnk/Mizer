@@ -3,12 +3,13 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
 use uuid::Uuid;
+use mizer_ecs::*;
 
 const DEFAULT_MEDIA_PATH: &str = "media";
 const DEFAULT_THUMBNAIL_PATH: &str = "thumbnails";
 const DEFAULT_TMP_PATH: &str = "tmp";
 
-#[derive(Debug, Clone)]
+#[derive(Resource, Debug, Clone)]
 pub struct FileStorage {
     temp_path: PathBuf,
     media_path: PathBuf,

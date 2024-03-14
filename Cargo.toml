@@ -30,6 +30,7 @@ members = [
     "crates/components/surfaces",
     "crates/components/timecode",
     "crates/components/vector",
+    "crates/ecs",
     "crates/projects",
     "crates/runtime",
     "crates/runtime/clock",

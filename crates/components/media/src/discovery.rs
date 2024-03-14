@@ -1,9 +1,11 @@
-use std::path::PathBuf;
+use std::future::Future;
+use std::path::{Path, PathBuf};
 
 use async_walkdir::WalkDir;
 use futures::{future, FutureExt, StreamExt, TryStreamExt};
 
 use crate::{MediaCreateModel, MediaServer};
+use crate::documents::MediaDocument;
 
 const SUPPORTED_EXTENSIONS: [&str; 13] = [
     // Audio
@@ -13,13 +15,28 @@ const SUPPORTED_EXTENSIONS: [&str; 13] = [
     "avi", "mov", "mp4", "webm", "wmv",
 ];
 
-pub struct MediaDiscovery {
+pub struct MediaDiscovery<T: MediaImporter = MediaServer> {
     walker: MediaWalker,
-    api: MediaServer,
+    api: T,
 }
 
-impl MediaDiscovery {
-    pub fn new<P: Into<PathBuf>>(api: MediaServer, path: P) -> Self {
+pub trait MediaImporter {
+    fn import_file(
+        &self,
+        model: MediaCreateModel,
+        path: PathBuf,
+        source_path: Option<&Path>,
+    ) -> impl Future<Output = anyhow::Result<Option<MediaDocument>>> + Send;
+}
+
+impl MediaImporter for MediaServer {
+    async fn import_file(&self, model: MediaCreateModel, path: PathBuf, source_path: Option<&Path>) -> anyhow::Result<Option<MediaDocument>> {
+        MediaServer::import_file(self, model, path, source_path).await
+    }
+}
+
+impl<T: MediaImporter> MediaDiscovery<T> {
+    pub fn new<P: Into<PathBuf>>(api: T, path: P) -> Self {
         MediaDiscovery {
             walker: MediaWalker::new(path.into()),
             api,

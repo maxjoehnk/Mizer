@@ -26,7 +26,10 @@ mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
 mizer-message-bus = { path = "../../util/bus" }
+mizer-ecs = { path = "../../ecs" }
 shellexpand = "3.1"
 
 [dev-dependencies]
 test-case = "3.3"
+tokio = { version = "1.36", features = ["macros", "rt-multi-thread", "time"] }
+tracing-subscriber = "0.3"

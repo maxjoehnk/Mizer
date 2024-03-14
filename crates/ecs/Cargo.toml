@@ -1,0 +1,11 @@
+[package]
+name = "mizer-ecs"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+bevy_ecs = "0.13"
+anyhow = "1"
+tracing = "0.1"
+flume = "0.11"

@@ -20,6 +20,8 @@ mod import_handler;
 pub mod media_handlers;
 mod module;
 
+pub mod ecs;
+
 #[derive(Clone)]
 #[repr(transparent)]
 pub struct ImportPaths(Arc<RwLock<Vec<PathBuf>>>);

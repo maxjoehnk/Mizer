@@ -9,7 +9,7 @@ impl HsvWgpuPipeline {
         let pipeline = NodePipelineBuilder::new(context, "HSV Texture")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .uniform(
+            .fragment_uniform(
                 "HSV Color Buffer",
                 bytemuck::cast_slice(&[360.0f32, 1.0, 1.0]),
             )

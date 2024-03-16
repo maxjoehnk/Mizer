@@ -9,7 +9,7 @@ impl ColorizeTextureWgpuPipeline {
         let effect_pipeline = NodePipelineBuilder::new(context, "Colorize Texture")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .uniform("Color Buffer", bytemuck::cast_slice(&[1.0f32, 1.0, 1.0]))
+            .fragment_uniform("Color Buffer", bytemuck::cast_slice(&[1.0f32, 1.0, 1.0]))
             .build()?;
 
         Ok(Self { effect_pipeline })

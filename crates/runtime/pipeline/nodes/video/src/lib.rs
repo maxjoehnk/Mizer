@@ -1,5 +1,6 @@
 pub use self::border::*;
 pub use self::colorize::*;
+pub use self::drop_shadow::*;
 pub use self::hsv::*;
 pub use self::image_file::*;
 pub use self::invert::*;
@@ -16,6 +17,7 @@ pub use self::video_file::*;
 
 mod border;
 mod colorize;
+mod drop_shadow;
 mod hsv;
 mod image_file;
 mod invert;

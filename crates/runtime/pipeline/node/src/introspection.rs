@@ -96,6 +96,7 @@ node_type_name! {
         Webcam,
         ScreenCapture,
         TextureBorder,
+        DropShadow,
         Scripting,
         PixelDmx,
         PixelPattern,

@@ -122,6 +122,7 @@ impl PipelineAccess {
             VideoRgb(node) => self.add_node(path, node),
             VideoRgbSplit(node) => self.add_node(path, node),
             TextureBorder(node) => self.add_node(path, node),
+            DropShadow(node) => self.add_node(path, node),
             StaticColor(node) => self.add_node(path, node),
             Invert(node) => self.add_node(path, node),
             VideoText(node) => self.add_node(path, node),

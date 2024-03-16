@@ -695,6 +695,7 @@ fn register_node(
         Node::ColorizeTexture(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::TextureMask(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::TextureOpacity(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::DropShadow(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::LumaKey(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::ColorConstant(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::ColorBrightness(node) => pipeline.register_node(path, &node, pipeline_access),

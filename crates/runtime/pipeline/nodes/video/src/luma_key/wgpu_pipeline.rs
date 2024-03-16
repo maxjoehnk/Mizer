@@ -9,7 +9,7 @@ impl LumaKeyWgpuPipeline {
         let pipeline = NodePipelineBuilder::new(context, "Luma Key")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .uniform("Luma Key Threshold Buffer", bytemuck::cast_slice(&[1.0f32]))
+            .fragment_uniform("Luma Key Threshold Buffer", bytemuck::cast_slice(&[1.0f32]))
             .build()?;
 
         Ok(Self { pipeline })

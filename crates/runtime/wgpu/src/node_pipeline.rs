@@ -99,7 +99,7 @@ impl<'a> NodePipelineBuilder<'a> {
         self
     }
 
-    pub fn uniform(mut self, label: &str, initial_value: &[u8]) -> Self {
+    pub fn fragment_uniform(mut self, label: &str, initial_value: &[u8]) -> Self {
         self.uniforms.push(Uniform::new(
             self.context,
             initial_value,
@@ -116,6 +116,17 @@ impl<'a> NodePipelineBuilder<'a> {
             initial_value,
             &format!("{} Uniform Buffer ({})", self.label, label),
             wgpu::ShaderStages::VERTEX,
+        ));
+
+        self
+    }
+
+    pub fn uniform(mut self, label: &str, initial_value: &[u8]) -> Self {
+        self.uniforms.push(Uniform::new(
+            self.context,
+            initial_value,
+            &format!("{} Uniform Buffer ({})", self.label, label),
+            wgpu::ShaderStages::VERTEX | wgpu::ShaderStages::FRAGMENT,
         ));
 
         self

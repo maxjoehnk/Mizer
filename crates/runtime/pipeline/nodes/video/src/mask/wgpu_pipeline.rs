@@ -10,7 +10,7 @@ impl TextureMaskWgpuPipeline {
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
             .input("Mask Texture")
-            .uniform(
+            .fragment_uniform(
                 "Texture Mask Threshold Buffer",
                 bytemuck::cast_slice(&[1.0f32]),
             )

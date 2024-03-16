@@ -9,7 +9,7 @@ impl RgbWgpuPipeline {
         let node_pipeline = NodePipelineBuilder::new(context, "RGB Texture")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .uniform("Color Buffer", bytemuck::cast_slice(initial))
+            .fragment_uniform("Color Buffer", bytemuck::cast_slice(initial))
             .build()?;
 
         Ok(Self { node_pipeline })

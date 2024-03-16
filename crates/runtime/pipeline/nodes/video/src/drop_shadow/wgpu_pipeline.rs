@@ -3,23 +3,24 @@ use mizer_wgpu::{wgpu, NodePipeline, NodePipelineBuilder, TextureView, WgpuConte
 
 #[derive(Default, Debug, Clone, Copy, PartialEq, bytemuck::Pod, bytemuck::Zeroable)]
 #[repr(C)]
-struct BorderSettings {
+struct ShadowSettings {
     pub color: [f32; 4],
-    pub widths: [f32; 4],
+    pub offsets: [f32; 2],
+    pub _padding: [f32; 2],
 }
 
-pub struct BorderWgpuPipeline {
+pub struct DropShadowWgpuPipeline {
     effect_pipeline: NodePipeline,
 }
 
-impl BorderWgpuPipeline {
+impl DropShadowWgpuPipeline {
     pub fn new(context: &WgpuContext) -> anyhow::Result<Self> {
-        let effect_pipeline = NodePipelineBuilder::new(context, "Border")
+        let effect_pipeline = NodePipelineBuilder::new(context, "Drop Shadow")
             .shader(wgpu::include_wgsl!("shader.wgsl"))
             .input("Source Texture")
-            .fragment_uniform(
-                "Border Settings Buffer",
-                bytemuck::cast_slice(&[BorderSettings::default()]),
+            .uniform(
+                "Drop Shadow Settings Buffer",
+                bytemuck::cast_slice(&[ShadowSettings::default()]),
             )
             .build()?;
 
@@ -30,25 +31,18 @@ impl BorderWgpuPipeline {
         &self,
         context: &WgpuContext,
         color: Color,
-        border_width: f64,
-        (top, right, bottom, left): (bool, bool, bool, bool),
+        (x_offset, y_offset): (f64, f64),
     ) {
-        profiling::scope!("BorderWgpuPipeline::write_params");
-        let vertical_width = border_width as f32 / 1080f32;
-        let horizontal_width = border_width as f32 / 1920f32;
-        let settings = BorderSettings {
+        profiling::scope!("DropShadowWgpuPipeline::write_params");
+        let settings = ShadowSettings {
             color: [
                 color.red as f32,
                 color.green as f32,
                 color.blue as f32,
                 color.alpha as f32,
             ],
-            widths: [
-                left.then_some(horizontal_width).unwrap_or_default(),
-                top.then_some(vertical_width).unwrap_or_default(),
-                1f32 - right.then_some(horizontal_width).unwrap_or_default(),
-                1f32 - bottom.then_some(vertical_width).unwrap_or_default(),
-            ],
+            _padding: Default::default(),
+            offsets: [x_offset as f32, y_offset as f32],
         };
         self.effect_pipeline
             .write_uniform(context, 0, bytemuck::cast_slice(&[settings]));
@@ -60,7 +54,7 @@ impl BorderWgpuPipeline {
         target: &TextureView,
         source: &TextureView,
     ) -> anyhow::Result<wgpu::CommandBuffer> {
-        profiling::scope!("BorderWgpuPipeline::render");
+        profiling::scope!("DropShadowWgpuPipeline::render");
         self.effect_pipeline.render(context, &[source], target)
     }
 }

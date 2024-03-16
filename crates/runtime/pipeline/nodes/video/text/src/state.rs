@@ -1,13 +1,13 @@
 use glyphon::{
-    Attrs, Buffer, Family, FontSystem, Metrics, Resolution, Shaping, SwashCache, TextArea,
-    TextAtlas, TextBounds, TextRenderer,
+    cosmic_text, Attrs, Buffer, Family, FontSystem, Metrics, Resolution, Shaping, SwashCache,
+    TextArea, TextAtlas, TextBounds, TextRenderer,
 };
 
 use mizer_node::Color;
 use mizer_wgpu::wgpu::{CommandBuffer, MultisampleState};
 use mizer_wgpu::{wgpu, TextureHandle, TextureRegistry, TextureView, WgpuContext};
 
-use crate::node::FontWeight;
+use crate::node::{FontWeight, TextAlign};
 
 pub struct TextTextureState {
     pub transfer_texture: TextureHandle,
@@ -24,6 +24,7 @@ pub struct TextStyle<'a> {
     pub font_weight: FontWeight,
     pub italic: bool,
     pub color: Color,
+    pub align: TextAlign,
 }
 
 impl<'a> From<TextStyle<'a>> for Attrs<'a> {
@@ -58,6 +59,16 @@ impl From<FontWeight> for glyphon::Weight {
             FontWeight::Bold => Self::BOLD,
             FontWeight::ExtraBold => Self::EXTRA_BOLD,
             FontWeight::Black => Self::BLACK,
+        }
+    }
+}
+
+impl From<TextAlign> for cosmic_text::Align {
+    fn from(value: TextAlign) -> Self {
+        match value {
+            TextAlign::Start => Self::Left,
+            TextAlign::Middle => Self::Center,
+            TextAlign::End => Self::Right,
         }
     }
 }
@@ -109,12 +120,17 @@ impl TextTextureState {
             &mut self.font_system,
             Metrics::new(text_style.font_size as f32, text_style.font_size as f32),
         );
+        let align = text_style.align.into();
         self.buffer.set_text(
             &mut self.font_system,
             text,
             text_style.into(),
             Shaping::Advanced,
         );
+        for line in self.buffer.lines.iter_mut() {
+            line.set_align(Some(align));
+        }
+        self.buffer.shape_until_scroll(&mut self.font_system);
         self.text_renderer.prepare(
             &context.device,
             &context.queue,

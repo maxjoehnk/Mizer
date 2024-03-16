@@ -22,6 +22,7 @@ const FONT_SETTING: &str = "Font";
 const FONT_SIZE_SETTING: &str = "Font Size";
 const FONT_WEIGHT_SETTING: &str = "Font Weight";
 const ITALIC_SETTING: &str = "Italic";
+const TEXT_ALIGN_SETTING: &str = "Text Align";
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoTextNode {
@@ -30,6 +31,8 @@ pub struct VideoTextNode {
     pub font_size: f64,
     pub italic: bool,
     pub font_weight: FontWeight,
+    #[serde(default)]
+    pub align: TextAlign,
 }
 
 #[derive(
@@ -92,6 +95,32 @@ impl Display for FontWeight {
     }
 }
 
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    PartialEq,
+    Deserialize,
+    Serialize,
+    Sequence,
+    IntoPrimitive,
+    TryFromPrimitive,
+)]
+#[repr(u8)]
+pub enum TextAlign {
+    #[default]
+    Start,
+    Middle,
+    End,
+}
+
+impl Display for TextAlign {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 impl Default for VideoTextNode {
     fn default() -> Self {
         Self {
@@ -100,6 +129,7 @@ impl Default for VideoTextNode {
             font_size: 32.0,
             italic: false,
             font_weight: Default::default(),
+            align: Default::default(),
         }
     }
 }
@@ -119,6 +149,7 @@ impl ConfigurableNode for VideoTextNode {
             setting!(FONT_SIZE_SETTING, self.font_size).max_hint(100.0),
             setting!(enum FONT_WEIGHT_SETTING, self.font_weight),
             setting!(ITALIC_SETTING, self.italic),
+            setting!(enum TEXT_ALIGN_SETTING, self.align),
         ]
     }
 
@@ -128,6 +159,7 @@ impl ConfigurableNode for VideoTextNode {
         update!(float setting, FONT_SIZE_SETTING, self.font_size);
         update!(enum setting, FONT_WEIGHT_SETTING, self.font_weight);
         update!(bool setting, ITALIC_SETTING, self.italic);
+        update!(enum setting, TEXT_ALIGN_SETTING, self.align);
 
         update_fallback!(setting)
     }
@@ -171,7 +203,9 @@ impl ProcessingNode for VideoTextNode {
         };
 
         let color = context.read_port(INPUT_COLOR_PORT).unwrap_or(Color::WHITE);
-        let font_size = context.read_port(INPUT_FONT_SIZE_PORT).unwrap_or(self.font_size);
+        let font_size = context
+            .read_port(INPUT_FONT_SIZE_PORT)
+            .unwrap_or(self.font_size);
 
         if state.is_none() {
             *state = Some(
@@ -192,10 +226,12 @@ impl ProcessingNode for VideoTextNode {
             font_size,
             color,
             italic: self.italic,
+            align: self.align,
         };
 
         let option = context.text_input(INPUT_TEXT_PORT).read();
-        let text = option.as_ref()
+        let text = option
+            .as_ref()
             .map(|text| text.as_str())
             .unwrap_or(&self.text);
 

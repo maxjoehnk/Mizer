@@ -21,6 +21,7 @@ pub struct TextTextureState {
 pub struct TextStyle<'a> {
     pub font_family: &'a str,
     pub font_size: f64,
+    pub line_height: f64,
     pub font_weight: FontWeight,
     pub italic: bool,
     pub color: Color,
@@ -118,7 +119,7 @@ impl TextTextureState {
         profiling::scope!("TextTextureState::draw_text");
         self.buffer.set_metrics(
             &mut self.font_system,
-            Metrics::new(text_style.font_size as f32, text_style.font_size as f32),
+            Metrics::new(text_style.font_size as f32, text_style.line_height as f32),
         );
         let align = text_style.align.into();
         self.buffer.set_text(

@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/settings.dart';
-import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
+import 'package:mizer/settings/hotkeys/keymap.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
+
+const modifierKeys = {
+  "ctrl": HotKeyModifier.control,
+  "cmd": HotKeyModifier.meta,
+  "alt": HotKeyModifier.alt,
+  "shift": HotKeyModifier.shift,
+};
 
 class HotkeyConfiguration extends StatefulWidget {
   final Widget child;
@@ -21,7 +29,7 @@ class HotkeyConfiguration extends StatefulWidget {
 }
 
 class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
-  HotkeyWidgetKey? _hotkeyWidgetKey;
+  List<HotKey> hotkeys = [];
 
   @override
   void didUpdateWidget(HotkeyConfiguration oldWidget) {
@@ -43,26 +51,55 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
   @override
   void initState() {
     super.initState();
-    this._hotkeyWidgetKey = this._hotkeyManager.acquireKey();
     _updateHotkeys();
   }
 
   void _updateHotkeys() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      this._hotkeyManager.setHotkeys(_hotkeyWidgetKey!, widget.hotkeySelector, widget.hotkeyMap);
-    });
-  }
+    Settings settings = context.read<Settings>();
+    if (this.hotkeys.isNotEmpty) {
+      this.hotkeys.forEach((hotkey) {
+        hotKeyManager.unregister(hotkey);
+      });
+    }
+    var hotkeyMappings = widget.hotkeySelector(settings.hotkeys);
 
-  HotkeyManager get _hotkeyManager {
-    return context.read();
+    var hotkeys = hotkeyMappings.map((hotkeyId, hotkeyKeys) {
+      var hotkeyParts = hotkeyKeys
+          .split("+")
+          .map((e) => e.trim())
+          .toSet();
+      var modifiers = hotkeyParts
+          .map((element) => modifierKeys[element])
+          .where((element) => element != null)
+          .map((e) => e!)
+          .toList();
+      var key = hotkeyParts
+          .where((element) => !modifierKeys.containsKey(element))
+          .map((e) => keyMappings[e])
+          .where((element) => element != null)
+          .map((e) => e!)
+          .first;
+      var hotkey = HotKey(key: key, modifiers: modifiers, scope: HotKeyScope.inapp);
+
+      return MapEntry(hotkeyId, hotkey);
+    });
+
+    hotkeys.forEach((hotkeyId, hotkey) {
+      hotKeyManager.register(hotkey, keyDownHandler: (_) {
+        var callback = widget.hotkeyMap[hotkeyId];
+        if (callback != null) {
+          callback();
+        }
+      });
+    });
+
+    this.hotkeys = hotkeys.values.toList();
   }
 
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _hotkeyWidgetKey?.dispose();
-    });
+
   }
 }
 

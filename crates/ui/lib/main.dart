@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:mizer/app.dart';
 import 'package:nativeshell/nativeshell.dart';
 
@@ -11,6 +12,7 @@ import 'windows/smart_window.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await hotKeyManager.unregisterAll();
   await MizerI18n.loadTranslations();
   runApp(MizerIntegratedUi());
 }

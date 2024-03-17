@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:media_kit/media_kit.dart';
 import 'package:mizer/app.dart';
 import 'package:nativeshell/nativeshell.dart';
 
@@ -11,6 +12,7 @@ import 'windows/smart_window.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
   await MizerI18n.loadTranslations();
   runApp(MizerIntegratedUi());
 }

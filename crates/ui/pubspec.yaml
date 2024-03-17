@@ -39,6 +39,9 @@ dependencies:
   vector_math: ^2.1.4
   toggle_switch: ^2.1.0
   change_case: ^2.0.1
+  media_kit: ^1.1.10
+  media_kit_video: ^1.2.4
+  media_kit_libs_video: ^1.0.4
 
 dev_dependencies:
   flutter_test:

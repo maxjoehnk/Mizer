@@ -6,6 +6,8 @@ import 'package:mizer/protos/media.pb.dart';
 import 'previews/image.dart';
 import 'previews/svg.dart';
 
+import 'video_preview.dart';
+
 class MediaPreview extends StatelessWidget {
   final MediaFile file;
 
@@ -19,6 +21,10 @@ class MediaPreview extends StatelessWidget {
 
     if (file.type == MediaType.VECTOR) {
       return SvgPreview(file: file);
+    }
+
+    if (file.type == MediaType.VIDEO) {
+      return VideoPreview(sourcePath: this.file.metadata.sourcePath);
     }
 
     if (!file.hasThumbnailPath()) {

@@ -1,0 +1,18 @@
+= RGB Color
+include::description.adoc[]
+
+image:color/rgb-color/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_color.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_red.adoc[leveloffset=+2]
+include::port_input_green.adoc[leveloffset=+2]
+include::port_input_blue.adoc[leveloffset=+2]

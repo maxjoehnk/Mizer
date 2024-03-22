@@ -1,0 +1,26 @@
+site:
+  title: Mizer Docs
+  start_page: mizer::index.adoc
+content:
+  sources:
+    - url: ../
+      start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./ui
+antora:
+  extensions:
+    - '@antora/lunr-extension'
+asciidoc:
+  attributes:
+    page-pagination: ''
+    experimental: ''
+    idprefix: '@'
+    idseparator: '-@'
+    table-caption: false
+    example-caption: false
+    listing-caption: false
+    hide-uri-scheme: '@'
+

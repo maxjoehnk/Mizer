@@ -1,0 +1,31 @@
+= Video Transform
+include::description.adoc[]
+
+image:video/video-transform/node.png[Node Preview]
+
+== Settings
+
+include::setting_rotate_x.adoc[leveloffset=+2]
+include::setting_rotate_y.adoc[leveloffset=+2]
+include::setting_rotate_z.adoc[leveloffset=+2]
+include::setting_translate_x.adoc[leveloffset=+2]
+include::setting_translate_y.adoc[leveloffset=+2]
+include::setting_translate_z.adoc[leveloffset=+2]
+include::setting_scale_x.adoc[leveloffset=+2]
+include::setting_scale_y.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]
+include::port_input_rotate_x.adoc[leveloffset=+2]
+include::port_input_rotate_y.adoc[leveloffset=+2]
+include::port_input_rotate_z.adoc[leveloffset=+2]
+include::port_input_translate_x.adoc[leveloffset=+2]
+include::port_input_translate_y.adoc[leveloffset=+2]
+include::port_input_translate_z.adoc[leveloffset=+2]
+include::port_input_scale_x.adoc[leveloffset=+2]
+include::port_input_scale_y.adoc[leveloffset=+2]

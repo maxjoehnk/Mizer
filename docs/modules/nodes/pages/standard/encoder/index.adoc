@@ -1,0 +1,19 @@
+= Encoder
+include::description.adoc[]
+
+image:standard/encoder/node.png[Node Preview]
+
+== Settings
+
+include::setting_hold_rate.adoc[leveloffset=+2]
+include::setting_hold.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_increase.adoc[leveloffset=+2]
+include::port_input_decrease.adoc[leveloffset=+2]
+include::port_input_reset.adoc[leveloffset=+2]

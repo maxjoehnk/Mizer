@@ -1,0 +1,17 @@
+= MQTT Input
+include::description.adoc[]
+
+image:connections/mqtt-input/node.png[Node Preview]
+
+== Settings
+
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_path.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+

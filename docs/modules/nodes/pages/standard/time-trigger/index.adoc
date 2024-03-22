@@ -1,0 +1,18 @@
+= Time Trigger
+include::description.adoc[]
+
+image:standard/time-trigger/node.png[Node Preview]
+
+== Settings
+
+include::setting_second.adoc[leveloffset=+2]
+include::setting_minute.adoc[leveloffset=+2]
+include::setting_hour.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+

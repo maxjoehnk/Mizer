@@ -1,0 +1,23 @@
+= Oscillator
+include::description.adoc[]
+
+image:standard/oscillator/node.png[Node Preview]
+
+== Settings
+
+include::setting_type.adoc[leveloffset=+2]
+include::setting_interval.adoc[leveloffset=+2]
+include::setting_min.adoc[leveloffset=+2]
+include::setting_max.adoc[leveloffset=+2]
+include::setting_offset.adoc[leveloffset=+2]
+include::setting_reverse.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_interval.adoc[leveloffset=+2]
+include::port_input_min.adoc[leveloffset=+2]
+include::port_input_max.adoc[leveloffset=+2]

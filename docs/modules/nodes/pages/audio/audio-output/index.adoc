@@ -1,0 +1,16 @@
+= Audio Output
+include::description.adoc[]
+
+image:audio/audio-output/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_stereo.adoc[leveloffset=+2]

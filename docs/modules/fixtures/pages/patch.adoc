@@ -1,0 +1,4 @@
+= Fixture Patch
+
+.Fixture Patch
+image::fixtures:patch.png[]

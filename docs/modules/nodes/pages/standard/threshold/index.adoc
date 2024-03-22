@@ -1,0 +1,19 @@
+= Threshold
+include::description.adoc[]
+
+image:standard/threshold/node.png[Node Preview]
+
+== Settings
+
+include::setting_lower_threshold.adoc[leveloffset=+2]
+include::setting_upper_threshold.adoc[leveloffset=+2]
+include::setting_inactive_value.adoc[leveloffset=+2]
+include::setting_active_value.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]

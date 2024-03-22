@@ -1,0 +1,17 @@
+= Math
+include::description.adoc[]
+
+image:standard/math/node.png[Node Preview]
+
+== Settings
+
+include::setting_mode.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_lhs.adoc[leveloffset=+2]
+include::port_input_rhs.adoc[leveloffset=+2]

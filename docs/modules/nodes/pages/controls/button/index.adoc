@@ -1,0 +1,20 @@
+= Button
+include::description.adoc[]
+
+image:controls/button/node.png[Node Preview]
+
+== Settings
+
+include::setting_toggle.adoc[leveloffset=+2]
+include::setting_high_value.adoc[leveloffset=+2]
+include::setting_low_value.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]
+include::port_input_set.adoc[leveloffset=+2]
+include::port_input_reset.adoc[leveloffset=+2]

@@ -1,0 +1,22 @@
+= Texture Border
+include::description.adoc[]
+
+image:video/texture-border/node.png[Node Preview]
+
+== Settings
+
+include::setting_border_width.adoc[leveloffset=+2]
+include::setting_top_border.adoc[leveloffset=+2]
+include::setting_right_border.adoc[leveloffset=+2]
+include::setting_bottom_border.adoc[leveloffset=+2]
+include::setting_left_border.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]
+include::port_input_color.adoc[leveloffset=+2]
+include::port_input_border_width.adoc[leveloffset=+2]

@@ -1,53 +1,46 @@
 from os import listdir
 from os.path import isdir, join
 
-
-def rootIndexTemplate(categories):
-    return f"""= Nodes
-:toc:
-:toclevels: 2
-ifndef::imagesdir[:imagesdir: ../]
-
-{concatList(categories, 1)}
-"""
-
-
-def categoryIndexTemplate(category, categories):
-    return f"""= {category.title()}
-ifndef::imagesdir[:imagesdir: ../../]
-
-{concatList(categories, 1)}
-"""
-
-
-def includeTemplate(offset):
-    return lambda category: f"""include::{category}/index.adoc[leveloffset=+{offset}]"""
-
-
-def concatList(entries, offset):
-    return "\n".join(map(includeTemplate(offset), entries))
-
+nodesDir = "modules/nodes/pages"
 
 def generateIndexFile():
-    path = "nodes"
+    path = nodesDir
     directories = [f for f in listdir(path) if isdir(join(path, f))]
     directories.sort()
     fileContent = rootIndexTemplate(directories)
-    with open(join(path, "index.adoc"), "w", encoding="utf-8") as file:
+    with open(join("modules/nodes", "nav.adoc"), "w", encoding="utf-8") as file:
         file.write(fileContent)
 
 
-def generateCategoryFile(category):
-    path = f"nodes/{category}"
+def rootIndexTemplate(categories):
+    return f""".Nodes
+{buildCategories(categories)}
+"""
+
+
+def buildCategories(categories):
+    return "\n".join(map(generateCategoryContent, categories))
+
+
+def generateCategoryContent(category):
+    path = join(nodesDir, category)
     directories = [f for f in listdir(path) if isdir(join(path, f))]
     directories.sort()
-    fileContent = categoryIndexTemplate(category, directories)
-    with open(join(path, "index.adoc"), "w", encoding="utf-8") as file:
-        file.write(fileContent)
+    return categoryIndexTemplate(category, directories)
+
+
+def categoryIndexTemplate(category, categories):
+    return f"""* {category.title()}
+{concatNodes(category, categories)}
+"""
+
+
+def concatNodes(category, entries):
+    return "\n".join(map(includeTemplate(category), entries))
+
+
+def includeTemplate(category):
+    return lambda node: f"""** xref:nodes:{category}/{node}/index.adoc[]"""
 
 
 generateIndexFile()
-directories = [f for f in listdir("nodes") if isdir(join("nodes", f))]
-
-for category in directories:
-    generateCategoryFile(category)

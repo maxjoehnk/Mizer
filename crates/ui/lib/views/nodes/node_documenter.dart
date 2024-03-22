@@ -10,21 +10,26 @@ import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 Future documentNode(BuildContext context, BaseNodeState nodeState) async {
   String path = _getPath(nodeState);
   await _createDirectory(path);
-  await _createIndexIfNotExists(nodeState, path);
+  await _createIndex(nodeState, path);
   await _createDescriptionIfNotExists(nodeState, path);
   await _createNonExistentSettings(nodeState, path);
   await _createNonExistentInputs(nodeState, path);
   await _createNonExistentOutputs(nodeState, path);
 
-  _screenshotNode(context, nodeState, path);
+  _screenshotNode(context, nodeState);
+}
+
+String _getBasePath() {
+  var cwd = Directory.current;
+  var basePath = "${cwd.path}/docs/modules/nodes";
+  return basePath;
 }
 
 String _getPath(BaseNodeState nodeState) {
-  var cwd = Directory.current;
-  var basePath = "${cwd.path}/docs";
+  var basePath = _getBasePath();
   var category = _getCategory(nodeState);
   var name = _getPathName(nodeState);
-  var path = "$basePath/nodes/$category/$name";
+  var path = "$basePath/pages/$category/$name";
 
   return path;
 }
@@ -37,8 +42,11 @@ Future _createDirectory(String path) async {
   await Directory(path).create(recursive: true);
 }
 
-void _screenshotNode(BuildContext context, BaseNodeState nodeState, String path) async {
-  var imagesPath = "$path/images";
+void _screenshotNode(BuildContext context, BaseNodeState nodeState) async {
+  var basePath = _getBasePath();
+  var category = _getCategory(nodeState);
+  var name = _getPathName(nodeState);
+  var imagesPath = "$basePath/images/$category/$name";
   await _createDirectory(imagesPath);
   final ui.Image image = await nodeState.screenshot();
   final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
@@ -47,7 +55,7 @@ void _screenshotNode(BuildContext context, BaseNodeState nodeState, String path)
   await file.writeAsBytes(pngBytes);
 }
 
-Future _createIndexIfNotExists(BaseNodeState nodeState, String path) async {
+Future _createIndex(BaseNodeState nodeState, String path) async {
   var indexPath = "$path/index.adoc";
   await File(indexPath).writeAsString(_indexTemplate(nodeState));
 }
@@ -72,26 +80,21 @@ String _indexTemplate(BaseNodeState nodeState) {
   List<String> outputs = _listOutputIncludes(nodeState);
 
   return """= ${nodeState.node.details.nodeTypeName}
-:toc:
-:toclevels: 3
-ifndef::imagesdir[:imagesdir: ../../../]
-
-image::nodes/$categoryName/$nodeName/images/node.png[Node Preview,300]
-
 include::description.adoc[]
+
+image:$categoryName/$nodeName/node.png[Node Preview]
 
 == Settings
 
 ${settings.map((p) => "include::$p[leveloffset=+2]").join("\n")}
 
-== Ports
-=== Outputs
+== Outputs
 
-${outputs.map((p) => "include::$p[leveloffset=+3]").join("\n")}
+${outputs.map((p) => "include::$p[leveloffset=+2]").join("\n")}
 
-=== Inputs
+== Inputs
 
-${inputs.map((p) => "include::$p[leveloffset=+3]").join("\n")}
+${inputs.map((p) => "include::$p[leveloffset=+2]").join("\n")}
 """;
 }
 

@@ -1,0 +1,16 @@
+= Container
+include::description.adoc[]
+
+image:standard/container/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+
+
+== Inputs
+
+

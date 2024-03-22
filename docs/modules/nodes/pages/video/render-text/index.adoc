@@ -1,0 +1,25 @@
+= Render Text
+include::description.adoc[]
+
+image:video/render-text/node.png[Node Preview]
+
+== Settings
+
+include::setting_text.adoc[leveloffset=+2]
+include::setting_font.adoc[leveloffset=+2]
+include::setting_font_size.adoc[leveloffset=+2]
+include::setting_line_height.adoc[leveloffset=+2]
+include::setting_font_weight.adoc[leveloffset=+2]
+include::setting_italic.adoc[leveloffset=+2]
+include::setting_text_align.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_color.adoc[leveloffset=+2]
+include::port_input_font_size.adoc[leveloffset=+2]
+include::port_input_line_height.adoc[leveloffset=+2]
+include::port_input_text.adoc[leveloffset=+2]

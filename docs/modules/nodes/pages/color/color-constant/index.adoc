@@ -1,0 +1,19 @@
+= Color Constant
+include::description.adoc[]
+
+image:color/color-constant/node.png[Node Preview]
+
+== Settings
+
+include::setting_mode.adoc[leveloffset=+2]
+include::setting_red.adoc[leveloffset=+2]
+include::setting_green.adoc[leveloffset=+2]
+include::setting_blue.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_color.adoc[leveloffset=+2]
+
+== Inputs
+
+

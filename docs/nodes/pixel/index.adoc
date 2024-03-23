@@ -1,7 +1,0 @@
-= Pixel
-ifndef::imagesdir[:imagesdir: ../../]
-
-include::dmx-pixels/index.adoc[leveloffset=+1]
-include::pattern-generator/index.adoc[leveloffset=+1]
-include::pixel-dmx/index.adoc[leveloffset=+1]
-include::pixel-pattern/index.adoc[leveloffset=+1]

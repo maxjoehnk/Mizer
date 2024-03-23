@@ -1,0 +1,21 @@
+= Video File
+include::description.adoc[]
+
+image:video/video-file/node.png[Node Preview]
+
+== Settings
+
+include::setting_file.adoc[leveloffset=+2]
+include::setting_playback_speed.adoc[leveloffset=+2]
+include::setting_sync_to_transport_state.adoc[leveloffset=+2]
+include::setting_render_when_stopped.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+include::port_output_playback.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_playback.adoc[leveloffset=+2]
+include::port_input_playback_speed.adoc[leveloffset=+2]

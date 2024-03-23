@@ -1,0 +1,16 @@
+= Label
+include::description.adoc[]
+
+image:controls/label/node.png[Node Preview]
+
+== Settings
+
+include::setting_text.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_text.adoc[leveloffset=+2]

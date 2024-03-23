@@ -1,0 +1,16 @@
+= Value
+include::description.adoc[]
+
+image:data/value/node.png[Node Preview]
+
+== Settings
+
+include::setting_value.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+

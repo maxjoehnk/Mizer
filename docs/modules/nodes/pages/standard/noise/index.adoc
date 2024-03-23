@@ -1,0 +1,17 @@
+= Noise
+include::description.adoc[]
+
+image:standard/noise/node.png[Node Preview]
+
+== Settings
+
+include::setting_tick_rate.adoc[leveloffset=+2]
+include::setting_fade.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+

@@ -1,0 +1,23 @@
+= MIDI Output
+include::description.adoc[]
+
+image:connections/midi-output/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+include::setting_binding.adoc[leveloffset=+2]
+include::setting_mode.adoc[leveloffset=+2]
+include::setting_channel.adoc[leveloffset=+2]
+include::setting_port.adoc[leveloffset=+2]
+include::setting_range_from.adoc[leveloffset=+2]
+include::setting_range_to.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]
+include::port_input_color.adoc[leveloffset=+2]

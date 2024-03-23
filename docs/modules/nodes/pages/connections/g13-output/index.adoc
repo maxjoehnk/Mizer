@@ -1,0 +1,20 @@
+= G13 Output
+include::description.adoc[]
+
+image:connections/g13-output/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_key_color.adoc[leveloffset=+2]
+include::port_input_m1.adoc[leveloffset=+2]
+include::port_input_m2.adoc[leveloffset=+2]
+include::port_input_m3.adoc[leveloffset=+2]
+include::port_input_mr.adoc[leveloffset=+2]

@@ -1,0 +1,4 @@
+.Fixtures
+* xref:fixtures:patch.adoc[]
+* xref:fixtures:programmer.adoc[]
+* xref:fixtures:plan.adoc[]

@@ -75,7 +75,7 @@ fn generate_settings(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Result
 
 fn list_nodes() -> anyhow::Result<Vec<PathBuf>> {
     let mut nodes = Vec::new();
-    for category in fs::read_dir("nodes")? {
+    for category in fs::read_dir("modules/nodes/pages")? {
         let category = category?;
         let path = category.path();
         if path.is_dir() {

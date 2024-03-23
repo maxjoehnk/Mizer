@@ -1,0 +1,17 @@
+= Audio Volume
+include::description.adoc[]
+
+image:audio/audio-volume/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_stereo.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_volume.adoc[leveloffset=+2]
+include::port_input_stereo.adoc[leveloffset=+2]

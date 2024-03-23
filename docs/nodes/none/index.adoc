@@ -1,5 +1,0 @@
-= None
-ifndef::imagesdir[:imagesdir: ../../]
-
-include::programmer/index.adoc[leveloffset=+1]
-include::transport/index.adoc[leveloffset=+1]

@@ -1,0 +1,18 @@
+= Audio Meter
+include::description.adoc[]
+
+image:audio/audio-meter/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_volume.adoc[leveloffset=+2]
+include::port_output_volume_l_.adoc[leveloffset=+2]
+include::port_output_volume_r_.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_stereo.adoc[leveloffset=+2]

@@ -1,0 +1,18 @@
+= Video Output
+include::description.adoc[]
+
+image:video/video-output/node.png[Node Preview]
+
+== Settings
+
+include::setting_fullscreen.adoc[leveloffset=+2]
+include::setting_screen.adoc[leveloffset=+2]
+include::setting_window_name.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]

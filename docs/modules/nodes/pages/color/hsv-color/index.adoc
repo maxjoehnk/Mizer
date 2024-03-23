@@ -1,0 +1,18 @@
+= HSV Color
+include::description.adoc[]
+
+image:color/hsv-color/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_color.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_hue.adoc[leveloffset=+2]
+include::port_input_saturation.adoc[leveloffset=+2]
+include::port_input_value.adoc[leveloffset=+2]

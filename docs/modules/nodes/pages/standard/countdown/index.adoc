@@ -1,0 +1,20 @@
+= Countdown
+include::description.adoc[]
+
+image:standard/countdown/node.png[Node Preview]
+
+== Settings
+
+include::setting_seconds.adoc[leveloffset=+2]
+include::setting_minutes.adoc[leveloffset=+2]
+include::setting_hours.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_active.adoc[leveloffset=+2]
+include::port_output_finished.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_start.adoc[leveloffset=+2]
+include::port_input_stop.adoc[leveloffset=+2]

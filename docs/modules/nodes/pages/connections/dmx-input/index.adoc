@@ -1,0 +1,18 @@
+= DMX Input
+include::description.adoc[]
+
+image:connections/dmx-input/node.png[Node Preview]
+
+== Settings
+
+include::setting_connection.adoc[leveloffset=+2]
+include::setting_universe.adoc[leveloffset=+2]
+include::setting_channel.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+

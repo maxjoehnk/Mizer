@@ -1,0 +1,8 @@
+= Fixture 2D Plan
+
+The 2D Plan allows you to align your fixtures in a 2D space.
+This is useful for creating a floor plan of your venue and placing fixtures in their correct positions.
+
+You can create multiple 2D plans for different areas or views of the setup.
+
+image::plan.png[]

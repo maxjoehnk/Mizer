@@ -1,1 +1,15 @@
 = Sequencer
+
+image::sequencer.png[]
+
+== Cue List
+
+image::sequencer_cue_list.png[]
+
+== Track Sheet
+
+image::sequencer_track_sheet.png[]
+
+== Sequence Settings
+
+image::sequencer_settings.png[]

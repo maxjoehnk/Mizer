@@ -17,7 +17,7 @@ with Mizer() as mizer:
     infrastructure.interactions.take_screenshot('../docs/screenshots/layout.png')
 
     open_view(View.PLAN)
-    infrastructure.interactions.take_screenshot('../docs/screenshots/plan.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/fixtures/images/plan.png')
 
     open_view(View.NODES)
     infrastructure.interactions.move_to_center()
@@ -36,25 +36,25 @@ with Mizer() as mizer:
     infrastructure.interactions.click_on_text('7')
     infrastructure.interactions.click_on_text('8')
     infrastructure.interactions.click_on_text('9')
-    infrastructure.interactions.take_screenshot('../docs/screenshots/programmer.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/fixtures/images/programmer.png')
 
     open_view(View.PRESETS)
-    infrastructure.interactions.take_screenshot('../docs/screenshots/presets.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/fixtures/images/presets.png')
 
     open_view(View.CONNECTIONS)
     infrastructure.interactions.take_screenshot('../docs/screenshots/connections.png')
 
     open_view(View.PATCH)
-    infrastructure.interactions.take_screenshot('../docs/screenshots/patch.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/fixtures/images/patch.png')
 
     open_view(View.SEQUENCER)
-    infrastructure.interactions.take_screenshot('../docs/screenshots/sequencer.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/sequencer/images/sequencer.png')
 
     infrastructure.interactions.click_on_text('Strobe')
-    infrastructure.interactions.take_screenshot('../docs/screenshots/sequencer_cue_list.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/sequencer/images/sequencer_cue_list.png')
 
     infrastructure.interactions.click_on_text('Sequence Settings')
-    infrastructure.interactions.take_screenshot('../docs/screenshots/sequencer_settings.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/sequencer/images/sequencer_settings.png')
 
     infrastructure.interactions.click_on_text('Track Sheet')
-    infrastructure.interactions.take_screenshot('../docs/screenshots/sequencer_track_sheet.png')
+    infrastructure.interactions.take_screenshot('../docs/modules/sequencer/images/sequencer_track_sheet.png')

@@ -2,7 +2,8 @@
   "name": "mizer-docs",
   "version": "1.0.0",
   "scripts": {
-    "build": "antora generate antora-playbook.yml"
+    "build": "antora generate antora-playbook.yml",
+    "serve": "http-server build/site"
   },
   "repository": {
     "type": "git",
@@ -11,7 +12,8 @@
   "private": true,
   "devDependencies": {
     "@antora/cli": "3.1.7",
-    "@antora/site-generator": "3.1.7"
+    "@antora/site-generator": "3.1.7",
+    "http-server": "^14.1.1"
   },
   "dependencies": {
     "@antora/lunr-extension": "^1.0.0-alpha.8"

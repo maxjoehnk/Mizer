@@ -1,0 +1,18 @@
+= Color to HSV
+include::description.adoc[]
+
+image:color/color-to-hsv/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_hue.adoc[leveloffset=+2]
+include::port_output_saturation.adoc[leveloffset=+2]
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_color.adoc[leveloffset=+2]

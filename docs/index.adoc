@@ -1,6 +1,0 @@
-= Mizer
-:toc:
-:toclevels: 3
-:imagesdir: ./
-
-include::nodes/index.adoc[leveloffset=+1]

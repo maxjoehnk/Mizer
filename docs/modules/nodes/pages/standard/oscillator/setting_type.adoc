@@ -1,0 +1,21 @@
+= Oscillator Type
+ifndef::imagesdir[:imagesdir: ../../../]
+
+Specify the type of the oscillator.
+
+== Sine
+
+image:standard/oscillator/sine.png[Sine Preview,200]
+
+== Saw
+
+image:standard/oscillator/saw.png[Saw Preview,200]
+
+== Square
+
+image:standard/oscillator/square.png[Square Preview, 200]
+
+== Triangle
+
+image:standard/oscillator/triangle.png[Triangle Preview, 200]
+

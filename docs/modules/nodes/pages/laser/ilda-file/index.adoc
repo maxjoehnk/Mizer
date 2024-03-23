@@ -1,0 +1,16 @@
+= ILDA File
+include::description.adoc[]
+
+image:laser/ilda-file/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_frames.adoc[leveloffset=+2]
+
+== Inputs
+
+

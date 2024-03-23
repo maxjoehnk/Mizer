@@ -1,0 +1,17 @@
+= Dial
+include::description.adoc[]
+
+image:controls/dial/node.png[Node Preview]
+
+== Settings
+
+include::setting_start_value.adoc[leveloffset=+2]
+include::setting_end_value.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]

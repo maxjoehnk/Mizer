@@ -1,0 +1,16 @@
+= Vector File
+include::description.adoc[]
+
+image:vector/vector-file/node.png[Node Preview]
+
+== Settings
+
+include::setting_file.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_vector.adoc[leveloffset=+2]
+
+== Inputs
+
+

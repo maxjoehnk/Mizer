@@ -1,0 +1,12 @@
+= Getting Started
+:experimental:
+
+Open a new project
+
+== Project Management
+
+New projects can be created via the menu:[ File > New Project ] Menu.
+
+Opening projects can be done via the menu:[File > Open Project] Menu.
+
+The last 10 projects can be opened via the menu:[File > Open Recent] Menu.

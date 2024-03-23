@@ -1,0 +1,20 @@
+= DMX Pixels
+include::description.adoc[]
+
+image:pixel/dmx-pixels/node.png[Node Preview]
+
+== Settings
+
+include::setting_output.adoc[leveloffset=+2]
+include::setting_width.adoc[leveloffset=+2]
+include::setting_height.adoc[leveloffset=+2]
+include::setting_start_universe.adoc[leveloffset=+2]
+include::setting_pixels_per_universe.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]

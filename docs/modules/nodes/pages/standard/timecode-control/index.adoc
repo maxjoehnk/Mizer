@@ -1,0 +1,18 @@
+= Timecode Control
+include::description.adoc[]
+
+image:standard/timecode-control/node.png[Node Preview]
+
+== Settings
+
+include::setting_timecode.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_clock.adoc[leveloffset=+2]
+include::port_input_playback.adoc[leveloffset=+2]
+include::port_input_recording.adoc[leveloffset=+2]

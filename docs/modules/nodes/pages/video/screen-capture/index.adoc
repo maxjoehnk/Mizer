@@ -1,0 +1,16 @@
+= Screen Capture
+include::description.adoc[]
+
+image:video/screen-capture/node.png[Node Preview]
+
+== Settings
+
+include::setting_screen.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+

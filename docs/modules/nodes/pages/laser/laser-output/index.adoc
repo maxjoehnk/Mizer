@@ -1,0 +1,16 @@
+= Laser Output
+include::description.adoc[]
+
+image:laser/laser-output/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_frames.adoc[leveloffset=+2]

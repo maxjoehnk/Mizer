@@ -1,0 +1,16 @@
+= NDI Input
+include::description.adoc[]
+
+image:video/ndi-input/node.png[Node Preview]
+
+== Settings
+
+include::setting_source.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+

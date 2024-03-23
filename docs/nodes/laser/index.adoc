@@ -1,5 +1,0 @@
-= Laser
-ifndef::imagesdir[:imagesdir: ../../]
-
-include::ilda-file/index.adoc[leveloffset=+1]
-include::laser-output/index.adoc[leveloffset=+1]

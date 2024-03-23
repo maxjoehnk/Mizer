@@ -1,7 +1,0 @@
-= Data
-ifndef::imagesdir[:imagesdir: ../../]
-
-include::data-file/index.adoc[leveloffset=+1]
-include::extract/index.adoc[leveloffset=+1]
-include::template/index.adoc[leveloffset=+1]
-include::value/index.adoc[leveloffset=+1]

@@ -1,0 +1,21 @@
+= Transport
+include::description.adoc[]
+
+image:none/transport/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_tempo.adoc[leveloffset=+2]
+include::port_output_playing.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_tap.adoc[leveloffset=+2]
+include::port_input_play.adoc[leveloffset=+2]
+include::port_input_pause.adoc[leveloffset=+2]
+include::port_input_stop.adoc[leveloffset=+2]
+include::port_input_tempo.adoc[leveloffset=+2]

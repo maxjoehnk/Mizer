@@ -1,0 +1,17 @@
+= Conditional
+include::description.adoc[]
+
+image:standard/conditional/node.png[Node Preview]
+
+== Settings
+
+include::setting_threshold.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_value.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_condition.adoc[leveloffset=+2]
+include::port_input_value.adoc[leveloffset=+2]

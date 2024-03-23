@@ -1,0 +1,21 @@
+= Audio File
+include::description.adoc[]
+
+image:audio/audio-file/node.png[Node Preview]
+
+== Settings
+
+include::setting_playback_mode.adoc[leveloffset=+2]
+include::setting_file.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_playback.adoc[leveloffset=+2]
+include::port_output_timecode.adoc[leveloffset=+2]
+include::port_output_stereo.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_playback.adoc[leveloffset=+2]
+include::port_input_pause.adoc[leveloffset=+2]
+include::port_input_timecode.adoc[leveloffset=+2]

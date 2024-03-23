@@ -1,0 +1,17 @@
+= Comparison
+include::description.adoc[]
+
+image:standard/comparison/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+include::port_output_result.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_lhs.adoc[leveloffset=+2]
+include::port_input_rhs.adoc[leveloffset=+2]

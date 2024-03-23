@@ -1,0 +1,28 @@
+= Programmer
+include::description.adoc[]
+
+image:none/programmer/node.png[Node Preview]
+
+== Settings
+
+
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_intensity.adoc[leveloffset=+2]
+include::port_input_shutter.adoc[leveloffset=+2]
+include::port_input_color.adoc[leveloffset=+2]
+include::port_input_pan.adoc[leveloffset=+2]
+include::port_input_tilt.adoc[leveloffset=+2]
+include::port_input_focus.adoc[leveloffset=+2]
+include::port_input_zoom.adoc[leveloffset=+2]
+include::port_input_prism.adoc[leveloffset=+2]
+include::port_input_iris.adoc[leveloffset=+2]
+include::port_input_frost.adoc[leveloffset=+2]
+include::port_input_gobo.adoc[leveloffset=+2]
+include::port_input_highlight.adoc[leveloffset=+2]
+include::port_input_clear.adoc[leveloffset=+2]

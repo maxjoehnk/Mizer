@@ -6272,7 +6272,7 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=bdff6f7#bdff6f70f21bab3744352f158db02eceffb7761e"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=94a16e8#94a16e84ab5d11d9be0e4b13c86a30e68645c0eb"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -6320,7 +6320,7 @@ dependencies = [
 [[package]]
 name = "nativeshell_build"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=bdff6f7#bdff6f70f21bab3744352f158db02eceffb7761e"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=94a16e8#94a16e84ab5d11d9be0e4b13c86a30e68645c0eb"
 dependencies = [
  "base64 0.13.1",
  "cargo-emit",

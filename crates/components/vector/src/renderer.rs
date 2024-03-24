@@ -1,3 +1,4 @@
+use std::num::NonZeroUsize;
 use std::time::{Duration, Instant};
 
 use parking_lot::Mutex;
@@ -19,6 +20,7 @@ impl VectorWgpuRenderer {
                 antialiasing_support: AaSupport::all(),
                 surface_format: None,
                 use_cpu: false,
+                num_init_threads: Some(NonZeroUsize::new(1).unwrap()),
             },
         )
         .map_err(|err| anyhow::anyhow!("{err:?}"))?;

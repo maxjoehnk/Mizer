@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use std::sync::mpsc::Receiver;
 
 use wgpu::SurfaceTexture;
@@ -9,8 +10,8 @@ use crate::{TextureView, WgpuContext};
 use super::event_loop::*;
 
 pub struct WindowRef {
-    pub(crate) window: winit::window::Window,
-    pub(crate) surface: wgpu::Surface,
+    pub(crate) window: Arc<winit::window::Window>,
+    pub(crate) surface: wgpu::Surface<'static>,
     pub(crate) surface_config: wgpu::SurfaceConfiguration,
     pub(crate) events: Receiver<WindowEvent>,
 }

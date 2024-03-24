@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use std::sync::mpsc::Sender;
 
 use dashmap::DashMap;
@@ -43,7 +44,8 @@ impl EventLoopHandle {
             .with_title(title.unwrap_or("Mizer"))
             .build(&self.event_loop)
             .unwrap();
-        let surface = unsafe { context.instance.create_surface(&window) }?;
+        let window = Arc::new(window);
+        let surface = context.instance.create_surface(Arc::clone(&window))?;
         let surface_caps = surface.get_capabilities(&context.adapter);
         let surface_format = surface_caps
             .formats
@@ -59,6 +61,7 @@ impl EventLoopHandle {
             present_mode: PresentMode::Immediate,
             alpha_mode: surface_caps.alpha_modes[0],
             view_formats: vec![],
+            desired_maximum_frame_latency: 2,
         };
         surface.configure(&context.device, &config);
         self.window_event_sender.insert(window.id(), tx);
@@ -79,7 +82,7 @@ impl EventLoopHandle {
             .unwrap();
         self.window_event_sender.insert(window.id(), tx);
 
-        Ok(RawWindowRef { window, events: rx })
+        Ok(RawWindowRef { window: Arc::new(window), events: rx })
     }
 
     pub fn available_screens(&self) -> Vec<Screen> {

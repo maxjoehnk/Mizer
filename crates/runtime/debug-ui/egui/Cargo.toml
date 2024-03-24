@@ -6,9 +6,9 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-egui = "0.25"
-egui-winit = "0.25"
-egui-wgpu = { version = "0.25", features = ["winit"] }
+egui = "0.27"
+egui-winit = "0.27"
+egui-wgpu = { version = "0.27", features = ["winit"] }
 winit = "0.29"
 image = "0.24"
 tracing = "0.1"
@@ -18,6 +18,6 @@ futures = { version = "0.3", features = ["executor"] }
 mizer-wgpu = { path = "../../wgpu" }
 mizer-debug-ui = { path = ".." }
 mizer-module = { path = "../../module" }
-egui_plot = "0.25"
-egui_tracing = { git = "https://github.com/zakarumych/egui_tracing.git", rev = "f35ee86" }
-egui_tiles = "0.6"
+egui_plot = "0.27"
+egui_tracing = "0.2.2"
+egui_tiles = "0.8"

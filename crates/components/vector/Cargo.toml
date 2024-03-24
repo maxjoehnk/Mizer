@@ -6,10 +6,10 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-vello = { git = "https://github.com/linebender/vello", features = ["wgpu"] }
-vello_svg = { git = "https://github.com/linebender/vello" }
+vello = { version = "0.1", features = ["wgpu"] }
+vello_svg = "0.1"
 mizer-wgpu = { path = "../../runtime/wgpu" }
 mizer-module = { path = "../../runtime/module"}
 mizer-processing = { path = "../../runtime/processing"}
 parking_lot = "0.12"
-usvg = "0.37"
+usvg = "0.40"

@@ -10,7 +10,7 @@ anyhow = "1"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
 rayon = "1.9"
-hard-xml = "1.34"
+hard-xml = "1.36"
 custom_derive = "0.1"
 enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch = "feature/better-error-reporting" }
 htmlentity = "1.3"

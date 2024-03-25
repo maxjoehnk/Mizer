@@ -30,7 +30,7 @@ mizer-status-bus = { path = "status" }
 profiling = "1.0"
 serde = { version = "1", features = ["derive"] }
 tracing = "0.1"
-tracing-unwrap = "0.10"
+tracing-unwrap = "1.0"
 itertools = "0.12"
 
 [dev-dependencies]

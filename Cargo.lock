@@ -9489,9 +9489,9 @@ dependencies = [
 
 [[package]]
 name = "tracing-unwrap"
-version = "0.10.0"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77934bd2f10b38daeb37d0e24fb94f7bb83e08b474a0568d6ba71876c797c02e"
+checksum = "c4e33415be97f5ae70322d6fefc696bbc08887d8835400d6c77f059469b30354"
 dependencies = [
  "tracing",
 ]

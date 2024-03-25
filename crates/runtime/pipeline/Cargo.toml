@@ -27,7 +27,7 @@ downcast = "0.11"
 profiling = "1"
 pinboard = "2.2"
 tracing = "0.1"
-tracing-unwrap = "0.10"
+tracing-unwrap = "1.0"
 parking_lot = "0.12"
 
 [dev-dependencies]

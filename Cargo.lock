@@ -1340,13 +1340,13 @@ dependencies = [
 
 [[package]]
 name = "core-text"
-version = "19.2.0"
+version = "20.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "99d74ada66e07c1cefa18f8abfba765b486f250de2e4a999e5727fc0dd4b4a25"
+checksum = "c9d2790b5c08465d49f8dc05c8bcae9fea467855947db39b0f8145c091aaced5"
 dependencies = [
  "core-foundation 0.9.4",
- "core-graphics 0.22.3",
- "foreign-types 0.3.2",
+ "core-graphics 0.23.1",
+ "foreign-types 0.5.0",
  "libc",
 ]
 
@@ -2589,14 +2589,14 @@ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
 name = "font-kit"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0504fc23a34d36352540ae5eedcec2623c86607a4efe25494ca9641845c5a50"
+checksum = "d50ba02d3a19ab9012a00314ff4d105128cdc7ba223d69d48181f2d257244d51"
 dependencies = [
  "bitflags 2.4.2",
  "byteorder",
  "core-foundation 0.9.4",
- "core-graphics 0.22.3",
+ "core-graphics 0.23.1",
  "core-text",
  "dirs-next",
  "dwrote",

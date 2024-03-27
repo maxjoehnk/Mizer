@@ -22,6 +22,12 @@ class NodeProperties extends StatelessWidget {
         value: node.details.hasCustomName ? node.details.displayName : "",
         placeholder: node.details.displayName,
         onUpdate: (String path) {},
+      ),
+      TextPropertyField(
+        label: "Type",
+        value: "",
+        placeholder: node.details.nodeTypeName,
+        onUpdate: (String path) {},
       )
     ]);
   }

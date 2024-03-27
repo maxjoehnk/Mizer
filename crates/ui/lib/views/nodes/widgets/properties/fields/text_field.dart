@@ -63,10 +63,11 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: this.isEditing ? _editView(context) : _readView(context),
-    );
+    if (this.isEditing) {
+      return _editView(context);
+    }
+
+    return _readView(context);
   }
 
   Widget _readView(BuildContext context) {
@@ -80,12 +81,13 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _readSinglelineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     TextStyle placeholderStyle = textStyle.copyWith(color: Colors.grey.shade400);
     bool hasValue = controller.text.isNotEmpty;
     return Field(
       label: this.widget.label,
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(2),
           color: Colors.grey.shade700,
@@ -100,14 +102,14 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _readMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(widget.label),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             color: Colors.grey.shade700,
@@ -130,11 +132,12 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _editSinglelineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
     return Field(
         label: this.widget.label,
         child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             color: Colors.grey.shade700,
@@ -157,7 +160,7 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _editMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -165,7 +168,7 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
         children: [
           Text(widget.label),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(2),
               color: Colors.grey.shade700,

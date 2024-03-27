@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/help_group.dart';
 
 import 'groups/node_group.dart';
+import 'groups/port_group.dart';
 import 'groups/settings_group.dart';
 
 class NodePropertiesPane extends StatefulWidget {
@@ -29,7 +31,7 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
     var nodesApi = context.read<NodesApi>();
 
     return Container(
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(2),
         child: ListView(
           children: _getPropertyPanes(node, nodesApi),
         ));
@@ -40,7 +42,7 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
       NodeProperties(node: node),
       NodeSettingsPane(
           nodePath: node.path,
-          title: node.details.nodeTypeName,
+          title: "Settings".i18n,
           type: node.type,
           settings: node.settings,
           onUpdate: (updated) {
@@ -50,6 +52,8 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
           onHover: (setting) => setState(() {
                 hoveredSetting = setting?.id;
               })),
+      NodeInputsPane(node: node),
+      NodeOutputsPane(node: node),
       HelpGroup(nodeType: node.type, hoveredSetting: hoveredSetting)
     ];
     return widgets;

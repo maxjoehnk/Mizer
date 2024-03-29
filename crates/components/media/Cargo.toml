@@ -15,7 +15,7 @@ infer = "0.15"
 mime_guess = "2"
 image = "0.24"
 futures = "0.3"
-tokio = { version = "1.36", features = ["fs", "rt", "io-util"] }
+tokio = { version = "1.37", features = ["fs", "rt", "io-util"] }
 async-walkdir = "1.0"
 resvg = "0.40"
 fontdb = "0.16"

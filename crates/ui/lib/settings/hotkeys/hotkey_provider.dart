@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
@@ -6,6 +7,13 @@ import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'keymap.dart';
+
+const List<LogicalKeyboardKey> _modifierKeys = [
+  LogicalKeyboardKey.control,
+  LogicalKeyboardKey.alt,
+  LogicalKeyboardKey.shift,
+  LogicalKeyboardKey.meta,
+];
 
 class HotkeyProvider extends StatefulWidget {
   final Widget child;
@@ -43,7 +51,12 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return CallbackShortcuts(
           bindings: _bindings(manager, settings),
-          child: FocusScope(child: widget.child, autofocus: true, skipTraversal: true, debugLabel: "HotkeyMappings"));
+          child: FocusScope(
+            child: widget.child,
+            autofocus: true,
+            skipTraversal: true,
+            debugLabel: "HotkeyMappings",
+          ));
     });
   }
 
@@ -54,8 +67,23 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
       return hotkeys.actions.map((key, value) => MapEntry(hotkeyKeybindings[key], value));
     }).fold(Map(), (result, hotkeys) {
       hotkeys.removeWhere((key, value) => key == null);
-      var mappedHotkeys =
-          hotkeys.map((key, value) => MapEntry(LogicalKeySet.fromSet(convertKeyMap(key!)), value));
+      var mappedHotkeys = hotkeys.map((key, value) {
+        var keys = convertKeyMap(key!);
+        var control = keys.any((element) => element == LogicalKeyboardKey.control);
+        var alt = keys.any((element) => element == LogicalKeyboardKey.alt);
+        var shift = keys.any((element) => element == LogicalKeyboardKey.shift);
+        var meta = keys.any((element) => element == LogicalKeyboardKey.meta);
+        var standardKeys = keys.where((element) => !_modifierKeys.contains(element)).toList();
+
+        if (standardKeys.length != 1) {
+          throw Exception("Only one standard key is allowed");
+        }
+
+        return MapEntry(
+            SingleActivator(standardKeys.first,
+                alt: alt, control: control, meta: meta, shift: shift),
+            value);
+      });
 
       result.addAll(mappedHotkeys);
 

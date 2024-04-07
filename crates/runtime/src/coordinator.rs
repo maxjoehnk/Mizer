@@ -197,8 +197,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
 
-        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         self.read_node_ports();
+        let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
             for command in executor.commands {
                 tracing::debug!("Updating pipeline worker: {:?}", command);
@@ -241,6 +241,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         } else {
             self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         }
+        pipeline_access.reorder_nodes();
         self.read_node_settings();
         self.read_node_metadata();
     }

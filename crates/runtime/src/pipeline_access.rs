@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::DerefMut;
 use std::str::FromStr;
@@ -5,6 +6,7 @@ use std::sync::Arc;
 
 use anyhow::Context;
 use dashmap::DashMap;
+use indexmap::IndexMap;
 use pinboard::NonEmptyPinboard;
 
 use mizer_node::*;
@@ -13,7 +15,7 @@ use mizer_nodes::*;
 use mizer_pipeline::*;
 
 pub struct PipelineAccess {
-    pub(crate) nodes: HashMap<NodePath, Box<dyn ProcessingNodeExt>>,
+    pub(crate) nodes: IndexMap<NodePath, Box<dyn ProcessingNodeExt>>,
     pub nodes_view: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
@@ -209,7 +211,7 @@ impl PipelineAccess {
     ) -> anyhow::Result<(Node, NodeDesigner, Vec<NodeLink>)> {
         let node = self
             .nodes
-            .remove(&path)
+            .shift_remove(&path)
             .ok_or_else(|| anyhow::anyhow!("Deleting unknown node"))?;
         let node = NodeDowncast::downcast(&node);
         self.nodes_view.remove(&path);
@@ -349,5 +351,34 @@ impl PipelineAccess {
         config.apply_to(node.deref_mut())?;
 
         Ok(previous)
+    }
+    
+    pub(crate) fn reorder_nodes(&mut self) {
+        profiling::scope!("PipelineAccess::reorder_nodes");
+        let dependencies = self
+            .links
+            .read()
+            .into_iter()
+            .fold(HashMap::<NodePath, Vec<NodePath>>::default(), |mut map, link| {
+                map.entry(link.target).or_default().push(link.source);
+                map
+            });
+        // TODO: this doesn't actually guarantee execution order, but it's the same algorithm as before
+        // Because two nodes don't have to relate to each other just using sort_by doesn't work for our use case
+        self.nodes.sort_by(|left, _, right, _| {
+            let deps = dependencies.get(left).zip(dependencies.get(right));
+            if let Some((left_deps, right_deps)) = deps {
+                if left_deps.contains(right) {
+                    Ordering::Less
+                } else if right_deps.contains(left) {
+                    Ordering::Greater
+                } else {
+                    Ordering::Equal
+                }
+            }else {
+                Ordering::Equal
+            }
+        });
+        tracing::debug!("Reordered nodes: {:?}", self.nodes.keys().collect::<Vec<_>>());
     }
 }

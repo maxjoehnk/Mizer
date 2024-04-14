@@ -83,20 +83,22 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn store(&self, sequence_id: u32, store_mode: store_request::Mode, cue_id: Option<u32>) {
-        let (controls, effects) = {
+        let (controls, effects, presets) = {
             let programmer = self.fixture_manager.get_programmer();
             let controls = programmer.get_controls();
+            let presets = programmer.active_presets();
             let effects = programmer.active_effects().cloned().collect::<Vec<_>>();
 
-            (controls, effects)
+            (controls, effects, presets)
         };
         self.runtime
             .run_command(StoreProgrammerInSequenceCommand {
                 sequence_id,
                 cue_id,
                 controls,
-                store_mode: store_mode.into(),
+                presets,
                 effects,
+                store_mode: store_mode.into(),
             })
             .unwrap();
     }
@@ -146,7 +148,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn call_preset(&self, preset_id: PresetId) {
         tracing::debug!("call_preset {:?}", preset_id);
         let mut programmer = self.fixture_manager.get_programmer();
-        programmer.call_preset(&self.fixture_manager.presets, preset_id.into());
+        programmer.call_preset(preset_id.into());
     }
 
     #[tracing::instrument(skip(self))]
@@ -320,7 +322,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.runtime.run_command(AddPresetCommand {
             preset_type: preset_type.into(),
             name,
-            values: self.get_preset_values(preset_type.into()),
+            values: self.get_programmer_values_for_preset_type(preset_type.into()),
         })?;
 
         Ok(())
@@ -329,17 +331,20 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
-        let value = self.get_preset_values(preset_id.r#type().into());
+        let values = self.get_programmer_values_for_preset_type(preset_id.r#type().into());
+        let preset_values = self.get_preset_values_for_preset_type(preset_id.r#type().into());
+        
+        let values = values.into_iter().chain(preset_values).collect();
 
         self.runtime.run_command(StoreInPresetCommand {
             id: preset_id.into(),
-            values: value,
+            values,
         })?;
 
         Ok(())
     }
 
-    fn get_preset_values(
+    fn get_programmer_values_for_preset_type(
         &self,
         preset_type: mizer_fixtures::programmer::PresetType,
     ) -> Vec<FixtureControlValue> {
@@ -348,6 +353,19 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_channels()
             .into_iter()
             .map(|control| control.value)
+            .filter(|value| preset_type.contains_control(value))
+            .collect()
+    }
+    
+    fn get_preset_values_for_preset_type(
+        &self,
+        preset_type: mizer_fixtures::programmer::PresetType,
+    ) -> Vec<FixtureControlValue> {
+        self.fixture_manager
+            .get_programmer()
+            .active_presets()
+            .into_iter()
+            .flat_map(|preset| self.fixture_manager.presets.get_preset_values(preset.preset_id))
             .filter(|value| preset_type.contains_control(value))
             .collect()
     }

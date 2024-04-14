@@ -407,7 +407,7 @@ impl FixtureManager {
     pub(crate) fn execute_programmers(&self) {
         tracing::trace!("Locking programmer");
         let programmer = self.programmer.lock().unwrap().log_wrap();
-        programmer.run(&self.fixtures);
+        programmer.run(&self.fixtures, &self.presets);
     }
 
     pub(crate) fn default_fixtures(&self) {

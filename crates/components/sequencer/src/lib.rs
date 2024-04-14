@@ -14,6 +14,7 @@ mod sequence;
 mod sequencer;
 mod state;
 mod value;
+mod cue_preset;
 
 #[cfg(test)]
 mod tests {
@@ -24,6 +25,7 @@ mod tests {
 
     use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
     use mizer_fixtures::FixtureId;
+    use mizer_fixtures::programmer::Presets;
     use mizer_module::ClockFrame;
 
     use crate::contracts::*;
@@ -39,6 +41,7 @@ mod tests {
     ) {
         let mut context = TestContext::default();
         let frame = ClockFrame::default();
+        let presets = Presets::default();
         context
             .fixture_controller
             .expect_write()
@@ -68,6 +71,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &presets,
             frame,
         );
 
@@ -80,6 +84,7 @@ mod tests {
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         let frame = ClockFrame::default();
+        let presets = Presets::default();
         context
             .fixture_controller
             .expect_write()
@@ -131,6 +136,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &presets,
             frame,
         );
         context
@@ -141,6 +147,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &presets,
             frame,
         );
 
@@ -189,6 +196,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -237,6 +245,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -285,6 +294,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -333,6 +343,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.forward_clock(delay);
@@ -342,6 +353,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -390,6 +402,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         let frame = ClockFrame {
@@ -404,6 +417,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -485,6 +499,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.forward_clock(time);
@@ -494,6 +509,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -542,6 +558,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -607,6 +624,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.forward_clock(time);
@@ -616,6 +634,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -677,6 +696,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.forward_clock(time);
@@ -699,6 +719,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -737,6 +758,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.fixture_controller.checkpoint();
@@ -758,6 +780,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -826,6 +849,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.fixture_controller.checkpoint();
@@ -859,6 +883,7 @@ mod tests {
                 &context.clock,
                 &context.fixture_controller,
                 &context.effect_engine,
+                &context.presets,
                 frame,
             );
 
@@ -1037,6 +1062,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context
@@ -1048,6 +1074,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
         context.forward_clock(0.5);
@@ -1056,6 +1083,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            &context.presets,
             frame,
         );
 
@@ -1068,6 +1096,7 @@ mod tests {
         fixture_controller: MockFixtureController,
         state: SequenceState,
         effect_engine: EffectEngine,
+        presets: Presets,
     }
 
     impl Default for TestContext {
@@ -1079,6 +1108,7 @@ mod tests {
                 fixture_controller: Default::default(),
                 state: Default::default(),
                 effect_engine: Default::default(),
+                presets: Default::default(),
             };
             context.clock.expect_now().return_const(now);
 

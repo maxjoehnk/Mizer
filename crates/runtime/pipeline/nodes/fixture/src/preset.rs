@@ -100,9 +100,9 @@ impl ProcessingNode for PresetNode {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.try_inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
-            if let Some(value) = context.read_port("Call") {
+            if let Some(value) = context.read_port(CALL_PORT) {
                 if let Some(true) = state.update(value) {
-                    programmer.call_preset(&fixture_manager.presets, self.id);
+                    programmer.call_preset(self.id);
                 }
             }
 

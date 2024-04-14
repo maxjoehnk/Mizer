@@ -4,6 +4,7 @@ use std::ops::Deref;
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::{FixtureId, FixturePriority};
+use mizer_fixtures::programmer::Presets;
 use mizer_module::ClockFrame;
 
 use crate::contracts::*;
@@ -53,6 +54,7 @@ impl Sequence {
         clock: &impl Clock,
         fixture_controller: &impl FixtureController,
         effect_engine: &EffectEngine,
+        presets: &Presets,
         frame: ClockFrame,
     ) {
         profiling::scope!("Sequence::run", &self.name);
@@ -88,6 +90,17 @@ impl Sequence {
                 }
             }
         }
+        for preset in &cue.presets {
+            for (fixture_id, control, value) in preset.values(cue, state, presets) {
+                fixture_controller.write(
+                    fixture_id,
+                    control.clone(),
+                    value,
+                    self.priority,
+                );
+                state.set_fixture_value(fixture_id, control, value);
+            }
+        }
         for effect in &cue.effects {
             if let Some(id) = state.running_effects.get(effect) {
                 effect_engine.set_instance_rate(id, state.rate);
@@ -118,6 +131,7 @@ impl Sequence {
             name: format!("Cue {}", id),
             controls: Vec::new(),
             effects: Vec::new(),
+            presets: Vec::new(),
             trigger: CueTrigger::Go,
             trigger_time: None,
             cue_fade: None,

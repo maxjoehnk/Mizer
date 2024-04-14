@@ -136,7 +136,7 @@ class SequencerControl extends StatelessWidget {
       padding: const EdgeInsets.all(6),
       child: Text(sequence.name,
           textAlign: TextAlign.center,
-          style: textTheme.bodyMedium,
+          style: textTheme.bodySmall,
           overflow: TextOverflow.clip,
           maxLines: 2),
     );

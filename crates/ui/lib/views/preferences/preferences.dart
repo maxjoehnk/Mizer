@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/i18n.dart';
@@ -43,11 +44,12 @@ class PreferencesCategory extends StatelessWidget {
   const PreferencesCategory({required this.label, required this.children, Key? key})
       : super(key: key);
 
-  factory PreferencesCategory.hotkeys(String label, Map<String, String> hotkeys) {
+  factory PreferencesCategory.hotkeys(String label, Map<String, String> hotkeys, Function(String, String?) update) {
     return PreferencesCategory(
         label: label,
         children: hotkeys.entries
-            .map((e) => HotkeySetting(label: _title(e.key), combination: e.value))
+            .sortedBy((e) => e.key)
+            .map((e) => HotkeySetting(label: _title(e.key), combination: e.value, update: (combination) => update(e.key, combination),))
             .toList());
   }
 
@@ -57,7 +59,10 @@ class PreferencesCategory extends StatelessWidget {
     return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Text(label, style: textTheme.titleLarge), ...children]);
+        children: [Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(label, style: textTheme.titleLarge),
+        ), ...children]);
   }
 }
 

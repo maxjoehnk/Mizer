@@ -66,7 +66,7 @@ class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
 
       return hotkeys.actions.map((key, value) => MapEntry(hotkeyKeybindings[key], value));
     }).fold(Map(), (result, hotkeys) {
-      hotkeys.removeWhere((key, value) => key == null);
+      hotkeys.removeWhere((key, value) => key == null || key.isEmpty);
       var mappedHotkeys = hotkeys.map((key, value) {
         var keys = convertKeyMap(key!);
         var control = keys.any((element) => element == LogicalKeyboardKey.control);

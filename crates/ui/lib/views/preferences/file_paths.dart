@@ -156,7 +156,7 @@ class _PathSettingState extends State<PathSetting> {
             builder: (hover) => Container(
                   padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade800,
+                    color: hover ? Colors.grey.shade700 : Colors.grey.shade800,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text("..."),

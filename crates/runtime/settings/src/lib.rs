@@ -100,10 +100,8 @@ impl SettingsManager {
         {
             paths.push(path);
         }
-        if let Some(dir) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
-            .map(|dirs| dirs.config_dir().join("settings.toml"))
-        {
-            paths.push(dir);
+        if let Some(path) = Self::get_config_path() {
+            paths.push(path);
         }
         if let Some(path) = paths.iter().find(|path| path.exists()) {
             tracing::trace!("Loading settings from {path:?}");
@@ -123,15 +121,18 @@ impl SettingsManager {
     pub fn save(&self) -> anyhow::Result<()> {
         let file_path = if let Some(ref path) = self.file_path {
             path.clone()
-        } else if let Some(path) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
-            .map(|dirs| dirs.config_dir().join("settings.toml"))
-        {
+        } else if let Some(path) = Self::get_config_path() {
             path
         } else {
             PathBuf::from("settings.toml")
         };
 
         self.settings.save_to(file_path)
+    }
+    
+    fn get_config_path() -> Option<PathBuf> {
+        ProjectDirs::from("live", "mizer", "Mizer")
+            .map(|dirs| dirs.config_dir().join("settings.toml"))
     }
 }
 

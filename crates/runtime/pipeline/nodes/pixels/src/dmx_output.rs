@@ -2,14 +2,13 @@ use image::Pixel;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_protocol_dmx::{DmxConnectionManager, DmxWriter};
 
 use crate::texture_to_pixels::TextureToPixelsConverter;
 
 const DMX_CHANNELS: u16 = 512;
 const CHANNELS_PER_PIXEL: u32 = 3; // RGB, add configuration later
 
-const OUTPUT_SETTING: &str = "Output";
 const WIDTH_SETTING: &str = "Width";
 const HEIGHT_SETTING: &str = "Height";
 const START_UNIVERSE_SETTING: &str = "Start Universe";
@@ -23,7 +22,6 @@ pub struct PixelDmxNode {
     pub start_universe: u16,
     #[serde(default = "default_pixels_per_universe")]
     pub pixels_per_universe: u8,
-    pub output: String,
 }
 
 impl Default for PixelDmxNode {
@@ -33,7 +31,6 @@ impl Default for PixelDmxNode {
             height: 100,
             start_universe: default_universe(),
             pixels_per_universe: default_pixels_per_universe(),
-            output: "".into(),
         }
     }
 }
@@ -41,19 +38,8 @@ impl Default for PixelDmxNode {
 const INPUT_PORT: &str = "Input";
 
 impl ConfigurableNode for PixelDmxNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let dmx_manager = injector.get::<DmxConnectionManager>().unwrap();
-        let outputs = dmx_manager
-            .list_outputs()
-            .into_iter()
-            .map(|(id, output)| SelectVariant::Item {
-                value: id.clone().into(),
-                label: output.name().into(),
-            })
-            .collect();
-
+    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
-            setting!(select OUTPUT_SETTING, &self.output, outputs),
             setting!(WIDTH_SETTING, self.width).min(1u32),
             setting!(HEIGHT_SETTING, self.height).min(1u32),
             setting!(START_UNIVERSE_SETTING, self.start_universe as u32)
@@ -66,7 +52,6 @@ impl ConfigurableNode for PixelDmxNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(select setting, OUTPUT_SETTING, self.output);
         update!(uint setting, WIDTH_SETTING, self.width);
         update!(uint setting, HEIGHT_SETTING, self.height);
         update!(uint setting, START_UNIVERSE_SETTING, self.start_universe);
@@ -122,9 +107,6 @@ impl ProcessingNode for PixelDmxNode {
         let dmx_manager = context
             .try_inject::<DmxConnectionManager>()
             .ok_or_else(|| anyhow::anyhow!("missing dmx module"))?;
-        let output = dmx_manager
-            .get_output(&self.output)
-            .ok_or_else(|| anyhow::anyhow!("unknown dmx output"))?;
 
         if let Some(state) = state.as_mut() {
             if let Some(pixels) = state.post_process(context, self.width, self.height)? {
@@ -137,7 +119,7 @@ impl ProcessingNode for PixelDmxNode {
                         .copied()
                         .flat_map(|pixel| pixel.to_rgb().0)
                         .collect::<Vec<_>>();
-                    output.write_bulk(universe, 1, &pixels);
+                    dmx_manager.write_bulk(universe, 1, &pixels);
                 }
             }
         }

@@ -14,7 +14,7 @@ impl Processor for WgpuPipelineProcessor {
         pipeline.map_buffers(wgpu_context);
     }
 
-    fn post_process(&mut self, injector: &Injector, _frame: ClockFrame) {
+    fn post_process(&mut self, injector: &mut Injector, _frame: ClockFrame) {
         profiling::scope!("WgpuPipelineProcessor::post_process");
         let pipeline = injector.get::<WgpuPipeline>().unwrap();
 

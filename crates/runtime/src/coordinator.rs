@@ -461,7 +461,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         self.post_process_pipeline(frame);
         tracing::trace!("post_process");
         for processor in self.processors.iter_mut() {
-            processor.post_process(&self.injector, frame);
+            processor.post_process(&mut self.injector, frame);
         }
         if self
             .read_node_settings

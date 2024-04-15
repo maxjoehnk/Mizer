@@ -28,7 +28,7 @@ impl Processor for FixtureProcessor {
     }
 
     #[tracing::instrument]
-    fn post_process(&mut self, injector: &Injector, _frame: ClockFrame) {
+    fn post_process(&mut self, injector: &mut Injector, _frame: ClockFrame) {
         profiling::scope!("FixtureProcessor::post_process");
         let fixture_manager = injector.inject::<FixtureManager>();
         let dmx_manager = injector.inject::<DmxConnectionManager>();

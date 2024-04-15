@@ -19,7 +19,6 @@ impl ProjectManager for FixtureManager {
                     fixture.name.clone(),
                     def,
                     fixture.mode.clone(),
-                    fixture.output.clone(),
                     fixture.channel,
                     fixture.universe,
                     fixture.configuration.clone(),
@@ -49,7 +48,6 @@ impl ProjectManager for FixtureManager {
                 channel: fixture.channel,
                 fixture: fixture.definition.id.clone(),
                 mode: fixture.current_mode.name.clone().into(),
-                output: fixture.output.clone(),
                 configuration: fixture.configuration.clone(),
             });
         }

@@ -10,7 +10,7 @@ abstract class ConnectionsApi {
   Future<void> addMqtt(MqttConnection request);
   Future<void> addOsc(OscConnection request);
 
-  Future<Map<int, List<int>>> monitorDmxConnection(String outputId);
+  Future<Map<int, List<int>>> monitorDmxOutput();
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId);
   Stream<MonitorOscResponse> monitorOscConnection(String connectionId);
 

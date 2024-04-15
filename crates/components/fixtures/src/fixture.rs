@@ -3,7 +3,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use mizer_protocol_dmx::DmxOutput;
+use mizer_protocol_dmx::{DmxOutput, DmxWriter};
 use mizer_util::LerpExt;
 
 use crate::color_mixer::update_color_mixer;
@@ -24,7 +24,6 @@ pub struct Fixture {
     pub current_mode: FixtureMode,
     pub universe: u16,
     pub channel: u16,
-    pub output: Option<String>,
     /// Contains values for all dmx channels including sub-fixtures
     pub(crate) channel_values: ChannelValues,
     pub configuration: FixtureConfiguration,
@@ -180,7 +179,6 @@ impl Fixture {
         name: String,
         definition: FixtureDefinition,
         selected_mode: Option<String>,
-        output: Option<String>,
         channel: u16,
         universe: Option<u16>,
         configuration: FixtureConfiguration,
@@ -191,7 +189,6 @@ impl Fixture {
             current_mode: get_current_mode(&definition, selected_mode),
             definition,
             channel,
-            output,
             universe: universe.unwrap_or(1),
             channel_values: Default::default(),
             configuration,
@@ -277,7 +274,7 @@ impl Fixture {
         }
     }
 
-    pub(crate) fn flush(&self, output: &dyn DmxOutput) {
+    pub(crate) fn flush(&self, output: &dyn DmxWriter) {
         profiling::scope!("Fixture::flush");
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;

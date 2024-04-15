@@ -210,7 +210,6 @@ pub struct FixtureConfig {
     pub universe: Option<u16>,
     #[serde(default)]
     pub mode: Option<String>,
-    pub output: Option<String>,
     #[serde(default)]
     pub configuration: FixtureConfiguration,
 }

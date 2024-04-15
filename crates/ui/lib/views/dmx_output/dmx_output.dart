@@ -2,32 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/i18n.dart';
-import 'package:mizer/protos/connections.pb.dart';
-import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/windows/dmx_monitor_window.dart';
+import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
-class DmxMonitorDialog implements DialogBuilder {
-  final Connection connection;
-
-  DmxMonitorDialog(this.connection);
+class DmxOutputView extends StatelessWidget {
+  const DmxOutputView({super.key});
 
   @override
-  WidgetBuilder widgetBuilder() {
-    return (context) => Center(child: Card(child: DmxMonitor(connection)));
-  }
-
-  @override
-  toInitData() {
-    return DmxMonitorWindow.toInitData(connection);
+  Widget build(BuildContext context) {
+    return DmxMonitor();
   }
 }
 
 class DmxMonitor extends StatefulWidget {
-  final Connection connection;
-
-  DmxMonitor(this.connection);
+  DmxMonitor();
 
   @override
   State<DmxMonitor> createState() => _DmxMonitorState();
@@ -40,7 +29,7 @@ class _DmxMonitorState extends State<DmxMonitor> {
   Widget build(BuildContext context) {
     var connections = context.read<ConnectionsApi>();
     var channels = Stream.periodic(Duration(milliseconds: 16)).asyncMap(
-        (event) => connections.monitorDmxConnection(widget.connection.dmxOutput.outputId));
+            (event) => connections.monitorDmxOutput());
     return StreamBuilder<Map<int, List<int>>>(
       stream: channels,
       initialData: {},
@@ -61,7 +50,6 @@ class _DmxMonitorState extends State<DmxMonitor> {
                       universe: universe,
                       onSelect: (u) => setState(() => universe = u))),
               Expanded(child: AddressObserver(channels: snapshot.data?[universe] ?? [])),
-              LimitedBox(maxWidth: 250, child: AddressHistory()),
             ],
           ),
         );
@@ -81,8 +69,8 @@ class UniverseSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(
-        title: "Universes".i18n,
+    return Panel(
+        label: "Universes".i18n,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Wrap(
@@ -90,10 +78,10 @@ class UniverseSelector extends StatelessWidget {
             runSpacing: 4,
             children: universes
                 .map((u) => Universe(
-                      universe: u,
-                      selected: universe == u,
-                      onClick: () => onSelect(u),
-                    ))
+              universe: u,
+              selected: universe == u,
+              onClick: () => onSelect(u),
+            ))
                 .toList(),
           ),
         ));
@@ -129,30 +117,32 @@ class AddressObserver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(
-        title: "DMX".i18n,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 4,
-              runSpacing: 4,
-              children: channels.asMap().mapToList((index, value) {
-                var percentage = value / 255;
-                return Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: [
-                      Colors.deepOrangeAccent,
-                      Colors.black12,
-                    ], stops: [
-                      percentage,
-                      percentage,
-                    ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-                    width: 40,
-                    height: 40,
-                    alignment: Alignment.center,
-                    child: Text("${index + 1}"));
-              })),
+    return Panel(
+        label: "DMX".i18n,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 4,
+                runSpacing: 4,
+                children: channels.asMap().mapToList((index, value) {
+                  var percentage = value / 255;
+                  return Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colors.deepOrangeAccent,
+                            Colors.black12,
+                          ], stops: [
+                            percentage,
+                            percentage,
+                          ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+                      width: 40,
+                      height: 40,
+                      alignment: Alignment.center,
+                      child: Text("${index + 1}"));
+                })),
+          ),
         ));
   }
 }
@@ -162,31 +152,6 @@ class AddressHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(title: "History".i18n, child: Container());
-  }
-}
-
-class MonitorGroup extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  const MonitorGroup({required this.title, required this.child, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-      ),
-      clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.all(4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(child: Text(title), color: Colors.black87, padding: const EdgeInsets.all(4)),
-          Expanded(child: SingleChildScrollView(child: child, scrollDirection: Axis.vertical)),
-        ],
-      ),
-    );
+    return Panel(label: "History".i18n, child: Container());
   }
 }

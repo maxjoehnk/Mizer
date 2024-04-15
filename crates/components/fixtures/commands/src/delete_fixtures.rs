@@ -88,7 +88,6 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
                 fixture.name,
                 fixture.definition,
                 fixture.current_mode.name.into(),
-                fixture.output,
                 fixture.channel,
                 fixture.universe.into(),
                 fixture.configuration,

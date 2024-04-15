@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_protocol_dmx::{DmxConnectionManager, DmxWriter};
 
 const INPUT_PORT: &str = "Input";
 
@@ -13,7 +13,6 @@ pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
     pub universe: u16,
     pub channel: u16,
-    pub output: Option<String>,
 }
 
 impl Default for DmxOutputNode {
@@ -21,7 +20,6 @@ impl Default for DmxOutputNode {
         Self {
             universe: default_universe(),
             channel: 0,
-            output: None,
         }
     }
 }
@@ -77,23 +75,13 @@ impl ProcessingNode for DmxOutputNode {
         if dmx_connections.is_none() {
             anyhow::bail!("Missing dmx module");
         }
-        let dmx_connections = dmx_connections.unwrap();
+        let dmx_manager = dmx_connections.unwrap();
 
         if let Some(value) = value {
             context.push_history_value(value);
             let value = (value * u8::MAX as f64).min(255.).max(0.).floor() as u8;
 
-            if let Some(output) = self
-                .output
-                .as_ref()
-                .and_then(|output| dmx_connections.get_output(output))
-            {
-                output.write_single(self.universe, self.channel, value);
-            } else {
-                for (_, output) in dmx_connections.list_outputs() {
-                    output.write_single(self.universe, self.channel, value);
-                }
-            }
+            dmx_manager.write_single(self.universe, self.channel, value);
         }
 
         Ok(())

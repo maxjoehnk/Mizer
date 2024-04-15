@@ -35,22 +35,20 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                 resp.respond_msg(response);
             }
             "monitorDmx" => {
-                if let Value::String(output_id) = call.args {
-                    match self.handler.monitor_dmx(output_id) {
-                        Ok(values) => {
-                            let values = values
-                                .into_iter()
-                                .map(|(universe, channels)| {
-                                    (
-                                        Value::I64(universe as i64),
-                                        Value::U8List(channels.to_vec()),
-                                    )
-                                })
-                                .collect();
-                            resp.send_ok(Value::Map(values));
-                        }
-                        Err(err) => resp.respond_error(err),
+                match self.handler.monitor_dmx() {
+                    Ok(values) => {
+                        let values = values
+                            .into_iter()
+                            .map(|(universe, channels)| {
+                                (
+                                    Value::I64(universe as i64),
+                                    Value::U8List(channels.to_vec()),
+                                )
+                            })
+                            .collect();
+                        resp.send_ok(Value::Map(values));
                     }
+                    Err(err) => resp.respond_error(err),
                 }
             }
             "addArtnetOutput" => {

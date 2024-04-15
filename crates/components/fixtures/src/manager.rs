@@ -49,7 +49,6 @@ impl FixtureManager {
         name: String,
         definition: FixtureDefinition,
         mode: Option<String>,
-        output: Option<String>,
         channel: u16,
         universe: Option<u16>,
         configuration: FixtureConfiguration,
@@ -65,7 +64,6 @@ impl FixtureManager {
             name,
             definition,
             mode,
-            output,
             channel,
             universe,
             configuration,
@@ -383,18 +381,10 @@ impl FixtureManager {
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         profiling::scope!("FixtureManager::write_outputs");
+        // TODO[perf]: par_iter with rayon? Would only work when the dmx_manager supports concurrency which would require removing the Mutex
+        // Maybe we could cluster fixtures by universe and then write them in parallel
         for fixture in self.fixtures.iter() {
-            if let Some(output) = fixture
-                .output
-                .as_ref()
-                .and_then(|output| dmx_manager.get_output(output))
-            {
-                fixture.flush(output);
-            } else {
-                for (_, output) in dmx_manager.list_outputs() {
-                    fixture.flush(output);
-                }
-            }
+            fixture.flush(dmx_manager);
         }
     }
 

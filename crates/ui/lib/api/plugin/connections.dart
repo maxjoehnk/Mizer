@@ -30,8 +30,8 @@ class ConnectionsPluginApi implements ConnectionsApi {
   }
 
   @override
-  Future<Map<int, List<int>>> monitorDmxConnection(String outputId) async {
-    Map<dynamic, dynamic> response = await channel.invokeMethod("monitorDmx", outputId);
+  Future<Map<int, List<int>>> monitorDmxOutput() async {
+    Map<dynamic, dynamic> response = await channel.invokeMethod("monitorDmx");
 
     return response.map((dynamic key, dynamic value) =>
         MapEntry(key as int, (value as List<dynamic>).map((dynamic e) => e as int).toList()));

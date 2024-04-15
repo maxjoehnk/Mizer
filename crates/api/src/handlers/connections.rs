@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::rc::Rc;
 
 use futures::{Stream, StreamExt};
 
@@ -34,8 +34,8 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn monitor_dmx(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
-        self.runtime.get_dmx_monitor(output_id)
+    pub fn monitor_dmx(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>> {
+        self.runtime.get_dmx_monitor()
     }
 
     #[tracing::instrument(skip(self))]

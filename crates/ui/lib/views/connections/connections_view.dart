@@ -18,7 +18,6 @@ import 'dialogs/add_artnet_output_connection.dart';
 import 'dialogs/add_mqtt_connection.dart';
 import 'dialogs/add_osc_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
-import 'dialogs/dmx_monitor.dart';
 import 'dialogs/midi_monitor.dart';
 import 'dialogs/osc_monitor.dart';
 import 'types/helios_connection.dart';
@@ -99,14 +98,6 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   List<Widget> _buildActions(BuildContext context, Connection connection) {
-    if (connection.hasDmxOutput()) {
-      return [
-        MizerIconButton(
-            icon: MdiIcons.chartBar,
-            label: "Monitor".i18n,
-            onClick: () => _showDmxMonitor(context, connection))
-      ];
-    }
     if (connection.hasOsc()) {
       return [
         MizerIconButton(
@@ -149,10 +140,6 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return CitpConnectionView(connection: connection.citp);
     }
     return Container();
-  }
-
-  _showDmxMonitor(BuildContext context, Connection connection) {
-    openDialog(context, DmxMonitorDialog(connection));
   }
 
   _showMidiMonitor(BuildContext context, Connection connection) {

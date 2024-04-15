@@ -18,3 +18,4 @@ serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.37", features = ["net", "rt", "io-util"] }
 dashmap = "5.5"
 flume = "0.11"
+evmap = "10"

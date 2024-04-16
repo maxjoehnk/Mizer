@@ -222,7 +222,6 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
             provider: "Test",
         },
         Some("Default".into()),
-        None,
         1,
         None,
         Default::default(),

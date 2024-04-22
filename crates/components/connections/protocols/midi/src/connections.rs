@@ -20,7 +20,7 @@ impl MidiConnectionManager {
         }
     }
 
-    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
+    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: &[P]) -> anyhow::Result<()> {
         self.provider.load_device_profiles(path)
     }
 

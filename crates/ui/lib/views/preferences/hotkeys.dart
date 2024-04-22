@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/views/preferences/settings_button.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
-import 'package:mizer/widgets/hoverable.dart';
 
 import 'preferences.dart';
 
@@ -61,18 +61,10 @@ class HotkeySetting extends StatelessWidget {
     return SettingsRow(label, [
       Text(formatHotkey(combination)),
       SizedBox(width: 8),
-      Hoverable(
-        builder: (hover) => Container(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-          decoration: BoxDecoration(
-            color: hover ? Colors.grey.shade700 : Colors.grey.shade800,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Center(child: Icon(Icons.clear, size: 12)),
-        ),
-        onTap: () {
-          this.update(null);
-        },
+      SettingsButton(
+        symmetric: true,
+        child: Center(child: Icon(Icons.clear, size: 12)),
+        onTap: () => this.update(null),
       )
     ]);
   }

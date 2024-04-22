@@ -21,6 +21,7 @@ bezier-rs = "0.4"
 uuid = { version = "1.8", features = ["v4"] }
 base64 = "0.21"
 indexmap = "2.2"
+shellexpand = "3.1"
 
 [dev-dependencies]
 test-case = "3.3"

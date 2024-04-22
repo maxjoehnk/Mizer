@@ -34,7 +34,7 @@ const PathSettings$json = {
   '1': 'PathSettings',
   '2': [
     {'1': 'media_storage', '3': 1, '4': 1, '5': 9, '10': 'mediaStorage'},
-    {'1': 'midi_device_profiles', '3': 2, '4': 1, '5': 9, '10': 'midiDeviceProfiles'},
+    {'1': 'midi_device_profiles', '3': 2, '4': 3, '5': 9, '10': 'midiDeviceProfiles'},
     {'1': 'open_fixture_library', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'openFixtureLibrary', '17': true},
     {'1': 'qlcplus', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'qlcplus', '17': true},
     {'1': 'gdtf', '3': 5, '4': 1, '5': 9, '9': 2, '10': 'gdtf', '17': true},
@@ -51,7 +51,7 @@ const PathSettings$json = {
 /// Descriptor for `PathSettings`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List pathSettingsDescriptor = $convert.base64Decode(
     'CgxQYXRoU2V0dGluZ3MSIwoNbWVkaWFfc3RvcmFnZRgBIAEoCVIMbWVkaWFTdG9yYWdlEjAKFG'
-    '1pZGlfZGV2aWNlX3Byb2ZpbGVzGAIgASgJUhJtaWRpRGV2aWNlUHJvZmlsZXMSNQoUb3Blbl9m'
+    '1pZGlfZGV2aWNlX3Byb2ZpbGVzGAIgAygJUhJtaWRpRGV2aWNlUHJvZmlsZXMSNQoUb3Blbl9m'
     'aXh0dXJlX2xpYnJhcnkYAyABKAlIAFISb3BlbkZpeHR1cmVMaWJyYXJ5iAEBEh0KB3FsY3BsdX'
     'MYBCABKAlIAVIHcWxjcGx1c4gBARIXCgRnZHRmGAUgASgJSAJSBGdkdGaIAQESGQoFbWl6ZXIY'
     'BiABKAlIA1IFbWl6ZXKIAQFCFwoVX29wZW5fZml4dHVyZV9saWJyYXJ5QgoKCF9xbGNwbHVzQg'

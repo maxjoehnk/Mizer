@@ -100,7 +100,7 @@ class Settings extends $pb.GeneratedMessage {
 class PathSettings extends $pb.GeneratedMessage {
   factory PathSettings({
     $core.String? mediaStorage,
-    $core.String? midiDeviceProfiles,
+    $core.Iterable<$core.String>? midiDeviceProfiles,
     $core.String? openFixtureLibrary,
     $core.String? qlcplus,
     $core.String? gdtf,
@@ -111,7 +111,7 @@ class PathSettings extends $pb.GeneratedMessage {
       $result.mediaStorage = mediaStorage;
     }
     if (midiDeviceProfiles != null) {
-      $result.midiDeviceProfiles = midiDeviceProfiles;
+      $result.midiDeviceProfiles.addAll(midiDeviceProfiles);
     }
     if (openFixtureLibrary != null) {
       $result.openFixtureLibrary = openFixtureLibrary;
@@ -133,7 +133,7 @@ class PathSettings extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PathSettings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'mediaStorage')
-    ..aOS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
+    ..pPS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
     ..aOS(3, _omitFieldNames ? '' : 'openFixtureLibrary')
     ..aOS(4, _omitFieldNames ? '' : 'qlcplus')
     ..aOS(5, _omitFieldNames ? '' : 'gdtf')
@@ -172,13 +172,7 @@ class PathSettings extends $pb.GeneratedMessage {
   void clearMediaStorage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get midiDeviceProfiles => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set midiDeviceProfiles($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasMidiDeviceProfiles() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearMidiDeviceProfiles() => clearField(2);
+  $core.List<$core.String> get midiDeviceProfiles => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.String get openFixtureLibrary => $_getSZ(2);

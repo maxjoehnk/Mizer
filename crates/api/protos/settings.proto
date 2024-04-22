@@ -10,7 +10,7 @@ message Settings {
 
 message PathSettings {
   string media_storage = 1;
-  string midi_device_profiles = 2;
+  repeated string midi_device_profiles = 2;
   optional string open_fixture_library = 3;
   optional string qlcplus = 4;
   optional string gdtf = 5;

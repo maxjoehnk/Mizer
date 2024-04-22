@@ -35,7 +35,8 @@ pub struct General {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct FilePaths {
-    pub midi_device_profiles: PathBuf,
+    // TODO: parse single entry or list
+    pub midi_device_profiles: Vec<PathBuf>,
     pub fixture_libraries: FixtureLibraryPaths,
     #[serde(default = "default_media_storage")]
     pub media_storage: PathBuf,

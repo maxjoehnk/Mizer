@@ -5999,6 +5999,7 @@ dependencies = [
  "palette",
  "profiling",
  "serde",
+ "shellexpand",
  "test-case",
  "tracing",
  "tracy-client",

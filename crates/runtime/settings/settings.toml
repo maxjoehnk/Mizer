@@ -3,8 +3,11 @@ language = "en"
 auto_load_last_project = true
 
 [paths]
-midi_device_profiles = "crates/components/connections/protocols/midi/device-profiles/profiles"
 media_storage = ".storage"
+midi_device_profiles = [
+    "crates/components/connections/protocols/midi/device-profiles/profiles",
+    "~/Documents/Mizer/Midi Device Profiles",
+]
 
 [paths.fixture_libraries]
 open_fixture_library = "crates/components/fixtures/open-fixture-library/.fixtures"

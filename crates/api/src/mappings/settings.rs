@@ -44,7 +44,7 @@ impl From<settings::FilePaths> for model::PathSettings {
     fn from(paths: settings::FilePaths) -> Self {
         Self {
             media_storage: paths.media_storage.to_string_lossy().to_string(),
-            midi_device_profiles: paths.midi_device_profiles.to_string_lossy().to_string(),
+            midi_device_profiles: paths.midi_device_profiles.into_iter().map(|p| p.to_string_lossy().to_string()).collect(),
             open_fixture_library: paths
                 .fixture_libraries
                 .open_fixture_library
@@ -101,7 +101,7 @@ impl From<model::PathSettings> for settings::FilePaths {
                 qlcplus: paths.qlcplus.map(PathBuf::from),
                 mizer: paths.mizer.map(PathBuf::from),
             },
-            midi_device_profiles: PathBuf::from(paths.midi_device_profiles),
+            midi_device_profiles: paths.midi_device_profiles.into_iter().map(PathBuf::from).collect(),
         }
     }
 }

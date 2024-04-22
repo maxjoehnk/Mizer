@@ -49,9 +49,13 @@ impl MidiDeviceProvider {
         Self::default()
     }
 
-    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
+    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, paths: &[P]) -> anyhow::Result<()> {
         let mut profiles = self.profiles.write();
-        *profiles = load_profiles(path)?;
+        *profiles = Default::default();
+        for path in paths {
+            let device_profiles = load_profiles(path)?;
+            profiles.extend(device_profiles);
+        }
 
         Ok(())
     }

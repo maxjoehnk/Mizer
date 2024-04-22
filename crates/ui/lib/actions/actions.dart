@@ -23,6 +23,7 @@ enum View {
   DmxOutput,
   Timecode,
   Preferences,
+  MidiProfiles,
 }
 
 const ViewHotkeyLabels = {
@@ -42,6 +43,7 @@ const ViewHotkeyLabels = {
   View.DmxOutput: "dmx_output_view",
   View.Timecode: "timecode_view",
   View.Preferences: "preferences_view",
+  View.MidiProfiles: "midi_profiles_view",
 };
 
 extension ViewToHotkey on View {

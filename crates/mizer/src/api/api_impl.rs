@@ -17,13 +17,14 @@ use mizer_node::{
     NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId, PortMetadata,
 };
 use mizer_protocol_dmx::DmxMonitorHandle;
-use mizer_protocol_midi::MidiEvent;
+use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{
     DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
 };
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
+use mizer_status_bus::StatusHandle;
 
 use crate::{ApiCommand, ApiHandler};
 
@@ -336,6 +337,15 @@ impl RuntimeApi for Api {
         self.open_node_views
             .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         self.update_read_node_settings();
+    }
+
+    fn reload_midi_device_profiles(&self) -> anyhow::Result<()> {
+        let status_handle = self.api_injector.require_service::<StatusHandle>();
+        let registry = self.api_injector.require_service::<MidiDeviceProfileRegistry>();
+        let loaded_profiles = registry.load_device_profiles(&self.settings.read().settings.paths.midi_device_profiles)?;
+        status_handle.add_message(format!("Loaded {loaded_profiles} MIDI Device Profiles"), None);
+        
+        Ok(())
     }
 
     #[profiling::function]

@@ -24,6 +24,7 @@ impl Module for MidiModule {
         if let Err(err) = connection_manager.load_device_profiles(device_profile_path) {
             tracing::error!("Failed to load MIDI device profiles: {}", err);
         }
+        context.provide_api(connection_manager.provider.profile_registry.clone());
         context.provide(connection_manager);
 
         Ok(())

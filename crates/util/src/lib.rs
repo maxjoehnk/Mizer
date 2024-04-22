@@ -8,6 +8,7 @@ pub use self::lerp_extension::*;
 pub use self::spline::*;
 pub use self::structured_data::*;
 pub use self::thread_pinned::*;
+pub use self::error_collector::*;
 
 mod async_runtime;
 #[cfg(feature = "test")]
@@ -23,3 +24,4 @@ mod file_loading;
 mod image;
 mod thread_pinned;
 pub mod tracing;
+mod error_collector;

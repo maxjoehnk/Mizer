@@ -1,14 +1,31 @@
 use std::convert::TryInto;
+use std::path::PathBuf;
 use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
 use mizer_midi_messages::{Channel, MidiMessage};
+use mizer_util::ErrorCollector;
 
 use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
 
-#[derive(Clone, Deserialize, Serialize)]
+#[derive(Clone)]
 pub struct DeviceProfile {
+    pub id: String,
+    pub manufacturer: String,
+    pub name: String,
+    /// Keyword to detect the device by
+    pub keyword: String,
+    pub pages: Vec<Page>,
+    pub(crate) output_script: Option<OutputScript>,
+    pub layout: Option<String>,
+    pub(crate) engine: OutputEngine,
+    pub errors: ErrorCollector<ProfileErrors>,
+    pub file_path: PathBuf,
+}
+
+#[derive(Clone, Deserialize, Serialize)]
+pub(crate) struct DeviceProfileConfig {
     pub id: String,
     pub manufacturer: String,
     pub name: String,
@@ -17,14 +34,31 @@ pub struct DeviceProfile {
     #[serde(default)]
     pub pages: Vec<Page>,
     pub(crate) scripts: Option<ProfileScripts>,
-    #[serde(skip)]
-    pub(crate) output_script: Option<OutputScript>,
     #[serde(rename = "layout")]
     pub(crate) layout_file: Option<String>,
-    #[serde(skip)]
-    pub layout: Option<String>,
-    #[serde(default, skip)]
-    pub(crate) engine: OutputEngine,
+}
+
+#[derive(Debug, Clone)]
+pub enum ProfileErrors {
+    PagesLoadingError(String),
+    OutputScriptLoadingError(String),
+    OutputScriptWritingError(String),
+    LayoutLoadingError(String),
+}
+
+impl ProfileErrors {
+    pub fn to_string(&self) -> String {
+        match self {
+            ProfileErrors::PagesLoadingError(err) => format!("Pages loading error: {}", err),
+            ProfileErrors::OutputScriptLoadingError(err) => {
+                format!("Output script loading error: {}", err)
+            }
+            ProfileErrors::OutputScriptWritingError(err) => {
+                format!("Output script writing error: {}", err)
+            }
+            ProfileErrors::LayoutLoadingError(err) => format!("Layout loading error: {}", err),
+        }
+    }
 }
 
 impl DeviceProfile {
@@ -44,6 +78,8 @@ impl DeviceProfile {
         match script.write_rgb(&self.engine, control, Color(color)) {
             Ok(msg) => Some(msg),
             Err(err) => {
+                // TODO: Report write_rgb script errors back
+                // self.errors.push(ProfileErrors::OutputScriptWritingError(err.to_string()));
                 tracing::error!("Unable to write rgb to control {control:?}: {err:?}");
                 None
             }

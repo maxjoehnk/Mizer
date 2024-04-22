@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+use mizer_connections::midi_device_profile;
 
 use mizer_settings as settings;
 
@@ -108,4 +109,30 @@ impl From<model::PathSettings> for settings::FilePaths {
 
 fn path_to_string(path: PathBuf) -> String {
     path.to_string_lossy().to_string()
+}
+
+impl From<Vec<midi_device_profile::DeviceProfile>> for model::MidiDeviceProfiles {
+    fn from(profiles: Vec<midi_device_profile::DeviceProfile>) -> Self {
+        Self {
+            profiles: profiles.into_iter().map(|p| p.into()).collect(),
+        }
+    }
+}
+
+impl From<midi_device_profile::DeviceProfile> for model::MidiDeviceProfile {
+    fn from(profile: midi_device_profile::DeviceProfile) -> Self {
+        Self {
+            id: profile.id,
+            manufacturer: profile.manufacturer,
+            name: profile.name,
+            keyword: profile.keyword,
+            file_path: profile.file_path.to_string_lossy().to_string(),
+            errors: profile.errors.errors().into_iter()
+                .map(|err| model::Error {
+                    timestamp: err.timestamp.to_string(),
+                    message: err.error.to_string(),
+                })
+                .collect(),
+        }
+    }
 }

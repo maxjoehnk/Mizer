@@ -46,6 +46,9 @@ fn load_dir(dir: &DirEntry) -> anyhow::Result<Option<DeviceProfile>> {
     if !dir.metadata()?.is_dir() {
         return Ok(None);
     }
+    if !dir.path().join("profile.yml").exists() {
+        return Ok(None);
+    }
     let profile = read_profile(&dir.path()).context(format!("Reading profile {dir:?}"))?;
 
     Ok(Some(profile))

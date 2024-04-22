@@ -201,3 +201,50 @@ final $typed_data.Uint8List generalDescriptor = $convert.base64Decode(
     'CgdHZW5lcmFsEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZRIzChZhdXRvX2xvYWRfbGFzdF'
     '9wcm9qZWN0GAIgASgIUhNhdXRvTG9hZExhc3RQcm9qZWN0');
 
+@$core.Deprecated('Use midiDeviceProfilesDescriptor instead')
+const MidiDeviceProfiles$json = {
+  '1': 'MidiDeviceProfiles',
+  '2': [
+    {'1': 'profiles', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.MidiDeviceProfile', '10': 'profiles'},
+  ],
+};
+
+/// Descriptor for `MidiDeviceProfiles`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List midiDeviceProfilesDescriptor = $convert.base64Decode(
+    'ChJNaWRpRGV2aWNlUHJvZmlsZXMSPQoIcHJvZmlsZXMYASADKAsyIS5taXplci5zZXR0aW5ncy'
+    '5NaWRpRGV2aWNlUHJvZmlsZVIIcHJvZmlsZXM=');
+
+@$core.Deprecated('Use midiDeviceProfileDescriptor instead')
+const MidiDeviceProfile$json = {
+  '1': 'MidiDeviceProfile',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'manufacturer', '3': 2, '4': 1, '5': 9, '10': 'manufacturer'},
+    {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'keyword', '3': 4, '4': 1, '5': 9, '10': 'keyword'},
+    {'1': 'file_path', '3': 5, '4': 1, '5': 9, '10': 'filePath'},
+    {'1': 'errors', '3': 7, '4': 3, '5': 11, '6': '.mizer.settings.Error', '10': 'errors'},
+  ],
+};
+
+/// Descriptor for `MidiDeviceProfile`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode(
+    'ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgAS'
+    'gJUgxtYW51ZmFjdHVyZXISEgoEbmFtZRgDIAEoCVIEbmFtZRIYCgdrZXl3b3JkGAQgASgJUgdr'
+    'ZXl3b3JkEhsKCWZpbGVfcGF0aBgFIAEoCVIIZmlsZVBhdGgSLQoGZXJyb3JzGAcgAygLMhUubW'
+    'l6ZXIuc2V0dGluZ3MuRXJyb3JSBmVycm9ycw==');
+
+@$core.Deprecated('Use errorDescriptor instead')
+const Error$json = {
+  '1': 'Error',
+  '2': [
+    {'1': 'timestamp', '3': 1, '4': 1, '5': 9, '10': 'timestamp'},
+    {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `Error`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List errorDescriptor = $convert.base64Decode(
+    'CgVFcnJvchIcCgl0aW1lc3RhbXAYASABKAlSCXRpbWVzdGFtcBIYCgdtZXNzYWdlGAIgASgJUg'
+    'dtZXNzYWdl');
+

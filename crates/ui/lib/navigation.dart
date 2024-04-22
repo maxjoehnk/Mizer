@@ -10,6 +10,7 @@ import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/history/history_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
+import 'package:mizer/views/midi_profiles/midi_profiles_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/patch/fixture_patch.dart';
 import 'package:mizer/views/plan/plan_view.dart';
@@ -51,6 +52,7 @@ List<Route> routes = [
   Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => PreferencesView(), Icons.settings, 'Preferences'.i18n, View.Preferences),
+  Route(() => MidiProfilesView(), MdiIcons.midi, 'MIDI Profiles'.i18n, View.MidiProfiles),
 ];
 
 class Home extends StatefulWidget {

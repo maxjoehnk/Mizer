@@ -79,6 +79,8 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>>;
     fn get_device_manager(&self) -> DeviceManager;
+    
+    fn reload_midi_device_profiles(&self) -> anyhow::Result<()>;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 

@@ -8,7 +8,7 @@ use mizer_midi_device_profiles::DeviceProfile;
 use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 
 pub struct MidiConnectionManager {
-    provider: MidiDeviceProvider,
+    pub(crate) provider: MidiDeviceProvider,
     devices: DashMap<String, MidiDevice>,
 }
 

@@ -39,19 +39,16 @@ class _DmxMonitorState extends State<DmxMonitor> {
         }
         var universes = snapshot.data?.keys.toList() ?? [];
         universes.sort();
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Row(
-            children: [
-              LimitedBox(
-                  maxWidth: 144,
-                  child: UniverseSelector(
-                      universes: universes,
-                      universe: universe,
-                      onSelect: (u) => setState(() => universe = u))),
-              Expanded(child: AddressObserver(channels: snapshot.data?[universe] ?? [])),
-            ],
-          ),
+        return Row(
+          children: [
+            LimitedBox(
+                maxWidth: 144,
+                child: UniverseSelector(
+                    universes: universes,
+                    universe: universe,
+                    onSelect: (u) => setState(() => universe = u))),
+            Expanded(child: AddressObserver(channels: snapshot.data?[universe] ?? [])),
+          ],
         );
       },
     );

@@ -319,6 +319,7 @@ jobs:
             libfontconfig-dev \
             libssl-dev
            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+           source "$HOME/.cargo/env"
            make build-headless
      - uses: actions/upload-artifact@v4
        with:

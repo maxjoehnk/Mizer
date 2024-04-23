@@ -291,14 +291,13 @@ jobs:
   build-linux-arm:
     runs-on: ubuntu-latest
     steps:
-     - name: Free Disk Space
-       uses: jlumbroso/free-disk-space@main
      - uses: actions/checkout@v4
        with:
          submodules: recursive
      - uses: pguyot/arm-runner-action@v2
        with:
          base_image: raspios_lite_arm64:latest
+         image_additional_mb: 5000
          copy_artifact_path: target/release/mizer
          commands: |
            apt-get update

@@ -187,6 +187,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Remove ndi libs from cache
+        run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
+      - name: Remove linked flutter libs from cache
+        run: rm -rf target/release/lib
       - name: Build
         run: make build-release
         env:

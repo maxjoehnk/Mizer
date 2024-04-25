@@ -8,17 +8,16 @@ import 'package:provider/provider.dart';
 
 const double HEADER_BADGE_HEIGHT = 32;
 
-class ProDJLinkConnectionView extends StatefulWidget {
+class CdjConnectionView extends StatefulWidget {
   final PioneerCdjConnection device;
 
-  ProDJLinkConnectionView({required this.device});
+  CdjConnectionView({required this.device});
 
   @override
-  State<ProDJLinkConnectionView> createState() => _ProDJLinkConnectionViewState();
+  State<CdjConnectionView> createState() => _CdjConnectionViewState();
 }
 
-class _ProDJLinkConnectionViewState extends State<ProDJLinkConnectionView>
-    with SingleTickerProviderStateMixin {
+class _CdjConnectionViewState extends State<CdjConnectionView> with SingleTickerProviderStateMixin {
   late Ticker _ticker;
   PioneerCdjConnection? _device;
 

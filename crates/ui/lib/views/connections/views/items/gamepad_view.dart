@@ -52,6 +52,7 @@ class _GamepadConnectionViewState extends State<GamepadConnectionView>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(widget.device.name),
           DPad(_state!.dpad),
           Stick(_state!.leftStick),
           Stick(_state!.rightStick),

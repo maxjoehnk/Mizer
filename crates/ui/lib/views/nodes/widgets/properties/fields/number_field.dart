@@ -101,10 +101,11 @@ class _NumberFieldState extends State<NumberField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: this.isEditing ? _editView(context) : _readView(context),
-    );
+    if (this.isEditing) {
+      return _editView(context);
+    }
+
+    return _readView(context);
   }
 
   num get _maxHint {
@@ -221,6 +222,7 @@ class _Bar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: const EdgeInsets.symmetric(vertical: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(2),
           gradient: LinearGradient(colors: [

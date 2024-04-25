@@ -1,10 +1,10 @@
 import 'package:flutter/services.dart';
 
 const Map<String, LogicalKeyboardKey> keyMappings = {
-  "ctrl": LogicalKeyboardKey.controlLeft,
-  "cmd": LogicalKeyboardKey.metaLeft,
-  "alt": LogicalKeyboardKey.altLeft,
-  "shift": LogicalKeyboardKey.shiftLeft,
+  "ctrl": LogicalKeyboardKey.control,
+  "cmd": LogicalKeyboardKey.meta,
+  "alt": LogicalKeyboardKey.alt,
+  "shift": LogicalKeyboardKey.shift,
   "0": LogicalKeyboardKey.digit0,
   "1": LogicalKeyboardKey.digit1,
   "2": LogicalKeyboardKey.digit2,

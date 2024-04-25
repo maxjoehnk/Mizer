@@ -14,5 +14,5 @@ num_enum = "0.7"
 mizer-wgpu = { path = "../../../../wgpu" }
 image = "0.24"
 profiling = "1"
-glyphon = { git = "https://github.com/grovesNL/glyphon", rev = "941309a" }
-font-kit = "0.12"
+glyphon = "0.5.0"
+font-kit = "0.13"

@@ -1,5 +1,5 @@
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammerControl};
+use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammedPreset, ProgrammerControl};
 use mizer_sequencer::{CueControl, CueEffect, Sequence, Sequencer, SequencerTime, SequencerValue};
 use serde::{Deserialize, Serialize};
 
@@ -9,6 +9,7 @@ pub struct StoreProgrammerInSequenceCommand {
     pub cue_id: Option<u32>,
     pub store_mode: StoreMode,
     pub controls: Vec<ProgrammerControl>,
+    pub presets: Vec<ProgrammedPreset>,
     pub effects: Vec<ProgrammedEffect>,
 }
 
@@ -66,6 +67,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
             match self.store_mode {
                 StoreMode::Merge => {
                     cue.merge(cue_channels);
+                    // TODO: this can cause the same effect to run multiple times
                     for effect in &self.effects {
                         cue.effects.push(CueEffect {
                             effect: effect.effect_id,
@@ -84,6 +86,11 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                             fixtures: effect.fixtures.clone().into(),
                             effect_offset: effect.offset.map(SequencerTime::Beats),
                         })
+                        .collect();
+                    cue.presets = self
+                        .presets
+                        .iter()
+                        .map(|preset| preset.clone().into())
                         .collect();
                 }
             }

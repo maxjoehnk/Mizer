@@ -14,6 +14,8 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
+use mizer_fixtures::programmer::{PresetId, ProgrammedPreset};
+use crate::cue_preset::CuePreset;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -28,6 +30,8 @@ pub struct Cue {
     pub controls: Vec<CueControl>,
     #[serde(default)]
     pub effects: Vec<CueEffect>,
+    #[serde(default)]
+    pub presets: Vec<CuePreset>,
     #[serde(default)]
     pub cue_fade: Option<SequencerValue<SequencerTime>>,
     #[serde(default)]
@@ -48,7 +52,8 @@ impl Cue {
             id,
             name: name.into(),
             controls,
-            effects: Vec::new(),
+            effects: Default::default(),
+            presets: Default::default(),
             trigger: Default::default(),
             trigger_time: Default::default(),
             cue_fade: None,

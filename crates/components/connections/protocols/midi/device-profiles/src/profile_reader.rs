@@ -1,4 +1,4 @@
-use crate::profile::DeviceProfile;
+use crate::profile::{DeviceProfile, DeviceProfileConfig, ProfileErrors, ProfileScripts};
 use crate::scripts::outputs::parse_outputs_ast;
 use crate::scripts::pages::get_pages;
 use anyhow::Context;
@@ -6,15 +6,36 @@ use std::fs;
 use std::path::Path;
 
 pub fn read_profile(path: &Path) -> anyhow::Result<DeviceProfile> {
-    let mut profile = read_config(path)?;
-    generate_pages(&mut profile, path)?;
-    generate_output_script(&mut profile, path)?;
-    read_layout(&mut profile, path)?;
+    let config = read_config(path)?;
+    let mut profile = DeviceProfile {
+        id: config.id,
+        manufacturer: config.manufacturer,
+        name: config.name,
+        keyword: config.keyword,
+        pages: config.pages,
+        output_script: None,
+        layout: None,
+        engine: Default::default(),
+        errors: Default::default(),
+        file_path: path.to_path_buf(),
+    };
+    if let Err(err) = generate_pages(&config.scripts, &mut profile, path) {
+        profile.errors.push(ProfileErrors::PagesLoadingError(err.to_string()));
+        tracing::error!("Error generating pages for profile {}: {:?}", profile.name, err);
+    }
+    if let Err(err) = generate_output_script(&config.scripts, &mut profile, path) {
+        profile.errors.push(ProfileErrors::OutputScriptLoadingError(err.to_string()));
+        tracing::error!("Error generating output script for profile {}: {:?}", profile.name, err);
+    }
+    if let Err(err) = read_layout(&config.layout_file, &mut profile, path) {
+        profile.errors.push(ProfileErrors::LayoutLoadingError(err.to_string()));
+        tracing::error!("Error reading layout for profile {}: {:?}", profile.name, err);
+    }
 
     Ok(profile)
 }
 
-fn read_config(path: &Path) -> anyhow::Result<DeviceProfile> {
+fn read_config(path: &Path) -> anyhow::Result<DeviceProfileConfig> {
     let profile_path = path.join("profile.yml");
     let mut file = fs::File::open(profile_path)?;
     let profile = serde_yaml::from_reader(&mut file)?;
@@ -22,9 +43,8 @@ fn read_config(path: &Path) -> anyhow::Result<DeviceProfile> {
     Ok(profile)
 }
 
-fn generate_pages(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
-    if let Some(script_name) = profile
-        .scripts
+fn generate_pages(scripts: &Option<ProfileScripts>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+    if let Some(script_name) = scripts
         .as_ref()
         .and_then(|scripts| scripts.pages.as_ref())
     {
@@ -34,9 +54,8 @@ fn generate_pages(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()
     Ok(())
 }
 
-fn generate_output_script(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
-    if let Some(script_name) = profile
-        .scripts
+fn generate_output_script(scripts: &Option<ProfileScripts>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+    if let Some(script_name) = scripts
         .as_ref()
         .and_then(|scripts| scripts.outputs.as_ref())
     {
@@ -49,8 +68,8 @@ fn generate_output_script(profile: &mut DeviceProfile, path: &Path) -> anyhow::R
     Ok(())
 }
 
-fn read_layout(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
-    if let Some(filename) = profile.layout_file.as_ref() {
+fn read_layout(layout_file: &Option<String>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+    if let Some(filename) = layout_file.as_ref() {
         let layout_path = path.join(filename);
         let layout = std::fs::read_to_string(layout_path)?;
         profile.layout = Some(layout);

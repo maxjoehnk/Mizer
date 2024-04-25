@@ -1,6 +1,5 @@
 use super::DmxOutput;
 use crate::buffer::DmxBuffer;
-use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 
@@ -8,7 +7,6 @@ pub struct ArtnetOutput {
     socket: UdpSocket,
     pub host: String,
     pub port: u16,
-    buffer: DmxBuffer,
 }
 
 impl ArtnetOutput {
@@ -22,7 +20,6 @@ impl ArtnetOutput {
             socket,
             host,
             port,
-            buffer: DmxBuffer::default(),
         })
     }
 
@@ -41,15 +38,7 @@ impl DmxOutput for ArtnetOutput {
         format!("Artnet ({}:{})", self.host, self.port)
     }
 
-    fn write_single(&self, universe: u16, channel: u16, value: u8) {
-        self.buffer.write_single(universe, channel, value)
-    }
-
-    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
-        self.buffer.write_bulk(universe, channel, values)
-    }
-
-    fn flush(&self) {
+    fn flush(&self, buffer: &DmxBuffer) {
         profiling::scope!("ArtnetOutput::flush");
         let broadcast_addr = match self.parse_addr() {
             Ok(addr) => addr,
@@ -59,11 +48,10 @@ impl DmxOutput for ArtnetOutput {
             }
         };
 
-        let universe_buffer = self.buffer.buffers.lock().unwrap();
-        for (universe, buffer) in universe_buffer.iter() {
+        for (universe, buffer) in buffer.iter() {
             let msg = artnet_protocol::Output {
-                port_address: artnet_protocol::PortAddress::try_from(*universe - 1).unwrap(),
-                data: buffer.to_vec().into(),
+                port_address: artnet_protocol::PortAddress::try_from(universe - 1).unwrap(),
+                data: buffer.into_iter().collect::<Vec<_>>().into(),
                 ..artnet_protocol::Output::default()
             };
 
@@ -75,10 +63,5 @@ impl DmxOutput for ArtnetOutput {
                 tracing::error!("Unable to send to artnet server {:?}", err);
             }
         }
-    }
-
-    fn read_buffer(&self) -> HashMap<u16, [u8; 512]> {
-        let buffers = self.buffer.buffers.lock().unwrap();
-        buffers.clone()
     }
 }

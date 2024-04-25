@@ -9,7 +9,6 @@ class OpenViewIntent extends Intent {
 enum View {
   Layout,
   Plan,
-  PreViz,
   Nodes,
   Sequencer,
   Effects,
@@ -21,14 +20,15 @@ enum View {
   FixturePatch,
   Session,
   History,
+  DmxOutput,
   Timecode,
   Preferences,
+  MidiProfiles,
 }
 
 const ViewHotkeyLabels = {
   View.Layout: "layout_view",
   View.Plan: "plan_view",
-  View.PreViz: "previz_view",
   View.Nodes: "nodes_view",
   View.Sequencer: "sequencer_view",
   View.Effects: "effects_view",
@@ -40,8 +40,10 @@ const ViewHotkeyLabels = {
   View.FixturePatch: "fixture_patch_view",
   View.Session: "session_view",
   View.History: "history_view",
+  View.DmxOutput: "dmx_output_view",
   View.Timecode: "timecode_view",
   View.Preferences: "preferences_view",
+  View.MidiProfiles: "midi_profiles_view",
 };
 
 extension ViewToHotkey on View {

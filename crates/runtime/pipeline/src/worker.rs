@@ -97,7 +97,6 @@ pub struct PipelineWorker {
     states: HashMap<NodePath, Box<dyn Any>>,
     senders: HashMap<NodePath, NodeSenders>,
     receivers: HashMap<NodePath, NodeReceivers>,
-    dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     _node_metadata: HashMap<NodePath, NodeRuntimeMetadata>,
@@ -116,7 +115,6 @@ impl std::fmt::Debug for PipelineWorker {
         f.debug_struct("PipelineWorker")
             .field("senders", &self.senders)
             .field("receivers", &self.receivers)
-            .field("dependencies", &self.dependencies)
             .field("previews", &self.previews)
             .field("port_metadata", &self.node_metadata)
             .finish()
@@ -135,7 +133,6 @@ impl PipelineWorker {
             states: Default::default(),
             senders: Default::default(),
             receivers: Default::default(),
-            dependencies: Default::default(),
             previews: Default::default(),
             node_metadata,
             _node_metadata: Default::default(),
@@ -189,7 +186,6 @@ impl PipelineWorker {
         self.receivers.remove(path);
         self.senders.remove(path);
         self.previews.remove(path);
-        self.dependencies.remove(path);
     }
 
     pub fn rename_node(&mut self, from: NodePath, to: NodePath) -> anyhow::Result<()> {
@@ -200,16 +196,7 @@ impl PipelineWorker {
         self.receivers.rename_key(&from, to.clone());
         self.senders.rename_key(&from, to.clone());
         self.previews.rename_key(&from, to.clone());
-        self.dependencies.rename_key(&from, to.clone());
-
-        for (_, dependencies) in self.dependencies.iter_mut() {
-            for path in dependencies.iter_mut() {
-                if path == &from {
-                    *path = to.clone();
-                }
-            }
-        }
-
+        
         Ok(())
     }
 
@@ -221,18 +208,9 @@ impl PipelineWorker {
         target_meta: PortMetadata,
     ) -> anyhow::Result<()> {
         tracing::trace!("Connect nodes");
-        self.add_dependency(link.source.clone(), link.target.clone());
         self.connect_ports(link, source_meta, target_meta)?;
 
         Ok(())
-    }
-
-    fn add_dependency(&mut self, node: NodePath, dependency: NodePath) {
-        if let Some(dependencies) = self.dependencies.get_mut(&node) {
-            dependencies.push(dependency);
-        } else {
-            self.dependencies.insert(node, vec![dependency]);
-        }
     }
 
     fn connect_ports(
@@ -306,7 +284,7 @@ impl PipelineWorker {
         let senders = self
             .senders
             .entry(link.source.clone())
-            .or_insert_with(NodeSenders::default);
+            .or_default();
         let rx = if let Some((port, _)) = senders.get(&link.source_port) {
             let port = port
                 .downcast_ref::<MemorySender<V>>()
@@ -323,7 +301,7 @@ impl PipelineWorker {
         let receivers = self
             .receivers
             .entry(link.target)
-            .or_insert_with(NodeReceivers::default);
+            .or_default();
         receivers.add(
             link.target_port,
             rx,
@@ -350,7 +328,6 @@ impl PipelineWorker {
     ) {
         profiling::scope!("PipelineWorker::pre_process");
         self.check_node_receivers(&nodes, port_reader);
-        self.order_nodes_by_dependencies(&mut nodes);
         self.pre_process_nodes(&mut nodes, clock, context);
     }
 
@@ -363,7 +340,6 @@ impl PipelineWorker {
     ) {
         profiling::scope!("PipelineWorker::process");
         self.check_node_receivers(&nodes, port_reader);
-        self.order_nodes_by_dependencies(&mut nodes);
         self.process_nodes(&mut nodes, clock, context);
     }
 
@@ -376,7 +352,6 @@ impl PipelineWorker {
     ) {
         profiling::scope!("PipelineWorker::post_process");
         self.check_node_receivers(&nodes, port_reader);
-        self.order_nodes_by_dependencies(&mut nodes);
         self.post_process_nodes(&mut nodes, clock, context);
     }
 
@@ -402,25 +377,6 @@ impl PipelineWorker {
                 }
             }
         }
-    }
-
-    fn order_nodes_by_dependencies(
-        &mut self,
-        nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-    ) {
-        profiling::scope!("PipelineWorker::order_nodes_by_dependencies");
-        nodes.sort_by(|(left, _), (right, _)| {
-            let left_deps = self.dependencies.get(left).cloned().unwrap_or_default();
-            let right_deps = self.dependencies.get(right).cloned().unwrap_or_default();
-
-            if left_deps.contains(right) {
-                Ordering::Less
-            } else if right_deps.contains(left) {
-                Ordering::Greater
-            } else {
-                Ordering::Equal
-            }
-        });
     }
 
     fn pre_process_nodes(
@@ -568,6 +524,7 @@ fn register_receiver(
     port_id: PortId,
     metadata: PortMetadata,
 ) {
+    profiling::scope!("PipelineWorker::register_receiver");
     tracing::debug!("Registering port receiver for {:?} {:?}", path, &port_id);
     match metadata.port_type {
         PortType::Single => receivers.register::<port_types::SINGLE>(port_id, metadata),

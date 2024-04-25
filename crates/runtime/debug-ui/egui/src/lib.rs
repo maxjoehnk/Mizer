@@ -2,7 +2,7 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::num::NonZeroU32;
 use std::rc::Rc;
-use std::sync::OnceLock;
+use std::sync::{Arc, OnceLock};
 
 use egui::{Context, TextureHandle, ViewportId};
 use egui_tracing::tracing::collector::AllowedTargets;
@@ -106,12 +106,12 @@ impl DebugUi for EguiDebugUi {
 impl EguiDebugUi {
     #[cfg(target_os = "linux")]
     pub fn new(event_loop: &EventLoopHandle, panes: Vec<Pane>) -> anyhow::Result<Self> {
-        let window = event_loop.new_raw_window(Some("Mizer Debug UI"))?;
+        let window_ref = event_loop.new_raw_window(Some("Mizer Debug UI"))?;
         let context = Context::default();
         let viewport_id = ViewportId::default();
 
         let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
-        futures::executor::block_on(painter.set_window(viewport_id, Some(&window)))?;
+        futures::executor::block_on(painter.set_window(viewport_id, Some(Arc::clone(&window_ref.window))))?;
 
         let mut tiles = egui_tiles::Tiles::<Pane>::default();
         let mut tabs = vec![];
@@ -127,7 +127,7 @@ impl EguiDebugUi {
             viewport_id,
             egui_context: context,
             egui_state: None,
-            window,
+            window: window_ref,
             painter,
             textures: Default::default(),
             state: Default::default(),

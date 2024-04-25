@@ -942,6 +942,31 @@ impl From<FixtureControlValue> for FixtureControl {
     }
 }
 
+impl FixtureControlValue {
+    pub fn into_fader_values(self) -> Vec<(FixtureFaderControl, f64)> {
+        use FixtureControlValue::*;
+        match self {
+            Intensity(value) => vec![(FixtureFaderControl::Intensity, value)],
+            Shutter(value) => vec![(FixtureFaderControl::Shutter, value)],
+            ColorMixer(r, g, b) => vec![
+                (FixtureFaderControl::ColorMixer(ColorChannel::Red), r),
+                (FixtureFaderControl::ColorMixer(ColorChannel::Green), g),
+                (FixtureFaderControl::ColorMixer(ColorChannel::Blue), b),
+            ],
+            ColorWheel(value) => vec![(FixtureFaderControl::ColorWheel, value)],
+            Pan(value) => vec![(FixtureFaderControl::Pan, value)],
+            Tilt(value) => vec![(FixtureFaderControl::Tilt, value)],
+            Focus(value) => vec![(FixtureFaderControl::Focus, value)],
+            Zoom(value) => vec![(FixtureFaderControl::Zoom, value)],
+            Prism(value) => vec![(FixtureFaderControl::Prism, value)],
+            Iris(value) => vec![(FixtureFaderControl::Iris, value)],
+            Frost(value) => vec![(FixtureFaderControl::Frost, value)],
+            Gobo(value) => vec![(FixtureFaderControl::Gobo, value)],
+            Generic(name, value) => vec![(FixtureFaderControl::Generic(name), value)],
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct FixtureChannelDefinition {
     pub name: String,

@@ -15,6 +15,7 @@ profiling = "1"
 enum_dispatch = "0.3"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
-tokio = { version = "1.36", features = ["net", "rt", "io-util"] }
+tokio = { version = "1.37", features = ["net", "rt", "io-util"] }
 dashmap = "5.5"
 flume = "0.11"
+evmap = "10"

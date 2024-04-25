@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::io::{Read, Write};
+use std::ops::Deref;
 use std::path::{Path, PathBuf};
 
 use directories_next::ProjectDirs;
@@ -35,10 +36,60 @@ pub struct General {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct FilePaths {
-    pub midi_device_profiles: PathBuf,
+    pub midi_device_profiles: PathList,
     pub fixture_libraries: FixtureLibraryPaths,
     #[serde(default = "default_media_storage")]
     pub media_storage: PathBuf,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(from="BackwardCompatibility")]
+#[repr(transparent)]
+pub struct PathList(Vec<PathBuf>);
+
+impl FromIterator<PathBuf> for PathList {
+    fn from_iter<T: IntoIterator<Item=PathBuf>>(iter: T) -> Self {
+        PathList(iter.into_iter().collect())
+    }
+}
+
+impl From<Vec<PathBuf>> for PathList {
+    fn from(value: Vec<PathBuf>) -> Self {
+        PathList(value)
+    }
+}
+
+impl IntoIterator for PathList {
+    type Item = PathBuf;
+    type IntoIter = std::vec::IntoIter<PathBuf>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.into_iter()
+    }
+}
+
+impl Deref for PathList {
+    type Target = Vec<PathBuf>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(untagged)]
+pub enum BackwardCompatibility {
+    SinglePath(PathBuf),
+    MultiplePaths(Vec<PathBuf>),
+}
+
+impl From<BackwardCompatibility> for PathList {
+    fn from(value: BackwardCompatibility) -> Self {
+        match value {
+            BackwardCompatibility::SinglePath(path) => PathList(vec![path]),
+            BackwardCompatibility::MultiplePaths(paths) => PathList(paths),
+        }
+    }
 }
 
 fn default_media_storage() -> PathBuf {
@@ -100,10 +151,8 @@ impl SettingsManager {
         {
             paths.push(path);
         }
-        if let Some(dir) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
-            .map(|dirs| dirs.config_dir().join("settings.toml"))
-        {
-            paths.push(dir);
+        if let Some(path) = Self::get_config_path() {
+            paths.push(path);
         }
         if let Some(path) = paths.iter().find(|path| path.exists()) {
             tracing::trace!("Loading settings from {path:?}");
@@ -123,15 +172,18 @@ impl SettingsManager {
     pub fn save(&self) -> anyhow::Result<()> {
         let file_path = if let Some(ref path) = self.file_path {
             path.clone()
-        } else if let Some(path) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
-            .map(|dirs| dirs.config_dir().join("settings.toml"))
-        {
+        } else if let Some(path) = Self::get_config_path() {
             path
         } else {
             PathBuf::from("settings.toml")
         };
 
         self.settings.save_to(file_path)
+    }
+    
+    fn get_config_path() -> Option<PathBuf> {
+        ProjectDirs::from("live", "mizer", "Mizer")
+            .map(|dirs| dirs.config_dir().join("settings.toml"))
     }
 }
 

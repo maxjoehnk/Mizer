@@ -8,7 +8,7 @@ use mizer_midi_device_profiles::DeviceProfile;
 use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 
 pub struct MidiConnectionManager {
-    provider: MidiDeviceProvider,
+    pub(crate) provider: MidiDeviceProvider,
     devices: DashMap<String, MidiDevice>,
 }
 
@@ -20,7 +20,7 @@ impl MidiConnectionManager {
         }
     }
 
-    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
+    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: &[P]) -> anyhow::Result<()> {
         self.provider.load_device_profiles(path)
     }
 

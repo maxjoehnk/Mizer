@@ -210,7 +210,6 @@ pub struct FixtureConfig {
     pub universe: Option<u16>,
     #[serde(default)]
     pub mode: Option<String>,
-    pub output: Option<String>,
     #[serde(default)]
     pub configuration: FixtureConfiguration,
 }
@@ -427,7 +426,6 @@ mod tests {
                 name: "My Fixture".into(),
                 fixture: "fixture-definition-ref".into(),
                 channel: 1,
-                output: Some("output".into()),
                 universe: None,
                 mode: None,
                 configuration: Default::default(),
@@ -457,7 +455,6 @@ mod tests {
                 name: "My Fixture".into(),
                 fixture: "another-fixture".into(),
                 channel: 5,
-                output: None,
                 universe: None,
                 mode: Some("2-channel".into()),
                 configuration: Default::default(),
@@ -487,7 +484,6 @@ mod tests {
                 name: "My Fixture".into(),
                 fixture: "another-fixture".into(),
                 channel: 5,
-                output: None,
                 universe: Some(1),
                 mode: None,
                 configuration: Default::default(),

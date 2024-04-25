@@ -72,13 +72,13 @@ mizer-status-bus = { path = "../runtime/status" }
 mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-vector = { path = "../components/vector" }
 mizer-wgpu = { path = "../runtime/wgpu" }
-tokio = { version = "1.36", features = ["rt-multi-thread", "macros", "time", "rt"] }
+tokio = { version = "1.37", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"
 dashmap = "5"
 flume = "0.11"
 profiling = "1.0"
-rayon = "1.9"
+rayon = "1.10"
 serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.32", features = ["anyhow", "tracing", "debug-images"] }
 sentry-tracing = "0.32"

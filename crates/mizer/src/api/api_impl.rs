@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::rc::Rc;
 use std::sync::atomic::AtomicU8;
 use std::sync::Arc;
 
@@ -15,13 +16,15 @@ use mizer_module::ApiInjector;
 use mizer_node::{
     NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId, PortMetadata,
 };
-use mizer_protocol_midi::MidiEvent;
+use mizer_protocol_dmx::DmxMonitorHandle;
+use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{
     DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
 };
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
+use mizer_status_bus::StatusHandle;
 
 use crate::{ApiCommand, ApiHandler};
 
@@ -240,13 +243,11 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::GetDmxMonitor(output_id, tx))
-            .unwrap();
-
-        rx.recv().unwrap()
+    fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>> {
+        let dmx_monitor = self.api_injector.get::<DmxMonitorHandle>();
+        let dmx_monitor = dmx_monitor.ok_or_else(|| anyhow::anyhow!("DMX monitor not available"))?;
+        
+        Ok(dmx_monitor.read_all())
     }
 
     #[profiling::function]
@@ -336,6 +337,15 @@ impl RuntimeApi for Api {
         self.open_node_views
             .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         self.update_read_node_settings();
+    }
+
+    fn reload_midi_device_profiles(&self) -> anyhow::Result<()> {
+        let status_handle = self.api_injector.require_service::<StatusHandle>();
+        let registry = self.api_injector.require_service::<MidiDeviceProfileRegistry>();
+        let loaded_profiles = registry.load_device_profiles(&self.settings.read().settings.paths.midi_device_profiles)?;
+        status_handle.add_message(format!("Loaded {loaded_profiles} MIDI Device Profiles"), None);
+        
+        Ok(())
     }
 
     #[profiling::function]

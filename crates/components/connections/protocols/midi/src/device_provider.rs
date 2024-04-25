@@ -40,8 +40,38 @@ impl std::fmt::Debug for MidiDeviceIdentifier {
 
 #[derive(Default)]
 pub struct MidiDeviceProvider {
-    pub(crate) profiles: Arc<RwLock<Vec<DeviceProfile>>>,
+    pub(crate) profile_registry: MidiDeviceProfileRegistry,
     pub(crate) available_devices: Arc<DashMap<String, MidiDeviceIdentifier>>,
+}
+
+#[derive(Clone, Default)]
+pub struct MidiDeviceProfileRegistry {
+    pub(crate) profiles: Arc<RwLock<Vec<DeviceProfile>>>,
+}
+
+impl MidiDeviceProfileRegistry {
+    pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
+        self.profiles.read().clone()
+    }
+    
+    pub fn find_profile(&self, name: &str) -> Option<DeviceProfile> {
+        let profiles = self.profiles.read();
+        profiles
+            .iter()
+            .find(|profile| profile.matches(name))
+            .cloned()
+    }
+
+    pub fn load_device_profiles<P: AsRef<Path>>(&self, paths: &[P]) -> anyhow::Result<usize> {
+        let mut profiles = self.profiles.write();
+        *profiles = Default::default();
+        for path in paths {
+            let device_profiles = load_profiles(path)?;
+            profiles.extend(device_profiles);
+        }
+
+        Ok(profiles.len())
+    }
 }
 
 impl MidiDeviceProvider {
@@ -49,15 +79,14 @@ impl MidiDeviceProvider {
         Self::default()
     }
 
-    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
-        let mut profiles = self.profiles.write();
-        *profiles = load_profiles(path)?;
-
+    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, paths: &[P]) -> anyhow::Result<()> {
+        self.profile_registry.load_device_profiles(paths)?;
+        
         Ok(())
     }
 
     pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
-        self.profiles.read().clone()
+        self.profile_registry.list_device_profiles()
     }
 
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {

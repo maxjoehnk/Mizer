@@ -59,6 +59,12 @@ impl PartialEq for ProgrammedEffect {
 
 impl Eq for ProgrammedEffect {}
 
+#[derive(Debug, Clone, Deserialize, Serialize, Eq, PartialEq, Hash)]
+pub struct ProgrammedPreset {
+    pub preset_id: PresetId,
+    pub fixtures: FixtureSelection,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct ProgrammerState {
     pub selection: Vec<Vec<FixtureId>>,
@@ -102,6 +108,7 @@ pub struct FixtureProgrammer {
     frost: Option<f64>,
     gobo: Option<f64>,
     generic: HashMap<String, f64>,
+    presets: Vec<PresetId>,
 }
 
 impl FixtureProgrammer {
@@ -305,7 +312,7 @@ impl Programmer {
         Self::default()
     }
 
-    pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
+    pub(crate) fn run(&self, fixture_controller: &impl FixtureController, presets: &Presets) {
         profiling::scope!("Programmer::run");
         tracing::trace!("Programmer::run");
         if self.offline {
@@ -317,6 +324,14 @@ impl Programmer {
             for fixture_id in selection.get_fixtures().iter().flatten() {
                 for (control, value) in state.fader_controls() {
                     values.insert((*fixture_id, control), value);
+                }
+                for preset in &state.presets {
+                    let preset_values = presets.get_preset_values(*preset)
+                        .into_iter()
+                        .flat_map(|control| control.into_fader_values());
+                    for (control, value) in preset_values {
+                        values.insert((*fixture_id, control), value);
+                    }
                 }
             }
         }
@@ -457,11 +472,8 @@ impl Programmer {
         })
     }
 
-    pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {
-        let values = presets.get_preset_values(preset_id);
-        for value in values {
-            self.write_control(value);
-        }
+    pub fn call_preset(&mut self, preset_id: PresetId) {
+        self.active_channels.presets.push(preset_id);
     }
 
     pub fn call_effect(&mut self, effect_id: u32) {
@@ -637,6 +649,32 @@ impl Programmer {
     pub fn active_effects(&self) -> impl Iterator<Item = &ProgrammedEffect> {
         self.running_effects.iter()
     }
+
+    pub fn active_presets(&self) -> Vec<ProgrammedPreset> {
+        self.active_channels.presets
+            .iter()
+            .map(|preset_id| {
+                ProgrammedPreset {
+                    preset_id: *preset_id,
+                    fixtures: self.active_selection.clone(),
+                }
+            })
+            .chain(
+                self.tracked_selections
+                    .iter()
+                    .flat_map(|(selection, programmer)| {
+                        programmer.presets
+                            .iter()
+                            .map(|preset_id| {
+                                ProgrammedPreset {
+                                    preset_id: *preset_id,
+                                    fixtures: selection.clone(),
+                                }
+                            })
+                    }))
+            .collect()
+
+    }
 }
 
 #[derive(Clone)]
@@ -668,7 +706,7 @@ mod tests {
 
     use crate::contracts::*;
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
-    use crate::programmer::{Group, Programmer, ProgrammerState};
+    use crate::programmer::{Group, Presets, Programmer, ProgrammerState};
     use crate::selection::FixtureSelection;
     use crate::FixtureId;
 
@@ -870,6 +908,7 @@ mod tests {
     #[test_case(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)])]
     #[test_case(vec![FixtureId::SubFixture(1, 2)])]
     fn run_should_highlight_selected_fixtures(fixtures: Vec<FixtureId>) {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         for fixture_id in &fixtures {
@@ -882,13 +921,14 @@ mod tests {
         programmer.select_fixtures(fixtures);
         programmer.set_highlight(true);
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
 
     #[test]
     fn run_should_not_highlight_selected_fixtures() {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
@@ -899,13 +939,14 @@ mod tests {
             .with(predicate::eq(FixtureId::Fixture(1)))
             .return_const(());
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
 
     #[test]
     fn run_should_not_highlight_fixtures_after_clear() {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
@@ -917,13 +958,14 @@ mod tests {
             .with(predicate::eq(FixtureId::Fixture(1)))
             .return_const(());
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
 
     #[test]
     fn run_should_not_highlight_fixtures_after_store() {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
@@ -936,7 +978,7 @@ mod tests {
             .return_const(());
         fixture_controller.expect_write().return_const(());
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
@@ -948,13 +990,14 @@ mod tests {
         fader: FixtureFaderControl,
         value: f64,
     ) {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
         programmer.write_control(control);
         expect_write(&mut fixture_controller, FixtureId::Fixture(1), fader, value);
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
@@ -963,6 +1006,7 @@ mod tests {
     #[test_case(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)])]
     #[test_case(vec![FixtureId::SubFixture(1, 2)])]
     fn run_should_write_to_multiple_fixtures(fixtures: Vec<FixtureId>) {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         for fixture_id in &fixtures {
@@ -976,7 +1020,7 @@ mod tests {
         programmer.select_fixtures(fixtures);
         programmer.write_control(FixtureControlValue::Intensity(1.));
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
@@ -992,6 +1036,7 @@ mod tests {
     fn run_should_write_multiple_controls_to_fixture(
         controls: Vec<(FixtureControlValue, FixtureFaderControl, f64)>,
     ) {
+        let presets = Presets::default();
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
@@ -1000,7 +1045,7 @@ mod tests {
             expect_write(&mut fixture_controller, FixtureId::Fixture(1), fader, value);
         }
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }
@@ -1009,6 +1054,7 @@ mod tests {
     fn run_should_combine_multiple_fixture_and_control_values() {
         let mut fixture_controller = MockFixtureController::default();
         let mut programmer = Programmer::new();
+        let presets = Presets::default();
         programmer.select_fixtures(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
         programmer.write_control(FixtureControlValue::Intensity(1.));
         programmer.select_fixtures(vec![FixtureId::Fixture(2), FixtureId::Fixture(3)]);
@@ -1032,7 +1078,7 @@ mod tests {
             0.5,
         );
 
-        programmer.run(&fixture_controller);
+        programmer.run(&fixture_controller, &presets);
 
         fixture_controller.checkpoint();
     }

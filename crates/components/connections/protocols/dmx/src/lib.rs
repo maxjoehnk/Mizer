@@ -1,4 +1,7 @@
 use std::collections::HashMap;
+use crate::buffer::DmxBuffer;
+use crate::dmx_monitor::DmxMonitorInternalHandle;
+pub use crate::dmx_monitor::DmxMonitorHandle;
 
 pub use crate::inputs::*;
 pub use crate::module::DmxModule;
@@ -10,16 +13,23 @@ mod inputs;
 mod module;
 mod outputs;
 mod processor;
+mod dmx_monitor;
 
-#[derive(Default)]
 pub struct DmxConnectionManager {
+    dmx_monitor: DmxMonitorInternalHandle,
+    buffer: DmxBuffer,
     outputs: HashMap<String, DmxOutputConnection>,
     inputs: HashMap<String, DmxInputConnection>,
 }
 
 impl DmxConnectionManager {
-    pub fn new() -> Self {
-        DmxConnectionManager::default()
+    pub fn new(internal_monitor: DmxMonitorInternalHandle) -> Self {
+        Self {
+            dmx_monitor: internal_monitor,
+            buffer: DmxBuffer::default(),
+            outputs: HashMap::new(),
+            inputs: HashMap::new(),
+        }
     }
 
     pub fn add_output(&mut self, id: String, output: impl Into<DmxOutputConnection>) {
@@ -34,10 +44,12 @@ impl DmxConnectionManager {
         self.outputs.get_mut(name)
     }
 
-    pub fn flush(&self) {
+    pub fn flush(&mut self) {
         for (_, output) in self.outputs.iter() {
-            output.flush();
+            output.flush(&self.buffer);
         }
+        self.dmx_monitor.write(&self.buffer);
+        self.dmx_monitor.flush();
     }
 
     pub fn list_outputs(&self) -> Vec<(&String, &DmxOutputConnection)> {
@@ -70,5 +82,15 @@ impl DmxConnectionManager {
 
     pub fn delete_input(&mut self, id: &str) -> Option<DmxInputConnection> {
         self.inputs.remove(id)
+    }
+}
+
+impl DmxWriter for DmxConnectionManager {
+    fn write_single(&self, universe: u16, channel: u16, value: u8) {
+        self.buffer.write_single(universe, channel, value);
+    }
+
+    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
+        self.buffer.write_bulk(universe, channel, values);
     }
 }

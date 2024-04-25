@@ -86,7 +86,6 @@ impl<'a> Command<'a> for PatchFixturesCommand {
                 name,
                 definition.clone(),
                 self.mode.clone().into(),
-                None,
                 channel,
                 Some(universe),
                 Default::default(),

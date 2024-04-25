@@ -18,9 +18,8 @@ class GlobalHotkeyConfiguration extends StatelessWidget {
           "undo": () => _undo(context),
           "redo": () => _redo(context),
           "save": () => ProjectFiles.saveProject(context),
-          // FIXME: when these are pressed, the other hotkeys don't work any longer
-          // "save_as": () => ProjectFiles.saveProjectAs(context),
-          // "open": () => ProjectFiles.openProject(context),
+          "save_as": () => ProjectFiles.saveProjectAs(context),
+          "open": () => ProjectFiles.openProject(context),
         },
         child: child);
   }

@@ -390,7 +390,6 @@ fn create_test_fixture(modes: impl IntoIterator<Item = FixtureMode>) -> Fixture 
         Default::default(),
         definition,
         None,
-        None,
         0,
         None,
         Default::default(),

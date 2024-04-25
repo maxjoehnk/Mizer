@@ -100,7 +100,7 @@ class Settings extends $pb.GeneratedMessage {
 class PathSettings extends $pb.GeneratedMessage {
   factory PathSettings({
     $core.String? mediaStorage,
-    $core.String? midiDeviceProfiles,
+    $core.Iterable<$core.String>? midiDeviceProfiles,
     $core.String? openFixtureLibrary,
     $core.String? qlcplus,
     $core.String? gdtf,
@@ -111,7 +111,7 @@ class PathSettings extends $pb.GeneratedMessage {
       $result.mediaStorage = mediaStorage;
     }
     if (midiDeviceProfiles != null) {
-      $result.midiDeviceProfiles = midiDeviceProfiles;
+      $result.midiDeviceProfiles.addAll(midiDeviceProfiles);
     }
     if (openFixtureLibrary != null) {
       $result.openFixtureLibrary = openFixtureLibrary;
@@ -133,7 +133,7 @@ class PathSettings extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PathSettings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'mediaStorage')
-    ..aOS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
+    ..pPS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
     ..aOS(3, _omitFieldNames ? '' : 'openFixtureLibrary')
     ..aOS(4, _omitFieldNames ? '' : 'qlcplus')
     ..aOS(5, _omitFieldNames ? '' : 'gdtf')
@@ -172,13 +172,7 @@ class PathSettings extends $pb.GeneratedMessage {
   void clearMediaStorage() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get midiDeviceProfiles => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set midiDeviceProfiles($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasMidiDeviceProfiles() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearMidiDeviceProfiles() => clearField(2);
+  $core.List<$core.String> get midiDeviceProfiles => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.String get openFixtureLibrary => $_getSZ(2);
@@ -387,6 +381,228 @@ class General extends $pb.GeneratedMessage {
   $core.bool hasAutoLoadLastProject() => $_has(1);
   @$pb.TagNumber(2)
   void clearAutoLoadLastProject() => clearField(2);
+}
+
+class MidiDeviceProfiles extends $pb.GeneratedMessage {
+  factory MidiDeviceProfiles({
+    $core.Iterable<MidiDeviceProfile>? profiles,
+  }) {
+    final $result = create();
+    if (profiles != null) {
+      $result.profiles.addAll(profiles);
+    }
+    return $result;
+  }
+  MidiDeviceProfiles._() : super();
+  factory MidiDeviceProfiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..pc<MidiDeviceProfile>(1, _omitFieldNames ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfiles clone() => MidiDeviceProfiles()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfiles create() => MidiDeviceProfiles._();
+  MidiDeviceProfiles createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfiles> createRepeated() => $pb.PbList<MidiDeviceProfiles>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfiles>(create);
+  static MidiDeviceProfiles? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<MidiDeviceProfile> get profiles => $_getList(0);
+}
+
+class MidiDeviceProfile extends $pb.GeneratedMessage {
+  factory MidiDeviceProfile({
+    $core.String? id,
+    $core.String? manufacturer,
+    $core.String? name,
+    $core.String? keyword,
+    $core.String? filePath,
+    $core.Iterable<Error>? errors,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (manufacturer != null) {
+      $result.manufacturer = manufacturer;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (keyword != null) {
+      $result.keyword = keyword;
+    }
+    if (filePath != null) {
+      $result.filePath = filePath;
+    }
+    if (errors != null) {
+      $result.errors.addAll(errors);
+    }
+    return $result;
+  }
+  MidiDeviceProfile._() : super();
+  factory MidiDeviceProfile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'manufacturer')
+    ..aOS(3, _omitFieldNames ? '' : 'name')
+    ..aOS(4, _omitFieldNames ? '' : 'keyword')
+    ..aOS(5, _omitFieldNames ? '' : 'filePath')
+    ..pc<Error>(7, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: Error.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile clone() => MidiDeviceProfile()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile create() => MidiDeviceProfile._();
+  MidiDeviceProfile createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfile> createRepeated() => $pb.PbList<MidiDeviceProfile>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfile>(create);
+  static MidiDeviceProfile? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get manufacturer => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set manufacturer($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasManufacturer() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearManufacturer() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get name => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set name($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get keyword => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set keyword($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasKeyword() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearKeyword() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get filePath => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set filePath($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasFilePath() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearFilePath() => clearField(5);
+
+  @$pb.TagNumber(7)
+  $core.List<Error> get errors => $_getList(5);
+}
+
+class Error extends $pb.GeneratedMessage {
+  factory Error({
+    $core.String? timestamp,
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (timestamp != null) {
+      $result.timestamp = timestamp;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  Error._() : super();
+  factory Error.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Error.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Error', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'timestamp')
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Error clone() => Error()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Error copyWith(void Function(Error) updates) => super.copyWith((message) => updates(message as Error)) as Error;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Error create() => Error._();
+  Error createEmptyInstance() => create();
+  static $pb.PbList<Error> createRepeated() => $pb.PbList<Error>();
+  @$core.pragma('dart2js:noInline')
+  static Error getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Error>(create);
+  static Error? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get timestamp => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set timestamp($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTimestamp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTimestamp() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get message => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set message($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessage() => clearField(2);
 }
 
 

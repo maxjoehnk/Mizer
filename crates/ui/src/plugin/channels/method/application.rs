@@ -43,6 +43,12 @@ impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> MethodCallHandler
                     reply.send_ok(Value::Null);
                 }
             }
+            "loadMidiDeviceProfiles" => {
+                reply.respond_msg(self.handler.load_midi_device_profiles());
+            }
+            "reloadMidiDeviceProfiles" => {
+                reply.respond_unit_result(self.handler.reload_midi_device_profiles());
+            }
             _ => reply.not_implemented(),
         }
     }

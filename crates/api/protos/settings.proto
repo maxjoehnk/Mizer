@@ -10,7 +10,7 @@ message Settings {
 
 message PathSettings {
   string media_storage = 1;
-  string midi_device_profiles = 2;
+  repeated string midi_device_profiles = 2;
   optional string open_fixture_library = 3;
   optional string qlcplus = 4;
   optional string gdtf = 5;
@@ -32,4 +32,22 @@ message Hotkeys {
 message General {
   string language = 1;
   bool auto_load_last_project = 2;
+}
+
+message MidiDeviceProfiles {
+  repeated MidiDeviceProfile profiles = 1;
+}
+
+message MidiDeviceProfile {
+  string id = 1;
+  string manufacturer = 2;
+  string name = 3;
+  string keyword = 4;
+  string file_path = 5;
+  repeated Error errors = 7;
+}
+
+message Error {
+  string timestamp = 1;
+  string message = 2;
 }

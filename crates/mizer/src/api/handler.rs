@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::path::PathBuf;
 
 use mizer_clock::Clock;
@@ -121,13 +120,6 @@ impl ApiHandler {
                 let device_profiles = self.get_midi_device_profiles(mizer);
                 sender
                     .send(device_profiles)
-                    .expect("api command sender disconnected");
-            }
-            ApiCommand::GetDmxMonitor(output_id, sender) => {
-                profiling::scope!("ApiCommand::GetDmxMonitor");
-                let result = self.monitor_dmx(mizer, output_id);
-                sender
-                    .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::GetMidiMonitor(name, sender) => {
@@ -312,22 +304,6 @@ impl ApiHandler {
             .unwrap();
 
         manager.list_available_device_profiles()
-    }
-
-    fn monitor_dmx(
-        &self,
-        mizer: &mut Mizer,
-        output_id: String,
-    ) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
-        let dmx_manager = mizer
-            .runtime
-            .injector()
-            .get::<DmxConnectionManager>()
-            .unwrap();
-        let dmx_connection = dmx_manager.get_output(&output_id).unwrap();
-        let buffer = dmx_connection.read_buffer();
-
-        Ok(buffer)
     }
 
     fn monitor_midi(

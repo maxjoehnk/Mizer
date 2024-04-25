@@ -10,6 +10,7 @@ import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/history/history_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
+import 'package:mizer/views/midi_profiles/midi_profiles_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/patch/fixture_patch.dart';
 import 'package:mizer/views/plan/plan_view.dart';
@@ -26,6 +27,7 @@ import 'package:provider/provider.dart';
 import 'actions/actions.dart';
 import 'panes/programmer/programmer_view.dart';
 import 'panes/selection/selection_pane.dart';
+import 'views/dmx_output/dmx_output.dart';
 
 const double SHEET_SIZE = 150;
 const double SHEET_PADDING = 0;
@@ -36,7 +38,6 @@ const double SELECTION_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + 
 List<Route> routes = [
   Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
   Route(() => PlanView(), MdiIcons.viewComfy, '2D Plan'.i18n, View.Plan),
-  Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes),
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer'.i18n, View.Sequencer),
   Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures'.i18n, View.Programmer),
@@ -44,12 +45,14 @@ List<Route> routes = [
   Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects),
   Route(() => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
   Route(() => SurfacesView(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
+  Route(() => DmxOutputView(), Icons.bar_chart, 'DMX Output'.i18n, View.DmxOutput),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode),
-  Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
+  Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => PreferencesView(), Icons.settings, 'Preferences'.i18n, View.Preferences),
+  Route(() => MidiProfilesView(), MdiIcons.midi, 'MIDI Profiles'.i18n, View.MidiProfiles),
 ];
 
 class Home extends StatefulWidget {

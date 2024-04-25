@@ -3,7 +3,6 @@ import 'package:mizer/app.dart';
 import 'package:nativeshell/nativeshell.dart';
 
 import 'i18n.dart';
-import 'windows/dmx_monitor_window.dart';
 import 'windows/main_window.dart';
 import 'windows/midi_monitor_window.dart';
 import 'windows/osc_monitor_window.dart';
@@ -21,7 +20,6 @@ class MizerIntegratedUi extends StatelessWidget {
     return MizerApp(child: WindowWidget(onCreateState: (initData) {
       WindowState? state;
 
-      state ??= DmxMonitorWindow.fromInitData(initData);
       state ??= MidiMonitorWindow.fromInitData(initData);
       state ??= OscMonitorWindow.fromInitData(initData);
       state ??= SmartWindow.fromInitData(initData);

@@ -14,7 +14,7 @@ use mizer_fixtures::FixtureModule;
 use mizer_layouts::LayoutsModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
-use mizer_module::{ApiInjector, Module, Runtime};
+use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
 use mizer_plan::PlansModule;
 use mizer_project_files::history::ProjectHistory;
 use mizer_protocol_citp::CitpModule;
@@ -83,6 +83,7 @@ pub fn build_runtime(
     load_modules(&mut context, &flags);
 
     let status_bus = context.runtime.access().status_bus;
+    context.provide_api(status_bus.handle());
 
     let (api_handler, api) = Api::setup(
         &context.runtime,

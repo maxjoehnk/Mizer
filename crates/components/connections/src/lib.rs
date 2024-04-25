@@ -11,7 +11,7 @@ pub use mizer_protocol_pro_dj_link::{CDJView, DJMView};
 
 pub mod midi_device_profile {
     pub use mizer_protocol_midi::{
-        Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page,
+        Control, DeviceControl, DeviceProfile, Group, MidiDeviceControl, Page, MidiDeviceProfileRegistry
     };
 }
 

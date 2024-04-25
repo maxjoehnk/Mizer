@@ -1,4 +1,5 @@
 use std::path::PathBuf;
+use mizer_connections::midi_device_profile;
 
 use mizer_settings as settings;
 
@@ -44,7 +45,7 @@ impl From<settings::FilePaths> for model::PathSettings {
     fn from(paths: settings::FilePaths) -> Self {
         Self {
             media_storage: paths.media_storage.to_string_lossy().to_string(),
-            midi_device_profiles: paths.midi_device_profiles.to_string_lossy().to_string(),
+            midi_device_profiles: paths.midi_device_profiles.into_iter().map(|p| p.to_string_lossy().to_string()).collect(),
             open_fixture_library: paths
                 .fixture_libraries
                 .open_fixture_library
@@ -101,11 +102,37 @@ impl From<model::PathSettings> for settings::FilePaths {
                 qlcplus: paths.qlcplus.map(PathBuf::from),
                 mizer: paths.mizer.map(PathBuf::from),
             },
-            midi_device_profiles: PathBuf::from(paths.midi_device_profiles),
+            midi_device_profiles: paths.midi_device_profiles.into_iter().map(PathBuf::from).collect(),
         }
     }
 }
 
 fn path_to_string(path: PathBuf) -> String {
     path.to_string_lossy().to_string()
+}
+
+impl From<Vec<midi_device_profile::DeviceProfile>> for model::MidiDeviceProfiles {
+    fn from(profiles: Vec<midi_device_profile::DeviceProfile>) -> Self {
+        Self {
+            profiles: profiles.into_iter().map(|p| p.into()).collect(),
+        }
+    }
+}
+
+impl From<midi_device_profile::DeviceProfile> for model::MidiDeviceProfile {
+    fn from(profile: midi_device_profile::DeviceProfile) -> Self {
+        Self {
+            id: profile.id,
+            manufacturer: profile.manufacturer,
+            name: profile.name,
+            keyword: profile.keyword,
+            file_path: profile.file_path.to_string_lossy().to_string(),
+            errors: profile.errors.errors().into_iter()
+                .map(|err| model::Error {
+                    timestamp: err.timestamp.to_string(),
+                    message: err.error.to_string(),
+                })
+                .collect(),
+        }
+    }
 }

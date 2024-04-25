@@ -1,3 +1,4 @@
+use mizer_connections::midi_device_profile::MidiDeviceProfileRegistry;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
@@ -72,6 +73,7 @@ impl<R: RuntimeApi> Handlers<R> {
         let effect_engine: EffectEngine = api_injector.require_service();
         let timecode_manager: TimecodeManager = api_injector.require_service();
         let surface_registry_api: SurfaceRegistryApi = api_injector.require_service();
+        let midi_device_registry: MidiDeviceProfileRegistry = api_injector.require_service();
 
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -88,7 +90,7 @@ impl<R: RuntimeApi> Handlers<R> {
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
             effects: EffectsHandler::new(effect_engine, runtime.clone()),
             programmer: ProgrammerHandler::new(fixture_manager.clone(), sequencer, runtime.clone()),
-            settings: SettingsHandler::new(runtime.clone()),
+            settings: SettingsHandler::new(runtime.clone(), midi_device_registry),
             plans: PlansHandler::new(fixture_manager, runtime.clone()),
             mappings: MappingsHandler::new(runtime.clone()),
             timecode: TimecodeHandler::new(timecode_manager, runtime.clone()),

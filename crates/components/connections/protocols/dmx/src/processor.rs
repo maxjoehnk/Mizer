@@ -7,9 +7,9 @@ pub(crate) struct DmxProcessor;
 
 impl Processor for DmxProcessor {
     #[tracing::instrument]
-    fn post_process(&mut self, injector: &Injector, _: ClockFrame) {
+    fn post_process(&mut self, injector: &mut Injector, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");
-        if let Some(dmx) = injector.get::<DmxConnectionManager>() {
+        if let Some(dmx) = injector.get_mut::<DmxConnectionManager>() {
             dmx.flush();
         }
     }

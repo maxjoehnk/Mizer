@@ -17,6 +17,14 @@ class PipelineState {
     return PipelineState([], [], [], []);
   }
 
+  List<NodeConnection> getInputs(String targetPath) {
+    return this.channels.where((c) => c.targetNode == targetPath).toList();
+  }
+
+  List<NodeConnection> getOutputs(String sourcePath) {
+    return this.channels.where((c) => c.sourceNode == sourcePath).toList();
+  }
+
   PipelineState copyWith({
     List<Node>? nodes,
     List<Node>? allNodes,

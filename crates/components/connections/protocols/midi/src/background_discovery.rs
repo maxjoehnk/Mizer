@@ -5,12 +5,11 @@ use std::time::Duration;
 
 use dashmap::DashMap;
 use midir::{MidiInput, MidiOutput};
-use parking_lot::RwLock;
 use regex::Regex;
 
 use mizer_midi_device_profiles::DeviceProfile;
 
-use crate::{MidiDeviceIdentifier, MidiDeviceProvider};
+use crate::{MidiDeviceIdentifier, MidiDeviceProfileRegistry, MidiDeviceProvider};
 
 lazy_static::lazy_static! {
     static ref LINUX_MIDI_PORT_NAME: Regex = Regex::new("(.*) ([0-9]+:[0-9]+)").unwrap();
@@ -18,14 +17,14 @@ lazy_static::lazy_static! {
 
 pub struct MidiBackgroundDiscovery {
     devices: Arc<DashMap<String, MidiDeviceIdentifier>>,
-    profiles: Arc<RwLock<Vec<DeviceProfile>>>,
+    profiles: MidiDeviceProfileRegistry,
 }
 
 impl MidiBackgroundDiscovery {
     pub fn new(provider: &MidiDeviceProvider) -> Self {
         Self {
             devices: Arc::clone(&provider.available_devices),
-            profiles: Arc::clone(&provider.profiles),
+            profiles: provider.profile_registry.clone(),
         }
     }
 
@@ -94,11 +93,7 @@ impl MidiBackgroundDiscovery {
 
     fn search_profile(&self, name: &str) -> Option<DeviceProfile> {
         profiling::scope!("MidiBackgroundDiscovery::search_profile");
-        let profiles = self.profiles.read();
-        profiles
-            .iter()
-            .find(|profile| profile.matches(name))
-            .cloned()
+        self.profiles.find_profile(name)
     }
 }
 

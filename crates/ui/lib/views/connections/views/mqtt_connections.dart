@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
 import '../dialogs/add_mqtt_connection.dart';
+import '../dialogs/delete_connection.dart';
 
 class MqttConnectionsView extends StatefulWidget {
   final List<Connection> connections;
@@ -26,18 +28,30 @@ class _MqttConnectionsViewState extends State<MqttConnectionsView> {
     return Panel(
       label: "MQTT Connections".i18n,
       child: MizerTable(
+          columnWidths: {
+            4: FixedColumnWidth(128),
+          },
           columns: [
             Text("Name".i18n, style: titleTheme),
             Text("URL".i18n, style: titleTheme),
             Text("Username".i18n, style: titleTheme),
             Text("Password".i18n, style: titleTheme),
+            Container(),
           ],
-          rows: _connections.map((c) => MizerTableRow(cells: [
-            Text(c.name),
-            Text(c.mqtt.url),
-            Text(c.mqtt.username),
-            Text(c.mqtt.password.isEmpty ? "" : "******"),
-          ])).toList()),
+          rows: _connections
+              .map((c) => MizerTableRow(cells: [
+                    Text(c.name),
+                    Text(c.mqtt.url),
+                    Text(c.mqtt.username),
+                    Text(c.mqtt.password.isEmpty ? "" : "******"),
+                    Row(children: [
+                      MizerIconButton(
+                          icon: Icons.edit, label: "Edit".i18n, onClick: () => _onConfigure(c)),
+                      MizerIconButton(
+                          icon: Icons.delete, label: "Delete".i18n, onClick: () => _onDelete(c)),
+                    ])
+                  ]))
+              .toList()),
       actions: [
         PanelActionModel(label: "Add MQTT".i18n, onClick: _addMqtt),
       ],
@@ -52,6 +66,26 @@ class _MqttConnectionsViewState extends State<MqttConnectionsView> {
     }
     await api.addMqtt(value);
     await widget.onRefresh();
+  }
+
+  _onConfigure(Connection connection) async {
+    var value = await showDialog<MqttConnection>(
+        context: context,
+        builder: (context) => ConfigureMqttConnectionDialog(config: connection.mqtt));
+    if (value == null) {
+      return null;
+    }
+    value.connectionId = connection.mqtt.connectionId;
+    await api.configureConnection(ConfigureConnectionRequest(mqtt: value));
+    await widget.onRefresh();
+  }
+
+  _onDelete(Connection connection) async {
+    bool? result = await DeleteConnectionDialog.show(context, connection);
+    if (result == true) {
+      await api.deleteConnection(connection);
+      await widget.onRefresh();
+    }
   }
 
   ConnectionsApi get api {

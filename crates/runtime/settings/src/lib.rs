@@ -53,6 +53,12 @@ impl FromIterator<PathBuf> for PathList {
     }
 }
 
+impl From<Vec<PathBuf>> for PathList {
+    fn from(value: Vec<PathBuf>) -> Self {
+        PathList(value)
+    }
+}
+
 impl IntoIterator for PathList {
     type Item = PathBuf;
     type IntoIter = std::vec::IntoIter<PathBuf>;

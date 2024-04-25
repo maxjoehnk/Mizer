@@ -36,7 +36,7 @@ fn main() -> anyhow::Result<()> {
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("device-profiles/midi"),
             PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
-        ];
+        ].into();
         settings.paths.fixture_libraries.open_fixture_library =
             Some(PathBuf::from("fixtures/open-fixture-library"));
         settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
@@ -79,7 +79,7 @@ fn main() -> anyhow::Result<()> {
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("../Resources/device-profiles/midi"),
             PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
-        ];
+        ].into();
         settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from(
             "../Resources/fixtures/open-fixture-library",
         ));

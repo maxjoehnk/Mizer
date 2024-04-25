@@ -30,22 +30,22 @@ def open_view(view: View):
         case View.PLAN:
             pyautogui.hotkey('F2')
         case View.NODES:
-            pyautogui.hotkey('F4')
+            pyautogui.hotkey('F3')
         case View.SEQUENCER:
-            pyautogui.hotkey('F5')
+            pyautogui.hotkey('F4')
         case View.FIXTURES:
-            pyautogui.hotkey('F6')
+            pyautogui.hotkey('F5')
         case View.PRESETS:
-            pyautogui.hotkey('F7')
+            pyautogui.hotkey('F6')
         case View.EFFECTS:
-            pyautogui.hotkey('F8')
+            pyautogui.hotkey('F7')
         case View.MEDIA:
-            pyautogui.hotkey('F9')
+            pyautogui.hotkey('F8')
         case View.SURFACES:
+            pyautogui.hotkey('F9')
+        case View.PATCH:
             pyautogui.hotkey('F10')
         case View.CONNECTIONS:
-            pyautogui.hotkey('F11')
-        case View.PATCH:
             pyautogui.hotkey('F12')
         case View.TIMECODE:
             click_on_text('Timecode')

@@ -25,6 +25,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for FixturesChannel<R> {
 
                 resp.respond_result(response);
             }
+            "previewFixtures" => {
+                let response = call.arguments().and_then(|args| self.handler.preview_fixtures(args));
+
+                resp.respond_result(response);
+            }
             "getFixtures" => {
                 let response = self.get_fixtures();
 

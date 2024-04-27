@@ -51,4 +51,11 @@ class FixturesPluginApi implements FixturesApi {
   Future<void> exportPatch(String path) async {
     await channel.invokeMethod("exportPatch", path);
   }
+
+  @override
+  Future<Fixtures> previewFixtures(AddFixturesRequest request) async {
+    var response = await channel.invokeMethod("previewFixtures", request.writeToBuffer());
+
+    return _parseResponse(response);
+  }
 }

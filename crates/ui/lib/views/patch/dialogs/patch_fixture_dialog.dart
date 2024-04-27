@@ -23,6 +23,7 @@ class PatchFixtureDialog extends StatelessWidget {
         initialData: FixtureDefinitions(),
         builder: (context, AsyncSnapshot<FixtureDefinitions> state) {
           return PatchFixtureDialogStepper(
+            apiClient: apiClient,
             definitions: state.data!,
             bloc: fixturesBloc,
           );
@@ -31,10 +32,11 @@ class PatchFixtureDialog extends StatelessWidget {
 }
 
 class PatchFixtureDialogStepper extends StatefulWidget {
+  final FixturesApi apiClient;
   final FixtureDefinitions definitions;
   final FixturesBloc bloc;
 
-  PatchFixtureDialogStepper({required this.definitions, required this.bloc});
+  PatchFixtureDialogStepper({required this.definitions, required this.bloc, required this.apiClient});
 
   @override
   _PatchFixtureDialogStepperState createState() => _PatchFixtureDialogStepperState();
@@ -75,6 +77,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
       return FixturePatch(
         this.definition!,
         this.mode!,
+        apiClient: widget.apiClient,
         initialId: widget.bloc.state.fixtures.isEmpty
             ? 1
             : widget.bloc.state.fixtures.map((f) => f.id).reduce(max) + 1,
@@ -124,6 +127,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
 }
 
 class FixturePatch extends StatefulWidget {
+  final FixturesApi apiClient;
   final FixtureDefinition definition;
   final FixtureMode mode;
   final Function(PatchSettingsEvent) onChange;
@@ -135,7 +139,7 @@ class FixturePatch extends StatefulWidget {
       {required this.onChange,
       required this.onConfirm,
       required this.initialId,
-      required this.initialChannel});
+      required this.initialChannel, required this.apiClient});
 
   @override
   _FixturePatchState createState() => _FixturePatchState();
@@ -147,6 +151,7 @@ class _FixturePatchState extends State<FixturePatch> {
   int channel = 1;
   int id = 1;
   int count = 1;
+  Fixtures fixturesPreview = Fixtures();
 
   @override
   void initState() {
@@ -154,6 +159,7 @@ class _FixturePatchState extends State<FixturePatch> {
     name = widget.definition.name + " 1";
     id = widget.initialId;
     channel = widget.initialChannel;
+    _fetchPreview();
   }
 
   @override
@@ -181,21 +187,34 @@ class _FixturePatchState extends State<FixturePatch> {
                       count = event.count;
                     });
                     widget.onChange(event);
+                    _fetchPreview();
                   },
                   onConfirm: widget.onConfirm),
             ),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FixturePatchPreview(
-                  mode: widget.mode,
-                  universe: universe,
-                  startChannel: channel,
-                  startId: id,
-                  count: count),
+              child: FixturePatchPreview(fixtures: fixturesPreview),
             )),
           ]),
     );
+  }
+
+  _fetchPreview() async {
+    var request = AddFixturesRequest(
+        request: AddFixtureRequest(
+          id: id,
+          name: name,
+          universe: universe,
+          channel: channel,
+          definitionId: widget.definition.id,
+          mode: widget.mode.name,
+        ),
+        count: count);
+    var fixtures = await widget.apiClient.previewFixtures(request);
+    setState(() {
+      fixturesPreview = fixtures;
+    });
   }
 }
 
@@ -325,64 +344,35 @@ class PatchSettingsEvent {
 }
 
 class FixturePatchPreview extends StatelessWidget {
-  final FixtureMode mode;
-  final int universe;
-  final int startChannel;
-  final int count;
-  final int startId;
+  final Fixtures fixtures;
 
-  const FixturePatchPreview(
-      {Key? key,
-      required this.mode,
-      required this.universe,
-      required this.startChannel,
-      required this.startId,
-      required this.count})
-      : super(key: key);
+  const FixturePatchPreview({Key? key, required this.fixtures}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<MizerTableRow> rows = _getRows();
-
     return SingleChildScrollView(
       child: MizerTable(
         columnWidths: {
           0: FixedColumnWidth(64),
-          1: FixedColumnWidth(128),
+          2: FixedColumnWidth(128),
         },
         columns: [
           Text("Id"),
+          Text("Name"),
           Text("Address"),
         ],
-        rows: rows,
+        rows: fixtures.fixtures.sorted((lhs, rhs) => lhs.id.compareTo(rhs.id)).map((f) {
+          var startAddress = f.channel;
+          var endAddress = f.channel + f.channelCount - 1;
+
+          return MizerTableRow(cells: [
+            Text(f.id.toString()),
+            Text(f.name),
+            Text("${f.universe}:$startAddress - ${f.universe}:$endAddress"),
+          ]);
+        }).toList(),
       ),
     );
-  }
-
-  List<MizerTableRow> _getRows() {
-    List<MizerTableRow> rows = [];
-
-    var channelCount = mode.channels.map((e) {
-      if (e.hasFine()) {
-        return 2;
-      }
-      if (e.hasFinest()) {
-        return 3;
-      }
-      return 1;
-    }).sum;
-    for (var i = 0; i < count; i++) {
-      var id = startId + i;
-      var startAddress = startChannel + (i * channelCount);
-      var endAddress = startAddress + channelCount - 1;
-
-      rows.add(MizerTableRow(cells: [
-        Text(id.toString()),
-        Text("$universe:$startAddress - $universe:$endAddress"),
-      ]));
-    }
-
-    return rows;
   }
 }
 

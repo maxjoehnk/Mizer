@@ -42,4 +42,10 @@ class FixturesMobileApi implements FixturesApi {
     // TODO: implement exportPatch
     throw UnimplementedError();
   }
+
+  @override
+  Future<Fixtures> previewFixtures(AddFixturesRequest request) {
+    // TODO: implement previewFixtures
+    throw UnimplementedError();
+  }
 }

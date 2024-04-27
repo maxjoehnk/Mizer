@@ -4,6 +4,7 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{sub_command, Command, Ref, RefMut};
+use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::{NodeDesigner, NodeType};
@@ -38,6 +39,39 @@ impl PatchFixturesCommand {
         } else {
             base_name.to_string()
         }
+    }
+    
+    pub fn preview(&self, fixture_library: &FixtureLibrary) -> anyhow::Result<Vec<Fixture>> {
+        let mut previews = Vec::with_capacity(self.count as usize);
+        let captures = FIXTURE_NAME_REGEX.captures(&self.name).unwrap();
+        let definition = fixture_library
+            .get_definition(&self.definition_id)
+            .ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
+        let mode = definition
+            .get_mode(&self.mode)
+            .ok_or_else(|| anyhow::anyhow!("Unknown fixture mode"))?;
+        for i in 0..self.count {
+            let fixture_id = self.start_id + i;
+            let name = Self::build_name(&captures, i);
+            let (universe, channel) = calculate_address(
+                self.universe as u16,
+                self.start_channel as u16,
+                mode.dmx_channels(),
+                i as u16,
+            );
+            
+            previews.push(Fixture::new(
+                fixture_id,
+                name,
+                definition.clone(),
+                Some(self.mode.clone()),
+                channel,
+                Some(universe),
+                Default::default()
+            ));
+        }
+        
+        Ok(previews)
     }
 }
 

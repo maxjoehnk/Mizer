@@ -11,10 +11,6 @@ use mizer_fixtures::manager::FixtureManager;
 use crate::proto::fixtures::*;
 use crate::RuntimeApi;
 
-lazy_static::lazy_static! {
-    static ref FIXTURE_NAME_REGEX: Regex = Regex::new("^(?P<name>.*?)(?P<counter>[0-9]+)?$").unwrap();
-}
-
 #[derive(Clone)]
 pub struct FixturesHandler<R: RuntimeApi> {
     fixture_manager: FixtureManager,
@@ -50,7 +46,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 model: fixture.definition.name.clone(),
                 mode: fixture.current_mode.name.clone(),
                 controls: FixtureControls::with_values(
-                    fixture.deref() as &mizer_fixtures::fixture::Fixture,
+                    fixture.deref(),
                     fixture.current_mode.controls.clone(),
                 ),
                 children: fixture
@@ -101,17 +97,35 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn add_fixtures(&self, add_fixtures: AddFixturesRequest) {
-        let request = add_fixtures.request.unwrap();
-        let cmd = PatchFixturesCommand {
-            definition_id: request.definition_id,
-            mode: request.mode,
-            start_id: request.id,
-            start_channel: request.channel,
-            universe: request.universe,
-            name: request.name,
-            count: add_fixtures.count,
-        };
+        let cmd = into_patch_fixtures_command(add_fixtures);
         self.runtime.run_command(cmd).unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn preview_fixtures(&self, add_fixtures: AddFixturesRequest) -> anyhow::Result<Fixtures> {
+        let cmd = into_patch_fixtures_command(add_fixtures);
+
+        let mut fixtures = Fixtures::default();
+        for fixture in cmd.preview(&self.fixture_library)? {
+            let model = Fixture {
+                channel: fixture.channel as u32,
+                universe: fixture.universe as u32,
+                channel_count: fixture.current_mode.dmx_channels() as u32,
+                id: fixture.id,
+                name: fixture.name.clone(),
+                manufacturer: fixture.definition.manufacturer.clone(),
+                model: fixture.definition.name.clone(),
+                mode: fixture.current_mode.name.clone(),
+                controls: Default::default(),
+                children: Default::default(),
+                config: None,
+            };
+            
+            fixtures.fixtures.push(model);
+        }
+        
+        Ok(fixtures)
     }
 
     #[tracing::instrument(skip(self))]
@@ -161,4 +175,19 @@ impl<R: RuntimeApi> FixturesHandler<R> {
 
         Ok(())
     }
+}
+
+fn into_patch_fixtures_command(add_fixtures: AddFixturesRequest) -> PatchFixturesCommand {
+    let request = add_fixtures.request.unwrap();
+    let cmd = PatchFixturesCommand {
+        definition_id: request.definition_id,
+        mode: request.mode,
+        start_id: request.id,
+        start_channel: request.channel,
+        universe: request.universe,
+        name: request.name,
+        count: add_fixtures.count,
+    };
+
+    cmd
 }

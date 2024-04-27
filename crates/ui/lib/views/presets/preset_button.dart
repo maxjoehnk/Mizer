@@ -78,8 +78,9 @@ class _GroupButtonState extends State<GroupButton>
 class ColorButton extends StatelessWidget {
   final Color color;
   final Preset preset;
+  final void Function()? onTap;
 
-  const ColorButton({required this.color, required this.preset, Key? key}) : super(key: key);
+  const ColorButton({required this.color, required this.preset, Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,9 @@ class ColorButton extends StatelessWidget {
             height: 48,
             decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
           ),
-          preset: preset),
+          preset: preset,
+          onTap: onTap,
+      ),
     );
   }
 
@@ -118,8 +121,9 @@ class PositionButton extends StatelessWidget {
   final Preset preset;
   final double? pan;
   final double? tilt;
+  final void Function()? onTap;
 
-  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key})
+  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
       : super(key: key);
 
   @override
@@ -139,7 +143,9 @@ class PositionButton extends StatelessWidget {
                 BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
             child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
           ),
-          preset: preset),
+          preset: preset,
+          onTap: onTap,
+      ),
     );
   }
 
@@ -205,13 +211,14 @@ class PresetButton extends StatelessWidget {
     this.onTap = (context) => onTap();
   }
 
-  PresetButton.preset({required this.child, required this.preset, this.active, Key? key})
+  PresetButton.preset({required this.child, required this.preset, this.active, void Function()? onTap, Key? key})
       : label = preset!.label,
         effect = null,
         group = null {
     this.onTap = (BuildContext context) {
       var programmerApi = context.read<ProgrammerApi>();
       programmerApi.callPreset(preset!.id);
+      onTap?.call();
     };
   }
 

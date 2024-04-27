@@ -145,9 +145,10 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                           setState(() {
                             _ast = ValueAst([Value.fromDouble(v)]);
                           });
+                          _build(context);
                         })),
                   if (!(widget.globalPresets?.isEmpty ?? true))
-                    Tab(label: "Presets", child: PresetsTab(widget.globalPresets!)),
+                    Tab(label: "Presets", child: PresetsTab(widget.globalPresets!, onSelect: () => Navigator.of(context).pop())),
                 ]),
               )
             ]),
@@ -225,12 +226,13 @@ class Pad extends StatelessWidget {
 
 class PresetsTab extends StatelessWidget {
   final List<Preset> presets;
+  final void Function() onSelect;
 
-  const PresetsTab(this.presets, {super.key});
+  const PresetsTab(this.presets, {super.key, required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
-    return PresetList(presets: presets);
+    return PresetList(presets: presets, onSelect: onSelect);
   }
 }
 

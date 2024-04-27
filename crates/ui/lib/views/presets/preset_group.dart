@@ -73,8 +73,9 @@ class PresetButtonList extends StatelessWidget {
 class PresetList extends StatelessWidget {
   final List<Preset>? presets;
   final List<Effect>? effects;
+  final void Function()? onSelect;
 
-  const PresetList({super.key, this.effects, this.presets});
+  const PresetList({super.key, this.effects, this.presets, this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +94,15 @@ class PresetList extends StatelessWidget {
       return ColorButton(
           color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
               (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
-          preset: preset);
+          preset: preset,
+        onTap: onSelect,
+      );
     }
     if (preset.hasFader()) {
-      return ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset);
+      return ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset, onTap: onSelect);
     }
     if (preset.hasPosition()) {
-      return PositionButton(pan: preset.position.pan, tilt: preset.position.tilt, preset: preset);
+      return PositionButton(pan: preset.position.pan, tilt: preset.position.tilt, preset: preset, onTap: onSelect);
     }
 
     return Container();

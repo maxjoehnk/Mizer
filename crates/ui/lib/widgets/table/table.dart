@@ -7,8 +7,9 @@ class MizerTable extends StatefulWidget {
   final List<Widget>? columns;
   final List<MizerTableRow> rows;
   final Map<int, TableColumnWidth>? columnWidths;
+  final AlignmentDirectional headerAlignment;
 
-  const MizerTable({this.columns, required this.rows, this.columnWidths, Key? key})
+  const MizerTable({this.columns, required this.rows, this.headerAlignment = AlignmentDirectional.centerStart, this.columnWidths, Key? key})
       : super(key: key);
 
   @override
@@ -24,6 +25,7 @@ class _MizerTableState extends State<MizerTable> {
     return Table(
       children: [if (header != null) header, ...widget.rows.map(_mapRow)],
       columnWidths: widget.columnWidths,
+      border: TableBorder.all(color: Colors.black12),
     );
   }
 
@@ -39,26 +41,26 @@ class _MizerTableState extends State<MizerTable> {
   Widget _wrapHeader(Widget header) {
     return Container(
       padding: const EdgeInsets.all(16),
-      child: header,
+      child: Align(child: header, alignment: widget.headerAlignment),
     );
   }
 
   TableRow _mapRow(MizerTableRow row) {
     return TableRow(
         children: row.cells.map((cell) => _wrapCell(cell, row)).toList(),
-        decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.white10))));
+    );
   }
 
   Widget _wrapCell(Widget cell, MizerTableRow row) {
     Widget cellContent = Container(
-        alignment: Alignment.centerLeft,
+        alignment: row.alignment,
         height: TABLE_ROW_HEIGHT,
         color: row.selected
             ? Colors.white24
             : (_hoveredRow == row
                 ? Colors.white10
                 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: row.padding,
         child: cell);
 
     // The cell has probably interactive elements if it's not a text widget so we don't apply the tap handling
@@ -92,6 +94,8 @@ class MizerTableRow {
   final void Function()? onTap;
   final void Function()? onDoubleTap;
   final void Function()? onSecondaryTap;
+  final Alignment alignment;
+  final EdgeInsets padding;
 
   MizerTableRow(
       {required this.cells,
@@ -100,7 +104,10 @@ class MizerTableRow {
       this.inactive = false,
       this.onTap,
       this.onDoubleTap,
-      this.onSecondaryTap});
+      this.onSecondaryTap,
+      this.alignment = Alignment.centerLeft,
+      this.padding = const EdgeInsets.symmetric(horizontal: 16)
+      });
 }
 
 class PopupTableCell extends StatelessWidget {

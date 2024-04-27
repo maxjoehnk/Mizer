@@ -77,6 +77,7 @@ const ProgrammerChannel$json = {
     {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
     {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 0, '10': 'color'},
     {'1': 'generic', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.ProgrammerChannel.GenericValue', '9': 0, '10': 'generic'},
+    {'1': 'preset', '3': 6, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '9': 0, '10': 'preset'},
   ],
   '3': [ProgrammerChannel_GenericValue$json],
   '4': [ProgrammerChannel_ColorChannel$json],
@@ -111,9 +112,10 @@ final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode(
     'eHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjkKBWNvbG9yGA'
     'QgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAFIFY29sb3ISTAoHZ2Vu'
     'ZXJpYxgFIAEoCzIwLm1pemVyLnByb2dyYW1tZXIuUHJvZ3JhbW1lckNoYW5uZWwuR2VuZXJpY1'
-    'ZhbHVlSABSB2dlbmVyaWMaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoF'
-    'dmFsdWUYAiABKAFSBXZhbHVlIiwKDENvbG9yQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEg'
-    'gKBEJMVUUQAkIHCgV2YWx1ZQ==');
+    'ZhbHVlSABSB2dlbmVyaWMSNAoGcHJlc2V0GAYgASgLMhoubWl6ZXIucHJvZ3JhbW1lci5QcmVz'
+    'ZXRJZEgAUgZwcmVzZXQaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdm'
+    'FsdWUYAiABKAFSBXZhbHVlIiwKDENvbG9yQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggK'
+    'BEJMVUUQAkIHCgV2YWx1ZQ==');
 
 @$core.Deprecated('Use effectProgrammerStateDescriptor instead')
 const EffectProgrammerState$json = {

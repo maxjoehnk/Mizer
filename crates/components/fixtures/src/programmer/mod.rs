@@ -270,7 +270,26 @@ impl FixtureProgrammer {
 #[derive(Debug, Clone)]
 pub struct ProgrammerChannel {
     pub fixtures: Vec<FixtureId>,
-    pub value: FixtureControlValue,
+    pub value: ProgrammerControlValue,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum ProgrammerControlValue {
+    Control(FixtureControlValue),
+    Preset(PresetId),
+}
+
+impl From<ProgrammerControlValue> for FixtureControl {
+    fn from(value: ProgrammerControlValue) -> Self {
+        match value {
+            ProgrammerControlValue::Control(value) => value.into(),
+            ProgrammerControlValue::Preset(PresetId::Intensity(_)) => FixtureControl::Intensity,
+            ProgrammerControlValue::Preset(PresetId::Shutter(_)) => FixtureControl::Shutter,
+            ProgrammerControlValue::Preset(PresetId::Color(_)) => FixtureControl::ColorMixer,
+            // FIXME: we need to group by something different than control when calculating state so this can be thrown away
+            ProgrammerControlValue::Preset(PresetId::Position(_)) => FixtureControl::Pan,
+        }
+    }
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -473,7 +492,9 @@ impl Programmer {
     }
 
     pub fn call_preset(&mut self, preset_id: PresetId) {
+        self.active_channels.presets.retain(|id| id.preset_type() != preset_id.preset_type());
         self.active_channels.presets.push(preset_id);
+        self.has_written_to_selection = true;
     }
 
     pub fn call_effect(&mut self, effect_id: u32) {
@@ -550,11 +571,14 @@ impl Programmer {
     }
 
     pub fn get_channels(&self) -> Vec<ProgrammerChannel> {
-        let mut controls: HashMap<FixtureControl, Vec<(Vec<FixtureId>, FixtureControlValue)>> =
+        let mut controls: HashMap<FixtureControl, Vec<(Vec<FixtureId>, ProgrammerControlValue)>> =
             HashMap::new();
         let selections = self.get_selections();
         for (selection, state) in selections.iter() {
-            for value in state.controls() {
+            let values = state.presets.iter()
+                .map(|preset_id| ProgrammerControlValue::Preset(*preset_id))
+                .chain(state.controls().map(ProgrammerControlValue::Control));
+            for value in values {
                 let values = controls.entry(value.clone().into()).or_default();
                 if let Some((fixtures, _)) = values.iter_mut().find(|(_, v)| &value == v) {
                     for fixture_id in selection.get_fixtures().iter().flatten() {
@@ -706,7 +730,7 @@ mod tests {
 
     use crate::contracts::*;
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
-    use crate::programmer::{Group, Presets, Programmer, ProgrammerState};
+    use crate::programmer::{Group, Presets, Programmer, ProgrammerControlValue, ProgrammerState};
     use crate::selection::FixtureSelection;
     use crate::FixtureId;
 
@@ -742,6 +766,7 @@ mod tests {
 
         programmer.write_control(value.clone());
 
+        let value = ProgrammerControlValue::Control(value);
         let state = get_state(&mut programmer);
         let channel = &state.channels[0];
         assert_that!(channel.fixtures.iter()).contains_all_of(&selection.iter());
@@ -772,6 +797,7 @@ mod tests {
 
         programmer.select_fixtures(second_selection.clone());
 
+        let value = ProgrammerControlValue::Control(value);
         let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_equal_to(&second_selection);
         assert_that!(state.tracked_fixtures).is_equal_to(&first_selection);
@@ -802,6 +828,7 @@ mod tests {
 
         programmer.clear();
 
+        let value = ProgrammerControlValue::Control(value);
         let state = get_state(&mut programmer);
         assert_that!(state.tracked_fixtures).is_equal_to(&selection);
         assert_that!(state.active_fixtures).is_empty();

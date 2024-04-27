@@ -1,8 +1,6 @@
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::programmer::{
-    ProgrammedEffect, ProgrammerChannel, ProgrammerState, ProgrammerView,
-};
+use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammerChannel, ProgrammerState, ProgrammerView, ProgrammerControlValue, PresetId};
 use mizer_fixtures::FixtureId;
 use parking_lot::Mutex;
 use std::collections::HashMap;
@@ -154,6 +152,7 @@ impl From<FixtureId> for FFIFixtureId {
 #[repr(C)]
 pub struct FFIProgrammerChannel {
     pub value: ProgrammerChannelValue,
+    pub preset: u8,
     pub control: FFIFixtureFaderControl,
     pub fixtures: Array<FFIFixtureId>,
 }
@@ -161,58 +160,60 @@ pub struct FFIProgrammerChannel {
 impl FFIProgrammerChannel {
     fn from(channel: ProgrammerChannel, ffi_state: &mut ProgrammerFFIState) -> Self {
         use FixtureControlValue::*;
+        use ProgrammerControlValue::*;
+        let preset = matches!(channel.value, Preset(_));
         let (control, value) = match channel.value {
-            Intensity(value) => (
+            Control(Intensity(value)) => (
                 FFIFixtureFaderControl::Intensity,
                 ProgrammerChannelValue { fader: value },
             ),
-            Shutter(value) => (
+            Control(Shutter(value)) => (
                 FFIFixtureFaderControl::Shutter,
                 ProgrammerChannelValue { fader: value },
             ),
-            Pan(value) => (
+            Control(Pan(value)) => (
                 FFIFixtureFaderControl::Pan,
                 ProgrammerChannelValue { fader: value },
             ),
-            Tilt(value) => (
+            Control(Tilt(value)) => (
                 FFIFixtureFaderControl::Tilt,
                 ProgrammerChannelValue { fader: value },
             ),
-            Focus(value) => (
+            Control(Focus(value)) => (
                 FFIFixtureFaderControl::Focus,
                 ProgrammerChannelValue { fader: value },
             ),
-            Zoom(value) => (
+            Control(Zoom(value)) => (
                 FFIFixtureFaderControl::Zoom,
                 ProgrammerChannelValue { fader: value },
             ),
-            Prism(value) => (
+            Control(Prism(value)) => (
                 FFIFixtureFaderControl::Prism,
                 ProgrammerChannelValue { fader: value },
             ),
-            Iris(value) => (
+            Control(Iris(value)) => (
                 FFIFixtureFaderControl::Iris,
                 ProgrammerChannelValue { fader: value },
             ),
-            Frost(value) => (
+            Control(Frost(value)) => (
                 FFIFixtureFaderControl::Frost,
                 ProgrammerChannelValue { fader: value },
             ),
-            Gobo(value) => (
+            Control(Gobo(value)) => (
                 FFIFixtureFaderControl::Gobo,
                 ProgrammerChannelValue { fader: value },
             ),
-            ColorMixer(red, green, blue) => (
+            Control(ColorMixer(red, green, blue)) => (
                 FFIFixtureFaderControl::ColorMixer,
                 ProgrammerChannelValue {
                     color: FFIColorValue { red, green, blue },
                 },
             ),
-            ColorWheel(value) => (
+            Control(ColorWheel(value)) => (
                 FFIFixtureFaderControl::ColorWheel,
                 ProgrammerChannelValue { fader: value },
             ),
-            Generic(channel, value) => {
+            Control(Generic(channel, value)) => {
                 let channel = CString::new(channel).unwrap();
                 let channel_pointer = channel.as_ptr();
                 ffi_state.generic_channels.insert(channel_pointer, channel);
@@ -226,11 +227,37 @@ impl FFIProgrammerChannel {
                     },
                 )
             }
+            Preset(preset_id) if preset_id.is_intensity() => (
+                FFIFixtureFaderControl::Intensity,
+                ProgrammerChannelValue {
+                    preset: preset_id.into(),
+                },
+            ),
+            Preset(preset_id) if preset_id.is_shutter() => (
+                FFIFixtureFaderControl::Shutter,
+                ProgrammerChannelValue {
+                    preset: preset_id.into(),
+                },
+            ),
+            Preset(preset_id) if preset_id.is_color() => (
+                FFIFixtureFaderControl::ColorMixer,
+                ProgrammerChannelValue {
+                    preset: preset_id.into(),
+                },
+            ),
+            Preset(preset_id) if preset_id.is_position() => (
+                FFIFixtureFaderControl::Pan,
+                ProgrammerChannelValue {
+                    preset: preset_id.into(),
+                },
+            ),
+            Preset(_) => unreachable!(),
         };
 
         Self {
             value,
             control,
+            preset: preset.into(),
             fixtures: channel
                 .fixtures
                 .into_iter()
@@ -245,6 +272,7 @@ pub union ProgrammerChannelValue {
     pub fader: f64,
     pub color: FFIColorValue,
     pub generic: FFIGenericValue,
+    pub preset: FFIPresetId,
 }
 
 #[derive(Clone, Copy)]
@@ -260,6 +288,26 @@ pub struct FFIColorValue {
 pub struct FFIGenericValue {
     pub channel: *const c_char,
     pub value: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub union FFIPresetId {
+    pub intensity: u32,
+    pub shutter: u32,
+    pub color: u32,
+    pub position: u32,
+}
+
+impl From<PresetId> for FFIPresetId {
+    fn from(id: PresetId) -> Self {
+        match id {
+            PresetId::Intensity(id) => FFIPresetId { intensity: id },
+            PresetId::Shutter(id) => FFIPresetId { shutter: id },
+            PresetId::Color(id) => FFIPresetId { color: id },
+            PresetId::Position(id) => FFIPresetId { position: id },
+        }
+    }
 }
 
 #[repr(C)]

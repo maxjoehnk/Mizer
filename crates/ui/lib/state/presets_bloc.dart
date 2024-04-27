@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
@@ -23,6 +24,13 @@ class PresetsState {
       default:
         return [];
     }
+  }
+  
+  Preset? getPreset(PresetId id) {
+    return presets.intensities.firstWhereOrNull((p) => p.id.id == id.id && p.id.type == id.type) ??
+        presets.shutters.firstWhereOrNull((p) => p.id.id == id.id && p.id.type == id.type) ??
+        presets.colors.firstWhereOrNull((p) => p.id.id == id.id && p.id.type == id.type) ??
+        presets.positions.firstWhereOrNull((p) => p.id.id == id.id && p.id.type == id.type);
   }
 }
 

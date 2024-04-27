@@ -88,7 +88,9 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
         control: control,
         fixtures: fixtures,
       );
-      if (channel.control == FFIFixtureFaderControl.ColorMixer) {
+      if (channel.preset == 1) {
+        result.preset = _mapPresetId(channel.value.preset, control!);
+      } else if (channel.control == FFIFixtureFaderControl.ColorMixer) {
         result.color = ColorMixerChannel(
           red: channel.value.color.red,
           green: channel.value.color.green,
@@ -118,6 +120,23 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
     }).toList();
   }
 
+  PresetId _mapPresetId(FFIPresetId presetId, FixtureControl control) {
+    if (control == FixtureControl.INTENSITY) {
+      return PresetId(id: presetId.intensity, type: PresetId_PresetType.INTENSITY);
+    }
+    if (control == FixtureControl.SHUTTER) {
+      return PresetId(id: presetId.shutter, type: PresetId_PresetType.SHUTTER);
+    }
+    if (control == FixtureControl.PAN) {
+      return PresetId(id: presetId.position, type: PresetId_PresetType.POSITION);
+    }
+    if (control == FixtureControl.COLOR_MIXER) {
+      return PresetId(id: presetId.color, type: PresetId_PresetType.COLOR);
+    }
+    
+    return PresetId();
+  }
+  
   @override
   void disposePointer(ffi.Pointer<Programmer> _ptr) {
     this._bindings.drop_programmer_pointer(_ptr);

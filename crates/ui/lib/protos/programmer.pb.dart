@@ -337,6 +337,7 @@ enum ProgrammerChannel_Value {
   fader, 
   color, 
   generic, 
+  preset, 
   notSet
 }
 
@@ -347,6 +348,7 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     $core.double? fader,
     $0.ColorMixerChannel? color,
     ProgrammerChannel_GenericValue? generic,
+    PresetId? preset,
   }) {
     final $result = create();
     if (fixtures != null) {
@@ -364,6 +366,9 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     if (generic != null) {
       $result.generic = generic;
     }
+    if (preset != null) {
+      $result.preset = preset;
+    }
     return $result;
   }
   ProgrammerChannel._() : super();
@@ -374,15 +379,17 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     3 : ProgrammerChannel_Value.fader,
     4 : ProgrammerChannel_Value.color,
     5 : ProgrammerChannel_Value.generic,
+    6 : ProgrammerChannel_Value.preset,
     0 : ProgrammerChannel_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProgrammerChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5])
+    ..oo(0, [3, 4, 5, 6])
     ..pc<$0.FixtureId>(1, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..e<$0.FixtureControl>(2, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
+    ..e<$0.FixtureControl>(2, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.NONE, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
     ..a<$core.double>(3, _omitFieldNames ? '' : 'fader', $pb.PbFieldType.OD)
     ..aOM<$0.ColorMixerChannel>(4, _omitFieldNames ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
     ..aOM<ProgrammerChannel_GenericValue>(5, _omitFieldNames ? '' : 'generic', subBuilder: ProgrammerChannel_GenericValue.create)
+    ..aOM<PresetId>(6, _omitFieldNames ? '' : 'preset', subBuilder: PresetId.create)
     ..hasRequiredFields = false
   ;
 
@@ -452,6 +459,17 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
   void clearGeneric() => clearField(5);
   @$pb.TagNumber(5)
   ProgrammerChannel_GenericValue ensureGeneric() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  PresetId get preset => $_getN(5);
+  @$pb.TagNumber(6)
+  set preset(PresetId v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPreset() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPreset() => clearField(6);
+  @$pb.TagNumber(6)
+  PresetId ensurePreset() => $_ensure(5);
 }
 
 class EffectProgrammerState extends $pb.GeneratedMessage {
@@ -765,7 +783,7 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WriteControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..oo(0, [2, 3, 4])
-    ..e<$0.FixtureControl>(1, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
+    ..e<$0.FixtureControl>(1, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.NONE, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
     ..a<$core.double>(2, _omitFieldNames ? '' : 'fader', $pb.PbFieldType.OD)
     ..aOM<$0.ColorMixerChannel>(3, _omitFieldNames ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
     ..aOM<WriteControlRequest_GenericValue>(4, _omitFieldNames ? '' : 'generic', subBuilder: WriteControlRequest_GenericValue.create)

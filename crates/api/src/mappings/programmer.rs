@@ -1,4 +1,5 @@
 use mizer_fixtures::definition::FixtureControlValue;
+use mizer_fixtures::programmer::ProgrammerControlValue;
 
 use crate::proto::fixtures::*;
 use crate::proto::programmer::*;
@@ -218,41 +219,42 @@ impl From<mizer_fixtures::programmer::Group> for Group {
 impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
     fn from(channel: mizer_fixtures::programmer::ProgrammerChannel) -> Self {
         use FixtureControlValue::*;
+        use ProgrammerControlValue::*;
         let (control, value) = match channel.value {
-            Intensity(value) => (
+            Control(Intensity(value)) => (
                 FixtureControl::Intensity,
                 programmer_channel::Value::Fader(value),
             ),
-            Shutter(value) => (
+            Control(Shutter(value)) => (
                 FixtureControl::Shutter,
                 programmer_channel::Value::Fader(value),
             ),
-            Pan(value) => (FixtureControl::Pan, programmer_channel::Value::Fader(value)),
-            Tilt(value) => (
+            Control(Pan(value)) => (FixtureControl::Pan, programmer_channel::Value::Fader(value)),
+            Control(Tilt(value)) => (
                 FixtureControl::Tilt,
                 programmer_channel::Value::Fader(value),
             ),
-            Focus(value) => (
+            Control(Focus(value)) => (
                 FixtureControl::Focus,
                 programmer_channel::Value::Fader(value),
             ),
-            Zoom(value) => (
+            Control(Zoom(value)) => (
                 FixtureControl::Zoom,
                 programmer_channel::Value::Fader(value),
             ),
-            Prism(value) => (
+            Control(Prism(value)) => (
                 FixtureControl::Prism,
                 programmer_channel::Value::Fader(value),
             ),
-            Iris(value) => (
+            Control(Iris(value)) => (
                 FixtureControl::Iris,
                 programmer_channel::Value::Fader(value),
             ),
-            Frost(value) => (
+            Control(Frost(value)) => (
                 FixtureControl::Frost,
                 programmer_channel::Value::Fader(value),
             ),
-            ColorMixer(red, green, blue) => (
+            Control(ColorMixer(red, green, blue)) => (
                 FixtureControl::ColorMixer,
                 programmer_channel::Value::Color(crate::proto::fixtures::ColorMixerChannel {
                     red,
@@ -261,21 +263,38 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                     ..Default::default()
                 }),
             ),
-            ColorWheel(value) => (
+            Control(ColorWheel(value)) => (
                 FixtureControl::ColorWheel,
                 programmer_channel::Value::Fader(value),
             ),
-            Gobo(value) => (
+            Control(Gobo(value)) => (
                 FixtureControl::Gobo,
                 programmer_channel::Value::Fader(value),
             ),
-            Generic(name, value) => (
+            Control(Generic(name, value)) => (
                 FixtureControl::Generic,
                 programmer_channel::Value::Generic(programmer_channel::GenericValue {
                     value,
                     name,
                 }),
             ),
+            Preset(preset_id) if preset_id.is_intensity() => (
+                FixtureControl::Intensity,
+                programmer_channel::Value::Preset(preset_id.into()),
+            ),
+            Preset(preset_id) if preset_id.is_shutter() => (
+                FixtureControl::Shutter,
+                programmer_channel::Value::Preset(preset_id.into()),
+            ),
+            Preset(preset_id) if preset_id.is_color() => (
+                FixtureControl::ColorMixer,
+                programmer_channel::Value::Preset(preset_id.into()),
+            ),
+            Preset(preset_id) if preset_id.is_position() => (
+                FixtureControl::Pan,
+                programmer_channel::Value::Preset(preset_id.into()),
+            ),
+            Preset(_) => unreachable!(),
         };
 
         Self {

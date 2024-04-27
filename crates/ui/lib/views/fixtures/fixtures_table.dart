@@ -4,8 +4,14 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/state/presets_bloc.dart';
+import 'package:mizer/views/fixtures/position_indicator.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/table/table.dart';
+import 'package:provider/provider.dart';
+
+import 'color_indicator.dart';
+import 'fader_indicator.dart';
 
 class FixturesTable extends StatelessWidget {
   final List<Fixture> fixtures;
@@ -33,108 +39,185 @@ class FixturesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<MizerTableRow> rows = _getRows();
+    List<MizerTableRow> rows = _getRows(context);
 
     return SingleChildScrollView(
-      child: MizerTable(columnWidths: {
-        0: FixedColumnWidth(64),
-        1: FixedColumnWidth(64),
-      }, columns: [
-        Text(""),
-        Text("Id".i18n),
-        Text("Name".i18n),
-        Text("Intensity".i18n),
-        Text("Red".i18n),
-        Text("Green".i18n),
-        Text("Blue".i18n),
-        Text("Pan".i18n),
-        Text("Tilt".i18n),
-        Text("Gobo".i18n),
-      ], rows: rows),
+      scrollDirection: Axis.vertical,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: MizerTable(
+            columnWidths: {
+              0: FixedColumnWidth(40),
+              1: FixedColumnWidth(50),
+              2: FixedColumnWidth(150),
+              3: FixedColumnWidth(128),
+              4: FixedColumnWidth(128),
+              5: FixedColumnWidth(40),
+              6: FixedColumnWidth(128),
+              7: FixedColumnWidth(128),
+              8: FixedColumnWidth(128),
+              9: FixedColumnWidth(40),
+              10: FixedColumnWidth(128),
+              11: FixedColumnWidth(128),
+              12: FixedColumnWidth(128),
+            },
+            headerAlignment: AlignmentDirectional.center,
+            columns: [
+              Text(""),
+              Text("Id".i18n),
+              Text("Name".i18n),
+              Text("Intensity".i18n),
+              Text("Shutter".i18n),
+              Container(),
+              Text("Red".i18n),
+              Text("Green".i18n),
+              Text("Blue".i18n),
+              Container(),
+              Text("Pan".i18n),
+              Text("Tilt".i18n),
+              Text("Gobo".i18n),
+            ],
+            rows: rows),
+      ),
     );
   }
 
-  List<MizerTableRow> _getRows() {
+  List<MizerTableRow> _getRows(BuildContext context) {
     List<MizerTableRow> rows = [];
     for (var fixture in fixtures) {
-      rows.add(_fixtureRow(fixture, expandedIds.contains(fixture.id)));
+      rows.add(_fixtureRow(context, fixture, expandedIds.contains(fixture.id)));
       if (expandedIds.contains(fixture.id)) {
         for (var child in fixture.children) {
-          rows.add(_subFixtureRow(fixture, child));
+          rows.add(_subFixtureRow(context, fixture, child));
         }
       }
     }
     return rows;
   }
 
-  MizerTableRow _fixtureRow(Fixture fixture, bool expanded) {
+  MizerTableRow _fixtureRow(BuildContext context, Fixture fixture, bool expanded) {
     var fixtureId = FixtureId(fixture: fixture.id);
-    var selected = selectedIds.contains(fixtureId);
-    var tracked = trackedIds.contains(fixtureId);
-    var textStyle = tracked ? TextStyle(color: Colors.deepOrange) : TextStyle();
     var fixtureState = state?.controls.where((channel) => channel.fixtures.contains(fixtureId));
+
+    return _row(
+      context,
+      fixtureId,
+      fixture.name,
+      fixtureState,
+      onSelectSimilar: () => onSelectSimilar(fixture),
+      child: fixture.children.isEmpty
+            ? Container()
+            : MizerIconButton(
+                onClick: () => onExpand(fixture.id),
+                icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
+                label: "Expand".i18n,
+              ),
+    );
+  }
+
+  MizerTableRow _subFixtureRow(BuildContext context, Fixture fixture, SubFixture subFixture) {
+    var fixtureId =
+        FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: subFixture.id));
+    var fixtureState = state?.controls
+        .where((channel) => channel.fixtures.any((f) => f.subFixture == fixtureId.subFixture));
+
+    return _row(
+      context,
+      fixtureId,
+      subFixture.name,
+      fixtureState,
+      onSelectSimilar: () => onSelectChildren(fixture),
+    );
+  }
+
+  MizerTableRow _row(BuildContext context, FixtureId id, String name, Iterable<ProgrammerChannel>? fixtureState, { Widget? child, required Function() onSelectSimilar }) {
+    var selected = selectedIds.contains(id);
+    var tracked = trackedIds.contains(id);
+    var textStyle = tracked ? TextStyle(color: Colors.deepOrange) : TextStyle();
+
     var row = MizerTableRow(
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       cells: [
-        fixture.children.isEmpty ? Container() : MizerIconButton(
-          onClick: () => onExpand(fixture.id),
-          icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
-          label: "Expand".i18n,
-        ),
-        Text(fixtureId.toDisplay(), style: textStyle),
-        Text(fixture.name, style: textStyle),
-        Text(_faderState(fixtureState, FixtureControl.INTENSITY), style: textStyle),
-        Text(_colorState(fixtureState, (color) => color.red), style: textStyle),
-        Text(_colorState(fixtureState, (color) => color.green), style: textStyle),
-        Text(_colorState(fixtureState, (color) => color.blue), style: textStyle),
-        Text(_faderState(fixtureState, FixtureControl.PAN), style: textStyle),
-        Text(_faderState(fixtureState, FixtureControl.TILT), style: textStyle),
-        Text(_faderState(fixtureState, FixtureControl.GOBO), style: textStyle),
+        child ?? Container(),
+        Text(id.toDisplay(), style: textStyle),
+        Text(name, style: textStyle),
+        IntensityIndicator(
+            fixtureState: fixtureState,
+            child: Text(_faderState(context, fixtureState, FixtureControl.INTENSITY), style: textStyle)),
+        Text(_faderState(context, fixtureState, FixtureControl.SHUTTER), style: textStyle),
+        ColorIndicator(fixtureState: fixtureState),
+        Text(_colorState(context, fixtureState, (color) => color.red), style: textStyle),
+        Text(_colorState(context, fixtureState, (color) => color.green), style: textStyle),
+        Text(_colorState(context, fixtureState, (color) => color.blue), style: textStyle),
+        PositionIndicator(fixtureState: fixtureState),
+        Text(_faderState(context, fixtureState, FixtureControl.PAN), style: textStyle),
+        Text(_faderState(context, fixtureState, FixtureControl.TILT, presetControl: FixtureControl.PAN), style: textStyle),
+        Text(_faderState(context, fixtureState, FixtureControl.GOBO), style: textStyle),
       ],
-      onTap: () => onSelect(fixtureId, !selected),
-      onDoubleTap: () => onSelectSimilar(fixture),
+      onTap: () => onSelect(id, !selected),
+      onDoubleTap: onSelectSimilar,
       selected: selected,
     );
     return row;
   }
 
-  String _faderState(Iterable<ProgrammerChannel>? fixtureState, FixtureControl control) {
-    var value = fixtureState?.firstWhereOrNull((element) => element.control == control)?.fader;
-    if (value == null) {
+  // FIXME: `presetControl` is a hack because currently the preset is only listed in the pan control
+  String _faderState(BuildContext context, Iterable<ProgrammerChannel>? fixtureState, FixtureControl control, { FixtureControl? presetControl }) {
+    var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == control);
+    var presetChannel = fixtureState?.firstWhereOrNull((element) => element.control == (presetControl ?? control));
+    if (programmerChannel == null && presetChannel == null) {
       return "";
     }
+    if (presetChannel?.hasPreset() == true) {
+      PresetsBloc bloc = context.read();
+      var preset = bloc.state.getPreset(presetChannel!.preset);
+      if (preset == null) {
+        return "";
+      }
+      return "${presetId(preset)} - ${preset.label}";
+    }
+    if (programmerChannel == null) {
+      return "";
+    }
+    var value = programmerChannel.fader;
     return "${(value * 100).toStringAsFixed(1)}%";
   }
 
-  String _colorState(Iterable<ProgrammerChannel>? fixtureState, double Function(ColorMixerChannel) colorAccessor) {
-    var color = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR_MIXER)?.color;
-    if (color == null) {
+  String _colorState(
+      BuildContext context,
+      Iterable<ProgrammerChannel>? fixtureState, double Function(ColorMixerChannel) colorAccessor) {
+    var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR_MIXER);
+    if (programmerChannel == null) {
       return "";
     }
+    if (programmerChannel.hasPreset()) {
+      PresetsBloc bloc = context.read();
+      var preset = bloc.state.getPreset(programmerChannel.preset);
+      if (preset == null) {
+        return "";
+      }
+      return "${presetId(preset)} - ${preset.label}";
+    }
+    var color = programmerChannel.color;
     var value = colorAccessor(color);
     return "${(value * 100).toStringAsFixed(1)}%";
   }
+}
 
-  MizerTableRow _subFixtureRow(Fixture fixture, SubFixture subFixture) {
-    var fixtureId = FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: subFixture.id));
-    var fixtureState = state?.controls.where((channel) => channel.fixtures.any((f) => f.subFixture == fixtureId.subFixture));
-    var selected = selectedIds.contains(fixtureId);
-    var row = MizerTableRow(
-      cells: [
-        Text(""),
-        Text(fixtureId.toDisplay()),
-        Text(subFixture.name),
-        Text(_faderState(fixtureState, FixtureControl.INTENSITY)),
-        Text(_colorState(fixtureState, (color) => color.red)),
-        Text(_colorState(fixtureState, (color) => color.green)),
-        Text(_colorState(fixtureState, (color) => color.blue)),
-        Text(_faderState(fixtureState, FixtureControl.PAN)),
-        Text(_faderState(fixtureState, FixtureControl.TILT)),
-        Text(_faderState(fixtureState, FixtureControl.GOBO)),
-      ],
-      onTap: () => onSelect(fixtureId, !selected),
-      onDoubleTap: () => onSelectChildren(fixture),
-      selected: selected,
-    );
-    return row;
+String presetId(Preset preset) {
+  if (preset.id.type == PresetId_PresetType.COLOR) {
+    return "C${preset.id.id}";
   }
+  if (preset.id.type == PresetId_PresetType.INTENSITY) {
+    // Panel is actually called Dimmer
+    return "D${preset.id.id}";
+  }
+  if (preset.id.type == PresetId_PresetType.SHUTTER) {
+    return "S${preset.id.id}";
+  }
+  if (preset.id.type == PresetId_PresetType.POSITION) {
+    return "P${preset.id.id}";
+  }
+  return "";
 }

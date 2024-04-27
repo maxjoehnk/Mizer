@@ -6,7 +6,7 @@ use itertools::Itertools;
 use mizer_command_executor::*;
 use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::ProgrammerView;
+use mizer_fixtures::programmer::{ProgrammerControlValue, ProgrammerView};
 use mizer_fixtures::GroupId;
 use mizer_sequencer::Sequencer;
 use std::ops::Deref;
@@ -353,6 +353,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_channels()
             .into_iter()
             .map(|control| control.value)
+            .filter_map(|value| if let ProgrammerControlValue::Control(value) = value {
+                Some(value)
+            } else {
+                None
+            })
             .filter(|value| preset_type.contains_control(value))
             .collect()
     }

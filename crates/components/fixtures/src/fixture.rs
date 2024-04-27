@@ -3,7 +3,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use mizer_protocol_dmx::{DmxOutput, DmxWriter};
+use mizer_protocol_dmx::DmxWriter;
 use mizer_util::LerpExt;
 
 use crate::color_mixer::update_color_mixer;

@@ -232,6 +232,33 @@ pub enum PresetId {
     Position(u32),
 }
 
+impl PresetId {
+    pub fn preset_type(&self) -> PresetType {
+        match self {
+            Self::Intensity(_) => PresetType::Intensity,
+            Self::Shutter(_) => PresetType::Shutter,
+            Self::Color(_) => PresetType::Color,
+            Self::Position(_) => PresetType::Position,
+        }
+    }
+    
+    pub fn is_intensity(&self) -> bool {
+        matches!(self, Self::Intensity(_))
+    }
+    
+    pub fn is_shutter(&self) -> bool {
+        matches!(self, Self::Shutter(_))
+    }
+    
+    pub fn is_color(&self) -> bool {
+        matches!(self, Self::Color(_))
+    }
+    
+    pub fn is_position(&self) -> bool {
+        matches!(self, Self::Position(_))
+    }
+}
+
 impl Display for PresetId {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{self:?}")

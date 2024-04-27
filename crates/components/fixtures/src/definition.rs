@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::fmt::Display;
 use std::hash::{Hash, Hasher};
 use std::str::FromStr;
 
@@ -712,9 +713,9 @@ pub enum FixtureControl {
     Generic(String),
 }
 
-impl ToString for FixtureControl {
-    fn to_string(&self) -> String {
-        match self {
+impl Display for FixtureControl {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let str = match self {
             Self::Intensity => "Intensity".into(),
             Self::Shutter => "Shutter".into(),
             Self::ColorMixer => "ColorMixer".into(),
@@ -728,7 +729,8 @@ impl ToString for FixtureControl {
             Self::Frost => "Frost".into(),
             Self::Gobo => "Gobo".into(),
             Self::Generic(control) => control.clone(),
-        }
+        };
+        write!(f, "{}", str)
     }
 }
 

@@ -870,10 +870,10 @@ mod tests {
             .is_equal_to(&vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
         assert_that!(state.channels).has_length(2);
         let first_channel = &state.channels[0];
-        assert_that!(first_channel.value).is_equal_to(&first_value);
+        assert_that!(first_channel.value).is_equal_to(&ProgrammerControlValue::Control(first_value));
         assert_that!(first_channel.fixtures).is_equal_to(&first_fixtures);
         let second_channel = &state.channels[1];
-        assert_that!(second_channel.value).is_equal_to(&second_value);
+        assert_that!(second_channel.value).is_equal_to(&ProgrammerControlValue::Control(second_value));
         assert_that!(second_channel.fixtures).is_equal_to(&second_fixtures);
     }
 

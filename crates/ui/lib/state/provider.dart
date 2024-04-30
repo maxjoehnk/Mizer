@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/state/console_bloc.dart';
 import 'package:mizer/state/midi_profiles_bloc.dart';
 import 'package:mizer/state/nodes_view.dart';
 import 'package:mizer/state/plans_bloc.dart';
@@ -41,6 +42,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => TimecodeBloc(context.read())),
         BlocProvider(create: (context) => StatusBarCubit(context.read())),
         BlocProvider(create: (context) => SurfacesCubit(context.read())),
+        BlocProvider(create: (context) => ConsoleCubit(context.read())),
       ],
     );
   }

@@ -12,6 +12,7 @@ regex = "1.10"
 tracing = "0.1"
 lazy_static = "1.4"
 anyhow = "1"
+mizer-console = { path = "../components/console" }
 mizer-media = { path = "../components/media" }
 mizer-node = { path = "../runtime/pipeline/node" }
 mizer-nodes = { path = "../runtime/pipeline/nodes" }

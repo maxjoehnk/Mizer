@@ -33,6 +33,7 @@ tracing = "0.1"
 anyhow = "1"
 structopt = "0.3"
 metrics = "0.22"
+mizer-console = { path = "../components/console" }
 mizer-media = { path = "../components/media" }
 mizer-project-files = { path = "../projects" }
 mizer-fixtures = { path = "../components/fixtures" }

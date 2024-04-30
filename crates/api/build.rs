@@ -4,6 +4,7 @@ fn main() {
         .build_server(true)
         .compile(
             &[
+                "protos/console.proto",
                 "protos/connections.proto",
                 "protos/fixtures.proto",
                 "protos/layouts.proto",

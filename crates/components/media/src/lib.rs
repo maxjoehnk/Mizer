@@ -164,6 +164,11 @@ impl MediaServer {
             Ok(document) => Ok(document),
             Err(err) => {
                 tracing::error!("Error importing file {err:?}");
+                mizer_console::error!(
+                    mizer_console::ConsoleCategory::Media,
+                    "Error importing file '{}'",
+                    file_path.display()
+                );
                 Err(err)
             }
         }

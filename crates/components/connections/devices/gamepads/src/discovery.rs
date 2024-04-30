@@ -37,6 +37,11 @@ impl GamepadDiscoveryService {
 
     fn add_gamepad(&mut self, id: GamepadId) {
         let gamepad = self.gilrs.gamepad(id);
+        mizer_console::debug!(
+            mizer_console::ConsoleCategory::Connections,
+            "Gamepad connected: {:?}",
+            gamepad.name()
+        );
         let state = GamepadState::new(&gamepad);
         let state = Arc::new(NonEmptyPinboard::new(state));
         self.gamepad_states.insert(id, state.clone());

@@ -60,6 +60,7 @@ pub trait MediaHandler {
                 .context("Generating Thumbnail")
             {
                 tracing::warn!("Unable to generate thumbnail for {file_path:?}: {err:?}");
+                mizer_console::warn!(mizer_console::ConsoleCategory::Media, "Unable to generate thumbnail for {file_path:?}");
                 None
             } else {
                 Some(thumbnail_path)
@@ -79,6 +80,7 @@ pub trait MediaHandler {
             Ok(metadata) => metadata,
             Err(err) => {
                 tracing::warn!("Unable to read metadata for {file_path:?}: {err:?}");
+                mizer_console::warn!(mizer_console::ConsoleCategory::Media, "Unable to read metadata for {file_path:?}");
 
                 Default::default()
             }

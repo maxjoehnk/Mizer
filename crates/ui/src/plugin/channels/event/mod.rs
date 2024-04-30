@@ -1,3 +1,4 @@
+pub use self::console::*;
 pub use self::history::*;
 pub use self::media::*;
 pub use self::midi_monitor::*;
@@ -10,6 +11,7 @@ pub use self::surfaces::*;
 pub use self::timecode::*;
 pub use self::transport::*;
 
+mod console;
 mod history;
 mod media;
 mod midi_monitor;

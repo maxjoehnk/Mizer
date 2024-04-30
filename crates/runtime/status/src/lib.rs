@@ -1,7 +1,7 @@
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
-use chrono::Utc;
+use chrono::{Local, Utc};
 use serde::{Deserialize, Serialize};
 
 use mizer_message_bus::{MessageBus, Subscriber};
@@ -48,7 +48,7 @@ impl Display for StatusMessage {
         write!(
             f,
             "{} - {}",
-            self.created_at.time().format("%H:%M"),
+            self.created_at.with_timezone(&Local).time().format("%H:%M"),
             self.message
         )
     }

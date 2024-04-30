@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/api/contracts/console.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
@@ -20,6 +21,7 @@ import 'package:mizer/api/plugin/status.dart';
 
 import 'app.dart';
 import 'connections.dart';
+import 'console.dart';
 import 'effects.dart';
 import 'ffi/api.dart';
 import 'ffi/bindings.dart' as ffi;
@@ -66,6 +68,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<TimecodeApi>(create: (_) => TimecodePluginApi(bindings)),
         RepositoryProvider<StatusApi>(create: (_) => StatusPluginApi(bindings)),
         RepositoryProvider<SurfacesApi>(create: (_) => SurfacesPluginApi()),
+        RepositoryProvider<ConsoleApi>(create: (_) => ConsolePluginApi()),
       ],
     );
   }

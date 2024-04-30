@@ -18,14 +18,18 @@ const double TRANSPORT_CONTROLS_HEIGHT = 64;
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;
   final bool showSelection;
+  final bool showConsole;
   final Function() toggleProgrammer;
   final Function() toggleSelection;
+  final Function() toggleConsole;
 
   TransportControls(
       {required this.showProgrammer,
       required this.toggleProgrammer,
       required this.showSelection,
-      required this.toggleSelection});
+      required this.toggleSelection,
+      required this.showConsole,
+      required this.toggleConsole});
 
   @override
   State<TransportControls> createState() => _TransportControlsState();
@@ -91,6 +95,14 @@ class _TransportControlsState extends State<TransportControls> {
                 }),
           ),
           Spacer(),
+          PanelAction(
+              width: 80,
+              action: PanelActionModel(
+                label: "Console",
+                hotkeyId: "console_pane",
+                onClick: widget.toggleConsole,
+                activated: widget.showConsole,
+              )),
           PanelAction(
               width: 80,
               action: PanelActionModel(

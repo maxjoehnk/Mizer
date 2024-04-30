@@ -4567,6 +4567,7 @@ dependencies = [
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
+ "mizer-console",
  "mizer-debug-ui-egui",
  "mizer-debug-ui-impl",
  "mizer-devices",
@@ -4632,6 +4633,7 @@ dependencies = [
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
+ "mizer-console",
  "mizer-devices",
  "mizer-docs",
  "mizer-fixture-patch-export",
@@ -4718,6 +4720,7 @@ dependencies = [
  "derive_more",
  "flume 0.11.0",
  "mizer-commander",
+ "mizer-console",
  "mizer-fixture-commands",
  "mizer-layout-commands",
  "mizer-layouts",
@@ -4760,6 +4763,20 @@ dependencies = [
  "mizer-protocol-midi",
  "mizer-protocol-osc",
  "mizer-protocol-pro-dj-link",
+ "tracing",
+]
+
+[[package]]
+name = "mizer-console"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "chrono",
+ "flume 0.11.0",
+ "futures",
+ "mizer-message-bus",
+ "mizer-module",
+ "parking_lot 0.12.1",
  "tracing",
 ]
 
@@ -5044,6 +5061,7 @@ dependencies = [
  "flume 0.11.0",
  "futures",
  "gilrs",
+ "mizer-console",
  "pinboard",
  "tracing",
 ]
@@ -5146,6 +5164,7 @@ dependencies = [
  "image",
  "infer",
  "mime_guess",
+ "mizer-console",
  "mizer-message-bus",
  "mizer-module",
  "mizer-settings",
@@ -5566,6 +5585,7 @@ dependencies = [
  "fs2",
  "indexmap 2.2.3",
  "lazy_static",
+ "mizer-console",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
@@ -5650,6 +5670,7 @@ dependencies = [
  "dashmap",
  "lazy_static",
  "midir",
+ "mizer-console",
  "mizer-message-bus",
  "mizer-midi-device-profiles",
  "mizer-midi-messages",
@@ -6139,6 +6160,7 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.0",
  "futures",
+ "mizer-console",
  "nokhwa",
  "pinboard",
  "tracing",

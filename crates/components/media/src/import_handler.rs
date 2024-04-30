@@ -122,6 +122,10 @@ impl ImportFileHandler {
             format!("Imported file {file_path:?}"),
             Some(Duration::from_secs(10)),
         );
+        mizer_console::info!(
+            mizer_console::ConsoleCategory::Media,
+            "Imported file {file_path:?}",
+        );
 
         Ok(Some(media))
     }

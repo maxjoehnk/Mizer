@@ -60,6 +60,10 @@ impl ModuleContext for SetupContext {
         });
     }
 
+    fn spawn<F: Future + Send + 'static>(&self, future: F) where <F as Future>::Output: Send {
+        self.handle.spawn(future);
+    }
+
     fn status_handle(&self) -> StatusHandle {
         self.runtime.access().status_bus.handle()
     }

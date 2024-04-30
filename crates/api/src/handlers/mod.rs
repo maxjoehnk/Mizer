@@ -11,6 +11,7 @@ use mizer_timecode::TimecodeManager;
 use crate::RuntimeApi;
 
 pub use self::connections::*;
+pub use self::console::*;
 pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
@@ -28,6 +29,7 @@ pub use self::timecode::*;
 pub use self::transport::*;
 
 mod connections;
+mod console;
 mod effects;
 mod fixtures;
 mod layouts;
@@ -47,6 +49,7 @@ mod transport;
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
     pub connections: ConnectionsHandler<R>,
+    pub console: ConsoleHandler,
     pub fixtures: FixturesHandler<R>,
     pub layouts: LayoutsHandler<R>,
     pub media: MediaHandler,
@@ -74,9 +77,11 @@ impl<R: RuntimeApi> Handlers<R> {
         let timecode_manager: TimecodeManager = api_injector.require_service();
         let surface_registry_api: SurfaceRegistryApi = api_injector.require_service();
         let midi_device_registry: MidiDeviceProfileRegistry = api_injector.require_service();
+        let console_history = api_injector.require_service();
 
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
+            console: ConsoleHandler::new(console_history),
             fixtures: FixturesHandler::new(
                 fixture_manager.clone(),
                 fixture_library,

@@ -29,6 +29,12 @@ impl ProjectManager for FixtureManager {
                     fixture.id,
                     fixture.fixture
                 );
+                mizer_console::error!(
+                    mizer_console::ConsoleCategory::Projects,
+                    "No fixture definition for fixture id {}. Missing fixture definition: {}",
+                    fixture.id,
+                    fixture.fixture
+                );
             }
         }
         for group in &project.groups {

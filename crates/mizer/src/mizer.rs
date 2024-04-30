@@ -4,6 +4,7 @@ use std::time::Duration;
 use anyhow::Context;
 
 use mizer_api::handlers::Handlers;
+use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
@@ -93,6 +94,7 @@ impl Mizer {
         self.runtime
             .add_status_message("Created new project", Some(Duration::from_secs(10)));
         self.status_bus.send_current_project(ProjectStatus::New);
+        mizer_console::info(ConsoleCategory::Projects, "New project created");
     }
 
     #[profiling::function]
@@ -159,6 +161,7 @@ impl Mizer {
                 format!("Project loaded ({path:?})"),
                 Some(Duration::from_secs(10)),
             );
+            mizer_console::info!(ConsoleCategory::Projects, "Project loaded ({})", path.display());
             self.status_bus.send_current_project(ProjectStatus::Loaded(
                 path.file_name()
                     .map(|name| name.to_string_lossy().to_string())
@@ -211,6 +214,7 @@ impl Mizer {
                 format!("Project saved ({path:?})"),
                 Some(Duration::from_secs(10)),
             );
+            mizer_console::info!(ConsoleCategory::Projects, "Project saved ({})", path.display());
         }
         Ok(())
     }

@@ -2,6 +2,7 @@ use std::fmt::{Debug, Formatter};
 use std::ops::Deref;
 use std::pin::Pin;
 use std::sync::{Arc, Weak};
+use std::sync::atomic::AtomicBool;
 use std::task::{Context, Poll};
 
 use flume::r#async::RecvStream;
@@ -13,6 +14,7 @@ use parking_lot::RwLock;
 pub struct MessageBus<T: Clone + Send + Sync> {
     senders: Arc<RwLock<Vec<Weak<flume::Sender<T>>>>>,
     last_event: Arc<RwLock<Option<T>>>,
+    keep_last_event: Arc<AtomicBool>,
 }
 
 impl<T: Clone + Send + Sync + Debug> Debug for MessageBus<T> {
@@ -34,7 +36,12 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
         Self {
             senders: Default::default(),
             last_event: Default::default(),
+            keep_last_event: Arc::new(AtomicBool::new(true)),
         }
+    }
+    
+    pub fn set_keep_last_event(&self, keep_last_event: bool) {
+        self.keep_last_event.store(keep_last_event, std::sync::atomic::Ordering::Relaxed);
     }
 
     pub fn send(&self, msg: T) {
@@ -53,8 +60,10 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
             }
         }
 
-        let mut last_event = self.last_event.write();
-        *last_event = Some(msg);
+        if self.keep_last_event.load(std::sync::atomic::Ordering::Relaxed) {
+            let mut last_event = self.last_event.write();
+            *last_event = Some(msg);
+        }
 
         tracing::trace!(
             "Send msg to {} / {} subscribers. {} dropped subscribers remaining",

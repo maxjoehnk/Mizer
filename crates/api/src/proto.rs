@@ -1,3 +1,6 @@
+pub mod console {
+    tonic::include_proto!("mizer.console");
+}
 pub mod connections {
     tonic::include_proto!("mizer.connections");
 }

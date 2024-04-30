@@ -6,6 +6,7 @@ use pinboard::NonEmptyPinboard;
 use mizer_api::handlers::Handlers;
 use mizer_api::start_remote_api;
 use mizer_command_executor::CommandExecutorModule;
+use mizer_console::ConsoleModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUiModule;
 use mizer_devices::DeviceModule;
@@ -38,6 +39,7 @@ use crate::module_context::SetupContext;
 use crate::Mizer;
 
 fn load_modules(context: &mut SetupContext, flags: &Flags) {
+    ConsoleModule.try_load(context);
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
     SequencerModule.try_load(context);
     EffectsModule.try_load(context);
@@ -138,6 +140,7 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
             tracing::info!("Loading last project {:?}", last_project);
             if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
                 tracing::error!("Failed to load last project: {:?}", err);
+                mizer_console::error!(mizer_console::ConsoleCategory::Projects, "Failed to load last project");
             }
         } else {
             mizer.new_project();

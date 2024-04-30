@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package mizer.console;
+
+message ConsoleHistory {
+  repeated ConsoleMessage messages = 1;
+}
+
+message ConsoleMessage {
+  ConsoleLevel level = 1;
+  ConsoleCategory category = 2;
+  string message = 3;
+  uint64 timestamp = 4;
+}
+
+enum ConsoleLevel {
+  ERROR = 0;
+  WARNING = 1;
+  INFO = 2;
+  DEBUG = 3;
+}
+
+enum ConsoleCategory {
+  CONNECTIONS = 0;
+  MEDIA = 1;
+  PROJECTS = 2;
+  COMMANDS = 3;
+  NODES = 4;
+}

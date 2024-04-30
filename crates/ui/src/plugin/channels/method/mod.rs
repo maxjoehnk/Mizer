@@ -1,5 +1,6 @@
 pub use self::application::*;
 pub use self::connections::*;
+pub use self::console::*;
 pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
@@ -17,6 +18,7 @@ pub use self::transport::*;
 
 mod application;
 mod connections;
+mod console;
 mod effects;
 mod fixtures;
 mod layouts;

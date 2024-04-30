@@ -97,6 +97,7 @@ pub trait ModuleContext {
     fn block_in_thread<A: 'static, F: Future + 'static>(&self, future_action: A)
     where
         A: FnOnce() -> F + Send;
+    fn spawn<F: Future + Send + 'static>(&self, future: F) where <F as Future>::Output: Send;
 
     fn status_handle(&self) -> StatusHandle;
 }

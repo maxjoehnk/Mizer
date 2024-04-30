@@ -1,4 +1,5 @@
 mod connections;
+mod console;
 mod effects;
 mod fixtures;
 mod layouts;

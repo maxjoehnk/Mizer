@@ -22,6 +22,7 @@ fontdb = "0.16"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 ffmpeg-the-third = "1.2"
 dashmap = "5.5"
+mizer-console = { path = "../../components/console" }
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }

@@ -92,7 +92,11 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
             .event_channel(context.weak());
     let _surfaces = SurfacesChannel::new(handlers.surfaces.clone()).channel(context.weak());
     let _surfaces_events =
-        MonitorSurfacesChannel::new(handlers.surfaces, async_runtime, context.weak())
+        MonitorSurfacesChannel::new(handlers.surfaces, async_runtime.clone(), context.weak())
+            .event_channel(context.weak());
+    let _console = ConsoleChannel::new(handlers.console.clone()).channel(context.weak());
+    let _console_events =
+        MonitorConsoleChannel::new(handlers.console, async_runtime, context.weak())
             .event_channel(context.weak());
 
     context

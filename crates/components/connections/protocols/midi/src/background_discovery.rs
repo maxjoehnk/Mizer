@@ -79,12 +79,20 @@ impl MidiBackgroundDiscovery {
             };
             if !self.devices.contains_key(&name) {
                 tracing::info!("Connected device: {device:?}");
+                mizer_console::debug!(
+                    mizer_console::ConsoleCategory::Connections,
+                    "Connected MIDI device: {name}",
+                );
             }
             old_devices.retain(|old_name| old_name != &name);
             self.devices.insert(name, device);
         }
         for name in old_devices {
             tracing::info!("Disconnected device: {name}");
+            mizer_console::debug!(
+                mizer_console::ConsoleCategory::Connections,
+                "Disconnected MIDI device: {name}",
+            );
             self.devices.remove(&name);
         }
 

@@ -3,6 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
+import 'package:mizer/panes/console/console_pane.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
@@ -32,8 +33,7 @@ import 'views/dmx_output/dmx_output.dart';
 const double SHEET_SIZE = 150;
 const double SHEET_PADDING = 0;
 const double TAB_STRIP_HEIGHT = 32;
-const double PROGRAMMER_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
-const double SELECTION_SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
+const double BOTTOM_PANE_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
 List<Route> routes = [
   Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
@@ -65,6 +65,7 @@ class _HomeState extends State<Home> {
   Widget? _currentWidget;
   bool _showProgrammer = true;
   bool _showSelection = false;
+  bool _showConsole = false;
 
   _HomeState() {
     _updateWidget();
@@ -98,17 +99,22 @@ class _HomeState extends State<Home> {
                               decoration: BoxDecoration()),
                         ),
                       ),
+                      if (_showConsole)
+                        SizedBox(height: BOTTOM_PANE_CONTAINER_HEIGHT, child: ConsolePane()),
                       if (_showSelection)
-                        SizedBox(height: SELECTION_SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
+                        SizedBox(height: BOTTOM_PANE_CONTAINER_HEIGHT, child: SelectionPane()),
                       if (_showProgrammer)
                         SizedBox(
-                            height: PROGRAMMER_SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+                            height: BOTTOM_PANE_CONTAINER_HEIGHT, child: ProgrammerView()),
                       RepaintBoundary(
                           child: TransportControls(
                               showProgrammer: _showProgrammer,
                               toggleProgrammer: () => _toggleProgrammerPane(),
                               showSelection: _showSelection,
-                              toggleSelection: () => _toggleSelectionPane())),
+                              toggleSelection: () => _toggleSelectionPane(),
+                              showConsole: _showConsole,
+                              toggleConsole: () => _toggleConsolePane(),
+                          )),
                     ],
                   ))
                 ],
@@ -128,6 +134,7 @@ class _HomeState extends State<Home> {
     return setState(() {
       _showSelection = !_showSelection;
       _showProgrammer = false;
+      _showConsole = false;
     });
   }
 
@@ -135,6 +142,15 @@ class _HomeState extends State<Home> {
     return setState(() {
       _showProgrammer = !_showProgrammer;
       _showSelection = false;
+      _showConsole = false;
+    });
+  }
+
+  void _toggleConsolePane() {
+    return setState(() {
+      _showConsole = !_showConsole;
+      _showSelection = false;
+      _showProgrammer = false;
     });
   }
 
@@ -153,6 +169,7 @@ class _HomeState extends State<Home> {
     Map<String, Function()> shortcuts = {
       'programmer_pane': () => _toggleProgrammerPane(),
       'selection_pane': () => _toggleSelectionPane(),
+      'console_pane': () => _toggleConsolePane(),
     };
     for (var entry in routes.asMap().entries) {
       shortcuts[entry.value.viewKey.toHotkeyString()] = () => _selectView(entry.key);

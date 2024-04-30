@@ -38,6 +38,7 @@ impl CommandExecutor {
         command: &T,
     ) -> anyhow::Result<T::Result> {
         tracing::debug!("Applying command {:?}", command);
+        mizer_console::info(mizer_console::ConsoleCategory::Commands, command.label());
         let dependencies = T::Dependencies::extract(injector);
         let (result, state) = command.apply(dependencies)?;
         self.states
@@ -52,6 +53,7 @@ impl CommandExecutor {
         command: &T,
     ) -> anyhow::Result<()> {
         tracing::debug!("Reverting command {:?}", command);
+        mizer_console::info!(mizer_console::ConsoleCategory::Commands, "Undo: {}", command.label());
         let dependencies = T::Dependencies::extract(injector);
         let state = self
             .states

@@ -22,6 +22,11 @@ impl DiscoveryService {
             Ok(cameras) => {
                 for camera in cameras {
                     tracing::trace!("Found webcam: {camera:?}");
+                    mizer_console::debug!(
+                        mizer_console::ConsoleCategory::Connections,
+                        "Webcam connected: {:?}",
+                        camera.human_name()
+                    );
                     let camera = WebcamRef::new(camera);
                     if let Err(err) = self.sender.send(camera) {
                         tracing::error!("Unable to notify of new device {err:?}");

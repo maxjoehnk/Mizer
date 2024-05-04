@@ -28,7 +28,7 @@ mizer-surfaces = { path = "../components/surfaces" }
 directories-next = "2.0"
 fs2 = "0.4"
 indexmap = { version = "2.2", features = ["serde"] }
-enum_dispatch = "0.3"
+enum_dispatch = "0.3.13"
 enum-iterator = "2.0"
 profiling = "1.0"
 

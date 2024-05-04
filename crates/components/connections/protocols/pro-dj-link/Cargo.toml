@@ -16,4 +16,4 @@ tokio = { version = "1.37", features = ["net", "rt", "sync", "time"] }
 serde = { version = "1", features = ["derive"] }
 pro-dj-link = { git = "https://github.com/maxjoehnk/pro-dj-link-rs.git", features = ["tokio"], default-features = false }
 netdev = "0.25"
-enum_dispatch = "0.3"
+enum_dispatch = "0.3.13"

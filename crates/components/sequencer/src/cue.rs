@@ -14,7 +14,6 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
-use mizer_fixtures::programmer::{PresetId, ProgrammedPreset};
 use crate::cue_preset::CuePreset;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]

@@ -1,7 +1,5 @@
 use std::ops::Deref;
 
-use regex::Regex;
-
 use mizer_command_executor::*;
 use mizer_fixture_patch_export::PatchExporter;
 use mizer_fixtures::fixture::ChannelLimit;

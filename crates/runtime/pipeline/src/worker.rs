@@ -1,6 +1,5 @@
 use std::any::{type_name, Any};
 use std::cell::RefCell;
-use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::ops::Deref;
 use std::sync::Arc;
@@ -9,12 +8,12 @@ use downcast::*;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::Clock;
-use mizer_debug_ui_impl::{DebugUi, DebugUiImpl, NodeStateAccess};
+use mizer_debug_ui_impl::NodeStateAccess;
 use mizer_node::*;
 use mizer_nodes::NodeDowncast;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
-use mizer_processing::{DebugUiDrawHandle, ProcessingContext};
+use mizer_processing::ProcessingContext;
 use mizer_protocol_laser::LaserFrame;
 use mizer_util::HashMapExtension;
 use mizer_wgpu::TextureHandle;
@@ -465,20 +464,6 @@ impl PipelineWorker {
 
         (context, state)
     }
-
-    // pub fn debug_ui(
-    //     &self,
-    //     ui: &mut <DebugUiImpl as DebugUi>::DrawHandle<'_>,
-    //     nodes: &Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-    // ) {
-    //     ui.collapsing_header("Nodes", |ui| {
-    //         for (path, node) in nodes {
-    //             let state = self.states.get(path);
-    //             let state = state.unwrap();
-    //             ui.collapsing_header(path.as_str(), |ui| node.debug_ui(ui, state));
-    //         }
-    //     });
-    // }
 
     pub fn get_state<S: 'static>(&self, path: &NodePath) -> Option<&S> {
         self.states.get(path).and_then(|state| state.downcast_ref())

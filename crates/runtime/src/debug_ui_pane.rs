@@ -1,5 +1,5 @@
 use crate::pipeline_access::PipelineAccess;
-use mizer_debug_ui_impl::{DebugUiImpl, NodeStateAccess};
+use mizer_debug_ui_impl::NodeStateAccess;
 use mizer_module::*;
 use mizer_nodes::NodeDowncast;
 

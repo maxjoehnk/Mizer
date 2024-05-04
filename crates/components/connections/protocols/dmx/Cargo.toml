@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-artnet_protocol = "0.4"
+artnet_protocol = "0.4.2"
 sacn = "0.4"
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }

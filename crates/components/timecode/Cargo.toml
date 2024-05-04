@@ -20,4 +20,4 @@ splines = "4.3"
 
 [dev-dependencies]
 test-case = "3.3"
-plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }
+plotters = { version = "0.3.5", default-features = false, features = ["svg_backend", "line_series"] }

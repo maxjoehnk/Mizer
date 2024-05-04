@@ -13,4 +13,4 @@ toml = "0.8"
 mizer-util = { path = "../../../util" }
 base64 = "0.21"
 rayon = "1.10"
-indexmap = "2.2"
+indexmap = "2.2.6"

@@ -20,7 +20,7 @@ serde = { version = "1", features = ["derive", "rc"] }
 bezier-rs = "0.4"
 uuid = { version = "1.8", features = ["v4"] }
 base64 = "0.21"
-indexmap = "2.2"
+indexmap = "2.2.6"
 shellexpand = "3.1"
 ringbuffer = "0.15"
 chrono = { version = "0.4", features = ["serde"] }

@@ -22,7 +22,7 @@ itertools = "0.12"
 num-traits = "0.2"
 uuid = { version = "1.8", features = ["v4"] }
 tracing = "0.1"
-indexmap = "2.2"
+indexmap = "2.2.6"
 
 [dev-dependencies]
 test-case = "3.3"

@@ -18,6 +18,6 @@ futures = { version = "0.3", features = ["executor"] }
 mizer-wgpu = { path = "../../wgpu" }
 mizer-debug-ui = { path = ".." }
 mizer-module = { path = "../../module" }
-egui_plot = "0.27"
+egui_plot = "0.27.2"
 egui_tracing = "0.2.2"
 egui_tiles = "0.8"

@@ -26,7 +26,7 @@ mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
 directories-next = "2.0"
-fs2 = "0.4"
+fs2 = "0.4.3"
 indexmap = { version = "2.2", features = ["serde"] }
 enum_dispatch = "0.3"
 enum-iterator = "2.0"

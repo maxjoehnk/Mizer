@@ -13,4 +13,4 @@ mizer-devices = { path = "../../../../../components/connections/devices" }
 mizer-node = { path = "../../../node" }
 mizer-util = { path = "../../../../../util" }
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"

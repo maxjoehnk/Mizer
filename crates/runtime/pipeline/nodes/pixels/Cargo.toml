@@ -12,7 +12,7 @@ mizer-protocol-dmx = { path = "../../../../components/connections/protocols/dmx"
 mizer-util = { path = "../../../../util" }
 test-case = "3.3"
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"
 tracing = "0.1"
 image = "0.24"
 mizer-wgpu = { path = "../../../wgpu" }

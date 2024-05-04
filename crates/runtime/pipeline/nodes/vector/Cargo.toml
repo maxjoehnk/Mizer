@@ -10,7 +10,7 @@ tracing = "0.1"
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"
 mizer-wgpu = { path = "../../../wgpu" }
 profiling = "1"
 mizer-media = { path = "../../../../components/media" }

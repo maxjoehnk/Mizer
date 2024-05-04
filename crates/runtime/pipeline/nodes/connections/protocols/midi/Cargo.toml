@@ -13,4 +13,4 @@ mizer-protocol-midi = { path = "../../../../../../components/connections/protoco
 mizer-util = { path = "../../../../../../util" }
 mizer-message-bus = { path = "../../../../../../util/bus" }
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"

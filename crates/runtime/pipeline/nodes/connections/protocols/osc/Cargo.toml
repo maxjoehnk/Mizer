@@ -12,4 +12,4 @@ mizer-protocol-osc = { path = "../../../../../../components/connections/protocol
 tracing = "0.1"
 mizer-util = { path = "../../../../../../util" }
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"

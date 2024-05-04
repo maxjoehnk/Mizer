@@ -13,7 +13,7 @@ mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 rb = "0.4"
 enum-iterator = "2.0"
-num_enum = "0.7"
+num_enum = "0.7.2"
 mizer-media = { path = "../../../../components/media" }
 dasp = { version = "0.11", features = ["signal", "signal-rms", "interpolate", "interpolate-sinc", "ring_buffer"] }
 flume = "0.11"

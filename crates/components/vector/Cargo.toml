@@ -11,5 +11,5 @@ vello_svg = "0.1"
 mizer-wgpu = { path = "../../runtime/wgpu" }
 mizer-module = { path = "../../runtime/module"}
 mizer-processing = { path = "../../runtime/processing"}
-parking_lot = "0.12"
+parking_lot = "0.12.2"
 usvg = "0.40"

@@ -11,5 +11,5 @@ mizer-module = { path = "../../runtime/module" }
 mizer-message-bus = { path = "../../util/bus" }
 flume = "0.11"
 futures = "0.3"
-parking_lot = "0.12"
+parking_lot = "0.12.2"
 chrono = "0.4"

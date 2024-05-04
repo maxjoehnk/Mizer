@@ -21,7 +21,7 @@ serde = { version = "1", features = ["derive"] }
 postage = { version = "0.5", features = ["futures-traits"] }
 futures = "0.3"
 pinboard = "2.2"
-parking_lot = "0.12"
+parking_lot = "0.12.2"
 indexmap = "2.2"
 tracing = "0.1"
 palette = "0.7"

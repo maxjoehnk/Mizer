@@ -45,7 +45,7 @@ mizer-timing-nodes = { path = "behaviors/timing" }
 mizer-timecode-nodes = { path = "timecode" }
 mizer-transport-nodes = { path = "transport" }
 mizer-vector-nodes = { path = "vector" }
-derive_more = "0.99"
+derive_more = "0.99.17"
 dashmap = "5.5"
 
 [dev-dependencies]

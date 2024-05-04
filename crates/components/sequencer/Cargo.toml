@@ -28,6 +28,6 @@ indexmap = "2.2"
 test-case = "3.3"
 mizer-util = { path = "../../util", features = ["test"] }
 mockall = "0.12"
-mockall_double = "0.3"
+mockall_double = "0.3.1"
 predicates = "3.1"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }

@@ -12,6 +12,6 @@ mizer-message-bus = { path = "../../util/bus" }
 mizer-commander = { path = "../../runtime/commander" }
 pinboard = "2.2"
 profiling = "1"
-dashmap = "5"
+dashmap = "5.5.3"
 uuid = { version = "1.8", features = ["v4", "serde"] }
 tracing = "0.1"

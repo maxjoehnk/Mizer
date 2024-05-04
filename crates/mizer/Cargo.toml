@@ -76,7 +76,7 @@ mizer-wgpu = { path = "../runtime/wgpu" }
 tokio = { version = "1.37", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.2"
-dashmap = "5"
+dashmap = "5.5.3"
 flume = "0.11"
 profiling = "1.0"
 rayon = "1.10"

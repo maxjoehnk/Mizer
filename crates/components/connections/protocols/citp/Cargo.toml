@@ -17,5 +17,5 @@ mizer-fixtures = { path = "../../../fixtures" }
 tokio = { version = "1", features = ["net"] }
 uuid = "1.8"
 flume = "0.11"
-async-stream = "0.3"
+async-stream = "0.3.5"
 futures = "0.3"

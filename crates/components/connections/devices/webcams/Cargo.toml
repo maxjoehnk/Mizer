@@ -11,5 +11,5 @@ futures = "0.3"
 flume = "0.11"
 pinboard = "2.2"
 enum-iterator = "2.0"
-nokhwa = { version = "0.10", features = ["input-native"] }
+nokhwa = { version = "0.10.4", features = ["input-native"] }
 mizer-console = { path = "../../../console" }

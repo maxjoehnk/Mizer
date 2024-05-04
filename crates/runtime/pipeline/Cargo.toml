@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-metrics = "0.22"
+metrics = "0.22.3"
 mizer-debug-ui-impl = { path = "../debug-ui/impl" }
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }

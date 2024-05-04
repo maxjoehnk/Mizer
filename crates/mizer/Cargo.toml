@@ -32,7 +32,7 @@ tracing-appender = "0.2"
 tracing = "0.1"
 anyhow = "1"
 structopt = "0.3"
-metrics = "0.22"
+metrics = "0.22.3"
 mizer-console = { path = "../components/console" }
 mizer-media = { path = "../components/media" }
 mizer-project-files = { path = "../projects" }

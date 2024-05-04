@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 tracing = "0.1"
-anyhow = "1"
+anyhow = "1.0.82"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
 rayon = "1.10"

@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 uuid = { version = "1.8", features = ["serde", "v4"] }
-anyhow = "1"
+anyhow = "1.0.82"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../pipeline/node" }
 mizer-fixtures = { path = "../../components/fixtures" }

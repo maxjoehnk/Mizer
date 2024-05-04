@@ -30,7 +30,7 @@ directories-next = "2.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
 tracing-appender = "0.2"
 tracing = "0.1"
-anyhow = "1"
+anyhow = "1.0.82"
 structopt = "0.3"
 metrics = "0.22"
 mizer-console = { path = "../components/console" }

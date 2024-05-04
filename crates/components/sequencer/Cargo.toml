@@ -8,7 +8,7 @@ edition = "2021"
 nightly = ["mockall/nightly"]
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 serde = { version = "1", features = ["derive"] }
 mizer-module = { path = "../../runtime/module" }
 mizer-fixtures = { path = "../fixtures" }

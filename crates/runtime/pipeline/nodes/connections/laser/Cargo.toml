@@ -5,7 +5,7 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-protocol-laser = { path = "../../../../../components/connections/protocols/laser" }

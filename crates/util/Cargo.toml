@@ -9,7 +9,7 @@ test = ["mizer-clock"]
 tracing = ["profiling/profile-with-tracy", "tracy-client"]
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 tracing = "0.1"
 mizer-clock = { path = "../runtime/clock", optional = true }
 futures = "0.3"

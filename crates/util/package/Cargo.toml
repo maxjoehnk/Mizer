@@ -9,7 +9,7 @@ default = ["ui"]
 ui = []
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 mizer-settings = { path = "../../runtime/settings" }
 
 [target.'cfg(target_os = "macos")'.dependencies]

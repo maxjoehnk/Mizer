@@ -8,7 +8,7 @@ edition = "2021"
 test = []
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 tracing = "0.1"
 heck = "0.4"
 serde = { version = "1", features = ["derive", "rc"] }

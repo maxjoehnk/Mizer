@@ -8,7 +8,7 @@ edition = "2021"
 default = []
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 serde = { version = "1", features = ["derive"] }
 mizer-console = { path = "../components/console" }
 mizer-fixtures = { path = "../components/fixtures" }

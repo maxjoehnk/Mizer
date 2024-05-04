@@ -11,7 +11,7 @@ mizer-api = { path = "../api" }
 nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "94a16e8" }
 mizer-util = { path = "../util" }
 mizer-ui-ffi = { path = "ffi" }
-futures = "0.3"
+futures = "0.3.30"
 pinboard = "2.2"
 profiling = "1"
 

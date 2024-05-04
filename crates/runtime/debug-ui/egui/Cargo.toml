@@ -14,7 +14,7 @@ image = "0.24"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 profiling = "1"
-futures = { version = "0.3", features = ["executor"] }
+futures = { version = "0.3.30", features = ["executor"] }
 mizer-wgpu = { path = "../../wgpu" }
 mizer-debug-ui = { path = ".." }
 mizer-module = { path = "../../module" }

@@ -9,7 +9,7 @@ anyhow = "1"
 tracing = "0.1"
 flume = "0.11"
 mizer-message-bus = { path = "../../../../util/bus" }
-futures = "0.3"
+futures = "0.3.30"
 mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
 tokio = { version = "1.37", features = ["net", "rt", "sync", "time"] }

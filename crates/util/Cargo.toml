@@ -13,7 +13,7 @@ anyhow = "1"
 tracing = "0.1"
 mizer-clock = { path = "../runtime/clock", optional = true }
 futures = "0.3"
-palette = "0.7"
+palette = "0.7.6"
 profiling = "1"
 tracy-client = { version = "0.17", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
 serde = { version = "1", features = ["derive", "rc"] }

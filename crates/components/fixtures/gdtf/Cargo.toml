@@ -9,6 +9,6 @@ tracing = "0.1"
 anyhow = "1"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
-zip = "0.6"
+zip = "0.6.6"
 hard-xml = "1.36"
 rayon = "1.10"

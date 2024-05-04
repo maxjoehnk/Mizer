@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 serde = { version = "1", features = ["derive"] }
 test-case = "3.3"
-itertools = "0.12"
+itertools = "0.12.1"
 mizer-node = { path = "../pipeline/node" }
 mizer-util = { path = "../../util" }
 tracing = "0.1"

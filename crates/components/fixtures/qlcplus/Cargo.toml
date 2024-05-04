@@ -19,5 +19,5 @@ cached = { version = "0.49", default-features = false, features = ["proc_macro"]
 [build-dependencies]
 ureq = "2.9"
 zip = "0.6"
-temp-dir = "0.1"
+temp-dir = "0.1.13"
 fs_extra = "1.3"

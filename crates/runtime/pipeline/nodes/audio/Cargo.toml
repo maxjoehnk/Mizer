@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
-cpal = "0.15"
+cpal = "0.15.3"
 mizer-node = { path = "../../node" }
 serde = { version = "1", features = ["derive"] }
 rb = "0.4"

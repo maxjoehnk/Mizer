@@ -11,7 +11,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 flume = "0.11"
 futures = "0.3"
-mqtt-async-client = { version = "0.3", default-features = false }
+mqtt-async-client = { version = "0.3.1", default-features = false }
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }

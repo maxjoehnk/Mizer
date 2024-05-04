@@ -31,4 +31,4 @@ tracing-unwrap = "1.0"
 parking_lot = "0.12"
 
 [dev-dependencies]
-test-case = "3.3"
+test-case = "3.3.1"

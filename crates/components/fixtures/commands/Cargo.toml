@@ -14,4 +14,4 @@ mizer-layouts = { path = "../../../runtime/layouts" }
 mizer-fixtures = { path = ".." }
 regex = "1.10"
 lazy_static = "1.4"
-test-case = "3.3"
+test-case = "3.3.1"

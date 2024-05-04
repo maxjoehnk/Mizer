@@ -30,6 +30,6 @@ itertools = "0.12"
 enum-iterator = "2.0"
 
 [dev-dependencies]
-test-case = "3.3"
+test-case = "3.3.1"
 spectral = { version = "0.6.0", default-features = false }
 mockall = "0.12"

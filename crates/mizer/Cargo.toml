@@ -88,7 +88,7 @@ ffmpeg-the-third = { version = "1.2" }
 rolling-file = "0.2"
 
 [dev-dependencies]
-test-case = "3.3"
+test-case = "3.3.1"
 criterion = { version = "0.5", features = ["html_reports"] }
 
 [[bench]]

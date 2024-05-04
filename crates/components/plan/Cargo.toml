@@ -20,5 +20,5 @@ itertools = "0.12"
 uuid = { version = "1.8", features = ["serde"] }
 
 [dev-dependencies]
-test-case = "3.3"
+test-case = "3.3.1"
 spectral = { version = "0.6", default-features = false }

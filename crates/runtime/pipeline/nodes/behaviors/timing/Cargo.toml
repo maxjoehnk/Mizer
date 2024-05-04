@@ -10,4 +10,4 @@ mizer-node = { path = "../../../node" }
 mizer-clock = { path = "../../../../clock" }
 serde = { version = "1", features = ["derive"] }
 cron = "0.12"
-chrono = "0.4"
+chrono = "0.4.38"

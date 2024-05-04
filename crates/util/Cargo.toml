@@ -23,7 +23,7 @@ base64 = "0.21"
 indexmap = "2.2"
 shellexpand = "3.1"
 ringbuffer = "0.15"
-chrono = { version = "0.4", features = ["serde"] }
+chrono = { version = "0.4.38", features = ["serde"] }
 
 [dev-dependencies]
 test-case = "3.3"

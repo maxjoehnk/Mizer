@@ -8,5 +8,5 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 mizer-message-bus = { path = "../../util/bus" }
-chrono = { version = "0.4", features = ["serde"] }
+chrono = { version = "0.4.38", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }

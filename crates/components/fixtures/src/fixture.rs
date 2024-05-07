@@ -34,9 +34,15 @@ pub(crate) struct ChannelValues {
     values: HashMap<String, ChannelValue>,
 }
 
-#[derive(Default, Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub(crate) struct ChannelValue {
     values: Vec<(FixturePriority, f64)>,
+}
+
+impl Default for ChannelValue {
+    fn default() -> Self {
+        ChannelValue { values: Vec::with_capacity(10) }
+    }
 }
 
 impl ChannelValue {
@@ -62,9 +68,16 @@ impl ChannelValue {
 }
 
 impl ChannelValues {
-    pub fn insert(&mut self, channel: String, value: f64, priority: FixturePriority) {
-        let values = self.values.entry(channel).or_default();
-        values.insert(value, priority);
+    pub fn insert(&mut self, channel: &String, value: f64, priority: FixturePriority) {
+        // TODO: this should be actually measured
+        // perf: we don't use entry here to avoid cloning the key when it's already in the map
+        if let Some(values) = self.values.get_mut(channel) {
+            values.insert(value, priority);
+        } else {
+            let mut values = ChannelValue::default();
+            values.insert(value, priority);
+            self.values.insert(channel.clone(), values);
+        }
     }
 
     pub fn get(&self, channel: &str) -> Option<f64> {
@@ -78,7 +91,23 @@ impl ChannelValues {
     }
 
     pub fn clear(&mut self) {
-        self.values.clear();
+        for value in self.values.values_mut() {
+            value.clear();
+        }
+    }
+
+    pub(crate) fn write(&mut self, name: &String, value: f64) {
+        self.write_priority(name, value, Default::default());
+    }
+
+    pub(crate) fn write_priority(
+        &mut self,
+        name: &String,
+        value: f64,
+        priority: FixturePriority,
+    ) {
+        tracing::trace!("write {name} -> {value} ({priority:?})");
+        self.insert(name, value, priority);
     }
 }
 
@@ -203,34 +232,30 @@ impl Fixture {
             .collect()
     }
 
-    pub(crate) fn write<S: Into<String>>(&mut self, name: S, value: f64) {
-        self.write_priority(name, value, Default::default());
-    }
-
-    pub(crate) fn write_priority<S: Into<String>>(
-        &mut self,
-        name: S,
-        value: f64,
-        priority: FixturePriority,
-    ) {
-        let name = name.into();
-        tracing::trace!("write {name} -> {value} ({priority:?})");
-        self.channel_values.insert(name, value, priority);
-    }
-
     pub fn sub_fixture(&self, id: u32) -> Option<SubFixture> {
         self.sub_fixture_definition(id)
             .map(move |definition| SubFixture {
-                fixture: self,
+                channel_values: &self.channel_values,
                 definition,
             })
     }
 
     pub fn sub_fixture_mut(&mut self, id: u32) -> Option<SubFixtureMut> {
-        self.sub_fixture_definition(id)
-            .cloned()
-            .map(move |definition| SubFixtureMut {
-                fixture: self,
+        self
+            .current_mode
+            .sub_fixtures
+            .iter()
+            .position(|f| f.id == id)
+            .and_then(|p| {
+                let mut fixtures = self.current_mode.sub_fixtures.iter_mut();
+                if self.configuration.reverse_pixel_order {
+                    fixtures.rev().nth(p)
+                } else {
+                    fixtures.nth(p)
+                }
+            })
+            .map(|definition| SubFixtureMut {
+                channel_values: &mut self.channel_values,
                 definition,
             })
     }
@@ -256,7 +281,7 @@ impl Fixture {
         self.channel_values.clear();
         for channel in self.current_mode.get_channels() {
             self.channel_values
-                .insert(channel.name.clone(), 0f64, FixturePriority::LOWEST);
+                .insert(&channel.name, 0f64, FixturePriority::LOWEST);
         }
         if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
             mixer.clear();
@@ -329,9 +354,9 @@ impl Fixture {
     fn update_color_mixer(&mut self) {
         profiling::scope!("Fixture::update_color_mixer");
         update_color_mixer(
-            self.current_mode.color_mixer.clone(),
-            self.current_mode.controls.color_mixer.clone(),
-            |channel, value| self.write(channel, value),
+            self.current_mode.color_mixer.as_ref(),
+            self.current_mode.controls.color_mixer.as_ref(),
+            |channel, value| self.channel_values.write(channel, value),
         );
     }
 }
@@ -357,15 +382,13 @@ impl IFixtureMut for Fixture {
                     }
                     self.update_color_mixer();
                 } else {
-                    let channel = channel.to_string();
-                    self.write_priority(channel, value, priority)
+                    self.channel_values.write_priority(channel, value, priority)
                 }
             }
             Some(FixtureControlChannel::Delegate) => {
-                let sub_fixtures = self.current_mode.sub_fixtures.clone();
-                for definition in sub_fixtures.into_iter() {
+                for definition in self.current_mode.sub_fixtures.iter_mut() {
                     let mut fixture = SubFixtureMut {
-                        fixture: self,
+                        channel_values: &mut self.channel_values,
                         definition,
                     };
                     fixture.write_fader_control(control.clone(), value, priority);
@@ -416,6 +439,7 @@ impl IFixture for Fixture {
 
 pub trait IChannelType {
     fn into_channel(self) -> Option<String>;
+    fn to_channel(&self) -> Option<&String>;
 }
 
 pub trait IFixture {

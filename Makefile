@@ -11,6 +11,9 @@ benchmarks:
 oscillator_nodes_benchmarks:
 	cargo bench --no-default-features --bench oscillator_nodes
 
+fixtures_benchmarks:
+	cargo bench --no-default-features -p mizer-fixtures --bench fixtures
+
 build-headless:
 	cargo build --release --no-default-features --features build-ffmpeg -p mizer
 

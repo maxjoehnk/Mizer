@@ -4985,6 +4985,7 @@ name = "mizer-fixtures"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "criterion",
  "dashmap",
  "enum-iterator",
  "futures",

@@ -512,6 +512,14 @@ impl IChannelType for FixtureControlChannel {
             None
         }
     }
+
+    fn to_channel(&self) -> Option<&String> {
+        if let FixtureControlChannel::Channel(channel) = self {
+            Some(channel)
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -524,6 +532,14 @@ pub enum SubFixtureControlChannel {
 
 impl IChannelType for SubFixtureControlChannel {
     fn into_channel(self) -> Option<String> {
+        if let SubFixtureControlChannel::Channel(channel) = self {
+            Some(channel)
+        } else {
+            None
+        }
+    }
+
+    fn to_channel(&self) -> Option<&String> {
         if let SubFixtureControlChannel::Channel(channel) = self {
             Some(channel)
         } else {

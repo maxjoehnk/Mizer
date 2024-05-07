@@ -134,13 +134,13 @@ pub struct Cmy {
 
 #[profiling::function]
 pub(crate) fn update_color_mixer<TChannel: IChannelType>(
-    color_mixer: Option<ColorMixer>,
-    color_group: Option<ColorGroup<TChannel>>,
-    mut write: impl FnMut(String, f64),
+    color_mixer: Option<&ColorMixer>,
+    color_group: Option<&ColorGroup<TChannel>>,
+    mut write: impl FnMut(&String, f64),
 ) {
     debug_assert!(
         color_mixer.is_some(),
-        "Trying to update non existent color mixer"
+        "Trying to update non-existent color mixer"
     );
     debug_assert!(
         color_group.is_some(),
@@ -155,7 +155,7 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             ..
         }) = color_group
         {
-            let rgb = if let Some(white_channel) = white.and_then(|c| c.into_channel()) {
+            let rgb = if let Some(white_channel) = white.as_ref().and_then(|c| c.to_channel()) {
                 let value = color_mixer.rgbw();
                 write(white_channel, value.white);
 
@@ -167,13 +167,13 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
             } else {
                 color_mixer.rgb()
             };
-            if let Some(channel) = red.into_channel() {
+            if let Some(channel) = red.to_channel() {
                 write(channel, rgb.red);
             }
-            if let Some(channel) = green.into_channel() {
+            if let Some(channel) = green.to_channel() {
                 write(channel, rgb.green);
             }
-            if let Some(channel) = blue.into_channel() {
+            if let Some(channel) = blue.to_channel() {
                 write(channel, rgb.blue);
             }
         } else if let Some(ColorGroup::Cmy {
@@ -183,13 +183,13 @@ pub(crate) fn update_color_mixer<TChannel: IChannelType>(
         }) = color_group
         {
             let cmy = color_mixer.cmy();
-            if let Some(channel) = cyan.into_channel() {
+            if let Some(channel) = cyan.to_channel() {
                 write(channel, cmy.cyan);
             }
-            if let Some(channel) = magenta.into_channel() {
+            if let Some(channel) = magenta.to_channel() {
                 write(channel, cmy.magenta);
             }
-            if let Some(channel) = yellow.into_channel() {
+            if let Some(channel) = yellow.to_channel() {
                 write(channel, cmy.yellow);
             }
         }

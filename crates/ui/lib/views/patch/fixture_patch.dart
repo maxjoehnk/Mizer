@@ -28,9 +28,17 @@ class _FixturePatchViewState extends State<FixturePatchView> {
   String? searchQuery;
 
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FixturesBloc fixturesBloc = context.read();
+      fixturesBloc.add(FetchFixtures());
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     FixturesBloc fixturesBloc = context.read();
-    fixturesBloc.add(FetchFixtures());
     var fixturesApi = context.read<FixturesApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return HotkeyConfiguration(

@@ -43,6 +43,10 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           });
           ticker!.start();
         }));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FixturesBloc>().add(FetchFixtures());
+      context.read<SequencerBloc>().add(FetchSequences());
+    });
   }
 
   @override
@@ -54,8 +58,6 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    context.read<FixturesBloc>().add(FetchFixtures());
-    context.read<SequencerBloc>().add(FetchSequences());
     return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.sequencer,
       hotkeyMap: {

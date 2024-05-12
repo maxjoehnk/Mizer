@@ -17,10 +17,16 @@ class SelectionPane extends StatefulWidget {
 class _SelectionPaneState extends State<SelectionPane>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   @override
-  Widget build(BuildContext context) {
-    FixturesBloc fixturesBloc = context.read();
-    fixturesBloc.add(FetchFixtures());
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FixturesBloc fixturesBloc = context.read();
+      fixturesBloc.add(FetchFixtures());
+    });
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return SelectionSheet(
         fixtures: getSelectedInstances(selection, fixtures.fixtures),

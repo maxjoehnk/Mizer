@@ -15,10 +15,16 @@ class ProgrammerView extends StatefulWidget {
 class _ProgrammerViewState extends State<ProgrammerView>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   @override
-  Widget build(BuildContext context) {
-    FixturesBloc fixturesBloc = context.read();
-    fixturesBloc.add(FetchFixtures());
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FixturesBloc fixturesBloc = context.read();
+      fixturesBloc.add(FetchFixtures());
+    });
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return ProgrammerSheet(
           highlight: programmerState.highlight,

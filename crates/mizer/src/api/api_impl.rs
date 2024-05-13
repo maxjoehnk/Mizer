@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::rc::Rc;
 use std::sync::atomic::AtomicU8;
 use std::sync::Arc;
@@ -7,20 +6,18 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_command_executor::{CommandExecutorApi, SendableCommand};
-use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
+use mizer_command_executor::{CommandExecutorApi, SendableCommand, SendableQuery, GetCommandHistoryQuery};
 use mizer_devices::DeviceManager;
-use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
 use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId, PortMetadata,
+    NodePath, PortId,
 };
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
 use mizer_runtime::{
-    DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
+    DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
 };
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
@@ -52,6 +49,16 @@ impl RuntimeApi for Api {
 
         Ok(result)
     }
+    
+    #[profiling::function]
+    fn query<'a, T: SendableQuery<'a> + 'static>(
+        &self,
+        query: T,
+    ) -> anyhow::Result<T::Result> {
+        let result = self.command_executor_api.execute_query(query)?;
+
+        Ok(result)
+    }
 
     fn undo(&self) -> anyhow::Result<()> {
         self.command_executor_api.undo()?;
@@ -69,40 +76,6 @@ impl RuntimeApi for Api {
 
     fn observe_history(&self) -> Subscriber<(Vec<(String, u128)>, usize)> {
         self.history_bus.subscribe()
-    }
-
-    #[profiling::function]
-    fn nodes(&self) -> Vec<NodeDescriptor> {
-        let metadata = self.access.metadata.read();
-        let designer = self.access.designer.read();
-        let settings = self.access.settings.read();
-        self.access
-            .nodes
-            .iter()
-            .map(|entry| entry.key().clone())
-            .map(|path| {
-                let ports = self
-                    .access
-                    .ports
-                    .get(&path)
-                    .map(|ports| ports.clone())
-                    .unwrap_or_default();
-
-                self.get_descriptor(path, &metadata, &designer, &settings, ports)
-            })
-            .collect()
-    }
-
-    fn links(&self) -> Vec<NodeLink> {
-        self.access.links.read()
-    }
-
-    fn layouts(&self) -> Vec<Layout> {
-        self.access.layouts.read()
-    }
-
-    fn plans(&self) -> Vec<mizer_plan::Plan> {
-        self.access.plans.read()
     }
 
     #[profiling::function]
@@ -132,28 +105,6 @@ impl RuntimeApi for Api {
         let value = rx.recv()?;
 
         Ok(value)
-    }
-
-    #[profiling::function]
-    fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
-        let metadata = self.access.metadata.read();
-        let designer = self.access.designer.read();
-        let settings = self.access.settings.read();
-        self.access
-            .nodes
-            .iter()
-            .map(|entry| entry.key().clone())
-            .find(|node_path| node_path == path)
-            .map(|path| {
-                let ports = self
-                    .access
-                    .ports
-                    .get(&path)
-                    .map(|ports| ports.clone())
-                    .unwrap_or_default();
-
-                self.get_descriptor(path, &metadata, &designer, &settings, ports)
-            })
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -222,24 +173,6 @@ impl RuntimeApi for Api {
         self.sender.send(ApiCommand::SetFps(fps))?;
 
         Ok(())
-    }
-
-    #[profiling::function]
-    fn get_connections(&self) -> Vec<Connection> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::GetConnections(tx)).unwrap();
-
-        rx.recv().unwrap()
-    }
-
-    #[profiling::function]
-    fn get_midi_device_profiles(&self) -> Vec<DeviceProfile> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::GetMidiDeviceProfiles(tx))
-            .unwrap();
-
-        rx.recv().unwrap()
     }
 
     #[profiling::function]
@@ -327,11 +260,6 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn get_service<T: 'static + Send + Sync + Clone>(&self) -> Option<&T> {
-        self.api_injector.get()
-    }
-
-    #[profiling::function]
     fn open_nodes_view(&self) {
         tracing::debug!("Opening nodes view");
         self.open_node_views
@@ -384,35 +312,8 @@ impl Api {
         )
     }
 
-    #[profiling::function]
-    fn get_descriptor(
-        &self,
-        path: NodePath,
-        metadata: &HashMap<NodePath, NodeMetadata>,
-        designer: &HashMap<NodePath, NodeDesigner>,
-        settings: &HashMap<NodePath, Vec<NodeSetting>>,
-        ports: Vec<(PortId, PortMetadata)>,
-    ) -> NodeDescriptor {
-        let node = self.access.nodes.get(&path).unwrap();
-        let metadata = metadata.get(&path).cloned().unwrap_or_default();
-        let settings = settings.get(&path).cloned().unwrap_or_default();
-        let designer = designer[&path].clone();
-
-        NodeDescriptor {
-            path,
-            metadata,
-            node,
-            designer,
-            ports,
-            settings,
-        }
-    }
-
     fn emit_history(&self) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::GetHistory(tx))?;
-
-        let history = rx.recv()?;
+        let history = self.query(GetCommandHistoryQuery)?;
         tracing::debug!("Emitting history {:?}", history);
         self.history_bus.send(history);
 

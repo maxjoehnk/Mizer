@@ -26,6 +26,7 @@ mizer-console = { path = "../../components/console" }
 mizer-module = { path = "../../runtime/module" }
 mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
+mizer-commander = { path = "../../runtime/commander" }
 mizer-message-bus = { path = "../../util/bus" }
 shellexpand = "3.1"
 

@@ -1,5 +1,5 @@
-use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeSetting, NodeType, PortMetadata};
-use mizer_nodes::{ContainerNode, Node};
+use mizer_node::{NodeDesigner, NodeDetails, NodeMetadata, NodePath, NodeSetting, NodeType, PortMetadata};
+use mizer_nodes::{ContainerNode};
 use mizer_ports::PortId;
 
 use crate::pipeline_access::PipelineAccess;
@@ -41,8 +41,9 @@ pub struct StaticNodeDescriptor {
     pub designer: NodeDesigner,
     pub ports: Vec<(PortId, PortMetadata)>,
     pub details: NodeDetails,
-    pub config: Node,
     pub settings: Vec<NodeSetting>,
+    pub metadata: NodeMetadata,
+    pub children: Vec<NodePath>,
 }
 
 pub(crate) fn assert_valid_parent(

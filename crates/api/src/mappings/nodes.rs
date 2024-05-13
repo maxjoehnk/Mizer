@@ -1,39 +1,11 @@
 use std::sync::Arc;
 
 use mizer_node::{NodeLink, PortDirection, PortId, PortMetadata, PortType, PreviewType};
-use mizer_nodes::{MidiInputConfig, NodeDowncast};
+use mizer_nodes::{MidiInputConfig};
 use mizer_runtime::commands::StaticNodeDescriptor;
-use mizer_runtime::NodeDescriptor;
 
 use crate::proto::nodes::node_setting::{spline_value, SplineValue};
 use crate::proto::nodes::*;
-
-impl TryFrom<mizer_nodes::Node> for node_config::Type {
-    type Error = ();
-
-    fn try_from(node: mizer_nodes::Node) -> Result<Self, Self::Error> {
-        use mizer_nodes::Node::*;
-        match node {
-            Container(node) => Ok(Self::ContainerConfig(node.into())),
-            _ => Err(()),
-        }
-    }
-}
-
-impl From<node_config::Type> for mizer_nodes::Node {
-    fn from(node_config: node_config::Type) -> Self {
-        match node_config {
-            node_config::Type::ContainerConfig(node) => Self::Container(node.into()),
-        }
-    }
-}
-
-impl From<mizer_nodes::Node> for NodeConfig {
-    fn from(node: mizer_nodes::Node) -> Self {
-        let config: Option<node_config::Type> = node.try_into().ok();
-        NodeConfig { r#type: config }
-    }
-}
 
 impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
     fn from(config: MidiNodeConfig) -> Self {
@@ -62,25 +34,6 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
                 }
                 None => MidiInputConfig::default(),
             },
-        }
-    }
-}
-
-impl From<mizer_nodes::ContainerNode> for ContainerNodeConfig {
-    fn from(_: mizer_nodes::ContainerNode) -> Self {
-        // This is just a fallback to avoid crashing when
-        Default::default()
-    }
-}
-
-impl From<ContainerNodeConfig> for mizer_nodes::ContainerNode {
-    fn from(config: ContainerNodeConfig) -> Self {
-        Self {
-            nodes: config
-                .nodes
-                .into_iter()
-                .map(|node| node.path.into())
-                .collect(),
         }
     }
 }
@@ -135,53 +88,6 @@ impl From<mizer_util::SplineStep> for spline_value::SplineStep {
     }
 }
 
-impl From<NodeDescriptor<'_>> for Node {
-    fn from(descriptor: NodeDescriptor<'_>) -> Self {
-        let config = descriptor.downcast().into();
-        map_node_descriptor_with_config(descriptor, config)
-    }
-}
-
-pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: NodeConfig) -> Node {
-    let details = descriptor.node.value().details();
-    let node_type = descriptor.node_type();
-    let mut node = Node {
-        path: descriptor.path.to_string(),
-        r#type: node_type.get_name(),
-        settings: descriptor
-            .settings
-            .into_iter()
-            .map(NodeSetting::from)
-            .collect(),
-        config: Some(config),
-        designer: Some(descriptor.designer.into()),
-        preview: node::NodePreviewType::from(details.preview_type) as i32,
-        details: Some(NodeDetails {
-            node_type_name: details.node_type_name,
-            display_name: descriptor.metadata.display_name().to_string(),
-            has_custom_name: descriptor.metadata.custom_name.is_some(),
-            category: NodeCategory::from(details.category) as i32,
-        }),
-        inputs: vec![],
-        outputs: vec![],
-    };
-    let (inputs, outputs) = descriptor
-        .ports
-        .into_iter()
-        .partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
-
-    for input in inputs {
-        node.inputs.push(input.into());
-    }
-    for output in outputs {
-        node.outputs.push(output.into());
-    }
-
-    tracing::trace!("{node:?}");
-
-    node
-}
-
 impl From<StaticNodeDescriptor> for Node {
     fn from(descriptor: StaticNodeDescriptor) -> Self {
         let mut node = Node {
@@ -192,13 +98,13 @@ impl From<StaticNodeDescriptor> for Node {
                 .into_iter()
                 .map(NodeSetting::from)
                 .collect(),
-            config: descriptor.config.try_into().ok().into(),
+            children: vec![],
             designer: Some(descriptor.designer.into()),
             preview: node::NodePreviewType::from(descriptor.details.preview_type) as i32,
             details: Some(NodeDetails {
                 node_type_name: descriptor.details.node_type_name,
-                display_name: Default::default(),
-                has_custom_name: false,
+                display_name: descriptor.metadata.display_name().to_string(),
+                has_custom_name: descriptor.metadata.custom_name.is_some(),
                 category: NodeCategory::from(descriptor.details.category) as i32,
             }),
             inputs: vec![],

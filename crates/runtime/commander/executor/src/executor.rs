@@ -1,7 +1,8 @@
-use mizer_commander::{Command, ExtractDependencies};
-use mizer_processing::Injector;
+use mizer_commander::{Command, ExtractDependencies, ExtractDependenciesQuery, Query};
+use mizer_processing::{Inject, Injector};
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
+use std::time::Instant;
 
 #[derive(Default)]
 pub struct CommandExecutor {
@@ -67,5 +68,19 @@ impl CommandExecutor {
             .ok_or_else(|| anyhow::anyhow!("Missing state for command reversion with key {command_key:?}"))?;
         let state = state.downcast::<T::State>().unwrap();
         command.revert(dependencies, *state)
+    }
+
+    pub fn query<'a, T: Query<'a> + 'static>(
+        &'a self,
+        injector: &'a impl Inject,
+        query: &T,
+    ) -> anyhow::Result<T::Result> {
+        let before = Instant::now();
+        let dependencies = T::Dependencies::extract(injector);
+        let result = query.query(dependencies);
+        let after = Instant::now();
+        tracing::debug!("Executed query {query:?} in {:?}", after - before);
+
+        result
     }
 }

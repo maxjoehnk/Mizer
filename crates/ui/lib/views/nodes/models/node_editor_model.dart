@@ -66,8 +66,7 @@ class NodeEditorModel extends ChangeNotifier {
         this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
     if (parent != null) {
       this.parent = parent;
-      List<NodeModel> nodeModels =
-          parent.node.config.containerConfig.nodes.map(_createModel).toList();
+      List<NodeModel> nodeModels = parent.node.children.map(_createModel).toList();
       this.currentNodes = nodeModels;
     }
     this.updateNodes();
@@ -129,7 +128,7 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   List<Node> getContainerNodes(NodeModel container) {
-    return container.node.config.containerConfig.nodes;
+    return container.node.children;
   }
 
   List<NodeConnection> getContainerConnections(NodeModel container) {
@@ -193,8 +192,7 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   openContainer(NodeModel nodeModel) {
-    List<NodeModel> nodeModels =
-        nodeModel.node.config.containerConfig.nodes.map(_createModel).toList();
+    List<NodeModel> nodeModels = nodeModel.node.children.map(_createModel).toList();
     this.currentNodes = nodeModels;
     this.parent = nodeModel;
     this.path = [nodeModel.node.path.substring(1)];

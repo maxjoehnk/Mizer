@@ -119,9 +119,9 @@ message Node {
   repeated Port outputs = 4;
   NodeDesigner designer = 5;
   NodePreviewType preview = 6;
-  NodeConfig config = 7;
-  repeated NodeSetting settings = 8;
-  NodeDetails details = 9;
+  repeated NodeSetting settings = 7;
+  NodeDetails details = 8;
+  repeated Node children = 9;
 }
 
 message NodeDetails {
@@ -146,12 +146,6 @@ enum NodeCategory {
   NODE_CATEGORY_VECTOR = 11;
   NODE_CATEGORY_FIXTURES = 12;
   NODE_CATEGORY_UI = 13;
-}
-
-message NodeConfig {
-  oneof type {
-    ContainerNodeConfig container_config = 45;
-  }
 }
 
 message NodeSetting {
@@ -299,10 +293,6 @@ message MidiNodeConfig {
     string page = 1;
     string control = 2;
   }
-}
-
-message ContainerNodeConfig {
-  repeated Node nodes = 1;
 }
 
 message NodePosition {

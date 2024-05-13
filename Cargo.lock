@@ -4867,7 +4867,6 @@ name = "mizer-api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "enum-iterator",
  "flume 0.11.0",
  "futures",
  "itertools 0.12.1",
@@ -4963,10 +4962,14 @@ dependencies = [
  "derive_more",
  "flume 0.11.0",
  "mizer-commander",
+ "mizer-connection-queries",
  "mizer-console",
  "mizer-fixture-commands",
+ "mizer-fixture-queries",
  "mizer-layout-commands",
+ "mizer-layout-queries",
  "mizer-layouts",
+ "mizer-media",
  "mizer-module",
  "mizer-node",
  "mizer-node-templates",
@@ -4978,8 +4981,11 @@ dependencies = [
  "mizer-protocol-osc",
  "mizer-runtime",
  "mizer-sequencer-commands",
+ "mizer-sequencer-queries",
  "mizer-surfaces",
  "mizer-timecode",
+ "mizer-util",
+ "parking_lot 0.12.1",
  "serde",
  "serde_json",
  "tracing",
@@ -4991,6 +4997,22 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "mizer-injector",
+ "serde",
+]
+
+[[package]]
+name = "mizer-connection-queries"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-connections",
+ "mizer-devices",
+ "mizer-protocol-citp",
+ "mizer-protocol-dmx",
+ "mizer-protocol-midi",
+ "mizer-protocol-mqtt",
+ "mizer-protocol-osc",
  "serde",
 ]
 
@@ -5225,6 +5247,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-fixture-queries"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-fixtures",
+ "serde",
+]
+
+[[package]]
 name = "mizer-fixtures"
 version = "0.1.0"
 dependencies = [
@@ -5368,6 +5400,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-layout-queries"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-layouts",
+ "serde",
+]
+
+[[package]]
 name = "mizer-layouts"
 version = "0.1.0"
 dependencies = [
@@ -5409,6 +5451,7 @@ dependencies = [
  "image",
  "infer",
  "mime_guess",
+ "mizer-commander",
  "mizer-console",
  "mizer-message-bus",
  "mizer-module",
@@ -6013,6 +6056,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "downcast",
+ "enum-iterator",
  "flume 0.11.0",
  "indexmap 2.2.6",
  "insta",
@@ -6020,6 +6064,7 @@ dependencies = [
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
+ "mizer-docs",
  "mizer-execution-planner",
  "mizer-fixtures",
  "mizer-layouts",
@@ -6120,6 +6165,16 @@ dependencies = [
  "mizer-sequencer",
  "serde",
  "tracing",
+]
+
+[[package]]
+name = "mizer-sequencer-queries"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-sequencer",
+ "serde",
 ]
 
 [[package]]

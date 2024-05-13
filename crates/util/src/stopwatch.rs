@@ -11,7 +11,9 @@ macro_rules! stopwatch {
 #[cfg(not(debug_assertions))]
 #[macro_export]
 macro_rules! stopwatch {
-    ($fmt: expr) => {}
+    ($fmt: expr) => {
+        mizer_util::Stopwatch::start()
+    }
 }
 
 pub struct Stopwatch {

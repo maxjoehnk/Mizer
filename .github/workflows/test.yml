@@ -110,6 +110,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - uses: Swatinem/rust-cache@v2
       - name: Remove ndi libs from cache
         run: rm -rf target/debug/deps/libndi* target/debug/build/ndi-*
@@ -152,6 +153,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: crates/ui

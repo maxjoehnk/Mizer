@@ -30,8 +30,12 @@ def find_coordinates_text(text: str):
 
     # Find the coordinates of the provided text (text)
     try:
-        x, y = data[data['text'] ==
-                    text]['left'].iloc[0], data[data['text'] == text]['top'].iloc[0]
+        left = data[data['text'] == text]['left'].iloc[0]
+        top = data[data['text'] == text]['top'].iloc[0]
+        width = data[data['text'] == text]['width'].iloc[0]
+        height = data[data['text'] == text]['height'].iloc[0]
+
+        x, y = left + width // 2, top + height // 2
 
     except IndexError:
         # The text was not found on the screen

@@ -1,4 +1,6 @@
 from pathlib import Path
+
+import pyautogui
 from time import sleep
 
 from infrastructure.interactions import take_screenshot
@@ -18,6 +20,7 @@ def after_all(context):
 def before_scenario(context, scenario):
     context.mizer.start(None)
     sleep(1)
+    pyautogui.hotkey('win', 'f')
 
 
 def after_scenario(context, scenario):

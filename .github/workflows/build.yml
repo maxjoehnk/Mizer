@@ -168,7 +168,7 @@ jobs:
         with:
           name: linux-full
       - name: Unzip artifact
-        run: unzip mizer.zip
+        run: unzip mizer.zip -d artifact
       - name: Verify ffmpeg is statically linked
         working-directory: artifact
         run: nm mizer | grep ff_mpeg

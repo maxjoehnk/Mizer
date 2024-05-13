@@ -43,7 +43,7 @@ build-docker:
 	docker build -t mizer:latest .
 
 mizer.zip: artifact
-	zip -r mizer.zip artifact/*
+	cd artifact && zip -r ../mizer.zip *
 
 build-in-docker:
 	./.ci/test-local.sh

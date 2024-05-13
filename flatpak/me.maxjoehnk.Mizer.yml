@@ -30,6 +30,7 @@ modules:
       # Copy app
       - mkdir -p /app/Mizer
       - mkdir -p /app/lib
+      - unzip mizer.zip -d artifact
       - cp -r artifact/* /app/Mizer/
       - cp -r artifact/lib/* /app/lib/
       - install -D artifact/mizer /app/Mizer/
@@ -42,9 +43,12 @@ modules:
       - mkdir -p /app/share/applications
       - cp me.maxjoehnk.Mizer.desktop /app/share/applications/
     sources:
-      - type: archive
+      - type: file
         path: ../mizer.zip
-        dest: artifact
+      # Not sure why this doesn't work, flatpak builder seems to remove directory structure from the given archive
+      #- type: archive
+      #  path: ../mizer.zip
+      #  dest: artifact
       - type: file
         path: ../assets/me.maxjoehnk.Mizer.desktop
       - type: file

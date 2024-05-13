@@ -20,7 +20,7 @@ class Mizer:
         self.cleanup()
 
     def start(self, project: str | None):
-        work = f'{self.tempdir}/artifact'
+        work = self.tempdir
         args = [f'{work}/mizer']
         if project:
             cwd = os.getcwd()

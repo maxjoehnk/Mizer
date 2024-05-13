@@ -44,7 +44,9 @@ def open_view(view: View):
         case View.SURFACES:
             pyautogui.hotkey('F9')
         case View.PATCH:
-            pyautogui.hotkey('F10')
+            # This is required because something else seems to block the hotkey on my machine
+            #pyautogui.hotkey('F10')
+            click_on_text('Patch')
         case View.CONNECTIONS:
             pyautogui.hotkey('F12')
         case View.TIMECODE:

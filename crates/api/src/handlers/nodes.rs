@@ -1,12 +1,9 @@
 use std::fmt::Debug;
 
 use mizer_command_executor::*;
-use mizer_docs::{get_node_description, list_node_settings};
 use mizer_node::{NodePath, NodeType, PortId};
-use mizer_nodes::{ContainerNode, NodeDowncast};
 use mizer_runtime::{NodeMetadataRef, NodePreviewRef};
 
-use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::proto::nodes::*;
 use crate::RuntimeApi;
 
@@ -25,60 +22,47 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn get_nodes(&self) -> Nodes {
         let mut res = Nodes::default();
 
-        for node in self.runtime.nodes() {
-            let node: Node = node.into();
+        let nodes = self.runtime.query(ListNodesQuery).unwrap();
+        let links = self.runtime.query(ListLinksQuery).unwrap();
+
+        for node in nodes.iter() {
+            let node: Node = node.clone().into();
             res.all_nodes.push(node);
         }
 
-        let nodes = self.runtime.nodes();
-
         let (container_nodes, non_container_nodes) = nodes
             .into_iter()
-            .partition::<Vec<_>, _>(|node| node.node_type() == NodeType::Container);
-        let container_nodes = container_nodes
-            .into_iter()
-            .map(|node| {
-                node.downcast_node::<ContainerNode>(NodeType::Container)
-                    .map(|c| (c, node))
-                    .unwrap()
-            })
-            .collect::<Vec<_>>();
+            .partition::<Vec<_>, _>(|node| node.node_type == NodeType::Container);
 
         let (mut child_nodes, standalone_nodes) = non_container_nodes
             .into_iter()
             .partition::<Vec<_>, _>(|node| {
                 container_nodes
                     .iter()
-                    .any(|(c, _)| c.nodes.contains(&node.path))
+                    .any(|n| n.children.contains(&node.path))
             });
 
         for node in standalone_nodes {
             let node: Node = node.into();
             res.nodes.push(node);
         }
-        for (container_node, node) in container_nodes {
-            let children = container_node
-                .nodes
-                .into_iter()
+        for node in container_nodes {
+            let children = node
+                .children
+                .iter()
                 .filter_map(|path| {
                     child_nodes
                         .iter()
-                        .position(|node| node.path == path)
+                        .position(|node| &node.path == path)
                         .map(|index| child_nodes.remove(index))
                 })
                 .map(Node::from)
                 .collect();
-            let config = ContainerNodeConfig {
-                nodes: children,
-                ..Default::default()
-            };
-            let config = NodeConfig {
-                r#type: Some(node_config::Type::ContainerConfig(config)),
-            };
-            let node = map_node_descriptor_with_config(node, config);
+            let mut node: Node = node.into();
+            node.children = children;
             res.nodes.push(node);
         }
-        for channel in self.runtime.links() {
+        for channel in links {
             res.channels.push(NodeConnection {
                 source_node: channel.source.to_string(),
                 source_port: Some(Port {
@@ -102,30 +86,26 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_available_nodes(&self) -> AvailableNodes {
-        let node_types = enum_iterator::all::<NodeType>();
-        let nodes = node_types
+        let nodes = self.runtime.query(ListAvailableNodesQuery).unwrap();
+        let nodes = nodes
             .into_iter()
-            .filter(|node_type| node_type != &NodeType::TestSink)
-            .map(|node_type| {
-                let node: mizer_nodes::Node = node_type.into();
-                let details = node.details();
-                let node_type_name = node_type.get_name();
-                let description = get_node_description(&node_type_name)
+            .map(|node| {
+                let description = node.description
                     .map(|desc| desc.to_string())
                     .unwrap_or_default();
-                let settings = list_node_settings(&node_type_name)
-                    .map(|settings| settings
-                        .map(|(setting, description)| NodeSettingDescription {
-                            name: setting.to_string(),
-                            description: description.to_string(),
-                        })
-                        .collect::<Vec<_>>())
-                    .unwrap_or_default();
+                let settings = node
+                    .settings
+                    .into_iter()
+                    .map(|(setting, description)| NodeSettingDescription {
+                        name: setting.to_string(),
+                        description: description.to_string(),
+                    })
+                    .collect::<Vec<_>>();
 
                 AvailableNode {
-                    name: details.node_type_name,
-                    category: NodeCategory::from(details.category) as i32,
-                    r#type: node_type_name,
+                    name: node.name,
+                    category: NodeCategory::from(node.category) as i32,
+                    r#type: node.node_type_name,
                     description,
                     settings,
                 }
@@ -138,7 +118,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_node(&self, path: String) -> Option<Node> {
-        let node = self.runtime.get_node(&NodePath(path))?;
+        let node = self.runtime.query(GetNodeQuery { path: NodePath(path) }).unwrap()?;
 
         Some(node.into())
     }

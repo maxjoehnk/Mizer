@@ -5,7 +5,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
 use mizer_api::start_remote_api;
-use mizer_command_executor::CommandExecutorModule;
+use mizer_command_executor::{CommandExecutorApi, CommandExecutorModule};
 use mizer_console::ConsoleModule;
 #[cfg(feature = "debug-ui")]
 use mizer_debug_ui_egui::EguiDebugUiModule;
@@ -17,6 +17,7 @@ use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
 use mizer_plan::PlansModule;
+use mizer_processing::Inject;
 use mizer_project_files::history::ProjectHistory;
 use mizer_protocol_citp::CitpModule;
 use mizer_protocol_dmx::*;
@@ -84,8 +85,14 @@ pub fn build_runtime(
 
     load_modules(&mut context, &flags);
 
-    let status_bus = context.runtime.access().status_bus;
+    let runtime_access = context.runtime.access();
+    let status_bus = runtime_access.status_bus;
     context.provide_api(status_bus.handle());
+    context.provide_api(context.runtime.access());
+    context.provide_api(runtime_access.plans);
+    context.provide_api(runtime_access.layouts);
+
+    context.api_injector.inject::<CommandExecutorApi>().provide_injector(context.api_injector.clone());
 
     let (api_handler, api) = Api::setup(
         &context.runtime,

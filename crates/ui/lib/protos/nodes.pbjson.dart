@@ -326,9 +326,9 @@ const Node$json = {
     {'1': 'outputs', '3': 4, '4': 3, '5': 11, '6': '.mizer.nodes.Port', '10': 'outputs'},
     {'1': 'designer', '3': 5, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDesigner', '10': 'designer'},
     {'1': 'preview', '3': 6, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodePreviewType', '10': 'preview'},
-    {'1': 'config', '3': 7, '4': 1, '5': 11, '6': '.mizer.nodes.NodeConfig', '10': 'config'},
-    {'1': 'settings', '3': 8, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSetting', '10': 'settings'},
-    {'1': 'details', '3': 9, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDetails', '10': 'details'},
+    {'1': 'settings', '3': 7, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSetting', '10': 'settings'},
+    {'1': 'details', '3': 8, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDetails', '10': 'details'},
+    {'1': 'children', '3': 9, '4': 3, '5': 11, '6': '.mizer.nodes.Node', '10': 'children'},
   ],
   '4': [Node_NodePreviewType$json],
 };
@@ -354,12 +354,12 @@ final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode(
     'MYAyADKAsyES5taXplci5ub2Rlcy5Qb3J0UgZpbnB1dHMSKwoHb3V0cHV0cxgEIAMoCzIRLm1p'
     'emVyLm5vZGVzLlBvcnRSB291dHB1dHMSNQoIZGVzaWduZXIYBSABKAsyGS5taXplci5ub2Rlcy'
     '5Ob2RlRGVzaWduZXJSCGRlc2lnbmVyEjsKB3ByZXZpZXcYBiABKA4yIS5taXplci5ub2Rlcy5O'
-    'b2RlLk5vZGVQcmV2aWV3VHlwZVIHcHJldmlldxIvCgZjb25maWcYByABKAsyFy5taXplci5ub2'
-    'Rlcy5Ob2RlQ29uZmlnUgZjb25maWcSNAoIc2V0dGluZ3MYCCADKAsyGC5taXplci5ub2Rlcy5O'
-    'b2RlU2V0dGluZ1IIc2V0dGluZ3MSMgoHZGV0YWlscxgJIAEoCzIYLm1pemVyLm5vZGVzLk5vZG'
-    'VEZXRhaWxzUgdkZXRhaWxzInQKD05vZGVQcmV2aWV3VHlwZRIICgROT05FEAASCwoHSElTVE9S'
-    'WRABEgwKCFdBVkVGT1JNEAISDAoITVVMVElQTEUQAxILCgdURVhUVVJFEAQSDAoIVElNRUNPRE'
-    'UQBRIICgREQVRBEAYSCQoFQ09MT1IQBw==');
+    'b2RlLk5vZGVQcmV2aWV3VHlwZVIHcHJldmlldxI0CghzZXR0aW5ncxgHIAMoCzIYLm1pemVyLm'
+    '5vZGVzLk5vZGVTZXR0aW5nUghzZXR0aW5ncxIyCgdkZXRhaWxzGAggASgLMhgubWl6ZXIubm9k'
+    'ZXMuTm9kZURldGFpbHNSB2RldGFpbHMSLQoIY2hpbGRyZW4YCSADKAsyES5taXplci5ub2Rlcy'
+    '5Ob2RlUghjaGlsZHJlbiJ0Cg9Ob2RlUHJldmlld1R5cGUSCAoETk9ORRAAEgsKB0hJU1RPUlkQ'
+    'ARIMCghXQVZFRk9STRACEgwKCE1VTFRJUExFEAMSCwoHVEVYVFVSRRAEEgwKCFRJTUVDT0RFEA'
+    'USCAoEREFUQRAGEgkKBUNPTE9SEAc=');
 
 @$core.Deprecated('Use nodeDetailsDescriptor instead')
 const NodeDetails$json = {
@@ -378,22 +378,6 @@ final $typed_data.Uint8List nodeDetailsDescriptor = $convert.base64Decode(
     'Rpc3BsYXlfbmFtZRgCIAEoCVILZGlzcGxheU5hbWUSJgoPaGFzX2N1c3RvbV9uYW1lGAMgASgI'
     'Ug1oYXNDdXN0b21OYW1lEjUKCGNhdGVnb3J5GAQgASgOMhkubWl6ZXIubm9kZXMuTm9kZUNhdG'
     'Vnb3J5UghjYXRlZ29yeQ==');
-
-@$core.Deprecated('Use nodeConfigDescriptor instead')
-const NodeConfig$json = {
-  '1': 'NodeConfig',
-  '2': [
-    {'1': 'container_config', '3': 45, '4': 1, '5': 11, '6': '.mizer.nodes.ContainerNodeConfig', '9': 0, '10': 'containerConfig'},
-  ],
-  '8': [
-    {'1': 'type'},
-  ],
-};
-
-/// Descriptor for `NodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode(
-    'CgpOb2RlQ29uZmlnEk0KEGNvbnRhaW5lcl9jb25maWcYLSABKAsyIC5taXplci5ub2Rlcy5Db2'
-    '50YWluZXJOb2RlQ29uZmlnSABSD2NvbnRhaW5lckNvbmZpZ0IGCgR0eXBl');
 
 @$core.Deprecated('Use nodeSettingDescriptor instead')
 const NodeSetting$json = {
@@ -726,19 +710,6 @@ final $typed_data.Uint8List midiNodeConfigDescriptor = $convert.base64Decode(
     'JhbmdlVG8iHAoITWlkaVR5cGUSBgoCQ0MQABIICgROT1RFEAEaPgoOQ29udHJvbEJpbmRpbmcS'
     'EgoEcGFnZRgBIAEoCVIEcGFnZRIYCgdjb250cm9sGAIgASgJUgdjb250cm9sQgkKB2JpbmRpbm'
     'c=');
-
-@$core.Deprecated('Use containerNodeConfigDescriptor instead')
-const ContainerNodeConfig$json = {
-  '1': 'ContainerNodeConfig',
-  '2': [
-    {'1': 'nodes', '3': 1, '4': 3, '5': 11, '6': '.mizer.nodes.Node', '10': 'nodes'},
-  ],
-};
-
-/// Descriptor for `ContainerNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List containerNodeConfigDescriptor = $convert.base64Decode(
-    'ChNDb250YWluZXJOb2RlQ29uZmlnEicKBW5vZGVzGAEgAygLMhEubWl6ZXIubm9kZXMuTm9kZV'
-    'IFbm9kZXM=');
 
 @$core.Deprecated('Use nodePositionDescriptor instead')
 const NodePosition$json = {

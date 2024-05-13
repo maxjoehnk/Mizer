@@ -57,7 +57,8 @@ impl<'a> Command<'a> for DuplicateNodeCommand {
             details,
             ports: Default::default(),
             settings: pipeline.get_settings(&self.path).unwrap_or_default(),
-            config: node.downcast(),
+            children: Default::default(),
+            metadata: Default::default(),
         };
 
         Ok((descriptor, new_path))

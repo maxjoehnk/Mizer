@@ -108,6 +108,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - uses: Swatinem/rust-cache@v2
       - name: Remove ndi libs from cache
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
@@ -187,6 +188,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - uses: Swatinem/rust-cache@v2
       - name: Remove ndi libs from cache
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
@@ -210,7 +212,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget yasm ffmpeg
+        run: choco install protoc make wget yasm ffmpeg yq
         shell: bash
       - uses: actions/checkout@v4
         with:
@@ -221,6 +223,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Build
         run: make build-release
         continue-on-error: true
@@ -276,6 +279,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: crates/ui

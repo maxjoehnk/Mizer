@@ -45,6 +45,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Get flutter deps
         run: flutter pub get
         working-directory: crates/ui

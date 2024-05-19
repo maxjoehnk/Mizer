@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -15,17 +16,18 @@ class SurfaceMappingSettingsPreview extends StatelessWidget {
     return MizerButton(child: Text("Open Surface"), onClick: () => _openSurface(context));
   }
 
-  String _getSetting(String id) {
+  String? _getSetting(String id) {
     return settings
-        .firstWhere((element) {
-          return element.hasSelectValue() && element.id == id;
-        })
-        .selectValue
+        .firstWhereOrNull((element) => element.hasSelectValue() && element.id == id)
+        ?.selectValue
         .value;
   }
 
   _openSurface(BuildContext context) {
     var surfaceId = _getSetting("Surface");
+    if (surfaceId == null) {
+      return;
+    }
     context.read<SurfacesCubit>().selectSurface(surfaceId);
   }
 }

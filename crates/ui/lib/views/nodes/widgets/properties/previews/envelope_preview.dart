@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -9,22 +10,25 @@ class EnvelopeSettingsPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(settings);
     var attack = _getSetting("Attack");
     var decay = _getSetting("Decay");
     var sustain = _getSetting("Sustain");
     var release = _getSetting("Release");
+
+    if (attack == null || decay == null || sustain == null || release == null) {
+      return Container();
+    }
 
     var config = EnvelopeConfig(attack, decay, sustain, release);
 
     return EnvelopePreview(config);
   }
 
-  double _getSetting(String label) {
+  double? _getSetting(String label) {
     return settings
-        .firstWhere((element) {
-          return element.hasFloatValue() && element.label == label;
-        })
-        .floatValue
+        .firstWhereOrNull((element) => element.hasFloatValue() && element.id == label)
+        ?.floatValue
         .value;
   }
 }

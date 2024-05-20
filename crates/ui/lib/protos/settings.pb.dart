@@ -432,7 +432,6 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
     $core.String? id,
     $core.String? manufacturer,
     $core.String? name,
-    $core.String? keyword,
     $core.String? filePath,
     $core.Iterable<Error>? errors,
   }) {
@@ -445,9 +444,6 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
     }
     if (name != null) {
       $result.name = name;
-    }
-    if (keyword != null) {
-      $result.keyword = keyword;
     }
     if (filePath != null) {
       $result.filePath = filePath;
@@ -465,9 +461,8 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'manufacturer')
     ..aOS(3, _omitFieldNames ? '' : 'name')
-    ..aOS(4, _omitFieldNames ? '' : 'keyword')
-    ..aOS(5, _omitFieldNames ? '' : 'filePath')
-    ..pc<Error>(7, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: Error.create)
+    ..aOS(4, _omitFieldNames ? '' : 'filePath')
+    ..pc<Error>(5, _omitFieldNames ? '' : 'errors', $pb.PbFieldType.PM, subBuilder: Error.create)
     ..hasRequiredFields = false
   ;
 
@@ -520,25 +515,16 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
   void clearName() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get keyword => $_getSZ(3);
+  $core.String get filePath => $_getSZ(3);
   @$pb.TagNumber(4)
-  set keyword($core.String v) { $_setString(3, v); }
+  set filePath($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasKeyword() => $_has(3);
+  $core.bool hasFilePath() => $_has(3);
   @$pb.TagNumber(4)
-  void clearKeyword() => clearField(4);
+  void clearFilePath() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get filePath => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set filePath($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasFilePath() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearFilePath() => clearField(5);
-
-  @$pb.TagNumber(7)
-  $core.List<Error> get errors => $_getList(5);
+  $core.List<Error> get errors => $_getList(4);
 }
 
 class Error extends $pb.GeneratedMessage {

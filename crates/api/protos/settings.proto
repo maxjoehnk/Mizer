@@ -42,9 +42,8 @@ message MidiDeviceProfile {
   string id = 1;
   string manufacturer = 2;
   string name = 3;
-  string keyword = 4;
-  string file_path = 5;
-  repeated Error errors = 7;
+  string file_path = 4;
+  repeated Error errors = 5;
 }
 
 message Error {

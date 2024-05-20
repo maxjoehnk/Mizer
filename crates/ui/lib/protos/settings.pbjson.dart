@@ -221,18 +221,17 @@ const MidiDeviceProfile$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'manufacturer', '3': 2, '4': 1, '5': 9, '10': 'manufacturer'},
     {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'keyword', '3': 4, '4': 1, '5': 9, '10': 'keyword'},
-    {'1': 'file_path', '3': 5, '4': 1, '5': 9, '10': 'filePath'},
-    {'1': 'errors', '3': 7, '4': 3, '5': 11, '6': '.mizer.settings.Error', '10': 'errors'},
+    {'1': 'file_path', '3': 4, '4': 1, '5': 9, '10': 'filePath'},
+    {'1': 'errors', '3': 5, '4': 3, '5': 11, '6': '.mizer.settings.Error', '10': 'errors'},
   ],
 };
 
 /// Descriptor for `MidiDeviceProfile`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode(
     'ChFNaWRpRGV2aWNlUHJvZmlsZRIOCgJpZBgBIAEoCVICaWQSIgoMbWFudWZhY3R1cmVyGAIgAS'
-    'gJUgxtYW51ZmFjdHVyZXISEgoEbmFtZRgDIAEoCVIEbmFtZRIYCgdrZXl3b3JkGAQgASgJUgdr'
-    'ZXl3b3JkEhsKCWZpbGVfcGF0aBgFIAEoCVIIZmlsZVBhdGgSLQoGZXJyb3JzGAcgAygLMhUubW'
-    'l6ZXIuc2V0dGluZ3MuRXJyb3JSBmVycm9ycw==');
+    'gJUgxtYW51ZmFjdHVyZXISEgoEbmFtZRgDIAEoCVIEbmFtZRIbCglmaWxlX3BhdGgYBCABKAlS'
+    'CGZpbGVQYXRoEi0KBmVycm9ycxgFIAMoCzIVLm1pemVyLnNldHRpbmdzLkVycm9yUgZlcnJvcn'
+    'M=');
 
 @$core.Deprecated('Use errorDescriptor instead')
 const Error$json = {

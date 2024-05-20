@@ -125,7 +125,6 @@ impl From<midi_device_profile::DeviceProfile> for model::MidiDeviceProfile {
             id: profile.id,
             manufacturer: profile.manufacturer,
             name: profile.name,
-            keyword: profile.keyword,
             file_path: profile.file_path.to_string_lossy().to_string(),
             errors: profile.errors.errors().into_iter()
                 .map(|err| model::Error {

@@ -15,7 +15,7 @@ pub struct DeviceProfile {
     pub manufacturer: String,
     pub name: String,
     /// Keyword to detect the device by
-    pub keyword: String,
+    pub keyword: Option<String>,
     pub pages: Vec<Page>,
     pub(crate) output_script: Option<OutputScript>,
     pub layout: Option<String>,
@@ -30,7 +30,8 @@ pub(crate) struct DeviceProfileConfig {
     pub manufacturer: String,
     pub name: String,
     /// Keyword to detect the device by
-    pub keyword: String,
+    #[serde(default)]
+    pub keyword: Option<String>,
     #[serde(default)]
     pub pages: Vec<Page>,
     pub(crate) scripts: Option<ProfileScripts>,
@@ -63,7 +64,11 @@ impl ProfileErrors {
 
 impl DeviceProfile {
     pub fn matches(&self, name: &str) -> bool {
-        name.contains(&self.keyword)
+        if let Some(keyword) = &self.keyword {
+            name.contains(keyword)
+        }else {
+            false
+        }
     }
 
     pub fn get_control(&self, page: &str, control: &str) -> Option<&Control> {

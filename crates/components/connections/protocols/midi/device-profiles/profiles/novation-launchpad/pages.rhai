@@ -26,7 +26,6 @@ fn generate_pads() {
                 .id(button_id)
                 .input()
                 .note(button_note)
-                .range(0, 127)
                 .output()
                 .range(0, 63)
                 .step(12, "Off")
@@ -59,7 +58,6 @@ fn generate_play_buttons() {
             .id(button_id)
             .input()
             .note(button_note)
-            .range(0, 127)
             .output()
             .range(0, 60);
     }
@@ -82,7 +80,7 @@ fn generate_controls() {
 }
 
 fn generate_control(name, note) {
-    let control = control(name).input().cc(note).range(0, 127);
+    let control = control(name).input().cc(note);
 
     control
 }

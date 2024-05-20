@@ -8,7 +8,7 @@ use mizer_util::find_path;
 
 pub use crate::profile::{
     Control, ControlStep, ControlStepVariant, DeviceControl, DeviceProfile, Group,
-    MidiDeviceControl, Page,
+    MidiDeviceControl, Page, MidiResolution,
 };
 use crate::profile_reader::read_profile;
 

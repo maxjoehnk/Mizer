@@ -5669,6 +5669,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
+ "evmap",
  "lazy_static",
  "midir",
  "mizer-console",

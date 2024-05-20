@@ -5,7 +5,7 @@ use std::convert::TryFrom;
 /// Represents a Midi channel
 ///
 /// Note that `Ch1 = 0`, `Ch2 = 1`, etc, as the actual protocol is 0-indexed.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Deserialize, Serialize)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Deserialize, Serialize)]
 pub enum Channel {
     Ch1 = 0,
     Ch2 = 1,

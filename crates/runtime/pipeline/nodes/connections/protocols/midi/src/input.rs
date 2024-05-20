@@ -1,10 +1,8 @@
 use std::fmt::{Display, Formatter};
-use std::ops::Deref;
 
 use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
 
-use mizer_message_bus::Subscriber;
 use mizer_node::*;
 use mizer_protocol_midi::*;
 use mizer_util::LerpExt;
@@ -38,7 +36,7 @@ pub enum MidiInputConfig {
         #[serde(default = "default_channel")]
         channel: u8,
         port: u8,
-        #[serde(default = "default_midi_range")]
+        #[serde(default = "default_midi_range")] // TODO: get defaults from resolution, default to 7 bit
         range: (u8, u8),
     },
     Control {
@@ -162,82 +160,55 @@ impl PipelineNode for MidiInputNode {
 }
 
 impl ProcessingNode for MidiInputNode {
-    type State = Option<Subscriber<MidiEvent>>;
+    type State = Option<MidiTimestamp>;
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let connection_manager = context.try_inject::<MidiConnectionManager>().unwrap();
+    fn process(&self, context: &impl NodeContext, last_read_at: &mut Self::State) -> anyhow::Result<()> {
+        let Some(connection_manager) = context.try_inject::<MidiConnectionManager>() else {
+            return Ok(());
+        };
         if let Some(device) = connection_manager.request_device(&self.device)? {
-            let device: &MidiDevice = device.deref();
-            if state.is_none() {
-                *state = Some(device.events());
-            }
-            if let Some(recv) = state {
-                let mut result_value = None;
+            let state = device.state();
 
-                for event in recv.iter() {
-                    match (event.msg, &self.config) {
-                        (
-                            MidiMessage::ControlChange(channel, port, value),
-                            MidiInputConfig::Note {
-                                mode: NoteMode::CC,
-                                channel: config_channel,
-                                port: config_port,
-                                range: (min, max),
-                            },
-                        ) if port == *config_port => {
-                            if channel != *config_channel {
-                                continue;
-                            }
-                            result_value =
-                                Some(value.linear_extrapolate((*min, *max), (0f64, 1f64)));
-                        }
-                        (
-                            MidiMessage::NoteOn(channel, port, value),
-                            MidiInputConfig::Note {
-                                mode: NoteMode::Note,
-                                channel: config_channel,
-                                port: config_port,
-                                range: (min, max),
-                            },
-                        ) if port == *config_port => {
-                            if channel != *config_channel {
-                                continue;
-                            }
-                            result_value =
-                                Some(value.linear_extrapolate((*min, *max), (0f64, 1f64)));
-                        }
-                        (
-                            MidiMessage::NoteOff(channel, port, _),
-                            MidiInputConfig::Note {
-                                mode: NoteMode::Note,
-                                channel: config_channel,
-                                port: config_port,
-                                ..
-                            },
-                        ) if port == *config_port => {
-                            if channel != *config_channel {
-                                continue;
-                            }
-                            result_value = Some(0f64);
-                        }
-                        (msg, MidiInputConfig::Control { page, control }) => {
-                            if let Some(control) = device
-                                .profile
-                                .as_ref()
-                                .and_then(|profile| profile.get_control(page, control))
-                            {
-                                if let Some(value) = control.receive_value(msg) {
-                                    result_value = Some(value);
-                                }
-                            }
-                        }
-                        _ => {}
+            let result = match &self.config {
+                MidiInputConfig::Note {
+                    mode: NoteMode::Note,
+                    channel,
+                    port,
+                    range: (min, max),
+                } => {
+                    let value = state.read_note_changes(Channel::try_from(*channel).map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?, *port, *last_read_at);
+                    value.map(|(value, last_read)| (value.linear_extrapolate((*min, *max), (0f64, 1f64)), last_read))
+                }
+                MidiInputConfig::Note {
+                    mode: NoteMode::CC,
+                    channel,
+                    port,
+                    range: (min, max),
+                } => {
+                    let value = state.read_cc_changes(Channel::try_from(*channel).map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?, *port, *last_read_at);
+                    value.map(|(value, last_read)| (value.linear_extrapolate((*min, *max), (0f64, 1f64)), last_read))
+                }
+                MidiInputConfig::Control {
+                    page,
+                    control,
+                } => {
+                    if let Some(control) = device
+                        .profile
+                        .as_ref()
+                        .and_then(|profile| profile.get_control(page, control))
+                        .and_then(|control| control.input.as_ref())
+                    {
+                        state.read_control_changes(control, *last_read_at)
+                    }else {
+                        None
                     }
                 }
-                if let Some(value) = result_value {
-                    context.write_port::<_, f64>(OUTPUT_PORT, value);
-                    context.push_history_value(value);
-                }
+            };
+
+            if let Some((value, last_changed)) = result {
+                *last_read_at = Some(last_changed);
+                context.write_port::<_, f64>(OUTPUT_PORT, value);
+                context.push_history_value(value);
             }
         }
 

@@ -1,7 +1,7 @@
 fn generate_page() {
     let page = create_page("Default");
     page = add_buttons(page);
-    page += control("Shift").id("button-98").input().note(98).range(0, 127);
+    page += control("Shift").id("button-98").input().note(98);
     page += add_faders();
 
     page
@@ -20,7 +20,6 @@ fn add_buttons(page) {
                 .id(button_id)
                 .input()
                 .note(button_note)
-                .range(0, 127)
                 .output()
                 .range(0, 6)
                 .step(0, "Off")
@@ -56,7 +55,6 @@ fn generate_button(prefix, button_index, base) {
         .id(button_id)
         .input()
         .note(button_note)
-        .range(0, 127)
         .output()
         .range(0, 2)
         .step(0, "Off")
@@ -69,7 +67,7 @@ fn generate_button(prefix, button_index, base) {
 fn add_faders() {
     let group = create_group("Faders");
     for fader_index in range(0, 9) {
-        group += control("Fader " + (fader_index + 1)).input().cc(48 + fader_index).range(0, 127);
+        group += control("Fader " + (fader_index + 1)).input().cc(48 + fader_index);
     }
 
     group

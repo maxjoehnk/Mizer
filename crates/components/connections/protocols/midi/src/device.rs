@@ -10,6 +10,7 @@ use mizer_midi_messages::{MidiEvent, MidiMessage};
 use mizer_util::LerpExt;
 
 use crate::device_provider::MidiDeviceIdentifier;
+use crate::device_state::DeviceState;
 
 pub struct MidiDevice {
     pub name: String,
@@ -17,16 +18,19 @@ pub struct MidiDevice {
     input: Option<MidiInputConnection<()>>,
     output: Option<MidiOutputConnection>,
     event_bus: MessageBus<MidiEvent>,
+    state: DeviceState,
 }
 
 impl MidiDevice {
     pub(crate) fn new(identifier: MidiDeviceIdentifier) -> anyhow::Result<Self> {
+        let (state, mut writer) = DeviceState::new();
         let mut device = MidiDevice {
             name: identifier.name.clone(),
             input: None,
             output: None,
             event_bus: Default::default(),
             profile: identifier.profile,
+            state,
         };
         if let Some(port) = identifier.input {
             let input = MidiInput::new("mizer")?;
@@ -41,6 +45,7 @@ impl MidiDevice {
                             msg: MidiMessage::try_from(data).expect("could not parse midi message"),
                         };
                         tracing::trace!("{:?}", event);
+                        writer.write(event.clone());
                         bus.send(event);
                     },
                     (),
@@ -62,6 +67,10 @@ impl MidiDevice {
     pub fn events(&self) -> Subscriber<MidiEvent> {
         self.event_bus.subscribe()
     }
+    
+    pub fn state(&self) -> &DeviceState {
+        &self.state
+    }
 
     pub fn write(&mut self, msg: MidiMessage) -> anyhow::Result<()> {
         if let Some(ref mut output) = self.output {
@@ -74,8 +83,6 @@ impl MidiDevice {
 }
 
 pub trait MidiControl {
-    fn receive_value(&self, msg: MidiMessage) -> Option<f64>;
-
     fn send_value(
         &self,
         value: f64,
@@ -85,42 +92,6 @@ pub trait MidiControl {
 }
 
 impl MidiControl for Control {
-    fn receive_value(&self, msg: MidiMessage) -> Option<f64> {
-        match (msg, &self.input) {
-            (
-                MidiMessage::ControlChange(channel, port, value),
-                Some(DeviceControl::MidiCC(MidiDeviceControl {
-                    note,
-                    channel: note_channel,
-                    range,
-                    ..
-                })),
-            ) if port == *note && channel == *note_channel => {
-                Some(value.linear_extrapolate(*range, (0., 1.)))
-            }
-            (
-                MidiMessage::NoteOn(channel, port, value),
-                Some(DeviceControl::MidiNote(MidiDeviceControl {
-                    note,
-                    channel: note_channel,
-                    range,
-                    ..
-                })),
-            ) if port == *note && channel == *note_channel => {
-                Some(value.linear_extrapolate(*range, (0., 1.)))
-            }
-            (
-                MidiMessage::NoteOff(channel, port, _),
-                Some(DeviceControl::MidiNote(MidiDeviceControl {
-                    note,
-                    channel: note_channel,
-                    ..
-                })),
-            ) if port == *note && channel == *note_channel => Some(0f64),
-            _ => None,
-        }
-    }
-
     fn send_value(
         &self,
         value: f64,
@@ -153,7 +124,7 @@ impl MidiControl for Control {
     }
 }
 
-fn convert_value(value: f64, range: (u8, u8), on_step: Option<u8>, off_step: Option<u8>) -> u8 {
+fn convert_value(value: f64, range: (u16, u16), on_step: Option<u8>, off_step: Option<u8>) -> u8 {
     if let Some(on_step) = on_step {
         if value > 0f64 + f64::EPSILON {
             return on_step;
@@ -165,5 +136,5 @@ fn convert_value(value: f64, range: (u8, u8), on_step: Option<u8>, off_step: Opt
         }
     }
 
-    value.linear_extrapolate((0f64, 1f64), range)
+    value.linear_extrapolate((0f64, 1f64), (range.0.min(u8::MAX as u16) as u8, range.1.min(u8::MAX as u16) as u8))
 }

@@ -185,8 +185,18 @@ impl DeviceControl {
 pub struct MidiDeviceControl {
     pub channel: Channel,
     pub note: u8,
-    pub range: (u8, u8),
+    pub range: (u16, u16),
     pub steps: Option<Vec<ControlStep>>,
+    pub resolution: MidiResolution,
+}
+
+#[derive(Debug, Default, Clone, Deserialize, Serialize)]
+pub enum MidiResolution {
+    #[default]
+    // 7-Bit
+    Default,
+    // 14-Bit
+    HighRes,
 }
 
 impl Control {
@@ -212,8 +222,9 @@ impl Control {
                 control_type: ControlType::Note,
                 channel: control.channel,
                 note: control.note,
-                range: control.range,
+                range: None,
                 steps: Default::default(),
+                resolution: Default::default(),
             },
             Some(DeviceControl::MidiCC(control)) => ControlBuilder {
                 control: self,
@@ -221,17 +232,19 @@ impl Control {
                 control_type: ControlType::ControlChange,
                 channel: control.channel,
                 note: control.note,
-                range: control.range,
+                range: None,
                 steps: Default::default(),
+                resolution: Default::default(),
             },
             _ => ControlBuilder {
                 control: self,
                 input: true,
                 channel: Default::default(),
                 note: Default::default(),
-                range: (0, 255),
+                range: None,
                 control_type: Default::default(),
                 steps: Default::default(),
+                resolution: Default::default(),
             },
         }
     }
@@ -244,8 +257,9 @@ impl Control {
                 control_type: ControlType::Note,
                 channel: control.channel,
                 note: control.note,
-                range: control.range,
+                range: None,
                 steps: Default::default(),
+                resolution: Default::default(),
             },
             Some(DeviceControl::MidiCC(control)) => ControlBuilder {
                 control: self,
@@ -253,17 +267,19 @@ impl Control {
                 control_type: ControlType::ControlChange,
                 channel: control.channel,
                 note: control.note,
-                range: control.range,
+                range: None,
                 steps: Default::default(),
+                resolution: Default::default(),
             },
             _ => ControlBuilder {
                 control: self,
                 input: false,
                 channel: Default::default(),
                 note: Default::default(),
-                range: (0, 255),
+                range: None,
                 control_type: Default::default(),
                 steps: Default::default(),
+                resolution: Default::default(),
             },
         }
     }
@@ -275,9 +291,10 @@ pub struct ControlBuilder {
     control: Control,
     pub channel: Channel,
     pub note: u8,
-    pub range: (u8, u8),
+    pub range: Option<(u16, u16)>,
     pub control_type: ControlType,
     pub steps: Vec<ControlStep>,
+    pub resolution: MidiResolution,
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
@@ -311,8 +328,13 @@ impl ControlBuilder {
         self
     }
 
-    pub fn range(mut self, from: u8, to: u8) -> Self {
-        self.range = (from, to);
+    pub fn range(mut self, from: u16, to: u16) -> Self {
+        self.range = Some((from, to));
+        self
+    }
+    
+    pub fn resolution(mut self, resolution: MidiResolution) -> Self {
+        self.resolution = resolution;
         self
     }
 
@@ -322,8 +344,12 @@ impl ControlBuilder {
         } else {
             let control = MidiDeviceControl {
                 note: self.note,
-                range: self.range,
+                range: self.range.unwrap_or(match self.resolution {
+                    MidiResolution::Default => (0, 127),
+                    MidiResolution::HighRes => (0, 16383),
+                }),
                 channel: self.channel,
+                resolution: self.resolution,
                 steps: if self.steps.is_empty() {
                     None
                 } else {

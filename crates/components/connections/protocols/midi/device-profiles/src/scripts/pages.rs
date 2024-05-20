@@ -3,9 +3,7 @@ use std::sync::Arc;
 
 use rhai::{Array, Engine};
 
-use crate::profile::{
-    Control, ControlBuilder, ControlStep, ControlStepVariant, Group, Page, StepsBuilder,
-};
+use crate::profile::{Control, ControlBuilder, ControlStep, ControlStepVariant, Group, MidiResolution, Page, StepsBuilder};
 
 pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
     let mut engine = Engine::new();
@@ -48,7 +46,13 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
             c.channel(channel as u8)
         })
         .register_fn("range", |c: ControlBuilder, from: i64, to: i64| {
-            c.range(from as u8, to as u8)
+            c.range(from as u16, to as u16)
+        })
+        .register_fn("resolution_14_bit", |c: ControlBuilder| {
+            c.resolution(MidiResolution::HighRes)
+        })
+        .register_fn("resolution_7_bit", |c: ControlBuilder| {
+            c.resolution(MidiResolution::Default)
         })
         .register_fn("output", |c: ControlBuilder| c.build().output())
         .register_fn("input", |c: ControlBuilder| c.build().input())

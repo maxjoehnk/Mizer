@@ -39,9 +39,7 @@ fn create_pad(button_id, name, channel, note) {
         .input()
         .channel(channel)
         .note(note)
-        .range(0, 127)
         .output()
-        .range(0, 127)
         .step(12, "Off")
         .step(13, "Red - Low")
         .step(15, "Red - Full")
@@ -60,12 +58,12 @@ fn add_faders(channel) {
     let group = create_group("Knobs");
     for fader_index in range(0, 8) {
         let fader_name = fader_index + 1;
-        group += control("Knob 1-" + fader_name).input().cc(21 + fader_index).channel(channel).range(0, 127);
+        group += control("Knob 1-" + fader_name).input().cc(21 + fader_index).channel(channel);
     }
 
     for fader_index in range(0, 8) {
         let fader_name = fader_index + 1;
-        group += control("Knob 2-" + fader_name).input().cc(41 + fader_index).channel(channel).range(0, 127);
+        group += control("Knob 2-" + fader_name).input().cc(41 + fader_index).channel(channel);
     }
 
     group
@@ -73,10 +71,10 @@ fn add_faders(channel) {
 
 fn add_move_buttons(page, channel) {
     let button_id = "button-" + (channel - 1) + "-";
-    page += control("Down").id(button_id + "9").input().cc(115).channel(channel).range(0, 127).output();
-    page += control("Up").id(button_id + "8").input().cc(114).channel(channel).range(0, 127).output();
-    page += control("Left").id(button_id + "10").input().cc(116).channel(channel).range(0, 127).output();
-    page += control("Right").id(button_id + "11").input().cc(117).channel(channel).range(0, 127).output();
+    page += control("Down").id(button_id + "9").input().cc(115).channel(channel).output();
+    page += control("Up").id(button_id + "8").input().cc(114).channel(channel).output();
+    page += control("Left").id(button_id + "10").input().cc(116).channel(channel).output();
+    page += control("Right").id(button_id + "11").input().cc(117).channel(channel).output();
 
     page
 }

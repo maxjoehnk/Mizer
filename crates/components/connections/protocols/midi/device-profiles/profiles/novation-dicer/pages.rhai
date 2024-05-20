@@ -27,7 +27,6 @@ fn create_layer(name, channel, button_base) {
             .input()
             .channel(channel)
             .note(button_note)
-            .range(0, 127)
             .output()
             .range(0, 112)
             .step(0, "Off")

@@ -20,7 +20,6 @@ fn add_buttons(page) {
                 .id(button_id)
                 .input()
                 .note(button_note)
-                .range(0, 127)
                 .output()
                 .rgb("write_rgb");
             pad_index += 1;
@@ -78,8 +77,7 @@ fn create_button(name, note) {
     let button = control(name)
         .id(button_id)
         .input()
-        .note(note)
-        .range(0, 127);
+        .note(note);
 
     return button;
 }
@@ -87,15 +85,15 @@ fn create_button(name, note) {
 fn add_knobs() {
     let group = create_group("Knobs");
 
-    group += control("Volume").input().cc(16).range(0, 127);
-    group += control("Volume Touch").input().note(16).range(0, 127);
-    group += control("Pan").input().cc(17).range(0, 127);
-    group += control("Pan Touch").input().note(17).range(0, 127);
-    group += control("Filter").input().cc(18).range(0, 127);
-    group += control("Filter Touch").input().note(18).range(0, 127);
-    group += control("Resonance").input().cc(19).range(0, 127);
-    group += control("Resonance Touch").input().note(19).range(0, 127);
-    group += control("Select").input().cc(118).range(0, 127);
+    group += control("Volume").input().cc(16);
+    group += control("Volume Touch").input().note(16);
+    group += control("Pan").input().cc(17);
+    group += control("Pan Touch").input().note(17);
+    group += control("Filter").input().cc(18);
+    group += control("Filter Touch").input().note(18);
+    group += control("Resonance").input().cc(19);
+    group += control("Resonance Touch").input().note(19);
+    group += control("Select").input().cc(118);
 
     group
 }

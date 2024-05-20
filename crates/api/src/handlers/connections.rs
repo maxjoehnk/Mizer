@@ -170,6 +170,17 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn change_midi_device_profile(&self, device: String, profile_id: Option<String>) -> anyhow::Result<()> {
+        self.runtime.run_command(ChangeMidiDeviceProfileCommand {
+            device,
+            profile_id
+        })?;
+        
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
         if let Some(connection::Connection::DmxOutput(dmx)) = connection.connection {
             self.runtime.run_command(DeleteOutputCommand {

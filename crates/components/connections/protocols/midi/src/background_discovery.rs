@@ -71,18 +71,21 @@ impl MidiBackgroundDiscovery {
             .collect::<Vec<_>>();
         for (name, (input, output)) in ports {
             let name = cleanup_name(name);
-            let device = MidiDeviceIdentifier {
+            let mut device = MidiDeviceIdentifier {
                 name: name.clone(),
                 input,
                 output,
-                profile: self.search_profile(&name),
+                profile: None,
             };
-            if !self.devices.contains_key(&name) {
+            if let Some(old_device) = self.devices.get(&name) {
+                device.profile = old_device.profile.clone();
+            } else  {
                 tracing::info!("Connected device: {device:?}");
                 mizer_console::debug!(
                     mizer_console::ConsoleCategory::Connections,
                     "Connected MIDI device: {name}",
                 );
+                device.profile = self.search_profile(&name);
             }
             old_devices.retain(|old_name| old_name != &name);
             self.devices.insert(name, device);
@@ -94,6 +97,7 @@ impl MidiBackgroundDiscovery {
                 "Disconnected MIDI device: {name}",
             );
             self.devices.remove(&name);
+            // TODO: close connection
         }
 
         Ok(())

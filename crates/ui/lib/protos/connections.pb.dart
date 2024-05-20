@@ -68,6 +68,70 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
   void clearOutputId() => clearField(1);
 }
 
+class ChangeMidiDeviceProfileRequest extends $pb.GeneratedMessage {
+  factory ChangeMidiDeviceProfileRequest({
+    $core.String? deviceId,
+    $core.String? profileId,
+  }) {
+    final $result = create();
+    if (deviceId != null) {
+      $result.deviceId = deviceId;
+    }
+    if (profileId != null) {
+      $result.profileId = profileId;
+    }
+    return $result;
+  }
+  ChangeMidiDeviceProfileRequest._() : super();
+  factory ChangeMidiDeviceProfileRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChangeMidiDeviceProfileRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChangeMidiDeviceProfileRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'deviceId')
+    ..aOS(2, _omitFieldNames ? '' : 'profileId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChangeMidiDeviceProfileRequest clone() => ChangeMidiDeviceProfileRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChangeMidiDeviceProfileRequest copyWith(void Function(ChangeMidiDeviceProfileRequest) updates) => super.copyWith((message) => updates(message as ChangeMidiDeviceProfileRequest)) as ChangeMidiDeviceProfileRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChangeMidiDeviceProfileRequest create() => ChangeMidiDeviceProfileRequest._();
+  ChangeMidiDeviceProfileRequest createEmptyInstance() => create();
+  static $pb.PbList<ChangeMidiDeviceProfileRequest> createRepeated() => $pb.PbList<ChangeMidiDeviceProfileRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ChangeMidiDeviceProfileRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChangeMidiDeviceProfileRequest>(create);
+  static ChangeMidiDeviceProfileRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get profileId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set profileId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProfileId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProfileId() => clearField(2);
+}
+
 class MonitorDmxResponse extends $pb.GeneratedMessage {
   factory MonitorDmxResponse({
     $core.Iterable<MonitorDmxUniverse>? universes,

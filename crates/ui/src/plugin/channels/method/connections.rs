@@ -34,6 +34,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
 
                 resp.respond_msg(response);
             }
+            "changeMidiDeviceProfile" => {
+                if let Err(err) = call.arguments()
+                    .and_then(|args: ChangeMidiDeviceProfileRequest| self.handler.change_midi_device_profile(args.device_id, args.profile_id)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "monitorDmx" => {
                 match self.handler.monitor_dmx() {
                     Ok(values) => {

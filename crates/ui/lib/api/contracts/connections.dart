@@ -14,6 +14,7 @@ abstract class ConnectionsApi {
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId);
   Stream<MonitorOscResponse> monitorOscConnection(String connectionId);
 
+  Future<void> changeMidiDeviceProfile(String connectionId, String profileId);
   Future<MidiDeviceProfiles> getMidiDeviceProfiles();
 
   Future<void> deleteConnection(Connection connection);

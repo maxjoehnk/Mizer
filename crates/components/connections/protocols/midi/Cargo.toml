@@ -9,6 +9,7 @@ anyhow = "1"
 midir = "0.10"
 dashmap = "5"
 mizer-console = { path = "../../../console" }
+mizer-commander = { path = "../../../../runtime/commander" }
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 mizer-midi-device-profiles = { path = "device-profiles" }
@@ -21,3 +22,4 @@ profiling = "1"
 tracing = "0.1"
 parking_lot = "0.12"
 evmap = "10"
+serde = { version = "1", features = ["derive"] }

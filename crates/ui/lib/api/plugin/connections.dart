@@ -108,4 +108,12 @@ class ConnectionsPluginApi implements ConnectionsApi {
   PioneerCdjConnection? getCdjState(String id) {
     return this._connectionsPointer?.readCdjState(id);
   }
+
+  @override
+  Future<void> changeMidiDeviceProfile(String connectionId, String profileId) async {
+    await channel.invokeMethod(
+        "changeMidiDeviceProfile",
+        ChangeMidiDeviceProfileRequest(deviceId: connectionId, profileId: profileId)
+            .writeToBuffer());
+  }
 }

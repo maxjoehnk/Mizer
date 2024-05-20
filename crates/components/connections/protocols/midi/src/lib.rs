@@ -7,6 +7,7 @@ pub use crate::device_state::MidiTimestamp;
 pub use crate::module::MidiModule;
 
 mod background_discovery;
+pub mod commands;
 mod connections;
 mod device;
 mod device_provider;

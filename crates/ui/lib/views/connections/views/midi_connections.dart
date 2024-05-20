@@ -52,7 +52,10 @@ class _MidiConnectionsViewState extends State<MidiConnectionsView> {
                         options: widget.deviceProfiles
                             .map((dp) => SelectOption(value: dp.id, label: dp.model))
                             .toList(),
-                        onChanged: (e) {}),
+                        onChanged: (e) {
+                          api.changeMidiDeviceProfile(c.name, e)
+                            .then((_) => widget.onRefresh());
+                        }),
                     MizerIconButton(
                         icon: MdiIcons.formatListBulleted,
                         label: "Monitor".i18n,

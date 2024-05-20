@@ -53,6 +53,14 @@ impl MidiDeviceProfileRegistry {
     pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
         self.profiles.read().clone()
     }
+
+    pub fn get_profile(&self, id: &str) -> Option<DeviceProfile> {
+        let profiles = self.profiles.read();
+        profiles
+            .iter()
+            .find(|profile| profile.id == id)
+            .cloned()
+    }
     
     pub fn find_profile(&self, name: &str) -> Option<DeviceProfile> {
         let profiles = self.profiles.read();

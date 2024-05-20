@@ -6,6 +6,11 @@ message MonitorDmxRequest {
   string output_id = 1;
 }
 
+message ChangeMidiDeviceProfileRequest {
+  string device_id = 1;
+  optional string profile_id = 2;
+}
+
 message MonitorDmxResponse {
   repeated MonitorDmxUniverse universes = 1;
 }

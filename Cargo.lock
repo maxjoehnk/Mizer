@@ -4730,6 +4730,7 @@ dependencies = [
  "mizer-plan",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "mizer-protocol-midi",
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
  "mizer-runtime",
@@ -5672,6 +5673,7 @@ dependencies = [
  "evmap",
  "lazy_static",
  "midir",
+ "mizer-commander",
  "mizer-console",
  "mizer-message-bus",
  "mizer-midi-device-profiles",
@@ -5682,6 +5684,7 @@ dependencies = [
  "parking_lot 0.12.1",
  "profiling",
  "regex",
+ "serde",
  "tracing",
 ]
 

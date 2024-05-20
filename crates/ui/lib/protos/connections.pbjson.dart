@@ -25,6 +25,24 @@ const MonitorDmxRequest$json = {
 final $typed_data.Uint8List monitorDmxRequestDescriptor = $convert.base64Decode(
     'ChFNb25pdG9yRG14UmVxdWVzdBIbCglvdXRwdXRfaWQYASABKAlSCG91dHB1dElk');
 
+@$core.Deprecated('Use changeMidiDeviceProfileRequestDescriptor instead')
+const ChangeMidiDeviceProfileRequest$json = {
+  '1': 'ChangeMidiDeviceProfileRequest',
+  '2': [
+    {'1': 'device_id', '3': 1, '4': 1, '5': 9, '10': 'deviceId'},
+    {'1': 'profile_id', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'profileId', '17': true},
+  ],
+  '8': [
+    {'1': '_profile_id'},
+  ],
+};
+
+/// Descriptor for `ChangeMidiDeviceProfileRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List changeMidiDeviceProfileRequestDescriptor = $convert.base64Decode(
+    'Ch5DaGFuZ2VNaWRpRGV2aWNlUHJvZmlsZVJlcXVlc3QSGwoJZGV2aWNlX2lkGAEgASgJUghkZX'
+    'ZpY2VJZBIiCgpwcm9maWxlX2lkGAIgASgJSABSCXByb2ZpbGVJZIgBAUINCgtfcHJvZmlsZV9p'
+    'ZA==');
+
 @$core.Deprecated('Use monitorDmxResponseDescriptor instead')
 const MonitorDmxResponse$json = {
   '1': 'MonitorDmxResponse',

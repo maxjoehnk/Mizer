@@ -169,6 +169,8 @@ impl ProcessingNode for GroupControlNode {
             if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
                 buffer.push(value);
                 context.write_color_preview(value);
+            }else {
+                buffer.clear();
             }
             self.write(manager, buffer.iter().map(|c| c.red), FixtureFaderControl::ColorMixer(ColorChannel::Red), phase);
             self.write(manager, buffer.iter().map(|c| c.green), FixtureFaderControl::ColorMixer(ColorChannel::Green), phase);
@@ -184,6 +186,8 @@ impl ProcessingNode for GroupControlNode {
             if let Some(value) = reader.read() {
                 buffer.push(value);
                 context.push_history_value(value);
+            }else {
+                buffer.clear();
             }
             for fader_control in self.control.clone().faders() {
                 self.write(manager, buffer.iter().copied(), fader_control, phase);

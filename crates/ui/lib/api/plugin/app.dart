@@ -6,6 +6,14 @@ class ApplicationPluginApi implements SettingsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/application");
   final EventChannel settingsEvents = const EventChannel("mizer.live/settings/watch");
 
+  Future<void> shutdown() async {
+    await channel.invokeMethod("shutdown");
+  }
+
+  Future<void> reboot() async {
+    await channel.invokeMethod("reboot");
+  }
+
   Future<void> exit() async {
     await channel.invokeMethod("exit");
   }

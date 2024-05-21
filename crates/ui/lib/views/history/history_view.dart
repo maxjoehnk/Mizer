@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/session.dart';
-import 'package:mizer/navigation.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';

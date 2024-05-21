@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart' hide View;
+import 'package:flutter/material.dart' hide View, NavigationBar, Route;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:mizer/extensions/string_extensions.dart';
+import 'package:mizer/api/plugin/app.dart';
+import 'package:mizer/dialogs/power_dialog.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/panes/console/console_pane.dart';
@@ -21,6 +23,7 @@ import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/views/surfaces/surfaces_view.dart';
 import 'package:mizer/views/timecode/timecode_view.dart';
+import 'package:mizer/widgets/navigation_bar/navigation_bar.dart';
 import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +86,7 @@ class _HomeState extends State<Home> {
             Expanded(
               child: Row(
                 children: [
-                  NavigationBar(
+                  HomeNavigation(
                     selectedIndex: _selectedIndex,
                     onSelect: this._selectView,
                     routes: routes,
@@ -178,117 +181,27 @@ class _HomeState extends State<Home> {
   }
 }
 
-class Route {
-  final WidgetFunction view;
-  final IconData icon;
-  final String label;
-  final View viewKey;
-
-  Route(this.view, this.icon, this.label, this.viewKey);
-}
-
-typedef WidgetFunction = Widget Function();
-
-class NavigationBar extends StatelessWidget {
+class HomeNavigation extends StatelessWidget {
   final List<Route> routes;
   final int selectedIndex;
   final Function(int) onSelect;
 
-  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect});
+  const HomeNavigation({super.key, required this.routes, required this.selectedIndex, required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
     HotkeyMapping mapping = context.read();
-    return Container(
-        color: Colors.grey.shade800,
-        width: 64,
-        child: ListView(
-            children: this
-                .routes
-                .mapEnumerated((route, i) => NavigationItem(
-                    route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
-                .toList()));
+    ApplicationPluginApi applicationApi = context.read();
+
+    return NavigationBar(children: [
+      NavigationBarItem(
+          label: "Power",
+          icon: MdiIcons.power,
+          onSelect: () => showDialog(
+              context: context, builder: (context) => PowerDialog(applicationApi: applicationApi))),
+      ...this.routes.mapEnumerated((route, i) => NavigationRouteItem(
+          route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
+    ]);
   }
 }
 
-extension MapWithIndex<T> on List<T> {
-  List<R> mapEnumerated<R>(R Function(T, int i) callback) {
-    return this.asMap().map((key, value) => MapEntry(key, callback(value, key))).values.toList();
-  }
-}
-
-class NavigationItem extends StatefulWidget {
-  final Route route;
-  final bool selected;
-  final void Function() onSelect;
-  final Map<String, String> hotkeys;
-
-  NavigationItem(this.route, this.selected, this.onSelect, this.hotkeys);
-
-  @override
-  _NavigationItemState createState() => _NavigationItemState();
-}
-
-class _NavigationItemState extends State<NavigationItem> {
-  bool hovering = false;
-
-  @override
-  Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var textTheme = theme.textTheme;
-    var color = this.widget.selected ? theme.colorScheme.secondary : theme.hintColor;
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onExit: (e) => setState(() => hovering = false),
-      onHover: (e) => setState(() => hovering = true),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: this.widget.onSelect,
-        child: Container(
-          height: 64,
-          color: backgroundColor,
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Stack(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      this.widget.route.icon,
-                      color: color,
-                      size: 24,
-                    ),
-                    Text(this.widget.route.label,
-                        style: textTheme.subtitle2!.copyWith(color: color, fontSize: 10)),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
-              ),
-              if (hotkeyLabel != null)
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Text(hotkeyLabel!.toCapitalCase(),
-                        style: textTheme.caption!.copyWith(fontSize: 9))),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  String? get hotkeyLabel {
-    return widget.hotkeys[widget.route.viewKey.toHotkeyString()];
-  }
-
-  Color? get backgroundColor {
-    if (widget.selected) {
-      return Colors.black26;
-    }
-    if (hovering) {
-      return Colors.black12;
-    }
-    return null;
-  }
-}

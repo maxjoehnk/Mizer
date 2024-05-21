@@ -7,6 +7,12 @@ extension ListExtensions<T> on List<T> {
   }
 }
 
+extension MapWithIndex<T> on List<T> {
+  List<R> mapEnumerated<R>(R Function(T, int i) callback) {
+    return this.asMap().map((key, value) => MapEntry(key, callback(value, key))).values.toList();
+  }
+}
+
 extension IterableExtensions<T> on Iterable<T> {
   Iterable<T> distinct() {
     final ids = Set();

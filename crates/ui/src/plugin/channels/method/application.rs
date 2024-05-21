@@ -22,7 +22,24 @@ impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> MethodCallHandler
         _: EngineHandle,
     ) {
         match call.method.as_str() {
+            "shutdown" => {
+                tracing::info!("Triggering shutdown");
+                if let Err(err) = system_shutdown::shutdown() {
+                    reply.respond_error(err.into());
+                } else {
+                    reply.send_ok(Value::Null);
+                }
+            }
+            "reboot" => {
+                tracing::info!("Triggering reboot");
+                if let Err(err) = system_shutdown::reboot() {
+                    reply.respond_error(err.into());
+                } else {
+                    reply.send_ok(Value::Null);
+                }
+            }
             "exit" => {
+                tracing::info!("Exiting application");
                 if let Some(handler) = self.lifecycle_handler.take() {
                     handler.shutdown();
                 }

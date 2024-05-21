@@ -3,7 +3,7 @@ import 'package:mizer/session/window_title_updater.dart';
 import 'package:mizer/widgets/global_hotkeys.dart';
 import 'package:nativeshell/nativeshell.dart';
 
-import '../navigation.dart';
+import '../home.dart';
 import 'base_window_state.dart';
 
 const double WIDTH = 800;

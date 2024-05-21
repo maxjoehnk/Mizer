@@ -1,12 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
-import 'package:mizer/navigation.dart';
 import 'package:mizer/state/settings_bloc.dart';
 
 import 'preferences.dart';

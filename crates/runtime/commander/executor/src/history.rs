@@ -163,7 +163,7 @@ impl std::ops::Add<usize> for OptionIndex {
         if let Some(index) = self.0 {
             index + rhs
         } else {
-            rhs
+            rhs - 1
         }
     }
 }
@@ -252,6 +252,20 @@ mod tests {
         let command = Command(3);
         cursor.push(Command(1));
         cursor.push(Command(2));
+        cursor.back();
+
+        cursor.push(command);
+
+        let result = cursor.get();
+        assert_eq!(Some(&command), result);
+        assert_eq!(None, cursor.forward());
+    }
+
+    #[test]
+    fn push_should_drop_old_forward_history_when_reverting_all_commands() {
+        let mut cursor = CommandCursor::<Command>::new();
+        let command = Command(2);
+        cursor.push(Command(1));
         cursor.back();
 
         cursor.push(command);

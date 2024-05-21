@@ -42,7 +42,7 @@ class _DragAreaSelectionState extends State<DragAreaSelection> {
     };
     var onUpdate = (DragUpdateDetails e) {
       setState(() {
-        state!.end = e.localPosition;
+        state!.update(e.localPosition);
         widget.onUpdate(state!);
       });
     };

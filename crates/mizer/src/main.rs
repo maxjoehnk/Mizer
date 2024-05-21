@@ -1,4 +1,5 @@
 use std::sync::mpsc;
+use anyhow::Context;
 
 use structopt::StructOpt;
 
@@ -63,6 +64,10 @@ fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     let guard = logger::init(&flags)?;
     tracing::debug!("flags: {:?}", flags);
     init_ffmpeg()?;
+    #[cfg(target_os = "macos")]
+    coremidi_hotplug_notification::receive_device_updates(|| {})
+        .map_err(|err| anyhow::anyhow!(err))
+        .context("Registering coremidi callback for MIDI device hotplug")?;
 
     Ok((flags, guard))
 }

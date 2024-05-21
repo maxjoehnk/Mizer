@@ -70,47 +70,62 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       child: Panel(
           label: "Selection",
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      children: widget.fixtures
-                          .map((f) => FixtureSelectionItem(
-                                fixture: f,
-                                ref: _fixturesPointer!,
-                              ))
-                          .toList()),
+                SizedBox(
+                  height: 48,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                        children: widget.fixtures
+                            .map((f) => FixtureSelectionItem(
+                                  fixture: f,
+                                  ref: _fixturesPointer!,
+                                ))
+                            .toList()),
+                  ),
                 ),
-                NumberField(
-                    label: "Block Size",
-                    value: widget.state.blockSize,
-                    min: 0,
-                    maxHint: 10,
-                    onUpdate: (v) {
-                      var api = context.read<ProgrammerApi>();
-                      api.updateBlockSize(v.toInt());
-                    }),
-                NumberField(
-                    label: "Groups",
-                    value: widget.state.groups,
-                    min: 0,
-                    maxHint: 10,
-                    onUpdate: (v) {
-                      var api = context.read<ProgrammerApi>();
-                      api.updateGroups(v.toInt());
-                    }),
-                NumberField(
-                    label: "Wings",
-                    value: widget.state.wings,
-                    min: 0,
-                    maxHint: 10,
-                    onUpdate: (v) {
-                      var api = context.read<ProgrammerApi>();
-                      api.updateWings(v.toInt());
-                    }),
+                SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: NumberField(
+                      label: "Block Size",
+                      value: widget.state.blockSize,
+                      min: 0,
+                      maxHint: 10,
+                      onUpdate: (v) {
+                        var api = context.read<ProgrammerApi>();
+                        api.updateBlockSize(v.toInt());
+                      }),
+                ),
+                SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: NumberField(
+                      label: "Groups",
+                      value: widget.state.groups,
+                      min: 0,
+                      maxHint: 10,
+                      onUpdate: (v) {
+                        var api = context.read<ProgrammerApi>();
+                        api.updateGroups(v.toInt());
+                      }),
+                ),
+                SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: NumberField(
+                      label: "Wings",
+                      value: widget.state.wings,
+                      min: 0,
+                      maxHint: 10,
+                      onUpdate: (v) {
+                        var api = context.read<ProgrammerApi>();
+                        api.updateWings(v.toInt());
+                      }),
+                ),
               ],
             ),
           ),
@@ -219,26 +234,23 @@ class _FixtureSelectionItemState extends State<FixtureSelectionItem>
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: widget.fixture.name ?? "",
-      child: Container(
-          width: 48,
-          height: 48,
-          padding: const EdgeInsets.all(2),
-          child: Container(
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(2),
-                  side: BorderSide(
-                    color: Colors.grey.shade800,
-                    width: 4,
-                    style: BorderStyle.solid,
-                  ),
+    return Container(
+        width: 48,
+        height: 48,
+        padding: const EdgeInsets.all(2),
+        child: Container(
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(2),
+                side: BorderSide(
+                  color: Colors.grey.shade800,
+                  width: 2,
+                  style: BorderStyle.solid,
                 ),
-                color: state.getColor(),
               ),
-              child:
-                  Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay())))),
-    );
+              color: state.getColor(),
+            ),
+            child:
+                Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay()))));
   }
 }

@@ -1,19 +1,16 @@
 use mizer_command_executor::*;
-use mizer_sequencer::effects::EffectEngine;
 
 use crate::proto::effects::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct EffectsHandler<R> {
-    engine: EffectEngine,
     runtime: R,
 }
 
 impl<R: RuntimeApi> EffectsHandler<R> {
-    pub fn new(effect_engine: EffectEngine, runtime: R) -> Self {
+    pub fn new(runtime: R) -> Self {
         Self {
-            engine: effect_engine,
             runtime,
         }
     }
@@ -21,13 +18,12 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_effects(&self) -> Effects {
-        let effects = self.engine.effects();
+        let effects = self.runtime.query(ListEffectsQuery).unwrap();
 
         let effects = effects.into_iter().map(Effect::from).collect();
 
         Effects {
             effects,
-            ..Default::default()
         }
     }
 

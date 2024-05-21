@@ -1,30 +1,20 @@
-use std::ops::Deref;
-
 use mizer_command_executor::*;
 use mizer_fixture_patch_export::PatchExporter;
 use mizer_fixtures::fixture::ChannelLimit;
-use mizer_fixtures::library::FixtureLibrary;
-use mizer_fixtures::manager::FixtureManager;
 
 use crate::proto::fixtures::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct FixturesHandler<R: RuntimeApi> {
-    fixture_manager: FixtureManager,
-    fixture_library: FixtureLibrary,
     runtime: R,
 }
 
 impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn new(
-        fixture_manager: FixtureManager,
-        fixture_library: FixtureLibrary,
         runtime: R,
     ) -> Self {
         Self {
-            fixture_manager,
-            fixture_library,
             runtime,
         }
     }
@@ -32,63 +22,70 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixtures(&self) -> Fixtures {
-        let mut fixtures = Fixtures::default();
-        for fixture in self.fixture_manager.get_fixtures() {
-            let fixture_model = Fixture {
-                channel: fixture.channel as u32,
-                universe: fixture.universe as u32,
-                channel_count: fixture.current_mode.dmx_channels() as u32,
-                id: fixture.id,
-                name: fixture.name.clone(),
-                manufacturer: fixture.definition.manufacturer.clone(),
-                model: fixture.definition.name.clone(),
-                mode: fixture.current_mode.name.clone(),
-                controls: FixtureControls::with_values(
-                    fixture.deref(),
+        let fixtures = self.runtime.query(ListFixturesQuery).unwrap();
+        let fixtures = fixtures.into_iter()
+            .map(|fixture| {
+                let controls = FixtureControls::with_values(
+                    &fixture,
                     fixture.current_mode.controls.clone(),
-                ),
-                children: fixture
+                );
+                let sub_fixtures = fixture
                     .current_mode
                     .sub_fixtures
                     .iter()
-                    .map(|sub_fixture| SubFixture {
-                        id: sub_fixture.id,
-                        name: sub_fixture.name.clone(),
-                        controls: FixtureControls::with_values(
+                    .map(|sub_fixture| {
+                        let controls = FixtureControls::with_values(
                             &fixture.sub_fixture(sub_fixture.id).unwrap(),
                             sub_fixture.controls.clone(),
-                        ),
+                        );
+                        SubFixture {
+                            id: sub_fixture.id,
+                            name: sub_fixture.name.clone(),
+                            controls,
+                        }
                     })
-                    .collect(),
-                config: Some(FixtureConfig {
-                    invert_pan: fixture.configuration.invert_pan,
-                    invert_tilt: fixture.configuration.invert_tilt,
-                    reverse_pixel_order: fixture.configuration.reverse_pixel_order,
-                    channel_limits: fixture.configuration.limits.iter().map(|(control, limits)| FixtureChannelLimit {
-                        control: Some(control.clone().into()),
-                        min: limits.min,
-                        max: limits.max,
-                    }).collect()
-                }),
-            };
-            fixtures.fixtures.push(fixture_model);
+                    .collect();
+                Fixture {
+                    channel: fixture.channel as u32,
+                    universe: fixture.universe as u32,
+                    channel_count: fixture.current_mode.dmx_channels() as u32,
+                    id: fixture.id,
+                    name: fixture.name,
+                    manufacturer: fixture.definition.manufacturer,
+                    model: fixture.definition.name,
+                    mode: fixture.current_mode.name,
+                    controls,
+                    children: sub_fixtures,
+                    config: Some(FixtureConfig {
+                        invert_pan: fixture.configuration.invert_pan,
+                        invert_tilt: fixture.configuration.invert_tilt,
+                        reverse_pixel_order: fixture.configuration.reverse_pixel_order,
+                        channel_limits: fixture.configuration.limits.into_iter().map(|(control, limits)| FixtureChannelLimit {
+                            control: Some(control.into()),
+                            min: limits.min,
+                            max: limits.max,
+                        }).collect()
+                    }),
+                }
+            })
+            .collect();
+
+        Fixtures {
+            fixtures
         }
-        fixtures
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixture_definitions(&self) -> FixtureDefinitions {
-        let definitions = self
-            .fixture_library
-            .list_definitions()
+        let definitions = self.runtime.query(ListFixtureDefinitionsQuery).unwrap();
+        let definitions = definitions
             .into_iter()
             .map(FixtureDefinition::from)
             .collect();
 
         FixtureDefinitions {
             definitions,
-            ..Default::default()
         }
     }
 
@@ -102,10 +99,13 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn preview_fixtures(&self, add_fixtures: AddFixturesRequest) -> anyhow::Result<Fixtures> {
+        let definition = self.runtime.query(GetFixtureDefinitionQuery {
+            definition_id: add_fixtures.request.as_ref().unwrap().definition_id.clone(),
+        })?.ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
         let cmd = into_patch_fixtures_command(add_fixtures);
 
         let mut fixtures = Fixtures::default();
-        for fixture in cmd.preview(&self.fixture_library)? {
+        for fixture in cmd.preview(definition)? {
             let model = Fixture {
                 channel: fixture.channel as u32,
                 universe: fixture.universe as u32,
@@ -160,11 +160,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn export_patch(&self, path: &str) -> anyhow::Result<()> {
-        let fixtures = self.fixture_manager.get_fixtures();
+        let fixtures = self.runtime.query(ListFixturesQuery)?;
         let patch_exporter = PatchExporter::new();
         let mut fixture_refs = fixtures
             .iter()
-            .map(|fixture| fixture.deref())
             .collect::<Vec<_>>();
         fixture_refs.sort_by_key(|fixture| fixture.id);
         let pdf = patch_exporter.export_csv(fixture_refs.as_slice())?;

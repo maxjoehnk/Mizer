@@ -8,6 +8,7 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 pub mod commands;
+pub mod queries;
 mod debug_ui_pane;
 mod module;
 

@@ -19,10 +19,9 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_layouts(&self) -> Layouts {
+        let layouts = self.runtime.query(ListLayoutsQuery).unwrap();
         Layouts {
-            layouts: self
-                .runtime
-                .layouts()
+            layouts: layouts
                 .into_iter()
                 .map(Layout::from)
                 .collect::<Vec<_>>(),

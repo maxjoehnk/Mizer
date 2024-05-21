@@ -9,6 +9,7 @@ pub use self::spline::*;
 pub use self::structured_data::*;
 pub use self::thread_pinned::*;
 pub use self::error_collector::*;
+pub use self::stopwatch::*;
 
 mod async_runtime;
 #[cfg(feature = "test")]
@@ -18,6 +19,7 @@ mod conversion;
 mod hashmap_extension;
 mod lerp_extension;
 mod spline;
+mod stopwatch;
 mod structured_data;
 
 mod file_loading;

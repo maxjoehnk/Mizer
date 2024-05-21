@@ -3,16 +3,17 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use mizer_api::handlers::MediaHandler;
 use mizer_api::proto::media::*;
+use mizer_api::RuntimeApi;
 use mizer_util::AsyncRuntime;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
-pub struct MediaChannel<AR> {
-    handler: MediaHandler,
+pub struct MediaChannel<AR, R> {
+    handler: MediaHandler<R>,
     runtime: AR,
 }
 
-impl<AR: AsyncRuntime + 'static> MethodCallHandler for MediaChannel<AR> {
+impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MethodCallHandler for MediaChannel<AR, R> {
     fn on_method_call(
         &mut self,
         call: MethodCall<Value>,
@@ -99,8 +100,8 @@ impl<AR: AsyncRuntime + 'static> MethodCallHandler for MediaChannel<AR> {
     }
 }
 
-impl<AR: AsyncRuntime + 'static> MediaChannel<AR> {
-    pub fn new(handler: MediaHandler, runtime: AR) -> Self {
+impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MediaChannel<AR, R> {
+    pub fn new(handler: MediaHandler<R>, runtime: AR) -> Self {
         Self { handler, runtime }
     }
 

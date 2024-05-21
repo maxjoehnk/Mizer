@@ -1,5 +1,4 @@
 use mizer_clock::ClockState;
-use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodePath, PortId};
 use mizer_protocol_midi::MidiEvent;
@@ -17,8 +16,6 @@ pub enum ApiCommand {
     SetClockState(ClockState),
     SetBpm(f64),
     SetFps(f64),
-    GetConnections(flume::Sender<Vec<Connection>>),
-    GetMidiDeviceProfiles(flume::Sender<Vec<DeviceProfile>>),
     GetMidiMonitor(String, flume::Sender<anyhow::Result<Subscriber<MidiEvent>>>),
     GetOscMonitor(
         String,
@@ -30,5 +27,4 @@ pub enum ApiCommand {
     LoadProject(String, flume::Sender<anyhow::Result<()>>),
     ObserveSession(flume::Sender<Subscriber<SessionState>>),
     ReloadFixtureLibraries(FixtureLibraryPaths, flume::Sender<anyhow::Result<()>>),
-    GetHistory(flume::Sender<(Vec<(String, u128)>, usize)>),
 }

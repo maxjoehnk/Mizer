@@ -1,4 +1,8 @@
+use std::any::{type_name, TypeId};
+use std::sync::Arc;
+use parking_lot::RwLock;
 pub use mizer_commander::Command;
+use mizer_module::ApiInjector;
 use mizer_processing::Injector;
 
 pub use crate::executor::CommandExecutor;
@@ -8,6 +12,7 @@ pub use crate::module::CommandExecutorModule;
 pub use crate::processor::CommandProcessor;
 
 pub use self::commands::*;
+pub use self::queries::*;
 
 mod aggregates;
 mod commands;
@@ -16,11 +21,19 @@ mod history;
 mod in_main_loop_executor;
 mod module;
 mod processor;
+mod queries;
 
 #[derive(Clone)]
-pub struct CommandExecutorApi(InMainLoopExecutor);
+pub struct CommandExecutorApi {
+    executor: InMainLoopExecutor,
+    api_injector: Arc<RwLock<Option<ApiInjector>>>,
+}
 
 impl CommandExecutorApi {
+    pub fn provide_injector(&self, api_injector: ApiInjector) {
+        self.api_injector.write().replace(api_injector);
+    }
+
     pub fn run_command<'a, T: SendableCommand<'a> + 'static>(
         &self,
         command: T,
@@ -29,7 +42,7 @@ impl CommandExecutorApi {
         T::Result: Send + Sync,
     {
         let cmd = command.into();
-        let result = self.0.run_in_main_loop(move |executor, injector| {
+        let result = self.executor.run_in_main_loop(move |executor, injector| {
             let result = cmd.apply(injector, executor);
             let history = injector.get_mut::<CommandHistory>().unwrap();
             history.add_entry(cmd);
@@ -41,8 +54,32 @@ impl CommandExecutorApi {
         Ok(*result)
     }
 
+    pub fn execute_query<'a, T: SendableQuery<'a> + 'static>(
+        &self,
+        query: T,
+    ) -> anyhow::Result<T::Result>
+        where
+            T::Result: Send + Sync,
+    {
+        let _stopwatch = mizer_util::stopwatch!("Executed query from api {query:?}");
+        let requires_main_loop = query.requires_main_loop();
+        let query = query.into();
+        let result = if requires_main_loop {
+            self.executor.run_in_main_loop(move |_, injector| {
+                query.query(injector)
+            })?
+        }else {
+            query.query(self.api_injector.read().as_ref().unwrap())
+        };
+        let result = result?.downcast::<T::Result>().unwrap_or_else(|got| {
+            panic!("Expected query result to be of type {} ({:?}), but got {:?}", type_name::<T::Result>(), TypeId::of::<T::Result>(), (*got).type_id());
+        });
+
+        Ok(*result)
+    }
+
     pub fn undo(&self) -> anyhow::Result<()> {
-        self.0.run_in_main_loop(move |executor, injector| {
+        self.executor.run_in_main_loop(move |executor, injector| {
             let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
             let history = injector1.get_mut::<CommandHistory>().unwrap();
             history.undo(executor, injector)
@@ -52,7 +89,7 @@ impl CommandExecutorApi {
     }
 
     pub fn redo(&self) -> anyhow::Result<()> {
-        self.0.run_in_main_loop(move |executor, injector| {
+        self.executor.run_in_main_loop(move |executor, injector| {
             let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
             let history = injector1.get_mut::<CommandHistory>().unwrap();
             history.redo(executor, injector)

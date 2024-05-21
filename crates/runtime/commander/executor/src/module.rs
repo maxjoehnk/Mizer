@@ -12,7 +12,7 @@ impl Module for CommandExecutorModule {
 
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
         let (executor, worker) = InMainLoopExecutor::new();
-        let executor_api = CommandExecutorApi(executor);
+        let executor_api = CommandExecutorApi { executor, api_injector: Default::default() };
         context.provide_api(executor_api);
         let executor = CommandExecutor::new();
         let history = CommandHistory::new();

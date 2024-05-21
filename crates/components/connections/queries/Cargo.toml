@@ -1,0 +1,16 @@
+[package]
+name = "mizer-connection-queries"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+mizer-commander = { path = "../../../runtime/commander" }
+mizer-connections = { path = ".." }
+mizer-protocol-midi = { path = "../protocols/midi" }
+mizer-protocol-osc = { path = "../protocols/osc" }
+mizer-protocol-mqtt = { path = "../protocols/mqtt" }
+mizer-protocol-dmx = { path = "../protocols/dmx" }
+mizer-protocol-citp = { path = "../protocols/citp" }
+mizer-devices = { path = "../devices" }

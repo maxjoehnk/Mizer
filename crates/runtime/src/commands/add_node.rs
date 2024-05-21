@@ -4,7 +4,7 @@ use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
-use mizer_nodes::{Node, NodeDowncast};
+use mizer_nodes::{Node};
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 
@@ -53,10 +53,11 @@ impl<'a> Command<'a> for AddNodeCommand {
             node_type: self.node_type,
             path: path.clone(),
             designer: self.designer.clone(),
+            metadata: Default::default(),
             details,
             ports: Default::default(),
             settings: Default::default(),
-            config: node.downcast(),
+            children: Default::default(),
         };
 
         Ok((descriptor, path))

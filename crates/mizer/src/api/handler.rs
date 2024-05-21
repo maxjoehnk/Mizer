@@ -1,16 +1,10 @@
 use std::path::PathBuf;
 
 use mizer_clock::Clock;
-use mizer_command_executor::CommandHistory;
-use mizer_connections::{midi_device_profile::DeviceProfile, *};
-use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
-use mizer_protocol_citp::CitpConnectionManager;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxInput, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
-use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
 
 use crate::{ApiCommand, Mizer};
@@ -108,20 +102,6 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::GetConnections(sender) => {
-                profiling::scope!("ApiCommand::GetConnections");
-                let connections = self.get_connections(mizer);
-                sender
-                    .send(connections)
-                    .expect("api command sender disconnected");
-            }
-            ApiCommand::GetMidiDeviceProfiles(sender) => {
-                profiling::scope!("ApiCommand::GetMidiDeviceProfiles");
-                let device_profiles = self.get_midi_device_profiles(mizer);
-                sender
-                    .send(device_profiles)
-                    .expect("api command sender disconnected");
-            }
             ApiCommand::GetMidiMonitor(name, sender) => {
                 profiling::scope!("ApiCommand::GetMidiMonitor");
                 let result = self.monitor_midi(mizer, name);
@@ -152,158 +132,7 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::GetHistory(sender) => {
-                profiling::scope!("ApiCommand::GetHistory");
-                let injector = mizer.runtime.injector();
-                let history = injector.get::<CommandHistory>().unwrap();
-                let result = history.items();
-                let cursor = history.index();
-
-                sender
-                    .send((result, cursor))
-                    .expect("api command sender disconnected");
-            }
         }
-    }
-
-    #[profiling::function]
-    fn get_connections(&self, mizer: &mut Mizer) -> Vec<Connection> {
-        let manager = mizer
-            .runtime
-            .injector()
-            .get::<MidiConnectionManager>()
-            .unwrap();
-        let midi_connections = manager
-            .list_available_devices()
-            .into_iter()
-            .map(|device| MidiView {
-                name: device.name,
-                device_profile: device.profile.as_ref().map(|profile| profile.id.clone()),
-            })
-            .map(Connection::from);
-        let dmx_manager = mizer
-            .runtime
-            .injector()
-            .get::<DmxConnectionManager>()
-            .unwrap();
-        let dmx_outputs = dmx_manager
-            .list_outputs()
-            .into_iter()
-            .map(|(id, output)| DmxOutputView {
-                output_id: id.clone(),
-                name: output.name(),
-                config: match output {
-                    mizer_protocol_dmx::DmxOutputConnection::Artnet(config) => {
-                        DmxOutputConfig::Artnet {
-                            host: config.host.clone(),
-                            port: config.port,
-                        }
-                    }
-                    mizer_protocol_dmx::DmxOutputConnection::Sacn(config) => {
-                        DmxOutputConfig::Sacn {
-                            priority: config.priority,
-                        }
-                    }
-                },
-            })
-            .map(Connection::from);
-        let dmx_inputs = dmx_manager
-            .list_inputs()
-            .into_iter()
-            .map(|(id, input)| DmxInputView {
-                input_id: id.clone(),
-                name: input.name(),
-                config: match input {
-                    mizer_protocol_dmx::DmxInputConnection::Artnet(config) => {
-                        DmxInputConfig::Artnet {
-                            host: config.config.host.clone(),
-                            port: config.config.port,
-                        }
-                    }
-                },
-            })
-            .map(Connection::from);
-        let mqtt_manager = mizer
-            .runtime
-            .injector()
-            .get::<MqttConnectionManager>()
-            .unwrap();
-        let mqtt_connections = mqtt_manager
-            .list_connections()
-            .into_iter()
-            .map(|(id, connection)| MqttView {
-                connection_id: id.clone(),
-                name: connection.address.url.to_string(),
-                url: connection.address.url.to_string(),
-                username: connection.address.username.clone(),
-                password: connection.address.password.clone(),
-            })
-            .map(Connection::from);
-        let osc_manager = mizer
-            .runtime
-            .injector()
-            .get::<OscConnectionManager>()
-            .unwrap();
-        let osc_connections = osc_manager
-            .list_connections()
-            .into_iter()
-            .map(|(id, connection)| OscView {
-                connection_id: id.clone(),
-                name: format!(
-                    "{}://{}:{}",
-                    connection.address.protocol,
-                    connection.address.output_host,
-                    connection.address.output_port
-                ),
-                output_host: connection.address.output_host.to_string(),
-                output_port: connection.address.output_port,
-                input_port: connection.address.input_port,
-            })
-            .map(Connection::from);
-        let citp_connections = Self::get_citp_connections(mizer);
-        let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
-        let devices = device_manager
-            .current_devices()
-            .into_iter()
-            .map(Connection::from);
-
-        let mut connections = Vec::new();
-        connections.extend(midi_connections);
-        connections.extend(dmx_outputs);
-        connections.extend(dmx_inputs);
-        connections.extend(mqtt_connections);
-        connections.extend(osc_connections);
-        connections.extend(citp_connections);
-        connections.extend(devices);
-
-        connections
-    }
-
-    fn get_citp_connections(mizer: &Mizer) -> Vec<Connection> {
-        let Some(citp_manager) = mizer.runtime.injector().get::<CitpConnectionManager>() else {
-            return Vec::default();
-        };
-        citp_manager
-            .list_connections()
-            .into_iter()
-            .map(|handle| CitpView {
-                connection_id: handle.id,
-                name: handle.name.to_string(),
-                kind: handle.kind,
-                state: handle.state.clone(),
-            })
-            .map(Connection::from)
-            .collect()
-    }
-
-    fn get_midi_device_profiles(&self, mizer: &mut Mizer) -> Vec<DeviceProfile> {
-        let manager = mizer
-            .runtime
-            .injector()
-            .get::<MidiConnectionManager>()
-            .unwrap();
-
-        manager.list_available_device_profiles()
     }
 
     fn monitor_midi(

@@ -4,6 +4,7 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{sub_command, Command, Ref, RefMut};
+use mizer_fixtures::definition::FixtureDefinition;
 use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
@@ -41,12 +42,9 @@ impl PatchFixturesCommand {
         }
     }
     
-    pub fn preview(&self, fixture_library: &FixtureLibrary) -> anyhow::Result<Vec<Fixture>> {
+    pub fn preview(&self, definition: FixtureDefinition) -> anyhow::Result<Vec<Fixture>> {
         let mut previews = Vec::with_capacity(self.count as usize);
         let captures = FIXTURE_NAME_REGEX.captures(&self.name).unwrap();
-        let definition = fixture_library
-            .get_definition(&self.definition_id)
-            .ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
         let mode = definition
             .get_mode(&self.mode)
             .ok_or_else(|| anyhow::anyhow!("Unknown fixture mode"))?;

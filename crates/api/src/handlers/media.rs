@@ -4,17 +4,20 @@ use futures::{Stream, StreamExt};
 
 use mizer_media::documents::{MediaDocument, MediaId, TagId};
 use mizer_media::{MediaCreateModel, MediaServer};
+use mizer_media::queries::{ListMediaFilesQuery, ListMediaFoldersQuery, ListMediaTagsQuery};
 
 use crate::proto::media::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
-pub struct MediaHandler {
+pub struct MediaHandler<R> {
     api: MediaServer,
+    runtime: R,
 }
 
-impl MediaHandler {
-    pub fn new(api: MediaServer) -> Self {
-        Self { api }
+impl<R: RuntimeApi> MediaHandler<R> {
+    pub fn new(api: MediaServer, runtime: R) -> Self {
+        Self { api, runtime }
     }
 
     #[tracing::instrument(skip(self))]
@@ -54,13 +57,15 @@ impl MediaHandler {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_media(&self) -> anyhow::Result<MediaFiles> {
-        let files = Self::map_files(self.api.get_media()?);
-        let folders = self.api.get_import_paths();
+        let files = self.runtime.query(ListMediaFilesQuery)?;
+        let folders = self.runtime.query(ListMediaFoldersQuery)?;
+        let tags = self.runtime.query(ListMediaTagsQuery)?;
+
+        let files = Self::map_files(files);
         let folders = folders
             .into_iter()
             .flat_map(|p| p.to_str().map(|p| p.to_string()))
             .collect();
-        let tags = self.api.get_tags()?;
         let tags = tags.into_iter().map(MediaTag::from).collect();
 
         Ok(MediaFiles {
@@ -105,9 +110,8 @@ impl MediaHandler {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_folders(&self) -> anyhow::Result<Vec<String>> {
-        let folders = self
-            .api
-            .get_import_paths()
+        let folders = self.runtime.query(ListMediaFoldersQuery)?;
+        let folders = folders
             .into_iter()
             .flat_map(|path| path.to_str().map(|s| s.to_string()))
             .collect();

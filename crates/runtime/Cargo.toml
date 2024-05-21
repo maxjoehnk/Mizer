@@ -26,6 +26,7 @@ mizer-layouts = { path = "layouts" }
 mizer-plan = { path = "../components/plan" }
 mizer-commander = { path = "commander" }
 mizer-util = { path = "../util" }
+mizer-docs = { path = "../../docs" }
 mizer-status-bus = { path = "status" }
 profiling = "1.0"
 serde = { version = "1", features = ["derive"] }
@@ -33,6 +34,7 @@ tracing = "0.1"
 tracing-unwrap = "1.0"
 itertools = "0.12"
 indexmap = "2.2"
+enum-iterator = "2.0"
 
 [dev-dependencies]
 insta = "1.38"

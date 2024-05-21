@@ -19,6 +19,7 @@ mod file_storage;
 mod import_handler;
 pub mod media_handlers;
 mod module;
+pub mod queries;
 
 #[derive(Clone)]
 #[repr(transparent)]

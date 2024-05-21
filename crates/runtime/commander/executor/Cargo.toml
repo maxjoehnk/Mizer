@@ -14,17 +14,24 @@ mizer-processing = { path = "../../processing" }
 mizer-module = { path = "../../module" }
 mizer-runtime = { path = "../.." }
 mizer-fixture-commands = { path = "../../../components/fixtures/commands" }
+mizer-fixture-queries = { path = "../../../components/fixtures/queries" }
 mizer-sequencer-commands = { path = "../../../components/sequencer/commands" }
+mizer-sequencer-queries = { path = "../../../components/sequencer/queries" }
+mizer-media = { path = "../../../components/media" }
 mizer-timecode = { path = "../../../components/timecode" }
 mizer-plan = { path = "../../../components/plan" }
 mizer-layouts = { path = "../../layouts" }
 mizer-layout-commands = { path = "../../layouts/commands" }
+mizer-layout-queries = { path = "../../layouts/queries" }
 mizer-node = { path = "../../pipeline/node" }
 mizer-protocol-dmx = { path  = "../../../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path  = "../../../components/connections/protocols/mqtt" }
 mizer-protocol-midi = { path  = "../../../components/connections/protocols/midi" }
 mizer-protocol-osc = { path  = "../../../components/connections/protocols/osc" }
+mizer-connection-queries = { path  = "../../../components/connections/queries" }
 mizer-node-templates = { path = "../../pipeline/templates" }
 mizer-surfaces = { path = "../../../components/surfaces" }
+mizer-util = { path = "../../../util" }
 flume = "0.11"
 tracing = "0.1"
+parking_lot = "0.12"

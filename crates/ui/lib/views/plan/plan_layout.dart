@@ -7,7 +7,6 @@ import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/protos/plans.pb.dart';
-import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/views/plan/layers/drag_selection_layer.dart';
 import 'package:mizer/views/plan/layers/fixtures_layer.dart';
@@ -65,61 +64,42 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     if (_fixturesPointer == null) {
       return Container();
     }
-    return DragTarget(
-      onWillAccept: (details) => details is FixturePosition,
-      onAcceptWithDetails: (details) {
-        var renderBox = context.findRenderObject() as RenderBox;
-        var local = renderBox.globalToLocal(details.offset);
-        var scene = _transformationController.toScene(local);
-        var newPosition = _convertFromScreenPosition(scene);
-        var fixturePosition = details.data as FixturePosition;
-        var movement =
-            Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
-
-        PlansBloc bloc = context.read();
-        if (widget.programmerState?.activeFixtures.isEmpty ?? true) {
-          bloc.add(MoveFixture(id: fixturePosition.id, x: movement.dx, y: movement.dy));
-        } else {
-          bloc.add(MoveFixtureSelection(x: movement.dx, y: movement.dy));
-        }
-      },
-      builder: (context, candidates, rejects) => Stack(
-        fit: StackFit.expand,
-        children: [
-          CanvasBackgroundLayer(_transformationController.value, gridSize: fieldSize,),
-          TransformLayer(transformationController: _transformationController, minScale: 0.1, maxScale: 5, scaleFactor: 500),
-          PlanDragSelectionLayer(
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        CanvasBackgroundLayer(_transformationController.value, gridSize: fieldSize,),
+        TransformLayer(transformationController: _transformationController, minScale: 0.1, maxScale: 5, scaleFactor: 500),
+        PlanDragSelectionLayer(
+          plan: widget.plan,
+          transformation: _transformationController.value,
+          selectionState: _selectionState,
+          onUpdateSelection: (selection) => setState(() => _selectionState = selection),
+        ),
+        PlansImageLayer(
             plan: widget.plan,
-            transformation: _transformationController.value,
-            selectionState: _selectionState,
-            onUpdateSelection: (selection) => setState(() => _selectionState = selection),
-          ),
-          PlansImageLayer(
-              plan: widget.plan,
-              isSetup: widget.setupMode,
-              transformation: _transformationController.value),
-          Transform(
-              transform: _transformationController.value,
-              child: PlansScreenLayer(plan: widget.plan)),
-          if (widget.placingImage != null)
-            ImagePlacer(
-                image: widget.placingImage!,
-                onPlaced: widget.placeImage,
-                onCancel: widget.cancelPlacing),
-          Transform(
+            isSetup: widget.setupMode,
+            transformation: _transformationController.value),
+        Transform(
             transform: _transformationController.value,
-            child: PlansFixturesLayer(
-              plan: widget.plan,
-              setupMode: widget.setupMode,
-              fixturesPointer: _fixturesPointer!,
-              programmerState: widget.programmerState,
-            ),
+            child: PlansScreenLayer(plan: widget.plan)),
+        if (widget.placingImage != null)
+          ImagePlacer(
+              image: widget.placingImage!,
+              onPlaced: widget.placeImage,
+              onCancel: widget.cancelPlacing),
+        Transform(
+          transform: _transformationController.value,
+          child: PlansFixturesLayer(
+            plan: widget.plan,
+            setupMode: widget.setupMode,
+            fixturesPointer: _fixturesPointer!,
+            programmerState: widget.programmerState,
           ),
-          if (_selectionState != null) SelectionIndicator(_selectionState!),
-          if (_selectionState?.direction != null)
-            SelectionDirectionIndicator(_selectionState!.direction!),
-        ],
-      ),
+        ),
+        if (_selectionState != null) SelectionIndicator(_selectionState!),
+        if (_selectionState?.direction != null)
+          SelectionDirectionIndicator(_selectionState!.direction!),
+      ],
     );
   }
 }

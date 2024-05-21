@@ -3,7 +3,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, GroupId};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {
     pub group_id: GroupId,
     pub fixture_ids: Vec<FixtureId>,

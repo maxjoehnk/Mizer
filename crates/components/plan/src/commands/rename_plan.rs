@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
 use std::mem::swap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RenamePlanCommand {
     pub id: String,
     pub name: String,

@@ -18,7 +18,7 @@ pub use mizer_surfaces::commands::*;
 pub use mizer_timecode::commands::*;
 
 pub use crate::aggregates::*;
-use crate::executor::CommandExecutor;
+use crate::executor::{CommandExecutor, CommandKey};
 
 pub trait SendableCommand<'a>: Command<'a> + Into<CommandImpl> + Send + Sync {}
 
@@ -36,18 +36,20 @@ macro_rules! command_impl {
                 &self,
                 injector: &mut Injector,
                 executor: &mut CommandExecutor,
-            ) -> anyhow::Result<Box<dyn Any + Send + Sync>> {
+                command_key: Option<CommandKey>,
+            ) -> anyhow::Result<(Box<dyn Any + Send + Sync>, CommandKey)> {
                 match &self {
-                    $(Self::$x(cmd) => self._apply(injector, executor, cmd),)*
+                    $(Self::$x(cmd) => self._apply(injector, executor, cmd, command_key),)*
                 }
             }
             pub(crate) fn revert(
                 &self,
                 injector: &mut Injector,
                 executor: &mut CommandExecutor,
+                command_key: &CommandKey,
             ) -> anyhow::Result<()> {
                 match &self {
-                    $(Self::$x(cmd) => executor.revert(injector, cmd),)*
+                    $(Self::$x(cmd) => executor.revert(injector, cmd, command_key),)*
                 }
             }
 
@@ -160,9 +162,10 @@ impl CommandImpl {
         injector: &'a mut Injector,
         executor: &'a mut CommandExecutor,
         cmd: &(impl Command<'a> + 'static),
-    ) -> anyhow::Result<Box<dyn Any + Send + Sync>> {
-        let result = executor.apply(injector, cmd)?;
+        command_key: Option<CommandKey>,
+    ) -> anyhow::Result<(Box<dyn Any + Send + Sync>, CommandKey)> {
+        let (result, command_key) = executor.apply(injector, cmd, command_key)?;
 
-        Ok(Box::new(result))
+        Ok((Box::new(result), command_key))
     }
 }

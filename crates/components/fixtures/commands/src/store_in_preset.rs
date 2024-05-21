@@ -4,7 +4,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct StoreInPresetCommand {
     pub id: PresetId,
     pub values: Vec<FixtureControlValue>,

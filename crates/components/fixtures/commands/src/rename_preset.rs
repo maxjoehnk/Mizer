@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RenamePresetCommand {
     pub id: PresetId,
     pub label: String,

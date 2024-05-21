@@ -7,7 +7,7 @@ use mizer_nodes::PresetNode;
 use mizer_runtime::commands::AddNodeCommand;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddPresetCommand {
     pub name: Option<String>,
     pub preset_type: PresetType,

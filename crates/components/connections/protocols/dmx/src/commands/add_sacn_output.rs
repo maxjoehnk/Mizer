@@ -4,7 +4,7 @@ use mizer_commander::{Command, RefMut};
 
 use crate::{DmxConnectionManager, SacnOutput};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddSacnOutputCommand {
     pub name: String,
     pub priority: u8,

@@ -1,4 +1,3 @@
-use std::hash::Hash;
 use std::ops::DerefMut;
 use std::sync::Arc;
 
@@ -11,7 +10,7 @@ use mizer_pipeline::ProcessingNodeExt;
 
 use crate::pipeline_access::PipelineAccess;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateNodeSettingCommand {
     pub path: NodePath,
     pub setting: NodeSetting,

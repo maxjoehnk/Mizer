@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 use mizer_fixtures::FixturePriority;
 use mizer_sequencer::Sequencer;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateSequencePriorityCommand {
     pub sequence_id: u32,
     pub priority: FixturePriority,

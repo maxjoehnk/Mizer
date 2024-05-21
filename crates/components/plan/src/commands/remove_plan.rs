@@ -2,7 +2,7 @@ use crate::{Plan, PlanStorage};
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RemovePlanCommand {
     pub id: String,
 }

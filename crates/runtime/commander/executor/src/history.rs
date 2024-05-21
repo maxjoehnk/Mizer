@@ -1,9 +1,10 @@
 use crate::{CommandExecutor, CommandImpl};
 use mizer_module::Injector;
 use std::time::{SystemTime, UNIX_EPOCH};
+use crate::executor::CommandKey;
 
 pub struct CommandHistory {
-    commands: CommandCursor<(CommandImpl, SystemTime)>,
+    commands: CommandCursor<(CommandImpl, CommandKey, SystemTime)>,
 }
 
 impl CommandHistory {
@@ -13,9 +14,9 @@ impl CommandHistory {
         }
     }
 
-    pub(crate) fn add_entry(&mut self, command: impl Into<CommandImpl>) {
+    pub(crate) fn add_entry(&mut self, command: impl Into<CommandImpl>, key: CommandKey) {
         let command = command.into();
-        self.commands.push((command, SystemTime::now()));
+        self.commands.push((command, key, SystemTime::now()));
     }
 
     pub(crate) fn undo(
@@ -23,8 +24,8 @@ impl CommandHistory {
         executor: &mut CommandExecutor,
         injector: &mut Injector,
     ) -> anyhow::Result<()> {
-        if let Some((command, _)) = self.commands.back() {
-            command.revert(injector, executor)
+        if let Some((command, key, _)) = self.commands.back() {
+            command.revert(injector, executor, key)
         } else {
             Ok(())
         }
@@ -35,8 +36,8 @@ impl CommandHistory {
         executor: &mut CommandExecutor,
         injector: &mut Injector,
     ) -> anyhow::Result<()> {
-        if let Some((command, _)) = self.commands.forward() {
-            command.apply(injector, executor)?;
+        if let Some((command, key, _)) = self.commands.forward() {
+            command.apply(injector, executor, Some(*key))?;
             Ok(())
         } else {
             Ok(())
@@ -47,7 +48,7 @@ impl CommandHistory {
         self.commands
             .commands
             .iter()
-            .map(|(cmd, time)| {
+            .map(|(cmd, _key, time)| {
                 let label = cmd.label();
                 let timestamp = time
                     .duration_since(UNIX_EPOCH)

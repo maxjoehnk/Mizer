@@ -6,7 +6,6 @@ use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddNodeCommand {
@@ -14,14 +13,6 @@ pub struct AddNodeCommand {
     pub designer: NodeDesigner,
     pub node: Option<Node>,
     pub parent: Option<NodePath>,
-}
-
-impl Hash for AddNodeCommand {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.node_type.hash(state);
-        self.designer.hash(state);
-        state.write_u8(u8::from(self.node.is_some()));
-    }
 }
 
 impl<'a> Command<'a> for AddNodeCommand {

@@ -3,7 +3,7 @@ use mizer_commander::{Command, Ref};
 use mizer_layouts::{ControlId, ControlSize, LayoutStorage};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ResizeLayoutControlCommand {
     pub layout_id: String,
     pub control_id: ControlId,

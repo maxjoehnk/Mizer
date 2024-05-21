@@ -4,7 +4,7 @@ use mizer_commander::{Command, RefMut};
 
 use crate::{DmxConnectionManager, DmxOutputConnection, SacnOutput};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureSacnOutputCommand {
     pub id: String,
     pub name: String,

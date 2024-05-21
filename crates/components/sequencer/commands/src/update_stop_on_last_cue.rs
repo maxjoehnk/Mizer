@@ -2,7 +2,7 @@ use mizer_commander::{Command, Ref};
 use mizer_sequencer::Sequencer;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateSequenceStopOnLastCueCommand {
     pub sequence_id: u32,
     pub stop_on_last_cue: bool,

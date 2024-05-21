@@ -3,7 +3,7 @@ use crate::{ImageId, PlanImage, PlanStorage};
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RemovePlanImageCommand {
     pub plan_id: String,
     pub image_id: ImageId,

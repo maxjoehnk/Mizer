@@ -3,7 +3,7 @@ use mizer_commander::{Command, Ref};
 use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateControlDelayTimeCommand {
     pub sequence_id: u32,
     pub cue_id: u32,

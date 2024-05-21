@@ -6,7 +6,7 @@ use mizer_node::NodeLink;
 
 use crate::pipeline_access::PipelineAccess;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLinkCommand {
     pub link: NodeLink,
 }

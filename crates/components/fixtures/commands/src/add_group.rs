@@ -8,7 +8,7 @@ use mizer_node::{NodeDesigner, NodeType};
 use mizer_nodes::GroupNode;
 use mizer_runtime::commands::AddNodeCommand;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddGroupCommand {
     pub name: String,
 }

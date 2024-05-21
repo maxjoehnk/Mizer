@@ -2,7 +2,7 @@ use crate::{MqttAddress, MqttConnectionManager};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteMqttConnectionCommand {
     pub id: String,
 }

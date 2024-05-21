@@ -9,7 +9,7 @@ use mizer_fixtures::FixtureId;
 use crate::commands::update_plan;
 use crate::PlanStorage;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AlignFixturesInPlanCommand {
     pub id: String,
     pub fixture_ids: Vec<FixtureId>,
@@ -19,7 +19,7 @@ pub struct AlignFixturesInPlanCommand {
     pub column_gap: u32,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash, Eq, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq)]
 pub enum AlignFixturesDirection {
     LeftToRight,
     TopToBottom,

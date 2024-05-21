@@ -6,9 +6,8 @@ use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::NodePath;
 use mizer_nodes::NodeDowncast;
 use serde::{Deserialize, Serialize};
-use std::hash::Hash;
 
-#[derive(Debug, Clone, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DuplicateNodeCommand {
     pub path: NodePath,
     pub parent: Option<NodePath>,

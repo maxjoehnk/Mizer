@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 use mizer_fixtures::FixtureId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddFixturesToPlanCommand {
     pub id: String,
     pub fixture_ids: Vec<FixtureId>,

@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 
 use crate::{TimecodeControlId, TimecodeManager};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RenameTimecodeControlCommand {
     pub id: TimecodeControlId,
     pub name: String,

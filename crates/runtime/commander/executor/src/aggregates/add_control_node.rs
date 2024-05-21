@@ -7,7 +7,7 @@ use mizer_runtime::pipeline_access::PipelineAccess;
 use mizer_runtime::ExecutionPlanner;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutControlWithNodeCommand {
     pub layout_id: String,
     pub node_type: NodeType,

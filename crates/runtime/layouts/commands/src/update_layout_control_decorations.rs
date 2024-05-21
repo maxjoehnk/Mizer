@@ -2,9 +2,8 @@ use crate::get_control;
 use mizer_commander::{Command, Ref};
 use mizer_layouts::{ControlDecorations, ControlId, LayoutStorage};
 use serde::{Deserialize, Serialize};
-use std::hash::Hash;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateLayoutControlDecorationsCommand {
     pub layout_id: String,
     pub control_id: ControlId,

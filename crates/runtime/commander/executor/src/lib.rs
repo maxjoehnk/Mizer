@@ -29,13 +29,14 @@ impl CommandExecutorApi {
         T::Result: Send + Sync,
     {
         let cmd = command.into();
-        let result = self.0.run_in_main_loop(move |executor, injector| {
-            let result = cmd.apply(injector, executor);
+        let result: anyhow::Result<_> = self.0.run_in_main_loop(move |executor, injector| {
+            let (result, key) = cmd.apply(injector, executor, None)?;
             let history = injector.get_mut::<CommandHistory>().unwrap();
-            history.add_entry(cmd);
+            history.add_entry(cmd, key);
 
-            result
-        })??;
+            Ok(result)
+        })?;
+        let result = result?;
         let result = result.downcast::<T::Result>().unwrap();
 
         Ok(*result)

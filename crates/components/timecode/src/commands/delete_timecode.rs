@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 
 use crate::{TimecodeId, TimecodeManager, TimecodeTrack};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteTimecodeCommand {
     pub id: TimecodeId,
 }

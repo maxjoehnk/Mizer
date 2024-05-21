@@ -3,7 +3,7 @@ use mizer_commander::{Command, Ref};
 use mizer_layouts::{ControlConfig, ControlId, LayoutStorage};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeleteLayoutControlCommand {
     pub layout_id: String,
     pub control_id: ControlId,

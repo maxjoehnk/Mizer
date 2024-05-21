@@ -3,7 +3,7 @@ use mizer_commander::{Command, Ref};
 use mizer_layouts::LayoutStorage;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RenameLayoutCommand {
     pub id: String,
     pub name: String,

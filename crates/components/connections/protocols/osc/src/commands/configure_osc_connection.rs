@@ -2,7 +2,7 @@ use crate::{OscAddress, OscConnectionManager, OscProtocol};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureOscConnectionCommand {
     pub connection_id: String,
     pub output_host: String,

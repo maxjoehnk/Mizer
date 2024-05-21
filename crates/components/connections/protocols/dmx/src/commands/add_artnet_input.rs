@@ -6,7 +6,7 @@ use mizer_commander::{Command, RefMut};
 
 use crate::{ArtnetInput, DmxConnectionManager};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddArtnetInputCommand {
     pub name: String,
     pub host: Ipv4Addr,

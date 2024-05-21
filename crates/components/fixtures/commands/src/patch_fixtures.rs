@@ -17,7 +17,7 @@ lazy_static::lazy_static! {
     static ref FIXTURE_NAME_REGEX: Regex = Regex::new("^(?P<name>.*?)(?P<counter>[0-9]+)?$").unwrap();
 }
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct PatchFixturesCommand {
     pub definition_id: String,
     pub mode: String,

@@ -8,7 +8,7 @@ use mizer_util::HashMapExtension;
 
 use crate::pipeline_access::PipelineAccess;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RenameNodeCommand {
     pub path: NodePath,
     pub new_name: NodePath,

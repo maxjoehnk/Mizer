@@ -3,7 +3,7 @@ use mizer_commander::{Command, RefMut};
 use mizer_node::NodePath;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HideNodeCommand {
     pub path: NodePath,
 }

@@ -3,7 +3,7 @@ use mizer_commander::{Command, Ref};
 use mizer_sequencer::{EffectEngine, EffectStep};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddEffectStepCommand {
     pub effect_id: u32,
     pub channel_index: usize,

@@ -4,7 +4,7 @@ use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::GroupId;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RenameGroupCommand {
     pub id: GroupId,
     pub name: String,

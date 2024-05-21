@@ -3,7 +3,6 @@ use crate::{ImageId, PlanImage, PlanStorage};
 use mizer_commander::{Command, Ref};
 use mizer_util::Base64Image;
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddPlanImageCommand {
@@ -14,18 +13,6 @@ pub struct AddPlanImageCommand {
     pub width: f64,
     pub height: f64,
     pub transparency: f64,
-}
-
-impl Hash for AddPlanImageCommand {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.plan.hash(state);
-        self.data.hash(state);
-        self.x.to_bits().hash(state);
-        self.y.to_bits().hash(state);
-        self.width.to_bits().hash(state);
-        self.height.to_bits().hash(state);
-        self.transparency.to_bits().hash(state);
-    }
 }
 
 impl<'a> Command<'a> for AddPlanImageCommand {

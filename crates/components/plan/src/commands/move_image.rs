@@ -2,7 +2,6 @@ use crate::commands::update_image;
 use crate::{ImageId, PlanStorage};
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MovePlanImageCommand {
@@ -10,14 +9,6 @@ pub struct MovePlanImageCommand {
     pub image: ImageId,
     pub x: f64,
     pub y: f64,
-}
-
-impl Hash for MovePlanImageCommand {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.plan.hash(state);
-        self.x.to_bits().hash(state);
-        self.y.to_bits().hash(state);
-    }
 }
 
 impl<'a> Command<'a> for MovePlanImageCommand {

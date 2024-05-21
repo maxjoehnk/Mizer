@@ -2,7 +2,7 @@ use crate::{TimecodeControl, TimecodeControlId, TimecodeManager};
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddTimecodeControlCommand {
     pub name: String,
 }

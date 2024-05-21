@@ -3,7 +3,7 @@ use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureMqttConnectionCommand {
     pub connection_id: String,
     pub url: String,

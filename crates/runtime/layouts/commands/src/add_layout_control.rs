@@ -7,7 +7,7 @@ use mizer_node::NodeType;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutControlCommand {
     pub layout_id: String,
     pub control_type: ControlType,

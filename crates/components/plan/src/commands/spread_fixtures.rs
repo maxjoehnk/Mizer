@@ -8,7 +8,7 @@ use mizer_fixtures::FixtureId;
 use crate::commands::update_plan;
 use crate::{FixturePosition, PlanStorage};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SpreadFixturesInPlanCommand {
     pub plan_id: String,
     pub fixture_ids: Vec<FixtureId>,

@@ -2,7 +2,7 @@ use crate::{ArtnetOutput, DmxConnectionManager};
 use mizer_commander::{Command, RefMut};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddArtnetOutputCommand {
     pub name: String,
     pub host: String,

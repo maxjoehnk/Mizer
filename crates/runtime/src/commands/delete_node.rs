@@ -6,9 +6,8 @@ use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use std::hash::Hash;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeleteNodeCommand {
     pub path: NodePath,
 }

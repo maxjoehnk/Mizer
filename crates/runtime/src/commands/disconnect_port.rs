@@ -7,7 +7,7 @@ use mizer_ports::PortId;
 
 use crate::pipeline_access::PipelineAccess;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DisconnectPortCommand {
     pub path: NodePath,
     pub port: PortId,

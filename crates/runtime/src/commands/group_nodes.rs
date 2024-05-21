@@ -6,7 +6,7 @@ use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GroupNodesCommand {
     pub nodes: Vec<NodePath>,
     pub parent: Option<NodePath>,

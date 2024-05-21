@@ -3,9 +3,8 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::any::Any;
 use std::fmt::Debug;
-use std::hash::Hash;
 
-pub trait Command<'a>: Debug + Send + Sized + Serialize + DeserializeOwned + Hash {
+pub trait Command<'a>: Debug + Send + Sized + Serialize + DeserializeOwned {
     type Dependencies: ExtractDependencies<'a>;
     type State: Any;
     type Result: Any + Send + Sync;

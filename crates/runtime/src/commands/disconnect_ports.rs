@@ -4,7 +4,7 @@ use mizer_execution_planner::ExecutionPlanner;
 use mizer_node::{NodeLink, NodePath};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DisconnectPortsCommand {
     pub path: NodePath,
 }

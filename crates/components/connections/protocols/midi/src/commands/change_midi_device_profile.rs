@@ -2,7 +2,7 @@ use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
 use crate::MidiConnectionManager;
 
-#[derive(Debug, Clone, Deserialize, Serialize, Hash, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ChangeMidiDeviceProfileCommand {
     pub device: String,
     pub profile_id: Option<String>,

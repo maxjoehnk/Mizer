@@ -4,7 +4,7 @@ use mizer_commander::{Command, RefMut};
 use mizer_node::{NodePath, NodePosition};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ShowNodeCommand {
     pub path: NodePath,
     pub position: NodePosition,

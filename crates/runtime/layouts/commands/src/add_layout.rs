@@ -2,7 +2,7 @@ use mizer_commander::{Command, Ref};
 use mizer_layouts::{Layout, LayoutStorage};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutCommand {
     pub name: String,
 }

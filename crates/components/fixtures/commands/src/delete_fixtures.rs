@@ -9,7 +9,7 @@ use mizer_runtime::ExecutionPlanner;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteFixturesCommand {
     pub fixture_ids: Vec<u32>,
 }

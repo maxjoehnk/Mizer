@@ -11,7 +11,7 @@ use mizer_runtime::ExecutionPlanner;
 
 use crate::{NodeRequest, NodeTemplate};
 
-#[derive(Debug, Clone, Serialize, Deserialize, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExecuteNodeTemplateCommand {
     pub template: NodeTemplate,
 }

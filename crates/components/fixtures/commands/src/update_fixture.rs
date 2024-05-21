@@ -4,7 +4,7 @@ use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 use mizer_fixtures::definition::FixtureFaderControl;
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateFixtureCommand {
     pub fixture_id: u32,
     pub invert_pan: Option<bool>,

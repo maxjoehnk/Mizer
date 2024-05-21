@@ -4,7 +4,7 @@ use mizer_commander::{Command, RefMut};
 
 use crate::{DmxConnectionManager, DmxInputConnection};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteInputCommand {
     pub id: String,
 }

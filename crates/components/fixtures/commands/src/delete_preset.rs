@@ -6,7 +6,7 @@ use mizer_runtime::commands::DeleteNodeCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, Hash)]
+#[derive(Clone, Copy, Debug, Deserialize, Serialize)]
 pub struct DeletePresetCommand {
     pub id: PresetId,
 }

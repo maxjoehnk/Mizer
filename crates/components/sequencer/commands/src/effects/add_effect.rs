@@ -2,7 +2,7 @@ use mizer_commander::{Command, Ref};
 use mizer_sequencer::{Effect, EffectEngine};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct AddEffectCommand {
     pub name: String,
 }

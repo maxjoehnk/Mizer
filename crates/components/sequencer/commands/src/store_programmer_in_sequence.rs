@@ -3,7 +3,7 @@ use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammedPreset, ProgrammerC
 use mizer_sequencer::{CueControl, CueEffect, Sequence, Sequencer, SequencerTime, SequencerValue};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct StoreProgrammerInSequenceCommand {
     pub sequence_id: u32,
     pub cue_id: Option<u32>,

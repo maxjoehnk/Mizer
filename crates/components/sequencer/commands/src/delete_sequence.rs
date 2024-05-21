@@ -7,7 +7,7 @@ use mizer_runtime::ExecutionPlanner;
 use mizer_sequencer::{Sequence, Sequencer};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Hash)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteSequenceCommand {
     pub sequence_id: u32,
 }

@@ -97,7 +97,6 @@ impl MidiBackgroundDiscovery {
                 "Disconnected MIDI device: {name}",
             );
             self.devices.remove(&name);
-            // TODO: close connection
         }
 
         Ok(())

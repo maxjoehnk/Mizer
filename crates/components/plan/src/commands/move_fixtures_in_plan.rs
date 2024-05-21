@@ -40,9 +40,9 @@ impl<'a> Command<'a> for MoveFixturesInPlanCommand {
                 .filter(|position| self.fixture_ids.contains(&position.fixture))
             {
                 // TODO: add test checking whether undo works
+                fixtures.insert(position.fixture, (position.x, position.y));
                 position.x += self.offset.0;
                 position.y += self.offset.1;
-                fixtures.insert(position.fixture, (position.x, position.y));
             }
 
             Ok(())
@@ -59,8 +59,8 @@ impl<'a> Command<'a> for MoveFixturesInPlanCommand {
                 .filter(|position| self.fixture_ids.contains(&position.fixture))
             {
                 let offset = state.get(&position.fixture).unwrap();
-                position.x += offset.0;
-                position.y += offset.1;
+                position.x = offset.0;
+                position.y = offset.1;
             }
 
             Ok(())

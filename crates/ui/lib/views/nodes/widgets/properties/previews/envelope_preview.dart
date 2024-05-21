@@ -10,7 +10,6 @@ class EnvelopeSettingsPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(settings);
     var attack = _getSetting("Attack");
     var decay = _getSetting("Decay");
     var sustain = _getSetting("Sustain");

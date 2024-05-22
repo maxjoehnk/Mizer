@@ -5752,12 +5752,11 @@ name = "mizer-plan-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "image",
  "mizer-fixtures",
  "mizer-node",
- "mizer-pixel-nodes",
  "mizer-plan",
  "mizer-util",
+ "mizer-wgpu",
  "serde",
  "tracing",
 ]

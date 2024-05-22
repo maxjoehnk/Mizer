@@ -83,12 +83,13 @@ pub struct PlanScreen {
 
 impl PlanScreen {
     pub fn contains_fixture(&self, fixture: &FixturePosition) -> bool {
-        let x_1 = self.x;
-        let x_2 = self.x + self.width;
-        let y_1 = self.y;
-        let y_2 = self.y + self.height;
-
-        x_1 <= fixture.x && fixture.x <= x_2 && y_1 <= fixture.y && fixture.y <= y_2
+        let screen_rect = (self.x, self.y, self.x + self.width, self.y + self.height);
+        let fixture_rect = (fixture.x, fixture.y, fixture.x + fixture.width, fixture.y + fixture.height);
+        
+        let x_overlap = fixture_rect.0 <= screen_rect.2 && fixture_rect.2 >= screen_rect.0;
+        let y_overlap = fixture_rect.1 <= screen_rect.3 && fixture_rect.3 >= screen_rect.1;
+        
+        x_overlap && y_overlap
     }
 
     pub fn translate_position(&self, fixture: &FixturePosition) -> (f64, f64) {

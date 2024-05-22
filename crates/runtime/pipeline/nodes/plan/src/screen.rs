@@ -1,13 +1,11 @@
-use image::{Pixel, Rgba};
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixturePriority;
 use mizer_node::*;
-use mizer_pixel_nodes::texture_to_pixels::TextureToPixelsConverter;
 use mizer_plan::{Plan, PlanScreen, PlanStorage, ScreenId};
-use mizer_util::ConvertBytes;
+use crate::texture_to_pixels::TextureToPixelsConverter;
 
 const INPUT_PORT: &str = "Input";
 
@@ -72,23 +70,6 @@ impl PlanScreenNode {
         let plan = self.get_plan(injector)?;
         plan.screens.into_iter().find(|s| s.id == self.screen_id)
     }
-
-    fn convert_pixels(width: u32, pixels: Vec<Rgba<u8>>) -> Vec<Vec<Color>> {
-        pixels
-            .into_iter()
-            .map(|pixel| {
-                let bytes = pixel.to_rgb();
-                Color::rgb(
-                    f64::from_8bit(bytes[0]),
-                    f64::from_8bit(bytes[1]),
-                    f64::from_8bit(bytes[2]),
-                )
-            })
-            .collect::<Vec<Color>>()
-            .chunks_exact(width as usize)
-            .map(|row| row.to_vec())
-            .collect()
-    }
 }
 
 impl PipelineNode for PlanScreenNode {
@@ -96,7 +77,7 @@ impl PipelineNode for PlanScreenNode {
         NodeDetails {
             node_type_name: "Plan Screen".into(),
             preview_type: PreviewType::None,
-            category: NodeCategory::None,
+            category: NodeCategory::Fixtures,
         }
     }
 
@@ -144,41 +125,58 @@ impl ProcessingNode for PlanScreenNode {
             return Ok(());
         };
         if let Some(state) = state.as_mut() {
-            let width = screen.width.round() as u32;
-            let height = screen.height.round() as u32;
-            if let Some(pixels) = state.post_process(context, width, height)? {
-                let pixel_data = Self::convert_pixels(width, pixels);
+            if let Some(pixels) = state.post_process(context)? {
+                let pixel_width = 1920f64;
+                let pixel_height = 1080f64;
+                let pixels_per_screen_width = pixel_width / screen.width;
+                let pixels_per_screen_height = pixel_height / screen.height;
                 for fixture in plan.fixtures.iter().filter(|f| screen.contains_fixture(f)) {
-                    let (x, y) = screen.translate_position(fixture);
-                    // TODO: the downsampling of the input texture does not take into account that pixels can be smaller than 1 pixel
-                    // in the future we should probably sample the picture for each pixel instead of down sampling it and then using the nearest pixel
-                    let x = x.round() as usize;
-                    let y = y.round() as usize;
-                    let Some(color) = pixel_data.get(y).and_then(|row| row.get(x)) else {
+                    // TODO: calculate average of all pixels in given rect instead of just the center
+                    let (x1, y1) = screen.translate_position(fixture);
+                    let x2 = x1 + fixture.width;
+                    let y2 = y1 + fixture.height;
+
+                    let x = (x1 + x2) / 2.0;
+                    let y = (y1 + y2) / 2.0;
+
+                    let x_pixel = (x * pixels_per_screen_width).round() as u32;
+                    let y_pixel = (y * pixels_per_screen_height).round() as u32;
+
+                    let pixel_index = (y_pixel * 1920 + x_pixel) as usize;
+                    let pixel_index = pixel_index * 4;
+
+                    if pixel_index + 3 >= pixels.len() {
+                        tracing::warn!("Pixel index out of bounds: {} >= {}", pixel_index + 3, pixels.len());
                         continue;
-                    };
+                    }
+
+                    let blue = pixels[pixel_index] as f64 / 255.0;
+                    let green = pixels[pixel_index + 1] as f64 / 255.0;
+                    let red = pixels[pixel_index + 2] as f64 / 255.0;
+                    let alpha = pixels[pixel_index + 3] as f64 / 255.0;
+
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::Intensity,
-                        color.alpha,
+                        alpha,
                         self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                        color.red,
+                        red,
                         self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                        color.green,
+                        green,
                         self.priority,
                     );
                     manager.write_fixture_control(
                         fixture.fixture,
                         FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                        color.blue,
+                        blue,
                         self.priority,
                     );
                 }

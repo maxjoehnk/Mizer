@@ -370,6 +370,50 @@ class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
   NodeSetting ensureSetting() => $_ensure(1);
 }
 
+class MoveNodesRequest extends $pb.GeneratedMessage {
+  factory MoveNodesRequest({
+    $core.Iterable<MoveNodeRequest>? nodes,
+  }) {
+    final $result = create();
+    if (nodes != null) {
+      $result.nodes.addAll(nodes);
+    }
+    return $result;
+  }
+  MoveNodesRequest._() : super();
+  factory MoveNodesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MoveNodesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveNodesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<MoveNodeRequest>(1, _omitFieldNames ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: MoveNodeRequest.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MoveNodesRequest clone() => MoveNodesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MoveNodesRequest copyWith(void Function(MoveNodesRequest) updates) => super.copyWith((message) => updates(message as MoveNodesRequest)) as MoveNodesRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static MoveNodesRequest create() => MoveNodesRequest._();
+  MoveNodesRequest createEmptyInstance() => create();
+  static $pb.PbList<MoveNodesRequest> createRepeated() => $pb.PbList<MoveNodesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static MoveNodesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MoveNodesRequest>(create);
+  static MoveNodesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<MoveNodeRequest> get nodes => $_getList(0);
+}
+
 class MoveNodeRequest extends $pb.GeneratedMessage {
   factory MoveNodeRequest({
     $core.String? path,

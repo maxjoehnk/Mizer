@@ -78,10 +78,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 },
                 Err(err) => resp.respond_error(err),
             },
-            "moveNode" => match call.arguments() {
+            "moveNodes" => match call.arguments() {
                 Ok(args) => {
-                    tracing::debug!("moveNode {:?}", args);
-                    match self.handler.move_node(args) {
+                    tracing::debug!("moveNodes {:?}", args);
+                    match self.handler.move_nodes(args) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
                     }

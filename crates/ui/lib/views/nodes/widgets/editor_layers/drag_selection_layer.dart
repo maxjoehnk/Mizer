@@ -13,11 +13,12 @@ class NodesDragSelectionLayer extends DragSelectionLayer {
   void onSelection(BuildContext context, Rect rect) {
     List<NodeModel> selection = this
         .nodes
+        .where((node) => !node.node.designer.hidden)
         .where((node) => node.rect.overlaps(rect))
         .toList();
 
     NodeEditorModel model = context.read();
-    model.selectAdditionalNodes(selection);
+    model.selectNodes(selection);
   }
 
   @override

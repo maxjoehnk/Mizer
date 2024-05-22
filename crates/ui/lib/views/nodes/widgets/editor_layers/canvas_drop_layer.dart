@@ -14,23 +14,19 @@ class CanvasDropLayer extends StatelessWidget {
           builder: (context, candidates, rejects) {
             return SizedBox.expand();
           },
-          onWillAccept: (data) => data is NodeModel,
-          onAccept: (NodeModel data) {
+          onWillAcceptWithDetails: (details) => details.data is NodeModel,
+          onAcceptWithDetails: (DragTargetDetails<NodeModel> details) {
             RenderBox canvasBox = context.findRenderObject() as RenderBox;
-            RenderBox elementBox = data.key.currentContext!.findRenderObject() as RenderBox;
+            RenderBox elementBox = details.data.key.currentContext!.findRenderObject() as RenderBox;
             Offset off = model.transformationController.toScene(
               canvasBox.globalToLocal(
                 elementBox.localToGlobal(Offset.zero),
               ),
             );
-            data.offset = off;
+            details.data.offset = off;
             NodesBloc bloc = context.read();
-            if (data.node.designer.hidden) {
-              bloc.add(ShowNode(data.node.path, data.getPosition(), model.parent?.node.path));
-            }else {
-              model.updateNodes();
-              model.update();
-              bloc.add(MoveNode(data.node.path, data.getPosition()));
+            if (details.data.node.designer.hidden) {
+              bloc.add(ShowNode(details.data.node.path, details.data.getPosition(), model.parent?.node.path));
             }
           },
           onMove: (_) {

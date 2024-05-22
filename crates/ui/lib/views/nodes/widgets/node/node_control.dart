@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/nodes.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/node_editor_model.dart';
@@ -19,48 +17,17 @@ class NodeControl extends StatefulWidget {
 }
 
 class _NodeControlState extends State<NodeControl> {
-  Widget? node;
-
-  @override
-  void initState() {
-    super.initState();
-    node = _buildNode();
-  }
-
   @override
   Widget build(BuildContext context) {
-    var nodesApi = context.read<NodesApi>();
-    var node = _buildNode();
-    return Consumer<NodeEditorModel>(
-      builder: (context, model, _) => Draggable<NodeModel>(
-        data: widget.nodeModel,
-        child: node,
-        childWhenDragging: Container(),
-        feedback: RepositoryProvider<NodesApi>.value(
-          value: nodesApi,
-          child: ChangeNotifierProvider<NodeEditorModel>.value(
-              value: model,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: model.transformationController.value.getMaxScaleOnAxis(),
-                  child: node,
-                );
-              }),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNode() {
     return Consumer<NodeEditorModel>(builder: (context, model, _) {
       return BaseNode.fromNode(widget.nodeModel,
           key: widget.nodeModel.key,
-          selected: model.selectedNode == widget.nodeModel,
-          selectedAdditionally: model.otherSelectedNodes.contains(widget.nodeModel),
-          connected: model.connectedToSelectedNodes.contains(widget.nodeModel),
+          selected: model.selectedNode?.node.path == widget.nodeModel.node.path,
+          selectedAdditionally: model.otherSelectedNodes.any((nodeModel) => nodeModel.node.path == widget.nodeModel.node.path),
+          connected: model.connectedToSelectedNodes.any((nodeModel) => nodeModel.node.path == widget.nodeModel.node.path),
           collapsed: widget.collapsed,
           onSelect: () => model.selectNode(widget.nodeModel),
-          onSelectAdditional: () => model.selectAdditionalNodes([widget.nodeModel]));
+          onSelectAdditional: () => model.selectAdditionalNode(widget.nodeModel));
     });
   }
 }

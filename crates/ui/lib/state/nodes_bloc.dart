@@ -70,15 +70,27 @@ class LinkNodes extends NodesEvent {
   ChannelProtocol get protocol => this.sourcePort.protocol;
 }
 
-class MoveNode extends NodesEvent {
-  final String node;
+class MoveNodes extends NodesEvent {
+  final List<MoveNode> nodes;
+
+  MoveNodes(this.nodes);
+
+  MoveNodesRequest into() {
+    return MoveNodesRequest(
+      nodes: nodes.map((n) => n.into()).toList(),
+    );
+  }
+}
+
+class MoveNode {
+  final String nodePath;
   final Offset position;
 
-  MoveNode(this.node, this.position);
+  MoveNode(this.nodePath, this.position);
 
   MoveNodeRequest into() {
     return MoveNodeRequest(
-      path: node,
+      path: nodePath,
       position: NodePosition(
         x: position.dx,
         y: position.dy,
@@ -197,9 +209,9 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       }
       emit(await _fetchNodes());
     });
-    on<MoveNode>((event, emit) async {
+    on<MoveNodes>((event, emit) async {
       var request = event.into();
-      await api.moveNode(request);
+      await api.moveNodes(request);
       emit(await _fetchNodes());
     });
     on<DeleteNode>((event, emit) async {

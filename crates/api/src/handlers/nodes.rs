@@ -219,10 +219,14 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
-        self.runtime.run_command(MoveNodeCommand {
-            path: request.path.into(),
-            position: request.position.unwrap().into(),
+    pub fn move_nodes(&self, request: MoveNodesRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(MoveNodesCommand {
+            movements: request.nodes.into_iter().map(|request|
+                NodeMovement {
+                    path: request.path.into(),
+                    position: request.position.unwrap().into(),
+                }
+            ).collect()
         })?;
 
         Ok(())

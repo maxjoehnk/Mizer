@@ -85,6 +85,13 @@ class NodeEditorModel extends ChangeNotifier {
     }
   }
 
+  /// Recalculate port positions so the graph connections re-render
+  void updateMovement() {
+    nodes.where((node) => isSelected(node.node.path)).forEach((element) {
+      element.updatePorts(painterKey);
+    });
+  }
+
   /// Notify listeners of changes
   void update() {
     notifyListeners();
@@ -118,6 +125,10 @@ class NodeEditorModel extends ChangeNotifier {
     return nodes.firstWhereOrNull((nodeModel) => nodeModel.node.path == path)?.node;
   }
 
+  bool isSelected(String nodePath) {
+    return this.selectedNode?.node.path == nodePath || this.otherSelectedNodes.any((element) => element.node.path == nodePath);
+  }
+
   selectNode(NodeModel nodeModel) {
     this.selectedNode = nodeModel;
     this.otherSelectedNodes.clear();
@@ -134,11 +145,15 @@ class NodeEditorModel extends ChangeNotifier {
 
     this.update();
   }
+  
+  selectNodes(List<NodeModel> nodes) {
+    this.selectedNode = null;
+    this.otherSelectedNodes = nodes;
+    this.update();
+  }
 
-  selectAdditionalNodes(List<NodeModel> nodes) {
-    for (var node in nodes) {
-      this.otherSelectedNodes.add(node);
-    }
+  selectAdditionalNode(NodeModel node) {
+    this.otherSelectedNodes.add(node);
     this.update();
   }
 

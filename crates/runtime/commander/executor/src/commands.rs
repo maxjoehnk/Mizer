@@ -79,7 +79,7 @@ command_impl! {
     DuplicateNodeCommand,
     ShowNodeCommand,
     HideNodeCommand,
-    MoveNodeCommand,
+    MoveNodesCommand,
     RenameNodeCommand,
     GroupNodesCommand,
     UpdateNodeSettingCommand,

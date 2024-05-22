@@ -31,6 +31,10 @@ message UpdateNodeSettingRequest {
   NodeSetting setting = 2;
 }
 
+message MoveNodesRequest {
+  repeated MoveNodeRequest nodes = 1;
+}
+
 message MoveNodeRequest {
   string path = 1;
   NodePosition position = 2;

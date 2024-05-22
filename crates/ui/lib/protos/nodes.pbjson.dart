@@ -146,6 +146,19 @@ final $typed_data.Uint8List updateNodeSettingRequestDescriptor = $convert.base64
     'ChhVcGRhdGVOb2RlU2V0dGluZ1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIyCgdzZXR0aW'
     '5nGAIgASgLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSB3NldHRpbmc=');
 
+@$core.Deprecated('Use moveNodesRequestDescriptor instead')
+const MoveNodesRequest$json = {
+  '1': 'MoveNodesRequest',
+  '2': [
+    {'1': 'nodes', '3': 1, '4': 3, '5': 11, '6': '.mizer.nodes.MoveNodeRequest', '10': 'nodes'},
+  ],
+};
+
+/// Descriptor for `MoveNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveNodesRequestDescriptor = $convert.base64Decode(
+    'ChBNb3ZlTm9kZXNSZXF1ZXN0EjIKBW5vZGVzGAEgAygLMhwubWl6ZXIubm9kZXMuTW92ZU5vZG'
+    'VSZXF1ZXN0UgVub2Rlcw==');
+
 @$core.Deprecated('Use moveNodeRequestDescriptor instead')
 const MoveNodeRequest$json = {
   '1': 'MoveNodeRequest',

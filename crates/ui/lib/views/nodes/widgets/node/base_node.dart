@@ -113,11 +113,7 @@ class BaseNodeState extends State<BaseNode> {
           width: NODE_BASE_WIDTH,
           child: GestureDetector(
             onTap: () {
-              if (RawKeyboard.instance.keysPressed.any((key) => [
-                    LogicalKeyboardKey.shift,
-                    LogicalKeyboardKey.shiftLeft,
-                    LogicalKeyboardKey.shiftRight,
-                  ].contains(key))) {
+              if (HardwareKeyboard.instance.isShiftPressed) {
                 this.widget.onSelectAdditional();
               } else {
                 this.widget.onSelect();

@@ -12,11 +12,13 @@ class TextPropertyField extends StatefulWidget {
   final String? placeholder;
   final Function(String) onUpdate;
   final bool multiline;
+  final bool readOnly;
 
   TextPropertyField(
       {required this.label,
       required this.value,
       this.placeholder,
+      this.readOnly = false,
       required this.onUpdate,
       this.multiline = false});
 
@@ -71,6 +73,9 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _readView(BuildContext context) {
+    if (widget.readOnly) {
+      return widget.multiline ? _readMultilineView(context) : _readSinglelineView(context);
+    }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(

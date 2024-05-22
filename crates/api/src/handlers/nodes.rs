@@ -114,12 +114,14 @@ impl<R: RuntimeApi> NodesHandler<R> {
                     .map(|desc| desc.to_string())
                     .unwrap_or_default();
                 let settings = list_node_settings(&node_type_name)
-                    .map(|settings| settings
-                        .map(|(setting, description)| NodeSettingDescription {
-                            name: setting.to_string(),
-                            description: description.to_string(),
-                        })
-                        .collect::<Vec<_>>())
+                    .map(|settings| {
+                        settings
+                            .map(|(setting, description)| NodeSettingDescription {
+                                name: setting.to_string(),
+                                description: description.to_string(),
+                            })
+                            .collect::<Vec<_>>()
+                    })
                     .unwrap_or_default();
 
                 AvailableNode {
@@ -154,6 +156,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
             },
             scale: 1.,
             hidden: false,
+            color: None,
         };
 
         let cmd = AddNodeCommand {
@@ -219,14 +222,29 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn update_node_color(&self, request: UpdateNodeColorRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(UpdateNodeColorCommand {
+            path: request.path.into(),
+            color: request
+                .color
+                .and_then(|color| (color as u8).try_into().ok()),
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn move_nodes(&self, request: MoveNodesRequest) -> anyhow::Result<()> {
         self.runtime.run_command(MoveNodesCommand {
-            movements: request.nodes.into_iter().map(|request|
-                NodeMovement {
+            movements: request
+                .nodes
+                .into_iter()
+                .map(|request| NodeMovement {
                     path: request.path.into(),
                     position: request.position.unwrap().into(),
-                }
-            ).collect()
+                })
+                .collect(),
         })?;
 
         Ok(())

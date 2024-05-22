@@ -43,6 +43,45 @@ final $typed_data.Uint8List nodeCategoryDescriptor = $convert.base64Decode(
     'IQCRIXChNOT0RFX0NBVEVHT1JZX1BJWEVMEAoSGAoUTk9ERV9DQVRFR09SWV9WRUNUT1IQCxIa'
     'ChZOT0RFX0NBVEVHT1JZX0ZJWFRVUkVTEAw=');
 
+@$core.Deprecated('Use nodeColorDescriptor instead')
+const NodeColor$json = {
+  '1': 'NodeColor',
+  '2': [
+    {'1': 'NODE_COLOR_NONE', '2': 0},
+    {'1': 'NODE_COLOR_GREY', '2': 1},
+    {'1': 'NODE_COLOR_RED', '2': 2},
+    {'1': 'NODE_COLOR_DEEP_ORANGE', '2': 3},
+    {'1': 'NODE_COLOR_ORANGE', '2': 4},
+    {'1': 'NODE_COLOR_AMBER', '2': 5},
+    {'1': 'NODE_COLOR_YELLOW', '2': 6},
+    {'1': 'NODE_COLOR_LIME', '2': 7},
+    {'1': 'NODE_COLOR_LIGHT_GREEN', '2': 8},
+    {'1': 'NODE_COLOR_GREEN', '2': 9},
+    {'1': 'NODE_COLOR_TEAL', '2': 10},
+    {'1': 'NODE_COLOR_CYAN', '2': 11},
+    {'1': 'NODE_COLOR_LIGHT_BLUE', '2': 12},
+    {'1': 'NODE_COLOR_BLUE', '2': 13},
+    {'1': 'NODE_COLOR_INDIGO', '2': 14},
+    {'1': 'NODE_COLOR_PURPLE', '2': 15},
+    {'1': 'NODE_COLOR_DEEP_PURPLE', '2': 16},
+    {'1': 'NODE_COLOR_PINK', '2': 17},
+    {'1': 'NODE_COLOR_BLUE_GREY', '2': 18},
+    {'1': 'NODE_COLOR_BROWN', '2': 19},
+  ],
+};
+
+/// Descriptor for `NodeColor`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List nodeColorDescriptor = $convert.base64Decode(
+    'CglOb2RlQ29sb3ISEwoPTk9ERV9DT0xPUl9OT05FEAASEwoPTk9ERV9DT0xPUl9HUkVZEAESEg'
+    'oOTk9ERV9DT0xPUl9SRUQQAhIaChZOT0RFX0NPTE9SX0RFRVBfT1JBTkdFEAMSFQoRTk9ERV9D'
+    'T0xPUl9PUkFOR0UQBBIUChBOT0RFX0NPTE9SX0FNQkVSEAUSFQoRTk9ERV9DT0xPUl9ZRUxMT1'
+    'cQBhITCg9OT0RFX0NPTE9SX0xJTUUQBxIaChZOT0RFX0NPTE9SX0xJR0hUX0dSRUVOEAgSFAoQ'
+    'Tk9ERV9DT0xPUl9HUkVFThAJEhMKD05PREVfQ09MT1JfVEVBTBAKEhMKD05PREVfQ09MT1JfQ1'
+    'lBThALEhkKFU5PREVfQ09MT1JfTElHSFRfQkxVRRAMEhMKD05PREVfQ09MT1JfQkxVRRANEhUK'
+    'EU5PREVfQ09MT1JfSU5ESUdPEA4SFQoRTk9ERV9DT0xPUl9QVVJQTEUQDxIaChZOT0RFX0NPTE'
+    '9SX0RFRVBfUFVSUExFEBASEwoPTk9ERV9DT0xPUl9QSU5LEBESGAoUTk9ERV9DT0xPUl9CTFVF'
+    'X0dSRVkQEhIUChBOT0RFX0NPTE9SX0JST1dOEBM=');
+
 @$core.Deprecated('Use channelProtocolDescriptor instead')
 const ChannelProtocol$json = {
   '1': 'ChannelProtocol',
@@ -145,6 +184,23 @@ const UpdateNodeSettingRequest$json = {
 final $typed_data.Uint8List updateNodeSettingRequestDescriptor = $convert.base64Decode(
     'ChhVcGRhdGVOb2RlU2V0dGluZ1JlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIyCgdzZXR0aW'
     '5nGAIgASgLMhgubWl6ZXIubm9kZXMuTm9kZVNldHRpbmdSB3NldHRpbmc=');
+
+@$core.Deprecated('Use updateNodeColorRequestDescriptor instead')
+const UpdateNodeColorRequest$json = {
+  '1': 'UpdateNodeColorRequest',
+  '2': [
+    {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    {'1': 'color', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.NodeColor', '9': 0, '10': 'color', '17': true},
+  ],
+  '8': [
+    {'1': '_color'},
+  ],
+};
+
+/// Descriptor for `UpdateNodeColorRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateNodeColorRequestDescriptor = $convert.base64Decode(
+    'ChZVcGRhdGVOb2RlQ29sb3JSZXF1ZXN0EhIKBHBhdGgYASABKAlSBHBhdGgSMQoFY29sb3IYAi'
+    'ABKA4yFi5taXplci5ub2Rlcy5Ob2RlQ29sb3JIAFIFY29sb3KIAQFCCAoGX2NvbG9y');
 
 @$core.Deprecated('Use moveNodesRequestDescriptor instead')
 const MoveNodesRequest$json = {
@@ -773,6 +829,10 @@ const NodeDesigner$json = {
     {'1': 'position', '3': 1, '4': 1, '5': 11, '6': '.mizer.nodes.NodePosition', '10': 'position'},
     {'1': 'scale', '3': 2, '4': 1, '5': 1, '10': 'scale'},
     {'1': 'hidden', '3': 3, '4': 1, '5': 8, '10': 'hidden'},
+    {'1': 'color', '3': 4, '4': 1, '5': 14, '6': '.mizer.nodes.NodeColor', '9': 0, '10': 'color', '17': true},
+  ],
+  '8': [
+    {'1': '_color'},
   ],
 };
 
@@ -780,7 +840,8 @@ const NodeDesigner$json = {
 final $typed_data.Uint8List nodeDesignerDescriptor = $convert.base64Decode(
     'CgxOb2RlRGVzaWduZXISNQoIcG9zaXRpb24YASABKAsyGS5taXplci5ub2Rlcy5Ob2RlUG9zaX'
     'Rpb25SCHBvc2l0aW9uEhQKBXNjYWxlGAIgASgBUgVzY2FsZRIWCgZoaWRkZW4YAyABKAhSBmhp'
-    'ZGRlbg==');
+    'ZGRlbhIxCgVjb2xvchgEIAEoDjIWLm1pemVyLm5vZGVzLk5vZGVDb2xvckgAUgVjb2xvcogBAU'
+    'IICgZfY29sb3I=');
 
 @$core.Deprecated('Use portDescriptor instead')
 const Port$json = {

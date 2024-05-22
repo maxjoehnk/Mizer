@@ -120,6 +120,7 @@ class BaseNodeState extends State<BaseNode> {
               }
             },
             child: NodeContainer(
+              designer: node.designer,
               child: DefaultTextStyle(
                 style: Theme.of(context).textTheme.bodyText2!,
                 child: Column(

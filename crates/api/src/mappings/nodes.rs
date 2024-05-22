@@ -525,6 +525,7 @@ impl From<mizer_node::NodeDesigner> for NodeDesigner {
                 y: designer.position.y,
             }),
             hidden: designer.hidden,
+            color: designer.color.map(|c| c as u8).map(|c| c as i32),
         }
     }
 }
@@ -535,6 +536,9 @@ impl From<NodeDesigner> for mizer_node::NodeDesigner {
             scale: designer.scale,
             position: designer.position.unwrap().into(),
             hidden: designer.hidden,
+            color: designer
+                .color
+                .and_then(|color| (color as u8).try_into().ok()),
         }
     }
 }

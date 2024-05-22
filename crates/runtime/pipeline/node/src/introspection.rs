@@ -1,6 +1,7 @@
 use std::hash::{Hash, Hasher};
 
 use enum_iterator::Sequence;
+use num_enum::TryFromPrimitive;
 use serde::{Deserialize, Serialize};
 
 use crate::PreviewType;
@@ -179,6 +180,32 @@ pub struct NodeDesigner {
     pub scale: f64,
     #[serde(default)]
     pub hidden: bool,
+    #[serde(default)]
+    pub color: Option<NodeColor>,
+}
+
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Hash, TryFromPrimitive)]
+#[repr(u8)]
+pub enum NodeColor {
+    Grey = 1,
+    Red = 2,
+    DeepOrange = 3,
+    Orange = 4,
+    Amber = 5,
+    Yellow = 6,
+    Lime = 7,
+    LightGreen = 8,
+    Green = 9,
+    Teal = 10,
+    Cyan = 11,
+    LightBlue = 12,
+    Blue = 13,
+    Indigo = 14,
+    Purple = 15,
+    DeepPurple = 16,
+    Pink = 17,
+    BlueGrey = 18,
+    Brown = 19,
 }
 
 #[allow(clippy::derived_hash_with_manual_eq)]

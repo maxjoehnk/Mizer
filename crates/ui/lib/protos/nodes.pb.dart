@@ -370,6 +370,70 @@ class UpdateNodeSettingRequest extends $pb.GeneratedMessage {
   NodeSetting ensureSetting() => $_ensure(1);
 }
 
+class UpdateNodeColorRequest extends $pb.GeneratedMessage {
+  factory UpdateNodeColorRequest({
+    $core.String? path,
+    NodeColor? color,
+  }) {
+    final $result = create();
+    if (path != null) {
+      $result.path = path;
+    }
+    if (color != null) {
+      $result.color = color;
+    }
+    return $result;
+  }
+  UpdateNodeColorRequest._() : super();
+  factory UpdateNodeColorRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateNodeColorRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateNodeColorRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'path')
+    ..e<NodeColor>(2, _omitFieldNames ? '' : 'color', $pb.PbFieldType.OE, defaultOrMaker: NodeColor.NODE_COLOR_NONE, valueOf: NodeColor.valueOf, enumValues: NodeColor.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateNodeColorRequest clone() => UpdateNodeColorRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateNodeColorRequest copyWith(void Function(UpdateNodeColorRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeColorRequest)) as UpdateNodeColorRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UpdateNodeColorRequest create() => UpdateNodeColorRequest._();
+  UpdateNodeColorRequest createEmptyInstance() => create();
+  static $pb.PbList<UpdateNodeColorRequest> createRepeated() => $pb.PbList<UpdateNodeColorRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateNodeColorRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateNodeColorRequest>(create);
+  static UpdateNodeColorRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  NodeColor get color => $_getN(1);
+  @$pb.TagNumber(2)
+  set color(NodeColor v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasColor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearColor() => clearField(2);
+}
+
 class MoveNodesRequest extends $pb.GeneratedMessage {
   factory MoveNodesRequest({
     $core.Iterable<MoveNodeRequest>? nodes,
@@ -3396,6 +3460,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
     NodePosition? position,
     $core.double? scale,
     $core.bool? hidden,
+    NodeColor? color,
   }) {
     final $result = create();
     if (position != null) {
@@ -3407,6 +3472,9 @@ class NodeDesigner extends $pb.GeneratedMessage {
     if (hidden != null) {
       $result.hidden = hidden;
     }
+    if (color != null) {
+      $result.color = color;
+    }
     return $result;
   }
   NodeDesigner._() : super();
@@ -3417,6 +3485,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
     ..aOM<NodePosition>(1, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
     ..a<$core.double>(2, _omitFieldNames ? '' : 'scale', $pb.PbFieldType.OD)
     ..aOB(3, _omitFieldNames ? '' : 'hidden')
+    ..e<NodeColor>(4, _omitFieldNames ? '' : 'color', $pb.PbFieldType.OE, defaultOrMaker: NodeColor.NODE_COLOR_NONE, valueOf: NodeColor.valueOf, enumValues: NodeColor.values)
     ..hasRequiredFields = false
   ;
 
@@ -3469,6 +3538,15 @@ class NodeDesigner extends $pb.GeneratedMessage {
   $core.bool hasHidden() => $_has(2);
   @$pb.TagNumber(3)
   void clearHidden() => clearField(3);
+
+  @$pb.TagNumber(4)
+  NodeColor get color => $_getN(3);
+  @$pb.TagNumber(4)
+  set color(NodeColor v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasColor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearColor() => clearField(4);
 }
 
 class Port extends $pb.GeneratedMessage {

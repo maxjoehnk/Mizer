@@ -5540,6 +5540,7 @@ dependencies = [
  "mizer-ports",
  "mizer-util",
  "mizer-wgpu",
+ "num_enum 0.7.2",
  "parking_lot 0.12.1",
  "pinboard",
  "serde",

@@ -22,7 +22,7 @@ class NodeHeader extends StatelessWidget {
             borderRadius: collapsed
                 ? BorderRadius.circular(INNER_RADIUS)
                 : BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
-        color: CATEGORY_COLORS[category] ?? Colors.black,
+        color: CATEGORY_COLORS[category] ?? Colors.grey.shade800,
       ),
       clipBehavior: Clip.none,
       padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),

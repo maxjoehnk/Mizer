@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 final Map<NodeCategory, Color> CATEGORY_COLORS = {
-  NodeCategory.NODE_CATEGORY_NONE: Colors.blueGrey,
-  NodeCategory.NODE_CATEGORY_STANDARD: Colors.green,
-  NodeCategory.NODE_CATEGORY_CONNECTIONS: Colors.orange,
-  NodeCategory.NODE_CATEGORY_CONVERSIONS: Colors.grey,
-  NodeCategory.NODE_CATEGORY_CONTROLS: Colors.blue,
-  NodeCategory.NODE_CATEGORY_DATA: Colors.green,
-  NodeCategory.NODE_CATEGORY_COLOR: Colors.green,
-  NodeCategory.NODE_CATEGORY_AUDIO: Colors.green,
-  NodeCategory.NODE_CATEGORY_VIDEO: Colors.red,
-  NodeCategory.NODE_CATEGORY_LASER: Colors.purpleAccent,
-  NodeCategory.NODE_CATEGORY_PIXEL: Colors.red,
-  NodeCategory.NODE_CATEGORY_VECTOR: Colors.purple,
-  NodeCategory.NODE_CATEGORY_FIXTURES: Colors.blueGrey,
+  NodeCategory.NODE_CATEGORY_NONE: Colors.blueGrey.shade700,
+  NodeCategory.NODE_CATEGORY_STANDARD: Colors.green.shade700,
+  NodeCategory.NODE_CATEGORY_CONNECTIONS: Colors.orange.shade700,
+  NodeCategory.NODE_CATEGORY_CONVERSIONS: Colors.grey.shade700,
+  NodeCategory.NODE_CATEGORY_CONTROLS: Colors.blue.shade700,
+  NodeCategory.NODE_CATEGORY_DATA: Colors.green.shade700,
+  NodeCategory.NODE_CATEGORY_COLOR: Colors.green.shade700,
+  NodeCategory.NODE_CATEGORY_AUDIO: Colors.green.shade700,
+  NodeCategory.NODE_CATEGORY_VIDEO: Colors.red.shade700,
+  NodeCategory.NODE_CATEGORY_LASER: Colors.purpleAccent.shade700,
+  NodeCategory.NODE_CATEGORY_PIXEL: Colors.red.shade700,
+  NodeCategory.NODE_CATEGORY_VECTOR: Colors.purple.shade700,
+  NodeCategory.NODE_CATEGORY_FIXTURES: Colors.blueGrey.shade700,
 };
 
 final Map<NodeCategory, String> CATEGORY_NAMES = {

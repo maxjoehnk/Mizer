@@ -39,7 +39,12 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
 
   List<Widget> _getPropertyPanes(Node node, NodesApi nodesApi) {
     List<Widget> widgets = [
-      NodeProperties(node: node),
+      NodeProperties(node: node,
+        onUpdateColor: (color) {
+          nodesApi.updateNodeColor(UpdateNodeColorRequest(path: node.path, color: color));
+          widget.onUpdate();
+        }
+      ),
       NodeSettingsPane(
           nodePath: node.path,
           title: "Settings".i18n,

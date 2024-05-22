@@ -16,6 +16,7 @@ pub use self::move_node::*;
 pub use self::remove_link::*;
 pub use self::rename_node::*;
 pub use self::show_node::*;
+pub use self::update_node_color::*;
 pub use self::update_node_setting::*;
 
 mod add_link;
@@ -31,6 +32,7 @@ mod remove_link;
 mod rename_node;
 mod show_node;
 mod update_node_setting;
+mod update_node_color;
 
 #[derive(Debug, Clone)]
 pub struct StaticNodeDescriptor {

@@ -50,6 +50,57 @@ class NodeCategory extends $pb.ProtobufEnum {
   const NodeCategory._($core.int v, $core.String n) : super(v, n);
 }
 
+class NodeColor extends $pb.ProtobufEnum {
+  static const NodeColor NODE_COLOR_NONE = NodeColor._(0, _omitEnumNames ? '' : 'NODE_COLOR_NONE');
+  static const NodeColor NODE_COLOR_GREY = NodeColor._(1, _omitEnumNames ? '' : 'NODE_COLOR_GREY');
+  static const NodeColor NODE_COLOR_RED = NodeColor._(2, _omitEnumNames ? '' : 'NODE_COLOR_RED');
+  static const NodeColor NODE_COLOR_DEEP_ORANGE = NodeColor._(3, _omitEnumNames ? '' : 'NODE_COLOR_DEEP_ORANGE');
+  static const NodeColor NODE_COLOR_ORANGE = NodeColor._(4, _omitEnumNames ? '' : 'NODE_COLOR_ORANGE');
+  static const NodeColor NODE_COLOR_AMBER = NodeColor._(5, _omitEnumNames ? '' : 'NODE_COLOR_AMBER');
+  static const NodeColor NODE_COLOR_YELLOW = NodeColor._(6, _omitEnumNames ? '' : 'NODE_COLOR_YELLOW');
+  static const NodeColor NODE_COLOR_LIME = NodeColor._(7, _omitEnumNames ? '' : 'NODE_COLOR_LIME');
+  static const NodeColor NODE_COLOR_LIGHT_GREEN = NodeColor._(8, _omitEnumNames ? '' : 'NODE_COLOR_LIGHT_GREEN');
+  static const NodeColor NODE_COLOR_GREEN = NodeColor._(9, _omitEnumNames ? '' : 'NODE_COLOR_GREEN');
+  static const NodeColor NODE_COLOR_TEAL = NodeColor._(10, _omitEnumNames ? '' : 'NODE_COLOR_TEAL');
+  static const NodeColor NODE_COLOR_CYAN = NodeColor._(11, _omitEnumNames ? '' : 'NODE_COLOR_CYAN');
+  static const NodeColor NODE_COLOR_LIGHT_BLUE = NodeColor._(12, _omitEnumNames ? '' : 'NODE_COLOR_LIGHT_BLUE');
+  static const NodeColor NODE_COLOR_BLUE = NodeColor._(13, _omitEnumNames ? '' : 'NODE_COLOR_BLUE');
+  static const NodeColor NODE_COLOR_INDIGO = NodeColor._(14, _omitEnumNames ? '' : 'NODE_COLOR_INDIGO');
+  static const NodeColor NODE_COLOR_PURPLE = NodeColor._(15, _omitEnumNames ? '' : 'NODE_COLOR_PURPLE');
+  static const NodeColor NODE_COLOR_DEEP_PURPLE = NodeColor._(16, _omitEnumNames ? '' : 'NODE_COLOR_DEEP_PURPLE');
+  static const NodeColor NODE_COLOR_PINK = NodeColor._(17, _omitEnumNames ? '' : 'NODE_COLOR_PINK');
+  static const NodeColor NODE_COLOR_BLUE_GREY = NodeColor._(18, _omitEnumNames ? '' : 'NODE_COLOR_BLUE_GREY');
+  static const NodeColor NODE_COLOR_BROWN = NodeColor._(19, _omitEnumNames ? '' : 'NODE_COLOR_BROWN');
+
+  static const $core.List<NodeColor> values = <NodeColor> [
+    NODE_COLOR_NONE,
+    NODE_COLOR_GREY,
+    NODE_COLOR_RED,
+    NODE_COLOR_DEEP_ORANGE,
+    NODE_COLOR_ORANGE,
+    NODE_COLOR_AMBER,
+    NODE_COLOR_YELLOW,
+    NODE_COLOR_LIME,
+    NODE_COLOR_LIGHT_GREEN,
+    NODE_COLOR_GREEN,
+    NODE_COLOR_TEAL,
+    NODE_COLOR_CYAN,
+    NODE_COLOR_LIGHT_BLUE,
+    NODE_COLOR_BLUE,
+    NODE_COLOR_INDIGO,
+    NODE_COLOR_PURPLE,
+    NODE_COLOR_DEEP_PURPLE,
+    NODE_COLOR_PINK,
+    NODE_COLOR_BLUE_GREY,
+    NODE_COLOR_BROWN,
+  ];
+
+  static final $core.Map<$core.int, NodeColor> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static NodeColor? valueOf($core.int value) => _byValue[value];
+
+  const NodeColor._($core.int v, $core.String n) : super(v, n);
+}
+
 class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol SINGLE = ChannelProtocol._(0, _omitEnumNames ? '' : 'SINGLE');
   static const ChannelProtocol MULTI = ChannelProtocol._(1, _omitEnumNames ? '' : 'MULTI');

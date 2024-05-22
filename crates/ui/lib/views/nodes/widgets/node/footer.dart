@@ -48,7 +48,7 @@ class NodeFooter extends StatelessWidget {
     return Hoverable(
       onTap: () => onSelectTab(display),
       builder: (hovered) {
-        var color = selected ? Theme.of(context).colorScheme.secondary : Colors.white54;
+        var color = selected ? Colors.white : Colors.white54;
         var background =
             selected ? Colors.black26 : (hovered ? Colors.black12 : Colors.transparent);
 

@@ -15,6 +15,7 @@ abstract class NodesApi {
       {required String path, required String port, required double value});
 
   Future<void> updateNodeSetting(UpdateNodeSettingRequest request);
+  Future<void> updateNodeColor(UpdateNodeColorRequest request);
 
   Future<void> moveNodes(MoveNodesRequest request);
 

@@ -31,6 +31,11 @@ message UpdateNodeSettingRequest {
   NodeSetting setting = 2;
 }
 
+message UpdateNodeColorRequest {
+  string path = 1;
+  optional NodeColor color = 2;
+}
+
 message MoveNodesRequest {
   repeated MoveNodeRequest nodes = 1;
 }
@@ -308,6 +313,30 @@ message NodeDesigner {
   NodePosition position = 1;
   double scale = 2;
   bool hidden = 3;
+  optional NodeColor color = 4;
+}
+
+enum NodeColor {
+  NODE_COLOR_NONE = 0;
+  NODE_COLOR_GREY = 1;
+  NODE_COLOR_RED = 2;
+  NODE_COLOR_DEEP_ORANGE = 3;
+  NODE_COLOR_ORANGE = 4;
+  NODE_COLOR_AMBER = 5;
+  NODE_COLOR_YELLOW = 6;
+  NODE_COLOR_LIME = 7;
+  NODE_COLOR_LIGHT_GREEN = 8;
+  NODE_COLOR_GREEN = 9;
+  NODE_COLOR_TEAL = 10;
+  NODE_COLOR_CYAN = 11;
+  NODE_COLOR_LIGHT_BLUE = 12;
+  NODE_COLOR_BLUE = 13;
+  NODE_COLOR_INDIGO = 14;
+  NODE_COLOR_PURPLE = 15;
+  NODE_COLOR_DEEP_PURPLE = 16;
+  NODE_COLOR_PINK = 17;
+  NODE_COLOR_BLUE_GREY = 18;
+  NODE_COLOR_BROWN = 19;
 }
 
 enum ChannelProtocol {

@@ -63,6 +63,11 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
+  Future<void> updateNodeColor(UpdateNodeColorRequest request) {
+    return channel.invokeMethod("updateNodeColor", request.writeToBuffer());
+  }
+
+  @override
   Future<void> moveNodes(MoveNodesRequest request) {
     return channel.invokeMethod("moveNodes", request.writeToBuffer());
   }

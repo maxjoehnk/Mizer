@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/protos/nodes.pb.dart';
 
 import '../../consts.dart';
 
@@ -7,12 +8,14 @@ class NodeContainer extends StatelessWidget {
   final bool selected;
   final bool selectedAdditionally;
   final bool connected;
+  final NodeDesigner designer;
 
   NodeContainer(
       {this.child,
       this.selected = false,
       this.selectedAdditionally = false,
-      this.connected = false});
+      this.connected = false,
+      required this.designer});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class NodeContainer extends StatelessWidget {
         ),
         child: Container(
           decoration: ShapeDecoration(
-              color: Colors.grey.shade900,
+              color: designer.hasColor() ? DESIGNER_COLORS[designer.color] : Colors.grey.shade900,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
               )),

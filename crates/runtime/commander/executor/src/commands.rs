@@ -9,8 +9,8 @@ pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
 use mizer_processing::Injector;
 pub use mizer_protocol_dmx::commands::*;
-pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_protocol_midi::commands::*;
+pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_protocol_osc::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
@@ -83,6 +83,7 @@ command_impl! {
     RenameNodeCommand,
     GroupNodesCommand,
     UpdateNodeSettingCommand,
+    UpdateNodeColorCommand,
     AddLinkCommand,
     RemoveLinkCommand,
     DisconnectPortsCommand,

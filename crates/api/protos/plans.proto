@@ -82,6 +82,15 @@ message RemoveImageRequest {
   string image_id = 2;
 }
 
+message AddScreenRequest {
+  string plan_id = 1;
+  double x = 2;
+  double y = 3;
+  double width = 4;
+  double height = 5;
+}
+
+
 message Plans {
   repeated Plan plans = 1;
 }
@@ -103,10 +112,10 @@ message FixturePosition {
 
 message PlanScreen {
   uint32 id = 1;
-  int32 x = 2;
-  int32 y = 3;
-  uint32 width = 4;
-  uint32 height = 5;
+  double x = 2;
+  double y = 3;
+  double width = 4;
+  double height = 5;
 }
 
 message PlanImage {

@@ -33,6 +33,7 @@ class _PlanViewState extends State<PlanView>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   bool _setupMode = false;
   Uint8List? _placingImage;
+  bool _creatingScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,15 @@ class _PlanViewState extends State<PlanView>
                       placingImage: _placingImage,
                       cancelPlacing: () => setState(() => _placingImage = null),
                       placeImage: _placeImage,
+                      creatingScreen: _creatingScreen,
+                      onAddScreen: (rect) {
+                        plansBloc.add(AddScreen(
+                            x: rect.left / fieldSize,
+                            y: rect.top / fieldSize,
+                            width: rect.width / fieldSize,
+                            height: rect.height / fieldSize));
+                        setState(() => _creatingScreen = false);
+                      },
                     )),
                     if (_setupMode) AlignToolbar(),
                   ])))
@@ -98,6 +108,8 @@ class _PlanViewState extends State<PlanView>
                   onClick: () => _placeFixtureSelection(plansBloc)),
             if (_setupMode)
               PanelActionModel(label: "Add Image", onClick: () => _addImage(plansBloc)),
+            if (_setupMode)
+              PanelActionModel(label: "Add Screen", onClick: () => setState(() => _creatingScreen = true)),
           ],
         ),
       );

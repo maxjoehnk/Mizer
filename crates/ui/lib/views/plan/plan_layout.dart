@@ -7,6 +7,7 @@ import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/protos/plans.pb.dart';
+import 'package:mizer/views/plan/layers/add_screen_layer.dart';
 import 'package:mizer/widgets/interactive_surface/interactive_surface.dart';
 import 'package:mizer/views/plan/layers/drag_selection_layer.dart';
 import 'package:mizer/views/plan/layers/fixtures_layer.dart';
@@ -20,8 +21,10 @@ class PlanLayout extends StatefulWidget {
   final ProgrammerState? programmerState;
   final bool setupMode;
   final Uint8List? placingImage;
+  final bool creatingScreen;
   final Function() cancelPlacing;
   final Function(Offset, Size) placeImage;
+  final Function(Rect) onAddScreen;
 
   const PlanLayout(
       {required this.plan,
@@ -30,7 +33,8 @@ class PlanLayout extends StatefulWidget {
       this.placingImage,
       required this.cancelPlacing,
       required this.placeImage,
-      Key? key})
+      this.creatingScreen = false,
+      Key? key, required this.onAddScreen})
       : super(key: key);
 
   @override
@@ -69,12 +73,20 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
       children: [
         CanvasBackgroundLayer(_transformationController.value, gridSize: fieldSize,),
         TransformLayer(transformationController: _transformationController, minScale: 0.1, maxScale: 5, scaleFactor: 500),
-        PlanDragSelectionLayer(
-          plan: widget.plan,
-          transformation: _transformationController.value,
-          selectionState: _selectionState,
-          onUpdateSelection: (selection) => setState(() => _selectionState = selection),
-        ),
+        if (!widget.creatingScreen)
+          PlanDragSelectionLayer(
+            plan: widget.plan,
+            transformation: _transformationController.value,
+            selectionState: _selectionState,
+            onUpdateSelection: (selection) => setState(() => _selectionState = selection),
+          ),
+        if (widget.creatingScreen)
+          AddScreenLayer(
+            onAddScreen: widget.onAddScreen,
+            transformation: _transformationController.value,
+            selectionState: _selectionState,
+            onUpdateSelection: (selection) => setState(() => _selectionState = selection),
+          ),
         PlansImageLayer(
             plan: widget.plan,
             isSetup: widget.setupMode,
@@ -97,7 +109,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
           ),
         ),
         if (_selectionState != null) SelectionIndicator(_selectionState!),
-        if (_selectionState?.direction != null)
+        if (!widget.creatingScreen && _selectionState?.direction != null)
           SelectionDirectionIndicator(_selectionState!.direction!),
       ],
     );

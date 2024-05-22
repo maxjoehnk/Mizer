@@ -21,7 +21,7 @@ impl From<mizer_plan::Plan> for Plan {
                 .screens
                 .into_iter()
                 .map(|s| PlanScreen {
-                    id: s.screen_id.into(),
+                    id: s.id.into(),
                     x: s.x,
                     y: s.y,
                     width: s.width,

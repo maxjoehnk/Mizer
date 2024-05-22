@@ -130,6 +130,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addScreen" => {
+                if let Err(err) = call.arguments().and_then(|req| self.handler.add_screen(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

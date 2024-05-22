@@ -115,6 +115,19 @@ class DeleteImage implements PlansEvent {
   DeleteImage({required this.imageId});
 }
 
+class AddScreen implements PlansEvent {
+  final double x;
+  final double y;
+  final double width;
+  final double height;
+
+  AddScreen(
+      {required this.x,
+        required this.y,
+        required this.width,
+        required this.height});
+}
+
 class PlansState {
   final int tabIndex;
   final List<Plan> plans;
@@ -219,6 +232,18 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
     on<DeleteImage>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       await api.removeImage(plan.name, event.imageId);
+      await _refreshPlans(emit);
+    });
+    on<AddScreen>((event, emit) async {
+      var plan = state.plans[state.tabIndex];
+      AddScreenRequest request = AddScreenRequest(
+        x: event.x,
+        y: event.y,
+        width: event.width,
+        height: event.height,
+        planId: plan.name,
+      );
+      await api.addScreen(request);
       await _refreshPlans(emit);
     });
     this.add(FetchPlans());

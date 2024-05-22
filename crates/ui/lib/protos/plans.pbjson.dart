@@ -207,6 +207,24 @@ final $typed_data.Uint8List removeImageRequestDescriptor = $convert.base64Decode
     'ChJSZW1vdmVJbWFnZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEhkKCGltYWdlX2'
     'lkGAIgASgJUgdpbWFnZUlk');
 
+@$core.Deprecated('Use addScreenRequestDescriptor instead')
+const AddScreenRequest$json = {
+  '1': 'AddScreenRequest',
+  '2': [
+    {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    {'1': 'x', '3': 2, '4': 1, '5': 1, '10': 'x'},
+    {'1': 'y', '3': 3, '4': 1, '5': 1, '10': 'y'},
+    {'1': 'width', '3': 4, '4': 1, '5': 1, '10': 'width'},
+    {'1': 'height', '3': 5, '4': 1, '5': 1, '10': 'height'},
+  ],
+};
+
+/// Descriptor for `AddScreenRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addScreenRequestDescriptor = $convert.base64Decode(
+    'ChBBZGRTY3JlZW5SZXF1ZXN0EhcKB3BsYW5faWQYASABKAlSBnBsYW5JZBIMCgF4GAIgASgBUg'
+    'F4EgwKAXkYAyABKAFSAXkSFAoFd2lkdGgYBCABKAFSBXdpZHRoEhYKBmhlaWdodBgFIAEoAVIG'
+    'aGVpZ2h0');
+
 @$core.Deprecated('Use plansDescriptor instead')
 const Plans$json = {
   '1': 'Plans',
@@ -260,17 +278,17 @@ const PlanScreen$json = {
   '1': 'PlanScreen',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
-    {'1': 'x', '3': 2, '4': 1, '5': 5, '10': 'x'},
-    {'1': 'y', '3': 3, '4': 1, '5': 5, '10': 'y'},
-    {'1': 'width', '3': 4, '4': 1, '5': 13, '10': 'width'},
-    {'1': 'height', '3': 5, '4': 1, '5': 13, '10': 'height'},
+    {'1': 'x', '3': 2, '4': 1, '5': 1, '10': 'x'},
+    {'1': 'y', '3': 3, '4': 1, '5': 1, '10': 'y'},
+    {'1': 'width', '3': 4, '4': 1, '5': 1, '10': 'width'},
+    {'1': 'height', '3': 5, '4': 1, '5': 1, '10': 'height'},
   ],
 };
 
 /// Descriptor for `PlanScreen`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List planScreenDescriptor = $convert.base64Decode(
-    'CgpQbGFuU2NyZWVuEg4KAmlkGAEgASgNUgJpZBIMCgF4GAIgASgFUgF4EgwKAXkYAyABKAVSAX'
-    'kSFAoFd2lkdGgYBCABKA1SBXdpZHRoEhYKBmhlaWdodBgFIAEoDVIGaGVpZ2h0');
+    'CgpQbGFuU2NyZWVuEg4KAmlkGAEgASgNUgJpZBIMCgF4GAIgASgBUgF4EgwKAXkYAyABKAFSAX'
+    'kSFAoFd2lkdGgYBCABKAFSBXdpZHRoEhYKBmhlaWdodBgFIAEoAVIGaGVpZ2h0');
 
 @$core.Deprecated('Use planImageDescriptor instead')
 const PlanImage$json = {

@@ -18,5 +18,7 @@ abstract class PlansApi {
   Future<void> resizeImage(ResizeImageRequest request);
   Future<void> removeImage(String planId, String imageId);
 
+  Future<void> addScreen(AddScreenRequest request);
+
   Future<FixturesRefPointer?> getFixturesPointer();
 }

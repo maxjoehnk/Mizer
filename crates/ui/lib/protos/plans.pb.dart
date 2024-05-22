@@ -906,6 +906,112 @@ class RemoveImageRequest extends $pb.GeneratedMessage {
   void clearImageId() => clearField(2);
 }
 
+class AddScreenRequest extends $pb.GeneratedMessage {
+  factory AddScreenRequest({
+    $core.String? planId,
+    $core.double? x,
+    $core.double? y,
+    $core.double? width,
+    $core.double? height,
+  }) {
+    final $result = create();
+    if (planId != null) {
+      $result.planId = planId;
+    }
+    if (x != null) {
+      $result.x = x;
+    }
+    if (y != null) {
+      $result.y = y;
+    }
+    if (width != null) {
+      $result.width = width;
+    }
+    if (height != null) {
+      $result.height = height;
+    }
+    return $result;
+  }
+  AddScreenRequest._() : super();
+  factory AddScreenRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddScreenRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddScreenRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddScreenRequest clone() => AddScreenRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddScreenRequest copyWith(void Function(AddScreenRequest) updates) => super.copyWith((message) => updates(message as AddScreenRequest)) as AddScreenRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AddScreenRequest create() => AddScreenRequest._();
+  AddScreenRequest createEmptyInstance() => create();
+  static $pb.PbList<AddScreenRequest> createRepeated() => $pb.PbList<AddScreenRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddScreenRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddScreenRequest>(create);
+  static AddScreenRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get planId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set planId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlanId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlanId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get x => $_getN(1);
+  @$pb.TagNumber(2)
+  set x($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasX() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearX() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get y => $_getN(2);
+  @$pb.TagNumber(3)
+  set y($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasY() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearY() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get width => $_getN(3);
+  @$pb.TagNumber(4)
+  set width($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWidth() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWidth() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get height => $_getN(4);
+  @$pb.TagNumber(5)
+  set height($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasHeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHeight() => clearField(5);
+}
+
 class Plans extends $pb.GeneratedMessage {
   factory Plans({
     $core.Iterable<Plan>? plans,
@@ -1135,10 +1241,10 @@ class FixturePosition extends $pb.GeneratedMessage {
 class PlanScreen extends $pb.GeneratedMessage {
   factory PlanScreen({
     $core.int? id,
-    $core.int? x,
-    $core.int? y,
-    $core.int? width,
-    $core.int? height,
+    $core.double? x,
+    $core.double? y,
+    $core.double? width,
+    $core.double? height,
   }) {
     final $result = create();
     if (id != null) {
@@ -1164,10 +1270,10 @@ class PlanScreen extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PlanScreen', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.O3)
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OU3)
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -1202,36 +1308,36 @@ class PlanScreen extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get x => $_getIZ(1);
+  $core.double get x => $_getN(1);
   @$pb.TagNumber(2)
-  set x($core.int v) { $_setSignedInt32(1, v); }
+  set x($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasX() => $_has(1);
   @$pb.TagNumber(2)
   void clearX() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get y => $_getIZ(2);
+  $core.double get y => $_getN(2);
   @$pb.TagNumber(3)
-  set y($core.int v) { $_setSignedInt32(2, v); }
+  set y($core.double v) { $_setDouble(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
   void clearY() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get width => $_getIZ(3);
+  $core.double get width => $_getN(3);
   @$pb.TagNumber(4)
-  set width($core.int v) { $_setUnsignedInt32(3, v); }
+  set width($core.double v) { $_setDouble(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasWidth() => $_has(3);
   @$pb.TagNumber(4)
   void clearWidth() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.int get height => $_getIZ(4);
+  $core.double get height => $_getN(4);
   @$pb.TagNumber(5)
-  set height($core.int v) { $_setUnsignedInt32(4, v); }
+  set height($core.double v) { $_setDouble(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasHeight() => $_has(4);
   @$pb.TagNumber(5)

@@ -98,4 +98,9 @@ class PlansPluginApi implements PlansApi {
   Future<void> resizeImage(ResizeImageRequest request) async {
     await channel.invokeMethod("resizeImage", request.writeToBuffer());
   }
+
+  @override
+  Future<void> addScreen(AddScreenRequest request) async {
+    await channel.invokeMethod("addScreen", request.writeToBuffer());
+  }
 }

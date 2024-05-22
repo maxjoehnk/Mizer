@@ -194,4 +194,18 @@ impl<R: RuntimeApi> PlansHandler<R> {
 
         Ok(())
     }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_screen(&self, request: AddScreenRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(AddPlanScreenCommand {
+            plan: request.plan_id,
+            x: request.x,
+            y: request.y,
+            width: request.width,
+            height: request.height,
+        })?;
+
+        Ok(())
+    }
 }

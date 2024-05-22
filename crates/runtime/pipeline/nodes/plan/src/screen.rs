@@ -2,8 +2,8 @@ use image::{Pixel, Rgba};
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
-use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixturePriority;
 use mizer_node::*;
 use mizer_pixel_nodes::texture_to_pixels::TextureToPixelsConverter;
 use mizer_plan::{Plan, PlanScreen, PlanStorage, ScreenId};
@@ -40,8 +40,8 @@ impl ConfigurableNode for PlanScreenNode {
                     .map(move |screen| (plan.name.clone(), screen))
             })
             .map(|(plan, screen)| IdVariant {
-                value: screen.screen_id.0,
-                label: format!("{} / {}", plan, screen.screen_id.0),
+                value: screen.id.0,
+                label: format!("{} / {}", plan, screen.id.0),
             })
             .collect();
 
@@ -70,9 +70,7 @@ impl PlanScreenNode {
 
     fn get_screen(&self, injector: &impl Inject) -> Option<PlanScreen> {
         let plan = self.get_plan(injector)?;
-        plan.screens
-            .into_iter()
-            .find(|s| s.screen_id == self.screen_id)
+        plan.screens.into_iter().find(|s| s.id == self.screen_id)
     }
 
     fn convert_pixels(width: u32, pixels: Vec<Rgba<u8>>) -> Vec<Vec<Color>> {
@@ -142,12 +140,14 @@ impl ProcessingNode for PlanScreenNode {
         let Some(plan) = self.get_plan(context) else {
             return Ok(());
         };
-        let Some(screen) = plan.screens.iter().find(|s| s.screen_id == self.screen_id) else {
+        let Some(screen) = plan.screens.iter().find(|s| s.id == self.screen_id) else {
             return Ok(());
         };
         if let Some(state) = state.as_mut() {
-            if let Some(pixels) = state.post_process(context, screen.width, screen.height)? {
-                let pixel_data = Self::convert_pixels(screen.width, pixels);
+            let width = screen.width.round() as u32;
+            let height = screen.height.round() as u32;
+            if let Some(pixels) = state.post_process(context, width, height)? {
+                let pixel_data = Self::convert_pixels(width, pixels);
                 for fixture in plan.fixtures.iter().filter(|f| screen.contains_fixture(f)) {
                     let (x, y) = screen.translate_position(fixture);
                     // TODO: the downsampling of the input texture does not take into account that pixels can be smaller than 1 pixel

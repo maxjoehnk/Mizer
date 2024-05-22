@@ -99,6 +99,7 @@ command_impl! {
     MovePlanImageCommand,
     ResizePlanImageCommand,
     RemovePlanImageCommand,
+    AddPlanScreenCommand,
     AddLayoutCommand,
     RenameLayoutCommand,
     RemoveLayoutCommand,

@@ -227,7 +227,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         position: globalPosition,
         child: PopupMenu<String>(
             categories: categories.entries
-                .sorted((lhs, rhs) => lhs.key.value.compareTo(rhs.key.value))
+                .sorted((lhs, rhs) => lhs.key.name.compareTo(rhs.key.name))
                 .map((e) => PopupCategory(
                     label: CATEGORY_NAMES[e.key]!,
                     items: e.value

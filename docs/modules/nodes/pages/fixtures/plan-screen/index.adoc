@@ -1,0 +1,17 @@
+= Plan Screen
+include::description.adoc[]
+
+image:fixtures/plan-screen/node.png[Node Preview]
+
+== Settings
+
+include::setting_screen.adoc[leveloffset=+2]
+include::setting_priority.adoc[leveloffset=+2]
+
+== Outputs
+
+
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]

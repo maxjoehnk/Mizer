@@ -7,11 +7,8 @@ image:connections/midi-input/node.png[Node Preview]
 
 include::setting_device.adoc[leveloffset=+2]
 include::setting_binding.adoc[leveloffset=+2]
-include::setting_mode.adoc[leveloffset=+2]
-include::setting_channel.adoc[leveloffset=+2]
-include::setting_port.adoc[leveloffset=+2]
-include::setting_range_from.adoc[leveloffset=+2]
-include::setting_range_to.adoc[leveloffset=+2]
+include::setting_page.adoc[leveloffset=+2]
+include::setting_control.adoc[leveloffset=+2]
 
 == Outputs
 

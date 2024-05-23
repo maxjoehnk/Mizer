@@ -5,7 +5,6 @@ image:pixel/dmx-pixels/node.png[Node Preview]
 
 == Settings
 
-include::setting_output.adoc[leveloffset=+2]
 include::setting_width.adoc[leveloffset=+2]
 include::setting_height.adoc[leveloffset=+2]
 include::setting_start_universe.adoc[leveloffset=+2]

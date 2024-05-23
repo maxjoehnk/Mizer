@@ -1,0 +1,20 @@
+= Drop Shadow
+include::description.adoc[]
+
+image:video/drop-shadow/node.png[Node Preview]
+
+== Settings
+
+include::setting_y_offset.adoc[leveloffset=+2]
+include::setting_x_offset.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_input.adoc[leveloffset=+2]
+include::port_input_color.adoc[leveloffset=+2]
+include::port_input_x_offset.adoc[leveloffset=+2]
+include::port_input_y_offset.adoc[leveloffset=+2]

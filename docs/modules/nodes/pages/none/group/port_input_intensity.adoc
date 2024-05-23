@@ -1,0 +1,3 @@
+= Intensity
+  
+Type: Single

@@ -6,6 +6,7 @@ image:standard/conditional/node.png[Node Preview]
 == Settings
 
 include::setting_threshold.adoc[leveloffset=+2]
+include::setting_port_type.adoc[leveloffset=+2]
 
 == Outputs
 

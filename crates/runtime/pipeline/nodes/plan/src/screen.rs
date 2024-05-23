@@ -37,20 +37,31 @@ impl ConfigurableNode for PlanScreenNode {
                     .into_iter()
                     .map(move |screen| (plan.name.clone(), screen))
             })
-            .map(|(plan, screen)| IdVariant {
-                value: screen.id.0,
-                label: format!("{} / {}", plan, screen.id.0),
+            .map(|(plan, screen)| SelectVariant::Item {
+                value: format!("{}-{}", plan, screen.id.0).into(),
+                label: format!("{} / {}", plan, screen.id.0).into(),
             })
             .collect();
 
+        let selected = format!("{}-{}", self.plan, self.screen_id.0);
+
         vec![
-            setting!(id SCREEN_SETTING, self.screen_id.0, screens),
+            setting!(select SCREEN_SETTING, selected, screens),
             setting!(enum PRIORITY_SETTING, self.priority),
         ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(id setting, SCREEN_SETTING, self.screen_id, ScreenId);
+        if matches!(setting.value, NodeSettingValue::Select { .. }) && setting.id == SCREEN_SETTING {
+            if let NodeSettingValue::Select { value, .. } = setting.value {
+                let parts = value.split('-').collect::<Vec<_>>();
+                self.plan = parts[0].to_string();
+                let screen_id = parts[1].parse::<u32>()?;
+                self.screen_id = ScreenId(screen_id);
+
+                return Ok(());
+            }
+        }
         update!(enum setting, PRIORITY_SETTING, self.priority);
 
         Ok(())

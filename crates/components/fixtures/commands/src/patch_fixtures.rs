@@ -79,10 +79,8 @@ impl<'a> Command<'a> for PatchFixturesCommand {
     type Dependencies = (
         Ref<FixtureManager>,
         Ref<FixtureLibrary>,
-        RefMut<PipelineAccess>,
-        RefMut<ExecutionPlanner>,
     );
-    type State = Vec<sub_command!(AddNodeCommand)>;
+    type State = ();
     type Result = ();
 
     fn label(&self) -> String {
@@ -91,11 +89,9 @@ impl<'a> Command<'a> for PatchFixturesCommand {
 
     fn apply(
         &self,
-        (fixture_manager, fixture_library, pipeline, planner): (
+        (fixture_manager, fixture_library): (
             &FixtureManager,
             &FixtureLibrary,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let definition = fixture_library
@@ -105,7 +101,6 @@ impl<'a> Command<'a> for PatchFixturesCommand {
         let mode = definition
             .get_mode(&self.mode)
             .ok_or_else(|| anyhow::anyhow!("Unknown fixture mode"))?;
-        let mut paths = Vec::with_capacity(self.count as usize);
         for i in 0..self.count {
             let fixture_id = self.start_id + i;
             let name = Self::build_name(&captures, i);
@@ -124,42 +119,22 @@ impl<'a> Command<'a> for PatchFixturesCommand {
                 Some(universe),
                 Default::default(),
             );
-            let node = FixtureNode {
-                fixture_id,
-                ..Default::default()
-            };
-            let sub_cmd = AddNodeCommand {
-                node_type: NodeType::Fixture,
-                designer: NodeDesigner {
-                    hidden: true,
-                    ..Default::default()
-                },
-                node: Some(node.into()),
-                parent: None,
-            };
-            let (_, path) = sub_cmd.apply((pipeline, planner))?;
-            paths.push((sub_cmd, path));
         }
 
-        Ok(((), paths))
+        Ok(((), ()))
     }
 
     fn revert(
         &self,
-        (fixture_manager, _, pipeline, planner): (
+        (fixture_manager, _): (
             &FixtureManager,
             &FixtureLibrary,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
         ),
-        state: Self::State,
+        _state: Self::State,
     ) -> anyhow::Result<()> {
         for i in 0..self.count {
             let fixture_id = self.start_id + i;
             fixture_manager.delete_fixture(fixture_id);
-        }
-        for (cmd, path) in state {
-            cmd.revert((pipeline, planner), path)?;
         }
 
         Ok(())

@@ -31,10 +31,10 @@ impl DeviceStateWriter {
                 tracing::trace!("Inserting {control_type:?} => {value:?}");
                 self.write.update(control_type, CopyValue::from(value));
             }
-            MidiMessage::NoteOff(channel, control, value) => {
+            MidiMessage::NoteOff(channel, control, _) => {
                 let control_type = MidiControlType::Note(channel, control);
                 let value = MidiValue {
-                    value,
+                    value: 0,
                     timestamp: event.timestamp,
                 };
                 tracing::trace!("Inserting {control_type:?} => {value:?}");

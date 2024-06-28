@@ -10,8 +10,9 @@ class PipelineState {
   final List<Node> allNodes;
   final List<NodeConnection> channels;
   final List<AvailableNode> availableNodes;
+  final List<String> selectedNodes;
 
-  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes);
+  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes, { this.selectedNodes = const [] });
 
   factory PipelineState.empty() {
     return PipelineState([], [], [], []);
@@ -30,12 +31,14 @@ class PipelineState {
     List<Node>? allNodes,
     List<NodeConnection>? channels,
     List<AvailableNode>? availableNodes,
+    List<String>? selectedNodes,
   }) {
     return PipelineState(
       nodes ?? this.nodes,
       allNodes ?? this.allNodes,
       channels ?? this.channels,
       availableNodes ?? this.availableNodes,
+      selectedNodes: selectedNodes ?? [],
     );
   }
 
@@ -99,10 +102,10 @@ class MoveNode {
   }
 }
 
-class DeleteNode extends NodesEvent {
-  final String node;
+class DeleteNodes extends NodesEvent {
+  final List<String> nodes;
 
-  DeleteNode(this.node);
+  DeleteNodes(this.nodes);
 }
 
 class HideNode extends NodesEvent {
@@ -124,11 +127,11 @@ class DisconnectPort extends NodesEvent {
   DisconnectPort(this.node, this.port);
 }
 
-class DuplicateNode extends NodesEvent {
-  final String node;
+class DuplicateNodes extends NodesEvent {
+  final List<String> nodes;
   final String? parent;
 
-  DuplicateNode(this.node, {this.parent});
+  DuplicateNodes(this.nodes, {this.parent});
 }
 
 class GroupNodes extends NodesEvent {
@@ -214,8 +217,8 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       await api.moveNodes(request);
       emit(await _fetchNodes());
     });
-    on<DeleteNode>((event, emit) async {
-      await api.deleteNode(event.node);
+    on<DeleteNodes>((event, emit) async {
+      await api.deleteNodes(event.nodes);
       emit(await _fetchNodes());
     });
     on<HideNode>((event, emit) async {
@@ -240,9 +243,10 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       await api.disconnectPort(event.node, event.port);
       emit(await _fetchNodes());
     });
-    on<DuplicateNode>((event, emit) async {
-      await api.duplicateNode(DuplicateNodeRequest(path: event.node, parent: event.parent));
-      emit(await _fetchNodes());
+    on<DuplicateNodes>((event, emit) async {
+      var newNodes = await api.duplicateNodes(DuplicateNodesRequest(paths: event.nodes, parent: event.parent));
+      var state = await _fetchNodes();
+      emit(state.copyWith(selectedNodes: newNodes));
     });
     on<GroupNodes>((event, emit) async {
       await api.groupNodes(event.nodes, parent: event.parent);

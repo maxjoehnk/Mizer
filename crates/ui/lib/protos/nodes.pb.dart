@@ -98,26 +98,26 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   void clearParent() => clearField(3);
 }
 
-class DuplicateNodeRequest extends $pb.GeneratedMessage {
-  factory DuplicateNodeRequest({
-    $core.String? path,
+class DuplicateNodesRequest extends $pb.GeneratedMessage {
+  factory DuplicateNodesRequest({
+    $core.Iterable<$core.String>? paths,
     $core.String? parent,
   }) {
     final $result = create();
-    if (path != null) {
-      $result.path = path;
+    if (paths != null) {
+      $result.paths.addAll(paths);
     }
     if (parent != null) {
       $result.parent = parent;
     }
     return $result;
   }
-  DuplicateNodeRequest._() : super();
-  factory DuplicateNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DuplicateNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  DuplicateNodesRequest._() : super();
+  factory DuplicateNodesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DuplicateNodesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DuplicateNodeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'path')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DuplicateNodesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'paths')
     ..aOS(2, _omitFieldNames ? '' : 'parent')
     ..hasRequiredFields = false
   ;
@@ -126,31 +126,25 @@ class DuplicateNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  DuplicateNodeRequest clone() => DuplicateNodeRequest()..mergeFromMessage(this);
+  DuplicateNodesRequest clone() => DuplicateNodesRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DuplicateNodeRequest copyWith(void Function(DuplicateNodeRequest) updates) => super.copyWith((message) => updates(message as DuplicateNodeRequest)) as DuplicateNodeRequest;
+  DuplicateNodesRequest copyWith(void Function(DuplicateNodesRequest) updates) => super.copyWith((message) => updates(message as DuplicateNodesRequest)) as DuplicateNodesRequest;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static DuplicateNodeRequest create() => DuplicateNodeRequest._();
-  DuplicateNodeRequest createEmptyInstance() => create();
-  static $pb.PbList<DuplicateNodeRequest> createRepeated() => $pb.PbList<DuplicateNodeRequest>();
+  static DuplicateNodesRequest create() => DuplicateNodesRequest._();
+  DuplicateNodesRequest createEmptyInstance() => create();
+  static $pb.PbList<DuplicateNodesRequest> createRepeated() => $pb.PbList<DuplicateNodesRequest>();
   @$core.pragma('dart2js:noInline')
-  static DuplicateNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DuplicateNodeRequest>(create);
-  static DuplicateNodeRequest? _defaultInstance;
+  static DuplicateNodesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DuplicateNodesRequest>(create);
+  static DuplicateNodesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get path => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set path($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPath() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPath() => clearField(1);
+  $core.List<$core.String> get paths => $_getList(0);
 
   @$pb.TagNumber(2)
   $core.String get parent => $_getSZ(1);

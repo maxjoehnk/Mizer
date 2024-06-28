@@ -46,6 +46,13 @@ class NodeEditorModel extends ChangeNotifier {
         .toList();
   }
 
+  List<NodeModel> get selection {
+    if (selectedNode == null) {
+      return otherSelectedNodes;
+    }
+    return [selectedNode!, ...otherSelectedNodes];
+  }
+
   /// Rebuild the node and port states
   void refresh(PipelineState nodes) {
     this._disposeOldNodes();
@@ -65,8 +72,20 @@ class NodeEditorModel extends ChangeNotifier {
     }
     this.updateNodes();
     this.update();
-    this.selectedNode =
-        this.nodes.firstWhereOrNull((element) => element.node.path == this.selectedNode?.node.path);
+    if (nodes.selectedNodes.isNotEmpty) {
+      this.selectedNode = null;
+      this.otherSelectedNodes = nodes.selectedNodes
+          .map((path) => this.nodes.firstWhereOrNull((element) => element.node.path == path))
+          .whereNotNull()
+          .toList();
+    }else {
+      this.selectedNode =
+          this.nodes.firstWhereOrNull((element) => element.node.path == this.selectedNode?.node.path);
+      this.otherSelectedNodes = this.otherSelectedNodes
+          .map((node) => this.nodes.firstWhereOrNull((element) => element.node.path == node.node.path))
+          .whereNotNull()
+          .toList();
+    }
   }
 
   NodeModel _createModel(Node node) {

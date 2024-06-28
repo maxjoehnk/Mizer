@@ -49,6 +49,29 @@ impl PipelineAccess {
         Self::default()
     }
 
+    pub fn duplicate_node(
+        &mut self,
+        path: &NodePath,
+    ) -> anyhow::Result<NodePath> {
+        let config = {
+            let node_to_duplicate = self.nodes_view.get(path).ok_or_else(|| anyhow::anyhow!("Unknown node {path}"))?;
+            let config = node_to_duplicate.downcast();
+            
+            config
+        };
+        let designer = self
+            .designer
+            .read()
+            .get(&path)
+            .cloned()
+            .unwrap_or_default();
+
+        let new_path = self.handle_add_node(config.node_type(), designer, Some(config))?;
+        self.ports.insert(new_path.clone(), self.ports.get(path).map(|ports| ports.value().clone()).unwrap_or_default());
+        
+        Ok(new_path)
+    }
+
     pub fn handle_add_node(
         &mut self,
         node_type: NodeType,

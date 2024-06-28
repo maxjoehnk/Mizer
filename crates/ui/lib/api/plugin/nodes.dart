@@ -73,8 +73,8 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> deleteNode(String path) {
-    return channel.invokeMethod("deleteNode", path);
+  Future<void> deleteNodes(List<String> paths) {
+    return channel.invokeMethod("deleteNodes", paths);
   }
 
   Future<NodeHistoryPointer> getHistoryPointer(String path) async {
@@ -106,8 +106,10 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> duplicateNode(DuplicateNodeRequest request) async {
-    await channel.invokeMethod("duplicateNode", request.writeToBuffer());
+  Future<List<String>> duplicateNodes(DuplicateNodesRequest request) async {
+    List<Object?> response = await channel.invokeMethod("duplicateNodes", request.writeToBuffer());
+
+    return response.map((e) => e as String).toList();
   }
 
   @override

@@ -3,7 +3,7 @@ use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_layouts::LayoutStorage;
 use mizer_nodes::{Node, NodeDowncast};
-use mizer_runtime::commands::DeleteNodeCommand;
+use mizer_runtime::commands::DeleteNodesCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use mizer_runtime::ExecutionPlanner;
 use serde::{Deserialize, Serialize};
@@ -21,7 +21,7 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
         RefMut<ExecutionPlanner>,
         Ref<LayoutStorage>,
     );
-    type State = Vec<(Fixture, sub_command!(DeleteNodeCommand))>;
+    type State = Vec<(Fixture, sub_command!(DeleteNodesCommand))>;
     type Result = ();
 
     fn label(&self) -> String {
@@ -54,7 +54,7 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
                 }
             })
             .filter(|(_, node)| self.fixture_ids.contains(&node.fixture_id))
-            .map(|(path, node)| (node.fixture_id, DeleteNodeCommand { path }))
+            .map(|(path, node)| (node.fixture_id, DeleteNodesCommand { paths: vec![path] }))
             .collect::<HashMap<_, _>>();
 
         let mut states = Vec::new();

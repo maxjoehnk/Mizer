@@ -4,7 +4,7 @@ use mizer_fixtures::programmer::Group;
 use mizer_fixtures::GroupId;
 use mizer_layouts::LayoutStorage;
 use mizer_nodes::{Node, NodeDowncast};
-use mizer_runtime::commands::DeleteNodeCommand;
+use mizer_runtime::commands::DeleteNodesCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use mizer_runtime::ExecutionPlanner;
 use serde::{Deserialize, Serialize};
@@ -23,8 +23,8 @@ impl<'a> Command<'a> for DeleteGroupCommand {
     );
     type State = (
         Group,
-        DeleteNodeCommand,
-        <DeleteNodeCommand as Command<'a>>::State,
+        DeleteNodesCommand,
+        <DeleteNodesCommand as Command<'a>>::State,
     );
     type Result = ();
 
@@ -58,7 +58,7 @@ impl<'a> Command<'a> for DeleteGroupCommand {
             .map(|node| node.key().clone())
             .ok_or_else(|| anyhow::anyhow!("Missing node for group {}", self.id))?;
 
-        let sub_cmd = DeleteNodeCommand { path };
+        let sub_cmd = DeleteNodesCommand { paths: vec![path] };
         let (_, state) = sub_cmd.apply((pipeline, planner, layout_storage))?;
 
         Ok(((), (group, sub_cmd, state)))

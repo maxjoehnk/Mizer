@@ -19,7 +19,7 @@ abstract class NodesApi {
 
   Future<void> moveNodes(MoveNodesRequest request);
 
-  Future<void> deleteNode(String path);
+  Future<void> deleteNodes(List<String> paths);
 
   Future<void> hideNode(String path);
 
@@ -31,7 +31,7 @@ abstract class NodesApi {
 
   Future<void> disconnectPort(String path, String port);
 
-  Future<void> duplicateNode(DuplicateNodeRequest request);
+  Future<List<String>> duplicateNodes(DuplicateNodesRequest request);
 
   Future<void> groupNodes(List<String> nodes, {String? parent});
 

@@ -206,11 +206,11 @@ class BaseNodeState extends State<BaseNode> {
 
   void _onDuplicateNode(BuildContext context) async {
     var parent = context.read<NodeEditorModel>().parent?.node.path;
-    context.read<NodesBloc>().add(DuplicateNode(node.path, parent: parent));
+    context.read<NodesBloc>().add(DuplicateNodes([node.path], parent: parent));
   }
 
   void _onDeleteNode(BuildContext context) async {
-    context.read<NodesBloc>().add(DeleteNode(node.path));
+    context.read<NodesBloc>().add(DeleteNodes([node.path]));
   }
 
   Future<ui.Image> screenshot() async {

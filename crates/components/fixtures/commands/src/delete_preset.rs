@@ -2,7 +2,7 @@ use mizer_commander::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{GenericPreset, PresetId};
 use mizer_nodes::{Node, NodeDowncast};
-use mizer_runtime::commands::DeleteNodeCommand;
+use mizer_runtime::commands::DeleteNodesCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
 
@@ -15,9 +15,9 @@ impl<'a> Command<'a> for DeletePresetCommand {
     type Dependencies = (
         Ref<FixtureManager>,
         Ref<PipelineAccess>,
-        SubCommand<DeleteNodeCommand>,
+        SubCommand<DeleteNodesCommand>,
     );
-    type State = (GenericPreset, sub_command!(DeleteNodeCommand));
+    type State = (GenericPreset, sub_command!(DeleteNodesCommand));
     type Result = ();
 
     fn label(&self) -> String {
@@ -29,7 +29,7 @@ impl<'a> Command<'a> for DeletePresetCommand {
         (fixture_manager, pipeline, delete_node_runner): (
             &FixtureManager,
             &PipelineAccess,
-            SubCommandRunner<DeleteNodeCommand>,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let preset = fixture_manager
@@ -49,7 +49,7 @@ impl<'a> Command<'a> for DeletePresetCommand {
             .map(|node| node.key().clone())
             .ok_or_else(|| anyhow::anyhow!("Missing node for preset {}", self.id))?;
 
-        let sub_cmd = DeleteNodeCommand { path };
+        let sub_cmd = DeleteNodesCommand { paths: vec![path] };
         let (_, state) = delete_node_runner.apply(sub_cmd)?;
 
         Ok(((), (preset, state)))
@@ -60,7 +60,7 @@ impl<'a> Command<'a> for DeletePresetCommand {
         (fixture_manager, _, delete_node_runner): (
             &FixtureManager,
             &PipelineAccess,
-            SubCommandRunner<DeleteNodeCommand>,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
         (preset, sub_cmd): Self::State,
     ) -> anyhow::Result<()> {

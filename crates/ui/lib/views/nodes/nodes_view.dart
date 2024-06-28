@@ -74,8 +74,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       hotkeyMap: {
         // TODO: determine position for new node
         "add_node": () => {},
-        "duplicate_node": () => _duplicateNode(context),
-        "delete_node": () => _deleteNode(context),
+        "duplicate_node": () => _duplicateNodes(context),
+        "delete_node": () => _deleteNodes(context),
         "group_nodes": () => _groupNodes(context),
         "rename_node": () => _renameNode(context),
       },
@@ -145,14 +145,14 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     onClick: () => _groupNodes(context),
                     hotkeyId: "group_nodes"),
                 PanelActionModel(
-                    label: "Delete Node".i18n,
-                    disabled: model.selectedNode == null || !model.selectedNode!.node.canDelete,
-                    onClick: () => _deleteNode(context),
+                    label: "Delete Nodes".i18n,
+                    disabled: model.selection.isEmpty || model.selection.where((s) => s.node.canDelete).isEmpty,
+                    onClick: () => _deleteNodes(context),
                     hotkeyId: "delete_node"),
                 PanelActionModel(
-                    label: "Duplicate Node".i18n,
-                    disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate,
-                    onClick: () => _duplicateNode(context),
+                    label: "Duplicate Nodes".i18n,
+                    disabled: model.selection.isEmpty || model.selection.where((s) => s.node.canDuplicate).isEmpty,
+                    onClick: () => _duplicateNodes(context),
                     hotkeyId: "duplicate_node"),
                 PanelActionModel(
                     label: "Rename Node".i18n,
@@ -240,17 +240,22 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     });
   }
 
-  void _deleteNode(BuildContext context) {
-    if (widget.nodeEditorModel.selectedNode != null &&
-        widget.nodeEditorModel.selectedNode!.node.canDelete) {
-      context.read<NodesBloc>().add(DeleteNode(widget.nodeEditorModel.selectedNode!.node.path));
+  void _deleteNodes(BuildContext context) {
+    if (model.selection.where((s) => s.node.canDelete).isNotEmpty) {
+      context.read<NodesBloc>().add(DeleteNodes(widget.nodeEditorModel.selection
+          .where((s) => s.node.canDelete)
+          .map((e) => e.node.path)
+          .toList()));
     }
   }
 
-  void _duplicateNode(BuildContext context) {
-    if (widget.nodeEditorModel.selectedNode != null &&
-        widget.nodeEditorModel.selectedNode!.node.canDuplicate) {
-      context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path,
+  void _duplicateNodes(BuildContext context) {
+    if (model.selection.where((s) => s.node.canDuplicate).isNotEmpty) {
+      context.read<NodesBloc>().add(DuplicateNodes(
+          widget.nodeEditorModel.selection
+              .where((s) => s.node.canDuplicate)
+              .map((e) => e.node.path)
+              .toList(),
           parent: widget.nodeEditorModel.parent?.node.path));
     }
   }

@@ -6,10 +6,10 @@ use crate::pipeline_access::PipelineAccess;
 
 pub use self::add_link::*;
 pub use self::add_node::*;
-pub use self::delete_node::*;
+pub use self::delete_nodes::*;
 pub use self::disconnect_port::*;
 pub use self::disconnect_ports::*;
-pub use self::duplicate_node::*;
+pub use self::duplicate_nodes::*;
 pub use self::group_nodes::*;
 pub use self::hide_node::*;
 pub use self::move_node::*;
@@ -21,10 +21,10 @@ pub use self::update_node_setting::*;
 
 mod add_link;
 mod add_node;
-mod delete_node;
+mod delete_nodes;
 mod disconnect_port;
 mod disconnect_ports;
-mod duplicate_node;
+mod duplicate_nodes;
 mod group_nodes;
 mod hide_node;
 mod move_node;

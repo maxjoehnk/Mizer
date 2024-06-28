@@ -125,11 +125,11 @@ final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode(
     'kubWl6ZXIubm9kZXMuTm9kZVBvc2l0aW9uUghwb3NpdGlvbhIbCgZwYXJlbnQYAyABKAlIAFIG'
     'cGFyZW50iAEBQgkKB19wYXJlbnQ=');
 
-@$core.Deprecated('Use duplicateNodeRequestDescriptor instead')
-const DuplicateNodeRequest$json = {
-  '1': 'DuplicateNodeRequest',
+@$core.Deprecated('Use duplicateNodesRequestDescriptor instead')
+const DuplicateNodesRequest$json = {
+  '1': 'DuplicateNodesRequest',
   '2': [
-    {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    {'1': 'paths', '3': 1, '4': 3, '5': 9, '10': 'paths'},
     {'1': 'parent', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
   ],
   '8': [
@@ -137,10 +137,10 @@ const DuplicateNodeRequest$json = {
   ],
 };
 
-/// Descriptor for `DuplicateNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List duplicateNodeRequestDescriptor = $convert.base64Decode(
-    'ChREdXBsaWNhdGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhsKBnBhcmVudBgCIA'
-    'EoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
+/// Descriptor for `DuplicateNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List duplicateNodesRequestDescriptor = $convert.base64Decode(
+    'ChVEdXBsaWNhdGVOb2Rlc1JlcXVlc3QSFAoFcGF0aHMYASADKAlSBXBhdGhzEhsKBnBhcmVudB'
+    'gCIAEoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
 
 @$core.Deprecated('Use disconnectPortRequestDescriptor instead')
 const DisconnectPortRequest$json = {

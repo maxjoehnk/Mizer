@@ -1,7 +1,7 @@
 use mizer_commander::{sub_command, Command, Ref, RefMut};
 use mizer_layouts::LayoutStorage;
 use mizer_nodes::{Node, NodeDowncast};
-use mizer_runtime::commands::DeleteNodeCommand;
+use mizer_runtime::commands::DeleteNodesCommand;
 use mizer_runtime::pipeline_access::PipelineAccess;
 use mizer_runtime::ExecutionPlanner;
 use mizer_sequencer::{Sequence, Sequencer};
@@ -19,7 +19,7 @@ impl<'a> Command<'a> for DeleteSequenceCommand {
         RefMut<ExecutionPlanner>,
         Ref<LayoutStorage>,
     );
-    type State = (Sequence, sub_command!(DeleteNodeCommand));
+    type State = (Sequence, sub_command!(DeleteNodesCommand));
     type Result = ();
 
     fn label(&self) -> String {
@@ -50,7 +50,7 @@ impl<'a> Command<'a> for DeleteSequenceCommand {
             })
             .map(|node| node.key().clone())
             .ok_or_else(|| anyhow::anyhow!("Missing node for sequence {}", self.sequence_id))?;
-        let sub_cmd = DeleteNodeCommand { path };
+        let sub_cmd = DeleteNodesCommand { paths: vec![path] };
         let (_, path) = sub_cmd.apply((pipeline, planner, layout_storage))?;
 
         Ok(((), (sequence, (sub_cmd, path))))

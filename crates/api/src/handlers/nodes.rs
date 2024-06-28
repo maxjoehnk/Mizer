@@ -283,8 +283,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
-        self.runtime.run_command(DeleteNodeCommand { path })?;
+    pub fn delete_nodes(&self, paths: Vec<NodePath>) -> anyhow::Result<()> {
+        self.runtime.run_command(DeleteNodesCommand { paths })?;
 
         Ok(())
     }
@@ -314,13 +314,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn duplicate_node(&self, request: DuplicateNodeRequest) -> anyhow::Result<()> {
-        self.runtime.run_command(DuplicateNodeCommand {
-            path: request.path.into(),
+    pub fn duplicate_nodes(&self, request: DuplicateNodesRequest) -> anyhow::Result<Vec<NodePath>> {
+        let nodes = self.runtime.run_command(DuplicateNodesCommand {
+            paths: request.paths.into_iter().map(NodePath::from).collect(),
             parent: request.parent.map(NodePath::from),
         })?;
 
-        Ok(())
+        Ok(nodes.into_iter().map(|node| node.path).collect())
     }
 
     #[tracing::instrument(skip(self))]

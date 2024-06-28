@@ -424,7 +424,7 @@ pub struct IdVariant {
     pub label: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize, Hash, PartialOrd, Ord)]
 pub enum SelectVariant {
     Group {
         label: Arc<String>,

@@ -295,6 +295,7 @@ mod tests {
                     hidden: false,
                     position: NodePosition { x: 1., y: 2. },
                     scale: 3.,
+                    color: Default::default(),
                 },
             }
         );

@@ -60,7 +60,7 @@ impl GroupControlNode {
 impl ConfigurableNode for GroupControlNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
-        let groups = fixture_manager
+        let mut groups: Vec<_> = fixture_manager
             .get_groups()
             .into_iter()
             .map(|group| IdVariant {
@@ -68,10 +68,13 @@ impl ConfigurableNode for GroupControlNode {
                 label: group.name.clone(),
             })
             .collect();
-        let controls = self
+        groups.sort_by_key(|group| group.label.clone());
+        let mut controls: Vec<_> = self
             .get_controls(fixture_manager)
             .map(|control| SelectVariant::from(control.to_string()))
             .collect();
+        
+        controls.sort();
 
         vec![
             setting!(id GROUP_SETTING, self.group_id, groups),
@@ -152,6 +155,9 @@ impl ProcessingNode for GroupControlNode {
             return Ok(());
         };
 
+        if self.group_id == GroupId::default() {
+            return Ok(());
+        }
         if manager.get_group(self.group_id).is_none() {
             tracing::error!("could not find group for id {}", self.group_id);
             return Ok(());

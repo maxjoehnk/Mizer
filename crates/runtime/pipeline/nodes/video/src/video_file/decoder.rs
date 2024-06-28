@@ -75,7 +75,8 @@ impl VideoDecoder for VideoFileDecoder {
     }
 
     fn decode(&mut self) -> anyhow::Result<Option<Vec<u8>>> {
-        for (stream, packet) in self.context.packets() {
+        for packet in self.context.packets() {
+            let (stream, packet) = packet?;
             if self.stream_index == stream.index() {
                 self.decoder.send_packet(&packet)?;
                 let mut decoded = ffmpeg::frame::Video::empty();

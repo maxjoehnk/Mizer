@@ -132,7 +132,8 @@ impl VideoHandler {
         let mut converter = decoder.converter(ffmpeg::format::Pixel::RGBA)?;
 
         let mut converted_video = None;
-        for (stream, packet) in input_context.packets() {
+        for packet in input_context.packets() {
+            let (stream, packet) = packet?;
             if stream_index == stream.index() {
                 decoder.send_packet(&packet)?;
                 let mut decoded = ffmpeg::frame::Video::empty();

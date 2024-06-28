@@ -18,12 +18,13 @@ const MIN_SETTING: &str = "Min";
 const MAX_SETTING: &str = "Max";
 const OFFSET_SETTING: &str = "Offset";
 const REVERSE_SETTING: &str = "Reverse";
+const RATIO_SETTING: &str = "Ratio";
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct OscillatorNode {
     #[serde(rename = "type")]
     pub oscillator_type: OscillatorType,
-    #[serde(alias = "ratio", default = "default_interval")]
+    #[serde(default = "default_interval")]
     pub interval: f64,
     #[serde(default = "default_max")]
     pub max: f64,
@@ -33,6 +34,8 @@ pub struct OscillatorNode {
     pub offset: f64,
     #[serde(default)]
     pub reverse: bool,
+    #[serde(default = "default_ratio")]
+    pub ratio: f64,
 }
 
 impl Default for OscillatorNode {
@@ -43,6 +46,7 @@ impl Default for OscillatorNode {
             max: 1f64,
             min: 0f64,
             offset: 0f64,
+            ratio: 0.5,
             reverse: false,
         }
     }
@@ -58,6 +62,10 @@ fn default_min() -> f64 {
 
 fn default_max() -> f64 {
     OscillatorNode::default().max
+}
+
+fn default_ratio() -> f64 {
+    OscillatorNode::default().ratio
 }
 
 impl ConfigurableNode for OscillatorNode {
@@ -78,6 +86,9 @@ impl ConfigurableNode for OscillatorNode {
             setting!(OFFSET_SETTING, self.offset)
                 .min_hint(0.)
                 .max_hint(1.),
+            setting!(RATIO_SETTING, self.ratio)
+                .min(0.)
+                .max(1.),
             setting!(REVERSE_SETTING, self.reverse),
         ]
     }
@@ -89,6 +100,7 @@ impl ConfigurableNode for OscillatorNode {
         update!(float setting, MAX_SETTING, self.max);
         update!(float setting, OFFSET_SETTING, self.offset);
         update!(bool setting, REVERSE_SETTING, self.reverse);
+        update!(float setting, RATIO_SETTING, self.ratio);
 
         update_fallback!(setting)
     }
@@ -145,6 +157,7 @@ struct OscillatorContext {
     pub min: f64,
     pub offset: f64,
     pub reverse: bool,
+    pub ratio: f64,
 }
 
 impl Default for OscillatorContext {
@@ -158,6 +171,7 @@ impl Default for OscillatorContext {
             max: node.max,
             offset: node.offset,
             reverse: node.reverse,
+            ratio: node.ratio,
         }
     }
 }
@@ -177,6 +191,7 @@ impl OscillatorContext {
                 .unwrap_or(node.max),
             offset: node.offset,
             reverse: node.reverse,
+            ratio: node.ratio,
         };
 
         context.max = context.max.max(context.min);
@@ -191,7 +206,7 @@ impl OscillatorContext {
         }
         match &self.oscillator_type {
             OscillatorType::Square => {
-                let base = self.interval * 0.5;
+                let base = self.interval * self.ratio;
                 let frame = self.get_frame(beat);
                 if frame > base {
                     self.min
@@ -388,5 +403,21 @@ mod tests {
         let value = node.tick(1.);
 
         assert_eq!(0., value);
+    }
+    
+    #[test_case(0.5, 0.5, 1.0)]
+    #[test_case(0.5, 0.51, 0.0)]
+    #[test_case(0.3, 0.3, 1.0)]
+    #[test_case(0.3, 0.31, 0.0)]
+    fn square_oscillator_should_shift_mid_point_based_on_ratio(ratio: f64, tick: f64, expected: f64) {
+        let node = OscillatorContext {
+            oscillator_type: OscillatorType::Square,
+            ratio,
+            ..Default::default()
+        };
+
+        let value = node.tick(tick);
+
+        assert_eq!(expected, value);
     }
 }

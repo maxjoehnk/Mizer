@@ -260,6 +260,70 @@ class MoveFixturesRequest extends $pb.GeneratedMessage {
   void clearY() => clearField(3);
 }
 
+class TransformFixturesRequest extends $pb.GeneratedMessage {
+  factory TransformFixturesRequest({
+    $core.String? planId,
+    $core.double? rotation,
+  }) {
+    final $result = create();
+    if (planId != null) {
+      $result.planId = planId;
+    }
+    if (rotation != null) {
+      $result.rotation = rotation;
+    }
+    return $result;
+  }
+  TransformFixturesRequest._() : super();
+  factory TransformFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TransformFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TransformFixturesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.plans'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'planId')
+    ..a<$core.double>(2, _omitFieldNames ? '' : 'rotation', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TransformFixturesRequest clone() => TransformFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TransformFixturesRequest copyWith(void Function(TransformFixturesRequest) updates) => super.copyWith((message) => updates(message as TransformFixturesRequest)) as TransformFixturesRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static TransformFixturesRequest create() => TransformFixturesRequest._();
+  TransformFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<TransformFixturesRequest> createRepeated() => $pb.PbList<TransformFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static TransformFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransformFixturesRequest>(create);
+  static TransformFixturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get planId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set planId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlanId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlanId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get rotation => $_getN(1);
+  @$pb.TagNumber(2)
+  set rotation($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRotation() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRotation() => clearField(2);
+}
+
 class AlignFixturesRequest extends $pb.GeneratedMessage {
   factory AlignFixturesRequest({
     $core.String? planId,

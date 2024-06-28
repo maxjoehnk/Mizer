@@ -74,6 +74,11 @@ class PlansPluginApi implements PlansApi {
   }
 
   @override
+  Future<void> transformFixtures(TransformFixturesRequest request) async {
+    await channel.invokeMethod("transformSelection", request.writeToBuffer());
+  }
+
+  @override
   Future<void> spreadFixtures(SpreadFixturesRequest request) async {
     await channel.invokeMethod("spreadFixtures", request.writeToBuffer());
   }

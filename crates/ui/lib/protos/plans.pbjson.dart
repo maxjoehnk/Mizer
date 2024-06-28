@@ -66,6 +66,20 @@ final $typed_data.Uint8List moveFixturesRequestDescriptor = $convert.base64Decod
     'ChNNb3ZlRml4dHVyZXNSZXF1ZXN0EhcKB3BsYW5faWQYASABKAlSBnBsYW5JZBIMCgF4GAIgAS'
     'gBUgF4EgwKAXkYAyABKAFSAXk=');
 
+@$core.Deprecated('Use transformFixturesRequestDescriptor instead')
+const TransformFixturesRequest$json = {
+  '1': 'TransformFixturesRequest',
+  '2': [
+    {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    {'1': 'rotation', '3': 2, '4': 1, '5': 1, '10': 'rotation'},
+  ],
+};
+
+/// Descriptor for `TransformFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List transformFixturesRequestDescriptor = $convert.base64Decode(
+    'ChhUcmFuc2Zvcm1GaXh0dXJlc1JlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEhoKCH'
+    'JvdGF0aW9uGAIgASgBUghyb3RhdGlvbg==');
+
 @$core.Deprecated('Use alignFixturesRequestDescriptor instead')
 const AlignFixturesRequest$json = {
   '1': 'AlignFixturesRequest',

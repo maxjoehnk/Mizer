@@ -209,6 +209,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
   final TextEditingController groupsController = TextEditingController(text: "1");
   final TextEditingController rowGapController = TextEditingController(text: "0");
   final TextEditingController columnGapController = TextEditingController(text: "0");
+  final TextEditingController rotationController = TextEditingController(text: "0");
 
   AlignFixturesRequest_AlignDirection direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT;
 
@@ -257,6 +258,15 @@ class _AlignToolbarState extends State<AlignToolbar> {
         ),
         MizerButton(child: Text("Apply"), onClick: () => _align()),
         Spacer(),
+        SizedBox(
+          width: 200,
+          child: TextFormField(
+            controller: rotationController,
+            decoration: InputDecoration(label: Text("Rotation"), filled: true),
+          ),
+        ),
+        MizerButton(child: Text("Transform"), onClick: () => _transform()),
+        Spacer(),
         MizerButton(child: Text("Square"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
         MizerButton(child: Text("Triangle"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
       ]),
@@ -272,7 +282,14 @@ class _AlignToolbarState extends State<AlignToolbar> {
     bloc.add(
         AlignFixtures(direction: direction, groups: groups, rowGap: rowGap, columnGap: columnGap));
   }
-  
+
+  _transform() {
+    PlansBloc bloc = context.read();
+    int rotation = int.parse(rotationController.text);
+
+    bloc.add(TransformFixtures(rotation: rotation));
+  }
+
   _spread(SpreadFixturesRequest_SpreadGeometry geometry) {
     PlansBloc bloc = context.read();
     bloc.add(SpreadFixtures(geometry: geometry));

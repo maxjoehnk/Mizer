@@ -92,6 +92,7 @@ command_impl! {
     RemovePlanCommand,
     RenamePlanCommand,
     MoveFixturesInPlanCommand,
+    TransformFixturesInPlanCommand,
     AddFixturesToPlanCommand,
     AlignFixturesInPlanCommand,
     SpreadFixturesInPlanCommand,

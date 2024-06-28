@@ -69,6 +69,16 @@ class AlignFixtures implements PlansEvent {
         );
 }
 
+class TransformFixtures implements PlansEvent {
+  final TransformFixturesRequest request;
+
+  TransformFixtures(
+      {required int rotation})
+      : request = TransformFixturesRequest(
+    rotation: rotation.toDouble(),
+  );
+}
+
 class SpreadFixtures implements PlansEvent {
   final SpreadFixturesRequest request;
 
@@ -185,6 +195,12 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
       var plan = state.plans[state.tabIndex];
       event.request.planId = plan.name;
       await api.alignFixtures(event.request);
+      await _refreshPlans(emit);
+    });
+    on<TransformFixtures>((event, emit) async {
+      var plan = state.plans[state.tabIndex];
+      event.request.planId = plan.name;
+      await api.transformFixtures(event.request);
       await _refreshPlans(emit);
     });
     on<SpreadFixtures>((event, emit) async {

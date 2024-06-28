@@ -93,6 +93,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "transformSelection" => {
+                if let Err(err) = call.arguments().and_then(|req| self.handler.transform_selection(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "addImage" => {
                 if let Err(err) = call.arguments().and_then(|req| self.handler.add_image(req)) {
                     resp.respond_error(err);

@@ -23,6 +23,11 @@ message MoveFixturesRequest {
   double y = 3;
 }
 
+message TransformFixturesRequest {
+  string plan_id = 1;
+  double rotation = 2;
+}
+
 message AlignFixturesRequest {
   string plan_id = 1;
   AlignDirection direction = 2;

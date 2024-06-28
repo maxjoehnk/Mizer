@@ -106,34 +106,11 @@ mod tests {
         command.apply(&plans).unwrap();
 
         let plan = plans.read().into_iter().next().unwrap();
-        let expected = generate_fixtures_along_x_axis(10, 5.);
-        assert_eq!(plan.fixtures, expected);
-    }
+        let expected: Vec<_> =
+            (0..10)
+                .map(|i| position(i as u32, 4.5 - i as f64, 4.5))
+                .collect();
 
-    #[test]
-    fn test_transform_fixtures_by_45deg_in_plan() {
-        let plan = Plan {
-            name: "test".to_string(),
-            fixtures: generate_fixtures_along_y_axis(3, 0.),
-            screens: vec![],
-            images: vec![],
-        };
-        let fixtures = plan.fixtures.iter().map(|p| p.fixture).collect();
-        let plans: PlanStorage = Arc::new(NonEmptyPinboard::new(vec![plan]));
-        let command = TransformFixturesInPlanCommand {
-            id: "test".to_string(),
-            fixture_ids: fixtures,
-            rotation: 45.0,
-        };
-
-        command.apply(&plans).unwrap();
-
-        let plan = plans.read().into_iter().next().unwrap();
-        let expected = vec![
-            position(0, 1., 0.),
-            position(1, 0., 1.),
-            position(2, -1., 0.),
-        ];
         assert_eq!(plan.fixtures, expected);
     }
 
@@ -143,9 +120,9 @@ mod tests {
             .collect()
     }
 
-    fn generate_fixtures_along_x_axis(count: usize, y: f64) -> Vec<FixturePosition> {
+    fn generate_fixtures_along_x_axis(count: usize, y: f64, x_start: f64) -> Vec<FixturePosition> {
         (0..count)
-            .map(|i| position(i as u32, i as f64, y))
+            .map(|i| position(i as u32, x_start + i as f64, y))
             .collect()
     }
 

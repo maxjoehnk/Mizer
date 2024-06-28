@@ -120,8 +120,8 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
             }
             "deleteGroup" => {
                 if let Value::I64(id) = call.args {
-                    self.handler.delete_group(id as u32);
-                    reply.send_ok(Value::Null);
+                    let result = self.handler.delete_group(id as u32);
+                    reply.respond_unit_result(result);
                 }
             }
             "renameGroup" => match call

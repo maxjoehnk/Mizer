@@ -183,10 +183,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn delete_group(&self, id: u32) {
+    pub fn delete_group(&self, id: u32) -> anyhow::Result<()> {
         self.runtime
-            .run_command(DeleteGroupCommand { id: id.into() })
-            .unwrap();
+            .run_command(DeleteGroupCommand { id: id.into() })?;
+            
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]

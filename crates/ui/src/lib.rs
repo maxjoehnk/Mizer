@@ -116,7 +116,9 @@ impl LifecycleHandler for ContextRef {
     fn shutdown(self) {
         // TODO: this is no clean exit.
         self.run_loop.borrow().stop();
-        self.engine_manager.borrow_mut().shut_down().unwrap();
+        if cfg!(not(target_os = "macos")) {
+            self.engine_manager.borrow_mut().shut_down().unwrap();
+        }
     }
 }
 

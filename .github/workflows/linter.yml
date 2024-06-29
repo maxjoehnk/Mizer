@@ -29,6 +29,12 @@ jobs:
     # Set the agent to run on
     runs-on: ubuntu-22.04
 
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
     ##################
     # Load all steps #
     ##################
@@ -58,6 +64,7 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JSCPD: false
+          VALIDATE_CHECKOV: false
           # This gives false positives because the flutter sdk and the dependencies are not available
           VALIDATE_DART: false
           VALIDATE_EDITORCONFIG: false

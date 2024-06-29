@@ -50,7 +50,7 @@ pub extern "C" fn read_dial_value(ptr: *const LayoutRef, path: *const c_char) ->
 }
 
 #[no_mangle]
-pub extern "C" fn read_button_value(ptr: *const LayoutRef, path: *const c_char) -> bool {
+pub extern "C" fn read_button_value(ptr: *const LayoutRef, path: *const c_char) -> u8 {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
     let node_path = NodePath(path.to_string());
@@ -60,7 +60,7 @@ pub extern "C" fn read_button_value(ptr: *const LayoutRef, path: *const c_char) 
 
     std::mem::forget(ffi);
 
-    value
+    value.into()
 }
 
 #[no_mangle]

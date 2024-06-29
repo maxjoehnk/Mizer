@@ -12,12 +12,39 @@ const INPUT_PORT: &str = "Input";
 const SCREEN_SETTING: &str = "Screen";
 const PRIORITY_SETTING: &str = "Priority";
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize)]
+const WRITE_COLOR_SETTING: &str = "Write Color";
+const WRITE_INTENSITY_SETTING: &str = "Write Intensity";
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlanScreenNode {
     pub plan: String,
     pub screen_id: ScreenId,
     #[serde(default)]
     pub priority: FixturePriority,
+    #[serde(default = "default_write_color")]
+    pub write_color: bool,
+    #[serde(default = "default_write_intensity")]
+    pub write_intensity: bool,
+}
+
+impl Default for PlanScreenNode {
+    fn default() -> Self {
+        Self {
+            plan: Default::default(),
+            screen_id: Default::default(),
+            priority: Default::default(),
+            write_color: true,
+            write_intensity: true,
+        }
+    }
+}
+
+fn default_write_color() -> bool {
+    true
+}
+
+fn default_write_intensity() -> bool {
+    true
 }
 
 impl PartialEq for PlanScreenNode {
@@ -48,6 +75,8 @@ impl ConfigurableNode for PlanScreenNode {
         vec![
             setting!(select SCREEN_SETTING, selected, screens),
             setting!(enum PRIORITY_SETTING, self.priority),
+            setting!(WRITE_COLOR_SETTING, self.write_color),
+            setting!(WRITE_INTENSITY_SETTING, self.write_intensity),
         ]
     }
 
@@ -63,6 +92,8 @@ impl ConfigurableNode for PlanScreenNode {
             }
         }
         update!(enum setting, PRIORITY_SETTING, self.priority);
+        update!(bool setting, WRITE_COLOR_SETTING, self.write_color);
+        update!(bool setting, WRITE_INTENSITY_SETTING, self.write_intensity);
 
         Ok(())
     }
@@ -166,30 +197,34 @@ impl ProcessingNode for PlanScreenNode {
                     let red = pixels[pixel_index + 2] as f64 / 255.0;
                     let alpha = pixels[pixel_index + 3] as f64 / 255.0;
 
-                    manager.write_fixture_control(
-                        fixture.fixture,
-                        FixtureFaderControl::Intensity,
-                        alpha,
-                        self.priority,
-                    );
-                    manager.write_fixture_control(
-                        fixture.fixture,
-                        FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                        red,
-                        self.priority,
-                    );
-                    manager.write_fixture_control(
-                        fixture.fixture,
-                        FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                        green,
-                        self.priority,
-                    );
-                    manager.write_fixture_control(
-                        fixture.fixture,
-                        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                        blue,
-                        self.priority,
-                    );
+                    if self.write_intensity {
+                        manager.write_fixture_control(
+                            fixture.fixture,
+                            FixtureFaderControl::Intensity,
+                            alpha,
+                            self.priority,
+                        );
+                    }
+                    if self.write_color {
+                        manager.write_fixture_control(
+                            fixture.fixture,
+                            FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                            red,
+                            self.priority,
+                        );
+                        manager.write_fixture_control(
+                            fixture.fixture,
+                            FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                            green,
+                            self.priority,
+                        );
+                        manager.write_fixture_control(
+                            fixture.fixture,
+                            FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                            blue,
+                            self.priority,
+                        );
+                    }
                 }
             }
         }

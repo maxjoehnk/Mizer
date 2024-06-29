@@ -42,7 +42,7 @@ class _LabelControlState extends State<LabelControl> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(child: Text(value)),
+        child: Center(child: Text(value, textAlign: TextAlign.center)),
         decoration: ControlDecoration(color: widget.color ?? Colors.grey.shade900));
   }
 }

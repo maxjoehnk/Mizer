@@ -176,9 +176,9 @@ mod tests {
     }
 
     #[test_case(0, 0, 1, 1, 2, 2)]
-    #[test_case(0, 0, 1, 1, -1, -1)]
-    #[test_case(2, 2, 4, 4, 1, 4)]
-    #[test_case(2, 2, 4, 4, 4, 1)]
+    #[test_case(0, 0, 1, 1, -2, -2; "negatives")]
+    #[test_case(2, 2, 4, 4, 0, 3)]
+    #[test_case(2, 2, 4, 4, 3, 0)]
     #[test_case(2, 2, 4, 4, 2, 7)]
     #[test_case(2, 2, 4, 4, 7, 2)]
     fn contains_fixture_should_return_false_when_fixture_is_not_in_screen(

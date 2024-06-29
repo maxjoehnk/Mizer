@@ -71,6 +71,10 @@ impl MidiBackgroundDiscovery {
             .collect::<Vec<_>>();
         for (name, (input, output)) in ports {
             let name = cleanup_name(name);
+            // Skip the device if it's the application itself
+            if cfg!(target_os = "linux") && name == "mizer" {
+                continue;
+            }
             let mut device = MidiDeviceIdentifier {
                 name: name.clone(),
                 input,
@@ -78,7 +82,7 @@ impl MidiBackgroundDiscovery {
                 profile: None,
             };
             if let Some(old_device) = self.devices.get(&name) {
-                device.profile = old_device.profile.clone();
+                device.profile.clone_from(&old_device.profile);
             } else  {
                 tracing::info!("Connected device: {device:?}");
                 mizer_console::debug!(

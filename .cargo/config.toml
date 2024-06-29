@@ -1,5 +1,8 @@
 [target.'cfg(target_os = "macos")']
 rustflags = ["-C", "target-cpu=native", "-C" , "link-arg=-Wl,-rpath,@executable_path"]
 
-[target.'cfg(target_os = "linux")']
+[target.'cfg(all(target_os = "linux", target_arch = "aarch64"))']
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-C", "target-cpu=native", "-C", "link-arg=-Wl,-rpath,$ORIGIN/lib"]
+
+[target.'cfg(all(target_os = "linux", target_arch = "x86_64"))']
 rustflags = ["-Clink-arg=-fuse-ld=lld", "-C", "target-feature=+avx2,+sse4.2", "-C", "link-arg=-Wl,-rpath,$ORIGIN/lib"]

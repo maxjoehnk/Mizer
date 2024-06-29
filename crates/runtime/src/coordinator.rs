@@ -267,10 +267,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .dedup()
             .collect::<Vec<_>>();
 
+        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        let node_views = pipeline_access.nodes.iter().collect::<HashMap<_, _>>();
+
         let fader_values = nodes
             .iter()
             .filter_map(|path| {
-                let value = self.pipeline.get_state::<f64>(path).copied();
+                let value = self.pipeline.get_state::<<FaderNode as ProcessingNode>::State>(path).copied();
 
                 value.map(|value| (path.clone(), value))
             })
@@ -281,7 +284,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let dial_values = nodes
             .iter()
             .filter_map(|path| {
-                let value = self.pipeline.get_state::<f64>(path).copied();
+                let value = self.pipeline.get_state::<<DialNode as ProcessingNode>::State>(path).copied();
 
                 value.map(|value| (path.clone(), value))
             })
@@ -291,18 +294,20 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let button_values = nodes
             .iter()
             .filter_map(|path| {
-                let value = self
+                let state = self
                     .pipeline
                     .get_state::<<ButtonNode as ProcessingNode>::State>(path);
+                let value = node_views
+                    .get(path)
+                    .and_then(|node| node.downcast_node::<ButtonNode>(node.node_type()))
+                    .zip(state)
+                    .map(|(node, state)| node.value(state));
 
-                value.map(|state| (path.clone(), state.value()))
+                value.map(|value| (path.clone(), value))
             })
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_button_values(button_values);
-
-        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
-        let node_views = pipeline_access.nodes.iter().collect::<Vec<_>>();
 
         let label_values = nodes
             .iter()
@@ -311,9 +316,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                     .pipeline
                     .get_state::<<LabelNode as ProcessingNode>::State>(path);
                 let value = node_views
-                    .iter()
-                    .find(|(p, _)| &path == p)
-                    .map(|(_, node)| node)
+                    .get(path)
                     .and_then(|node| node.downcast_node::<LabelNode>(node.node_type()))
                     .zip(state)
                     .map(|(node, state)| node.label(state));
@@ -323,6 +326,25 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_label_values(label_values);
+
+        let control_colors = nodes
+            .iter()
+            .filter_map(|path| {
+                let state = self
+                    .pipeline
+                    .get_state::<<ButtonNode as ProcessingNode>::State>(path);
+
+                let value = node_views
+                    .get(path)
+                    .and_then(|node| node.downcast_node::<ButtonNode>(node.node_type()))
+                    .zip(state)
+                    .and_then(|(node, state)| node.color(state));
+
+                value.map(|value| (path.clone(), value))
+            })
+            .collect::<HashMap<_, _>>();
+        
+        self.layout_fader_view.write_control_colors(control_colors);
     }
 
     fn get_preset_ids(&self) -> Vec<PresetId> {

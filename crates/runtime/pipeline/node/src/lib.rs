@@ -54,6 +54,10 @@ pub trait ConfigurableNode {
     }
 }
 
+pub trait LayoutNode: ProcessingNode {
+    fn color(&self, state: &Self::State) -> Option<Color>;
+}
+
 downcast!(dyn PipelineNode);
 
 pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {

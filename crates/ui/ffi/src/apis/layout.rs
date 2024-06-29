@@ -85,6 +85,43 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
 }
 
 #[no_mangle]
+pub extern "C" fn read_control_color(ptr: *const LayoutRef, path: *const c_char) -> FFIControlColor {
+    let path = unsafe { CStr::from_ptr(path) };
+    let path = path.to_str().unwrap();
+    let node_path = NodePath(path.to_string());
+    let ffi = Arc::from_pointer(ptr);
+
+    let value = if let Some(value) = ffi.view.get_control_color(&node_path) {
+        FFIControlColor {
+            has_color: 1,
+            color_red: value.red,
+            color_green: value.green,
+            color_blue: value.blue,
+        }
+    }else {
+        FFIControlColor {
+            has_color: 0,
+            color_red: 0.,
+            color_green: 0.,
+            color_blue: 0.,
+        }
+    };
+
+    std::mem::forget(ffi);
+
+    value
+}
+
+#[no_mangle]
 pub extern "C" fn drop_layout_pointer(ptr: *const LayoutRef) {
     drop_pointer(ptr);
+}
+
+#[derive(Default)]
+#[repr(C)]
+pub struct FFIControlColor {
+    pub has_color: u8,
+    pub color_red: f64,
+    pub color_green: f64,
+    pub color_blue: f64,
 }

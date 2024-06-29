@@ -5,6 +5,7 @@ use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
 
 use mizer_node::NodePath;
+use mizer_ports::Color;
 
 #[derive(Clone)]
 pub struct LayoutsView {
@@ -12,6 +13,7 @@ pub struct LayoutsView {
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
     dials: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
+    colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>
 }
 
 impl Default for LayoutsView {
@@ -21,6 +23,7 @@ impl Default for LayoutsView {
             buttons: Arc::new(NonEmptyPinboard::new(Default::default())),
             dials: Arc::new(NonEmptyPinboard::new(Default::default())),
             labels: Arc::new(NonEmptyPinboard::new(Default::default())),
+            colors: Arc::new(NonEmptyPinboard::new(Default::default())),
         }
     }
 }
@@ -64,5 +67,15 @@ impl LayoutsView {
 
     pub(crate) fn write_label_values(&self, values: HashMap<NodePath, Arc<String>>) {
         self.labels.set(values);
+    }
+
+    pub(crate) fn write_control_colors(&self, values: HashMap<NodePath, Color>) {
+        self.colors.set(values);
+    }
+    
+    pub fn get_control_color(&self, path: &NodePath) -> Option<Color> {
+        let values = self.colors.read();
+
+        values.get(path).copied()
     }
 }

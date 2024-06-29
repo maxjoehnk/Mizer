@@ -8,6 +8,8 @@ const OUTPUT_PORT: &str = "Output";
 const SET_PORT: &str = "Set";
 const RESET_PORT: &str = "Reset";
 
+const COLOR_PORT: &str = "Color";
+
 const TOGGLE_SETTING: &str = "Toggle";
 const HIGH_VALUE_SETTING: &str = "High Value";
 const LOW_VALUE_SETTING: &str = "Low Value";
@@ -76,6 +78,7 @@ impl PipelineNode for ButtonNode {
             input_port!(INPUT_PORT, PortType::Single),
             input_port!(SET_PORT, PortType::Single),
             input_port!(RESET_PORT, PortType::Single),
+            input_port!(COLOR_PORT, PortType::Color),
             output_port!(OUTPUT_PORT, PortType::Single),
         ]
     }
@@ -96,8 +99,10 @@ impl ProcessingNode for ButtonNode {
             input_edge,
             reset_edge,
             set_edge,
+            color,
         }: &mut Self::State,
     ) -> anyhow::Result<()> {
+        *color = context.color_input(COLOR_PORT).read();
         if let Some(value) = context.read_port::<_, f64>(INPUT_PORT) {
             if self.toggle {
                 if let Some(true) = input_edge.update(value) {
@@ -140,6 +145,7 @@ impl ProcessingNode for ButtonNode {
             input_edge,
             reset_edge,
             set_edge,
+            ..
         }: &Self::State,
     ) {
         ui.collapsing_header("Config", |ui| {
@@ -178,10 +184,23 @@ pub struct ButtonState {
     input_edge: Edge,
     reset_edge: Edge,
     set_edge: Edge,
+    color: Option<Color>,
 }
 
 impl ButtonState {
     pub fn value(&self) -> bool {
         self.state
+    }
+}
+
+impl ButtonNode {
+    pub fn value(&self, state: &ButtonState) -> bool {
+        state.state
+    }
+}
+
+impl LayoutNode for ButtonNode {
+    fn color(&self, state: &Self::State) -> Option<Color> {
+        state.color
     }
 }

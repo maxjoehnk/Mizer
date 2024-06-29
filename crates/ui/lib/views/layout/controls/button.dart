@@ -2,6 +2,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
 import 'package:mizer/widgets/inputs/button.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class ButtonControl extends StatefulWidget {
 
 class _ButtonControlState extends State<ButtonControl> with SingleTickerProviderStateMixin {
   bool value = false;
+  Color? color;
   late Ticker ticker;
 
   @override
@@ -33,10 +35,14 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
     super.initState();
     this.ticker = this.createTicker((elapsed) async {
       var v = widget.pointer.readButtonValue(widget.control.node.path);
+      var c = widget.pointer.readControlColor(widget.control.node.path);
       if (!this.mounted) {
         return;
       }
-      setState(() => value = v);
+      setState(() {
+        value = v;
+        color = c?.asFlutterColor;
+      });
     });
     this.ticker.start();
   }
@@ -53,7 +59,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
 
     return ButtonInput(
       label: widget.control.label,
-      color: widget.color,
+      color: color ?? widget.color,
       image: widget.image,
       pressed: value,
       onValue: (value) =>

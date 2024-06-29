@@ -110,11 +110,17 @@ impl MidiBackgroundDiscovery {
 
 #[cfg(target_os = "linux")]
 fn cleanup_name(name: String) -> String {
-    LINUX_MIDI_PORT_NAME
+    let name = LINUX_MIDI_PORT_NAME
         .captures_iter(&name)
         .next()
         .map(|s| s[1].to_string())
-        .unwrap_or(name)
+        .unwrap_or(name);
+    if let Some(p) = name.find(':') {
+        name.split_at(p).0.to_string()
+    }else {
+        name
+    }
+
 }
 
 #[cfg(not(target_os = "linux"))]

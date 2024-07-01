@@ -12,7 +12,7 @@ serde = { version = "1", features = ["derive"] }
 enum-iterator = "2.0"
 num_enum = "0.7"
 mizer-wgpu = { path = "../../../../wgpu" }
-image = "0.24"
+image = "0.25"
 profiling = "1"
 mizer-webcams = { path = "../../../../../components/connections/devices/webcams" }
 mizer-devices = { path = "../../../../../components/connections/devices" }

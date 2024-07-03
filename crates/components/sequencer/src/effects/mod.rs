@@ -11,6 +11,7 @@ mod engine;
 mod instance;
 mod module;
 mod processor;
+mod project_loading;
 mod spline;
 
 #[cfg(test)]

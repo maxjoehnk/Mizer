@@ -5,23 +5,17 @@ use anyhow::Context;
 
 use mizer_api::handlers::Handlers;
 use mizer_console::ConsoleCategory;
-use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::Runtime;
-use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
-use mizer_protocol_dmx::*;
-use mizer_protocol_mqtt::MqttConnectionManager;
-use mizer_protocol_osc::OscConnectionManager;
+use mizer_module::{Injector, ProjectHandlerContext, Runtime};
+use mizer_project_files::{HandlerContext, history::ProjectHistory};
 use mizer_runtime::DefaultRuntime;
-use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_session::SessionState;
 use mizer_status_bus::{ProjectStatus, StatusBus};
-use mizer_surfaces::SurfaceRegistry;
-use mizer_timecode::TimecodeManager;
 
 use crate::api::*;
 use crate::flags::Flags;
+use crate::project_handler::ErasedProjectHandler;
 
 pub struct Mizer {
     pub flags: Flags,
@@ -32,6 +26,25 @@ pub struct Mizer {
     pub session_events: MessageBus<SessionState>,
     pub project_history: ProjectHistory,
     pub status_bus: StatusBus,
+    pub(crate) project_handlers: Vec<Box<dyn ErasedProjectHandler>>,
+}
+
+pub(crate) struct NewProjectContext<'a> {
+    injector: &'a mut Injector,
+}
+
+impl<'a> ProjectHandlerContext for NewProjectContext<'a> {
+    fn try_get<T: 'static>(&self) -> Option<&T> {
+        self.injector.get()
+    }
+
+    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        self.injector.get_mut()
+    }
+
+    fn report_issue(&mut self, issue: impl Into<String>) {
+        mizer_console::error!(ConsoleCategory::Projects, "{}", issue.into());
+    }
 }
 
 impl Mizer {
@@ -67,40 +80,29 @@ impl Mizer {
     }
 
     #[profiling::function]
-    pub fn new_project(&mut self) {
+    pub fn new_project(&mut self) -> anyhow::Result<()> {
         tracing::info!("Creating new project...");
         mizer_util::message!("New Project", 0);
         self.runtime
             .add_status_message("Creating new project...", None);
-        self.close_project();
         let injector = self.runtime.injector_mut();
-        let fixture_manager = injector.get::<FixtureManager>().unwrap();
-        fixture_manager.new_project();
-        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
-        effects_engine.new_project();
-        let sequencer = injector.get::<Sequencer>().unwrap();
-        sequencer.new_project();
-        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
-        timecode_manager.new_project();
-        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-        dmx_manager.new_project();
-        let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
-        mqtt_manager.new_project();
-        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
-        osc_manager.new_project();
-        let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
-        surface_registry.new_project();
-        self.runtime.new_project();
+        let mut context = NewProjectContext {
+            injector
+        };
+        for project_handler in &mut self.project_handlers {
+            project_handler.new_project(&mut context)?;
+        }
         self.send_session_update();
         self.runtime
             .add_status_message("Created new project", Some(Duration::from_secs(10)));
         self.status_bus.send_current_project(ProjectStatus::New);
         mizer_console::info(ConsoleCategory::Projects, "New project created");
+
+        Ok(())
     }
 
     #[profiling::function]
     pub fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
-        self.close_project();
         self.project_path = Some(path);
         self.load_project()?;
 
@@ -113,42 +115,10 @@ impl Mizer {
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Loading project...", None);
             tracing::info!("Loading project {:?}...", path);
-            let project = Project::load_file(path)?;
-            {
-                let injector = self.runtime.injector_mut();
-                let manager: &FixtureManager = injector.get().unwrap();
-                manager.load(&project).context("loading fixtures")?;
-                let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
-                effects_engine.load(&project)?;
-                let sequencer = injector.get::<Sequencer>().unwrap();
-                sequencer.load(&project).context("loading sequences")?;
-                let timecode_manager = injector.get::<TimecodeManager>().unwrap();
-                timecode_manager
-                    .load(&project)
-                    .context("loading timecodes")?;
-                let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-                dmx_manager
-                    .load(&project)
-                    .context("loading dmx connections")?;
-                let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
-                mqtt_manager
-                    .load(&project)
-                    .context("loading mqtt connections")?;
-                let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
-                osc_manager
-                    .load(&project)
-                    .context("loading osc connections")?;
-                let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
-                surface_registry
-                    .load(&project)
-                    .context("loading surfaces")?;
+            let mut context = HandlerContext::open(self.runtime.injector_mut(), path)?;
+            for project_handler in &mut self.project_handlers {
+                project_handler.load_project(&mut context)?;
             }
-            self.media_server_api
-                .load(&project)
-                .context("loading media files")?;
-            start_media_discovery(&project.media.import_paths, &self.media_server_api)
-                .context("starting media discovery")?;
-            self.runtime.load(&project).context("loading project")?;
             tracing::info!("Loading project...Done");
 
             if self.flags.generate_graph {
@@ -188,32 +158,16 @@ impl Mizer {
     }
 
     #[profiling::function]
-    pub fn save_project(&self) -> anyhow::Result<()> {
+    pub fn save_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Saving Project", 0);
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Saving project...", None);
             tracing::info!("Saving project to {:?}...", path);
-            let mut project = Project::new();
-            self.runtime.save(&mut project);
-            let injector = self.runtime.injector();
-            let fixture_manager = injector.get::<FixtureManager>().unwrap();
-            fixture_manager.save(&mut project);
-            let dmx_manager = injector.get::<DmxConnectionManager>().unwrap();
-            dmx_manager.save(&mut project);
-            let mqtt_manager = injector.get::<MqttConnectionManager>().unwrap();
-            mqtt_manager.save(&mut project);
-            let osc_manager = injector.get::<OscConnectionManager>().unwrap();
-            osc_manager.save(&mut project);
-            let sequencer = injector.get::<Sequencer>().unwrap();
-            sequencer.save(&mut project);
-            let timecode_manager = injector.get::<TimecodeManager>().unwrap();
-            timecode_manager.save(&mut project);
-            let effects_engine = injector.get::<EffectEngine>().unwrap();
-            effects_engine.save(&mut project);
-            let surface_registry = injector.get::<SurfaceRegistry>().unwrap();
-            surface_registry.save(&mut project);
-            self.media_server_api.save(&mut project);
-            project.save_file(path)?;
+            let mut context = HandlerContext::new(self.runtime.injector_mut());
+            for project_handler in &mut self.project_handlers {
+                project_handler.save_project(&mut context)?;
+            }
+            context.save(path)?;
             tracing::info!("Saving project...Done");
             self.runtime.add_status_message(
                 format!("Project saved ({path:?})"),
@@ -226,31 +180,6 @@ impl Mizer {
             );
         }
         Ok(())
-    }
-
-    #[profiling::function]
-    pub fn close_project(&mut self) {
-        mizer_util::message!("Closing Project", 0);
-        self.runtime.clear();
-        let injector = self.runtime.injector_mut();
-        let fixture_manager = injector.get::<FixtureManager>().unwrap();
-        fixture_manager.clear();
-        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-        dmx_manager.clear();
-        let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
-        mqtt_manager.clear();
-        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
-        osc_manager.clear();
-        let sequencer = injector.get::<Sequencer>().unwrap();
-        sequencer.clear();
-        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
-        timecode_manager.clear();
-        self.project_path = None;
-        self.media_server_api.clear();
-        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
-        effects_engine.clear();
-        self.send_session_update();
-        self.status_bus.send_current_project(ProjectStatus::None);
     }
 
     #[profiling::function]

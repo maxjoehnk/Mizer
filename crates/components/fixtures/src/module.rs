@@ -34,6 +34,7 @@ impl<TLibraryLoader: FixtureLibraryLoader + Default + 'static> Module
         context.provide_api(library.clone());
         context.provide(library);
         context.provide_api(manager.clone());
+        context.add_project_handler(manager.clone());
         context.provide(manager);
         context.add_processor(FixtureProcessor);
         context.add_debug_ui_pane(FixturesDebugUiPane);

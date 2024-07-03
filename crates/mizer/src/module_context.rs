@@ -1,11 +1,12 @@
 use mizer_debug_ui_impl::{DebugUiImpl, DebugUiPane};
 use std::future::Future;
 
-use mizer_module::{ApiInjector, ModuleContext, Runtime};
+use mizer_module::{ApiInjector, ModuleContext, ProjectHandler, Runtime};
 use mizer_processing::Processor;
 use mizer_runtime::DefaultRuntime;
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
+use crate::project_handler::ErasedProjectHandler;
 
 pub struct SetupContext {
     pub runtime: DefaultRuntime,
@@ -13,6 +14,7 @@ pub struct SetupContext {
     pub settings: Settings,
     pub handle: tokio::runtime::Handle,
     pub debug_ui_panes: Vec<Box<dyn DebugUiPane<DebugUiImpl>>>,
+    pub project_handlers: Vec<Box<dyn ErasedProjectHandler>>,
 }
 
 impl ModuleContext for SetupContext {
@@ -69,6 +71,10 @@ impl ModuleContext for SetupContext {
 
     fn status_handle(&self) -> StatusHandle {
         self.runtime.access().status_bus.handle()
+    }
+
+    fn add_project_handler(&mut self, handler: impl ProjectHandler + 'static) {
+        self.project_handlers.push(Box::new(handler));
     }
 }
 

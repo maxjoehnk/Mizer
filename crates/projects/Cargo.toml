@@ -25,12 +25,14 @@ mizer-protocol-dmx = { path = "../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
+mizer-module = { path = "../runtime/module" }
 directories-next = "2.0"
 fs2 = "0.4"
 indexmap = { version = "2.2", features = ["serde"] }
 enum_dispatch = "0.3"
 enum-iterator = "2.0"
 profiling = "1.0"
+zip = "2.1"
 
 [dev-dependencies]
 test-case = "3.3"

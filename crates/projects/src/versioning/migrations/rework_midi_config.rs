@@ -8,14 +8,14 @@ use crate::versioning::migrations::ProjectFileMigration;
 pub struct ReworkMidiConfig;
 
 impl ProjectFileMigration for ReworkMidiConfig {
-    const VERSION: usize = 2;
+    const VERSION: u32 = 2;
 
-    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut Vec<u8>) -> anyhow::Result<()> {
         profiling::scope!("ReworkMidiConfig::migrate");
-        let project: ProjectConfig<OldMidiConfig> = serde_yaml::from_str(project_file)?;
+        let project: ProjectConfig<OldMidiConfig> = serde_yaml::from_slice(&project_file)?;
         let project: ProjectConfig<NewMidiConfig> = project.into();
 
-        *project_file = serde_yaml::to_string(&project)?;
+        *project_file = serde_yaml::to_vec(&project)?;
 
         Ok(())
     }

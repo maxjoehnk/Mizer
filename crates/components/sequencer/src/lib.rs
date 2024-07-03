@@ -15,6 +15,7 @@ mod sequence;
 mod sequencer;
 mod state;
 mod value;
+mod project_loading;
 
 #[cfg(test)]
 mod tests {

@@ -7,3 +7,4 @@ pub mod commands;
 mod models;
 mod module;
 mod registry;
+mod project_loading;

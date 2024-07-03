@@ -3,6 +3,8 @@ use std::sync::{Arc, Mutex, MutexGuard};
 
 use dashmap::DashMap;
 use itertools::Itertools;
+use mizer_module::{LoadProjectContext, ProjectHandler, ProjectHandlerContext, SaveProjectContext};
+
 use mizer_protocol_dmx::DmxConnectionManager;
 use rayon::prelude::*;
 
@@ -15,6 +17,7 @@ use crate::programmer::{
     GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
 };
 use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
+use crate::config::{FixtureConfig, PresetsStore};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -419,6 +422,91 @@ impl FixtureManager {
         for mut fixture in self.fixtures.iter_mut() {
             fixture.set_to_default();
         }
+    }
+
+    fn clear(&self) {
+        self.fixtures.clear();
+        self.groups.clear();
+        self.presets.clear();
+        self.states.clear();
+    }
+}
+
+impl ProjectHandler for FixtureManager {
+    fn get_name(&self) -> &'static str {
+        "fixtures"
+    }
+
+    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext) -> anyhow::Result<()> {
+        self.clear();
+        self.presets.load_defaults();
+
+        Ok(())
+    }
+
+    fn load_project(&mut self, context: &mut impl LoadProjectContext) -> anyhow::Result<()> {
+        profiling::scope!("FixtureManager::load_project");
+        self.clear();
+        let fixtures = context.read_file::<Vec<FixtureConfig>>("patch")?;
+        for fixture in fixtures {
+            let def = self.get_definition(&fixture.fixture);
+            if let Some(def) = def {
+                self.add_fixture(
+                    fixture.id,
+                    fixture.name,
+                    def,
+                    fixture.mode,
+                    fixture.channel,
+                    fixture.universe,
+                    fixture.configuration,
+                );
+            } else {
+                tracing::warn!(
+                    "No fixture definition for fixture id {}. Missing fixture definition: {}",
+                    fixture.id,
+                    fixture.fixture
+                );
+                context.report_issue(format!(
+                    "No fixture definition for fixture id {}. Missing fixture definition: {}",
+                    fixture.id,
+                    fixture.fixture
+                ));
+            }
+        }
+        let groups = context.read_file::<Vec<Group>>("groups")?;
+        for group in groups {
+            self.groups.insert(group.id, group);
+        }
+        let presets = context.read_file::<PresetsStore>("presets")?;
+        presets.load(&self.presets);
+
+        Ok(())
+    }
+
+    fn save_project(&self, context: &mut impl SaveProjectContext) -> anyhow::Result<()> {
+        profiling::scope!("FixtureManager::save_project");
+        let mut fixtures = Vec::with_capacity(self.fixtures.len());
+        for fixture in self.get_fixtures() {
+            fixtures.push(FixtureConfig {
+                id: fixture.id,
+                name: fixture.name.clone(),
+                universe: fixture.universe.into(),
+                channel: fixture.channel,
+                fixture: fixture.definition.id.clone(),
+                mode: fixture.current_mode.name.clone().into(),
+                configuration: fixture.configuration.clone(),
+            });
+        }
+        context.write_file("patch", &fixtures)?;
+        let mut groups = Vec::with_capacity(self.groups.len());
+        for group in self.get_groups() {
+            groups.push(group.deref().clone());
+        }
+        context.write_file("groups", &groups)?;
+        let presets = PresetsStore::store(&self.presets);
+        context.write_file("presets", &presets)?;
+
+        Ok(())
     }
 }
 

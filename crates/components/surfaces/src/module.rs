@@ -1,6 +1,6 @@
 use mizer_message_bus::MessageBus;
 use mizer_module::*;
-
+use crate::project_loading::SurfaceProjectHandler;
 use crate::registry::SurfaceRegistry;
 use crate::Surface;
 
@@ -21,7 +21,8 @@ impl Module for SurfaceModule {
         let api = SurfaceRegistryApi {
             bus: registry.bus.clone(),
         };
-        context.provide(registry);
+        context.provide(SurfaceProjectHandler);
+        
         context.provide_api(api);
 
         Ok(())

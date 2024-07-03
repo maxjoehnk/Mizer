@@ -1,6 +1,6 @@
 use std::convert::TryFrom;
 use std::fs::File;
-use std::io::Read;
+use std::io::{Cursor, Read, Seek};
 use std::net::Ipv4Addr;
 use std::path::Path;
 
@@ -22,17 +22,18 @@ use mizer_timecode::{TimecodeControl, TimecodeTrack};
 
 use crate::fixtures::PresetsStore;
 use crate::media::Media;
+use crate::project_file::ProjectFile;
 use crate::versioning::{migrate, Migrations};
+pub use crate::handler_context::HandlerContext;
 
 mod connections;
-mod effects;
 mod fixtures;
 pub mod history;
 mod media;
-mod sequencer;
-mod surfaces;
 mod timecode;
 mod versioning;
+mod handler_context;
+mod project_file;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -46,7 +47,7 @@ lazy_static! {
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
     #[serde(default)]
-    pub version: usize,
+    pub version: u32,
     #[serde(default)]
     pub playback: PlaybackSettings,
     #[serde(default)]
@@ -104,22 +105,20 @@ impl Project {
 
     #[profiling::function]
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
-        let mut file = File::open(path)?;
-        let mut project_file = String::new();
-        file.read_to_string(&mut project_file)?;
+        let path = path.as_ref();
+        let mut project_file = ProjectFile::open(path.as_ref())?;
         migrate(&mut project_file)?;
-        let project = serde_yaml::from_str(&project_file)?;
-
-        Ok(project)
+        todo!();
     }
 
-    pub fn load(content: &str) -> anyhow::Result<Project> {
-        let mut content = content.to_string();
-        migrate(&mut content)?;
-        let project = serde_yaml::from_str(&content)?;
-
-        Ok(project)
-    }
+    // pub fn load(content: &str) -> anyhow::Result<Project> {
+    //     let mut content = content.to_string();
+    //     let file_content = unsafe { content.as_mut_vec() };
+    //     migrate(file_content)?;
+    //     let project = serde_yaml::from_str(&content)?;
+    // 
+    //     Ok(project)
+    // }
 
     // TODO: do file persistence on background thread
     #[profiling::function]
@@ -239,257 +238,4 @@ pub enum ConnectionTypes {
     },
     Mqtt(MqttAddress),
     Osc(OscAddress),
-}
-
-#[cfg(test)]
-mod tests {
-    use std::collections::HashMap;
-
-    use mizer_node::NodePosition;
-
-    use super::*;
-
-    #[test]
-    fn load_empty_project() -> anyhow::Result<()> {
-        let content = "nodes: []\nchannels: []";
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.nodes.len(), 0, "no nodes");
-        assert_eq!(result.channels.len(), 0, "no channels");
-        assert_eq!(result.fixtures.len(), 0, "no fixtures");
-        Ok(())
-    }
-
-    #[test]
-    fn load_single_node() -> anyhow::Result<()> {
-        let content = r#"
-        nodes:
-        - type: opc-output
-          path: /opc-output-0
-          config:
-            host: 0.0.0.0
-            width: 10
-            height: 20
-          designer:
-            position:
-              x: 1
-              y: 2
-            scale: 3
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.nodes.len(), 1);
-        assert_eq!(
-            result.nodes[0],
-            Node {
-                path: "/opc-output-0".into(),
-                config: mizer_nodes::Node::OpcOutput(mizer_nodes::OpcOutputNode {
-                    host: "0.0.0.0".into(),
-                    port: 7890,
-                    width: 10,
-                    height: 20
-                }),
-                designer: NodeDesigner {
-                    hidden: false,
-                    position: NodePosition { x: 1., y: 2. },
-                    scale: 3.,
-                    color: Default::default(),
-                },
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_channel() -> anyhow::Result<()> {
-        let content = r#"
-        nodes:
-          - type: pixel-pattern
-            path: /pixel-pattern-0
-            config:
-              pattern: rgb-iterate
-          - type: opc-output
-            path: /opc-output-0
-            config:
-              host: 127.0.0.1
-              width: 25
-              height: 50
-        channels:
-          - Output@/pixel-pattern-0 -> Pixels@/opc-output-0
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.nodes.len(), 2);
-        assert_eq!(result.channels.len(), 1);
-        assert_eq!(
-            result.nodes[0],
-            Node {
-                path: "/pixel-pattern-0".into(),
-                config: mizer_nodes::Node::PixelPattern(mizer_nodes::PixelPatternGeneratorNode {
-                    pattern: mizer_pixel_nodes::Pattern::RgbIterate
-                }),
-                designer: Default::default(),
-            }
-        );
-        assert_eq!(
-            result.nodes[1],
-            Node {
-                path: "/opc-output-0".into(),
-                config: mizer_nodes::Node::OpcOutput(mizer_nodes::OpcOutputNode {
-                    host: "127.0.0.1".into(),
-                    port: 7890,
-                    width: 25,
-                    height: 50
-                }),
-                designer: Default::default(),
-            }
-        );
-        assert_eq!(
-            result.channels[0],
-            Channel {
-                from_path: "/pixel-pattern-0".into(),
-                from_channel: "Output".into(),
-                to_path: "/opc-output-0".into(),
-                to_channel: "Pixels".into()
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_channel_should_support_uppercase() -> anyhow::Result<()> {
-        let content = r#"
-        nodes: []
-        channels:
-          - Output@/pixel-pattern-0 -> Pixels@/opc-output-0
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(
-            result.channels[0],
-            Channel {
-                from_path: "/pixel-pattern-0".into(),
-                from_channel: "Output".into(),
-                to_path: "/opc-output-0".into(),
-                to_channel: "Pixels".into()
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_properties() -> anyhow::Result<()> {
-        let mut expected = HashMap::new();
-        expected.insert("value".to_string(), 0.5f64);
-        let content = r#"
-        nodes:
-        - type: fader
-          path: /fader-0
-          config: {}
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.nodes.len(), 1);
-        assert_eq!(
-            result.nodes[0],
-            Node {
-                path: "/fader-0".into(),
-                config: mizer_nodes::Node::Fader(mizer_nodes::FaderNode::default()),
-                designer: Default::default(),
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_fixtures() -> anyhow::Result<()> {
-        let content = r#"
-        fixtures:
-        - id: 1
-          name: My Fixture
-          fixture: fixture-definition-ref
-          output: output
-          channel: 1
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(
-            result.fixtures[0],
-            FixtureConfig {
-                id: 1,
-                name: "My Fixture".into(),
-                fixture: "fixture-definition-ref".into(),
-                channel: 1,
-                universe: None,
-                mode: None,
-                configuration: Default::default(),
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_fixtures_with_mode() -> anyhow::Result<()> {
-        let content = r#"
-        fixtures:
-        - id: 1
-          name: My Fixture
-          fixture: another-fixture
-          channel: 5
-          mode: 2-channel
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(
-            result.fixtures[0],
-            FixtureConfig {
-                id: 1,
-                name: "My Fixture".into(),
-                fixture: "another-fixture".into(),
-                channel: 5,
-                universe: None,
-                mode: Some("2-channel".into()),
-                configuration: Default::default(),
-            }
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn load_fixtures_with_universe() -> anyhow::Result<()> {
-        let content = r#"
-        fixtures:
-        - id: 1
-          name: My Fixture
-          fixture: another-fixture
-          channel: 5
-          universe: 1
-        "#;
-
-        let result = Project::load(content)?;
-
-        assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(
-            result.fixtures[0],
-            FixtureConfig {
-                id: 1,
-                name: "My Fixture".into(),
-                fixture: "another-fixture".into(),
-                channel: 5,
-                universe: Some(1),
-                mode: None,
-                configuration: Default::default(),
-            }
-        );
-        Ok(())
-    }
 }

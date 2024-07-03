@@ -9,14 +9,14 @@ use crate::versioning::migrations::ProjectFileMigration;
 pub struct ReworkLayoutControlsToNotUseNodes;
 
 impl ProjectFileMigration for ReworkLayoutControlsToNotUseNodes {
-    const VERSION: usize = 3;
+    const VERSION: u32 = 3;
 
-    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut Vec<u8>) -> anyhow::Result<()> {
         profiling::scope!("ReworkLayoutControlsToNotUseNodes::migrate");
-        let project: ProjectConfig<OldControlConfig> = serde_yaml::from_str(project_file)?;
+        let project: ProjectConfig<OldControlConfig> = serde_yaml::from_slice(&project_file)?;
         let project: ProjectConfig<NewControlConfig> = project.into();
 
-        *project_file = serde_yaml::to_string(&project)?;
+        *project_file = serde_yaml::to_vec(&project)?;
 
         Ok(())
     }

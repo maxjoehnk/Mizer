@@ -83,6 +83,7 @@ pub fn build_runtime(
         settings: settings_manager.read().settings,
         handle: handle.clone(),
         debug_ui_panes: Vec::new(),
+        project_handlers: Vec::new(),
     };
 
     load_modules(&mut context, &flags);
@@ -110,6 +111,7 @@ pub fn build_runtime(
 
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
+        project_handlers: context.project_handlers,
         flags,
         runtime: context.runtime,
         handlers,
@@ -152,10 +154,10 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
                 mizer_console::error!(mizer_console::ConsoleCategory::Projects, "Failed to load last project");
             }
         } else {
-            mizer.new_project();
+            mizer.new_project()?;
         }
     } else {
-        mizer.new_project();
+        mizer.new_project()?;
     }
 
     Ok(())

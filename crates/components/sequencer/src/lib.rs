@@ -15,6 +15,7 @@ mod sequencer;
 mod state;
 mod value;
 mod cue_preset;
+mod project_loading;
 
 #[cfg(test)]
 mod tests {

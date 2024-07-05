@@ -6,6 +6,7 @@ use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::pipeline::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeleteNodesCommand {
@@ -14,8 +15,7 @@ pub struct DeleteNodesCommand {
 
 impl<'a> Command<'a> for DeleteNodesCommand {
     type Dependencies = (
-        RefMut<PipelineAccess>,
-        RefMut<ExecutionPlanner>,
+        RefMut<Pipeline>,
         Ref<LayoutStorage>,
     );
     type State = Vec<(
@@ -33,9 +33,8 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn apply(
         &self,
-        (pipeline, planner, layout_storage): (
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
+        (pipeline, layout_storage): (
+            &mut Pipeline,
             &LayoutStorage,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
@@ -69,9 +68,8 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn revert(
         &self,
-        (pipeline, planner, layout_storage): (
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
+        (pipeline, layout_storage): (
+            &mut Pipeline,
             &LayoutStorage,
         ),
         state: Self::State,

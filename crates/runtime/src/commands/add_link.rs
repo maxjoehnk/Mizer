@@ -1,10 +1,8 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::ExecutionPlanner;
 use mizer_node::NodeLink;
-
-use crate::pipeline_access::PipelineAccess;
+use crate::pipeline::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLinkCommand {
@@ -12,7 +10,7 @@ pub struct AddLinkCommand {
 }
 
 impl<'a> Command<'a> for AddLinkCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = RefMut<Pipeline>;
     type State = Option<NodeLink>;
     type Result = ();
 
@@ -25,9 +23,9 @@ impl<'a> Command<'a> for AddLinkCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let links = pipeline.links.read();
+        let links = pipeline.get_links();
 
         let mut state = None;
         let metadata = pipeline
@@ -39,26 +37,22 @@ impl<'a> Command<'a> for AddLinkCommand {
                 .find(|l| l.target_port == self.link.target_port && l.target == self.link.target)
             {
                 pipeline.remove_link(&existing_link);
-                planner.remove_link(&existing_link);
                 state = Some(existing_link);
             };
         }
         pipeline.add_link(self.link.clone())?;
-        planner.add_link(self.link.clone());
 
         Ok(((), state))
     }
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
         previous_link: Self::State,
     ) -> anyhow::Result<()> {
-        planner.remove_link(&self.link);
         pipeline.remove_link(&self.link);
         if let Some(previous_link) = previous_link {
             pipeline.add_link(previous_link.clone())?;
-            planner.add_link(previous_link);
         }
 
         Ok(())

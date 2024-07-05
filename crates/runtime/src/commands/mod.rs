@@ -1,7 +1,7 @@
 use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeSetting, NodeType, PortMetadata};
 use mizer_nodes::{ContainerNode, Node};
 use mizer_ports::PortId;
-
+use crate::pipeline::Pipeline;
 use crate::pipeline_access::PipelineAccess;
 
 pub use self::add_link::*;
@@ -46,11 +46,11 @@ pub struct StaticNodeDescriptor {
 }
 
 pub(crate) fn assert_valid_parent(
-    pipeline: &PipelineAccess,
+    pipeline: &Pipeline,
     parent: Option<&NodePath>,
 ) -> anyhow::Result<()> {
     if let Some(path) = parent {
-        if !pipeline.nodes.contains_key(path) {
+        if !pipeline.contains_node(path) {
             return Err(anyhow::anyhow!("Unknown parent node {}", path));
         }
     };

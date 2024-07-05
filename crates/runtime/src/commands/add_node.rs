@@ -1,11 +1,10 @@
 use super::StaticNodeDescriptor;
-use crate::commands::{add_path_to_container, assert_valid_parent, remove_path_from_container};
-use crate::pipeline_access::PipelineAccess;
+use crate::commands::{assert_valid_parent};
 use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
-use mizer_nodes::{Node, NodeDowncast};
+use mizer_nodes::{Node};
 use serde::{Deserialize, Serialize};
+use crate::pipeline::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddNodeCommand {
@@ -16,7 +15,7 @@ pub struct AddNodeCommand {
 }
 
 impl<'a> Command<'a> for AddNodeCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = RefMut<Pipeline>;
     type State = NodePath;
     type Result = StaticNodeDescriptor;
 
@@ -26,41 +25,21 @@ impl<'a> Command<'a> for AddNodeCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         assert_valid_parent(pipeline, self.parent.as_ref())?;
-        let path =
-            pipeline.handle_add_node(self.node_type, self.designer.clone(), self.node.clone())?;
-        planner.add_node(ExecutionNode {
-            path: path.clone(),
-            attached_executor: None,
-        });
-        add_path_to_container(pipeline, self.parent.as_ref(), &path)?;
-
-        let node = pipeline.nodes_view.get(&path).unwrap();
-        let details = node.value().details();
-
-        let descriptor = StaticNodeDescriptor {
-            node_type: self.node_type,
-            path: path.clone(),
-            designer: self.designer.clone(),
-            details,
-            ports: Default::default(),
-            settings: Default::default(),
-            config: node.downcast(),
-        };
+        let descriptor = pipeline.add_node(self.node_type, self.designer, self.node.clone(), self.parent.as_ref())?;
+        let path = descriptor.path.clone();
 
         Ok((descriptor, path))
     }
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
         state: Self::State,
     ) -> anyhow::Result<()> {
-        remove_path_from_container(pipeline, self.parent.as_ref(), &state)?;
-        planner.remove_node(&state);
-        pipeline.delete_node(state)?;
+        pipeline.remove_node(&state)?;
 
         Ok(())
     }

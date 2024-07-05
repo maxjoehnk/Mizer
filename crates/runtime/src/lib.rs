@@ -20,3 +20,4 @@ mod node_metadata;
 pub mod pipeline_access;
 mod processor;
 mod views;
+mod pipeline;

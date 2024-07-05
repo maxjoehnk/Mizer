@@ -31,7 +31,6 @@ use crate::{LayoutsView, NodeMetadataRef};
 const DEFAULT_FPS: f64 = 60.0;
 
 pub struct CoordinatorRuntime<TClock: Clock> {
-    executor_id: ExecutorId,
     layouts: LayoutStorage,
     plans: PlanStorage,
     // TODO: this should not be pub
@@ -62,7 +61,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let snapshot = clock.snapshot();
         let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
         let mut runtime = Self {
-            executor_id: ExecutorId("coordinator".to_string()),
             layouts: NonEmptyPinboard::new(Default::default()).into(),
             plans: NonEmptyPinboard::new(Default::default()).into(),
             pipeline: PipelineWorker::new(Arc::clone(&node_metadata)),
@@ -83,12 +81,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn bootstrap(&mut self) {
-        let executor = Executor {
-            id: self.executor_id.clone(),
-        };
-        let mut planner = ExecutionPlanner::default();
-        planner.add_executor(executor);
-        self.injector.provide(planner);
         self.injector.provide(PipelineAccess::new());
         self.injector.provide(self.plans.clone());
         self.injector.provide(self.layouts.clone());

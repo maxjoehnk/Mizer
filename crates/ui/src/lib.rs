@@ -96,8 +96,10 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
             .event_channel(context.weak());
     let _console = ConsoleChannel::new(handlers.console.clone()).channel(context.weak());
     let _console_events =
-        MonitorConsoleChannel::new(handlers.console, async_runtime, context.weak())
+        MonitorConsoleChannel::new(handlers.console, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
+    let _ui_dialog_events = UiDialogChannel::new(handlers.ui, async_runtime, context.weak())
+        .event_channel(context.weak());
 
     context
         .window_manager

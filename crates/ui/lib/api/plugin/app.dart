@@ -36,10 +36,6 @@ class ApplicationPluginApi implements SettingsApi {
         .map((buffer) => Settings.fromBuffer(_convertBuffer(buffer)));
   }
 
-  static List<int> _convertBuffer(List<Object> response) {
-    return response.map((dynamic e) => e as int).toList();
-  }
-
   @override
   Future<List<MidiDeviceProfile>> loadMidiDeviceProfiles() async {
     var response = await channel.invokeMethod("loadMidiDeviceProfiles");
@@ -51,5 +47,9 @@ class ApplicationPluginApi implements SettingsApi {
   @override
   Future<void> reloadMidiDeviceProfiles() async {
     await channel.invokeMethod("reloadMidiDeviceProfiles");
+  }
+
+  static List<int> _convertBuffer(List<Object> response) {
+    return response.map((dynamic e) => e as int).toList();
   }
 }

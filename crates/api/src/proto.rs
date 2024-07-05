@@ -46,3 +46,6 @@ pub mod transport {
 pub mod surfaces {
     tonic::include_proto!("mizer.surfaces");
 }
+pub mod ui {
+    tonic::include_proto!("mizer.ui");
+}

@@ -20,6 +20,7 @@ fn main() {
                 "protos/mappings.proto",
                 "protos/timecode.proto",
                 "protos/surfaces.proto",
+                "protos/ui.proto",
             ],
             &["protos/"],
         )

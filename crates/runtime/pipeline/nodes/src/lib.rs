@@ -60,6 +60,7 @@ pub use mizer_video_nodes::{
     TextureBorderNode, TextureMaskNode, TextureOpacityNode, VideoFileNode, VideoHsvNode,
     VideoMixerNode, VideoOutputNode, VideoRgbNode, VideoRgbSplitNode, VideoTransformNode,
 };
+pub use mizer_ui_nodes::DialogNode;
 pub use mizer_webcam_nodes::WebcamNode;
 
 use crate::test_sink::TestSink;
@@ -273,4 +274,5 @@ node_impl! {
     RasterizeVector(RasterizeVectorNode),
     VectorFile(VectorFileNode),
     Comparison(ComparisonNode),
+    Dialog(DialogNode),
 }

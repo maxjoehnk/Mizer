@@ -4841,6 +4841,7 @@ dependencies = [
  "mizer-surfaces",
  "mizer-timecode",
  "mizer-ui",
+ "mizer-ui-api",
  "mizer-util",
  "mizer-vector",
  "mizer-wgpu",
@@ -4895,6 +4896,7 @@ dependencies = [
  "mizer-status-bus",
  "mizer-surfaces",
  "mizer-timecode",
+ "mizer-ui-api",
  "mizer-util",
  "pinboard",
  "profiling",
@@ -5603,6 +5605,7 @@ dependencies = [
  "mizer-timecode-nodes",
  "mizer-timing-nodes",
  "mizer-transport-nodes",
+ "mizer-ui-nodes",
  "mizer-util",
  "mizer-vector-nodes",
  "mizer-video-nodes",
@@ -6286,6 +6289,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-ui-api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "mizer-message-bus",
+ "mizer-module",
+ "profiling",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-ui-ffi"
 version = "0.1.0"
 dependencies = [
@@ -6305,6 +6320,17 @@ dependencies = [
  "mizer-util",
  "parking_lot 0.12.3",
  "pinboard",
+]
+
+[[package]]
+name = "mizer-ui-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "mizer-ui-api",
+ "serde",
+ "tracing",
 ]
 
 [[package]]

@@ -768,6 +768,7 @@ fn register_node(
         Node::VectorFile(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::RasterizeVector(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::Comparison(node) => pipeline.register_node(path, &node, pipeline_access),
+        Node::Dialog(node) => pipeline.register_node(path, &node, pipeline_access),
         Node::TestSink(node) => pipeline.register_node(path, &node, pipeline_access),
     }
 }

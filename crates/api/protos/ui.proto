@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package mizer.ui;
+
+message ShowDialog {
+  string title = 1;
+  repeated DialogElement elements = 2;
+}
+
+message DialogElement {
+  oneof element {
+    string text = 1;
+  }
+}

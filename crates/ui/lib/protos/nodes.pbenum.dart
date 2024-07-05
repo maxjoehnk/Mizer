@@ -27,6 +27,7 @@ class NodeCategory extends $pb.ProtobufEnum {
   static const NodeCategory NODE_CATEGORY_PIXEL = NodeCategory._(10, _omitEnumNames ? '' : 'NODE_CATEGORY_PIXEL');
   static const NodeCategory NODE_CATEGORY_VECTOR = NodeCategory._(11, _omitEnumNames ? '' : 'NODE_CATEGORY_VECTOR');
   static const NodeCategory NODE_CATEGORY_FIXTURES = NodeCategory._(12, _omitEnumNames ? '' : 'NODE_CATEGORY_FIXTURES');
+  static const NodeCategory NODE_CATEGORY_UI = NodeCategory._(13, _omitEnumNames ? '' : 'NODE_CATEGORY_UI');
 
   static const $core.List<NodeCategory> values = <NodeCategory> [
     NODE_CATEGORY_NONE,
@@ -42,6 +43,7 @@ class NodeCategory extends $pb.ProtobufEnum {
     NODE_CATEGORY_PIXEL,
     NODE_CATEGORY_VECTOR,
     NODE_CATEGORY_FIXTURES,
+    NODE_CATEGORY_UI,
   ];
 
   static final $core.Map<$core.int, NodeCategory> _byValue = $pb.ProtobufEnum.initByValue(values);

@@ -29,6 +29,7 @@ use mizer_session::Session;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_surfaces::SurfaceModule;
 use mizer_timecode::TimecodeModule;
+use mizer_ui_api::module::UiApiModule;
 use mizer_vector::VectorModule;
 use mizer_wgpu::{window::WindowModule, WgpuModule};
 
@@ -58,6 +59,7 @@ fn load_modules(context: &mut SetupContext, flags: &Flags) {
     CitpModule.try_load(context);
     DmxModule.try_load(context);
     RuntimeModule.try_load(context);
+    UiApiModule.try_load(context);
 
     #[cfg(feature = "debug-ui")]
     if flags.debug {

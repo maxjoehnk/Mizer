@@ -27,6 +27,7 @@ pub use self::status::*;
 pub use self::surfaces::*;
 pub use self::timecode::*;
 pub use self::transport::*;
+pub use self::ui::*;
 
 mod connections;
 mod console;
@@ -45,6 +46,7 @@ mod status;
 mod surfaces;
 mod timecode;
 mod transport;
+mod ui;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
@@ -65,6 +67,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub timecode: TimecodeHandler<R>,
     pub status: StatusHandler,
     pub surfaces: SurfacesHandler<R>,
+    pub ui: UiHandler,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -78,6 +81,7 @@ impl<R: RuntimeApi> Handlers<R> {
         let surface_registry_api: SurfaceRegistryApi = api_injector.require_service();
         let midi_device_registry: MidiDeviceProfileRegistry = api_injector.require_service();
         let console_history = api_injector.require_service();
+        let ui_api = api_injector.require_service();
 
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -101,6 +105,7 @@ impl<R: RuntimeApi> Handlers<R> {
             timecode: TimecodeHandler::new(timecode_manager, runtime.clone()),
             status: StatusHandler::new(status_bus),
             surfaces: SurfacesHandler::new(runtime, surface_registry_api),
+            ui: UiHandler::new(ui_api),
         }
     }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mizer/dialogs/backend_dialog_controller.dart';
 import 'package:mizer/session/window_title_updater.dart';
 import 'package:mizer/widgets/global_hotkeys.dart';
 import 'package:nativeshell/nativeshell.dart';
@@ -16,8 +17,10 @@ class MainWindowState extends WindowState {
       child: WindowLayoutProbe(
         child: LanguageSwitcher(
           child: GlobalHotkeyConfiguration(
-            child: WindowTitleUpdater(
-              child: Home(),
+            child: BackendDialogController(
+              child: WindowTitleUpdater(
+                child: Home(),
+              ),
             ),
           ),
         ),

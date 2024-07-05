@@ -15,6 +15,7 @@ final Map<NodeCategory, Color> CATEGORY_COLORS = {
   NodeCategory.NODE_CATEGORY_PIXEL: Colors.red.shade700,
   NodeCategory.NODE_CATEGORY_VECTOR: Colors.purple.shade700,
   NodeCategory.NODE_CATEGORY_FIXTURES: Colors.blueGrey.shade700,
+  NodeCategory.NODE_CATEGORY_UI: Colors.blue.shade700,
 };
 
 final Map<NodeCategory, String> CATEGORY_NAMES = {
@@ -30,4 +31,5 @@ final Map<NodeCategory, String> CATEGORY_NAMES = {
   NodeCategory.NODE_CATEGORY_PIXEL: "Pixel",
   NodeCategory.NODE_CATEGORY_VECTOR: "Vector",
   NodeCategory.NODE_CATEGORY_FIXTURES: "Fixtures",
+  NodeCategory.NODE_CATEGORY_UI: "UI",
 };

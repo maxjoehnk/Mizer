@@ -29,6 +29,7 @@ mizer-clock = { path = "../runtime/clock" }
 mizer-settings = { path = "../runtime/settings" }
 mizer-sequencer = { path = "../components/sequencer" }
 mizer-timecode = { path = "../components/timecode" }
+mizer-ui-api = { path = "../components/ui" }
 mizer-session = { path = "../runtime/session" }
 mizer-status-bus = { path = "../runtime/status" }
 mizer-command-executor = { path = "../runtime/commander/executor" }

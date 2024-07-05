@@ -65,6 +65,7 @@ pub enum NodeCategory {
     Laser,
     Pixel,
     Vector,
+    Ui,
 }
 
 node_type_name! {
@@ -168,6 +169,7 @@ node_type_name! {
         RasterizeVector,
         VectorFile,
         Comparison,
+        Dialog,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

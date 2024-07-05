@@ -18,6 +18,7 @@ import 'package:mizer/api/contracts/surfaces.dart';
 import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/plugin/status.dart';
+import 'package:mizer/api/contracts/ui.dart';
 
 import 'app.dart';
 import 'connections.dart';
@@ -37,6 +38,7 @@ import 'session.dart';
 import 'surfaces.dart';
 import 'timecode.dart';
 import 'transport.dart';
+import 'ui.dart';
 
 class PluginApiProvider extends StatelessWidget {
   final Widget child;
@@ -69,6 +71,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<StatusApi>(create: (_) => StatusPluginApi(bindings)),
         RepositoryProvider<SurfacesApi>(create: (_) => SurfacesPluginApi()),
         RepositoryProvider<ConsoleApi>(create: (_) => ConsolePluginApi()),
+        RepositoryProvider<UiApi>(create: (_) => UiPluginApi()),
       ],
     );
   }

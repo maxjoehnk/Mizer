@@ -42,9 +42,12 @@ impl Pipeline {
     
     pub fn add_node(&mut self, injector: &Injector, node_type: NodeType, designer: NodeDesigner, node: Option<Node>, parent: Option<&NodePath>) -> anyhow::Result<StaticNodeDescriptor> {
         let node = node.unwrap_or_else(|| node_type.into());
-        let node_config = node.clone();
-
         let path = self.new_node_path(node_type);
+        
+        self.add_node_with_path(injector, path, designer, node, parent)
+    }
+    
+    fn add_node_with_path(&mut self, injector: &Injector, path: NodePath, designer: NodeDesigner, node: Node, parent: Option<&NodePath>) -> anyhow::Result<StaticNodeDescriptor> {
         let settings = node.settings(injector);
         let ports = node.list_ports(injector);
         let node = self.add_dyn_node(path.clone(), node, &ports);
@@ -60,55 +63,11 @@ impl Pipeline {
             node,
         };
 
-        let descriptor = StaticNodeDescriptor {
-            node_type,
-            path: path.clone(),
-            designer: state.designer.clone(),
-            config: node_config,
-            settings: state.settings.clone(),
-            ports: state.ports.clone(),
-            details: state.node.details(),
-        };
+        let descriptor = Self::get_descriptor(path.clone(), &state);
 
         self.nodes.insert(path, state);
 
         self.reorder_nodes();
-        // TODO: add to container
-
-        Ok(descriptor)
-    }
-
-    fn add_node_with_path(&mut self, injector: &Injector, path: NodePath, designer: NodeDesigner, node: Node, parent: Option<&NodePath>) -> anyhow::Result<StaticNodeDescriptor> {
-        let node_config = node.clone();
-        let node_type = node.node_type();
-
-        let settings = node.settings(injector);
-        let ports = node.list_ports(injector);
-        let node = self.add_dyn_node(path.clone(), node, &ports);
-        let metadata = NodeMetadata {
-            display_name: node.display_name(injector),
-            custom_name: None,
-        };
-        let state = NodeState {
-            metadata,
-            designer,
-            settings,
-            ports,
-            node,
-        };
-
-        let descriptor = StaticNodeDescriptor {
-            node_type,
-            path: path.clone(),
-            designer: state.designer.clone(),
-            config: node_config,
-            settings: state.settings.clone(),
-            ports: state.ports.clone(),
-            details: state.node.details(),
-        };
-
-        self.nodes.insert(path, state);
-
         // TODO: add to container
 
         Ok(descriptor)
@@ -272,9 +231,35 @@ impl Pipeline {
         self.nodes.get_mut(path).map(|state| &mut state.designer)
     }
 
-
     pub fn list_nodes(&self) -> impl Iterator<Item=(&NodePath, &dyn ProcessingNodeExt)> {
         self.nodes.iter().map(|(path, state)| (path, &*state.node))
+    }
+
+    pub fn list_node_descriptors(&self) -> Vec<StaticNodeDescriptor> {
+        self.nodes.iter()
+            .map(|(path, state)| {
+                Self::get_descriptor(path.clone(), state)
+            })
+            .collect()
+    }
+    
+    pub fn get_node_descriptor(&self, path: &NodePath) -> Option<StaticNodeDescriptor> {
+        self.nodes.get(path).map(|state| Self::get_descriptor(path.clone(), state))
+    }
+
+    fn get_descriptor(path: NodePath, state: &NodeState) -> StaticNodeDescriptor {
+        let node_type = state.node.node_type();
+
+        StaticNodeDescriptor {
+            node_type,
+            path: path.clone(),
+            designer: state.designer.clone(),
+            metadata: state.metadata.clone(),
+            children: Default::default(),
+            settings: state.settings.clone(),
+            ports: state.ports.clone(),
+            details: state.node.details(),
+        }
     }
 
     pub fn find_node_paths<TNode: PipelineNode>(&self, matches: impl Fn(&TNode) -> bool) -> Vec<&NodePath> {

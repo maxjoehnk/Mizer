@@ -4985,7 +4985,7 @@ dependencies = [
  "mizer-surfaces",
  "mizer-timecode",
  "mizer-util",
- "parking_lot 0.12.1",
+ "parking_lot 0.12.3",
  "serde",
  "serde_json",
  "tracing",

@@ -56,7 +56,8 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
                 details,
                 ports: pipeline.list_ports(path).unwrap_or_default(),
                 settings: pipeline.get_settings(path).unwrap_or_default(),
-                config: node.downcast(),
+                children: Default::default(),
+                metadata: Default::default(),
             };
             descriptors.push(descriptor);
             new_paths.push(new_path.clone());

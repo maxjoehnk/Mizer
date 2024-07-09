@@ -64,7 +64,13 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
         "go_forward": () {
           SequencerBloc bloc = context.read();
           if (bloc.state.selectedSequenceId != null) {
-            _sequenceGo(bloc.state.selectedSequenceId!);
+            _sequenceGoForward(bloc.state.selectedSequenceId!);
+          }
+        },
+        "go_backward": () {
+          SequencerBloc bloc = context.read();
+          if (bloc.state.selectedSequenceId != null) {
+            _sequenceGoBackward(bloc.state.selectedSequenceId!);
           }
         },
         "delete": () {
@@ -101,13 +107,18 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                   PanelActionModel(
                       hotkeyId: "go_forward",
                       label: "Go+",
-                      onClick: () => _sequenceGo(state.selectedSequenceId!),
+                      onClick: () => _sequenceGoForward(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null,
                       menu: Menu(items: [
                         MenuItem(
                             label: "Add Midi Mapping",
                             action: () => _addMidiMappingForGo(context, state))
                       ])),
+                  PanelActionModel(
+                      hotkeyId: "go_backward",
+                      label: "Go-",
+                      onClick: () => _sequenceGoBackward(state.selectedSequenceId!),
+                      disabled: state.selectedSequenceId == null),
                   PanelActionModel(
                       hotkeyId: "stop",
                       label: "Stop",
@@ -181,8 +192,12 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
     context.read<SequencerBloc>().add(DuplicateSequence(sequenceId));
   }
 
-  _sequenceGo(int sequenceId) {
+  _sequenceGoForward(int sequenceId) {
     context.read<SequencerApi>().sequenceGoForward(sequenceId);
+  }
+
+  _sequenceGoBackward(int sequenceId) {
+    context.read<SequencerApi>().sequenceGoBackward(sequenceId);
   }
 
   _sequenceStop(int sequenceId) {

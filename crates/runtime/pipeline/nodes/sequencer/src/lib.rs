@@ -82,7 +82,7 @@ impl ProcessingNode for SequencerNode {
             if let Some(value) = context.read_port(PLAYBACK) {
                 if (state.playback > 0f64) != (value > 0f64) {
                     if value > 0f64 {
-                        sequencer.sequence_go(self.sequence_id);
+                        sequencer.sequence_go_forward(self.sequence_id);
                     } else {
                         sequencer.sequence_stop(self.sequence_id);
                     }
@@ -91,7 +91,7 @@ impl ProcessingNode for SequencerNode {
             }
             if let Some(value) = context.read_port(GO_FORWARD) {
                 if let Some(true) = state.go_forward.update(value) {
-                    sequencer.sequence_go(self.sequence_id);
+                    sequencer.sequence_go_forward(self.sequence_id);
                 }
             }
             if let Some(value) = context.read_port(STOP) {
@@ -107,7 +107,7 @@ impl ProcessingNode for SequencerNode {
                         if sequence_state.active {
                             sequencer.sequence_stop(self.sequence_id);
                         } else {
-                            sequencer.sequence_go(self.sequence_id);
+                            sequencer.sequence_go_forward(self.sequence_id);
                         }
                     }
                 }

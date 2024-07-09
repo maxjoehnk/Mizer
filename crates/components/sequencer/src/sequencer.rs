@@ -100,11 +100,25 @@ impl Sequencer {
         let mut sequence_orders = self.sequence_order.borrow_mut();
         for command in self.commands.1.try_iter() {
             match command {
-                SequencerCommands::Go(sequence_id) => {
+                SequencerCommands::GoForward(sequence_id) => {
                     let state = states.entry(sequence_id).or_default();
                     if let Some(sequence) = sequences.get(&sequence_id) {
                         let was_active = state.active;
                         state.go(sequence.value(), &self.clock, effect_engine, frame);
+                        let is_active = state.active;
+                        if !is_active {
+                            sequence_orders.shift_remove(&sequence_id);
+                        }
+                        if is_active && !was_active {
+                            sequence_orders.insert(sequence_id);
+                        }
+                    }
+                }
+                SequencerCommands::GoBackward(sequence_id) => {
+                    let state = states.entry(sequence_id).or_default();
+                    if let Some(sequence) = sequences.get(&sequence_id) {
+                        let was_active = state.active;
+                        state.go_backward(sequence.value(), &self.clock, effect_engine, frame);
                         let is_active = state.active;
                         if !is_active {
                             sequence_orders.shift_remove(&sequence_id);
@@ -213,10 +227,17 @@ impl Sequencer {
         result
     }
 
-    pub fn sequence_go(&self, sequence: u32) {
+    pub fn sequence_go_forward(&self, sequence: u32) {
         self.commands
             .0
-            .send(SequencerCommands::Go(sequence))
+            .send(SequencerCommands::GoForward(sequence))
+            .unwrap();
+    }
+
+    pub fn sequence_go_backward(&self, sequence: u32) {
+        self.commands
+            .0
+            .send(SequencerCommands::GoBackward(sequence))
             .unwrap();
     }
 
@@ -302,7 +323,8 @@ impl Sequencer {
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum SequencerCommands {
-    Go(u32),
+    GoForward(u32),
+    GoBackward(u32),
     GoTo(u32, u32),
     Stop(u32),
     DropState(u32),

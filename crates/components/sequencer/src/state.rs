@@ -182,6 +182,28 @@ impl SequenceState {
         }
         self.update_channel_states(sequence, clock, frame);
     }
+    
+    pub fn go_backward(
+        &mut self,
+        sequence: &Sequence,
+        clock: &impl Clock,
+        effect_engine: &EffectEngine,
+        frame: ClockFrame,
+    ) {
+        self.last_go = Some(SequenceTimestamp {
+            time: clock.now(),
+            beat: frame.frame,
+        });
+        self.cue_finished_at = None;
+        self.stop_effects(effect_engine);
+        if !self.active {
+            self.active = true;
+            self.active_cue_index = sequence.cues.len().saturating_sub(1);
+        } else {
+            self.prev_cue(sequence, effect_engine, clock, frame);
+        }
+        self.update_channel_states(sequence, clock, frame);
+    }
 
     pub fn go_to(
         &mut self,
@@ -234,6 +256,26 @@ impl SequenceState {
             self.active_cue_index = 0;
             self.active = false;
             self.stop(sequence, effect_engine, clock, frame);
+        }
+    }
+
+    fn prev_cue(
+        &mut self,
+        sequence: &Sequence,
+        effect_engine: &EffectEngine,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) {
+        if self.active_cue_index == 0 {
+            if sequence.wrap_around {
+                self.active_cue_index = sequence.cues.len().saturating_sub(1);
+                return;
+            }
+            self.active_cue_index = 0;
+            self.active = false;
+            self.stop(sequence, effect_engine, clock, frame);
+        }else {
+            self.active_cue_index = self.active_cue_index.saturating_sub(1);
         }
     }
 

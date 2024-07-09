@@ -56,7 +56,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
             }
             "sequenceGo" => {
                 if let Value::I64(sequence) = call.args {
-                    self.sequence_go(sequence as u32);
+                    self.sequence_go_forward(sequence as u32);
+
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "sequenceGoBackward" => {
+                if let Value::I64(sequence) = call.args {
+                    self.sequence_go_backward(sequence as u32);
 
                     resp.send_ok(Value::Null);
                 }
@@ -156,8 +163,12 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
         self.handler.add_sequence()
     }
 
-    pub fn sequence_go(&self, sequence: u32) {
-        self.handler.sequence_go(sequence);
+    pub fn sequence_go_forward(&self, sequence: u32) {
+        self.handler.sequence_go_forward(sequence);
+    }
+
+    pub fn sequence_go_backward(&self, sequence: u32) {
+        self.handler.sequence_go_backward(sequence);
     }
 
     pub fn sequence_stop(&self, sequence: u32) {

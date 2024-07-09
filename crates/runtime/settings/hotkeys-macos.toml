@@ -61,6 +61,7 @@ add_sequence = "alt+a"
 delete = "cmd+backspace"
 duplicate = "cmd+d"
 go_forward = "cmd+g"
+go_backward = "cmd+shift+g"
 stop = "alt+s"
 
 [hotkeys.effects]

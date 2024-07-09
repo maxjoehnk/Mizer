@@ -31,6 +31,11 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
+  Future<void> sequenceGoBackward(int sequence) async {
+    await channel.invokeMethod("sequenceGoBackward", sequence);
+  }
+
+  @override
   Future<void> sequenceStop(int sequence) async {
     await channel.invokeMethod("sequenceStop", sequence);
   }

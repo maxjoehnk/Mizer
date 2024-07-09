@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use futures::StreamExt;
 use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventChannelHandler, EventSink, RegisteredEventChannel};
 

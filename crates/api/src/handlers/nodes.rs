@@ -315,12 +315,12 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn duplicate_nodes(&self, request: DuplicateNodesRequest) -> anyhow::Result<Vec<NodePath>> {
-        let nodes = self.runtime.run_command(DuplicateNodesCommand {
+        let paths = self.runtime.run_command(DuplicateNodesCommand {
             paths: request.paths.into_iter().map(NodePath::from).collect(),
             parent: request.parent.map(NodePath::from),
         })?;
 
-        Ok(nodes.into_iter().map(|node| node.path).collect())
+        Ok(paths)
     }
 
     #[tracing::instrument(skip(self))]

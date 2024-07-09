@@ -13,9 +13,7 @@ use mizer_devices::DeviceManager;
 use mizer_layouts::Layout;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, PortId, PortMetadata,
-};
+use mizer_node::{NodeLink, NodePath, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
@@ -73,28 +71,15 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn nodes(&self) -> Vec<NodeDescriptor> {
-        let metadata = self.access.metadata.read();
-        let designer = self.access.designer.read();
-        let settings = self.access.settings.read();
-        self.access
-            .nodes
-            .iter()
-            .map(|entry| entry.key().clone())
-            .map(|path| {
-                let ports = self
-                    .access
-                    .ports
-                    .get(&path)
-                    .map(|ports| ports.clone())
-                    .unwrap_or_default();
+        // TODO: replace with query
 
-                self.get_descriptor(path, &metadata, &designer, &settings, ports)
-            })
-            .collect()
+        Default::default()
     }
 
     fn links(&self) -> Vec<NodeLink> {
-        self.access.links.read()
+        // TODO: replace with query
+
+        Default::default()
     }
 
     fn layouts(&self) -> Vec<Layout> {
@@ -136,24 +121,9 @@ impl RuntimeApi for Api {
 
     #[profiling::function]
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
-        let metadata = self.access.metadata.read();
-        let designer = self.access.designer.read();
-        let settings = self.access.settings.read();
-        self.access
-            .nodes
-            .iter()
-            .map(|entry| entry.key().clone())
-            .find(|node_path| node_path == path)
-            .map(|path| {
-                let ports = self
-                    .access
-                    .ports
-                    .get(&path)
-                    .map(|ports| ports.clone())
-                    .unwrap_or_default();
+        // TODO: replace with query
 
-                self.get_descriptor(path, &metadata, &designer, &settings, ports)
-            })
+        Default::default()
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -382,30 +352,6 @@ impl Api {
                 open_node_views: Arc::new(AtomicU8::new(0)),
             },
         )
-    }
-
-    #[profiling::function]
-    fn get_descriptor(
-        &self,
-        path: NodePath,
-        metadata: &HashMap<NodePath, NodeMetadata>,
-        designer: &HashMap<NodePath, NodeDesigner>,
-        settings: &HashMap<NodePath, Vec<NodeSetting>>,
-        ports: Vec<(PortId, PortMetadata)>,
-    ) -> NodeDescriptor {
-        let node = self.access.nodes.get(&path).unwrap();
-        let metadata = metadata.get(&path).cloned().unwrap_or_default();
-        let settings = settings.get(&path).cloned().unwrap_or_default();
-        let designer = designer[&path].clone();
-
-        NodeDescriptor {
-            path,
-            metadata,
-            node,
-            designer,
-            ports,
-            settings,
-        }
     }
 
     fn emit_history(&self) -> anyhow::Result<()> {

@@ -17,7 +17,6 @@ mizer-nodes = { path = "pipeline/nodes" }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-pipeline = { path = "pipeline" }
 mizer-session = { path = "session" }
-mizer-execution-planner = { path = "execution-planner" }
 mizer-ports = { path = "pipeline/ports"}
 mizer-processing = { path = "processing" }
 mizer-project-files = { path = "../projects" }

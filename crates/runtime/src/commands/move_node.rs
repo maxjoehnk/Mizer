@@ -1,8 +1,8 @@
 use std::collections::HashMap;
-use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodePath, NodePosition};
 use serde::{Deserialize, Serialize};
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MoveNodesCommand {
@@ -16,7 +16,7 @@ pub struct NodeMovement {
 }
 
 impl<'a> Command<'a> for MoveNodesCommand {
-    type Dependencies = RefMut<PipelineAccess>;
+    type Dependencies = RefMut<Pipeline>;
     type State = HashMap<NodePath, NodePosition>;
     type Result = ();
 
@@ -24,31 +24,25 @@ impl<'a> Command<'a> for MoveNodesCommand {
         format!("Moving {} Nodes", self.movements.len())
     }
 
-    fn apply(&self, pipeline: &mut PipelineAccess) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut nodes = pipeline.designer.read();
+    fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = HashMap::with_capacity(self.movements.len());
         for movement in &self.movements {
-            let node = nodes
-                .get_mut(&movement.path)
-                .ok_or_else(|| anyhow::anyhow!("Unknown node {}", movement.path))?;
+            let designer = pipeline.get_node_designer_mut(&movement.path)
+                .ok_or_else(|| anyhow::anyhow!("Unknown node {}", &movement.path))?;
             let mut previous = movement.position;
-            std::mem::swap(&mut node.position, &mut previous);
+            std::mem::swap(&mut designer.position, &mut previous);
             state.insert(movement.path.clone(), previous);
         }
-        pipeline.designer.set(nodes);
 
         Ok(((), state))
     }
 
-    fn revert(&self, pipeline: &mut PipelineAccess, state: Self::State) -> anyhow::Result<()> {
-        let mut nodes = pipeline.designer.read();
+    fn revert(&self, pipeline: &mut Pipeline, state: Self::State) -> anyhow::Result<()> {
         for (path, position) in state {
-            let node = nodes
-                .get_mut(&path)
-                .ok_or_else(|| anyhow::anyhow!("Unknown node {}", path))?;
-            node.position = position;
+            let designer = pipeline.get_node_designer_mut(&path)
+                .ok_or_else(|| anyhow::anyhow!("Unknown node {}", &path))?;
+            designer.position = position;
         }
-        pipeline.designer.set(nodes);
 
         Ok(())
     }

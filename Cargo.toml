@@ -40,7 +40,6 @@ members = [
     "crates/runtime/debug-ui",
     "crates/runtime/debug-ui/impl",
     "crates/runtime/debug-ui/egui",
-    "crates/runtime/execution-planner",
     "crates/runtime/injector",
     "crates/runtime/layouts",
     "crates/runtime/layouts/commands",

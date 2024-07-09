@@ -46,6 +46,15 @@ impl Injector {
             .get_mut(&id)
             .and_then(|service| service.downcast_mut())
     }
+
+    // TODO: add safe way to access mutable and immutable parts of the injector
+    pub fn get_slice_mut<T: 'static>(&mut self) -> Option<(&mut T, &Injector)> {
+        let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&self) };
+   
+        let service = injector1.get_mut::<T>()?;
+        
+        Some((service, self))
+    }
 }
 
 impl Inject for Injector {

@@ -3,15 +3,10 @@ use std::str::FromStr;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{sub_command, Command, Ref, RefMut};
+use mizer_commander::{Command, Ref};
 use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_node::{NodeDesigner, NodeType};
-use mizer_nodes::FixtureNode;
-use mizer_runtime::commands::AddNodeCommand;
-use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::ExecutionPlanner;
 
 lazy_static::lazy_static! {
     static ref FIXTURE_NAME_REGEX: Regex = Regex::new("^(?P<name>.*?)(?P<counter>[0-9]+)?$").unwrap();

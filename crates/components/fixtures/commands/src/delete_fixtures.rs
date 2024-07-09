@@ -1,13 +1,11 @@
-use mizer_commander::{sub_command, Command, Ref, RefMut};
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, Ref, sub_command, SubCommand, SubCommandRunner};
 use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_layouts::LayoutStorage;
-use mizer_nodes::{Node, NodeDowncast};
+use mizer_nodes::FixtureNode;
 use mizer_runtime::commands::DeleteNodesCommand;
-use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::ExecutionPlanner;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use mizer_runtime::Pipeline;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteFixturesCommand {
@@ -17,11 +15,10 @@ pub struct DeleteFixturesCommand {
 impl<'a> Command<'a> for DeleteFixturesCommand {
     type Dependencies = (
         Ref<FixtureManager>,
-        RefMut<PipelineAccess>,
-        RefMut<ExecutionPlanner>,
-        Ref<LayoutStorage>,
+        Ref<Pipeline>,
+        SubCommand<DeleteNodesCommand>,
     );
-    type State = Vec<(Fixture, sub_command!(DeleteNodesCommand))>;
+    type State = (Vec<Fixture>, sub_command!(DeleteNodesCommand));
     type Result = ();
 
     fn label(&self) -> String {
@@ -36,53 +33,42 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
 
     fn apply(
         &self,
-        (fixture_manager, pipeline, planner, layout_storage): (
+        (fixture_manager, pipeline, delete_node_runner): (
             &FixtureManager,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
-            &LayoutStorage,
+            &Pipeline,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut nodes = pipeline
-            .nodes_view
+        let nodes =
+            pipeline.find_node_paths::<FixtureNode>(|node| self.fixture_ids.contains(&node.fixture_id));
+        let cmd = DeleteNodesCommand {
+            paths: nodes.into_iter().cloned().collect(),
+        };
+
+        let mut fixtures = Vec::new();
+
+        for fixture in self
+            .fixture_ids
             .iter()
-            .filter_map(|node| {
-                if let Node::Fixture(fixture_node) = node.downcast() {
-                    Some((node.key().clone(), fixture_node))
-                } else {
-                    None
-                }
-            })
-            .filter(|(_, node)| self.fixture_ids.contains(&node.fixture_id))
-            .map(|(path, node)| (node.fixture_id, DeleteNodesCommand { paths: vec![path] }))
-            .collect::<HashMap<_, _>>();
-
-        let mut states = Vec::new();
-
-        for (fixture, command) in self.fixture_ids.iter().filter_map(|fixture_id| {
-            let fixture = fixture_manager.delete_fixture(*fixture_id);
-            let fixture_node = nodes.remove(fixture_id);
-
-            fixture.zip(fixture_node)
-        }) {
-            let (_, state) = command.apply((pipeline, planner, layout_storage))?;
-            states.push((fixture, (command, state)));
+            .filter_map(|fixture_id| fixture_manager.delete_fixture(*fixture_id))
+        {
+            fixtures.push(fixture);
         }
+        let (_, state) = delete_node_runner.apply(cmd)?;
 
-        Ok(((), states))
+        Ok(((), (fixtures, state)))
     }
 
     fn revert(
         &self,
-        (fixture_manager, pipeline, planner, layout_storage): (
+        (fixture_manager, _, delete_node_runner): (
             &FixtureManager,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
-            &LayoutStorage,
+            &Pipeline,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
-        state: Self::State,
+        (fixtures, sub_cmd): Self::State,
     ) -> anyhow::Result<()> {
-        for (fixture, (delete_node_cmd, state)) in state {
+        for fixture in fixtures {
             fixture_manager.add_fixture(
                 fixture.id,
                 fixture.name,
@@ -92,8 +78,8 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
                 fixture.universe.into(),
                 fixture.configuration,
             );
-            delete_node_cmd.revert((pipeline, planner, layout_storage), state)?;
         }
+        delete_node_runner.revert(sub_cmd)?;
 
         Ok(())
     }

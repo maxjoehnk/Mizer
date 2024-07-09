@@ -4,8 +4,8 @@ use mizer_layouts::{
     ControlConfig, ControlId, ControlPosition, ControlSize, ControlType, LayoutStorage,
 };
 use mizer_node::NodeType;
-use mizer_runtime::pipeline_access::PipelineAccess;
 use serde::{Deserialize, Serialize};
+use mizer_runtime::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutControlCommand {
@@ -15,7 +15,7 @@ pub struct AddLayoutControlCommand {
 }
 
 impl<'a> Command<'a> for AddLayoutControlCommand {
-    type Dependencies = (Ref<LayoutStorage>, Ref<PipelineAccess>);
+    type Dependencies = (Ref<LayoutStorage>, Ref<Pipeline>);
     type State = ControlId;
     type Result = ();
 
@@ -28,13 +28,11 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
 
     fn apply(
         &self,
-        (layout_storage, pipeline_access): (&LayoutStorage, &PipelineAccess),
+        (layout_storage, pipeline): (&LayoutStorage, &Pipeline),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let size = if let ControlType::Node { path: node } = &self.control_type {
-            let node = pipeline_access
-                .nodes_view
-                .get(node)
-                .ok_or_else(|| anyhow::anyhow!("Unknown node {node}"))?;
+        let size = if let ControlType::Node { path: node_path } = &self.control_type {
+            let node = pipeline.get_node_dyn(node_path)
+                .ok_or_else(|| anyhow::anyhow!("Unknown node {node_path}"))?;
             get_default_size_for_node_type(node.node_type())
         } else {
             ControlSize::default()
@@ -59,7 +57,7 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
 
     fn revert(
         &self,
-        (layout_storage, _): (&LayoutStorage, &PipelineAccess),
+        (layout_storage, _): (&LayoutStorage, &Pipeline),
         control_id: Self::State,
     ) -> anyhow::Result<()> {
         update_layout(layout_storage, &self.layout_id, |layout| {

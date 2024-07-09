@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
 use mizer_node::NodeLink;
+
 use crate::pipeline::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -21,22 +22,16 @@ impl<'a> Command<'a> for AddLinkCommand {
         )
     }
 
-    fn apply(
-        &self,
-        pipeline: &mut Pipeline,
-    ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let links = pipeline.get_links();
-
+    fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = None;
         let metadata = pipeline
             .try_get_input_port_metadata(&self.link.target, &self.link.target_port)
             .ok_or_else(|| anyhow::anyhow!("Target port does not exist"))?;
         if metadata.multiple != Some(true) {
-            if let Some(existing_link) = links
-                .into_iter()
-                .find(|l| l.target_port == self.link.target_port && l.target == self.link.target)
+            if let Some(existing_link) =
+                pipeline.find_input_link(&self.link.target, &self.link.target_port)
             {
-                pipeline.remove_link(&existing_link);
+                pipeline.delete_link(&existing_link);
                 state = Some(existing_link);
             };
         }
@@ -45,14 +40,10 @@ impl<'a> Command<'a> for AddLinkCommand {
         Ok(((), state))
     }
 
-    fn revert(
-        &self,
-        pipeline: &mut Pipeline,
-        previous_link: Self::State,
-    ) -> anyhow::Result<()> {
-        pipeline.remove_link(&self.link);
+    fn revert(&self, pipeline: &mut Pipeline, previous_link: Self::State) -> anyhow::Result<()> {
+        pipeline.delete_link(&self.link);
         if let Some(previous_link) = previous_link {
-            pipeline.add_link(previous_link.clone())?;
+            pipeline.add_link(previous_link)?;
         }
 
         Ok(())

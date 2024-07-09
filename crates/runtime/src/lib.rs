@@ -17,6 +17,5 @@ mod coordinator;
 mod debug_ui_pane;
 mod module;
 mod node_metadata;
-mod processor;
 mod views;
 mod pipeline;

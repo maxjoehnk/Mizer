@@ -1,15 +1,10 @@
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 
-use dashmap::mapref::one::Ref;
 use pinboard::NonEmptyPinboard;
 
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
-use mizer_node::{
-    NodeDesigner, NodeMetadata, NodePath, NodeSetting, PipelineNode, PortId,
-    PortMetadata,
-};
 use mizer_plan::Plan;
 use mizer_status_bus::StatusBus;
 

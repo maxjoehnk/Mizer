@@ -10,7 +10,7 @@ use mizer_command_executor::{CommandExecutorApi, SendableCommand, SendableQuery,
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{NodeLink, NodePath, PortId};
+use mizer_node::{NodePath, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;

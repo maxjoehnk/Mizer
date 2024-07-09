@@ -1,8 +1,7 @@
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodeColor, NodePath};
 use serde::{Deserialize, Serialize};
-
-use crate::pipeline_access::PipelineAccess;
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateNodeColorCommand {
@@ -11,7 +10,7 @@ pub struct UpdateNodeColorCommand {
 }
 
 impl<'a> Command<'a> for UpdateNodeColorCommand {
-    type Dependencies = RefMut<PipelineAccess>;
+    type Dependencies = RefMut<Pipeline>;
     type State = Option<NodeColor>;
     type Result = ();
 
@@ -24,25 +23,19 @@ impl<'a> Command<'a> for UpdateNodeColorCommand {
         }
     }
 
-    fn apply(&self, pipeline: &mut PipelineAccess) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut nodes = pipeline.designer.read();
-        let node = nodes
-            .get_mut(&self.path)
+    fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
+        let designer = pipeline.get_node_designer_mut(&self.path)
             .ok_or_else(|| anyhow::anyhow!("Unknown node {}", self.path))?;
         let mut previous = self.color;
-        std::mem::swap(&mut node.color, &mut previous);
-        pipeline.designer.set(nodes);
+        std::mem::swap(&mut designer.color, &mut previous);
 
         Ok(((), previous))
     }
 
-    fn revert(&self, pipeline: &mut PipelineAccess, state: Self::State) -> anyhow::Result<()> {
-        let mut nodes = pipeline.designer.read();
-        let node = nodes
-            .get_mut(&self.path)
+    fn revert(&self, pipeline: &mut Pipeline, state: Self::State) -> anyhow::Result<()> {
+        let designer = pipeline.get_node_designer_mut(&self.path)
             .ok_or_else(|| anyhow::anyhow!("Unknown node {}", self.path))?;
-        node.color = state;
-        pipeline.designer.set(nodes);
+        designer.color = state;
 
         Ok(())
     }

@@ -21,7 +21,7 @@ impl Processor for FixtureProcessor {
     }
 
     #[tracing::instrument]
-    fn process(&mut self, injector: &Injector, _: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, _: ClockFrame) {
         profiling::scope!("FixtureProcessor::process");
         let fixture_manager = injector.inject::<FixtureManager>();
         fixture_manager.execute_programmers();

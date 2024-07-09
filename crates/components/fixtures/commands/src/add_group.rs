@@ -21,7 +21,7 @@ impl<'a> Command<'a> for AddGroupCommand {
 
     fn apply(
         &self,
-        (fixture_manager): (&FixtureManager),
+        fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let group_id = fixture_manager.add_group(self.name.clone());
         let group = Group {

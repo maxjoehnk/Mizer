@@ -50,7 +50,6 @@ mizer-devices = { path = "../components/connections/devices" }
 mizer-sequencer = { path = "../components/sequencer" }
 mizer-timecode = { path = "../components/timecode" }
 mizer-runtime = { path = "../runtime" }
-mizer-execution-planner = { path = "../runtime/execution-planner" }
 mizer-node = { path = "../runtime/pipeline/node" }
 mizer-nodes = { path = "../runtime/pipeline/nodes" }
 mizer-layouts = { path = "../runtime/layouts" }

@@ -5,7 +5,7 @@ use crate::{WgpuContext, WgpuPipeline};
 pub struct WgpuPipelineProcessor;
 
 impl Processor for WgpuPipelineProcessor {
-    fn process(&mut self, injector: &Injector, _frame: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, _frame: ClockFrame) {
         profiling::scope!("WgpuPipelineProcessor::process");
         let pipeline = injector.get::<WgpuPipeline>().unwrap();
         let wgpu_context = injector.get::<WgpuContext>().unwrap();

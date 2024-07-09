@@ -2,12 +2,11 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{Command, RefMut};
-use mizer_node::NodeLink;
+use mizer_commander::{Command, InjectorRef, RefMut, sub_command};
+use mizer_node::{Injector, NodeLink};
 use mizer_ports::PortType;
 use mizer_runtime::commands::{AddLinkCommand, AddNodeCommand};
-use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::ExecutionPlanner;
+use mizer_runtime::{Pipeline};
 
 use crate::{NodeRequest, NodeTemplate};
 
@@ -17,10 +16,10 @@ pub struct ExecuteNodeTemplateCommand {
 }
 
 impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = (RefMut<Pipeline>, InjectorRef);
     type State = (
-        Vec<(AddNodeCommand, <AddNodeCommand as Command<'a>>::State)>,
-        Vec<(AddLinkCommand, <AddLinkCommand as Command<'a>>::State)>,
+        Vec<sub_command!(AddNodeCommand)>,
+        Vec<sub_command!(AddLinkCommand)>,
     );
     type Result = ();
 
@@ -30,7 +29,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
 
     fn apply(
         &self,
-        (pipeline_access, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        (pipeline, injector): (&mut Pipeline, &Injector),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut node_paths = HashMap::new();
         let mut new_nodes = vec![];
@@ -47,7 +46,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
                     },
                 )),
                 NodeRequest::Existing(path) => {
-                    if !pipeline_access.nodes_view.contains_key(path) {
+                    if !pipeline.contains_node(path) {
                         anyhow::bail!("Unknown node {path}");
                     }
                     node_paths.insert(template_ref.clone(), path.clone());
@@ -57,7 +56,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
         let nodes = new_nodes
             .into_iter()
             .map(|(template, cmd)| {
-                let (_, state) = cmd.apply((pipeline_access, planner))?;
+                let (_, state) = cmd.apply((pipeline, injector))?;
 
                 node_paths.insert(template, state.clone());
 
@@ -83,7 +82,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
                 },
             };
 
-            let (_, state) = cmd.apply((pipeline_access, planner))?;
+            let (_, state) = cmd.apply(pipeline)?;
 
             links.push((cmd, state));
         }
@@ -93,14 +92,14 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
 
     fn revert(
         &self,
-        (pipeline_access, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        (pipeline, injector): (&mut Pipeline, &Injector),
         (nodes, links): Self::State,
     ) -> anyhow::Result<()> {
         for (link_cmd, link_state) in links {
-            link_cmd.revert((pipeline_access, planner), link_state)?;
+            link_cmd.revert(pipeline, link_state)?;
         }
         for (node_cmd, node_state) in nodes {
-            node_cmd.revert((pipeline_access, planner), node_state)?;
+            node_cmd.revert((pipeline, injector), node_state)?;
         }
 
         Ok(())

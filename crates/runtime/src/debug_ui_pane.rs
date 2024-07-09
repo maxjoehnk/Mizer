@@ -1,7 +1,7 @@
-use crate::pipeline_access::PipelineAccess;
 use mizer_debug_ui_impl::NodeStateAccess;
 use mizer_module::*;
 use mizer_nodes::NodeDowncast;
+use crate::Pipeline;
 
 pub struct NodesDebugUiPane;
 
@@ -17,8 +17,8 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for NodesDebugUiPane {
         ui: &mut TUi::DrawHandle<'a>,
         _textures: &mut <TUi::DrawHandle<'a> as DebugUiDrawHandle<'a>>::TextureMap,
     ) {
-        let pipeline_access = injector.inject::<PipelineAccess>();
-        let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+        let pipeline = injector.inject::<Pipeline>();
+        let nodes = pipeline.list_nodes();
 
         for (path, node) in nodes {
             let state = state_access.get(path);

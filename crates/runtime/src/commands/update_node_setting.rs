@@ -1,4 +1,3 @@
-use std::ops::DerefMut;
 use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
@@ -6,9 +5,7 @@ use serde::{Deserialize, Serialize};
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodePath, NodeSetting, NodeSettingValue, SelectVariant};
 use mizer_nodes::*;
-use mizer_pipeline::ProcessingNodeExt;
-
-use crate::pipeline_access::PipelineAccess;
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateNodeSettingCommand {
@@ -17,7 +14,7 @@ pub struct UpdateNodeSettingCommand {
 }
 
 impl<'a> Command<'a> for UpdateNodeSettingCommand {
-    type Dependencies = RefMut<PipelineAccess>;
+    type Dependencies = RefMut<Pipeline>;
     type State = Node;
     type Result = ();
 
@@ -113,24 +110,13 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
 
     fn apply(
         &self,
-        pipeline_access: &mut PipelineAccess,
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         tracing::debug!("Updating {:?} with {:?}", self.path, self.setting);
 
-        let node = pipeline_access
-            .nodes
-            .get_mut(&self.path)
+        let node = pipeline.get_node_dyn_mut(&self.path)
             .ok_or_else(|| anyhow::anyhow!("Unknown Node {}", self.path))?;
-        let previous_config: Node = NodeDowncast::downcast(node);
-        let node: &mut dyn ProcessingNodeExt = node.deref_mut();
-        node.as_pipeline_node_mut()
-            .update_setting(self.setting.clone())?;
-
-        let mut node = pipeline_access
-            .nodes_view
-            .get_mut(&self.path)
-            .ok_or_else(|| anyhow::anyhow!("Unknown Node {}", self.path))?;
-        let node = node.value_mut();
+        let previous_config: Node = NodeDowncast::downcast(&node);
         node.update_setting(self.setting.clone())?;
 
         Ok(((), previous_config))
@@ -138,10 +124,10 @@ impl<'a> Command<'a> for UpdateNodeSettingCommand {
 
     fn revert(
         &self,
-        pipeline_access: &mut PipelineAccess,
+        pipeline: &mut Pipeline,
         state: Self::State,
     ) -> anyhow::Result<()> {
-        pipeline_access.apply_node_config(&self.path, state)?;
+        pipeline.update_node(&self.path, state)?;
 
         Ok(())
     }

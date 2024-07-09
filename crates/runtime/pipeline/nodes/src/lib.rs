@@ -155,6 +155,13 @@ macro_rules! node_impl {
                     Node::TestSink(_) => {},
                 }
             }
+            
+            pub fn boxed(&self) -> Box<dyn PipelineNode> {
+                match self {
+                    $(Node::$node_type(node) => Box::new(node.clone()),)*
+                    Node::TestSink(node) => Box::new(node.clone()),
+                }
+            }
         }
 
         pub trait NodeDowncast {
@@ -171,6 +178,18 @@ macro_rules! node_impl {
             fn downcast_node<T: Clone + 'static>(&self, node_type: NodeType) -> Option<T>;
         }
 
+        pub trait NodeExt {
+            type Result;
+
+            fn handle<TNode: mizer_node::ProcessingNode>(&mut self, node: TNode) -> Self::Result;
+
+            fn handle_dyn(&mut self, node: Node) -> Self::Result {
+                match node {
+                    $(Node::$node_type(node) => self.handle(node),)*
+                    Node::TestSink(node) => self.handle(node),
+                }
+            }
+        }
     };
 }
 

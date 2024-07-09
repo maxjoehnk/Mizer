@@ -2,7 +2,6 @@ use mizer_node::{NodeDesigner, NodeDetails, NodeMetadata, NodePath, NodeSetting,
 use mizer_nodes::{ContainerNode};
 use mizer_ports::PortId;
 use crate::pipeline::Pipeline;
-use crate::pipeline_access::PipelineAccess;
 
 pub use self::add_link::*;
 pub use self::add_node::*;
@@ -60,35 +59,33 @@ pub(crate) fn assert_valid_parent(
 }
 
 pub(crate) fn add_path_to_container(
-    pipeline: &mut PipelineAccess,
+    pipeline: &mut Pipeline,
     parent: Option<&NodePath>,
     path: &NodePath,
 ) -> anyhow::Result<()> {
-    if let Some(parent) = parent.and_then(|path| pipeline.nodes.get_mut(path)) {
-        let parent = parent.downcast_mut::<ContainerNode>()?;
-        parent.nodes.push(path.clone());
-    }
-    if let Some(mut parent) = parent.and_then(|path| pipeline.nodes_view.get_mut(path)) {
-        let parent = parent.value_mut().downcast_mut::<ContainerNode>()?;
-        parent.nodes.push(path.clone());
-    }
+    let Some(parent) = parent else {
+        return Ok(());
+    };
+    let container = pipeline.get_node_mut::<ContainerNode>(parent).ok_or_else(|| {
+        anyhow::anyhow!("Node {} is not a container", path)
+    })?;
+    container.nodes.push(path.clone());
 
     Ok(())
 }
 
 pub(crate) fn remove_path_from_container(
-    pipeline: &mut PipelineAccess,
+    pipeline: &mut Pipeline,
     parent: Option<&NodePath>,
     path: &NodePath,
 ) -> anyhow::Result<()> {
-    if let Some(parent) = parent.and_then(|path| pipeline.nodes.get_mut(path)) {
-        let parent = parent.downcast_mut::<ContainerNode>()?;
-        parent.nodes.retain(|p| path != p);
-    }
-    if let Some(mut parent) = parent.and_then(|path| pipeline.nodes_view.get_mut(path)) {
-        let parent = parent.value_mut().downcast_mut::<ContainerNode>()?;
-        parent.nodes.retain(|p| path != p);
-    }
+    let Some(parent) = parent else {
+        return Ok(());
+    };
+    let container = pipeline.get_node_mut::<ContainerNode>(parent).ok_or_else(|| {
+        anyhow::anyhow!("Node {} is not a container", path)
+    })?;
+    container.nodes.retain(|p| path != p);
 
     Ok(())
 }

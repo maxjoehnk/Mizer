@@ -1,9 +1,10 @@
 use super::StaticNodeDescriptor;
 use crate::commands::{assert_valid_parent};
-use mizer_commander::{Command, RefMut};
+use mizer_commander::{Command, InjectorRef, RefMut};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{Node};
 use serde::{Deserialize, Serialize};
+use mizer_processing::Injector;
 use crate::pipeline::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -15,7 +16,7 @@ pub struct AddNodeCommand {
 }
 
 impl<'a> Command<'a> for AddNodeCommand {
-    type Dependencies = RefMut<Pipeline>;
+    type Dependencies = (RefMut<Pipeline>, InjectorRef);
     type State = NodePath;
     type Result = StaticNodeDescriptor;
 
@@ -25,10 +26,10 @@ impl<'a> Command<'a> for AddNodeCommand {
 
     fn apply(
         &self,
-        pipeline: &mut Pipeline,
+        (pipeline, injector): (&mut Pipeline, &Injector),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         assert_valid_parent(pipeline, self.parent.as_ref())?;
-        let descriptor = pipeline.add_node(self.node_type, self.designer, self.node.clone(), self.parent.as_ref())?;
+        let descriptor = pipeline.add_node(injector, self.node_type, self.designer, self.node.clone(), self.parent.as_ref())?;
         let path = descriptor.path.clone();
 
         Ok((descriptor, path))
@@ -36,10 +37,10 @@ impl<'a> Command<'a> for AddNodeCommand {
 
     fn revert(
         &self,
-        pipeline: &mut Pipeline,
+        (pipeline, _injector): (&mut Pipeline, &Injector),
         state: Self::State,
     ) -> anyhow::Result<()> {
-        pipeline.remove_node(&state)?;
+        pipeline.delete_node(&state);
 
         Ok(())
     }

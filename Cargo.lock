@@ -4812,7 +4812,6 @@ dependencies = [
  "mizer-debug-ui-egui",
  "mizer-debug-ui-impl",
  "mizer-devices",
- "mizer-execution-planner",
  "mizer-fixture-definition-provider",
  "mizer-fixtures",
  "mizer-gdtf-provider",
@@ -5175,19 +5174,6 @@ dependencies = [
  "mizer-util",
  "serde",
  "test-case",
-]
-
-[[package]]
-name = "mizer-execution-planner"
-version = "0.1.0"
-dependencies = [
- "itertools 0.12.1",
- "mizer-node",
- "mizer-util",
- "profiling",
- "serde",
- "test-case",
- "tracing",
 ]
 
 [[package]]
@@ -5613,6 +5599,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "derive_more",
+ "downcast",
  "insta",
  "mizer-audio-nodes",
  "mizer-clock-nodes",
@@ -6065,7 +6052,6 @@ dependencies = [
  "mizer-commander",
  "mizer-debug-ui-impl",
  "mizer-docs",
- "mizer-execution-planner",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-module",

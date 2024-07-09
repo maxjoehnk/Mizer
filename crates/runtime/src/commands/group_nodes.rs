@@ -1,7 +1,5 @@
 use crate::commands::AddNodeCommand;
-use crate::pipeline_access::PipelineAccess;
-use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::ExecutionPlanner;
+use mizer_commander::{Command, sub_command, SubCommand, SubCommandRunner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
@@ -13,8 +11,8 @@ pub struct GroupNodesCommand {
 }
 
 impl<'a> Command<'a> for GroupNodesCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
-    type State = (AddNodeCommand, <AddNodeCommand as Command<'a>>::State);
+    type Dependencies = SubCommand<AddNodeCommand>;
+    type State = sub_command!(AddNodeCommand);
     type Result = ();
 
     fn label(&self) -> String {
@@ -23,7 +21,7 @@ impl<'a> Command<'a> for GroupNodesCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        add_node_runner: SubCommandRunner<AddNodeCommand>,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let cmd = AddNodeCommand {
             node_type: NodeType::Container,
@@ -33,17 +31,17 @@ impl<'a> Command<'a> for GroupNodesCommand {
             })),
             designer: NodeDesigner::default(),
         };
-        let (_, state) = cmd.apply((pipeline, planner))?;
+        let (_, state) = add_node_runner.apply(cmd)?;
 
-        Ok(((), (cmd, state)))
+        Ok(((), state))
     }
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
-        (cmd, state): Self::State,
+        add_node_runner: SubCommandRunner<AddNodeCommand>,
+        state: Self::State,
     ) -> anyhow::Result<()> {
-        cmd.revert((pipeline, planner), state)?;
+        add_node_runner.revert(state)?;
 
         Ok(())
     }

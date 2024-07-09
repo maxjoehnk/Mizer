@@ -1,8 +1,7 @@
-use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::ExecutionPlanner;
 use mizer_node::NodeLink;
 use serde::{Deserialize, Serialize};
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RemoveLinkCommand {
@@ -10,7 +9,7 @@ pub struct RemoveLinkCommand {
 }
 
 impl<'a> Command<'a> for RemoveLinkCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = RefMut<Pipeline>;
     type State = ();
     type Result = ();
 
@@ -23,20 +22,18 @@ impl<'a> Command<'a> for RemoveLinkCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        pipeline.remove_link(&self.link);
-        planner.remove_link(&self.link);
+        pipeline.delete_link(&self.link);
 
         Ok(((), ()))
     }
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
         _: Self::State,
     ) -> anyhow::Result<()> {
-        planner.add_link(self.link.clone());
         pipeline.add_link(self.link.clone())?;
 
         Ok(())

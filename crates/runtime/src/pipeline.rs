@@ -64,11 +64,14 @@ impl Pipeline {
         };
 
         let descriptor = Self::get_descriptor(path.clone(), &state);
+        
+        if let Some(container) = parent.and_then(|parent| self.get_node_mut::<ContainerNode>(parent)) {
+            container.nodes.push(path.clone());
+        }
 
         self.nodes.insert(path, state);
 
         self.reorder_nodes();
-        // TODO: add to container
 
         Ok(descriptor)
     }
@@ -100,7 +103,7 @@ impl Pipeline {
         };
         let new_node = NodeState {
             node,
-            designer: state.designer.clone(),
+            designer: state.designer,
             metadata: state.metadata.clone(),
             settings: state.settings.clone(),
             ports: state.ports.clone(),
@@ -301,7 +304,7 @@ impl Pipeline {
             .filter_map(move |(path, state)| {
                 let node = state.node.downcast_ref::<TNode>().ok()?;
 
-                matches(node).then(|| (path, node))
+                matches(node).then_some((path, node))
             })
     }
 

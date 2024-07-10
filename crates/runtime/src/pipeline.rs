@@ -6,7 +6,7 @@ use indexmap::IndexMap;
 use mizer_clock::{ClockFrame, SystemClock};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
 use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
-use mizer_nodes::{Node, NodeDowncast, NodeExt};
+use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
 use mizer_processing::{Processor};
@@ -257,12 +257,18 @@ impl Pipeline {
     fn get_descriptor(path: NodePath, state: &NodeState) -> StaticNodeDescriptor {
         let node_type = state.node.node_type();
 
+        let children = if let Some(container) = state.node.downcast_node::<ContainerNode>(node_type) {
+            container.nodes.clone()
+        }else {
+            Default::default()
+        };
+
         StaticNodeDescriptor {
             node_type,
             path: path.clone(),
-            designer: state.designer.clone(),
+            designer: state.designer,
             metadata: state.metadata.clone(),
-            children: Default::default(),
+            children,
             settings: state.settings.clone(),
             ports: state.ports.clone(),
             details: state.node.details(),

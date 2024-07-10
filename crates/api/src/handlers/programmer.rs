@@ -9,7 +9,6 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammerControlValue, ProgrammerView};
 use mizer_fixtures::GroupId;
 use mizer_sequencer::Sequencer;
-use std::ops::Deref;
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
@@ -106,40 +105,32 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_presets(&self) -> Presets {
+        let intensities = self.runtime.query(ListIntensityPresetsQuery).unwrap();
+        let shutters = self.runtime.query(ListShutterPresetsQuery).unwrap();
+        let colors = self.runtime.query(ListColorPresetsQuery).unwrap();
+        let positions = self.runtime.query(ListPositionPresetsQuery).unwrap();
+        
         Presets {
-            intensities: self
-                .fixture_manager
-                .presets
-                .intensity_presets()
+            intensities: intensities
                 .into_iter()
                 .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
-            shutters: self
-                .fixture_manager
-                .presets
-                .shutter_presets()
+            shutters: shutters
                 .into_iter()
                 .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
-            colors: self
-                .fixture_manager
-                .presets
-                .color_presets()
+            colors: colors
                 .into_iter()
                 .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
-            positions: self
-                .fixture_manager
-                .presets
-                .position_presets()
+            positions: positions
                 .into_iter()
                 .sorted_by_key(|(_, preset)| preset.id)
                 .map(Preset::from)
                 .collect(),
-            ..Default::default()
         }
     }
 
@@ -162,14 +153,12 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_groups(&self) -> Groups {
+        let groups = self.runtime.query(ListGroupsQuery).unwrap();
         Groups {
-            groups: self
-                .fixture_manager
-                .get_groups()
+            groups: groups
                 .into_iter()
-                .map(|group| group.deref().clone().into())
+                .map(|group| group.into())
                 .collect(),
-            ..Default::default()
         }
     }
 

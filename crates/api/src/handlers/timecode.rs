@@ -2,6 +2,7 @@ use futures::Stream;
 use futures::StreamExt;
 
 use mizer_timecode::commands::*;
+use mizer_timecode::queries::{ListTimecodeControlsQuery, ListTimecodeTracksQuery};
 use mizer_timecode::TimecodeManager;
 pub use mizer_timecode::TimecodeStateAccess;
 
@@ -35,15 +36,13 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
 
     #[profiling::function]
     pub fn get_timecodes(&self) -> AllTimecodes {
-        let timecodes = self
-            .manager
-            .timecodes()
+        let timecodes = self.runtime.query(ListTimecodeTracksQuery).unwrap();
+        let controls = self.runtime.query(ListTimecodeControlsQuery).unwrap();
+        let timecodes = timecodes
             .into_iter()
             .map(Timecode::from)
             .collect();
-        let controls = self
-            .manager
-            .controls()
+        let controls = controls
             .into_iter()
             .map(TimecodeControl::from)
             .collect();

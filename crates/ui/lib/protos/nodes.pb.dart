@@ -1227,9 +1227,9 @@ class Node extends $pb.GeneratedMessage {
     $core.Iterable<Port>? outputs,
     NodeDesigner? designer,
     Node_NodePreviewType? preview,
-    NodeConfig? config,
     $core.Iterable<NodeSetting>? settings,
     NodeDetails? details,
+    $core.Iterable<Node>? children,
   }) {
     final $result = create();
     if (type != null) {
@@ -1250,14 +1250,14 @@ class Node extends $pb.GeneratedMessage {
     if (preview != null) {
       $result.preview = preview;
     }
-    if (config != null) {
-      $result.config = config;
-    }
     if (settings != null) {
       $result.settings.addAll(settings);
     }
     if (details != null) {
       $result.details = details;
+    }
+    if (children != null) {
+      $result.children.addAll(children);
     }
     return $result;
   }
@@ -1272,9 +1272,9 @@ class Node extends $pb.GeneratedMessage {
     ..pc<Port>(4, _omitFieldNames ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..aOM<NodeDesigner>(5, _omitFieldNames ? '' : 'designer', subBuilder: NodeDesigner.create)
     ..e<Node_NodePreviewType>(6, _omitFieldNames ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.NONE, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
-    ..aOM<NodeConfig>(7, _omitFieldNames ? '' : 'config', subBuilder: NodeConfig.create)
-    ..pc<NodeSetting>(8, _omitFieldNames ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSetting.create)
-    ..aOM<NodeDetails>(9, _omitFieldNames ? '' : 'details', subBuilder: NodeDetails.create)
+    ..pc<NodeSetting>(7, _omitFieldNames ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSetting.create)
+    ..aOM<NodeDetails>(8, _omitFieldNames ? '' : 'details', subBuilder: NodeDetails.create)
+    ..pc<Node>(9, _omitFieldNames ? '' : 'children', $pb.PbFieldType.PM, subBuilder: Node.create)
     ..hasRequiredFields = false
   ;
 
@@ -1344,29 +1344,21 @@ class Node extends $pb.GeneratedMessage {
   void clearPreview() => clearField(6);
 
   @$pb.TagNumber(7)
-  NodeConfig get config => $_getN(6);
-  @$pb.TagNumber(7)
-  set config(NodeConfig v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasConfig() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearConfig() => clearField(7);
-  @$pb.TagNumber(7)
-  NodeConfig ensureConfig() => $_ensure(6);
+  $core.List<NodeSetting> get settings => $_getList(6);
 
   @$pb.TagNumber(8)
-  $core.List<NodeSetting> get settings => $_getList(7);
+  NodeDetails get details => $_getN(7);
+  @$pb.TagNumber(8)
+  set details(NodeDetails v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasDetails() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearDetails() => clearField(8);
+  @$pb.TagNumber(8)
+  NodeDetails ensureDetails() => $_ensure(7);
 
   @$pb.TagNumber(9)
-  NodeDetails get details => $_getN(8);
-  @$pb.TagNumber(9)
-  set details(NodeDetails v) { setField(9, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasDetails() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearDetails() => clearField(9);
-  @$pb.TagNumber(9)
-  NodeDetails ensureDetails() => $_ensure(8);
+  $core.List<Node> get children => $_getList(8);
 }
 
 class NodeDetails extends $pb.GeneratedMessage {
@@ -1459,71 +1451,6 @@ class NodeDetails extends $pb.GeneratedMessage {
   $core.bool hasCategory() => $_has(3);
   @$pb.TagNumber(4)
   void clearCategory() => clearField(4);
-}
-
-enum NodeConfig_Type {
-  containerConfig, 
-  notSet
-}
-
-class NodeConfig extends $pb.GeneratedMessage {
-  factory NodeConfig({
-    ContainerNodeConfig? containerConfig,
-  }) {
-    final $result = create();
-    if (containerConfig != null) {
-      $result.containerConfig = containerConfig;
-    }
-    return $result;
-  }
-  NodeConfig._() : super();
-  factory NodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory NodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static const $core.Map<$core.int, NodeConfig_Type> _NodeConfig_TypeByTag = {
-    45 : NodeConfig_Type.containerConfig,
-    0 : NodeConfig_Type.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [45])
-    ..aOM<ContainerNodeConfig>(45, _omitFieldNames ? '' : 'containerConfig', subBuilder: ContainerNodeConfig.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  NodeConfig clone() => NodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  NodeConfig copyWith(void Function(NodeConfig) updates) => super.copyWith((message) => updates(message as NodeConfig)) as NodeConfig;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static NodeConfig create() => NodeConfig._();
-  NodeConfig createEmptyInstance() => create();
-  static $pb.PbList<NodeConfig> createRepeated() => $pb.PbList<NodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static NodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeConfig>(create);
-  static NodeConfig? _defaultInstance;
-
-  NodeConfig_Type whichType() => _NodeConfig_TypeByTag[$_whichOneof(0)]!;
-  void clearType() => clearField($_whichOneof(0));
-
-  @$pb.TagNumber(45)
-  ContainerNodeConfig get containerConfig => $_getN(0);
-  @$pb.TagNumber(45)
-  set containerConfig(ContainerNodeConfig v) { setField(45, v); }
-  @$pb.TagNumber(45)
-  $core.bool hasContainerConfig() => $_has(0);
-  @$pb.TagNumber(45)
-  void clearContainerConfig() => clearField(45);
-  @$pb.TagNumber(45)
-  ContainerNodeConfig ensureContainerConfig() => $_ensure(0);
 }
 
 class NodeSetting_TextValue extends $pb.GeneratedMessage {
@@ -3339,50 +3266,6 @@ class MidiNodeConfig extends $pb.GeneratedMessage {
   void clearControlBinding() => clearField(3);
   @$pb.TagNumber(3)
   MidiNodeConfig_ControlBinding ensureControlBinding() => $_ensure(2);
-}
-
-class ContainerNodeConfig extends $pb.GeneratedMessage {
-  factory ContainerNodeConfig({
-    $core.Iterable<Node>? nodes,
-  }) {
-    final $result = create();
-    if (nodes != null) {
-      $result.nodes.addAll(nodes);
-    }
-    return $result;
-  }
-  ContainerNodeConfig._() : super();
-  factory ContainerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ContainerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ContainerNodeConfig', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..pc<Node>(1, _omitFieldNames ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ContainerNodeConfig clone() => ContainerNodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ContainerNodeConfig copyWith(void Function(ContainerNodeConfig) updates) => super.copyWith((message) => updates(message as ContainerNodeConfig)) as ContainerNodeConfig;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static ContainerNodeConfig create() => ContainerNodeConfig._();
-  ContainerNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<ContainerNodeConfig> createRepeated() => $pb.PbList<ContainerNodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static ContainerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ContainerNodeConfig>(create);
-  static ContainerNodeConfig? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<Node> get nodes => $_getList(0);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

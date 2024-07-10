@@ -1,6 +1,5 @@
-use crate::ExtractDependencies;
-use mizer_injector::Injector;
-use std::any::type_name;
+use crate::{ExtractDependencies, ExtractDependenciesQuery};
+use mizer_injector::{Inject, Injector};
 use std::marker::PhantomData;
 
 pub struct Ref<T>(pub(crate) PhantomData<T>);
@@ -9,10 +8,14 @@ impl<'a, T: 'static> ExtractDependencies<'a> for Ref<T> {
     type Type = &'a T;
 
     fn extract(injector: &'a mut Injector) -> Self::Type {
-        let type_name = type_name::<T>();
+        injector.inject()
+    }
+}
 
-        injector
-            .get::<T>()
-            .unwrap_or_else(|| panic!("Type {} is not available in injector", type_name))
+impl<'a, T: 'static> ExtractDependenciesQuery<'a> for Ref<T> {
+    type Type = &'a T;
+
+    fn extract(injector: &'a impl Inject) -> Self::Type {
+        injector.inject::<T>()
     }
 }

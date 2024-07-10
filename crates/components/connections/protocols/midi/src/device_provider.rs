@@ -93,10 +93,6 @@ impl MidiDeviceProvider {
         Ok(())
     }
 
-    pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
-        self.profile_registry.list_device_profiles()
-    }
-
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
         profiling::scope!("MidiDeviceProvider::find_device");
 

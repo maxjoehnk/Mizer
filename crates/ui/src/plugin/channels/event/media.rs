@@ -6,21 +6,22 @@ use nativeshell::Context;
 
 use mizer_api::handlers::MediaHandler;
 use mizer_api::proto::media::*;
+use mizer_api::RuntimeApi;
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
 use crate::impl_into_flutter_value;
 use crate::plugin::event_sink::EventSinkSubscriber;
 
-pub struct MediaEventChannel<AR: AsyncRuntime> {
+pub struct MediaEventChannel<AR: AsyncRuntime, R> {
     context: Context,
-    handler: MediaHandler,
+    handler: MediaHandler<R>,
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
 
 impl_into_flutter_value!(MediaFiles);
 
-impl<AR: AsyncRuntime + 'static> EventChannelHandler for MediaEventChannel<AR> {
+impl<AR: AsyncRuntime + 'static, R: RuntimeApi + 'static> EventChannelHandler for MediaEventChannel<AR, R> {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         tracing::debug!("register_event_sink {}", id);
@@ -34,14 +35,14 @@ impl<AR: AsyncRuntime + 'static> EventChannelHandler for MediaEventChannel<AR> {
     fn unregister_event_sink(&mut self, sink_id: i64) {
         tracing::debug!("unregister_event_sink {}", sink_id);
         if let Some(subscription) = self.subscriptions.remove(&sink_id) {
-            tracing::trace!("Dropped history subscription");
+            tracing::trace!("Dropped media subscription");
             subscription.unsubscribe();
         }
     }
 }
 
-impl<AR: AsyncRuntime + 'static> MediaEventChannel<AR> {
-    pub fn new(handler: MediaHandler, runtime: AR, context: Context) -> Self {
+impl<AR: AsyncRuntime + 'static, R: RuntimeApi + 'static> MediaEventChannel<AR, R> {
+    pub fn new(handler: MediaHandler<R>, runtime: AR, context: Context) -> Self {
         Self {
             handler,
             runtime,

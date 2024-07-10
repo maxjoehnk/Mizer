@@ -3,8 +3,6 @@ use std::path::Path;
 
 use dashmap::DashMap;
 
-use mizer_midi_device_profiles::DeviceProfile;
-
 use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 
 pub struct MidiConnectionManager {
@@ -76,9 +74,5 @@ impl MidiConnectionManager {
 
     pub fn list_available_devices(&self) -> Vec<MidiDeviceIdentifier> {
         self.provider.list_devices().unwrap_or_default()
-    }
-
-    pub fn list_available_device_profiles(&self) -> Vec<DeviceProfile> {
-        self.provider.list_device_profiles()
     }
 }

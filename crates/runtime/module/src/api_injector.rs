@@ -2,6 +2,7 @@ use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::fmt::Formatter;
 use std::sync::Arc;
+use mizer_processing::Inject;
 
 pub trait ApiService: Any + Send + Sync + Clone {}
 
@@ -19,20 +20,26 @@ impl std::fmt::Debug for ApiInjector {
     }
 }
 
+impl Inject for ApiInjector {
+    fn try_inject<T: 'static>(&self) -> Option<&T> {
+        let id = TypeId::of::<T>();
+        self.services
+            .get(&id)
+            .and_then(|service| service.downcast_ref())
+    }
+}
+
 impl ApiInjector {
     pub fn new() -> Self {
         Default::default()
     }
 
     pub fn require_service<T: 'static + ApiService>(&self) -> T {
-        self.get::<T>().cloned().unwrap()
+        self.inject::<T>().clone()
     }
 
     pub fn get<T: 'static + ApiService>(&self) -> Option<&T> {
-        let id = TypeId::of::<T>();
-        self.services
-            .get(&id)
-            .and_then(|service| service.downcast_ref())
+        self.try_inject()
     }
 
     pub fn provide<T: 'static + ApiService>(&mut self, value: T) {

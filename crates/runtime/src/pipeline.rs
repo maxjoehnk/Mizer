@@ -88,6 +88,7 @@ impl Pipeline {
         let node_config: Node = NodeDowncast::downcast(&state.node);
         let node_type = node_config.node_type();
         let new_path = self.new_node_path(node_type);
+        // add_dyn_node inlined because of borrow checker
         let node = {
             let mut registration = PipelineNodeRegistration {
                 ports: &state.ports,
@@ -138,11 +139,13 @@ impl Pipeline {
     pub(crate) fn delete_node(&mut self, path: &NodePath) -> Option<(NodeState, Vec<NodeLink>)> {
         let node = self.nodes.shift_remove(path)?;
         let links = self.remove_links_if(|link| link.source == *path || link.target == *path);
+        self.worker.remove_node(path, &links);
 
         Some((node, links))
     }
 
     pub(crate) fn reinsert_node(&mut self, path: NodePath, state: NodeState) {
+        self.add_dyn_node(path.clone(), NodeDowncast::downcast(&state.node), &state.ports);
         self.nodes.insert(path, state);
         self.reorder_nodes();
     }
@@ -165,9 +168,8 @@ impl Pipeline {
 
     pub(crate) fn find_input_link(&mut self, path: &NodePath, port: &PortId) -> Option<NodeLink> {
         self.links.iter()
-            .filter(|link| link.target == *path && link.target_port == *port)
+            .find(|link| link.target == *path && link.target_port == *port)
             .cloned()
-            .next()
     }
 
     fn remove_links_if(&mut self, predicate: impl Fn(&NodeLink) -> bool) -> Vec<NodeLink> {
@@ -175,6 +177,9 @@ impl Pipeline {
         let (remaining_links, removed_links) = links.into_iter()
             .partition(predicate);
         self.links = remaining_links;
+        for link in &removed_links {
+            self.worker.disconnect_port(link);
+        }
         self.reorder_nodes();
 
         removed_links
@@ -192,6 +197,7 @@ impl Pipeline {
             &link
         );
         link.port_type = source_port.port_type;
+        self.worker.connect_nodes(link.clone(), source_port, target_port)?;
         self.links.push(link);
         self.reorder_nodes();
 

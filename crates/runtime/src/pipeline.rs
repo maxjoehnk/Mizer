@@ -174,8 +174,9 @@ impl Pipeline {
 
     fn remove_links_if(&mut self, predicate: impl Fn(&NodeLink) -> bool) -> Vec<NodeLink> {
         let links = std::mem::take(&mut self.links);
-        let (remaining_links, removed_links) = links.into_iter()
+        let (removed_links, remaining_links) = links.into_iter()
             .partition(predicate);
+        tracing::debug!("Removing links: {removed_links:?}");
         self.links = remaining_links;
         for link in &removed_links {
             self.worker.disconnect_port(link);

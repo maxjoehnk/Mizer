@@ -26,6 +26,7 @@ mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
 mizer-module = { path = "../runtime/module" }
+mizer-runtime = { path = "../runtime" }
 directories-next = "2.0"
 fs2 = "0.4"
 indexmap = { version = "2.2", features = ["serde"] }

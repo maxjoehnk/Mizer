@@ -9,3 +9,4 @@ mod module;
 mod processor;
 pub mod queries;
 mod spline;
+mod project_loading;

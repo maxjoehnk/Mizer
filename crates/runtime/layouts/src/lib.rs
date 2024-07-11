@@ -11,6 +11,7 @@ use uuid::Uuid;
 
 mod debug_ui_pane;
 mod module;
+mod project_handler;
 
 pub type LayoutStorage = Arc<NonEmptyPinboard<Vec<Layout>>>;
 

@@ -70,11 +70,13 @@ pub use mizer_webcam_nodes::WebcamNode;
 use crate::test_sink::TestSink;
 
 pub use self::container_node::ContainerNode;
+pub use self::config::NodeConfig;
 
 mod container_node;
 mod downcast;
 #[doc(hidden)]
 pub mod test_sink;
+mod config;
 
 macro_rules! node_impl {
     ($($node_type:ident($node:ty),)*) => {

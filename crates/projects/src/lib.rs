@@ -1,18 +1,16 @@
 use std::convert::TryFrom;
-use std::fs::File;
-use std::io::{Cursor, Read, Seek};
+use std::io::{Read, Seek};
 use std::net::Ipv4Addr;
 use std::path::Path;
 
 use indexmap::IndexMap;
-use lazy_static::lazy_static;
-use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
-use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_nodes::NodeConfig;
+use mizer_runtime::Channel;
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
@@ -21,7 +19,6 @@ use mizer_surfaces::Surface;
 use mizer_timecode::{TimecodeControl, TimecodeTrack};
 
 use crate::fixtures::PresetsStore;
-use crate::media::Media;
 use crate::project_file::ProjectFile;
 use crate::versioning::{migrate, Migrations};
 pub use crate::handler_context::HandlerContext;
@@ -29,20 +26,10 @@ pub use crate::handler_context::HandlerContext;
 mod connections;
 mod fixtures;
 pub mod history;
-mod media;
-mod timecode;
 mod versioning;
 mod handler_context;
 mod project_file;
-
-lazy_static! {
-    static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
-        r"^(?P<fc>[a-z0-9\-\+/ ]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z0-9\-\+/ ]*)@(?P<ti>[a-z0-9\-/]*)$"
-    )
-    .case_insensitive(true)
-    .build()
-    .unwrap();
-}
+mod media;
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
@@ -51,11 +38,11 @@ pub struct Project {
     #[serde(default)]
     pub playback: PlaybackSettings,
     #[serde(default)]
-    pub nodes: Vec<Node>,
+    pub nodes: Vec<NodeConfig>,
     #[serde(default)]
     pub channels: Vec<Channel>,
     #[serde(default)]
-    pub media: Media,
+    pub media: media::Media,
     #[serde(default)]
     pub layouts: IndexMap<String, Vec<ControlConfig>>,
     #[serde(default)]
@@ -76,11 +63,6 @@ pub struct Project {
     pub timecodes: Timecodes,
     #[serde(default)]
     pub surfaces: Vec<Surface>,
-}
-
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
-pub struct PlaybackSettings {
-    pub fps: f64,
 }
 
 impl Default for PlaybackSettings {
@@ -119,85 +101,6 @@ impl Project {
     // 
     //     Ok(project)
     // }
-
-    // TODO: do file persistence on background thread
-    #[profiling::function]
-    pub fn save_file<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
-        let file = File::create(path)?;
-        serde_yaml::to_writer(file, &self)?;
-
-        Ok(())
-    }
-}
-
-pub trait ProjectManagerMut {
-    fn new_project(&mut self) {}
-    fn load(&mut self, project: &Project) -> anyhow::Result<()>;
-    fn save(&self, project: &mut Project);
-    fn clear(&mut self);
-}
-
-pub trait ProjectManager {
-    fn new_project(&self) {}
-    fn load(&self, project: &Project) -> anyhow::Result<()>;
-    fn save(&self, project: &mut Project);
-    fn clear(&self);
-}
-
-#[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
-#[serde(try_from = "String", into = "String")]
-pub struct Channel {
-    pub from_path: NodePath,
-    pub from_channel: PortId,
-    pub to_path: NodePath,
-    pub to_channel: PortId,
-}
-
-impl TryFrom<String> for Channel {
-    type Error = String;
-
-    fn try_from(value: String) -> Result<Self, Self::Error> {
-        if let Some(captures) = CHANNEL_REGEX.captures(&value) {
-            let from_path = captures.name("fi").unwrap().as_str().into();
-            let from_channel = captures.name("fc").unwrap().as_str().into();
-            let to_path = captures.name("ti").unwrap().as_str().into();
-            let to_channel = captures.name("tc").unwrap().as_str().into();
-
-            Ok(Channel {
-                from_path,
-                from_channel,
-                to_path,
-                to_channel,
-            })
-        } else {
-            Err("invalid channel format".into())
-        }
-    }
-}
-
-impl From<Channel> for String {
-    fn from(channel: Channel) -> Self {
-        format!("{:?}", channel)
-    }
-}
-
-impl std::fmt::Debug for Channel {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}@{} -> {}@{}",
-            self.from_channel, self.from_path, self.to_channel, self.to_path
-        )
-    }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-pub struct Node {
-    pub path: NodePath,
-    #[serde(flatten)]
-    pub config: mizer_nodes::Node,
-    #[serde(default)]
-    pub designer: NodeDesigner,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

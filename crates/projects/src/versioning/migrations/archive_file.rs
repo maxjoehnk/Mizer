@@ -1,3 +1,4 @@
+use mizer_layouts::Layout;
 use crate::Project;
 use crate::project_file::{ProjectArchive, ProjectFile};
 use crate::versioning::ProjectMigration;
@@ -32,8 +33,12 @@ impl TryFrom<Project> for ProjectArchive {
         let mut archive = ProjectArchive::default();
         {
             let mut writer = archive.write()?;
-            writer.write_file("playback.json")?;
+            writer.write_file("runtime/playback.json")?;
             serde_json::to_writer(&mut writer, &project.playback)?;
+            writer.write_file("runtime/nodes.json")?;
+            serde_json::to_writer(&mut writer, &project.nodes)?;
+            writer.write_file("runtime/channels.json")?;
+            serde_json::to_writer(&mut writer, &project.channels)?;
             writer.write_file("fixtures/patch.json")?;
             serde_json::to_writer(&mut writer, &project.fixtures)?;
             writer.write_file("fixtures/groups.json")?;
@@ -45,21 +50,28 @@ impl TryFrom<Project> for ProjectArchive {
             writer.write_file("effects/effects.json")?;
             serde_json::to_writer(&mut writer, &project.effects)?;
             writer.write_file("timecodes/timecodes.json")?;
-            serde_json::to_writer(&mut writer, &project.timecodes)?;
-            writer.write_file("pipeline/nodes.json")?;
-            serde_json::to_writer(&mut writer, &project.nodes)?;
-            writer.write_file("pipeline/channels.json")?;
-            serde_json::to_writer(&mut writer, &project.channels)?;
+            serde_json::to_writer(&mut writer, &project.timecodes.timecodes)?;
+            writer.write_file("timecodes/controls.json")?;
+            serde_json::to_writer(&mut writer, &project.timecodes.controls)?;
             writer.write_file("layouts/layouts.json")?;
-            serde_json::to_writer(&mut writer, &project.layouts)?;
+            let layouts = project.layouts.into_iter()
+                .map(|(id, controls)| Layout {
+                    id,
+                    controls,
+                }).collect::<Vec<_>>();
+            serde_json::to_writer(&mut writer, &layouts)?;
             writer.write_file("plans/plans.json")?;
             serde_json::to_writer(&mut writer, &project.plans)?;
             writer.write_file("surfaces/surfaces.json")?;
             serde_json::to_writer(&mut writer, &project.surfaces)?;
             writer.write_file("connections/connections.json")?;
             serde_json::to_writer(&mut writer, &project.connections)?;
-            writer.write_file("media/media.json")?;
-            serde_json::to_writer(&mut writer, &project.media)?;
+            writer.write_file("media/files.json")?;
+            serde_json::to_writer(&mut writer, &project.media.files)?;
+            writer.write_file("media/tags.json")?;
+            serde_json::to_writer(&mut writer, &project.media.tags)?;
+            writer.write_file("media/watched_folders.json")?;
+            serde_json::to_writer(&mut writer, &project.media.import_paths)?;
         }
         
         Ok(archive)

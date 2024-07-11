@@ -3,7 +3,7 @@ use mizer_node::ProcessingNode;
 use mizer_nodes::{Node, OscillatorNode};
 use mizer_runtime::*;
 
-use crate::utils::add_node;
+use crate::utils::run_node;
 
 mod utils;
 
@@ -22,14 +22,13 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
     let sink = utils::TestSink::new();
     let mut runtime = CoordinatorRuntime::with_clock(clock);
     let node_type = node.node_type();
-    add_node(
+    run_node(
         &mut runtime,
         node_type,
         Some(node.into()),
         sink.clone(),
         port,
     );
-    runtime.plan();
 
     for _ in 0..frames {
         runtime.process();

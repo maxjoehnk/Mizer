@@ -176,7 +176,7 @@ node_type_name! {
     }
 }
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
 pub struct NodeDesigner {
     pub position: NodePosition,
     pub scale: f64,

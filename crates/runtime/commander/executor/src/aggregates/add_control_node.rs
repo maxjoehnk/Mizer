@@ -1,11 +1,10 @@
-use mizer_commander::{Command, Ref, RefMut};
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, sub_command, SubCommand, SubCommandRunner};
 use mizer_layout_commands::AddLayoutControlCommand;
-use mizer_layouts::{ControlPosition, ControlType, LayoutStorage};
+use mizer_layouts::{ControlPosition, ControlType};
 use mizer_node::NodeType;
 use mizer_runtime::commands::AddNodeCommand;
-use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::ExecutionPlanner;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutControlWithNodeCommand {
@@ -16,15 +15,12 @@ pub struct AddLayoutControlWithNodeCommand {
 
 impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
     type Dependencies = (
-        RefMut<PipelineAccess>,
-        Ref<LayoutStorage>,
-        RefMut<ExecutionPlanner>,
+        SubCommand<AddNodeCommand>,
+        SubCommand<AddLayoutControlCommand>,
     );
     type State = (
-        AddNodeCommand,
-        <AddNodeCommand as Command<'a>>::State,
-        AddLayoutControlCommand,
-        <AddLayoutControlCommand as Command<'a>>::State,
+        sub_command!(AddNodeCommand),
+        sub_command!(AddLayoutControlCommand),
     );
     type Result = ();
 
@@ -37,10 +33,9 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
 
     fn apply(
         &self,
-        (pipeline_access, layout_storage, planner): (
-            &mut PipelineAccess,
-            &LayoutStorage,
-            &mut ExecutionPlanner,
+        (add_node_runner, add_control_runner): (
+            SubCommandRunner<AddNodeCommand>,
+            SubCommandRunner<AddLayoutControlCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let add_node_command = AddNodeCommand {
@@ -49,7 +44,7 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
             designer: Default::default(),
             parent: None,
         };
-        let (descriptor, state) = add_node_command.apply((pipeline_access, planner))?;
+        let (descriptor, add_node_state) = add_node_runner.apply(add_node_command)?;
         let add_control_command = AddLayoutControlCommand {
             layout_id: self.layout_id.clone(),
             control_type: ControlType::Node {
@@ -57,32 +52,21 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
             },
             position: self.position,
         };
-        let (_, add_control_state) =
-            add_control_command.apply((layout_storage, pipeline_access))?;
+        let (_, add_control_state) = add_control_runner.apply(add_control_command)?;
 
-        Ok((
-            (),
-            (
-                add_node_command,
-                state,
-                add_control_command,
-                add_control_state,
-            ),
-        ))
+        Ok(((), (add_node_state, add_control_state)))
     }
 
     fn revert(
         &self,
-        (pipeline_access, layout_storage, planner): (
-            &mut PipelineAccess,
-            &LayoutStorage,
-            &mut ExecutionPlanner,
+        (add_node_runner, add_control_runner): (
+            SubCommandRunner<AddNodeCommand>,
+            SubCommandRunner<AddLayoutControlCommand>,
         ),
-        (add_node_command, add_node_state, add_layout_control_command, add_layout_control_state): Self::State,
+        (add_node_state, add_control_state): Self::State,
     ) -> anyhow::Result<()> {
-        add_layout_control_command
-            .revert((layout_storage, pipeline_access), add_layout_control_state)?;
-        add_node_command.revert((pipeline_access, planner), add_node_state)?;
+        add_control_runner.revert(add_control_state)?;
+        add_node_runner.revert(add_node_state)?;
 
         Ok(())
     }

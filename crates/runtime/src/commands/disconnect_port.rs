@@ -1,11 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::ExecutionPlanner;
 use mizer_node::{NodeLink, NodePath};
 use mizer_ports::PortId;
-
-use crate::pipeline_access::PipelineAccess;
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DisconnectPortCommand {
@@ -14,7 +12,7 @@ pub struct DisconnectPortCommand {
 }
 
 impl<'a> Command<'a> for DisconnectPortCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = RefMut<Pipeline>;
     type State = Vec<NodeLink>;
     type Result = ();
 
@@ -24,32 +22,21 @@ impl<'a> Command<'a> for DisconnectPortCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let links = pipeline.links.read();
-        let (old_links, new_links) = links.into_iter().partition(|link| {
-            (link.source == self.path && link.source_port == self.port)
-                || (link.target == self.path && link.target_port == self.port)
-        });
-        pipeline.links.set(new_links);
-        for link in &old_links {
-            planner.remove_link(link);
-        }
+        let old_links = pipeline.remove_links_from_port(&self.path, &self.port);
 
         Ok(((), old_links))
     }
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
-        mut state: Self::State,
+        pipeline: &mut Pipeline,
+        state: Self::State,
     ) -> anyhow::Result<()> {
-        for link in &state {
-            planner.add_link(link.clone());
+        for link in state {
+            pipeline.add_link(link)?;
         }
-        let mut links = pipeline.links.read();
-        links.append(&mut state);
-        pipeline.links.set(links);
 
         Ok(())
     }

@@ -1,12 +1,9 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, RefMut};
-use mizer_execution_planner::ExecutionPlanner;
-use mizer_node::{NodePath, NodeType};
-use mizer_nodes::{ContainerNode, Node, NodeDowncast};
-use mizer_util::HashMapExtension;
-
-use crate::pipeline_access::PipelineAccess;
+use mizer_node::{NodePath};
+use mizer_nodes::{ContainerNode, Node};
+use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RenameNodeCommand {
@@ -15,7 +12,7 @@ pub struct RenameNodeCommand {
 }
 
 impl<'a> Command<'a> for RenameNodeCommand {
-    type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
+    type Dependencies = RefMut<Pipeline>;
     type State = Vec<(NodePath, Node)>;
     type Result = ();
 
@@ -25,13 +22,9 @@ impl<'a> Command<'a> for RenameNodeCommand {
 
     fn apply(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        rename_designer_nodes(pipeline, &self.path, &self.new_name)?;
-        rename_nodes(pipeline, &self.path, &self.new_name)?;
-        rename_nodes_view(pipeline, &self.path, &self.new_name)?;
-        rename_links(pipeline, &self.path, &self.new_name)?;
-        planner.rename_node(&self.path, self.new_name.clone());
+        pipeline.rename_node(&self.path, self.new_name.clone())?;
         let previous_containers = self.rename_node_in_containers(pipeline)?;
 
         Ok(((), previous_containers))
@@ -39,108 +32,40 @@ impl<'a> Command<'a> for RenameNodeCommand {
 
     fn revert(
         &self,
-        (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
+        pipeline: &mut Pipeline,
         container_commands: Self::State,
     ) -> anyhow::Result<()> {
-        rename_designer_nodes(pipeline, &self.new_name, &self.path)?;
-        rename_nodes(pipeline, &self.new_name, &self.path)?;
-        rename_nodes_view(pipeline, &self.new_name, &self.path)?;
-        rename_links(pipeline, &self.new_name, &self.path)?;
-        planner.rename_node(&self.new_name, self.path.clone());
+        pipeline.rename_node(&self.new_name, self.path.clone())?;
         for (path, container) in container_commands {
-            pipeline.apply_node_config(&path, container)?;
+            pipeline.update_node(&path, container)?;
         }
 
         Ok(())
     }
 }
 
-fn rename_designer_nodes(
-    pipeline: &mut PipelineAccess,
-    from: &NodePath,
-    to: &NodePath,
-) -> anyhow::Result<()> {
-    let mut nodes = pipeline.designer.read();
-    nodes
-        .rename_key(from, to.clone())
-        .then_some(())
-        .ok_or_else(|| anyhow::anyhow!("Unknown node {}", from))?;
-    pipeline.designer.set(nodes);
-
-    Ok(())
-}
-
-fn rename_nodes(
-    pipeline: &mut PipelineAccess,
-    from: &NodePath,
-    to: &NodePath,
-) -> anyhow::Result<()> {
-    pipeline
-        .nodes
-        .rename_key(from, to.clone())
-        .then_some(())
-        .ok_or_else(|| anyhow::anyhow!("Unknown node {}", from))?;
-
-    Ok(())
-}
-
-fn rename_nodes_view(
-    pipeline: &mut PipelineAccess,
-    from: &NodePath,
-    to: &NodePath,
-) -> anyhow::Result<()> {
-    let (_, node) = pipeline
-        .nodes_view
-        .remove(from)
-        .ok_or_else(|| anyhow::anyhow!("Unknown node {}", from))?;
-    pipeline.nodes_view.insert(to.clone(), node);
-
-    Ok(())
-}
-
-fn rename_links(
-    pipeline: &mut PipelineAccess,
-    from: &NodePath,
-    to: &NodePath,
-) -> anyhow::Result<()> {
-    let mut links = pipeline.links.read();
-    for link in links.iter_mut() {
-        if &link.source == from {
-            link.source = to.clone();
-        }
-        if &link.target == from {
-            link.target = to.clone();
-        }
-    }
-    pipeline.links.set(links);
-
-    Ok(())
-}
-
 impl RenameNodeCommand {
     fn rename_node_in_containers(
         &self,
-        pipeline: &mut PipelineAccess,
+        pipeline: &mut Pipeline,
     ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
-        for (path, node) in pipeline
-            .nodes
-            .iter()
-            .filter(|(_, node)| node.node_type() == NodeType::Container)
+        for (path, container) in pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(&self.path))
         {
-            if let Some(mut container) = node.downcast_node::<ContainerNode>(NodeType::Container) {
-                let updated_node = container.nodes.iter().position(|p| p == &self.path);
-                if let Some(updated_node_index) = updated_node {
-                    container.nodes[updated_node_index] = self.new_name.clone();
-                    update_node_commands.push((path.clone(), container));
-                }
-            }
+            let new_config = ContainerNode {
+                nodes: container
+                    .nodes
+                    .iter()
+                    .map(|p| if p == &self.path { self.new_name.clone() } else { p.clone() })
+                    .collect(),
+            };
+            update_node_commands.push((path.clone(), new_config));
         }
 
         update_node_commands
             .into_iter()
             .map(|(path, node)| {
-                let previous = pipeline.apply_node_config(&path, node.into());
+                let previous = pipeline.update_node(&path, node.into());
 
                 previous.map(|previous| (path, previous))
             })

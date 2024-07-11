@@ -1,13 +1,12 @@
-use mizer_commander::{Command, Ref, RefMut};
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, Ref, sub_command, SubCommand, SubCommandRunner};
+use mizer_fixtures::GroupId;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
-use mizer_fixtures::GroupId;
-use mizer_layouts::LayoutStorage;
-use mizer_nodes::{Node, NodeDowncast};
+use mizer_nodes::GroupNode;
 use mizer_runtime::commands::DeleteNodesCommand;
-use mizer_runtime::pipeline_access::PipelineAccess;
-use mizer_runtime::ExecutionPlanner;
-use serde::{Deserialize, Serialize};
+use mizer_runtime::Pipeline;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteGroupCommand {
@@ -15,16 +14,10 @@ pub struct DeleteGroupCommand {
 }
 
 impl<'a> Command<'a> for DeleteGroupCommand {
-    type Dependencies = (
-        Ref<FixtureManager>,
-        RefMut<PipelineAccess>,
-        RefMut<ExecutionPlanner>,
-        Ref<LayoutStorage>,
-    );
+    type Dependencies = (Ref<FixtureManager>, Ref<Pipeline>, SubCommand<DeleteNodesCommand>);
     type State = (
         Group,
-        DeleteNodesCommand,
-        <DeleteNodesCommand as Command<'a>>::State,
+        sub_command!(DeleteNodesCommand),
     );
     type Result = ();
 
@@ -34,48 +27,37 @@ impl<'a> Command<'a> for DeleteGroupCommand {
 
     fn apply(
         &self,
-        (fixture_manager, pipeline, planner, layout_storage): (
+        (fixture_manager, pipeline, delete_node_runner): (
             &FixtureManager,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
-            &LayoutStorage,
+            &Pipeline,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let group = fixture_manager
             .delete_group(self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.id))?;
 
-        let path = pipeline
-            .nodes_view
-            .iter()
-            .find(|node| {
-                if let Node::Group(node) = node.downcast() {
-                    node.id == self.id
-                } else {
-                    false
-                }
-            })
-            .map(|node| node.key().clone())
+        let path = pipeline.find_node_path::<GroupNode>(|node| node.id == self.id)
+            .cloned()
             .ok_or_else(|| anyhow::anyhow!("Missing node for group {}", self.id))?;
 
         let sub_cmd = DeleteNodesCommand { paths: vec![path] };
-        let (_, state) = sub_cmd.apply((pipeline, planner, layout_storage))?;
+        let (_, state) = delete_node_runner.apply(sub_cmd)?;
 
-        Ok(((), (group, sub_cmd, state)))
+        Ok(((), (group, state)))
     }
 
     fn revert(
         &self,
-        (fixture_manager, pipeline, planner, layout_storage): (
+        (fixture_manager, _, delete_node_runner): (
             &FixtureManager,
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
-            &LayoutStorage,
+            &Pipeline,
+            SubCommandRunner<DeleteNodesCommand>,
         ),
-        (group, sub_cmd, state): Self::State,
+        (group, sub_cmd): Self::State,
     ) -> anyhow::Result<()> {
         fixture_manager.groups.insert(group.id, group);
-        sub_cmd.revert((pipeline, planner, layout_storage), state)?;
+        delete_node_runner.revert(sub_cmd)?;
 
         Ok(())
     }

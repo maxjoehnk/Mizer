@@ -6,7 +6,7 @@ use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
-
+use mizer_runtime::Pipeline;
 use crate::{ApiCommand, Mizer};
 
 pub struct ApiHandler {
@@ -32,7 +32,8 @@ impl ApiHandler {
         match command {
             ApiCommand::WritePort(path, port, value, sender) => {
                 profiling::scope!("ApiCommand::WritePort");
-                mizer.runtime.pipeline.write_port(path, port, value);
+                let pipeline = mizer.runtime.injector_mut().get_mut::<Pipeline>().unwrap();
+                pipeline.write_port(path, port, value);
 
                 sender
                     .send(Ok(()))
@@ -40,10 +41,9 @@ impl ApiHandler {
             }
             ApiCommand::ReadFaderValue(path, sender) => {
                 profiling::scope!("ApiCommand::ReadFaderValue");
-                let value = mizer
-                    .runtime
-                    .pipeline
-                    .get_state::<f64>(&path)
+                let pipeline = mizer.runtime.injector().get::<Pipeline>().unwrap();
+                let value = pipeline
+                    .read_state::<f64>(&path)
                     .copied()
                     .ok_or_else(|| anyhow::anyhow!("No fader node with given path found"));
 

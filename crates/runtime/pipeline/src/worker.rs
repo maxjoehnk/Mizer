@@ -92,6 +92,26 @@ impl NodeDowncast for Box<dyn ProcessingNodeExt> {
     }
 }
 
+impl NodeDowncast for &dyn ProcessingNodeExt {
+    fn node_type(&self) -> NodeType {
+        PipelineNode::node_type(*self)
+    }
+
+    fn downcast_node<T: Clone + 'static>(&self, _: NodeType) -> Option<T> {
+        self.downcast_ref().ok().cloned()
+    }
+}
+
+impl NodeDowncast for &mut dyn ProcessingNodeExt {
+    fn node_type(&self) -> NodeType {
+        PipelineNode::node_type(*self)
+    }
+
+    fn downcast_node<T: Clone + 'static>(&self, _: NodeType) -> Option<T> {
+        self.downcast_ref().ok().cloned()
+    }
+}
+
 pub struct PipelineWorker {
     states: HashMap<NodePath, Box<dyn Any>>,
     senders: HashMap<NodePath, NodeSenders>,
@@ -138,15 +158,15 @@ impl PipelineWorker {
         }
     }
 
-    pub fn register_node<T: 'static + ProcessingNode<State = S>, S: 'static>(
+    pub fn register_node<T: 'static + ProcessingNode>(
         &mut self,
         path: NodePath,
         node: &T,
-        pipeline_access: &impl NodePortReader,
+        ports: &[(PortId, PortMetadata)],
     ) {
         tracing::debug!("register_node {:?} ({:?})", path, node);
         let state = node.create_state();
-        match mizer_node::ProcessingNode::details(node).preview_type {
+        match ProcessingNode::details(node).preview_type {
             PreviewType::History => {
                 self.previews
                     .insert(path.clone(), NodePreviewState::History(Default::default()));
@@ -167,12 +187,12 @@ impl PipelineWorker {
                 self.previews.insert(path.clone(), NodePreviewState::None);
             }
         }
-        let state: Box<S> = Box::new(state);
+        let state: Box<T::State> = Box::new(state);
         self.states.insert(path.clone(), state);
         let mut receivers = NodeReceivers::default();
-        for (port_id, metadata) in pipeline_access.list_ports(&path).unwrap_or_default() {
+        for (port_id, metadata) in ports {
             if metadata.is_input() {
-                register_receiver(&mut receivers, &path, port_id, metadata);
+                register_receiver(&mut receivers, &path, port_id.clone(), *metadata);
             }
         }
         self.receivers.insert(path, receivers);

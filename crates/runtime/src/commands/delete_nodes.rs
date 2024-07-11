@@ -1,11 +1,10 @@
-use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, Ref, RefMut};
-use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_layouts::{ControlConfig, ControlType, LayoutStorage};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
-use mizer_nodes::{ContainerNode, Node, NodeDowncast};
+use mizer_node::{NodeLink, NodePath};
+use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::pipeline::{NodeState, Pipeline};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeleteNodesCommand {
@@ -14,14 +13,11 @@ pub struct DeleteNodesCommand {
 
 impl<'a> Command<'a> for DeleteNodesCommand {
     type Dependencies = (
-        RefMut<PipelineAccess>,
-        RefMut<ExecutionPlanner>,
+        RefMut<Pipeline>,
         Ref<LayoutStorage>,
     );
     type State = Vec<(
-        Node,
-        NodeDesigner,
-        Vec<NodeLink>,
+        NodeState, Vec<NodeLink>,
         HashMap<String, Vec<ControlConfig>>,
         Vec<(NodePath, Node)>,
     )>;
@@ -33,19 +29,16 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn apply(
         &self,
-        (pipeline, planner, layout_storage): (
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
+        (pipeline, layout_storage): (
+            &mut Pipeline,
             &LayoutStorage,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = Vec::with_capacity(self.paths.len());
         for path in &self.paths {
-            let (node, designer, links) = pipeline.delete_node(path.clone())?;
-            for link in &links {
-                planner.remove_link(link);
-            }
-            planner.remove_node(path);
+            let Some((node_state, links)) = pipeline.delete_node(path) else {
+                continue;
+            };
 
             let mut layouts = layout_storage.read();
             let mut controls = HashMap::new();
@@ -59,8 +52,8 @@ impl<'a> Command<'a> for DeleteNodesCommand {
             }
             layout_storage.set(layouts);
             let update_node_commands = self.remove_node_from_containers(pipeline, path)?;
-            
-            let entry = (node, designer, links, controls, update_node_commands);
+
+            let entry = (node_state, links, controls, update_node_commands);
             state.push(entry);
         }
 
@@ -69,22 +62,16 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn revert(
         &self,
-        (pipeline, planner, layout_storage): (
-            &mut PipelineAccess,
-            &mut ExecutionPlanner,
+        (pipeline, layout_storage): (
+            &mut Pipeline,
             &LayoutStorage,
         ),
         state: Self::State,
     ) -> anyhow::Result<()> {
-        for (path, (node, designer, links, mut controls, container_commands)) in self.paths.iter().zip(state) {
-            pipeline.internal_add_node(path.clone(), node, designer);
-            planner.add_node(ExecutionNode {
-                path: path.clone(),
-                attached_executor: None,
-            });
+        for (path, (node_state, links, mut controls, container_commands)) in self.paths.iter().zip(state) {
+            pipeline.reinsert_node(path.clone(), node_state);
             for link in links {
                 pipeline.add_link(link.clone())?;
-                planner.add_link(link);
             }
             let mut layouts = layout_storage.read();
             for layout in &mut layouts {
@@ -93,7 +80,7 @@ impl<'a> Command<'a> for DeleteNodesCommand {
             }
             layout_storage.set(layouts);
             for (path, container) in container_commands {
-                pipeline.apply_node_config(&path, container)?;
+                pipeline.update_node(&path, container)?;
             }
         }
 
@@ -104,28 +91,21 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 impl DeleteNodesCommand {
     fn remove_node_from_containers(
         &self,
-        pipeline: &mut PipelineAccess,
+        pipeline: &mut Pipeline,
         node_path: &NodePath,
     ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
-        for (path, node) in pipeline
-            .nodes
-            .iter()
-            .filter(|(_, node)| node.node_type() == NodeType::Container)
-        {
-            if let Some(mut container) = node.downcast_node::<ContainerNode>(NodeType::Container) {
-                let removed_node = container.nodes.iter().position(|p| p == node_path);
-                if let Some(removed_node_index) = removed_node {
-                    container.nodes.remove(removed_node_index);
-                    update_node_commands.push((path.clone(), container));
-                }
-            }
+        for (path, container) in pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(node_path)) {
+            let container = ContainerNode {
+                nodes: container.nodes.iter().filter(|p| p != &node_path).cloned().collect(),
+            };
+            update_node_commands.push((path.clone(), container))
         }
 
         update_node_commands
             .into_iter()
             .map(|(path, node)| {
-                let previous = pipeline.apply_node_config(&path, node.into());
+                let previous = pipeline.update_node(&path, node.into());
 
                 previous.map(|previous| (path, previous))
             })
@@ -136,41 +116,26 @@ impl DeleteNodesCommand {
 #[cfg(test)]
 mod tests {
     use crate::commands::DeleteNodesCommand;
-    use crate::pipeline_access::PipelineAccess;
+    use crate::pipeline::Pipeline;
     use mizer_commander::Command;
-    use mizer_execution_planner::ExecutionPlanner;
     use mizer_layouts::{
         ControlConfig, ControlDecorations, ControlPosition, ControlSize, ControlType, Layout,
         LayoutStorage,
     };
     use mizer_node::*;
-    use mizer_nodes::FaderNode;
     use mizer_ports::PortType;
     use pinboard::NonEmptyPinboard;
 
     #[test]
     fn delete_node_should_remove_the_connected_links() {
-        let mut pipeline_access = PipelineAccess::new();
-        let mut planner = ExecutionPlanner::new();
+        let injector = Injector::new();
+        let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
-        let path1 = NodePath("/node1".into());
-        let path2 = NodePath("/node2".into());
-        pipeline_access.internal_add_node(
-            path1.clone(),
-            FaderNode::default().into(),
-            Default::default(),
-        );
-        pipeline_access.internal_add_node(
-            path2.clone(),
-            FaderNode::default().into(),
-            Default::default(),
-        );
-        let injector = Injector::default();
-        let ports = pipeline_access.nodes[&path1].list_ports(&injector);
-        pipeline_access.ports.insert(path1.clone(), ports);
-        let ports = pipeline_access.nodes[&path2].list_ports(&injector);
-        pipeline_access.ports.insert(path2.clone(), ports);
-        pipeline_access
+        let node1 = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let node2 = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let path1 = node1.path;
+        let path2 = node2.path;
+        pipeline
             .add_link(NodeLink {
                 source: path1.clone(),
                 source_port: "Output".into(),
@@ -182,24 +147,19 @@ mod tests {
             .unwrap();
         let cmd = DeleteNodesCommand { paths: vec![path1] };
 
-        cmd.apply((&mut pipeline_access, &mut planner, &layout_storage))
-            .unwrap();
+        cmd.apply((&mut pipeline, &layout_storage)).unwrap();
 
-        let links = pipeline_access.links.read();
+        let links = pipeline.list_links().collect::<Vec<_>>();
         assert!(links.is_empty());
     }
 
     #[test]
     fn delete_node_should_remove_layout_controls() {
-        let mut pipeline_access = PipelineAccess::new();
-        let mut planner = ExecutionPlanner::new();
+        let injector = Injector::new();
+        let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
-        let path = NodePath("/node".into());
-        pipeline_access.internal_add_node(
-            path.clone(),
-            FaderNode::default().into(),
-            Default::default(),
-        );
+        let descriptor = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let path = descriptor.path;
         let mut layouts = layout_storage.read();
         layouts.push(Layout {
             id: "".into(),
@@ -219,8 +179,7 @@ mod tests {
         layout_storage.set(layouts);
         let cmd = DeleteNodesCommand { paths: vec![path] };
 
-        cmd.apply((&mut pipeline_access, &mut planner, &layout_storage))
-            .unwrap();
+        cmd.apply((&mut pipeline, &layout_storage)).unwrap();
 
         let layouts = layout_storage.read();
         assert!(layouts[0].controls.is_empty());

@@ -125,21 +125,21 @@ macro_rules! node_impl {
             pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
                 match self {
                     $(Node::$node_type(node) => node.list_ports(injector),)*
-                    Node::TestSink(_) => vec![],
+                    Node::TestSink(node) => node.list_ports(injector),
                 }
             }
 
             pub fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
                 match self {
                     $(Node::$node_type(node) => node.settings(injector),)*
-                    Node::TestSink(_) => vec![],
+                    Node::TestSink(node) => node.settings(injector),
                 }
             }
 
             pub fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
                 match self {
                     $(Node::$node_type(node) => node.update_setting(setting),)*
-                    Node::TestSink(_) => Ok(()),
+                    Node::TestSink(node) => node.update_setting(setting),
                 }
             }
 
@@ -153,6 +153,13 @@ macro_rules! node_impl {
                         }
                     },)*
                     Node::TestSink(_) => {},
+                }
+            }
+            
+            pub fn boxed(&self) -> Box<dyn PipelineNode> {
+                match self {
+                    $(Node::$node_type(node) => Box::new(node.clone()),)*
+                    Node::TestSink(node) => Box::new(node.clone()),
                 }
             }
         }
@@ -171,6 +178,18 @@ macro_rules! node_impl {
             fn downcast_node<T: Clone + 'static>(&self, node_type: NodeType) -> Option<T>;
         }
 
+        pub trait NodeExt {
+            type Result;
+
+            fn handle<TNode: mizer_node::ProcessingNode>(&mut self, node: TNode) -> Self::Result;
+
+            fn handle_dyn(&mut self, node: Node) -> Self::Result {
+                match node {
+                    $(Node::$node_type(node) => self.handle(node),)*
+                    Node::TestSink(node) => self.handle(node),
+                }
+            }
+        }
     };
 }
 

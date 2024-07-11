@@ -9,7 +9,7 @@ pub(crate) struct SequenceProcessor;
 
 impl Processor for SequenceProcessor {
     #[tracing::instrument]
-    fn process(&mut self, injector: &Injector, frame: ClockFrame) {
+    fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("SequenceProcessor::process");
         let sequencer = injector.get::<Sequencer>().unwrap();
         let fixture_manager = injector

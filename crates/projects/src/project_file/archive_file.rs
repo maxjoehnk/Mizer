@@ -1,5 +1,5 @@
 use std::io::{Cursor, Read, Write};
-
+use anyhow::Context;
 use zip::{ZipArchive, ZipWriter};
 
 #[derive(Default)]
@@ -31,7 +31,9 @@ pub(crate) struct ProjectArchiveReader<'a>(ZipArchive<Cursor<&'a [u8]>>);
 
 impl<'a> ProjectArchiveReader<'a> {
     pub fn read_file(&mut self, file_name: &str) -> anyhow::Result<impl Read + '_> {
-        Ok(self.0.by_name(file_name)?)
+        let file = self.0.by_name(file_name).context(format!("Reading {file_name}"))?;
+        
+        Ok(file)
     }
 }
 
@@ -39,7 +41,7 @@ pub(crate) struct ProjectArchiveWriter<'a>(ZipWriter<Cursor<&'a mut Vec<u8>>>);
 
 impl<'a> ProjectArchiveWriter<'a> {
     pub fn write_file(&mut self, file_name: &str) -> anyhow::Result<()> {
-        self.0.start_file::<_, (), _>(file_name, Default::default())?;
+        self.0.start_file::<_, (), _>(file_name, Default::default()).context(format!("Starting {file_name}"))?;
         
         Ok(())
     }

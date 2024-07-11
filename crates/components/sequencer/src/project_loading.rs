@@ -6,20 +6,20 @@ impl ProjectHandler for Sequencer {
         "sequencer"
     }
 
-    fn new_project(&mut self, context: &mut impl ProjectHandlerContext) -> anyhow::Result<()> {
+    fn new_project(&mut self, context: &mut impl ProjectHandlerContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         self.clear();
 
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext) -> anyhow::Result<()> {
+    fn load_project(&mut self, context: &mut impl LoadProjectContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         let sequences = context.read_file::<Vec<Sequence>>("sequences")?;
         self.load_sequences(sequences);
 
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext) -> anyhow::Result<()> {
+    fn save_project(&self, context: &mut impl SaveProjectContext, _injector: &dyn InjectDyn) -> anyhow::Result<()> {
         context.write_file("sequences", self.sequences())?;
 
         Ok(())

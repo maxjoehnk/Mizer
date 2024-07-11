@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 pub use mizer_clock::ClockFrame;
 pub use mizer_debug_ui::{DebugUi, DebugUiDrawHandle, DebugUiPane, NodeStateAccess};
-pub use mizer_injector::{Inject, Injector};
+pub use mizer_injector::{Inject, InjectMut, InjectDyn, InjectDynMut, Injector};
 
 pub trait Processor {
     fn pre_process(&mut self, _injector: &mut Injector, _frame: ClockFrame, _fps: f64) {}

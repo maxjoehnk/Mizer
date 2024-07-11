@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 use lazy_static::lazy_static;
 use mizer_clock::Clock;
-use mizer_module::{LoadProjectContext, ProjectHandler, ProjectHandlerContext, Runtime, SaveProjectContext};
+use mizer_module::*;
 use mizer_node::{NodeLink, NodePath, NodeType};
-use mizer_nodes::{Node, NodeConfig};
+use mizer_nodes::{Node, NodeConfig, NodeDowncast};
 use mizer_ports::PortId;
 use regex::{Regex, RegexBuilder};
 use crate::{CoordinatorRuntime, Pipeline};
@@ -17,31 +17,34 @@ lazy_static! {
     .unwrap();
 }
 
-struct RuntimeProjectHandler;
+pub(crate) struct RuntimeProjectHandler;
 
 impl ProjectHandler for RuntimeProjectHandler {
     fn get_name(&self) -> &'static str {
         "runtime"
     }
 
-    fn new_project(&mut self, context: &mut impl ProjectHandlerContext) -> anyhow::Result<()> {
-        let mut pipeline = context.try_get_mut::<Pipeline>().unwrap();
-        pipeline.add_node(context, NodeType::Programmer, Default::default(), None, None).unwrap();
-        pipeline.add_node(context, NodeType::Transport, Default::default(), None, None).unwrap();
+    fn new_project(&mut self, context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+        let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
+        pipeline.clear();
+        pipeline.add_node(&injector, NodeType::Programmer, Default::default(), None, None).unwrap();
+        pipeline.add_node(&injector, NodeType::Transport, Default::default(), None, None).unwrap();
+
+        Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext) -> anyhow::Result<()> {
+    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         profiling::scope!("CoordinatorRuntime::load_project");
-        let playback = context.read_file::<PlaybackSettings>("playback")?;
-        self.set_fps(playback.fps);
+        let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
+        pipeline.clear();
+        // let playback = context.read_file::<PlaybackSettings>("playback")?;
+        // self.set_fps(playback.fps);
         let nodes = context.read_file::<Vec<NodeConfig>>("nodes")?;
         for node in nodes {
-            let pipeline = context.try_get_mut::<Pipeline>().unwrap();
-            pipeline.add_node_with_path(&context, node.path, node.designer, node.config, None)?;
+            pipeline.add_node_with_path(&injector, node.path, node.designer, node.config, None)?;
         }
         let channels = context.read_file::<Vec<Channel>>("channels")?;
         for link in channels {
-            let pipeline = context.try_get_mut::<Pipeline>().unwrap();
             let source_port =
                 pipeline.get_output_port_metadata(&link.from_path, &link.from_channel);
             let target_port =
@@ -63,19 +66,52 @@ impl ProjectHandler for RuntimeProjectHandler {
             };
             pipeline.add_link(link)?;
         }
-        self.force_plan();
 
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext) -> anyhow::Result<()> {
-        todo!()
+    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()> {
+        // let playback_settings = PlaybackSettings {
+        //     fps: self.
+        // }
+        let pipeline = injector.inject::<Pipeline>();
+        let mut nodes = Vec::with_capacity(pipeline.list_nodes().count());
+        for (path, node) in pipeline.list_nodes() {
+            let node = NodeDowncast::downcast(&node);
+            let designer = pipeline.get_node_designer(&path).copied();
+            let config = NodeConfig {
+                path: path.clone(),
+                designer: designer.unwrap_or_default(),
+                config: node,
+            };
+            nodes.push(config);
+        }
+        context.write_file("nodes", &nodes)?;
+
+        let channels = pipeline
+            .list_links()
+            .map(|link| Channel {
+                from_channel: link.source_port.clone(),
+                from_path: link.source.clone(),
+                to_channel: link.target_port.clone(),
+                to_path: link.target.clone(),
+            })
+            .collect::<Vec<_>>();
+        context.write_file("channels", &channels)?;
+
+        Ok(())
     }
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub struct PlaybackSettings {
     pub fps: f64,
+}
+
+impl Default for PlaybackSettings {
+    fn default() -> Self {
+        Self { fps: 60. }
+    }
 }
 
 #[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]

@@ -34,7 +34,7 @@ impl Default for TimeTriggerNode {
 }
 
 impl ConfigurableNode for TimeTriggerNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(SECOND_SETTING, self.seconds as u32)
                 .min(0u32)
@@ -66,7 +66,7 @@ impl PipelineNode for TimeTriggerNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_OUTPUT, PortType::Single)]
     }
 

@@ -38,8 +38,8 @@ impl VideoOutputState {
 }
 
 impl ConfigurableNode for VideoOutputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let mut screens = if let Some(event_loop) = injector.get::<EventLoopHandle>() {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let mut screens = if let Some(event_loop) = injector.try_inject::<EventLoopHandle>() {
             let screens = event_loop.available_screens();
             let screens: Vec<_> = screens
                 .into_iter()
@@ -80,7 +80,7 @@ impl PipelineNode for VideoOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Texture)]
     }
 

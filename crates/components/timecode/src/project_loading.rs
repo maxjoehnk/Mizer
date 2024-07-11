@@ -1,4 +1,4 @@
-use mizer_module::{LoadProjectContext, ProjectHandler, ProjectHandlerContext, SaveProjectContext};
+use mizer_module::*;
 use crate::{TimecodeControl, TimecodeManager, TimecodeTrack};
 
 impl ProjectHandler for TimecodeManager {
@@ -6,13 +6,13 @@ impl ProjectHandler for TimecodeManager {
         "timecode"
     }
 
-    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext) -> anyhow::Result<()> {
+    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         self.clear();
         
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext) -> anyhow::Result<()> {
+    fn load_project(&mut self, context: &mut impl LoadProjectContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         self.clear();
         profiling::scope!("TimecodeManager::load");
         let timecodes = context.read_file::<Vec<TimecodeTrack>>("timecodes")?;
@@ -22,7 +22,7 @@ impl ProjectHandler for TimecodeManager {
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext) -> anyhow::Result<()> {
+    fn save_project(&self, context: &mut impl SaveProjectContext, _injector: &dyn InjectDyn) -> anyhow::Result<()> {
         profiling::scope!("TimecodeManager::save");
         context.write_file("timecodes", self.timecodes())?;
         context.write_file("controls", self.controls())?;

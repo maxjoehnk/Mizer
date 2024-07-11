@@ -21,7 +21,7 @@ impl PipelineNode for ComparisonNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(LHS_INPUT, PortType::Data),
             input_port!(RHS_INPUT, PortType::Data),

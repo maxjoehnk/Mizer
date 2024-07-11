@@ -20,7 +20,7 @@ pub struct MathNode {
 }
 
 impl ConfigurableNode for MathNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(enum MODE_SETTING, self.mode)]
     }
 
@@ -40,7 +40,7 @@ impl PipelineNode for MathNode {
         }
     }
 
-    fn display_name(&self, _injector: &Injector) -> String {
+    fn display_name(&self, _injector: &dyn InjectDyn) -> String {
         match self.mode {
             MathMode::Addition => "Add".into(),
             MathMode::Subtraction => "Subtract".into(),
@@ -50,7 +50,7 @@ impl PipelineNode for MathNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         let mut ports = vec![output_port!(VALUE_OUTPUT, PortType::Single)];
         if self.mode.single_parameter() {
             ports.push(input_port!(VALUE_INPUT, PortType::Single));

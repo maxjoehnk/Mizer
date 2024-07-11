@@ -11,7 +11,7 @@
   },
   "private": true,
   "devDependencies": {
-    "@antora/cli": "3.1.8",
+    "@antora/cli": "3.1.9",
     "@antora/site-generator": "3.1.9",
     "http-server": "^14.1.1"
   },

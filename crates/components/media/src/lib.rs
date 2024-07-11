@@ -20,6 +20,7 @@ mod import_handler;
 pub mod media_handlers;
 mod module;
 pub mod queries;
+mod project_loading;
 
 #[derive(Clone)]
 #[repr(transparent)]

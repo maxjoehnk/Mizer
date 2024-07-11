@@ -7,6 +7,7 @@ pub use self::api::*;
 pub use self::pipeline::*;
 pub use self::coordinator::CoordinatorRuntime;
 pub use self::views::LayoutsView;
+pub use self::project_handler::{Channel, PlaybackSettings};
 
 pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
 
@@ -18,5 +19,6 @@ mod coordinator;
 mod debug_ui_pane;
 mod module;
 mod node_metadata;
+mod project_handler;
 mod views;
 mod pipeline;

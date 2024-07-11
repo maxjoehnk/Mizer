@@ -2269,9 +2269,9 @@ checksum = "bd0c93bb4b0c6d9b77f4435b0ae98c24d17f1c45b2ff844c6151a07256ca923b"
 
 [[package]]
 name = "displaydoc"
-version = "0.2.4"
+version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "487585f4d0c6655fe74905e2504d8ad6908e4db67f744eb140876906c2f3175d"
+checksum = "97369cbbc041bc366949bc74d34658d6cda5621039731c6310521892a3a20ae0"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4606,9 +4606,9 @@ checksum = "9374ef4228402d4b7e403e5838cb880d9ee663314b0a900d5a6aabf0c213552e"
 
 [[package]]
 name = "log"
-version = "0.4.21"
+version = "0.4.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90ed8c1e510134f979dbc4f070f87d4313098b704861a105fe34231c70a3901c"
+checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
 
 [[package]]
 name = "loom"
@@ -4698,9 +4698,9 @@ checksum = "df39d232f5c40b0891c10216992c2f250c054105cb1e56f0fc9032db6203ecc1"
 
 [[package]]
 name = "memchr"
-version = "2.7.2"
+version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
+checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "memmap2"
@@ -5786,7 +5786,6 @@ dependencies = [
  "mizer-nodes",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-util",
  "mizer-video-nodes",
@@ -5931,6 +5930,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
+ "mizer-runtime",
  "mizer-sequencer",
  "mizer-surfaces",
  "mizer-timecode",
@@ -6108,6 +6108,7 @@ dependencies = [
  "indexmap 2.2.6",
  "insta",
  "itertools 0.12.1",
+ "lazy_static",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -6121,12 +6122,12 @@ dependencies = [
  "mizer-plan",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-session",
  "mizer-status-bus",
  "mizer-util",
  "pinboard",
  "profiling",
+ "regex",
  "serde",
  "test-case",
  "tracing",
@@ -11815,9 +11816,9 @@ dependencies = [
 
 [[package]]
 name = "zstd-sys"
-version = "2.0.10+zstd.1.5.6"
+version = "2.0.11+zstd.1.5.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c253a4914af5bafc8fa8c86ee400827e83cf6ec01195ec1f1ed8441bf00d65aa"
+checksum = "75652c55c0b6f3e6f12eb786fe1bc960396bf05a1eb3bf1f3691c3610ac2e6d4"
 dependencies = [
  "cc",
  "pkg-config",

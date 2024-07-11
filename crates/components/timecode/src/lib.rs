@@ -9,3 +9,4 @@ mod model;
 mod module;
 mod processor;
 mod spline;
+mod project_loading;

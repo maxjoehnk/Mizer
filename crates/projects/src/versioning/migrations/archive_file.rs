@@ -49,9 +49,9 @@ impl TryFrom<Project> for ProjectArchive {
             serde_json::to_writer(&mut writer, &project.sequences)?;
             writer.write_file("effects/effects.json")?;
             serde_json::to_writer(&mut writer, &project.effects)?;
-            writer.write_file("timecodes/timecodes.json")?;
+            writer.write_file("timecode/timecodes.json")?;
             serde_json::to_writer(&mut writer, &project.timecodes.timecodes)?;
-            writer.write_file("timecodes/controls.json")?;
+            writer.write_file("timecode/controls.json")?;
             serde_json::to_writer(&mut writer, &project.timecodes.controls)?;
             writer.write_file("layouts/layouts.json")?;
             let layouts = project.layouts.into_iter()

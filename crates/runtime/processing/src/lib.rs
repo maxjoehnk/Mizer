@@ -2,7 +2,7 @@ use std::fmt::Debug;
 
 pub use mizer_clock::ClockFrame;
 pub use mizer_debug_ui::{DebugUi, DebugUiDrawHandle, DebugUiPane, NodeStateAccess};
-pub use mizer_injector::{Inject, Injector};
+pub use mizer_injector::{Inject, InjectMut, InjectDyn, InjectDynMut, Injector};
 
 #[derive(Default, Debug, Clone, Copy)]
 pub struct ProcessorPriorities {

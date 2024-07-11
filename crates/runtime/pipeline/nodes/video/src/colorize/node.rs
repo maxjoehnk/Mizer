@@ -29,7 +29,7 @@ impl PipelineNode for ColorizeTextureNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

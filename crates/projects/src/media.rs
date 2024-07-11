@@ -3,9 +3,6 @@ use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
 
 use mizer_media::documents::{MediaDocument, MediaTag};
-use mizer_media::MediaServer;
-
-use crate::{Project, ProjectManager};
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(from = "BackwardsCompatibleMedia")]

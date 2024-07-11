@@ -15,7 +15,7 @@ pub struct VectorFileNode {
 }
 
 impl ConfigurableNode for VectorFileNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let media_id = self.media_id.map(|id| id.to_string()).unwrap_or_default();
 
         vec![setting!(media MEDIA_ID_SETTING, media_id, vec![MediaContentType::Vector])]
@@ -39,9 +39,9 @@ impl PipelineNode for VectorFileNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &dyn InjectDyn) -> String {
         if let Some(document) = injector
-            .get::<MediaServer>()
+            .try_inject::<MediaServer>()
             .zip(self.media_id.as_ref())
             .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
         {
@@ -53,7 +53,7 @@ impl PipelineNode for VectorFileNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VECTOR_OUTPUT_PORT, PortType::Vector)]
     }
 

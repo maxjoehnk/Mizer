@@ -22,8 +22,8 @@ pub struct GamepadNode {
 }
 
 impl ConfigurableNode for GamepadNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let device_manager = injector.get::<DeviceManager>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let device_manager = injector.inject::<DeviceManager>();
 
         let devices = device_manager
             .current_devices()
@@ -63,7 +63,7 @@ impl PipelineNode for GamepadNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE, PortType::Single)]
     }
 

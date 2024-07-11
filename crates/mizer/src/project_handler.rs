@@ -1,26 +1,26 @@
-use mizer_module::{LoadProjectContext, ProjectHandler, ProjectHandlerContext, SaveProjectContext};
+use mizer_module::*;
 use mizer_project_files::HandlerContext;
 
 pub(crate) trait ErasedProjectHandler {
-    fn new_project(&mut self, context: &mut crate::mizer::NewProjectContext) -> anyhow::Result<()>;
-    fn load_project(&mut self, context: &mut HandlerContext) -> anyhow::Result<()>;
-    fn save_project(&self, context: &mut HandlerContext) -> anyhow::Result<()>;
+    fn new_project(&mut self, context: &mut crate::mizer::NewProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
+    fn load_project(&mut self, context: &mut HandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
+    fn save_project(&self, context: &mut HandlerContext, injector: &dyn InjectDyn) -> anyhow::Result<()>;
 }
 
 impl<T: ProjectHandler> ErasedProjectHandler for T {
-    fn new_project(&mut self, context: &mut crate::mizer::NewProjectContext) -> anyhow::Result<()> {
+    fn new_project(&mut self, context: &mut crate::mizer::NewProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         let mut context = ContextWrapper::new(self, context);
-        T::new_project(self, &mut context)
+        T::new_project(self, &mut context, injector)
     }
 
-    fn load_project(&mut self, context: &mut HandlerContext) -> anyhow::Result<()> {
+    fn load_project(&mut self, context: &mut HandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         let mut context = ContextWrapper::new(self, context);
-        T::load_project(self, &mut context)
+        T::load_project(self, &mut context, injector)
     }
 
-    fn save_project(&self, context: &mut HandlerContext) -> anyhow::Result<()> {
+    fn save_project(&self, context: &mut HandlerContext, injector: &dyn InjectDyn) -> anyhow::Result<()> {
         let mut context = ContextWrapper::new(self, context);
-        T::save_project(self, &mut context)
+        T::save_project(self, &mut context, injector)
     }
 }
 
@@ -39,14 +39,6 @@ impl<'a, TContext> ContextWrapper<'a, TContext> {
 }
 
 impl<'a, TContext: ProjectHandlerContext> ProjectHandlerContext for ContextWrapper<'a, TContext> {
-    fn try_get<T: 'static>(&self) -> Option<&T> {
-        self.context.try_get()
-    }
-
-    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T> {
-        self.context.try_get_mut()
-    }
-
     fn report_issue(&mut self, issue: impl Into<String>) {
         self.context.report_issue(issue)
     }

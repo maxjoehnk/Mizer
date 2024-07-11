@@ -20,7 +20,7 @@ impl PipelineNode for StaticColorNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_COLOR_PORT, PortType::Color),
             output_port!(OUTPUT_TEXTURE_PORT, PortType::Texture),

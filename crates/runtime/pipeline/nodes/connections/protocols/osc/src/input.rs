@@ -33,7 +33,7 @@ impl Default for OscInputNode {
 }
 
 impl ConfigurableNode for OscInputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let connections = injector.get_connections();
 
         vec![
@@ -65,11 +65,11 @@ impl PipelineNode for OscInputNode {
         }
     }
 
-    fn display_name(&self, _injector: &Injector) -> String {
+    fn display_name(&self, _injector: &dyn InjectDyn) -> String {
         format!("OSC Input ({})", self.path)
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(
             self.argument_type.get_port_id(),
             self.argument_type.get_port_type()

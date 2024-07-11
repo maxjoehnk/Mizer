@@ -56,7 +56,7 @@ impl Display for VideoMixerMode {
 }
 
 impl ConfigurableNode for VideoMixerNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(enum "Mode", self.mode)]
     }
 
@@ -76,7 +76,7 @@ impl PipelineNode for VideoMixerNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUTS_PORT, PortType::Texture, multiple),
             output_port!(OUTPUT_PORT, PortType::Texture),

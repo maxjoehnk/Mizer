@@ -2,6 +2,7 @@ use crate::debug_ui_pane::NodesDebugUiPane;
 use crate::pipeline::RuntimeProcessor;
 use crate::Pipeline;
 use mizer_module::*;
+use crate::project_handler::RuntimeProjectHandler;
 
 pub struct RuntimeModule;
 
@@ -15,6 +16,7 @@ impl Module for RuntimeModule {
         context.provide(pipeline);
         context.add_processor(RuntimeProcessor);
         context.add_debug_ui_pane(NodesDebugUiPane);
+        context.add_project_handler(RuntimeProjectHandler);
 
         Ok(())
     }

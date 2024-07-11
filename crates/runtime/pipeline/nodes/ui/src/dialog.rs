@@ -15,7 +15,7 @@ pub struct DialogNode {
 }
 
 impl ConfigurableNode for DialogNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(TITLE_SETTING, &self.title),
             setting!(TEXT_SETTING, &self.text).multiline(),
@@ -39,7 +39,7 @@ impl PipelineNode for DialogNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(TRIGGER_PORT, PortType::Single)]
     }
 

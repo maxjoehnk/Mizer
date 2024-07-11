@@ -125,21 +125,21 @@ macro_rules! node_impl {
             pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
                 match self {
                     $(Node::$node_type(node) => node.list_ports(injector),)*
-                    Node::TestSink(_) => vec![],
+                    Node::TestSink(node) => node.list_ports(injector),
                 }
             }
 
             pub fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
                 match self {
                     $(Node::$node_type(node) => node.settings(injector),)*
-                    Node::TestSink(_) => vec![],
+                    Node::TestSink(node) => node.settings(injector),
                 }
             }
 
             pub fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
                 match self {
                     $(Node::$node_type(node) => node.update_setting(setting),)*
-                    Node::TestSink(_) => Ok(()),
+                    Node::TestSink(node) => node.update_setting(setting),
                 }
             }
 

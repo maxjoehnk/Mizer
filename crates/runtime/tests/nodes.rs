@@ -29,7 +29,6 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
         sink.clone(),
         port,
     );
-    runtime.plan();
 
     for _ in 0..frames {
         runtime.process();

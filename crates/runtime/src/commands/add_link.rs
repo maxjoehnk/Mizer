@@ -24,6 +24,9 @@ impl<'a> Command<'a> for AddLinkCommand {
 
     fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = None;
+        if pipeline.get_node_dyn(&self.link.target).is_none() {
+            return Err(anyhow::anyhow!("Target node does not exist"));
+        }
         let metadata = pipeline
             .try_get_input_port_metadata(&self.link.target, &self.link.target_port)
             .ok_or_else(|| anyhow::anyhow!("Target port does not exist"))?;

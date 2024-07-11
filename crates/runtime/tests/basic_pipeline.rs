@@ -19,7 +19,6 @@ fn main() {
         sink.clone(),
         "Value",
     );
-    runtime.plan();
 
     run_for_one_second(runtime);
 

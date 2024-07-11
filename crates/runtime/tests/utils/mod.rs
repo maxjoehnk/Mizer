@@ -5,7 +5,7 @@ pub use mizer_nodes::test_sink::TestSink;
 use mizer_nodes::Node;
 use mizer_ports::{PortId, PortType};
 use mizer_runtime::commands::{AddLinkCommand, AddNodeCommand, StaticNodeDescriptor};
-use mizer_runtime::CoordinatorRuntime;
+use mizer_runtime::{CoordinatorRuntime, Pipeline, RuntimeProcessor};
 pub use mizer_util::clock::*;
 
 pub fn run_node(
@@ -15,6 +15,8 @@ pub fn run_node(
     sink: TestSink,
     source_port: impl Into<PortId>,
 ) {
+    runtime.provide(Pipeline::new());
+    runtime.add_processor(RuntimeProcessor);
     let output_path = setup_sink(sink, runtime.injector_mut());
     let oscillator_node = add_node_command(node_type, node, runtime.injector_mut());
     add_link(
@@ -42,7 +44,7 @@ fn add_node_command(
 }
 
 fn add_link(
-    source_port: impl Into<PortId> + Sized,
+    source_port: impl Into<PortId>,
     oscillator_node: StaticNodeDescriptor,
     output_path: NodePath,
     injector: &mut Injector,

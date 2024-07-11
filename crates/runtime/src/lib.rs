@@ -4,7 +4,7 @@ pub use mizer_pipeline::NodePreviewRef;
 pub use node_metadata::NodeMetadataRef;
 
 pub use self::api::*;
-pub use self::pipeline::Pipeline;
+pub use self::pipeline::*;
 pub use self::coordinator::CoordinatorRuntime;
 pub use self::views::LayoutsView;
 

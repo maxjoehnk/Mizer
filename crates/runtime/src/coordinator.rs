@@ -373,28 +373,15 @@ mod tests {
     #[test]
     fn node_runner_should_lend_state_ref() {
         let mut runner = CoordinatorRuntime::new();
-        let node = FaderNode::default();
-        let path = NodePath("/test".to_string());
-        runner
-            .injector
-            .get_mut::<PipelineAccess>()
-            .unwrap()
-            .internal_add_node(path.clone(), node.into(), Default::default());
-        runner
-            .injector
-            .get_mut::<ExecutionPlanner>()
-            .unwrap()
-            .add_node(ExecutionNode {
-                path: path.clone(),
-                attached_executor: None,
-            });
-        runner.plan();
+        let mut pipeline = Pipeline::new();
+        let node = pipeline.add_node(runner.injector(), NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        runner.injector.provide(pipeline);
 
         runner.process();
 
-        let state = runner
-            .pipeline
-            .get_state::<<FaderNode as ProcessingNode>::State>(&path)
+        let pipeline = runner.injector.inject::<Pipeline>();
+        let state = pipeline
+            .read_state::<<FaderNode as ProcessingNode>::State>(&node.path)
             .unwrap();
         assert_eq!(state, &0f64);
     }

@@ -1,3 +1,4 @@
+use std::any::{Any, TypeId};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
@@ -93,9 +94,9 @@ impl NodePreviewState {
     }
 }
 
-impl<'a> Inject for PipelineContext<'a> {
-    fn try_inject<T: 'static>(&self) -> Option<&T> {
-        self.processing_context.borrow().injector().get::<T>()
+impl<'a> InjectDyn for PipelineContext<'a> {
+    fn try_inject_dyn(&self, type_id: TypeId) -> Option<&Box<dyn Any>> {
+        self.processing_context.borrow().injector().try_inject_dyn(type_id)
     }
 }
 

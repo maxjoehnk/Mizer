@@ -9,20 +9,18 @@ use mizer_module::{Injector, LoadProjectContext, ProjectHandlerContext, SaveProj
 use crate::project_file::{ProjectArchive, ProjectFile};
 use crate::versioning::{migrate, Migrations};
 
-pub struct HandlerContext<'a> {
+pub struct HandlerContext {
     archive: ProjectArchive,
-    injector: &'a mut Injector,
 }
 
-impl<'a> HandlerContext<'a> {
-    pub fn new(injector: &'a mut Injector) -> Self {
+impl HandlerContext {
+    pub fn new() -> Self {
         Self {
             archive: Default::default(),
-            injector
         }
     }
     
-    pub fn open(injector: &'a mut Injector, path: impl AsRef<Path>) -> anyhow::Result<Self> {
+    pub fn open(path: impl AsRef<Path>) -> anyhow::Result<Self> {
         let mut file = ProjectFile::open(path.as_ref())?;
         migrate(&mut file)?;
         let archive = match file {
@@ -32,7 +30,6 @@ impl<'a> HandlerContext<'a> {
 
         Ok(Self {
             archive,
-            injector,
         })
     }
 
@@ -49,21 +46,13 @@ impl<'a> HandlerContext<'a> {
     }
 }
 
-impl<'a> ProjectHandlerContext for HandlerContext<'a> {
-    fn try_get<T: 'static>(&self) -> Option<&T> {
-        self.injector.get()
-    }
-
-    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T> {
-        self.injector.get_mut()
-    }
-
+impl ProjectHandlerContext for HandlerContext {
     fn report_issue(&mut self, issue: impl Into<String>) {
         mizer_console::error!(ConsoleCategory::Projects, "{}", issue.into());
     }
 }
 
-impl<'a> LoadProjectContext for HandlerContext<'a> {
+impl LoadProjectContext for HandlerContext {
     fn read_file<T: DeserializeOwned>(&self, filename: &str) -> anyhow::Result<T> {
         tracing::trace!("Reading file {}", filename);
         let mut file = self.archive.read()?;
@@ -74,7 +63,7 @@ impl<'a> LoadProjectContext for HandlerContext<'a> {
     }
 }
 
-impl<'a> SaveProjectContext for HandlerContext<'a> {
+impl SaveProjectContext for HandlerContext {
     fn write_file<T: Serialize>(&mut self, filename: &str, content: T) -> anyhow::Result<()> {
         tracing::trace!("Writing file {}", filename);
         let mut writer = self.archive.write()?;

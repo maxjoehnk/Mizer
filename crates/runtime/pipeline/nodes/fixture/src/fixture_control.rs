@@ -54,8 +54,8 @@ impl FixtureControlNode {
 }
 
 impl ConfigurableNode for FixtureControlNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let fixture_manager = injector.inject::<FixtureManager>();
         let fixtures = fixture_manager
             .get_fixtures()
             .into_iter()
@@ -100,9 +100,9 @@ impl PipelineNode for FixtureControlNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &dyn InjectDyn) -> String {
         if let Some(fixture) = injector
-            .get::<FixtureManager>()
+            .try_inject::<FixtureManager>()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
         {
             format!(
@@ -119,7 +119,7 @@ impl PipelineNode for FixtureControlNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         if self.control.is_color() {
             vec![input_port!(INPUT_VALUE_PORT, PortType::Color)]
         } else {

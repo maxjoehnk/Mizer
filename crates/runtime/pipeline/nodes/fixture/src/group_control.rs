@@ -67,8 +67,8 @@ impl GroupControlNode {
 }
 
 impl ConfigurableNode for GroupControlNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let fixture_manager = injector.inject::<FixtureManager>();
         let mut groups: Vec<_> = fixture_manager
             .get_groups()
             .into_iter()
@@ -128,9 +128,9 @@ impl PipelineNode for GroupControlNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &dyn InjectDyn) -> String {
         if let Some(group) = injector
-            .get::<FixtureManager>()
+            .try_inject::<FixtureManager>()
             .and_then(|manager| manager.get_group(self.group_id))
         {
             format!("Group Control ({} - {})", group.name, self.control)
@@ -139,7 +139,7 @@ impl PipelineNode for GroupControlNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         let value_port = if self.control.is_color() {
             input_port!(INPUT_VALUE_PORT, PortType::Color)
         } else {

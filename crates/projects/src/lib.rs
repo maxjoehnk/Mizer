@@ -10,7 +10,7 @@ use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
 use mizer_nodes::NodeConfig;
-use mizer_runtime::Channel;
+use mizer_runtime::{Channel, PlaybackSettings};
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
@@ -63,12 +63,6 @@ pub struct Project {
     pub timecodes: Timecodes,
     #[serde(default)]
     pub surfaces: Vec<Surface>,
-}
-
-impl Default for PlaybackSettings {
-    fn default() -> Self {
-        Self { fps: 60. }
-    }
 }
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]

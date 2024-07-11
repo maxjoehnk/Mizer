@@ -44,7 +44,7 @@ pub struct TextureBorderState {
 }
 
 impl ConfigurableNode for TextureBorderNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(BORDER_WIDTH_SETTING, self.border_width)
                 .min(0.0)
@@ -76,7 +76,7 @@ impl PipelineNode for TextureBorderNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

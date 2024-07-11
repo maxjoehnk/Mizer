@@ -17,7 +17,7 @@ pub struct MergeNode {
 }
 
 impl ConfigurableNode for MergeNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(enum MODE_SETTING, self.mode)]
     }
 
@@ -37,7 +37,7 @@ impl PipelineNode for MergeNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single, multiple),
             output_port!(OUTPUT_PORT, PortType::Single),

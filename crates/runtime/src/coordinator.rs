@@ -341,50 +341,38 @@ impl Runtime for CoordinatorRuntime {
     }
 }
 
-impl ProjectManagerMut for CoordinatorRuntime {
-    fn new_project(&mut self) {
-        profiling::scope!("CoordinatorRuntime::new_project");
-        self.set_fps(DEFAULT_FPS);
-        let preset_ids = self.get_preset_ids();
-        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
-        pipeline.new_project(injector);
-        for preset_id in preset_ids {
-            pipeline
-                .add_node(
-                    injector,
-                    NodeType::Preset,
-                    NodeDesigner {
-                        hidden: true,
-                        ..Default::default()
-                    },
-                    Some(Node::Preset(PresetNode { id: preset_id })),
-                    None,
-                )
-                .unwrap();
-        }
-    }
-
-    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
-        profiling::scope!("CoordinatorRuntime::load");
-        self.set_fps(project.playback.fps);
-        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
-        pipeline.load(project, injector)?;
-        Ok(())
-    }
-
-    fn save(&self, project: &mut Project) {
-        profiling::scope!("CoordinatorRuntime::save");
-        project.playback.fps = self.fps();
-        let pipeline = self.injector.inject::<Pipeline>();
-        pipeline.save(project);
-    }
-
-    fn clear(&mut self) {
-        self.set_fps(DEFAULT_FPS);
-        let pipeline = self.injector.get_mut::<Pipeline>().unwrap();
-        pipeline.clear();
-    }
-}
+// impl ProjectManagerMut for CoordinatorRuntime {
+//     fn new_project(&mut self) {
+//         profiling::scope!("CoordinatorRuntime::new_project");
+//         self.set_fps(DEFAULT_FPS);
+//         let preset_ids = self.get_preset_ids();
+//         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+//         pipeline.new_project(injector);
+//         for preset_id in preset_ids {
+//             pipeline
+//                 .add_node(
+//                     injector,
+//                     NodeType::Preset,
+//                     NodeDesigner {
+//                         hidden: true,
+//                         ..Default::default()
+//                     },
+//                     Some(Node::Preset(PresetNode { id: preset_id })),
+//                     None,
+//                 )
+//                 .unwrap();
+//         }
+//     }
+//
+//     fn save(&self, project: &mut Project) {
+//         profiling::scope!("CoordinatorRuntime::save");
+//         project.playback.fps = self.fps();
+//     }
+//
+//     fn clear(&mut self) {
+//         self.set_fps(DEFAULT_FPS);
+//     }
+// }
 
 #[cfg(test)]
 mod tests {

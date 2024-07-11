@@ -29,19 +29,9 @@ pub struct Mizer {
     pub(crate) project_handlers: Vec<Box<dyn ErasedProjectHandler>>,
 }
 
-pub(crate) struct NewProjectContext<'a> {
-    injector: &'a mut Injector,
-}
+pub(crate) struct NewProjectContext;
 
-impl<'a> ProjectHandlerContext for NewProjectContext<'a> {
-    fn try_get<T: 'static>(&self) -> Option<&T> {
-        self.injector.get()
-    }
-
-    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T> {
-        self.injector.get_mut()
-    }
-
+impl ProjectHandlerContext for NewProjectContext {
     fn report_issue(&mut self, issue: impl Into<String>) {
         mizer_console::error!(ConsoleCategory::Projects, "{}", issue.into());
     }
@@ -86,11 +76,9 @@ impl Mizer {
         self.runtime
             .add_status_message("Creating new project...", None);
         let injector = self.runtime.injector_mut();
-        let mut context = NewProjectContext {
-            injector
-        };
+        let mut context = NewProjectContext;
         for project_handler in &mut self.project_handlers {
-            project_handler.new_project(&mut context)?;
+            project_handler.new_project(&mut context, injector)?;
         }
         self.send_session_update();
         self.runtime
@@ -115,9 +103,9 @@ impl Mizer {
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Loading project...", None);
             tracing::info!("Loading project {:?}...", path);
-            let mut context = HandlerContext::open(self.runtime.injector_mut(), path)?;
+            let mut context = HandlerContext::open(path)?;
             for project_handler in &mut self.project_handlers {
-                project_handler.load_project(&mut context)?;
+                project_handler.load_project(&mut context, self.runtime.injector_mut())?;
             }
             tracing::info!("Loading project...Done");
 
@@ -163,9 +151,9 @@ impl Mizer {
         if let Some(ref path) = self.project_path {
             self.runtime.add_status_message("Saving project...", None);
             tracing::info!("Saving project to {:?}...", path);
-            let mut context = HandlerContext::new(self.runtime.injector_mut());
+            let mut context = HandlerContext::new();
             for project_handler in &mut self.project_handlers {
-                project_handler.save_project(&mut context)?;
+                project_handler.save_project(&mut context, self.runtime.injector())?;
             }
             context.save(path)?;
             tracing::info!("Saving project...Done");

@@ -35,8 +35,8 @@ pub use mizer_midi_nodes::{
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
 use mizer_node::{
-    ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeTemplate,
-    NodeType, PipelineNode, PortId, PortMetadata,
+    ConfigurableNode, DebugUiDrawHandle, NodeDetails, NodeSetting, NodeTemplate,
+    NodeType, PipelineNode, PortId, PortMetadata, InjectDyn,
 };
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
@@ -145,14 +145,14 @@ macro_rules! node_impl {
                 }
             }
 
-            pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+            pub fn list_ports(&self, injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
                 match self {
                     $(Node::$node_type(node) => node.list_ports(injector),)*
                     Node::TestSink(node) => node.list_ports(injector),
                 }
             }
 
-            pub fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+            pub fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
                 match self {
                     $(Node::$node_type(node) => node.settings(injector),)*
                     Node::TestSink(node) => node.settings(injector),

@@ -16,8 +16,8 @@ pub struct TimecodeControlNode {
 }
 
 impl ConfigurableNode for TimecodeControlNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let manager = injector.get::<TimecodeManager>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let manager = injector.inject::<TimecodeManager>();
         let timecodes = manager
             .timecodes()
             .into_iter()
@@ -46,9 +46,9 @@ impl PipelineNode for TimecodeControlNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &dyn InjectDyn) -> String {
         if let Some(timecode) = injector
-            .get::<TimecodeManager>()
+            .try_inject::<TimecodeManager>()
             .and_then(|timecode_manager| {
                 timecode_manager
                     .timecodes()
@@ -62,7 +62,7 @@ impl PipelineNode for TimecodeControlNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(TIMECODE_INPUT, PortType::Clock),
             input_port!(PLAYBACK_INPUT, PortType::Single),

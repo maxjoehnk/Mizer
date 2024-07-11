@@ -15,14 +15,12 @@ mod api_injector;
 pub trait ProjectHandler {
     fn get_name(&self) -> &'static str;
 
-    fn new_project(&mut self, context: &mut impl ProjectHandlerContext) -> anyhow::Result<()>;
-    fn load_project(&mut self, context: &mut impl LoadProjectContext) -> anyhow::Result<()>;
-    fn save_project(&self, context: &mut impl SaveProjectContext) -> anyhow::Result<()>;
+    fn new_project(&mut self, context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
+    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
+    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()>;
 }
 
 pub trait ProjectHandlerContext {
-    fn try_get<T: 'static>(&self) -> Option<&T>;
-    fn try_get_mut<T: 'static>(&mut self) -> Option<&mut T>;
     fn report_issue(&mut self, issue: impl Into<String>);
 }
 

@@ -69,7 +69,7 @@ fn default_ratio() -> f64 {
 }
 
 impl ConfigurableNode for OscillatorNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(enum TYPE_SETTING, self.oscillator_type),
             setting!(INTERVAL_SETTING, self.interval)
@@ -113,11 +113,11 @@ impl PipelineNode for OscillatorNode {
         }
     }
 
-    fn display_name(&self, _injector: &Injector) -> String {
+    fn display_name(&self, _injector: &dyn InjectDyn) -> String {
         format!("{} Wave", self.oscillator_type)
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(VALUE_OUTPUT_PORT, PortType::Single),
             input_port!(INTERVAL_INPUT_PORT, PortType::Single),

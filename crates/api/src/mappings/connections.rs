@@ -68,6 +68,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 input_port: osc.input_port as u32,
             }),
             G13(g13) => Self::G13(G13Connection { id: g13.id }),
+            TraktorKontrolX1(x1) => Self::X1(TraktorKontrolX1Connection { id: x1.id }),
             Webcam(webcam) => Self::Webcam(WebcamConnection {
                 id: webcam.id,
                 name: webcam.name,

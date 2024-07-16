@@ -14,6 +14,7 @@ enum ConnectionCategory {
   Mqtt,
   Citp,
   Video,
+  HID,
 }
 
 final Map<ConnectionCategory, String> categoryNames = {
@@ -26,6 +27,7 @@ final Map<ConnectionCategory, String> categoryNames = {
   ConnectionCategory.Mqtt: "MQTT",
   ConnectionCategory.Citp: "CITP",
   ConnectionCategory.Video: "Video Sources",
+  ConnectionCategory.HID: "HID Devices",
 };
 
 class ConnectionCategoryList extends StatelessWidget {
@@ -65,13 +67,15 @@ extension ConnectionCategoryExt on List<Connection> {
       case ConnectionCategory.Laser:
         return where((c) => c.hasHelios() || c.hasEtherDream());
       case ConnectionCategory.GameControllers:
-        return where((c) => c.hasGamepad() || c.hasG13());
+        return where((c) => c.hasGamepad());
       case ConnectionCategory.ProDjLink:
         return where((c) => c.hasCdj() || c.hasDjm());
       case ConnectionCategory.Mqtt:
         return where((c) => c.hasMqtt());
       case ConnectionCategory.Citp:
         return where((c) => c.hasCitp());
+      case ConnectionCategory.HID:
+        return where((c) => c.hasX1() || c.hasG13());
       case ConnectionCategory.Video:
         return where((c) => c.hasNdiSource() || c.hasWebcam());
     }

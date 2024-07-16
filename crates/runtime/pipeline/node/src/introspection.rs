@@ -149,6 +149,8 @@ node_type_name! {
         Beats,
         G13Input,
         G13Output,
+        TraktorKontrolX1Input,
+        TraktorKontrolX1Output,
         ConstantNumber,
         Conditional,
         TimecodeControl,

@@ -15,19 +15,7 @@ class GamepadConnectionsView extends StatelessWidget {
     return Panel(
       label: "Gamepads".i18n,
       child: ListView(
-        children: connections.where((c) => c.hasGamepad() || c.hasG13()).map((c) {
-          if (c.hasGamepad()) {
-            return GamepadConnectionView(device: c.gamepad);
-          }
-          if (c.hasG13()) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(c.name),
-            );
-          }
-
-          return Container();
-        }).toList(),
+        children: connections.where((c) => c.hasGamepad()).map((c) => GamepadConnectionView(device: c.gamepad)).toList(),
       ),
     );
   }

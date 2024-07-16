@@ -9,6 +9,7 @@ import 'connection_categories.dart';
 import 'views/citp_connections.dart';
 import 'views/dmx_connections.dart';
 import 'views/gamepad_connections.dart';
+import 'views/hid_connections.dart';
 import 'views/laser_connections.dart';
 import 'views/midi_connections.dart';
 import 'views/mqtt_connections.dart';
@@ -58,6 +59,8 @@ class _ConnectionsViewState extends State<ConnectionsView> {
         Expanded(child: CitpConnectionsView(connections: connections)),
       if (category == ConnectionCategory.Video)
         Expanded(child: VideoConnectionsView(connections: connections)),
+      if (category == ConnectionCategory.HID)
+        Expanded(child: HidConnectionsView(connections: connections)),
     ]);
   }
 

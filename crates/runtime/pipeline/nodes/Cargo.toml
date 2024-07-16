@@ -20,6 +20,7 @@ mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-port-operation-nodes = { path = "behaviors/port-operations" }
 mizer-dmx-nodes = { path = "connections/protocols/dmx" }
 mizer-g13-nodes = { path = "connections/g13" }
+mizer-traktor-kontrol-nodes = { path = "connections/traktor-kontrol" }
 mizer-gamepad-nodes = { path = "connections/gamepad" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-step-sequencer-nodes = { path = "behaviors/step-sequencer" }

@@ -5122,6 +5122,7 @@ dependencies = [
  "mizer-processing",
  "mizer-protocol-laser",
  "mizer-protocol-pro-dj-link",
+ "mizer-traktor-kontrol-x1",
  "mizer-webcams",
  "profiling",
  "tokio",
@@ -5617,6 +5618,7 @@ dependencies = [
  "mizer-text-nodes",
  "mizer-timecode-nodes",
  "mizer-timing-nodes",
+ "mizer-traktor-kontrol-nodes",
  "mizer-transport-nodes",
  "mizer-ui-nodes",
  "mizer-util",
@@ -6283,6 +6285,33 @@ dependencies = [
  "mizer-clock",
  "mizer-node",
  "serde",
+]
+
+[[package]]
+name = "mizer-traktor-kontrol-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "enum-iterator",
+ "mizer-devices",
+ "mizer-node",
+ "mizer-traktor-kontrol-x1",
+ "num_enum",
+ "serde",
+ "tracing",
+]
+
+[[package]]
+name = "mizer-traktor-kontrol-x1"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "flume 0.11.0",
+ "futures",
+ "pinboard",
+ "tracing",
+ "traktor-kontrol-x1",
+ "uuid 1.10.0",
 ]
 
 [[package]]
@@ -9979,6 +10008,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "98b98232a2447ce0a58f9a0bfb5f5e39647b5c597c994b63945fcccd1306fafb"
 dependencies = [
  "cc",
+]
+
+[[package]]
+name = "traktor-kontrol-x1"
+version = "0.1.0"
+source = "git+https://github.com/maxjoehnk/traktor-kontrol-x1-rs.git#ba61422b62ae895eb13a70f968bfe62ce35690b2"
+dependencies = [
+ "rusb",
+ "thiserror",
 ]
 
 [[package]]

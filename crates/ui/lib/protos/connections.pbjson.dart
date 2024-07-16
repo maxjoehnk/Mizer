@@ -294,6 +294,7 @@ const Connection$json = {
     {'1': 'djm', '3': 21, '4': 1, '5': 11, '6': '.mizer.connections.PioneerDjmConnection', '9': 0, '10': 'djm'},
     {'1': 'ndi_source', '3': 22, '4': 1, '5': 11, '6': '.mizer.connections.NdiSourceConnection', '9': 0, '10': 'ndiSource'},
     {'1': 'citp', '3': 23, '4': 1, '5': 11, '6': '.mizer.connections.CitpConnection', '9': 0, '10': 'citp'},
+    {'1': 'x1', '3': 24, '4': 1, '5': 11, '6': '.mizer.connections.TraktorKontrolX1Connection', '9': 0, '10': 'x1'},
   ],
   '8': [
     {'1': 'connection'},
@@ -318,7 +319,8 @@ final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode(
     'IDY2RqEjsKA2RqbRgVIAEoCzInLm1pemVyLmNvbm5lY3Rpb25zLlBpb25lZXJEam1Db25uZWN0'
     'aW9uSABSA2RqbRJHCgpuZGlfc291cmNlGBYgASgLMiYubWl6ZXIuY29ubmVjdGlvbnMuTmRpU2'
     '91cmNlQ29ubmVjdGlvbkgAUgluZGlTb3VyY2USNwoEY2l0cBgXIAEoCzIhLm1pemVyLmNvbm5l'
-    'Y3Rpb25zLkNpdHBDb25uZWN0aW9uSABSBGNpdHBCDAoKY29ubmVjdGlvbg==');
+    'Y3Rpb25zLkNpdHBDb25uZWN0aW9uSABSBGNpdHASPwoCeDEYGCABKAsyLS5taXplci5jb25uZW'
+    'N0aW9ucy5UcmFrdG9yS29udHJvbFgxQ29ubmVjdGlvbkgAUgJ4MUIMCgpjb25uZWN0aW9u');
 
 @$core.Deprecated('Use dmxOutputConnectionDescriptor instead')
 const DmxOutputConnection$json = {
@@ -408,6 +410,18 @@ const G13Connection$json = {
 /// Descriptor for `G13Connection`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List g13ConnectionDescriptor = $convert.base64Decode(
     'Cg1HMTNDb25uZWN0aW9uEg4KAmlkGAEgASgJUgJpZA==');
+
+@$core.Deprecated('Use traktorKontrolX1ConnectionDescriptor instead')
+const TraktorKontrolX1Connection$json = {
+  '1': 'TraktorKontrolX1Connection',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `TraktorKontrolX1Connection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List traktorKontrolX1ConnectionDescriptor = $convert.base64Decode(
+    'ChpUcmFrdG9yS29udHJvbFgxQ29ubmVjdGlvbhIOCgJpZBgBIAEoCVICaWQ=');
 
 @$core.Deprecated('Use webcamConnectionDescriptor instead')
 const WebcamConnection$json = {

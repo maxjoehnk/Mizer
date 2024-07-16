@@ -13,6 +13,7 @@ use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_ndi::{NdiSourceDiscovery, NdiSourceRef};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use mizer_protocol_pro_dj_link::{CDJView, DJMView, ProDJLinkDevice, ProDJLinkDiscovery};
+use mizer_traktor_kontrol_x1::{TraktorX1Discovery, TraktorX1Ref};
 use mizer_webcams::{WebcamDiscovery, WebcamRef};
 
 use crate::laser::LaserDevice;
@@ -23,6 +24,7 @@ pub mod gamepads;
 pub mod laser;
 pub mod ndi;
 pub mod pro_dj_link;
+pub mod traktor_kontrol_x1;
 pub mod webcams;
 
 mod module;
@@ -47,6 +49,7 @@ enum DiscoveredDevice {
     Laser(LaserDevice),
     Gamepad(GamepadRef),
     G13(G13Ref),
+    TraktorX1(TraktorX1Ref),
     Webcam(WebcamRef),
     NdiSource(NdiSourceRef),
     PioneerCDJ(CDJView),
@@ -73,6 +76,8 @@ pub struct DeviceManager {
     ndi_sources: Arc<DashMap<String, NdiSourceRef>>,
     cdjs: Arc<DashMap<String, CDJView>>,
     djms: Arc<DashMap<String, DJMView>>,
+    traktor_kontrol_x1_id_counter: Arc<AtomicUsize>,
+    traktor_kontrol_x1s: Arc<DashMap<String, TraktorX1Ref>>,
 }
 
 impl DeviceManager {
@@ -100,6 +105,10 @@ impl DeviceManager {
         let pro_dj_link_devices = ProDJLinkDiscovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
+        let traktor_x1s = TraktorX1Discovery::discover()
+            .map(DiscoveredDevice::from)
+            .boxed_local();
+        
         let mut devices = select_all([
             lasers,
             gamepads,
@@ -107,6 +116,7 @@ impl DeviceManager {
             webcams,
             ndi_sources,
             pro_dj_link_devices,
+            traktor_x1s,
         ]);
         while let Some(device) = devices.next().await {
             match device {
@@ -127,6 +137,12 @@ impl DeviceManager {
                     let id = format!("g13-{}", id);
                     tracing::debug!("Discovered device {g13:?} => {id}");
                     self.g13s.insert(id, g13);
+                }
+                DiscoveredDevice::TraktorX1(x1) => {
+                    let id = self.traktor_kontrol_x1_id_counter.fetch_add(1, Ordering::Relaxed);
+                    let id = format!("traktor-kontrol-x1-{}", id);
+                    tracing::debug!("Discovered device {x1:?} => {id}");
+                    self.traktor_kontrol_x1s.insert(id, x1);
                 }
                 DiscoveredDevice::Webcam(webcam) => {
                     let id = webcam.id();
@@ -180,6 +196,10 @@ impl DeviceManager {
         self.g13s.get_mut(id)
     }
 
+    pub fn get_x1_mut(&self, id: &str) -> Option<RefMut<'_, String, TraktorX1Ref>> {
+        self.traktor_kontrol_x1s.get_mut(id)
+    }
+
     pub fn get_cdj(&self, id: &str) -> Option<Ref<'_, String, CDJView>> {
         self.cdjs.get(id)
     }
@@ -220,6 +240,12 @@ impl DeviceManager {
         });
         let cdjs = self.cdjs.iter().map(|cdj| cdj.value().clone().into());
         let djms = self.djms.iter().map(|djm| djm.value().clone().into());
+        let traktor_kontrol_x1s = self.traktor_kontrol_x1s.iter().map(|x1| {
+            TraktorKontrolX1View {
+                id: x1.key().clone(),
+            }
+                .into()
+        });
 
         lasers
             .chain(gamepads)
@@ -228,6 +254,7 @@ impl DeviceManager {
             .chain(ndi_sources)
             .chain(cdjs)
             .chain(djms)
+            .chain(traktor_kontrol_x1s)
             .collect()
     }
 }
@@ -278,6 +305,7 @@ pub enum DeviceRef {
     NdiSource(NdiSourceView),
     PioneerCDJ(CDJView),
     PioneerDJM(DJMView),
+    TraktorKontrolX1(TraktorKontrolX1View),
 }
 
 #[derive(Debug, Clone)]
@@ -295,4 +323,9 @@ pub struct WebcamView {
 pub struct NdiSourceView {
     pub id: String,
     pub name: String,
+}
+
+#[derive(Debug, Clone)]
+pub struct TraktorKontrolX1View {
+    pub id: String,
 }

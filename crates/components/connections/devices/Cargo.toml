@@ -11,6 +11,7 @@ tracing = "0.1"
 mizer-protocol-laser = { path = "../protocols/laser" }
 mizer-gamepads = { path = "./gamepads" }
 mizer-g13 = { path = "./g13" }
+mizer-traktor-kontrol-x1 = { path = "./traktor-kontrol-x1" }
 mizer-webcams = { path = "./webcams" }
 mizer-ndi = { path = "./ndi" }
 mizer-module = { path = "../../../runtime/module" }

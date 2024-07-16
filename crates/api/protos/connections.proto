@@ -120,6 +120,7 @@ message Connection {
     PioneerDjmConnection djm = 21;
     NdiSourceConnection ndi_source = 22;
     CitpConnection citp = 23;
+    TraktorKontrolX1Connection x1 = 24;
   }
 }
 
@@ -153,6 +154,10 @@ message GamepadConnection {
 }
 
 message G13Connection {
+  string id = 1;
+}
+
+message TraktorKontrolX1Connection {
   string id = 1;
 }
 

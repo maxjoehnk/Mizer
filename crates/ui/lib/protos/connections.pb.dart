@@ -1341,6 +1341,7 @@ enum Connection_Connection {
   djm, 
   ndiSource, 
   citp, 
+  x1, 
   notSet
 }
 
@@ -1361,6 +1362,7 @@ class Connection extends $pb.GeneratedMessage {
     PioneerDjmConnection? djm,
     NdiSourceConnection? ndiSource,
     CitpConnection? citp,
+    TraktorKontrolX1Connection? x1,
   }) {
     final $result = create();
     if (name != null) {
@@ -1408,6 +1410,9 @@ class Connection extends $pb.GeneratedMessage {
     if (citp != null) {
       $result.citp = citp;
     }
+    if (x1 != null) {
+      $result.x1 = x1;
+    }
     return $result;
   }
   Connection._() : super();
@@ -1429,10 +1434,11 @@ class Connection extends $pb.GeneratedMessage {
     21 : Connection_Connection.djm,
     22 : Connection_Connection.ndiSource,
     23 : Connection_Connection.citp,
+    24 : Connection_Connection.x1,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Connection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24])
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOM<DmxOutputConnection>(10, _omitFieldNames ? '' : 'dmxOutput', subBuilder: DmxOutputConnection.create)
     ..aOM<DmxInputConnection>(11, _omitFieldNames ? '' : 'dmxInput', subBuilder: DmxInputConnection.create)
@@ -1448,6 +1454,7 @@ class Connection extends $pb.GeneratedMessage {
     ..aOM<PioneerDjmConnection>(21, _omitFieldNames ? '' : 'djm', subBuilder: PioneerDjmConnection.create)
     ..aOM<NdiSourceConnection>(22, _omitFieldNames ? '' : 'ndiSource', subBuilder: NdiSourceConnection.create)
     ..aOM<CitpConnection>(23, _omitFieldNames ? '' : 'citp', subBuilder: CitpConnection.create)
+    ..aOM<TraktorKontrolX1Connection>(24, _omitFieldNames ? '' : 'x1', subBuilder: TraktorKontrolX1Connection.create)
     ..hasRequiredFields = false
   ;
 
@@ -1637,6 +1644,17 @@ class Connection extends $pb.GeneratedMessage {
   void clearCitp() => clearField(23);
   @$pb.TagNumber(23)
   CitpConnection ensureCitp() => $_ensure(14);
+
+  @$pb.TagNumber(24)
+  TraktorKontrolX1Connection get x1 => $_getN(15);
+  @$pb.TagNumber(24)
+  set x1(TraktorKontrolX1Connection v) { setField(24, v); }
+  @$pb.TagNumber(24)
+  $core.bool hasX1() => $_has(15);
+  @$pb.TagNumber(24)
+  void clearX1() => clearField(24);
+  @$pb.TagNumber(24)
+  TraktorKontrolX1Connection ensureX1() => $_ensure(15);
 }
 
 enum DmxOutputConnection_Config {
@@ -2032,6 +2050,56 @@ class G13Connection extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static G13Connection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<G13Connection>(create);
   static G13Connection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class TraktorKontrolX1Connection extends $pb.GeneratedMessage {
+  factory TraktorKontrolX1Connection({
+    $core.String? id,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    return $result;
+  }
+  TraktorKontrolX1Connection._() : super();
+  factory TraktorKontrolX1Connection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TraktorKontrolX1Connection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TraktorKontrolX1Connection', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.connections'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TraktorKontrolX1Connection clone() => TraktorKontrolX1Connection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TraktorKontrolX1Connection copyWith(void Function(TraktorKontrolX1Connection) updates) => super.copyWith((message) => updates(message as TraktorKontrolX1Connection)) as TraktorKontrolX1Connection;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static TraktorKontrolX1Connection create() => TraktorKontrolX1Connection._();
+  TraktorKontrolX1Connection createEmptyInstance() => create();
+  static $pb.PbList<TraktorKontrolX1Connection> createRepeated() => $pb.PbList<TraktorKontrolX1Connection>();
+  @$core.pragma('dart2js:noInline')
+  static TraktorKontrolX1Connection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TraktorKontrolX1Connection>(create);
+  static TraktorKontrolX1Connection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);

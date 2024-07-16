@@ -58,12 +58,20 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
     if (value == null) {
       return null;
     }
-    return value.label;
+    return [...value.parents, value.label].join(" / ");
   }
 
-  List<SelectOption<T>> get flatOptions {
-    return this.widget.options.flatOptionList;
+  List<FlatSelectItem<T>> get flatOptions {
+    return this.widget.options.flatOptionList();
   }
+}
+
+class FlatSelectItem<T> {
+  final String label;
+  final List<String> parents;
+  final T value;
+
+  FlatSelectItem(this.label, this.parents, this.value);
 }
 
 class _MizerSelectRoute<T> extends PopupRoute {
@@ -190,7 +198,7 @@ class _MizerSelectList<T> extends StatelessWidget {
     var theme = Theme.of(context).textTheme;
 
     return DefaultTextStyle(
-        style: theme.bodyText2!,
+        style: theme.bodyMedium!,
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
@@ -261,21 +269,21 @@ class SelectOption<T> extends SelectItem<T> {
 
 class SelectGroup<T> extends SelectItem<T> {
   // TODO: currently doesn't support nested groups as the widget doesn't support this yet
-  final List<SelectOption<T>> options;
+  final List<SelectItem<T>> options;
 
   SelectGroup(String label, this.options) : super(label);
 }
 
 extension SelectItemList<T> on List<SelectItem<T>> {
-  List<SelectOption<T>> get flatOptionList {
+  List<FlatSelectItem<T>> flatOptionList({ List<String>? parents = null }) {
     return this
         .map((e) {
           if (e is SelectOption<T>) {
-            return [e];
+            return [FlatSelectItem(e.label, parents ?? [], e.value)];
           } else if (e is SelectGroup<T>) {
-            return e.options.flatOptionList;
+            return e.options.flatOptionList(parents: [...parents ?? [], e.label]);
           } else {
-            return [] as List<SelectOption<T>>;
+            return [] as List<FlatSelectItem<T>>;
           }
         })
         .flattened

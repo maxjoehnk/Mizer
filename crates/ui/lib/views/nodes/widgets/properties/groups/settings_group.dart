@@ -203,7 +203,7 @@ class NodeSettingsPane extends StatelessWidget {
 SelectItem<String> mapVariant(NodeSetting_SelectVariant variant) {
   if (variant.hasGroup()) {
     return SelectGroup<String>(variant.group.label,
-        variant.group.items.map((v) => mapVariant(v) as SelectOption<String>).toList());
+        variant.group.items.map((v) => mapVariant(v)).toList());
   }
   return SelectOption<String>(value: variant.item.value, label: variant.item.label);
 }

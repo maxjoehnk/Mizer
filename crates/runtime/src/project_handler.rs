@@ -1,12 +1,11 @@
 use serde::{Deserialize, Serialize};
 use lazy_static::lazy_static;
-use mizer_clock::Clock;
 use mizer_module::*;
 use mizer_node::{NodeLink, NodePath, NodeType};
-use mizer_nodes::{Node, NodeConfig, NodeDowncast};
+use mizer_nodes::{NodeConfig, NodeDowncast};
 use mizer_ports::PortId;
 use regex::{Regex, RegexBuilder};
-use crate::{CoordinatorRuntime, Pipeline};
+use crate::{Pipeline};
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -17,14 +16,14 @@ lazy_static! {
     .unwrap();
 }
 
-pub(crate) struct RuntimeProjectHandler;
+pub(crate) struct PipelineProjectHandler;
 
-impl ProjectHandler for RuntimeProjectHandler {
+impl ProjectHandler for PipelineProjectHandler {
     fn get_name(&self) -> &'static str {
-        "runtime"
+        "pipeline"
     }
 
-    fn new_project(&mut self, context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
         let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
         pipeline.clear();
         pipeline.add_node(&injector, NodeType::Programmer, Default::default(), None, None).unwrap();
@@ -37,8 +36,6 @@ impl ProjectHandler for RuntimeProjectHandler {
         profiling::scope!("CoordinatorRuntime::load_project");
         let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
         pipeline.clear();
-        // let playback = context.read_file::<PlaybackSettings>("playback")?;
-        // self.set_fps(playback.fps);
         let nodes = context.read_file::<Vec<NodeConfig>>("nodes")?;
         for node in nodes {
             pipeline.add_node_with_path(&injector, node.path, node.designer, node.config, None)?;

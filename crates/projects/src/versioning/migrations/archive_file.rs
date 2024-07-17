@@ -35,9 +35,9 @@ impl TryFrom<Project> for ProjectArchive {
             let mut writer = archive.write()?;
             writer.write_file("runtime/playback.json")?;
             serde_json::to_writer(&mut writer, &project.playback)?;
-            writer.write_file("runtime/nodes.json")?;
+            writer.write_file("pipeline/nodes.json")?;
             serde_json::to_writer(&mut writer, &project.nodes)?;
-            writer.write_file("runtime/channels.json")?;
+            writer.write_file("pipeline/channels.json")?;
             serde_json::to_writer(&mut writer, &project.channels)?;
             writer.write_file("fixtures/patch.json")?;
             serde_json::to_writer(&mut writer, &project.fixtures)?;

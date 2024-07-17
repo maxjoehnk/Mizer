@@ -348,6 +348,7 @@ class MediaFile extends $pb.GeneratedMessage {
     $core.String? name,
     MediaType? type,
     MediaMetadata? metadata,
+    $core.String? filePath,
     $core.String? thumbnailPath,
     $core.bool? fileAvailable,
   }) {
@@ -363,6 +364,9 @@ class MediaFile extends $pb.GeneratedMessage {
     }
     if (metadata != null) {
       $result.metadata = metadata;
+    }
+    if (filePath != null) {
+      $result.filePath = filePath;
     }
     if (thumbnailPath != null) {
       $result.thumbnailPath = thumbnailPath;
@@ -381,8 +385,9 @@ class MediaFile extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..e<MediaType>(3, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
     ..aOM<MediaMetadata>(4, _omitFieldNames ? '' : 'metadata', subBuilder: MediaMetadata.create)
-    ..aOS(5, _omitFieldNames ? '' : 'thumbnailPath')
-    ..aOB(6, _omitFieldNames ? '' : 'fileAvailable')
+    ..aOS(5, _omitFieldNames ? '' : 'filePath')
+    ..aOS(6, _omitFieldNames ? '' : 'thumbnailPath')
+    ..aOB(7, _omitFieldNames ? '' : 'fileAvailable')
     ..hasRequiredFields = false
   ;
 
@@ -446,22 +451,31 @@ class MediaFile extends $pb.GeneratedMessage {
   MediaMetadata ensureMetadata() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $core.String get thumbnailPath => $_getSZ(4);
+  $core.String get filePath => $_getSZ(4);
   @$pb.TagNumber(5)
-  set thumbnailPath($core.String v) { $_setString(4, v); }
+  set filePath($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasThumbnailPath() => $_has(4);
+  $core.bool hasFilePath() => $_has(4);
   @$pb.TagNumber(5)
-  void clearThumbnailPath() => clearField(5);
+  void clearFilePath() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.bool get fileAvailable => $_getBF(5);
+  $core.String get thumbnailPath => $_getSZ(5);
   @$pb.TagNumber(6)
-  set fileAvailable($core.bool v) { $_setBool(5, v); }
+  set thumbnailPath($core.String v) { $_setString(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasFileAvailable() => $_has(5);
+  $core.bool hasThumbnailPath() => $_has(5);
   @$pb.TagNumber(6)
-  void clearFileAvailable() => clearField(6);
+  void clearThumbnailPath() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.bool get fileAvailable => $_getBF(6);
+  @$pb.TagNumber(7)
+  set fileAvailable($core.bool v) { $_setBool(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasFileAvailable() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearFileAvailable() => clearField(7);
 }
 
 class MediaMetadata_Dimensions extends $pb.GeneratedMessage {

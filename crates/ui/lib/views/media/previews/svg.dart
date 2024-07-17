@@ -16,7 +16,7 @@ class SvgPreview extends StatelessWidget {
       child: Stack(
         children: [
           TransparentBackground(),
-          Center(child: SvgPicture.file(File(this.file.metadata.sourcePath))),
+          Center(child: SvgPicture.file(File(this.file.filePath))),
         ],
       ),
       maxScale: 10,

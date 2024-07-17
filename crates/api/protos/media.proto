@@ -33,8 +33,9 @@ message MediaFile {
   string name = 2;
   MediaType type = 3;
   MediaMetadata metadata = 4;
-  optional string thumbnail_path = 5;
-  optional bool file_available = 6;
+  string file_path = 5;
+  optional string thumbnail_path = 6;
+  optional bool file_available = 7;
 }
 
 message MediaMetadata {

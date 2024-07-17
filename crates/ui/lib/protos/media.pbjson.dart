@@ -109,8 +109,9 @@ const MediaFile$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.media.MediaType', '10': 'type'},
     {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.mizer.media.MediaMetadata', '10': 'metadata'},
-    {'1': 'thumbnail_path', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'thumbnailPath', '17': true},
-    {'1': 'file_available', '3': 6, '4': 1, '5': 8, '9': 1, '10': 'fileAvailable', '17': true},
+    {'1': 'file_path', '3': 5, '4': 1, '5': 9, '10': 'filePath'},
+    {'1': 'thumbnail_path', '3': 6, '4': 1, '5': 9, '9': 0, '10': 'thumbnailPath', '17': true},
+    {'1': 'file_available', '3': 7, '4': 1, '5': 8, '9': 1, '10': 'fileAvailable', '17': true},
   ],
   '8': [
     {'1': '_thumbnail_path'},
@@ -122,9 +123,10 @@ const MediaFile$json = {
 final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode(
     'CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSKgoEdHlwZR'
     'gDIAEoDjIWLm1pemVyLm1lZGlhLk1lZGlhVHlwZVIEdHlwZRI2CghtZXRhZGF0YRgEIAEoCzIa'
-    'Lm1pemVyLm1lZGlhLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEioKDnRodW1ibmFpbF9wYXRoGA'
-    'UgASgJSABSDXRodW1ibmFpbFBhdGiIAQESKgoOZmlsZV9hdmFpbGFibGUYBiABKAhIAVINZmls'
-    'ZUF2YWlsYWJsZYgBAUIRCg9fdGh1bWJuYWlsX3BhdGhCEQoPX2ZpbGVfYXZhaWxhYmxl');
+    'Lm1pemVyLm1lZGlhLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEhsKCWZpbGVfcGF0aBgFIAEoCV'
+    'IIZmlsZVBhdGgSKgoOdGh1bWJuYWlsX3BhdGgYBiABKAlIAFINdGh1bWJuYWlsUGF0aIgBARIq'
+    'Cg5maWxlX2F2YWlsYWJsZRgHIAEoCEgBUg1maWxlQXZhaWxhYmxliAEBQhEKD190aHVtYm5haW'
+    'xfcGF0aEIRCg9fZmlsZV9hdmFpbGFibGU=');
 
 @$core.Deprecated('Use mediaMetadataDescriptor instead')
 const MediaMetadata$json = {

@@ -15,7 +15,7 @@ class ImagePreview extends StatelessWidget {
       child: Stack(
         children: [
           TransparentBackground(),
-          Center(child: Image.file(File(this.file.metadata.sourcePath))),
+          Center(child: Image.file(File(this.file.filePath))),
         ],
       ),
       maxScale: 10,

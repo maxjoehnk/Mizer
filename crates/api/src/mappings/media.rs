@@ -33,6 +33,10 @@ impl From<mizer_media::documents::MediaDocument> for MediaFile {
                 album: media.metadata.album,
                 artist: media.metadata.artist,
             }),
+            file_path: media
+                .file_path
+                .as_os_str().to_str().map(|path| path.to_string())
+                .unwrap_or_default(),
             thumbnail_path: media
                 .metadata
                 .thumbnail_path

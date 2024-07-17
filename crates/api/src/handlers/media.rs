@@ -101,6 +101,14 @@ impl<R: RuntimeApi> MediaHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
+    pub fn relink_media(&self, req: RelinkMediaRequest) -> anyhow::Result<()> {
+        self.api.relink_media(MediaId::try_from(req.media_id)?, PathBuf::from(req.path))?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
     pub fn remove_media(&self, file_id: String) -> anyhow::Result<()> {
         self.api.remove_file(MediaId::try_from(file_id)?);
 

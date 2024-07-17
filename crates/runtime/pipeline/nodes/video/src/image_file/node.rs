@@ -91,6 +91,10 @@ impl ProcessingNode for ImageFileNode {
         }
 
         let media_file = media_file.unwrap();
+        
+        if media_file.file_available != Some(true) {
+            return Ok(());
+        }
 
         if state.is_none() {
             *state = Some(

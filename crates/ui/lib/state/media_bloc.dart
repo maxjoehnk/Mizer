@@ -12,6 +12,13 @@ class ImportMedia extends MediaEvent {
   ImportMedia(this.files);
 }
 
+class RelinkMedia extends MediaEvent {
+  final String mediaId;
+  final String path;
+
+  RelinkMedia({ required this.mediaId, required this.path });
+}
+
 class RemoveMedia extends MediaEvent {
   final String mediaId;
 
@@ -105,6 +112,10 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
     });
     on<MediaChanged>((event, emit) async {
       emit(MediaFiles(files: event.files, tags: event.tags, folders: state.folders));
+    });
+    on<RelinkMedia>((event, emit) async {
+      await api.relinkMedia(event.mediaId, event.path);
+      this.add(FetchMedia());
     });
     this.api.watchMedia().listen((value) {
       this.add(MediaChanged(files: value.files, tags: value.tags));

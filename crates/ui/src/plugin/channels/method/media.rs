@@ -67,6 +67,11 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MethodCallHandler for 
                     resp.respond_unit_result(response);
                 }
             }
+            "relinkMedia" => {
+                let response = call.arguments().and_then(|req| self.handler.relink_media(req));
+                
+                resp.respond_unit_result(response);
+            }
             "removeMedia" => {
                 if let Value::String(id) = call.args {
                     let response = self.handler.remove_media(id);

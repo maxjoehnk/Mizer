@@ -68,6 +68,17 @@ impl DataAccess {
 
         Ok(media_document)
     }
+    
+    pub fn relink_media(&self, id: MediaId, path: PathBuf) -> anyhow::Result<()> {
+        let mut media = self
+            .media
+            .get_mut(&id)
+            .ok_or_else(|| anyhow::anyhow!("Media with id {id} does not exist"))?;
+        media.file_path = path;
+        self.bus.send(self.clone());
+
+        Ok(())
+    }
 
     pub fn import_tags(&self, tags: Vec<MediaTag>) -> anyhow::Result<()> {
         for tag in tags {

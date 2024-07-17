@@ -111,6 +111,17 @@ impl<T: Clone + Send + Sync + 'static> Subscriber<T> {
             }
         }
     }
+    
+    pub fn read_blocking(&self) -> Option<T> {
+        match self.recv.recv() {
+            Ok(value) => Some(value),
+            Err(_) => {
+                tracing::error!("Bus Subscriber has disconnected");
+
+                None
+            }
+        }
+    }
 
     pub fn read_last(&self) -> Option<T> {
         self.recv.try_iter().last()

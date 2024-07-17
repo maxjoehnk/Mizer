@@ -9,6 +9,7 @@ abstract class MediaApi {
   Future<MediaFiles> getMedia();
   Future<void> importMedia(List<String> files);
   Future<void> removeMedia(String mediaId);
+  Future<void> relinkMedia(String mediaId, String path);
 
   Future<void> addTagToMedia(String mediaId, String tagId);
   Future<void> removeTagFromMedia(String mediaId, String tagId);

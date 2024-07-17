@@ -58,6 +58,20 @@ final $typed_data.Uint8List removeTagFromMediaRequestDescriptor = $convert.base6
     'ChlSZW1vdmVUYWdGcm9tTWVkaWFSZXF1ZXN0EhkKCG1lZGlhX2lkGAEgASgJUgdtZWRpYUlkEh'
     'UKBnRhZ19pZBgCIAEoCVIFdGFnSWQ=');
 
+@$core.Deprecated('Use relinkMediaRequestDescriptor instead')
+const RelinkMediaRequest$json = {
+  '1': 'RelinkMediaRequest',
+  '2': [
+    {'1': 'media_id', '3': 1, '4': 1, '5': 9, '10': 'mediaId'},
+    {'1': 'path', '3': 2, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+/// Descriptor for `RelinkMediaRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List relinkMediaRequestDescriptor = $convert.base64Decode(
+    'ChJSZWxpbmtNZWRpYVJlcXVlc3QSGQoIbWVkaWFfaWQYASABKAlSB21lZGlhSWQSEgoEcGF0aB'
+    'gCIAEoCVIEcGF0aA==');
+
 @$core.Deprecated('Use mediaTagDescriptor instead')
 const MediaTag$json = {
   '1': 'MediaTag',
@@ -96,9 +110,11 @@ const MediaFile$json = {
     {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.media.MediaType', '10': 'type'},
     {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.mizer.media.MediaMetadata', '10': 'metadata'},
     {'1': 'thumbnail_path', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'thumbnailPath', '17': true},
+    {'1': 'file_available', '3': 6, '4': 1, '5': 8, '9': 1, '10': 'fileAvailable', '17': true},
   ],
   '8': [
     {'1': '_thumbnail_path'},
+    {'1': '_file_available'},
   ],
 };
 
@@ -107,7 +123,8 @@ final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode(
     'CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSKgoEdHlwZR'
     'gDIAEoDjIWLm1pemVyLm1lZGlhLk1lZGlhVHlwZVIEdHlwZRI2CghtZXRhZGF0YRgEIAEoCzIa'
     'Lm1pemVyLm1lZGlhLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEioKDnRodW1ibmFpbF9wYXRoGA'
-    'UgASgJSABSDXRodW1ibmFpbFBhdGiIAQFCEQoPX3RodW1ibmFpbF9wYXRo');
+    'UgASgJSABSDXRodW1ibmFpbFBhdGiIAQESKgoOZmlsZV9hdmFpbGFibGUYBiABKAhIAVINZmls'
+    'ZUF2YWlsYWJsZYgBAUIRCg9fdGh1bWJuYWlsX3BhdGhCEQoPX2ZpbGVfYXZhaWxhYmxl');
 
 @$core.Deprecated('Use mediaMetadataDescriptor instead')
 const MediaMetadata$json = {

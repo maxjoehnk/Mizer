@@ -12,6 +12,11 @@ message RemoveTagFromMediaRequest {
   string tag_id = 2;
 }
 
+message RelinkMediaRequest {
+  string media_id = 1;
+  string path = 2;
+}
+
 message MediaTag {
   string id = 1;
   string name = 2;
@@ -29,6 +34,7 @@ message MediaFile {
   MediaType type = 3;
   MediaMetadata metadata = 4;
   optional string thumbnail_path = 5;
+  optional bool file_available = 6;
 }
 
 message MediaMetadata {

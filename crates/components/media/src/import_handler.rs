@@ -34,7 +34,7 @@ impl ImportFileHandler {
             video_handler: VideoHandler,
             image_handler: ImageHandler,
             audio_handler: AudioHandler,
-            svg_handler: SvgHandler::new(),
+            svg_handler: SvgHandler,
             data_handler: DataHandler,
         }
     }
@@ -116,6 +116,7 @@ impl ImportFileHandler {
             file_path: self.file_storage.get_media_path(file_path),
             source_path,
             file_size,
+            file_available: Some(true),
         })?;
 
         self.status_bus.add_message(

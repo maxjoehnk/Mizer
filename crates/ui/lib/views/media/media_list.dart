@@ -88,6 +88,7 @@ class _MediaListState extends State<MediaList> {
                   Text("Duration"),
                   Text("Resolution"),
                   Text("FPS"),
+                  Text("Status"),
                 ],
                 rows:
                     _files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
@@ -97,6 +98,7 @@ class _MediaListState extends State<MediaList> {
                   2: FlexColumnWidth(2),
                   3: FlexColumnWidth(2),
                   4: FlexColumnWidth(1),
+                  5: FlexColumnWidth(2),
                 },
               )),
             ),
@@ -111,6 +113,11 @@ class _MediaListState extends State<MediaList> {
             disabled: widget.selectedFile == null,
             onClick: () => context.read<MediaBloc>().add(RemoveMedia(widget.selectedFile!.id)),
             hotkeyId: "delete",
+          ),
+          PanelActionModel(
+            label: "Relink",
+            disabled: widget.selectedFile == null,
+            onClick: () => _relinkFile(context),
           ),
           PanelActionModel(
               label: "Media Folders",
@@ -136,6 +143,7 @@ class _MediaListState extends State<MediaList> {
           ? Text("${file.metadata.dimensions.width}x${file.metadata.dimensions.height}")
           : Container(),
       file.metadata.hasFramerate() ? Text("${file.metadata.framerate}") : Container(),
+      file.fileAvailable ? Text("Ok") : Text("File Missing", style: TextStyle(color: Colors.red)),
     ], onTap: () => widget.onSelectFile(file), selected: widget.selectedFile == file);
   }
 
@@ -166,6 +174,39 @@ class _MediaListState extends State<MediaList> {
     context.read<MediaBloc>().add(ImportMedia(files.map((f) => f.path).toList()));
   }
 
+  _relinkFile(BuildContext context) async {
+    if (widget.selectedFile == null) {
+      return;
+    }
+    XTypeGroup? typeGroup = null;
+    if (widget.selectedFile!.type == MediaType.AUDIO) {
+      typeGroup = XTypeGroup(
+          label: 'Audio'.i18n,
+          extensions: ['wav', 'mp3', 'ogg', 'flac', 'm4a', 'aac', 'wma', 'opus']);
+    }
+    if (widget.selectedFile!.type == MediaType.IMAGE) {
+      typeGroup = XTypeGroup(
+          label: 'Images'.i18n, extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp']);
+    }
+    if (widget.selectedFile!.type == MediaType.VIDEO) {
+      typeGroup = XTypeGroup(
+          label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv']);
+    }
+    if (widget.selectedFile!.type == MediaType.VECTOR) {
+      typeGroup = XTypeGroup(label: 'Vector Files'.i18n, extensions: ['svg']);
+    }
+    if (widget.selectedFile!.type == MediaType.DATA) {
+      typeGroup = XTypeGroup(label: 'Data'.i18n, extensions: ['csv']);
+    }
+
+    var file = await openFile(acceptedTypeGroups: [typeGroup!]);
+    if (file == null) {
+      return;
+    }
+
+    context.read<MediaBloc>().add(RelinkMedia(mediaId: widget.selectedFile!.id, path: file.path));
+  }
+
   _manageMediaFolders(BuildContext context) {
     MediaBloc bloc = context.read();
     showDialog(context: context, builder: (context) => MediaFoldersDialog(bloc: bloc));
@@ -194,6 +235,9 @@ class MediaThumbnail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!file.fileAvailable) {
+      return Container();
+    }
     return Container(
         alignment: Alignment.center,
         child: file.hasThumbnailPath()

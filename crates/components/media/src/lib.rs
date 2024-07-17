@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
-use mizer_message_bus::Subscriber;
+use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
 pub use module::MediaModule;
@@ -9,9 +9,12 @@ pub use module::MediaModule;
 use crate::data_access::DataAccess;
 pub use crate::discovery::MediaDiscovery;
 use crate::documents::*;
+use crate::events::MediaEvent;
 use crate::file_storage::FileStorage;
 use crate::import_handler::ImportFileHandler;
 
+mod background_media_job;
+mod events;
 mod data_access;
 mod discovery;
 pub mod documents;
@@ -20,6 +23,7 @@ mod import_handler;
 pub mod media_handlers;
 mod module;
 pub mod queries;
+mod thumbnail_generator;
 
 #[derive(Clone)]
 #[repr(transparent)]
@@ -73,6 +77,7 @@ pub struct MediaServer {
     db: DataAccess,
     import_paths: ImportPaths,
     status_bus: StatusHandle,
+    event_bus: MessageBus<MediaEvent>,
 }
 
 impl MediaServer {
@@ -86,6 +91,7 @@ impl MediaServer {
             storage,
             db,
             import_paths,
+            event_bus: MessageBus::new(),
         })
     }
 
@@ -135,6 +141,9 @@ impl MediaServer {
     }
 
     pub fn import_files(&self, files: Vec<MediaDocument>) -> anyhow::Result<()> {
+        for file in &files {
+            self.event_bus.send(MediaEvent::FileAdded(file.id));
+        }
         self.db.import_media(files)
     }
 
@@ -162,7 +171,12 @@ impl MediaServer {
             .import_file(model, &file_path, relative_to)
             .await
         {
-            Ok(document) => Ok(document),
+            Ok(Some(document)) => {
+                self.event_bus.send(MediaEvent::FileAdded(document.id));
+                
+                Ok(Some(document))
+            },
+            Ok(None) => Ok(None),
             Err(err) => {
                 tracing::error!("Error importing file {err:?}");
                 mizer_console::error!(
@@ -173,6 +187,13 @@ impl MediaServer {
                 Err(err)
             }
         }
+    }
+    
+    pub fn relink_media(&self, id: MediaId, path: PathBuf) -> anyhow::Result<()> {
+        self.db.relink_media(id, path)?;
+        self.event_bus.send(MediaEvent::FileUpdated(id));
+        
+        Ok(())
     }
 
     pub fn get_media_file(&self, id: impl AsRef<MediaId>) -> Option<MediaDocument> {

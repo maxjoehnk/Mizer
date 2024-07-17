@@ -38,6 +38,7 @@ impl From<mizer_media::documents::MediaDocument> for MediaFile {
                 .thumbnail_path
                 .and_then(|path| path.as_os_str().to_str().map(|path| path.to_string())),
             r#type: MediaType::from(media.media_type) as i32,
+            file_available: media.file_available,
         }
     }
 }

@@ -1,20 +1,15 @@
 use std::fs::File;
-use std::io::Cursor;
 use std::path::Path;
 
 use anyhow::Context;
-use id3::frame::PictureType;
 use id3::{Tag, TagLike};
-use image::imageops::FilterType;
 use symphonia::core::formats::{FormatOptions, FormatReader};
 use symphonia::core::io::{MediaSourceStream, ReadOnlySource};
 use symphonia::core::meta::MetadataOptions;
 use symphonia::core::probe::Hint;
 
 use crate::documents::{MediaMetadata, MediaType};
-use crate::file_storage::FileStorage;
-use crate::media_handlers::image_handler::parse_image_content_type;
-use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
+use crate::media_handlers::{MediaHandler};
 
 #[derive(Clone)]
 pub struct AudioHandler;
@@ -24,28 +19,6 @@ impl MediaHandler for AudioHandler {
 
     fn supported(content_type: &str) -> bool {
         content_type.starts_with("audio")
-    }
-
-    fn generate_thumbnail<P: AsRef<Path>>(
-        &self,
-        file: P,
-        storage: &FileStorage,
-        _content_type: &str,
-    ) -> anyhow::Result<()> {
-        let target = storage.get_thumbnail_path(&file);
-        let tag = Tag::read_from_path(file).context("Unable to read id3 tag")?;
-        if let Some(cover) = tag
-            .pictures()
-            .find(|p| p.picture_type == PictureType::CoverFront)
-        {
-            let cursor = Cursor::new(&cover.data);
-            let image = image::load(cursor, parse_image_content_type(&cover.mime_type)?)
-                .context("Unable to read cover image")?;
-            let image = image.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Nearest);
-            image.save(target).context("Unable to save thumbnail")?;
-        }
-
-        Ok(())
     }
 
     fn read_metadata<P: AsRef<Path>>(

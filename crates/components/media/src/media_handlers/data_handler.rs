@@ -1,7 +1,4 @@
-use std::path::{Path};
-
 use crate::documents::MediaType;
-use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler};
 
 #[derive(Clone)]
@@ -12,14 +9,5 @@ impl MediaHandler for DataHandler {
 
     fn supported(content_type: &str) -> bool {
         content_type == "text/csv"
-    }
-
-    fn generate_thumbnail<P: AsRef<Path>>(
-        &self,
-        _path: P,
-        _storage: &FileStorage,
-        _content_type: &str,
-    ) -> anyhow::Result<()> {
-        Ok(())
     }
 }

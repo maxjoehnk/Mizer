@@ -72,4 +72,10 @@ class MediaPluginApi implements MediaApi {
     var request = RemoveTagFromMediaRequest(mediaId: mediaId, tagId: tagId);
     await channel.invokeMethod("removeTagFromMedia", request.writeToBuffer());
   }
+
+  @override
+  Future<void> relinkMedia(String mediaId, String path) {
+    var request = RelinkMediaRequest(mediaId: mediaId, path: path);
+    return channel.invokeMethod("relinkMedia", request.writeToBuffer());
+  }
 }

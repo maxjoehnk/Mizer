@@ -146,6 +146,70 @@ class RemoveTagFromMediaRequest extends $pb.GeneratedMessage {
   void clearTagId() => clearField(2);
 }
 
+class RelinkMediaRequest extends $pb.GeneratedMessage {
+  factory RelinkMediaRequest({
+    $core.String? mediaId,
+    $core.String? path,
+  }) {
+    final $result = create();
+    if (mediaId != null) {
+      $result.mediaId = mediaId;
+    }
+    if (path != null) {
+      $result.path = path;
+    }
+    return $result;
+  }
+  RelinkMediaRequest._() : super();
+  factory RelinkMediaRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RelinkMediaRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RelinkMediaRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.media'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'mediaId')
+    ..aOS(2, _omitFieldNames ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RelinkMediaRequest clone() => RelinkMediaRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RelinkMediaRequest copyWith(void Function(RelinkMediaRequest) updates) => super.copyWith((message) => updates(message as RelinkMediaRequest)) as RelinkMediaRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RelinkMediaRequest create() => RelinkMediaRequest._();
+  RelinkMediaRequest createEmptyInstance() => create();
+  static $pb.PbList<RelinkMediaRequest> createRepeated() => $pb.PbList<RelinkMediaRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RelinkMediaRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RelinkMediaRequest>(create);
+  static RelinkMediaRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get mediaId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set mediaId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMediaId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMediaId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get path => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set path($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPath() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPath() => clearField(2);
+}
+
 class MediaTag extends $pb.GeneratedMessage {
   factory MediaTag({
     $core.String? id,
@@ -285,6 +349,7 @@ class MediaFile extends $pb.GeneratedMessage {
     MediaType? type,
     MediaMetadata? metadata,
     $core.String? thumbnailPath,
+    $core.bool? fileAvailable,
   }) {
     final $result = create();
     if (id != null) {
@@ -302,6 +367,9 @@ class MediaFile extends $pb.GeneratedMessage {
     if (thumbnailPath != null) {
       $result.thumbnailPath = thumbnailPath;
     }
+    if (fileAvailable != null) {
+      $result.fileAvailable = fileAvailable;
+    }
     return $result;
   }
   MediaFile._() : super();
@@ -314,6 +382,7 @@ class MediaFile extends $pb.GeneratedMessage {
     ..e<MediaType>(3, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
     ..aOM<MediaMetadata>(4, _omitFieldNames ? '' : 'metadata', subBuilder: MediaMetadata.create)
     ..aOS(5, _omitFieldNames ? '' : 'thumbnailPath')
+    ..aOB(6, _omitFieldNames ? '' : 'fileAvailable')
     ..hasRequiredFields = false
   ;
 
@@ -384,6 +453,15 @@ class MediaFile extends $pb.GeneratedMessage {
   $core.bool hasThumbnailPath() => $_has(4);
   @$pb.TagNumber(5)
   void clearThumbnailPath() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get fileAvailable => $_getBF(5);
+  @$pb.TagNumber(6)
+  set fileAvailable($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasFileAvailable() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearFileAvailable() => clearField(6);
 }
 
 class MediaMetadata_Dimensions extends $pb.GeneratedMessage {

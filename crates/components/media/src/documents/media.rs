@@ -17,6 +17,8 @@ pub struct MediaDocument {
     /// File size in bytes
     pub file_size: u64,
     pub metadata: MediaMetadata,
+    #[serde(skip, default)]
+    pub file_available: Option<bool>,
 }
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]

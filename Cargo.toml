@@ -119,3 +119,5 @@ opt-level = 3
 [patch.crates-io]
 nokhwa = { git = "https://github.com/l1npengtul/nokhwa.git", rev = "3be9227" }
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
+egui_tracing = { git = "https://github.com/Umatriz/egui_tracing.git", rev = "7604668" }
+glyphon = { git = "https://github.com/grovesNL/glyphon.git", rev = "47f4126" }

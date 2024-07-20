@@ -1,7 +1,4 @@
-use glyphon::{
-    cosmic_text, Attrs, Buffer, Family, FontSystem, Metrics, Resolution, Shaping, SwashCache,
-    TextArea, TextAtlas, TextBounds, TextRenderer,
-};
+use glyphon::{cosmic_text, Attrs, Buffer, Family, FontSystem, Metrics, Resolution, Shaping, SwashCache, TextArea, TextAtlas, TextBounds, TextRenderer, Cache, Viewport};
 
 use mizer_node::Color;
 use mizer_wgpu::wgpu::{CommandBuffer, MultisampleState};
@@ -12,7 +9,8 @@ use crate::node::{FontWeight, TextAlign};
 pub struct TextTextureState {
     pub transfer_texture: TextureHandle,
     font_system: FontSystem,
-    cache: SwashCache,
+    swash_cache: SwashCache,
+    viewport: Viewport,
     atlas: TextAtlas,
     text_renderer: TextRenderer,
     buffer: Buffer,
@@ -84,10 +82,12 @@ impl TextTextureState {
     pub fn new(context: &WgpuContext, registry: &TextureRegistry) -> anyhow::Result<Self> {
         let transfer_texture = registry.register(context, 1920, 1080, None);
         let mut font_system = FontSystem::new();
-        let cache = SwashCache::new();
+        let swash_cache = SwashCache::new();
+        let cache = Cache::new(&context.device);
         let mut atlas = TextAtlas::new(
             &context.device,
             &context.queue,
+            &cache,
             wgpu::TextureFormat::Bgra8UnormSrgb,
         );
         let text_renderer = TextRenderer::new(
@@ -97,13 +97,23 @@ impl TextTextureState {
             None,
         );
         let mut buffer = Buffer::new(&mut font_system, Metrics::new(32.0, 32.0));
-        buffer.set_size(&mut font_system, 1920f32, 1080f32);
-        buffer.shape_until_scroll(&mut font_system);
+        buffer.set_size(&mut font_system, Some(1920f32), Some(1080f32));
+        buffer.shape_until_scroll(&mut font_system, true);
+        let mut viewport = Viewport::new(&context.device, &cache);
+
+        viewport.update(
+            &context.queue,
+            Resolution {
+                width: 1920,
+                height: 1080,
+            },
+        );
 
         Ok(Self {
             transfer_texture,
             font_system,
-            cache,
+            swash_cache,
+            viewport,
             atlas,
             text_renderer,
             buffer,
@@ -131,16 +141,13 @@ impl TextTextureState {
         for line in self.buffer.lines.iter_mut() {
             line.set_align(Some(align));
         }
-        self.buffer.shape_until_scroll(&mut self.font_system);
+        self.buffer.shape_until_scroll(&mut self.font_system, true);
         self.text_renderer.prepare(
             &context.device,
             &context.queue,
             &mut self.font_system,
             &mut self.atlas,
-            Resolution {
-                width: 1920,
-                height: 1080,
-            },
+            &self.viewport,
             [TextArea {
                 buffer: &self.buffer,
                 left: 0.,
@@ -149,7 +156,7 @@ impl TextTextureState {
                 bounds: TextBounds::default(),
                 default_color: glyphon::Color::rgb(0, 0, 0),
             }],
-            &mut self.cache,
+            &mut self.swash_cache,
         )?;
 
         Ok(())
@@ -164,7 +171,7 @@ impl TextTextureState {
         let mut buffer = context.create_command_buffer("Text Render Pass");
         {
             let mut pass = buffer.start_render_pass(target);
-            self.text_renderer.render(&self.atlas, &mut pass)?;
+            self.text_renderer.render(&self.atlas, &self.viewport, &mut pass)?;
         }
 
         Ok(buffer.finish())

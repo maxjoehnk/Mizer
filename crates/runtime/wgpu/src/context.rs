@@ -46,6 +46,12 @@ impl WgpuContext {
             } => {
                 tracing::error!(source, "wgpu validation error: {}", description);
             }
+            wgpu::Error::Internal {
+                description,
+                source
+            } => {
+                tracing::error!(source, "wgpu internal error: {}", description);
+            }
         }));
 
         Ok(Self {
@@ -193,6 +199,7 @@ impl WgpuContext {
                     module: shader,
                     entry_point: "vs_main",
                     buffers: &[Vertex::desc()],
+                    compilation_options: Default::default(),
                 },
                 fragment: Some(wgpu::FragmentState {
                     module: shader,
@@ -202,6 +209,7 @@ impl WgpuContext {
                         blend: Some(wgpu::BlendState::REPLACE),
                         write_mask: wgpu::ColorWrites::ALL,
                     })],
+                    compilation_options: Default::default(),
                 }),
                 primitive: wgpu::PrimitiveState {
                     topology: wgpu::PrimitiveTopology::TriangleList,

@@ -723,7 +723,7 @@ dependencies = [
  "bitflags 2.6.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.10.5",
  "lazy_static",
  "lazycell",
  "log",
@@ -4210,15 +4210,6 @@ dependencies = [
 
 [[package]]
 name = "itertools"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
-dependencies = [
- "either",
-]
-
-[[package]]
-name = "itertools"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "413ee7dfc52ee1a4949ceeb7dbc8a33f2d6c088194d9f922fb8318faf1f01186"
@@ -4844,7 +4835,7 @@ dependencies = [
  "anyhow",
  "flume 0.11.0",
  "futures",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "lazy_static",
  "mizer-clock",
  "mizer-command-executor",
@@ -5229,7 +5220,7 @@ dependencies = [
  "enum-iterator",
  "futures",
  "indexmap 2.2.6",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "mizer-commander",
  "mizer-module",
  "mizer-node",
@@ -5743,7 +5734,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "mizer-commander",
  "mizer-fixtures",
  "mizer-module",
@@ -5778,7 +5769,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "mizer-node",
  "mizer-protocol-laser",
  "mizer-util",
@@ -6025,7 +6016,7 @@ dependencies = [
  "flume 0.11.0",
  "indexmap 2.2.6",
  "insta",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -6088,7 +6079,7 @@ dependencies = [
  "dashmap",
  "geo-nd",
  "indexmap 2.2.6",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "mizer-fixtures",
  "mizer-module",
  "mizer-util",
@@ -7868,7 +7859,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "81bddcdb20abf9501610992b6759a4c888aef7d1a7247ef75e2404275ac24af1"
 dependencies = [
  "anyhow",
- "itertools 0.12.1",
+ "itertools 0.10.5",
  "proc-macro2",
  "quote",
  "syn 2.0.48",

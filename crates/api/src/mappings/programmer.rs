@@ -120,6 +120,15 @@ impl From<preset_id::PresetType> for mizer_fixtures::programmer::PresetType {
     }
 }
 
+impl From<PresetTarget> for mizer_fixtures::programmer::PresetTarget {
+    fn from(value: PresetTarget) -> Self {
+        match value {
+            PresetTarget::Universal => Self::Universal,
+            PresetTarget::Selective => Self::Selective,
+        }
+    }
+}
+
 impl
     From<(
         mizer_fixtures::programmer::PresetId,
@@ -132,11 +141,7 @@ impl
             mizer_fixtures::programmer::Preset<f64>,
         ),
     ) -> Self {
-        Self {
-            id: Some(id.into()),
-            value: Some(preset::Value::Fader(preset.value)),
-            label: preset.label,
-        }
+        map_preset(id, preset, preset::Value::Fader)
     }
 }
 
@@ -152,11 +157,7 @@ impl
             mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Color>,
         ),
     ) -> Self {
-        Self {
-            id: Some(id.into()),
-            value: Some(preset::Value::Color(preset.value.into())),
-            label: preset.label,
-        }
+        map_preset(id, preset, |value| preset::Value::Color(value.into()))
     }
 }
 
@@ -178,11 +179,7 @@ impl
             mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Position>,
         ),
     ) -> Self {
-        Self {
-            id: Some(id.into()),
-            value: Some(preset::Value::Position(preset.value.into())),
-            label: preset.label,
-        }
+        map_preset(id, preset, |value| preset::Value::Position(value.into()))
     }
 }
 
@@ -203,6 +200,27 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
                 pan: Some(pan),
                 tilt: Some(tilt),
             },
+        }
+    }
+}
+
+fn map_preset<TValue>(
+    id: mizer_fixtures::programmer::PresetId, preset:
+    mizer_fixtures::programmer::Preset<TValue>,
+    map: impl FnOnce(TValue) -> preset::Value,
+) -> Preset {
+    match preset.value {
+        mizer_fixtures::programmer::PresetValue::Universal(value) => Preset {
+            id: Some(id.into()),
+            value: Some(map(value)),
+            label: preset.label,
+            target: PresetTarget::Universal as i32,
+        },
+        mizer_fixtures::programmer::PresetValue::Selective(_) => Preset {
+            id: Some(id.into()),
+            value: None,
+            label: preset.label,
+            target: PresetTarget::Selective as i32,
         }
     }
 }

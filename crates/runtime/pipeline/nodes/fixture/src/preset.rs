@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::{Preset, PresetId};
+use mizer_fixtures::programmer::{Preset, PresetId, PresetValue};
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
@@ -99,7 +99,7 @@ impl ProcessingNode for PresetNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.try_inject::<FixtureManager>() {
-            let mut programmer = fixture_manager.get_programmer();
+            let mut programmer = fixture_manager.get_programmer_mut();
             if let Some(value) = context.read_port(CALL_PORT) {
                 if let Some(true) = state.update(value) {
                     programmer.call_preset(self.id);
@@ -109,19 +109,24 @@ impl ProcessingNode for PresetNode {
             match self.id {
                 PresetId::Color(id) => {
                     if let Some(preset) = fixture_manager.presets.color.get(&id) {
-                        let (red, green, blue) = preset.value;
-                        let color = Color::rgb(red, green, blue);
-                        context.write_port(COLOR_OUTPUT, color);
+                        if let PresetValue::Universal((red, green, blue)) = preset.value {
+                            let color = Color::rgb(red, green, blue);
+                            context.write_port(COLOR_OUTPUT, color);
+                        }
                     }
                 }
                 PresetId::Intensity(id) => {
                     if let Some(preset) = fixture_manager.presets.intensity.get(&id) {
-                        context.write_port(VALUE_OUTPUT, preset.value);
+                        if let PresetValue::Universal(value) = preset.value {
+                            context.write_port(VALUE_OUTPUT, value);
+                        }
                     }
                 }
                 PresetId::Shutter(id) => {
                     if let Some(preset) = fixture_manager.presets.shutter.get(&id) {
-                        context.write_port(VALUE_OUTPUT, preset.value);
+                        if let PresetValue::Universal(value) = preset.value {
+                            context.write_port(VALUE_OUTPUT, value);
+                        }
                     }
                 }
                 _ => {}
@@ -141,6 +146,7 @@ fn convert_presets_to_select_variants<TValue>(
 ) -> Vec<SelectVariant> {
     presets
         .into_iter()
+        .filter(|(_, preset)| matches!(preset.value, PresetValue::Universal(_)))
         .map(|(id, preset)| SelectVariant::Item {
             value: id.to_string().into(),
             label: preset.label.unwrap_or_else(|| id.to_string()).into(),

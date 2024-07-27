@@ -23,14 +23,21 @@ impl From<ProgrammedPreset> for CuePreset {
 
 impl CuePreset {
     pub(crate) fn values(&self, _cue: &Cue, _state: &SequenceState, presets: &Presets) -> Vec<(FixtureId, FixtureFaderControl, f64)> {
-        presets.get_preset_values(self.preset_id)
+        let fixture_ids = self.fixtures.get_fixtures()
+                .into_iter()
+                .flatten()
+                .collect::<Vec<_>>();
+        presets.get_values(self.preset_id, &fixture_ids)
             .into_iter()
-            .flat_map(|control| control.into_fader_values())
-            .flat_map(|(control, value)| {
-                self.fixtures.get_fixtures()
+            .flat_map(|(fixture_ids, fader_controls)| {
+                fixture_ids
                     .into_iter()
-                    .flatten()
-                    .map(move |fixture_id| (fixture_id, control.clone(), value))
+                    .map(move |(fixture_id)| (fixture_id, fader_controls.clone()))
+            })
+            .flat_map(|(fixture, controls)| {
+                controls.into_iter()
+                    .flat_map(|control| control.into_fader_values())
+                    .map(move |(control, value)| (fixture, control, value))
             })
             .collect()
     }

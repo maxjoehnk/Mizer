@@ -1170,11 +1170,15 @@ class StoreResponse extends $pb.GeneratedMessage {
 class StorePresetRequest_NewPreset extends $pb.GeneratedMessage {
   factory StorePresetRequest_NewPreset({
     PresetId_PresetType? type,
+    PresetTarget? target,
     $core.String? label,
   }) {
     final $result = create();
     if (type != null) {
       $result.type = type;
+    }
+    if (target != null) {
+      $result.target = target;
     }
     if (label != null) {
       $result.label = label;
@@ -1187,7 +1191,8 @@ class StorePresetRequest_NewPreset extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StorePresetRequest.NewPreset', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..e<PresetId_PresetType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PresetId_PresetType.INTENSITY, valueOf: PresetId_PresetType.valueOf, enumValues: PresetId_PresetType.values)
-    ..aOS(2, _omitFieldNames ? '' : 'label')
+    ..e<PresetTarget>(2, _omitFieldNames ? '' : 'target', $pb.PbFieldType.OE, defaultOrMaker: PresetTarget.PRESET_TARGET_UNIVERSAL, valueOf: PresetTarget.valueOf, enumValues: PresetTarget.values)
+    ..aOS(3, _omitFieldNames ? '' : 'label')
     ..hasRequiredFields = false
   ;
 
@@ -1222,13 +1227,22 @@ class StorePresetRequest_NewPreset extends $pb.GeneratedMessage {
   void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get label => $_getSZ(1);
+  PresetTarget get target => $_getN(1);
   @$pb.TagNumber(2)
-  set label($core.String v) { $_setString(1, v); }
+  set target(PresetTarget v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasLabel() => $_has(1);
+  $core.bool hasTarget() => $_has(1);
   @$pb.TagNumber(2)
-  void clearLabel() => clearField(2);
+  void clearTarget() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get label => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set label($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLabel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLabel() => clearField(3);
 }
 
 enum StorePresetRequest_Target {
@@ -1696,6 +1710,7 @@ enum Preset_Value {
 class Preset extends $pb.GeneratedMessage {
   factory Preset({
     PresetId? id,
+    PresetTarget? target,
     $core.String? label,
     $core.double? fader,
     Preset_Color? color,
@@ -1704,6 +1719,9 @@ class Preset extends $pb.GeneratedMessage {
     final $result = create();
     if (id != null) {
       $result.id = id;
+    }
+    if (target != null) {
+      $result.target = target;
     }
     if (label != null) {
       $result.label = label;
@@ -1724,18 +1742,19 @@ class Preset extends $pb.GeneratedMessage {
   factory Preset.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static const $core.Map<$core.int, Preset_Value> _Preset_ValueByTag = {
-    3 : Preset_Value.fader,
-    4 : Preset_Value.color,
-    5 : Preset_Value.position,
+    4 : Preset_Value.fader,
+    5 : Preset_Value.color,
+    6 : Preset_Value.position,
     0 : Preset_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Preset', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5])
+    ..oo(0, [4, 5, 6])
     ..aOM<PresetId>(1, _omitFieldNames ? '' : 'id', subBuilder: PresetId.create)
-    ..aOS(2, _omitFieldNames ? '' : 'label')
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'fader', $pb.PbFieldType.OD)
-    ..aOM<Preset_Color>(4, _omitFieldNames ? '' : 'color', subBuilder: Preset_Color.create)
-    ..aOM<Preset_Position>(5, _omitFieldNames ? '' : 'position', subBuilder: Preset_Position.create)
+    ..e<PresetTarget>(2, _omitFieldNames ? '' : 'target', $pb.PbFieldType.OE, defaultOrMaker: PresetTarget.PRESET_TARGET_UNIVERSAL, valueOf: PresetTarget.valueOf, enumValues: PresetTarget.values)
+    ..aOS(3, _omitFieldNames ? '' : 'label')
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<Preset_Color>(5, _omitFieldNames ? '' : 'color', subBuilder: Preset_Color.create)
+    ..aOM<Preset_Position>(6, _omitFieldNames ? '' : 'position', subBuilder: Preset_Position.create)
     ..hasRequiredFields = false
   ;
 
@@ -1775,44 +1794,53 @@ class Preset extends $pb.GeneratedMessage {
   PresetId ensureId() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.String get label => $_getSZ(1);
+  PresetTarget get target => $_getN(1);
   @$pb.TagNumber(2)
-  set label($core.String v) { $_setString(1, v); }
+  set target(PresetTarget v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasLabel() => $_has(1);
+  $core.bool hasTarget() => $_has(1);
   @$pb.TagNumber(2)
-  void clearLabel() => clearField(2);
+  void clearTarget() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.double get fader => $_getN(2);
+  $core.String get label => $_getSZ(2);
   @$pb.TagNumber(3)
-  set fader($core.double v) { $_setDouble(2, v); }
+  set label($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasFader() => $_has(2);
+  $core.bool hasLabel() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFader() => clearField(3);
+  void clearLabel() => clearField(3);
 
   @$pb.TagNumber(4)
-  Preset_Color get color => $_getN(3);
+  $core.double get fader => $_getN(3);
   @$pb.TagNumber(4)
-  set color(Preset_Color v) { setField(4, v); }
+  set fader($core.double v) { $_setDouble(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasColor() => $_has(3);
+  $core.bool hasFader() => $_has(3);
   @$pb.TagNumber(4)
-  void clearColor() => clearField(4);
-  @$pb.TagNumber(4)
-  Preset_Color ensureColor() => $_ensure(3);
+  void clearFader() => clearField(4);
 
   @$pb.TagNumber(5)
-  Preset_Position get position => $_getN(4);
+  Preset_Color get color => $_getN(4);
   @$pb.TagNumber(5)
-  set position(Preset_Position v) { setField(5, v); }
+  set color(Preset_Color v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPosition() => $_has(4);
+  $core.bool hasColor() => $_has(4);
   @$pb.TagNumber(5)
-  void clearPosition() => clearField(5);
+  void clearColor() => clearField(5);
   @$pb.TagNumber(5)
-  Preset_Position ensurePosition() => $_ensure(4);
+  Preset_Color ensureColor() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  Preset_Position get position => $_getN(5);
+  @$pb.TagNumber(6)
+  set position(Preset_Position v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPosition() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPosition() => clearField(6);
+  @$pb.TagNumber(6)
+  Preset_Position ensurePosition() => $_ensure(5);
 }
 
 class CallPresetResponse extends $pb.GeneratedMessage {

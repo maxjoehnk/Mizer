@@ -295,11 +295,30 @@ class PresetButton extends StatelessWidget {
                     ),
                     alignment: Alignment.bottomCenter),
                 if (id != null)
-                  Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+                  Align(child: Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: Text(id!, style: textTheme.bodySmall),
+                  ), alignment: Alignment.topLeft),
+                if (target != null)
+                  Align(child: Padding(
+                    padding: const EdgeInsets.only(right: 2.0),
+                    child: Text(target!, style: textTheme.bodySmall),
+                  ), alignment: Alignment.topRight),
               ],
             ),
           );
         });
+  }
+
+  String? get target {
+    if (preset?.target == PresetTarget.PRESET_TARGET_UNIVERSAL) {
+      return "U";
+    }
+    if (preset?.target == PresetTarget.PRESET_TARGET_SELECTIVE) {
+      return "S";
+    }
+
+    return null;
   }
 
   String? get id {

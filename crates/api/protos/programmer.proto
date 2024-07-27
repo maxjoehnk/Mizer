@@ -128,7 +128,8 @@ message StorePresetRequest {
 
   message NewPreset {
     PresetId.PresetType type = 1;
-    optional string label = 2;
+    PresetTarget target = 2;
+    optional string label = 3;
   }
 }
 
@@ -152,6 +153,11 @@ message PresetId {
   }
 }
 
+enum PresetTarget {
+  PRESET_TARGET_UNIVERSAL = 0;
+  PRESET_TARGET_SELECTIVE = 1;
+}
+
 message Presets {
   repeated Preset intensities = 1;
   repeated Preset shutters = 2;
@@ -161,11 +167,12 @@ message Presets {
 
 message Preset {
   PresetId id = 1;
-  optional string label = 2;
+  PresetTarget target = 2;
+  optional string label = 3;
   oneof value {
-    double fader = 3;
-    Color color = 4;
-    Position position = 5;
+    double fader = 4;
+    Color color = 5;
+    Position position = 6;
   }
 
   message Color {

@@ -13,6 +13,21 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class PresetTarget extends $pb.ProtobufEnum {
+  static const PresetTarget PRESET_TARGET_UNIVERSAL = PresetTarget._(0, _omitEnumNames ? '' : 'PRESET_TARGET_UNIVERSAL');
+  static const PresetTarget PRESET_TARGET_SELECTIVE = PresetTarget._(1, _omitEnumNames ? '' : 'PRESET_TARGET_SELECTIVE');
+
+  static const $core.List<PresetTarget> values = <PresetTarget> [
+    PRESET_TARGET_UNIVERSAL,
+    PRESET_TARGET_SELECTIVE,
+  ];
+
+  static final $core.Map<$core.int, PresetTarget> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PresetTarget? valueOf($core.int value) => _byValue[value];
+
+  const PresetTarget._($core.int v, $core.String n) : super(v, n);
+}
+
 class ProgrammerChannel_ColorChannel extends $pb.ProtobufEnum {
   static const ProgrammerChannel_ColorChannel RED = ProgrammerChannel_ColorChannel._(0, _omitEnumNames ? '' : 'RED');
   static const ProgrammerChannel_ColorChannel GREEN = ProgrammerChannel_ColorChannel._(1, _omitEnumNames ? '' : 'GREEN');

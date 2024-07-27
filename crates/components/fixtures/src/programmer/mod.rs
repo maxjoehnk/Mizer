@@ -340,17 +340,21 @@ impl Programmer {
         let mut values = HashMap::new();
         for (selection, state) in self.get_selections().into_iter() {
             tracing::trace!("{:?} => {:?}", selection, state);
-            for fixture_id in selection.get_fixtures().iter().flatten() {
-                for (control, value) in state.fader_controls() {
-                    values.insert((*fixture_id, control), value);
+            let fixture_ids = selection.get_fixtures().into_iter().flatten().collect::<Vec<_>>();
+            for preset in &state.presets {
+                let preset_values = presets.get_values(*preset, &fixture_ids)
+                    .into_iter()
+                    .flat_map(|(fixture_ids, control_values)| fixture_ids.into_iter().map(move |fixture_id| (fixture_id, control_values.clone())))
+                    .flat_map(|(fixture_id, controls)| controls.into_iter().flat_map(move |control| control.into_fader_values().into_iter().map(move |(fader, value)| (fixture_id, fader, value))))
+                    .collect::<Vec<_>>();
+                for (fixture_id, control, value) in preset_values {
+                    values.insert((fixture_id, control), value);
                 }
-                for preset in &state.presets {
-                    let preset_values = presets.get_preset_values(*preset)
-                        .into_iter()
-                        .flat_map(|control| control.into_fader_values());
-                    for (control, value) in preset_values {
-                        values.insert((*fixture_id, control), value);
-                    }
+            }
+
+            for fixture_id in fixture_ids {
+                for (control, value) in state.fader_controls() {
+                    values.insert((fixture_id, control), value);
                 }
             }
         }
@@ -613,6 +617,10 @@ impl Programmer {
         } else {
             self.tracked_selections.clone()
         }
+    }
+    
+    pub fn get_active_values(&self) -> Vec<FixtureControlValue> {
+        self.active_channels.controls().collect()
     }
 
     pub fn bus(&self) -> impl Stream<Item = ProgrammerState> {

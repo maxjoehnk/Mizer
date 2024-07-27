@@ -16,7 +16,7 @@ impl Module for MediaModule {
         context.provide_api(media_server.clone());
         context.provide(media_server.clone());
         
-        BackgroundMediaJob::new(media_server, context.status_handle(), event_bus).spawn()?;
+        context.add_background_job(BackgroundMediaJob::new(media_server, event_bus));
 
         Ok(())
     }

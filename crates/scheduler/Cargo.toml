@@ -1,0 +1,14 @@
+[package]
+name = "mizer-scheduler"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+futures = "0.3"
+mizer-util = { path = "../util"  }
+tokio = { version = "1", features = ["rt", "time"] }
+flume = "0.11"
+num_cpus = "1.16"
+tracing = "0.1"

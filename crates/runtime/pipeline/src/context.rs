@@ -10,9 +10,8 @@ use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::ProcessingContext;
-use mizer_util::{stopwatch, StructuredData};
+use mizer_util::{StructuredData, rw_lock::RwLock};
 use mizer_wgpu::{TextureRegistry, TextureView};
-use parking_lot::RwLock;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
@@ -67,14 +66,8 @@ impl NodePreviewState {
 
     fn push_multi_value(&self, value: Vec<f64>) {
         if let Self::Multi(history) = self {
-            let _stopwatch = stopwatch!("Acquiring write lock", std::time::Duration::from_micros(10));
-            // This usually shouldn't block for long, but while implementing I've noticed a deadlock which I was unable to locate (or reliably reproduce)
-            // As this happens in the main loop but is only necessary for the preview in the ui we should never wait too long for this lock
-            if let Some(mut guard) = history.try_write_for(std::time::Duration::from_millis(1)) {
-                *guard = Some(value);
-            }else {
-                tracing::error!("Failed to acquire write lock in time to push multiple preview value");
-            }
+            let mut guard = history.write();
+            *guard = Some(value);
         }
     }
 
@@ -265,7 +258,6 @@ impl<'a> PreviewContext for PipelineContext<'a> {
 
     fn write_multi_preview(&self, data: Vec<f64>) {
         profiling::scope!("PipelineContext::write_multi_preview");
-        tracing::trace!("PipelineContext::write_multi_preview");
         self.preview.push_multi_value(data);
     }
 

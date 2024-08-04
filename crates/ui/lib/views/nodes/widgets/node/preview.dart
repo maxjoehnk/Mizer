@@ -7,6 +7,7 @@ import 'package:mizer/views/nodes/widgets/node/preview/color.dart';
 
 import 'preview/data.dart';
 import 'preview/history.dart';
+import 'preview/multi.dart';
 import 'preview/timecode.dart';
 
 const SUPPORTED_PREVIEW_TYPES = [
@@ -14,6 +15,7 @@ const SUPPORTED_PREVIEW_TYPES = [
   Node_NodePreviewType.DATA,
   Node_NodePreviewType.COLOR,
   Node_NodePreviewType.TIMECODE,
+  Node_NodePreviewType.MULTIPLE,
 ];
 
 class NodePreview extends StatelessWidget {
@@ -38,8 +40,12 @@ class NodePreview extends StatelessWidget {
       return DataRenderer(nodesPluginApi, node.path);
     } else if (node.preview == Node_NodePreviewType.COLOR) {
       return ColorRenderer(nodesPluginApi, node.path);
-    } else {
+    } else if (node.preview == Node_NodePreviewType.TIMECODE) {
       return TimecodeRenderer(nodesPluginApi, node.path);
+    } else if (node.preview == Node_NodePreviewType.MULTIPLE) {
+      return MultiRenderer(nodesPluginApi, node.path);
+    } else {
+      return Container();
     }
   }
 }

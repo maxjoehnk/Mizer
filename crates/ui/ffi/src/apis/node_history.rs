@@ -194,3 +194,15 @@ pub extern "C" fn read_node_timecode_preview(ptr: *const NodeHistory) -> Timecod
 pub extern "C" fn drop_node_history_pointer(ptr: *const NodeHistory) {
     drop_pointer(ptr);
 }
+
+#[no_mangle]
+pub extern "C" fn read_node_multi_preview(ptr: *const NodeHistory) -> Array<f64> {
+    let ffi = Arc::from_pointer(ptr);
+
+    let values = ffi.preview_ref.read_multi().unwrap_or_default();
+
+    std::mem::forget(ffi);
+
+    values.into()
+}
+

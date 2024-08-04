@@ -68,6 +68,12 @@ class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeRead
     return result;
   }
 
+  List<double> readMulti() {
+    var result = this._bindings.read_node_multi_preview(ptr);
+
+    return result.toList();
+  }
+
   @override
   void disposePointer(ffi.Pointer<NodeHistory> ptr) {
     this._bindings.drop_node_history_pointer(ptr);

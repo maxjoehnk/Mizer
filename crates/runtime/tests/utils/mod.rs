@@ -38,6 +38,7 @@ fn add_node_command(
         designer: NodeDesigner::default(),
         node,
         parent: None,
+        template: None,
     };
     let (oscillator_node, _) = oscillator_add_node.apply(deps).unwrap();
     oscillator_node
@@ -73,6 +74,7 @@ fn setup_sink(
         designer: NodeDesigner::default(),
         node: Some(Node::TestSink(sink)),
         parent: None,
+        template: None,
     };
     let (descriptor, _) = sink_add_node.apply(deps).unwrap();
     

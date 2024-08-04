@@ -49,7 +49,8 @@ impl From<DmxChannelOffset> for ChannelResolution {
             [coarse] => Self::Coarse(*coarse),
             [coarse, fine] => Self::Fine(*coarse, *fine),
             [coarse, fine, finest] => Self::Finest(*coarse, *fine, *finest),
-            _ => unimplemented!(),
+            [coarse, fine, finest, ultra] => Self::Ultra(*coarse, *fine, *finest, *ultra),
+            offset => unimplemented!("Unsupported offset {offset:?}"),
         }
     }
 }

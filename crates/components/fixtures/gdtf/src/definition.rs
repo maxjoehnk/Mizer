@@ -32,6 +32,8 @@ pub struct FixtureType {
     pub attribute_definitions: AttributeDefinitions,
     #[xml(child = "Wheels", default)]
     pub wheels: Wheels,
+    #[xml(child = "Geometries")]
+    pub geometries: Geometries,
     #[xml(child = "PhysicalDescriptions")]
     pub physical_descriptions: PhysicalDescriptions,
     #[xml(child = "DMXModes")]
@@ -177,6 +179,8 @@ pub struct DmxChannel {
     pub default: DmxValue,
     #[xml(attr = "Highlight")]
     pub highlight: DmxValue,
+    #[xml(attr = "Geometry")]
+    pub geometry: String,
     // This is documented as a list of channels but I haven't found a file where this is the case
     #[xml(child = "LogicalChannel")]
     pub logical_channel: LogicalChannel,

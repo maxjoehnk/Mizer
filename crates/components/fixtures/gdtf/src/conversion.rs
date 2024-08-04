@@ -29,16 +29,40 @@ impl From<GdtfFixtureDefinition> for FixtureDefinition {
 
 type GdtfAttributes = HashMap<String, Attribute>;
 type GdtfFeatures = HashMap<FeatureRef, Feature>;
+type GdtfGeometries = HashMap<String, Geometry>;
+
+#[derive(Default)]
+struct GeometryStateBuilder {
+    controls: FixtureControls<FixtureControlChannel>,
+    color_builder: ColorGroupBuilder<FixtureControlChannel>,
+}
+
+impl GeometryStateBuilder {
+    fn build(mut self) -> GeometryState {
+        self.controls.color_mixer = self.color_builder.build();
+        
+        GeometryState {
+            controls: self.controls,
+        }
+    }
+}
+
+#[derive(Debug)]
+struct GeometryState {
+    controls: FixtureControls<FixtureControlChannel>,
+}
 
 struct GdtfState {
     attributes: GdtfAttributes,
     features: GdtfFeatures,
+    geometries: Geometries,
 }
 
 impl GdtfState {
     fn build_state(definition: &GdtfFixtureDefinition) -> Self {
         let mut attributes = GdtfAttributes::default();
         let mut features = GdtfFeatures::default();
+        
         for attribute in &definition
             .fixture_type
             .attribute_definitions
@@ -65,43 +89,47 @@ impl GdtfState {
         Self {
             attributes,
             features,
+            geometries: definition.fixture_type.geometries.clone(),
         }
     }
 
     fn build_fixture_mode(&self, mode: DmxMode) -> FixtureMode {
-        let mut controls = FixtureControls::default();
-
-        let mut color_builder = ColorGroupBuilder::<FixtureControlChannel>::new();
+        let mut geometries: HashMap<String, GeometryStateBuilder> = Default::default();
 
         for channel in mode.channels.channels.iter() {
+            let geometry = geometries.entry(channel.geometry.clone()).or_default();
             if let Some(attribute) = self.attributes.get(&channel.logical_channel.attribute) {
                 if let Some(feature) = self.features.get(&attribute.feature) {
                     let channel = if channel.offset.is_virtual() {
                         // TODO: add FixtureControlChannel::Virtual which delegates to other channels
                         continue;
                     } else {
-                        FixtureControlChannel::Channel(attribute.name.clone())
+                        FixtureControlChannel::Channel(format!("{}_{}", channel.geometry, attribute.name))
                     };
                     match feature.name.as_str() {
-                        "Dimmer" => controls.intensity = Some(channel),
-                        "Focus" => controls.focus = Some(channel),
+                        "Dimmer" => geometry.controls.intensity = Some(channel),
+                        "Focus" => geometry.controls.focus = Some(channel),
                         "RGB" => match attribute.name.as_str() {
-                            "ColorAdd_R" => color_builder.red(channel),
-                            "ColorAdd_G" => color_builder.green(channel),
-                            "ColorAdd_B" => color_builder.blue(channel),
-                            "ColorAdd_RY" => color_builder.amber(channel),
-                            "ColorAdd_W" => color_builder.white(channel),
+                            "ColorAdd_R" => geometry.color_builder.red(channel),
+                            "ColorAdd_G" => geometry.color_builder.green(channel),
+                            "ColorAdd_B" => geometry.color_builder.blue(channel),
+                            "ColorAdd_RY" => geometry.color_builder.amber(channel),
+                            "ColorAdd_W" => geometry.color_builder.white(channel),
                             _ => {}
                         },
+                        "Color" => geometry.controls.color_wheel = Some(ColorWheelGroup {
+                            channel,
+                            colors: Default::default(),
+                        }),
                         "PanTilt" => match attribute.name.as_str() {
                             "Pan" => {
-                                controls.pan = Some(AxisGroup {
+                                geometry.controls.pan = Some(AxisGroup {
                                     channel,
                                     angle: None,
                                 })
                             }
                             "Tilt" => {
-                                controls.tilt = Some(AxisGroup {
+                                geometry.controls.tilt = Some(AxisGroup {
                                     channel,
                                     angle: None,
                                 })
@@ -109,22 +137,22 @@ impl GdtfState {
                             _ => {}
                         },
                         "Control" => {
-                            controls.generic.push(GenericControl {
+                            geometry.controls.generic.push(GenericControl {
                                 channel,
                                 label: attribute.pretty.clone(),
                             });
                         }
                         "Beam" => match attribute.name.as_str() {
-                            "Shutter1" => controls.shutter = Some(channel),
-                            "Iris1" => controls.iris = Some(channel),
-                            "Frost1" => controls.frost = Some(channel),
-                            "Prism1" => controls.prism = Some(channel),
-                            "Zoom1" => controls.zoom = Some(channel),
+                            "Shutter1" => geometry.controls.shutter = Some(channel),
+                            "Iris1" => geometry.controls.iris = Some(channel),
+                            "Frost1" => geometry.controls.frost = Some(channel),
+                            "Prism1" => geometry.controls.prism = Some(channel),
+                            "Zoom1" => geometry.controls.zoom = Some(channel),
                             _ => {}
                         },
                         "Gobo" => {
                             if attribute.name.as_str() == "Gobo1" {
-                                controls.gobo = Some(GoboGroup {
+                                geometry.controls.gobo = Some(GoboGroup {
                                     channel,
                                     gobos: vec![], // TODO: read gobo wheel variants
                                 })
@@ -136,19 +164,34 @@ impl GdtfState {
             }
         }
 
-        controls.color_mixer = color_builder.build();
-
         let channels = mode
             .channels
             .channels
             .into_iter()
             .filter(|channel| !channel.offset.is_virtual())
             .map(|channel| FixtureChannelDefinition {
-                name: channel.logical_channel.attribute,
+                name: format!("{}_{}", channel.geometry, channel.logical_channel.attribute),
                 resolution: channel.offset.into(),
             })
             .collect();
+        
+        let geometries: HashMap<_, _> = geometries.into_iter()
+            .map(|(name, geometry)| (name, geometry.build()))
+            .collect();
+        
+        let beam_count = self.geometries.count_beams(|name| geometries.contains_key(name));
+        
+        let (controls, sub_fixtures) = if beam_count > 1 {
+            (Default::default(), Default::default())
+        }else {
+            let mut controls = Default::default();
+            for (_, geometry) in geometries {
+                controls += geometry.controls;
+            }
 
-        FixtureMode::new(mode.name, channels, controls, Default::default())
+            (controls, Default::default())
+        };
+
+        FixtureMode::new(mode.name, channels, controls, sub_fixtures)
     }
 }

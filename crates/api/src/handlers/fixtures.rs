@@ -78,7 +78,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixture_definitions(&self) -> FixtureDefinitions {
-        let definitions = self.runtime.query(ListFixtureDefinitionsQuery).unwrap();
+        let definitions = self.runtime.query(ListFixtureDefinitionsQuery::default()).unwrap();
         let definitions = definitions
             .into_iter()
             .map(FixtureDefinition::from)

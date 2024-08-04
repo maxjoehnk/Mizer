@@ -9,16 +9,16 @@ use mizer_util::{AsyncRuntime, StreamSubscription};
 use crate::impl_into_flutter_value;
 use crate::plugin::event_sink::EventSinkSubscriber;
 
-pub struct UiDialogChannel<AR: AsyncRuntime> {
+pub struct UiDialogChannel<AR: AsyncRuntime, R> {
     context: Context,
-    handler: UiHandler,
+    handler: UiHandler<R>,
     runtime: AR,
     subscriptions: HashMap<i64, AR::Subscription>,
 }
 
 impl_into_flutter_value!(ShowDialog);
 
-impl<AR: AsyncRuntime + 'static> EventChannelHandler for UiDialogChannel<AR> {
+impl<AR: AsyncRuntime + 'static, R: 'static> EventChannelHandler for UiDialogChannel<AR, R> {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         let stream = self
@@ -38,8 +38,8 @@ impl<AR: AsyncRuntime + 'static> EventChannelHandler for UiDialogChannel<AR> {
     }
 }
 
-impl<AR: AsyncRuntime + 'static> UiDialogChannel<AR> {
-    pub fn new(handler: UiHandler, runtime: AR, context: Context) -> Self {
+impl<AR: AsyncRuntime + 'static, R: 'static> UiDialogChannel<AR, R> {
+    pub fn new(handler: UiHandler<R>, runtime: AR, context: Context) -> Self {
         Self {
             handler,
             runtime,

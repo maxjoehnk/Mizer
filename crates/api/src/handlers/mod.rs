@@ -66,7 +66,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub timecode: TimecodeHandler<R>,
     pub status: StatusHandler,
     pub surfaces: SurfacesHandler<R>,
-    pub ui: UiHandler,
+    pub ui: UiHandler<R>,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -97,8 +97,8 @@ impl<R: RuntimeApi> Handlers<R> {
             mappings: MappingsHandler::new(runtime.clone()),
             timecode: TimecodeHandler::new(timecode_manager, runtime.clone()),
             status: StatusHandler::new(status_bus),
-            surfaces: SurfacesHandler::new(runtime, surface_registry_api),
-            ui: UiHandler::new(ui_api),
+            surfaces: SurfacesHandler::new(runtime.clone(), surface_registry_api),
+            ui: UiHandler::new(runtime, ui_api),
         }
     }
 }

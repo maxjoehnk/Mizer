@@ -12,3 +12,4 @@ mod settings;
 mod surfaces;
 mod timecode;
 mod transport;
+mod ui;

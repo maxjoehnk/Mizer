@@ -12,3 +12,14 @@ message DialogElement {
     string text = 1;
   }
 }
+
+message TabularData {
+  repeated string columns = 1;
+  repeated Row rows = 2;
+}
+
+message Row {
+  string id = 1;
+  repeated string cells = 2;
+  repeated Row children = 3;
+}

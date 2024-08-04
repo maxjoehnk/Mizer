@@ -39,3 +39,4 @@ pub enum UiEvent {
 
 pub mod dialog;
 pub mod module;
+pub mod table;

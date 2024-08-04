@@ -5226,6 +5226,7 @@ dependencies = [
  "mizer-node",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "mizer-ui-api",
  "mizer-util",
  "mockall",
  "palette",

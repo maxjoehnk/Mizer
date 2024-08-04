@@ -10,6 +10,7 @@ pub use crate::module::*;
 pub use crate::priority::*;
 use crate::programmer::Color;
 
+pub mod ui_handlers;
 mod contracts;
 pub mod definition;
 pub mod fixture;

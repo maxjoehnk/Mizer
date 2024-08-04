@@ -9,6 +9,7 @@ import 'package:mizer/panes/console/console_pane.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
+import 'package:mizer/views/fixture_definitions/fixture_definitions_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/history/history_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -56,6 +57,7 @@ List<Route> routes = [
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => PreferencesView(), Icons.settings, 'Preferences'.i18n, View.Preferences),
   Route(() => MidiProfilesView(), MdiIcons.midi, 'MIDI Profiles'.i18n, View.MidiProfiles),
+  Route(() => FixtureDefinitionsView(), MdiIcons.spotlight, 'Fixture Definitions'.i18n, View.FixtureDefinitions),
 ];
 
 class Home extends StatefulWidget {

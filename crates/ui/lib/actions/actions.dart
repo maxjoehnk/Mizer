@@ -24,6 +24,7 @@ enum View {
   Timecode,
   Preferences,
   MidiProfiles,
+  FixtureDefinitions,
 }
 
 const ViewHotkeyLabels = {
@@ -44,6 +45,7 @@ const ViewHotkeyLabels = {
   View.Timecode: "timecode_view",
   View.Preferences: "preferences_view",
   View.MidiProfiles: "midi_profiles_view",
+  View.FixtureDefinitions: "fixture_definitions_view",
 };
 
 extension ViewToHotkey on View {

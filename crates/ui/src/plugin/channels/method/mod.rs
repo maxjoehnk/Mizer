@@ -15,6 +15,7 @@ pub use self::status::*;
 pub use self::surfaces::*;
 pub use self::timecode::*;
 pub use self::transport::*;
+pub use self::ui::*;
 
 mod application;
 mod connections;
@@ -33,3 +34,4 @@ mod status;
 mod surfaces;
 mod timecode;
 mod transport;
+mod ui;

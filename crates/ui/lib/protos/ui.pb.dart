@@ -134,6 +134,124 @@ class DialogElement extends $pb.GeneratedMessage {
   void clearText() => clearField(1);
 }
 
+class TabularData extends $pb.GeneratedMessage {
+  factory TabularData({
+    $core.Iterable<$core.String>? columns,
+    $core.Iterable<Row>? rows,
+  }) {
+    final $result = create();
+    if (columns != null) {
+      $result.columns.addAll(columns);
+    }
+    if (rows != null) {
+      $result.rows.addAll(rows);
+    }
+    return $result;
+  }
+  TabularData._() : super();
+  factory TabularData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TabularData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TabularData', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'columns')
+    ..pc<Row>(2, _omitFieldNames ? '' : 'rows', $pb.PbFieldType.PM, subBuilder: Row.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TabularData clone() => TabularData()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TabularData copyWith(void Function(TabularData) updates) => super.copyWith((message) => updates(message as TabularData)) as TabularData;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static TabularData create() => TabularData._();
+  TabularData createEmptyInstance() => create();
+  static $pb.PbList<TabularData> createRepeated() => $pb.PbList<TabularData>();
+  @$core.pragma('dart2js:noInline')
+  static TabularData getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TabularData>(create);
+  static TabularData? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.String> get columns => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.List<Row> get rows => $_getList(1);
+}
+
+class Row extends $pb.GeneratedMessage {
+  factory Row({
+    $core.String? id,
+    $core.Iterable<$core.String>? cells,
+    $core.Iterable<Row>? children,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (cells != null) {
+      $result.cells.addAll(cells);
+    }
+    if (children != null) {
+      $result.children.addAll(children);
+    }
+    return $result;
+  }
+  Row._() : super();
+  factory Row.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Row.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Row', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..pPS(2, _omitFieldNames ? '' : 'cells')
+    ..pc<Row>(3, _omitFieldNames ? '' : 'children', $pb.PbFieldType.PM, subBuilder: Row.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Row clone() => Row()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Row copyWith(void Function(Row) updates) => super.copyWith((message) => updates(message as Row)) as Row;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static Row create() => Row._();
+  Row createEmptyInstance() => create();
+  static $pb.PbList<Row> createRepeated() => $pb.PbList<Row>();
+  @$core.pragma('dart2js:noInline')
+  static Row getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Row>(create);
+  static Row? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get cells => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<Row> get children => $_getList(2);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

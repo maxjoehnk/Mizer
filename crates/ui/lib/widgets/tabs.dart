@@ -106,6 +106,7 @@ class _TabsState extends State<Tabs> {
 class Tab {
   final String? label;
   final Widget child;
+  final bool padding = true;
   late Widget Function(bool, Function()) header;
 
   Tab({this.label, required this.child, Widget Function(bool, Function())? header}) {

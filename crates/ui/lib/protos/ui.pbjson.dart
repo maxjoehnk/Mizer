@@ -42,3 +42,32 @@ const DialogElement$json = {
 final $typed_data.Uint8List dialogElementDescriptor = $convert.base64Decode(
     'Cg1EaWFsb2dFbGVtZW50EhQKBHRleHQYASABKAlIAFIEdGV4dEIJCgdlbGVtZW50');
 
+@$core.Deprecated('Use tabularDataDescriptor instead')
+const TabularData$json = {
+  '1': 'TabularData',
+  '2': [
+    {'1': 'columns', '3': 1, '4': 3, '5': 9, '10': 'columns'},
+    {'1': 'rows', '3': 2, '4': 3, '5': 11, '6': '.mizer.ui.Row', '10': 'rows'},
+  ],
+};
+
+/// Descriptor for `TabularData`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tabularDataDescriptor = $convert.base64Decode(
+    'CgtUYWJ1bGFyRGF0YRIYCgdjb2x1bW5zGAEgAygJUgdjb2x1bW5zEiEKBHJvd3MYAiADKAsyDS'
+    '5taXplci51aS5Sb3dSBHJvd3M=');
+
+@$core.Deprecated('Use rowDescriptor instead')
+const Row$json = {
+  '1': 'Row',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'cells', '3': 2, '4': 3, '5': 9, '10': 'cells'},
+    {'1': 'children', '3': 3, '4': 3, '5': 11, '6': '.mizer.ui.Row', '10': 'children'},
+  ],
+};
+
+/// Descriptor for `Row`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List rowDescriptor = $convert.base64Decode(
+    'CgNSb3cSDgoCaWQYASABKAlSAmlkEhQKBWNlbGxzGAIgAygJUgVjZWxscxIpCghjaGlsZHJlbh'
+    'gDIAMoCzINLm1pemVyLnVpLlJvd1IIY2hpbGRyZW4=');
+

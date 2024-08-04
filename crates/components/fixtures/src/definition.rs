@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fmt::Display;
 use std::hash::{Hash, Hasher};
+use std::ops::AddAssign;
 use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
@@ -192,6 +193,36 @@ impl<TChannel> Default for FixtureControls<TChannel> {
             frost: None,
             gobo: None,
             generic: Vec::default(),
+        }
+    }
+}
+
+impl<TChannel> AddAssign for FixtureControls<TChannel> {
+    fn add_assign(&mut self, mut rhs: Self) {
+        self.intensity.replace_optional(rhs.intensity);
+        self.shutter.replace_optional(rhs.shutter);
+        self.color_mixer.replace_optional(rhs.color_mixer);
+        self.color_wheel.replace_optional(rhs.color_wheel);
+        self.pan.replace_optional(rhs.pan);
+        self.tilt.replace_optional(rhs.tilt);
+        self.gobo.replace_optional(rhs.gobo);
+        self.focus.replace_optional(rhs.focus);
+        self.zoom.replace_optional(rhs.zoom);
+        self.prism.replace_optional(rhs.prism);
+        self.iris.replace_optional(rhs.iris);
+        self.frost.replace_optional(rhs.frost);
+        self.generic.append(&mut rhs.generic);
+    }
+}
+
+trait OptionExt {
+    fn replace_optional(&mut self, other: Self);
+}
+
+impl<T> OptionExt for Option<T> {
+    fn replace_optional(&mut self, other: Self) {
+        if other.is_some() {
+            *self = other;
         }
     }
 }
@@ -638,13 +669,13 @@ impl<TChannel> ColorGroupBuilder<TChannel> {
                 amber: self.amber,
                 white: self.white,
             }
-            .into(),
+                .into(),
             (_, Some(((cyan, magenta), yellow))) => ColorGroup::Cmy {
                 cyan,
                 magenta,
                 yellow,
             }
-            .into(),
+                .into(),
             _ => None,
         }
     }
@@ -998,6 +1029,15 @@ impl FixtureChannelDefinition {
             ChannelResolution::Fine { .. } => 2,
             ChannelResolution::Finest { .. } => 3,
             ChannelResolution::Ultra { .. } => 4,
+        }
+    }
+    
+    pub fn first_address(&self) -> u16 {
+        match self.resolution {
+            ChannelResolution::Coarse(address) => address,
+            ChannelResolution::Fine(address, _) => address,
+            ChannelResolution::Finest(address, _, _) => address,
+            ChannelResolution::Ultra(address, _, _, _) => address,
         }
     }
 }

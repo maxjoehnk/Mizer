@@ -51,6 +51,7 @@ pub struct RuntimePortMetadata {
 pub enum NodePreviewState {
     History(Arc<RwLock<ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>>>),
     Data(Arc<RwLock<Option<StructuredData>>>),
+    Multi(Arc<RwLock<Option<Vec<f64>>>>),
     Color(Arc<RwLock<Option<Color>>>),
     Timecode(Arc<RwLock<Option<Timecode>>>),
     None,
@@ -61,6 +62,13 @@ impl NodePreviewState {
         if let Self::History(history) = self {
             let mut guard = history.write();
             guard.push(value);
+        }
+    }
+
+    fn push_multi_value(&mut self, value: &[f64]) {
+        if let Self::Multi(history) = self {
+            let mut guard = history.write();
+            *guard = Some(value.to_vec());
         }
     }
 
@@ -247,6 +255,11 @@ impl<'a> PreviewContext for PipelineContext<'a> {
     fn push_history_value(&self, value: f64) {
         profiling::scope!("PipelineContext::push_history_value");
         self.preview.borrow_mut().push_history_value(value);
+    }
+
+    fn write_multi_preview(&self, data: &[f64]) {
+        profiling::scope!("PipelineContext::write_multi_preview");
+        todo!()
     }
 
     fn write_data_preview(&self, data: StructuredData) {

@@ -1,6 +1,6 @@
 use evmap::{ReadHandle, WriteHandle};
 use evmap::shallow_copy::CopyValue;
-use mizer_midi_device_profiles::{DeviceControl, MidiResolution};
+use mizer_midi_device_profiles::{DeviceControl, GridRef, MidiResolution};
 use mizer_midi_messages::{Channel, MidiEvent, MidiMessage};
 use mizer_util::LerpExt;
 
@@ -71,6 +71,22 @@ impl DeviceState {
         };
 
         (state, writer)
+    }
+    
+    pub fn read_grid(&self, grid: &GridRef) -> Vec<f64> {
+        let mut values = Vec::with_capacity(grid.len());
+        for control in grid.controls() {
+            if let Some(input) = control.input.as_ref() {
+                let value = self.read_control_changes(input, None);
+                if let Some((value, _)) = value {
+                    values.push(value);
+                }else {
+                    values.push(Default::default())
+                }
+            }
+        }
+        
+        values
     }
 
     pub fn read_note_changes(&self, channel: Channel, note: u8, last_read: Option<MidiTimestamp>) -> Option<(u8, MidiTimestamp)> {

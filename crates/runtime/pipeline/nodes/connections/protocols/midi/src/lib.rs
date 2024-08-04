@@ -11,6 +11,7 @@ pub use self::input::{MidiInputConfig, MidiInputNode};
 pub use self::output::{MidiOutputConfig, MidiOutputNode};
 
 mod input;
+mod input_grid;
 mod output;
 
 #[derive(
@@ -137,6 +138,33 @@ fn get_pages_and_controls(
                 })
                 .collect()
         });
+
+    (pages, controls, steps)
+}
+
+fn get_pages_and_grid(
+    injector: &Injector,
+    device: &str,
+    page_name: &str,
+) -> (
+    Vec<SelectVariant>,
+    Option<(usize, usize)>
+) {
+    let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    let pages = connection_manager
+        .request_device(device)
+        .ok()
+        .flatten()
+        .and_then(|device| device.profile.clone())
+        .map(|profile| profile.pages)
+        .unwrap_or_default();
+    let page = pages.iter().find(|p| p.name == page_name).cloned();
+    let pages = pages
+        .into_iter()
+        .map(|p| SelectVariant::from(p.name))
+        .collect();
+    
+    let grid_size = page.
 
     (pages, controls, steps)
 }

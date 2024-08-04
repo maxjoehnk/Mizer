@@ -3,6 +3,14 @@ fn generate_page() {
     page = add_buttons(page);
     page += control("Shift").id("button-98").input().note(98);
     page += add_faders();
+    page.grid(8, 8, |x, y| {
+        let button_base = (y - 7).abs() * 8;
+        let button_note = button_base + x;
+
+        let button_id = "button-" + button_note;
+
+        button_id
+    });
 
     page
 }

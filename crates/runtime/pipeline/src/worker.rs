@@ -171,6 +171,10 @@ impl PipelineWorker {
                 self.previews
                     .insert(path.clone(), NodePreviewState::History(Default::default()));
             }
+            PreviewType::Multiple => {
+                self.previews
+                    .insert(path.clone(), NodePreviewState::Multi(Default::default()));
+            }
             PreviewType::Data => {
                 self.previews
                     .insert(path.clone(), NodePreviewState::Data(Default::default()));
@@ -513,6 +517,7 @@ impl PipelineWorker {
             match preview {
                 NodePreviewState::History(buf) => Some(NodePreviewRef::History(buf.clone())),
                 NodePreviewState::Data(buf) => Some(NodePreviewRef::Data(buf.clone())),
+                NodePreviewState::Multi(buf) => Some(NodePreviewRef::Multi(buf.clone())),
                 NodePreviewState::Color(buf) => Some(NodePreviewRef::Color(buf.clone())),
                 NodePreviewState::Timecode(buf) => Some(NodePreviewRef::Timecode(buf.clone())),
                 _ => None,

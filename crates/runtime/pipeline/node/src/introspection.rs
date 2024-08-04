@@ -113,6 +113,7 @@ node_type_name! {
         Envelope,
         StepSequencer,
         MidiInput,
+        MidiInputGrid,
         MidiOutput,
         Laser,
         IldaFile,

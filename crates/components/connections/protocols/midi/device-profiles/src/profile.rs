@@ -24,6 +24,23 @@ pub struct DeviceProfile {
     pub file_path: PathBuf,
 }
 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ControlGrid {
+    rows: usize,
+    columns: usize,
+    pub grid: Vec<Control>,
+}
+
+impl ControlGrid {
+    pub fn rows(&self) -> usize {
+        self.rows
+    }
+    
+    pub fn cols(&self) -> usize {
+        self.columns
+    }
+}
+
 #[derive(Clone, Deserialize, Serialize)]
 pub(crate) struct DeviceProfileConfig {
     pub id: String,
@@ -62,6 +79,18 @@ impl ProfileErrors {
     }
 }
 
+pub struct GridRef<'a>(&'a [Control]);
+
+impl<'a> GridRef<'a> {
+    pub fn controls(&self) -> impl Iterator<Item = &Control> {
+        self.0.iter()
+    }
+    
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+}
+
 impl DeviceProfile {
     pub fn matches(&self, name: &str) -> bool {
         if let Some(keyword) = &self.keyword {
@@ -69,6 +98,13 @@ impl DeviceProfile {
         }else {
             false
         }
+    }
+    
+    pub fn get_grid(&self, page: &str, x: usize, y: usize, columns: usize, rows: usize) -> Option<GridRef> {
+        let page = self.pages.iter().find(|p| p.name == page)?;
+        let grid = page.grid.as_ref()?;
+
+        Some(grid.view(x, y, columns, rows))
     }
 
     pub fn get_control(&self, page: &str, control: &str) -> Option<&Control> {
@@ -116,6 +152,8 @@ pub struct Page {
     pub groups: Vec<Group>,
     #[serde(default)]
     pub controls: Vec<Control>,
+    #[serde(default)]
+    pub grid: Option<ControlGrid>,
 }
 
 impl Page {

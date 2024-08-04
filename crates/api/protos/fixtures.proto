@@ -167,7 +167,6 @@ message Gobo {
   }
 }
 
-
 message GenericChannel {
   double value = 1;
   string name = 2;
@@ -201,6 +200,7 @@ message FixtureChannel {
     CoarseResolution coarse = 2;
     FineResolution fine = 3;
     FinestResolution finest = 4;
+    UltraResolution ultra = 5;
   }
 
   message CoarseResolution {
@@ -216,6 +216,13 @@ message FixtureChannel {
     uint32 finest_channel = 1;
     uint32 fine_channel = 2;
     uint32 coarse_channel = 3;
+  }
+
+  message UltraResolution {
+    uint32 ultra_channel = 1;
+    uint32 finest_channel = 2;
+    uint32 fine_channel = 3;
+    uint32 coarse_channel = 4;
   }
 }
 

@@ -344,6 +344,22 @@ impl Fixture {
                         buffer[fine_channel] = fine_value as u8;
                         buffer[finest_channel] = finest_value as u8;
                     }
+                    ChannelResolution::Ultra(coarse, fine, finest, ultra) => {
+                        let value = convert_value_32bit(value);
+                        let coarse_value = (value >> 24) & 0xff;
+                        let fine_value = (value >> 16) & 0xff;
+                        let finest_value = (value >> 8) & 0xff;
+                        #[allow(clippy::identity_op)]
+                        let ultra_value = (value >> 0) & 0xff;
+                        let coarse_channel = base_channel + coarse as usize;
+                        let fine_channel = base_channel + fine as usize;
+                        let finest_channel = base_channel + finest as usize;
+                        let ultra_channel = base_channel + ultra as usize;
+                        buffer[coarse_channel] = coarse_value as u8;
+                        buffer[fine_channel] = fine_value as u8;
+                        buffer[finest_channel] = finest_value as u8;
+                        buffer[ultra_channel] = ultra_value as u8;
+                    }
                 }
             }
         }
@@ -491,6 +507,13 @@ fn convert_value_16bit(input: f64) -> u16 {
 fn convert_value_24bit(input: f64) -> u32 {
     let clamped = input.min(1.0).max(0.0);
     let channel = clamped * (U24_MAX as f64);
+
+    channel.floor() as u32
+}
+
+fn convert_value_32bit(input: f64) -> u32 {
+    let clamped = input.min(1.0).max(0.0);
+    let channel = clamped * (u32::MAX as f64);
 
     channel.floor() as u32
 }

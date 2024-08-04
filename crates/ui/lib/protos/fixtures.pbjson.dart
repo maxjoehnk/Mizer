@@ -499,8 +499,9 @@ const FixtureChannel$json = {
     {'1': 'coarse', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.CoarseResolution', '9': 0, '10': 'coarse'},
     {'1': 'fine', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FineResolution', '9': 0, '10': 'fine'},
     {'1': 'finest', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FinestResolution', '9': 0, '10': 'finest'},
+    {'1': 'ultra', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.UltraResolution', '9': 0, '10': 'ultra'},
   ],
-  '3': [FixtureChannel_CoarseResolution$json, FixtureChannel_FineResolution$json, FixtureChannel_FinestResolution$json],
+  '3': [FixtureChannel_CoarseResolution$json, FixtureChannel_FineResolution$json, FixtureChannel_FinestResolution$json, FixtureChannel_UltraResolution$json],
   '8': [
     {'1': 'resolution'},
   ],
@@ -533,18 +534,34 @@ const FixtureChannel_FinestResolution$json = {
   ],
 };
 
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
+const FixtureChannel_UltraResolution$json = {
+  '1': 'UltraResolution',
+  '2': [
+    {'1': 'ultra_channel', '3': 1, '4': 1, '5': 13, '10': 'ultraChannel'},
+    {'1': 'finest_channel', '3': 2, '4': 1, '5': 13, '10': 'finestChannel'},
+    {'1': 'fine_channel', '3': 3, '4': 1, '5': 13, '10': 'fineChannel'},
+    {'1': 'coarse_channel', '3': 4, '4': 1, '5': 13, '10': 'coarseChannel'},
+  ],
+};
+
 /// Descriptor for `FixtureChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixtureChannelDescriptor = $convert.base64Decode(
     'Cg5GaXh0dXJlQ2hhbm5lbBISCgRuYW1lGAEgASgJUgRuYW1lEkkKBmNvYXJzZRgCIAEoCzIvLm'
     '1pemVyLmZpeHR1cmVzLkZpeHR1cmVDaGFubmVsLkNvYXJzZVJlc29sdXRpb25IAFIGY29hcnNl'
     'EkMKBGZpbmUYAyABKAsyLS5taXplci5maXh0dXJlcy5GaXh0dXJlQ2hhbm5lbC5GaW5lUmVzb2'
     'x1dGlvbkgAUgRmaW5lEkkKBmZpbmVzdBgEIAEoCzIvLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVD'
-    'aGFubmVsLkZpbmVzdFJlc29sdXRpb25IAFIGZmluZXN0GiwKEENvYXJzZVJlc29sdXRpb24SGA'
-    'oHY2hhbm5lbBgBIAEoDVIHY2hhbm5lbBpaCg5GaW5lUmVzb2x1dGlvbhIhCgxmaW5lX2NoYW5u'
-    'ZWwYASABKA1SC2ZpbmVDaGFubmVsEiUKDmNvYXJzZV9jaGFubmVsGAIgASgNUg1jb2Fyc2VDaG'
-    'FubmVsGoMBChBGaW5lc3RSZXNvbHV0aW9uEiUKDmZpbmVzdF9jaGFubmVsGAEgASgNUg1maW5l'
-    'c3RDaGFubmVsEiEKDGZpbmVfY2hhbm5lbBgCIAEoDVILZmluZUNoYW5uZWwSJQoOY29hcnNlX2'
-    'NoYW5uZWwYAyABKA1SDWNvYXJzZUNoYW5uZWxCDAoKcmVzb2x1dGlvbg==');
+    'aGFubmVsLkZpbmVzdFJlc29sdXRpb25IAFIGZmluZXN0EkYKBXVsdHJhGAUgASgLMi4ubWl6ZX'
+    'IuZml4dHVyZXMuRml4dHVyZUNoYW5uZWwuVWx0cmFSZXNvbHV0aW9uSABSBXVsdHJhGiwKEENv'
+    'YXJzZVJlc29sdXRpb24SGAoHY2hhbm5lbBgBIAEoDVIHY2hhbm5lbBpaCg5GaW5lUmVzb2x1dG'
+    'lvbhIhCgxmaW5lX2NoYW5uZWwYASABKA1SC2ZpbmVDaGFubmVsEiUKDmNvYXJzZV9jaGFubmVs'
+    'GAIgASgNUg1jb2Fyc2VDaGFubmVsGoMBChBGaW5lc3RSZXNvbHV0aW9uEiUKDmZpbmVzdF9jaG'
+    'FubmVsGAEgASgNUg1maW5lc3RDaGFubmVsEiEKDGZpbmVfY2hhbm5lbBgCIAEoDVILZmluZUNo'
+    'YW5uZWwSJQoOY29hcnNlX2NoYW5uZWwYAyABKA1SDWNvYXJzZUNoYW5uZWwapwEKD1VsdHJhUm'
+    'Vzb2x1dGlvbhIjCg11bHRyYV9jaGFubmVsGAEgASgNUgx1bHRyYUNoYW5uZWwSJQoOZmluZXN0'
+    'X2NoYW5uZWwYAiABKA1SDWZpbmVzdENoYW5uZWwSIQoMZmluZV9jaGFubmVsGAMgASgNUgtmaW'
+    '5lQ2hhbm5lbBIlCg5jb2Fyc2VfY2hhbm5lbBgEIAEoDVINY29hcnNlQ2hhbm5lbEIMCgpyZXNv'
+    'bHV0aW9u');
 
 @$core.Deprecated('Use fixturePhysicalDataDescriptor instead')
 const FixturePhysicalData$json = {

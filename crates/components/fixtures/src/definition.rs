@@ -997,6 +997,7 @@ impl FixtureChannelDefinition {
             ChannelResolution::Coarse { .. } => 1,
             ChannelResolution::Fine { .. } => 2,
             ChannelResolution::Finest { .. } => 3,
+            ChannelResolution::Ultra { .. } => 4,
         }
     }
 }
@@ -1015,6 +1016,10 @@ pub enum ChannelResolution {
     ///
     /// coarse, fine, finest
     Finest(u16, u16, u16),
+    /// 32 Bit
+    ///
+    /// coarse, fine, finest, ultra
+    Ultra(u16, u16, u16, u16),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Default)]

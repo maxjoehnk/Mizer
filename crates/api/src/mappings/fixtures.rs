@@ -82,6 +82,14 @@ impl From<mizer_fixtures::definition::ChannelResolution> for fixture_channel::Re
                     coarse_channel: coarse.into(),
                 })
             }
+            ChannelResolution::Ultra(ultra, finest, fine, coarse) => {
+                fixture_channel::Resolution::Ultra(fixture_channel::UltraResolution {
+                    ultra_channel: ultra.into(),
+                    finest_channel: finest.into(),
+                    fine_channel: fine.into(),
+                    coarse_channel: coarse.into(),
+                })
+            }
         }
     }
 }

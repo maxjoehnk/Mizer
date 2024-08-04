@@ -2352,10 +2352,103 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
   void clearCoarseChannel() => clearField(3);
 }
 
+class FixtureChannel_UltraResolution extends $pb.GeneratedMessage {
+  factory FixtureChannel_UltraResolution({
+    $core.int? ultraChannel,
+    $core.int? finestChannel,
+    $core.int? fineChannel,
+    $core.int? coarseChannel,
+  }) {
+    final $result = create();
+    if (ultraChannel != null) {
+      $result.ultraChannel = ultraChannel;
+    }
+    if (finestChannel != null) {
+      $result.finestChannel = finestChannel;
+    }
+    if (fineChannel != null) {
+      $result.fineChannel = fineChannel;
+    }
+    if (coarseChannel != null) {
+      $result.coarseChannel = coarseChannel;
+    }
+    return $result;
+  }
+  FixtureChannel_UltraResolution._() : super();
+  factory FixtureChannel_UltraResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel_UltraResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel.UltraResolution', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'ultraChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'finestChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'fineChannel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'coarseChannel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_UltraResolution clone() => FixtureChannel_UltraResolution()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_UltraResolution copyWith(void Function(FixtureChannel_UltraResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_UltraResolution)) as FixtureChannel_UltraResolution;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_UltraResolution create() => FixtureChannel_UltraResolution._();
+  FixtureChannel_UltraResolution createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannel_UltraResolution> createRepeated() => $pb.PbList<FixtureChannel_UltraResolution>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_UltraResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_UltraResolution>(create);
+  static FixtureChannel_UltraResolution? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get ultraChannel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set ultraChannel($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUltraChannel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUltraChannel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get finestChannel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set finestChannel($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFinestChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFinestChannel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get fineChannel => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set fineChannel($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFineChannel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFineChannel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get coarseChannel => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set coarseChannel($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCoarseChannel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCoarseChannel() => clearField(4);
+}
+
 enum FixtureChannel_Resolution {
   coarse, 
   fine, 
   finest, 
+  ultra, 
   notSet
 }
 
@@ -2365,6 +2458,7 @@ class FixtureChannel extends $pb.GeneratedMessage {
     FixtureChannel_CoarseResolution? coarse,
     FixtureChannel_FineResolution? fine,
     FixtureChannel_FinestResolution? finest,
+    FixtureChannel_UltraResolution? ultra,
   }) {
     final $result = create();
     if (name != null) {
@@ -2379,6 +2473,9 @@ class FixtureChannel extends $pb.GeneratedMessage {
     if (finest != null) {
       $result.finest = finest;
     }
+    if (ultra != null) {
+      $result.ultra = ultra;
+    }
     return $result;
   }
   FixtureChannel._() : super();
@@ -2389,14 +2486,16 @@ class FixtureChannel extends $pb.GeneratedMessage {
     2 : FixtureChannel_Resolution.coarse,
     3 : FixtureChannel_Resolution.fine,
     4 : FixtureChannel_Resolution.finest,
+    5 : FixtureChannel_Resolution.ultra,
     0 : FixtureChannel_Resolution.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FixtureChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4])
+    ..oo(0, [2, 3, 4, 5])
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOM<FixtureChannel_CoarseResolution>(2, _omitFieldNames ? '' : 'coarse', subBuilder: FixtureChannel_CoarseResolution.create)
     ..aOM<FixtureChannel_FineResolution>(3, _omitFieldNames ? '' : 'fine', subBuilder: FixtureChannel_FineResolution.create)
     ..aOM<FixtureChannel_FinestResolution>(4, _omitFieldNames ? '' : 'finest', subBuilder: FixtureChannel_FinestResolution.create)
+    ..aOM<FixtureChannel_UltraResolution>(5, _omitFieldNames ? '' : 'ultra', subBuilder: FixtureChannel_UltraResolution.create)
     ..hasRequiredFields = false
   ;
 
@@ -2465,6 +2564,17 @@ class FixtureChannel extends $pb.GeneratedMessage {
   void clearFinest() => clearField(4);
   @$pb.TagNumber(4)
   FixtureChannel_FinestResolution ensureFinest() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  FixtureChannel_UltraResolution get ultra => $_getN(4);
+  @$pb.TagNumber(5)
+  set ultra(FixtureChannel_UltraResolution v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUltra() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUltra() => clearField(5);
+  @$pb.TagNumber(5)
+  FixtureChannel_UltraResolution ensureUltra() => $_ensure(4);
 }
 
 class FixturePhysicalData extends $pb.GeneratedMessage {

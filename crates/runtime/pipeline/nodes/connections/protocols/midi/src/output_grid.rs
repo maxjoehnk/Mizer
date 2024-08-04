@@ -73,19 +73,19 @@ impl ConfigurableNode for MidiOutputGridNode {
         update!(uint setting, X_SETTING, self.x);
         update!(uint setting, Y_SETTING, self.y);
         update!(select setting, ON_STEP_SETTING, self.on_step, |value: String| {
-                    if value.is_empty() {
-                        Ok(None)
-                    } else {
-                        Some(value.parse::<u8>()).transpose()
-                    }
-                });
+            if value.is_empty() {
+                Ok(None)
+            } else {
+                Some(value.parse::<u8>()).transpose()
+            }
+        });
         update!(select setting, OFF_STEP_SETTING, self.off_step, |value: String| {
-                    if value.is_empty() {
-                        Ok(None)
-                    } else {
-                        Some(value.parse::<u8>()).transpose()
-                    }
-                });
+            if value.is_empty() {
+                Ok(None)
+            } else {
+                Some(value.parse::<u8>()).transpose()
+            }
+        });
 
         update_fallback!(setting)
     }

@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use rhai::{Array, Engine};
+use rhai::{Array, Engine, FnPtr, NativeCallContext};
 
 use crate::profile::{Control, ControlBuilder, ControlStep, ControlStepVariant, Group, MidiResolution, Page, StepsBuilder};
 
@@ -17,6 +17,13 @@ pub fn get_pages(script: impl Into<PathBuf>) -> anyhow::Result<Vec<Page>> {
         .register_fn("+=", Page::add_group)
         .register_fn("add", Page::add_control)
         .register_fn("+=", Page::add_control)
+        .register_fn("grid", |context: NativeCallContext, page: &mut Page, rows: i64, cols: i64, get_id: FnPtr| page.define_grid(rows as u32, cols as u32, |x, y| {
+            get_id.call_within_context(&context, (x as i64, y as i64)).unwrap_or_else(|err| {
+                tracing::error!("Error calling get_id function: {err:?}");
+
+                panic!("Error calling get_id function: {err:?}");
+            })
+        }))
         .register_fn("add", |page: &mut Page, cb: ControlBuilder| {
             page.add_control(cb.build())
         })

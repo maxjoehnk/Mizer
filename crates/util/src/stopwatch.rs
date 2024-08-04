@@ -1,11 +1,14 @@
-use std::time::Instant;
+use std::time::{Instant, Duration};
 
 #[cfg(debug_assertions)]
 #[macro_export]
 macro_rules! stopwatch {
     ($fmt: expr) => {
-        mizer_util::Stopwatch::start(format!($fmt))
-    }
+        mizer_util::Stopwatch::start(format!($fmt), std::time::Duration::default())
+    };
+    ($fmt: expr, $deadline: expr) => {
+        mizer_util::Stopwatch::start(format!($fmt), $deadline)
+    };
 }
 
 #[cfg(not(debug_assertions))]
@@ -16,26 +19,29 @@ macro_rules! stopwatch {
     }
 }
 
+#[cfg(debug_assertions)]
 pub struct Stopwatch {
     start: Instant,
-    #[cfg(debug_assertions)]
     text: String,
+    deadline: std::time::Duration,
 }
+
+#[cfg(not(debug_assertions))]
+pub struct Stopwatch;
 
 impl Stopwatch {
     #[cfg(not(debug_assertions))]
     pub fn start() -> Self {
-        Self {
-            start: Instant::now(),
-        }
+        Self
     }
 
     #[cfg(debug_assertions)]
     #[must_use]
-    pub fn start(text: String) -> Self {
+    pub fn start(text: String, deadline: Duration) -> Self {
         Self {
             start: Instant::now(),
             text,
+            deadline,
         }
     }
 }
@@ -46,6 +52,8 @@ impl Drop for Stopwatch {
         let now = Instant::now();
         let duration = now - self.start;
 
-        tracing::info!("Stopwatch: {} took {duration:?}", self.text);
+        if duration > self.deadline {
+            tracing::info!("Stopwatch: {} took {duration:?}", self.text);
+        }
     }
 }

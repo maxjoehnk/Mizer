@@ -9,6 +9,7 @@ use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
 pub use self::output::{MidiOutputConfig, MidiOutputNode};
+pub use self::input_grid::{MidiInputGridNode};
 
 mod input;
 mod input_grid;
@@ -148,7 +149,7 @@ fn get_pages_and_grid(
     page_name: &str,
 ) -> (
     Vec<SelectVariant>,
-    Option<(usize, usize)>
+    Option<(u32, u32)>
 ) {
     let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
@@ -161,10 +162,11 @@ fn get_pages_and_grid(
     let page = pages.iter().find(|p| p.name == page_name).cloned();
     let pages = pages
         .into_iter()
+        .filter(|p| p.grid.is_some())
         .map(|p| SelectVariant::from(p.name))
         .collect();
-    
-    let grid_size = page.
 
-    (pages, controls, steps)
+    let grid_size = page.and_then(|p| p.grid.as_ref().map(|g| (g.rows(), g.cols())));
+
+    (pages, grid_size)
 }

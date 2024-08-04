@@ -1,4 +1,5 @@
 use std::convert::TryInto;
+use std::fmt::{Display, Formatter};
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -26,18 +27,34 @@ pub struct DeviceProfile {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ControlGrid {
-    rows: usize,
-    columns: usize,
+    rows: u32,
+    columns: u32,
     pub grid: Vec<Control>,
 }
 
 impl ControlGrid {
-    pub fn rows(&self) -> usize {
+    pub fn rows(&self) -> u32 {
         self.rows
     }
-    
-    pub fn cols(&self) -> usize {
+
+    pub fn cols(&self) -> u32 {
         self.columns
+    }
+
+    fn view(&self, min_x: u32, min_y: u32, columns: u32, rows: u32) -> GridRef {
+        let max_x = min_x + columns;
+        let max_y = min_y + rows;
+        GridRef(self.grid.iter()
+            .enumerate()
+            .filter(|(i, _c)| {
+                let i = *i;
+                let x = i as u32 % self.columns;
+                let y = i as u32 / self.columns;
+                
+                (x >= min_x && x < max_x) && (y >= min_y && y < max_y)
+            })
+            .map(|(_i, c)| c)
+            .collect())
     }
 }
 
@@ -64,28 +81,28 @@ pub enum ProfileErrors {
     LayoutLoadingError(String),
 }
 
-impl ProfileErrors {
-    pub fn to_string(&self) -> String {
+impl Display for ProfileErrors {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ProfileErrors::PagesLoadingError(err) => format!("Pages loading error: {}", err),
+            ProfileErrors::PagesLoadingError(err) => write!(f, "Pages loading error: {}", err),
             ProfileErrors::OutputScriptLoadingError(err) => {
-                format!("Output script loading error: {}", err)
+                write!(f, "Output script loading error: {}", err)
             }
             ProfileErrors::OutputScriptWritingError(err) => {
-                format!("Output script writing error: {}", err)
+                write!(f, "Output script writing error: {}", err)
             }
-            ProfileErrors::LayoutLoadingError(err) => format!("Layout loading error: {}", err),
+            ProfileErrors::LayoutLoadingError(err) => write!(f, "Layout loading error: {}", err),
         }
     }
 }
 
-pub struct GridRef<'a>(&'a [Control]);
+pub struct GridRef<'a>(Vec<&'a Control>);
 
 impl<'a> GridRef<'a> {
     pub fn controls(&self) -> impl Iterator<Item = &Control> {
-        self.0.iter()
+        self.0.iter().copied()
     }
-    
+
     pub fn len(&self) -> usize {
         self.0.len()
     }
@@ -95,12 +112,14 @@ impl DeviceProfile {
     pub fn matches(&self, name: &str) -> bool {
         if let Some(keyword) = &self.keyword {
             name.contains(keyword)
-        }else {
+        } else {
             false
         }
     }
-    
-    pub fn get_grid(&self, page: &str, x: usize, y: usize, columns: usize, rows: usize) -> Option<GridRef> {
+
+    pub fn get_grid(&self, page: &str, x: u32, y: u32, columns: u32, rows: u32) -> Option<GridRef> {
+        tracing::trace!("Getting grid for page {page} at {x}, {y} with {columns} columns and {rows} rows");
+        
         let page = self.pages.iter().find(|p| p.name == page)?;
         let grid = page.grid.as_ref()?;
 
@@ -162,6 +181,7 @@ impl Page {
             name,
             groups: Default::default(),
             controls: Default::default(),
+            grid: Default::default(),
         }
     }
 
@@ -178,6 +198,24 @@ impl Page {
         let grouped_controls = self.groups.iter().flat_map(|g| g.controls.iter());
 
         controls.chain(grouped_controls)
+    }
+
+    pub fn define_grid(
+        &mut self,
+        rows: u32,
+        columns: u32,
+        get_control_id: impl Fn(u32, u32) -> String,
+    ) {
+        let get_id = &get_control_id;
+        let grid = ControlGrid {
+            rows,
+            columns,
+            grid: (0..rows)
+                .flat_map(|y| (0..columns).map(move |x| get_id(x, y)))
+                .filter_map(|id| self.all_controls().find(|c| c.id.as_str() == id).cloned())
+                .collect(),
+        };
+        self.grid = Some(grid);
     }
 }
 
@@ -375,7 +413,7 @@ impl ControlBuilder {
         self.range = Some((from, to));
         self
     }
-    
+
     pub fn resolution(mut self, resolution: MidiResolution) -> Self {
         self.resolution = resolution;
         self

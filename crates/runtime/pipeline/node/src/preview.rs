@@ -21,7 +21,7 @@ pub enum PreviewType {
 
 pub trait PreviewContext {
     fn push_history_value(&self, value: f64);
-    fn write_multi_preview(&self, data: &[f64]);
+    fn write_multi_preview(&self, data: Vec<f64>);
     fn write_data_preview(&self, data: StructuredData);
     fn write_color_preview(&self, data: Color);
     fn write_timecode_preview(&self, timecode: Timecode);

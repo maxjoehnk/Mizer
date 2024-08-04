@@ -85,7 +85,7 @@ impl DeviceState {
                 }
             }
         }
-        
+
         values
     }
 

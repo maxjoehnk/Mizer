@@ -472,11 +472,9 @@ impl PipelineWorker {
         profiling::scope!("PipelineWorker::get_context");
         let context = PipelineContext {
             processing_context: RefCell::new(processing_context),
-            preview: RefCell::new(
-                self.previews
-                    .get_mut(path)
-                    .unwrap_or_else(|| panic!("Missing preview for {path}")),
-            ),
+            preview: self.previews
+                .get(path)
+                .unwrap_or_else(|| panic!("Missing preview for {path}")),
             receivers: self.receivers.get(path),
             senders: self.senders.get(path),
             node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),

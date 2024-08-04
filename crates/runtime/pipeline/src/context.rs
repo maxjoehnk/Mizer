@@ -10,7 +10,7 @@ use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::ProcessingContext;
-use mizer_util::StructuredData;
+use mizer_util::{stopwatch, StructuredData};
 use mizer_wgpu::{TextureRegistry, TextureView};
 use parking_lot::RwLock;
 
@@ -21,7 +21,7 @@ pub struct PipelineContext<'a> {
     pub(crate) processing_context: RefCell<&'a dyn ProcessingContext>,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
-    pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+    pub(crate) preview: &'a NodePreviewState,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
     pub(crate) node_metadata: RefCell<&'a mut NodeRuntimeMetadata>,
 }
@@ -58,35 +58,41 @@ pub enum NodePreviewState {
 }
 
 impl NodePreviewState {
-    fn push_history_value(&mut self, value: f64) {
+    fn push_history_value(&self, value: f64) {
         if let Self::History(history) = self {
             let mut guard = history.write();
             guard.push(value);
         }
     }
 
-    fn push_multi_value(&mut self, value: &[f64]) {
+    fn push_multi_value(&self, value: Vec<f64>) {
         if let Self::Multi(history) = self {
-            let mut guard = history.write();
-            *guard = Some(value.to_vec());
+            let _stopwatch = stopwatch!("Acquiring write lock", std::time::Duration::from_nanos(100));
+            // This usually shouldn't block for long, but while implementing I've noticed a deadlock which I was unable to locate (or reliably reproduce)
+            // As this happens in the main loop but is only necessary for the preview in the ui we should never wait too long for this lock
+            if let Some(mut guard) = history.try_write_for(std::time::Duration::from_millis(1)) {
+                *guard = Some(value);
+            }else {
+                tracing::error!("Failed to acquire write lock in time to push multiple preview value");
+            }
         }
     }
 
-    fn push_data_value(&mut self, value: StructuredData) {
+    fn push_data_value(&self, value: StructuredData) {
         if let Self::Data(history) = self {
             let mut guard = history.write();
             *guard = Some(value);
         }
     }
 
-    fn push_color_value(&mut self, color: Color) {
+    fn push_color_value(&self, color: Color) {
         if let Self::Color(history) = self {
             let mut guard = history.write();
             *guard = Some(color);
         }
     }
 
-    fn push_timecode_value(&mut self, timecode: Timecode) {
+    fn push_timecode_value(&self, timecode: Timecode) {
         if let Self::Timecode(history) = self {
             let mut guard = history.write();
             *guard = Some(timecode);
@@ -254,26 +260,27 @@ impl<'a> NodeContext for PipelineContext<'a> {
 impl<'a> PreviewContext for PipelineContext<'a> {
     fn push_history_value(&self, value: f64) {
         profiling::scope!("PipelineContext::push_history_value");
-        self.preview.borrow_mut().push_history_value(value);
+        self.preview.push_history_value(value);
     }
 
-    fn write_multi_preview(&self, data: &[f64]) {
+    fn write_multi_preview(&self, data: Vec<f64>) {
         profiling::scope!("PipelineContext::write_multi_preview");
-        todo!()
+        tracing::trace!("PipelineContext::write_multi_preview");
+        self.preview.push_multi_value(data);
     }
 
     fn write_data_preview(&self, data: StructuredData) {
         profiling::scope!("PipelineContext::write_data_preview");
-        self.preview.borrow_mut().push_data_value(data);
+        self.preview.push_data_value(data);
     }
 
     fn write_color_preview(&self, data: Color) {
         profiling::scope!("PipelineContext::write_color_preview");
-        self.preview.borrow_mut().push_color_value(data);
+        self.preview.push_color_value(data);
     }
 
     fn write_timecode_preview(&self, timecode: Timecode) {
         profiling::scope!("PipelineContext::write_timecode_preview");
-        self.preview.borrow_mut().push_timecode_value(timecode);
+        self.preview.push_timecode_value(timecode);
     }
 }

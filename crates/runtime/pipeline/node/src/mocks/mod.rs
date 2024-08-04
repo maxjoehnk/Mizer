@@ -111,7 +111,7 @@ impl PreviewContext for NodeContextMock {
         self.history.borrow_mut().push(value);
     }
 
-    fn write_multi_preview(&self, data: &[f64]) {}
+    fn write_multi_preview(&self, data: Vec<f64>) {}
 
     fn write_data_preview(&self, _data: StructuredData) {
         todo!()

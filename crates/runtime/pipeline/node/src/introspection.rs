@@ -72,6 +72,7 @@ node_type_name! {
     enum NodeType {
         Fader,
         Button,
+        ButtonGrid,
         Dial,
         Label,
         DmxInput,

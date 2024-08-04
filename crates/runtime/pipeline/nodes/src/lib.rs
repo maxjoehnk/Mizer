@@ -24,7 +24,7 @@ pub use mizer_fixture_nodes::{
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
 pub use mizer_traktor_kontrol_nodes::{TraktorKontrolX1InputNode, TraktorKontrolX1OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
-pub use mizer_input_nodes::{ButtonNode, DialNode, FaderNode, LabelNode};
+pub use mizer_input_nodes::{ButtonNode, ButtonGridNode, DialNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{
@@ -219,6 +219,7 @@ node_impl! {
     Fader(FaderNode),
     Dial(DialNode),
     Button(ButtonNode),
+    ButtonGrid(ButtonGridNode),
     Label(LabelNode),
     MidiInput(MidiInputNode),
     MidiOutput(MidiOutputNode),

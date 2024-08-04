@@ -67,7 +67,7 @@ impl NodePreviewState {
 
     fn push_multi_value(&self, value: Vec<f64>) {
         if let Self::Multi(history) = self {
-            let _stopwatch = stopwatch!("Acquiring write lock", std::time::Duration::from_nanos(100));
+            let _stopwatch = stopwatch!("Acquiring write lock", std::time::Duration::from_micros(10));
             // This usually shouldn't block for long, but while implementing I've noticed a deadlock which I was unable to locate (or reliably reproduce)
             // As this happens in the main loop but is only necessary for the preview in the ui we should never wait too long for this lock
             if let Some(mut guard) = history.try_write_for(std::time::Duration::from_millis(1)) {

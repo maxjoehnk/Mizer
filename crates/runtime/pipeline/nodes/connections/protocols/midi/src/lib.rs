@@ -9,11 +9,13 @@ use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
 pub use self::output::{MidiOutputConfig, MidiOutputNode};
-pub use self::input_grid::{MidiInputGridNode};
+pub use self::input_grid::MidiInputGridNode;
+pub use self::output_grid::MidiOutputGridNode;
 
 mod input;
 mod input_grid;
 mod output;
+mod output_grid;
 
 #[derive(
     Clone, Debug, Serialize, Deserialize, PartialEq, Eq, Sequence, TryFromPrimitive, IntoPrimitive,
@@ -118,27 +120,7 @@ fn get_pages_and_controls(
         .and_then(|control| if input { control.input } else { control.output })
         .and_then(|control| control.midi_device_control())
         .and_then(|control| control.steps)
-        .map(|steps| {
-            steps
-                .into_iter()
-                .map(|s| match s {
-                    ControlStep::Single(variant) => SelectVariant::Item {
-                        value: variant.value.to_string().into(),
-                        label: variant.label,
-                    },
-                    ControlStep::Group { label, steps } => SelectVariant::Group {
-                        label,
-                        children: steps
-                            .into_iter()
-                            .map(|variant| SelectVariant::Item {
-                                value: variant.value.to_string().into(),
-                                label: variant.label,
-                            })
-                            .collect(),
-                    },
-                })
-                .collect()
-        });
+        .map(convert_steps);
 
     (pages, controls, steps)
 }
@@ -149,7 +131,8 @@ fn get_pages_and_grid(
     page_name: &str,
 ) -> (
     Vec<SelectVariant>,
-    Option<(u32, u32)>
+    Option<(u32, u32)>,
+    Option<Vec<SelectVariant>>
 ) {
     let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
     let pages = connection_manager
@@ -165,8 +148,37 @@ fn get_pages_and_grid(
         .filter(|p| p.grid.is_some())
         .map(|p| SelectVariant::from(p.name))
         .collect();
+    let steps = page
+        .as_ref()
+        .and_then(|page| page.grid.as_ref().and_then(|grid| grid.grid.first()))
+        .and_then(|control| control.output.clone())
+        .and_then(|control| control.midi_device_control())
+        .and_then(|control| control.steps)
+        .map(convert_steps);
 
     let grid_size = page.and_then(|p| p.grid.as_ref().map(|g| (g.rows(), g.cols())));
 
-    (pages, grid_size)
+    (pages, grid_size, steps)
+}
+
+fn convert_steps(steps: Vec<ControlStep>) -> Vec<SelectVariant> {
+    steps
+        .into_iter()
+        .map(|s| match s {
+            ControlStep::Single(variant) => SelectVariant::Item {
+                value: variant.value.to_string().into(),
+                label: variant.label,
+            },
+            ControlStep::Group { label, steps } => SelectVariant::Group {
+                label,
+                children: steps
+                    .into_iter()
+                    .map(|variant| SelectVariant::Item {
+                        value: variant.value.to_string().into(),
+                        label: variant.label,
+                    })
+                    .collect(),
+            },
+        })
+        .collect()
 }

@@ -27,7 +27,7 @@ pub struct MidiInputGridNode {
 impl ConfigurableNode for MidiInputGridNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let devices = get_devices(injector);
-        let (pages, grid_size) = get_pages_and_grid(injector, &self.device, &self.page);
+        let (pages, grid_size, _) = get_pages_and_grid(injector, &self.device, &self.page);
         let (max_rows, max_cols) = grid_size.unwrap_or((u32::MAX, u32::MAX));
 
         vec![

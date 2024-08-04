@@ -28,7 +28,7 @@ pub use mizer_input_nodes::{ButtonNode, DialNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{
-    MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode, MidiInputGridNode,
+    MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode, MidiInputGridNode, MidiOutputGridNode,
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
@@ -223,6 +223,7 @@ node_impl! {
     MidiInput(MidiInputNode),
     MidiOutput(MidiOutputNode),
     MidiInputGrid(MidiInputGridNode),
+    MidiOutputGrid(MidiOutputGridNode),
     OpcOutput(OpcOutputNode),
     PixelPattern(PixelPatternGeneratorNode),
     PixelDmx(PixelDmxNode),

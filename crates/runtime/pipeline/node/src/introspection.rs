@@ -115,6 +115,7 @@ node_type_name! {
         MidiInput,
         MidiInputGrid,
         MidiOutput,
+        MidiOutputGrid,
         Laser,
         IldaFile,
         Gamepad,

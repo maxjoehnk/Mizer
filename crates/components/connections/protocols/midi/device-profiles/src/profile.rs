@@ -6,7 +6,7 @@ use std::sync::Arc;
 use serde::{Deserialize, Serialize};
 
 use mizer_midi_messages::{Channel, MidiMessage};
-use mizer_util::ErrorCollector;
+use mizer_util::{ErrorCollector, LerpExt};
 
 use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
 
@@ -105,6 +105,13 @@ impl<'a> GridRef<'a> {
 
     pub fn len(&self) -> usize {
         self.0.len()
+    }
+
+    pub fn write(&self, values: &[f64], on_step: Option<u8>, off_step: Option<u8>) -> Vec<MidiMessage> {
+        self.0.iter()
+            .zip(values.iter())
+            .filter_map(|(control, value)| control.send_value(*value, on_step, off_step))
+            .collect()
     }
 }
 
@@ -364,6 +371,52 @@ impl Control {
             },
         }
     }
+
+    pub fn send_value(
+        &self,
+        value: f64,
+        on_step: Option<u8>,
+        off_step: Option<u8>,
+    ) -> Option<MidiMessage> {
+        match self.output {
+            Some(DeviceControl::MidiNote(MidiDeviceControl {
+                                             channel,
+                                             note,
+                                             range,
+                                             ..
+                                         })) => Some(MidiMessage::NoteOn(
+                channel,
+                note,
+                convert_value(value, range, on_step, off_step),
+            )),
+            Some(DeviceControl::MidiCC(MidiDeviceControl {
+                                           channel,
+                                           note,
+                                           range,
+                                           ..
+                                       })) => Some(MidiMessage::ControlChange(
+                channel,
+                note,
+                convert_value(value, range, on_step, off_step),
+            )),
+            _ => None,
+        }
+    }
+}
+
+fn convert_value(value: f64, range: (u16, u16), on_step: Option<u8>, off_step: Option<u8>) -> u8 {
+    if let Some(on_step) = on_step {
+        if value > 0f64 + f64::EPSILON {
+            return on_step;
+        }
+    }
+    if let Some(off_step) = off_step {
+        if value > 0f64 - f64::EPSILON && value < 0f64 + f64::EPSILON {
+            return off_step;
+        }
+    }
+
+    value.linear_extrapolate((0f64, 1f64), (range.0.min(u8::MAX as u16) as u8, range.1.min(u8::MAX as u16) as u8))
 }
 
 #[derive(Debug, Clone)]

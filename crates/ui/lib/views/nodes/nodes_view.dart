@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
-import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/i18n.dart';
@@ -225,13 +224,26 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     var categories = groupBy(availableNodes, (AvailableNode node) => node.category);
     Navigator.of(context).push(MizerPopupRoute(
         position: globalPosition,
-        child: PopupMenu<String>(
+        child: PopupMenu<CreateNode>(
             categories: categories.entries
                 .sorted((lhs, rhs) => lhs.key.name.compareTo(rhs.key.name))
                 .map((e) => PopupCategory(
                     label: CATEGORY_NAMES[e.key]!,
                     items: e.value
-                        .map((n) => PopupItem(n.type, n.name, description: n.description))
+                        .map((n) {
+                          if (n.templates.isEmpty) {
+                            return PopupItem(CreateNode(n.type), n.name, description: n.description);
+                          }
+                          return PopupCategory(
+                              label: n.name,
+                              description: n.description,
+                              items: [
+                                PopupItem(CreateNode(n.type), "Default", description: n.description, searchLabel: n.name, sortOrder: SortOrder.First),
+                                ...n.templates
+                                  .map((t) => PopupItem(CreateNode(n.type, template: t.name), t.name, description: t.description))
+                                ]
+                          );
+                        })
                         .toList()))
                 .toList(),
             onSelect: (nodeType) => _addNode(model, nodeType))));
@@ -331,12 +343,12 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     model.update();
   }
 
-  void _addNode(NodeEditorModel model, String nodeType) {
+  void _addNode(NodeEditorModel model, CreateNode req) {
     var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
     context
         .read<NodesBloc>()
-        .add(AddNode(nodeType: nodeType, position: position, parent: model.parent?.node.path));
+        .add(AddNode(nodeType: req.nodeType, template: req.template, position: position, parent: model.parent?.node.path));
     setState(() {
       addMenuPosition = null;
     });
@@ -345,4 +357,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   void _refresh() {
     context.read<NodesBloc>().add(FetchNodes());
   }
+}
+
+class CreateNode {
+  final String nodeType;
+  final String? template;
+
+  CreateNode(this.nodeType, { this.template });
 }

@@ -43,6 +43,7 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
             node: None,
             designer: Default::default(),
             parent: None,
+            template: None,
         };
         let (descriptor, add_node_state) = add_node_runner.apply(add_node_command)?;
         let add_control_command = AddLayoutControlCommand {

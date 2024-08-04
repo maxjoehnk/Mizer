@@ -44,6 +44,7 @@ impl<'a> Command<'a> for AddPresetCommand {
             },
             node: Some(node.into()),
             parent: None,
+            template: None,
         };
         let (_, state) = add_node_runner.apply(sub_cmd)?;
 

@@ -136,6 +136,39 @@ impl PipelineNode for OscillatorNode {
 impl ProcessingNode for OscillatorNode {
     type State = ();
 
+    fn templates() -> Vec<NodeTemplate<Self>> {
+        vec![
+            NodeTemplate {
+                name: "Sine".into(),
+                config: OscillatorNode {
+                    oscillator_type: OscillatorType::Sine,
+                    ..Default::default()
+                },
+            },
+            NodeTemplate {
+                name: "Square".into(),
+                config: OscillatorNode {
+                    oscillator_type: OscillatorType::Square,
+                    ..Default::default()
+                },
+            },
+            NodeTemplate {
+                name: "Saw".into(),
+                config: OscillatorNode {
+                    oscillator_type: OscillatorType::Saw,
+                    ..Default::default()
+                },
+            },
+            NodeTemplate {
+                name: "Triangle".into(),
+                config: OscillatorNode {
+                    oscillator_type: OscillatorType::Triangle,
+                    ..Default::default()
+                },
+            },
+        ]
+    }
+
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let clock = context.clock();
         let oscillator = OscillatorContext::read(self, context);

@@ -32,10 +32,7 @@ pub use mizer_midi_nodes::{
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
-use mizer_node::{
-    ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeType,
-    PipelineNode, PortId, PortMetadata,
-};
+use mizer_node::{ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeTemplate, NodeType, PipelineNode, PortId, PortMetadata};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -123,6 +120,23 @@ macro_rules! node_impl {
                 }
             }
 
+            pub fn templates(&self) -> Vec<NodeTemplate<Node>> {
+                use mizer_node::ProcessingNode;
+
+                match self {
+                    $(Node::$node_type(node) => {
+                        let templates = <$node>::templates();
+                        templates.into_iter()
+                            .map(|template| NodeTemplate {
+                                name: template.name,
+                                config: Node::$node_type(template.config),
+                            })
+                            .collect()
+                    },)*
+                    Node::TestSink(_node) => Default::default(),
+                }
+            }
+
             pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
                 match self {
                     $(Node::$node_type(node) => node.list_ports(injector),)*
@@ -188,6 +202,21 @@ macro_rules! node_impl {
                 match node {
                     $(Node::$node_type(node) => self.handle(node),)*
                     Node::TestSink(node) => self.handle(node),
+                }
+            }
+        }
+
+        pub trait NodeTypeExt {
+            fn get_template(&self, template: &str) -> Option<Node>;
+        }
+
+        impl NodeTypeExt for NodeType {
+            fn get_template(&self, template: &str) -> Option<Node> {
+                use mizer_node::ProcessingNode;
+
+                match self {
+                    $(NodeType::$node_type => <$node>::get_template(template).map(|t| t.config).map(Node::$node_type),)*
+                    NodeType::TestSink => unimplemented!(),
                 }
             }
         }

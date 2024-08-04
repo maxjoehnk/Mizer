@@ -1,0 +1,3 @@
+= Triangle
+
+Generate a triangle wave.

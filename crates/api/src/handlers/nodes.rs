@@ -1,6 +1,7 @@
 use std::fmt::Debug;
 
 use mizer_command_executor::*;
+use mizer_docs::get_node_template_description;
 use mizer_node::{NodePath, NodeType, PortId};
 use mizer_runtime::{NodeMetadataRef, NodePreviewRef};
 
@@ -105,6 +106,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 AvailableNode {
                     name: node.name,
                     category: NodeCategory::from(node.category) as i32,
+                    templates: node.templates.into_iter().map(|template| NodeTemplate {
+                        description: get_node_template_description(&node.node_type_name, template.name.as_ref()).map(|desc| desc.to_string()),
+                        name: template.name.to_string(),
+                    }).collect::<Vec<_>>(),
                     r#type: node.node_type_name,
                     description,
                     settings,
@@ -142,6 +147,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
             node_type: request.r#type.try_into().unwrap(),
             node: None,
             parent: request.parent.map(NodePath::from),
+            template: request.template,
         };
         let descriptor = self.runtime.run_command(cmd).unwrap();
 

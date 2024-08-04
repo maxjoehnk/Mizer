@@ -23,6 +23,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
     $core.String? type,
     NodePosition? position,
     $core.String? parent,
+    $core.String? template,
   }) {
     final $result = create();
     if (type != null) {
@@ -34,6 +35,9 @@ class AddNodeRequest extends $pb.GeneratedMessage {
     if (parent != null) {
       $result.parent = parent;
     }
+    if (template != null) {
+      $result.template = template;
+    }
     return $result;
   }
   AddNodeRequest._() : super();
@@ -44,6 +48,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'type')
     ..aOM<NodePosition>(2, _omitFieldNames ? '' : 'position', subBuilder: NodePosition.create)
     ..aOS(3, _omitFieldNames ? '' : 'parent')
+    ..aOS(4, _omitFieldNames ? '' : 'template')
     ..hasRequiredFields = false
   ;
 
@@ -96,6 +101,15 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   $core.bool hasParent() => $_has(2);
   @$pb.TagNumber(3)
   void clearParent() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get template => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set template($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasTemplate() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearTemplate() => clearField(4);
 }
 
 class DuplicateNodesRequest extends $pb.GeneratedMessage {
@@ -952,6 +966,7 @@ class AvailableNode extends $pb.GeneratedMessage {
     NodeCategory? category,
     $core.String? description,
     $core.Iterable<NodeSettingDescription>? settings,
+    $core.Iterable<NodeTemplate>? templates,
   }) {
     final $result = create();
     if (type != null) {
@@ -969,6 +984,9 @@ class AvailableNode extends $pb.GeneratedMessage {
     if (settings != null) {
       $result.settings.addAll(settings);
     }
+    if (templates != null) {
+      $result.templates.addAll(templates);
+    }
     return $result;
   }
   AvailableNode._() : super();
@@ -981,6 +999,7 @@ class AvailableNode extends $pb.GeneratedMessage {
     ..e<NodeCategory>(3, _omitFieldNames ? '' : 'category', $pb.PbFieldType.OE, defaultOrMaker: NodeCategory.NODE_CATEGORY_NONE, valueOf: NodeCategory.valueOf, enumValues: NodeCategory.values)
     ..aOS(4, _omitFieldNames ? '' : 'description')
     ..pc<NodeSettingDescription>(5, _omitFieldNames ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSettingDescription.create)
+    ..pc<NodeTemplate>(6, _omitFieldNames ? '' : 'templates', $pb.PbFieldType.PM, subBuilder: NodeTemplate.create)
     ..hasRequiredFields = false
   ;
 
@@ -1043,6 +1062,9 @@ class AvailableNode extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.List<NodeSettingDescription> get settings => $_getList(4);
+
+  @$pb.TagNumber(6)
+  $core.List<NodeTemplate> get templates => $_getList(5);
 }
 
 class NodeSettingDescription extends $pb.GeneratedMessage {
@@ -1107,6 +1129,70 @@ class NodeSettingDescription extends $pb.GeneratedMessage {
   $core.bool hasDescription() => $_has(1);
   @$pb.TagNumber(2)
   void clearDescription() => clearField(2);
+}
+
+class NodeTemplate extends $pb.GeneratedMessage {
+  factory NodeTemplate({
+    $core.String? name,
+    $core.String? description,
+  }) {
+    final $result = create();
+    if (name != null) {
+      $result.name = name;
+    }
+    if (description != null) {
+      $result.description = description;
+    }
+    return $result;
+  }
+  NodeTemplate._() : super();
+  factory NodeTemplate.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeTemplate.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeTemplate', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..aOS(3, _omitFieldNames ? '' : 'description')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeTemplate clone() => NodeTemplate()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeTemplate copyWith(void Function(NodeTemplate) updates) => super.copyWith((message) => updates(message as NodeTemplate)) as NodeTemplate;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static NodeTemplate create() => NodeTemplate._();
+  NodeTemplate createEmptyInstance() => create();
+  static $pb.PbList<NodeTemplate> createRepeated() => $pb.PbList<NodeTemplate>();
+  @$core.pragma('dart2js:noInline')
+  static NodeTemplate getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeTemplate>(create);
+  static NodeTemplate? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(3)
+  $core.String get description => $_getSZ(1);
+  @$pb.TagNumber(3)
+  set description($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDescription() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearDescription() => clearField(3);
 }
 
 class NodeConnection extends $pb.GeneratedMessage {

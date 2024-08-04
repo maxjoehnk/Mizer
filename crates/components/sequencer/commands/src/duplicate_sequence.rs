@@ -44,6 +44,7 @@ impl<'a> Command<'a> for DuplicateSequenceCommand {
             },
             node: Some(node.into()),
             parent: None,
+            template: None,
         };
         let (_, state) = runner.apply(sub_cmd)?;
 

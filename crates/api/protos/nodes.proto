@@ -8,6 +8,7 @@ message AddNodeRequest {
   string type = 1;
   NodePosition position = 2;
   optional string parent = 3;
+  optional string template = 4;
 }
 
 message DuplicateNodesRequest {
@@ -86,11 +87,17 @@ message AvailableNode {
   NodeCategory category = 3;
   string description = 4;
   repeated NodeSettingDescription settings = 5;
+  repeated NodeTemplate templates = 6;
 }
 
 message NodeSettingDescription {
   string name = 1;
   string description = 2;
+}
+
+message NodeTemplate {
+  string name = 1;
+  optional string description = 3;
 }
 
 message NodeConnection {

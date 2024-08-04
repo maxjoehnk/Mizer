@@ -1,0 +1,3 @@
+= Sine
+
+Generate a sine wave.

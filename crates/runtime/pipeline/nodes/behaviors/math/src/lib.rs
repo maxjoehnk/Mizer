@@ -1,7 +1,7 @@
 use std::f64::consts::PI;
 use std::fmt::{Display, Formatter};
 
-use enum_iterator::Sequence;
+use enum_iterator::{all, Sequence};
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
@@ -69,6 +69,15 @@ impl PipelineNode for MathNode {
 
 impl ProcessingNode for MathNode {
     type State = ();
+
+    fn templates() -> Vec<NodeTemplate<Self>> {
+        all::<MathMode>()
+            .map(|mode| NodeTemplate {
+                name: mode.to_string().into(),
+                config: MathNode { mode },
+            })
+            .collect()
+    }
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let value = if self.mode.single_parameter() {

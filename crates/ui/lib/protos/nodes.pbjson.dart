@@ -114,9 +114,11 @@ const AddNodeRequest$json = {
     {'1': 'type', '3': 1, '4': 1, '5': 9, '10': 'type'},
     {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.nodes.NodePosition', '10': 'position'},
     {'1': 'parent', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
+    {'1': 'template', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'template', '17': true},
   ],
   '8': [
     {'1': '_parent'},
+    {'1': '_template'},
   ],
 };
 
@@ -124,7 +126,8 @@ const AddNodeRequest$json = {
 final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode(
     'Cg5BZGROb2RlUmVxdWVzdBISCgR0eXBlGAEgASgJUgR0eXBlEjUKCHBvc2l0aW9uGAIgASgLMh'
     'kubWl6ZXIubm9kZXMuTm9kZVBvc2l0aW9uUghwb3NpdGlvbhIbCgZwYXJlbnQYAyABKAlIAFIG'
-    'cGFyZW50iAEBQgkKB19wYXJlbnQ=');
+    'cGFyZW50iAEBEh8KCHRlbXBsYXRlGAQgASgJSAFSCHRlbXBsYXRliAEBQgkKB19wYXJlbnRCCw'
+    'oJX3RlbXBsYXRl');
 
 @$core.Deprecated('Use duplicateNodesRequestDescriptor instead')
 const DuplicateNodesRequest$json = {
@@ -342,6 +345,7 @@ const AvailableNode$json = {
     {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.nodes.NodeCategory', '10': 'category'},
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
     {'1': 'settings', '3': 5, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSettingDescription', '10': 'settings'},
+    {'1': 'templates', '3': 6, '4': 3, '5': 11, '6': '.mizer.nodes.NodeTemplate', '10': 'templates'},
   ],
 };
 
@@ -350,7 +354,8 @@ final $typed_data.Uint8List availableNodeDescriptor = $convert.base64Decode(
     'Cg1BdmFpbGFibGVOb2RlEhIKBHR5cGUYASABKAlSBHR5cGUSEgoEbmFtZRgCIAEoCVIEbmFtZR'
     'I1CghjYXRlZ29yeRgDIAEoDjIZLm1pemVyLm5vZGVzLk5vZGVDYXRlZ29yeVIIY2F0ZWdvcnkS'
     'IAoLZGVzY3JpcHRpb24YBCABKAlSC2Rlc2NyaXB0aW9uEj8KCHNldHRpbmdzGAUgAygLMiMubW'
-    'l6ZXIubm9kZXMuTm9kZVNldHRpbmdEZXNjcmlwdGlvblIIc2V0dGluZ3M=');
+    'l6ZXIubm9kZXMuTm9kZVNldHRpbmdEZXNjcmlwdGlvblIIc2V0dGluZ3MSNwoJdGVtcGxhdGVz'
+    'GAYgAygLMhkubWl6ZXIubm9kZXMuTm9kZVRlbXBsYXRlUgl0ZW1wbGF0ZXM=');
 
 @$core.Deprecated('Use nodeSettingDescriptionDescriptor instead')
 const NodeSettingDescription$json = {
@@ -365,6 +370,23 @@ const NodeSettingDescription$json = {
 final $typed_data.Uint8List nodeSettingDescriptionDescriptor = $convert.base64Decode(
     'ChZOb2RlU2V0dGluZ0Rlc2NyaXB0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSIAoLZGVzY3JpcH'
     'Rpb24YAiABKAlSC2Rlc2NyaXB0aW9u');
+
+@$core.Deprecated('Use nodeTemplateDescriptor instead')
+const NodeTemplate$json = {
+  '1': 'NodeTemplate',
+  '2': [
+    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'description', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'description', '17': true},
+  ],
+  '8': [
+    {'1': '_description'},
+  ],
+};
+
+/// Descriptor for `NodeTemplate`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeTemplateDescriptor = $convert.base64Decode(
+    'CgxOb2RlVGVtcGxhdGUSEgoEbmFtZRgBIAEoCVIEbmFtZRIlCgtkZXNjcmlwdGlvbhgDIAEoCU'
+    'gAUgtkZXNjcmlwdGlvbogBAUIOCgxfZGVzY3JpcHRpb24=');
 
 @$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = {

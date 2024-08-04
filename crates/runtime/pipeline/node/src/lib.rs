@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::fmt::Debug;
 
 use downcast::*;
@@ -44,6 +45,11 @@ pub trait PipelineNode: ConfigurableNode + Debug + Send + Sync + Any {
     fn node_type(&self) -> NodeType;
 }
 
+pub struct NodeTemplate<TNode> {
+    pub name: Cow<'static, str>,
+    pub config: TNode,
+}
+
 pub trait ConfigurableNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![]
@@ -65,6 +71,14 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
 
     fn details(&self) -> NodeDetails {
         PipelineNode::details(self)
+    }
+
+    fn templates() -> Vec<NodeTemplate<Self>> {
+        vec![]
+    }
+
+    fn get_template(name: &str) -> Option<NodeTemplate<Self>> {
+        Self::templates().into_iter().find(|t| t.name == name)
     }
 
     #[allow(unused_variables)]

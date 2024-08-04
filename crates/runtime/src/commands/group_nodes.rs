@@ -30,6 +30,7 @@ impl<'a> Command<'a> for GroupNodesCommand {
                 nodes: self.nodes.clone(),
             })),
             designer: NodeDesigner::default(),
+            template: None,
         };
         let (_, state) = add_node_runner.apply(cmd)?;
 

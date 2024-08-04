@@ -59,8 +59,9 @@ class AddNode extends NodesEvent {
   final String nodeType;
   final Offset position;
   final String? parent;
+  final String? template;
 
-  AddNode({required this.nodeType, required this.position, this.parent});
+  AddNode({required this.nodeType, required this.position, this.parent, this.template});
 }
 
 class LinkNodes extends NodesEvent {
@@ -190,7 +191,9 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       await api.addNode(AddNodeRequest(
           type: event.nodeType,
           position: NodePosition(x: event.position.dx, y: event.position.dy),
-          parent: event.parent));
+          parent: event.parent,
+          template: event.template,
+      ));
       emit(await _fetchNodes());
     });
     on<LinkNodes>((event, emit) async {

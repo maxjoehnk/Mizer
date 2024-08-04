@@ -43,6 +43,7 @@ impl<'a> Command<'a> for ExecuteNodeTemplateCommand {
                         node: Some(node.clone()),
                         designer: Default::default(),
                         parent: None,
+                        template: None,
                     },
                 )),
                 NodeRequest::Existing(path) => {

@@ -834,9 +834,9 @@ dependencies = [
 
 [[package]]
 name = "bonjour-sys"
-version = "0.2.2"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09c6bd8cd70ddd43e654232eae6fce46d60a43e250b2cc8f08c750e6325604ca"
+checksum = "af472e0498391b03b29af72ef4228248d2ff7bc49b6cd489c3c644b798736e58"
 dependencies = [
  "bindgen 0.68.1",
  "libc",
@@ -11568,9 +11568,9 @@ checksum = "dd15f8e0dbb966fd9245e7498c7e9e5055d9e5c8b676b95bd67091cd11a1e697"
 
 [[package]]
 name = "zeroconf"
-version = "0.14.1"
+version = "0.14.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2ac03705931460d2a7b50545e22fd299e851e72a4d36cefcc678b99c70c4bfb0"
+checksum = "f36443a3c74563c6320d1c0d77b48d3ea79ee3d622b88619233fc93e00a3976c"
 dependencies = [
  "avahi-sys",
  "bonjour-sys",

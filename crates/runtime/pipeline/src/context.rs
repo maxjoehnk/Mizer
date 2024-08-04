@@ -10,9 +10,8 @@ use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::ProcessingContext;
-use mizer_util::StructuredData;
+use mizer_util::{StructuredData, rw_lock::RwLock};
 use mizer_wgpu::{TextureRegistry, TextureView};
-use parking_lot::RwLock;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
@@ -21,7 +20,7 @@ pub struct PipelineContext<'a> {
     pub(crate) processing_context: RefCell<&'a dyn ProcessingContext>,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
-    pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+    pub(crate) preview: &'a NodePreviewState,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
     pub(crate) node_metadata: RefCell<&'a mut NodeRuntimeMetadata>,
 }
@@ -51,34 +50,42 @@ pub struct RuntimePortMetadata {
 pub enum NodePreviewState {
     History(Arc<RwLock<ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>>>),
     Data(Arc<RwLock<Option<StructuredData>>>),
+    Multi(Arc<RwLock<Option<Vec<f64>>>>),
     Color(Arc<RwLock<Option<Color>>>),
     Timecode(Arc<RwLock<Option<Timecode>>>),
     None,
 }
 
 impl NodePreviewState {
-    fn push_history_value(&mut self, value: f64) {
+    fn push_history_value(&self, value: f64) {
         if let Self::History(history) = self {
             let mut guard = history.write();
             guard.push(value);
         }
     }
 
-    fn push_data_value(&mut self, value: StructuredData) {
+    fn push_multi_value(&self, value: Vec<f64>) {
+        if let Self::Multi(history) = self {
+            let mut guard = history.write();
+            *guard = Some(value);
+        }
+    }
+
+    fn push_data_value(&self, value: StructuredData) {
         if let Self::Data(history) = self {
             let mut guard = history.write();
             *guard = Some(value);
         }
     }
 
-    fn push_color_value(&mut self, color: Color) {
+    fn push_color_value(&self, color: Color) {
         if let Self::Color(history) = self {
             let mut guard = history.write();
             *guard = Some(color);
         }
     }
 
-    fn push_timecode_value(&mut self, timecode: Timecode) {
+    fn push_timecode_value(&self, timecode: Timecode) {
         if let Self::Timecode(history) = self {
             let mut guard = history.write();
             *guard = Some(timecode);
@@ -246,21 +253,26 @@ impl<'a> NodeContext for PipelineContext<'a> {
 impl<'a> PreviewContext for PipelineContext<'a> {
     fn push_history_value(&self, value: f64) {
         profiling::scope!("PipelineContext::push_history_value");
-        self.preview.borrow_mut().push_history_value(value);
+        self.preview.push_history_value(value);
+    }
+
+    fn write_multi_preview(&self, data: Vec<f64>) {
+        profiling::scope!("PipelineContext::write_multi_preview");
+        self.preview.push_multi_value(data);
     }
 
     fn write_data_preview(&self, data: StructuredData) {
         profiling::scope!("PipelineContext::write_data_preview");
-        self.preview.borrow_mut().push_data_value(data);
+        self.preview.push_data_value(data);
     }
 
     fn write_color_preview(&self, data: Color) {
         profiling::scope!("PipelineContext::write_color_preview");
-        self.preview.borrow_mut().push_color_value(data);
+        self.preview.push_color_value(data);
     }
 
     fn write_timecode_preview(&self, timecode: Timecode) {
         profiling::scope!("PipelineContext::write_timecode_preview");
-        self.preview.borrow_mut().push_timecode_value(timecode);
+        self.preview.push_timecode_value(timecode);
     }
 }

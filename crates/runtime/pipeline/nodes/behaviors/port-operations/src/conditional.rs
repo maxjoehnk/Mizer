@@ -94,7 +94,13 @@ impl ProcessingNode for ConditionalNode {
                         context.write_color_preview(value);
                     }
                 }
-                PortType::Multi => transfer_port::<Vec<f64>>(context, is_active),
+                PortType::Multi => {
+                    transfer_port::<Vec<f64>>(context, is_active);
+
+                    if let Some(value) = is_active.then_some(()).and_then(|_| context.read_port(VALUE_INPUT)) {
+                        context.write_multi_preview(value);
+                    }
+                },
                 PortType::Laser => transfer_port::<Vec<LaserFrame>>(context, is_active),
                 PortType::Data => {
                     transfer_port::<StructuredData>(context, is_active);

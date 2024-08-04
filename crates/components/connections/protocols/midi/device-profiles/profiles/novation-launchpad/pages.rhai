@@ -1,6 +1,13 @@
 fn generate_page() {
     let page = create_page("Default");
     page = add_buttons(page);
+    page.grid(8, 8, |x, y| {
+        let pad_index = y * 16 + x;
+
+        let button_id = "button-" + pad_index;
+
+        button_id
+    });
 
     page
 }

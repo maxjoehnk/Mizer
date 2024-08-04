@@ -1,11 +1,12 @@
 use std::convert::TryInto;
+use std::fmt::{Display, Formatter};
 use std::path::PathBuf;
 use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
 use mizer_midi_messages::{Channel, MidiMessage};
-use mizer_util::ErrorCollector;
+use mizer_util::{ErrorCollector, LerpExt};
 
 use crate::scripts::outputs::{Color, OutputEngine, OutputScript};
 
@@ -22,6 +23,39 @@ pub struct DeviceProfile {
     pub(crate) engine: OutputEngine,
     pub errors: ErrorCollector<ProfileErrors>,
     pub file_path: PathBuf,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ControlGrid {
+    rows: u32,
+    columns: u32,
+    pub grid: Vec<Control>,
+}
+
+impl ControlGrid {
+    pub fn rows(&self) -> u32 {
+        self.rows
+    }
+
+    pub fn cols(&self) -> u32 {
+        self.columns
+    }
+
+    fn view(&self, min_x: u32, min_y: u32, columns: u32, rows: u32) -> GridRef {
+        let max_x = min_x + columns;
+        let max_y = min_y + rows;
+        GridRef(self.grid.iter()
+            .enumerate()
+            .filter(|(i, _c)| {
+                let i = *i;
+                let x = i as u32 % self.columns;
+                let y = i as u32 / self.columns;
+                
+                (x >= min_x && x < max_x) && (y >= min_y && y < max_y)
+            })
+            .map(|(_i, c)| c)
+            .collect())
+    }
 }
 
 #[derive(Clone, Deserialize, Serialize)]
@@ -47,18 +81,37 @@ pub enum ProfileErrors {
     LayoutLoadingError(String),
 }
 
-impl ProfileErrors {
-    pub fn to_string(&self) -> String {
+impl Display for ProfileErrors {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            ProfileErrors::PagesLoadingError(err) => format!("Pages loading error: {}", err),
+            ProfileErrors::PagesLoadingError(err) => write!(f, "Pages loading error: {}", err),
             ProfileErrors::OutputScriptLoadingError(err) => {
-                format!("Output script loading error: {}", err)
+                write!(f, "Output script loading error: {}", err)
             }
             ProfileErrors::OutputScriptWritingError(err) => {
-                format!("Output script writing error: {}", err)
+                write!(f, "Output script writing error: {}", err)
             }
-            ProfileErrors::LayoutLoadingError(err) => format!("Layout loading error: {}", err),
+            ProfileErrors::LayoutLoadingError(err) => write!(f, "Layout loading error: {}", err),
         }
+    }
+}
+
+pub struct GridRef<'a>(Vec<&'a Control>);
+
+impl<'a> GridRef<'a> {
+    pub fn controls(&self) -> impl Iterator<Item = &Control> {
+        self.0.iter().copied()
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
+    pub fn write(&self, values: &[f64], on_step: Option<u8>, off_step: Option<u8>) -> Vec<MidiMessage> {
+        self.0.iter()
+            .zip(values.iter())
+            .filter_map(|(control, value)| control.send_value(*value, on_step, off_step))
+            .collect()
     }
 }
 
@@ -66,9 +119,18 @@ impl DeviceProfile {
     pub fn matches(&self, name: &str) -> bool {
         if let Some(keyword) = &self.keyword {
             name.contains(keyword)
-        }else {
+        } else {
             false
         }
+    }
+
+    pub fn get_grid(&self, page: &str, x: u32, y: u32, columns: u32, rows: u32) -> Option<GridRef> {
+        tracing::trace!("Getting grid for page {page} at {x}, {y} with {columns} columns and {rows} rows");
+        
+        let page = self.pages.iter().find(|p| p.name == page)?;
+        let grid = page.grid.as_ref()?;
+
+        Some(grid.view(x, y, columns, rows))
     }
 
     pub fn get_control(&self, page: &str, control: &str) -> Option<&Control> {
@@ -116,6 +178,8 @@ pub struct Page {
     pub groups: Vec<Group>,
     #[serde(default)]
     pub controls: Vec<Control>,
+    #[serde(default)]
+    pub grid: Option<ControlGrid>,
 }
 
 impl Page {
@@ -124,6 +188,7 @@ impl Page {
             name,
             groups: Default::default(),
             controls: Default::default(),
+            grid: Default::default(),
         }
     }
 
@@ -140,6 +205,24 @@ impl Page {
         let grouped_controls = self.groups.iter().flat_map(|g| g.controls.iter());
 
         controls.chain(grouped_controls)
+    }
+
+    pub fn define_grid(
+        &mut self,
+        rows: u32,
+        columns: u32,
+        get_control_id: impl Fn(u32, u32) -> String,
+    ) {
+        let get_id = &get_control_id;
+        let grid = ControlGrid {
+            rows,
+            columns,
+            grid: (0..rows)
+                .flat_map(|y| (0..columns).map(move |x| get_id(x, y)))
+                .filter_map(|id| self.all_controls().find(|c| c.id.as_str() == id).cloned())
+                .collect(),
+        };
+        self.grid = Some(grid);
     }
 }
 
@@ -288,6 +371,52 @@ impl Control {
             },
         }
     }
+
+    pub fn send_value(
+        &self,
+        value: f64,
+        on_step: Option<u8>,
+        off_step: Option<u8>,
+    ) -> Option<MidiMessage> {
+        match self.output {
+            Some(DeviceControl::MidiNote(MidiDeviceControl {
+                                             channel,
+                                             note,
+                                             range,
+                                             ..
+                                         })) => Some(MidiMessage::NoteOn(
+                channel,
+                note,
+                convert_value(value, range, on_step, off_step),
+            )),
+            Some(DeviceControl::MidiCC(MidiDeviceControl {
+                                           channel,
+                                           note,
+                                           range,
+                                           ..
+                                       })) => Some(MidiMessage::ControlChange(
+                channel,
+                note,
+                convert_value(value, range, on_step, off_step),
+            )),
+            _ => None,
+        }
+    }
+}
+
+fn convert_value(value: f64, range: (u16, u16), on_step: Option<u8>, off_step: Option<u8>) -> u8 {
+    if let Some(on_step) = on_step {
+        if value > 0f64 + f64::EPSILON {
+            return on_step;
+        }
+    }
+    if let Some(off_step) = off_step {
+        if value > 0f64 - f64::EPSILON && value < 0f64 + f64::EPSILON {
+            return off_step;
+        }
+    }
+
+    value.linear_extrapolate((0f64, 1f64), (range.0.min(u8::MAX as u16) as u8, range.1.min(u8::MAX as u16) as u8))
 }
 
 #[derive(Debug, Clone)]
@@ -337,7 +466,7 @@ impl ControlBuilder {
         self.range = Some((from, to));
         self
     }
-    
+
     pub fn resolution(mut self, resolution: MidiResolution) -> Self {
         self.resolution = resolution;
         self

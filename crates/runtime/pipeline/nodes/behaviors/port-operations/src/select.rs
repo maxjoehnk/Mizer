@@ -88,7 +88,15 @@ impl ProcessingNode for SelectNode {
                         context.write_color_preview(value);
                     }
                 }
-                PortType::Multi => transfer_port::<Vec<f64>>(context, *channel),
+                PortType::Multi => {
+                    transfer_port::<Vec<f64>>(context, *channel);
+                    let ports = context.read_ports::<_, _>(INPUT_PORT);
+                    let value = ports.get(*channel).cloned().flatten();
+
+                    if let Some(value) = value {
+                        context.write_multi_preview(value);
+                    }
+                },
                 PortType::Laser => transfer_port::<Vec<LaserFrame>>(context, *channel),
                 PortType::Data => {
                     transfer_port::<StructuredData>(context, *channel);

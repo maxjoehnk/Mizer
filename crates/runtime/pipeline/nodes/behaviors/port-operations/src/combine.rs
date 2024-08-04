@@ -40,7 +40,8 @@ impl ProcessingNode for CombineNode {
             .into_iter()
             .map(|value| value.unwrap_or_default())
             .collect::<Vec<_>>();
-        context.write_port(OUTPUT_PORT, values);
+        context.write_port(OUTPUT_PORT, values.clone());
+        context.write_multi_preview(values);
 
         Ok(())
     }

@@ -2,15 +2,22 @@ fn generate_page() {
     let page = create_page("Default");
     page = add_buttons(page);
     page += add_knobs();
+    page.grid(4, 16, |x, y| {
+        let pad_index = y * 16 + x;
+
+        let button_id = "pad-" + pad_index;
+
+        button_id
+    });
 
     page
 }
 
 fn add_buttons(page) {
     let pads = create_group("Pads");
-    let pad_index = 0;
     for row_index in range(0, 4) {
         for column_index in range(0, 16) {
+            let pad_index = row_index * 16 + column_index;
             let button_base = 54 + row_index * 16;
             let button_note = button_base + column_index;
 
@@ -22,7 +29,6 @@ fn add_buttons(page) {
                 .note(button_note)
                 .output()
                 .rgb("write_rgb");
-            pad_index += 1;
         }
     }
     let mutes = create_group("Mutes");

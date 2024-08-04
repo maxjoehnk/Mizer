@@ -27,3 +27,5 @@ mod image;
 mod thread_pinned;
 pub mod tracing;
 mod error_collector;
+
+pub mod rw_lock;

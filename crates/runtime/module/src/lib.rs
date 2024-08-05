@@ -4,6 +4,7 @@ use std::time::Duration;
 
 pub use mizer_processing::*;
 pub use mizer_settings::*;
+pub use mizer_scheduler::*;
 use mizer_status_bus::StatusHandle;
 
 pub use crate::api_injector::ApiInjector;
@@ -100,4 +101,6 @@ pub trait ModuleContext {
     fn spawn<F: Future + Send + 'static>(&self, future: F) where <F as Future>::Output: Send;
 
     fn status_handle(&self) -> StatusHandle;
+    
+    fn add_background_job(&mut self, job: impl BackgroundJob + 'static);
 }

@@ -96,6 +96,7 @@ members = [
     "crates/runtime/settings",
     "crates/runtime/status",
     "crates/runtime/wgpu",
+    "crates/scheduler",
     "crates/ui",
     "crates/ui/ffi",
     "crates/util",

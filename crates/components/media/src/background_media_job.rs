@@ -1,66 +1,73 @@
+use std::future::Future;
+use std::sync::Arc;
+use futures::FutureExt;
 use mizer_message_bus::Subscriber;
-use mizer_status_bus::StatusHandle;
-use crate::documents::{MediaDocument};
+use mizer_scheduler::{BackgroundTask, EventJobSchedule, TaskContext};
+use crate::documents::{MediaDocument, MediaId};
 use crate::events::MediaEvent;
 use crate::MediaServer;
 use crate::thumbnail_generator::{ThumbnailGenerator};
 
 pub struct BackgroundMediaJob {
-    media_server: MediaServer,
-    status_handle: StatusHandle,
     media_events: Subscriber<MediaEvent>,
-    thumbnail_generator: ThumbnailGenerator,
+    media_server: MediaServer,
+    thumbnail_generator: Arc<ThumbnailGenerator>,
+}
+
+impl EventJobSchedule for BackgroundMediaJob {
+    type Event = MediaEvent;
+
+    fn next_event(&self) -> impl Future<Output=Option<Self::Event>> + Send {
+        self.media_events.read_async().map(|result| result.ok())
+    }
+
+    fn create_task(&self, event: Self::Event) -> Box<dyn BackgroundTask> {
+        match event {
+            MediaEvent::FileAdded(media_id) | MediaEvent::FileUpdated(media_id) => {
+                Box::new(BackgroundMediaTask {
+                    media_id,
+                    media_server: self.media_server.clone(),
+                    thumbnail_generator: Arc::clone(&self.thumbnail_generator),
+                })
+            }}
+    }
 }
 
 impl BackgroundMediaJob {
-    pub fn new(media_server: MediaServer, status_handle: StatusHandle, media_events: Subscriber<MediaEvent>) -> Self {
+    pub fn new(media_server: MediaServer, media_events: Subscriber<MediaEvent>) -> Self {
         let generator = ThumbnailGenerator::new(media_server.storage.clone());
 
         BackgroundMediaJob {
             media_server,
-            status_handle,
             media_events,
-            thumbnail_generator: generator,
+            thumbnail_generator: Arc::new(generator),
         }
     }
+}
 
-    pub fn spawn(self) -> anyhow::Result<()> {
-        std::thread::Builder::new()
-            .name("Media Background Job".to_string())
-            .spawn(move || self.start())?;
+struct BackgroundMediaTask {
+    media_id: MediaId,
+    media_server: MediaServer,
+    thumbnail_generator: Arc<ThumbnailGenerator>,
+}
 
-        Ok(())
-    }
-
-    pub fn start(&self) {
-        loop {
-            if let Some(event) = self.media_events.read_blocking() {
-                if let Err(err) = self.handle_event(event) {
-                    tracing::error!("Error handling media event: {:?}", err);
-                }
+impl BackgroundTask for BackgroundMediaTask {
+    fn run(&self, _context: &dyn TaskContext) -> anyhow::Result<()> {
+        let media = self.media_server.get_media_file(self.media_id);
+        if let Some(mut media) = media {
+            let exists = media.file_path.exists();
+            media.file_available = Some(exists);
+            if exists {
+                self.generate_thumbnail(&mut media);
             }
-            std::thread::yield_now();
-        }
-    }
-
-    fn handle_event(&self, event: MediaEvent) -> anyhow::Result<()> {
-        match event {
-            MediaEvent::FileAdded(media_id) | MediaEvent::FileUpdated(media_id) => {
-                let media = self.media_server.get_media_file(media_id);
-                if let Some(mut media) = media {
-                    let exists = media.file_path.exists();
-                    media.file_available = Some(exists);
-                    if exists {
-                        self.generate_thumbnail(&mut media);
-                    }
-                    self.media_server.db.add_media(media)?;
-                }
-            }
+            self.media_server.db.add_media(media)?;
         }
 
         Ok(())
     }
-
+}
+    
+impl BackgroundMediaTask {
     fn generate_thumbnail(&self, media: &mut MediaDocument) {
         match self.thumbnail_generator.generate(media) {
             Ok(thumbnail_path) => {

@@ -28,6 +28,7 @@ mizer-settings = { path = "../../runtime/settings" }
 mizer-status-bus = { path = "../../runtime/status" }
 mizer-commander = { path = "../../runtime/commander" }
 mizer-message-bus = { path = "../../util/bus" }
+mizer-scheduler = { path = "../../scheduler" }
 shellexpand = "3.1"
 
 [dev-dependencies]

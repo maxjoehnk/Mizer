@@ -4807,6 +4807,7 @@ dependencies = [
  "mizer-protocol-osc",
  "mizer-qlcplus-provider",
  "mizer-runtime",
+ "mizer-scheduler",
  "mizer-sequencer",
  "mizer-session",
  "mizer-settings",
@@ -5418,6 +5419,7 @@ dependencies = [
  "mizer-console",
  "mizer-message-bus",
  "mizer-module",
+ "mizer-scheduler",
  "mizer-settings",
  "mizer-status-bus",
  "resvg",
@@ -5484,6 +5486,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "mizer-processing",
+ "mizer-scheduler",
  "mizer-settings",
  "mizer-status-bus",
  "test-case",
@@ -6049,6 +6052,19 @@ dependencies = [
  "test-case",
  "tracing",
  "tracing-unwrap",
+]
+
+[[package]]
+name = "mizer-scheduler"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "flume 0.11.0",
+ "futures",
+ "mizer-util",
+ "num_cpus",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]

@@ -7,7 +7,6 @@ use resvg::usvg::{self, Options};
 use crate::documents::{MediaDocument, MediaType};
 use super::{THUMBNAIL_SIZE, IThumbnailGenerator};
 
-#[derive(Clone)]
 pub struct SvgGenerator {
     fontdb: fontdb::Database,
 }

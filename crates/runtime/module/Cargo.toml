@@ -9,7 +9,8 @@ anyhow = "1"
 mizer-processing = { path = "../processing" }
 tracing = "0.1"
 mizer-settings = { path = "../settings"}
-mizer-status-bus = { path = "../../runtime/status" }
+mizer-status-bus = { path = "../status" }
+mizer-scheduler = { path = "../../scheduler" }
 
 [dev-dependencies]
 test-case = "3.3"

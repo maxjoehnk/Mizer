@@ -1,0 +1,13 @@
+= Dialog
+include::description.adoc[]
+
+image:ui/dialog/node.png[Node Preview]
+
+== Settings
+
+include::setting_title.adoc[leveloffset=+2]
+include::setting_text.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_trigger.adoc[leveloffset=+2]

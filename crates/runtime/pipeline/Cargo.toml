@@ -20,7 +20,7 @@ mizer-ports = { path = "ports" }
 mizer-processing = { path = "../processing" }
 mizer-util = { path = "../../util" }
 mizer-wgpu = { path = "../wgpu" }
-dashmap = "5"
+dashmap = "6"
 flume = "0.11"
 ringbuffer = "0.15"
 downcast = "0.11"

@@ -13,7 +13,3 @@ include::setting_control.adoc[leveloffset=+2]
 == Outputs
 
 include::port_output_output.adoc[leveloffset=+2]
-
-== Inputs
-
-

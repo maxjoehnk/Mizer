@@ -10,10 +10,6 @@ include::setting_height.adoc[leveloffset=+2]
 include::setting_start_universe.adoc[leveloffset=+2]
 include::setting_pixels_per_universe.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_input.adoc[leveloffset=+2]

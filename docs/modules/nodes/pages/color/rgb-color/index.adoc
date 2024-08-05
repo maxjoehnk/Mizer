@@ -3,10 +3,6 @@ include::description.adoc[]
 
 image:color/rgb-color/node.png[Node Preview]
 
-== Settings
-
-
-
 == Outputs
 
 include::port_output_color.adoc[leveloffset=+2]

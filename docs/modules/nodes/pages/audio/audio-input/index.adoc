@@ -3,14 +3,6 @@ include::description.adoc[]
 
 image:audio/audio-input/node.png[Node Preview]
 
-== Settings
-
-
-
 == Outputs
 
 include::port_output_stereo.adoc[leveloffset=+2]
-
-== Inputs
-
-

@@ -9,10 +9,6 @@ include::setting_fixture.adoc[leveloffset=+2]
 include::setting_priority.adoc[leveloffset=+2]
 include::setting_send_zero.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_intensity.adoc[leveloffset=+2]

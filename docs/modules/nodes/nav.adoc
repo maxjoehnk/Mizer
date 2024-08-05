@@ -21,7 +21,9 @@
 ** xref:nodes:connections/g13-output/index.adoc[]
 ** xref:nodes:connections/gamepad/index.adoc[]
 ** xref:nodes:connections/midi-input/index.adoc[]
+** xref:nodes:connections/midi-input-grid/index.adoc[]
 ** xref:nodes:connections/midi-output/index.adoc[]
+** xref:nodes:connections/midi-output-grid/index.adoc[]
 ** xref:nodes:connections/mqtt-input/index.adoc[]
 ** xref:nodes:connections/mqtt-output/index.adoc[]
 ** xref:nodes:connections/opc-output/index.adoc[]
@@ -29,9 +31,12 @@
 ** xref:nodes:connections/osc-output/index.adoc[]
 ** xref:nodes:connections/pioneer-cdj/index.adoc[]
 ** xref:nodes:connections/pro-dj-link-clock/index.adoc[]
+** xref:nodes:connections/traktor-kontrol-x1-input/index.adoc[]
+** xref:nodes:connections/traktor-kontrol-x1-output/index.adoc[]
 
 * Controls
 ** xref:nodes:controls/button/index.adoc[]
+** xref:nodes:controls/button-grid/index.adoc[]
 ** xref:nodes:controls/dial/index.adoc[]
 ** xref:nodes:controls/fader/index.adoc[]
 ** xref:nodes:controls/label/index.adoc[]
@@ -52,12 +57,15 @@
 * Fixtures
 ** xref:nodes:fixtures/fixture-control/index.adoc[]
 ** xref:nodes:fixtures/group-control/index.adoc[]
+** xref:nodes:fixtures/plan-screen/index.adoc[]
 
 * Laser
 ** xref:nodes:laser/ilda-file/index.adoc[]
 ** xref:nodes:laser/laser-output/index.adoc[]
 
 * None
+** xref:nodes:none/fixture/index.adoc[]
+** xref:nodes:none/group/index.adoc[]
 ** xref:nodes:none/programmer/index.adoc[]
 ** xref:nodes:none/transport/index.adoc[]
 
@@ -67,6 +75,7 @@
 
 * Standard
 ** xref:nodes:standard/beats/index.adoc[]
+** xref:nodes:standard/clock/index.adoc[]
 ** xref:nodes:standard/combine/index.adoc[]
 ** xref:nodes:standard/comparison/index.adoc[]
 ** xref:nodes:standard/conditional/index.adoc[]
@@ -90,12 +99,16 @@
 ** xref:nodes:standard/timecode-output/index.adoc[]
 ** xref:nodes:standard/timecode-recorder/index.adoc[]
 
+* Ui
+** xref:nodes:ui/dialog/index.adoc[]
+
 * Vector
 ** xref:nodes:vector/rasterize-vector/index.adoc[]
 ** xref:nodes:vector/vector-file/index.adoc[]
 
 * Video
 ** xref:nodes:video/colorize-texture/index.adoc[]
+** xref:nodes:video/drop-shadow/index.adoc[]
 ** xref:nodes:video/image-file/index.adoc[]
 ** xref:nodes:video/invert/index.adoc[]
 ** xref:nodes:video/luma-key/index.adoc[]

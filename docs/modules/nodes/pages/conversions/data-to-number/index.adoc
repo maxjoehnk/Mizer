@@ -3,10 +3,6 @@ include::description.adoc[]
 
 image:conversions/data-to-number/node.png[Node Preview]
 
-== Settings
-
-
-
 == Outputs
 
 include::port_output_output.adoc[leveloffset=+2]

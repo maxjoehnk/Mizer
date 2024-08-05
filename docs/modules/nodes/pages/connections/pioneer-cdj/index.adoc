@@ -14,7 +14,3 @@ include::port_output_current_tempo.adoc[leveloffset=+2]
 include::port_output_pitch.adoc[leveloffset=+2]
 include::port_output_playing.adoc[leveloffset=+2]
 include::port_output_live.adoc[leveloffset=+2]
-
-== Inputs
-
-

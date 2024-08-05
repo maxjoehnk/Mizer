@@ -7,10 +7,8 @@ image:fixtures/plan-screen/node.png[Node Preview]
 
 include::setting_screen.adoc[leveloffset=+2]
 include::setting_priority.adoc[leveloffset=+2]
-
-== Outputs
-
-
+include::setting_write_color.adoc[leveloffset=+2]
+include::setting_write_intensity.adoc[leveloffset=+2]
 
 == Inputs
 

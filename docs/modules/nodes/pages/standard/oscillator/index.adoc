@@ -10,6 +10,7 @@ include::setting_interval.adoc[leveloffset=+2]
 include::setting_min.adoc[leveloffset=+2]
 include::setting_max.adoc[leveloffset=+2]
 include::setting_offset.adoc[leveloffset=+2]
+include::setting_ratio.adoc[leveloffset=+2]
 include::setting_reverse.adoc[leveloffset=+2]
 
 == Outputs
@@ -25,6 +26,6 @@ include::port_input_max.adoc[leveloffset=+2]
 == Templates
 
 include::template_sine.adoc[leveloffset=+2]
-include::template_saw.adoc[leveloffset=+2]
 include::template_square.adoc[leveloffset=+2]
+include::template_saw.adoc[leveloffset=+2]
 include::template_triangle.adoc[leveloffset=+2]

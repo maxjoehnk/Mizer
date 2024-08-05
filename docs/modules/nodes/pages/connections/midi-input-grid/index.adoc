@@ -1,0 +1,17 @@
+= MIDI Input Grid
+include::description.adoc[]
+
+image:connections/midi-input-grid/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+include::setting_page.adoc[leveloffset=+2]
+include::setting_rows.adoc[leveloffset=+2]
+include::setting_columns.adoc[leveloffset=+2]
+include::setting_x.adoc[leveloffset=+2]
+include::setting_y.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_output.adoc[leveloffset=+2]

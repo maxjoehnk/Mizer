@@ -7,10 +7,6 @@ image:standard/timecode-control/node.png[Node Preview]
 
 include::setting_timecode.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_clock.adoc[leveloffset=+2]

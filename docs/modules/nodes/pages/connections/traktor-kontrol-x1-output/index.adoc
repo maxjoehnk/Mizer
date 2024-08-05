@@ -1,0 +1,13 @@
+= Traktor Kontrol X1 Output
+include::description.adoc[]
+
+image:connections/traktor-kontrol-x1-output/node.png[Node Preview]
+
+== Settings
+
+include::setting_device.adoc[leveloffset=+2]
+include::setting_input.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_value.adoc[leveloffset=+2]

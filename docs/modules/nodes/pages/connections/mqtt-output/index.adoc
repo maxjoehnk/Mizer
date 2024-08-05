@@ -9,10 +9,6 @@ include::setting_connection.adoc[leveloffset=+2]
 include::setting_path.adoc[leveloffset=+2]
 include::setting_retain.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_input.adoc[leveloffset=+2]

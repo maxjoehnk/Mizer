@@ -10,10 +10,6 @@ include::setting_control.adoc[leveloffset=+2]
 include::setting_priority.adoc[leveloffset=+2]
 include::setting_send_zero.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_value.adoc[leveloffset=+2]

@@ -3,10 +3,6 @@ include::description.adoc[]
 
 image:video/video-rgb-split/node.png[Node Preview]
 
-== Settings
-
-
-
 == Outputs
 
 include::port_output_red.adoc[leveloffset=+2]

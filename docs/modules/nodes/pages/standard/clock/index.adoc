@@ -6,11 +6,3 @@ image:standard/clock/node.png[Node Preview]
 == Settings
 
 include::setting_bpm.adoc[leveloffset=+2]
-
-== Outputs
-
-
-
-== Inputs
-
-

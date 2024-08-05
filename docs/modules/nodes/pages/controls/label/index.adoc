@@ -7,10 +7,6 @@ image:controls/label/node.png[Node Preview]
 
 include::setting_text.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_text.adoc[leveloffset=+2]

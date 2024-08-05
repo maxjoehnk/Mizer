@@ -10,10 +10,6 @@ include::setting_binding.adoc[leveloffset=+2]
 include::setting_page.adoc[leveloffset=+2]
 include::setting_control.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_input.adoc[leveloffset=+2]

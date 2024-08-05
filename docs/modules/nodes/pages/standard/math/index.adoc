@@ -15,3 +15,14 @@ include::port_output_value.adoc[leveloffset=+2]
 
 include::port_input_lhs.adoc[leveloffset=+2]
 include::port_input_rhs.adoc[leveloffset=+2]
+
+== Templates
+
+include::template_addition.adoc[leveloffset=+2]
+include::template_subtraction.adoc[leveloffset=+2]
+include::template_multiplication.adoc[leveloffset=+2]
+include::template_division.adoc[leveloffset=+2]
+include::template_invert.adoc[leveloffset=+2]
+include::template_sine.adoc[leveloffset=+2]
+include::template_cosine.adoc[leveloffset=+2]
+include::template_tangent.adoc[leveloffset=+2]

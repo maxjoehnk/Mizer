@@ -3,10 +3,6 @@ include::description.adoc[]
 
 image:conversions/multi-to-data/node.png[Node Preview]
 
-== Settings
-
-
-
 == Outputs
 
 include::port_output_output.adoc[leveloffset=+2]

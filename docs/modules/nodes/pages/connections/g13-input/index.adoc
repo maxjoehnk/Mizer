@@ -11,7 +11,3 @@ include::setting_device.adoc[leveloffset=+2]
 == Outputs
 
 include::port_output_value.adoc[leveloffset=+2]
-
-== Inputs
-
-

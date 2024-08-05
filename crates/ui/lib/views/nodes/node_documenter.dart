@@ -5,16 +5,20 @@ import 'dart:ui' as ui;
 import 'package:change_case/change_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
+import 'package:provider/provider.dart';
 
 Future documentNode(BuildContext context, BaseNodeState nodeState) async {
+  AvailableNode nodeType = context.read<NodesBloc>().state.availableNodes.firstWhere((n) => n.name == nodeState.node.details.nodeTypeName);
   String path = _getPath(nodeState);
   await _createDirectory(path);
-  await _createIndex(nodeState, path);
+  await _createIndex(nodeState, path, nodeType);
   await _createDescriptionIfNotExists(nodeState, path);
   await _createNonExistentSettings(nodeState, path);
   await _createNonExistentInputs(nodeState, path);
   await _createNonExistentOutputs(nodeState, path);
+  await _createNonExistentTemplates(nodeType, path);
 
   _screenshotNode(context, nodeState);
 }
@@ -55,9 +59,9 @@ void _screenshotNode(BuildContext context, BaseNodeState nodeState) async {
   await file.writeAsBytes(pngBytes);
 }
 
-Future _createIndex(BaseNodeState nodeState, String path) async {
+Future _createIndex(BaseNodeState nodeState, String path, AvailableNode nodeType) async {
   var indexPath = "$path/index.adoc";
-  await File(indexPath).writeAsString(_indexTemplate(nodeState));
+  await File(indexPath).writeAsString(_indexTemplate(nodeState, nodeType));
 }
 
 List<String> _listSettingIncludes(BaseNodeState nodeState) {
@@ -72,29 +76,42 @@ List<String> _listOutputIncludes(BaseNodeState nodeState) {
   return nodeState.node.outputs.map((p) => "port_output_${p.name.toSnakeCase()}.adoc").toList();
 }
 
-String _indexTemplate(BaseNodeState nodeState) {
+List<String> _listTemplateIncludes(AvailableNode nodeType) {
+  return nodeType.templates.map((p) => "template_${p.name.toSnakeCase()}.adoc").toList();
+}
+
+String _indexTemplate(BaseNodeState nodeState, AvailableNode nodeType) {
   String categoryName = _getCategory(nodeState);
   String nodeName = _getPathName(nodeState);
   List<String> settings = _listSettingIncludes(nodeState);
   List<String> inputs = _listInputIncludes(nodeState);
   List<String> outputs = _listOutputIncludes(nodeState);
+  List<String> templates = _listTemplateIncludes(nodeType);
+
+  String settingsBlock = _block("Settings", settings);
+  String inputsBlock = _block("Inputs", inputs);
+  String outputsBlock = _block("Outputs", outputs);
+  String templateBlock = _block("Templates", templates);
+
+  List<String> blocks = [settingsBlock, outputsBlock, inputsBlock, templateBlock];
+  
+  String content = blocks.where((block) => block.isNotEmpty).join("\n");
 
   return """= ${nodeState.node.details.nodeTypeName}
 include::description.adoc[]
 
 image:$categoryName/$nodeName/node.png[Node Preview]
 
-== Settings
+$content""";
+}
 
-${settings.map((p) => "include::$p[leveloffset=+2]").join("\n")}
+String _block(String title, List<String> includes) {
+  if (includes.isEmpty) {
+    return "";
+  }
+  return """== $title
 
-== Outputs
-
-${outputs.map((p) => "include::$p[leveloffset=+2]").join("\n")}
-
-== Inputs
-
-${inputs.map((p) => "include::$p[leveloffset=+2]").join("\n")}
+${includes.map((i) => "include::$i[leveloffset=+2]").join("\n")}
 """;
 }
 
@@ -145,6 +162,21 @@ String _portTemplate(Port port) {
   return """= ${port.name}
   
 Type: ${port.protocol.name.toLowerCase().toTitleCase()}
+""";
+}
+
+Future _createNonExistentTemplates(AvailableNode nodeType, String path) async {
+  for (var template in nodeType.templates) {
+    var filePath = "$path/template_${template.name.toSnakeCase()}.adoc";
+    if (await File(filePath).exists()) {
+      continue;
+    }
+    await File(filePath).writeAsString(_templateTemplate(template));
+  }
+}
+
+String _templateTemplate(NodeTemplate template) {
+  return """= ${template.name}
 """;
 }
 

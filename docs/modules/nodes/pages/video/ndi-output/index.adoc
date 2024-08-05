@@ -7,10 +7,6 @@ image:video/ndi-output/node.png[Node Preview]
 
 include::setting_name.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_input.adoc[leveloffset=+2]

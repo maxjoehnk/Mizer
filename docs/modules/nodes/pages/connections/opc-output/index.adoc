@@ -10,10 +10,6 @@ include::setting_port.adoc[leveloffset=+2]
 include::setting_width.adoc[leveloffset=+2]
 include::setting_height.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_pixels.adoc[leveloffset=+2]

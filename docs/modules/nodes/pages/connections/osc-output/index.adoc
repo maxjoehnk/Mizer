@@ -10,10 +10,6 @@ include::setting_argument_type.adoc[leveloffset=+2]
 include::setting_path.adoc[leveloffset=+2]
 include::setting_only_emit_changes.adoc[leveloffset=+2]
 
-== Outputs
-
-
-
 == Inputs
 
 include::port_input_number.adoc[leveloffset=+2]

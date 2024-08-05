@@ -1,0 +1,1531 @@
+---
+version: 5
+playback:
+  fps: 60.0
+nodes:
+  - path: /ilda-file-0
+    type: ilda-file
+    config:
+      file: ""
+    designer:
+      position:
+        x: 9.194962739832912
+        y: 1.1576784477157653
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /extract-0
+    type: extract
+    config:
+      path: ""
+    designer:
+      position:
+        x: 3.257929391625741
+        y: -4.656833560433779
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /color-constant-0
+    type: color-constant
+    config:
+      Rgb:
+        red: 0.6
+        green: 1.0
+        blue: 1.0
+    designer:
+      position:
+        x: 4.096720570716549
+        y: 3.1092165187006655
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /gamepad-0
+    type: gamepad
+    config:
+      device: gamepad-0
+      control: LeftStickX
+    designer:
+      position:
+        x: -1.737705013017012
+        y: -4.389518573998117
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /color-rgb-0
+    type: color-rgb
+    config: ~
+    designer:
+      position:
+        x: 7.242928695397107
+        y: -13.947909347519326
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /midi-input-0
+    type: midi-input
+    config:
+      device: "FL STUDIO FIRE:FL STUDIO FIRE Jack 1"
+      type: control
+      page: Default
+      control: volume
+    designer:
+      position:
+        x: -1.4871059407119507
+        y: -2.685449606930791
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /merge-0
+    type: merge
+    config:
+      mode: latest
+    designer:
+      position:
+        x: -9.0111027385811
+        y: -9.55951391604162
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-output-0
+    type: osc-output
+    config:
+      connection: osc-0
+      path: ""
+      argument_type: float
+      only_emit_changes: false
+    designer:
+      position:
+        x: -0.5715566008274315
+        y: 5.431329879636948
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /audio-mix-0
+    type: audio-mix
+    config: ~
+    designer:
+      position:
+        x: 8.68499541724211
+        y: -5.3052628650119065
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /webcam-0
+    type: webcam
+    config:
+      device_id: ""
+    designer:
+      position:
+        x: 24.199457567742748
+        y: 10.617582365171986
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /clock-0
+    type: clock
+    config:
+      speed: 90.0
+    designer:
+      position:
+        x: -16.1045592001733
+        y: -9.808131100656214
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /g13-input-0
+    type: g13-input
+    config:
+      device: ""
+      key: G1
+    designer:
+      position:
+        x: -2.2134060594302083
+        y: -8.285736668429994
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /fader-0
+    type: fader
+    config:
+      start_value: 0.0
+      end_value: 1.0
+    designer:
+      position:
+        x: 3.3290009872155313
+        y: -8.20847132129639
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-mixer-0
+    type: video-mixer
+    config:
+      mode: Add
+    designer:
+      position:
+        x: 23.853365296240995
+        y: -2.5109187667291994
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /g13-output-0
+    type: g13-output
+    config:
+      device: ""
+    designer:
+      position:
+        x: -1.5338331359827861
+        y: -6.926590821535153
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /sequencer-0
+    type: sequencer
+    config:
+      sequence: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+      priority:
+        LTP: Normal
+      send_zero: true
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /ramp-0
+    type: ramp
+    config:
+      steps:
+        - x: 0.0
+          y: 0.0
+          c0a: 0.5
+          c0b: 0.5
+          c1a: 0.5
+          c1b: 0.5
+        - x: 1.0
+          y: 1.0
+          c0a: 0.5
+          c0b: 0.5
+          c1a: 0.5
+          c1b: 0.5
+    designer:
+      position:
+        x: -7.829325320542045
+        y: -3.581110507138169
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /dmx-output-0
+    type: dmx-output
+    config:
+      universe: 1
+      channel: 0
+    designer:
+      position:
+        x: -2.485235228809176
+        y: -9.984668977048544
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /button-0
+    type: button
+    config:
+      toggle: false
+      high_value: 1.0
+      low_value: 0.0
+    designer:
+      position:
+        x: 2.7731051130078233
+        y: -10.290260584975472
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /conditional-0
+    type: conditional
+    config:
+      threshold: 0.5
+      port_type: Single
+    designer:
+      position:
+        x: 14.25553252913254
+        y: -1.0894919597820112
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /oscillator-0
+    type: oscillator
+    config:
+      type: sine
+      interval: 1.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+      ratio: 0.5
+    designer:
+      position:
+        x: -8.107390595374763
+        y: -5.944665343216278
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+      priority:
+        LTP: Normal
+      send_zero: true
+    designer:
+      position:
+        x: 12.888594261885936
+        y: -10.307524810257249
+      scale: 0.0
+      hidden: false
+      color: ~
+  - path: /opc-output-0
+    type: opc-output
+    config:
+      host: localhost
+      port: 7890
+      width: 100
+      height: 100
+    designer:
+      position:
+        x: 13.272489008572707
+        y: -14.033031440284322
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-text-0
+    type: video-text
+    config:
+      text: Hello World!
+      font: Arial
+      font_size: 32.0
+      line_height: 32.0
+      italic: false
+      font_weight: Normal
+      align: Start
+    designer:
+      position:
+        x: 23.503800586688982
+        y: -12.160913250979146
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /pioneer-cdj-0
+    type: pioneer-cdj
+    config:
+      device_id: 0
+    designer:
+      position:
+        x: 13.934028287718316
+        y: -6.0359226167834485
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /audio-file-0
+    type: audio-file
+    config:
+      file: ""
+      playback_mode: OneShot
+    designer:
+      position:
+        x: 7.783824891528053
+        y: -11.385162058218333
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /color-brightness-0
+    type: color-brightness
+    config: ~
+    designer:
+      position:
+        x: 4.128178073579787
+        y: 1.0654799243739217
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /threshold-0
+    type: threshold
+    config:
+      lower_threshold: 0.5
+      upper_threshold: 1000000.0
+      active_value: 1.0
+      inactive_value: 0.0
+    designer:
+      position:
+        x: -7.330616466136668
+        y: 2.120521152474662
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /ndi-output-0
+    type: ndi-output
+    config:
+      name: Mizer
+    designer:
+      position:
+        x: 23.540358703035867
+        y: -13.665351960719654
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /pixel-dmx-0
+    type: pixel-dmx
+    config:
+      width: 100
+      height: 100
+      start_universe: 1
+      pixels_per_universe: 170
+    designer:
+      position:
+        x: 10.414606876705335
+        y: 4.619920592459888
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /audio-input-0
+    type: audio-input
+    config: ~
+    designer:
+      position:
+        x: 8.12707605153401
+        y: -8.999534591107984
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /group-0
+    type: group
+    config:
+      id: 1
+      priority:
+        LTP: Normal
+      send_zero: true
+    designer:
+      position:
+        x: 13.70408177002284
+        y: -8.450025486167634
+      scale: 0.0
+      hidden: false
+      color: ~
+  - path: /container-0
+    type: container
+    config:
+      nodes: []
+    designer:
+      position:
+        x: -15.096534797563068
+        y: -4.732033853422214
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /audio-output-0
+    type: audio-output
+    config: {}
+    designer:
+      position:
+        x: 8.702374496919155
+        y: -2.941708028933798
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /label-0
+    type: label
+    config:
+      text: Test
+    designer:
+      position:
+        x: 3.393148592112963
+        y: -6.215689150855979
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /timecode-output-0
+    type: timecode-output
+    config:
+      control_id: 1
+    designer:
+      position:
+        x: -2.485235228809176
+        y: -12.091345039735545
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 17.08143239946914
+        y: 2.6112143288798872
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /video-hsv-0
+    type: video-hsv
+    config:
+      hue: 0.0
+      saturation: 1.0
+      value: 1.0
+    designer:
+      position:
+        x: 23.853365296240995
+        y: -5.025338583484654
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /color-hsv-0
+    type: color-hsv
+    config: ~
+    designer:
+      position:
+        x: 4.101511653363398
+        y: 4.693964505701591
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /template-0
+    type: template
+    config:
+      template: "2"
+    designer:
+      position:
+        x: 3.8312627249590743
+        y: -2.910166893767112
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-file-0
+    type: video-file
+    config:
+      file: ""
+      playback_speed: 1.0
+      sync_to_transport_state: false
+      render_when_stopped: false
+    designer:
+      position:
+        x: 23.713438413061454
+        y: -7.258563865859926
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-rgb-0
+    type: video-rgb
+    config:
+      red: 1.0
+      green: 1.0
+      blue: 1.0
+    designer:
+      position:
+        x: 24.05723717327522
+        y: 1.1587750198868707
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /number-to-data-0
+    type: number-to-data
+    config: ~
+    designer:
+      position:
+        x: 2.7731051130078233
+        y: -12.002761622503959
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-transform-0
+    type: video-transform
+    config:
+      rotation_x: 0.0
+      rotation_y: 0.0
+      rotation_z: 0.0
+      translation_x: 0.0
+      translation_y: 0.0
+      translation_z: 0.0
+      scale_x: 1.0
+      scale_y: 1.0
+    designer:
+      position:
+        x: 24.12028857805172
+        y: 6.291137251564781
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /value-0
+    type: value
+    config:
+      value: "{ \"test\": true }"
+    designer:
+      position:
+        x: 3.733147950629187
+        y: -0.6116517589813035
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /texture-border-0
+    type: texture-border
+    config:
+      border_width: 1.0
+      top_border: true
+      right_border: true
+      bottom_border: true
+      left_border: true
+    designer:
+      position:
+        x: 23.51987496048212
+        y: -9.83243526026206
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /laser-0
+    type: laser
+    config:
+      device: ""
+    designer:
+      position:
+        x: 9.594681572404943
+        y: 2.669658379618673
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /encoder-0
+    type: encoder
+    config:
+      hold_rate: 0.01
+      hold: false
+    designer:
+      position:
+        x: -14.556350040834905
+        y: -0.5251460578190184
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /delay-0
+    type: delay
+    config:
+      buffer_size: 0
+    designer:
+      position:
+        x: -14.731574124345125
+        y: -2.2642045392818364
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /midi-output-0
+    type: midi-output
+    config:
+      device: "FL STUDIO FIRE:FL STUDIO FIRE Jack 1"
+      type: control
+      page: Default
+      control: led-1
+      off_step: ~
+      on_step: ~
+    designer:
+      position:
+        x: -1.3402148592578031
+        y: -1.0885403175981523
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /osc-input-0
+    type: osc-input
+    config:
+      connection: osc-0
+      path: ""
+      argument_type: float
+    designer:
+      position:
+        x: -0.7105892382437924
+        y: 3.9541081070881305
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /envelope-0
+    type: envelope
+    config:
+      attack: 1.0
+      decay: 1.0
+      sustain: 0.5
+      release: 1.0
+    designer:
+      position:
+        x: -14.452075562772634
+        y: 1.6472389018115974
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /timecode-control-0
+    type: timecode-control
+    config:
+      timecode_id: 1
+    designer:
+      position:
+        x: -2.642247845453582
+        y: -14.014291888488241
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /constant-number-0
+    type: constant-number
+    config:
+      value: 0.0
+    designer:
+      position:
+        x: -15.53101178948919
+        y: -6.452562741449662
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /pro-dj-link-clock-0
+    type: pro-dj-link-clock
+    config:
+      source: Master
+    designer:
+      position:
+        x: 14.02092368610354
+        y: -3.0988581513628577
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -12.113770967712403
+        y: -0.09304659817477841
+      scale: 0.0
+      hidden: true
+      color: ~
+  - path: /audio-meter-0
+    type: audio-meter
+    config: ~
+    designer:
+      position:
+        x: 8.842903820886495
+        y: -7.491476866409814
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /audio-volume-0
+    type: audio-volume
+    config: ~
+    designer:
+      position:
+        x: 8.997394718810813
+        y: -1.3349750834104437
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-rgb-split-0
+    type: video-rgb-split
+    config: ~
+    designer:
+      position:
+        x: 23.93277039713867
+        y: 3.766609794280422
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /mqtt-output-0
+    type: mqtt-output
+    config:
+      path: /
+      connection: mqtt-0
+      retain: false
+    designer:
+      position:
+        x: -0.8644003086885005
+        y: 2.439336008126732
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /mqtt-input-0
+    type: mqtt-input
+    config:
+      path: /
+      connection: mqtt-0
+    designer:
+      position:
+        x: -1.2293609819064446
+        y: 0.7361861997763299
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /math-0
+    type: math
+    config:
+      mode: Addition
+    designer:
+      position:
+        x: -14.469454642449678
+        y: 3.593695825640628
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /step-sequencer-0
+    type: step-sequencer
+    config:
+      steps:
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+        - false
+      bar_count: 1
+    designer:
+      position:
+        x: -7.267275498228227
+        y: 4.041082022801385
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /select-0
+    type: select
+    config:
+      port_type: Single
+    designer:
+      position:
+        x: -7.168557856449803
+        y: -0.1443816256416585
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /pixel-pattern-0
+    type: pixel-pattern
+    config:
+      pattern: rgb-iterate
+    designer:
+      position:
+        x: 13.336562278697253
+        y: -12.400054099697709
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /scripting-0
+    type: scripting
+    config:
+      script: ""
+    designer:
+      position:
+        x: -7.444064669451844
+        y: -1.4581964985920908
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /video-output-0
+    type: video-output
+    config:
+      fullscreen: false
+      screen: ""
+      window_name: ""
+    designer:
+      position:
+        x: 23.98927988093048
+        y: -0.4495475656053577
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /data-to-number-0
+    type: data-to-number
+    config: ~
+    designer:
+      position:
+        x: 2.448320433476559
+        y: -14.099099099478481
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /noise-0
+    type: noise
+    config:
+      tick_rate: 5
+      fade: true
+    designer:
+      position:
+        x: -8.541867587300887
+        y: -7.630436071889635
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /plan-screen-0
+    type: plan-screen
+    config:
+      plan: ""
+      screen_id: 0
+      priority:
+        LTP: Normal
+      write_color: true
+      write_intensity: true
+    designer:
+      position:
+        x: 14.551407056718727
+        y: 1.6596925002716185
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /drop-shadow-0
+    type: drop-shadow
+    config:
+      x_offset: 5.0
+      y_offset: 5.0
+    designer:
+      position:
+        x: 24.391537200557675
+        y: 12.645261235350667
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /static-color-0
+    type: static-color
+    config: {}
+    designer:
+      position:
+        x: 29.45337142752922
+        y: -13.379633466447128
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /colorize-texture-0
+    type: colorize-texture
+    config: ~
+    designer:
+      position:
+        x: 29.707403720834257
+        y: -10.847632039400041
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /image-file-0
+    type: image-file
+    config:
+      file: ""
+    designer:
+      position:
+        x: 30.115147474902653
+        y: -7.902816037794552
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /invert-0
+    type: invert
+    config: ~
+    designer:
+      position:
+        x: 30.273714490373713
+        y: -6.13592643683126
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /luma-key-0
+    type: luma-key
+    config:
+      threshold: 0.1
+    designer:
+      position:
+        x: 30.205757198028973
+        y: -4.029250374144258
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /texture-mask-0
+    type: texture-mask
+    config: ~
+    designer:
+      position:
+        x: 30.386976644281628
+        y: -1.8093121575493645
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /texture-opacity-0
+    type: texture-opacity
+    config:
+      opacity: 1.0
+    designer:
+      position:
+        x: 30.364324213500065
+        y: 0.7957173823325563
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /fixture-control-0
+    type: fixture-control
+    config:
+      fixture: 0
+      priority:
+        LTP: Normal
+      send_zero: true
+      control: Intensity
+    designer:
+      position:
+        x: -8.579900056369045
+        y: -13.841413168987117
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /group-control-0
+    type: group-control
+    config:
+      group: 0
+      priority:
+        LTP: Normal
+      send_zero: true
+      control: Intensity
+      phase: 0
+    designer:
+      position:
+        x: -8.656869949416189
+        y: -11.53231637757275
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /dmx-input-0
+    type: dmx-input
+    config:
+      input: ""
+      universe: 1
+      channel: 1
+    designer:
+      position:
+        x: -15.881406436991789
+        y: -11.924483073587714
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /vector-file-0
+    type: vector-file
+    config:
+      media_id: ~
+    designer:
+      position:
+        x: 37.141283208922225
+        y: -13.001170127487672
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /rasterize-vector-0
+    type: rasterize-vector
+    config: ~
+    designer:
+      position:
+        x: 37.28734557967987
+        y: -11.254499147117137
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /dial-0
+    type: dial
+    config:
+      start_value: 0.0
+      end_value: 1.0
+    designer:
+      position:
+        x: 37.177519129776556
+        y: -9.194235870027303
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /data-file-0
+    type: data-file
+    config:
+      file: ""
+      csv_settings:
+        header: false
+        delimiter: ","
+    designer:
+      position:
+        x: 4.197111217374501
+        y: -15.808032980482189
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /surface-mapping-0
+    type: surface-mapping
+    config:
+      surface_id: cc42596a-da0e-4196-9f75-efeece301199
+    designer:
+      position:
+        x: 30.66359365210647
+        y: 3.76445730866571
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /ndi-input-0
+    type: ndi-input
+    config:
+      device_id: ""
+    designer:
+      position:
+        x: 30.601086729557757
+        y: 6.352281058578379
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /midi-input-grid-0
+    type: midi-input-grid
+    config:
+      device: ""
+      page: ""
+      rows: 0
+      columns: 0
+      x: 0
+      y: 0
+    designer:
+      position:
+        x: -0.7110867075404235
+        y: 7.778852526199952
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /midi-output-grid-0
+    type: midi-output-grid
+    config:
+      device: ""
+      page: ""
+      rows: 0
+      columns: 0
+      x: 0
+      y: 0
+      off_step: ~
+      on_step: ~
+    designer:
+      position:
+        x: -0.7284657872174723
+        y: 9.586276812612624
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /button-grid-0
+    type: button-grid
+    config:
+      toggle: false
+      rows: 2
+      columns: 4
+    designer:
+      position:
+        x: 4.1225467233818165
+        y: 7.926021759437589
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /traktor-kontrol-x1-input-0
+    type: traktor-kontrol-x1-input
+    config:
+      device: ""
+      element: ""
+    designer:
+      position:
+        x: 37.1251643646797
+        y: -5.9954546069966606
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /traktor-kontrol-x1-output-0
+    type: traktor-kontrol-x1-output
+    config:
+      device: ""
+      element: ""
+    designer:
+      position:
+        x: 37.61190349652159
+        y: -3.9304815180097874
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /number-to-clock-0
+    type: number-to-clock
+    config: ~
+    designer:
+      position:
+        x: 14.779907970104626
+        y: 3.7436465797313168
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /multi-to-data-0
+    type: multi-to-data
+    config: ~
+    designer:
+      position:
+        x: 15.018767796172172
+        y: 6.585517339958742
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /data-to-text-0
+    type: data-to-text
+    config: ~
+    designer:
+      position:
+        x: 14.864517100714432
+        y: 8.877667331474585
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /time-trigger-0
+    type: time-trigger
+    config:
+      seconds: 0
+      minutes: 0
+      hours: 12
+    designer:
+      position:
+        x: 37.824488309491386
+        y: -1.427411542594356
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /beats-0
+    type: beats
+    config: {}
+    designer:
+      position:
+        x: 38.050416345292966
+        y: 0.3800127438183161
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /countdown-0
+    type: countdown
+    config:
+      seconds: 0
+      minutes: 1
+      hours: 0
+    designer:
+      position:
+        x: 37.980900026584784
+        y: 3.351835368592996
+      scale: 1.0
+      hidden: false
+      color: ~
+  - path: /dialog-0
+    type: dialog
+    config:
+      title: ""
+      text: ""
+    designer:
+      position:
+        x: 38.306050423956414
+        y: 6.099520881766363
+      scale: 1.0
+      hidden: false
+      color: ~
+channels: []
+media:
+  import_paths: []
+  files: []
+  tags: []
+layouts:
+  Default:
+    - id: 8c157134-e555-421f-a6e7-79a6a5c836b1
+      label: ~
+      path: /label-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 1
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+    priority: 100
+  - id: mqtt-0
+    name: ""
+    type: mqtt
+    url: "mqtt://localhost"
+    username: ~
+    password: ~
+  - id: osc-0
+    name: ""
+    type: osc
+    protocol: udp
+    output_host: 192.168.1.13
+    output_port: 5000
+    input_port: 5001
+fixtures:
+  - id: 1
+    name: Analogue Dimmer 6Ch 1
+    fixture: "qlc:Proel:Analogue Dimmer 6Ch"
+    channel: 1
+    universe: 1
+    mode: 6Ch Mode
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+      limits: {}
+  - id: 2
+    name: Analogue Dimmer 6Ch 2
+    fixture: "qlc:Proel:Analogue Dimmer 6Ch"
+    channel: 7
+    universe: 1
+    mode: 6Ch Mode
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+      reverse_pixel_order: false
+      limits: {}
+groups:
+  - id: 1
+    name: Dimmers
+    fixtures:
+      - 1
+      - 2
+presets:
+  intensity:
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 5
+      label: 100%
+      value: 1.0
+  shutter: []
+  color:
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+  position: []
+sequences:
+  - id: 1
+    name: Sequence 1
+    fixtures:
+      - - 1
+        - 1
+      - - 1
+        - 2
+      - - 1
+        - 3
+      - - 1
+        - 4
+      - - 1
+        - 5
+      - - 1
+        - 6
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
+              fixtures:
+                - - 1
+                  - 1
+                - - 1
+                  - 2
+                - - 1
+                  - 3
+                - - 1
+                  - 4
+                - - 1
+                  - 5
+                - - 1
+                  - 6
+              block_size: ~
+              groups: ~
+              wings: ~
+        effects: []
+        presets: []
+        cue_fade: ~
+        cue_delay: ~
+    wrap_around: false
+    stop_on_last_cue: false
+    priority:
+      LTP: Normal
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans: []
+timecodes:
+  timecodes:
+    - id: 1
+      name: Song
+      controls:
+        - id: 1
+          spline:
+            steps: []
+      labels: []
+  controls:
+    - id: 1
+      name: Strobe
+surfaces:
+  - id: cc42596a-da0e-4196-9f75-efeece301199
+    name: Surface
+    sections:
+      - id:
+          surface_id: cc42596a-da0e-4196-9f75-efeece301199
+          index: 0
+        name: Section 1
+        input:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0
+        output:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0

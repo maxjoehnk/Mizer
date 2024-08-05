@@ -5541,7 +5541,7 @@ dependencies = [
  "anyhow",
  "downcast",
  "enum-iterator",
- "heck 0.4.1",
+ "heck 0.5.0",
  "mizer-clock",
  "mizer-debug-ui",
  "mizer-injector",
@@ -10387,9 +10387,9 @@ dependencies = [
 
 [[package]]
 name = "vello_svg"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "550ba9acde6c03d00372604523ac153724c8c38a959eccfac03e0f90398c5799"
+checksum = "fe5b606f733291749051e27fcc3420d36d1e39af481911d7e7b769a9b6a33709"
 dependencies = [
  "image 0.25.1",
  "thiserror",
@@ -10687,7 +10687,7 @@ dependencies = [
  "js-sys",
  "log",
  "naga",
- "parking_lot 0.12.3",
+ "parking_lot 0.11.2",
  "profiling",
  "raw-window-handle 0.6.2",
  "serde",
@@ -10717,7 +10717,7 @@ dependencies = [
  "log",
  "naga",
  "once_cell",
- "parking_lot 0.12.3",
+ "parking_lot 0.11.2",
  "profiling",
  "raw-window-handle 0.6.2",
  "ron",
@@ -10761,7 +10761,7 @@ dependencies = [
  "ndk-sys",
  "objc",
  "once_cell",
- "parking_lot 0.12.3",
+ "parking_lot 0.11.2",
  "profiling",
  "range-alloc",
  "raw-window-handle 0.6.2",

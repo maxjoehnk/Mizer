@@ -4133,12 +4133,12 @@ dependencies = [
 
 [[package]]
 name = "image"
-version = "0.25.1"
+version = "0.25.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd54d660e773627692c524beaad361aca785a4f9f5730ce91f42aabe5bce3d11"
+checksum = "99314c8a2152b8ddb211f924cdae532d8c5e4c8bb54728e12fff1b0cd5963a10"
 dependencies = [
  "bytemuck",
- "byteorder",
+ "byteorder-lite",
  "color_quant",
  "exr",
  "gif 0.13.1",
@@ -5228,7 +5228,7 @@ dependencies = [
  "egui_tiles",
  "egui_tracing",
  "futures",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-debug-ui",
  "mizer-module",
  "mizer-wgpu",
@@ -5559,7 +5559,7 @@ dependencies = [
  "fontdb 0.16.1",
  "futures",
  "id3",
- "image 0.25.1",
+ "image 0.25.2",
  "infer",
  "mime_guess",
  "mizer-commander",
@@ -5657,7 +5657,7 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.0",
  "futures",
- "image 0.25.1",
+ "image 0.25.2",
  "ndi",
  "pinboard",
  "tracing",
@@ -5669,7 +5669,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-devices",
  "mizer-ndi",
  "mizer-node",
@@ -5778,7 +5778,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bytes 1.7.1",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-node",
  "mizer-pixel-nodes",
  "mizer-util",
@@ -5874,7 +5874,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
@@ -6205,7 +6205,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-node",
  "mizer-video-nodes",
  "mizer-wgpu",
@@ -6341,7 +6341,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.0",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-node",
  "mizer-surfaces",
  "mizer-wgpu",
@@ -6376,7 +6376,7 @@ dependencies = [
  "enum-iterator",
  "font-kit",
  "glyphon",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-node",
  "mizer-wgpu",
  "num_enum",
@@ -6589,7 +6589,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.0",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
@@ -6606,7 +6606,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-devices",
  "mizer-node",
  "mizer-video-nodes",
@@ -6640,7 +6640,7 @@ dependencies = [
  "anyhow",
  "bytemuck",
  "dashmap",
- "image 0.25.1",
+ "image 0.25.2",
  "mizer-module",
  "parking_lot 0.12.3",
  "profiling",
@@ -10675,7 +10675,7 @@ version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fe5b606f733291749051e27fcc3420d36d1e39af481911d7e7b769a9b6a33709"
 dependencies = [
- "image 0.25.1",
+ "image 0.25.2",
  "thiserror",
  "usvg 0.42.0",
  "vello",

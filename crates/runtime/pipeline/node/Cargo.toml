@@ -10,7 +10,7 @@ test = []
 [dependencies]
 anyhow = "1"
 tracing = "0.1"
-heck = "0.4"
+heck = "0.5"
 serde = { version = "1", features = ["derive", "rc"] }
 mizer-clock = { path = "../../clock" }
 mizer-debug-ui = { path = "../../debug-ui" }

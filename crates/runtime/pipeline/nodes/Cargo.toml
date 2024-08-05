@@ -49,7 +49,7 @@ mizer-transport-nodes = { path = "transport" }
 mizer-vector-nodes = { path = "vector" }
 mizer-ui-nodes = { path = "ui" }
 derive_more = "0.99"
-dashmap = "5.5"
+dashmap = "6.0"
 
 [dev-dependencies]
 mizer-node = { path = "../node", features = ["test"] }

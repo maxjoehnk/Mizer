@@ -15,7 +15,7 @@ mizer-fixtures = { path = "../fixtures" }
 mizer-util = { path = "../../util" }
 pinboard = "2.2"
 profiling = "1"
-dashmap = "5"
+dashmap = "6"
 bezier-nd = "0.5"
 geo-nd = "0.5"
 itertools = "0.13"

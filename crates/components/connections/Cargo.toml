@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 tracing = "0.1"
-dashmap = "5"
+dashmap = "6"
 derive_more = "0.99"
 mizer-protocol-citp = { path = "./protocols/citp" }
 mizer-protocol-dmx = { path = "./protocols/dmx" }

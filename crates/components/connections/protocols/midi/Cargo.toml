@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 midir = "0.10"
-dashmap = "5"
+dashmap = "6"
 mizer-console = { path = "../../../console" }
 mizer-commander = { path = "../../../../runtime/commander" }
 mizer-processing = { path = "../../../../runtime/processing" }

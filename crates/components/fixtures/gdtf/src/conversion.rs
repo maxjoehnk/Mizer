@@ -47,7 +47,7 @@ impl GeometryStateBuilder {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 struct GeometryState {
     controls: FixtureControls<FixtureControlChannel>,
 }
@@ -175,14 +175,34 @@ impl GdtfState {
             })
             .collect();
         
-        let geometries: HashMap<_, _> = geometries.into_iter()
+        let mut geometries: HashMap<_, _> = geometries.into_iter()
             .map(|(name, geometry)| (name, geometry.build()))
             .collect();
         
         let beam_count = self.geometries.count_beams(|name| geometries.contains_key(name));
         
         let (controls, sub_fixtures) = if beam_count > 1 {
-            (Default::default(), Default::default())
+            // TODO: this fails when a fixture has no "primary" beam as might be the case for the Roxx Blinders
+            let parent_beam = self.geometries.first_beam().unwrap();
+            let child_beams = parent_beam.child_beams();
+
+            let mut parent_controls = Default::default();
+            let parent_geometry = geometries.remove(&parent_beam.name).unwrap_or_default();
+            parent_controls += parent_geometry.controls;
+
+            let sub_fixtures = child_beams.into_iter().enumerate().map(|(i, beam)| {
+                let mut controls = Default::default();
+                let geometry = geometries.remove(&beam.name).unwrap_or_default();
+                controls += geometry.controls.into();
+                for geometry in beam.child_names().into_iter().map(|name| geometries.remove(name).unwrap_or_default()) {
+                    controls += geometry.controls.into();
+                }
+
+                SubFixtureDefinition::new(i as u32 + 1, beam.name.clone(), controls)
+            })
+                .collect();
+
+            (parent_controls, sub_fixtures)
         }else {
             let mut controls = Default::default();
             for (_, geometry) in geometries {

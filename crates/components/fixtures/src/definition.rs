@@ -227,77 +227,17 @@ impl<T> OptionExt for Option<T> {
     }
 }
 
-impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {
-    fn from(controls: FixtureControls<String>) -> Self {
-        Self {
-            intensity: controls.intensity.map(FixtureControlChannel::Channel),
-            shutter: controls.shutter.map(FixtureControlChannel::Channel),
-            color_mixer: controls.color_mixer.map(|color| match color {
-                ColorGroup::Rgb {
-                    red,
-                    green,
-                    blue,
-                    white,
-                    amber,
-                } => ColorGroup::Rgb {
-                    red: FixtureControlChannel::Channel(red),
-                    green: FixtureControlChannel::Channel(green),
-                    blue: FixtureControlChannel::Channel(blue),
-                    white: white.map(FixtureControlChannel::Channel),
-                    amber: amber.map(FixtureControlChannel::Channel),
-                },
-                ColorGroup::Cmy {
-                    cyan,
-                    magenta,
-                    yellow,
-                } => ColorGroup::Cmy {
-                    cyan: FixtureControlChannel::Channel(cyan),
-                    magenta: FixtureControlChannel::Channel(magenta),
-                    yellow: FixtureControlChannel::Channel(yellow),
-                },
-            }),
-            color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
-                channel: FixtureControlChannel::Channel(wheel.channel),
-                colors: wheel.colors,
-            }),
-            pan: controls.pan.map(|axis| AxisGroup {
-                channel: FixtureControlChannel::Channel(axis.channel),
-                angle: axis.angle,
-            }),
-            tilt: controls.tilt.map(|axis| AxisGroup {
-                channel: FixtureControlChannel::Channel(axis.channel),
-                angle: axis.angle,
-            }),
-            focus: controls.focus.map(FixtureControlChannel::Channel),
-            zoom: controls.zoom.map(FixtureControlChannel::Channel),
-            prism: controls.prism.map(FixtureControlChannel::Channel),
-            iris: controls.iris.map(FixtureControlChannel::Channel),
-            frost: controls.frost.map(FixtureControlChannel::Channel),
-            gobo: controls.gobo.map(|gobo| GoboGroup {
-                channel: FixtureControlChannel::Channel(gobo.channel),
-                gobos: gobo.gobos,
-            }),
-            generic: controls
-                .generic
-                .into_iter()
-                .map(|generic| GenericControl {
-                    channel: FixtureControlChannel::Channel(generic.channel),
-                    label: generic.label,
-                })
-                .collect(),
-        }
-    }
-}
-
-impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
-    fn from(controls: FixtureControls<FixtureControlChannel>) -> Self {
+macro_rules! implement_conversion {
+    ($from:ty, $to:ty) => {
+impl From<FixtureControls<$from>> for FixtureControls<$to> {
+    fn from(controls: FixtureControls<$from>) -> Self {
         Self {
             intensity: controls
                 .intensity
-                .and_then(FixtureControlChannel::into_channel),
+                .and_then(|c| c.try_into().ok()),
             shutter: controls
                 .shutter
-                .and_then(FixtureControlChannel::into_channel),
+                .and_then(|c| c.try_into().ok()),
             color_mixer: controls.color_mixer.and_then(|color| match color {
                 ColorGroup::Rgb {
                     red,
@@ -306,168 +246,123 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
                     amber,
                     white,
                 } => {
-                    if let (
-                        FixtureControlChannel::Channel(red),
-                        FixtureControlChannel::Channel(green),
-                        FixtureControlChannel::Channel(blue),
-                    ) = (red, green, blue)
-                    {
-                        let amber = amber.and_then(|c| c.into_channel());
-                        let white = white.and_then(|c| c.into_channel());
+                    let red = red.try_into().ok()?;
+                    let green = green.try_into().ok()?;
+                    let blue = blue.try_into().ok()?;
+                    let amber = amber.and_then(|c| c.try_into().ok());
+                    let white = white.and_then(|c| c.try_into().ok());
 
-                        Some(ColorGroup::Rgb {
-                            red,
-                            green,
-                            blue,
-                            amber,
-                            white,
-                        })
-                    } else {
-                        None
-                    }
+                    Some(ColorGroup::Rgb {
+                        red,
+                        green,
+                        blue,
+                        amber,
+                        white,
+                    })
                 }
                 ColorGroup::Cmy {
                     yellow,
                     magenta,
                     cyan,
                 } => {
-                    if let (
-                        FixtureControlChannel::Channel(yellow),
-                        FixtureControlChannel::Channel(magenta),
-                        FixtureControlChannel::Channel(cyan),
-                    ) = (yellow, magenta, cyan)
-                    {
-                        Some(ColorGroup::Cmy {
-                            yellow,
-                            magenta,
-                            cyan,
-                        })
-                    } else {
-                        None
-                    }
+                    let yellow = yellow.try_into().ok()?;
+                    let magenta = magenta.try_into().ok()?;
+                    let cyan = cyan.try_into().ok()?;
+
+                    Some(ColorGroup::Cmy {
+                        yellow,
+                        magenta,
+                        cyan,
+                    })
                 }
             }),
             color_wheel: controls.color_wheel.and_then(|color_wheel| {
-                if let FixtureControlChannel::Channel(channel) = color_wheel.channel {
-                    Some(ColorWheelGroup {
-                        channel,
-                        colors: color_wheel.colors,
-                    })
-                } else {
-                    None
-                }
+                Some(ColorWheelGroup {
+                    channel: color_wheel.channel.try_into().ok()?,
+                    colors: color_wheel.colors,
+                })
             }),
             pan: controls.pan.and_then(|axis| {
-                if let FixtureControlChannel::Channel(channel) = axis.channel {
-                    Some(AxisGroup {
-                        channel,
-                        angle: axis.angle,
-                    })
-                } else {
-                    None
-                }
+                Some(AxisGroup {
+                    channel: axis.channel.try_into().ok()?,
+                    angle: axis.angle,
+                })
             }),
             tilt: controls.tilt.and_then(|axis| {
-                if let FixtureControlChannel::Channel(channel) = axis.channel {
-                    Some(AxisGroup {
-                        channel,
-                        angle: axis.angle,
-                    })
-                } else {
-                    None
-                }
+                Some(AxisGroup {
+                    channel: axis.channel.try_into().ok()?,
+                    angle: axis.angle,
+                })
             }),
-            focus: controls.focus.and_then(FixtureControlChannel::into_channel),
-            zoom: controls.zoom.and_then(FixtureControlChannel::into_channel),
-            prism: controls.prism.and_then(FixtureControlChannel::into_channel),
-            iris: controls.iris.and_then(FixtureControlChannel::into_channel),
-            frost: controls.frost.and_then(FixtureControlChannel::into_channel),
+            focus: controls.focus.and_then(|c| c.try_into().ok()),
+            zoom: controls.zoom.and_then(|c| c.try_into().ok()),
+            prism: controls.prism.and_then(|c| c.try_into().ok()),
+            iris: controls.iris.and_then(|c| c.try_into().ok()),
+            frost: controls.frost.and_then(|c| c.try_into().ok()),
             gobo: controls.gobo.and_then(|gobo| {
-                if let FixtureControlChannel::Channel(channel) = gobo.channel {
-                    Some(GoboGroup {
-                        channel,
-                        gobos: gobo.gobos,
-                    })
-                } else {
-                    None
-                }
+                Some(GoboGroup {
+                    channel: gobo.channel.try_into().ok()?,
+                    gobos: gobo.gobos,
+                })
             }),
             generic: controls
                 .generic
                 .into_iter()
                 .filter_map(|generic| {
-                    if let FixtureControlChannel::Channel(channel) = generic.channel {
-                        Some(GenericControl {
-                            channel,
-                            label: generic.label,
-                        })
-                    } else {
-                        None
-                    }
+                    Some(GenericControl {
+                        channel: generic.channel.try_into().ok()?,
+                        label: generic.label,
+                    })
                 })
                 .collect(),
         }
     }
 }
 
-impl From<FixtureControls<String>> for FixtureControls<SubFixtureControlChannel> {
-    fn from(controls: FixtureControls<String>) -> Self {
-        Self {
-            intensity: controls.intensity.map(SubFixtureControlChannel::Channel),
-            shutter: controls.shutter.map(SubFixtureControlChannel::Channel),
-            color_mixer: controls.color_mixer.map(|color| match color {
-                ColorGroup::Rgb {
-                    red,
-                    green,
-                    blue,
-                    white,
-                    amber,
-                } => ColorGroup::Rgb {
-                    red: SubFixtureControlChannel::Channel(red),
-                    green: SubFixtureControlChannel::Channel(green),
-                    blue: SubFixtureControlChannel::Channel(blue),
-                    white: white.map(SubFixtureControlChannel::Channel),
-                    amber: amber.map(SubFixtureControlChannel::Channel),
-                },
-                ColorGroup::Cmy {
-                    yellow,
-                    magenta,
-                    cyan,
-                } => ColorGroup::Cmy {
-                    yellow: SubFixtureControlChannel::Channel(yellow),
-                    magenta: SubFixtureControlChannel::Channel(magenta),
-                    cyan: SubFixtureControlChannel::Channel(cyan),
-                },
-            }),
-            color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
-                channel: SubFixtureControlChannel::Channel(wheel.channel),
-                colors: wheel.colors,
-            }),
-            pan: controls.pan.map(|axis| AxisGroup {
-                channel: SubFixtureControlChannel::Channel(axis.channel),
-                angle: axis.angle,
-            }),
-            tilt: controls.tilt.map(|axis| AxisGroup {
-                channel: SubFixtureControlChannel::Channel(axis.channel),
-                angle: axis.angle,
-            }),
-            focus: controls.focus.map(SubFixtureControlChannel::Channel),
-            zoom: controls.zoom.map(SubFixtureControlChannel::Channel),
-            prism: controls.prism.map(SubFixtureControlChannel::Channel),
-            iris: controls.iris.map(SubFixtureControlChannel::Channel),
-            frost: controls.frost.map(SubFixtureControlChannel::Channel),
-            gobo: controls.gobo.map(|gobo| GoboGroup {
-                channel: SubFixtureControlChannel::Channel(gobo.channel),
-                gobos: gobo.gobos,
-            }),
-            generic: controls
-                .generic
-                .into_iter()
-                .map(|generic| GenericControl {
-                    channel: SubFixtureControlChannel::Channel(generic.channel),
-                    label: generic.label,
-                })
-                .collect(),
+    };
+}
+
+implement_conversion!(FixtureControlChannel, SubFixtureControlChannel);
+implement_conversion!(String, FixtureControlChannel);
+implement_conversion!(FixtureControlChannel, String);
+implement_conversion!(String, SubFixtureControlChannel);
+
+impl TryFrom<FixtureControlChannel> for String {
+    type Error = ();
+
+    fn try_from(value: FixtureControlChannel) -> Result<Self, Self::Error> {
+        match value {
+            FixtureControlChannel::Channel(channel) => Ok(channel),
+            FixtureControlChannel::VirtualDimmer => Err(()),
+            FixtureControlChannel::Delegate => Err(()),
+        }
+    }
+}
+
+impl TryFrom<String> for FixtureControlChannel {
+    type Error = ();
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        Ok(Self::Channel(value))
+    }
+}
+
+impl TryFrom<String> for SubFixtureControlChannel {
+    type Error = ();
+
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        Ok(Self::Channel(value))
+    }
+}
+
+impl TryFrom<FixtureControlChannel> for SubFixtureControlChannel {
+    type Error = ();
+
+    fn try_from(value: FixtureControlChannel) -> Result<Self, Self::Error> {
+        match value {
+            FixtureControlChannel::Channel(channel) => Ok(Self::Channel(channel)),
+            FixtureControlChannel::VirtualDimmer => Ok(Self::VirtualDimmer),
+            FixtureControlChannel::Delegate => Err(()),
         }
     }
 }

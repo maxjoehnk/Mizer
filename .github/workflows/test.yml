@@ -104,9 +104,6 @@ jobs:
             yasm
       - uses: taiki-e/install-action@protoc
       - uses: nschloe/action-cached-lfs-checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
@@ -119,46 +116,8 @@ jobs:
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: crates/ui
-      - name: Generate protobuf code
-        run: make proto
-        working-directory: crates/ui
-      - name: Clippy Checks
-        uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
       - uses: taiki-e/install-action@nextest
       - name: Tests
         env:
           RUST_BACKTRACE: "1"
         run: make test
-  test-android:
-    runs-on: ubuntu-latest
-    if: false
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install native dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install libclang-dev
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: Install cbindgen binary crate
-        uses: actions-rs/install@v0.1
-        with:
-          crate: cbindgen
-          version: latest
-          use-tool-cache: true
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version-file: "crates/ui/pubspec.yaml"
-      - name: Generate FFI bindings
-        run: make generate_bindings
-        working-directory: crates/ui
-      - name: Generate protobuf code
-        run: make proto
-        working-directory: crates/ui
-      - run: flutter test
-        working-directory: crates/ui

@@ -135,6 +135,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
 }
 
 fn calculate_address(universe: u16, start_channel: u16, channel_count: u16, i: u16) -> (u16, u16) {
+    let start_channel = start_channel.clamp(0, 512);
     let fixtures_in_universe = (512 - start_channel) / channel_count;
     let offset = channel_count * i;
     let start_channel = start_channel + offset;
@@ -173,5 +174,12 @@ mod tests {
         let result = calculate_address(universe, channel, channel_count, i);
 
         assert_eq!(expected, result);
+    }
+
+    #[test]
+    fn calculate_address_should_clamp_start_channel() {
+        let result = calculate_address(1, 513, 1, 0);
+
+        assert_eq!((2, 1), result);
     }
 }

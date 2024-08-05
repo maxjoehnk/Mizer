@@ -39,9 +39,10 @@ class PreferencesView extends StatelessWidget {
 
 class PreferencesCategory extends StatelessWidget {
   final String label;
+  final bool subcategory;
   final List<Widget> children;
 
-  const PreferencesCategory({required this.label, required this.children, Key? key})
+  const PreferencesCategory({required this.label, required this.children, this.subcategory = false, Key? key})
       : super(key: key);
 
   factory PreferencesCategory.hotkeys(String label, Map<String, String> hotkeys, Function(String, String?) update) {
@@ -61,7 +62,7 @@ class PreferencesCategory extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(label, style: textTheme.titleLarge),
+          child: Text(label, style: subcategory ? textTheme.titleSmall : textTheme.titleLarge),
         ), ...children]);
   }
 }

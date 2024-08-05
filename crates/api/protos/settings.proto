@@ -11,10 +11,10 @@ message Settings {
 message PathSettings {
   string media_storage = 1;
   repeated string midi_device_profiles = 2;
-  optional string open_fixture_library = 3;
-  optional string qlcplus = 4;
-  optional string gdtf = 5;
-  optional string mizer = 6;
+  repeated string open_fixture_library = 3;
+  repeated string qlcplus = 4;
+  repeated string gdtf = 5;
+  repeated string mizer = 6;
 }
 
 message Hotkeys {

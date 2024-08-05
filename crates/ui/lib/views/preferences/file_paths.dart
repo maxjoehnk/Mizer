@@ -18,17 +18,19 @@ class PathSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return Column(mainAxisSize: MainAxisSize.min, children: [
-        PathSettingRow(
-            label: "Media Storage".i18n,
-            value: settings.paths.mediaStorage,
-            update: (path) {
-              SettingsBloc bloc = context.read();
-              bloc.add(UpdateSettings((settings) {
-                settings.paths.mediaStorage = path;
+        PreferencesCategory(label: "Media", children: [
+          PathSettingRow(
+              label: "Storage".i18n,
+              value: settings.paths.mediaStorage,
+              update: (path) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.paths.mediaStorage = path;
 
-                return settings;
-              }));
-            }),
+                  return settings;
+                }));
+              }),
+        ]),
         PreferencesCategory(label: "Midi Device Profiles".i18n, children: [
           PathsSetting(
               paths: settings.paths.midiDeviceProfiles,
@@ -43,51 +45,59 @@ class PathSettings extends StatelessWidget {
               }),
         ]),
         PreferencesCategory(label: "Fixture Libraries".i18n, children: [
-          PathSettingRow(
-              label: "Open Fixture Library".i18n,
-              value: settings.paths.openFixtureLibrary,
-              update: (path) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.openFixtureLibrary = path;
+          PreferencesCategory(label: "Open Fixture Library".i18n, subcategory: true, children: [
+            PathsSetting(
+                paths: settings.paths.openFixtureLibrary,
+                update: (paths) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.openFixtureLibrary.clear();
+                    settings.paths.openFixtureLibrary.addAll(paths);
 
-                  return settings;
-                }));
-              }),
-          PathSettingRow(
-              label: "QLC+".i18n,
-              value: settings.paths.qlcplus,
-              update: (path) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.qlcplus = path;
+                    return settings;
+                  }));
+                }),
+          ]),
+          PreferencesCategory(label: "QLC+".i18n, subcategory: true, children: [
+            PathsSetting(
+                paths: settings.paths.qlcplus,
+                update: (paths) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.qlcplus.clear();
+                    settings.paths.qlcplus.addAll(paths);
 
-                  return settings;
-                }));
-              }),
-          PathSettingRow(
-              label: "GDTF".i18n,
-              value: settings.paths.gdtf,
-              update: (path) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.gdtf = path;
+                    return settings;
+                  }));
+                }),
+          ]),
+          PreferencesCategory(label: "GDTF".i18n, subcategory: true, children: [
+            PathsSetting(
+                paths: settings.paths.gdtf,
+                update: (paths) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.gdtf.clear();
+                    settings.paths.gdtf.addAll(paths);
 
-                  return settings;
-                }));
-              }),
-          PathSettingRow(
-              label: "Mizer".i18n,
-              value: settings.paths.mizer,
-              update: (path) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.mizer = path;
+                    return settings;
+                  }));
+                }),
+          ]),
+          PreferencesCategory(label: "Mizer".i18n, subcategory: true, children: [
+            PathsSetting(
+                paths: settings.paths.mizer,
+                update: (paths) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.mizer.clear();
+                    settings.paths.mizer.addAll(paths);
 
-                  return settings;
-                }));
-              }),
-        ])
+                    return settings;
+                  }));
+                }),
+          ]),
+        ]),
       ]);
     });
   }

@@ -1,6 +1,6 @@
 use std::path::PathBuf;
-use mizer_connections::midi_device_profile;
 
+use mizer_connections::midi_device_profile;
 use mizer_settings as settings;
 
 use crate::proto::settings as model;
@@ -45,14 +45,35 @@ impl From<settings::FilePaths> for model::PathSettings {
     fn from(paths: settings::FilePaths) -> Self {
         Self {
             media_storage: paths.media_storage.to_string_lossy().to_string(),
-            midi_device_profiles: paths.midi_device_profiles.into_iter().map(|p| p.to_string_lossy().to_string()).collect(),
+            midi_device_profiles: paths
+                .midi_device_profiles
+                .into_iter()
+                .map(path_to_string)
+                .collect(),
             open_fixture_library: paths
                 .fixture_libraries
                 .open_fixture_library
-                .map(path_to_string),
-            qlcplus: paths.fixture_libraries.qlcplus.map(path_to_string),
-            gdtf: paths.fixture_libraries.gdtf.map(path_to_string),
-            mizer: paths.fixture_libraries.mizer.map(path_to_string),
+                .into_iter()
+                .map(path_to_string)
+                .collect(),
+            qlcplus: paths
+                .fixture_libraries
+                .qlcplus
+                .into_iter()
+                .map(path_to_string)
+                .collect(),
+            gdtf: paths
+                .fixture_libraries
+                .gdtf
+                .into_iter()
+                .map(path_to_string)
+                .collect(),
+            mizer: paths
+                .fixture_libraries
+                .mizer
+                .into_iter()
+                .map(path_to_string)
+                .collect(),
         }
     }
 }
@@ -97,12 +118,16 @@ impl From<model::PathSettings> for settings::FilePaths {
         Self {
             media_storage: PathBuf::from(paths.media_storage),
             fixture_libraries: settings::FixtureLibraryPaths {
-                gdtf: paths.gdtf.map(PathBuf::from),
-                open_fixture_library: paths.open_fixture_library.map(PathBuf::from),
-                qlcplus: paths.qlcplus.map(PathBuf::from),
-                mizer: paths.mizer.map(PathBuf::from),
+                gdtf: paths.gdtf.into_iter().map(PathBuf::from).collect(),
+                open_fixture_library: paths.open_fixture_library.into_iter().map(PathBuf::from).collect(),
+                qlcplus: paths.qlcplus.into_iter().map(PathBuf::from).collect(),
+                mizer: paths.mizer.into_iter().map(PathBuf::from).collect(),
             },
-            midi_device_profiles: paths.midi_device_profiles.into_iter().map(PathBuf::from).collect(),
+            midi_device_profiles: paths
+                .midi_device_profiles
+                .into_iter()
+                .map(PathBuf::from)
+                .collect(),
         }
     }
 }
@@ -126,7 +151,10 @@ impl From<midi_device_profile::DeviceProfile> for model::MidiDeviceProfile {
             manufacturer: profile.manufacturer,
             name: profile.name,
             file_path: profile.file_path.to_string_lossy().to_string(),
-            errors: profile.errors.errors().into_iter()
+            errors: profile
+                .errors
+                .errors()
+                .into_iter()
                 .map(|err| model::Error {
                     timestamp: err.timestamp.to_string(),
                     message: err.error.to_string(),

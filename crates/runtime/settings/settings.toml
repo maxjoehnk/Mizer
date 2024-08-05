@@ -10,7 +10,19 @@ midi_device_profiles = [
 ]
 
 [paths.fixture_libraries]
-open_fixture_library = "crates/components/fixtures/open-fixture-library/.fixtures"
-qlcplus = "crates/components/fixtures/qlcplus/.fixtures"
-gdtf = "crates/components/fixtures/gdtf/.fixtures"
-mizer = "crates/components/fixtures/mizer-definitions/.fixtures"
+open_fixture_library = [
+    "crates/components/fixtures/open-fixture-library/.fixtures",
+    "~/Documents/Mizer/Fixture Definitions/Open Fixture Library",
+]
+qlcplus = [
+    "crates/components/fixtures/qlcplus/.fixtures",
+    "~/Documents/Mizer/Fixture Definitions/QLC+",
+]
+gdtf = [
+    "crates/components/fixtures/gdtf/.fixtures",
+    "~/Documents/Mizer/Fixture Definitions/GDTF",
+]
+mizer = [
+    "crates/components/fixtures/mizer-definitions/.fixtures",
+    "~/Documents/Mizer/Fixture Definitions/Mizer",
+]

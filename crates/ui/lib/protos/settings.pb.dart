@@ -101,10 +101,10 @@ class PathSettings extends $pb.GeneratedMessage {
   factory PathSettings({
     $core.String? mediaStorage,
     $core.Iterable<$core.String>? midiDeviceProfiles,
-    $core.String? openFixtureLibrary,
-    $core.String? qlcplus,
-    $core.String? gdtf,
-    $core.String? mizer,
+    $core.Iterable<$core.String>? openFixtureLibrary,
+    $core.Iterable<$core.String>? qlcplus,
+    $core.Iterable<$core.String>? gdtf,
+    $core.Iterable<$core.String>? mizer,
   }) {
     final $result = create();
     if (mediaStorage != null) {
@@ -114,16 +114,16 @@ class PathSettings extends $pb.GeneratedMessage {
       $result.midiDeviceProfiles.addAll(midiDeviceProfiles);
     }
     if (openFixtureLibrary != null) {
-      $result.openFixtureLibrary = openFixtureLibrary;
+      $result.openFixtureLibrary.addAll(openFixtureLibrary);
     }
     if (qlcplus != null) {
-      $result.qlcplus = qlcplus;
+      $result.qlcplus.addAll(qlcplus);
     }
     if (gdtf != null) {
-      $result.gdtf = gdtf;
+      $result.gdtf.addAll(gdtf);
     }
     if (mizer != null) {
-      $result.mizer = mizer;
+      $result.mizer.addAll(mizer);
     }
     return $result;
   }
@@ -134,10 +134,10 @@ class PathSettings extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PathSettings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'mediaStorage')
     ..pPS(2, _omitFieldNames ? '' : 'midiDeviceProfiles')
-    ..aOS(3, _omitFieldNames ? '' : 'openFixtureLibrary')
-    ..aOS(4, _omitFieldNames ? '' : 'qlcplus')
-    ..aOS(5, _omitFieldNames ? '' : 'gdtf')
-    ..aOS(6, _omitFieldNames ? '' : 'mizer')
+    ..pPS(3, _omitFieldNames ? '' : 'openFixtureLibrary')
+    ..pPS(4, _omitFieldNames ? '' : 'qlcplus')
+    ..pPS(5, _omitFieldNames ? '' : 'gdtf')
+    ..pPS(6, _omitFieldNames ? '' : 'mizer')
     ..hasRequiredFields = false
   ;
 
@@ -175,40 +175,16 @@ class PathSettings extends $pb.GeneratedMessage {
   $core.List<$core.String> get midiDeviceProfiles => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.String get openFixtureLibrary => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set openFixtureLibrary($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasOpenFixtureLibrary() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearOpenFixtureLibrary() => clearField(3);
+  $core.List<$core.String> get openFixtureLibrary => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.String get qlcplus => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set qlcplus($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasQlcplus() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearQlcplus() => clearField(4);
+  $core.List<$core.String> get qlcplus => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.String get gdtf => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set gdtf($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasGdtf() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearGdtf() => clearField(5);
+  $core.List<$core.String> get gdtf => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.String get mizer => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set mizer($core.String v) { $_setString(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasMizer() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearMizer() => clearField(6);
+  $core.List<$core.String> get mizer => $_getList(5);
 }
 
 class Hotkeys extends $pb.GeneratedMessage {

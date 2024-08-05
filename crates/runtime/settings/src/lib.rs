@@ -42,7 +42,7 @@ pub struct FilePaths {
     pub media_storage: PathBuf,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(from="BackwardCompatibility")]
 #[repr(transparent)]
 pub struct PathList(Vec<PathBuf>);
@@ -98,10 +98,10 @@ fn default_media_storage() -> PathBuf {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct FixtureLibraryPaths {
-    pub open_fixture_library: Option<PathBuf>,
-    pub qlcplus: Option<PathBuf>,
-    pub gdtf: Option<PathBuf>,
-    pub mizer: Option<PathBuf>,
+    pub open_fixture_library: PathList,
+    pub qlcplus: PathList,
+    pub gdtf: PathList,
+    pub mizer: PathList,
 }
 
 impl Settings {

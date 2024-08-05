@@ -18,39 +18,39 @@ impl FixtureLibraryLoader for MizerFixtureLoader {
             load_mizer_provider,
         ]
         .into_iter()
-        .filter_map(|loader| loader(paths))
+        .flat_map(|loader| loader(paths))
         .collect()
     }
 }
 
-fn load_ofl_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
-    paths.open_fixture_library.as_ref().map(|path| {
+fn load_ofl_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+    paths.open_fixture_library.iter().map(|path| {
         let ofl_provider = OpenFixtureLibraryProvider::new(path.to_string_lossy().to_string());
 
         Box::new(ofl_provider) as Box<dyn FixtureLibraryProvider>
-    })
+    }).collect()
 }
 
-fn load_gdtf_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
-    paths.gdtf.as_ref().map(|path| {
+fn load_gdtf_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+    paths.gdtf.iter().map(|path| {
         let gdtf_provider = GdtfProvider::new(path.to_string_lossy().to_string());
 
         Box::new(gdtf_provider) as Box<dyn FixtureLibraryProvider>
-    })
+    }).collect()
 }
 
-fn load_qlcplus_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
-    paths.qlcplus.as_ref().map(|path| {
+fn load_qlcplus_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+    paths.qlcplus.iter().map(|path| {
         let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
 
         Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
-    })
+    }).collect()
 }
 
-fn load_mizer_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
-    paths.mizer.as_ref().map(|path| {
+fn load_mizer_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
+    paths.mizer.iter().map(|path| {
         let mizer_provider = MizerDefinitionsProvider::new(path.to_string_lossy().to_string());
 
         Box::new(mizer_provider) as Box<dyn FixtureLibraryProvider>
-    })
+    }).collect()
 }

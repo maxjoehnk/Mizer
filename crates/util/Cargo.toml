@@ -19,7 +19,7 @@ tracy-client = { version = "0.17", optional = true, features = ["sampling", "cod
 serde = { version = "1", features = ["derive", "rc"] }
 bezier-rs = "0.4"
 uuid = { version = "1.8", features = ["v4"] }
-base64 = "0.21"
+base64 = "0.22"
 indexmap = "2.2"
 shellexpand = "3.1"
 ringbuffer = "0.15"

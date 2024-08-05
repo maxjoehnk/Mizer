@@ -12,7 +12,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 simd-json = "0.13"
 mizer-util = { path = "../../../util" }
-base64 = "0.21"
+base64 = "0.22"
 
 [build-dependencies]
 ureq = "2.9"

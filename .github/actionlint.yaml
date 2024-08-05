@@ -1,3 +1,4 @@
+---
 self-hosted-runner:
   labels: []
 # Configuration variables in array of strings defined in your repository or

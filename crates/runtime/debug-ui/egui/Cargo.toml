@@ -10,7 +10,7 @@ egui = "0.28"
 egui-winit = "0.28"
 egui-wgpu = { version = "0.28", features = ["winit"] }
 winit = "0.29"
-image = "0.24"
+image = "0.25"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 profiling = "1"

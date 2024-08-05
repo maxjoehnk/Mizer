@@ -1,6 +1,6 @@
+use crate::MidiConnectionManager;
 use mizer_commander::{Command, Ref};
 use serde::{Deserialize, Serialize};
-use crate::MidiConnectionManager;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ChangeMidiDeviceProfileCommand {
@@ -15,19 +15,29 @@ impl<'a> Command<'a> for ChangeMidiDeviceProfileCommand {
 
     fn label(&self) -> String {
         if let Some(profile_id) = self.profile_id.as_ref() {
-            format!("Change MIDI device profile for device {} to {}", self.device, profile_id)
+            format!(
+                "Change MIDI device profile for device {} to {}",
+                self.device, profile_id
+            )
         } else {
             format!("Change MIDI device profile for device {}", self.device)
         }
     }
 
-    fn apply(&self, midi_connection_manager: &MidiConnectionManager) -> anyhow::Result<(Self::Result, Self::State)> {
+    fn apply(
+        &self,
+        midi_connection_manager: &MidiConnectionManager,
+    ) -> anyhow::Result<(Self::Result, Self::State)> {
         midi_connection_manager.change_device_profile(&self.device, self.profile_id.as_deref())?;
-        
+
         Ok(((), None))
     }
 
-    fn revert(&self, midi_connection_manager: &MidiConnectionManager, state: Self::State) -> anyhow::Result<()> {
+    fn revert(
+        &self,
+        midi_connection_manager: &MidiConnectionManager,
+        state: Self::State,
+    ) -> anyhow::Result<()> {
         midi_connection_manager.change_device_profile(&self.device, state.as_deref())?;
 
         Ok(())

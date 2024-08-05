@@ -1,5 +1,5 @@
-use std::sync::Arc;
 use std::sync::mpsc::Receiver;
+use std::sync::Arc;
 
 use wgpu::SurfaceTexture;
 use winit::event::WindowEvent;

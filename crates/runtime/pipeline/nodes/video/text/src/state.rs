@@ -1,4 +1,7 @@
-use glyphon::{cosmic_text, Attrs, Buffer, Family, FontSystem, Metrics, Resolution, Shaping, SwashCache, TextArea, TextAtlas, TextBounds, TextRenderer, Cache, Viewport};
+use glyphon::{
+    cosmic_text, Attrs, Buffer, Cache, Family, FontSystem, Metrics, Resolution, Shaping,
+    SwashCache, TextArea, TextAtlas, TextBounds, TextRenderer, Viewport,
+};
 
 use mizer_node::Color;
 use mizer_wgpu::wgpu::{CommandBuffer, MultisampleState};
@@ -171,7 +174,8 @@ impl TextTextureState {
         let mut buffer = context.create_command_buffer("Text Render Pass");
         {
             let mut pass = buffer.start_render_pass(target);
-            self.text_renderer.render(&self.atlas, &self.viewport, &mut pass)?;
+            self.text_renderer
+                .render(&self.atlas, &self.viewport, &mut pass)?;
         }
 
         Ok(buffer.finish())

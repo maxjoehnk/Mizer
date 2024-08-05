@@ -1,11 +1,11 @@
-use std::path::{Path};
+use std::path::Path;
 
 use ffmpeg::error::EAGAIN;
 use ffmpeg_the_third as ffmpeg;
 use image::DynamicImage;
 
+use super::{IThumbnailGenerator, THUMBNAIL_SIZE};
 use crate::documents::{MediaDocument, MediaType};
-use super::{THUMBNAIL_SIZE, IThumbnailGenerator};
 
 pub struct VideoGenerator;
 

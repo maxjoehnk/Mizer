@@ -2,11 +2,11 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{Command, InjectorRef, RefMut, sub_command};
+use mizer_commander::{sub_command, Command, InjectorRef, RefMut};
 use mizer_node::{Injector, NodeLink};
 use mizer_ports::PortType;
 use mizer_runtime::commands::{AddLinkCommand, AddNodeCommand};
-use mizer_runtime::{Pipeline};
+use mizer_runtime::Pipeline;
 
 use crate::{NodeRequest, NodeTemplate};
 

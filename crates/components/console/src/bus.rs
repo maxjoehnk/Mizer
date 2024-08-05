@@ -1,5 +1,5 @@
-use std::sync::OnceLock;
 use crate::{ConsoleCategory, ConsoleLevel, ConsoleMessage};
+use std::sync::OnceLock;
 
 static BUS: OnceLock<ConsoleBus> = OnceLock::new();
 

@@ -1,7 +1,7 @@
-use std::path::{Path, PathBuf};
-use image::ImageFormat;
 use crate::documents::MediaDocument;
 use crate::file_storage::FileStorage;
+use image::ImageFormat;
+use std::path::{Path, PathBuf};
 
 mod audio_generator;
 mod image_generator;
@@ -29,13 +29,14 @@ impl ThumbnailGenerator {
             generators,
         }
     }
-    
+
     pub fn generate(&self, media: &MediaDocument) -> anyhow::Result<Option<PathBuf>> {
         let thumbnail_path = self.file_storage.get_thumbnail_path(&media.file_path);
 
         for generator in self.generators.iter() {
             if generator.supported(media) {
-                return generator.generate_thumbnail(media, &thumbnail_path)
+                return generator
+                    .generate_thumbnail(media, &thumbnail_path)
                     .map(|result| result.map(|_| thumbnail_path));
             }
         }

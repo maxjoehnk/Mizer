@@ -2,7 +2,7 @@ use mizer_connections::midi_device_profile::MidiDeviceProfileRegistry;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
 use mizer_module::ApiInjector;
-use mizer_sequencer::{Sequencer};
+use mizer_sequencer::Sequencer;
 use mizer_status_bus::StatusBus;
 use mizer_surfaces::SurfaceRegistryApi;
 use mizer_timecode::TimecodeManager;

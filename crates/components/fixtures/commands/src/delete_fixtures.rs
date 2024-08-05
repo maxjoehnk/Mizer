@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{Command, Ref, sub_command, SubCommand, SubCommandRunner};
+use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
 use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_nodes::FixtureNode;
@@ -39,8 +39,8 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
             SubCommandRunner<DeleteNodesCommand>,
         ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let nodes =
-            pipeline.find_node_paths::<FixtureNode>(|node| self.fixture_ids.contains(&node.fixture_id));
+        let nodes = pipeline
+            .find_node_paths::<FixtureNode>(|node| self.fixture_ids.contains(&node.fixture_id));
         let cmd = DeleteNodesCommand {
             paths: nodes.into_iter().cloned().collect(),
         };

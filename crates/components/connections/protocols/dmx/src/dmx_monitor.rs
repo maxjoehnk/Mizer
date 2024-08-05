@@ -1,6 +1,6 @@
-use std::rc::Rc;
-use evmap::{ReadHandleFactory, WriteHandle};
 use crate::buffer::DmxBuffer;
+use evmap::{ReadHandleFactory, WriteHandle};
+use std::rc::Rc;
 
 type UnivereData = Rc<[u8; 512]>;
 
@@ -32,11 +32,12 @@ impl DmxMonitorHandle {
 
         universe_guard.into_iter().next().cloned()
     }
-    
+
     pub fn read_all(&self) -> Vec<(u16, UnivereData)> {
         let handle = self.handle_factory.handle();
-        let data = handle.map_into::<_, Vec<_>, _>(|universe, data| (*universe, data.iter().next().cloned()));
-        
+        let data = handle
+            .map_into::<_, Vec<_>, _>(|universe, data| (*universe, data.iter().next().cloned()));
+
         data.into_iter()
             .filter_map(|(universe, data)| data.map(|data| (universe, data)))
             .collect()
@@ -47,6 +48,8 @@ pub fn create_monitor() -> (DmxMonitorInternalHandle, DmxMonitorHandle) {
     let (read_handle, write_handle) = evmap::new();
     (
         DmxMonitorInternalHandle { write_handle },
-        DmxMonitorHandle { handle_factory: read_handle.factory() },
+        DmxMonitorHandle {
+            handle_factory: read_handle.factory(),
+        },
     )
 }

@@ -14,7 +14,8 @@ impl ConsoleHandler {
     }
 
     pub fn get_console_history(&self) -> Vec<ConsoleMessage> {
-        self.console_history.get_history()
+        self.console_history
+            .get_history()
             .into_iter()
             .map(ConsoleMessage::from)
             .collect()
@@ -22,7 +23,6 @@ impl ConsoleHandler {
 
     pub fn observe_console(&self) -> impl Stream<Item = ConsoleMessage> {
         let subscriber = self.console_history.subscribe();
-        subscriber.into_stream()
-            .map(ConsoleMessage::from)
+        subscriber.into_stream().map(ConsoleMessage::from)
     }
 }

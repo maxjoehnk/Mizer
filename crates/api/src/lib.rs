@@ -31,10 +31,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
         &self,
         command: T,
     ) -> anyhow::Result<T::Result>;
-    fn query<'a, T: SendableQuery<'a> + 'static>(
-        &self,
-        query: T,
-    ) -> anyhow::Result<T::Result>;
+    fn query<'a, T: SendableQuery<'a> + 'static>(&self, query: T) -> anyhow::Result<T::Result>;
 
     fn undo(&self) -> anyhow::Result<()>;
     fn redo(&self) -> anyhow::Result<()>;
@@ -44,9 +41,13 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
 
-    #[deprecated(note = "this is only used for ffi access but imposes the risk of bypassing the query layer")]
+    #[deprecated(
+        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
+    )]
     fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>>;
-    #[deprecated(note = "this is only used for ffi access but imposes the risk of bypassing the query layer")]
+    #[deprecated(
+        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
+    )]
     fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef>;
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
@@ -71,12 +72,16 @@ pub trait RuntimeApi: Clone + Send + Sync {
     #[deprecated(note = "this should be replaced with a subscribe query in the future")]
     fn get_osc_monitor(&self, name: String) -> anyhow::Result<Subscriber<OscMessage>>;
 
-    #[deprecated(note = "this is only used for ffi access but imposes the risk of bypassing the query layer")]
+    #[deprecated(
+        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
+    )]
     fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>>;
 
-    #[deprecated(note = "this is only used for ffi access but imposes the risk of bypassing the query layer")]
+    #[deprecated(
+        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
+    )]
     fn get_device_manager(&self) -> DeviceManager;
-    
+
     fn reload_midi_device_profiles(&self) -> anyhow::Result<()>;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
@@ -84,7 +89,9 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn read_settings(&self) -> Settings;
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
     fn observe_settings(&self) -> Subscriber<Settings>;
-    #[deprecated(note = "this is only used for ffi access but imposes the risk of bypassing the query layer")]
+    #[deprecated(
+        note = "this is only used for ffi access but imposes the risk of bypassing the query layer"
+    )]
     fn layouts_view(&self) -> LayoutsView;
 
     fn open_nodes_view(&self);

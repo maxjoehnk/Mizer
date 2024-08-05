@@ -182,7 +182,7 @@ impl SequenceState {
         }
         self.update_channel_states(sequence, clock, frame);
     }
-    
+
     pub fn go_backward(
         &mut self,
         sequence: &Sequence,
@@ -274,7 +274,7 @@ impl SequenceState {
             self.active_cue_index = 0;
             self.active = false;
             self.stop(sequence, effect_engine, clock, frame);
-        }else {
+        } else {
             self.active_cue_index = self.active_cue_index.saturating_sub(1);
         }
     }

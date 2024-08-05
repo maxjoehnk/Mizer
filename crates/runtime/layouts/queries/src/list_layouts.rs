@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_layouts::{Layout, LayoutStorage};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListLayoutsQuery;

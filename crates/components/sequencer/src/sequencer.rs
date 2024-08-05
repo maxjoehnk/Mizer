@@ -178,7 +178,14 @@ impl Sequencer {
         for id in orders.iter() {
             let state = states.entry(*id).or_default();
             if let Some(sequence) = sequences.get(id) {
-                sequence.run(state, &self.clock, fixture_manager, effect_engine, &fixture_manager.presets, frame);
+                sequence.run(
+                    state,
+                    &self.clock,
+                    fixture_manager,
+                    effect_engine,
+                    &fixture_manager.presets,
+                    frame,
+                );
             }
         }
     }

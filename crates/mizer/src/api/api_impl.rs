@@ -6,7 +6,9 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_command_executor::{CommandExecutorApi, SendableCommand, SendableQuery, GetCommandHistoryQuery};
+use mizer_command_executor::{
+    CommandExecutorApi, GetCommandHistoryQuery, SendableCommand, SendableQuery,
+};
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
@@ -14,9 +16,7 @@ use mizer_node::{NodePath, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
-use mizer_runtime::{
-    DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef, RuntimeAccess,
-};
+use mizer_runtime::{DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef, RuntimeAccess};
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_status_bus::StatusHandle;
@@ -49,10 +49,7 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn query<'a, T: SendableQuery<'a> + 'static>(
-        &self,
-        query: T,
-    ) -> anyhow::Result<T::Result> {
+    fn query<'a, T: SendableQuery<'a> + 'static>(&self, query: T) -> anyhow::Result<T::Result> {
         let result = self.command_executor_api.execute_query(query)?;
 
         Ok(result)
@@ -176,8 +173,9 @@ impl RuntimeApi for Api {
     #[profiling::function]
     fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>> {
         let dmx_monitor = self.api_injector.get::<DmxMonitorHandle>();
-        let dmx_monitor = dmx_monitor.ok_or_else(|| anyhow::anyhow!("DMX monitor not available"))?;
-        
+        let dmx_monitor =
+            dmx_monitor.ok_or_else(|| anyhow::anyhow!("DMX monitor not available"))?;
+
         Ok(dmx_monitor.read_all())
     }
 
@@ -267,10 +265,16 @@ impl RuntimeApi for Api {
 
     fn reload_midi_device_profiles(&self) -> anyhow::Result<()> {
         let status_handle = self.api_injector.require_service::<StatusHandle>();
-        let registry = self.api_injector.require_service::<MidiDeviceProfileRegistry>();
-        let loaded_profiles = registry.load_device_profiles(&self.settings.read().settings.paths.midi_device_profiles)?;
-        status_handle.add_message(format!("Loaded {loaded_profiles} MIDI Device Profiles"), None);
-        
+        let registry = self
+            .api_injector
+            .require_service::<MidiDeviceProfileRegistry>();
+        let loaded_profiles = registry
+            .load_device_profiles(&self.settings.read().settings.paths.midi_device_profiles)?;
+        status_handle.add_message(
+            format!("Loaded {loaded_profiles} MIDI Device Profiles"),
+            None,
+        );
+
         Ok(())
     }
 

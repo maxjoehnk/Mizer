@@ -3,8 +3,8 @@ use std::ops::Deref;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::{FixtureId, FixturePriority};
 use mizer_fixtures::programmer::Presets;
+use mizer_fixtures::{FixtureId, FixturePriority};
 use mizer_module::ClockFrame;
 
 use crate::contracts::*;
@@ -92,12 +92,7 @@ impl Sequence {
         }
         for preset in &cue.presets {
             for (fixture_id, control, value) in preset.values(cue, state, presets) {
-                fixture_controller.write(
-                    fixture_id,
-                    control.clone(),
-                    value,
-                    self.priority,
-                );
+                fixture_controller.write(fixture_id, control.clone(), value, self.priority);
                 state.set_fixture_value(fixture_id, control, value);
             }
         }

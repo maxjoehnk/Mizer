@@ -10,9 +10,7 @@ pub struct EffectsHandler<R> {
 
 impl<R: RuntimeApi> EffectsHandler<R> {
     pub fn new(runtime: R) -> Self {
-        Self {
-            runtime,
-        }
+        Self { runtime }
     }
 
     #[tracing::instrument(skip(self))]
@@ -22,9 +20,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
 
         let effects = effects.into_iter().map(Effect::from).collect();
 
-        Effects {
-            effects,
-        }
+        Effects { effects }
     }
 
     #[tracing::instrument(skip(self))]

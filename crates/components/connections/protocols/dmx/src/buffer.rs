@@ -24,8 +24,10 @@ impl DmxBuffer {
             buffer[i + channel as usize - 1usize] = *value;
         }
     }
-    
+
     pub fn iter(&self) -> impl Iterator<Item = (u16, [u8; 512])> + '_ {
-        self.buffers.iter().map(|entry| (*entry.key(), entry.value().clone()))
+        self.buffers
+            .iter()
+            .map(|entry| (*entry.key(), entry.value().clone()))
     }
 }

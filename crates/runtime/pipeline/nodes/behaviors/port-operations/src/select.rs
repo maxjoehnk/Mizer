@@ -96,7 +96,7 @@ impl ProcessingNode for SelectNode {
                     if let Some(value) = value {
                         context.write_multi_preview(value);
                     }
-                },
+                }
                 PortType::Laser => transfer_port::<Vec<LaserFrame>>(context, *channel),
                 PortType::Data => {
                     transfer_port::<StructuredData>(context, *channel);

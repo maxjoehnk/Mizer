@@ -36,23 +36,28 @@ fn main() -> anyhow::Result<()> {
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("device-profiles/midi"),
             PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.open_fixture_library = vec![
             PathBuf::from("fixtures/open-fixture-library"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/Open Fixture Library"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.qlcplus = vec![
             PathBuf::from("fixtures/qlcplus"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/QLC+"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.gdtf = vec![
             PathBuf::from("fixtures/gdtf"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/GDTF"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.mizer = vec![
             PathBuf::from("fixtures/mizer"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/Mizer"),
-        ].into();
+        ]
+        .into();
     })?;
 
     Ok(())
@@ -89,26 +94,35 @@ fn main() -> anyhow::Result<()> {
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("../Resources/device-profiles/midi"),
             PathBuf::from("~/Documents/Mizer/Midi Device Profiles"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.open_fixture_library = vec![
             PathBuf::from("../Resources/fixtures/open-fixture-library"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/Open Fixture Library"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.qlcplus = vec![
             PathBuf::from("../Resources/fixtures/qlcplus"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/QLC+"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.gdtf = vec![
             PathBuf::from("../Resources/fixtures/gdtf"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/GDTF"),
-        ].into();
+        ]
+        .into();
         settings.paths.fixture_libraries.mizer = vec![
             PathBuf::from("../Resources/fixtures/mizer"),
             PathBuf::from("~/Documents/Mizer/Fixture Definitions/Mizer"),
-        ].into();
+        ]
+        .into();
     })?;
 
-    change_rpath(&artifact.artifact_dir, "@executable_path", "@executable_path/../Frameworks")?;
+    change_rpath(
+        &artifact.artifact_dir,
+        "@executable_path",
+        "@executable_path/../Frameworks",
+    )?;
     generate_icns(&artifact.cwd, &artifact.artifact_dir)?;
 
     Ok(())

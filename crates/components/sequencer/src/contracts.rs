@@ -1,8 +1,8 @@
 use std::time::Instant;
 
-use mizer_fixtures::{FixtureId, FixturePriority};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::{FixtureId, FixturePriority};
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait Clock {

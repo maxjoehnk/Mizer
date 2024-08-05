@@ -21,7 +21,9 @@ pub struct MediaEventChannel<AR: AsyncRuntime, R> {
 
 impl_into_flutter_value!(MediaFiles);
 
-impl<AR: AsyncRuntime + 'static, R: RuntimeApi + 'static> EventChannelHandler for MediaEventChannel<AR, R> {
+impl<AR: AsyncRuntime + 'static, R: RuntimeApi + 'static> EventChannelHandler
+    for MediaEventChannel<AR, R>
+{
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         tracing::debug!("register_event_sink {}", id);

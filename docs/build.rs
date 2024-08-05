@@ -48,18 +48,21 @@ fn generate_settings(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Result
                 Ok(entry) => {
                     let file_name = entry.file_name();
                     let file_name = file_name.to_string_lossy();
-                    let is_setting_file = entry.file_type()?.is_file() && file_name.starts_with("setting");
+                    let is_setting_file =
+                        entry.file_type()?.is_file() && file_name.starts_with("setting");
                     if is_setting_file {
                         let setting_name = file_name.replace("setting_", "").replace(".adoc", "");
                         let settings = fs::read_to_string(entry.path())?;
-                        let settings = settings.lines()
-                            .skip(1)
-                            .collect::<String>();
+                        let settings = settings.lines().skip(1).collect::<String>();
                         let settings = settings.trim();
-                        settings_codegen.entry(setting_name.to_string(), &format!("\"{settings}\""));
+                        settings_codegen
+                            .entry(setting_name.to_string(), &format!("\"{settings}\""));
                     }
                 }
-                Err(err) => eprintln!("Error reading file in directory {}: {err:?}", node.display())
+                Err(err) => eprintln!(
+                    "Error reading file in directory {}: {err:?}",
+                    node.display()
+                ),
             }
         }
         codegen.entry(name.to_string(), &format!("{}", settings_codegen.build()));
@@ -103,18 +106,21 @@ fn generate_templates(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Resul
                 Ok(entry) => {
                     let file_name = entry.file_name();
                     let file_name = file_name.to_string_lossy();
-                    let is_setting_file = entry.file_type()?.is_file() && file_name.starts_with("template");
+                    let is_setting_file =
+                        entry.file_type()?.is_file() && file_name.starts_with("template");
                     if is_setting_file {
                         let template_name = file_name.replace("template_", "").replace(".adoc", "");
                         let template = fs::read_to_string(entry.path())?;
-                        let template = template.lines()
-                            .skip(1)
-                            .collect::<String>();
+                        let template = template.lines().skip(1).collect::<String>();
                         let template = template.trim();
-                        templates_codegen.entry(template_name.to_string(), &format!("\"{template}\""));
+                        templates_codegen
+                            .entry(template_name.to_string(), &format!("\"{template}\""));
                     }
                 }
-                Err(err) => eprintln!("Error reading file in directory {}: {err:?}", node.display())
+                Err(err) => eprintln!(
+                    "Error reading file in directory {}: {err:?}",
+                    node.display()
+                ),
             }
         }
         codegen.entry(name.to_string(), &format!("{}", templates_codegen.build()));
@@ -128,4 +134,3 @@ fn generate_templates(file: &mut impl Write, nodes: &[PathBuf]) -> anyhow::Resul
 
     Ok(())
 }
-

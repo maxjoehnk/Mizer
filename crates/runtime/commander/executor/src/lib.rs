@@ -1,9 +1,9 @@
-use std::any::{type_name, TypeId};
-use std::sync::Arc;
-use parking_lot::RwLock;
 pub use mizer_commander::Command;
 use mizer_module::ApiInjector;
 use mizer_processing::Injector;
+use parking_lot::RwLock;
+use std::any::{type_name, TypeId};
+use std::sync::Arc;
 
 pub use crate::executor::CommandExecutor;
 pub use crate::history::CommandHistory;
@@ -42,13 +42,14 @@ impl CommandExecutorApi {
         T::Result: Send + Sync,
     {
         let cmd = command.into();
-        let result: anyhow::Result<_> = self.executor.run_in_main_loop(move |executor, injector| {
-            let (result, key) = cmd.apply(injector, executor, None)?;
-            let history = injector.get_mut::<CommandHistory>().unwrap();
-            history.add_entry(cmd, key);
+        let result: anyhow::Result<_> =
+            self.executor.run_in_main_loop(move |executor, injector| {
+                let (result, key) = cmd.apply(injector, executor, None)?;
+                let history = injector.get_mut::<CommandHistory>().unwrap();
+                history.add_entry(cmd, key);
 
-            Ok(result)
-        })?;
+                Ok(result)
+            })?;
         let result = result?;
         let result = result.downcast::<T::Result>().unwrap();
 
@@ -59,21 +60,25 @@ impl CommandExecutorApi {
         &self,
         query: T,
     ) -> anyhow::Result<T::Result>
-        where
-            T::Result: Send + Sync,
+    where
+        T::Result: Send + Sync,
     {
         let _stopwatch = mizer_util::stopwatch!("Executed query from api {query:?}");
         let requires_main_loop = query.requires_main_loop();
         let query = query.into();
         let result = if requires_main_loop {
-            self.executor.run_in_main_loop(move |_, injector| {
-                query.query(injector)
-            })?
-        }else {
+            self.executor
+                .run_in_main_loop(move |_, injector| query.query(injector))?
+        } else {
             query.query(self.api_injector.read().as_ref().unwrap())
         };
         let result = result?.downcast::<T::Result>().unwrap_or_else(|got| {
-            panic!("Expected query result to be of type {} ({:?}), but got {:?}", type_name::<T::Result>(), TypeId::of::<T::Result>(), (*got).type_id());
+            panic!(
+                "Expected query result to be of type {} ({:?}), but got {:?}",
+                type_name::<T::Result>(),
+                TypeId::of::<T::Result>(),
+                (*got).type_id()
+            );
         });
 
         Ok(*result)

@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_protocol_midi::{DeviceProfile, MidiDeviceProfileRegistry};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListMidiDeviceProfilesQuery;
@@ -12,7 +12,7 @@ impl<'a> Query<'a> for ListMidiDeviceProfilesQuery {
     fn query(&self, profile_registry: &MidiDeviceProfileRegistry) -> anyhow::Result<Self::Result> {
         Ok(profile_registry.list_device_profiles())
     }
-    
+
     fn requires_main_loop(&self) -> bool {
         false
     }

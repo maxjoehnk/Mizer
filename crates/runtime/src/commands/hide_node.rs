@@ -1,7 +1,7 @@
+use crate::Pipeline;
 use mizer_commander::{Command, RefMut};
 use mizer_node::NodePath;
 use serde::{Deserialize, Serialize};
-use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HideNodeCommand {
@@ -18,7 +18,8 @@ impl<'a> Command<'a> for HideNodeCommand {
     }
 
     fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
-        let designer = pipeline.get_node_designer_mut(&self.path)
+        let designer = pipeline
+            .get_node_designer_mut(&self.path)
             .ok_or_else(|| anyhow::anyhow!("Unknown node {}", self.path))?;
         let mut previous = true;
         std::mem::swap(&mut designer.hidden, &mut previous);
@@ -27,7 +28,8 @@ impl<'a> Command<'a> for HideNodeCommand {
     }
 
     fn revert(&self, pipeline: &mut Pipeline, state: Self::State) -> anyhow::Result<()> {
-        let designer = pipeline.get_node_designer_mut(&self.path)
+        let designer = pipeline
+            .get_node_designer_mut(&self.path)
             .ok_or_else(|| anyhow::anyhow!("Unknown node {}", self.path))?;
         designer.hidden = state;
 

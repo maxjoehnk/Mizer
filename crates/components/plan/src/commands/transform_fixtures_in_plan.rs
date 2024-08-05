@@ -29,11 +29,27 @@ impl<'a> Command<'a> for TransformFixturesInPlanCommand {
                 .iter_mut()
                 .filter(|position| self.fixture_ids.contains(&position.fixture))
                 .collect::<Vec<_>>();
-            
-            let min_x = relevant_positions.iter().map(|p| p.x).min_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
-            let min_y = relevant_positions.iter().map(|p| p.y).min_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
-            let max_x = relevant_positions.iter().map(|p| p.x).max_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
-            let max_y = relevant_positions.iter().map(|p| p.y).max_by(|a, b| a.partial_cmp(b).unwrap()).unwrap();
+
+            let min_x = relevant_positions
+                .iter()
+                .map(|p| p.x)
+                .min_by(|a, b| a.partial_cmp(b).unwrap())
+                .unwrap();
+            let min_y = relevant_positions
+                .iter()
+                .map(|p| p.y)
+                .min_by(|a, b| a.partial_cmp(b).unwrap())
+                .unwrap();
+            let max_x = relevant_positions
+                .iter()
+                .map(|p| p.x)
+                .max_by(|a, b| a.partial_cmp(b).unwrap())
+                .unwrap();
+            let max_y = relevant_positions
+                .iter()
+                .map(|p| p.y)
+                .max_by(|a, b| a.partial_cmp(b).unwrap())
+                .unwrap();
             let center_x = (min_x + max_x) / 2.;
             let center_y = (min_y + max_y) / 2.;
             let rotation = self.rotation * (std::f64::consts::PI / 180.0);
@@ -44,13 +60,13 @@ impl<'a> Command<'a> for TransformFixturesInPlanCommand {
             {
                 // TODO: add test checking whether undo works
                 fixtures.insert(position.fixture, (position.x, position.y));
-                
+
                 let temp_x = position.x - center_x;
                 let temp_y = position.y - center_y;
-                
+
                 let rotated_x = temp_x * rotation.cos() - temp_y * rotation.sin();
                 let rotated_y = temp_x * rotation.sin() + temp_y * rotation.cos();
-                
+
                 position.x = rotated_x + center_x;
                 position.y = rotated_y + center_y;
             }
@@ -83,9 +99,9 @@ impl<'a> Command<'a> for TransformFixturesInPlanCommand {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{Plan, FixtureId, FixturePosition};
+    use crate::{FixtureId, FixturePosition, Plan};
+    use pinboard::NonEmptyPinboard;
     use std::sync::Arc;
-    use pinboard::{NonEmptyPinboard};
 
     #[test]
     fn test_transform_fixtures_by_90deg_in_plan() {
@@ -106,10 +122,9 @@ mod tests {
         command.apply(&plans).unwrap();
 
         let plan = plans.read().into_iter().next().unwrap();
-        let expected: Vec<_> =
-            (0..10)
-                .map(|i| position(i as u32, 4.5 - i as f64, 4.5))
-                .collect();
+        let expected: Vec<_> = (0..10)
+            .map(|i| position(i as u32, 4.5 - i as f64, 4.5))
+            .collect();
 
         assert_eq!(plan.fixtures, expected);
     }

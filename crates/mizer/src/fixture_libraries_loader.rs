@@ -24,33 +24,49 @@ impl FixtureLibraryLoader for MizerFixtureLoader {
 }
 
 fn load_ofl_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
-    paths.open_fixture_library.iter().map(|path| {
-        let ofl_provider = OpenFixtureLibraryProvider::new(path.to_string_lossy().to_string());
+    paths
+        .open_fixture_library
+        .iter()
+        .map(|path| {
+            let ofl_provider = OpenFixtureLibraryProvider::new(path.to_string_lossy().to_string());
 
-        Box::new(ofl_provider) as Box<dyn FixtureLibraryProvider>
-    }).collect()
+            Box::new(ofl_provider) as Box<dyn FixtureLibraryProvider>
+        })
+        .collect()
 }
 
 fn load_gdtf_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
-    paths.gdtf.iter().map(|path| {
-        let gdtf_provider = GdtfProvider::new(path.to_string_lossy().to_string());
+    paths
+        .gdtf
+        .iter()
+        .map(|path| {
+            let gdtf_provider = GdtfProvider::new(path.to_string_lossy().to_string());
 
-        Box::new(gdtf_provider) as Box<dyn FixtureLibraryProvider>
-    }).collect()
+            Box::new(gdtf_provider) as Box<dyn FixtureLibraryProvider>
+        })
+        .collect()
 }
 
 fn load_qlcplus_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
-    paths.qlcplus.iter().map(|path| {
-        let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
+    paths
+        .qlcplus
+        .iter()
+        .map(|path| {
+            let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
 
-        Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
-    }).collect()
+            Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
+        })
+        .collect()
 }
 
 fn load_mizer_provider(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
-    paths.mizer.iter().map(|path| {
-        let mizer_provider = MizerDefinitionsProvider::new(path.to_string_lossy().to_string());
+    paths
+        .mizer
+        .iter()
+        .map(|path| {
+            let mizer_provider = MizerDefinitionsProvider::new(path.to_string_lossy().to_string());
 
-        Box::new(mizer_provider) as Box<dyn FixtureLibraryProvider>
-    }).collect()
+            Box::new(mizer_provider) as Box<dyn FixtureLibraryProvider>
+        })
+        .collect()
 }

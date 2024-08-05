@@ -94,7 +94,10 @@ pub fn build_runtime(
     context.provide_api(runtime_access.plans);
     context.provide_api(runtime_access.layouts);
 
-    context.api_injector.inject::<CommandExecutorApi>().provide_injector(context.api_injector.clone());
+    context
+        .api_injector
+        .inject::<CommandExecutorApi>()
+        .provide_injector(context.api_injector.clone());
 
     let (api_handler, api) = Api::setup(
         &context.runtime,
@@ -149,7 +152,10 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
             tracing::info!("Loading last project {:?}", last_project);
             if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
                 tracing::error!("Failed to load last project: {:?}", err);
-                mizer_console::error!(mizer_console::ConsoleCategory::Projects, "Failed to load last project");
+                mizer_console::error!(
+                    mizer_console::ConsoleCategory::Projects,
+                    "Failed to load last project"
+                );
             }
         } else {
             mizer.new_project();

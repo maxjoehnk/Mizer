@@ -12,12 +12,12 @@ use mizer_fixtures::definition::{
     FixtureFaderControl, FixtureMode,
 };
 use mizer_fixtures::fixture::IFixture;
-use mizer_fixtures::FixtureId;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixtureId;
 use mizer_util::clock::{Clock, TestClock};
 
-use super::*;
 use super::instance::EffectInstance;
+use super::*;
 
 const FRAMES_PER_STEP: usize = 60;
 

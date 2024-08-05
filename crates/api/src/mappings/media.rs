@@ -35,7 +35,9 @@ impl From<mizer_media::documents::MediaDocument> for MediaFile {
             }),
             file_path: media
                 .file_path
-                .as_os_str().to_str().map(|path| path.to_string())
+                .as_os_str()
+                .to_str()
+                .map(|path| path.to_string())
                 .unwrap_or_default(),
             thumbnail_path: media
                 .metadata

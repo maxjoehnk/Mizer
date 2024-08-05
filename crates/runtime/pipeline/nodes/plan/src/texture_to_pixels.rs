@@ -41,10 +41,7 @@ impl TextureToPixelsConverter {
         Ok(())
     }
 
-    pub fn post_process(
-        &self,
-        context: &impl NodeContext,
-    ) -> anyhow::Result<Option<Vec<u8>>> {
+    pub fn post_process(&self, context: &impl NodeContext) -> anyhow::Result<Option<Vec<u8>>> {
         let wgpu_pipeline = context.try_inject::<WgpuPipeline>().unwrap();
         let texture_registry = context.try_inject::<TextureRegistry>().unwrap();
 

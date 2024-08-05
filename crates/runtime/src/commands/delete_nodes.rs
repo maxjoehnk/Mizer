@@ -1,10 +1,10 @@
+use crate::pipeline::{NodeState, Pipeline};
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_layouts::{ControlConfig, ControlType, LayoutStorage};
 use mizer_node::{NodeLink, NodePath};
 use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use crate::pipeline::{NodeState, Pipeline};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeleteNodesCommand {
@@ -12,12 +12,10 @@ pub struct DeleteNodesCommand {
 }
 
 impl<'a> Command<'a> for DeleteNodesCommand {
-    type Dependencies = (
-        RefMut<Pipeline>,
-        Ref<LayoutStorage>,
-    );
+    type Dependencies = (RefMut<Pipeline>, Ref<LayoutStorage>);
     type State = Vec<(
-        NodeState, Vec<NodeLink>,
+        NodeState,
+        Vec<NodeLink>,
         HashMap<String, Vec<ControlConfig>>,
         Vec<(NodePath, Node)>,
     )>;
@@ -29,10 +27,7 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn apply(
         &self,
-        (pipeline, layout_storage): (
-            &mut Pipeline,
-            &LayoutStorage,
-        ),
+        (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = Vec::with_capacity(self.paths.len());
         for path in &self.paths {
@@ -62,13 +57,12 @@ impl<'a> Command<'a> for DeleteNodesCommand {
 
     fn revert(
         &self,
-        (pipeline, layout_storage): (
-            &mut Pipeline,
-            &LayoutStorage,
-        ),
+        (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage),
         state: Self::State,
     ) -> anyhow::Result<()> {
-        for (path, (node_state, links, mut controls, container_commands)) in self.paths.iter().zip(state) {
+        for (path, (node_state, links, mut controls, container_commands)) in
+            self.paths.iter().zip(state)
+        {
             pipeline.reinsert_node(path.clone(), node_state);
             for link in links {
                 pipeline.add_link(link.clone())?;
@@ -95,9 +89,16 @@ impl DeleteNodesCommand {
         node_path: &NodePath,
     ) -> anyhow::Result<Vec<(NodePath, Node)>> {
         let mut update_node_commands = Vec::new();
-        for (path, container) in pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(node_path)) {
+        for (path, container) in
+            pipeline.find_nodes::<ContainerNode>(|node| node.nodes.contains(node_path))
+        {
             let container = ContainerNode {
-                nodes: container.nodes.iter().filter(|p| p != &node_path).cloned().collect(),
+                nodes: container
+                    .nodes
+                    .iter()
+                    .filter(|p| p != &node_path)
+                    .cloned()
+                    .collect(),
             };
             update_node_commands.push((path.clone(), container))
         }
@@ -131,8 +132,24 @@ mod tests {
         let injector = Injector::new();
         let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
-        let node1 = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
-        let node2 = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let node1 = pipeline
+            .add_node(
+                &injector,
+                NodeType::Fader,
+                Default::default(),
+                Default::default(),
+                Default::default(),
+            )
+            .unwrap();
+        let node2 = pipeline
+            .add_node(
+                &injector,
+                NodeType::Fader,
+                Default::default(),
+                Default::default(),
+                Default::default(),
+            )
+            .unwrap();
         let path1 = node1.path;
         let path2 = node2.path;
         pipeline
@@ -158,7 +175,15 @@ mod tests {
         let injector = Injector::new();
         let mut pipeline = Pipeline::new();
         let layout_storage = LayoutStorage::new(NonEmptyPinboard::new(Default::default()));
-        let descriptor = pipeline.add_node(&injector, NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let descriptor = pipeline
+            .add_node(
+                &injector,
+                NodeType::Fader,
+                Default::default(),
+                Default::default(),
+                Default::default(),
+            )
+            .unwrap();
         let path = descriptor.path;
         let mut layouts = layout_storage.read();
         layouts.push(Layout {

@@ -83,7 +83,7 @@ impl MidiBackgroundDiscovery {
             };
             if let Some(old_device) = self.devices.get(&name) {
                 device.profile.clone_from(&old_device.profile);
-            } else  {
+            } else {
                 tracing::info!("Connected device: {device:?}");
                 mizer_console::debug!(
                     mizer_console::ConsoleCategory::Connections,
@@ -121,10 +121,9 @@ fn cleanup_name(name: String) -> String {
         .unwrap_or(name);
     if let Some(p) = name.find(':') {
         name.split_at(p).0.to_string()
-    }else {
+    } else {
         name
     }
-
 }
 
 #[cfg(not(target_os = "linux"))]

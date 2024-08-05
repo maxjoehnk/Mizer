@@ -1,10 +1,10 @@
 use mizer_commander::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{GenericPreset, PresetId};
-use mizer_nodes::{PresetNode};
+use mizer_nodes::PresetNode;
 use mizer_runtime::commands::DeleteNodesCommand;
-use serde::{Deserialize, Serialize};
 use mizer_runtime::Pipeline;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize)]
 pub struct DeletePresetCommand {
@@ -36,7 +36,8 @@ impl<'a> Command<'a> for DeletePresetCommand {
             .delete_preset(self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown preset {}", self.id))?;
 
-        let path = pipeline.find_node_path::<PresetNode>(|node| node.id == self.id)
+        let path = pipeline
+            .find_node_path::<PresetNode>(|node| node.id == self.id)
             .cloned()
             .ok_or_else(|| anyhow::anyhow!("Missing node for preset {}", self.id))?;
 

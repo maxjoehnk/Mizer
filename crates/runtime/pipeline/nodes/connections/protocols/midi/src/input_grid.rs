@@ -34,7 +34,9 @@ impl ConfigurableNode for MidiInputGridNode {
             setting!(select DEVICE_SETTING, &self.device, devices),
             setting!(select PAGE_SETTING, &self.page, pages),
             setting!(ROWS_SETTING, self.rows).max(max_rows).min(0u32),
-            setting!(COLUMNS_SETTING, self.columns).max(max_cols).min(0u32),
+            setting!(COLUMNS_SETTING, self.columns)
+                .max(max_cols)
+                .min(0u32),
             setting!(X_SETTING, self.x).min(0u32).max(max_cols),
             setting!(Y_SETTING, self.y).min(0u32).max(max_rows),
         ]
@@ -80,7 +82,9 @@ impl ProcessingNode for MidiInputGridNode {
         if let Some(device) = connection_manager.request_device(&self.device)? {
             let state = device.state();
 
-            if let Some(grid) = device.profile.as_ref().and_then(|profile| profile.get_grid(&self.page, self.x, self.y, self.columns, self.rows)) {
+            if let Some(grid) = device.profile.as_ref().and_then(|profile| {
+                profile.get_grid(&self.page, self.x, self.y, self.columns, self.rows)
+            }) {
                 let values = state.read_grid(&grid);
                 context.write_multi_preview(values.clone());
                 context.write_port::<_, port_types::MULTI>(OUTPUT_PORT, values);

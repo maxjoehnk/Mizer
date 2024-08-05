@@ -109,7 +109,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         let shutters = self.runtime.query(ListShutterPresetsQuery).unwrap();
         let colors = self.runtime.query(ListColorPresetsQuery).unwrap();
         let positions = self.runtime.query(ListPositionPresetsQuery).unwrap();
-        
+
         Presets {
             intensities: intensities
                 .into_iter()
@@ -155,10 +155,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn get_groups(&self) -> Groups {
         let groups = self.runtime.query(ListGroupsQuery).unwrap();
         Groups {
-            groups: groups
-                .into_iter()
-                .map(|group| group.into())
-                .collect(),
+            groups: groups.into_iter().map(|group| group.into()).collect(),
         }
     }
 
@@ -175,7 +172,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn delete_group(&self, id: u32) -> anyhow::Result<()> {
         self.runtime
             .run_command(DeleteGroupCommand { id: id.into() })?;
-            
+
         Ok(())
     }
 
@@ -323,7 +320,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
         let values = self.get_programmer_values_for_preset_type(preset_id.r#type().into());
         let preset_values = self.get_preset_values_for_preset_type(preset_id.r#type().into());
-        
+
         let values = values.into_iter().chain(preset_values).collect();
 
         self.runtime.run_command(StoreInPresetCommand {
@@ -343,15 +340,17 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_channels()
             .into_iter()
             .map(|control| control.value)
-            .filter_map(|value| if let ProgrammerControlValue::Control(value) = value {
-                Some(value)
-            } else {
-                None
+            .filter_map(|value| {
+                if let ProgrammerControlValue::Control(value) = value {
+                    Some(value)
+                } else {
+                    None
+                }
             })
             .filter(|value| preset_type.contains_control(value))
             .collect()
     }
-    
+
     fn get_preset_values_for_preset_type(
         &self,
         preset_type: mizer_fixtures::programmer::PresetType,
@@ -360,7 +359,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .get_programmer()
             .active_presets()
             .into_iter()
-            .flat_map(|preset| self.fixture_manager.presets.get_preset_values(preset.preset_id))
+            .flat_map(|preset| {
+                self.fixture_manager
+                    .presets
+                    .get_preset_values(preset.preset_id)
+            })
             .filter(|value| preset_type.contains_control(value))
             .collect()
     }

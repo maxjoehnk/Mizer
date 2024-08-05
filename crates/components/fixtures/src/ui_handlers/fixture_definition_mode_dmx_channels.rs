@@ -1,6 +1,6 @@
+use crate::definition::{ChannelResolution, FixtureChannelDefinition, FixtureMode};
 use itertools::Itertools;
 use mizer_ui_api::table::*;
-use crate::definition::{ChannelResolution, FixtureChannelDefinition, FixtureMode};
 
 pub struct FixtureDefinitionDmxChannelTable;
 
@@ -16,15 +16,14 @@ impl TableHandler for FixtureDefinitionDmxChannelTable {
                 label: "Address".into(),
             },
         ];
-        let rows = data.channels.into_iter()
+        let rows = data
+            .channels
+            .into_iter()
             .sorted_by_key(|(_, channel)| channel.first_address())
             .map(Self::build_row)
             .collect();
 
-        Ok(TableData {
-            columns,
-            rows,
-        })
+        Ok(TableData { columns, rows })
     }
 }
 
@@ -39,13 +38,19 @@ impl FixtureDefinitionDmxChannelTable {
                 TableCell {
                     content: TableCellContent::Text(match definition.resolution {
                         ChannelResolution::Coarse(coarse) => format!("8 Bit ({coarse})"),
-                        ChannelResolution::Fine(coarse, fine) => format!("16 Bit ({coarse}, {fine})"),
-                        ChannelResolution::Finest(coarse, fine, finest) => format!("24 Bit ({coarse}, {fine}, {finest})"),
-                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})"),
+                        ChannelResolution::Fine(coarse, fine) => {
+                            format!("16 Bit ({coarse}, {fine})")
+                        }
+                        ChannelResolution::Finest(coarse, fine, finest) => {
+                            format!("24 Bit ({coarse}, {fine}, {finest})")
+                        }
+                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => {
+                            format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})")
+                        }
                     }),
                 },
             ],
-            children: Default::default()
+            children: Default::default(),
         }
     }
 }

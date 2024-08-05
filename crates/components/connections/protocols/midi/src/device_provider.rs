@@ -56,12 +56,9 @@ impl MidiDeviceProfileRegistry {
 
     pub fn get_profile(&self, id: &str) -> Option<DeviceProfile> {
         let profiles = self.profiles.read();
-        profiles
-            .iter()
-            .find(|profile| profile.id == id)
-            .cloned()
+        profiles.iter().find(|profile| profile.id == id).cloned()
     }
-    
+
     pub fn find_profile(&self, name: &str) -> Option<DeviceProfile> {
         let profiles = self.profiles.read();
         profiles
@@ -89,7 +86,7 @@ impl MidiDeviceProvider {
 
     pub fn load_device_profiles<P: AsRef<Path>>(&mut self, paths: &[P]) -> anyhow::Result<()> {
         self.profile_registry.load_device_profiles(paths)?;
-        
+
         Ok(())
     }
 

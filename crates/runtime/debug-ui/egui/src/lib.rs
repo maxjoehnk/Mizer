@@ -111,7 +111,9 @@ impl EguiDebugUi {
         let viewport_id = ViewportId::default();
 
         let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
-        futures::executor::block_on(painter.set_window(viewport_id, Some(Arc::clone(&window_ref.window))))?;
+        futures::executor::block_on(
+            painter.set_window(viewport_id, Some(Arc::clone(&window_ref.window))),
+        )?;
 
         let mut tiles = egui_tiles::Tiles::<Pane>::default();
         let mut tabs = vec![];

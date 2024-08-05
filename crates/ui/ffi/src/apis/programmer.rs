@@ -1,6 +1,9 @@
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammerChannel, ProgrammerState, ProgrammerView, ProgrammerControlValue, PresetId};
+use mizer_fixtures::programmer::{
+    PresetId, ProgrammedEffect, ProgrammerChannel, ProgrammerControlValue, ProgrammerState,
+    ProgrammerView,
+};
 use mizer_fixtures::FixtureId;
 use parking_lot::Mutex;
 use std::collections::HashMap;

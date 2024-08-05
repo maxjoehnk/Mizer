@@ -1,6 +1,9 @@
+use crate::definition::{
+    AxisGroup, ColorGroup, FixtureControl, FixtureControlChannel, FixtureControlType,
+    FixtureControls, FixtureMode, SubFixtureControlChannel,
+};
 use itertools::Itertools;
 use mizer_ui_api::table::*;
-use crate::definition::{AxisGroup, ColorGroup, FixtureControl, FixtureControlChannel, FixtureControls, FixtureControlType, FixtureMode, SubFixtureControlChannel};
 
 pub struct FixtureDefinitionTreeTable;
 
@@ -15,26 +18,26 @@ impl TableHandler for FixtureDefinitionTreeTable {
             TableColumn {
                 label: "DMX Channel".into(),
             },
-            TableColumn {
-                label: "".into(),
-            },
+            TableColumn { label: "".into() },
         ];
-        let rows = data.sub_fixtures
+        let rows = data
+            .sub_fixtures
             .into_iter()
             .map(|children| TableRow {
                 id: children.id.to_string(),
-                cells: vec![TableCell {
-                    content: TableCellContent::Text(children.name)
-                }, TableCell::empty(), TableCell::empty()],
+                cells: vec![
+                    TableCell {
+                        content: TableCellContent::Text(children.name),
+                    },
+                    TableCell::empty(),
+                    TableCell::empty(),
+                ],
                 children: Self::build_sub_controls(&children.controls),
             })
             .chain(Self::build_controls(&data.controls))
             .collect();
 
-        Ok(TableData {
-            columns,
-            rows,
-        })
+        Ok(TableData { columns, rows })
     }
 }
 
@@ -82,22 +85,39 @@ impl FixtureDefinitionTreeTable {
                                 green,
                                 blue,
                                 white,
-                                amber
-                            } => vec![Some(red), Some(green), Some(blue), white.as_ref(), amber.as_ref()]
-                                .into_iter()
-                                .flatten()
-                                .map(control_channel)
-                                .join(", "),
-                            ColorGroup::Cmy { cyan, magenta, yellow } =>
-                                format!("C: {}, M: {}, Y: {}", control_channel(cyan), control_channel(magenta), control_channel(yellow))
-                        })
+                                amber,
+                            } => vec![
+                                Some(red),
+                                Some(green),
+                                Some(blue),
+                                white.as_ref(),
+                                amber.as_ref(),
+                            ]
+                            .into_iter()
+                            .flatten()
+                            .map(control_channel)
+                            .join(", "),
+                            ColorGroup::Cmy {
+                                cyan,
+                                magenta,
+                                yellow,
+                            } => format!(
+                                "C: {}, M: {}, Y: {}",
+                                control_channel(cyan),
+                                control_channel(magenta),
+                                control_channel(yellow)
+                            ),
+                        }),
                     },
                     TableCell {
-                        content: TableCellContent::Text(if matches!(channel, ColorGroup::Rgb { .. }) {
-                            "RGB"
-                        } else {
-                            "CMY"
-                        }.to_string())
+                        content: TableCellContent::Text(
+                            if matches!(channel, ColorGroup::Rgb { .. }) {
+                                "RGB"
+                            } else {
+                                "CMY"
+                            }
+                            .to_string(),
+                        ),
                     },
                 ],
                 children: Default::default(),
@@ -106,24 +126,34 @@ impl FixtureDefinitionTreeTable {
         if let Some(channel) = &controls.color_wheel {
             rows.push(TableRow {
                 id: "Color Wheel".to_string(),
-                cells: vec![TableCell {
-                    content: TableCellContent::Text("Color Wheel".to_string()),
-                }, TableCell {
-                    content: TableCellContent::Text(control_channel(&channel.channel))
-                }, TableCell {
-                    content: TableCellContent::Text(channel.colors.iter().map(|c| &c.name).join(", "))
-                }],
+                cells: vec![
+                    TableCell {
+                        content: TableCellContent::Text("Color Wheel".to_string()),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(control_channel(&channel.channel)),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(
+                            channel.colors.iter().map(|c| &c.name).join(", "),
+                        ),
+                    },
+                ],
                 children: Default::default(),
             })
         }
         for channel in &controls.generic {
             rows.push(TableRow {
                 id: channel.label.clone(),
-                cells: vec![TableCell {
-                    content: TableCellContent::Text(channel.label.clone()),
-                }, TableCell {
-                    content: TableCellContent::Text(control_channel(&channel.channel)),
-                }, TableCell::empty()],
+                cells: vec![
+                    TableCell {
+                        content: TableCellContent::Text(channel.label.clone()),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(control_channel(&channel.channel)),
+                    },
+                    TableCell::empty(),
+                ],
                 children: Default::default(),
             });
         }
@@ -174,27 +204,42 @@ impl FixtureDefinitionTreeTable {
                                 green,
                                 blue,
                                 white,
-                                amber
+                                amber,
                             } => vec![
                                 Some(format!("R: {}", sub_control_channel(red))),
                                 Some(format!("G: {}", sub_control_channel(green))),
                                 Some(format!("B: {}", sub_control_channel(blue))),
-                                white.as_ref().map(|white| format!("W: {}", sub_control_channel(white))),
-                                amber.as_ref().map(|amber| format!("A: {}", sub_control_channel(amber))),
+                                white
+                                    .as_ref()
+                                    .map(|white| format!("W: {}", sub_control_channel(white))),
+                                amber
+                                    .as_ref()
+                                    .map(|amber| format!("A: {}", sub_control_channel(amber))),
                             ]
-                                .into_iter()
-                                .flatten()
-                                .join(", "),
-                            ColorGroup::Cmy { cyan, magenta, yellow } =>
-                                format!("C: {}, M: {}, Y: {}", sub_control_channel(cyan), sub_control_channel(magenta), sub_control_channel(yellow))
-                        })
+                            .into_iter()
+                            .flatten()
+                            .join(", "),
+                            ColorGroup::Cmy {
+                                cyan,
+                                magenta,
+                                yellow,
+                            } => format!(
+                                "C: {}, M: {}, Y: {}",
+                                sub_control_channel(cyan),
+                                sub_control_channel(magenta),
+                                sub_control_channel(yellow)
+                            ),
+                        }),
                     },
                     TableCell {
-                        content: TableCellContent::Text(if matches!(channel, ColorGroup::Rgb { .. }) {
-                            "RGB"
-                        } else {
-                            "CMY"
-                        }.to_string())
+                        content: TableCellContent::Text(
+                            if matches!(channel, ColorGroup::Rgb { .. }) {
+                                "RGB"
+                            } else {
+                                "CMY"
+                            }
+                            .to_string(),
+                        ),
                     },
                 ],
                 children: Default::default(),
@@ -203,24 +248,34 @@ impl FixtureDefinitionTreeTable {
         if let Some(channel) = &controls.color_wheel {
             rows.push(TableRow {
                 id: "Color Wheel".to_string(),
-                cells: vec![TableCell {
-                    content: TableCellContent::Text("Color Wheel".to_string()),
-                }, TableCell {
-                    content: TableCellContent::Text(sub_control_channel(&channel.channel))
-                }, TableCell {
-                    content: TableCellContent::Text(channel.colors.iter().map(|c| &c.name).join(", "))
-                }],
+                cells: vec![
+                    TableCell {
+                        content: TableCellContent::Text("Color Wheel".to_string()),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(sub_control_channel(&channel.channel)),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(
+                            channel.colors.iter().map(|c| &c.name).join(", "),
+                        ),
+                    },
+                ],
                 children: Default::default(),
             })
         }
         for channel in &controls.generic {
             rows.push(TableRow {
                 id: channel.label.clone(),
-                cells: vec![TableCell {
-                    content: TableCellContent::Text(channel.label.clone()),
-                }, TableCell {
-                    content: TableCellContent::Text(sub_control_channel(&channel.channel)),
-                }, TableCell::empty()],
+                cells: vec![
+                    TableCell {
+                        content: TableCellContent::Text(channel.label.clone()),
+                    },
+                    TableCell {
+                        content: TableCellContent::Text(sub_control_channel(&channel.channel)),
+                    },
+                    TableCell::empty(),
+                ],
                 children: Default::default(),
             });
         }
@@ -237,7 +292,7 @@ fn basic_control(name: &str, control: &FixtureControlChannel) -> TableRow {
                 content: TableCellContent::Text(name.to_string()),
             },
             TableCell {
-                content: TableCellContent::Text(control_channel(control))
+                content: TableCellContent::Text(control_channel(control)),
             },
             TableCell::empty(),
         ],
@@ -253,7 +308,7 @@ fn basic_sub_control(name: &str, control: &SubFixtureControlChannel) -> TableRow
                 content: TableCellContent::Text(name.to_string()),
             },
             TableCell {
-                content: TableCellContent::Text(sub_control_channel(control))
+                content: TableCellContent::Text(sub_control_channel(control)),
             },
             TableCell::empty(),
         ],
@@ -269,18 +324,19 @@ fn movement_control(name: &str, group: &AxisGroup<FixtureControlChannel>) -> Tab
                 content: TableCellContent::Text(name.to_string()),
             },
             TableCell {
-                content: TableCellContent::Text(control_channel(&group.channel))
+                content: TableCellContent::Text(control_channel(&group.channel)),
             },
             TableCell {
                 content: if let Some(angle) = group.angle {
                     TableCellContent::Text(format!("{}° - {}°", angle.from, angle.to))
-                } else { TableCellContent::Empty }
+                } else {
+                    TableCellContent::Empty
+                },
             },
         ],
         children: Default::default(),
     }
 }
-
 
 fn movement_sub_control(name: &str, group: &AxisGroup<SubFixtureControlChannel>) -> TableRow {
     TableRow {
@@ -290,12 +346,14 @@ fn movement_sub_control(name: &str, group: &AxisGroup<SubFixtureControlChannel>)
                 content: TableCellContent::Text(name.to_string()),
             },
             TableCell {
-                content: TableCellContent::Text(sub_control_channel(&group.channel))
+                content: TableCellContent::Text(sub_control_channel(&group.channel)),
             },
             TableCell {
                 content: if let Some(angle) = group.angle {
                     TableCellContent::Text(format!("{}° - {}°", angle.from, angle.to))
-                } else { TableCellContent::Empty }
+                } else {
+                    TableCellContent::Empty
+                },
             },
         ],
         children: Default::default(),

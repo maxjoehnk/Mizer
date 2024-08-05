@@ -1,7 +1,7 @@
-use std::path::PathBuf;
-use serde::{Deserialize, Serialize};
-use mizer_commander::{Query, Ref};
 use crate::MediaServer;
+use mizer_commander::{Query, Ref};
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListMediaFoldersQuery;

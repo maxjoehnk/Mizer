@@ -5,10 +5,10 @@ use std::sync::{Arc, Mutex};
 use dashmap::DashMap;
 use itertools::Itertools;
 
-use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
 use mizer_fixtures::selection::FixtureSelection;
+use mizer_fixtures::FixturePriority;
 use mizer_module::ClockFrame;
 
 use crate::effects::default_effects::CIRCLE;

@@ -1,5 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
-use mizer_fixtures::definition::{ChannelResolution, ColorChannel, ColorGroup, FixtureChannelDefinition, FixtureControlChannel, FixtureControls, FixtureDefinition, FixtureFaderControl, FixtureMode};
+use mizer_fixtures::definition::{
+    ChannelResolution, ColorChannel, ColorGroup, FixtureChannelDefinition, FixtureControlChannel,
+    FixtureControls, FixtureDefinition, FixtureFaderControl, FixtureMode,
+};
 use mizer_fixtures::fixture::{Fixture, IFixtureMut};
 
 pub fn fixtures_bench(c: &mut Criterion) {
@@ -10,7 +13,11 @@ pub fn fixtures_bench(c: &mut Criterion) {
             let mut fixtures = build_fixtures(*count);
             b.iter(|| {
                 for fixture in fixtures.iter_mut() {
-                    fixture.write_fader_control(FixtureFaderControl::Intensity, 1.0, Default::default());
+                    fixture.write_fader_control(
+                        FixtureFaderControl::Intensity,
+                        1.0,
+                        Default::default(),
+                    );
                 }
             })
         });
@@ -23,7 +30,11 @@ pub fn fixtures_bench(c: &mut Criterion) {
             let mut fixtures = build_fixtures(*count);
             b.iter(|| {
                 for fixture in fixtures.iter_mut() {
-                    fixture.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), 1.0, Default::default());
+                    fixture.write_fader_control(
+                        FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                        1.0,
+                        Default::default(),
+                    );
                 }
             })
         });
@@ -36,8 +47,9 @@ fn build_fixtures(count: usize) -> Vec<Fixture> {
         name: Default::default(),
         id: Default::default(),
         manufacturer: Default::default(),
-        modes: vec![
-            FixtureMode::new(Default::default(), vec![
+        modes: vec![FixtureMode::new(
+            Default::default(),
+            vec![
                 FixtureChannelDefinition {
                     name: "Intensity".to_string(),
                     resolution: ChannelResolution::Coarse(0),
@@ -54,7 +66,8 @@ fn build_fixtures(count: usize) -> Vec<Fixture> {
                     name: "Blue".to_string(),
                     resolution: ChannelResolution::Coarse(3),
                 },
-            ], FixtureControls {
+            ],
+            FixtureControls {
                 intensity: Some(FixtureControlChannel::Channel("Intensity".into())),
                 color_mixer: Some(ColorGroup::Rgb {
                     red: FixtureControlChannel::Channel("Red".into()),
@@ -64,15 +77,24 @@ fn build_fixtures(count: usize) -> Vec<Fixture> {
                     amber: None,
                 }),
                 ..Default::default()
-            }, Default::default()),
-        ],
+            },
+            Default::default(),
+        )],
         physical: Default::default(),
         provider: "benchmark",
         tags: Default::default(),
     };
     let mut fixtures = Vec::with_capacity(count);
     for i in 0..count {
-        let fixture = Fixture::new(i as u32, format!("fixture-{}", i), definition.clone(), None, 0, None, Default::default());
+        let fixture = Fixture::new(
+            i as u32,
+            format!("fixture-{}", i),
+            definition.clone(),
+            None,
+            0,
+            None,
+            Default::default(),
+        );
         fixtures.push(fixture);
     }
 

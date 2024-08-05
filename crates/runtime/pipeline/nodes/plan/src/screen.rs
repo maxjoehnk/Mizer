@@ -1,11 +1,11 @@
 use serde::{Deserialize, Serialize};
 
+use crate::texture_to_pixels::TextureToPixelsConverter;
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixturePriority;
 use mizer_node::*;
 use mizer_plan::{Plan, PlanScreen, PlanStorage, ScreenId};
-use crate::texture_to_pixels::TextureToPixelsConverter;
 
 const INPUT_PORT: &str = "Input";
 
@@ -81,7 +81,8 @@ impl ConfigurableNode for PlanScreenNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        if matches!(setting.value, NodeSettingValue::Select { .. }) && setting.id == SCREEN_SETTING {
+        if matches!(setting.value, NodeSettingValue::Select { .. }) && setting.id == SCREEN_SETTING
+        {
             if let NodeSettingValue::Select { value, .. } = setting.value {
                 let parts = value.split('-').collect::<Vec<_>>();
                 self.plan = parts[0].to_string();
@@ -188,7 +189,11 @@ impl ProcessingNode for PlanScreenNode {
                     let pixel_index = pixel_index * 4;
 
                     if pixel_index + 3 >= pixels.len() {
-                        tracing::warn!("Pixel index out of bounds: {} >= {}", pixel_index + 3, pixels.len());
+                        tracing::warn!(
+                            "Pixel index out of bounds: {} >= {}",
+                            pixel_index + 3,
+                            pixels.len()
+                        );
                         continue;
                     }
 

@@ -41,7 +41,9 @@ pub(crate) struct ChannelValue {
 
 impl Default for ChannelValue {
     fn default() -> Self {
-        ChannelValue { values: Vec::with_capacity(10) }
+        ChannelValue {
+            values: Vec::with_capacity(10),
+        }
     }
 }
 
@@ -100,12 +102,7 @@ impl ChannelValues {
         self.write_priority(name, value, Default::default());
     }
 
-    pub(crate) fn write_priority(
-        &mut self,
-        name: &String,
-        value: f64,
-        priority: FixturePriority,
-    ) {
+    pub(crate) fn write_priority(&mut self, name: &String, value: f64, priority: FixturePriority) {
         tracing::trace!("write {name} -> {value} ({priority:?})");
         self.insert(name, value, priority);
     }
@@ -241,8 +238,7 @@ impl Fixture {
     }
 
     pub fn sub_fixture_mut(&mut self, id: u32) -> Option<SubFixtureMut> {
-        self
-            .current_mode
+        self.current_mode
             .sub_fixtures
             .iter()
             .position(|f| f.id == id)

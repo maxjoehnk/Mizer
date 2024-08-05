@@ -1,7 +1,7 @@
+use crate::Pipeline;
 use mizer_commander::{Command, RefMut};
 use mizer_node::NodeLink;
 use serde::{Deserialize, Serialize};
-use crate::Pipeline;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RemoveLinkCommand {
@@ -20,20 +20,13 @@ impl<'a> Command<'a> for RemoveLinkCommand {
         )
     }
 
-    fn apply(
-        &self,
-        pipeline: &mut Pipeline,
-    ) -> anyhow::Result<(Self::Result, Self::State)> {
+    fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         pipeline.delete_link(&self.link);
 
         Ok(((), ()))
     }
 
-    fn revert(
-        &self,
-        pipeline: &mut Pipeline,
-        _: Self::State,
-    ) -> anyhow::Result<()> {
+    fn revert(&self, pipeline: &mut Pipeline, _: Self::State) -> anyhow::Result<()> {
         pipeline.add_link(self.link.clone())?;
 
         Ok(())

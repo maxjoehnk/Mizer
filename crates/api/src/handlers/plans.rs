@@ -147,13 +147,12 @@ impl<R: RuntimeApi> PlansHandler<R> {
     pub fn transform_selection(&self, req: TransformFixturesRequest) -> anyhow::Result<()> {
         let view = self.fixture_manager.get_programmer().view();
         let state = view.read();
-        self.runtime
-            .run_command(TransformFixturesInPlanCommand {
-                id: req.plan_id,
-                fixture_ids: state.all_fixtures(),
-                rotation: req.rotation,
-            })?;
-            
+        self.runtime.run_command(TransformFixturesInPlanCommand {
+            id: req.plan_id,
+            fixture_ids: state.all_fixtures(),
+            rotation: req.rotation,
+        })?;
+
         Ok(())
     }
 

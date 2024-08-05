@@ -32,9 +32,7 @@ impl ConfigurableNode for ButtonGridNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(TOGGLE_SETTING, self.toggle),
-            setting!(ROWS_SETTING, self.rows)
-                .min(1u32)
-                .max_hint(16u32),
+            setting!(ROWS_SETTING, self.rows).min(1u32).max_hint(16u32),
             setting!(COLUMNS_SETTING, self.columns)
                 .min(1u32)
                 .max_hint(16u32),
@@ -74,11 +72,7 @@ impl PipelineNode for ButtonGridNode {
 impl ProcessingNode for ButtonGridNode {
     type State = Vec<ButtonState>;
 
-    fn process(
-        &self,
-        context: &impl NodeContext,
-        state: &mut Self::State,
-    ) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let buttons = self.rows * self.columns;
         if state.len() != buttons as usize {
             state.resize(buttons as usize, Default::default());
@@ -101,7 +95,10 @@ impl ProcessingNode for ButtonGridNode {
                 }
             }
         }
-        let values: port_types::MULTI = state.iter().map(|state| if state.value() { 1f64 } else { 0f64 }).collect();
+        let values: port_types::MULTI = state
+            .iter()
+            .map(|state| if state.value() { 1f64 } else { 0f64 })
+            .collect();
         context.write_port(OUTPUT_PORT, values.clone());
         context.write_multi_preview(values);
 

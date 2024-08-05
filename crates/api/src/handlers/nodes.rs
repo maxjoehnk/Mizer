@@ -91,7 +91,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
         let nodes = nodes
             .into_iter()
             .map(|node| {
-                let description = node.description
+                let description = node
+                    .description
                     .map(|desc| desc.to_string())
                     .unwrap_or_default();
                 let settings = node
@@ -106,10 +107,18 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 AvailableNode {
                     name: node.name,
                     category: NodeCategory::from(node.category) as i32,
-                    templates: node.templates.into_iter().map(|template| NodeTemplate {
-                        description: get_node_template_description(&node.node_type_name, template.name.as_ref()).map(|desc| desc.to_string()),
-                        name: template.name.to_string(),
-                    }).collect::<Vec<_>>(),
+                    templates: node
+                        .templates
+                        .into_iter()
+                        .map(|template| NodeTemplate {
+                            description: get_node_template_description(
+                                &node.node_type_name,
+                                template.name.as_ref(),
+                            )
+                            .map(|desc| desc.to_string()),
+                            name: template.name.to_string(),
+                        })
+                        .collect::<Vec<_>>(),
                     r#type: node.node_type_name,
                     description,
                     settings,
@@ -123,7 +132,12 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_node(&self, path: String) -> Option<Node> {
-        let node = self.runtime.query(GetNodeQuery { path: NodePath(path) }).unwrap()?;
+        let node = self
+            .runtime
+            .query(GetNodeQuery {
+                path: NodePath(path),
+            })
+            .unwrap()?;
 
         Some(node.into())
     }

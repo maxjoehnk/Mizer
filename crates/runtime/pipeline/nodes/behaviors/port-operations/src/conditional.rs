@@ -21,7 +21,10 @@ pub struct ConditionalNode {
 
 impl Default for ConditionalNode {
     fn default() -> Self {
-        Self { threshold: 0.5, port_type: PortType::default() }
+        Self {
+            threshold: 0.5,
+            port_type: PortType::default(),
+        }
     }
 }
 
@@ -29,9 +32,9 @@ impl ConfigurableNode for ConditionalNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(THRESHOLD_SETTING, self.threshold)
-            .min_hint(0.)
-            .max_hint(1.),
-            setting!(enum PORT_TYPE_SETTING, self.port_type)
+                .min_hint(0.)
+                .max_hint(1.),
+            setting!(enum PORT_TYPE_SETTING, self.port_type),
         ]
     }
 
@@ -83,29 +86,41 @@ impl ProcessingNode for ConditionalNode {
                 PortType::Single => {
                     transfer_port::<f64>(context, is_active);
 
-                    if let Some(value) = is_active.then_some(()).and_then(|_| context.read_port(VALUE_INPUT)) {
+                    if let Some(value) = is_active
+                        .then_some(())
+                        .and_then(|_| context.read_port(VALUE_INPUT))
+                    {
                         context.push_history_value(value);
                     }
                 }
                 PortType::Color => {
                     transfer_port::<Color>(context, is_active);
 
-                    if let Some(value) = is_active.then_some(()).and_then(|_| context.read_port(VALUE_INPUT)) {
+                    if let Some(value) = is_active
+                        .then_some(())
+                        .and_then(|_| context.read_port(VALUE_INPUT))
+                    {
                         context.write_color_preview(value);
                     }
                 }
                 PortType::Multi => {
                     transfer_port::<Vec<f64>>(context, is_active);
 
-                    if let Some(value) = is_active.then_some(()).and_then(|_| context.read_port(VALUE_INPUT)) {
+                    if let Some(value) = is_active
+                        .then_some(())
+                        .and_then(|_| context.read_port(VALUE_INPUT))
+                    {
                         context.write_multi_preview(value);
                     }
-                },
+                }
                 PortType::Laser => transfer_port::<Vec<LaserFrame>>(context, is_active),
                 PortType::Data => {
                     transfer_port::<StructuredData>(context, is_active);
 
-                    if let Some(value) = is_active.then_some(()).and_then(|_| context.read_port(VALUE_INPUT)) {
+                    if let Some(value) = is_active
+                        .then_some(())
+                        .and_then(|_| context.read_port(VALUE_INPUT))
+                    {
                         context.write_data_preview(value);
                     }
                 }
@@ -133,7 +148,7 @@ fn transfer_port<TValue: PortValue + 'static>(context: &impl NodeContext, condit
             //     context.push_history_value(value);
             // }
         }
-    }else {
+    } else {
         context.clear_port::<_, TValue>(VALUE_OUTPUT)
     }
 }

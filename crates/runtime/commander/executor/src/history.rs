@@ -1,7 +1,7 @@
+use crate::executor::CommandKey;
 use crate::{CommandExecutor, CommandImpl};
 use mizer_module::Injector;
 use std::time::{SystemTime, UNIX_EPOCH};
-use crate::executor::CommandKey;
 
 pub struct CommandHistory {
     commands: CommandCursor<(CommandImpl, CommandKey, SystemTime)>,

@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{Preset, PresetId};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListIntensityPresetsQuery;

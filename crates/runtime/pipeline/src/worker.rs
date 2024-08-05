@@ -219,7 +219,7 @@ impl PipelineWorker {
         self.receivers.rename_key(&from, to.clone());
         self.senders.rename_key(&from, to.clone());
         self.previews.rename_key(&from, to.clone());
-        
+
         Ok(())
     }
 
@@ -304,10 +304,7 @@ impl PipelineWorker {
     ) {
         let value_name = type_name::<V>();
         tracing::trace!(value = value_name, "connect_memory_ports");
-        let senders = self
-            .senders
-            .entry(link.source.clone())
-            .or_default();
+        let senders = self.senders.entry(link.source.clone()).or_default();
         let rx = if let Some((port, _)) = senders.get(&link.source_port) {
             let port = port
                 .downcast_ref::<MemorySender<V>>()
@@ -321,10 +318,7 @@ impl PipelineWorker {
 
             rx
         };
-        let receivers = self
-            .receivers
-            .entry(link.target)
-            .or_default();
+        let receivers = self.receivers.entry(link.target).or_default();
         receivers.add(
             link.target_port,
             rx,
@@ -472,7 +466,8 @@ impl PipelineWorker {
         profiling::scope!("PipelineWorker::get_context");
         let context = PipelineContext {
             processing_context: RefCell::new(processing_context),
-            preview: self.previews
+            preview: self
+                .previews
                 .get(path)
                 .unwrap_or_else(|| panic!("Missing preview for {path}")),
             receivers: self.receivers.get(path),

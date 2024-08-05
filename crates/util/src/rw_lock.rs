@@ -61,7 +61,7 @@ pub struct RwLockReadGuard<'a, T> {
     id: uuid::Uuid,
 }
 
-impl <'a, T> Drop for RwLockReadGuard<'a, T> {
+impl<'a, T> Drop for RwLockReadGuard<'a, T> {
     fn drop(&mut self) {
         #[cfg(debug_assertions)]
         tracing::trace!("Dropping read lock for id: {}", self.id);
@@ -82,7 +82,7 @@ pub struct RwLockWriteGuard<'a, T> {
     id: uuid::Uuid,
 }
 
-impl <'a, T> Drop for RwLockWriteGuard<'a, T> {
+impl<'a, T> Drop for RwLockWriteGuard<'a, T> {
     fn drop(&mut self) {
         #[cfg(debug_assertions)]
         tracing::trace!("Dropping write lock for id: {}", self.id);
@@ -102,4 +102,3 @@ impl<'a, T> std::ops::DerefMut for RwLockWriteGuard<'a, T> {
         &mut *self.inner
     }
 }
-

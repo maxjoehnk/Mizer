@@ -1,5 +1,5 @@
-use std::sync::Arc;
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
 use mizer_node::*;
 
@@ -35,9 +35,7 @@ impl PipelineNode for LabelNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            input_port!(INPUT_TEXT_PORT, PortType::Text),
-        ]
+        vec![input_port!(INPUT_TEXT_PORT, PortType::Text)]
     }
 
     fn node_type(&self) -> NodeType {

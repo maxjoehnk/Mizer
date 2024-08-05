@@ -16,11 +16,7 @@ impl ArtnetOutput {
         socket.set_nonblocking(true)?;
         socket.set_broadcast(true)?;
 
-        Ok(ArtnetOutput {
-            socket,
-            host,
-            port,
-        })
+        Ok(ArtnetOutput { socket, host, port })
     }
 
     fn parse_addr(&self) -> anyhow::Result<SocketAddr> {

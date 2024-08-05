@@ -8,9 +8,9 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 pub mod commands;
-pub mod queries;
 mod debug_ui_pane;
 mod module;
+pub mod queries;
 
 pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 
@@ -85,11 +85,16 @@ pub struct PlanScreen {
 impl PlanScreen {
     pub fn contains_fixture(&self, fixture: &FixturePosition) -> bool {
         let screen_rect = (self.x, self.y, self.x + self.width, self.y + self.height);
-        let fixture_rect = (fixture.x, fixture.y, fixture.x + fixture.width, fixture.y + fixture.height);
-        
+        let fixture_rect = (
+            fixture.x,
+            fixture.y,
+            fixture.x + fixture.width,
+            fixture.y + fixture.height,
+        );
+
         let x_overlap = fixture_rect.0 <= screen_rect.2 && fixture_rect.2 >= screen_rect.0;
         let y_overlap = fixture_rect.1 <= screen_rect.3 && fixture_rect.3 >= screen_rect.1;
-        
+
         x_overlap && y_overlap
     }
 

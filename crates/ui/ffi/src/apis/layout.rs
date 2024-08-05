@@ -85,7 +85,10 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
 }
 
 #[no_mangle]
-pub extern "C" fn read_control_color(ptr: *const LayoutRef, path: *const c_char) -> FFIControlColor {
+pub extern "C" fn read_control_color(
+    ptr: *const LayoutRef,
+    path: *const c_char,
+) -> FFIControlColor {
     let path = unsafe { CStr::from_ptr(path) };
     let path = path.to_str().unwrap();
     let node_path = NodePath(path.to_string());
@@ -98,7 +101,7 @@ pub extern "C" fn read_control_color(ptr: *const LayoutRef, path: *const c_char)
             color_green: value.green,
             color_blue: value.blue,
         }
-    }else {
+    } else {
         FFIControlColor {
             has_color: 0,
             color_red: 0.,

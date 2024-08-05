@@ -3,8 +3,8 @@ use std::path::PathBuf;
 use futures::{Stream, StreamExt};
 
 use mizer_media::documents::{MediaDocument, MediaId, TagId};
-use mizer_media::{MediaCreateModel, MediaServer};
 use mizer_media::queries::{ListMediaFilesQuery, ListMediaFoldersQuery, ListMediaTagsQuery};
+use mizer_media::{MediaCreateModel, MediaServer};
 
 use crate::proto::media::*;
 use crate::RuntimeApi;
@@ -102,7 +102,8 @@ impl<R: RuntimeApi> MediaHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn relink_media(&self, req: RelinkMediaRequest) -> anyhow::Result<()> {
-        self.api.relink_media(MediaId::try_from(req.media_id)?, PathBuf::from(req.path))?;
+        self.api
+            .relink_media(MediaId::try_from(req.media_id)?, PathBuf::from(req.path))?;
 
         Ok(())
     }

@@ -1,5 +1,5 @@
-use mizer_injector::Injector;
 use crate::ExtractDependencies;
+use mizer_injector::Injector;
 
 // TODO: Access to the injector is highly dangerous as it allows for mutable and immutable access to the same objects
 pub struct InjectorRef;

@@ -1,9 +1,9 @@
-use std::sync::Arc;
 pub use self::input::*;
 pub use self::output::*;
 use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_node::{Inject, SelectVariant};
 use mizer_traktor_kontrol_x1::{Button, DeckButton, DeckEncoder, Encoder, FxButton, FxKnob, Knob};
+use std::sync::Arc;
 
 mod input;
 mod output;
@@ -93,7 +93,6 @@ impl ConvertVariant for Button {
                 value: Button::Shift.to_id_with_prefix(prefix).into(),
             },
         ]
-
     }
 }
 

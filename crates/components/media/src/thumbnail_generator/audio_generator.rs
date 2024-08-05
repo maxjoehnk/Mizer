@@ -3,11 +3,11 @@ use std::path::Path;
 
 use anyhow::Context;
 use id3::frame::PictureType;
-use id3::{Tag};
+use id3::Tag;
 use image::imageops::FilterType;
 
+use super::{parse_image_content_type, IThumbnailGenerator, THUMBNAIL_SIZE};
 use crate::documents::{MediaDocument, MediaType};
-use super::{THUMBNAIL_SIZE, IThumbnailGenerator, parse_image_content_type};
 
 pub struct AudioGenerator;
 
@@ -24,7 +24,8 @@ impl IThumbnailGenerator for AudioGenerator {
         let tag = Tag::read_from_path(&media.file_path).context("Unable to read id3 tag")?;
         let Some(cover) = tag
             .pictures()
-            .find(|p| p.picture_type == PictureType::CoverFront) else {
+            .find(|p| p.picture_type == PictureType::CoverFront)
+        else {
             return Ok(None);
         };
         let cursor = Cursor::new(&cover.data);
@@ -32,7 +33,7 @@ impl IThumbnailGenerator for AudioGenerator {
             .context("Unable to read cover image")?;
         let image = image.resize(THUMBNAIL_SIZE, THUMBNAIL_SIZE, FilterType::Nearest);
         image.save(target).context("Unable to save thumbnail")?;
-        
+
         Ok(Some(()))
     }
 }

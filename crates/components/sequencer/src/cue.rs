@@ -1,4 +1,5 @@
 use crate::contracts::Clock;
+use crate::cue_preset::CuePreset;
 use crate::state::{
     CueChannel, CueChannelState, SequenceDuration, SequenceRateMatchedDuration, SequenceState,
     SequenceTimestamp,
@@ -14,7 +15,6 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
-use crate::cue_preset::CuePreset;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {

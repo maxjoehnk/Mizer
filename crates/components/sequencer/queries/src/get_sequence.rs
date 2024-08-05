@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_sequencer::{Sequence, Sequencer};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GetSequenceQuery {
@@ -14,7 +14,7 @@ impl<'a> Query<'a> for GetSequenceQuery {
     fn query(&self, sequencer: &Sequencer) -> anyhow::Result<Self::Result> {
         Ok(sequencer.sequence(self.id))
     }
-    
+
     fn requires_main_loop(&self) -> bool {
         false
     }

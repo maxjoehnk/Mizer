@@ -1,5 +1,5 @@
-use mizer_module::*;
 use crate::background_media_job::BackgroundMediaJob;
+use mizer_module::*;
 
 use crate::MediaServer;
 
@@ -15,7 +15,7 @@ impl Module for MediaModule {
         let event_bus = media_server.event_bus.subscribe();
         context.provide_api(media_server.clone());
         context.provide(media_server.clone());
-        
+
         BackgroundMediaJob::new(media_server, context.status_handle(), event_bus).spawn()?;
 
         Ok(())

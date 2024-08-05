@@ -1,11 +1,11 @@
 use std::io::{Read, Write};
-use std::path::{Path};
+use std::path::Path;
 
 use resvg::tiny_skia::{self, Pixmap};
 use resvg::usvg::{self, Options};
 
+use super::{IThumbnailGenerator, THUMBNAIL_SIZE};
 use crate::documents::{MediaDocument, MediaType};
-use super::{THUMBNAIL_SIZE, IThumbnailGenerator};
 
 #[derive(Clone)]
 pub struct SvgGenerator {
@@ -18,17 +18,14 @@ impl SvgGenerator {
         let mut fontdb = fontdb::Database::new();
         fontdb.load_system_fonts();
 
-        Self {
-            fontdb
-        }
+        Self { fontdb }
     }
 }
 
 impl IThumbnailGenerator for SvgGenerator {
     fn supported(&self, media: &MediaDocument) -> bool {
-        media.media_type == MediaType::Vector && (
-            media.content_type == "text/xml" || media.content_type == "image/svg+xml"
-        )
+        media.media_type == MediaType::Vector
+            && (media.content_type == "text/xml" || media.content_type == "image/svg+xml")
     }
 
     fn generate_thumbnail(
@@ -73,7 +70,7 @@ impl SvgGenerator {
         } else {
             tree.size().to_int_size().scale_to_height(THUMBNAIL_SIZE)
         }
-            .ok_or_else(|| anyhow::anyhow!("Failed to calculate thumbnail size"))?;
+        .ok_or_else(|| anyhow::anyhow!("Failed to calculate thumbnail size"))?;
 
         let transform = tiny_skia::Transform::from_scale(
             size.width() as f32 / tree.size().width(),

@@ -1,13 +1,13 @@
-use std::sync::Arc;
 use chrono::{DateTime, Utc};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
 const MAX_ERROR_COUNT: usize = 32;
 
 #[derive(Debug, Clone)]
 pub struct ErrorCollector<TErr> {
-    buffer: ConstGenericRingBuffer<Error<TErr>, MAX_ERROR_COUNT>
+    buffer: ConstGenericRingBuffer<Error<TErr>, MAX_ERROR_COUNT>,
 }
 
 impl<TErr> Default for ErrorCollector<TErr> {

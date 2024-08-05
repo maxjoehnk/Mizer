@@ -1,5 +1,7 @@
+use crate::definition::{
+    ChannelResolution, FixtureChannelDefinition, FixtureDefinition, FixtureMode,
+};
 use mizer_ui_api::table::*;
-use crate::definition::{ChannelResolution, FixtureChannelDefinition, FixtureDefinition, FixtureMode};
 
 pub struct FixtureDefinitionModesTable;
 
@@ -15,14 +17,9 @@ impl TableHandler for FixtureDefinitionModesTable {
                 label: "Channel Count".into(),
             },
         ];
-        let rows = data.modes.into_iter()
-            .map(Self::build_row)
-            .collect();
+        let rows = data.modes.into_iter().map(Self::build_row).collect();
 
-        Ok(TableData {
-            columns,
-            rows,
-        })
+        Ok(TableData { columns, rows })
     }
 }
 
@@ -39,9 +36,7 @@ impl FixtureDefinitionModesTable {
                     content: TableCellContent::Uint(dmx_channels),
                 },
             ],
-            children: mode.channels.into_iter()
-                .map(Self::build_channel)
-                .collect()
+            children: mode.channels.into_iter().map(Self::build_channel).collect(),
         }
     }
 
@@ -55,13 +50,19 @@ impl FixtureDefinitionModesTable {
                 TableCell {
                     content: TableCellContent::Text(match definition.resolution {
                         ChannelResolution::Coarse(coarse) => format!("8 Bit ({coarse})"),
-                        ChannelResolution::Fine(coarse, fine) => format!("16 Bit ({coarse}, {fine})"),
-                        ChannelResolution::Finest(coarse, fine, finest) => format!("24 Bit ({coarse}, {fine}, {finest})"),
-                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})"),
+                        ChannelResolution::Fine(coarse, fine) => {
+                            format!("16 Bit ({coarse}, {fine})")
+                        }
+                        ChannelResolution::Finest(coarse, fine, finest) => {
+                            format!("24 Bit ({coarse}, {fine}, {finest})")
+                        }
+                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => {
+                            format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})")
+                        }
                     }),
                 },
             ],
-            children: Default::default()
+            children: Default::default(),
         }
     }
 }

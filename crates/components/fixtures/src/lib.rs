@@ -10,7 +10,6 @@ pub use crate::module::*;
 pub use crate::priority::*;
 use crate::programmer::Color;
 
-pub mod ui_handlers;
 mod contracts;
 pub mod definition;
 pub mod fixture;
@@ -18,6 +17,7 @@ pub mod library;
 pub mod manager;
 mod processor;
 mod sub_fixture;
+pub mod ui_handlers;
 // TODO: should probably find a better name
 mod color_mixer;
 mod debug_ui_pane;

@@ -5,7 +5,7 @@ use anyhow::Context;
 use image::ImageFormat;
 
 use crate::documents::{MediaMetadata, MediaType};
-use crate::media_handlers::{MediaHandler};
+use crate::media_handlers::MediaHandler;
 
 #[derive(Clone)]
 pub struct ImageHandler;

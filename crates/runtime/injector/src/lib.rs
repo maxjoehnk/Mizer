@@ -1,4 +1,4 @@
-use std::any::{Any, type_name, TypeId};
+use std::any::{type_name, Any, TypeId};
 use std::collections::HashMap;
 use std::fmt::Formatter;
 
@@ -10,9 +10,10 @@ pub struct Injector {
 
 pub trait Inject {
     fn try_inject<T: 'static>(&self) -> Option<&T>;
-    
+
     fn inject<T: 'static>(&self) -> &T {
-        self.try_inject().unwrap_or_else(|| panic!("Unable to inject {}", type_name::<T>()))
+        self.try_inject()
+            .unwrap_or_else(|| panic!("Unable to inject {}", type_name::<T>()))
     }
 }
 
@@ -32,7 +33,7 @@ impl Injector {
         let service = Box::new(service);
         self.services.insert(id, service);
     }
-    
+
     pub fn get<T: 'static>(&self) -> Option<&T> {
         let id = TypeId::of::<T>();
         self.services
@@ -50,9 +51,9 @@ impl Injector {
     // TODO: add safe way to access mutable and immutable parts of the injector
     pub fn get_slice_mut<T: 'static>(&mut self) -> Option<(&mut T, &Injector)> {
         let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&self) };
-   
+
         let service = injector1.get_mut::<T>()?;
-        
+
         Some((service, self))
     }
 }

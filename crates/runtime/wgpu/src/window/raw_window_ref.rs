@@ -1,10 +1,10 @@
 use std::ops::Deref;
-use std::sync::Arc;
 use std::sync::mpsc::Receiver;
+use std::sync::Arc;
 
 use raw_window_handle::{HasRawDisplayHandle, RawDisplayHandle};
-use winit::raw_window_handle::{DisplayHandle, HandleError, HasDisplayHandle};
 use winit::event::WindowEvent;
+use winit::raw_window_handle::{DisplayHandle, HandleError, HasDisplayHandle};
 
 pub struct RawWindowRef {
     pub window: Arc<winit::window::Window>,

@@ -21,10 +21,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     pub fn get_layouts(&self) -> Layouts {
         let layouts = self.runtime.query(ListLayoutsQuery).unwrap();
         Layouts {
-            layouts: layouts
-                .into_iter()
-                .map(Layout::from)
-                .collect::<Vec<_>>(),
+            layouts: layouts.into_iter().map(Layout::from).collect::<Vec<_>>(),
         }
     }
 

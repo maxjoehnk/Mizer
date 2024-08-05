@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 
 use mizer_fixtures::definition::FixtureFaderControl;
-use mizer_fixtures::FixturePriority;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
+use mizer_fixtures::FixturePriority;
 use mizer_module::ClockFrame;
 
 use crate::{Effect, SequencerTime, Spline};

@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use mizer_node::{NodeLink, PortDirection, PortId, PortMetadata, PortType, PreviewType};
-use mizer_nodes::{MidiInputConfig};
+use mizer_nodes::MidiInputConfig;
 use mizer_runtime::commands::StaticNodeDescriptor;
 
 use crate::proto::nodes::node_setting::{spline_value, SplineValue};

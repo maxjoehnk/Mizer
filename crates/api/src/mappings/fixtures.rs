@@ -405,11 +405,20 @@ impl From<definition::FixtureFaderControl> for models::FixtureFaderControl {
             Shutter => build_fader_control(FixtureControl::Shutter),
             ColorMixer(color_channel) => Self {
                 control: FixtureControl::ColorMixer.into(),
-                color_mixer_channel: Some(match color_channel {
-                    definition::ColorChannel::Red => fixture_fader_control::ColorMixerControlChannel::Red,
-                    definition::ColorChannel::Green => fixture_fader_control::ColorMixerControlChannel::Green,
-                    definition::ColorChannel::Blue => fixture_fader_control::ColorMixerControlChannel::Blue,
-                }.into()),
+                color_mixer_channel: Some(
+                    match color_channel {
+                        definition::ColorChannel::Red => {
+                            fixture_fader_control::ColorMixerControlChannel::Red
+                        }
+                        definition::ColorChannel::Green => {
+                            fixture_fader_control::ColorMixerControlChannel::Green
+                        }
+                        definition::ColorChannel::Blue => {
+                            fixture_fader_control::ColorMixerControlChannel::Blue
+                        }
+                    }
+                    .into(),
+                ),
                 ..Default::default()
             },
             ColorWheel => build_fader_control(FixtureControl::ColorWheel),

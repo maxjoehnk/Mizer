@@ -1,7 +1,7 @@
 use crate::debug_ui_pane::NodesDebugUiPane;
-use mizer_module::*;
-use crate::Pipeline;
 use crate::pipeline::RuntimeProcessor;
+use crate::Pipeline;
+use mizer_module::*;
 
 pub struct RuntimeModule;
 

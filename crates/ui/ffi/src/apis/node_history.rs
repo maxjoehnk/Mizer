@@ -205,4 +205,3 @@ pub extern "C" fn read_node_multi_preview(ptr: *const NodeHistory) -> Array<f64>
 
     values.into()
 }
-

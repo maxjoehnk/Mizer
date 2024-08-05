@@ -22,17 +22,20 @@ pub use mizer_fixture_nodes::{
     FixtureControlNode, FixtureNode, GroupControlNode, GroupNode, PresetNode, ProgrammerNode,
 };
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
-pub use mizer_traktor_kontrol_nodes::{TraktorKontrolX1InputNode, TraktorKontrolX1OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
-pub use mizer_input_nodes::{ButtonNode, ButtonGridNode, DialNode, FaderNode, LabelNode};
+pub use mizer_input_nodes::{ButtonGridNode, ButtonNode, DialNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{
-    MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode, NoteMode, MidiInputGridNode, MidiOutputGridNode,
+    MidiInputConfig, MidiInputGridNode, MidiInputNode, MidiOutputConfig, MidiOutputGridNode,
+    MidiOutputNode, NoteMode,
 };
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
-use mizer_node::{ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeTemplate, NodeType, PipelineNode, PortId, PortMetadata};
+use mizer_node::{
+    ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeTemplate,
+    NodeType, PipelineNode, PortId, PortMetadata,
+};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -51,14 +54,15 @@ pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
 pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode, TimecodeRecorderNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
+pub use mizer_traktor_kontrol_nodes::{TraktorKontrolX1InputNode, TraktorKontrolX1OutputNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
+pub use mizer_ui_nodes::DialogNode;
 pub use mizer_vector_nodes::{RasterizeVectorNode, VectorFileNode};
 pub use mizer_video_nodes::{
     ColorizeTextureNode, DropShadowNode, ImageFileNode, InvertNode, LumaKeyNode, StaticColorNode,
     TextureBorderNode, TextureMaskNode, TextureOpacityNode, VideoFileNode, VideoHsvNode,
     VideoMixerNode, VideoOutputNode, VideoRgbNode, VideoRgbSplitNode, VideoTransformNode,
 };
-pub use mizer_ui_nodes::DialogNode;
 pub use mizer_webcam_nodes::WebcamNode;
 
 use crate::test_sink::TestSink;
@@ -170,7 +174,7 @@ macro_rules! node_impl {
                     Node::TestSink(_) => {},
                 }
             }
-            
+
             pub fn boxed(&self) -> Box<dyn PipelineNode> {
                 match self {
                     $(Node::$node_type(node) => Box::new(node.clone()),)*

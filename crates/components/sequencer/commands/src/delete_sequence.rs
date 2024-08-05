@@ -1,7 +1,7 @@
 use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
-use mizer_nodes::{SequencerNode};
+use mizer_nodes::SequencerNode;
 use mizer_runtime::commands::DeleteNodesCommand;
-use mizer_runtime::{Pipeline};
+use mizer_runtime::Pipeline;
 use mizer_sequencer::{Sequence, Sequencer};
 use serde::{Deserialize, Serialize};
 
@@ -14,7 +14,7 @@ impl<'a> Command<'a> for DeleteSequenceCommand {
     type Dependencies = (
         Ref<Sequencer>,
         Ref<Pipeline>,
-        SubCommand<DeleteNodesCommand>
+        SubCommand<DeleteNodesCommand>,
     );
     type State = (Sequence, sub_command!(DeleteNodesCommand));
     type Result = ();
@@ -34,7 +34,8 @@ impl<'a> Command<'a> for DeleteSequenceCommand {
         let sequence = sequencer
             .delete_sequence(self.sequence_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown sequence {}", self.sequence_id))?;
-        let path = pipeline.find_node_path::<SequencerNode>(|node| node.sequence_id == self.sequence_id)
+        let path = pipeline
+            .find_node_path::<SequencerNode>(|node| node.sequence_id == self.sequence_id)
             .cloned()
             .ok_or_else(|| anyhow::anyhow!("Missing node for sequence {}", self.sequence_id))?;
         let sub_cmd = DeleteNodesCommand { paths: vec![path] };

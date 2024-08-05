@@ -11,24 +11,19 @@ pub struct FixturesHandler<R: RuntimeApi> {
 }
 
 impl<R: RuntimeApi> FixturesHandler<R> {
-    pub fn new(
-        runtime: R,
-    ) -> Self {
-        Self {
-            runtime,
-        }
+    pub fn new(runtime: R) -> Self {
+        Self { runtime }
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixtures(&self) -> Fixtures {
         let fixtures = self.runtime.query(ListFixturesQuery).unwrap();
-        let fixtures = fixtures.into_iter()
+        let fixtures = fixtures
+            .into_iter()
             .map(|fixture| {
-                let controls = FixtureControls::with_values(
-                    &fixture,
-                    fixture.current_mode.controls.clone(),
-                );
+                let controls =
+                    FixtureControls::with_values(&fixture, fixture.current_mode.controls.clone());
                 let sub_fixtures = fixture
                     .current_mode
                     .sub_fixtures
@@ -60,33 +55,37 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                         invert_pan: fixture.configuration.invert_pan,
                         invert_tilt: fixture.configuration.invert_tilt,
                         reverse_pixel_order: fixture.configuration.reverse_pixel_order,
-                        channel_limits: fixture.configuration.limits.into_iter().map(|(control, limits)| FixtureChannelLimit {
-                            control: Some(control.into()),
-                            min: limits.min,
-                            max: limits.max,
-                        }).collect()
+                        channel_limits: fixture
+                            .configuration
+                            .limits
+                            .into_iter()
+                            .map(|(control, limits)| FixtureChannelLimit {
+                                control: Some(control.into()),
+                                min: limits.min,
+                                max: limits.max,
+                            })
+                            .collect(),
                     }),
                 }
             })
             .collect();
 
-        Fixtures {
-            fixtures
-        }
+        Fixtures { fixtures }
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixture_definitions(&self) -> FixtureDefinitions {
-        let definitions = self.runtime.query(ListFixtureDefinitionsQuery::default()).unwrap();
+        let definitions = self
+            .runtime
+            .query(ListFixtureDefinitionsQuery::default())
+            .unwrap();
         let definitions = definitions
             .into_iter()
             .map(FixtureDefinition::from)
             .collect();
 
-        FixtureDefinitions {
-            definitions,
-        }
+        FixtureDefinitions { definitions }
     }
 
     #[tracing::instrument(skip(self))]
@@ -99,9 +98,12 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn preview_fixtures(&self, add_fixtures: AddFixturesRequest) -> anyhow::Result<Fixtures> {
-        let definition = self.runtime.query(GetFixtureDefinitionQuery {
-            definition_id: add_fixtures.request.as_ref().unwrap().definition_id.clone(),
-        })?.ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
+        let definition = self
+            .runtime
+            .query(GetFixtureDefinitionQuery {
+                definition_id: add_fixtures.request.as_ref().unwrap().definition_id.clone(),
+            })?
+            .ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
         let cmd = into_patch_fixtures_command(add_fixtures);
 
         let mut fixtures = Fixtures::default();
@@ -119,10 +121,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 children: Default::default(),
                 config: None,
             };
-            
+
             fixtures.fixtures.push(model);
         }
-        
+
         Ok(fixtures)
     }
 
@@ -143,10 +145,15 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             invert_pan: request.invert_pan,
             invert_tilt: request.invert_tilt,
             reverse_pixel_order: request.reverse_pixel_order,
-            limit: request.limit.map(|limit| (limit.control.unwrap().into(), ChannelLimit {
-                min: limit.min,
-                max: limit.max,
-            })),
+            limit: request.limit.map(|limit| {
+                (
+                    limit.control.unwrap().into(),
+                    ChannelLimit {
+                        min: limit.min,
+                        max: limit.max,
+                    },
+                )
+            }),
             name: request.name,
             address: request
                 .address
@@ -162,9 +169,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn export_patch(&self, path: &str) -> anyhow::Result<()> {
         let fixtures = self.runtime.query(ListFixturesQuery)?;
         let patch_exporter = PatchExporter::new();
-        let mut fixture_refs = fixtures
-            .iter()
-            .collect::<Vec<_>>();
+        let mut fixture_refs = fixtures.iter().collect::<Vec<_>>();
         fixture_refs.sort_by_key(|fixture| fixture.id);
         let pdf = patch_exporter.export_csv(fixture_refs.as_slice())?;
 

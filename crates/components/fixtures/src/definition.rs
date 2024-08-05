@@ -229,96 +229,91 @@ impl<T> OptionExt for Option<T> {
 
 macro_rules! implement_conversion {
     ($from:ty, $to:ty) => {
-impl From<FixtureControls<$from>> for FixtureControls<$to> {
-    fn from(controls: FixtureControls<$from>) -> Self {
-        Self {
-            intensity: controls
-                .intensity
-                .and_then(|c| c.try_into().ok()),
-            shutter: controls
-                .shutter
-                .and_then(|c| c.try_into().ok()),
-            color_mixer: controls.color_mixer.and_then(|color| match color {
-                ColorGroup::Rgb {
-                    red,
-                    green,
-                    blue,
-                    amber,
-                    white,
-                } => {
-                    let red = red.try_into().ok()?;
-                    let green = green.try_into().ok()?;
-                    let blue = blue.try_into().ok()?;
-                    let amber = amber.and_then(|c| c.try_into().ok());
-                    let white = white.and_then(|c| c.try_into().ok());
+        impl From<FixtureControls<$from>> for FixtureControls<$to> {
+            fn from(controls: FixtureControls<$from>) -> Self {
+                Self {
+                    intensity: controls.intensity.and_then(|c| c.try_into().ok()),
+                    shutter: controls.shutter.and_then(|c| c.try_into().ok()),
+                    color_mixer: controls.color_mixer.and_then(|color| match color {
+                        ColorGroup::Rgb {
+                            red,
+                            green,
+                            blue,
+                            amber,
+                            white,
+                        } => {
+                            let red = red.try_into().ok()?;
+                            let green = green.try_into().ok()?;
+                            let blue = blue.try_into().ok()?;
+                            let amber = amber.and_then(|c| c.try_into().ok());
+                            let white = white.and_then(|c| c.try_into().ok());
 
-                    Some(ColorGroup::Rgb {
-                        red,
-                        green,
-                        blue,
-                        amber,
-                        white,
-                    })
-                }
-                ColorGroup::Cmy {
-                    yellow,
-                    magenta,
-                    cyan,
-                } => {
-                    let yellow = yellow.try_into().ok()?;
-                    let magenta = magenta.try_into().ok()?;
-                    let cyan = cyan.try_into().ok()?;
+                            Some(ColorGroup::Rgb {
+                                red,
+                                green,
+                                blue,
+                                amber,
+                                white,
+                            })
+                        }
+                        ColorGroup::Cmy {
+                            yellow,
+                            magenta,
+                            cyan,
+                        } => {
+                            let yellow = yellow.try_into().ok()?;
+                            let magenta = magenta.try_into().ok()?;
+                            let cyan = cyan.try_into().ok()?;
 
-                    Some(ColorGroup::Cmy {
-                        yellow,
-                        magenta,
-                        cyan,
-                    })
+                            Some(ColorGroup::Cmy {
+                                yellow,
+                                magenta,
+                                cyan,
+                            })
+                        }
+                    }),
+                    color_wheel: controls.color_wheel.and_then(|color_wheel| {
+                        Some(ColorWheelGroup {
+                            channel: color_wheel.channel.try_into().ok()?,
+                            colors: color_wheel.colors,
+                        })
+                    }),
+                    pan: controls.pan.and_then(|axis| {
+                        Some(AxisGroup {
+                            channel: axis.channel.try_into().ok()?,
+                            angle: axis.angle,
+                        })
+                    }),
+                    tilt: controls.tilt.and_then(|axis| {
+                        Some(AxisGroup {
+                            channel: axis.channel.try_into().ok()?,
+                            angle: axis.angle,
+                        })
+                    }),
+                    focus: controls.focus.and_then(|c| c.try_into().ok()),
+                    zoom: controls.zoom.and_then(|c| c.try_into().ok()),
+                    prism: controls.prism.and_then(|c| c.try_into().ok()),
+                    iris: controls.iris.and_then(|c| c.try_into().ok()),
+                    frost: controls.frost.and_then(|c| c.try_into().ok()),
+                    gobo: controls.gobo.and_then(|gobo| {
+                        Some(GoboGroup {
+                            channel: gobo.channel.try_into().ok()?,
+                            gobos: gobo.gobos,
+                        })
+                    }),
+                    generic: controls
+                        .generic
+                        .into_iter()
+                        .filter_map(|generic| {
+                            Some(GenericControl {
+                                channel: generic.channel.try_into().ok()?,
+                                label: generic.label,
+                            })
+                        })
+                        .collect(),
                 }
-            }),
-            color_wheel: controls.color_wheel.and_then(|color_wheel| {
-                Some(ColorWheelGroup {
-                    channel: color_wheel.channel.try_into().ok()?,
-                    colors: color_wheel.colors,
-                })
-            }),
-            pan: controls.pan.and_then(|axis| {
-                Some(AxisGroup {
-                    channel: axis.channel.try_into().ok()?,
-                    angle: axis.angle,
-                })
-            }),
-            tilt: controls.tilt.and_then(|axis| {
-                Some(AxisGroup {
-                    channel: axis.channel.try_into().ok()?,
-                    angle: axis.angle,
-                })
-            }),
-            focus: controls.focus.and_then(|c| c.try_into().ok()),
-            zoom: controls.zoom.and_then(|c| c.try_into().ok()),
-            prism: controls.prism.and_then(|c| c.try_into().ok()),
-            iris: controls.iris.and_then(|c| c.try_into().ok()),
-            frost: controls.frost.and_then(|c| c.try_into().ok()),
-            gobo: controls.gobo.and_then(|gobo| {
-                Some(GoboGroup {
-                    channel: gobo.channel.try_into().ok()?,
-                    gobos: gobo.gobos,
-                })
-            }),
-            generic: controls
-                .generic
-                .into_iter()
-                .filter_map(|generic| {
-                    Some(GenericControl {
-                        channel: generic.channel.try_into().ok()?,
-                        label: generic.label,
-                    })
-                })
-                .collect(),
+            }
         }
-    }
-}
-
     };
 }
 
@@ -564,13 +559,13 @@ impl<TChannel> ColorGroupBuilder<TChannel> {
                 amber: self.amber,
                 white: self.white,
             }
-                .into(),
+            .into(),
             (_, Some(((cyan, magenta), yellow))) => ColorGroup::Cmy {
                 cyan,
                 magenta,
                 yellow,
             }
-                .into(),
+            .into(),
             _ => None,
         }
     }
@@ -926,7 +921,7 @@ impl FixtureChannelDefinition {
             ChannelResolution::Ultra { .. } => 4,
         }
     }
-    
+
     pub fn first_address(&self) -> u16 {
         match self.resolution {
             ChannelResolution::Coarse(address) => address,

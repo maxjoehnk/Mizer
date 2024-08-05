@@ -1,5 +1,5 @@
 use crate::commands::AddNodeCommand;
-use mizer_commander::{Command, sub_command, SubCommand, SubCommandRunner};
+use mizer_commander::{sub_command, Command, SubCommand, SubCommandRunner};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};

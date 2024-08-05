@@ -1,4 +1,4 @@
-use std::time::{Instant, Duration};
+use std::time::{Duration, Instant};
 
 #[cfg(debug_assertions)]
 #[macro_export]
@@ -16,7 +16,7 @@ macro_rules! stopwatch {
 macro_rules! stopwatch {
     ($fmt: expr) => {
         mizer_util::Stopwatch::start()
-    }
+    };
 }
 
 #[cfg(debug_assertions)]

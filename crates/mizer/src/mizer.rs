@@ -54,7 +54,8 @@ impl Mizer {
             histogram.record(frame_time);
             if frame_time <= frame_delay {
                 // MacOS seems to have really inaccurate timers, so we increase the accuracy of spin_sleep
-                #[cfg(target_os = "macos")] {
+                #[cfg(target_os = "macos")]
+                {
                     let sleeper = spin_sleep::SpinSleeper::new(5_000_000);
                     sleeper.sleep(frame_delay - frame_time);
                 }
@@ -161,7 +162,11 @@ impl Mizer {
                 format!("Project loaded ({path:?})"),
                 Some(Duration::from_secs(10)),
             );
-            mizer_console::info!(ConsoleCategory::Projects, "Project loaded ({})", path.display());
+            mizer_console::info!(
+                ConsoleCategory::Projects,
+                "Project loaded ({})",
+                path.display()
+            );
             self.status_bus.send_current_project(ProjectStatus::Loaded(
                 path.file_name()
                     .map(|name| name.to_string_lossy().to_string())
@@ -214,7 +219,11 @@ impl Mizer {
                 format!("Project saved ({path:?})"),
                 Some(Duration::from_secs(10)),
             );
-            mizer_console::info!(ConsoleCategory::Projects, "Project saved ({})", path.display());
+            mizer_console::info!(
+                ConsoleCategory::Projects,
+                "Project saved ({})",
+                path.display()
+            );
         }
         Ok(())
     }

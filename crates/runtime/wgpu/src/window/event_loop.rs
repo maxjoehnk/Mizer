@@ -1,5 +1,5 @@
-use std::sync::Arc;
 use std::sync::mpsc::Sender;
+use std::sync::Arc;
 
 use dashmap::DashMap;
 use wgpu::PresentMode;
@@ -82,7 +82,10 @@ impl EventLoopHandle {
             .unwrap();
         self.window_event_sender.insert(window.id(), tx);
 
-        Ok(RawWindowRef { window: Arc::new(window), events: rx })
+        Ok(RawWindowRef {
+            window: Arc::new(window),
+            events: rx,
+        })
     }
 
     pub fn available_screens(&self) -> Vec<Screen> {

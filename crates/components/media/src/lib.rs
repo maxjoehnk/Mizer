@@ -14,10 +14,10 @@ use crate::file_storage::FileStorage;
 use crate::import_handler::ImportFileHandler;
 
 mod background_media_job;
-mod events;
 mod data_access;
 mod discovery;
 pub mod documents;
+mod events;
 mod file_storage;
 mod import_handler;
 pub mod media_handlers;
@@ -173,9 +173,9 @@ impl MediaServer {
         {
             Ok(Some(document)) => {
                 self.event_bus.send(MediaEvent::FileAdded(document.id));
-                
+
                 Ok(Some(document))
-            },
+            }
             Ok(None) => Ok(None),
             Err(err) => {
                 tracing::error!("Error importing file {err:?}");
@@ -188,11 +188,11 @@ impl MediaServer {
             }
         }
     }
-    
+
     pub fn relink_media(&self, id: MediaId, path: PathBuf) -> anyhow::Result<()> {
         self.db.relink_media(id, path)?;
         self.event_bus.send(MediaEvent::FileUpdated(id));
-        
+
         Ok(())
     }
 

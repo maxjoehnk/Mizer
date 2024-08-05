@@ -1,8 +1,8 @@
 use crate::documents::MediaType;
-use crate::media_handlers::{MediaHandler};
+use crate::media_handlers::MediaHandler;
 
 #[derive(Clone)]
-pub struct SvgHandler; 
+pub struct SvgHandler;
 
 impl MediaHandler for SvgHandler {
     const MEDIA_TYPE: MediaType = MediaType::Vector;

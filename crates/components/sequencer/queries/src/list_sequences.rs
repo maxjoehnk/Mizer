@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_sequencer::{Sequence, Sequencer};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListSequencesQuery;

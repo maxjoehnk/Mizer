@@ -1,6 +1,6 @@
-use mizer_module::{Module, module_name, ModuleContext};
 use crate::dialog::DialogService;
 use crate::UiApi;
+use mizer_module::{module_name, Module, ModuleContext};
 
 pub struct UiApiModule;
 

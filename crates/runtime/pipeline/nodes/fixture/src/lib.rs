@@ -5,6 +5,7 @@ pub use group_control::*;
 pub use preset::*;
 pub use programmer::*;
 
+mod contracts;
 mod fixture;
 mod fixture_control;
 mod fixture_ports;
@@ -12,4 +13,3 @@ mod group;
 mod group_control;
 mod preset;
 mod programmer;
-mod contracts;

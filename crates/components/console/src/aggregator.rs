@@ -1,9 +1,9 @@
-use std::sync::Arc;
-use futures::StreamExt;
-use parking_lot::RwLock;
-use mizer_message_bus::MessageBus;
+use crate::bus::{init_bus, ConsoleBus};
 use crate::{ConsoleHistory, ConsoleMessage};
-use crate::bus::{ConsoleBus, init_bus};
+use futures::StreamExt;
+use mizer_message_bus::MessageBus;
+use parking_lot::RwLock;
+use std::sync::Arc;
 
 pub struct ConsoleAggregator {
     receiver: flume::Receiver<ConsoleMessage>,

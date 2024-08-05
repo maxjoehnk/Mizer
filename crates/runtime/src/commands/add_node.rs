@@ -1,11 +1,11 @@
 use super::StaticNodeDescriptor;
-use crate::commands::{assert_valid_parent};
+use crate::commands::assert_valid_parent;
+use crate::pipeline::Pipeline;
 use mizer_commander::{Command, InjectorRef, RefMut};
 use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::{Node, NodeTypeExt};
-use serde::{Deserialize, Serialize};
 use mizer_processing::Injector;
-use crate::pipeline::Pipeline;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddNodeCommand {
@@ -30,9 +30,17 @@ impl<'a> Command<'a> for AddNodeCommand {
         (pipeline, injector): (&mut Pipeline, &Injector),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         assert_valid_parent(pipeline, self.parent.as_ref())?;
-        let node = self.node.clone()
+        let node = self
+            .node
+            .clone()
             .or_else(|| self.node_type.get_template(self.template.as_ref()?));
-        let descriptor = pipeline.add_node(injector, self.node_type, self.designer, node, self.parent.as_ref())?;
+        let descriptor = pipeline.add_node(
+            injector,
+            self.node_type,
+            self.designer,
+            node,
+            self.parent.as_ref(),
+        )?;
         let path = descriptor.path.clone();
 
         Ok((descriptor, path))

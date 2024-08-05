@@ -20,16 +20,34 @@ pub fn read_profile(path: &Path) -> anyhow::Result<DeviceProfile> {
         file_path: path.to_path_buf(),
     };
     if let Err(err) = generate_pages(&config.scripts, &mut profile, path) {
-        profile.errors.push(ProfileErrors::PagesLoadingError(err.to_string()));
-        tracing::error!("Error generating pages for profile {}: {:?}", profile.name, err);
+        profile
+            .errors
+            .push(ProfileErrors::PagesLoadingError(err.to_string()));
+        tracing::error!(
+            "Error generating pages for profile {}: {:?}",
+            profile.name,
+            err
+        );
     }
     if let Err(err) = generate_output_script(&config.scripts, &mut profile, path) {
-        profile.errors.push(ProfileErrors::OutputScriptLoadingError(err.to_string()));
-        tracing::error!("Error generating output script for profile {}: {:?}", profile.name, err);
+        profile
+            .errors
+            .push(ProfileErrors::OutputScriptLoadingError(err.to_string()));
+        tracing::error!(
+            "Error generating output script for profile {}: {:?}",
+            profile.name,
+            err
+        );
     }
     if let Err(err) = read_layout(&config.layout_file, &mut profile, path) {
-        profile.errors.push(ProfileErrors::LayoutLoadingError(err.to_string()));
-        tracing::error!("Error reading layout for profile {}: {:?}", profile.name, err);
+        profile
+            .errors
+            .push(ProfileErrors::LayoutLoadingError(err.to_string()));
+        tracing::error!(
+            "Error reading layout for profile {}: {:?}",
+            profile.name,
+            err
+        );
     }
 
     Ok(profile)
@@ -43,18 +61,23 @@ fn read_config(path: &Path) -> anyhow::Result<DeviceProfileConfig> {
     Ok(profile)
 }
 
-fn generate_pages(scripts: &Option<ProfileScripts>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
-    if let Some(script_name) = scripts
-        .as_ref()
-        .and_then(|scripts| scripts.pages.as_ref())
-    {
+fn generate_pages(
+    scripts: &Option<ProfileScripts>,
+    profile: &mut DeviceProfile,
+    path: &Path,
+) -> anyhow::Result<()> {
+    if let Some(script_name) = scripts.as_ref().and_then(|scripts| scripts.pages.as_ref()) {
         profile.pages = get_pages(path.join(script_name))?;
     }
 
     Ok(())
 }
 
-fn generate_output_script(scripts: &Option<ProfileScripts>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+fn generate_output_script(
+    scripts: &Option<ProfileScripts>,
+    profile: &mut DeviceProfile,
+    path: &Path,
+) -> anyhow::Result<()> {
     if let Some(script_name) = scripts
         .as_ref()
         .and_then(|scripts| scripts.outputs.as_ref())
@@ -68,7 +91,11 @@ fn generate_output_script(scripts: &Option<ProfileScripts>, profile: &mut Device
     Ok(())
 }
 
-fn read_layout(layout_file: &Option<String>, profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+fn read_layout(
+    layout_file: &Option<String>,
+    profile: &mut DeviceProfile,
+    path: &Path,
+) -> anyhow::Result<()> {
     if let Some(filename) = layout_file.as_ref() {
         let layout_path = path.join(filename);
         let layout = std::fs::read_to_string(layout_path)?;

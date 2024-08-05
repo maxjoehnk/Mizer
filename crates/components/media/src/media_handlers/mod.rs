@@ -51,12 +51,16 @@ pub trait MediaHandler {
         }
         let metadata = self
             .read_metadata(file_path, content_type)
-            .context("Reading metadata").unwrap_or_else(|err| {
-            tracing::warn!("Unable to read metadata for {file_path:?}: {err:?}");
-            mizer_console::warn!(mizer_console::ConsoleCategory::Media, "Unable to read metadata for {file_path:?}");
+            .context("Reading metadata")
+            .unwrap_or_else(|err| {
+                tracing::warn!("Unable to read metadata for {file_path:?}: {err:?}");
+                mizer_console::warn!(
+                    mizer_console::ConsoleCategory::Media,
+                    "Unable to read metadata for {file_path:?}"
+                );
 
-            Default::default()
-        });
+                Default::default()
+            });
 
         Ok((Self::MEDIA_TYPE, metadata))
     }

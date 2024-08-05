@@ -8,8 +8,8 @@ use mizer_node::{Injector, SelectVariant};
 use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
-pub use self::output::{MidiOutputConfig, MidiOutputNode};
 pub use self::input_grid::MidiInputGridNode;
+pub use self::output::{MidiOutputConfig, MidiOutputNode};
 pub use self::output_grid::MidiOutputGridNode;
 
 mod input;
@@ -116,7 +116,11 @@ fn get_pages_and_controls(
         })
         .unwrap_or_default();
     let steps = page
-        .and_then(|page| page.all_controls().find(|c| c.id.as_str() == control_name).cloned())
+        .and_then(|page| {
+            page.all_controls()
+                .find(|c| c.id.as_str() == control_name)
+                .cloned()
+        })
         .and_then(|control| if input { control.input } else { control.output })
         .and_then(|control| control.midi_device_control())
         .and_then(|control| control.steps)
@@ -132,7 +136,7 @@ fn get_pages_and_grid(
 ) -> (
     Vec<SelectVariant>,
     Option<(u32, u32)>,
-    Option<Vec<SelectVariant>>
+    Option<Vec<SelectVariant>>,
 ) {
     let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
     let pages = connection_manager

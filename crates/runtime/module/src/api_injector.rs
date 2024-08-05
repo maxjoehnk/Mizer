@@ -1,8 +1,8 @@
+use mizer_processing::Inject;
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
 use std::fmt::Formatter;
 use std::sync::Arc;
-use mizer_processing::Inject;
 
 pub trait ApiService: Any + Send + Sync + Clone {}
 

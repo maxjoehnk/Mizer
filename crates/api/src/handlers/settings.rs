@@ -6,12 +6,15 @@ use mizer_connections::midi_device_profile::MidiDeviceProfileRegistry;
 #[derive(Clone)]
 pub struct SettingsHandler<R: RuntimeApi> {
     runtime: R,
-    profile_registry: MidiDeviceProfileRegistry, 
+    profile_registry: MidiDeviceProfileRegistry,
 }
 
 impl<R: RuntimeApi> SettingsHandler<R> {
     pub fn new(runtime: R, profile_registry: MidiDeviceProfileRegistry) -> Self {
-        Self { runtime, profile_registry }
+        Self {
+            runtime,
+            profile_registry,
+        }
     }
 
     #[tracing::instrument(skip(self))]

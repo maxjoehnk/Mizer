@@ -36,7 +36,7 @@ impl PatchFixturesCommand {
             base_name.to_string()
         }
     }
-    
+
     pub fn preview(&self, definition: FixtureDefinition) -> anyhow::Result<Vec<Fixture>> {
         let mut previews = Vec::with_capacity(self.count as usize);
         let captures = FIXTURE_NAME_REGEX.captures(&self.name).unwrap();
@@ -52,7 +52,7 @@ impl PatchFixturesCommand {
                 mode.dmx_channels(),
                 i as u16,
             );
-            
+
             previews.push(Fixture::new(
                 fixture_id,
                 name,
@@ -60,19 +60,16 @@ impl PatchFixturesCommand {
                 Some(self.mode.clone()),
                 channel,
                 Some(universe),
-                Default::default()
+                Default::default(),
             ));
         }
-        
+
         Ok(previews)
     }
 }
 
 impl<'a> Command<'a> for PatchFixturesCommand {
-    type Dependencies = (
-        Ref<FixtureManager>,
-        Ref<FixtureLibrary>,
-    );
+    type Dependencies = (Ref<FixtureManager>, Ref<FixtureLibrary>);
     type State = ();
     type Result = ();
 
@@ -82,10 +79,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
 
     fn apply(
         &self,
-        (fixture_manager, fixture_library): (
-            &FixtureManager,
-            &FixtureLibrary,
-        ),
+        (fixture_manager, fixture_library): (&FixtureManager, &FixtureLibrary),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let definition = fixture_library
             .get_definition(&self.definition_id)
@@ -119,10 +113,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
 
     fn revert(
         &self,
-        (fixture_manager, _): (
-            &FixtureManager,
-            &FixtureLibrary,
-        ),
+        (fixture_manager, _): (&FixtureManager, &FixtureLibrary),
         _state: Self::State,
     ) -> anyhow::Result<()> {
         for i in 0..self.count {

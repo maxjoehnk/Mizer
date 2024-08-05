@@ -2,9 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_commander::{Command, Ref};
 
-use crate::{
-    SurfaceRegistry, SurfaceSection, SurfaceSectionId, SurfaceTransform,
-};
+use crate::{SurfaceRegistry, SurfaceSection, SurfaceSectionId, SurfaceTransform};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct UpdateSurfaceSectionCommand {

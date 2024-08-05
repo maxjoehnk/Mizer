@@ -22,4 +22,3 @@ pub enum ConsoleCategory {
     Commands,
     Nodes,
 }
-

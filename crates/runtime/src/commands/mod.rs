@@ -1,7 +1,9 @@
-use mizer_node::{NodeDesigner, NodeDetails, NodeMetadata, NodePath, NodeSetting, NodeType, PortMetadata};
-use mizer_nodes::{ContainerNode};
-use mizer_ports::PortId;
 use crate::pipeline::Pipeline;
+use mizer_node::{
+    NodeDesigner, NodeDetails, NodeMetadata, NodePath, NodeSetting, NodeType, PortMetadata,
+};
+use mizer_nodes::ContainerNode;
+use mizer_ports::PortId;
 
 pub use self::add_link::*;
 pub use self::add_node::*;
@@ -30,8 +32,8 @@ mod move_node;
 mod remove_link;
 mod rename_node;
 mod show_node;
-mod update_node_setting;
 mod update_node_color;
+mod update_node_setting;
 
 #[derive(Debug, Clone)]
 pub struct StaticNodeDescriptor {
@@ -66,9 +68,9 @@ pub(crate) fn add_path_to_container(
     let Some(parent) = parent else {
         return Ok(());
     };
-    let container = pipeline.get_node_mut::<ContainerNode>(parent).ok_or_else(|| {
-        anyhow::anyhow!("Node {} is not a container", path)
-    })?;
+    let container = pipeline
+        .get_node_mut::<ContainerNode>(parent)
+        .ok_or_else(|| anyhow::anyhow!("Node {} is not a container", path))?;
     container.nodes.push(path.clone());
 
     Ok(())
@@ -82,9 +84,9 @@ pub(crate) fn remove_path_from_container(
     let Some(parent) = parent else {
         return Ok(());
     };
-    let container = pipeline.get_node_mut::<ContainerNode>(parent).ok_or_else(|| {
-        anyhow::anyhow!("Node {} is not a container", path)
-    })?;
+    let container = pipeline
+        .get_node_mut::<ContainerNode>(parent)
+        .ok_or_else(|| anyhow::anyhow!("Node {} is not a container", path))?;
     container.nodes.retain(|p| path != p);
 
     Ok(())

@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 
 pub trait TableHandler {
     type Data;
-    
+
     fn get_table(&self, data: Self::Data) -> anyhow::Result<TableData>;
 }
 

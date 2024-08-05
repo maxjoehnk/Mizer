@@ -1,9 +1,9 @@
+use crate::documents::MediaDocument;
+use crate::events::MediaEvent;
+use crate::thumbnail_generator::ThumbnailGenerator;
+use crate::MediaServer;
 use mizer_message_bus::Subscriber;
 use mizer_status_bus::StatusHandle;
-use crate::documents::{MediaDocument};
-use crate::events::MediaEvent;
-use crate::MediaServer;
-use crate::thumbnail_generator::{ThumbnailGenerator};
 
 pub struct BackgroundMediaJob {
     media_server: MediaServer,
@@ -13,7 +13,11 @@ pub struct BackgroundMediaJob {
 }
 
 impl BackgroundMediaJob {
-    pub fn new(media_server: MediaServer, status_handle: StatusHandle, media_events: Subscriber<MediaEvent>) -> Self {
+    pub fn new(
+        media_server: MediaServer,
+        status_handle: StatusHandle,
+        media_events: Subscriber<MediaEvent>,
+    ) -> Self {
         let generator = ThumbnailGenerator::new(media_server.storage.clone());
 
         BackgroundMediaJob {
@@ -69,7 +73,10 @@ impl BackgroundMediaJob {
             Err(err) => {
                 let file_path = &media.file_path;
                 tracing::warn!("Unable to generate thumbnail for {file_path:?}: {err:?}");
-                mizer_console::warn!(mizer_console::ConsoleCategory::Media, "Unable to generate thumbnail for {file_path:?}");
+                mizer_console::warn!(
+                    mizer_console::ConsoleCategory::Media,
+                    "Unable to generate thumbnail for {file_path:?}"
+                );
             }
         }
     }

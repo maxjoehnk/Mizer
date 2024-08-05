@@ -1,7 +1,7 @@
+use crate::Pipeline;
 use mizer_debug_ui_impl::NodeStateAccess;
 use mizer_module::*;
 use mizer_nodes::NodeDowncast;
-use crate::Pipeline;
 
 pub struct NodesDebugUiPane;
 

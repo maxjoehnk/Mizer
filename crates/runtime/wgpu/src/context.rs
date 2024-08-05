@@ -48,7 +48,7 @@ impl WgpuContext {
             }
             wgpu::Error::Internal {
                 description,
-                source
+                source,
             } => {
                 tracing::error!(source, "wgpu internal error: {}", description);
             }

@@ -1,5 +1,5 @@
 use crate::documents::MediaType;
-use crate::media_handlers::{MediaHandler};
+use crate::media_handlers::MediaHandler;
 
 #[derive(Clone)]
 pub struct DataHandler;

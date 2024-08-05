@@ -23,10 +23,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn get_connections(&self) -> Connections {
         let connections = self.runtime.query(ListConnectionsQuery).unwrap();
-        let connections = connections
-            .into_iter()
-            .map(Connection::from)
-            .collect();
+        let connections = connections.into_iter().map(Connection::from).collect();
 
         Connections { connections }
     }
@@ -155,24 +152,21 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
         let profiles = self.runtime.query(ListMidiDeviceProfilesQuery).unwrap();
-        let profiles = profiles
-            .into_iter()
-            .map(MidiDeviceProfile::from)
-            .collect();
+        let profiles = profiles.into_iter().map(MidiDeviceProfile::from).collect();
 
-        MidiDeviceProfiles {
-            profiles,
-        }
+        MidiDeviceProfiles { profiles }
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn change_midi_device_profile(&self, device: String, profile_id: Option<String>) -> anyhow::Result<()> {
-        self.runtime.run_command(ChangeMidiDeviceProfileCommand {
-            device,
-            profile_id
-        })?;
-        
+    pub fn change_midi_device_profile(
+        &self,
+        device: String,
+        profile_id: Option<String>,
+    ) -> anyhow::Result<()> {
+        self.runtime
+            .run_command(ChangeMidiDeviceProfileCommand { device, profile_id })?;
+
         Ok(())
     }
 

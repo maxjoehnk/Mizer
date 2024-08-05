@@ -13,7 +13,9 @@ pub struct MediaChannel<AR, R> {
     runtime: AR,
 }
 
-impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MethodCallHandler for MediaChannel<AR, R> {
+impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MethodCallHandler
+    for MediaChannel<AR, R>
+{
     fn on_method_call(
         &mut self,
         call: MethodCall<Value>,
@@ -68,8 +70,10 @@ impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> MethodCallHandler for 
                 }
             }
             "relinkMedia" => {
-                let response = call.arguments().and_then(|req| self.handler.relink_media(req));
-                
+                let response = call
+                    .arguments()
+                    .and_then(|req| self.handler.relink_media(req));
+
                 resp.respond_unit_result(response);
             }
             "removeMedia" => {

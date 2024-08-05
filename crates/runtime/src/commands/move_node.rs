@@ -1,8 +1,8 @@
-use std::collections::HashMap;
+use crate::Pipeline;
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodePath, NodePosition};
 use serde::{Deserialize, Serialize};
-use crate::Pipeline;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MoveNodesCommand {
@@ -27,7 +27,8 @@ impl<'a> Command<'a> for MoveNodesCommand {
     fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut state = HashMap::with_capacity(self.movements.len());
         for movement in &self.movements {
-            let designer = pipeline.get_node_designer_mut(&movement.path)
+            let designer = pipeline
+                .get_node_designer_mut(&movement.path)
                 .ok_or_else(|| anyhow::anyhow!("Unknown node {}", &movement.path))?;
             let mut previous = movement.position;
             std::mem::swap(&mut designer.position, &mut previous);
@@ -39,7 +40,8 @@ impl<'a> Command<'a> for MoveNodesCommand {
 
     fn revert(&self, pipeline: &mut Pipeline, state: Self::State) -> anyhow::Result<()> {
         for (path, position) in state {
-            let designer = pipeline.get_node_designer_mut(&path)
+            let designer = pipeline
+                .get_node_designer_mut(&path)
                 .ok_or_else(|| anyhow::anyhow!("Unknown node {}", &path))?;
             designer.position = position;
         }

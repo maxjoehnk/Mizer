@@ -1,7 +1,7 @@
-use std::sync::Arc;
-use parking_lot::RwLock;
-use mizer_message_bus::{MessageBus, Subscriber};
 use crate::ConsoleMessage;
+use mizer_message_bus::{MessageBus, Subscriber};
+use parking_lot::RwLock;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct ConsoleHistory {
@@ -18,4 +18,3 @@ impl ConsoleHistory {
         self.bus.subscribe()
     }
 }
-

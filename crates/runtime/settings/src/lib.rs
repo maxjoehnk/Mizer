@@ -43,12 +43,12 @@ pub struct FilePaths {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(from="BackwardCompatibility")]
+#[serde(from = "BackwardCompatibility")]
 #[repr(transparent)]
 pub struct PathList(Vec<PathBuf>);
 
 impl FromIterator<PathBuf> for PathList {
-    fn from_iter<T: IntoIterator<Item=PathBuf>>(iter: T) -> Self {
+    fn from_iter<T: IntoIterator<Item = PathBuf>>(iter: T) -> Self {
         PathList(iter.into_iter().collect())
     }
 }
@@ -180,7 +180,7 @@ impl SettingsManager {
 
         self.settings.save_to(file_path)
     }
-    
+
     fn get_config_path() -> Option<PathBuf> {
         ProjectDirs::from("live", "mizer", "Mizer")
             .map(|dirs| dirs.config_dir().join("settings.toml"))

@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{Command, Ref, sub_command, SubCommand, SubCommandRunner};
-use mizer_fixtures::GroupId;
+use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
+use mizer_fixtures::GroupId;
 use mizer_nodes::GroupNode;
 use mizer_runtime::commands::DeleteNodesCommand;
 use mizer_runtime::Pipeline;
@@ -14,11 +14,12 @@ pub struct DeleteGroupCommand {
 }
 
 impl<'a> Command<'a> for DeleteGroupCommand {
-    type Dependencies = (Ref<FixtureManager>, Ref<Pipeline>, SubCommand<DeleteNodesCommand>);
-    type State = (
-        Group,
-        sub_command!(DeleteNodesCommand),
+    type Dependencies = (
+        Ref<FixtureManager>,
+        Ref<Pipeline>,
+        SubCommand<DeleteNodesCommand>,
     );
+    type State = (Group, sub_command!(DeleteNodesCommand));
     type Result = ();
 
     fn label(&self) -> String {
@@ -37,7 +38,8 @@ impl<'a> Command<'a> for DeleteGroupCommand {
             .delete_group(self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.id))?;
 
-        let path = pipeline.find_node_path::<GroupNode>(|node| node.id == self.id)
+        let path = pipeline
+            .find_node_path::<GroupNode>(|node| node.id == self.id)
             .cloned()
             .ok_or_else(|| anyhow::anyhow!("Missing node for group {}", self.id))?;
 

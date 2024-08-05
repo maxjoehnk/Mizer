@@ -1,4 +1,3 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Query, Ref};
 use mizer_connections::*;
 use mizer_devices::DeviceManager;
@@ -7,15 +6,33 @@ use mizer_protocol_dmx::{DmxConnectionManager, DmxInput, DmxOutput};
 use mizer_protocol_midi::MidiConnectionManager;
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::OscConnectionManager;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListConnectionsQuery;
 
 impl<'a> Query<'a> for ListConnectionsQuery {
-    type Dependencies = (Ref<MidiConnectionManager>, Ref<DmxConnectionManager>, Ref<MqttConnectionManager>, Ref<OscConnectionManager>, Ref<DeviceManager>, Ref<CitpConnectionManager>);
+    type Dependencies = (
+        Ref<MidiConnectionManager>,
+        Ref<DmxConnectionManager>,
+        Ref<MqttConnectionManager>,
+        Ref<OscConnectionManager>,
+        Ref<DeviceManager>,
+        Ref<CitpConnectionManager>,
+    );
     type Result = Vec<Connection>;
 
-    fn query(&self, (midi_manager, dmx_manager, mqtt_manager, osc_manager, device_manager, citp_manager): (&MidiConnectionManager, &DmxConnectionManager, &MqttConnectionManager, &OscConnectionManager, &DeviceManager, &CitpConnectionManager)) -> anyhow::Result<Self::Result> {
+    fn query(
+        &self,
+        (midi_manager, dmx_manager, mqtt_manager, osc_manager, device_manager, citp_manager): (
+            &MidiConnectionManager,
+            &DmxConnectionManager,
+            &MqttConnectionManager,
+            &OscConnectionManager,
+            &DeviceManager,
+            &CitpConnectionManager,
+        ),
+    ) -> anyhow::Result<Self::Result> {
         let mut connections = Vec::new();
         connections.extend(self.midi_connections(midi_manager));
         connections.extend(self.dmx_outputs(dmx_manager));
@@ -30,7 +47,10 @@ impl<'a> Query<'a> for ListConnectionsQuery {
 }
 
 impl ListConnectionsQuery {
-    fn midi_connections(&self, midi_manager: &MidiConnectionManager) -> impl Iterator<Item=Connection> {
+    fn midi_connections(
+        &self,
+        midi_manager: &MidiConnectionManager,
+    ) -> impl Iterator<Item = Connection> {
         midi_manager
             .list_available_devices()
             .into_iter()
@@ -41,7 +61,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn dmx_outputs<'a>(&self, dmx_manager: &'a DmxConnectionManager) -> impl Iterator<Item=Connection> + 'a {
+    fn dmx_outputs<'a>(
+        &self,
+        dmx_manager: &'a DmxConnectionManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         dmx_manager
             .list_outputs()
             .into_iter()
@@ -65,7 +88,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn dmx_inputs<'a>(&self, dmx_manager: &'a DmxConnectionManager) -> impl Iterator<Item=Connection> + 'a {
+    fn dmx_inputs<'a>(
+        &self,
+        dmx_manager: &'a DmxConnectionManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         dmx_manager
             .list_inputs()
             .into_iter()
@@ -84,7 +110,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn mqtt_connections<'a>(&self, mqtt_manager: &'a MqttConnectionManager) -> impl Iterator<Item=Connection> + 'a {
+    fn mqtt_connections<'a>(
+        &self,
+        mqtt_manager: &'a MqttConnectionManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         mqtt_manager
             .list_connections()
             .into_iter()
@@ -98,7 +127,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn osc_connections<'a>(&self, osc_manager: &'a OscConnectionManager) -> impl Iterator<Item=Connection> + 'a {
+    fn osc_connections<'a>(
+        &self,
+        osc_manager: &'a OscConnectionManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         osc_manager
             .list_connections()
             .into_iter()
@@ -117,7 +149,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn citp_connections<'a>(&self, citp_manager: &'a CitpConnectionManager) -> impl Iterator<Item=Connection> + 'a {
+    fn citp_connections<'a>(
+        &self,
+        citp_manager: &'a CitpConnectionManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         citp_manager
             .list_connections()
             .into_iter()
@@ -130,7 +165,10 @@ impl ListConnectionsQuery {
             .map(Connection::from)
     }
 
-    fn devices<'a>(&self, device_manager: &'a DeviceManager) -> impl Iterator<Item=Connection> + 'a {
+    fn devices<'a>(
+        &self,
+        device_manager: &'a DeviceManager,
+    ) -> impl Iterator<Item = Connection> + 'a {
         device_manager
             .current_devices()
             .into_iter()

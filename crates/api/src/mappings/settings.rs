@@ -119,7 +119,11 @@ impl From<model::PathSettings> for settings::FilePaths {
             media_storage: PathBuf::from(paths.media_storage),
             fixture_libraries: settings::FixtureLibraryPaths {
                 gdtf: paths.gdtf.into_iter().map(PathBuf::from).collect(),
-                open_fixture_library: paths.open_fixture_library.into_iter().map(PathBuf::from).collect(),
+                open_fixture_library: paths
+                    .open_fixture_library
+                    .into_iter()
+                    .map(PathBuf::from)
+                    .collect(),
                 qlcplus: paths.qlcplus.into_iter().map(PathBuf::from).collect(),
                 mizer: paths.mizer.into_iter().map(PathBuf::from).collect(),
             },

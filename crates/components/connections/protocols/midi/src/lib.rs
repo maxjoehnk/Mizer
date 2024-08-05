@@ -11,5 +11,5 @@ pub mod commands;
 mod connections;
 mod device;
 mod device_provider;
-mod module;
 mod device_state;
+mod module;

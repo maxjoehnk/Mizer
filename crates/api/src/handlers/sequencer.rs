@@ -21,15 +21,16 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         let sequences = self.runtime.query(ListSequencesQuery).unwrap();
         let sequences = sequences.into_iter().map(Sequence::from).collect();
 
-        Sequences {
-            sequences,
-        }
+        Sequences { sequences }
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
-        let sequence = self.runtime.query(GetSequenceQuery { id: sequence_id }).unwrap();
+        let sequence = self
+            .runtime
+            .query(GetSequenceQuery { id: sequence_id })
+            .unwrap();
         sequence.map(Sequence::from)
     }
 

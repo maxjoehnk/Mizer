@@ -1,7 +1,7 @@
+use indexmap::IndexMap;
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
-use indexmap::IndexMap;
 
 pub trait HashMapExtension<TKey> {
     fn rename_key(&mut self, from: &TKey, to: TKey) -> bool;

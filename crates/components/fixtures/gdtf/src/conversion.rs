@@ -40,7 +40,7 @@ struct GeometryStateBuilder {
 impl GeometryStateBuilder {
     fn build(mut self) -> GeometryState {
         self.controls.color_mixer = self.color_builder.build();
-        
+
         GeometryState {
             controls: self.controls,
         }
@@ -62,7 +62,7 @@ impl GdtfState {
     fn build_state(definition: &GdtfFixtureDefinition) -> Self {
         let mut attributes = GdtfAttributes::default();
         let mut features = GdtfFeatures::default();
-        
+
         for attribute in &definition
             .fixture_type
             .attribute_definitions
@@ -104,7 +104,10 @@ impl GdtfState {
                         // TODO: add FixtureControlChannel::Virtual which delegates to other channels
                         continue;
                     } else {
-                        FixtureControlChannel::Channel(format!("{}_{}", channel.geometry, attribute.name))
+                        FixtureControlChannel::Channel(format!(
+                            "{}_{}",
+                            channel.geometry, attribute.name
+                        ))
                     };
                     match feature.name.as_str() {
                         "Dimmer" => geometry.controls.intensity = Some(channel),
@@ -117,10 +120,12 @@ impl GdtfState {
                             "ColorAdd_W" => geometry.color_builder.white(channel),
                             _ => {}
                         },
-                        "Color" => geometry.controls.color_wheel = Some(ColorWheelGroup {
-                            channel,
-                            colors: Default::default(),
-                        }),
+                        "Color" => {
+                            geometry.controls.color_wheel = Some(ColorWheelGroup {
+                                channel,
+                                colors: Default::default(),
+                            })
+                        }
                         "PanTilt" => match attribute.name.as_str() {
                             "Pan" => {
                                 geometry.controls.pan = Some(AxisGroup {
@@ -174,13 +179,16 @@ impl GdtfState {
                 resolution: channel.offset.into(),
             })
             .collect();
-        
-        let mut geometries: HashMap<_, _> = geometries.into_iter()
+
+        let mut geometries: HashMap<_, _> = geometries
+            .into_iter()
             .map(|(name, geometry)| (name, geometry.build()))
             .collect();
-        
-        let beam_count = self.geometries.count_beams(|name| geometries.contains_key(name));
-        
+
+        let beam_count = self
+            .geometries
+            .count_beams(|name| geometries.contains_key(name));
+
         let (controls, sub_fixtures) = if beam_count > 1 {
             // TODO: this fails when a fixture has no "primary" beam as might be the case for the Roxx Blinders
             let parent_beam = self.geometries.first_beam().unwrap();
@@ -190,20 +198,27 @@ impl GdtfState {
             let parent_geometry = geometries.remove(&parent_beam.name).unwrap_or_default();
             parent_controls += parent_geometry.controls;
 
-            let sub_fixtures = child_beams.into_iter().enumerate().map(|(i, beam)| {
-                let mut controls = Default::default();
-                let geometry = geometries.remove(&beam.name).unwrap_or_default();
-                controls += geometry.controls.into();
-                for geometry in beam.child_names().into_iter().map(|name| geometries.remove(name).unwrap_or_default()) {
+            let sub_fixtures = child_beams
+                .into_iter()
+                .enumerate()
+                .map(|(i, beam)| {
+                    let mut controls = Default::default();
+                    let geometry = geometries.remove(&beam.name).unwrap_or_default();
                     controls += geometry.controls.into();
-                }
+                    for geometry in beam
+                        .child_names()
+                        .into_iter()
+                        .map(|name| geometries.remove(name).unwrap_or_default())
+                    {
+                        controls += geometry.controls.into();
+                    }
 
-                SubFixtureDefinition::new(i as u32 + 1, beam.name.clone(), controls)
-            })
+                    SubFixtureDefinition::new(i as u32 + 1, beam.name.clone(), controls)
+                })
                 .collect();
 
             (parent_controls, sub_fixtures)
-        }else {
+        } else {
             let mut controls = Default::default();
             for (_, geometry) in geometries {
                 controls += geometry.controls;

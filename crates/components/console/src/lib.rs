@@ -1,8 +1,8 @@
 pub use history::ConsoleHistory;
 pub use message::*;
 
-pub use module::ConsoleModule;
 use crate::bus::get_bus;
+pub use module::ConsoleModule;
 
 mod aggregator;
 mod bus;

@@ -1,7 +1,7 @@
-use std::collections::HashMap;
 use crate::buffer::DmxBuffer;
-use crate::dmx_monitor::DmxMonitorInternalHandle;
 pub use crate::dmx_monitor::DmxMonitorHandle;
+use crate::dmx_monitor::DmxMonitorInternalHandle;
+use std::collections::HashMap;
 
 pub use crate::inputs::*;
 pub use crate::module::DmxModule;
@@ -9,11 +9,11 @@ pub use crate::outputs::*;
 
 mod buffer;
 pub mod commands;
+mod dmx_monitor;
 mod inputs;
 mod module;
 mod outputs;
 mod processor;
-mod dmx_monitor;
 
 pub struct DmxConnectionManager {
     dmx_monitor: DmxMonitorInternalHandle,

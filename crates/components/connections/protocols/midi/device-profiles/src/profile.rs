@@ -44,17 +44,20 @@ impl ControlGrid {
     fn view(&self, min_x: u32, min_y: u32, columns: u32, rows: u32) -> GridRef {
         let max_x = min_x + columns;
         let max_y = min_y + rows;
-        GridRef(self.grid.iter()
-            .enumerate()
-            .filter(|(i, _c)| {
-                let i = *i;
-                let x = i as u32 % self.columns;
-                let y = i as u32 / self.columns;
-                
-                (x >= min_x && x < max_x) && (y >= min_y && y < max_y)
-            })
-            .map(|(_i, c)| c)
-            .collect())
+        GridRef(
+            self.grid
+                .iter()
+                .enumerate()
+                .filter(|(i, _c)| {
+                    let i = *i;
+                    let x = i as u32 % self.columns;
+                    let y = i as u32 / self.columns;
+
+                    (x >= min_x && x < max_x) && (y >= min_y && y < max_y)
+                })
+                .map(|(_i, c)| c)
+                .collect(),
+        )
     }
 }
 
@@ -107,8 +110,14 @@ impl<'a> GridRef<'a> {
         self.0.len()
     }
 
-    pub fn write(&self, values: &[f64], on_step: Option<u8>, off_step: Option<u8>) -> Vec<MidiMessage> {
-        self.0.iter()
+    pub fn write(
+        &self,
+        values: &[f64],
+        on_step: Option<u8>,
+        off_step: Option<u8>,
+    ) -> Vec<MidiMessage> {
+        self.0
+            .iter()
             .zip(values.iter())
             .filter_map(|(control, value)| control.send_value(*value, on_step, off_step))
             .collect()
@@ -125,8 +134,10 @@ impl DeviceProfile {
     }
 
     pub fn get_grid(&self, page: &str, x: u32, y: u32, columns: u32, rows: u32) -> Option<GridRef> {
-        tracing::trace!("Getting grid for page {page} at {x}, {y} with {columns} columns and {rows} rows");
-        
+        tracing::trace!(
+            "Getting grid for page {page} at {x}, {y} with {columns} columns and {rows} rows"
+        );
+
         let page = self.pages.iter().find(|p| p.name == page)?;
         let grid = page.grid.as_ref()?;
 
@@ -380,21 +391,21 @@ impl Control {
     ) -> Option<MidiMessage> {
         match self.output {
             Some(DeviceControl::MidiNote(MidiDeviceControl {
-                                             channel,
-                                             note,
-                                             range,
-                                             ..
-                                         })) => Some(MidiMessage::NoteOn(
+                channel,
+                note,
+                range,
+                ..
+            })) => Some(MidiMessage::NoteOn(
                 channel,
                 note,
                 convert_value(value, range, on_step, off_step),
             )),
             Some(DeviceControl::MidiCC(MidiDeviceControl {
-                                           channel,
-                                           note,
-                                           range,
-                                           ..
-                                       })) => Some(MidiMessage::ControlChange(
+                channel,
+                note,
+                range,
+                ..
+            })) => Some(MidiMessage::ControlChange(
                 channel,
                 note,
                 convert_value(value, range, on_step, off_step),
@@ -416,7 +427,13 @@ fn convert_value(value: f64, range: (u16, u16), on_step: Option<u8>, off_step: O
         }
     }
 
-    value.linear_extrapolate((0f64, 1f64), (range.0.min(u8::MAX as u16) as u8, range.1.min(u8::MAX as u16) as u8))
+    value.linear_extrapolate(
+        (0f64, 1f64),
+        (
+            range.0.min(u8::MAX as u16) as u8,
+            range.1.min(u8::MAX as u16) as u8,
+        ),
+    )
 }
 
 #[derive(Debug, Clone)]

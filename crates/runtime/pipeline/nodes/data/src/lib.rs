@@ -1,7 +1,7 @@
 pub use self::extract::*;
+pub use self::file::*;
 pub use self::template::*;
 pub use self::value::*;
-pub use self::file::*;
 
 mod extract;
 mod file;

@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
-use mizer_node::*;
 use mizer_node::edge::Edge;
+use mizer_node::*;
 use mizer_ui_api::dialog::{Dialog, DialogService};
+use serde::{Deserialize, Serialize};
 
 const TITLE_SETTING: &str = "Title";
 const TEXT_SETTING: &str = "Text";
@@ -40,9 +40,7 @@ impl PipelineNode for DialogNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            input_port!(TRIGGER_PORT, PortType::Single),
-        ]
+        vec![input_port!(TRIGGER_PORT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -54,16 +52,20 @@ impl ProcessingNode for DialogNode {
     type State = DialogState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(true) = context.single_input(TRIGGER_PORT).read().and_then(|v| state.trigger_edge.update(v)) {
+        if let Some(true) = context
+            .single_input(TRIGGER_PORT)
+            .read()
+            .and_then(|v| state.trigger_edge.update(v))
+        {
             let Some(dialog_service) = context.try_inject::<DialogService>() else {
                 return Ok(());
             };
-            
+
             let dialog = Dialog::builder()
                 .title(self.title.clone())
                 .text(self.text.clone())
                 .build()?;
-            
+
             dialog_service.show_dialog(dialog)?;
         }
 

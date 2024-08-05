@@ -1,5 +1,5 @@
-use mizer_module::*;
 use crate::dmx_monitor::create_monitor;
+use mizer_module::*;
 
 use crate::processor::DmxProcessor;
 use crate::DmxConnectionManager;

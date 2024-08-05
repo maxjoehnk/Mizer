@@ -4,8 +4,8 @@ use mizer_layouts::{
     ControlConfig, ControlId, ControlPosition, ControlSize, ControlType, LayoutStorage,
 };
 use mizer_node::NodeType;
-use serde::{Deserialize, Serialize};
 use mizer_runtime::Pipeline;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AddLayoutControlCommand {
@@ -31,7 +31,8 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
         (layout_storage, pipeline): (&LayoutStorage, &Pipeline),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         let size = if let ControlType::Node { path: node_path } = &self.control_type {
-            let node = pipeline.get_node_dyn(node_path)
+            let node = pipeline
+                .get_node_dyn(node_path)
                 .ok_or_else(|| anyhow::anyhow!("Unknown node {node_path}"))?;
             get_default_size_for_node_type(node.node_type())
         } else {

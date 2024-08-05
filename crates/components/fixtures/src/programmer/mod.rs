@@ -345,7 +345,8 @@ impl Programmer {
                     values.insert((*fixture_id, control), value);
                 }
                 for preset in &state.presets {
-                    let preset_values = presets.get_preset_values(*preset)
+                    let preset_values = presets
+                        .get_preset_values(*preset)
                         .into_iter()
                         .flat_map(|control| control.into_fader_values());
                     for (control, value) in preset_values {
@@ -492,7 +493,9 @@ impl Programmer {
     }
 
     pub fn call_preset(&mut self, preset_id: PresetId) {
-        self.active_channels.presets.retain(|id| id.preset_type() != preset_id.preset_type());
+        self.active_channels
+            .presets
+            .retain(|id| id.preset_type() != preset_id.preset_type());
         self.active_channels.presets.push(preset_id);
         self.has_written_to_selection = true;
     }
@@ -575,7 +578,9 @@ impl Programmer {
             HashMap::new();
         let selections = self.get_selections();
         for (selection, state) in selections.iter() {
-            let values = state.presets.iter()
+            let values = state
+                .presets
+                .iter()
                 .map(|preset_id| ProgrammerControlValue::Preset(*preset_id))
                 .chain(state.controls().map(ProgrammerControlValue::Control));
             for value in values {
@@ -675,29 +680,24 @@ impl Programmer {
     }
 
     pub fn active_presets(&self) -> Vec<ProgrammedPreset> {
-        self.active_channels.presets
+        self.active_channels
+            .presets
             .iter()
-            .map(|preset_id| {
-                ProgrammedPreset {
-                    preset_id: *preset_id,
-                    fixtures: self.active_selection.clone(),
-                }
+            .map(|preset_id| ProgrammedPreset {
+                preset_id: *preset_id,
+                fixtures: self.active_selection.clone(),
             })
             .chain(
                 self.tracked_selections
                     .iter()
                     .flat_map(|(selection, programmer)| {
-                        programmer.presets
-                            .iter()
-                            .map(|preset_id| {
-                                ProgrammedPreset {
-                                    preset_id: *preset_id,
-                                    fixtures: selection.clone(),
-                                }
-                            })
-                    }))
+                        programmer.presets.iter().map(|preset_id| ProgrammedPreset {
+                            preset_id: *preset_id,
+                            fixtures: selection.clone(),
+                        })
+                    }),
+            )
             .collect()
-
     }
 }
 
@@ -870,10 +870,12 @@ mod tests {
             .is_equal_to(&vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
         assert_that!(state.channels).has_length(2);
         let first_channel = &state.channels[0];
-        assert_that!(first_channel.value).is_equal_to(&ProgrammerControlValue::Control(first_value));
+        assert_that!(first_channel.value)
+            .is_equal_to(&ProgrammerControlValue::Control(first_value));
         assert_that!(first_channel.fixtures).is_equal_to(&first_fixtures);
         let second_channel = &state.channels[1];
-        assert_that!(second_channel.value).is_equal_to(&ProgrammerControlValue::Control(second_value));
+        assert_that!(second_channel.value)
+            .is_equal_to(&ProgrammerControlValue::Control(second_value));
         assert_that!(second_channel.fixtures).is_equal_to(&second_fixtures);
     }
 

@@ -1,5 +1,5 @@
-use evmap::{ReadHandle, WriteHandle};
 use evmap::shallow_copy::CopyValue;
+use evmap::{ReadHandle, WriteHandle};
 use mizer_midi_device_profiles::{DeviceControl, GridRef, MidiResolution};
 use mizer_midi_messages::{Channel, MidiEvent, MidiMessage};
 use mizer_util::LerpExt;
@@ -49,7 +49,7 @@ impl DeviceStateWriter {
                 tracing::trace!("Inserting {control_type:?} => {value:?}");
                 self.write.update(control_type, CopyValue::from(value));
             }
-            _ => ()
+            _ => (),
         }
         self.write.refresh();
     }
@@ -64,15 +64,13 @@ impl DeviceState {
         let (read_handle, write_handle) = evmap::new();
 
         let writer = DeviceStateWriter {
-            write: write_handle
+            write: write_handle,
         };
-        let state = DeviceState {
-            data: read_handle
-        };
+        let state = DeviceState { data: read_handle };
 
         (state, writer)
     }
-    
+
     pub fn read_grid(&self, grid: &GridRef) -> Vec<f64> {
         let mut values = Vec::with_capacity(grid.len());
         for control in grid.controls() {
@@ -80,7 +78,7 @@ impl DeviceState {
                 let value = self.read_control_changes(input, None);
                 if let Some((value, _)) = value {
                     values.push(value);
-                }else {
+                } else {
                     values.push(Default::default())
                 }
             }
@@ -89,41 +87,62 @@ impl DeviceState {
         values
     }
 
-    pub fn read_note_changes(&self, channel: Channel, note: u8, last_read: Option<MidiTimestamp>) -> Option<(u8, MidiTimestamp)> {
+    pub fn read_note_changes(
+        &self,
+        channel: Channel,
+        note: u8,
+        last_read: Option<MidiTimestamp>,
+    ) -> Option<(u8, MidiTimestamp)> {
         self.read_changes(&MidiControlType::Note(channel, note), last_read)
     }
 
-    pub fn read_cc_changes(&self, channel: Channel, note: u8, last_read: Option<MidiTimestamp>) -> Option<(u8, MidiTimestamp)> {
+    pub fn read_cc_changes(
+        &self,
+        channel: Channel,
+        note: u8,
+        last_read: Option<MidiTimestamp>,
+    ) -> Option<(u8, MidiTimestamp)> {
         self.read_changes(&MidiControlType::ControlChange(channel, note), last_read)
     }
 
-    pub fn read_control_changes(&self, control: &DeviceControl, last_read_at: Option<MidiTimestamp>) -> Option<(f64, MidiTimestamp)> {
+    pub fn read_control_changes(
+        &self,
+        control: &DeviceControl,
+        last_read_at: Option<MidiTimestamp>,
+    ) -> Option<(f64, MidiTimestamp)> {
         match control {
-            DeviceControl::MidiNote(note) => {
-                self.read_note_changes(note.channel, note.note, last_read_at)
-                    .map(|(value, last_changed)| ((value as u16).linear_extrapolate(note.range, (0., 1.)), last_changed))
-            }
+            DeviceControl::MidiNote(note) => self
+                .read_note_changes(note.channel, note.note, last_read_at)
+                .map(|(value, last_changed)| {
+                    (
+                        (value as u16).linear_extrapolate(note.range, (0., 1.)),
+                        last_changed,
+                    )
+                }),
             DeviceControl::MidiCC(note) => {
                 let value = match note.resolution {
-                    MidiResolution::Default => self.read_cc_changes(note.channel, note.note, last_read_at).map(|(v, last_changed)| (v as u16, last_changed)),
+                    MidiResolution::Default => self
+                        .read_cc_changes(note.channel, note.note, last_read_at)
+                        .map(|(v, last_changed)| (v as u16, last_changed)),
                     MidiResolution::HighRes => {
                         let coarse = self.read_cc(note.channel, note.note);
                         let fine = self.read_cc(note.channel, note.note + HIGH_RES_CONTROL_OFFSET);
                         let value = coarse.zip(fine);
 
-                        value.map(|(coarse, fine)| {
-                            let coarse_value = (coarse.value as u16) << 7;
-                            let fine_value = fine.value as u16;
-                            let value = coarse_value + fine_value;
+                        value
+                            .map(|(coarse, fine)| {
+                                let coarse_value = (coarse.value as u16) << 7;
+                                let fine_value = fine.value as u16;
+                                let value = coarse_value + fine_value;
 
-                            let last_changed_at = if coarse.timestamp > fine.timestamp {
-                                MidiTimestamp(coarse.timestamp)
-                            } else {
-                                MidiTimestamp(fine.timestamp)
-                            };
+                                let last_changed_at = if coarse.timestamp > fine.timestamp {
+                                    MidiTimestamp(coarse.timestamp)
+                                } else {
+                                    MidiTimestamp(fine.timestamp)
+                                };
 
-                            (value, last_changed_at)
-                        })
+                                (value, last_changed_at)
+                            })
                             .and_then(|(value, last_changed)| {
                                 if let Some(last_read_at) = last_read_at {
                                     if last_changed > last_read_at {
@@ -137,13 +156,19 @@ impl DeviceState {
                             })
                     }
                 };
-                value.map(|(value, last_changed)| (value.linear_extrapolate(note.range, (0., 1.)), last_changed))
+                value.map(|(value, last_changed)| {
+                    (value.linear_extrapolate(note.range, (0., 1.)), last_changed)
+                })
             }
-            _ => None
+            _ => None,
         }
     }
 
-    fn read_changes(&self, control_type: &MidiControlType, last_read_at: Option<MidiTimestamp>) -> Option<(u8, MidiTimestamp)> {
+    fn read_changes(
+        &self,
+        control_type: &MidiControlType,
+        last_read_at: Option<MidiTimestamp>,
+    ) -> Option<(u8, MidiTimestamp)> {
         let guard = self.data.get(control_type)?;
         let value = guard.get_one().copied()?;
         let timestamp = MidiTimestamp(value.timestamp);

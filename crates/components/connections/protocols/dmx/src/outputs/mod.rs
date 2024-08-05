@@ -1,5 +1,5 @@
-use enum_dispatch::enum_dispatch;
 use crate::buffer::DmxBuffer;
+use enum_dispatch::enum_dispatch;
 
 pub use self::artnet::ArtnetOutput;
 pub use self::sacn::SacnOutput;

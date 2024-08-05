@@ -66,7 +66,7 @@ impl MidiDevice {
     pub fn events(&self) -> Subscriber<MidiEvent> {
         self.event_bus.subscribe()
     }
-    
+
     pub fn state(&self) -> &DeviceState {
         &self.state
     }

@@ -1,10 +1,10 @@
-use std::collections::HashMap;
-use itertools::Itertools;
 use crate::commands::add_path_to_container;
+use crate::Pipeline;
+use itertools::Itertools;
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodeLink, NodePath};
 use serde::{Deserialize, Serialize};
-use crate::Pipeline;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DuplicateNodesCommand {
@@ -21,10 +21,7 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
         format!("Duplicate Nodes {:?}", &self.paths)
     }
 
-    fn apply(
-        &self,
-        pipeline: &mut Pipeline,
-    ) -> anyhow::Result<(Self::Result, Self::State)> {
+    fn apply(&self, pipeline: &mut Pipeline) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut new_paths = Vec::with_capacity(self.paths.len());
         let mut new_links = Vec::new();
         for path in &self.paths {
@@ -32,7 +29,7 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
             add_path_to_container(pipeline, self.parent.as_ref(), &new_path)?;
             new_paths.push(new_path.clone());
         }
-        
+
         let links = pipeline.list_links();
         let mut links: HashMap<_, _> = links
             .filter(|link| self.paths.contains(&link.source) && self.paths.contains(&link.target))
@@ -65,11 +62,7 @@ impl<'a> Command<'a> for DuplicateNodesCommand {
         Ok((new_paths.clone(), (new_paths, new_links)))
     }
 
-    fn revert(
-        &self,
-        pipeline: &mut Pipeline,
-        (nodes, links): Self::State,
-    ) -> anyhow::Result<()> {
+    fn revert(&self, pipeline: &mut Pipeline, (nodes, links): Self::State) -> anyhow::Result<()> {
         for link in links {
             pipeline.delete_link(&link);
         }

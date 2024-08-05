@@ -1,5 +1,5 @@
-use mizer_module::*;
 use crate::aggregator::ConsoleAggregator;
+use mizer_module::*;
 
 pub struct ConsoleModule;
 
@@ -12,7 +12,7 @@ impl Module for ConsoleModule {
         let (buffer, history) = ConsoleAggregator::init()?;
         context.spawn(buffer.distribute());
         context.provide_api(history);
-        
+
         Ok(())
     }
 }

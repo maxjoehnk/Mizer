@@ -108,7 +108,7 @@ impl DeviceManager {
         let traktor_x1s = TraktorX1Discovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
-        
+
         let mut devices = select_all([
             lasers,
             gamepads,
@@ -139,7 +139,9 @@ impl DeviceManager {
                     self.g13s.insert(id, g13);
                 }
                 DiscoveredDevice::TraktorX1(x1) => {
-                    let id = self.traktor_kontrol_x1_id_counter.fetch_add(1, Ordering::Relaxed);
+                    let id = self
+                        .traktor_kontrol_x1_id_counter
+                        .fetch_add(1, Ordering::Relaxed);
                     let id = format!("traktor-kontrol-x1-{}", id);
                     tracing::debug!("Discovered device {x1:?} => {id}");
                     self.traktor_kontrol_x1s.insert(id, x1);
@@ -244,7 +246,7 @@ impl DeviceManager {
             TraktorKontrolX1View {
                 id: x1.key().clone(),
             }
-                .into()
+            .into()
         });
 
         lasers

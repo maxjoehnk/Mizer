@@ -10,7 +10,7 @@ use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::ProcessingContext;
-use mizer_util::{StructuredData, rw_lock::RwLock};
+use mizer_util::{rw_lock::RwLock, StructuredData};
 use mizer_wgpu::{TextureRegistry, TextureView};
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
@@ -229,7 +229,6 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .map(|receivers| receivers.ports())
             .unwrap_or_default()
     }
-
 
     fn read_texture<P: Into<PortId>>(&self, port: P) -> Option<TextureView> {
         profiling::scope!("PipelineContext::read_texture");

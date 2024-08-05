@@ -1,21 +1,24 @@
-use std::cmp::Ordering;
-use std::collections::HashMap;
-use std::str::FromStr;
+use crate::commands::StaticNodeDescriptor;
+use crate::context::CoordinatorRuntimeContext;
 use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{ClockFrame, SystemClock};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
+use mizer_node::{
+    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
+    PortDirection, PortMetadata, ProcessingNode,
+};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
-use mizer_processing::{Processor};
-use crate::commands::StaticNodeDescriptor;
-use crate::context::CoordinatorRuntimeContext;
-use std::io::Write;
-use std::sync::Arc;
-use pinboard::NonEmptyPinboard;
+use mizer_processing::Processor;
 use mizer_project_files::{Channel, Project};
+use pinboard::NonEmptyPinboard;
+use std::cmp::Ordering;
+use std::collections::HashMap;
+use std::io::Write;
+use std::str::FromStr;
+use std::sync::Arc;
 
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
@@ -39,15 +42,29 @@ impl Pipeline {
             worker: PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default()))),
         }
     }
-    
-    pub fn add_node(&mut self, injector: &Injector, node_type: NodeType, designer: NodeDesigner, node: Option<Node>, parent: Option<&NodePath>) -> anyhow::Result<StaticNodeDescriptor> {
+
+    pub fn add_node(
+        &mut self,
+        injector: &Injector,
+        node_type: NodeType,
+        designer: NodeDesigner,
+        node: Option<Node>,
+        parent: Option<&NodePath>,
+    ) -> anyhow::Result<StaticNodeDescriptor> {
         let node = node.unwrap_or_else(|| node_type.into());
         let path = self.new_node_path(node_type);
-        
+
         self.add_node_with_path(injector, path, designer, node, parent)
     }
-    
-    fn add_node_with_path(&mut self, injector: &Injector, path: NodePath, designer: NodeDesigner, node: Node, parent: Option<&NodePath>) -> anyhow::Result<StaticNodeDescriptor> {
+
+    fn add_node_with_path(
+        &mut self,
+        injector: &Injector,
+        path: NodePath,
+        designer: NodeDesigner,
+        node: Node,
+        parent: Option<&NodePath>,
+    ) -> anyhow::Result<StaticNodeDescriptor> {
         let settings = node.settings(injector);
         let ports = node.list_ports(injector);
         let node = self.add_dyn_node(path.clone(), node, &ports);
@@ -64,8 +81,10 @@ impl Pipeline {
         };
 
         let descriptor = Self::get_descriptor(path.clone(), &state);
-        
-        if let Some(container) = parent.and_then(|parent| self.get_node_mut::<ContainerNode>(parent)) {
+
+        if let Some(container) =
+            parent.and_then(|parent| self.get_node_mut::<ContainerNode>(parent))
+        {
             container.nodes.push(path.clone());
         }
 
@@ -76,7 +95,12 @@ impl Pipeline {
         Ok(descriptor)
     }
 
-    fn add_dyn_node(&mut self, path: NodePath, node: Node, ports: &[(PortId, PortMetadata)]) -> Box<dyn ProcessingNodeExt> {
+    fn add_dyn_node(
+        &mut self,
+        path: NodePath,
+        node: Node,
+        ports: &[(PortId, PortMetadata)],
+    ) -> Box<dyn ProcessingNodeExt> {
         let mut registration = PipelineNodeRegistration {
             ports,
             path,
@@ -87,7 +111,10 @@ impl Pipeline {
     }
 
     pub(crate) fn duplicate_node(&mut self, path: &NodePath) -> anyhow::Result<NodePath> {
-        let state = self.nodes.get(path).ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
+        let state = self
+            .nodes
+            .get(path)
+            .ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
         let node_config: Node = NodeDowncast::downcast(&state.node);
         let node_type = node_config.node_type();
         let new_path = self.new_node_path(node_type);
@@ -148,7 +175,11 @@ impl Pipeline {
     }
 
     pub(crate) fn reinsert_node(&mut self, path: NodePath, state: NodeState) {
-        self.add_dyn_node(path.clone(), NodeDowncast::downcast(&state.node), &state.ports);
+        self.add_dyn_node(
+            path.clone(),
+            NodeDowncast::downcast(&state.node),
+            &state.ports,
+        );
         self.nodes.insert(path, state);
         self.reorder_nodes();
     }
@@ -161,7 +192,11 @@ impl Pipeline {
         self.remove_links_if(|l| l == link);
     }
 
-    pub(crate) fn remove_links_from_port(&mut self, path: &NodePath, port: &PortId) -> Vec<NodeLink> {
+    pub(crate) fn remove_links_from_port(
+        &mut self,
+        path: &NodePath,
+        port: &PortId,
+    ) -> Vec<NodeLink> {
         self.remove_links_if(|link| link.source == *path && link.source_port == *port)
     }
 
@@ -170,15 +205,15 @@ impl Pipeline {
     }
 
     pub(crate) fn find_input_link(&mut self, path: &NodePath, port: &PortId) -> Option<NodeLink> {
-        self.links.iter()
+        self.links
+            .iter()
             .find(|link| link.target == *path && link.target_port == *port)
             .cloned()
     }
 
     fn remove_links_if(&mut self, predicate: impl Fn(&NodeLink) -> bool) -> Vec<NodeLink> {
         let links = std::mem::take(&mut self.links);
-        let (removed_links, remaining_links) = links.into_iter()
-            .partition(predicate);
+        let (removed_links, remaining_links) = links.into_iter().partition(predicate);
         tracing::debug!("Removing links: {removed_links:?}");
         self.links = remaining_links;
         for link in &removed_links {
@@ -201,7 +236,8 @@ impl Pipeline {
             &link
         );
         link.port_type = source_port.port_type;
-        self.worker.connect_nodes(link.clone(), source_port, target_port)?;
+        self.worker
+            .connect_nodes(link.clone(), source_port, target_port)?;
         self.links.push(link);
         self.reorder_nodes();
 
@@ -213,11 +249,15 @@ impl Pipeline {
     }
 
     pub fn get_node<TNode: PipelineNode>(&self, path: &NodePath) -> Option<&TNode> {
-        self.nodes.get(path)
+        self.nodes
+            .get(path)
             .and_then(|state| state.node.downcast_ref::<TNode>().ok())
     }
 
-    pub fn get_node_with_state<TNode: ProcessingNode>(&self, path: &NodePath) -> Option<(&TNode, &TNode::State)> {
+    pub fn get_node_with_state<TNode: ProcessingNode>(
+        &self,
+        path: &NodePath,
+    ) -> Option<(&TNode, &TNode::State)> {
         let node = self.get_node(path)?;
         let state = self.worker.get_state::<TNode::State>(path)?;
 
@@ -233,7 +273,8 @@ impl Pipeline {
     }
 
     pub fn get_node_mut<TNode: PipelineNode>(&mut self, path: &NodePath) -> Option<&mut TNode> {
-        self.nodes.get_mut(path)
+        self.nodes
+            .get_mut(path)
             .and_then(|state| state.node.downcast_mut::<TNode>().ok())
     }
 
@@ -241,28 +282,30 @@ impl Pipeline {
         self.nodes.get_mut(path).map(|state| &mut state.designer)
     }
 
-    pub fn list_nodes(&self) -> impl Iterator<Item=(&NodePath, &dyn ProcessingNodeExt)> {
+    pub fn list_nodes(&self) -> impl Iterator<Item = (&NodePath, &dyn ProcessingNodeExt)> {
         self.nodes.iter().map(|(path, state)| (path, &*state.node))
     }
 
     pub fn list_node_descriptors(&self) -> Vec<StaticNodeDescriptor> {
-        self.nodes.iter()
-            .map(|(path, state)| {
-                Self::get_descriptor(path.clone(), state)
-            })
+        self.nodes
+            .iter()
+            .map(|(path, state)| Self::get_descriptor(path.clone(), state))
             .collect()
     }
-    
+
     pub fn get_node_descriptor(&self, path: &NodePath) -> Option<StaticNodeDescriptor> {
-        self.nodes.get(path).map(|state| Self::get_descriptor(path.clone(), state))
+        self.nodes
+            .get(path)
+            .map(|state| Self::get_descriptor(path.clone(), state))
     }
 
     fn get_descriptor(path: NodePath, state: &NodeState) -> StaticNodeDescriptor {
         let node_type = state.node.node_type();
 
-        let children = if let Some(container) = state.node.downcast_node::<ContainerNode>(node_type) {
+        let children = if let Some(container) = state.node.downcast_node::<ContainerNode>(node_type)
+        {
             container.nodes.clone()
-        }else {
+        } else {
             Default::default()
         };
 
@@ -278,20 +321,31 @@ impl Pipeline {
         }
     }
 
-    pub fn find_node_paths<TNode: PipelineNode>(&self, matches: impl Fn(&TNode) -> bool) -> Vec<&NodePath> {
+    pub fn find_node_paths<TNode: PipelineNode>(
+        &self,
+        matches: impl Fn(&TNode) -> bool,
+    ) -> Vec<&NodePath> {
         self.matching_nodes(matches).map(|(path, _)| path).collect()
     }
 
-    pub fn find_node_path<TNode: PipelineNode>(&self, matches: impl Fn(&TNode) -> bool) -> Option<&NodePath> {
+    pub fn find_node_path<TNode: PipelineNode>(
+        &self,
+        matches: impl Fn(&TNode) -> bool,
+    ) -> Option<&NodePath> {
         self.matching_nodes(matches).map(|(path, _)| path).next()
     }
 
-    pub fn find_nodes<TNode: PipelineNode>(&self, matches: impl Fn(&TNode) -> bool) -> Vec<(&NodePath, &TNode)> {
+    pub fn find_nodes<TNode: PipelineNode>(
+        &self,
+        matches: impl Fn(&TNode) -> bool,
+    ) -> Vec<(&NodePath, &TNode)> {
         self.matching_nodes(matches).collect()
     }
 
     pub fn update_node(&mut self, path: &NodePath, config: Node) -> anyhow::Result<Node> {
-        let state = self.nodes.get_mut(path)
+        let state = self
+            .nodes
+            .get_mut(path)
             .ok_or_else(|| anyhow::anyhow!("Node not found: {}", path))?;
         let mut node = boxed_node(config);
         std::mem::swap(&mut state.node, &mut node);
@@ -299,13 +353,15 @@ impl Pipeline {
         Ok(NodeDowncast::downcast(&node))
     }
 
-    fn matching_nodes<TNode: PipelineNode, TMatches: Fn(&TNode) -> bool>(&self, matches: TMatches) -> impl Iterator<Item=(&NodePath, &TNode)> {
-        self.nodes.iter()
-            .filter_map(move |(path, state)| {
-                let node = state.node.downcast_ref::<TNode>().ok()?;
+    fn matching_nodes<TNode: PipelineNode, TMatches: Fn(&TNode) -> bool>(
+        &self,
+        matches: TMatches,
+    ) -> impl Iterator<Item = (&NodePath, &TNode)> {
+        self.nodes.iter().filter_map(move |(path, state)| {
+            let node = state.node.downcast_ref::<TNode>().ok()?;
 
-                matches(node).then_some((path, node))
-            })
+            matches(node).then_some((path, node))
+        })
     }
 
     fn get_ports(&self, link: &NodeLink) -> anyhow::Result<(PortMetadata, PortMetadata)> {
@@ -451,12 +507,13 @@ impl Pipeline {
 
     fn reorder_nodes(&mut self) {
         profiling::scope!("PipelineAccess::reorder_nodes");
-        let dependencies = self.list_links()
-            .cloned()
-            .fold(HashMap::<NodePath, Vec<NodePath>>::default(), |mut map, link| {
+        let dependencies = self.list_links().cloned().fold(
+            HashMap::<NodePath, Vec<NodePath>>::default(),
+            |mut map, link| {
                 map.entry(link.target).or_default().push(link.source);
                 map
-            });
+            },
+        );
         // TODO: this doesn't actually guarantee execution order, but it's the same algorithm as before
         // Because two nodes don't have to relate to each other just using sort_by doesn't work for our use case
         self.nodes.sort_by(|left, _, right, _| {
@@ -469,17 +526,20 @@ impl Pipeline {
                 } else {
                     Ordering::Equal
                 }
-            }else {
+            } else {
                 Ordering::Equal
             }
         });
-        tracing::debug!("Reordered nodes: {:?}", self.nodes.keys().collect::<Vec<_>>());
+        tracing::debug!(
+            "Reordered nodes: {:?}",
+            self.nodes.keys().collect::<Vec<_>>()
+        );
     }
-    
+
     pub fn write_port(&mut self, path: NodePath, port: PortId, value: f64) {
         self.worker.write_port(path, port, value);
     }
-    
+
     pub fn read_state<TValue: 'static>(&self, path: &NodePath) -> Option<&TValue> {
         self.worker.get_state(path)
     }
@@ -501,7 +561,8 @@ impl<'a> NodeExt for PipelineNodeRegistration<'a> {
     type Result = Box<dyn ProcessingNodeExt>;
 
     fn handle<TNode: ProcessingNode>(&mut self, node: TNode) -> Self::Result {
-        self.worker.register_node(self.path.clone(), &node, self.ports);
+        self.worker
+            .register_node(self.path.clone(), &node, self.ports);
 
         Box::new(node)
     }
@@ -527,7 +588,9 @@ impl Processor for RuntimeProcessor {
     fn pre_process(&mut self, injector: &mut Injector, frame: ClockFrame, fps: f64) {
         profiling::scope!("Pipeline::pre_process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let nodes = pipeline.nodes.iter()
+        let nodes = pipeline
+            .nodes
+            .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
@@ -537,13 +600,20 @@ impl Processor for RuntimeProcessor {
         };
         // TODO: use global clock
         let mut clock = SystemClock::default();
-        pipeline.worker.pre_process(nodes, &context, &mut clock, &NodeStatePortReader(&pipeline.nodes));
+        pipeline.worker.pre_process(
+            nodes,
+            &context,
+            &mut clock,
+            &NodeStatePortReader(&pipeline.nodes),
+        );
     }
 
     fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("Pipeline::process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let nodes = pipeline.nodes.iter()
+        let nodes = pipeline
+            .nodes
+            .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
@@ -553,13 +623,20 @@ impl Processor for RuntimeProcessor {
         };
         // TODO: use global clock
         let mut clock = SystemClock::default();
-        pipeline.worker.process(nodes, &context, &mut clock, &NodeStatePortReader(&pipeline.nodes));
+        pipeline.worker.process(
+            nodes,
+            &context,
+            &mut clock,
+            &NodeStatePortReader(&pipeline.nodes),
+        );
     }
 
     fn post_process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("Pipeline::post_process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
-        let nodes = pipeline.nodes.iter()
+        let nodes = pipeline
+            .nodes
+            .iter()
             .map(|(path, state)| (path, &state.node))
             .collect::<Vec<_>>();
         let context = CoordinatorRuntimeContext {
@@ -569,25 +646,49 @@ impl Processor for RuntimeProcessor {
         };
         // TODO: use global clock
         let mut clock = SystemClock::default();
-        pipeline.worker.post_process(nodes, &context, &mut clock, &NodeStatePortReader(&pipeline.nodes));
+        pipeline.worker.post_process(
+            nodes,
+            &context,
+            &mut clock,
+            &NodeStatePortReader(&pipeline.nodes),
+        );
     }
 }
 
 impl Pipeline {
     pub fn new_project(&mut self, injector: &Injector) {
-        self.add_node(injector, NodeType::Programmer, Default::default(), None, None).unwrap();
-        self.add_node(injector, NodeType::Transport, Default::default(), None, None).unwrap();
+        self.add_node(
+            injector,
+            NodeType::Programmer,
+            Default::default(),
+            None,
+            None,
+        )
+        .unwrap();
+        self.add_node(
+            injector,
+            NodeType::Transport,
+            Default::default(),
+            None,
+            None,
+        )
+        .unwrap();
     }
 
     pub fn load(&mut self, project: &Project, injector: &Injector) -> anyhow::Result<()> {
         for node in &project.nodes {
-            self.add_node_with_path(injector, node.path.clone(), node.designer.clone(), node.config.clone(), None)?;
+            self.add_node_with_path(
+                injector,
+                node.path.clone(),
+                node.designer.clone(),
+                node.config.clone(),
+                None,
+            )?;
         }
         for channel in &project.channels {
             let source_port =
                 self.get_output_port_metadata(&channel.from_path, &channel.from_channel);
-            let target_port =
-                self.get_input_port_metadata(&channel.to_path, &channel.to_channel);
+            let target_port = self.get_input_port_metadata(&channel.to_path, &channel.to_channel);
             anyhow::ensure!(
                 source_port.port_type == target_port.port_type,
                 "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",

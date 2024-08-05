@@ -241,19 +241,19 @@ impl PresetId {
             Self::Position(_) => PresetType::Position,
         }
     }
-    
+
     pub fn is_intensity(&self) -> bool {
         matches!(self, Self::Intensity(_))
     }
-    
+
     pub fn is_shutter(&self) -> bool {
         matches!(self, Self::Shutter(_))
     }
-    
+
     pub fn is_color(&self) -> bool {
         matches!(self, Self::Color(_))
     }
-    
+
     pub fn is_position(&self) -> bool {
         matches!(self, Self::Position(_))
     }

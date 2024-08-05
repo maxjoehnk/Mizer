@@ -64,10 +64,7 @@ fn add_link(
     add_link_command.apply(deps).unwrap();
 }
 
-fn setup_sink(
-    sink: TestSink,
-    injector: &mut Injector,
-) -> NodePath {
+fn setup_sink(sink: TestSink, injector: &mut Injector) -> NodePath {
     let deps = <AddNodeCommand as Command<'_>>::Dependencies::extract(injector);
     let sink_add_node = AddNodeCommand {
         node_type: NodeType::TestSink,
@@ -77,6 +74,6 @@ fn setup_sink(
         template: None,
     };
     let (descriptor, _) = sink_add_node.apply(deps).unwrap();
-    
+
     descriptor.path
 }

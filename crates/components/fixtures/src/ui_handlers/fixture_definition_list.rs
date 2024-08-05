@@ -1,11 +1,11 @@
+use crate::definition::FixtureDefinition;
 use mizer_ui_api::table::*;
-use crate::definition::{FixtureDefinition};
 
 pub struct FixtureDefinitionTable;
 
 impl TableHandler for FixtureDefinitionTable {
     type Data = Vec<FixtureDefinition>;
-    
+
     fn get_table(&self, data: Self::Data) -> anyhow::Result<TableData> {
         let columns = vec![
             TableColumn {
@@ -21,14 +21,9 @@ impl TableHandler for FixtureDefinitionTable {
                 label: "Tags".into(),
             },
         ];
-        let rows = data.into_iter()
-            .map(Self::build_row)
-            .collect();
-        
-        Ok(TableData {
-            columns,
-            rows,
-        })
+        let rows = data.into_iter().map(Self::build_row).collect();
+
+        Ok(TableData { columns, rows })
     }
 }
 

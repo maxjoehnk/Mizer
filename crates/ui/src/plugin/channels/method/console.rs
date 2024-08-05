@@ -1,6 +1,6 @@
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::Context;
 use nativeshell::shell::{EngineHandle, MethodCallHandler, MethodChannel};
+use nativeshell::Context;
 
 use mizer_api::handlers::ConsoleHandler;
 use mizer_api::proto::console::ConsoleHistory;

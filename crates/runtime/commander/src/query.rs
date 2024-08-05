@@ -7,7 +7,7 @@ use std::fmt::Debug;
 pub trait Query<'a>: Debug + Send + Sized + Serialize + DeserializeOwned {
     type Dependencies: ExtractDependenciesQuery<'a>;
     type Result: Any + Send + Sync;
-    
+
     fn query(
         &self,
         dependencies: <<Self as Query<'a>>::Dependencies as ExtractDependenciesQuery<'a>>::Type,
@@ -16,7 +16,7 @@ pub trait Query<'a>: Debug + Send + Sized + Serialize + DeserializeOwned {
     fn requires_main_loop(&self) -> bool {
         true
     }
-    
+
     fn serialize<TSerializer: Serializer>(&self, serializer: &TSerializer) -> anyhow::Result<()> {
         serializer.serialize(&self)
     }

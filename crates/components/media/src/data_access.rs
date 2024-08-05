@@ -68,7 +68,7 @@ impl DataAccess {
 
         Ok(media_document)
     }
-    
+
     pub fn relink_media(&self, id: MediaId, path: PathBuf) -> anyhow::Result<()> {
         let mut media = self
             .media

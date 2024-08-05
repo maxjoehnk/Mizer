@@ -136,7 +136,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let fader_values = nodes
             .iter()
             .filter_map(|path| {
-                pipeline.get_node_with_state::<FaderNode>(path)
+                pipeline
+                    .get_node_with_state::<FaderNode>(path)
                     .map(|(_node, state)| *state)
                     .map(|value| (path.clone(), value))
             })
@@ -147,7 +148,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let dial_values = nodes
             .iter()
             .filter_map(|path| {
-                pipeline.get_node_with_state::<DialNode>(path)
+                pipeline
+                    .get_node_with_state::<DialNode>(path)
                     .map(|(_node, state)| *state)
                     .map(|value| (path.clone(), value))
             })
@@ -157,7 +159,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let button_values = nodes
             .iter()
             .filter_map(|path| {
-                pipeline.get_node_with_state::<ButtonNode>(path)
+                pipeline
+                    .get_node_with_state::<ButtonNode>(path)
                     .map(|(node, state)| node.value(state))
                     .map(|value| (path.clone(), value))
             })
@@ -168,7 +171,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let label_values = nodes
             .iter()
             .filter_map(|path| {
-                pipeline.get_node_with_state::<LabelNode>(path)
+                pipeline
+                    .get_node_with_state::<LabelNode>(path)
                     .map(|(node, state)| node.label(state))
                     .map(|value| (path.clone(), value))
             })
@@ -179,12 +183,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let button_colors = nodes
             .iter()
             .filter_map(|path| {
-                pipeline.get_node_with_state::<ButtonNode>(path)
+                pipeline
+                    .get_node_with_state::<ButtonNode>(path)
                     .and_then(|(node, state)| node.color(state))
                     .map(|value| (path.clone(), value))
             })
             .collect::<HashMap<_, _>>();
-        
+
         self.layout_fader_view.write_control_colors(button_colors);
     }
 
@@ -374,7 +379,15 @@ mod tests {
     fn node_runner_should_lend_state_ref() {
         let mut runner = CoordinatorRuntime::new();
         let mut pipeline = Pipeline::new();
-        let node = pipeline.add_node(runner.injector(), NodeType::Fader, Default::default(), Default::default(), Default::default()).unwrap();
+        let node = pipeline
+            .add_node(
+                runner.injector(),
+                NodeType::Fader,
+                Default::default(),
+                Default::default(),
+                Default::default(),
+            )
+            .unwrap();
         runner.injector.provide(pipeline);
 
         runner.process();

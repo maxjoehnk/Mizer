@@ -9,7 +9,7 @@ use symphonia::core::meta::MetadataOptions;
 use symphonia::core::probe::Hint;
 
 use crate::documents::{MediaMetadata, MediaType};
-use crate::media_handlers::{MediaHandler};
+use crate::media_handlers::MediaHandler;
 
 #[derive(Clone)]
 pub struct AudioHandler;
@@ -37,7 +37,10 @@ impl MediaHandler for AudioHandler {
 }
 
 impl AudioHandler {
-    fn probe_file<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<symphonia::core::probe::ProbeResult> {
+    fn probe_file<P: AsRef<Path>>(
+        &self,
+        file: P,
+    ) -> anyhow::Result<symphonia::core::probe::ProbeResult> {
         let mut hint = Hint::new();
         if let Some(extension) = file.as_ref().extension().and_then(|e| e.to_str()) {
             hint.with_extension(extension);
@@ -50,10 +53,10 @@ impl AudioHandler {
         let metadata_opts = MetadataOptions::default();
         let probed =
             symphonia::default::get_probe().format(&hint, mss, &format_opts, &metadata_opts)?;
-        
+
         Ok(probed)
     }
-    
+
     fn get_duration(format: &Box<dyn FormatReader>) -> Option<u64> {
         let track = format.default_track()?;
         let timebase = track.codec_params.time_base?;

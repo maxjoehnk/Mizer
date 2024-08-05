@@ -94,7 +94,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                 }
             }
             "transformSelection" => {
-                if let Err(err) = call.arguments().and_then(|req| self.handler.transform_selection(req)) {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|req| self.handler.transform_selection(req))
+                {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);
@@ -138,7 +141,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                 }
             }
             "addScreen" => {
-                if let Err(err) = call.arguments().and_then(|req| self.handler.add_screen(req)) {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|req| self.handler.add_screen(req))
+                {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);

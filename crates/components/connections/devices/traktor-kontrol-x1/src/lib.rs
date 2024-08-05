@@ -6,7 +6,7 @@ use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 use std::time::Duration;
 use traktor_kontrol_x1::{list_devices, TraktorX1, X1Error, X1State};
-pub use traktor_kontrol_x1::{Button, FxButton, DeckButton, Knob, FxKnob, Encoder, DeckEncoder};
+pub use traktor_kontrol_x1::{Button, DeckButton, DeckEncoder, Encoder, FxButton, FxKnob, Knob};
 
 #[derive(PartialEq, Eq, Hash)]
 #[repr(transparent)]
@@ -31,7 +31,11 @@ struct TraktorX1State {
 }
 
 impl TraktorX1State {
-    fn new(device: TraktorX1, state: Arc<Pinboard<X1State>>, receiver: Receiver<X1Command>) -> Self {
+    fn new(
+        device: TraktorX1,
+        state: Arc<Pinboard<X1State>>,
+        receiver: Receiver<X1Command>,
+    ) -> Self {
         Self {
             device,
             leds: Default::default(),
@@ -46,7 +50,7 @@ impl TraktorX1State {
             return Ok(());
         }
         let response = response?;
-        
+
         self.state.set(response);
 
         Ok(())
@@ -135,7 +139,7 @@ impl TraktorX1Discovery {
         Ok(Self { devices: receiver })
     }
 
-    pub fn into_stream(self) -> impl Stream<Item =TraktorX1Ref> {
+    pub fn into_stream(self) -> impl Stream<Item = TraktorX1Ref> {
         self.devices.into_stream()
     }
 }

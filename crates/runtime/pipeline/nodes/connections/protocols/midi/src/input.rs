@@ -36,7 +36,8 @@ pub enum MidiInputConfig {
         #[serde(default = "default_channel")]
         channel: u8,
         port: u8,
-        #[serde(default = "default_midi_range")] // TODO: get defaults from resolution, default to 7 bit
+        #[serde(default = "default_midi_range")]
+        // TODO: get defaults from resolution, default to 7 bit
         range: (u8, u8),
     },
     Control {
@@ -162,7 +163,11 @@ impl PipelineNode for MidiInputNode {
 impl ProcessingNode for MidiInputNode {
     type State = Option<MidiTimestamp>;
 
-    fn process(&self, context: &impl NodeContext, last_read_at: &mut Self::State) -> anyhow::Result<()> {
+    fn process(
+        &self,
+        context: &impl NodeContext,
+        last_read_at: &mut Self::State,
+    ) -> anyhow::Result<()> {
         let Some(connection_manager) = context.try_inject::<MidiConnectionManager>() else {
             return Ok(());
         };
@@ -176,8 +181,18 @@ impl ProcessingNode for MidiInputNode {
                     port,
                     range: (min, max),
                 } => {
-                    let value = state.read_note_changes(Channel::try_from(*channel).map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?, *port, *last_read_at);
-                    value.map(|(value, last_read)| (value.linear_extrapolate((*min, *max), (0f64, 1f64)), last_read))
+                    let value = state.read_note_changes(
+                        Channel::try_from(*channel)
+                            .map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?,
+                        *port,
+                        *last_read_at,
+                    );
+                    value.map(|(value, last_read)| {
+                        (
+                            value.linear_extrapolate((*min, *max), (0f64, 1f64)),
+                            last_read,
+                        )
+                    })
                 }
                 MidiInputConfig::Note {
                     mode: NoteMode::CC,
@@ -185,13 +200,20 @@ impl ProcessingNode for MidiInputNode {
                     port,
                     range: (min, max),
                 } => {
-                    let value = state.read_cc_changes(Channel::try_from(*channel).map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?, *port, *last_read_at);
-                    value.map(|(value, last_read)| (value.linear_extrapolate((*min, *max), (0f64, 1f64)), last_read))
+                    let value = state.read_cc_changes(
+                        Channel::try_from(*channel)
+                            .map_err(|_| anyhow::anyhow!("Invalid channel {channel}"))?,
+                        *port,
+                        *last_read_at,
+                    );
+                    value.map(|(value, last_read)| {
+                        (
+                            value.linear_extrapolate((*min, *max), (0f64, 1f64)),
+                            last_read,
+                        )
+                    })
                 }
-                MidiInputConfig::Control {
-                    page,
-                    control,
-                } => {
+                MidiInputConfig::Control { page, control } => {
                     if let Some(control) = device
                         .profile
                         .as_ref()
@@ -199,7 +221,7 @@ impl ProcessingNode for MidiInputNode {
                         .and_then(|control| control.input.as_ref())
                     {
                         state.read_control_changes(control, *last_read_at)
-                    }else {
+                    } else {
                         None
                     }
                 }

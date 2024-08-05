@@ -60,7 +60,10 @@ impl ModuleContext for SetupContext {
         });
     }
 
-    fn spawn<F: Future + Send + 'static>(&self, future: F) where <F as Future>::Output: Send {
+    fn spawn<F: Future + Send + 'static>(&self, future: F)
+    where
+        <F as Future>::Output: Send,
+    {
         self.handle.spawn(future);
     }
 

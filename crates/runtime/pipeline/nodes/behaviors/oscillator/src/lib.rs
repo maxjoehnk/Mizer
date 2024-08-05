@@ -86,9 +86,7 @@ impl ConfigurableNode for OscillatorNode {
             setting!(OFFSET_SETTING, self.offset)
                 .min_hint(0.)
                 .max_hint(1.),
-            setting!(RATIO_SETTING, self.ratio)
-                .min(0.)
-                .max(1.),
+            setting!(RATIO_SETTING, self.ratio).min(0.).max(1.),
             setting!(REVERSE_SETTING, self.reverse),
         ]
     }
@@ -437,12 +435,16 @@ mod tests {
 
         assert_eq!(0., value);
     }
-    
+
     #[test_case(0.5, 0.5, 1.0)]
     #[test_case(0.5, 0.51, 0.0)]
     #[test_case(0.3, 0.3, 1.0)]
     #[test_case(0.3, 0.31, 0.0)]
-    fn square_oscillator_should_shift_mid_point_based_on_ratio(ratio: f64, tick: f64, expected: f64) {
+    fn square_oscillator_should_shift_mid_point_based_on_ratio(
+        ratio: f64,
+        tick: f64,
+        expected: f64,
+    ) {
         let node = OscillatorContext {
             oscillator_type: OscillatorType::Square,
             ratio,

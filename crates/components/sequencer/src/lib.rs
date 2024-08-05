@@ -7,6 +7,7 @@ pub use self::value::*;
 
 mod contracts;
 mod cue;
+mod cue_preset;
 pub mod effects;
 mod module;
 mod processor;
@@ -14,7 +15,6 @@ mod sequence;
 mod sequencer;
 mod state;
 mod value;
-mod cue_preset;
 
 #[cfg(test)]
 mod tests {
@@ -24,8 +24,8 @@ mod tests {
     use test_case::test_case;
 
     use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
-    use mizer_fixtures::FixtureId;
     use mizer_fixtures::programmer::Presets;
+    use mizer_fixtures::FixtureId;
     use mizer_module::ClockFrame;
 
     use crate::contracts::*;

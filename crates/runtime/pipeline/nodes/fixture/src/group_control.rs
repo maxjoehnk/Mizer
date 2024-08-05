@@ -1,11 +1,11 @@
-use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
+use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
+use crate::contracts::FixtureController;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
 use mizer_node::*;
-use crate::contracts::FixtureController;
 
 const GROUP_SETTING: &str = "Group";
 const CONTROL_SETTING: &str = "Control";
@@ -73,7 +73,7 @@ impl ConfigurableNode for GroupControlNode {
             .get_controls(fixture_manager)
             .map(|control| SelectVariant::from(control.to_string()))
             .collect();
-        
+
         controls.sort();
 
         vec![
@@ -81,7 +81,9 @@ impl ConfigurableNode for GroupControlNode {
             setting!(select CONTROL_SETTING, self.control.to_string(), controls),
             setting!(enum PRIORITY_SETTING, self.priority),
             setting!(SEND_ZERO_SETTING, self.send_zero),
-            setting!(PHASE_SETTING, self.phase).min_hint(-100i64).max_hint(100i64),
+            setting!(PHASE_SETTING, self.phase)
+                .min_hint(-100i64)
+                .max_hint(100i64),
         ]
     }
 
@@ -135,10 +137,7 @@ impl PipelineNode for GroupControlNode {
             input_port!(INPUT_VALUE_PORT, PortType::Single)
         };
 
-        vec![
-            value_port,
-            input_port!(INPUT_PHASE_PORT, PortType::Single),
-        ]
+        vec![value_port, input_port!(INPUT_PHASE_PORT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -163,7 +162,11 @@ impl ProcessingNode for GroupControlNode {
             return Ok(());
         };
 
-        let phase = context.single_input(INPUT_PHASE_PORT).read().map(|v| v.round() as i64).unwrap_or(self.phase);
+        let phase = context
+            .single_input(INPUT_PHASE_PORT)
+            .read()
+            .map(|v| v.round() as i64)
+            .unwrap_or(self.phase);
 
         if self.control.is_color() {
             if !matches!(&buffer, ControlBuffer::Color(_)) {
@@ -175,12 +178,27 @@ impl ProcessingNode for GroupControlNode {
             if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
                 buffer.push(value);
                 context.write_color_preview(value);
-            }else {
+            } else {
                 buffer.clear();
             }
-            self.write(manager, buffer.iter().map(|c| c.red), FixtureFaderControl::ColorMixer(ColorChannel::Red), phase);
-            self.write(manager, buffer.iter().map(|c| c.green), FixtureFaderControl::ColorMixer(ColorChannel::Green), phase);
-            self.write(manager, buffer.iter().map(|c| c.blue), FixtureFaderControl::ColorMixer(ColorChannel::Blue), phase);
+            self.write(
+                manager,
+                buffer.iter().map(|c| c.red),
+                FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                phase,
+            );
+            self.write(
+                manager,
+                buffer.iter().map(|c| c.green),
+                FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                phase,
+            );
+            self.write(
+                manager,
+                buffer.iter().map(|c| c.blue),
+                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                phase,
+            );
         } else {
             if !matches!(&buffer, ControlBuffer::Single(_)) {
                 *buffer = ControlBuffer::single();
@@ -192,7 +210,7 @@ impl ProcessingNode for GroupControlNode {
             if let Some(value) = reader.read() {
                 buffer.push(value);
                 context.push_history_value(value);
-            }else {
+            } else {
                 buffer.clear();
             }
             for fader_control in self.control.clone().faders() {
@@ -206,7 +224,7 @@ impl ProcessingNode for GroupControlNode {
     fn create_state(&self) -> Self::State {
         if self.control.is_color() {
             ControlBuffer::color()
-        }else {
+        } else {
             ControlBuffer::single()
         }
     }
@@ -226,23 +244,25 @@ impl GroupControlNode {
                     manager.write_group_control(self.group_id, control, value, self.priority);
                 }
             }
-        }else {
+        } else {
             let fixtures = manager.get_group_fixture_ids(self.group_id);
             let phase_slots = phase.abs() + 1;
             // FIXME: when chunk size is zero this will panic
-            let fixtures = fixtures.chunks((fixtures.len() as f64 / phase_slots as f64).ceil() as usize);
+            let fixtures =
+                fixtures.chunks((fixtures.len() as f64 / phase_slots as f64).ceil() as usize);
             let skip_values = phase_slots as f64 / fixtures.len() as f64;
             let skip_values = skip_values.floor() as usize;
             let buffer = buffer.rev().step_by(skip_values);
             if phase > 0 {
                 self.write_phased(manager, fixtures, buffer, control);
-            }else {
+            } else {
                 self.write_phased(manager, fixtures.rev(), buffer, control);
             }
         }
     }
 
-    fn write_phased<'a>(&self,
+    fn write_phased<'a>(
+        &self,
         manager: &impl FixtureController,
         fixtures: impl Iterator<Item = &'a [Vec<FixtureId>]>,
         buffer: impl Iterator<Item = f64>,
@@ -277,19 +297,23 @@ impl<const CAP: usize> ControlBuffer<CAP> {
 
 #[cfg(test)]
 mod tests {
-    use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
-    use test_case::test_case;
-    use predicates::prelude::*;
-    use mizer_fixtures::definition::{FixtureFaderControl};
+    use crate::contracts::*;
+    use crate::GroupControlNode;
+    use mizer_fixtures::definition::FixtureFaderControl;
+    use mizer_fixtures::FixturePriority;
     use mizer_fixtures::{FixtureId, GroupId};
     use mizer_node::*;
-    use crate::contracts::*;
-    use crate::{GroupControlNode};
-    use mizer_fixtures::FixturePriority;
+    use predicates::prelude::*;
+    use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
+    use test_case::test_case;
 
     #[test_case(0f64, 1, FixturePriority::HIGH)]
     #[test_case(1f64, 2, FixturePriority::LOW)]
-    fn write_should_write_value_to_group_when_phase_is_zero(value: f64, group_id: u32, priority: FixturePriority) {
+    fn write_should_write_value_to_group_when_phase_is_zero(
+        value: f64,
+        group_id: u32,
+        priority: FixturePriority,
+    ) {
         let group_id = GroupId(group_id);
         let node = GroupControlNode {
             group_id,
@@ -299,7 +323,8 @@ mod tests {
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(value);
-        controller.expect_write_group_control()
+        controller
+            .expect_write_group_control()
             .once()
             .with(
                 predicate::eq(group_id),
@@ -309,21 +334,30 @@ mod tests {
             )
             .return_const(());
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
 
     #[test_case(1f64, vec![0f64, 1f64])]
     #[test_case(0f64, vec![1f64, 2f64, 3f64, 0f64])]
-    fn write_should_write_newest_value_to_group_when_phase_is_zero(expected: f64, values: Vec<f64>) {
+    fn write_should_write_newest_value_to_group_when_phase_is_zero(
+        expected: f64,
+        values: Vec<f64>,
+    ) {
         let node = GroupControlNode::default();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
             buffer.push(v);
         }
-        controller.expect_write_group_control()
+        controller
+            .expect_write_group_control()
             .once()
             .with(
                 predicate::always(),
@@ -333,7 +367,12 @@ mod tests {
             )
             .return_const(());
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -345,7 +384,12 @@ mod tests {
         let buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         controller.expect_write_group_control().never();
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -361,7 +405,12 @@ mod tests {
         buffer.push(0f64);
         controller.expect_write_group_control().never();
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -371,8 +420,15 @@ mod tests {
     #[test_case(vec![1, 2, 3, 4], vec![1., 2.], vec![(1, 2.), (2, 2.), (3, 1.), (4, 1.)])]
     #[test_case(vec![1, 2, 3, 4], vec![1.], vec![(1, 1.), (2, 1.)])]
     #[test_case(vec![1, 2, 3, 4], vec![], vec![])]
-    fn write_should_spread_values_across_two_fixture_groups_when_phase_is_one(fixture_ids: Vec<u32>, values: Vec<f64>, expected: Vec<(u32, f64)>) {
-        let fixtures = fixture_ids.into_iter().map(|v| vec![FixtureId::Fixture(v)]).collect::<Vec<_>>();
+    fn write_should_spread_values_across_two_fixture_groups_when_phase_is_one(
+        fixture_ids: Vec<u32>,
+        values: Vec<f64>,
+        expected: Vec<(u32, f64)>,
+    ) {
+        let fixtures = fixture_ids
+            .into_iter()
+            .map(|v| vec![FixtureId::Fixture(v)])
+            .collect::<Vec<_>>();
         let node = GroupControlNode {
             phase: 1,
             ..Default::default()
@@ -382,11 +438,13 @@ mod tests {
         for v in values {
             buffer.push(v);
         }
-        controller.expect_get_group_fixture_ids()
+        controller
+            .expect_get_group_fixture_ids()
             .with(predicate::eq(node.group_id))
             .return_const(fixtures);
         for (id, value) in expected {
-            controller.expect_write_fixture_control()
+            controller
+                .expect_write_fixture_control()
                 .once()
                 .with(
                     predicate::eq(FixtureId::Fixture(id)),
@@ -397,7 +455,12 @@ mod tests {
                 .return_const(());
         }
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -407,8 +470,15 @@ mod tests {
     #[test_case(vec![1, 2, 3, 4], vec![1., 2.], vec![(1, 1.), (2, 1.), (3, 2.), (4, 2.)])]
     #[test_case(vec![1, 2, 3, 4], vec![1.], vec![(3, 1.), (4, 1.)])]
     #[test_case(vec![1, 2, 3, 4], vec![], vec![])]
-    fn write_should_spread_reversed_values_across_two_fixture_groups_when_phase_is_minus_one(fixture_ids: Vec<u32>, values: Vec<f64>, expected: Vec<(u32, f64)>) {
-        let fixtures = fixture_ids.into_iter().map(|v| vec![FixtureId::Fixture(v)]).collect::<Vec<_>>();
+    fn write_should_spread_reversed_values_across_two_fixture_groups_when_phase_is_minus_one(
+        fixture_ids: Vec<u32>,
+        values: Vec<f64>,
+        expected: Vec<(u32, f64)>,
+    ) {
+        let fixtures = fixture_ids
+            .into_iter()
+            .map(|v| vec![FixtureId::Fixture(v)])
+            .collect::<Vec<_>>();
         let node = GroupControlNode {
             phase: -1,
             ..Default::default()
@@ -418,11 +488,13 @@ mod tests {
         for v in values {
             buffer.push(v);
         }
-        controller.expect_get_group_fixture_ids()
+        controller
+            .expect_get_group_fixture_ids()
             .with(predicate::eq(node.group_id))
             .return_const(fixtures);
         for (id, value) in expected {
-            controller.expect_write_fixture_control()
+            controller
+                .expect_write_fixture_control()
                 .once()
                 .with(
                     predicate::eq(FixtureId::Fixture(id)),
@@ -433,15 +505,28 @@ mod tests {
                 .return_const(());
         }
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
 
     #[test_case(2, vec![1, 2, 3], vec![1., 2., 3.], vec![(1, 3.), (2, 2.), (3, 1.)])]
     #[test_case(3, vec![1, 2, 3, 4], vec![1., 2., 3., 4.], vec![(1, 4.), (2, 3.), (3, 2.), (4, 1.)])]
-    fn write_should_spread_values_across_multiple_fixture_groups_when_phase_is_above_zero(phase: i64, fixture_ids: Vec<u32>, values: Vec<f64>, expected: Vec<(u32, f64)>) {
-        let fixtures = fixture_ids.into_iter().map(|v| vec![FixtureId::Fixture(v)]).collect::<Vec<_>>();
+    fn write_should_spread_values_across_multiple_fixture_groups_when_phase_is_above_zero(
+        phase: i64,
+        fixture_ids: Vec<u32>,
+        values: Vec<f64>,
+        expected: Vec<(u32, f64)>,
+    ) {
+        let fixtures = fixture_ids
+            .into_iter()
+            .map(|v| vec![FixtureId::Fixture(v)])
+            .collect::<Vec<_>>();
         let node = GroupControlNode {
             phase,
             ..Default::default()
@@ -451,11 +536,13 @@ mod tests {
         for v in values {
             buffer.push(v);
         }
-        controller.expect_get_group_fixture_ids()
+        controller
+            .expect_get_group_fixture_ids()
             .with(predicate::eq(node.group_id))
             .return_const(fixtures);
         for (id, value) in expected {
-            controller.expect_write_fixture_control()
+            controller
+                .expect_write_fixture_control()
                 .once()
                 .with(
                     predicate::eq(FixtureId::Fixture(id)),
@@ -466,7 +553,12 @@ mod tests {
                 .return_const(());
         }
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -474,8 +566,16 @@ mod tests {
     #[test_case(2, vec![1, 2], vec![1., 2., 3., 4.], vec![(1, 4.), (2, 3.)])]
     #[test_case(3, vec![1, 2, 3], vec![1., 2., 3., 4.], vec![(1, 4.), (2, 3.), (3, 2.)])]
     #[test_case(7, vec![1, 2, 3, 4], vec![1., 2., 3., 4., 5., 6., 7., 8.], vec![(1, 8.), (2, 6.), (3, 4.), (4, 2.)])]
-    fn write_should_spread_values_smooth_across_multiple_fixture_groups_when_phase_is_higher_than_fixture_count(phase: i64, fixture_ids: Vec<u32>, values: Vec<f64>, expected: Vec<(u32, f64)>) {
-        let fixtures = fixture_ids.into_iter().map(|v| vec![FixtureId::Fixture(v)]).collect::<Vec<_>>();
+    fn write_should_spread_values_smooth_across_multiple_fixture_groups_when_phase_is_higher_than_fixture_count(
+        phase: i64,
+        fixture_ids: Vec<u32>,
+        values: Vec<f64>,
+        expected: Vec<(u32, f64)>,
+    ) {
+        let fixtures = fixture_ids
+            .into_iter()
+            .map(|v| vec![FixtureId::Fixture(v)])
+            .collect::<Vec<_>>();
         let node = GroupControlNode {
             phase,
             ..Default::default()
@@ -485,11 +585,13 @@ mod tests {
         for v in values {
             buffer.push(v);
         }
-        controller.expect_get_group_fixture_ids()
+        controller
+            .expect_get_group_fixture_ids()
             .with(predicate::eq(node.group_id))
             .return_const(fixtures);
         for (id, value) in expected {
-            controller.expect_write_fixture_control()
+            controller
+                .expect_write_fixture_control()
                 .once()
                 .with(
                     predicate::eq(FixtureId::Fixture(id)),
@@ -500,7 +602,12 @@ mod tests {
                 .return_const(());
         }
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
@@ -518,8 +625,11 @@ mod tests {
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
         buffer.push(2f64);
-        controller.expect_get_group_fixture_ids().return_const(fixtures);
-        controller.expect_write_fixture_control()
+        controller
+            .expect_get_group_fixture_ids()
+            .return_const(fixtures);
+        controller
+            .expect_write_fixture_control()
             .times(2)
             .with(
                 predicate::always(),
@@ -548,8 +658,11 @@ mod tests {
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
         buffer.push(2f64);
-        controller.expect_get_group_fixture_ids().return_const(fixtures);
-        controller.expect_write_fixture_control()
+        controller
+            .expect_get_group_fixture_ids()
+            .return_const(fixtures);
+        controller
+            .expect_write_fixture_control()
             .times(2)
             .with(
                 predicate::always(),
@@ -559,13 +672,19 @@ mod tests {
             )
             .return_const(());
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
 
     #[test]
-    fn write_should_write_nothing_when_value_is_zero_and_send_zero_is_false_and_phase_is_not_zero() {
+    fn write_should_write_nothing_when_value_is_zero_and_send_zero_is_false_and_phase_is_not_zero()
+    {
         let node = GroupControlNode {
             send_zero: false,
             phase: 1,
@@ -574,27 +693,40 @@ mod tests {
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(0f64);
-        controller.expect_get_group_fixture_ids().return_const(vec![vec![FixtureId::Fixture(0)]]);
+        controller
+            .expect_get_group_fixture_ids()
+            .return_const(vec![vec![FixtureId::Fixture(0)]]);
         controller.expect_write_group_control().never();
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }
-    
+
     #[test]
     fn write_should_write_same_value_to_multiple_fixtures_at_same_position_in_group() {
         let node = GroupControlNode {
             phase: 1,
             ..Default::default()
         };
-        let fixtures = vec![vec![FixtureId::Fixture(1), FixtureId::Fixture(2)], vec![FixtureId::Fixture(3), FixtureId::Fixture(4)]];
+        let fixtures = vec![
+            vec![FixtureId::Fixture(1), FixtureId::Fixture(2)],
+            vec![FixtureId::Fixture(3), FixtureId::Fixture(4)],
+        ];
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
         buffer.push(2f64);
-        controller.expect_get_group_fixture_ids().return_const(fixtures);
-        controller.expect_write_fixture_control()
+        controller
+            .expect_get_group_fixture_ids()
+            .return_const(fixtures);
+        controller
+            .expect_write_fixture_control()
             .once()
             .with(
                 predicate::eq(FixtureId::Fixture(1)),
@@ -603,7 +735,8 @@ mod tests {
                 predicate::always(),
             )
             .return_const(());
-        controller.expect_write_fixture_control()
+        controller
+            .expect_write_fixture_control()
             .once()
             .with(
                 predicate::eq(FixtureId::Fixture(2)),
@@ -612,7 +745,8 @@ mod tests {
                 predicate::always(),
             )
             .return_const(());
-        controller.expect_write_fixture_control()
+        controller
+            .expect_write_fixture_control()
             .once()
             .with(
                 predicate::eq(FixtureId::Fixture(3)),
@@ -621,7 +755,8 @@ mod tests {
                 predicate::always(),
             )
             .return_const(());
-        controller.expect_write_fixture_control()
+        controller
+            .expect_write_fixture_control()
             .once()
             .with(
                 predicate::eq(FixtureId::Fixture(4)),
@@ -631,7 +766,12 @@ mod tests {
             )
             .return_const(());
 
-        node.write(&controller, buffer.iter().copied(), FixtureFaderControl::Intensity, node.phase);
+        node.write(
+            &controller,
+            buffer.iter().copied(),
+            FixtureFaderControl::Intensity,
+            node.phase,
+        );
 
         controller.checkpoint();
     }

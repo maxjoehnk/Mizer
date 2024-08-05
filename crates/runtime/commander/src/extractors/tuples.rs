@@ -1,7 +1,7 @@
 use super::ExtractDependencies;
+use crate::ExtractDependenciesQuery;
 use mizer_injector::{Inject, Injector};
 use std::any::TypeId;
-use crate::ExtractDependenciesQuery;
 
 // TODO: implement as macro
 impl<'a, T1: 'static + ExtractDependencies<'a>, T2: 'static + ExtractDependencies<'a>>
@@ -71,13 +71,13 @@ impl<
 }
 
 impl<
-    'a,
-    T1: 'static + ExtractDependencies<'a>,
-    T2: 'static + ExtractDependencies<'a>,
-    T3: 'static + ExtractDependencies<'a>,
-    T4: 'static + ExtractDependencies<'a>,
-    T5: 'static + ExtractDependencies<'a>,
-> ExtractDependencies<'a> for (T1, T2, T3, T4, T5)
+        'a,
+        T1: 'static + ExtractDependencies<'a>,
+        T2: 'static + ExtractDependencies<'a>,
+        T3: 'static + ExtractDependencies<'a>,
+        T4: 'static + ExtractDependencies<'a>,
+        T5: 'static + ExtractDependencies<'a>,
+    > ExtractDependencies<'a> for (T1, T2, T3, T4, T5)
 {
     type Type = (T1::Type, T2::Type, T3::Type, T4::Type, T5::Type);
 
@@ -102,14 +102,14 @@ impl<
 }
 
 impl<
-    'a,
-    T1: 'static + ExtractDependencies<'a>,
-    T2: 'static + ExtractDependencies<'a>,
-    T3: 'static + ExtractDependencies<'a>,
-    T4: 'static + ExtractDependencies<'a>,
-    T5: 'static + ExtractDependencies<'a>,
-    T6: 'static + ExtractDependencies<'a>,
-> ExtractDependencies<'a> for (T1, T2, T3, T4, T5, T6)
+        'a,
+        T1: 'static + ExtractDependencies<'a>,
+        T2: 'static + ExtractDependencies<'a>,
+        T3: 'static + ExtractDependencies<'a>,
+        T4: 'static + ExtractDependencies<'a>,
+        T5: 'static + ExtractDependencies<'a>,
+        T6: 'static + ExtractDependencies<'a>,
+    > ExtractDependencies<'a> for (T1, T2, T3, T4, T5, T6)
 {
     type Type = (T1::Type, T2::Type, T3::Type, T4::Type, T5::Type, T6::Type);
 
@@ -145,14 +145,14 @@ impl<'a> ExtractDependenciesQuery<'a> for () {
 }
 
 impl<
-    'a,
-    T1: 'static + ExtractDependenciesQuery<'a>,
-    T2: 'static + ExtractDependenciesQuery<'a>,
-    T3: 'static + ExtractDependenciesQuery<'a>,
-    T4: 'static + ExtractDependenciesQuery<'a>,
-    T5: 'static + ExtractDependenciesQuery<'a>,
-    T6: 'static + ExtractDependenciesQuery<'a>,
-> ExtractDependenciesQuery<'a> for (T1, T2, T3, T4, T5, T6)
+        'a,
+        T1: 'static + ExtractDependenciesQuery<'a>,
+        T2: 'static + ExtractDependenciesQuery<'a>,
+        T3: 'static + ExtractDependenciesQuery<'a>,
+        T4: 'static + ExtractDependenciesQuery<'a>,
+        T5: 'static + ExtractDependenciesQuery<'a>,
+        T6: 'static + ExtractDependenciesQuery<'a>,
+    > ExtractDependenciesQuery<'a> for (T1, T2, T3, T4, T5, T6)
 {
     type Type = (T1::Type, T2::Type, T3::Type, T4::Type, T5::Type, T6::Type);
 

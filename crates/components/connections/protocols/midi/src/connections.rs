@@ -17,30 +17,34 @@ impl MidiConnectionManager {
             devices: DashMap::new(),
         }
     }
-    
-    pub(crate) fn change_device_profile(&self, device: &str, profile_id: Option<&str>) -> anyhow::Result<Option<String>> {
+
+    pub(crate) fn change_device_profile(
+        &self,
+        device: &str,
+        profile_id: Option<&str>,
+    ) -> anyhow::Result<Option<String>> {
         let profile = if let Some(profile_id) = profile_id {
             let Some(profile) = self.provider.profile_registry.get_profile(profile_id) else {
                 anyhow::bail!("Profile not found");
             };
-            
+
             Some(profile)
-        }else {
+        } else {
             None
         };
-        
+
         if let Some(mut device) = self.devices.get_mut(device) {
             device.profile = profile.clone();
         }
         if let Some(mut device) = self.provider.available_devices.get_mut(device) {
             let previous = if let Some(profile) = profile {
                 device.profile.replace(profile)
-            }else {
+            } else {
                 device.profile.take()
             };
 
             Ok(previous.map(|p| p.id))
-        }else {
+        } else {
             anyhow::bail!("Device not connected");
         }
     }

@@ -5,8 +5,8 @@ use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use mizer_clock::Timecode;
 use mizer_node::HISTORY_PREVIEW_SIZE;
 use mizer_ports::Color;
-use mizer_util::StructuredData;
 use mizer_util::rw_lock::RwLock;
+use mizer_util::StructuredData;
 
 pub enum NodePreviewRef {
     History(Arc<RwLock<ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>>>),

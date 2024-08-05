@@ -1,8 +1,8 @@
 use mizer_commander::{Command, Ref};
+use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::fixture::{ChannelLimit, FixtureConfiguration};
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
-use mizer_fixtures::definition::FixtureFaderControl;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateFixtureCommand {

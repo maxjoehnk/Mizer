@@ -1,8 +1,8 @@
-use std::borrow::Cow;
-use serde::{Deserialize, Serialize};
-use mizer_commander::{Query};
+use mizer_commander::Query;
 use mizer_docs::{get_node_description, list_node_settings};
 use mizer_node::{NodeCategory, NodeType};
+use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListAvailableNodesQuery;
@@ -20,7 +20,13 @@ impl<'a> Query<'a> for ListAvailableNodesQuery {
                 let node_type_name = node_type.get_name();
                 let description = get_node_description(&node_type_name);
                 let settings = list_node_settings(&node_type_name).map(|s| s.collect::<Vec<_>>());
-                let templates = node.templates().into_iter().map(|template| AvailableNodeTemplateDescriptor { name: template.name }).collect();
+                let templates = node
+                    .templates()
+                    .into_iter()
+                    .map(|template| AvailableNodeTemplateDescriptor {
+                        name: template.name,
+                    })
+                    .collect();
 
                 AvailableNodeDescriptor {
                     name: details.node_type_name,
@@ -46,7 +52,7 @@ pub struct AvailableNodeDescriptor {
     pub node_type_name: String,
     pub description: Option<&'static str>,
     pub settings: Vec<(&'static str, &'static str)>,
-    pub templates: Vec<AvailableNodeTemplateDescriptor>
+    pub templates: Vec<AvailableNodeTemplateDescriptor>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]

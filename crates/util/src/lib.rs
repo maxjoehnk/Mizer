@@ -1,15 +1,15 @@
 pub use self::async_runtime::*;
 pub use self::colors::*;
 pub use self::conversion::*;
+pub use self::error_collector::*;
 pub use self::file_loading::*;
 pub use self::hashmap_extension::*;
 pub use self::image::*;
 pub use self::lerp_extension::*;
 pub use self::spline::*;
+pub use self::stopwatch::*;
 pub use self::structured_data::*;
 pub use self::thread_pinned::*;
-pub use self::error_collector::*;
-pub use self::stopwatch::*;
 
 mod async_runtime;
 #[cfg(feature = "test")]
@@ -22,10 +22,10 @@ mod spline;
 mod stopwatch;
 mod structured_data;
 
+mod error_collector;
 mod file_loading;
 mod image;
 mod thread_pinned;
 pub mod tracing;
-mod error_collector;
 
 pub mod rw_lock;

@@ -40,7 +40,9 @@ impl ConfigurableNode for MidiOutputGridNode {
             setting!(select DEVICE_SETTING, &self.device, devices),
             setting!(select PAGE_SETTING, &self.page, pages),
             setting!(ROWS_SETTING, self.rows).max(max_rows).min(0u32),
-            setting!(COLUMNS_SETTING, self.columns).max(max_cols).min(0u32),
+            setting!(COLUMNS_SETTING, self.columns)
+                .max(max_cols)
+                .min(0u32),
             setting!(X_SETTING, self.x).min(0u32).max(max_cols),
             setting!(Y_SETTING, self.y).min(0u32).max(max_rows),
         ];
@@ -54,8 +56,14 @@ impl ConfigurableNode for MidiOutputGridNode {
             );
         }
 
-        let selected_on_step = self.on_step.map(|value| value.to_string()).unwrap_or_default();
-        let selected_off_step = self.off_step.map(|value| value.to_string()).unwrap_or_default();
+        let selected_on_step = self
+            .on_step
+            .map(|value| value.to_string())
+            .unwrap_or_default();
+        let selected_off_step = self
+            .off_step
+            .map(|value| value.to_string())
+            .unwrap_or_default();
 
         if let Some(steps) = steps {
             settings.push(setting!(select ON_STEP_SETTING, selected_on_step, steps.clone()));
@@ -118,13 +126,17 @@ impl ProcessingNode for MidiOutputGridNode {
         };
         if let Some(values) = context.multi_input(INPUT_PORT).read_changes() {
             if let Some(mut device) = connection_manager.request_device(&self.device)? {
-                let messages = if let Some(grid) = device.profile.as_ref().and_then(|profile| profile.get_grid(&self.page, self.x, self.y, self.columns, self.rows)) {
+                let messages = if let Some(grid) = device.profile.as_ref().and_then(|profile| {
+                    profile.get_grid(&self.page, self.x, self.y, self.columns, self.rows)
+                }) {
                     if grid.len() != values.len() {
                         // TODO: report issue to ui, but we don't have to pad anything because of how the grid implementation works
                         tracing::warn!("Mismatch between grid size and input values size");
                     }
                     grid.write(&values, self.on_step, self.off_step)
-                } else { Default::default() };
+                } else {
+                    Default::default()
+                };
 
                 for message in messages {
                     device.write(message)?;

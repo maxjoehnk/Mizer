@@ -1,9 +1,9 @@
-use std::path::{Path};
+use std::path::Path;
 
 use ffmpeg_the_third as ffmpeg;
 
 use crate::documents::{MediaMetadata, MediaType};
-use crate::media_handlers::{MediaHandler};
+use crate::media_handlers::MediaHandler;
 
 #[derive(Clone)]
 pub struct VideoHandler;

@@ -1,8 +1,8 @@
 use std::fmt::{Debug, Formatter};
 use std::ops::Deref;
 use std::pin::Pin;
-use std::sync::{Arc, Weak};
 use std::sync::atomic::AtomicBool;
+use std::sync::{Arc, Weak};
 use std::task::{Context, Poll};
 
 use flume::r#async::RecvStream;
@@ -39,9 +39,10 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
             keep_last_event: Arc::new(AtomicBool::new(true)),
         }
     }
-    
+
     pub fn set_keep_last_event(&self, keep_last_event: bool) {
-        self.keep_last_event.store(keep_last_event, std::sync::atomic::Ordering::Relaxed);
+        self.keep_last_event
+            .store(keep_last_event, std::sync::atomic::Ordering::Relaxed);
     }
 
     pub fn send(&self, msg: T) {
@@ -60,7 +61,10 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
             }
         }
 
-        if self.keep_last_event.load(std::sync::atomic::Ordering::Relaxed) {
+        if self
+            .keep_last_event
+            .load(std::sync::atomic::Ordering::Relaxed)
+        {
             let mut last_event = self.last_event.write();
             *last_event = Some(msg);
         }
@@ -111,7 +115,7 @@ impl<T: Clone + Send + Sync + 'static> Subscriber<T> {
             }
         }
     }
-    
+
     pub fn read_blocking(&self) -> Option<T> {
         match self.recv.recv() {
             Ok(value) => Some(value),

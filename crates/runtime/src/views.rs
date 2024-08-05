@@ -13,7 +13,7 @@ pub struct LayoutsView {
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
     dials: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
-    colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>
+    colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>,
 }
 
 impl Default for LayoutsView {
@@ -72,7 +72,7 @@ impl LayoutsView {
     pub(crate) fn write_control_colors(&self, values: HashMap<NodePath, Color>) {
         self.colors.set(values);
     }
-    
+
     pub fn get_control_color(&self, path: &NodePath) -> Option<Color> {
         let values = self.colors.read();
 

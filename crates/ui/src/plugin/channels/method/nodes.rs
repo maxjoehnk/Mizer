@@ -117,10 +117,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "deleteNodes" => {
                 if let Value::List(path) = call.args {
-                    let nodes = path.into_iter().filter_map(|value| match value {
-                        Value::String(path) => Some(path.into()),
-                        _ => None,
-                    }).collect();
+                    let nodes = path
+                        .into_iter()
+                        .filter_map(|value| match value {
+                            Value::String(path) => Some(path.into()),
+                            _ => None,
+                        })
+                        .collect();
                     match self.handler.delete_nodes(nodes) {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
@@ -151,7 +154,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             },
             "duplicateNodes" => match call.arguments() {
                 Ok(args) => match self.handler.duplicate_nodes(args) {
-                    Ok(paths) => resp.send_ok(Value::List(paths.into_iter().map(|path| Value::String(path.into())).collect())),
+                    Ok(paths) => resp.send_ok(Value::List(
+                        paths
+                            .into_iter()
+                            .map(|path| Value::String(path.into()))
+                            .collect(),
+                    )),
                     Err(err) => resp.respond_error(err),
                 },
                 Err(err) => resp.respond_error(err),

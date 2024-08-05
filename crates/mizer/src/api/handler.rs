@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use crate::{ApiCommand, Mizer};
 use mizer_clock::Clock;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
@@ -7,7 +8,6 @@ use mizer_module::Runtime;
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_osc::{OscConnectionManager, OscMessage};
 use mizer_runtime::Pipeline;
-use crate::{ApiCommand, Mizer};
 
 pub struct ApiHandler {
     pub(super) recv: flume::Receiver<ApiCommand>,

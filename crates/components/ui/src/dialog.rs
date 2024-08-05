@@ -8,10 +8,10 @@ impl DialogService {
     pub(crate) fn new(api: UiApi) -> Self {
         Self { api }
     }
-    
+
     pub fn show_dialog(&self, dialog: Dialog) -> anyhow::Result<()> {
         self.api.emit(UiEvent::ShowDialog(dialog));
-        
+
         Ok(())
     }
 }
@@ -38,21 +38,26 @@ impl DialogBuilder {
     pub fn new() -> Self {
         Default::default()
     }
-    
+
     pub fn title(mut self, title: String) -> Self {
         self.title = Some(title);
         self
     }
-    
+
     pub fn text(mut self, text: String) -> Self {
         self.elements.push(DialogElement::Text(text));
         self
     }
-    
+
     pub fn build(self) -> anyhow::Result<Dialog> {
-        anyhow::ensure!(!self.elements.is_empty(), "at least one element is required");
+        anyhow::ensure!(
+            !self.elements.is_empty(),
+            "at least one element is required"
+        );
         Ok(Dialog {
-            title: self.title.ok_or_else(|| anyhow::anyhow!("title is required"))?,
+            title: self
+                .title
+                .ok_or_else(|| anyhow::anyhow!("title is required"))?,
             elements: self.elements,
         })
     }

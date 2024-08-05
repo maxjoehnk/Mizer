@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{Command, sub_command, SubCommand, SubCommandRunner};
+use mizer_commander::{sub_command, Command, SubCommand, SubCommandRunner};
 use mizer_layout_commands::AddLayoutControlCommand;
 use mizer_layouts::{ControlPosition, ControlType};
 use mizer_node::NodeType;

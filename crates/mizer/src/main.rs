@@ -1,5 +1,5 @@
-use std::sync::mpsc;
 use anyhow::Context;
+use std::sync::mpsc;
 
 use structopt::StructOpt;
 

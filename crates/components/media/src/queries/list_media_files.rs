@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
-use mizer_commander::{Query, Ref};
 use crate::documents::MediaDocument;
 use crate::MediaServer;
+use mizer_commander::{Query, Ref};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ListMediaFilesQuery;

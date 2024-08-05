@@ -38,7 +38,7 @@ impl CommandExecutor {
         &'a mut self,
         injector: &'a mut Injector,
         command: &T,
-        command_key: Option<CommandKey>
+        command_key: Option<CommandKey>,
     ) -> anyhow::Result<(T::Result, CommandKey)> {
         tracing::debug!("Applying command {:?}", command);
         mizer_console::info(mizer_console::ConsoleCategory::Commands, command.label());
@@ -46,8 +46,7 @@ impl CommandExecutor {
         let (result, state) = command.apply(dependencies)?;
         let key = command_key.unwrap_or_else(|| self.next_command_key(command));
         tracing::trace!("Inserting state for Command key: {key:?}");
-        self.states
-            .insert(key, Box::new(state));
+        self.states.insert(key, Box::new(state));
 
         Ok((result, key))
     }
@@ -59,13 +58,16 @@ impl CommandExecutor {
         command_key: &CommandKey,
     ) -> anyhow::Result<()> {
         tracing::debug!("Reverting command {:?}", command);
-        mizer_console::info!(mizer_console::ConsoleCategory::Commands, "Undo: {}", command.label());
+        mizer_console::info!(
+            mizer_console::ConsoleCategory::Commands,
+            "Undo: {}",
+            command.label()
+        );
         let dependencies = T::Dependencies::extract(injector);
         tracing::trace!("Requesting state for Command key: {command_key:?}");
-        let state = self
-            .states
-            .remove(command_key)
-            .ok_or_else(|| anyhow::anyhow!("Missing state for command reversion with key {command_key:?}"))?;
+        let state = self.states.remove(command_key).ok_or_else(|| {
+            anyhow::anyhow!("Missing state for command reversion with key {command_key:?}")
+        })?;
         let state = state.downcast::<T::State>().unwrap();
         command.revert(dependencies, *state)
     }

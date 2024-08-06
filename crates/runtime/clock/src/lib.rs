@@ -81,6 +81,7 @@ impl Clock for SystemClock {
             state: self.state,
             fps: self.fps,
             time: Timecode::new(self.frames, self.fps),
+            beat: self.beat,
         }
     }
 
@@ -162,6 +163,7 @@ pub struct ClockSnapshot {
     pub time: Timecode,
     pub state: ClockState,
     pub fps: f64,
+    pub beat: f64,
 }
 
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq)]

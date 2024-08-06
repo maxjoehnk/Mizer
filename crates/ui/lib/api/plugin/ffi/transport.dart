@@ -14,6 +14,12 @@ class TransportPointer extends FFIPointer<Transport> implements TimecodeReader {
     return result;
   }
 
+  double readBeat() {
+    var result = this._bindings.read_current_beat(ptr);
+
+    return result;
+  }
+
   @override
   void disposePointer(ffi.Pointer<Transport> _ptr) {
     this._bindings.drop_transport_pointer(_ptr);

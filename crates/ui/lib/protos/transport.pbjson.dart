@@ -35,6 +35,7 @@ const Transport$json = {
     {'1': 'speed', '3': 2, '4': 1, '5': 1, '10': 'speed'},
     {'1': 'timecode', '3': 3, '4': 1, '5': 11, '6': '.mizer.transport.Timecode', '10': 'timecode'},
     {'1': 'fps', '3': 4, '4': 1, '5': 1, '10': 'fps'},
+    {'1': 'beat', '3': 5, '4': 1, '5': 1, '10': 'beat'},
   ],
 };
 
@@ -42,7 +43,8 @@ const Transport$json = {
 final $typed_data.Uint8List transportDescriptor = $convert.base64Decode(
     'CglUcmFuc3BvcnQSNQoFc3RhdGUYASABKA4yHy5taXplci50cmFuc3BvcnQuVHJhbnNwb3J0U3'
     'RhdGVSBXN0YXRlEhQKBXNwZWVkGAIgASgBUgVzcGVlZBI1Cgh0aW1lY29kZRgDIAEoCzIZLm1p'
-    'emVyLnRyYW5zcG9ydC5UaW1lY29kZVIIdGltZWNvZGUSEAoDZnBzGAQgASgBUgNmcHM=');
+    'emVyLnRyYW5zcG9ydC5UaW1lY29kZVIIdGltZWNvZGUSEAoDZnBzGAQgASgBUgNmcHMSEgoEYm'
+    'VhdBgFIAEoAVIEYmVhdA==');
 
 @$core.Deprecated('Use timecodeDescriptor instead')
 const Timecode$json = {

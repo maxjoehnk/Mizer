@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'time_control.dart';
 
@@ -53,6 +55,8 @@ class _TransportControlsState extends State<TransportControls> {
         height: TRANSPORT_CONTROLS_HEIGHT,
         color: Colors.grey.shade800,
         child: Row(children: [
+          SizedBox(width: 8),
+          RepaintBoundary(child: BeatIndicator(context.read(), beatStream: transportStream.map((event) => event.beat))),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RepaintBoundary(child: TimeControl(context.read(), transportStream)),

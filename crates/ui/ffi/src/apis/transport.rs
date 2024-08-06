@@ -44,6 +44,17 @@ pub extern "C" fn read_timecode(ptr: *const Transport) -> Timecode {
 }
 
 #[no_mangle]
+pub extern "C" fn read_current_beat(ptr: *const Transport) -> f64 {
+    let ffi = Arc::from_pointer(ptr);
+
+    let snapshot = ffi.clock_ref.read();
+
+    std::mem::forget(ffi);
+
+    snapshot.beat
+}
+
+#[no_mangle]
 pub extern "C" fn drop_transport_pointer(ptr: *const Transport) {
     drop_pointer(ptr);
 }

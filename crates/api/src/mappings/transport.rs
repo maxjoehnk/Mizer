@@ -9,6 +9,7 @@ impl From<ClockSnapshot> for Transport {
             state: TransportState::from(snapshot.state) as i32,
             timecode: Some(snapshot.time.into()),
             fps: snapshot.fps,
+            beat: snapshot.beat,
         }
     }
 }

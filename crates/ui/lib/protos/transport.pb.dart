@@ -24,6 +24,7 @@ class Transport extends $pb.GeneratedMessage {
     $core.double? speed,
     Timecode? timecode,
     $core.double? fps,
+    $core.double? beat,
   }) {
     final $result = create();
     if (state != null) {
@@ -38,6 +39,9 @@ class Transport extends $pb.GeneratedMessage {
     if (fps != null) {
       $result.fps = fps;
     }
+    if (beat != null) {
+      $result.beat = beat;
+    }
     return $result;
   }
   Transport._() : super();
@@ -49,6 +53,7 @@ class Transport extends $pb.GeneratedMessage {
     ..a<$core.double>(2, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.OD)
     ..aOM<Timecode>(3, _omitFieldNames ? '' : 'timecode', subBuilder: Timecode.create)
     ..a<$core.double>(4, _omitFieldNames ? '' : 'fps', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'beat', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -110,6 +115,15 @@ class Transport extends $pb.GeneratedMessage {
   $core.bool hasFps() => $_has(3);
   @$pb.TagNumber(4)
   void clearFps() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get beat => $_getN(4);
+  @$pb.TagNumber(5)
+  set beat($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasBeat() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearBeat() => clearField(5);
 }
 
 class Timecode extends $pb.GeneratedMessage {

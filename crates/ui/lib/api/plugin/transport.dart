@@ -39,4 +39,14 @@ class TransportPluginApi implements TransportApi {
 
     return this.bindings.openTransport(pointer);
   }
+
+  @override
+  Future<void> resync() async {
+    await channel.invokeMethod("resync");
+  }
+
+  @override
+  Future<void> tap() async {
+    await channel.invokeMethod("tap");
+  }
 }

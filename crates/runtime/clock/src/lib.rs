@@ -1,5 +1,7 @@
 use std::fmt::{Display, Formatter};
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
+
+pub type BoxedClock = Box<dyn Clock>;
 
 fn now() -> u128 {
     let time = SystemTime::now();
@@ -21,6 +23,7 @@ pub struct SystemClock {
     frames: u64,
     state: ClockState,
     fps: f64,
+    tapper: Tapper,
 }
 
 impl Default for SystemClock {
@@ -33,6 +36,7 @@ impl Default for SystemClock {
             frames: 0,
             state: ClockState::Playing,
             fps: 60.,
+            tapper: Default::default(),
         }
     }
 }
@@ -105,6 +109,16 @@ impl Clock for SystemClock {
     fn fps_mut(&mut self) -> &mut f64 {
         &mut self.fps
     }
+
+    fn tap(&mut self) {
+        if let Some(speed) = self.tapper.tap() {
+            *self.speed_mut() = speed;
+        }
+    }
+
+    fn resync(&mut self) {
+        self.beat = 0.;
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -148,6 +162,9 @@ pub trait Clock {
 
     fn fps(&self) -> f64;
     fn fps_mut(&mut self) -> &mut f64;
+
+    fn tap(&mut self);
+    fn resync(&mut self);
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -229,5 +246,49 @@ impl Timecode {
             frames,
             negative,
         }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct Tapper {
+    last_tap: Instant,
+    bpm: Option<f64>,
+    last_bpms: Vec<f64>,
+}
+
+impl Default for Tapper {
+    fn default() -> Self {
+        Self {
+            last_tap: Instant::now(),
+            bpm: Default::default(),
+            last_bpms: Default::default(),
+        }
+    }
+}
+
+impl Tapper {
+    fn tap(&mut self) -> Option<f64> {
+        let tap = Instant::now();
+        let duration = tap - self.last_tap;
+        if duration.as_millis() > 2000 {
+            self.last_tap = tap;
+            self.last_bpms.clear();
+            self.bpm = None;
+
+            return None;
+        }
+        let bpm = 60000f64 / duration.as_millis() as f64;
+        self.last_bpms.push(bpm);
+        if self.bpm.is_none() {
+            self.bpm = Some(bpm);
+        } else {
+            let bpm_sum: f64 = self.last_bpms.iter().copied().sum();
+            let average = bpm_sum / self.last_bpms.len() as f64;
+
+            self.bpm = Some(average);
+        }
+        self.last_tap = tap;
+
+        self.bpm.map(|bpm| bpm.round())
     }
 }

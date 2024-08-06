@@ -114,6 +114,18 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn tap(&self) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::Tap)?;
+
+        Ok(())
+    }
+    
+    fn resync(&self) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::Resync)?;
+
+        Ok(())
+    }
+
     fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::ObserveSession(tx))?;

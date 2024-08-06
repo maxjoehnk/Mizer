@@ -1,5 +1,4 @@
 pub use crate::module::RuntimeModule;
-use mizer_clock::SystemClock;
 pub use mizer_pipeline::NodePreviewRef;
 pub use node_metadata::NodeMetadataRef;
 
@@ -8,7 +7,7 @@ pub use self::coordinator::CoordinatorRuntime;
 pub use self::pipeline::*;
 pub use self::views::LayoutsView;
 
-pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
+pub type DefaultRuntime = CoordinatorRuntime;
 
 mod api;
 pub mod commands;

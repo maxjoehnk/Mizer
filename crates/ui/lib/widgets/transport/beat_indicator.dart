@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 
-const PADDING = 2;
+const PADDING = 1;
 
 class BeatIndicator extends StatefulWidget {
   final TransportApi api;
@@ -81,7 +81,6 @@ class _FFIBeatIndicatorState extends State<_FFIBeatIndicator> with SingleTickerP
   }
 }
 
-
 class _BeatIndicator extends StatelessWidget {
   final double activeBeat;
 
@@ -89,10 +88,17 @@ class _BeatIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(dimension: 48, child: CustomPaint(painter: BeatIndicatorPainter(activeBeat: activeBeat.floor())));
+    return AspectRatio(
+        aspectRatio: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
+              clipBehavior: Clip.antiAlias,
+              child: CustomPaint(painter: BeatIndicatorPainter(activeBeat: activeBeat.floor()))),
+        ));
   }
 }
-
 
 class BeatIndicatorPainter extends CustomPainter {
   int activeBeat;
@@ -106,10 +112,11 @@ class BeatIndicatorPainter extends CustomPainter {
 
     void _draw(int i, int x, int y) {
       var paint = Paint()
-        ..color = i == activeBeat ? Colors.deepOrange.shade500 : Colors.grey.shade900
+        ..color = i == activeBeat ? Colors.deepOrange.shade500 : Colors.white10
         ..style = PaintingStyle.fill;
       canvas.drawRect(
-          Rect.fromLTWH((x * barWidth) + PADDING * x, (y * barHeight) + PADDING * y, barWidth, barWidth),
+          Rect.fromLTWH(
+              (x * barWidth) + PADDING * x, (y * barHeight) + PADDING * y, barWidth, barWidth),
           paint);
     }
 

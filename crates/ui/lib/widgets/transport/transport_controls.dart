@@ -1,11 +1,9 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -15,7 +13,7 @@ import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'time_control.dart';
 
-const double TRANSPORT_CONTROLS_HEIGHT = 64;
+const double TRANSPORT_CONTROLS_HEIGHT = 40;
 
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;
@@ -49,55 +47,40 @@ class _TransportControlsState extends State<TransportControls> {
 
   @override
   Widget build(BuildContext context) {
-    NodesApi apiClient = context.read();
+    TransportApi apiClient = context.read();
 
     return Container(
         height: TRANSPORT_CONTROLS_HEIGHT,
-        color: Colors.grey.shade800,
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
         child: Row(children: [
-          SizedBox(width: 8),
-          RepaintBoundary(child: BeatIndicator(context.read(), beatStream: transportStream.map((event) => event.beat))),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RepaintBoundary(child: TimeControl(context.read(), transportStream)),
-          ),
-          RepaintBoundary(
-              child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Hoverable(
-              onTap: () => apiClient.writeControlValue(path: "/transport-0", port: "Tap", value: 1),
-              builder: (hover) => Container(
-                  width: 64,
-                  margin: const EdgeInsets.only(left: 4),
-                  color: hover ? Colors.black45 : Colors.black26,
-                  child: Center(child: Text("Tap"))),
+          Row(mainAxisSize: MainAxisSize.min, children: [
+            RepaintBoundary(
+                child: BeatIndicator(apiClient,
+                    beatStream: transportStream.map((event) => event.beat))),
+            _Divider(),
+            RepaintBoundary(
+                child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
+            _Divider(),
+            TransportButton(
+                child: SizedBox(width: 64, child: Center(child: Text("Tap"))),
+                onClick: () => apiClient.tap()),
+            _Divider(),
+            TransportButton(
+                child: SizedBox(width: 64, child: Center(child: Text("Resync"))),
+                onClick: () => apiClient.resync()),
+            _Divider(width: 4),
+            RepaintBoundary(child: TimeControl(apiClient, transportStream)),
+            _Divider(),
+            RepaintBoundary(
+                child: TransportControl(transportStream.map((event) => event.state).distinct())),
+            _Divider(width: 4),
+            RepaintBoundary(
+              child: FpsSelector(transportStream: transportStream),
             ),
-          ),
-          RepaintBoundary(
-              child: TransportControl(transportStream.map((event) => event.state).distinct())),
-          SizedBox(width: 8),
-          RepaintBoundary(
-            child: StreamBuilder<double>(
-                stream: transportStream.map((event) => event.fps).distinct(),
-                builder: (context, snapshot) {
-                  return Container(
-                    color: Colors.grey.shade900,
-                    width: 96,
-                    height: 32,
-                    padding: const EdgeInsets.all(4),
-                    child: MizerSelect<double>(
-                      openTop: true,
-                      options: [
-                        SelectOption(label: "30 FPS", value: 30),
-                        SelectOption(label: "60 FPS", value: 60),
-                      ],
-                      onChanged: (fps) => context.read<TransportApi>().setFPS(fps),
-                      value: snapshot.data ?? 60,
-                    ),
-                  );
-                }),
-          ),
+            _Divider(width: 4),
+          ]),
           Spacer(),
           PanelAction(
               width: 80,
@@ -127,6 +110,34 @@ class _TransportControlsState extends State<TransportControls> {
   }
 }
 
+class FpsSelector extends StatelessWidget {
+  final Stream<Transport> transportStream;
+
+  const FpsSelector({super.key, required this.transportStream});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+        stream: transportStream.map((event) => event.fps).distinct(),
+        builder: (context, snapshot) {
+          return Container(
+            width: 96,
+            height: TRANSPORT_CONTROLS_HEIGHT,
+            padding: const EdgeInsets.all(4),
+            child: MizerSelect<double>(
+              openTop: true,
+              options: [
+                SelectOption(label: "30 FPS", value: 30),
+                SelectOption(label: "60 FPS", value: 60),
+              ],
+              onChanged: (fps) => context.read<TransportApi>().setFPS(fps),
+              value: snapshot.data ?? 60,
+            ),
+          );
+        });
+  }
+}
+
 class SpeedControl extends StatelessWidget {
   final Stream<double> bpm;
 
@@ -136,15 +147,14 @@ class SpeedControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 96,
-        color: Colors.grey.shade900,
         child: StreamBuilder<double>(
             stream: bpm,
             initialData: 0,
-            builder: (context, snapshot) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SpeedEditor(
-                    value: snapshot.data!,
-                    onUpdate: (bpm) => context.read<TransportApi>().setBPM(bpm)))));
+            builder: (context, snapshot) => Center(
+                  child: SpeedEditor(
+                      value: snapshot.data!,
+                      onUpdate: (bpm) => context.read<TransportApi>().setBPM(bpm)),
+                )));
   }
 }
 
@@ -283,24 +293,50 @@ class TransportControl extends StatelessWidget {
         stream: state,
         initialData: TransportState.PLAYING,
         builder: (context, snapshot) => Row(children: [
-              Container(
-                  margin: const EdgeInsets.only(left: 4),
-                  color: snapshot.data == TransportState.STOPPED ? Colors.deepOrange : null,
-                  child: IconButton(
-                      onPressed: () => api.setState(TransportState.STOPPED),
-                      icon: Icon(Icons.stop))),
-              Container(
-                  margin: const EdgeInsets.only(left: 4),
-                  color: snapshot.data == TransportState.PAUSED ? Colors.deepOrange : null,
-                  child: IconButton(
-                      onPressed: () => api.setState(TransportState.PAUSED),
-                      icon: Icon(Icons.pause))),
-              Container(
-                  margin: const EdgeInsets.only(left: 4),
-                  color: snapshot.data == TransportState.PLAYING ? Colors.deepOrange : null,
-                  child: IconButton(
-                      onPressed: () => api.setState(TransportState.PLAYING),
-                      icon: Icon(Icons.play_arrow))),
+              TransportButton(
+                  child: AspectRatio(aspectRatio: 1, child: Icon(Icons.stop)),
+                  onClick: () => api.setState(TransportState.STOPPED),
+                  active: snapshot.data == TransportState.STOPPED),
+              SizedBox(width: 2),
+              TransportButton(
+                  child: AspectRatio(aspectRatio: 1, child: Icon(Icons.pause)),
+                  onClick: () => api.setState(TransportState.PAUSED),
+                  active: snapshot.data == TransportState.PAUSED),
+              SizedBox(width: 2),
+              TransportButton(
+                  child: AspectRatio(aspectRatio: 1, child: Icon(Icons.play_arrow)),
+                  onClick: () => api.setState(TransportState.PLAYING),
+                  active: snapshot.data == TransportState.PLAYING),
             ]));
+  }
+}
+
+class TransportButton extends StatelessWidget {
+  final Widget child;
+  final Function() onClick;
+  final bool active;
+
+  const TransportButton(
+      {super.key, required this.child, required this.onClick, this.active = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hoverable(
+        onTap: active ? null : onClick,
+        builder: (hover) => Container(
+              color: active ? Colors.deepOrange : (hover ? Colors.white10 : Colors.transparent),
+              child: child,
+            ));
+  }
+}
+
+class _Divider extends StatelessWidget {
+  final double width;
+
+  const _Divider({super.key, this.width = 2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(width: 2, color: Colors.black26);
   }
 }

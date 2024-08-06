@@ -53,6 +53,7 @@ impl Clock for TestClock {
             time: Timecode::new(1, 60.),
             state: ClockState::Playing,
             fps: 60.,
+            beat: 0.,
         }
     }
 
@@ -70,5 +71,13 @@ impl Clock for TestClock {
 
     fn fps_mut(&mut self) -> &mut f64 {
         todo!()
+    }
+
+    fn tap(&mut self) {
+        unimplemented!()
+    }
+
+    fn resync(&mut self) {
+        unimplemented!()
     }
 }

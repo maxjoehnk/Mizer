@@ -115,6 +115,16 @@ impl<'a> NodeContext for PipelineContext<'a> {
         clock.set_state(state);
     }
 
+    fn tap_clock(&self) {
+        let mut clock = self.clock.borrow_mut();
+        clock.tap();
+    }
+
+    fn resync_clock(&self) {
+        let mut clock = self.clock.borrow_mut();
+        clock.resync();
+    }
+
     fn clock_state(&self) -> ClockState {
         self.clock.borrow().state()
     }

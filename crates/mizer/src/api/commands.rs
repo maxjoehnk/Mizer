@@ -16,6 +16,8 @@ pub enum ApiCommand {
     SetClockState(ClockState),
     SetBpm(f64),
     SetFps(f64),
+    Tap,
+    Resync,
     GetMidiMonitor(String, flume::Sender<anyhow::Result<Subscriber<MidiEvent>>>),
     GetOscMonitor(
         String,

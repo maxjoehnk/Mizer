@@ -55,6 +55,18 @@ impl<R: RuntimeApi> TransportHandler<R> {
     pub fn clock_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>> {
         self.runtime.get_clock_snapshot_ref()
     }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn tap(&self) -> anyhow::Result<()> {
+        self.runtime.tap()
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn resync(&self) -> anyhow::Result<()> {
+        self.runtime.resync()
+    }
 }
 
 pub struct TransportStream(flume::Receiver<ClockSnapshot>);

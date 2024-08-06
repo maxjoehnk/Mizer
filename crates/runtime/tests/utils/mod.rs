@@ -9,7 +9,7 @@ use mizer_runtime::{CoordinatorRuntime, Pipeline, RuntimeProcessor};
 pub use mizer_util::clock::*;
 
 pub fn run_node(
-    runtime: &mut CoordinatorRuntime<TestClock>,
+    runtime: &mut CoordinatorRuntime,
     node_type: NodeType,
     node: Option<Node>,
     sink: TestSink,

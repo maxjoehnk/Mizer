@@ -340,7 +340,7 @@ impl PipelineWorker {
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::pre_process");
@@ -352,7 +352,7 @@ impl PipelineWorker {
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::process");
@@ -364,7 +364,7 @@ impl PipelineWorker {
         &mut self,
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         context: &impl ProcessingContext,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         port_reader: &impl NodePortReader,
     ) {
         profiling::scope!("PipelineWorker::post_process");
@@ -399,7 +399,7 @@ impl PipelineWorker {
     fn pre_process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::pre_process_nodes");
@@ -419,7 +419,7 @@ impl PipelineWorker {
     fn process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
@@ -439,7 +439,7 @@ impl PipelineWorker {
     fn post_process_nodes(
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
-        clock: &mut impl Clock,
+        clock: &mut dyn Clock,
         processing_context: &impl ProcessingContext,
     ) {
         profiling::scope!("PipelineWorker::post_process_nodes");
@@ -460,7 +460,7 @@ impl PipelineWorker {
         &'a mut self,
         path: &NodePath,
         processing_context: &'a impl ProcessingContext,
-        clock: &'a mut impl Clock,
+        clock: &'a mut dyn Clock,
         node_metadata: &'a mut HashMap<NodePath, NodeRuntimeMetadata>,
     ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
         profiling::scope!("PipelineWorker::get_context");

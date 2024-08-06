@@ -63,16 +63,24 @@ impl ApiHandler {
             }
             ApiCommand::SetClockState(state) => {
                 profiling::scope!("ApiCommand::SetClockState");
-                mizer.runtime.clock.set_state(state);
+                mizer.runtime.clock_mut().set_state(state);
             }
             ApiCommand::SetBpm(bpm) => {
                 profiling::scope!("ApiCommand::SetBpm");
-                let speed = mizer.runtime.clock.speed_mut();
+                let speed = mizer.runtime.clock_mut().speed_mut();
                 *speed = bpm;
             }
             ApiCommand::SetFps(fps) => {
                 profiling::scope!("ApiCommand::SetFps");
                 mizer.runtime.set_fps(fps);
+            }
+            ApiCommand::Tap => {
+                profiling::scope!("ApiCommand::Tap");
+                mizer.runtime.clock_mut().tap();
+            }
+            ApiCommand::Resync => {
+                profiling::scope!("ApiCommand::Resync");
+                mizer.runtime.clock_mut().resync();
             }
             ApiCommand::SaveProject(sender) => {
                 profiling::scope!("ApiCommand::SaveProject");

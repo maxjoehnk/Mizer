@@ -26,7 +26,7 @@ fn main() {
     insta::assert_debug_snapshot!(frames);
 }
 
-fn run_for_one_second<TClock: Clock>(mut runtime: CoordinatorRuntime<TClock>) {
+fn run_for_one_second(mut runtime: CoordinatorRuntime) {
     for _ in 0..60 {
         runtime.process();
     }

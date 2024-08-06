@@ -43,6 +43,14 @@ impl NodeContext for NodeContextMock {
         todo!()
     }
 
+    fn tap_clock(&self) {
+        todo!()
+    }
+
+    fn resync_clock(&self) {
+        todo!()
+    }
+
     fn clock_state(&self) -> ClockState {
         todo!()
     }

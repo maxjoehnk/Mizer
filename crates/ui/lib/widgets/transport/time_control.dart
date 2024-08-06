@@ -14,17 +14,17 @@ class TimeControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(8),
-        color: Colors.grey.shade900,
         width: 160,
-        child: FutureBuilder(
-          future: api.getTransportPointer(),
-          builder: (context, AsyncSnapshot<TransportPointer?> snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              return FFITimeControl(pointer: snapshot.data!);
-            }
-            return _StreamTimeControl(transport: transport);
-          },
+        child: Center(
+          child: FutureBuilder(
+            future: api.getTransportPointer(),
+            builder: (context, AsyncSnapshot<TransportPointer?> snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return FFITimeControl(pointer: snapshot.data!);
+              }
+              return _StreamTimeControl(transport: transport);
+            },
+          ),
         ));
   }
 }

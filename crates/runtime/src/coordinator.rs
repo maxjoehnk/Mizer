@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::ops::{Deref, DerefMut};
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::time::Duration;
@@ -6,7 +7,7 @@ use std::time::Duration;
 use itertools::Itertools;
 use pinboard::NonEmptyPinboard;
 
-use mizer_clock::{Clock, ClockSnapshot, SystemClock};
+use mizer_clock::{BoxedClock, Clock, ClockSnapshot, SystemClock};
 use mizer_debug_ui_impl::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
@@ -25,10 +26,9 @@ use crate::{LayoutsView, NodeMetadataRef, Pipeline};
 
 const DEFAULT_FPS: f64 = 60.0;
 
-pub struct CoordinatorRuntime<TClock: Clock> {
+pub struct CoordinatorRuntime {
     layouts: LayoutStorage,
     plans: PlanStorage,
-    pub clock: TClock,
     injector: Injector,
     processors: Vec<Box<dyn Processor>>,
     clock_recv: flume::Receiver<ClockSnapshot>,
@@ -40,7 +40,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     read_node_settings: Arc<AtomicBool>,
 }
 
-impl CoordinatorRuntime<SystemClock> {
+impl CoordinatorRuntime {
     pub fn new() -> Self {
         let clock = SystemClock::default();
 
@@ -48,15 +48,14 @@ impl CoordinatorRuntime<SystemClock> {
     }
 }
 
-impl<TClock: Clock> CoordinatorRuntime<TClock> {
-    pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
+impl CoordinatorRuntime {
+    pub fn with_clock<TClock: Clock + 'static>(clock: TClock) -> CoordinatorRuntime {
         let (clock_tx, clock_rx) = flume::unbounded();
         let snapshot = clock.snapshot();
         let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
         let mut runtime = Self {
             layouts: NonEmptyPinboard::new(Default::default()).into(),
             plans: NonEmptyPinboard::new(Default::default()).into(),
-            clock,
             injector: Default::default(),
             processors: Default::default(),
             clock_recv: clock_rx,
@@ -67,14 +66,15 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             status_bus: Default::default(),
             read_node_settings: Arc::new(AtomicBool::new(false)),
         };
-        runtime.bootstrap();
+        runtime.bootstrap(Box::new(clock));
 
         runtime
     }
 
-    fn bootstrap(&mut self) {
+    fn bootstrap(&mut self, clock: BoxedClock) {
         self.injector.provide(self.plans.clone());
         self.injector.provide(self.layouts.clone());
+        self.injector.provide(clock);
     }
 
     fn add_layouts(&self, layouts: impl IntoIterator<Item = (String, Vec<ControlConfig>)>) {
@@ -244,9 +244,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
         pipeline.refresh_ports(injector);
     }
+
+    pub fn clock(&self) -> &dyn Clock {
+        self.injector.inject::<BoxedClock>().deref()
+    }
+
+    pub fn clock_mut(&mut self) -> &mut dyn Clock {
+        self.injector.get_mut::<BoxedClock>().unwrap().deref_mut()
+    }
 }
 
-impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
+impl Runtime for CoordinatorRuntime {
     fn injector_mut(&mut self) -> &mut Injector {
         &mut self.injector
     }
@@ -262,15 +270,21 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     fn process(&mut self) {
         profiling::scope!("CoordinatorRuntime::process");
         tracing::trace!("tick");
-        let frame = self.clock.tick();
-        let snapshot = self.clock.snapshot();
+        let (frame, snapshot, fps) = {
+            let clock = self.clock_mut();
+            let frame = clock.tick();
+            let snapshot = clock.snapshot();
+            let fps = clock.fps();
+
+            (frame, snapshot, fps)
+        };
         if let Err(err) = self.clock_sender.send(snapshot) {
             tracing::error!("Could not send clock snapshot {:?}", err);
         }
         self.clock_snapshot.set(snapshot);
         tracing::trace!("pre_process");
         for processor in self.processors.iter_mut() {
-            processor.pre_process(&mut self.injector, frame, self.clock.fps());
+            processor.pre_process(&mut self.injector, frame, fps);
         }
         tracing::trace!("process");
         for processor in self.processors.iter_mut() {
@@ -304,15 +318,16 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     }
 
     fn fps(&self) -> f64 {
-        self.clock.fps()
+        self.clock().fps()
     }
 
     fn set_fps(&mut self, fps: f64) {
-        *self.clock.fps_mut() = fps;
+        let clock = self.clock_mut();
+        *clock.fps_mut() = fps;
     }
 }
 
-impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
+impl ProjectManagerMut for CoordinatorRuntime {
     fn new_project(&mut self) {
         profiling::scope!("CoordinatorRuntime::new_project");
         self.set_fps(DEFAULT_FPS);

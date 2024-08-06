@@ -2,7 +2,7 @@ use crate::commands::StaticNodeDescriptor;
 use crate::context::CoordinatorRuntimeContext;
 use anyhow::Context;
 use indexmap::IndexMap;
-use mizer_clock::{ClockFrame, SystemClock};
+use mizer_clock::{BoxedClock, ClockFrame, SystemClock};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
 use mizer_node::{
     NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
@@ -17,6 +17,7 @@ use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::io::Write;
+use std::ops::DerefMut;
 use std::str::FromStr;
 use std::sync::Arc;
 
@@ -588,6 +589,7 @@ impl Processor for RuntimeProcessor {
     fn pre_process(&mut self, injector: &mut Injector, frame: ClockFrame, fps: f64) {
         profiling::scope!("Pipeline::pre_process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
+        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
         let nodes = pipeline
             .nodes
             .iter()
@@ -598,12 +600,10 @@ impl Processor for RuntimeProcessor {
             fps,
             master_clock: frame,
         };
-        // TODO: use global clock
-        let mut clock = SystemClock::default();
         pipeline.worker.pre_process(
             nodes,
             &context,
-            &mut clock,
+            clock.deref_mut(),
             &NodeStatePortReader(&pipeline.nodes),
         );
     }
@@ -611,6 +611,7 @@ impl Processor for RuntimeProcessor {
     fn process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("Pipeline::process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
+        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
         let nodes = pipeline
             .nodes
             .iter()
@@ -621,12 +622,10 @@ impl Processor for RuntimeProcessor {
             fps: 60.,
             master_clock: frame,
         };
-        // TODO: use global clock
-        let mut clock = SystemClock::default();
         pipeline.worker.process(
             nodes,
             &context,
-            &mut clock,
+            clock.deref_mut(),
             &NodeStatePortReader(&pipeline.nodes),
         );
     }
@@ -634,6 +633,7 @@ impl Processor for RuntimeProcessor {
     fn post_process(&mut self, injector: &mut Injector, frame: ClockFrame) {
         profiling::scope!("Pipeline::post_process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();
+        let (clock, injector) = injector.get_slice_mut::<BoxedClock>().unwrap();
         let nodes = pipeline
             .nodes
             .iter()
@@ -644,12 +644,10 @@ impl Processor for RuntimeProcessor {
             fps: 60.,
             master_clock: frame,
         };
-        // TODO: use global clock
-        let mut clock = SystemClock::default();
         pipeline.worker.post_process(
             nodes,
             &context,
-            &mut clock,
+            clock.deref_mut(),
             &NodeStatePortReader(&pipeline.nodes),
         );
     }

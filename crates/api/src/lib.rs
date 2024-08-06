@@ -52,6 +52,8 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
     fn set_bpm(&self, bpm: f64) -> anyhow::Result<()>;
+    fn tap(&self) -> anyhow::Result<()>;
+    fn resync(&self) -> anyhow::Result<()>;
 
     #[deprecated(note = "this should be replaced with a subscribe query in the future")]
     fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>>;

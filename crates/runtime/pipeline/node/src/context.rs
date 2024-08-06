@@ -16,6 +16,8 @@ pub trait NodeContext: PreviewContext + Sized + Inject {
     fn clock(&self) -> ClockFrame;
     fn write_clock_tempo(&self, speed: f64);
     fn write_clock_state(&self, state: ClockState);
+    fn tap_clock(&self);
+    fn resync_clock(&self);
     fn clock_state(&self) -> ClockState;
     fn fps(&self) -> f64;
 

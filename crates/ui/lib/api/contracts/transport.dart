@@ -10,5 +10,9 @@ abstract class TransportApi {
 
   Future<void> setFPS(double fps);
 
+  Future<void> tap();
+
+  Future<void> resync();
+
   Future<TransportPointer?> getTransportPointer();
 }

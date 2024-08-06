@@ -6704,9 +6704,9 @@ dependencies = [
 
 [[package]]
 name = "mozjpeg"
-version = "0.9.8"
+version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e8a807fbca64e7df4847726d172f459fb13e65cbf5e23b01f27408581d58258f"
+checksum = "9a3bcd16df874918cb91d9ca985d7fde466bdc3b0983bf83c33395033568e510"
 dependencies = [
  "arrayvec",
  "libc",
@@ -6716,9 +6716,9 @@ dependencies = [
 
 [[package]]
 name = "mozjpeg-sys"
-version = "1.1.1"
+version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "74c4fe4006093b2948ccb37bb413b6b9da2d654a9a50419b5861b0f4e8ad4da9"
+checksum = "9cf2a48f2f79f47fcce75d125d112e113a93f4a6f3cd8cc5b4cd6e16589d050f"
 dependencies = [
  "cc",
  "dunce",
@@ -6793,6 +6793,9 @@ name = "nasm-rs"
 version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fe4d98d0065f4b1daf164b3eafb11974c94662e5e2396cf03f32d0bb5c17da51"
+dependencies = [
+ "rayon",
+]
 
 [[package]]
 name = "native-tls"
@@ -7030,7 +7033,7 @@ checksum = "2bf50223579dc7cdcfb3bfcacf7069ff68243f8c363f62ffa99cf000a6b9c451"
 [[package]]
 name = "nokhwa"
 version = "0.10.4"
-source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
+source = "git+https://github.com/tactile-eng/nokhwa.git?rev=74a98ac#74a98ace10368320cfcc2186118ae10d5308ca59"
 dependencies = [
  "flume 0.10.14",
  "image 0.24.8",
@@ -7045,7 +7048,7 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-linux"
 version = "0.1.0"
-source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
+source = "git+https://github.com/tactile-eng/nokhwa.git?rev=74a98ac#74a98ace10368320cfcc2186118ae10d5308ca59"
 dependencies = [
  "nokhwa-core",
  "v4l",
@@ -7055,10 +7058,11 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-macos"
 version = "0.2.1"
-source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
+source = "git+https://github.com/tactile-eng/nokhwa.git?rev=74a98ac#74a98ace10368320cfcc2186118ae10d5308ca59"
 dependencies = [
  "block",
  "cocoa-foundation",
+ "core-foundation 0.9.4",
  "core-media-sys",
  "core-video-sys",
  "flume 0.10.14",
@@ -7070,7 +7074,7 @@ dependencies = [
 [[package]]
 name = "nokhwa-bindings-windows"
 version = "0.4.0"
-source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
+source = "git+https://github.com/tactile-eng/nokhwa.git?rev=74a98ac#74a98ace10368320cfcc2186118ae10d5308ca59"
 dependencies = [
  "nokhwa-core",
  "once_cell",
@@ -7079,8 +7083,8 @@ dependencies = [
 
 [[package]]
 name = "nokhwa-core"
-version = "0.1.1"
-source = "git+https://github.com/l1npengtul/nokhwa.git?rev=3be9227#3be9227a4cbac47eb3ab79844747a081fa2431a3"
+version = "0.1.2"
+source = "git+https://github.com/tactile-eng/nokhwa.git?rev=74a98ac#74a98ace10368320cfcc2186118ae10d5308ca59"
 dependencies = [
  "bytes 1.7.1",
  "image 0.24.8",

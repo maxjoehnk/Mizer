@@ -39,6 +39,11 @@ jobs:
     # Load all steps #
     ##################
     steps:
+      - name: Install lld
+        run: |
+          sudo apt-get update
+          sudo apt-get install lld
+
       ##########################
       # Checkout the code base #
       ##########################

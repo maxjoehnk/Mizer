@@ -195,7 +195,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
     if (group == null) {
       return;
     }
-    await programmerApi.assignFixturesToGroup(widget.fixtures.map((e) => e.id).toList(), group);
+    await programmerApi.assignFixtureSelectionToGroup(group);
   }
 }
 

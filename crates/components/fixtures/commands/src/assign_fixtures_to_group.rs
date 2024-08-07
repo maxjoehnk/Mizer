@@ -1,14 +1,14 @@
 use std::ops::Deref;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::{FixtureId, GroupId};
+use mizer_fixtures::GroupId;
 use serde::{Deserialize, Serialize};
 use mizer_fixtures::selection::FixtureSelection;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {
     pub group_id: GroupId,
-    pub fixture_ids: Vec<FixtureId>,
+    pub selection: FixtureSelection,
 }
 
 impl<'a> Command<'a> for AssignFixturesToGroupCommand {
@@ -29,7 +29,7 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
             .get_mut(&self.group_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.group_id))?;
         let fixture_ids = group.selection.deref().clone();
-        group.selection.add_fixtures(self.fixture_ids.clone());
+        group.selection = self.selection.clone().into();
 
         Ok(((), fixture_ids))
     }

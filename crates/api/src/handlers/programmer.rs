@@ -198,7 +198,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.runtime
             .run_command(AssignFixturesToGroupCommand {
                 group_id,
-                fixture_ids,
+                selection: fixture_ids.into(),
             })
             .unwrap();
     }
@@ -207,16 +207,15 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[profiling::function]
     pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
         let group_id = GroupId(group_id);
-        let fixture_ids = {
+        let selection = {
             let programmer = self.fixture_manager.get_programmer();
-            let state = programmer.view().read();
-            state.all_fixtures()
+            programmer.active_selection()
         };
 
         self.runtime
             .run_command(AssignFixturesToGroupCommand {
                 group_id,
-                fixture_ids,
+                selection,
             })
             .unwrap();
     }

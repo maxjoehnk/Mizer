@@ -119,7 +119,7 @@ impl RuntimeApi for Api {
 
         Ok(())
     }
-    
+
     fn resync(&self) -> anyhow::Result<()> {
         self.sender.send(ApiCommand::Resync)?;
 

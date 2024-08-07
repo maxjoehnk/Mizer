@@ -1,6 +1,6 @@
+use crate::selection::BackwardsCompatibleFixtureSelection;
 use crate::{FixtureId, GroupId};
 use serde::{Deserialize, Serialize};
-use crate::selection::{BackwardsCompatibleFixtureSelection};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct Group {

@@ -1,9 +1,9 @@
-use std::ops::Deref;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::selection::FixtureSelection;
 use mizer_fixtures::GroupId;
 use serde::{Deserialize, Serialize};
-use mizer_fixtures::selection::FixtureSelection;
+use std::ops::Deref;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {

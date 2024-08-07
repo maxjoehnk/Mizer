@@ -372,7 +372,7 @@ impl Programmer {
             }
         }
     }
-    
+
     pub fn active_selection(&self) -> FixtureSelection {
         self.active_selection.clone()
     }

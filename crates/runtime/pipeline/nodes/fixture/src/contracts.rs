@@ -44,10 +44,8 @@ impl FixtureController for FixtureManager {
     }
 
     fn get_group_fixture_ids(&self, group_id: GroupId) -> Vec<Vec<FixtureId>> {
-        // TODO: Return 2d fixture selection list
-        // Because groups are supposed to store fixture selections in the future we return multiple fixture ids at the same position here.
         self.get_group(group_id)
-            .map(|g| g.fixtures.iter().map(|f| vec![*f]).collect::<Vec<_>>())
+            .map(|g| g.fixtures())
             .unwrap_or_default()
     }
 }

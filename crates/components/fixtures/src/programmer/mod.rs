@@ -373,6 +373,10 @@ impl Programmer {
         }
     }
 
+    pub fn active_selection(&self) -> FixtureSelection {
+        self.active_selection.clone()
+    }
+
     pub fn clear(&mut self) {
         if !self.active_selection.is_empty() {
             if self.has_written_to_selection {
@@ -481,14 +485,16 @@ impl Programmer {
     }
 
     pub fn select_group(&mut self, group: &Group) {
-        self.select_fixtures(group.fixtures.clone());
+        self.active_selection = group.selection.deref().clone();
     }
 
+    // TODO: this should probably only be true when only the group is selected
+    // This requires tracking of the active group
     pub fn is_group_active(&self, group: &Group) -> bool {
-        group.fixtures.iter().all(|id| {
+        group.fixtures().into_iter().flatten().all(|id| {
             self.get_selections()
                 .iter()
-                .any(|(selection, _)| selection.contains(id))
+                .any(|(selection, _)| selection.contains(&id))
         })
     }
 

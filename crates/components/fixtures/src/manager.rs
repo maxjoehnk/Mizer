@@ -77,7 +77,7 @@ impl FixtureManager {
         let group_id = highest_id.next();
         let group = Group {
             id: group_id,
-            fixtures: Vec::new(),
+            selection: Default::default(),
             name,
         };
         self.groups.insert(group_id, group);
@@ -341,17 +341,18 @@ impl FixtureManager {
     ) -> Vec<(FixtureControl, FixtureControlType)> {
         if let Some(group) = self.groups.get(&group_id) {
             group
-                .fixtures
-                .iter()
+                .fixtures()
+                .into_iter()
+                .flatten()
                 .filter_map(|fixture_id| match fixture_id {
                     FixtureId::Fixture(fixture_id) => {
-                        let fixture = self.fixtures.get(fixture_id)?;
+                        let fixture = self.fixtures.get(&fixture_id)?;
 
                         Some(fixture.current_mode.controls.controls())
                     }
                     FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
-                        let fixture = self.fixtures.get(fixture_id)?;
-                        let sub_fixture = fixture.sub_fixture(*sub_fixture_id)?;
+                        let fixture = self.fixtures.get(&fixture_id)?;
+                        let sub_fixture = fixture.sub_fixture(sub_fixture_id)?;
 
                         Some(sub_fixture.definition.controls.controls())
                     }
@@ -373,8 +374,8 @@ impl FixtureManager {
         priority: FixturePriority,
     ) {
         if let Some(group) = self.groups.get(&group_id) {
-            for fixture_id in &group.fixtures {
-                self.write_fixture_control(*fixture_id, control.clone(), value, priority);
+            for fixture_id in group.fixtures().into_iter().flatten() {
+                self.write_fixture_control(fixture_id, control.clone(), value, priority);
             }
         }
     }

@@ -1,7 +1,9 @@
+use std::ops::Deref;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, GroupId};
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::selection::FixtureSelection;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {
@@ -11,7 +13,7 @@ pub struct AssignFixturesToGroupCommand {
 
 impl<'a> Command<'a> for AssignFixturesToGroupCommand {
     type Dependencies = Ref<FixtureManager>;
-    type State = Vec<FixtureId>;
+    type State = FixtureSelection;
     type Result = ();
 
     fn label(&self) -> String {
@@ -26,9 +28,8 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
             .groups
             .get_mut(&self.group_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.group_id))?;
-        let fixture_ids = group.fixtures.clone();
-        let mut add_ids = self.fixture_ids.clone();
-        group.fixtures.append(&mut add_ids);
+        let fixture_ids = group.selection.deref().clone();
+        group.selection.add_fixtures(self.fixture_ids.clone());
 
         Ok(((), fixture_ids))
     }
@@ -36,13 +37,13 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
     fn revert(
         &self,
         fixture_manager: &FixtureManager,
-        fixture_ids: Self::State,
+        selection: Self::State,
     ) -> anyhow::Result<()> {
         let mut group = fixture_manager
             .groups
             .get_mut(&self.group_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.group_id))?;
-        group.fixtures = fixture_ids;
+        group.selection = selection.into();
 
         Ok(())
     }

@@ -27,7 +27,7 @@ impl<'a> Command<'a> for AddGroupCommand {
         let group = Group {
             id: group_id,
             name: self.name.clone(),
-            fixtures: Vec::new(),
+            selection: Default::default(),
         };
 
         Ok((group, group_id))

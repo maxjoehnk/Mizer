@@ -481,14 +481,14 @@ impl Programmer {
     }
 
     pub fn select_group(&mut self, group: &Group) {
-        self.select_fixtures(group.fixtures.clone());
+        self.active_selection = group.selection.deref().clone();
     }
 
     pub fn is_group_active(&self, group: &Group) -> bool {
-        group.fixtures.iter().all(|id| {
+        group.fixtures().into_iter().flatten().all(|id| {
             self.get_selections()
                 .iter()
-                .any(|(selection, _)| selection.contains(id))
+                .any(|(selection, _)| selection.contains(&id))
         })
     }
 

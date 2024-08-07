@@ -35,9 +35,8 @@ class NavigationBarItem extends StatelessWidget {
     return Hoverable(
         onTap: onSelect,
         builder: (hovering) => Container(
-          height: 64,
+          height: 56,
           color: getBackgroundColor(hovering),
-          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Stack(
             children: [
               Center(
@@ -48,7 +47,7 @@ class NavigationBarItem extends StatelessWidget {
                       color: color,
                       size: 24,
                     ),
-                    Text(label,
+                    Text(label, textAlign: TextAlign.center,
                         style: textTheme.subtitle2!.copyWith(color: color, fontSize: 10)),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,

@@ -3,7 +3,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
 
-import '../fields/checkbox_field.dart';
+import '../fields/boolean_field.dart';
 import '../fields/enum_field.dart';
 import '../fields/media_field.dart';
 import '../fields/number_field.dart';
@@ -113,7 +113,7 @@ class NodeSettingsPane extends StatelessWidget {
         );
       }
       if (setting.hasBoolValue()) {
-        child = CheckboxField(
+        child = BooleanField(
             label: label,
             value: setting.boolValue.value,
             onUpdate: (v) {

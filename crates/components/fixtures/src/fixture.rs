@@ -62,6 +62,7 @@ impl ChannelValue {
             .iter()
             .max_by_key(|(priority, _)| *priority)
             .map(|(_, value)| *value)
+            .map(|value| value.clamp(0., 1.))
     }
 
     pub fn clear(&mut self) {

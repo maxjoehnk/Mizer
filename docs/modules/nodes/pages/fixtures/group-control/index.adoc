@@ -10,8 +10,11 @@ include::setting_control.adoc[leveloffset=+2]
 include::setting_priority.adoc[leveloffset=+2]
 include::setting_send_zero.adoc[leveloffset=+2]
 include::setting_phase.adoc[leveloffset=+2]
+include::setting_fan.adoc[leveloffset=+2]
+include::setting_asymmetrical.adoc[leveloffset=+2]
 
 == Inputs
 
 include::port_input_value.adoc[leveloffset=+2]
 include::port_input_phase.adoc[leveloffset=+2]
+include::port_input_fan.adoc[leveloffset=+2]

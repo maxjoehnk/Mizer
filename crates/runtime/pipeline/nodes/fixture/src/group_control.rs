@@ -246,10 +246,12 @@ impl GroupControlNode {
             }
         } else {
             let fixtures = manager.get_group_fixture_ids(self.group_id);
+            if fixtures.is_empty() {
+                return;
+            }
             let phase_slots = phase.abs() + 1;
-            // FIXME: when chunk size is zero this will panic
-            let fixtures =
-                fixtures.chunks((fixtures.len() as f64 / phase_slots as f64).ceil() as usize);
+            let chunk_size = (fixtures.len() as f64 / phase_slots as f64).ceil() as usize;
+            let fixtures = fixtures.chunks(chunk_size);
             let skip_values = phase_slots as f64 / fixtures.len() as f64;
             let skip_values = skip_values.floor() as usize;
             let buffer = buffer.rev().step_by(skip_values);

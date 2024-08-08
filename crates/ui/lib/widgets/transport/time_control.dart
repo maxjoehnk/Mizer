@@ -121,7 +121,7 @@ class _TimeFormat extends StatelessWidget {
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
 
-    return Text(_formatTime(), textAlign: TextAlign.center, style: textStyle ?? style.headline5);
+    return Text(_formatTime(), textAlign: TextAlign.center, style: textStyle ?? style.headlineSmall);
   }
 
   String _formatTime() {

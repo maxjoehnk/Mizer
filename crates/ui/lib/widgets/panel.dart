@@ -274,7 +274,7 @@ class PanelAction extends StatelessWidget {
             children: [
               Text(action.label,
                   textAlign: TextAlign.center,
-                  style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor())),
+                  style: textTheme.titleSmall!.copyWith(fontSize: 11, color: _getColor())),
               if (hotkey != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 2.0),

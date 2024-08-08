@@ -121,7 +121,7 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   Widget _readView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
       child: Listener(
@@ -155,7 +155,7 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   Widget _editView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
     return Field(
       label: this.widget.label,

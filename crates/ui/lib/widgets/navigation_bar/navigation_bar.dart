@@ -48,7 +48,7 @@ class NavigationBarItem extends StatelessWidget {
                       size: 24,
                     ),
                     Text(label, textAlign: TextAlign.center,
-                        style: textTheme.subtitle2!.copyWith(color: color, fontSize: 10)),
+                        style: textTheme.titleSmall!.copyWith(color: color, fontSize: 10)),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +58,7 @@ class NavigationBarItem extends StatelessWidget {
                 Align(
                     alignment: Alignment.topRight,
                     child: Text(hotkeyLabel!.toCapitalCase(),
-                        style: textTheme.caption!.copyWith(fontSize: 9))),
+                        style: textTheme.bodySmall!.copyWith(fontSize: 9))),
             ],
           ),
         )

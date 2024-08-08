@@ -106,7 +106,7 @@ class PlayerNumber extends StatelessWidget {
           color: live ? Colors.red : Colors.grey,
         ),
         child: Text(number.toString().padLeft(2, "0"),
-            textAlign: TextAlign.center, style: style.headline6));
+            textAlign: TextAlign.center, style: style.headlineLarge));
   }
 }
 
@@ -139,7 +139,7 @@ class PlayingState extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           color: colors[playerState],
         ),
-        child: Text(labels[playerState]!, textAlign: TextAlign.center, style: style.subtitle1));
+        child: Text(labels[playerState]!, textAlign: TextAlign.center, style: style.titleMedium));
   }
 }
 
@@ -229,9 +229,9 @@ class BPM extends StatelessWidget {
     var style = Theme.of(context).textTheme;
     return PlayerMetadata(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(bpm.toStringAsFixed(1), style: style.headline4),
+        Text(bpm.toStringAsFixed(1), style: style.headlineMedium),
         Text("BPM".i18n,
-            style: style.bodyText1!.copyWith(color: style.bodyText1!.color!.withAlpha(164)),
+            style: style.bodyLarge!.copyWith(color: style.bodyLarge!.color!.withAlpha(164)),
             textAlign: TextAlign.start),
       ]),
     );
@@ -249,8 +249,8 @@ class TrackInfo extends StatelessWidget {
     return PlayerMetadata(
         child: Row(children: [
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(track.title, style: style.headline4),
-        Text(track.artist, style: style.bodyText2),
+        Text(track.title, style: style.headlineMedium),
+        Text(track.artist, style: style.bodyMedium),
       ]),
     ]));
   }
@@ -283,8 +283,8 @@ class DeviceInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
     return Column(children: [
-      Text(device.model, style: style.bodyText1),
-      Text(device.address, style: style.caption),
+      Text(device.model, style: style.bodyLarge),
+      Text(device.address, style: style.bodySmall),
     ], crossAxisAlignment: CrossAxisAlignment.end);
   }
 }

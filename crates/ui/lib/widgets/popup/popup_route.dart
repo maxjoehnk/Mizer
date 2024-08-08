@@ -40,7 +40,7 @@ class MizerPopupRoute extends PopupRoute {
         top: top,
         right: right,
         bottom: bottom,
-        child: Material(textStyle: theme.bodyText2, child: child, color: Colors.transparent),
+        child: Material(textStyle: theme.bodyMedium, child: child, color: Colors.transparent),
       )
     ]);
   }

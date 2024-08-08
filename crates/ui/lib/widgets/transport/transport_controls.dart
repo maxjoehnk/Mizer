@@ -238,14 +238,14 @@ class _SpeedEditorState extends State<SpeedEditor> {
           },
           onTap: () => setState(() => this.isEditing = true),
           child:
-              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headline5),
+              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headlineSmall),
         ),
       ),
     );
   }
 
   Widget _editView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.headline5!;
+    TextStyle textStyle = Theme.of(context).textTheme.headlineSmall!;
 
     return EditableText(
       focusNode: focusNode,

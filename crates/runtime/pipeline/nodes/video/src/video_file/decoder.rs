@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use ffmpeg_the_third as ffmpeg;
-
 use crate::background_thread_decoder::*;
+use ffmpeg_the_third as ffmpeg;
+use ffmpeg_the_third::error::EAGAIN;
 
 pub type VideoDecodeThread = BackgroundDecoderThread<VideoFileDecoder>;
 pub type VideoDecodeThreadHandle = BackgroundDecoderThreadHandle<VideoFileDecoder>;
@@ -80,7 +80,10 @@ impl VideoDecoder for VideoFileDecoder {
             if self.stream_index == stream.index() {
                 self.decoder.send_packet(&packet)?;
                 let mut decoded = ffmpeg::frame::Video::empty();
-                self.decoder.receive_frame(&mut decoded)?;
+                let decode_result = self.decoder.receive_frame(&mut decoded);
+                if let Err(ffmpeg::Error::Other { errno: EAGAIN }) = decode_result {
+                    continue;
+                }
                 let mut frame = ffmpeg::frame::Video::empty();
                 self.converter.run(&decoded, &mut frame)?;
 

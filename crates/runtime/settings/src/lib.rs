@@ -24,7 +24,6 @@ pub struct Settings {
 #[derive(Debug, Clone)]
 pub struct SettingsManager {
     pub settings: Settings,
-    pub file_path: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -138,7 +137,6 @@ impl SettingsManager {
 
         Ok(Self {
             settings,
-            file_path: None,
         })
     }
 
@@ -161,7 +159,6 @@ impl SettingsManager {
             file.read_to_string(&mut buffer)?;
 
             self.settings = toml::from_str(&buffer)?;
-            self.file_path = Some(path.to_path_buf());
         } else {
             tracing::trace!("Loading default settings");
         }
@@ -170,13 +167,7 @@ impl SettingsManager {
     }
 
     pub fn save(&self) -> anyhow::Result<()> {
-        let file_path = if let Some(ref path) = self.file_path {
-            path.clone()
-        } else if let Some(path) = Self::get_config_path() {
-            path
-        } else {
-            PathBuf::from("settings.toml")
-        };
+        let file_path = Self::get_config_path().ok_or_else(|| anyhow::anyhow!("No config path found"))?;
 
         self.settings.save_to(file_path)
     }

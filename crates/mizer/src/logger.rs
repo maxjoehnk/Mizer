@@ -65,7 +65,7 @@ fn file_layer<S: Subscriber + for<'a> LookupSpan<'a>>(
             .with_line_number(false)
             .json()
             .with_writer(file_appender)
-            .with_filter(LevelFilter::from_level(Level::DEBUG));
+            .with_filter(LevelFilter::from_level(Level::INFO));
 
         (Some(guard), Some(file_layer))
     } else {

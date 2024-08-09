@@ -93,7 +93,7 @@ impl ConfigurableNode for GroupControlNode {
             setting!(PHASE_SETTING, self.phase)
                 .min_hint(-100i64)
                 .max_hint(100i64),
-            setting!(FAN_SETTING, self.phase)
+            setting!(FAN_SETTING, self.fan)
                 .min_hint(-100f64)
                 .max_hint(100f64),
             setting!(ASYMMETRICAL_SETTING, self.asymmetrical),

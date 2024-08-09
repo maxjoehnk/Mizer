@@ -49,4 +49,10 @@ impl<R: RuntimeApi> SettingsHandler<R> {
     pub fn reload_midi_device_profiles(&self) -> anyhow::Result<()> {
         self.runtime.reload_midi_device_profiles()
     }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn reload_fixture_definitions(&self) -> anyhow::Result<()> {
+        self.runtime.reload_fixture_definitions()
+    }
 }

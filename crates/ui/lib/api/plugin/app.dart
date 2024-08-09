@@ -49,6 +49,11 @@ class ApplicationPluginApi implements SettingsApi {
     await channel.invokeMethod("reloadMidiDeviceProfiles");
   }
 
+  @override
+  Future<void> reloadFixtureDefinitions() async {
+    await channel.invokeMethod("reloadFixtureDefinitions");
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

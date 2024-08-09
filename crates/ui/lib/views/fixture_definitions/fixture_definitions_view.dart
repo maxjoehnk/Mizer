@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart' hide Tab;
+import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:mizer/widgets/table/data_table.dart';
+import 'package:provider/provider.dart';
 
 class FixtureDefinitionsView extends StatefulWidget {
   const FixtureDefinitionsView({super.key});
@@ -23,6 +26,12 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
           flex: 1,
           child: Panel(
             label: "Fixture Definitions",
+            actions: [
+              PanelActionModel(
+                label: "Reload".i18n,
+                onClick: () => context.read<SettingsApi>().reloadFixtureDefinitions(),
+              )
+            ],
             tabs: [
               Tab(
                 label: "Open Fixture Library",

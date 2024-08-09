@@ -290,6 +290,17 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn reload_fixture_definitions(&self) -> anyhow::Result<()> {
+        let settings_manager = self.settings.read();
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::ReloadFixtureLibraries(
+            settings_manager.settings.paths.fixture_libraries,
+            tx,
+        ))?;
+
+        rx.recv()?
+    }
+
     #[profiling::function]
     fn close_nodes_view(&self) {
         tracing::debug!("Closing nodes view");

@@ -66,6 +66,9 @@ impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> MethodCallHandler
             "reloadMidiDeviceProfiles" => {
                 reply.respond_unit_result(self.handler.reload_midi_device_profiles());
             }
+            "reloadFixtureDefinitions" => {
+                reply.respond_unit_result(self.handler.reload_fixture_definitions());
+            }
             _ => reply.not_implemented(),
         }
     }

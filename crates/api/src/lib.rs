@@ -85,6 +85,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_device_manager(&self) -> DeviceManager;
 
     fn reload_midi_device_profiles(&self) -> anyhow::Result<()>;
+    fn reload_fixture_definitions(&self) -> anyhow::Result<()>;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 

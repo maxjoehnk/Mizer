@@ -9,4 +9,5 @@ abstract class SettingsApi {
 
   Future<List<MidiDeviceProfile>> loadMidiDeviceProfiles();
   Future<void> reloadMidiDeviceProfiles();
+  Future<void> reloadFixtureDefinitions();
 }

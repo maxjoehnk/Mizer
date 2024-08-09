@@ -1664,7 +1664,7 @@ dependencies = [
  "rangemap",
  "rayon",
  "rustc-hash 1.1.0",
- "rustybuzz 0.14.1",
+ "rustybuzz",
  "self_cell",
  "swash",
  "sys-locale",
@@ -6559,7 +6559,7 @@ dependencies = [
  "mizer-processing",
  "mizer-wgpu",
  "parking_lot 0.12.3",
- "usvg 0.42.0",
+ "usvg",
  "vello",
  "vello_svg",
 ]
@@ -8439,19 +8439,18 @@ dependencies = [
 
 [[package]]
 name = "resvg"
-version = "0.41.0"
+version = "0.42.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2327ced609dadeed3e9702fec3e6b2ddd208758a9268d13e06566c6101ba533"
+checksum = "944d052815156ac8fa77eaac055220e95ba0b01fa8887108ca710c03805d9051"
 dependencies = [
  "gif 0.13.1",
  "jpeg-decoder",
  "log",
  "pico-args",
- "png 0.17.11",
  "rgb",
  "svgtypes",
  "tiny-skia",
- "usvg 0.41.0",
+ "usvg",
 ]
 
 [[package]]
@@ -8665,22 +8664,6 @@ name = "rustversion"
 version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ffc183a10b4478d04cbbbfc96d0873219d962dd5accaff2ffbd4ceb7df837f4"
-
-[[package]]
-name = "rustybuzz"
-version = "0.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88117946aa1bfb53c2ae0643ceac6506337f44887f8c9fbfb43587b1cc52ba49"
-dependencies = [
- "bitflags 2.6.0",
- "bytemuck",
- "smallvec",
- "ttf-parser 0.20.0",
- "unicode-bidi-mirroring",
- "unicode-ccc",
- "unicode-properties",
- "unicode-script",
-]
 
 [[package]]
 name = "rustybuzz"
@@ -10461,33 +10444,6 @@ dependencies = [
 
 [[package]]
 name = "usvg"
-version = "0.41.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5c704361d822337cfc00387672c7b59eaa72a1f0744f62b2a68aa228a0c6927d"
-dependencies = [
- "base64 0.22.1",
- "data-url",
- "flate2",
- "fontdb 0.16.1",
- "imagesize",
- "kurbo",
- "log",
- "pico-args",
- "roxmltree 0.19.0",
- "rustybuzz 0.13.0",
- "simplecss",
- "siphasher 1.0.1",
- "strict-num",
- "svgtypes",
- "tiny-skia-path",
- "unicode-bidi",
- "unicode-script",
- "unicode-vo",
- "xmlwriter",
-]
-
-[[package]]
-name = "usvg"
 version = "0.42.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b84ea542ae85c715f07b082438a4231c3760539d902e11d093847a0b22963032"
@@ -10501,7 +10457,7 @@ dependencies = [
  "log",
  "pico-args",
  "roxmltree 0.20.0",
- "rustybuzz 0.14.1",
+ "rustybuzz",
  "simplecss",
  "siphasher 1.0.1",
  "strict-num",
@@ -10682,7 +10638,7 @@ checksum = "fe5b606f733291749051e27fcc3420d36d1e39af481911d7e7b769a9b6a33709"
 dependencies = [
  "image 0.25.2",
  "thiserror",
- "usvg 0.42.0",
+ "usvg",
  "vello",
 ]
 

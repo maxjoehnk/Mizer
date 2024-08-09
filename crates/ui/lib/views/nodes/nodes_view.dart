@@ -77,6 +77,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         "delete_node": () => _deleteNodes(context),
         "group_nodes": () => _groupNodes(context),
         "rename_node": () => _renameNode(context),
+        "align_nodes": () => _alignNodes(context),
       },
       child: Row(
         children: [
@@ -158,6 +159,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     disabled: model.selectedNode == null || !model.selectedNode!.node.canRename,
                     onClick: () => _renameNode(context),
                     hotkeyId: "rename_node"),
+                PanelActionModel(
+                    label: "Align Selection".i18n,
+                    disabled: model.selection.isEmpty,
+                    onClick: () => _alignNodes(context),
+                    hotkeyId: "align_nodes"),
                 if (EnableScreenshot)
                   PanelActionModel(
                       label: "Document Node",
@@ -285,6 +291,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             .add(RenameNode(widget.nodeEditorModel.selectedNode!.node.path, result));
       }
     }
+  }
+
+  void _alignNodes(BuildContext context) {
+    var nodes = widget.nodeEditorModel.selection.map((n) => MoveNode(n.node.path, n.align())).toList();
+    context.read<NodesBloc>().add(MoveNodes(nodes));
   }
 
   void _groupNodes(BuildContext context) {

@@ -35,6 +35,20 @@ class NodeModel extends ChangeNotifier {
     return next;
   }
 
+  Offset align() {
+    var current = getPosition();
+    print(current.dx);
+    const ALIGNMENT = 3;
+    var dx = (current.dx * ALIGNMENT).round() / ALIGNMENT;
+    var dy = (current.dy * ALIGNMENT).round() / ALIGNMENT;
+    print(dx);
+
+    var newOffset = Offset(dx.toDouble(), dy.toDouble());
+    this.offset = newOffset * MULTIPLIER;
+
+    return newOffset;
+  }
+
   Rect get rect {
     return Rect.fromPoints(offset, offset.translate(size.width, size.height));
   }

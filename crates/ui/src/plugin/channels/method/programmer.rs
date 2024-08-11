@@ -139,10 +139,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 Err(err) => reply.respond_error(err),
             },
             "assignFixtureSelectionToGroup" => {
-                if let Value::I64(group_id) = call.args {
-                    self.assign_fixture_selection_to_group(group_id as u32);
-                    reply.send_ok(Value::Null);
-                }
+                let result = call
+                    .arguments()
+                    .and_then(|req| self.assign_fixture_selection_to_group(req));
+                reply.respond_unit_result(result);
             }
             "getProgrammerPointer" => match self.get_programmer_pointer() {
                 Ok(ptr) => reply.send_ok(Value::I64(ptr)),
@@ -282,10 +282,15 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     }
 
     fn assign_fixtures_to_group(&self, req: AssignFixturesToGroupRequest) {
-        self.handler.assign_fixtures_to_group(req.id, req.fixtures);
+        self.handler.assign_fixtures_to_group(req);
     }
 
-    fn assign_fixture_selection_to_group(&self, group_id: u32) {
-        self.handler.assign_fixture_selection_to_group(group_id);
+    fn assign_fixture_selection_to_group(
+        &self,
+        req: AssignFixtureSelectionToGroupRequest,
+    ) -> anyhow::Result<()> {
+        self.handler.assign_fixture_selection_to_group(req)?;
+
+        Ok(())
     }
 }

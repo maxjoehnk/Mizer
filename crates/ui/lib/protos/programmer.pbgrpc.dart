@@ -6,23 +6,25 @@
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:async' as $async;
+
 import 'dart:core' as $core;
 
 import 'package:grpc/service_api.dart' as $grpc;
-
 import 'programmer.pb.dart' as $1;
-
 export 'programmer.pb.dart';
 
 class ProgrammerApiClient extends $grpc.Client {
-  static final _$subscribeToProgrammer = $grpc.ClientMethod<$1.EmptyRequest, $1.ProgrammerState>(
-      '/mizer.programmer.ProgrammerApi/SubscribeToProgrammer',
-      ($1.EmptyRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.ProgrammerState.fromBuffer(value));
-  static final _$selectFixtures = $grpc.ClientMethod<$1.SelectFixturesRequest, $1.EmptyResponse>(
-      '/mizer.programmer.ProgrammerApi/SelectFixtures',
-      ($1.SelectFixturesRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
+  static final _$subscribeToProgrammer =
+      $grpc.ClientMethod<$1.EmptyRequest, $1.ProgrammerState>(
+          '/mizer.programmer.ProgrammerApi/SubscribeToProgrammer',
+          ($1.EmptyRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $1.ProgrammerState.fromBuffer(value));
+  static final _$selectFixtures =
+      $grpc.ClientMethod<$1.SelectFixturesRequest, $1.EmptyResponse>(
+          '/mizer.programmer.ProgrammerApi/SelectFixtures',
+          ($1.SelectFixturesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
   static final _$unselectFixtures =
       $grpc.ClientMethod<$1.UnselectFixturesRequest, $1.EmptyResponse>(
           '/mizer.programmer.ProgrammerApi/UnselectFixtures',
@@ -32,39 +34,46 @@ class ProgrammerApiClient extends $grpc.Client {
       '/mizer.programmer.ProgrammerApi/Clear',
       ($1.EmptyRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
-  static final _$highlight = $grpc.ClientMethod<$1.HighlightRequest, $1.EmptyResponse>(
-      '/mizer.programmer.ProgrammerApi/Highlight',
-      ($1.HighlightRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
+  static final _$highlight =
+      $grpc.ClientMethod<$1.HighlightRequest, $1.EmptyResponse>(
+          '/mizer.programmer.ProgrammerApi/Highlight',
+          ($1.HighlightRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
   static final _$next = $grpc.ClientMethod<$1.EmptyRequest, $1.EmptyResponse>(
       '/mizer.programmer.ProgrammerApi/Next',
       ($1.EmptyRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
-  static final _$previous = $grpc.ClientMethod<$1.EmptyRequest, $1.EmptyResponse>(
-      '/mizer.programmer.ProgrammerApi/Previous',
-      ($1.EmptyRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
+  static final _$previous =
+      $grpc.ClientMethod<$1.EmptyRequest, $1.EmptyResponse>(
+          '/mizer.programmer.ProgrammerApi/Previous',
+          ($1.EmptyRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
   static final _$set = $grpc.ClientMethod<$1.EmptyRequest, $1.EmptyResponse>(
       '/mizer.programmer.ProgrammerApi/Set',
       ($1.EmptyRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$1.ProgrammerState> subscribeToProgrammer($1.EmptyRequest request,
+  $grpc.ResponseStream<$1.ProgrammerState> subscribeToProgrammer(
+      $1.EmptyRequest request,
       {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$subscribeToProgrammer, $async.Stream.fromIterable([request]),
+    return $createStreamingCall(
+        _$subscribeToProgrammer, $async.Stream.fromIterable([request]),
         options: options);
   }
 
-  $grpc.ResponseFuture<$1.EmptyResponse> selectFixtures($1.SelectFixturesRequest request,
+  $grpc.ResponseFuture<$1.EmptyResponse> selectFixtures(
+      $1.SelectFixturesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$selectFixtures, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.EmptyResponse> unselectFixtures($1.UnselectFixturesRequest request,
+  $grpc.ResponseFuture<$1.EmptyResponse> unselectFixtures(
+      $1.UnselectFixturesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unselectFixtures, request, options: options);
   }
@@ -111,15 +120,18 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         selectFixtures_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $1.SelectFixturesRequest.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $1.SelectFixturesRequest.fromBuffer(value),
         ($1.EmptyResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$1.UnselectFixturesRequest, $1.EmptyResponse>(
-        'UnselectFixtures',
-        unselectFixtures_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $1.UnselectFixturesRequest.fromBuffer(value),
-        ($1.EmptyResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$1.UnselectFixturesRequest, $1.EmptyResponse>(
+            'UnselectFixtures',
+            unselectFixtures_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $1.UnselectFixturesRequest.fromBuffer(value),
+            ($1.EmptyResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.EmptyRequest, $1.EmptyResponse>(
         'Clear',
         clear_Pre,
@@ -162,13 +174,13 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     yield* subscribeToProgrammer(call, await request);
   }
 
-  $async.Future<$1.EmptyResponse> selectFixtures_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.SelectFixturesRequest> request) async {
+  $async.Future<$1.EmptyResponse> selectFixtures_Pre($grpc.ServiceCall call,
+      $async.Future<$1.SelectFixturesRequest> request) async {
     return selectFixtures(call, await request);
   }
 
-  $async.Future<$1.EmptyResponse> unselectFixtures_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.UnselectFixturesRequest> request) async {
+  $async.Future<$1.EmptyResponse> unselectFixtures_Pre($grpc.ServiceCall call,
+      $async.Future<$1.UnselectFixturesRequest> request) async {
     return unselectFixtures(call, await request);
   }
 
@@ -177,8 +189,8 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return clear(call, await request);
   }
 
-  $async.Future<$1.EmptyResponse> highlight_Pre(
-      $grpc.ServiceCall call, $async.Future<$1.HighlightRequest> request) async {
+  $async.Future<$1.EmptyResponse> highlight_Pre($grpc.ServiceCall call,
+      $async.Future<$1.HighlightRequest> request) async {
     return highlight(call, await request);
   }
 
@@ -203,9 +215,14 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.SelectFixturesRequest request);
   $async.Future<$1.EmptyResponse> unselectFixtures(
       $grpc.ServiceCall call, $1.UnselectFixturesRequest request);
-  $async.Future<$1.EmptyResponse> clear($grpc.ServiceCall call, $1.EmptyRequest request);
-  $async.Future<$1.EmptyResponse> highlight($grpc.ServiceCall call, $1.HighlightRequest request);
-  $async.Future<$1.EmptyResponse> next($grpc.ServiceCall call, $1.EmptyRequest request);
-  $async.Future<$1.EmptyResponse> previous($grpc.ServiceCall call, $1.EmptyRequest request);
-  $async.Future<$1.EmptyResponse> set($grpc.ServiceCall call, $1.EmptyRequest request);
+  $async.Future<$1.EmptyResponse> clear(
+      $grpc.ServiceCall call, $1.EmptyRequest request);
+  $async.Future<$1.EmptyResponse> highlight(
+      $grpc.ServiceCall call, $1.HighlightRequest request);
+  $async.Future<$1.EmptyResponse> next(
+      $grpc.ServiceCall call, $1.EmptyRequest request);
+  $async.Future<$1.EmptyResponse> previous(
+      $grpc.ServiceCall call, $1.EmptyRequest request);
+  $async.Future<$1.EmptyResponse> set(
+      $grpc.ServiceCall call, $1.EmptyRequest request);
 }

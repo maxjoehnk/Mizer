@@ -314,3 +314,13 @@ impl From<store_request::Mode> for mizer_command_executor::StoreMode {
         }
     }
 }
+
+impl From<StoreGroupMode> for mizer_command_executor::StoreGroupMode {
+    fn from(mode: StoreGroupMode) -> Self {
+        match mode {
+            StoreGroupMode::Overwrite => Self::Overwrite,
+            StoreGroupMode::Merge => Self::Merge,
+            StoreGroupMode::Subtract => Self::Subtract,
+        }
+    }
+}

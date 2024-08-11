@@ -152,15 +152,11 @@ class _FixturePatchViewState extends State<FixturePatchView> {
 
   _assignGroup(BuildContext context, FixturesBloc fixturesBloc) async {
     var programmerApi = context.read<ProgrammerApi>();
-    var presetsBloc = context.read<PresetsBloc>();
-    Group? group = await showDialog(
-        context: context,
-        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
-    if (group == null) {
+    var result = await AssignFixturesToGroupDialog.open(context);
+    if (result == null) {
       return;
     }
-    await programmerApi.assignFixturesToGroup(
-        selectedIds.map((id) => FixtureId(fixture: id)).toList(), group);
+    await programmerApi.assignFixturesToGroup(selectedIds.map((id) => FixtureId(fixture: id)).toList(), result.group, result.mode);
   }
 
   _exportPatch(BuildContext context) async {

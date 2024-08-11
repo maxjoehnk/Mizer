@@ -17,13 +17,13 @@ class ProgrammerMobileApi extends ProgrammerApi {
   }
 
   @override
-  Future<void> assignFixtureSelectionToGroup(Group group) {
+  Future<void> assignFixtureSelectionToGroup(Group group, StoreGroupMode mode) {
     // TODO: implement assignFixtureSelectionToGroup
     throw UnimplementedError();
   }
 
   @override
-  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group) {
+  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group, StoreGroupMode mode) {
     // TODO: implement assignFixturesToGroup
     throw UnimplementedError();
   }

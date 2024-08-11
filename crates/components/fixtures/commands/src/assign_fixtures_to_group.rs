@@ -9,6 +9,14 @@ use std::ops::Deref;
 pub struct AssignFixturesToGroupCommand {
     pub group_id: GroupId,
     pub selection: FixtureSelection,
+    pub mode: StoreGroupMode,
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+pub enum StoreGroupMode {
+    Overwrite,
+    Merge,
+    Subtract,
 }
 
 impl<'a> Command<'a> for AssignFixturesToGroupCommand {
@@ -28,10 +36,28 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
             .groups
             .get_mut(&self.group_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.group_id))?;
-        let fixture_ids = group.selection.deref().clone();
-        group.selection = self.selection.clone().into();
+        let old = group.selection.deref().clone();
+        match self.mode {
+            StoreGroupMode::Overwrite => {
+                group.selection = self.selection.clone().into();
+            }
+            StoreGroupMode::Merge => {
+                group.selection.add_fixtures(
+                    self.selection
+                        .get_fixtures()
+                        .into_iter()
+                        .flatten()
+                        .collect(),
+                );
+            }
+            StoreGroupMode::Subtract => {
+                for fixture in self.selection.get_fixtures().into_iter().flatten() {
+                    group.selection.remove(&fixture);
+                }
+            }
+        }
 
-        Ok(((), fixture_ids))
+        Ok(((), old))
     }
 
     fn revert(

@@ -213,10 +213,18 @@ message RenameGroupRequest {
 message AssignFixturesToGroupRequest {
   uint32 id = 1;
   repeated mizer.fixtures.FixtureId fixtures = 2;
+  StoreGroupMode mode = 3;
 }
 
 message AssignFixtureSelectionToGroupRequest {
   uint32 id = 1;
+  StoreGroupMode mode = 2;
+}
+
+enum StoreGroupMode {
+  STORE_GROUP_MODE_OVERWRITE = 0;
+  STORE_GROUP_MODE_MERGE = 1;
+  STORE_GROUP_MODE_SUBTRACT = 2;
 }
 
 message AssignFixturesToGroupResponse {

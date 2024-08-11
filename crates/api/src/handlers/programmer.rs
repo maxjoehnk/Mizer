@@ -189,9 +189,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
-        let group_id = GroupId(group_id);
-        let fixture_ids = fixture_ids
+    pub fn assign_fixtures_to_group(&self, req: AssignFixturesToGroupRequest) {
+        let mode = req.mode();
+        let group_id = GroupId(req.id);
+        let fixture_ids = req
+            .fixtures
             .into_iter()
             .map(|id| id.into())
             .collect::<Vec<_>>();
@@ -199,25 +201,31 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .run_command(AssignFixturesToGroupCommand {
                 group_id,
                 selection: fixture_ids.into(),
+                mode: mode.into(),
             })
             .unwrap();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
-        let group_id = GroupId(group_id);
+    pub fn assign_fixture_selection_to_group(
+        &self,
+        req: AssignFixtureSelectionToGroupRequest,
+    ) -> anyhow::Result<()> {
+        let mode = req.mode();
+        let group_id = GroupId(req.id);
         let selection = {
             let programmer = self.fixture_manager.get_programmer();
             programmer.active_selection()
         };
 
-        self.runtime
-            .run_command(AssignFixturesToGroupCommand {
-                group_id,
-                selection,
-            })
-            .unwrap();
+        self.runtime.run_command(AssignFixturesToGroupCommand {
+            group_id,
+            selection,
+            mode: mode.into(),
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]

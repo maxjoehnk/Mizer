@@ -149,14 +149,11 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
 
   _storeToGroup() async {
     var programmerApi = context.read<ProgrammerApi>();
-    var presetsBloc = context.read<PresetsBloc>();
-    Group? group = await showDialog(
-        context: context,
-        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
-    if (group == null) {
+    var result = await AssignFixturesToGroupDialog.open(context);
+    if (result == null) {
       return;
     }
-    await programmerApi.assignFixtureSelectionToGroup(group);
+    await programmerApi.assignFixtureSelectionToGroup(result.group, result.mode);
   }
 
   _storeToPreset() async {

@@ -110,14 +110,16 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group) async {
-    var request = AssignFixturesToGroupRequest(id: group.id, fixtures: fixtures);
+  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group, StoreGroupMode mode) async {
+    var request = AssignFixturesToGroupRequest(id: group.id, fixtures: fixtures, mode: mode);
     await channel.invokeMethod("assignFixturesToGroup", request.writeToBuffer());
   }
 
   @override
-  Future<void> assignFixtureSelectionToGroup(Group group) async {
-    await channel.invokeMethod("assignFixtureSelectionToGroup", group.id);
+  Future<void> assignFixtureSelectionToGroup(Group group, StoreGroupMode mode) async {
+    var req = AssignFixtureSelectionToGroupRequest(id: group.id, mode: mode);
+
+    await channel.invokeMethod("assignFixtureSelectionToGroup", req.writeToBuffer());
   }
 
   @override

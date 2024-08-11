@@ -39,9 +39,9 @@ abstract class ProgrammerApi {
   Future<void> deleteGroup(int id);
   Future<void> renameGroup(int id, String name);
 
-  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group);
+  Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group, StoreGroupMode mode);
 
-  Future<void> assignFixtureSelectionToGroup(Group group);
+  Future<void> assignFixtureSelectionToGroup(Group group, StoreGroupMode mode);
 
   Future<ProgrammerStatePointer?> getProgrammerPointer();
 

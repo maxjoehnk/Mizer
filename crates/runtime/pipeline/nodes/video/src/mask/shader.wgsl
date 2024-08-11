@@ -42,8 +42,8 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
         pixel.r,
         pixel.g,
         pixel.b,
-        hsv.z
-    );
+        pixel.a
+    ) * hsv.z;
 }
 
 fn rgb_to_hsv(c: vec3<f32>) -> vec3<f32> {

@@ -81,14 +81,13 @@ impl FixtureLibrary {
 
     fn load_libraries(&self) -> anyhow::Result<()> {
         let mut providers = self.providers.write();
-        let result = providers
-            .iter_mut()
-            .map(|provider| provider.load())
-            .collect::<anyhow::Result<Vec<_>>>();
+        for provider in providers.iter_mut() {
+            if let Err(err) = provider.load() {
+                tracing::error!("Unable to load from provider {provider}: {err:?}");
+            }
+        }
 
         self.is_loading.set_loading(false);
-
-        result?;
 
         Ok(())
     }
@@ -112,7 +111,7 @@ impl FixtureLibrary {
     }
 }
 
-pub trait FixtureLibraryProvider: Send + Sync {
+pub trait FixtureLibraryProvider: std::fmt::Display + Send + Sync {
     fn load(&mut self) -> anyhow::Result<()>;
 
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;

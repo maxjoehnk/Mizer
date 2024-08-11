@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 use base64::prelude::*;
@@ -23,6 +24,12 @@ const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
 pub struct OpenFixtureLibraryProvider {
     file_path: String,
     definitions: HashMap<String, Vec<OpenFixtureLibraryFixtureDefinition>>,
+}
+
+impl Display for OpenFixtureLibraryProvider {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "OpenFixtureLibraryProvider({})", self.file_path)
+    }
 }
 
 impl OpenFixtureLibraryProvider {

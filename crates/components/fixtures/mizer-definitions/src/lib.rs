@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -19,6 +20,12 @@ mod definition;
 pub struct MizerDefinitionsProvider {
     file_path: String,
     definitions: HashMap<String, MizerFixtureDefinition>,
+}
+
+impl Display for MizerDefinitionsProvider {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "MizerDefinitionsProvider({})", self.file_path)
+    }
 }
 
 impl MizerDefinitionsProvider {

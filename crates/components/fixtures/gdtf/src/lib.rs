@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use std::io::Read;
 use std::path::Path;
 
@@ -20,6 +21,12 @@ mod types;
 pub struct GdtfProvider {
     file_path: String,
     definitions: HashMap<String, GdtfFixtureDefinition>,
+}
+
+impl Display for GdtfProvider {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "GdtfProvider({})", self.file_path)
+    }
 }
 
 impl GdtfProvider {

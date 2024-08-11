@@ -2,6 +2,7 @@
 #![recursion_limit = "256"]
 
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use std::fs::{DirEntry, File};
 use std::io::Read;
 use std::path::Path;
@@ -26,6 +27,12 @@ mod resource_reader;
 pub struct QlcPlusProvider {
     file_path: String,
     definitions: HashMap<String, QlcPlusFixtureDefinition>,
+}
+
+impl Display for QlcPlusProvider {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "QlcPlusProvider({})", self.file_path)
+    }
 }
 
 impl QlcPlusProvider {

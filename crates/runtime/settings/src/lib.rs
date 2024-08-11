@@ -135,9 +135,7 @@ impl SettingsManager {
     pub fn new() -> anyhow::Result<Self> {
         let settings = toml::from_str(&[DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat())?;
 
-        Ok(Self {
-            settings,
-        })
+        Ok(Self { settings })
     }
 
     pub fn load(&mut self) -> anyhow::Result<()> {
@@ -167,7 +165,8 @@ impl SettingsManager {
     }
 
     pub fn save(&self) -> anyhow::Result<()> {
-        let file_path = Self::get_config_path().ok_or_else(|| anyhow::anyhow!("No config path found"))?;
+        let file_path =
+            Self::get_config_path().ok_or_else(|| anyhow::anyhow!("No config path found"))?;
 
         self.settings.save_to(file_path)
     }

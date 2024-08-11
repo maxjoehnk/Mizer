@@ -86,7 +86,10 @@ class _NumberFieldState extends State<NumberField> {
       }
     });
     controller.addListener(() {
-      var value = num.parse(controller.text);
+      var value = num.tryParse(controller.text);
+      if (value == null) {
+        return;
+      }
       value = _validateValue(value);
       this._setValue(value);
     });

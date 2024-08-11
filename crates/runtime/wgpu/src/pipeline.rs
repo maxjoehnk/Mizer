@@ -13,7 +13,11 @@ const U32_SIZE: u32 = std::mem::size_of::<u32>() as u32;
 pub struct WgpuPipeline {
     command_buffers: Arc<Mutex<Vec<wgpu::CommandBuffer>>>,
     surfaces: Arc<Mutex<Vec<WindowSurface>>>,
+    // List of currently acquired transfer buffers
     transfer_buffers: Arc<Mutex<WeakKeyHashMap<Weak<BufferHandle>, wgpu::Buffer>>>,
+    // List of buffers that are queued to be mapped this frame
+    queued_buffers: Arc<Mutex<WeakHashSet<Weak<BufferHandle>>>>,
+    // List of buffers that were actually mapped this frame
     mapped_buffers: Arc<Mutex<WeakHashSet<Weak<BufferHandle>>>>,
 }
 
@@ -117,7 +121,7 @@ impl WgpuPipeline {
 
             self.add_stage(encoder.finish());
             tracing::trace!("Queuing buffer mapping {buffer_handle:?}");
-            self.mapped_buffers.lock().insert(buffer_handle);
+            self.queued_buffers.lock().insert(buffer_handle);
         } else {
             tracing::warn!("Unknown buffer handle");
         }
@@ -126,14 +130,18 @@ impl WgpuPipeline {
     pub(crate) fn map_buffers(&self, wgpu_context: &WgpuContext) {
         profiling::scope!("WgpuPipeline::map_buffers");
         let transfer_buffers = self.transfer_buffers.lock();
-        let mapped_buffers = self.mapped_buffers.lock();
-        for handle in mapped_buffers.iter() {
+        let queued_buffers = self.queued_buffers.lock();
+        for handle in queued_buffers.iter() {
             if let Some(buffer) = transfer_buffers.get(&handle) {
                 tracing::trace!("Mapping buffer {handle:?}");
                 let buffer_slice = buffer.slice(..);
+                let mapped_buffers = self.mapped_buffers.clone();
                 buffer_slice.map_async(wgpu::MapMode::Read, move |result| {
                     if let Err(err) = result {
                         tracing::error!("Failed to map buffer: {err:?}");
+                    } else {
+                        tracing::trace!("Buffer {handle:?} mapped successfully");
+                        mapped_buffers.lock().insert(handle);
                     }
                 });
             }
@@ -158,18 +166,20 @@ impl WgpuPipeline {
     pub(crate) fn cleanup(&self) {
         self.transfer_buffers.lock().remove_expired();
         self.unmap_buffers();
+        self.queued_buffers.lock().clear();
+        self.mapped_buffers.lock().clear();
     }
 
+    // Unmap buffer so it can be mapped in the next frame again
     pub(crate) fn unmap_buffers(&self) {
         let transfer_buffers = self.transfer_buffers.lock();
-        let mut mapped_buffers = self.mapped_buffers.lock();
+        let mapped_buffers = self.mapped_buffers.lock();
         for handle in mapped_buffers.iter() {
             if let Some(buffer) = transfer_buffers.get(&handle) {
                 tracing::trace!("Unmapping buffer {handle:?}");
                 buffer.unmap();
             }
         }
-        mapped_buffers.clear();
     }
 }
 
@@ -183,6 +193,7 @@ impl BufferAccess<'_> {
     pub fn read_mut(&self) -> Option<wgpu::BufferViewMut> {
         profiling::scope!("BufferAccess::read_mut");
         if !self.mapped_buffers.contains(&self.handle) {
+            tracing::debug!("Buffer not mapped yet");
             return None;
         }
         let buffer = self.transfer_buffers.get(&self.handle)?;
@@ -195,6 +206,7 @@ impl BufferAccess<'_> {
     pub fn read(&self) -> Option<wgpu::BufferView> {
         profiling::scope!("BufferAccess::read");
         if !self.mapped_buffers.contains(&self.handle) {
+            tracing::debug!("Buffer not mapped yet");
             return None;
         }
         let buffer = self.transfer_buffers.get(&self.handle)?;

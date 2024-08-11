@@ -13,6 +13,14 @@ use crate::{FixtureId, FixtureState};
 pub struct FixtureProcessor;
 
 impl Processor for FixtureProcessor {
+    fn priorities(&self) -> ProcessorPriorities {
+        ProcessorPriorities {
+            pre_process: -100,
+            post_process: 100,
+            ..Default::default()
+        }
+    }
+
     #[tracing::instrument]
     fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame, _fps: f64) {
         profiling::scope!("FixtureProcessor::pre_process");

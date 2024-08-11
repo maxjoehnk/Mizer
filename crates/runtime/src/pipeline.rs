@@ -11,7 +11,7 @@ use mizer_node::{
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
-use mizer_processing::Processor;
+use mizer_processing::{Processor, ProcessorPriorities};
 use mizer_project_files::{Channel, Project};
 use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
@@ -586,6 +586,14 @@ fn boxed_node(node: Node) -> Box<dyn ProcessingNodeExt> {
 pub struct RuntimeProcessor;
 
 impl Processor for RuntimeProcessor {
+    fn priorities(&self) -> ProcessorPriorities {
+        ProcessorPriorities {
+            pre_process: -50,
+            process: 0,
+            post_process: 50,
+        }
+    }
+
     fn pre_process(&mut self, injector: &mut Injector, frame: ClockFrame, fps: f64) {
         profiling::scope!("Pipeline::pre_process");
         let (pipeline, injector) = injector.get_slice_mut::<Pipeline>().unwrap();

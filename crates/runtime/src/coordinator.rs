@@ -283,15 +283,27 @@ impl Runtime for CoordinatorRuntime {
         }
         self.clock_snapshot.set(snapshot);
         tracing::trace!("pre_process");
-        for processor in self.processors.iter_mut() {
+        for processor in self
+            .processors
+            .iter_mut()
+            .sorted_by_key(|processor| processor.priorities().pre_process)
+        {
             processor.pre_process(&mut self.injector, frame, fps);
         }
         tracing::trace!("process");
-        for processor in self.processors.iter_mut() {
+        for processor in self
+            .processors
+            .iter_mut()
+            .sorted_by_key(|processor| processor.priorities().process)
+        {
             processor.process(&mut self.injector, frame);
         }
         tracing::trace!("post_process");
-        for processor in self.processors.iter_mut() {
+        for processor in self
+            .processors
+            .iter_mut()
+            .sorted_by_key(|processor| processor.priorities().post_process)
+        {
             processor.post_process(&mut self.injector, frame);
         }
         if self

@@ -4,7 +4,18 @@ pub use mizer_clock::ClockFrame;
 pub use mizer_debug_ui::{DebugUi, DebugUiDrawHandle, DebugUiPane, NodeStateAccess};
 pub use mizer_injector::{Inject, Injector};
 
+#[derive(Default, Debug, Clone, Copy)]
+pub struct ProcessorPriorities {
+    pub pre_process: i32,
+    pub process: i32,
+    pub post_process: i32,
+}
+
 pub trait Processor {
+    fn priorities(&self) -> ProcessorPriorities {
+        ProcessorPriorities::default()
+    }
+
     fn pre_process(&mut self, _injector: &mut Injector, _frame: ClockFrame, _fps: f64) {}
     fn process(&mut self, _injector: &mut Injector, _frame: ClockFrame) {}
     fn post_process(&mut self, _injector: &mut Injector, _frame: ClockFrame) {}

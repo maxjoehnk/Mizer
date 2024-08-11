@@ -21,6 +21,14 @@ class PresetGroup extends StatelessWidget {
             effects: effects.getEffectsForControls([EffectControl.INTENSITY])),
       );
     }
+    if (type == PresetType.Shutter) {
+      return PresetGroup(
+        label: "Shutter",
+        child: PresetList(
+            presets: presets.shutters,
+            effects: effects.getEffectsForControls([EffectControl.SHUTTER])),
+      );
+    }
     if (type == PresetType.Color) {
       return PresetGroup(
           label: "Color",

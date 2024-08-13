@@ -635,6 +635,7 @@ impl Programmer {
     }
 
     pub(crate) fn emit_state<'a>(&mut self, groups: Vec<impl Deref<Target = Group> + 'a>) {
+        profiling::scope!("Programmer::emit_state");
         let state = ProgrammerState {
             tracked_fixtures: self
                 .get_tracked_selections()

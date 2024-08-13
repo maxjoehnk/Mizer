@@ -76,12 +76,13 @@ impl ProcessingNode for DmxOutputNode {
             anyhow::bail!("Missing dmx module");
         }
         let dmx_manager = dmx_connections.unwrap();
+        let writer = dmx_manager.get_writer();
 
         if let Some(value) = value {
             context.push_history_value(value);
             let value = (value * u8::MAX as f64).min(255.).max(0.).floor() as u8;
 
-            dmx_manager.write_single(self.universe, self.channel, value);
+            writer.write_single(self.universe, self.channel, value);
         }
 
         Ok(())

@@ -107,6 +107,7 @@ impl ProcessingNode for PixelDmxNode {
         let dmx_manager = context
             .try_inject::<DmxConnectionManager>()
             .ok_or_else(|| anyhow::anyhow!("missing dmx module"))?;
+        let writer = dmx_manager.get_writer();
 
         if let Some(state) = state.as_mut() {
             if let Some(pixels) = state.post_process(context, self.width, self.height)? {
@@ -119,7 +120,7 @@ impl ProcessingNode for PixelDmxNode {
                         .copied()
                         .flat_map(|pixel| pixel.to_rgb().0)
                         .collect::<Vec<_>>();
-                    dmx_manager.write_bulk(universe, 1, &pixels);
+                    writer.write_bulk(universe, 1, &pixels);
                 }
             }
         }

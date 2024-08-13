@@ -258,6 +258,7 @@ impl GroupControlNode {
         phase: i64,
         fan: f64,
     ) {
+        profiling::scope!("GroupControlNode::write");
         if phase == 0 && fan == 0. {
             if let Some(value) = buffer.last() {
                 if value.is_high() || self.send_zero {
@@ -433,6 +434,7 @@ impl GroupControlNode {
         buffer: impl Iterator<Item = f64>,
         control: FixtureFaderControl,
     ) {
+        profiling::scope!("GroupControlNode::write_phased");
         for (group, value) in fixtures.zip(buffer) {
             if value.is_high() || self.send_zero {
                 for fixtures in group {
@@ -452,6 +454,7 @@ impl GroupControlNode {
         step_size: f64,
         control: FixtureFaderControl,
     ) {
+        profiling::scope!("GroupControlNode::write_fanned");
         for (i, group) in groups.enumerate() {
             let value = value - (step_size * i as f64);
             for id in group {

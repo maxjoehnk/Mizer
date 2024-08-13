@@ -11,6 +11,7 @@ serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../node" }
 mizer-fixtures = { path = "../../../../components/fixtures" }
 ringbuffer = "0.15"
+profiling = "1"
 
 [dev-dependencies]
 mockall = "0.13"

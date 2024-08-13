@@ -66,7 +66,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>>;
     fn set_fps(&self, fps: f64) -> anyhow::Result<()>;
 
-    fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>>;
+    fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Arc<[u8; 512]>)>>;
 
     #[deprecated(note = "this should be replaced with a subscribe query in the future")]
     fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>>;

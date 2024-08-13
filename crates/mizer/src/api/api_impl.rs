@@ -183,7 +183,7 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
-    fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>> {
+    fn get_dmx_monitor(&self) -> anyhow::Result<Vec<(u16, Arc<[u8; 512]>)>> {
         let dmx_monitor = self.api_injector.get::<DmxMonitorHandle>();
         let dmx_monitor =
             dmx_monitor.ok_or_else(|| anyhow::anyhow!("DMX monitor not available"))?;

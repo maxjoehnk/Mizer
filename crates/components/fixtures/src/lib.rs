@@ -112,10 +112,12 @@ impl FixtureStates {
     }
 
     pub fn read(&self) -> HashMap<FixtureId, FixtureState> {
+        profiling::scope!("FixtureStates::read");
         self.0.read()
     }
 
     pub(crate) fn write(&self, state: HashMap<FixtureId, FixtureState>) {
+        profiling::scope!("FixtureStates::write");
         self.0.set(state);
     }
 }

@@ -83,14 +83,18 @@ impl DmxConnectionManager {
     pub fn delete_input(&mut self, id: &str) -> Option<DmxInputConnection> {
         self.inputs.remove(id)
     }
+
+    pub fn get_writer(&self) -> impl DmxWriter + '_ {
+        &self.buffer
+    }
 }
 
-impl DmxWriter for DmxConnectionManager {
+impl DmxWriter for &DmxBuffer {
     fn write_single(&self, universe: u16, channel: u16, value: u8) {
-        self.buffer.write_single(universe, channel, value);
+        DmxBuffer::write_single(self, universe, channel, value);
     }
 
     fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
-        self.buffer.write_bulk(universe, channel, values);
+        DmxBuffer::write_bulk(self, universe, channel, values);
     }
 }

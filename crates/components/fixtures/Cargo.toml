@@ -16,6 +16,7 @@ mizer-commander = { path = "../../runtime/commander" }
 mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }
 mizer-util = { path = "../../util" }
+mizer-message-bus = { path = "../../util/bus" }
 mizer-ui-api = { path = "../ui" }
 profiling = "1"
 serde = { version = "1", features = ["derive"] }
@@ -29,6 +30,7 @@ palette = "0.7"
 rand = "0.8"
 itertools = "0.13"
 enum-iterator = "2.0"
+rayon = "1.10"
 
 [dev-dependencies]
 test-case = "3.3"

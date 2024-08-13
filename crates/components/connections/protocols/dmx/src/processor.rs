@@ -13,11 +13,20 @@ impl Processor for DmxProcessor {
         }
     }
 
+    fn pre_process(&mut self, injector: &mut Injector, _frame: ClockFrame, _fps: f64) {
+        profiling::scope!("DmxProcessor::pre_process");
+        if let Some(dmx) = injector.get_mut::<DmxConnectionManager>() {
+            dmx.buffer.pristine();
+        }
+    }
+
+
     #[tracing::instrument]
     fn post_process(&mut self, injector: &mut Injector, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");
         if let Some(dmx) = injector.get_mut::<DmxConnectionManager>() {
             dmx.flush();
+            dmx.buffer.cleanup();
         }
     }
 }

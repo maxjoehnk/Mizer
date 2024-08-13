@@ -296,8 +296,16 @@ impl Fixture {
         }
     }
 
-    pub(crate) fn flush(&self, output: &dyn DmxWriter) {
+    pub(crate) fn flush(&mut self, output: &dyn DmxWriter) {
         profiling::scope!("Fixture::flush");
+        self.update_color_mixer();
+        let sub_fixture_count = self.current_mode.sub_fixtures.len();
+        for sub_fixture_index in 0..sub_fixture_count {
+            if let Some(mut sub_fixture) = self.sub_fixture_mut(sub_fixture_index as u32) {
+                sub_fixture.update_color_mixer();
+            }
+        }
+        
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
         let start = start.clamp(DMX_START_ADDRESS, DMX_END_ADDRESS);
@@ -393,7 +401,6 @@ impl IFixtureMut for Fixture {
                             ColorChannel::Blue => color_mixer.set_blue(value, priority),
                         }
                     }
-                    self.update_color_mixer();
                 } else {
                     self.channel_values.write_priority(channel, value, priority)
                 }
@@ -415,7 +422,6 @@ impl IFixtureMut for Fixture {
                 if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
                     color_mixer.set_virtual_dimmer(value, priority);
                 }
-                self.update_color_mixer();
             }
             None => {}
         }

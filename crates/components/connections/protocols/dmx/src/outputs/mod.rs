@@ -19,7 +19,7 @@ pub enum DmxOutputConnection {
     Sacn(SacnOutput),
 }
 
-pub trait DmxWriter {
+pub trait DmxWriter: Sync + Send {
     fn write_single(&self, universe: u16, channel: u16, value: u8);
     fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]);
 }

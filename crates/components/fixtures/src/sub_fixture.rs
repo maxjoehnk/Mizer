@@ -12,7 +12,7 @@ pub struct SubFixtureMut<'a> {
 }
 
 impl<'a> SubFixtureMut<'a> {
-    fn update_color_mixer(&mut self) {
+    pub(crate) fn update_color_mixer(&mut self) {
         profiling::scope!("SubFixture::update_color_mixer");
         update_color_mixer(
             self.definition.color_mixer.as_ref(),
@@ -52,7 +52,6 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                                 ColorChannel::Blue => color_mixer.set_blue(value, priority),
                             }
                         }
-                        self.update_color_mixer();
                     } else {
                         self.channel_values.write_priority(channel, value, priority)
                     }
@@ -66,7 +65,6 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                     if let Some(color_mixer) = color_mixer {
                         color_mixer.set_virtual_dimmer(value, priority);
                     }
-                    self.update_color_mixer();
                 }
             }
         }

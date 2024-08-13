@@ -3,7 +3,7 @@ use std::sync::{Arc, Mutex, MutexGuard};
 
 use dashmap::DashMap;
 use itertools::Itertools;
-
+use rayon::prelude::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 
 use crate::definition::{
@@ -382,11 +382,23 @@ impl FixtureManager {
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         profiling::scope!("FixtureManager::write_outputs");
-        // TODO[perf]: par_iter with rayon? Would only work when the dmx_manager supports concurrency which would require removing the Mutex
-        // Maybe we could cluster fixtures by universe and then write them in parallel
-        for fixture in self.fixtures.iter() {
-            fixture.flush(dmx_manager);
-        }
+        let writer = dmx_manager.get_writer();
+        
+        let universes = self.fixtures.iter_mut()
+            .sorted_by_key(|f| f.universe)
+            .chunk_by(|f| f.universe)
+            .into_iter()
+            .map(|(_, f)| f.into_iter().map(|fixture| fixture.id).collect::<Vec<_>>())
+            .collect::<Vec<_>>();
+        
+        universes
+            .into_par_iter()
+            .for_each(|fixtures| {
+                for fixture_id in fixtures {
+                    let mut fixture = self.get_fixture_mut(fixture_id).unwrap();
+                    fixture.flush(&writer);
+                }
+            });
     }
 
     pub fn get_programmer(&self) -> impl DerefMut<Target = Programmer> + '_ {
@@ -396,12 +408,14 @@ impl FixtureManager {
     }
 
     pub(crate) fn execute_programmers(&self) {
+        profiling::scope!("FixtureManager::execute_programmers");
         tracing::trace!("Locking programmer");
         let programmer = self.programmer.lock().unwrap().log_wrap();
         programmer.run(&self.fixtures, &self.presets);
     }
 
     pub(crate) fn default_fixtures(&self) {
+        profiling::scope!("FixtureManager::default_fixtures");
         for mut fixture in self.fixtures.iter_mut() {
             fixture.set_to_default();
         }

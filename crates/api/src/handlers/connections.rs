@@ -1,5 +1,5 @@
 use std::rc::Rc;
-
+use std::sync::Arc;
 use futures::{Stream, StreamExt};
 
 use mizer_command_executor::*;
@@ -30,7 +30,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn monitor_dmx(&self) -> anyhow::Result<Vec<(u16, Rc<[u8; 512]>)>> {
+    pub fn monitor_dmx(&self) -> anyhow::Result<Vec<(u16, Arc<[u8; 512]>)>> {
         self.runtime.get_dmx_monitor()
     }
 

@@ -1,8 +1,8 @@
 use crate::buffer::DmxBuffer;
 use evmap::{ReadHandleFactory, WriteHandle};
-use std::rc::Rc;
+use std::sync::Arc;
 
-type UnivereData = Rc<[u8; 512]>;
+type UnivereData = Arc<[u8; 512]>;
 
 pub struct DmxMonitorInternalHandle {
     write_handle: WriteHandle<u16, UnivereData>,
@@ -11,7 +11,7 @@ pub struct DmxMonitorInternalHandle {
 impl DmxMonitorInternalHandle {
     pub fn write(&mut self, data: &DmxBuffer) {
         for (universe, data) in data.iter() {
-            self.write_handle.update(universe, Rc::new(data));
+            self.write_handle.update(universe, Arc::new(data));
         }
     }
 

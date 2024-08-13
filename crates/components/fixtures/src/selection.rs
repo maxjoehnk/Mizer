@@ -119,6 +119,7 @@ impl FixtureSelection {
     }
 
     pub fn get_fixtures(&self) -> Vec<Vec<FixtureId>> {
+        profiling::scope!("FixtureSelection::get_fixtures");
         // Itertools panics when fixture list is empty
         if self.fixtures.is_empty() {
             return Default::default();

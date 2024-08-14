@@ -99,6 +99,11 @@ impl GdtfState {
         for channel in mode.channels.channels.iter() {
             let geometry = geometries.entry(channel.geometry.clone()).or_default();
             if let Some(attribute) = self.attributes.get(&channel.logical_channel.attribute) {
+                // FIXME: This is a hack so the SGM G-1 Beam profile works properly
+                // I need to investigate how to handle this case better
+                if attribute.name == "Macro" {
+                    continue;
+                }
                 if let Some(feature) = self.features.get(&attribute.feature) {
                     let channel = if channel.offset.is_virtual() {
                         // TODO: add FixtureControlChannel::Virtual which delegates to other channels

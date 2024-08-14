@@ -20,7 +20,6 @@ impl Processor for DmxProcessor {
         }
     }
 
-
     #[tracing::instrument]
     fn post_process(&mut self, injector: &mut Injector, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");

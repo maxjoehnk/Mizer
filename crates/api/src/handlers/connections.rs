@@ -1,6 +1,6 @@
+use futures::{Stream, StreamExt};
 use std::rc::Rc;
 use std::sync::Arc;
-use futures::{Stream, StreamExt};
 
 use mizer_command_executor::*;
 use mizer_devices::DeviceManager;

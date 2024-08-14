@@ -301,7 +301,12 @@ impl Fixture {
         if self.current_mode.color_mixer.is_some() {
             self.update_color_mixer();
         }
-        let ids = self.current_mode.sub_fixtures.iter().map(|f| f.id).collect::<Vec<_>>();
+        let ids = self
+            .current_mode
+            .sub_fixtures
+            .iter()
+            .map(|f| f.id)
+            .collect::<Vec<_>>();
         for sub_fixture_id in ids {
             if let Some(mut sub_fixture) = self.sub_fixture_mut(sub_fixture_id) {
                 if sub_fixture.definition.color_mixer.is_some() {
@@ -309,7 +314,7 @@ impl Fixture {
                 }
             }
         }
-        
+
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
         let start = start.clamp(DMX_START_ADDRESS, DMX_END_ADDRESS);

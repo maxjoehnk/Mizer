@@ -1,6 +1,10 @@
 use indexmap::IndexMap;
 
-use mizer_fixtures::definition::{AxisGroup, ChannelResolution, ColorGroupBuilder, FixtureChannelDefinition, FixtureControlChannel, FixtureControls, FixtureDefinition, FixtureMode, GenericControl, SubFixtureControlChannel, SubFixtureDefinition};
+use mizer_fixtures::definition::{
+    AxisGroup, ChannelResolution, ColorGroupBuilder, FixtureChannelDefinition,
+    FixtureControlChannel, FixtureControls, FixtureDefinition, FixtureMode, GenericControl,
+    SubFixtureControlChannel, SubFixtureDefinition,
+};
 
 use crate::definition::{MizerFixtureControl, MizerFixtureDefinition, MizerFixtureResolution};
 
@@ -18,7 +22,8 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
             .into_iter()
             .map(|mode| {
                 let mut dmx_channel = 0;
-                let fixture_channels = mode.channels
+                let fixture_channels = mode
+                    .channels
                     .iter()
                     .enumerate()
                     .flat_map(|(i, channel)| {
@@ -29,7 +34,7 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                             .cloned()
                             .map(|c| {
                                 let fixture_channel = dmx_channel;
-                                
+
                                 dmx_channel += c.channels();
 
                                 (fixture_channel, c)
@@ -162,23 +167,19 @@ pub fn map_fixture_definition(definition: MizerFixtureDefinition) -> FixtureDefi
                     })
                     .collect();
 
-                let channels = fixture_channels.into_iter()
+                let channels = fixture_channels
+                    .into_iter()
                     .chain(sub_fixture_channels)
                     .map(|(name, (j, c))| FixtureChannelDefinition {
                         name,
                         resolution: match c.resolution {
                             MizerFixtureResolution::Coarse => ChannelResolution::Coarse(j),
                             MizerFixtureResolution::Fine => ChannelResolution::Fine(j, j + 1),
-                        }
+                        },
                     })
                     .collect();
 
-                FixtureMode::new(
-                    mode.name,
-                    channels,
-                    fixture_controls,
-                    sub_fixtures,
-                )
+                FixtureMode::new(mode.name, channels, fixture_controls, sub_fixtures)
             })
             .collect(),
         tags: definition.metadata.tags,

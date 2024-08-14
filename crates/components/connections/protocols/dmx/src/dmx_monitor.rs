@@ -1,6 +1,6 @@
-use std::collections::HashSet;
 use crate::buffer::DmxBuffer;
 use evmap::{ReadHandleFactory, WriteHandle};
+use std::collections::HashSet;
 use std::sync::Arc;
 
 type UniverseData = Arc<[u8; 512]>;
@@ -17,7 +17,8 @@ impl DmxMonitorInternalHandle {
         for (universe, data) in data.iter() {
             self.write_handle.update(universe, Arc::new(data));
         }
-        self.universes.iter()
+        self.universes
+            .iter()
             .filter(|universe| !universes.contains(universe))
             .for_each(|universe| {
                 self.write_handle.empty(*universe);
@@ -57,7 +58,10 @@ impl DmxMonitorHandle {
 pub fn create_monitor() -> (DmxMonitorInternalHandle, DmxMonitorHandle) {
     let (read_handle, write_handle) = evmap::new();
     (
-        DmxMonitorInternalHandle { write_handle, universes: Default::default() },
+        DmxMonitorInternalHandle {
+            write_handle,
+            universes: Default::default(),
+        },
         DmxMonitorHandle {
             handle_factory: read_handle.factory(),
         },

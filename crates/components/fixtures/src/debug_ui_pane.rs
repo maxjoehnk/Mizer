@@ -1,7 +1,7 @@
-use mizer_module::*;
-use mizer_node::Inject;
 use crate::fixture::IFixture;
 use crate::manager::FixtureManager;
+use mizer_module::*;
+use mizer_node::Inject;
 
 pub struct FixturesDebugUiPane;
 
@@ -98,12 +98,17 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                 });
                 ui.collapsing_header("Faders", |ui| {
                     ui.columns(3, |columns| {
-                        for (control, _control_type) in fixture.current_mode.controls.controls().into_iter() {
+                        for (control, _control_type) in
+                            fixture.current_mode.controls.controls().into_iter()
+                        {
                             for fader in control.faders() {
-                                let channel = fixture.current_mode.controls.get_channel(&fader).unwrap();
+                                let channel =
+                                    fixture.current_mode.controls.get_channel(&fader).unwrap();
                                 let channel = format!("{:?}", channel);
                                 columns[0].label(format!("{fader:?}"));
-                                columns[1].label(fixture.read_control(fader).unwrap_or_default().to_string());
+                                columns[1].label(
+                                    fixture.read_control(fader).unwrap_or_default().to_string(),
+                                );
                                 columns[2].label(channel);
                             }
                         }
@@ -114,12 +119,23 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         ui.collapsing_header(&sub_fixture.name, |ui| {
                             ui.columns(3, |columns| {
                                 if let Some(sub_fixture) = fixture.sub_fixture(sub_fixture.id) {
-                                    for (control, _control_type) in sub_fixture.definition.controls.controls().into_iter() {
+                                    for (control, _control_type) in
+                                        sub_fixture.definition.controls.controls().into_iter()
+                                    {
                                         for fader in control.faders() {
-                                            let channel = sub_fixture.definition.controls.get_channel(&fader).unwrap();
+                                            let channel = sub_fixture
+                                                .definition
+                                                .controls
+                                                .get_channel(&fader)
+                                                .unwrap();
                                             let channel = format!("{:?}", channel);
                                             columns[0].label(format!("{fader:?}"));
-                                            columns[1].label(sub_fixture.read_control(fader).unwrap_or_default().to_string());
+                                            columns[1].label(
+                                                sub_fixture
+                                                    .read_control(fader)
+                                                    .unwrap_or_default()
+                                                    .to_string(),
+                                            );
                                             columns[2].label(channel);
                                         }
                                     }

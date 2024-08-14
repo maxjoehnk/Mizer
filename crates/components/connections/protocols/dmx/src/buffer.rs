@@ -33,7 +33,7 @@ impl DmxBuffer {
             .iter()
             .map(|entry| (*entry.key(), *entry.value()))
     }
-    
+
     pub fn universes(&self) -> impl Iterator<Item = u16> + '_ {
         self.buffers.iter().map(|entry| *entry.key())
     }
@@ -41,7 +41,7 @@ impl DmxBuffer {
     pub(crate) fn pristine(&self) {
         self.touched.clear();
     }
-    
+
     pub(crate) fn cleanup(&self) {
         profiling::scope!("DmxBuffer::cleanup");
         self.buffers.retain(|key, _| self.touched.contains(key));

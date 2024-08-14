@@ -3,8 +3,8 @@ use std::sync::{Arc, Mutex, MutexGuard};
 
 use dashmap::DashMap;
 use itertools::Itertools;
-use rayon::prelude::*;
 use mizer_protocol_dmx::DmxConnectionManager;
+use rayon::prelude::*;
 
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
@@ -383,22 +383,22 @@ impl FixtureManager {
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         profiling::scope!("FixtureManager::write_outputs");
         let writer = dmx_manager.get_writer();
-        
-        let universes = self.fixtures.iter_mut()
+
+        let universes = self
+            .fixtures
+            .iter_mut()
             .sorted_by_key(|f| f.universe)
             .chunk_by(|f| f.universe)
             .into_iter()
             .map(|(_, f)| f.into_iter().map(|fixture| fixture.id).collect::<Vec<_>>())
             .collect::<Vec<_>>();
-        
-        universes
-            .into_par_iter()
-            .for_each(|fixtures| {
-                for fixture_id in fixtures {
-                    let mut fixture = self.get_fixture_mut(fixture_id).unwrap();
-                    fixture.flush(&writer);
-                }
-            });
+
+        universes.into_par_iter().for_each(|fixtures| {
+            for fixture_id in fixtures {
+                let mut fixture = self.get_fixture_mut(fixture_id).unwrap();
+                fixture.flush(&writer);
+            }
+        });
     }
 
     pub fn get_programmer(&self) -> impl DerefMut<Target = Programmer> + '_ {

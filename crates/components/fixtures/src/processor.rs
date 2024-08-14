@@ -1,5 +1,5 @@
-use std::ops::Deref;
 use rayon::prelude::*;
+use std::ops::Deref;
 
 use mizer_processing::*;
 use mizer_protocol_dmx::DmxConnectionManager;
@@ -43,10 +43,12 @@ impl Processor for FixtureProcessor {
         fixture_manager.write_outputs(dmx_manager);
         {
             profiling::scope!("FixtureProcessor::update_state");
-            let state = fixture_manager.get_fixtures()
+            let state = fixture_manager
+                .get_fixtures()
                 .par_iter()
                 .flat_map(|fixture| {
-                    let mut states = Vec::with_capacity(1 + fixture.current_mode.sub_fixtures.len());
+                    let mut states =
+                        Vec::with_capacity(1 + fixture.current_mode.sub_fixtures.len());
 
                     let state = get_state(fixture.deref());
                     states.push((FixtureId::Fixture(fixture.id), state));
@@ -70,9 +72,7 @@ impl Processor for FixtureProcessor {
     }
 }
 
-fn get_state(
-    fixture: &impl IFixture,
-) -> FixtureState {
+fn get_state(fixture: &impl IFixture) -> FixtureState {
     let mut fixture_state = FixtureState::default();
     fixture_state.brightness = fixture.read_control(FixtureFaderControl::Intensity);
     let red = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Red));

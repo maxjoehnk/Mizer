@@ -298,11 +298,15 @@ impl Fixture {
 
     pub(crate) fn flush(&mut self, output: &dyn DmxWriter) {
         profiling::scope!("Fixture::flush");
-        self.update_color_mixer();
+        if self.current_mode.color_mixer.is_some() {
+            self.update_color_mixer();
+        }
         let sub_fixture_count = self.current_mode.sub_fixtures.len();
         for sub_fixture_index in 0..sub_fixture_count {
             if let Some(mut sub_fixture) = self.sub_fixture_mut(sub_fixture_index as u32) {
-                sub_fixture.update_color_mixer();
+                if sub_fixture.definition.color_mixer.is_some() {
+                    sub_fixture.update_color_mixer();
+                }
             }
         }
         

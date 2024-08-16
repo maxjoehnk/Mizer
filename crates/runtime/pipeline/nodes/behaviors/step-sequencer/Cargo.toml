@@ -8,3 +8,5 @@ edition = "2021"
 anyhow = "1"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
+enum-iterator = "2.0"
+num_enum = "0.7"

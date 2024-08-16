@@ -6331,7 +6331,9 @@ name = "mizer-step-sequencer-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "enum-iterator",
  "mizer-node",
+ "num_enum",
  "serde",
 ]
 

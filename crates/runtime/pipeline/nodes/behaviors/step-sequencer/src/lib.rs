@@ -1,4 +1,7 @@
+use enum_iterator::Sequence;
+use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
 
 use mizer_node::*;
 
@@ -9,6 +12,7 @@ const BEAT_OUTPUT: &str = "Beat";
 
 const STEPS_SETTING: &str = "Steps";
 const BAR_COUNT_SETTING: &str = "Bar Count";
+const OUTPUT_WIDTH_SETTING: &str = "Output Width";
 
 const STEPS_IN_BAR: usize = 16;
 
@@ -16,6 +20,34 @@ const STEPS_IN_BAR: usize = 16;
 pub struct StepSequencerNode {
     pub steps: Vec<bool>,
     pub bar_count: u32,
+    #[serde(default)]
+    pub output_width_mode: OutputWidth,
+}
+
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    Deserialize,
+    Serialize,
+    PartialEq,
+    Eq,
+    Sequence,
+    TryFromPrimitive,
+    IntoPrimitive,
+)]
+#[repr(u8)]
+pub enum OutputWidth {
+    #[default]
+    Pulse,
+    Step,
+}
+
+impl Display for OutputWidth {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
+    }
 }
 
 impl Default for StepSequencerNode {
@@ -24,6 +56,7 @@ impl Default for StepSequencerNode {
         Self {
             steps: vec![false; count * STEPS_IN_BAR],
             bar_count: count as u32,
+            output_width_mode: OutputWidth::default(),
         }
     }
 }
@@ -35,12 +68,14 @@ impl ConfigurableNode for StepSequencerNode {
             // setting!(BAR_COUNT_SETTING, self.bar_count) // TODO: implement support for variable bar count
             //     .min(1u32)
             //     .max(16u32),
+            setting!(enum OUTPUT_WIDTH_SETTING, self.output_width_mode),
         ]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
         update!(steps setting, STEPS_SETTING, self.steps);
         update!(uint setting, BAR_COUNT_SETTING, self.bar_count);
+        update!(enum setting, OUTPUT_WIDTH_SETTING, self.output_width_mode);
 
         update_fallback!(setting)
     }
@@ -98,11 +133,23 @@ impl ProcessingNode for StepSequencerNode {
                 continue;
             }
             let beat = (i as f64) * 0.25;
+            let next_beat = ((i + 1) as f64) * 0.25;
 
-            if frame.beat > beat && !already_hit {
-                value = true;
-                state.already_hit[i] = true;
-                break;
+            match self.output_width_mode {
+                OutputWidth::Step => {
+                    if (frame.beat > beat) && (frame.beat <= next_beat) {
+                        value = true;
+                        state.already_hit[i] = true;
+                        break;
+                    }
+                }
+                OutputWidth::Pulse => {
+                    if frame.beat > beat && !already_hit {
+                        value = true;
+                        state.already_hit[i] = true;
+                        break;
+                    }
+                }
             }
             if frame.beat < beat || frame.downbeat {
                 state.already_hit[i] = false;

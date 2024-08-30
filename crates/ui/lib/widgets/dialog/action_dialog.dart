@@ -31,10 +31,13 @@ class _ActionDialogState extends State<ActionDialog> {
             }
           }
         },
-        child: PopupContainer(
-          title: widget.title,
-          child: widget.content,
-          actions: widget.actions,
+        child: ConstrainedBox(
+          constraints: BoxConstraints.loose(MediaQuery.of(context).size),
+          child: PopupContainer(
+            title: widget.title,
+            child: widget.content,
+            actions: widget.actions,
+          ),
         ),
       )
     );

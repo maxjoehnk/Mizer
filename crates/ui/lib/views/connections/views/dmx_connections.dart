@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/dialogs/dmx_universe_patch.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
@@ -69,6 +71,8 @@ class _DmxConnectionsViewState extends State<DmxConnectionsView> {
       Text(connection.dmxOutput.hasArtnet() ? connection.dmxOutput.artnet.port.toString() : ""),
       Row(children: [
         MizerIconButton(
+            icon: MdiIcons.arrowDecision, label: "Patch".i18n, onClick: () => _onEditPatch(connection)),
+        MizerIconButton(
             icon: Icons.edit, label: "Edit".i18n, onClick: () => _onConfigureOutput(connection)),
         MizerIconButton(
             icon: Icons.delete, label: "Delete".i18n, onClick: () => _onDelete(connection)),
@@ -85,11 +89,17 @@ class _DmxConnectionsViewState extends State<DmxConnectionsView> {
       Text(connection.dmxInput.hasArtnet() ? connection.dmxInput.artnet.port.toString() : ""),
       Row(children: [
         MizerIconButton(
+            icon: MdiIcons.arrowDecision, label: "Patch".i18n, onClick: () => _onEditPatch(connection)),
+        MizerIconButton(
             icon: Icons.edit, label: "Edit".i18n, onClick: () => _onConfigureInput(connection)),
         MizerIconButton(
             icon: Icons.delete, label: "Delete".i18n, onClick: () => _onDelete(connection)),
       ])
     ]);
+  }
+
+  _onEditPatch(dynamic connection) async {
+    await showDialog(context: context, builder: (context) => DmxUniversePatch());
   }
 
   _addSacnOutput() async {

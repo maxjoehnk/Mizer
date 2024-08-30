@@ -276,3 +276,12 @@ message ConfigureConnectionRequest {
     DmxInputConnection dmx_input = 4;
   }
 }
+
+message DmxPatch {
+  repeated DmxPatchEntry entries = 1;
+}
+
+message DmxPatchEntry {
+  uint32 input_universe = 1;
+  repeated uint32 output_universes = 2;
+}

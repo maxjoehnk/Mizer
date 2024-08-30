@@ -2,3 +2,8 @@
 
 .Fixture Patch
 image::fixtures:patch.png[]
+
+== Default Values
+
+There is currently no built in support for default values in the fixture module.
+However, you can use the xref:nodes:fixtures/fixture-control/index.adoc[Fixture Control Node] or xref:nodes:fixtures/group-control/index.adoc[Group Control Node] with the lowest priority to set default values.

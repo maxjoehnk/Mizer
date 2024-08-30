@@ -241,6 +241,7 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                     .map(|variant| variant as i32)
                     .collect(),
             }),
+            Button => Self::ButtonValue(node_setting::ButtonValue {}),
         }
     }
 }
@@ -313,6 +314,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .collect(),
                 value: value.value,
             },
+            Value::ButtonValue(_) => Self::Button,
         }
     }
 }

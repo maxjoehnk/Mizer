@@ -490,8 +490,9 @@ const NodeSetting$json = {
     {'1': 'media_value', '3': 13, '4': 1, '5': 11, '6': '.mizer.nodes.NodeSetting.MediaValue', '9': 0, '10': 'mediaValue'},
     {'1': 'uint_value', '3': 14, '4': 1, '5': 11, '6': '.mizer.nodes.NodeSetting.UintValue', '9': 0, '10': 'uintValue'},
     {'1': 'step_sequencer_value', '3': 15, '4': 1, '5': 11, '6': '.mizer.nodes.NodeSetting.StepSequencerValue', '9': 0, '10': 'stepSequencerValue'},
+    {'1': 'button_value', '3': 16, '4': 1, '5': 11, '6': '.mizer.nodes.NodeSetting.ButtonValue', '9': 0, '10': 'buttonValue'},
   ],
-  '3': [NodeSetting_TextValue$json, NodeSetting_FloatValue$json, NodeSetting_IntValue$json, NodeSetting_UintValue$json, NodeSetting_BoolValue$json, NodeSetting_SelectValue$json, NodeSetting_SelectVariant$json, NodeSetting_EnumValue$json, NodeSetting_EnumVariant$json, NodeSetting_IdValue$json, NodeSetting_IdVariant$json, NodeSetting_SplineValue$json, NodeSetting_MediaValue$json, NodeSetting_StepSequencerValue$json],
+  '3': [NodeSetting_TextValue$json, NodeSetting_FloatValue$json, NodeSetting_IntValue$json, NodeSetting_UintValue$json, NodeSetting_BoolValue$json, NodeSetting_SelectValue$json, NodeSetting_SelectVariant$json, NodeSetting_EnumValue$json, NodeSetting_EnumVariant$json, NodeSetting_IdValue$json, NodeSetting_IdVariant$json, NodeSetting_SplineValue$json, NodeSetting_MediaValue$json, NodeSetting_StepSequencerValue$json, NodeSetting_ButtonValue$json],
   '8': [
     {'1': 'value'},
     {'1': '_label'},
@@ -690,6 +691,11 @@ const NodeSetting_StepSequencerValue$json = {
   ],
 };
 
+@$core.Deprecated('Use nodeSettingDescriptor instead')
+const NodeSetting_ButtonValue$json = {
+  '1': 'ButtonValue',
+};
+
 /// Descriptor for `NodeSetting`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List nodeSettingDescriptor = $convert.base64Decode(
     'CgtOb2RlU2V0dGluZxIOCgJpZBgBIAEoCVICaWQSGQoFbGFiZWwYAiABKAlIAVIFbGFiZWyIAQ'
@@ -708,42 +714,43 @@ final $typed_data.Uint8List nodeSettingDescriptor = $convert.base64Decode(
     '5nLk1lZGlhVmFsdWVIAFIKbWVkaWFWYWx1ZRJDCgp1aW50X3ZhbHVlGA4gASgLMiIubWl6ZXIu'
     'bm9kZXMuTm9kZVNldHRpbmcuVWludFZhbHVlSABSCXVpbnRWYWx1ZRJfChRzdGVwX3NlcXVlbm'
     'Nlcl92YWx1ZRgPIAEoCzIrLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLlN0ZXBTZXF1ZW5jZXJW'
-    'YWx1ZUgAUhJzdGVwU2VxdWVuY2VyVmFsdWUaPwoJVGV4dFZhbHVlEhQKBXZhbHVlGAEgASgJUg'
-    'V2YWx1ZRIcCgltdWx0aWxpbmUYAiABKAhSCW11bHRpbGluZRrqAQoKRmxvYXRWYWx1ZRIUCgV2'
-    'YWx1ZRgBIAEoAVIFdmFsdWUSFQoDbWluGAIgASgBSABSA21pbogBARIeCghtaW5faGludBgDIA'
-    'EoAUgBUgdtaW5IaW50iAEBEhUKA21heBgEIAEoAUgCUgNtYXiIAQESHgoIbWF4X2hpbnQYBSAB'
-    'KAFIA1IHbWF4SGludIgBARIgCglzdGVwX3NpemUYBiABKAFIBFIIc3RlcFNpemWIAQFCBgoEX2'
-    '1pbkILCglfbWluX2hpbnRCBgoEX21heEILCglfbWF4X2hpbnRCDAoKX3N0ZXBfc2l6ZRroAQoI'
-    'SW50VmFsdWUSFAoFdmFsdWUYASABKAVSBXZhbHVlEhUKA21pbhgCIAEoBUgAUgNtaW6IAQESHg'
-    'oIbWluX2hpbnQYAyABKAVIAVIHbWluSGludIgBARIVCgNtYXgYBCABKAVIAlIDbWF4iAEBEh4K'
-    'CG1heF9oaW50GAUgASgFSANSB21heEhpbnSIAQESIAoJc3RlcF9zaXplGAYgASgFSARSCHN0ZX'
-    'BTaXpliAEBQgYKBF9taW5CCwoJX21pbl9oaW50QgYKBF9tYXhCCwoJX21heF9oaW50QgwKCl9z'
-    'dGVwX3NpemUa6QEKCVVpbnRWYWx1ZRIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUSFQoDbWluGAIgAS'
-    'gNSABSA21pbogBARIeCghtaW5faGludBgDIAEoDUgBUgdtaW5IaW50iAEBEhUKA21heBgEIAEo'
-    'DUgCUgNtYXiIAQESHgoIbWF4X2hpbnQYBSABKA1IA1IHbWF4SGludIgBARIgCglzdGVwX3Npem'
-    'UYBiABKA1IBFIIc3RlcFNpemWIAQFCBgoEX21pbkILCglfbWluX2hpbnRCBgoEX21heEILCglf'
-    'bWF4X2hpbnRCDAoKX3N0ZXBfc2l6ZRohCglCb29sVmFsdWUSFAoFdmFsdWUYASABKAhSBXZhbH'
-    'VlGmcKC1NlbGVjdFZhbHVlEhQKBXZhbHVlGAEgASgJUgV2YWx1ZRJCCgh2YXJpYW50cxgCIAMo'
-    'CzImLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLlNlbGVjdFZhcmlhbnRSCHZhcmlhbnRzGswCCg'
-    '1TZWxlY3RWYXJpYW50EkoKBWdyb3VwGAEgASgLMjIubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcu'
-    'U2VsZWN0VmFyaWFudC5TZWxlY3RHcm91cEgAUgVncm91cBJHCgRpdGVtGAIgASgLMjEubWl6ZX'
-    'Iubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudC5TZWxlY3RJdGVtSABSBGl0ZW0aYQoL'
-    'U2VsZWN0R3JvdXASFAoFbGFiZWwYASABKAlSBWxhYmVsEjwKBWl0ZW1zGAIgAygLMiYubWl6ZX'
-    'Iubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudFIFaXRlbXMaOAoKU2VsZWN0SXRlbRIU'
-    'CgV2YWx1ZRgBIAEoCVIFdmFsdWUSFAoFbGFiZWwYAiABKAlSBWxhYmVsQgkKB3ZhcmlhbnQaYw'
-    'oJRW51bVZhbHVlEhQKBXZhbHVlGAEgASgNUgV2YWx1ZRJACgh2YXJpYW50cxgCIAMoCzIkLm1p'
-    'emVyLm5vZGVzLk5vZGVTZXR0aW5nLkVudW1WYXJpYW50Ugh2YXJpYW50cxo5CgtFbnVtVmFyaW'
-    'FudBIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUSFAoFbGFiZWwYAiABKAlSBWxhYmVsGl8KB0lkVmFs'
-    'dWUSFAoFdmFsdWUYASABKA1SBXZhbHVlEj4KCHZhcmlhbnRzGAIgAygLMiIubWl6ZXIubm9kZX'
-    'MuTm9kZVNldHRpbmcuSWRWYXJpYW50Ugh2YXJpYW50cxo3CglJZFZhcmlhbnQSFAoFdmFsdWUY'
-    'ASABKA1SBXZhbHVlEhQKBWxhYmVsGAIgASgJUgVsYWJlbBrGAQoLU3BsaW5lVmFsdWUSRQoFc3'
-    'RlcHMYASADKAsyLy5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy5TcGxpbmVWYWx1ZS5TcGxpbmVT'
-    'dGVwUgVzdGVwcxpwCgpTcGxpbmVTdGVwEgwKAXgYASABKAFSAXgSDAoBeRgCIAEoAVIBeRIQCg'
-    'NjMGEYAyABKAFSA2MwYRIQCgNjMGIYBCABKAFSA2MwYhIQCgNjMWEYBSABKAFSA2MxYRIQCgNj'
-    'MWIYBiABKAFSA2MxYhpfCgpNZWRpYVZhbHVlEhQKBXZhbHVlGAEgASgJUgV2YWx1ZRI7Cg1hbG'
-    'xvd2VkX3R5cGVzGAIgAygOMhYubWl6ZXIubWVkaWEuTWVkaWFUeXBlUgxhbGxvd2VkVHlwZXMa'
-    'KgoSU3RlcFNlcXVlbmNlclZhbHVlEhQKBXN0ZXBzGAEgAygIUgVzdGVwc0IHCgV2YWx1ZUIICg'
-    'ZfbGFiZWw=');
+    'YWx1ZUgAUhJzdGVwU2VxdWVuY2VyVmFsdWUSSQoMYnV0dG9uX3ZhbHVlGBAgASgLMiQubWl6ZX'
+    'Iubm9kZXMuTm9kZVNldHRpbmcuQnV0dG9uVmFsdWVIAFILYnV0dG9uVmFsdWUaPwoJVGV4dFZh'
+    'bHVlEhQKBXZhbHVlGAEgASgJUgV2YWx1ZRIcCgltdWx0aWxpbmUYAiABKAhSCW11bHRpbGluZR'
+    'rqAQoKRmxvYXRWYWx1ZRIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSFQoDbWluGAIgASgBSABSA21p'
+    'bogBARIeCghtaW5faGludBgDIAEoAUgBUgdtaW5IaW50iAEBEhUKA21heBgEIAEoAUgCUgNtYX'
+    'iIAQESHgoIbWF4X2hpbnQYBSABKAFIA1IHbWF4SGludIgBARIgCglzdGVwX3NpemUYBiABKAFI'
+    'BFIIc3RlcFNpemWIAQFCBgoEX21pbkILCglfbWluX2hpbnRCBgoEX21heEILCglfbWF4X2hpbn'
+    'RCDAoKX3N0ZXBfc2l6ZRroAQoISW50VmFsdWUSFAoFdmFsdWUYASABKAVSBXZhbHVlEhUKA21p'
+    'bhgCIAEoBUgAUgNtaW6IAQESHgoIbWluX2hpbnQYAyABKAVIAVIHbWluSGludIgBARIVCgNtYX'
+    'gYBCABKAVIAlIDbWF4iAEBEh4KCG1heF9oaW50GAUgASgFSANSB21heEhpbnSIAQESIAoJc3Rl'
+    'cF9zaXplGAYgASgFSARSCHN0ZXBTaXpliAEBQgYKBF9taW5CCwoJX21pbl9oaW50QgYKBF9tYX'
+    'hCCwoJX21heF9oaW50QgwKCl9zdGVwX3NpemUa6QEKCVVpbnRWYWx1ZRIUCgV2YWx1ZRgBIAEo'
+    'DVIFdmFsdWUSFQoDbWluGAIgASgNSABSA21pbogBARIeCghtaW5faGludBgDIAEoDUgBUgdtaW'
+    '5IaW50iAEBEhUKA21heBgEIAEoDUgCUgNtYXiIAQESHgoIbWF4X2hpbnQYBSABKA1IA1IHbWF4'
+    'SGludIgBARIgCglzdGVwX3NpemUYBiABKA1IBFIIc3RlcFNpemWIAQFCBgoEX21pbkILCglfbW'
+    'luX2hpbnRCBgoEX21heEILCglfbWF4X2hpbnRCDAoKX3N0ZXBfc2l6ZRohCglCb29sVmFsdWUS'
+    'FAoFdmFsdWUYASABKAhSBXZhbHVlGmcKC1NlbGVjdFZhbHVlEhQKBXZhbHVlGAEgASgJUgV2YW'
+    'x1ZRJCCgh2YXJpYW50cxgCIAMoCzImLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLlNlbGVjdFZh'
+    'cmlhbnRSCHZhcmlhbnRzGswCCg1TZWxlY3RWYXJpYW50EkoKBWdyb3VwGAEgASgLMjIubWl6ZX'
+    'Iubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudC5TZWxlY3RHcm91cEgAUgVncm91cBJH'
+    'CgRpdGVtGAIgASgLMjEubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudC5TZW'
+    'xlY3RJdGVtSABSBGl0ZW0aYQoLU2VsZWN0R3JvdXASFAoFbGFiZWwYASABKAlSBWxhYmVsEjwK'
+    'BWl0ZW1zGAIgAygLMiYubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuU2VsZWN0VmFyaWFudFIFaX'
+    'RlbXMaOAoKU2VsZWN0SXRlbRIUCgV2YWx1ZRgBIAEoCVIFdmFsdWUSFAoFbGFiZWwYAiABKAlS'
+    'BWxhYmVsQgkKB3ZhcmlhbnQaYwoJRW51bVZhbHVlEhQKBXZhbHVlGAEgASgNUgV2YWx1ZRJACg'
+    'h2YXJpYW50cxgCIAMoCzIkLm1pemVyLm5vZGVzLk5vZGVTZXR0aW5nLkVudW1WYXJpYW50Ugh2'
+    'YXJpYW50cxo5CgtFbnVtVmFyaWFudBIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUSFAoFbGFiZWwYAi'
+    'ABKAlSBWxhYmVsGl8KB0lkVmFsdWUSFAoFdmFsdWUYASABKA1SBXZhbHVlEj4KCHZhcmlhbnRz'
+    'GAIgAygLMiIubWl6ZXIubm9kZXMuTm9kZVNldHRpbmcuSWRWYXJpYW50Ugh2YXJpYW50cxo3Cg'
+    'lJZFZhcmlhbnQSFAoFdmFsdWUYASABKA1SBXZhbHVlEhQKBWxhYmVsGAIgASgJUgVsYWJlbBrG'
+    'AQoLU3BsaW5lVmFsdWUSRQoFc3RlcHMYASADKAsyLy5taXplci5ub2Rlcy5Ob2RlU2V0dGluZy'
+    '5TcGxpbmVWYWx1ZS5TcGxpbmVTdGVwUgVzdGVwcxpwCgpTcGxpbmVTdGVwEgwKAXgYASABKAFS'
+    'AXgSDAoBeRgCIAEoAVIBeRIQCgNjMGEYAyABKAFSA2MwYRIQCgNjMGIYBCABKAFSA2MwYhIQCg'
+    'NjMWEYBSABKAFSA2MxYRIQCgNjMWIYBiABKAFSA2MxYhpfCgpNZWRpYVZhbHVlEhQKBXZhbHVl'
+    'GAEgASgJUgV2YWx1ZRI7Cg1hbGxvd2VkX3R5cGVzGAIgAygOMhYubWl6ZXIubWVkaWEuTWVkaW'
+    'FUeXBlUgxhbGxvd2VkVHlwZXMaKgoSU3RlcFNlcXVlbmNlclZhbHVlEhQKBXN0ZXBzGAEgAygI'
+    'UgVzdGVwcxoNCgtCdXR0b25WYWx1ZUIHCgV2YWx1ZUIICgZfbGFiZWw=');
 
 @$core.Deprecated('Use midiNodeConfigDescriptor instead')
 const MidiNodeConfig$json = {

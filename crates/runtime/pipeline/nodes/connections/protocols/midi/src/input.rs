@@ -20,6 +20,7 @@ const RANGE_FROM_SETTING: &str = "Range From";
 const RANGE_TO_SETTING: &str = "Range To";
 const PAGE_SETTING: &str = "Page";
 const CONTROL_SETTING: &str = "Control";
+const LEARN_SETTING: &str = "Learn";
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiInputNode {
@@ -102,6 +103,7 @@ impl ConfigurableNode for MidiInputNode {
                 setting!(RANGE_TO_SETTING, range.1 as u32)
                     .min(1u32)
                     .max(255u32),
+                setting!(button LEARN_SETTING, "Learn"),
             ],
             MidiInputConfig::Control { page, control } => {
                 let (pages, controls, _) =
@@ -111,12 +113,18 @@ impl ConfigurableNode for MidiInputNode {
                     binding_setting,
                     setting!(select PAGE_SETTING, &page, pages),
                     setting!(select CONTROL_SETTING, &control, controls),
+                    setting!(button LEARN_SETTING, "Learn"),
                 ]
             }
         }
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        if matches!(setting.value, NodeSettingValue::Button) && setting.id == LEARN_SETTING {
+            // TODO: start learning
+            return Ok(());
+        }
+        
         update!(select setting, DEVICE_SETTING, self.device);
         update!(enum setting, BINDING_SETTING, self.config);
         match &mut self.config {

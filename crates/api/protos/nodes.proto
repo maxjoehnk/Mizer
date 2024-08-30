@@ -173,6 +173,7 @@ message NodeSetting {
     MediaValue media_value = 13;
     UintValue uint_value = 14;
     StepSequencerValue step_sequencer_value = 15;
+    ButtonValue button_value = 16;
   }
 
   message TextValue {
@@ -274,6 +275,8 @@ message NodeSetting {
   message StepSequencerValue {
     repeated bool steps = 1;
   }
+
+  message ButtonValue {}
 }
 
 message MidiNodeConfig {

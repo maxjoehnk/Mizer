@@ -69,6 +69,9 @@ macro_rules! setting {
             $crate::NodeSettingValue::media($value.into(), $content_types)
         )
     };
+    (button $name:expr, $label:expr) => {
+        $crate::setting!($name, $crate::NodeSettingValue::Button).label($label)
+    };
 }
 
 #[macro_export]

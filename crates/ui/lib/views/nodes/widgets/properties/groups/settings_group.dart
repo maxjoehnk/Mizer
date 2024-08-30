@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
 
 import '../fields/boolean_field.dart';
 import '../fields/enum_field.dart';
+import '../fields/field.dart';
 import '../fields/media_field.dart';
 import '../fields/number_field.dart';
 import '../fields/sequencer_field.dart';
@@ -189,6 +191,12 @@ class NodeSettingsPane extends StatelessWidget {
               updated.stepSequencerValue = v;
               onUpdate(updated);
             });
+      }
+      if (setting.hasButtonValue()) {
+        child = Field(
+            label: "",
+            child: MizerButton(
+                child: Text(setting.label), onClick: () => onUpdate(setting), active: true));
       }
 
       return MouseRegion(

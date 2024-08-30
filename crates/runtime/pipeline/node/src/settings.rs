@@ -222,6 +222,7 @@ pub enum NodeSettingValue {
         content_types: Vec<MediaContentType>,
     },
     Steps(Vec<bool>),
+    Button,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
@@ -303,6 +304,7 @@ impl Hash for NodeSettingValue {
                 state.write_u8(8);
                 steps.hash(state);
             }
+            Self::Button => state.write_u8(9),
         }
     }
 }

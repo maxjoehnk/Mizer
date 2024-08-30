@@ -2786,6 +2786,38 @@ class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
   $core.List<$core.bool> get steps => $_getList(0);
 }
 
+class NodeSetting_ButtonValue extends $pb.GeneratedMessage {
+  factory NodeSetting_ButtonValue() => create();
+  NodeSetting_ButtonValue._() : super();
+  factory NodeSetting_ButtonValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_ButtonValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting.ButtonValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSetting_ButtonValue clone() => NodeSetting_ButtonValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSetting_ButtonValue copyWith(void Function(NodeSetting_ButtonValue) updates) => super.copyWith((message) => updates(message as NodeSetting_ButtonValue)) as NodeSetting_ButtonValue;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_ButtonValue create() => NodeSetting_ButtonValue._();
+  NodeSetting_ButtonValue createEmptyInstance() => create();
+  static $pb.PbList<NodeSetting_ButtonValue> createRepeated() => $pb.PbList<NodeSetting_ButtonValue>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_ButtonValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_ButtonValue>(create);
+  static NodeSetting_ButtonValue? _defaultInstance;
+}
+
 enum NodeSetting_Value {
   textValue, 
   floatValue, 
@@ -2798,6 +2830,7 @@ enum NodeSetting_Value {
   mediaValue, 
   uintValue, 
   stepSequencerValue, 
+  buttonValue, 
   notSet
 }
 
@@ -2818,6 +2851,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_MediaValue? mediaValue,
     NodeSetting_UintValue? uintValue,
     NodeSetting_StepSequencerValue? stepSequencerValue,
+    NodeSetting_ButtonValue? buttonValue,
   }) {
     final $result = create();
     if (id != null) {
@@ -2865,6 +2899,9 @@ class NodeSetting extends $pb.GeneratedMessage {
     if (stepSequencerValue != null) {
       $result.stepSequencerValue = stepSequencerValue;
     }
+    if (buttonValue != null) {
+      $result.buttonValue = buttonValue;
+    }
     return $result;
   }
   NodeSetting._() : super();
@@ -2883,10 +2920,11 @@ class NodeSetting extends $pb.GeneratedMessage {
     13 : NodeSetting_Value.mediaValue,
     14 : NodeSetting_Value.uintValue,
     15 : NodeSetting_Value.stepSequencerValue,
+    16 : NodeSetting_Value.buttonValue,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeSetting', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+    ..oo(0, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'label')
     ..aOS(3, _omitFieldNames ? '' : 'description')
@@ -2902,6 +2940,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     ..aOM<NodeSetting_MediaValue>(13, _omitFieldNames ? '' : 'mediaValue', subBuilder: NodeSetting_MediaValue.create)
     ..aOM<NodeSetting_UintValue>(14, _omitFieldNames ? '' : 'uintValue', subBuilder: NodeSetting_UintValue.create)
     ..aOM<NodeSetting_StepSequencerValue>(15, _omitFieldNames ? '' : 'stepSequencerValue', subBuilder: NodeSetting_StepSequencerValue.create)
+    ..aOM<NodeSetting_ButtonValue>(16, _omitFieldNames ? '' : 'buttonValue', subBuilder: NodeSetting_ButtonValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -3085,6 +3124,17 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearStepSequencerValue() => clearField(15);
   @$pb.TagNumber(15)
   NodeSetting_StepSequencerValue ensureStepSequencerValue() => $_ensure(14);
+
+  @$pb.TagNumber(16)
+  NodeSetting_ButtonValue get buttonValue => $_getN(15);
+  @$pb.TagNumber(16)
+  set buttonValue(NodeSetting_ButtonValue v) { setField(16, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasButtonValue() => $_has(15);
+  @$pb.TagNumber(16)
+  void clearButtonValue() => clearField(16);
+  @$pb.TagNumber(16)
+  NodeSetting_ButtonValue ensureButtonValue() => $_ensure(15);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

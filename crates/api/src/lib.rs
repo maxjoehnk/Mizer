@@ -1,5 +1,4 @@
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener};
-use std::rc::Rc;
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;

@@ -1,6 +1,6 @@
 use crate::definition::{
-    AxisGroup, ColorGroup, FixtureControl, FixtureControlChannel, FixtureControlType,
-    FixtureControls, FixtureMode, SubFixtureControlChannel,
+    AxisGroup, ColorGroup, FixtureControlChannel, FixtureControls, FixtureMode,
+    SubFixtureControlChannel,
 };
 use itertools::Itertools;
 use mizer_ui_api::table::*;

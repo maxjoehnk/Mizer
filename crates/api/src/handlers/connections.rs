@@ -1,5 +1,4 @@
 use futures::{Stream, StreamExt};
-use std::rc::Rc;
 use std::sync::Arc;
 
 use mizer_command_executor::*;

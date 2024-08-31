@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 
 use crate::{ApiCommand, Mizer};
-use mizer_clock::Clock;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;

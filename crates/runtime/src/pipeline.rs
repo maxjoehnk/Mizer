@@ -2,7 +2,7 @@ use crate::commands::StaticNodeDescriptor;
 use crate::context::CoordinatorRuntimeContext;
 use anyhow::Context;
 use indexmap::IndexMap;
-use mizer_clock::{BoxedClock, ClockFrame, SystemClock};
+use mizer_clock::{BoxedClock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
 use mizer_node::{
     NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,

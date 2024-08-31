@@ -8,12 +8,6 @@ pub struct Flags {
     pub generate_graph: bool,
     #[structopt(name = "FILE", parse(from_os_str))]
     pub file: Option<PathBuf>,
-    #[cfg(feature = "export_metrics")]
-    #[structopt(long)]
-    pub metrics: bool,
-    #[cfg(feature = "export_metrics")]
-    #[structopt(long, default_value = "8888")]
-    pub metrics_port: u16,
     /// Open the debug ui
     #[cfg(feature = "debug-ui")]
     #[structopt(long)]

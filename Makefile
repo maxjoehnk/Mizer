@@ -45,6 +45,21 @@ build-docker:
 mizer.zip: artifact
 	cd artifact && zip -r ../mizer.zip *
 
+Mizer.dmg: mizer.zip
+	mkdir mizer_dmg_content
+	unzip mizer.zip -d mizer_dmg_content
+	create-dmg --volname Mizer \
+		--volicon "artifact/Mizer.app/Contents/Resources/AppIcon.icns" \
+		--window-pos 200 120 \
+     	--window-size 800 400 \
+  		--icon-size 100 \
+  		--icon "Mizer.app" 200 190 \
+  		--hide-extension "Mizer.app" \
+  		--app-drop-link 600 185 \
+  		Mizer.dmg \
+	 	mizer_dmg_content
+	rm -rf mizer_dmg_content
+
 build-in-docker:
 	./.ci/test-local.sh
 

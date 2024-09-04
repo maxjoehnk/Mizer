@@ -174,7 +174,7 @@ jobs:
     runs-on: macos-14
     steps:
       - name: Install build dependencies
-        run: brew install protobuf ffmpeg pkg-config yasm cbindgen
+        run: brew install protobuf ffmpeg pkg-config yasm cbindgen create-dmg
       - uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -192,13 +192,13 @@ jobs:
         env:
           LIBUSB_STATIC: "true"
       - name: Package
-        run: make mizer.zip
+        run: make Mizer.dmg
         env:
           LIBUSB_STATIC: "true"
       - uses: actions/upload-artifact@v4
         with:
           name: macos-full
-          path: mizer.zip
+          path: Mizer.dmg
           if-no-files-found: error
 
   build-windows:

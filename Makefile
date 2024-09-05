@@ -77,6 +77,21 @@ Mizer.dmg: mizer.zip
 	@echo "Cleaning up..."
 	rm -rf to_be_bundled
 
+Mizer_unsigned.dmg: mizer.zip
+	rm -rf to_be_bundled
+	mkdir to_be_bundled
+	unzip mizer.zip -d to_be_bundled
+	create-dmg --volname Mizer \
+		--volicon "artifact/Mizer.app/Contents/Resources/AppIcon.icns" \
+		--window-pos 200 120 \
+     	--window-size 800 400 \
+  		--icon-size 100 \
+  		--icon "Mizer.app" 200 190 \
+  		--hide-extension "Mizer.app" \
+  		--app-drop-link 600 185 \
+  		Mizer_unsigned.dmg \
+	 	to_be_bundled
+	rm -rf to_be_bundled
 
 build-in-docker:
 	./.ci/test-local.sh

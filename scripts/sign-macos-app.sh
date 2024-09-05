@@ -2,7 +2,7 @@
 set -e
 
 echo "Preparing keychain..."
-echo "$MACOS_CERTIFICATE" | base64 --decode > certificate.p12
+echo "$MACOS_CERTIFICATE" | base64 --decode >certificate.p12
 security create-keychain -p "$MACOS_KEYCHAIN_PASSWORD" build.keychain
 security default-keychain -s build.keychain
 security unlock-keychain -p "$MACOS_KEYCHAIN_PASSWORD" build.keychain

@@ -51,15 +51,15 @@ Mizer.dmg: mizer.zip
 	unzip mizer.zip -d to_be_bundled
 
 	@echo "Preparing keychain..."
-	@echo "${MACOS_CERTIFICATE}" | base64 --decode > certificate.p12
-	@security create-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
-	@security default-keychain -s build.keychain
-	@security unlock-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
-	@security import certificate.p12 -k build.keychain -P "${MACOS_CERTIFICATE_PASSWORD}" -T /usr/bin/codesign
-	@security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
+	echo "${MACOS_CERTIFICATE}" | base64 --decode > certificate.p12
+	security create-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
+	security default-keychain -s build.keychain
+	security unlock-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
+	security import certificate.p12 -k build.keychain -P "${MACOS_CERTIFICATE_PASSWORD}" -T /usr/bin/codesign
+	security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
 
 	@echo "Signing app..."
-	@/usr/bin/codesign --force -s "${MACOS_CERTIFICATE_NAME}" ./to_be_bundled/Mizer.app -v
+	/usr/bin/codesign --force -s "${MACOS_CERTIFICATE_NAME}" ./to_be_bundled/Mizer.app -v
 
 	@echo "Packaging as .dmg..."
 	create-dmg --volname Mizer \

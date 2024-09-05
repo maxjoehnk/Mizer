@@ -53,6 +53,7 @@ Mizer.dmg: mizer.zip
 	rm to_be_bundled/Mizer.app/Contents/MacOS/settings.toml
 
 	./scripts/sign-macos-app.sh
+	./scripts/notarize-macos-app.sh
 	./scripts/package-dmg.sh
 
 	@echo "Cleaning up..."

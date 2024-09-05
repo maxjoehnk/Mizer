@@ -46,21 +46,22 @@ mizer.zip: artifact
 	cd artifact && zip -r ../mizer.zip *
 
 Mizer.dmg: mizer.zip
-	echo "Extracting packaged app..."
+	@echo "Extracting packaged app..."
 	mkdir to_be_bundled
 	unzip mizer.zip -d to_be_bundled
 
-	echo "Signing app..."
-	echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-	security create-keychain -p "$MACOS_KEYCHAIN_PASSWORD" build.keychain
-	security default-keychain -s build.keychain
-	security unlock-keychain -p "$MACOS_KEYCHAIN_PASSWORD" build.keychain
-	security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-	security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_KEYCHAIN_PASSWORD" build.keychain
+	@echo "Preparing keychain..."
+	@echo "${MACOS_CERTIFICATE}" | base64 --decode > certificate.p12
+	@security create-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
+	@security default-keychain -s build.keychain
+	@security unlock-keychain -p "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
+	@security import certificate.p12 -k build.keychain -P "${MACOS_CERTIFICATE_PASSWORD}" -T /usr/bin/codesign
+	@security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${MACOS_KEYCHAIN_PASSWORD}" build.keychain
 
-	/usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" ./to_be_bundled/Mizer.app -v
+	@echo "Signing app..."
+	@/usr/bin/codesign --force -s "${MACOS_CERTIFICATE_NAME}" ./to_be_bundled/Mizer.app -v
 
-	echo "Packaging as .dmg..."
+	@echo "Packaging as .dmg..."
 	create-dmg --volname Mizer \
 		--volicon "artifact/Mizer.app/Contents/Resources/AppIcon.icns" \
 		--window-pos 200 120 \
@@ -69,12 +70,13 @@ Mizer.dmg: mizer.zip
   		--icon "Mizer.app" 200 190 \
   		--hide-extension "Mizer.app" \
   		--app-drop-link 600 185 \
-  		--codesign "$MACOS_CERTIFICATE_NAME" \
+  		--codesign "${MACOS_CERTIFICATE_NAME}" \
   		Mizer.dmg \
 	 	to_be_bundled
 
-	echo "Cleaning up..."
+	@echo "Cleaning up..."
 	rm -rf to_be_bundled
+
 
 build-in-docker:
 	./.ci/test-local.sh

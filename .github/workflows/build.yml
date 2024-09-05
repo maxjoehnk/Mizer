@@ -192,10 +192,6 @@ jobs:
         env:
           LIBUSB_STATIC: "true"
       - name: Package
-        run: make mizer.zip
-        env:
-          LIBUSB_STATIC: "true"
-      - name: Package
         run: make Mizer.dmg
         env:
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}

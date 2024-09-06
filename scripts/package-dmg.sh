@@ -12,4 +12,4 @@ create-dmg --volname Mizer \
 	--app-drop-link 600 185 \
 	--codesign "$MACOS_CERTIFICATE_NAME" \
 	Mizer.dmg \
-	to_be_bundled
+	artifact

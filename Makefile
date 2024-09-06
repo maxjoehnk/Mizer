@@ -1,4 +1,4 @@
-.PHONY: mizer test benchmarks build-headless build build-release run clean flatpak
+.PHONY: mizer test benchmarks build-headless build build-release run clean flatpak artifact
 
 mizer: test build-headless build
 
@@ -34,6 +34,7 @@ clean:
 	rm -f mizer.flatpak
 
 artifact: build-release
+	rm -rf artifact || true
 	cargo run -p mizer-package
 
 package-headless:
@@ -45,24 +46,12 @@ build-docker:
 mizer.zip: artifact
 	cd artifact && zip -r ../mizer.zip *
 
-Mizer.dmg: mizer.zip
-	@echo "Extracting packaged app..."
-	mkdir to_be_bundled
-	unzip mizer.zip -d to_be_bundled
-	# TODO: Move settings file into Resources
-	rm to_be_bundled/Mizer.app/Contents/MacOS/settings.toml
-
+Mizer.dmg: artifact
 	./scripts/sign-macos-app.sh
 	./scripts/notarize-macos-app.sh
 	./scripts/package-dmg.sh
 
-	@echo "Cleaning up..."
-	rm -rf to_be_bundled
-
 Mizer_unsigned.dmg: mizer.zip
-	rm -rf to_be_bundled
-	mkdir to_be_bundled
-	unzip mizer.zip -d to_be_bundled
 	create-dmg --volname Mizer \
 		--volicon "artifact/Mizer.app/Contents/Resources/AppIcon.icns" \
 		--window-pos 200 120 \
@@ -72,8 +61,7 @@ Mizer_unsigned.dmg: mizer.zip
   		--hide-extension "Mizer.app" \
   		--app-drop-link 600 185 \
   		Mizer_unsigned.dmg \
-	 	to_be_bundled
-	rm -rf to_be_bundled
+	 	artifact
 
 build-in-docker:
 	./.ci/test-local.sh

@@ -9,7 +9,7 @@ xcrun notarytool store-credentials "notarytool-profile" --apple-id "$MACOS_NOTAR
 # notarization service
 
 echo "Creating temp notarization archive"
-ditto -c -k --keepParent "to_be_bundled/Mizer.app" "notarization.zip"
+ditto -c -k --keepParent "artifact/Mizer.app" "notarization.zip"
 
 # Here we send the notarization request to the Apple's Notarization service, waiting for the result.
 # This typically takes a few seconds inside a CI environment, but it might take more depending on the App
@@ -22,4 +22,4 @@ xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profil
 # Finally, we need to "attach the staple" to our executable, which will allow our app to be
 # validated by macOS even when an internet connection is not available.
 echo "Attach staple"
-xcrun stapler staple "to_be_bundled/Mizer.app"
+xcrun stapler staple "artifact/Mizer.app"

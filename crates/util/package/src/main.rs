@@ -1,6 +1,7 @@
 use std::fs;
-use std::fs::File;
+use std::fs::{DirEntry, File};
 use std::path::{Path, PathBuf};
+use anyhow::Context;
 
 use mizer_settings::Settings;
 
@@ -66,30 +67,30 @@ fn main() -> anyhow::Result<()> {
 #[cfg(target_os = "macos")]
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
-    artifact.link("Mizer.app")?;
-    artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
-    artifact.link_to(
+    artifact.copy("Mizer.app")?;
+    artifact.copy_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
+    artifact.copy_to(
         "deps/libndi.dylib",
         "Mizer.app/Contents/Frameworks/libndi.dylib",
     )?;
-    artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
-    artifact.link_source(
+    artifact.copy_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
+    artifact.copy_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/open-fixture-library",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/fixtures/qlcplus/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/qlcplus",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/fixtures/mizer-definitions/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/mizer",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/connections/protocols/midi/device-profiles/profiles",
         "Mizer.app/Contents/Resources/device-profiles/midi",
     )?;
-    artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {
+    artifact.copy_settings("Mizer.app/Contents/Resources/settings.toml", |settings| {
         settings.paths.media_storage = PathBuf::from("~/.mizer-media");
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("../Resources/device-profiles/midi"),
@@ -199,6 +200,48 @@ impl Artifact {
         })
     }
 
+    fn copy<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<()> {
+        self.copy_to(file.as_ref(), file.as_ref())
+    }
+
+    fn copy_to<P: AsRef<Path>, Q: AsRef<Path>>(&self, from: P, to: Q) -> anyhow::Result<()> {
+        let from = self.build_dir.join(from);
+        let to = self.artifact_dir.join(to);
+
+        fs::create_dir_all(to.parent().unwrap())?;
+
+        copy_all(&from, &to).context(format!("Copying from {from:?} to {to:?}"))?;
+
+        Ok(())
+    }
+
+    fn copy_source<P: AsRef<Path>, Q: AsRef<Path>>(&self, from: P, to: Q) -> anyhow::Result<()> {
+        let from = self.cwd.join(from);
+        let to = self.artifact_dir.join(to);
+
+        if let Some(parent) = to.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
+        copy_all(&from, &to).context(format!("Copying from {from:?} to {to:?}"))?;
+
+        Ok(())
+    }
+
+    fn copy_all_with_suffix_to<P: AsRef<Path>>(
+        &self,
+        suffix: &str,
+        target: P,
+    ) -> anyhow::Result<()> {
+        let files = self.get_files_with_suffix(suffix)?;
+
+        for file in files {
+            self.copy_to(file.path(), target.as_ref().join(&file.file_name()))?;
+        }
+
+        Ok(())
+    }
+
     fn link<P: AsRef<Path>>(&self, file: P) -> anyhow::Result<()> {
         self.link_to(file.as_ref(), file.as_ref())
     }
@@ -209,11 +252,7 @@ impl Artifact {
 
         fs::create_dir_all(to.parent().unwrap())?;
 
-        #[cfg(target_family = "unix")]
-        {
-            println!("Linking from {:?} to {:?}", from, to);
-            std::os::unix::fs::symlink(&from, &to)?;
-        }
+        link(&from, &to)?;
 
         Ok(())
     }
@@ -226,24 +265,7 @@ impl Artifact {
             fs::create_dir_all(parent)?;
         }
 
-        #[cfg(target_family = "unix")]
-        {
-            println!("Linking from {:?} to {:?}", from, to);
-            std::os::unix::fs::symlink(&from, &to)?;
-        }
-
-        Ok(())
-    }
-
-    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(
-        &self,
-        to: P,
-        editor: F,
-    ) -> anyhow::Result<()> {
-        let to = self.artifact_dir.join(to);
-        let mut settings = Settings::load()?;
-        editor(&mut settings);
-        settings.save_to(to)?;
+        link(&from, &to)?;
 
         Ok(())
     }
@@ -253,6 +275,16 @@ impl Artifact {
         suffix: &str,
         target: P,
     ) -> anyhow::Result<()> {
+        let files = self.get_files_with_suffix(suffix)?;
+
+        for file in files {
+            self.link_to(file.path(), target.as_ref().join(&file.file_name()))?;
+        }
+
+        Ok(())
+    }
+
+    fn get_files_with_suffix(&self, suffix: &str) -> anyhow::Result<Vec<DirEntry>> {
         let files = fs::read_dir(&self.build_dir)?;
         let files = files
             .into_iter()
@@ -277,11 +309,71 @@ impl Artifact {
             })
             .filter_map(|file: anyhow::Result<_>| file.ok().flatten())
             .collect::<Vec<_>>();
+        Ok(files)
+    }
 
-        for file in files {
-            self.link_to(file.path(), target.as_ref().join(&file.file_name()))?;
-        }
+    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(
+        &self,
+        to: P,
+        editor: F,
+    ) -> anyhow::Result<()> {
+        let to = self.artifact_dir.join(to);
+        let mut settings = Settings::load()?;
+        editor(&mut settings);
+        settings.save_to(to)?;
 
         Ok(())
     }
+}
+
+fn link(from: &Path, to: &Path) -> anyhow::Result<()> {
+    if fs::symlink_metadata(to).is_ok() {
+        fs::remove_file(to)?;
+    }
+    
+    #[cfg(target_family = "unix")]
+    {
+        println!("Linking from {:?} to {:?}", from, to);
+        std::os::unix::fs::symlink(from, to)?;
+    }
+    
+    Ok(())
+}
+
+fn copy_all(from: &Path, to: &Path) -> anyhow::Result<()> {
+    if from.is_dir() {
+        fs::remove_dir_all(to).ok();
+        fs::create_dir_all(to)?;
+        let files = fs::read_dir(from)?;
+        for file in files {
+            let file = file?;
+            let from = file.path();
+            let to = to.join(file.file_name());
+            if fs::symlink_metadata(&from)?.is_symlink() {
+                let target = fs::read_link(&from)?;
+                if target.is_absolute() {
+                    println!("Copying from {:?} to {:?}", target, to);
+                    fs::copy(&target, &to)?;
+                }else {
+                    link(&target, &to)?;
+                }
+                continue;
+            }
+            if from.is_dir() {
+                println!("Copying directory from {:?} to {:?}", from, to);
+                fs::create_dir_all(&to)?;
+                copy_all(&from, &to)?;
+                continue;
+            }
+            println!("Copying from {:?} to {:?}", from, to);
+            fs::copy(&from, &to)?;
+        }
+    }else {
+        fs::remove_file(to).ok();
+
+        println!("Copying from {:?} to {:?}", from, to);
+        fs::copy(from, to).context("Copying single file")?;
+    }
+
+    Ok(())
 }

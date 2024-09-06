@@ -12,4 +12,4 @@ security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PASSWOR
 security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$MACOS_KEYCHAIN_PASSWORD" build.keychain
 
 echo "Signing app..."
-/usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" ./to_be_bundled/Mizer.app -v
+/usr/bin/codesign --force -s "$MACOS_CERTIFICATE_NAME" --deep ./artifact/Mizer.app -v

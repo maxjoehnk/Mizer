@@ -1,5 +1,5 @@
-use std::sync::Arc;
 use parking_lot::Mutex;
+use std::sync::Arc;
 use test_case::test_case;
 
 use mizer_fixtures::definition::{
@@ -451,7 +451,7 @@ impl DmxWriter for TestDmxWriter {
         let mut buffer = self.buffer.lock();
         buffer[channel as usize] = value;
     }
-    
+
     fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
         assert!(channel < 512, "DMX Channel is above 512");
         assert!(
@@ -464,4 +464,3 @@ impl DmxWriter for TestDmxWriter {
         }
     }
 }
-

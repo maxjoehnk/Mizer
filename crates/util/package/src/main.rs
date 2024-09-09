@@ -1,7 +1,7 @@
+use anyhow::Context;
 use std::fs;
 use std::fs::{DirEntry, File};
 use std::path::{Path, PathBuf};
-use anyhow::Context;
 
 use mizer_settings::Settings;
 
@@ -354,7 +354,7 @@ fn copy_all(from: &Path, to: &Path) -> anyhow::Result<()> {
                 if target.is_absolute() {
                     println!("Copying from {:?} to {:?}", target, to);
                     fs::copy(&target, &to)?;
-                }else {
+                } else {
                     link(&target, &to)?;
                 }
                 continue;
@@ -368,7 +368,7 @@ fn copy_all(from: &Path, to: &Path) -> anyhow::Result<()> {
             println!("Copying from {:?} to {:?}", from, to);
             fs::copy(&from, &to)?;
         }
-    }else {
+    } else {
         fs::remove_file(to).ok();
 
         println!("Copying from {:?} to {:?}", from, to);

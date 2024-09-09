@@ -1,3 +1,5 @@
+use std::sync::Arc;
+use parking_lot::Mutex;
 use test_case::test_case;
 
 use mizer_fixtures::definition::{
@@ -7,6 +9,7 @@ use mizer_fixtures::definition::{
     SubFixtureDefinition,
 };
 use mizer_fixtures::fixture::{Fixture, IFixtureMut};
+use mizer_protocol_dmx::DmxWriter;
 
 #[test_case(1f64, 255, FixtureFaderControl::Intensity, "Brightness")]
 #[test_case(0f64, 0, FixtureFaderControl::Intensity, "Intensity")]
@@ -19,14 +22,16 @@ fn write_fader_control_should_output_given_value(
     control: FixtureFaderControl,
     name: &str,
 ) {
+    let test_writer = TestDmxWriter::default();
     let controls = create_controls(name.to_string(), control.clone());
     let mode = single_channel_mode(name, controls);
     let mut fixture = create_test_fixture([mode]);
 
     fixture.write_fader_control(control, value, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(expected, result[0]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(expected, buffer[0]);
 }
 
 #[test_case((1f64, 1f64, 1f64), (255, 255, 255))]
@@ -34,6 +39,7 @@ fn write_fader_control_should_output_given_value(
 #[test_case((0f64, 1f64, 0f64), (0, 255, 0))]
 #[test_case((0f64, 0f64, 1f64), (0, 0, 255))]
 fn write_fader_control_should_output_mixed_colors(value: (f64, f64, f64), expected: (u8, u8, u8)) {
+    let test_writer = TestDmxWriter::default();
     let controls = FixtureControls {
         color_mixer: Some(ColorGroup::Rgb {
             red: "Red".to_string(),
@@ -81,11 +87,12 @@ fn write_fader_control_should_output_mixed_colors(value: (f64, f64, f64), expect
         value.2,
         Default::default(),
     );
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(expected.0, result[0]);
-    assert_eq!(expected.1, result[1]);
-    assert_eq!(expected.2, result[2]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(expected.0, buffer[0]);
+    assert_eq!(expected.1, buffer[1]);
+    assert_eq!(expected.2, buffer[2]);
 }
 
 #[test_case(1f64, 255, FixtureFaderControl::Intensity, "Brightness")]
@@ -99,6 +106,7 @@ fn write_fader_control_should_output_given_value_for_sub_fixture(
     control: FixtureFaderControl,
     name: &str,
 ) {
+    let test_writer = TestDmxWriter::default();
     let sub_fixture_controls = create_controls(
         SubFixtureControlChannel::Channel(name.into()),
         control.clone(),
@@ -119,9 +127,10 @@ fn write_fader_control_should_output_given_value_for_sub_fixture(
         .expect("Sub fixture with id 1 should exist");
 
     sub_fixture.write_fader_control(control, value, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(expected, result[0]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(expected, buffer[0]);
 }
 
 #[test_case(1f64, 255, FixtureFaderControl::Intensity, "Brightness")]
@@ -135,6 +144,7 @@ fn write_fader_control_should_delegate_to_sub_fixtures(
     control: FixtureFaderControl,
     name: &str,
 ) {
+    let test_writer = TestDmxWriter::default();
     let controls = create_controls(FixtureControlChannel::Delegate, control.clone());
     let sub_fixture_controls = create_controls(
         SubFixtureControlChannel::Channel(name.into()),
@@ -153,14 +163,16 @@ fn write_fader_control_should_delegate_to_sub_fixtures(
     let mut fixture = create_test_fixture([mode]);
 
     fixture.write_fader_control(control, value, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(expected, result[0]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(expected, buffer[0]);
 }
 
 #[test_case(2)]
 #[test_case(5)]
 fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u16) {
+    let test_writer = TestDmxWriter::default();
     let controls = create_controls(
         FixtureControlChannel::Delegate,
         FixtureFaderControl::Intensity,
@@ -185,10 +197,11 @@ fn write_fader_control_should_delegate_to_all_sub_fixtures(count: u16) {
     let mut fixture = create_test_fixture([mode]);
 
     fixture.write_fader_control(FixtureFaderControl::Intensity, 1f64, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
+    let buffer = test_writer.get_buffer();
     for i in 0..count {
-        assert_eq!(255, result[i as usize]);
+        assert_eq!(255, buffer[i as usize]);
     }
 }
 
@@ -199,6 +212,7 @@ fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
     value: (f64, f64, f64),
     expected: (u8, u8, u8),
 ) {
+    let test_writer = TestDmxWriter::default();
     let controls = FixtureControls {
         color_mixer: Some(ColorGroup::Rgb {
             red: FixtureControlChannel::Delegate,
@@ -258,18 +272,20 @@ fn write_fader_control_should_delegate_color_mixing_to_all_sub_fixtures(
         value.2,
         Default::default(),
     );
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
+    let buffer = test_writer.get_buffer();
     for i in 0..count {
-        assert_eq!(expected.0, result[(i * 3) as usize]);
-        assert_eq!(expected.1, result[(i * 3 + 1) as usize]);
-        assert_eq!(expected.2, result[(i * 3 + 2) as usize]);
+        assert_eq!(expected.0, buffer[(i * 3) as usize]);
+        assert_eq!(expected.1, buffer[(i * 3 + 1) as usize]);
+        assert_eq!(expected.2, buffer[(i * 3 + 2) as usize]);
     }
 }
 
 #[test_case(1f64, 255, 255)]
 #[test_case(0.5f64, 127, 255)]
 fn write_fader_control_should_support_fine_values(value: f64, first_bytes: u8, second_bytes: u8) {
+    let test_writer = TestDmxWriter::default();
     let controls = create_controls("Intensity".to_string(), FixtureFaderControl::Intensity);
     let mode = FixtureMode::new(
         Default::default(),
@@ -283,10 +299,11 @@ fn write_fader_control_should_support_fine_values(value: f64, first_bytes: u8, s
     let mut fixture = create_test_fixture([mode]);
 
     fixture.write_fader_control(FixtureFaderControl::Intensity, value, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(first_bytes, result[0]);
-    assert_eq!(second_bytes, result[1]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(first_bytes, buffer[0]);
+    assert_eq!(second_bytes, buffer[1]);
 }
 
 #[test_case(1f64, 255, 255)]
@@ -296,6 +313,7 @@ fn write_fader_control_should_support_fine_values_for_sub_fixtures(
     first_bytes: u8,
     second_bytes: u8,
 ) {
+    let test_writer = TestDmxWriter::default();
     let sub_fixture_controls = create_controls(
         SubFixtureControlChannel::Channel("Intensity".into()),
         FixtureFaderControl::Intensity,
@@ -316,10 +334,11 @@ fn write_fader_control_should_support_fine_values_for_sub_fixtures(
         .expect("Sub fixture with id 1 should exist");
 
     sub_fixture.write_fader_control(FixtureFaderControl::Intensity, value, Default::default());
-    let result = fixture.get_dmx_values();
+    fixture.flush(&test_writer);
 
-    assert_eq!(first_bytes, result[0]);
-    assert_eq!(second_bytes, result[1]);
+    let buffer = test_writer.get_buffer();
+    assert_eq!(first_bytes, buffer[0]);
+    assert_eq!(second_bytes, buffer[1]);
 }
 
 fn single_channel_mode(
@@ -407,3 +426,42 @@ fn test_definition(modes: Vec<FixtureMode>) -> FixtureDefinition {
         provider: "test",
     }
 }
+
+struct TestDmxWriter {
+    buffer: Arc<Mutex<[u8; 512]>>,
+}
+
+impl Default for TestDmxWriter {
+    fn default() -> Self {
+        Self {
+            buffer: Arc::new(Mutex::new([0; 512])),
+        }
+    }
+}
+
+impl TestDmxWriter {
+    pub fn get_buffer(self) -> [u8; 512] {
+        Arc::try_unwrap(self.buffer).unwrap().into_inner()
+    }
+}
+
+impl DmxWriter for TestDmxWriter {
+    fn write_single(&self, universe: u16, channel: u16, value: u8) {
+        assert!(channel < 512, "DMX Channel is above 512");
+        let mut buffer = self.buffer.lock();
+        buffer[channel as usize] = value;
+    }
+    
+    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
+        assert!(channel < 512, "DMX Channel is above 512");
+        assert!(
+            channel as usize + values.len() <= 512,
+            "DMX Channel is above 512"
+        );
+        let mut buffer = self.buffer.lock();
+        for (i, value) in values.iter().enumerate() {
+            buffer[i + channel as usize] = *value;
+        }
+    }
+}
+

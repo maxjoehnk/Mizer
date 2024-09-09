@@ -296,7 +296,7 @@ impl Fixture {
         }
     }
 
-    pub(crate) fn flush(&mut self, output: &dyn DmxWriter) {
+    pub fn flush(&mut self, output: &dyn DmxWriter) {
         profiling::scope!("Fixture::flush");
         if self.current_mode.color_mixer.is_some() {
             self.update_color_mixer();
@@ -323,7 +323,7 @@ impl Fixture {
         output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }
 
-    pub fn get_dmx_values(&self) -> [u8; DMX_END_ADDRESS] {
+    fn get_dmx_values(&self) -> [u8; DMX_END_ADDRESS] {
         profiling::scope!("Fixture::get_dmx_values");
         let mut buffer = [0; DMX_END_ADDRESS];
 

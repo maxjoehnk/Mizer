@@ -1,4 +1,4 @@
-.PHONY: mizer test benchmarks build-headless build build-release run clean flatpak
+.PHONY: mizer test benchmarks build-headless build build-release run clean flatpak artifact
 
 mizer: test build-headless build
 
@@ -34,6 +34,7 @@ clean:
 	rm -f mizer.flatpak
 
 artifact: build-release
+	rm -rf artifact || true
 	cargo run -p mizer-package
 
 package-headless:
@@ -45,9 +46,12 @@ build-docker:
 mizer.zip: artifact
 	cd artifact && zip -r ../mizer.zip *
 
-Mizer.dmg: mizer.zip
-	mkdir mizer_dmg_content
-	unzip mizer.zip -d mizer_dmg_content
+Mizer.dmg: artifact
+	./scripts/sign-macos-app.sh
+	./scripts/notarize-macos-app.sh
+	./scripts/package-dmg.sh
+
+Mizer_unsigned.dmg: mizer.zip
 	create-dmg --volname Mizer \
 		--volicon "artifact/Mizer.app/Contents/Resources/AppIcon.icns" \
 		--window-pos 200 120 \
@@ -56,9 +60,8 @@ Mizer.dmg: mizer.zip
   		--icon "Mizer.app" 200 190 \
   		--hide-extension "Mizer.app" \
   		--app-drop-link 600 185 \
-  		Mizer.dmg \
-	 	mizer_dmg_content
-	rm -rf mizer_dmg_content
+  		Mizer_unsigned.dmg \
+	 	artifact
 
 build-in-docker:
 	./.ci/test-local.sh

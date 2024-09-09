@@ -1,12 +1,74 @@
 = Getting Started
-:experimental:
 
-Open a new project
+When you first open Mizer this is what you'll see.
 
-== Project Management
+.Startscreen
+image::ROOT:startscreen.png[]
 
-New projects can be created via the menu:[ File > New Project ] Menu.
+== Navigation Bar
 
-Opening projects can be done via the menu:[File > Open Project] Menu.
+On the left side you can see the navigation bar which contains all the different views. See xref:views.adoc[] for more information on the different views.
 
-The last 10 projects can be opened via the menu:[File > Open Recent] Menu.
+On top of the Navigation Bar is the btn:[Power] Button which will open the Shutdown Menu:
+
+.Shutdown Menu
+image::ROOT:shutdown-menu.png[]
+
+btn:[Shutdown] will shut down the computer.
+
+btn:[Reboot] will restart the computer.
+
+btn:[Quit] will close Mizer.
+
+The btn:[Shutdown] and btn:[Reboot] buttons are primarily intended for console like setups without a Desktop Environment.
+
+== Status Bar
+
+.Status Bar
+image::ROOT:status-bar.png[]
+
+At the bottom you can see the status bar.
+It will show shows status messages, the current FPS as well as the current time.
+
+Status messages can be which project was opened, a successful save or a new imported media file.
+
+== Transport Controls
+
+.Transport Controls
+image::ROOT:transport-controls.png[]
+
+Above the status bar you see the transport controls.
+The transport controls are split into multiple widgets:
+
+=== Beat Indicator
+Shows the current beat of the master clock.
+
+=== Tempo
+Shows the current tempo as BPM of the master clock.
+
+You can change the tempo by clicking on the tempo display and entering a new value or by dragging or scrolling on the tempo display.
+
+=== Tap
+The btn:[Tap] button allows you to tap the current tempo. It will calculate the tempo based on the timings of all taps since the first tap. If the last tap was more than 2 seconds ago, the previous timings will be cleared.
+
+=== Resync
+The btn:[Resync] will reset the beat to 1.
+
+=== Timecode
+The timecode display shows the current timecode of the master clock. It is split in Hours:Minutes:Seconds:Frames. The frames are dependent upon the current <<Framerate>>
+
+=== Stop/Pause/Play
+Pressing the btn:[Stop] button will stop the master clock resetting the timecode to 00:00:00:00.
+
+Pressing the btn:[Pause] button will pause the master clock at the current time.
+
+Pressing the btn:[Play] button will continue the master clock from the current time.
+
+=== Framerate
+
+You can select between different framerates by clicking on the framerate display and selecting a new framerate from the dropdown.
+
+The available framerates are:
+
+* 30 FPS
+* 60 FPS

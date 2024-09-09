@@ -1,1 +1,3 @@
 = Mizer
+
+Mizer combines a node based workflow with a classic fixture and programmer based workflow to create a powerful and flexible tool for live visualizations.

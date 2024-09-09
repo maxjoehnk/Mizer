@@ -1,0 +1,97 @@
+= Views
+
+== Layout
+
+The first view you'll see on startup is the Layout view.
+
+Here you can add interactive controls which will be available as Nodes in the Node view.
+
+You can also directly add presets, groups and sequences in this view.
+
+.Layout View Controls
+image::ROOT:views/layout.png[]
+
+Refer to xref:layout:index.adoc[] for further information.
+
+== 2D Plan
+
+.2D Plan View
+image::ROOT:views/2d-plan.png[]
+
+== Nodes
+
+.Nodes View
+image::ROOT:views/nodes.png[]
+
+== Sequencer
+
+.Sequencer View
+image::ROOT:views/sequencer.png[]
+
+== Fixtures
+
+.Fixtures View
+image::ROOT:views/fixtures.png[]
+
+== Presets
+
+.Presets View
+image::ROOT:views/presets.png[]
+
+== Effects
+
+.Effects View
+image::ROOT:views/effects.png[]
+
+== Media
+
+.Media View
+image::ROOT:views/media.png[]
+
+== Surfaces
+
+== Patch
+
+.Patch View
+image::ROOT:views/patch.png[]
+
+== DMX Output
+
+.DMX Output View
+image::ROOT:views/dmx-output.png[]
+
+== Connections
+
+.Connections View
+image::ROOT:views/connections.png[]
+
+== Timecode
+
+.Timecode View
+image::ROOT:views/timecode.png[]
+
+== History
+
+.History View
+image::ROOT:views/history.png[]
+
+== Session
+
+.Session View
+image::ROOT:views/session.png[]
+
+== Preferences
+
+.Preferences View
+image::ROOT:views/preferences.png[]
+
+== MIDI Profiles
+
+.MIDI Profiles View
+image::ROOT:views/midi-profiles.png[]
+
+== Fixture Definitions
+
+.Fixture Definitions View
+image::ROOT:views/fixture-definitions.png[]
+

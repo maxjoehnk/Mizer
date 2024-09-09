@@ -5,6 +5,7 @@ nav:
   - modules/ROOT/nav.adoc
   - modules/fixtures/nav.adoc
   - modules/sequencer/nav.adoc
+  - modules/layout/nav.adoc
   - modules/nodes/nav.adoc
   - modules/media/nav.adoc
   - modules/surfaces/nav.adoc

@@ -1,0 +1,13 @@
+= Project Management
+
+Projects are stored as `.yml` files. They contain all project related information except for the fixture profiles. This means you need to have the required fixture profiles installed on the target system to open a project.
+
+NOTE: I'm currently working on a new file format which will also include fixture profiles, media files and possibly app settings.
+
+|===
+| *Menu* | *Shortcut* | *Purpose*
+| menu:File[New Project] | | Create a new project
+| menu:File[Open Project] | kbd:[Ctrl + O] | Open an existing project
+| menu:File[Open Recent] | | Open one of the last 10 opened projects
+| menu:File[Save Project] | kbd:[Ctrl + S] | Save the current project
+| menu:File[Save Project As] | kbd:[Ctrl + Shift + S] | Save the current project as a new file

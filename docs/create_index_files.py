@@ -13,7 +13,8 @@ def generateIndexFile():
 
 
 def rootIndexTemplate(categories):
-    return f""".Nodes
+    return f"""* xref:nodes:index.adoc[]
+** Available Nodes
 {buildCategories(categories)}
 """
 
@@ -30,7 +31,7 @@ def generateCategoryContent(category):
 
 
 def categoryIndexTemplate(category, categories):
-    return f"""* {category.title()}
+    return f"""*** {category.title()}
 {concatNodes(category, categories)}
 """
 
@@ -40,7 +41,7 @@ def concatNodes(category, entries):
 
 
 def includeTemplate(category):
-    return lambda node: f"""** xref:nodes:{category}/{node}/index.adoc[]"""
+    return lambda node: f"""**** xref:nodes:{category}/{node}/index.adoc[]"""
 
 
 generateIndexFile()

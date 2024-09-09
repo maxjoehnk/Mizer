@@ -1,0 +1,9 @@
+= Nodes
+
+The Core of Mizer is the Node Graph which connects all other sub-systems.
+Almost all aspects of the software can be controlled via Nodes.
+
+Controlling a sequence for example can be done by connecting a xref:nodes:none/sequencer/index.adoc[Sequencer Node] to a xref:nodes:connections/midi-input/index.adoc[MIDI Input Node].
+
+.Connecting a MIDI Input to a Sequence
+image::nodes:sequencer-midi-connection.png[]

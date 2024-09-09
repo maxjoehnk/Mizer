@@ -1,2 +1,4 @@
 * xref:ROOT:getting-started.adoc[]
-** xref:ROOT:overview.adoc[]
+** xref:ROOT:views.adoc[]
+** xref:ROOT:project-management.adoc[]
+** xref:ROOT:patching-fixtures.adoc[]

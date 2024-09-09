@@ -1,0 +1,22 @@
+= Sequencer
+include::description.adoc[]
+
+image:none/sequencer/node.png[Node Preview]
+
+== Settings
+
+include::setting_sequence.adoc[leveloffset=+2]
+
+== Outputs
+
+include::port_output_active.adoc[leveloffset=+2]
+include::port_output_cue.adoc[leveloffset=+2]
+
+== Inputs
+
+include::port_input_go_.adoc[leveloffset=+2]
+include::port_input_playback.adoc[leveloffset=+2]
+include::port_input_playback_toggle.adoc[leveloffset=+2]
+include::port_input_stop.adoc[leveloffset=+2]
+include::port_input_cue.adoc[leveloffset=+2]
+include::port_input_rate.adoc[leveloffset=+2]

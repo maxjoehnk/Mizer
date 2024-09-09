@@ -1,0 +1,37 @@
+= Patching Fixtures
+
+To patch fixtures open the Patch window by clicking the btn:[Patch] button in the navigation bar or by pressing kbd:[F10].
+
+You should see the following window with an empty fixture list.
+
+.Patch Window
+image::ROOT:fixture-patch-view.png[]
+
+To patch a fixture click the btn:[Add Fixture] or press kbd:[Alt + A]. This will open the Fixture Patch dialog.
+
+.Fixture Patch Dialog
+image::ROOT:fixture-patch-dialog.png[]
+
+Here you can search for the fixtures you want to patch. The search bar at the top will search through the manufacturer and fixture name fields.
+
+When you've selected a fixture you can select its operating mode. On the right side you will see a short overview of the available channels in the given mode.
+
+.Fixture Patch Select Mode
+image::ROOT:fixture-patch-select-mode.png[]
+
+After you've selected the mode click the btn:[Next] button to configure the fixture's patch settings.
+
+.Fixture Patch Settings
+image::ROOT:fixture-patch-configuration.png[]
+
+Here you can configure the name, DMX Universe, DMX Channel, internal ID and the count.
+
+When the name ends with a number it will be automatically counted up as can be seen in the preview on the right side.
+
+.Filled Fixture Patch Settings
+image::ROOT:fixture-patch-configuration-2.png[]
+
+When you're ready press btn:[Add Fixtures] to patch the fixtures. You should now see the patched fixtures in the Patch window.
+
+.Patched Fixtures
+image::ROOT:patched-fixtures.png[]

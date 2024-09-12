@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use std::ops::Deref;
-
+use mizer_fixtures::channels::{DmxChannel, DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode, FixtureColorChannel, FixtureValue, SubFixtureChannelMode};
 use mizer_fixtures::definition::*;
+use mizer_fixtures::FixtureId::Fixture;
 use mizer_util::LerpExt;
 
 use crate::definition::*;
@@ -26,22 +27,10 @@ pub fn map_fixture_definition(
             .modes
             .into_iter()
             .map(|mode| {
-                let controls = create_controls(&mode, &channels, resource_reader);
+                let channel_definitions = create_fixture(&mode, &channels, resource_reader);
                 let sub_fixtures = create_sub_fixtures(&mode, &channels, resource_reader);
-                let channels = mode
-                    .channels
-                    .into_iter()
-                    .map(|mode_channel| {
-                        let channel = &channels[mode_channel.channel.deref()];
-
-                        FixtureChannelDefinition {
-                            name: channel.name.to_string(),
-                            resolution: ChannelResolution::Coarse(mode_channel.number),
-                        }
-                    })
-                    .collect();
-
-                FixtureMode::new(mode.name, channels, controls, sub_fixtures)
+                
+                FixtureChannelMode::new(mode.name, channel_definitions, sub_fixtures)
             })
             .collect(),
         tags: vec![definition.fixture_type],
@@ -49,11 +38,11 @@ pub fn map_fixture_definition(
     }
 }
 
-fn create_controls(
+fn create_fixture(
     mode: &ModeType,
     channels: &HashMap<String, ChannelType>,
     resource_reader: &ResourceReader<'_>,
-) -> FixtureControls<FixtureControlChannel> {
+) -> Vec<FixtureChannelDefinition> {
     let channels = mode
         .channels
         .iter()
@@ -64,21 +53,17 @@ fn create_controls(
                     .any(|channel| channel == &mode_channel.number)
             })
         })
-        .map(|mode_channel| channels[mode_channel.channel.deref()].clone())
+        .map(|mode_channel| (mode_channel, &channels[mode_channel.channel.deref()]))
         .collect::<Vec<_>>();
 
-    build_controls(
-        channels,
-        |channel| FixtureControlChannel::Channel(channel.name.to_string()),
-        resource_reader,
-    )
+    build_channels(channels, resource_reader)
 }
 
 fn create_sub_fixtures(
     mode: &ModeType,
     channels: &HashMap<String, ChannelType>,
     resource_reader: &ResourceReader<'_>,
-) -> Vec<SubFixtureDefinition> {
+) -> Vec<SubFixtureChannelMode> {
     mode.heads
         .iter()
         .enumerate()
@@ -90,33 +75,20 @@ fn create_sub_fixtures(
                 .filter_map(|channel_number| {
                     mode.channels.iter().find(|c| c.number == *channel_number)
                 })
-                .map(|channel| channels[channel.channel.deref()].clone())
+                .map(|mode_channel| (mode_channel, &channels[mode_channel.channel.deref()]))
                 .collect();
 
-            let controls = create_sub_fixture_controls(head_channels, resource_reader);
-            SubFixtureDefinition::new(id, format!("Head {id}"), controls)
+            let channel_definitions = build_channels(head_channels, resource_reader);
+            SubFixtureChannelMode::new(id, format!("Head {id}"), channel_definitions)
         })
         .collect()
 }
 
-fn create_sub_fixture_controls(
-    channels: Vec<ChannelType>,
+fn build_channels(
+    channels: Vec<(&ModeChannelType, &ChannelType)>,
     resource_reader: &ResourceReader<'_>,
-) -> FixtureControls<SubFixtureControlChannel> {
-    build_controls(
-        channels,
-        |channel| SubFixtureControlChannel::Channel(channel.name.to_string()),
-        resource_reader,
-    )
-}
-
-fn build_controls<TChannel>(
-    channels: Vec<ChannelType>,
-    control_channel_builder: impl Fn(&ChannelType) -> TChannel,
-    resource_reader: &ResourceReader<'_>,
-) -> FixtureControls<TChannel> {
-    let mut controls = FixtureControls::default();
-    let mut color_builder = ColorGroupBuilder::<TChannel>::new();
+) -> Vec<FixtureChannelDefinition> {
+    let mut channel_definitions = Vec::new();
     let gobo_channel = get_channel(
         &channels,
         GroupEnumType::Gobo,
@@ -127,116 +99,101 @@ fn build_controls<TChannel>(
         GroupEnumType::Colour,
         CapabilityPresetType::ColorMacro,
     );
-    for channel in channels {
-        let control_channel = control_channel_builder(&channel);
-        if let Some(group) = channel.group {
+    for (mode_channel, channel_type) in channels {
+        let channel = if let Some(group) = channel_type.group {
             match group.group {
-                GroupEnumType::Intensity => controls.intensity = Some(control_channel),
-                GroupEnumType::Shutter => controls.shutter = Some(control_channel),
-                GroupEnumType::Prism => controls.prism = Some(control_channel),
-                GroupEnumType::Pan => {
-                    controls.pan = Some(AxisGroup {
-                        channel: control_channel,
-                        angle: None,
-                    })
+                GroupEnumType::Intensity => FixtureChannel::Intensity,
+                GroupEnumType::Shutter => FixtureChannel::Shutter,
+                GroupEnumType::Prism => FixtureChannel::Prism,
+                GroupEnumType::Pan => FixtureChannel::Pan,
+                GroupEnumType::Tilt => FixtureChannel::Tilt,
+                GroupEnumType::Colour if color_channel.as_ref() == Some(&channel_type) => {
+                    FixtureChannel::ColorWheel
+                    // controls.color_wheel = Some(ColorWheelGroup {
+                    //     channel: control_channel,
+                    //     colors: channel_type
+                    //         .capabilities
+                    //         .into_iter()
+                    //         .filter(|capability| {
+                    //             capability.preset.is_none()
+                    //                 || capability.preset == Some(CapabilityPresetType::ColorMacro)
+                    //                 || capability.preset
+                    //                 == Some(CapabilityPresetType::ColorDoubleMacro)
+                    //         })
+                    //         .map(|capability| ColorWheelSlot {
+                    //             name: capability.name.to_string(),
+                    //             value: (capability.min as u8)
+                    //                 .linear_extrapolate((0, 255), (0., 1.)),
+                    //             color: vec![capability.resource1, capability.resource2]
+                    //                 .into_iter()
+                    //                 .flatten()
+                    //                 .collect(),
+                    //         })
+                    //         .collect(),
+                    // })
                 }
-                GroupEnumType::Tilt => {
-                    controls.tilt = Some(AxisGroup {
-                        channel: control_channel,
-                        angle: None,
-                    })
+                GroupEnumType::Gobo if gobo_channel.as_ref() == Some(&channel_type) => {
+                    FixtureChannel::GoboWheel
+                    // controls.gobo = Some(GoboGroup {
+                    //     channel: control_channel,
+                    //     gobos: channel_type
+                    //         .capabilities
+                    //         .into_iter()
+                    //         .map(|capability| Gobo {
+                    //             name: capability.name.to_string(),
+                    //             value: (capability.min as u8)
+                    //                 .linear_extrapolate((0, 255), (0., 1.)),
+                    //             image: capability
+                    //                 .resource1
+                    //                 .and_then(|file_name| resource_reader.read_gobo(&file_name)),
+                    //         })
+                    //         .collect(),
+                    // })
                 }
-                GroupEnumType::Colour if color_channel.as_ref() == Some(&channel) => {
-                    controls.color_wheel = Some(ColorWheelGroup {
-                        channel: control_channel,
-                        colors: channel
-                            .capabilities
-                            .into_iter()
-                            .filter(|capability| {
-                                capability.preset.is_none()
-                                    || capability.preset == Some(CapabilityPresetType::ColorMacro)
-                                    || capability.preset
-                                        == Some(CapabilityPresetType::ColorDoubleMacro)
-                            })
-                            .map(|capability| ColorWheelSlot {
-                                name: capability.name.to_string(),
-                                value: (capability.min as u8)
-                                    .linear_extrapolate((0, 255), (0., 1.)),
-                                color: vec![capability.resource1, capability.resource2]
-                                    .into_iter()
-                                    .flatten()
-                                    .collect(),
-                            })
-                            .collect(),
-                    })
-                }
-                GroupEnumType::Gobo if gobo_channel.as_ref() == Some(&channel) => {
-                    controls.gobo = Some(GoboGroup {
-                        channel: control_channel,
-                        gobos: channel
-                            .capabilities
-                            .into_iter()
-                            .map(|capability| Gobo {
-                                name: capability.name.to_string(),
-                                value: (capability.min as u8)
-                                    .linear_extrapolate((0, 255), (0., 1.)),
-                                image: capability
-                                    .resource1
-                                    .and_then(|file_name| resource_reader.read_gobo(&file_name)),
-                            })
-                            .collect(),
-                    })
-                }
-                _ => controls.generic.push(GenericControl {
-                    label: channel.name.to_string(),
-                    channel: control_channel,
-                }),
+                _ => todo!(),
             }
-        } else if let Some(preset) = channel.preset {
+        } else if let Some(preset) = channel_type.preset {
             match preset {
-                ChannelPresetType::IntensityRed => color_builder.red(control_channel),
-                ChannelPresetType::IntensityGreen => color_builder.green(control_channel),
-                ChannelPresetType::IntensityBlue => color_builder.blue(control_channel),
-                ChannelPresetType::IntensityWhite => color_builder.white(control_channel),
-                ChannelPresetType::IntensityAmber => color_builder.amber(control_channel),
-                ChannelPresetType::IntensityCyan => color_builder.cyan(control_channel),
-                ChannelPresetType::IntensityMagenta => color_builder.magenta(control_channel),
-                ChannelPresetType::IntensityYellow => color_builder.yellow(control_channel),
-                ChannelPresetType::IntensityDimmer => controls.intensity = Some(control_channel),
-                ChannelPresetType::IntensityMasterDimmer => {
-                    controls.intensity = Some(control_channel)
-                }
-                ChannelPresetType::PositionPan => {
-                    controls.pan = Some(AxisGroup {
-                        channel: control_channel,
-                        angle: None,
-                    })
-                }
-                ChannelPresetType::PositionTilt => {
-                    controls.tilt = Some(AxisGroup {
-                        channel: control_channel,
-                        angle: None,
-                    })
-                }
-                ChannelPresetType::BeamFocusFarNear | ChannelPresetType::BeamFocusNearFar => {
-                    controls.focus = Some(control_channel)
-                }
-                _ => {}
+                ChannelPresetType::IntensityRed => FixtureChannel::ColorMixer(FixtureColorChannel::Red),
+                ChannelPresetType::IntensityGreen => FixtureChannel::ColorMixer(FixtureColorChannel::Green),
+                ChannelPresetType::IntensityBlue => FixtureChannel::ColorMixer(FixtureColorChannel::Blue),
+                ChannelPresetType::IntensityWhite => FixtureChannel::ColorMixer(FixtureColorChannel::White),
+                ChannelPresetType::IntensityAmber => FixtureChannel::ColorMixer(FixtureColorChannel::Amber),
+                ChannelPresetType::IntensityCyan => FixtureChannel::ColorMixer(FixtureColorChannel::Cyan),
+                ChannelPresetType::IntensityMagenta => FixtureChannel::ColorMixer(FixtureColorChannel::Magenta),
+                ChannelPresetType::IntensityYellow => FixtureChannel::ColorMixer(FixtureColorChannel::Yellow),
+                ChannelPresetType::IntensityDimmer => FixtureChannel::Intensity,
+                ChannelPresetType::IntensityMasterDimmer => FixtureChannel::Intensity,
+                ChannelPresetType::PositionPan => FixtureChannel::Pan,
+                ChannelPresetType::PositionTilt => FixtureChannel::Tilt,
+                ChannelPresetType::BeamFocusFarNear | ChannelPresetType::BeamFocusNearFar => FixtureChannel::Focus,
+                ChannelPresetType::BeamZoomBigSmall | ChannelPresetType::BeamZoomSmallBig => FixtureChannel::Zoom,
+                _ => todo!()
             }
-        }
+        }else { 
+            todo!()
+        };
+
+        let channel_builder = FixtureChannelDefinition::builder()
+            .channels(DmxChannels::Resolution8Bit {
+                coarse: DmxChannel::new(mode_channel.number),
+            })
+            .channel(channel)
+            .maybe_default(channel_type.default.map(|d| FixtureValue::Percent(d as f64 / u8::MAX as f64)))
+            .label(channel_type.name.to_string().into());
+        
+        channel_definitions.push(channel_builder.build());
     }
-
-    controls.color_mixer = color_builder.build();
-
-    controls
+    
+    channel_definitions
 }
 
-fn get_channel(
-    channels: &[ChannelType],
+fn get_channel<'a>(
+    channels: &[(&ModeChannelType, &'a ChannelType)],
     group_type: GroupEnumType,
     preset_type: CapabilityPresetType,
-) -> Option<ChannelType> {
-    let is_channel = |c: &&ChannelType| {
+) -> Option<&'a ChannelType> {
+    let is_channel = |c: &&&ChannelType| {
         matches!(
             c.group,
             Some(GroupType {
@@ -247,6 +204,7 @@ fn get_channel(
     };
     channels
         .iter()
+        .map(|(_, channel)| channel)
         .filter(is_channel)
         .find(|channel| {
             channel
@@ -254,6 +212,8 @@ fn get_channel(
                 .iter()
                 .any(|c| c.preset == Some(preset_type))
         })
-        .or_else(|| channels.iter().find(is_channel))
+        .or_else(|| channels.iter()
+            .map(|(_, channel)| channel)
+            .find(is_channel))
         .cloned()
 }

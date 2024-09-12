@@ -59,9 +59,9 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                 .clone()
                 .into_iter()
                 .map(|control| CueControl {
-                    control: control.control,
+                    control: control.channel,
                     fixtures: control.fixtures.clone().into(),
-                    value: SequencerValue::Direct(control.value),
+                    value: SequencerValue::Direct(control.value.get_percent()),
                 })
                 .collect();
             match self.store_mode {

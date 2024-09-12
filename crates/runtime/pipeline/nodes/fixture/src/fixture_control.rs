@@ -1,6 +1,5 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use serde::{Deserialize, Serialize};
-
+use mizer_fixtures::channels::FixtureChannel;
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixturePriority;
@@ -21,7 +20,7 @@ pub struct FixtureControlNode {
     pub priority: FixturePriority,
     #[serde(default = "default_send_zero")]
     pub send_zero: bool,
-    pub control: FixtureControl,
+    pub control: FixtureChannel,
 }
 
 impl Default for FixtureControlNode {
@@ -30,7 +29,7 @@ impl Default for FixtureControlNode {
             fixture_id: 0,
             priority: FixturePriority::default(),
             send_zero: default_send_zero(),
-            control: FixtureControl::Intensity,
+            control: FixtureChannel::Intensity,
         }
     }
 }
@@ -40,16 +39,15 @@ fn default_send_zero() -> bool {
 }
 
 impl FixtureControlNode {
-    fn get_controls(
+    fn get_channels(
         &self,
         fixture_manager: &FixtureManager,
-    ) -> impl Iterator<Item = FixtureControl> {
+    ) -> impl Iterator<Item = FixtureChannel> {
         fixture_manager
             .get_fixture(self.fixture_id)
-            .map(|fixture| fixture.current_mode.controls.controls())
+            .map(|fixture| fixture.channel_mode.channels.keys().copied().collect::<Vec<_>>())
             .unwrap_or_default()
             .into_iter()
-            .map(|(control, _)| control)
     }
 }
 
@@ -65,7 +63,7 @@ impl ConfigurableNode for FixtureControlNode {
             })
             .collect();
         let controls = self
-            .get_controls(fixture_manager)
+            .get_channels(fixture_manager)
             .map(|control| SelectVariant::from(control.to_string()))
             .collect();
 
@@ -91,11 +89,12 @@ impl PipelineNode for FixtureControlNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             node_type_name: "Fixture Control".into(),
-            preview_type: if self.control.is_color() {
-                PreviewType::Color
-            } else {
-                PreviewType::History
-            },
+            // preview_type: if let FixtureChannel::ColorMixer(_) = self.control {
+            //     PreviewType::Color
+            // } else {
+            //     PreviewType::History
+            // },
+            preview_type: PreviewType::History,
             category: NodeCategory::Fixtures,
         }
     }
@@ -120,11 +119,11 @@ impl PipelineNode for FixtureControlNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        if self.control.is_color() {
-            vec![input_port!(INPUT_VALUE_PORT, PortType::Color)]
-        } else {
+        // if self.control.is_color() {
+        //     vec![input_port!(INPUT_VALUE_PORT, PortType::Color)]
+        // } else {
             vec![input_port!(INPUT_VALUE_PORT, PortType::Single)]
-        }
+        // }
     }
 
     fn node_type(&self) -> NodeType {
@@ -146,35 +145,33 @@ impl ProcessingNode for FixtureControlNode {
             return Ok(());
         };
 
-        if self.control.is_color() {
-            if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
-                fixture.write_fader_control(
-                    FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                    value.red,
-                    self.priority,
-                );
-                fixture.write_fader_control(
-                    FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                    value.green,
-                    self.priority,
-                );
-                fixture.write_fader_control(
-                    FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                    value.blue,
-                    self.priority,
-                );
-                context.write_color_preview(value);
-            }
-        } else {
+        // if self.control.is_color() {
+        //     if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
+        //         fixture.write_fader_control(
+        //             FixtureFaderControl::ColorMixer(ColorChannel::Red),
+        //             value.red,
+        //             self.priority,
+        //         );
+        //         fixture.write_fader_control(
+        //             FixtureFaderControl::ColorMixer(ColorChannel::Green),
+        //             value.green,
+        //             self.priority,
+        //         );
+        //         fixture.write_fader_control(
+        //             FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+        //             value.blue,
+        //             self.priority,
+        //         );
+        //         context.write_color_preview(value);
+        //     }
+        // } else {
             let reader = context.single_input(INPUT_VALUE_PORT);
             if reader.is_high().unwrap_or_default() || self.send_zero {
                 if let Some(value) = context.single_input(INPUT_VALUE_PORT).read() {
-                    for fader_control in self.control.clone().faders() {
-                        fixture.write_fader_control(fader_control, value, self.priority);
-                    }
+                    fixture.write_channel(self.control, value.into(), self.priority);
                     context.push_history_value(value);
                 }
-            }
+            // }
         }
 
         Ok(())

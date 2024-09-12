@@ -3,9 +3,8 @@ use std::hash::{Hash, Hasher};
 
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
-
+use mizer_fixtures::channels::FixtureChannel;
 use super::spline::*;
-use mizer_fixtures::definition::FixtureFaderControl;
 
 use crate::SequencerValue;
 
@@ -17,9 +16,9 @@ pub struct Effect {
 }
 
 impl Effect {
-    pub(crate) fn build_splines(&self) -> HashMap<FixtureFaderControl, Spline> {
+    pub(crate) fn build_splines(&self) -> HashMap<FixtureChannel, Spline> {
         let mut steps =
-            HashMap::<FixtureFaderControl, Vec<(EffectControlPoint, SequencerValue<f64>)>>::new();
+            HashMap::<FixtureChannel, Vec<(EffectControlPoint, SequencerValue<f64>)>>::new();
         for channel in self.channels.iter() {
             for step in channel.steps.iter() {
                 steps
@@ -91,12 +90,12 @@ impl EffectStep {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct EffectChannel {
-    pub control: FixtureFaderControl,
+    pub control: FixtureChannel,
     pub steps: Vec<EffectStep>,
 }
 
 impl EffectChannel {
-    pub const fn new(control: FixtureFaderControl, steps: Vec<EffectStep>) -> Self {
+    pub const fn new(control: FixtureChannel, steps: Vec<EffectStep>) -> Self {
         Self { control, steps }
     }
 

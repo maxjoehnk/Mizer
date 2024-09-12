@@ -2,21 +2,20 @@ use std::ops::DerefMut;
 use std::sync::Arc;
 
 use dashmap::DashMap;
-
-use crate::definition::FixtureFaderControl;
+use crate::channels::{FixtureChannel, FixtureValue};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::FixtureId;
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait FixtureController {
-    fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64);
+    fn write(&self, fixture_id: FixtureId, channel: FixtureChannel, value: FixtureValue);
     fn highlight(&self, fixture_id: FixtureId);
 }
 
 impl FixtureController for Arc<DashMap<u32, Fixture>> {
-    fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64) {
+    fn write(&self, fixture_id: FixtureId, channel: FixtureChannel, value: FixtureValue) {
         act_on_fixture(fixture_id, self, |fixture| {
-            fixture.write_fader_control(control, value, Default::default())
+            fixture.write_channel(channel, value, Default::default())
         });
     }
 

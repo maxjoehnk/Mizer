@@ -8,8 +8,11 @@ use serde::{Deserialize, Serialize};
 use crate::fixture::Fixture;
 pub use crate::module::*;
 pub use crate::priority::*;
+pub use crate::fixture_configuration::*;
 use crate::programmer::Color;
 
+pub mod channels;
+mod channel_evaluator;
 mod contracts;
 pub mod definition;
 pub mod fixture;
@@ -18,13 +21,13 @@ pub mod manager;
 mod processor;
 mod sub_fixture;
 pub mod ui_handlers;
-// TODO: should probably find a better name
-mod color_mixer;
 mod debug_ui_pane;
 mod module;
 mod priority;
 pub mod programmer;
 pub mod selection;
+
+mod fixture_configuration;
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]
@@ -89,7 +92,7 @@ impl FixtureStates {
     pub(crate) fn add_fixture(&self, fixture: &Fixture) {
         let mut states = self.0.read();
         states.insert(FixtureId::Fixture(fixture.id), Default::default());
-        for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
+        for sub_fixture in fixture.channel_mode.children.iter() {
             states.insert(
                 FixtureId::SubFixture(fixture.id, sub_fixture.id),
                 Default::default(),
@@ -101,7 +104,7 @@ impl FixtureStates {
     pub(crate) fn remove_fixture(&self, fixture: &Fixture) {
         let mut states = self.0.read();
         states.remove(&FixtureId::Fixture(fixture.id));
-        for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
+        for sub_fixture in fixture.channel_mode.children.iter() {
             states.remove(&FixtureId::SubFixture(fixture.id, sub_fixture.id));
         }
         self.0.set(states);

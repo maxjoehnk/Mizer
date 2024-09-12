@@ -31,6 +31,8 @@ rand = "0.8"
 itertools = "0.13"
 enum-iterator = "2.0"
 rayon = "1.10"
+derive_more = { version = "1", features = ["display", "from", "from_str"] }
+bon = "2.2"
 
 [dev-dependencies]
 test-case = "3.3"

@@ -6,7 +6,6 @@ use crate::state::{
 };
 use crate::value::*;
 use crate::Sequence;
-use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::selection::{BackwardsCompatibleFixtureSelection, FixtureSelection};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
@@ -15,6 +14,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
+use mizer_fixtures::channels::FixtureChannel;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -288,14 +288,14 @@ pub enum CueTrigger {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct CueControl {
-    pub control: FixtureFaderControl,
+    pub control: FixtureChannel,
     pub value: SequencerValue<f64>,
     pub fixtures: BackwardsCompatibleFixtureSelection,
 }
 
 impl CueControl {
     pub(crate) fn new(
-        control: FixtureFaderControl,
+        control: FixtureChannel,
         value: impl Into<SequencerValue<f64>>,
         fixtures: FixtureSelection,
     ) -> Self {
@@ -414,7 +414,7 @@ impl CueControl {
                 continue;
             };
             let previous_value = sequence_state
-                .get_fixture_value(fixture_id, &self.control)
+                .get_fixture_value(fixture_id, self.control)
                 .unwrap_or_default();
 
             match cue.cue_fade {

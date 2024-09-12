@@ -1,11 +1,11 @@
-use crate::definition::{ChannelResolution, FixtureChannelDefinition, FixtureMode};
 use itertools::Itertools;
 use mizer_ui_api::table::*;
+use crate::channels::{DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode};
 
 pub struct FixtureDefinitionDmxChannelTable;
 
 impl TableHandler for FixtureDefinitionDmxChannelTable {
-    type Data = FixtureMode;
+    type Data = FixtureChannelMode;
 
     fn get_table(&self, data: Self::Data) -> anyhow::Result<TableData> {
         let columns = vec![
@@ -28,23 +28,23 @@ impl TableHandler for FixtureDefinitionDmxChannelTable {
 }
 
 impl FixtureDefinitionDmxChannelTable {
-    fn build_row((name, definition): (String, FixtureChannelDefinition)) -> TableRow {
+    fn build_row((channel, definition): (FixtureChannel, FixtureChannelDefinition)) -> TableRow {
         TableRow {
-            id: name.clone(),
+            id: channel.to_string(),
             cells: vec![
                 TableCell {
-                    content: TableCellContent::Text(name),
+                    content: TableCellContent::Text(channel.to_string()),
                 },
                 TableCell {
-                    content: TableCellContent::Text(match definition.resolution {
-                        ChannelResolution::Coarse(coarse) => format!("8 Bit ({coarse})"),
-                        ChannelResolution::Fine(coarse, fine) => {
+                    content: TableCellContent::Text(match definition.channels {
+                        DmxChannels::Resolution8Bit { coarse } => format!("8 Bit ({coarse})"),
+                        DmxChannels::Resolution16Bit { coarse, fine } => {
                             format!("16 Bit ({coarse}, {fine})")
                         }
-                        ChannelResolution::Finest(coarse, fine, finest) => {
+                        DmxChannels::Resolution24Bit { coarse, fine, finest } => {
                             format!("24 Bit ({coarse}, {fine}, {finest})")
                         }
-                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => {
+                        DmxChannels::Resolution32Bit { coarse, fine, finest, ultra } => {
                             format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})")
                         }
                     }),

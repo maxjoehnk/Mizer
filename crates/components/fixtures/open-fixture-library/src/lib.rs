@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-
+use std::sync::Arc;
 use base64::prelude::*;
 use serde::{Deserialize, Serialize};
-
+use mizer_fixtures::channels::{DmxChannel, DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode, FixtureChannelPreset, FixtureColorChannel, FixtureImage, FixtureValue, SubFixtureChannelMode};
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::{find_path, LerpExt};
@@ -384,94 +384,20 @@ fn build_fixture_mode(
     mode: Mode,
     available_channels: &HashMap<String, Channel>,
     wheels: &HashMap<String, WheelDefinition>,
-) -> FixtureMode {
+) -> FixtureChannelMode {
     let all_channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
 
     let (pixels, channels): (Vec<_>, Vec<_>) = all_channels
         .clone()
         .into_iter()
         .partition(|name| is_pixel_channel(name, available_channels));
-    let controls: FixtureControls<FixtureControlChannel> =
-        group_controls(available_channels, &channels, wheels).into();
-    let sub_fixtures = group_sub_fixtures(available_channels, pixels, wheels);
+    let sub_fixtures = group_sub_fixtures(available_channels, pixels, wheels, &all_channels);
 
-    FixtureMode::new(
+    FixtureChannelMode::new(
         mode.name,
-        map_channels(available_channels, all_channels),
-        controls,
+        build_channel_definitions(available_channels, &channels, wheels, &all_channels),
         sub_fixtures,
     )
-}
-
-fn map_channels(
-    available_channels: &HashMap<String, Channel>,
-    channels: Vec<String>,
-) -> Vec<FixtureChannelDefinition> {
-    let channels_2 = channels.clone();
-
-    let mut channels_to_omit = Vec::new();
-
-    channels
-        .into_iter()
-        .enumerate()
-        .flat_map(|(i, channel)| {
-            if channels_to_omit.contains(&channel) {
-                return None;
-            }
-            let fine_channels = available_channels
-                .get(&channel)
-                .map(|c| &c.fine_channel_aliases[..]);
-            match fine_channels {
-                Some([fine]) => {
-                    let fine_channel = channels_2.iter().position(|c| c == fine);
-                    if let Some(fine_channel) = fine_channel {
-                        channels_to_omit.push(fine.to_string());
-                        Some(FixtureChannelDefinition {
-                            name: channel,
-                            resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                        })
-                    } else {
-                        Some(FixtureChannelDefinition {
-                            name: channel,
-                            resolution: ChannelResolution::Coarse(i as u16),
-                        })
-                    }
-                }
-                Some([fine, finest]) => {
-                    let fine_channel = channels_2.iter().position(|c| c == fine);
-                    let finest_channel = channels_2.iter().position(|c| c == finest);
-                    if let Some(fine_channel) = fine_channel {
-                        channels_to_omit.push(fine.to_string());
-                        if let Some(finest_channel) = finest_channel {
-                            channels_to_omit.push(finest.to_string());
-                            Some(FixtureChannelDefinition {
-                                name: channel,
-                                resolution: ChannelResolution::Finest(
-                                    i as u16,
-                                    fine_channel as u16,
-                                    finest_channel as u16,
-                                ),
-                            })
-                        } else {
-                            Some(FixtureChannelDefinition {
-                                name: channel,
-                                resolution: ChannelResolution::Fine(i as u16, fine_channel as u16),
-                            })
-                        }
-                    } else {
-                        Some(FixtureChannelDefinition {
-                            name: channel,
-                            resolution: ChannelResolution::Coarse(i as u16),
-                        })
-                    }
-                }
-                _ => Some(FixtureChannelDefinition {
-                    name: channel,
-                    resolution: ChannelResolution::Coarse(i as u16),
-                }),
-            }
-        })
-        .collect()
 }
 
 fn is_pixel_channel(channel_name: &str, available_channels: &HashMap<String, Channel>) -> bool {
@@ -501,7 +427,8 @@ fn group_sub_fixtures(
     available_channels: &HashMap<String, Channel>,
     pixels: Vec<String>,
     wheels: &HashMap<String, WheelDefinition>,
-) -> Vec<SubFixtureDefinition> {
+    all_channels: &[String],
+) -> Vec<SubFixtureChannelMode> {
     let mut pixel_groups = HashMap::<String, Vec<String>>::new();
 
     for name in pixels {
@@ -514,7 +441,7 @@ fn group_sub_fixtures(
 
     let mut sub_fixtures: Vec<_> = pixel_groups
         .into_iter()
-        .map(|(key, channels)| build_sub_fixture(key, available_channels, channels, wheels))
+        .map(|(key, channels)| build_sub_fixture(key, available_channels, channels, wheels, all_channels))
         .collect();
 
     sub_fixtures.sort_by_key(|f| f.id);
@@ -527,36 +454,89 @@ fn build_sub_fixture(
     available_channels: &HashMap<String, Channel>,
     channels: Vec<String>,
     wheels: &HashMap<String, WheelDefinition>,
-) -> SubFixtureDefinition {
+    all_channels: &[String],
+) -> SubFixtureChannelMode {
     let id = key
         .parse::<u32>()
         .unwrap_or_else(|_| panic!("'{}' is not a number", key));
 
-    SubFixtureDefinition::new(
+    SubFixtureChannelMode::new(
         id,
         format!("Pixel {}", key),
-        group_controls(available_channels, &channels, wheels).into(),
+        build_channel_definitions(available_channels, &channels, wheels, all_channels).into(),
     )
 }
 
-fn group_controls(
+fn build_channel_definitions(
     available_channels: &HashMap<String, Channel>,
     enabled_channels: &[String],
     wheels: &HashMap<String, WheelDefinition>,
-) -> FixtureControls<String> {
-    let channels = enabled_channels
+    all_channels: &[String],
+) -> Vec<FixtureChannelDefinition> {
+    let channels = all_channels
         .iter()
-        .filter_map(|name| {
+        .enumerate()
+        .filter(|(_, name)| enabled_channels.contains(name))
+        .filter_map(|(index, name)| {
             available_channels
                 .get(name)
-                .map(|channel| (name.clone(), channel))
+                .map(|channel| (index as u16, name.clone(), channel))
         })
         .collect::<Vec<_>>();
 
-    let mut color_group = ColorGroupBuilder::<String>::new();
-    let mut controls = FixtureControls::default();
+    let mut channel_definitions = Vec::new();
 
-    for (name, channel) in channels {
+    let mut channels_to_omit = Vec::new();
+
+    for (i, name, channel) in channels {
+        if channels_to_omit.contains(&name) {
+            continue;
+        }
+        let fine_channel_aliases = channel.fine_channel_aliases.iter()
+            .map(|name| {
+                if let Some(fine_channel) = all_channels.iter().position(|c| c == name) {
+                    Some((name.clone(), fine_channel as u16))
+                }else {
+                    None
+                }
+            }).collect::<Vec<_>>();
+        let dmx_channels = match fine_channel_aliases[..] {
+            [Some((fine_name, fine_channel))] => {
+                channels_to_omit.push(fine_name.to_string());
+                DmxChannels::Resolution16Bit {
+                    coarse: DmxChannel::new(i as u16),
+                    fine: DmxChannel::new(fine_channel),
+                }
+            }
+            [Some((fine_name, fine_channel)), Some((finest_name, finest_channel))] => {
+                channels_to_omit.push(fine_name.to_string());
+                channels_to_omit.push(finest_name.to_string());
+                DmxChannels::Resolution24Bit {
+                    coarse: DmxChannel::new(i as u16),
+                    fine: DmxChannel::new(fine_channel),
+                    finest: DmxChannel::new(finest_channel),
+                }
+            }
+            [Some((fine_name, fine_channel)), Some((finest_name, finest_channel)), Some((ultra_name, ultra_channel))] => {
+                channels_to_omit.push(fine_name.to_string());
+                channels_to_omit.push(finest_name.to_string());
+                channels_to_omit.push(ultra_name.to_string());
+                DmxChannels::Resolution32Bit {
+                    coarse: DmxChannel::new(i as u16),
+                    fine: DmxChannel::new(fine_channel),
+                    finest: DmxChannel::new(finest_channel),
+                    ultra: DmxChannel::new(ultra_channel),
+                }
+            }
+            _ => DmxChannels::Resolution8Bit {
+                coarse: DmxChannel::new(i as u16),
+            }
+        };
+
+        let channel_builder = FixtureChannelDefinition::builder()
+            .label(name.clone().into())
+            .channels(dmx_channels);
+        
         if channel
             .capabilities
             .iter()
@@ -573,9 +553,9 @@ fn group_controls(
             if let Some(wheel) = wheels.get(&name) {
                 let used_slots = channel.capabilities.iter().filter_map(|c| {
                     if let Capability::WheelSlot(WheelSlot::Single {
-                        slot_number,
-                        dmx_range,
-                    }) = c
+                                                     slot_number,
+                                                     dmx_range,
+                                                 }) = c
                     {
                         Some((slot_number, dmx_range))
                     } else {
@@ -587,30 +567,33 @@ fn group_controls(
                     .iter()
                     .any(|s| matches!(s, WheelSlotDefinition::Gobo { .. }))
                 {
-                    controls.gobo = Some(GoboGroup {
-                        channel: name,
-                        gobos: used_slots
-                            .filter_map(|(slot_index, dmx_range)| {
-                                let value =
-                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
-                                if let WheelSlotDefinition::Gobo { name, resource } =
-                                    &wheel.slots[(*slot_index as usize) - 1]
-                                {
-                                    let name = name
-                                        .clone()
-                                        .unwrap_or_else(|| format!("Gobo {}", slot_index));
+                    let channel_builder = channel_builder.channel(FixtureChannel::GoboWheel)
+                        .presets(
+                            used_slots
+                                .filter_map(|(slot_index, dmx_range)| {
+                                    let value =
+                                        dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
+                                    if let WheelSlotDefinition::Gobo { name, resource } =
+                                        &wheel.slots[(*slot_index as usize) - 1]
+                                    {
+                                        let name = name
+                                            .clone()
+                                            .unwrap_or_else(|| format!("Gobo {}", slot_index));
 
-                                    Some(Gobo {
-                                        name,
-                                        value,
-                                        image: resource.clone().map(GoboImage::from),
-                                    })
-                                } else {
-                                    None
-                                }
-                            })
-                            .collect(),
-                    });
+                                        Some(FixtureChannelPreset {
+                                            name,
+                                            value: FixtureValue::Percent(value),
+                                            image: resource.clone().map(FixtureImage::from),
+                                            color: Default::default(),
+                                        })
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .collect()
+                        );
+
+                    channel_definitions.push(channel_builder.build());
                     continue;
                 }
                 if wheel
@@ -618,126 +601,97 @@ fn group_controls(
                     .iter()
                     .any(|s| matches!(s, WheelSlotDefinition::Color { .. }))
                 {
-                    controls.color_wheel = Some(ColorWheelGroup {
-                        channel: name,
-                        colors: used_slots
-                            .filter_map(|(slot_index, dmx_range)| {
-                                let value =
-                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
-                                if let WheelSlotDefinition::Color { name, colors } =
-                                    &wheel.slots[(*slot_index as usize) - 1]
-                                {
-                                    let name = name
-                                        .clone()
-                                        .unwrap_or_else(|| format!("Color {}", slot_index));
+                    let channel_builder = channel_builder.channel(FixtureChannel::GoboWheel)
+                        .presets(
+                            used_slots
+                                .filter_map(|(slot_index, dmx_range)| {
+                                    let value =
+                                        dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
+                                    if let WheelSlotDefinition::Color { name, colors } =
+                                        &wheel.slots[(*slot_index as usize) - 1]
+                                    {
+                                        let name = name
+                                            .clone()
+                                            .unwrap_or_else(|| format!("Color {}", slot_index));
 
-                                    Some(ColorWheelSlot {
-                                        name,
-                                        value,
-                                        color: colors.clone(),
-                                    })
-                                } else {
-                                    None
-                                }
-                            })
-                            .collect(),
-                    });
+                                        Some(FixtureChannelPreset {
+                                            name,
+                                            value: FixtureValue::Percent(value),
+                                            image: None,
+                                            color: colors.clone(),
+                                        })
+                                    } else {
+                                        None
+                                    }
+                                })
+                                .collect()
+                        );
+
+                    channel_definitions.push(channel_builder.build());
                     continue;
                 }
             }
         }
-        match channel
+        let channel = match channel
             .capabilities
             .iter()
             .find(|c| !matches!(c, Capability::NoFunction))
         {
-            Some(Capability::Intensity) => {
-                controls.intensity = Some(name);
-            }
+            Some(Capability::Intensity) => FixtureChannel::Intensity,
             Some(Capability::ColorIntensity { color }) if color == COLOR_RED => {
-                color_group.red(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Red)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_GREEN => {
-                color_group.green(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Green)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_BLUE => {
-                color_group.blue(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Blue)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_WHITE => {
-                color_group.white(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::White)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
-                color_group.amber(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Amber)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_CYAN => {
-                color_group.cyan(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Cyan)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_MAGENTA => {
-                color_group.magenta(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Magenta)
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_YELLOW => {
-                color_group.yellow(name);
+                FixtureChannel::ColorMixer(FixtureColorChannel::Yellow)
             }
-            Some(Capability::Pan {
-                angle_start,
-                angle_end,
-            }) => {
-                controls.pan = Some(AxisGroup {
-                    channel: name,
-                    angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
-                    }),
-                })
+            Some(Capability::Pan { .. }) => FixtureChannel::Pan,
+            Some(Capability::Tilt { .. }) => FixtureChannel::Tilt,
+            Some(Capability::Focus) => FixtureChannel::Focus,
+            Some(Capability::Zoom) => FixtureChannel::Zoom,
+            Some(Capability::Prism) => FixtureChannel::Prism,
+            Some(Capability::Iris) => FixtureChannel::Iris,
+            Some(Capability::Frost) => FixtureChannel::Frost,
+            Some(Capability::ShutterStrobe { .. }) => FixtureChannel::Shutter,
+            Some(Capability::PanContinuous) => FixtureChannel::PanEndless,
+            Some(Capability::TiltContinuous) => FixtureChannel::TiltEndless,
+            capability => {
+                tracing::warn!("Unsupported capability: {:?}", capability);
+
+                continue
             }
-            Some(Capability::Tilt {
-                angle_start,
-                angle_end,
-            }) => {
-                controls.tilt = Some(AxisGroup {
-                    channel: name,
-                    angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
-                    }),
-                })
-            }
-            Some(Capability::Focus) => {
-                controls.focus = Some(name);
-            }
-            Some(Capability::Zoom) => {
-                controls.zoom = Some(name);
-            }
-            Some(Capability::Prism) => {
-                controls.prism = Some(name);
-            }
-            Some(Capability::Iris) => {
-                controls.iris = Some(name);
-            }
-            Some(Capability::Frost) => {
-                controls.frost = Some(name);
-            }
-            Some(Capability::ShutterStrobe { .. }) => {
-                controls.shutter = Some(name);
-            }
-            Some(_) => controls.generic.push(GenericControl {
-                label: name.clone(),
-                channel: name,
-            }),
-            _ => {}
-        }
+        };
+        
+        let channel_builder = channel_builder.channel(channel);
+
+        channel_definitions.push(channel_builder.build());
     }
 
-    controls.color_mixer = color_group.build();
-
-    controls
+    channel_definitions
 }
 
-impl From<Resource> for GoboImage {
+impl From<Resource> for FixtureImage {
     fn from(resource: Resource) -> Self {
         match resource.image.encoding.as_str() {
-            "utf8" => GoboImage::Svg(resource.image.data),
-            _ => GoboImage::Raster(Box::new(
+            "utf8" => FixtureImage::Svg(Arc::new(resource.image.data)),
+            _ => FixtureImage::Raster(Arc::new(
                 BASE64_STANDARD.decode(resource.image.data).unwrap(),
             )),
         }
@@ -748,7 +702,7 @@ impl From<Resource> for GoboImage {
 mod tests {
     use std::collections::HashMap;
 
-    use mizer_fixtures::definition::{ColorGroup, GenericControl};
+    
 
     use crate::{Capability, Channel};
 

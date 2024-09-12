@@ -1,6 +1,6 @@
+use mizer_fixtures::channels::{FixtureChannel, FixtureColorChannel, SubFixtureChannelMode};
 use mizer_fixtures::definition::{
-    ColorGroup, FixtureControlChannel, FixtureDefinition, SubFixtureControlChannel,
-    SubFixtureDefinition,
+    FixtureDefinition,
 };
 use mizer_open_fixture_library_provider::{
     Capability, Channel, FixtureManufacturer, Matrix, MatrixPixels, Mode,
@@ -22,33 +22,19 @@ fn should_map_pixels_to_sub_fixtures() {
     let fixture = FixtureDefinition::from(definition);
 
     let mode = &fixture.modes[0];
-    assert_eq!(mode.sub_fixtures.len(), 3);
-    assert_sub_fixture(&mode.sub_fixtures[0], 1);
-    assert_sub_fixture(&mode.sub_fixtures[1], 2);
-    assert_sub_fixture(&mode.sub_fixtures[2], 3);
+    assert_eq!(mode.children.len(), 3);
+    assert_sub_fixture(&mode.children[0], 1);
+    assert_sub_fixture(&mode.children[1], 2);
+    assert_sub_fixture(&mode.children[2], 3);
 }
 
-fn assert_sub_fixture(sub_fixture: &SubFixtureDefinition, index: u32) {
+fn assert_sub_fixture(sub_fixture: &SubFixtureChannelMode, index: u32) {
     assert_eq!(sub_fixture.id, index);
-    assert_eq!(sub_fixture.name, format!("Pixel {}", index));
-    assert!(sub_fixture.controls.color_mixer.is_some());
-    if let Some(ColorGroup::Rgb {
-        red, green, blue, ..
-    }) = sub_fixture.controls.color_mixer.as_ref()
-    {
-        assert_eq!(
-            red,
-            &SubFixtureControlChannel::Channel(format!("Red {}", index))
-        );
-        assert_eq!(
-            green,
-            &SubFixtureControlChannel::Channel(format!("Green {}", index))
-        );
-        assert_eq!(
-            blue,
-            &SubFixtureControlChannel::Channel(format!("Blue {}", index))
-        );
-    }
+    assert_eq!(sub_fixture.name.to_string(), format!("Pixel {}", index));
+    assert_eq!(sub_fixture.channels.len(), 3);
+    assert!(sub_fixture.channels.contains_key(&FixtureChannel::ColorMixer(FixtureColorChannel::Red)));
+    assert!(sub_fixture.channels.contains_key(&FixtureChannel::ColorMixer(FixtureColorChannel::Green)));
+    assert!(sub_fixture.channels.contains_key(&FixtureChannel::ColorMixer(FixtureColorChannel::Blue)));
 }
 
 #[test]

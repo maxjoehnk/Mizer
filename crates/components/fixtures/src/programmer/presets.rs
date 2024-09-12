@@ -2,8 +2,7 @@ use std::fmt::{Display, Formatter};
 
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
-
-use crate::definition::FixtureControlValue;
+use crate::channels::{FixtureChannel, FixtureChannelValue, FixtureColorChannel};
 
 pub type Color = (f64, f64, f64);
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
@@ -20,19 +19,6 @@ impl Position {
             (Some(pan), None) => Some(Self::Pan(pan)),
             (None, Some(tilt)) => Some(Self::Tilt(tilt)),
             (None, None) => None,
-        }
-    }
-}
-
-impl From<Position> for Vec<FixtureControlValue> {
-    fn from(value: Position) -> Self {
-        match value {
-            Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
-            Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
-            Position::PanTilt(pan, tilt) => vec![
-                FixtureControlValue::Pan(pan),
-                FixtureControlValue::Tilt(tilt),
-            ],
         }
     }
 }
@@ -54,14 +40,14 @@ pub enum PresetType {
 }
 
 impl PresetType {
-    pub fn contains_control(&self, control: &FixtureControlValue) -> bool {
+    pub fn contains_control(&self, control: &FixtureChannel) -> bool {
         match self {
-            Self::Intensity => matches!(control, &FixtureControlValue::Intensity(_)),
-            Self::Shutter => matches!(control, &FixtureControlValue::Shutter(_)),
-            Self::Color => matches!(control, &FixtureControlValue::ColorMixer(_, _, _)),
+            Self::Intensity => matches!(control, &FixtureChannel::Intensity),
+            Self::Shutter => matches!(control, &FixtureChannel::Shutter),
+            Self::Color => matches!(control, &FixtureChannel::ColorMixer(_)),
             Self::Position => matches!(
                 control,
-                &FixtureControlValue::Pan(_) | &FixtureControlValue::Tilt(_)
+                &FixtureChannel::Pan | &FixtureChannel::Tilt
             ),
         }
     }
@@ -70,6 +56,60 @@ impl PresetType {
 impl Display for PresetType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{self:?}")
+    }
+}
+
+pub enum PresetValue {
+    Intensity(f64),
+    Shutter(f64),
+    Color(Color),
+    Position(Position),
+}
+
+impl PresetValue {
+    pub fn into_channel_values(self) -> Vec<FixtureChannelValue> {
+        match self {
+            Self::Intensity(value) => vec![FixtureChannelValue {
+                channel: FixtureChannel::Intensity,
+                value: value.into(),
+            }],
+            Self::Shutter(value) => vec![FixtureChannelValue {
+                channel: FixtureChannel::Shutter,
+                value: value.into(),
+            }],
+            Self::Color((red, green, blue)) => vec![
+                FixtureChannelValue {
+                    channel: FixtureChannel::ColorMixer(FixtureColorChannel::Red),
+                    value: red.into(),
+                },
+                FixtureChannelValue {
+                    channel: FixtureChannel::ColorMixer(FixtureColorChannel::Green),
+                    value: green.into(),
+                },
+                FixtureChannelValue {
+                    channel: FixtureChannel::ColorMixer(FixtureColorChannel::Blue),
+                    value: blue.into(),
+                },
+            ],
+            Self::Position(Position::Pan(pan)) => vec![FixtureChannelValue {
+                channel: FixtureChannel::Pan,
+                value: pan.into(),
+            }],
+            Self::Position(Position::Tilt(tilt)) => vec![FixtureChannelValue {
+                channel: FixtureChannel::Tilt,
+                value: tilt.into(),
+            }],
+            Self::Position(Position::PanTilt(pan, tilt)) => vec![
+                FixtureChannelValue {
+                    channel: FixtureChannel::Pan,
+                    value: pan.into(),
+                },
+                FixtureChannelValue {
+                    channel: FixtureChannel::Tilt,
+                    value: tilt.into(),
+                },
+            ],
+        }
     }
 }
 
@@ -153,50 +193,24 @@ impl Presets {
         self.position.clear();
     }
 
-    pub fn get_preset_values(&self, id: PresetId) -> Vec<FixtureControlValue> {
+    pub fn get_preset_values(&self, id: PresetId) -> Option<PresetValue> {
         match id {
             PresetId::Intensity(id) => self
                 .intensity
                 .get(&id)
-                .map(|value| vec![FixtureControlValue::Intensity(value.value)])
-                .unwrap_or_default(),
+                .map(|value| PresetValue::Intensity(value.value)),
             PresetId::Shutter(id) => self
                 .shutter
                 .get(&id)
-                .map(|value| vec![FixtureControlValue::Shutter(value.value)])
-                .unwrap_or_default(),
-            PresetId::Color(id) => Self::color_value(&self.color, id),
-            PresetId::Position(id) => Self::position_value(&self.position, id),
-        }
-    }
-
-    fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<FixtureControlValue> {
-        if let Some(preset) = presets.get(&id) {
-            vec![FixtureControlValue::ColorMixer(
-                preset.value.0,
-                preset.value.1,
-                preset.value.2,
-            )]
-        } else {
-            Default::default()
-        }
-    }
-
-    fn position_value(
-        presets: &DashMap<u32, Preset<Position>>,
-        id: u32,
-    ) -> Vec<FixtureControlValue> {
-        if let Some(preset) = presets.get(&id) {
-            match preset.value {
-                Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
-                Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
-                Position::PanTilt(pan, tilt) => vec![
-                    FixtureControlValue::Pan(pan),
-                    FixtureControlValue::Tilt(tilt),
-                ],
-            }
-        } else {
-            Default::default()
+                .map(|value| PresetValue::Shutter(value.value)),
+            PresetId::Color(id) => self
+                .color
+                .get(&id)
+                .map(|value| PresetValue::Color(value.value)),
+            PresetId::Position(id) => self
+                .position
+                .get(&id)
+                .map(|value| PresetValue::Position(value.value)),
         }
     }
 

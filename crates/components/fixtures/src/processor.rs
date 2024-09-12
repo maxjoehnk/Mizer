@@ -4,10 +4,10 @@ use std::ops::Deref;
 use mizer_processing::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 
-use crate::definition::{ColorChannel, FixtureFaderControl};
 use crate::fixture::IFixture;
 use crate::manager::FixtureManager;
 use crate::{FixtureId, FixtureState};
+use crate::channels::{FixtureChannel, FixtureColorChannel};
 
 #[derive(Debug)]
 pub struct FixtureProcessor;
@@ -48,12 +48,12 @@ impl Processor for FixtureProcessor {
                 .par_iter()
                 .flat_map(|fixture| {
                     let mut states =
-                        Vec::with_capacity(1 + fixture.current_mode.sub_fixtures.len());
+                        Vec::with_capacity(1 + fixture.channel_mode.children.len());
 
                     let state = get_state(fixture.deref());
                     states.push((FixtureId::Fixture(fixture.id), state));
 
-                    for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
+                    for sub_fixture in fixture.channel_mode.children.iter() {
                         let id = FixtureId::SubFixture(fixture.id, sub_fixture.id);
                         if let Some(sub_fixture) = fixture.sub_fixture(sub_fixture.id) {
                             let state = get_state(&sub_fixture);
@@ -74,10 +74,10 @@ impl Processor for FixtureProcessor {
 
 fn get_state(fixture: &impl IFixture) -> FixtureState {
     let mut fixture_state = FixtureState::default();
-    fixture_state.brightness = fixture.read_control(FixtureFaderControl::Intensity);
-    let red = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Red));
-    let green = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Green));
-    let blue = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue));
+    fixture_state.brightness = fixture.read_channel(FixtureChannel::Intensity);
+    let red = fixture.read_channel(FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+    let green = fixture.read_channel(FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+    let blue = fixture.read_channel(FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
     fixture_state.color = red
         .zip(green)
         .zip(blue)

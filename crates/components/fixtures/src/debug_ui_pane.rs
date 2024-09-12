@@ -33,7 +33,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     columns[0].label("Channel");
                     columns[1].label(fixture.channel.to_string());
                 });
-                ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |_ui| {});
+                ui.collapsing_header(format!("Mode: {}", fixture.channel_mode.name), |_ui| {});
                 ui.collapsing_header("Configuration", |ui| {
                     ui.columns(2, |columns| {
                         columns[0].label("Invert Pan");
@@ -62,13 +62,13 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     });
                     ui.collapsing_header("Modes", |ui| {
                         for mode in &fixture.definition.modes {
-                            ui.collapsing_header(&mode.name, |ui| {
+                            ui.collapsing_header(mode.name.as_str(), |ui| {
                                 ui.collapsing_header("Channels", |ui| {
                                     ui.columns(2, |columns| {
-                                        for channel in mode.get_channels() {
-                                            columns[0].label(&channel.name);
-                                            columns[1].label(format!("{:?}", channel.resolution));
-                                        }
+                                        // for channel in mode.get_channels() {
+                                        //     columns[0].label(&channel.name);
+                                        //     columns[1].label(format!("{:?}", channel.resolution));
+                                        // }
                                     });
                                 });
                             });
@@ -91,59 +91,59 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                 ui.collapsing_header("Channel Values", |ui| {
                     ui.columns(2, |columns| {
                         for (channel, value) in fixture.channel_values.iter() {
-                            columns[0].label(channel);
+                            columns[0].label(channel.to_string());
                             columns[1].label(value.to_string());
                         }
                     });
                 });
-                ui.collapsing_header("Faders", |ui| {
-                    ui.columns(3, |columns| {
-                        for (control, _control_type) in
-                            fixture.current_mode.controls.controls().into_iter()
-                        {
-                            for fader in control.faders() {
-                                let channel =
-                                    fixture.current_mode.controls.get_channel(&fader).unwrap();
-                                let channel = format!("{:?}", channel);
-                                columns[0].label(format!("{fader:?}"));
-                                columns[1].label(
-                                    fixture.read_control(fader).unwrap_or_default().to_string(),
-                                );
-                                columns[2].label(channel);
-                            }
-                        }
-                    });
-                });
-                ui.collapsing_header("Sub Fixtures", |ui| {
-                    for sub_fixture in &fixture.current_mode.sub_fixtures {
-                        ui.collapsing_header(&sub_fixture.name, |ui| {
-                            ui.columns(3, |columns| {
-                                if let Some(sub_fixture) = fixture.sub_fixture(sub_fixture.id) {
-                                    for (control, _control_type) in
-                                        sub_fixture.definition.controls.controls().into_iter()
-                                    {
-                                        for fader in control.faders() {
-                                            let channel = sub_fixture
-                                                .definition
-                                                .controls
-                                                .get_channel(&fader)
-                                                .unwrap();
-                                            let channel = format!("{:?}", channel);
-                                            columns[0].label(format!("{fader:?}"));
-                                            columns[1].label(
-                                                sub_fixture
-                                                    .read_control(fader)
-                                                    .unwrap_or_default()
-                                                    .to_string(),
-                                            );
-                                            columns[2].label(channel);
-                                        }
-                                    }
-                                }
-                            });
-                        })
-                    }
-                });
+                // ui.collapsing_header("Faders", |ui| {
+                //     ui.columns(3, |columns| {
+                //         for (control, _control_type) in
+                //             fixture.current_mode.controls.controls().into_iter()
+                //         {
+                //             for fader in control.faders() {
+                //                 let channel =
+                //                     fixture.current_mode.controls.get_channel(&fader).unwrap();
+                //                 let channel = format!("{:?}", channel);
+                //                 columns[0].label(format!("{fader:?}"));
+                //                 columns[1].label(
+                //                     fixture.read_control(fader).unwrap_or_default().to_string(),
+                //                 );
+                //                 columns[2].label(channel);
+                //             }
+                //         }
+                //     });
+                // });
+                // ui.collapsing_header("Sub Fixtures", |ui| {
+                //     for sub_fixture in &fixture.current_mode.sub_fixtures {
+                //         ui.collapsing_header(&sub_fixture.name, |ui| {
+                //             ui.columns(3, |columns| {
+                //                 if let Some(sub_fixture) = fixture.sub_fixture(sub_fixture.id) {
+                //                     for (control, _control_type) in
+                //                         sub_fixture.definition.controls.controls().into_iter()
+                //                     {
+                //                         for fader in control.faders() {
+                //                             let channel = sub_fixture
+                //                                 .definition
+                //                                 .controls
+                //                                 .get_channel(&fader)
+                //                                 .unwrap();
+                //                             let channel = format!("{:?}", channel);
+                //                             columns[0].label(format!("{fader:?}"));
+                //                             columns[1].label(
+                //                                 sub_fixture
+                //                                     .read_control(fader)
+                //                                     .unwrap_or_default()
+                //                                     .to_string(),
+                //                             );
+                //                             columns[2].label(channel);
+                //                         }
+                //                     }
+                //                 }
+                //             });
+                //         })
+                //     }
+                // });
             });
         }
     }

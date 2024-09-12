@@ -1,7 +1,7 @@
 use std::collections::HashMap;
-
+use mizer_fixtures::channels::{FixtureChannel, FixtureChannelDefinition, FixtureChannelMode, FixtureColorChannel, SubFixtureChannelMode};
 use mizer_fixtures::definition::*;
-
+use mizer_fixtures::fixture::SubFixtureMut;
 use crate::definition::*;
 use crate::types::*;
 
@@ -31,25 +31,9 @@ type GdtfAttributes = HashMap<String, Attribute>;
 type GdtfFeatures = HashMap<FeatureRef, Feature>;
 type GdtfGeometries = HashMap<String, Geometry>;
 
-#[derive(Default)]
-struct GeometryStateBuilder {
-    controls: FixtureControls<FixtureControlChannel>,
-    color_builder: ColorGroupBuilder<FixtureControlChannel>,
-}
-
-impl GeometryStateBuilder {
-    fn build(mut self) -> GeometryState {
-        self.controls.color_mixer = self.color_builder.build();
-
-        GeometryState {
-            controls: self.controls,
-        }
-    }
-}
-
 #[derive(Debug, Default)]
 struct GeometryState {
-    controls: FixtureControls<FixtureControlChannel>,
+    channels: Vec<FixtureChannelDefinition>,
 }
 
 struct GdtfState {
@@ -93,11 +77,16 @@ impl GdtfState {
         }
     }
 
-    fn build_fixture_mode(&self, mode: DmxMode) -> FixtureMode {
-        let mut geometries: HashMap<String, GeometryStateBuilder> = Default::default();
+    fn build_fixture_mode(&self, mode: DmxMode) -> FixtureChannelMode {
+        let mut geometries: HashMap<String, GeometryState> = Default::default();
 
         for channel in mode.channels.channels.iter() {
             let geometry = geometries.entry(channel.geometry.clone()).or_default();
+
+            if channel.offset.is_virtual() {
+                continue;
+            }
+
             if let Some(attribute) = self.attributes.get(&channel.logical_channel.attribute) {
                 // FIXME: This is a hack so the SGM G-1 Beam profile works properly
                 // I need to investigate how to handle this case better
@@ -105,133 +94,107 @@ impl GdtfState {
                     continue;
                 }
                 if let Some(feature) = self.features.get(&attribute.feature) {
-                    let channel = if channel.offset.is_virtual() {
-                        // TODO: add FixtureControlChannel::Virtual which delegates to other channels
-                        continue;
-                    } else {
-                        FixtureControlChannel::Channel(format!(
-                            "{}_{}",
-                            channel.geometry, attribute.name
-                        ))
-                    };
-                    match feature.name.as_str() {
-                        "Dimmer" => geometry.controls.intensity = Some(channel),
-                        "Focus" => geometry.controls.focus = Some(channel),
+                    let fixture_channel = match feature.name.as_str() {
+                        "Dimmer" => FixtureChannel::Intensity,
+                        "Focus" => FixtureChannel::Focus,
                         "RGB" => match attribute.name.as_str() {
-                            "ColorAdd_R" => geometry.color_builder.red(channel),
-                            "ColorAdd_G" => geometry.color_builder.green(channel),
-                            "ColorAdd_B" => geometry.color_builder.blue(channel),
-                            "ColorAdd_RY" => geometry.color_builder.amber(channel),
-                            "ColorAdd_W" => geometry.color_builder.white(channel),
-                            _ => {}
+                            "ColorAdd_R" => FixtureChannel::ColorMixer(FixtureColorChannel::Red),
+                            "ColorAdd_G" => FixtureChannel::ColorMixer(FixtureColorChannel::Green),
+                            "ColorAdd_B" => FixtureChannel::ColorMixer(FixtureColorChannel::Blue),
+                            "ColorAdd_RY" => FixtureChannel::ColorMixer(FixtureColorChannel::Amber),
+                            "ColorAdd_W" => FixtureChannel::ColorMixer(FixtureColorChannel::White),
+                            _ => todo!("Currently unsupported color attribute: {}", attribute.name),
                         },
                         "Color" => {
-                            geometry.controls.color_wheel = Some(ColorWheelGroup {
-                                channel,
-                                colors: Default::default(),
-                            })
+                            FixtureChannel::ColorWheel
                         }
                         "PanTilt" => match attribute.name.as_str() {
                             "Pan" => {
-                                geometry.controls.pan = Some(AxisGroup {
-                                    channel,
-                                    angle: None,
-                                })
+                                FixtureChannel::Pan
                             }
                             "Tilt" => {
-                                geometry.controls.tilt = Some(AxisGroup {
-                                    channel,
-                                    angle: None,
-                                })
+                                FixtureChannel::Tilt
                             }
-                            _ => {}
+                            _ => todo!("Currently unsupported PanTilt attribute: {}", attribute.name),
                         },
-                        "Control" => {
-                            geometry.controls.generic.push(GenericControl {
-                                channel,
-                                label: attribute.pretty.clone(),
-                            });
-                        }
+                        // "Control" => {
+                        //     geometry.controls.generic.push(GenericControl {
+                        //         channel,
+                        //         label: attribute.pretty.clone(),
+                        //     });
+                        // }
                         "Beam" => match attribute.name.as_str() {
-                            "Shutter1" => geometry.controls.shutter = Some(channel),
-                            "Iris1" => geometry.controls.iris = Some(channel),
-                            "Frost1" => geometry.controls.frost = Some(channel),
-                            "Prism1" => geometry.controls.prism = Some(channel),
-                            "Zoom1" => geometry.controls.zoom = Some(channel),
-                            _ => {}
+                            "Shutter1" => FixtureChannel::Shutter,
+                            "Iris1" => FixtureChannel::Iris,
+                            "Frost1" => FixtureChannel::Frost,
+                            "Prism1" => FixtureChannel::Prism,
+                            "Zoom1" => FixtureChannel::Zoom,
+                            _ => todo!("Currently unsupported Beam attribute: {}", attribute.name),
                         },
                         "Gobo" => {
                             if attribute.name.as_str() == "Gobo1" {
-                                geometry.controls.gobo = Some(GoboGroup {
-                                    channel,
-                                    gobos: vec![], // TODO: read gobo wheel variants
-                                })
+                                FixtureChannel::GoboWheel
+                            } else {
+                                todo!("Currently unsupported Gobo attribute: {}", attribute.name)
                             }
                         }
-                        _ => {}
-                    }
+                        _ => todo!("Currently unsupported feature: {}", feature.name),
+                    };
+
+                    let channel_definition = FixtureChannelDefinition::builder()
+                        // TODO: Remove this clone
+                        .channels(channel.offset.clone().into())
+                        .label(format!("{}_{}", channel.geometry, attribute.name).into())
+                        .channel(fixture_channel)
+                        .build();
+
+                    geometry.channels.push(channel_definition);
                 }
             }
         }
-
-        let channels = mode
-            .channels
-            .channels
-            .into_iter()
-            .filter(|channel| !channel.offset.is_virtual())
-            .map(|channel| FixtureChannelDefinition {
-                name: format!("{}_{}", channel.geometry, channel.logical_channel.attribute),
-                resolution: channel.offset.into(),
-            })
-            .collect();
-
-        let mut geometries: HashMap<_, _> = geometries
-            .into_iter()
-            .map(|(name, geometry)| (name, geometry.build()))
-            .collect();
 
         let beam_count = self
             .geometries
             .count_beams(|name| geometries.contains_key(name));
 
-        let (controls, sub_fixtures) = if beam_count > 1 {
+        let (channels, sub_fixtures) = if beam_count > 1 {
             // TODO: this fails when a fixture has no "primary" beam as might be the case for the Roxx Blinders
             let parent_beam = self.geometries.first_beam().unwrap();
             let child_beams = parent_beam.child_beams();
 
-            let mut parent_controls = Default::default();
-            let parent_geometry = geometries.remove(&parent_beam.name).unwrap_or_default();
-            parent_controls += parent_geometry.controls;
+            let mut parent_controls: Vec<FixtureChannelDefinition> = Default::default();
+            let mut parent_geometry = geometries.remove(&parent_beam.name).unwrap_or_default();
+            parent_controls.append(&mut parent_geometry.channels);
 
             let sub_fixtures = child_beams
                 .into_iter()
                 .enumerate()
                 .map(|(i, beam)| {
-                    let mut controls = Default::default();
-                    let geometry = geometries.remove(&beam.name).unwrap_or_default();
-                    controls += geometry.controls.into();
-                    for geometry in beam
+                    let mut channels: Vec<FixtureChannelDefinition> = Default::default();
+                    let mut geometry = geometries.remove(&beam.name).unwrap_or_default();
+                    channels.append(&mut geometry.channels);
+                    for mut geometry in beam
                         .child_names()
                         .into_iter()
                         .map(|name| geometries.remove(name).unwrap_or_default())
                     {
-                        controls += geometry.controls.into();
+                        channels.append(&mut geometry.channels);
                     }
 
-                    SubFixtureDefinition::new(i as u32 + 1, beam.name.clone(), controls)
+                    SubFixtureChannelMode::new(i as u32 + 1, beam.name.clone(), channels)
                 })
                 .collect();
 
             (parent_controls, sub_fixtures)
         } else {
-            let mut controls = Default::default();
-            for (_, geometry) in geometries {
-                controls += geometry.controls;
+            let mut controls: Vec<FixtureChannelDefinition> = Default::default();
+            for (_, mut geometry) in geometries {
+                controls.append(&mut geometry.channels);
             }
 
             (controls, Default::default())
         };
 
-        FixtureMode::new(mode.name, channels, controls, sub_fixtures)
+        FixtureChannelMode::new(mode.name, channels, sub_fixtures)
     }
 }

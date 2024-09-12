@@ -1,5 +1,5 @@
+use mizer_fixtures::channels::FixtureChannel;
 use super::{Effect, EffectChannel, EffectStep};
-use mizer_fixtures::definition::FixtureFaderControl;
 
 const C: f64 = 0.55191502449351;
 
@@ -7,7 +7,7 @@ pub(crate) const CIRCLE: EffectTemplate<2, 5> = EffectTemplate::new(
     "Circle",
     [
         EffectChannelTemplate::new(
-            FixtureFaderControl::Pan,
+            FixtureChannel::Pan,
             [
                 EffectStep::new(1.0),
                 EffectStep::cubic(0.0, (C, 1.), (1., C)),
@@ -17,7 +17,7 @@ pub(crate) const CIRCLE: EffectTemplate<2, 5> = EffectTemplate::new(
             ],
         ),
         EffectChannelTemplate::new(
-            FixtureFaderControl::Tilt,
+            FixtureChannel::Tilt,
             [
                 EffectStep::new(0.0),
                 EffectStep::cubic(1.0, (1., C), (C, 1.)),
@@ -51,12 +51,12 @@ impl<const T: usize, const P: usize> From<(u32, &EffectTemplate<T, P>)> for Effe
 }
 
 pub(crate) struct EffectChannelTemplate<const T: usize> {
-    pub control: FixtureFaderControl,
+    pub control: FixtureChannel,
     pub steps: [EffectStep; T],
 }
 
 impl<const T: usize> EffectChannelTemplate<T> {
-    pub const fn new(control: FixtureFaderControl, steps: [EffectStep; T]) -> Self {
+    pub const fn new(control: FixtureChannel, steps: [EffectStep; T]) -> Self {
         Self { control, steps }
     }
 }

@@ -1,7 +1,8 @@
 use crate::definition::{
-    ChannelResolution, FixtureChannelDefinition, FixtureDefinition, FixtureMode,
+    FixtureDefinition,
 };
 use mizer_ui_api::table::*;
+use crate::channels::{DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode};
 
 pub struct FixtureDefinitionModesTable;
 
@@ -24,13 +25,13 @@ impl TableHandler for FixtureDefinitionModesTable {
 }
 
 impl FixtureDefinitionModesTable {
-    fn build_row(mode: FixtureMode) -> TableRow {
-        let dmx_channels = mode.dmx_channels() as u64;
+    fn build_row(mode: FixtureChannelMode) -> TableRow {
+        let dmx_channels = mode.channel_count() as u64;
         TableRow {
-            id: mode.name.clone(),
+            id: mode.name.to_string(),
             cells: vec![
                 TableCell {
-                    content: TableCellContent::Text(mode.name),
+                    content: TableCellContent::Text(mode.name.to_string()),
                 },
                 TableCell {
                     content: TableCellContent::Uint(dmx_channels),
@@ -40,23 +41,23 @@ impl FixtureDefinitionModesTable {
         }
     }
 
-    fn build_channel((name, definition): (String, FixtureChannelDefinition)) -> TableRow {
+    fn build_channel((channel, definition): (FixtureChannel, FixtureChannelDefinition)) -> TableRow {
         TableRow {
-            id: name.clone(),
+            id: channel.to_string(),
             cells: vec![
                 TableCell {
-                    content: TableCellContent::Text(name),
+                    content: TableCellContent::Text(channel.to_string()),
                 },
                 TableCell {
-                    content: TableCellContent::Text(match definition.resolution {
-                        ChannelResolution::Coarse(coarse) => format!("8 Bit ({coarse})"),
-                        ChannelResolution::Fine(coarse, fine) => {
+                    content: TableCellContent::Text(match definition.channels {
+                        DmxChannels::Resolution8Bit { coarse } => format!("8 Bit ({coarse})"),
+                        DmxChannels::Resolution16Bit { coarse, fine } => {
                             format!("16 Bit ({coarse}, {fine})")
                         }
-                        ChannelResolution::Finest(coarse, fine, finest) => {
+                        DmxChannels::Resolution24Bit { coarse, fine, finest } => {
                             format!("24 Bit ({coarse}, {fine}, {finest})")
                         }
-                        ChannelResolution::Ultra(coarse, fine, finest, ultra) => {
+                        DmxChannels::Resolution32Bit { coarse, fine, finest, ultra } => {
                             format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})")
                         }
                     }),

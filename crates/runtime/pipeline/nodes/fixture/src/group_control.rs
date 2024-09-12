@@ -1,10 +1,10 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
 use crate::contracts::FixtureController;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
+use mizer_fixtures::channels::FixtureChannel;
 use mizer_node::*;
 
 const GROUP_SETTING: &str = "Group";
@@ -27,7 +27,7 @@ pub struct GroupControlNode {
     pub priority: FixturePriority,
     #[serde(default = "default_send_zero")]
     pub send_zero: bool,
-    pub control: FixtureControl,
+    pub control: FixtureChannel,
     #[serde(default)]
     pub phase: i64,
     #[serde(default)]
@@ -42,7 +42,7 @@ impl Default for GroupControlNode {
             group_id: Default::default(),
             priority: FixturePriority::default(),
             send_zero: default_send_zero(),
-            control: FixtureControl::Intensity,
+            control: FixtureChannel::Intensity,
             phase: Default::default(),
             fan: Default::default(),
             asymmetrical: false,
@@ -58,11 +58,10 @@ impl GroupControlNode {
     fn get_controls(
         &self,
         fixture_manager: &FixtureManager,
-    ) -> impl Iterator<Item = FixtureControl> {
+    ) -> impl Iterator<Item = FixtureChannel> {
         fixture_manager
             .get_group_fixture_controls(self.group_id)
             .into_iter()
-            .map(|(control, _)| control)
     }
 }
 
@@ -117,11 +116,12 @@ impl PipelineNode for GroupControlNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             node_type_name: "Group Control".into(),
-            preview_type: if self.control.is_color() {
-                PreviewType::Color
-            } else {
-                PreviewType::History
-            },
+            // preview_type: if self.control.is_color() {
+            //     PreviewType::Color
+            // } else {
+            //     PreviewType::History
+            // },
+            preview_type: PreviewType::History,
             category: NodeCategory::Fixtures,
         }
     }
@@ -138,11 +138,11 @@ impl PipelineNode for GroupControlNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        let value_port = if self.control.is_color() {
-            input_port!(INPUT_VALUE_PORT, PortType::Color)
-        } else {
-            input_port!(INPUT_VALUE_PORT, PortType::Single)
-        };
+        // let value_port = if self.control.is_color() {
+        //     input_port!(INPUT_VALUE_PORT, PortType::Color)
+        // } else {
+        let value_port = input_port!(INPUT_VALUE_PORT, PortType::Single);
+        // };
 
         vec![
             value_port,
@@ -184,41 +184,41 @@ impl ProcessingNode for GroupControlNode {
             .read()
             .unwrap_or(self.fan);
 
-        if self.control.is_color() {
-            if !matches!(&buffer, ControlBuffer::Color(_)) {
-                *buffer = ControlBuffer::color();
-            }
-            let ControlBuffer::Color(buffer) = buffer else {
-                unreachable!("ControlBuffer got changed to color but somehow changed back");
-            };
-            if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
-                buffer.push(value);
-                context.write_color_preview(value);
-            } else {
-                buffer.clear();
-            }
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.red),
-                FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.green),
-                FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.blue),
-                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                phase,
-                fan,
-            );
-        } else {
+        // if self.control.is_color() {
+        //     if !matches!(&buffer, ControlBuffer::Color(_)) {
+        //         *buffer = ControlBuffer::color();
+        //     }
+        //     let ControlBuffer::Color(buffer) = buffer else {
+        //         unreachable!("ControlBuffer got changed to color but somehow changed back");
+        //     };
+        //     if let Some(value) = context.color_input(INPUT_VALUE_PORT).read() {
+        //         buffer.push(value);
+        //         context.write_color_preview(value);
+        //     } else {
+        //         buffer.clear();
+        //     }
+        //     self.write(
+        //         manager,
+        //         buffer.iter().map(|c| c.red),
+        //         FixtureFaderControl::ColorMixer(ColorChannel::Red),
+        //         phase,
+        //         fan,
+        //     );
+        //     self.write(
+        //         manager,
+        //         buffer.iter().map(|c| c.green),
+        //         FixtureFaderControl::ColorMixer(ColorChannel::Green),
+        //         phase,
+        //         fan,
+        //     );
+        //     self.write(
+        //         manager,
+        //         buffer.iter().map(|c| c.blue),
+        //         FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+        //         phase,
+        //         fan,
+        //     );
+        // } else {
             if !matches!(&buffer, ControlBuffer::Single(_)) {
                 *buffer = ControlBuffer::single();
             }
@@ -232,20 +232,20 @@ impl ProcessingNode for GroupControlNode {
             } else {
                 buffer.clear();
             }
-            for fader_control in self.control.clone().faders() {
-                self.write(manager, buffer.iter().copied(), fader_control, phase, fan);
-            }
-        }
+            // for fader_control in self.control.clone().faders() {
+            self.write(manager, buffer.iter().copied(), self.control, phase, fan);
+            // }
+        // }
 
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        if self.control.is_color() {
-            ControlBuffer::color()
-        } else {
+        // if self.control.is_color() {
+        //     ControlBuffer::color()
+        // } else {
             ControlBuffer::single()
-        }
+        // }
     }
 }
 
@@ -254,7 +254,7 @@ impl GroupControlNode {
         &self,
         manager: &impl FixtureController,
         buffer: impl DoubleEndedIterator<Item = f64>,
-        control: FixtureFaderControl,
+        control: FixtureChannel,
         phase: i64,
         fan: f64,
     ) {
@@ -262,7 +262,7 @@ impl GroupControlNode {
         if phase == 0 && fan == 0. {
             if let Some(value) = buffer.last() {
                 if value.is_high() || self.send_zero {
-                    manager.write_group_control(self.group_id, control, value, self.priority);
+                    manager.write_group_control(self.group_id, control, value.into(), self.priority);
                 }
             }
         } else if fan.is_normal() && phase == 0 {
@@ -356,7 +356,7 @@ impl GroupControlNode {
                         );
                     }
                     for id in middle {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                        manager.write_fixture_control(*id, control.clone(), value.into(), self.priority);
                     }
                 } else {
                     if self.asymmetrical {
@@ -378,7 +378,7 @@ impl GroupControlNode {
                             manager.write_fixture_control(
                                 *id,
                                 control.clone(),
-                                value,
+                                value.into(),
                                 self.priority,
                             );
                         }
@@ -401,7 +401,7 @@ impl GroupControlNode {
                             manager.write_fixture_control(
                                 *id,
                                 control.clone(),
-                                value - fan,
+                                (value - fan).into(),
                                 self.priority,
                             );
                         }
@@ -432,14 +432,14 @@ impl GroupControlNode {
         manager: &impl FixtureController,
         fixtures: impl Iterator<Item = &'a [Vec<FixtureId>]>,
         buffer: impl Iterator<Item = f64>,
-        control: FixtureFaderControl,
+        control: FixtureChannel,
     ) {
         profiling::scope!("GroupControlNode::write_phased");
         for (group, value) in fixtures.zip(buffer) {
             if value.is_high() || self.send_zero {
                 for fixtures in group {
                     for id in fixtures {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                        manager.write_fixture_control(*id, control.clone(), value.into(), self.priority);
                     }
                 }
             }
@@ -452,13 +452,13 @@ impl GroupControlNode {
         groups: impl Iterator<Item = &'a Vec<FixtureId>>,
         value: f64,
         step_size: f64,
-        control: FixtureFaderControl,
+        control: FixtureChannel,
     ) {
         profiling::scope!("GroupControlNode::write_fanned");
         for (i, group) in groups.enumerate() {
             let value = value - (step_size * i as f64);
             for id in group {
-                manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                manager.write_fixture_control(*id, control.clone(), value.into(), self.priority);
             }
         }
     }

@@ -22,7 +22,7 @@ impl PatchExporter {
                     fixture.channel,
                     fixture.definition.manufacturer,
                     fixture.definition.name,
-                    fixture.current_mode.name
+                    fixture.channel_mode.name
                 )
             })
             .collect::<Vec<_>>();

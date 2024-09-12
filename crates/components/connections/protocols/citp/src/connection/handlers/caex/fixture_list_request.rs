@@ -68,7 +68,7 @@ impl FixtureListRequestHandler {
                 manufacturer_name: Ucs2::from_str(&fixture.definition.manufacturer)
                     .or_else(|_| Ucs2::from_str(""))
                     .unwrap(),
-                mode_name: Ucs2::from_str(&fixture.current_mode.name)
+                mode_name: Ucs2::from_str(&fixture.channel_mode.name)
                     .or_else(|_| Ucs2::from_str(""))
                     .unwrap(),
                 data: citp::protocol::caex::FixtureData {
@@ -82,7 +82,7 @@ impl FixtureListRequestHandler {
                     position: Default::default(),
                     angles: Default::default(),
                 },
-                channel_count: fixture.current_mode.dmx_channels(),
+                channel_count: fixture.channel_mode.channel_count(),
                 is_dimmer: 0,
                 identifier_count: 0,
                 identifiers: Default::default(),

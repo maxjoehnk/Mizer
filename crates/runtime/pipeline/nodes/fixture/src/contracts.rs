@@ -1,21 +1,21 @@
-use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
+use mizer_fixtures::channels::{FixtureChannel, FixtureValue};
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait FixtureController {
     fn write_group_control(
         &self,
         group_id: GroupId,
-        control: FixtureFaderControl,
-        value: f64,
+        control: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     );
     fn write_fixture_control(
         &self,
         fixture_id: FixtureId,
-        control: FixtureFaderControl,
-        value: f64,
+        control: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     );
     /// Returns a list of fixture id lists
@@ -26,21 +26,21 @@ impl FixtureController for FixtureManager {
     fn write_group_control(
         &self,
         group_id: GroupId,
-        control: FixtureFaderControl,
-        value: f64,
+        channel: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     ) {
-        self.write_group_control(group_id, control, value, priority);
+        self.write_group_control(group_id, channel, value, priority);
     }
 
     fn write_fixture_control(
         &self,
         fixture_id: FixtureId,
-        control: FixtureFaderControl,
-        value: f64,
+        channel: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     ) {
-        self.write_fixture_control(fixture_id, control, value, priority);
+        self.write_fixture_control(fixture_id, channel, value, priority);
     }
 
     fn get_group_fixture_ids(&self, group_id: GroupId) -> Vec<Vec<FixtureId>> {

@@ -1,8 +1,8 @@
 use std::time::Instant;
 
-use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::{FixtureId, FixturePriority};
+use mizer_fixtures::channels::{FixtureChannel, FixtureValue};
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait Clock {
@@ -23,8 +23,8 @@ pub(crate) trait FixtureController {
     fn write(
         &self,
         fixture_id: FixtureId,
-        control: FixtureFaderControl,
-        value: f64,
+        control: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     );
 }
@@ -33,8 +33,8 @@ impl FixtureController for FixtureManager {
     fn write(
         &self,
         fixture_id: FixtureId,
-        control: FixtureFaderControl,
-        value: f64,
+        control: FixtureChannel,
+        value: FixtureValue,
         priority: FixturePriority,
     ) {
         self.write_fixture_control(fixture_id, control, value, priority);

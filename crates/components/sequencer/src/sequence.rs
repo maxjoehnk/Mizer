@@ -83,7 +83,7 @@ impl Sequence {
                     fixture_controller.write(
                         fixture_id,
                         control.control.clone(),
-                        value,
+                        value.into(),
                         self.priority,
                     );
                     state.set_fixture_value(fixture_id, control.control.clone(), value);
@@ -93,7 +93,7 @@ impl Sequence {
         for preset in &cue.presets {
             for (fixture_id, control, value) in preset.values(cue, state, presets) {
                 fixture_controller.write(fixture_id, control.clone(), value, self.priority);
-                state.set_fixture_value(fixture_id, control, value);
+                state.set_fixture_value(fixture_id, control, value.get_percent());
             }
         }
         for effect in &cue.effects {

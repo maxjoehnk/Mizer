@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-
-use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::channels::FixtureChannel;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
 use mizer_fixtures::FixturePriority;
@@ -14,7 +13,7 @@ pub(crate) struct EffectInstance {
     pub fixtures: FixtureSelection,
     effect: Effect,
     frame: f64,
-    splines: HashMap<FixtureFaderControl, Spline>,
+    splines: HashMap<FixtureChannel, Spline>,
     pub rate: f64,
     pub(crate) fixture_offset: Option<SequencerTime>,
     pub priority: FixturePriority,
@@ -68,7 +67,7 @@ impl EffectInstance {
                         fixture_manager.write_fixture_control(
                             id,
                             control.clone(),
-                            values[i],
+                            values[i].into(),
                             self.priority,
                         );
                     }

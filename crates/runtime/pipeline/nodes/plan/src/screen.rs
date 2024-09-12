@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
-
+use mizer_fixtures::channels::{FixtureChannel, FixtureColorChannel};
 use crate::texture_to_pixels::TextureToPixelsConverter;
-use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixturePriority;
 use mizer_node::*;
@@ -205,28 +204,28 @@ impl ProcessingNode for PlanScreenNode {
                     if self.write_intensity {
                         manager.write_fixture_control(
                             fixture.fixture,
-                            FixtureFaderControl::Intensity,
-                            alpha,
+                            FixtureChannel::Intensity,
+                            alpha.into(),
                             self.priority,
                         );
                     }
                     if self.write_color {
                         manager.write_fixture_control(
                             fixture.fixture,
-                            FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                            red,
+                            FixtureChannel::ColorMixer(FixtureColorChannel::Red),
+                            red.into(),
                             self.priority,
                         );
                         manager.write_fixture_control(
                             fixture.fixture,
-                            FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                            green,
+                            FixtureChannel::ColorMixer(FixtureColorChannel::Green),
+                            green.into(),
                             self.priority,
                         );
                         manager.write_fixture_control(
                             fixture.fixture,
-                            FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                            blue,
+                            FixtureChannel::ColorMixer(FixtureColorChannel::Blue),
+                            blue.into(),
                             self.priority,
                         );
                     }

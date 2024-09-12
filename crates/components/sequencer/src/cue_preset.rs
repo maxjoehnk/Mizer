@@ -1,10 +1,10 @@
 use crate::state::SequenceState;
 use crate::Cue;
-use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::programmer::{PresetId, Presets, ProgrammedPreset};
 use mizer_fixtures::selection::BackwardsCompatibleFixtureSelection;
 use mizer_fixtures::FixtureId;
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::channels::{FixtureChannel, FixtureValue};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct CuePreset {
@@ -27,17 +27,17 @@ impl CuePreset {
         _cue: &Cue,
         _state: &SequenceState,
         presets: &Presets,
-    ) -> Vec<(FixtureId, FixtureFaderControl, f64)> {
+    ) -> Vec<(FixtureId, FixtureChannel, FixtureValue)> {
         presets
             .get_preset_values(self.preset_id)
             .into_iter()
-            .flat_map(|control| control.into_fader_values())
-            .flat_map(|(control, value)| {
+            .flat_map(|control| control.into_channel_values())
+            .flat_map(|value| {
                 self.fixtures
                     .get_fixtures()
                     .into_iter()
                     .flatten()
-                    .map(move |fixture_id| (fixture_id, control.clone(), value))
+                    .map(move |fixture_id| (fixture_id, value.channel, value.value))
             })
             .collect()
     }

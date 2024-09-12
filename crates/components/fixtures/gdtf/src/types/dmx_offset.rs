@@ -1,6 +1,6 @@
-use mizer_fixtures::definition::ChannelResolution;
 use std::num::ParseIntError;
 use std::str::FromStr;
+use mizer_fixtures::channels::{DmxChannel, DmxChannels};
 
 #[derive(Debug, Clone)]
 pub struct DmxChannelOffset(Option<Vec<u16>>);
@@ -43,14 +43,16 @@ impl FromStr for DmxChannelOffset {
     }
 }
 
-impl From<DmxChannelOffset> for ChannelResolution {
+impl From<DmxChannelOffset> for DmxChannels {
     fn from(offset: DmxChannelOffset) -> Self {
-        match &offset.0.unwrap()[..] {
-            [coarse] => Self::Coarse(*coarse),
-            [coarse, fine] => Self::Fine(*coarse, *fine),
-            [coarse, fine, finest] => Self::Finest(*coarse, *fine, *finest),
-            [coarse, fine, finest, ultra] => Self::Ultra(*coarse, *fine, *finest, *ultra),
-            offset => unimplemented!("Unsupported offset {offset:?}"),
+        let channels = offset.0.unwrap().into_iter().map(DmxChannel::new).collect::<Vec<_>>();
+        let count = channels.len();
+        match channels[..] {
+            [coarse] => Self::Resolution8Bit { coarse },
+            [coarse, fine] => Self::Resolution16Bit { coarse, fine },
+            [coarse, fine, finest] => Self::Resolution24Bit { coarse, fine, finest },
+            [coarse, fine, finest, ultra] => Self::Resolution32Bit { coarse, fine, finest, ultra },
+            _ => unimplemented!("Unsupported offset count: {count}"),
         }
     }
 }

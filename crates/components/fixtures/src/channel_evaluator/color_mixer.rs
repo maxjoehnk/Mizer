@@ -1,7 +1,6 @@
 use palette::{FromColor, Hsv, Srgb};
-
-use crate::definition::ColorGroup;
-use crate::fixture::{ChannelValue, IChannelType};
+use crate::channel_evaluator::ChannelValue;
+use crate::channels::FixtureValue;
 use crate::FixturePriority;
 
 #[derive(Debug, Clone, Default, PartialEq)]
@@ -17,7 +16,7 @@ impl ColorMixer {
         Self {
             virtual_dimmer: virtual_dimmer.then(|| {
                 let mut value = ChannelValue::default();
-                value.insert(0.0, FixturePriority::LOWEST);
+                value.insert(Default::default(), FixturePriority::LOWEST);
 
                 value
             }),
@@ -31,23 +30,23 @@ impl ColorMixer {
         self.blue.clear();
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             virtual_dimmer.clear();
-            virtual_dimmer.insert(0.0, FixturePriority::LOWEST);
+            virtual_dimmer.insert(Default::default(), FixturePriority::LOWEST);
         }
     }
 
-    pub fn set_red(&mut self, red: f64, priority: FixturePriority) {
+    pub fn set_red(&mut self, red: FixtureValue, priority: FixturePriority) {
         self.red.insert(red, priority);
     }
 
-    pub fn set_green(&mut self, green: f64, priority: FixturePriority) {
+    pub fn set_green(&mut self, green: FixtureValue, priority: FixturePriority) {
         self.green.insert(green, priority);
     }
 
-    pub fn set_blue(&mut self, blue: f64, priority: FixturePriority) {
+    pub fn set_blue(&mut self, blue: FixtureValue, priority: FixturePriority) {
         self.blue.insert(blue, priority);
     }
 
-    pub fn set_virtual_dimmer(&mut self, value: f64, priority: FixturePriority) {
+    pub fn set_virtual_dimmer(&mut self, value: FixtureValue, priority: FixturePriority) {
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             virtual_dimmer.insert(value, priority);
         }
@@ -132,69 +131,69 @@ pub struct Cmy {
     pub yellow: f64,
 }
 
-#[profiling::function]
-pub(crate) fn update_color_mixer<TChannel: IChannelType>(
-    color_mixer: Option<&ColorMixer>,
-    color_group: Option<&ColorGroup<TChannel>>,
-    mut write: impl FnMut(&String, f64),
-) {
-    debug_assert!(
-        color_mixer.is_some(),
-        "Trying to update non-existent color mixer"
-    );
-    debug_assert!(
-        color_group.is_some(),
-        "Trying to update color mixer without color group"
-    );
-    if let Some(color_mixer) = color_mixer {
-        if let Some(ColorGroup::Rgb {
-            red,
-            green,
-            blue,
-            white,
-            ..
-        }) = color_group
-        {
-            let rgb = if let Some(white_channel) = white.as_ref().and_then(|c| c.to_channel()) {
-                let value = color_mixer.rgbw();
-                write(white_channel, value.white);
-
-                Rgb {
-                    red: value.red,
-                    green: value.green,
-                    blue: value.blue,
-                }
-            } else {
-                color_mixer.rgb()
-            };
-            if let Some(channel) = red.to_channel() {
-                write(channel, rgb.red);
-            }
-            if let Some(channel) = green.to_channel() {
-                write(channel, rgb.green);
-            }
-            if let Some(channel) = blue.to_channel() {
-                write(channel, rgb.blue);
-            }
-        } else if let Some(ColorGroup::Cmy {
-            cyan,
-            magenta,
-            yellow,
-        }) = color_group
-        {
-            let cmy = color_mixer.cmy();
-            if let Some(channel) = cyan.to_channel() {
-                write(channel, cmy.cyan);
-            }
-            if let Some(channel) = magenta.to_channel() {
-                write(channel, cmy.magenta);
-            }
-            if let Some(channel) = yellow.to_channel() {
-                write(channel, cmy.yellow);
-            }
-        }
-    }
-}
+// #[profiling::function]
+// pub(crate) fn update_color_mixer<TChannel: IChannelType>(
+//     color_mixer: Option<&ColorMixer>,
+//     color_group: Option<&ColorGroup<TChannel>>,
+//     mut write: impl FnMut(&String, f64),
+// ) {
+//     debug_assert!(
+//         color_mixer.is_some(),
+//         "Trying to update non-existent color mixer"
+//     );
+//     debug_assert!(
+//         color_group.is_some(),
+//         "Trying to update color mixer without color group"
+//     );
+//     if let Some(color_mixer) = color_mixer {
+//         if let Some(ColorGroup::Rgb {
+//                         red,
+//                         green,
+//                         blue,
+//                         white,
+//                         ..
+//                     }) = color_group
+//         {
+//             let rgb = if let Some(white_channel) = white.as_ref().and_then(|c| c.to_channel()) {
+//                 let value = color_mixer.rgbw();
+//                 write(white_channel, value.white);
+// 
+//                 Rgb {
+//                     red: value.red,
+//                     green: value.green,
+//                     blue: value.blue,
+//                 }
+//             } else {
+//                 color_mixer.rgb()
+//             };
+//             if let Some(channel) = red.to_channel() {
+//                 write(channel, rgb.red);
+//             }
+//             if let Some(channel) = green.to_channel() {
+//                 write(channel, rgb.green);
+//             }
+//             if let Some(channel) = blue.to_channel() {
+//                 write(channel, rgb.blue);
+//             }
+//         } else if let Some(ColorGroup::Cmy {
+//                                cyan,
+//                                magenta,
+//                                yellow,
+//                            }) = color_group
+//         {
+//             let cmy = color_mixer.cmy();
+//             if let Some(channel) = cyan.to_channel() {
+//                 write(channel, cmy.cyan);
+//             }
+//             if let Some(channel) = magenta.to_channel() {
+//                 write(channel, cmy.magenta);
+//             }
+//             if let Some(channel) = yellow.to_channel() {
+//                 write(channel, cmy.yellow);
+//             }
+//         }
+//     }
+// }
 
 #[cfg(test)]
 mod tests {

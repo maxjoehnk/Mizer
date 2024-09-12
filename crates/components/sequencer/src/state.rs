@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
-
-use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::channels::FixtureChannel;
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
 
@@ -20,8 +19,8 @@ pub(crate) struct SequenceState {
     last_go: Option<SequenceTimestamp>,
     /// Timestamp when the currently active cue has finished
     pub cue_finished_at: Option<SequenceTimestamp>,
-    pub fixture_values: HashMap<(FixtureId, FixtureFaderControl), f64>,
-    pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannel>,
+    pub fixture_values: HashMap<(FixtureId, FixtureChannel), f64>,
+    pub channel_state: HashMap<(FixtureId, FixtureChannel), CueChannel>,
     pub running_effects: HashMap<CueEffect, EffectInstanceId>,
     duration_since_last_go: Option<SequenceRateMatchedDuration>,
     duration_since_finished_at: Option<SequenceRateMatchedDuration>,
@@ -332,17 +331,17 @@ impl SequenceState {
     pub fn get_fixture_value(
         &self,
         fixture_id: FixtureId,
-        control: &FixtureFaderControl,
+        control: FixtureChannel,
     ) -> Option<f64> {
         self.fixture_values
-            .get(&(fixture_id, control.clone()))
+            .get(&(fixture_id, control))
             .copied()
     }
 
     pub fn set_fixture_value(
         &mut self,
         fixture_id: FixtureId,
-        control: FixtureFaderControl,
+        control: FixtureChannel,
         value: f64,
     ) {
         self.fixture_values.insert((fixture_id, control), value);

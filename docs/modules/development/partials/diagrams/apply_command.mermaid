@@ -1,0 +1,14 @@
+---
+title: Apply Command
+---
+sequenceDiagram
+    Api->>CommandExecutorApi: run_command
+    CommandExecutorApi->>CommandExecutor: apply
+    critical In Main Loop
+        CommandExecutor->>Command: apply
+        Command-->>CommandExecutor: state
+        Note over Command,CommandExecutor: Stored in CommandExecutor
+        Command-->>CommandExecutor: result
+    end
+    CommandExecutor-->>CommandExecutorApi: result
+    CommandExecutorApi-->>Api: result

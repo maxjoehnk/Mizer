@@ -1,4 +1,4 @@
-.PHONY: build index_files
+.PHONY: build index_files npm_install
 
 build: index_files npm_install
 	npm run build

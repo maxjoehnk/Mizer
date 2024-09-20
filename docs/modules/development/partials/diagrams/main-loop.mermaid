@@ -1,0 +1,10 @@
+stateDiagram
+    direction LR
+    [*] --> Pre
+    Pre --> Process
+    Process --> Post
+    Post --> [*]
+    Pre : Pre Process
+    Process : Process
+    Post : Post Process
+

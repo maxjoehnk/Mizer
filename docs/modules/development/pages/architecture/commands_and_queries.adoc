@@ -1,0 +1,32 @@
+= Commands and Queries
+
+Mizer uses a Command and Query system to communicate from the ui to the main loop.
+
+== Commands
+
+Commands are always executed as part of the main loop. They're executed by a Processor provided by the `CommandExecutorModule` in the `pre_process` stage with priority 0.
+
+Commands have to be reversible.
+
+A command can have a result and if required a state which is made accessible for the revert operation.
+Commands are also supposed to be serializable as they might be transmitted over the network to the main instance in the session.
+
+Commands have to be registered in `crates/runtime/commander/executor/commands.rs` as the `command_impl!` macro will generate an object safe version of every command so they can be stored and reverted.
+
+[mermaid,format=svg]
+....
+include::partial$diagrams/apply_command.mermaid[]
+....
+
+[mermaid,format=svg]
+....
+include::partial$diagrams/revert_command.mermaid[]
+....
+
+== Queries
+
+Queries can be run outside the main loop if all dependencies are available outside as well.
+By default, they will run as part of the main loop as well.
+
+Queries should never modify any state but only return data.
+The query as well as the data a query returns should be serializable as both might be transmitted over the network.

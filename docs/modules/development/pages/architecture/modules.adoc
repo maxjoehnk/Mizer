@@ -1,0 +1,35 @@
+= Modules
+
+Mizer tries to load the following modules on startup:
+
+== ConsoleModule
+== FixtureModule
+
+This module provides the fixtures api which in combination with the .DmxModule allows Mizer to communicate with dmx fixtures.
+
+== SequencerModule
+
+
+
+== EffectsModule
+== TimecodeModule
+== DeviceModule
+== MqttModule
+
+Provides
+
+== OscModule
+== MidiModule
+== WgpuModule
+== WindowModule
+== VectorModule
+== LayoutsModule
+== PlansModule
+== SurfacesModule
+== CommandExecutorModule
+== MediaModule
+== CitpModule
+== DmxModule
+== RuntimeModule
+== UiApiModule
+== EguiDebugUiModule

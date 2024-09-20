@@ -37,7 +37,7 @@ message UpdateFixtureRequest {
   optional UpdateFixtureLimit limit = 7;
 
   message UpdateFixtureLimit {
-    FixtureFaderControl control = 1;
+    string channel = 1;
     optional double min = 2;
     optional double max = 3;
   }
@@ -73,7 +73,7 @@ message Fixture {
   uint32 universe = 6;
   uint32 channel = 7;
   uint32 channel_count = 8;
-  repeated FixtureControls controls = 9;
+  repeated FixtureChannel channels = 9;
   repeated SubFixture children = 10;
   FixtureConfig config = 11;
 }
@@ -86,7 +86,7 @@ message FixtureConfig {
 }
 
 message FixtureChannelLimit {
-  FixtureFaderControl control = 1;
+  string channel = 1;
   optional double min = 2;
   optional double max = 3;
 }
@@ -94,82 +94,42 @@ message FixtureChannelLimit {
 message SubFixture {
   uint32 id = 1;
   string name = 2;
-  repeated FixtureControls controls = 3;
+  repeated FixtureChannel channels = 3;
 }
 
-enum FixtureControl {
-  NONE = 0;
-  INTENSITY = 1;
-  SHUTTER = 2;
-  COLOR_MIXER = 3;
-  COLOR_WHEEL = 4;
-  PAN = 5;
-  TILT = 6;
-  FOCUS = 7;
-  ZOOM = 8;
-  PRISM = 9;
-  IRIS = 10;
-  FROST = 11;
-  GOBO = 12;
-  GENERIC = 13;
+message FixtureChannel {
+  string channel = 1;
+  optional string label = 2;
+  FixtureChannelCategory category = 3;
+  repeated FixtureChannelPreset presets = 4;
+  optional FixtureValue value = 5;
 }
 
-message FixtureControls {
-  FixtureControl control = 1;
-  oneof value {
-    FaderChannel fader = 2;
-    ColorMixerChannel color_mixer = 3;
-    ColorWheelChannel color_wheel = 4;
-    AxisChannel axis = 5;
-    GoboChannel gobo = 6;
-    GenericChannel generic = 7;
-  }
+message FixtureChannelDefinition {
+  string channel = 1;
+  optional string label = 2;
+  FixtureChannelCategory category = 3;
+  repeated FixtureChannelPreset presets = 4;
 }
 
-message FaderChannel {
-  double value = 1;
-}
-
-message ColorMixerChannel {
-  double red = 1;
-  double green = 2;
-  double blue = 3;
-}
-
-message ColorWheelChannel {
-  double value = 1;
-  repeated ColorWheelSlot colors = 2;
-}
-
-message ColorWheelSlot {
-  string name = 1;
-  double value = 2;
-  repeated string colors = 3;
-}
-
-message AxisChannel {
-  double value = 1;
-  double angle_from = 2;
-  double angle_to = 3;
-}
-
-message GoboChannel {
-  double value = 1;
-  repeated Gobo gobos = 2;
-}
-
-message Gobo {
-  string name = 1;
-  double value = 2;
-  oneof image {
-    string svg = 3;
-    bytes raster = 4;
-  }
-}
-
-message GenericChannel {
-  double value = 1;
+message FixtureChannelPreset {
+  FixtureValue value = 1;
   string name = 2;
+  optional FixtureImage image = 3;
+  repeated string colors = 4;
+}
+
+message FixtureValue {
+  oneof value {
+    double percent = 1;
+  }
+}
+
+message FixtureImage {
+  oneof image {
+    string svg = 1;
+    bytes raster = 2;
+  }
 }
 
 message GetFixtureDefinitionsRequest {
@@ -191,39 +151,8 @@ message FixtureDefinition {
 
 message FixtureMode {
   string name = 1;
-  repeated FixtureChannel channels = 2;
-}
-
-message FixtureChannel {
-  string name = 1;
-  oneof resolution {
-    CoarseResolution coarse = 2;
-    FineResolution fine = 3;
-    FinestResolution finest = 4;
-    UltraResolution ultra = 5;
-  }
-
-  message CoarseResolution {
-    uint32 channel = 1;
-  }
-
-  message FineResolution {
-    uint32 fine_channel = 1;
-    uint32 coarse_channel = 2;
-  }
-
-  message FinestResolution {
-    uint32 finest_channel = 1;
-    uint32 fine_channel = 2;
-    uint32 coarse_channel = 3;
-  }
-
-  message UltraResolution {
-    uint32 ultra_channel = 1;
-    uint32 finest_channel = 2;
-    uint32 fine_channel = 3;
-    uint32 coarse_channel = 4;
-  }
+  repeated FixtureChannelDefinition channels = 2;
+  uint32 dmx_footprint = 3;
 }
 
 message FixturePhysicalData {
@@ -233,14 +162,13 @@ message FixturePhysicalData {
   float weight = 4;
 }
 
-message FixtureFaderControl {
-  FixtureControl control = 1;
-  optional ColorMixerControlChannel color_mixer_channel = 2;
-  optional string generic_channel = 3;
-
-  enum ColorMixerControlChannel {
-    RED = 0;
-    GREEN = 1;
-    BLUE = 2;
-  }
+enum FixtureChannelCategory {
+  NONE = 0;
+  DIMMER = 1;
+  COLOR = 2;
+  POSITION = 3;
+  GOBO = 4;
+  BEAM = 5;
+  SHAPER = 6;
+  CUSTOM = 7;
 }

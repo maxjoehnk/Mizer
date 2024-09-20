@@ -26,6 +26,7 @@ mod module;
 mod priority;
 pub mod programmer;
 pub mod selection;
+pub mod builder;
 
 mod fixture_configuration;
 

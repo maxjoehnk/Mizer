@@ -13,35 +13,6 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use effectControlDescriptor instead')
-const EffectControl$json = {
-  '1': 'EffectControl',
-  '2': [
-    {'1': 'INTENSITY', '2': 0},
-    {'1': 'SHUTTER', '2': 1},
-    {'1': 'COLOR_MIXER_RED', '2': 2},
-    {'1': 'COLOR_MIXER_GREEN', '2': 3},
-    {'1': 'COLOR_MIXER_BLUE', '2': 4},
-    {'1': 'COLOR_WHEEL', '2': 5},
-    {'1': 'PAN', '2': 6},
-    {'1': 'TILT', '2': 7},
-    {'1': 'FOCUS', '2': 8},
-    {'1': 'ZOOM', '2': 9},
-    {'1': 'PRISM', '2': 10},
-    {'1': 'IRIS', '2': 11},
-    {'1': 'FROST', '2': 12},
-    {'1': 'GOBO', '2': 13},
-    {'1': 'GENERIC', '2': 14},
-  ],
-};
-
-/// Descriptor for `EffectControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List effectControlDescriptor = $convert.base64Decode(
-    'Cg1FZmZlY3RDb250cm9sEg0KCUlOVEVOU0lUWRAAEgsKB1NIVVRURVIQARITCg9DT0xPUl9NSV'
-    'hFUl9SRUQQAhIVChFDT0xPUl9NSVhFUl9HUkVFThADEhQKEENPTE9SX01JWEVSX0JMVUUQBBIP'
-    'CgtDT0xPUl9XSEVFTBAFEgcKA1BBThAGEggKBFRJTFQQBxIJCgVGT0NVUxAIEggKBFpPT00QCR'
-    'IJCgVQUklTTRAKEggKBElSSVMQCxIJCgVGUk9TVBAMEggKBEdPQk8QDRILCgdHRU5FUklDEA4=');
-
 @$core.Deprecated('Use addEffectRequestDescriptor instead')
 const AddEffectRequest$json = {
   '1': 'AddEffectRequest',
@@ -77,14 +48,14 @@ const AddEffectChannelRequest$json = {
   '1': 'AddEffectChannelRequest',
   '2': [
     {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
-    {'1': 'control', '3': 2, '4': 1, '5': 14, '6': '.mizer.effects.EffectControl', '10': 'control'},
+    {'1': 'fixture_channel', '3': 2, '4': 1, '5': 9, '10': 'fixtureChannel'},
   ],
 };
 
 /// Descriptor for `AddEffectChannelRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addEffectChannelRequestDescriptor = $convert.base64Decode(
-    'ChdBZGRFZmZlY3RDaGFubmVsUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEj'
-    'YKB2NvbnRyb2wYAiABKA4yHC5taXplci5lZmZlY3RzLkVmZmVjdENvbnRyb2xSB2NvbnRyb2w=');
+    'ChdBZGRFZmZlY3RDaGFubmVsUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEi'
+    'cKD2ZpeHR1cmVfY2hhbm5lbBgCIAEoCVIOZml4dHVyZUNoYW5uZWw=');
 
 @$core.Deprecated('Use deleteEffectChannelRequestDescriptor instead')
 const DeleteEffectChannelRequest$json = {
@@ -164,16 +135,15 @@ final $typed_data.Uint8List effectDescriptor = $convert.base64Decode(
 const EffectChannel$json = {
   '1': 'EffectChannel',
   '2': [
-    {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.effects.EffectControl', '10': 'control'},
+    {'1': 'fixture_channel', '3': 1, '4': 1, '5': 9, '10': 'fixtureChannel'},
     {'1': 'steps', '3': 2, '4': 3, '5': 11, '6': '.mizer.effects.EffectStep', '10': 'steps'},
   ],
 };
 
 /// Descriptor for `EffectChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List effectChannelDescriptor = $convert.base64Decode(
-    'Cg1FZmZlY3RDaGFubmVsEjYKB2NvbnRyb2wYASABKA4yHC5taXplci5lZmZlY3RzLkVmZmVjdE'
-    'NvbnRyb2xSB2NvbnRyb2wSLwoFc3RlcHMYAiADKAsyGS5taXplci5lZmZlY3RzLkVmZmVjdFN0'
-    'ZXBSBXN0ZXBz');
+    'Cg1FZmZlY3RDaGFubmVsEicKD2ZpeHR1cmVfY2hhbm5lbBgBIAEoCVIOZml4dHVyZUNoYW5uZW'
+    'wSLwoFc3RlcHMYAiADKAsyGS5taXplci5lZmZlY3RzLkVmZmVjdFN0ZXBSBXN0ZXBz');
 
 @$core.Deprecated('Use effectStepDescriptor instead')
 const EffectStep$json = {

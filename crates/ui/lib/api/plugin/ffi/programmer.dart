@@ -7,21 +7,6 @@ import 'package:mizer/protos/programmer.pb.dart';
 import 'bindings.dart';
 import 'ffi_pointer.dart';
 
-Map<int, FixtureControl> controlMappings = {
-  FFIFixtureFaderControl.Intensity: FixtureControl.INTENSITY,
-  FFIFixtureFaderControl.Shutter: FixtureControl.SHUTTER,
-  FFIFixtureFaderControl.ColorMixer: FixtureControl.COLOR_MIXER,
-  FFIFixtureFaderControl.ColorWheel: FixtureControl.COLOR_WHEEL,
-  FFIFixtureFaderControl.Pan: FixtureControl.PAN,
-  FFIFixtureFaderControl.Tilt: FixtureControl.TILT,
-  FFIFixtureFaderControl.Focus: FixtureControl.FOCUS,
-  FFIFixtureFaderControl.Zoom: FixtureControl.ZOOM,
-  FFIFixtureFaderControl.Prism: FixtureControl.PRISM,
-  FFIFixtureFaderControl.Iris: FixtureControl.IRIS,
-  FFIFixtureFaderControl.Frost: FixtureControl.FROST,
-  FFIFixtureFaderControl.Gobo: FixtureControl.GOBO,
-};
-
 class ProgrammerStatePointer extends FFIPointer<Programmer> {
   final FFIBindings _bindings;
 
@@ -83,26 +68,15 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
 
     return channels.map((channel) {
       var fixtures = _readFixtureSelection(channel.fixtures);
-      var control = controlMappings[channel.control];
+      var control = channel.control.cast<Utf8>().toDartString();
       var result = ProgrammerChannel(
         control: control,
         fixtures: fixtures,
       );
       if (channel.preset == 1) {
-        result.preset = _mapPresetId(channel.value.preset, control!);
-      } else if (channel.control == FFIFixtureFaderControl.ColorMixer) {
-        result.color = ColorMixerChannel(
-          red: channel.value.color.red,
-          green: channel.value.color.green,
-          blue: channel.value.color.blue,
-        );
-      } else if (channel.control == FFIFixtureFaderControl.Generic) {
-        result.generic = ProgrammerChannel_GenericValue(
-          name: channel.value.generic.channel.cast<Utf8>().toDartString(),
-          value: channel.value.generic.value,
-        );
-      } else {
-        result.fader = channel.value.fader;
+        result.preset = _mapPresetId(channel.value.preset, control);
+      }else {
+        result.direct = FixtureValue(percent: channel.value.percent);
       }
       return result;
     }).toList();
@@ -120,17 +94,18 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
     }).toList();
   }
 
-  PresetId _mapPresetId(FFIPresetId presetId, FixtureControl control) {
-    if (control == FixtureControl.INTENSITY) {
+  // TODO: This should reference an enum as well? Or maybe it should be returned by the proto api
+  PresetId _mapPresetId(FFIPresetId presetId, String control) {
+    if (control == "Intensity") {
       return PresetId(id: presetId.intensity, type: PresetId_PresetType.INTENSITY);
     }
-    if (control == FixtureControl.SHUTTER) {
+    if (control == "Shutter") {
       return PresetId(id: presetId.shutter, type: PresetId_PresetType.SHUTTER);
     }
-    if (control == FixtureControl.PAN) {
+    if (control == "Pan") {
       return PresetId(id: presetId.position, type: PresetId_PresetType.POSITION);
     }
-    if (control == FixtureControl.COLOR_MIXER) {
+    if (control == "ColorMixerRed") {
       return PresetId(id: presetId.color, type: PresetId_PresetType.COLOR);
     }
     

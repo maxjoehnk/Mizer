@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use crate::definition::FixtureDefinition;
 use mizer_ui_api::table::*;
 
@@ -21,7 +22,10 @@ impl TableHandler for FixtureDefinitionTable {
                 label: "Tags".into(),
             },
         ];
-        let rows = data.into_iter().map(Self::build_row).collect();
+        let rows = data.into_iter()
+            .sorted_by(|lhs, rhs| lhs.manufacturer.cmp(&rhs.manufacturer))
+            .map(Self::build_row)
+            .collect();
 
         Ok(TableData { columns, rows })
     }

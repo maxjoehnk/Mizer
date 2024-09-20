@@ -18,7 +18,7 @@ class PresetGroup extends StatelessWidget {
         label: "Dimmer",
         child: PresetList(
             presets: presets.intensities,
-            effects: effects.getEffectsForControls([EffectControl.INTENSITY])),
+            effects: effects.getEffectsForControls(["Intensity"])),
       );
     }
     if (type == PresetType.Shutter) {
@@ -26,7 +26,7 @@ class PresetGroup extends StatelessWidget {
         label: "Shutter",
         child: PresetList(
             presets: presets.shutters,
-            effects: effects.getEffectsForControls([EffectControl.SHUTTER])),
+            effects: effects.getEffectsForControls(["Shutter"])),
       );
     }
     if (type == PresetType.Color) {
@@ -35,10 +35,10 @@ class PresetGroup extends StatelessWidget {
           child: PresetList(
               presets: presets.colors,
               effects: effects.getEffectsForControls([
-                EffectControl.COLOR_MIXER_BLUE,
-                EffectControl.COLOR_MIXER_GREEN,
-                EffectControl.COLOR_MIXER_RED,
-                EffectControl.COLOR_WHEEL
+                "ColorMixerRed",
+                "ColorMixerGreen",
+                "ColorMixerBlue",
+                "ColorWheel"
               ])));
     }
     if (type == PresetType.Position) {
@@ -46,7 +46,7 @@ class PresetGroup extends StatelessWidget {
           label: "Position",
           child: PresetList(
               presets: presets.positions,
-              effects: effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT])));
+              effects: effects.getEffectsForControls(["Pan", "Tilt"])));
     }
 
     throw new Exception("Invalid PresetType");
@@ -118,9 +118,9 @@ class PresetList extends StatelessWidget {
 }
 
 extension PresetEffects on List<Effect> {
-  List<Effect> getEffectsForControls(List<EffectControl> controls) {
+  List<Effect> getEffectsForControls(List<String> controls) {
     return this
-        .where((effect) => effect.channels.any((c) => controls.contains(c.control)))
+        .where((effect) => effect.channels.any((c) => controls.contains(c.fixtureChannel)))
         .toList();
   }
 }

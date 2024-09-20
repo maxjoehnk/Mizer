@@ -57,46 +57,5 @@ class CueTrigger_Type extends $pb.ProtobufEnum {
   const CueTrigger_Type._($core.int v, $core.String n) : super(v, n);
 }
 
-class CueControl_Type extends $pb.ProtobufEnum {
-  static const CueControl_Type INTENSITY = CueControl_Type._(0, _omitEnumNames ? '' : 'INTENSITY');
-  static const CueControl_Type SHUTTER = CueControl_Type._(1, _omitEnumNames ? '' : 'SHUTTER');
-  static const CueControl_Type COLOR_RED = CueControl_Type._(2, _omitEnumNames ? '' : 'COLOR_RED');
-  static const CueControl_Type COLOR_GREEN = CueControl_Type._(3, _omitEnumNames ? '' : 'COLOR_GREEN');
-  static const CueControl_Type COLOR_BLUE = CueControl_Type._(4, _omitEnumNames ? '' : 'COLOR_BLUE');
-  static const CueControl_Type COLOR_WHEEL = CueControl_Type._(5, _omitEnumNames ? '' : 'COLOR_WHEEL');
-  static const CueControl_Type PAN = CueControl_Type._(6, _omitEnumNames ? '' : 'PAN');
-  static const CueControl_Type TILT = CueControl_Type._(7, _omitEnumNames ? '' : 'TILT');
-  static const CueControl_Type FOCUS = CueControl_Type._(8, _omitEnumNames ? '' : 'FOCUS');
-  static const CueControl_Type ZOOM = CueControl_Type._(9, _omitEnumNames ? '' : 'ZOOM');
-  static const CueControl_Type PRISM = CueControl_Type._(10, _omitEnumNames ? '' : 'PRISM');
-  static const CueControl_Type IRIS = CueControl_Type._(11, _omitEnumNames ? '' : 'IRIS');
-  static const CueControl_Type FROST = CueControl_Type._(12, _omitEnumNames ? '' : 'FROST');
-  static const CueControl_Type GOBO = CueControl_Type._(13, _omitEnumNames ? '' : 'GOBO');
-  static const CueControl_Type GENERIC = CueControl_Type._(14, _omitEnumNames ? '' : 'GENERIC');
-
-  static const $core.List<CueControl_Type> values = <CueControl_Type> [
-    INTENSITY,
-    SHUTTER,
-    COLOR_RED,
-    COLOR_GREEN,
-    COLOR_BLUE,
-    COLOR_WHEEL,
-    PAN,
-    TILT,
-    FOCUS,
-    ZOOM,
-    PRISM,
-    IRIS,
-    FROST,
-    GOBO,
-    GENERIC,
-  ];
-
-  static final $core.Map<$core.int, CueControl_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CueControl_Type? valueOf($core.int value) => _byValue[value];
-
-  const CueControl_Type._($core.int v, $core.String n) : super(v, n);
-}
-
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

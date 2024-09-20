@@ -1,4 +1,6 @@
+use std::str::FromStr;
 use mizer_command_executor::*;
+use mizer_fixtures::channels::FixtureChannel;
 
 use crate::proto::effects::*;
 use crate::RuntimeApi;
@@ -35,7 +37,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
         self.runtime
             .run_command(AddEffectChannelCommand {
                 effect_id: request.effect_id,
-                control: EffectControl::try_from(request.control).unwrap().into(),
+                control: FixtureChannel::from_str(&request.fixture_channel).unwrap(),
             })
             .unwrap();
     }

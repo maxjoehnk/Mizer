@@ -6,6 +6,7 @@ import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/panes/programmer/dialogs/select_store_target_dialog.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/presets_bloc.dart';
@@ -20,13 +21,8 @@ import 'dialogs/select_cue_dialog.dart';
 import 'dialogs/select_preset_dialog.dart';
 import 'dialogs/select_sequence_dialog.dart';
 import 'dialogs/store_mode_dialog.dart';
-import 'sheets/beam_sheet.dart';
 import 'sheets/channel_sheet.dart';
-import 'sheets/color_sheet.dart';
-import 'sheets/dimmer_sheet.dart';
 import 'sheets/effects_sheet.dart';
-import 'sheets/gobo_sheet.dart';
-import 'sheets/position_sheet.dart';
 
 class ProgrammerSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
@@ -67,22 +63,25 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
         tabs: [
           Tab(
               label: "Dimmer",
-              child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.DIMMER)),
           Tab(
               label: "Position",
-              child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.POSITION)),
           Tab(
               label: "Gobo",
-              child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.GOBO)),
           Tab(
               label: "Color",
-              child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.COLOR)),
           Tab(
               label: "Beam",
-              child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.BEAM)),
           Tab(
-              label: "Channels",
-              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              label: "Shaper",
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.SHAPER)),
+          Tab(
+              label: "Custom",
+              child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels, category: FixtureChannelCategory.CUSTOM, useLabel: true)),
           Tab(
             label: "Effects",
             child: EffectsSheet(effects: widget.effects),

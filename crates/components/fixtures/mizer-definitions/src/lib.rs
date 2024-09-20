@@ -38,6 +38,10 @@ impl MizerDefinitionsProvider {
 }
 
 impl FixtureLibraryProvider for MizerDefinitionsProvider {
+    fn name(&self) -> &'static str {
+        "Mizer"
+    }
+
     fn load(&mut self) -> anyhow::Result<()> {
         tracing::info!("Loading Mizer fixture library...");
         if let Some(path) = find_path(&self.file_path) {
@@ -94,14 +98,33 @@ impl FixtureLibraryProvider for MizerDefinitionsProvider {
         self.definitions
             .get(&id["mizer:".len()..])
             .cloned()
-            .map(map_fixture_definition)
+            .and_then(|def| {
+                match map_fixture_definition(def) {
+                    Ok(def) => Some(def),
+                    Err(err) => {
+                        tracing::error!("Unable to map fixture definition: {err:?}");
+
+                        None
+                    }
+                }
+            })
     }
 
     fn list_definitions(&self) -> Vec<FixtureDefinition> {
         self.definitions
             .values()
             .cloned()
-            .map(map_fixture_definition)
+            .flat_map(|def| {
+                let name = def.metadata.name.clone();
+                match map_fixture_definition(def) {
+                    Ok(def) => Some(def),
+                    Err(err) => {
+                        tracing::warn!("Unable to map fixture definition {name}: {err:?}");
+
+                        None
+                    }
+                }
+            })
             .collect()
     }
 }

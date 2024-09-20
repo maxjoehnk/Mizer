@@ -12,3 +12,6 @@ mizer-util = { path = "../../../util" }
 zip = "0.6"
 hard-xml = "1.36"
 rayon = "1.10"
+
+[dev-dependencies]
+spectral = "0.6"

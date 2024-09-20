@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::str::FromStr;
 use mizer_fixtures::channels::{FixtureChannel, FixtureColorChannel};
 use mizer_node::*;
 
@@ -33,7 +34,7 @@ pub(crate) fn write_ports(
                         if is_zero && !send_zero {
                             continue;
                         }
-                        if let Ok(channel) = FixtureChannel::try_from(port.as_str()) {
+                        if let Ok(channel) = FixtureChannel::from_str(port.as_str()) {
                             write_fader_control(channel, value);
                         }else {
                             tracing::warn!("Could not convert port to FixtureChannel: {}", port.as_str());

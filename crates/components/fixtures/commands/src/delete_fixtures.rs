@@ -1,11 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
+use mizer_commander::{Command, Ref};
 use mizer_fixtures::fixture::Fixture;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_nodes::FixtureNode;
-use mizer_runtime::commands::DeleteNodesCommand;
-use mizer_runtime::Pipeline;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct DeleteFixturesCommand {
@@ -13,12 +10,8 @@ pub struct DeleteFixturesCommand {
 }
 
 impl<'a> Command<'a> for DeleteFixturesCommand {
-    type Dependencies = (
-        Ref<FixtureManager>,
-        Ref<Pipeline>,
-        SubCommand<DeleteNodesCommand>,
-    );
-    type State = (Vec<Fixture>, sub_command!(DeleteNodesCommand));
+    type Dependencies = Ref<FixtureManager>;
+    type State = Vec<Fixture>;
     type Result = ();
 
     fn label(&self) -> String {
@@ -33,18 +26,9 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
 
     fn apply(
         &self,
-        (fixture_manager, pipeline, delete_node_runner): (
+        fixture_manager:
             &FixtureManager,
-            &Pipeline,
-            SubCommandRunner<DeleteNodesCommand>,
-        ),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let nodes = pipeline
-            .find_node_paths::<FixtureNode>(|node| self.fixture_ids.contains(&node.fixture_id));
-        let cmd = DeleteNodesCommand {
-            paths: nodes.into_iter().cloned().collect(),
-        };
-
         let mut fixtures = Vec::new();
 
         for fixture in self
@@ -54,32 +38,27 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
         {
             fixtures.push(fixture);
         }
-        let (_, state) = delete_node_runner.apply(cmd)?;
 
-        Ok(((), (fixtures, state)))
+        Ok(((), fixtures))
     }
 
     fn revert(
         &self,
-        (fixture_manager, _, delete_node_runner): (
+        fixture_manager:
             &FixtureManager,
-            &Pipeline,
-            SubCommandRunner<DeleteNodesCommand>,
-        ),
-        (fixtures, sub_cmd): Self::State,
+        fixtures: Self::State,
     ) -> anyhow::Result<()> {
         for fixture in fixtures {
             fixture_manager.add_fixture(
                 fixture.id,
                 fixture.name,
                 fixture.definition,
-                fixture.current_mode.name.into(),
+                Some(fixture.channel_mode.name.to_string()),
                 fixture.channel,
                 fixture.universe.into(),
                 fixture.configuration,
             );
         }
-        delete_node_runner.revert(sub_cmd)?;
 
         Ok(())
     }

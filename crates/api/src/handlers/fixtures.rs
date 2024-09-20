@@ -1,6 +1,8 @@
+use std::str::FromStr;
 use mizer_command_executor::*;
 use mizer_fixture_patch_export::PatchExporter;
-use mizer_fixtures::fixture::ChannelLimit;
+use mizer_fixtures::ChannelLimit;
+use mizer_fixtures::fixture::IFixture;
 
 use crate::proto::fixtures::*;
 use crate::RuntimeApi;
@@ -22,34 +24,62 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         let fixtures = fixtures
             .into_iter()
             .map(|fixture| {
-                let controls =
-                    FixtureControls::with_values(&fixture, fixture.current_mode.controls.clone());
                 let sub_fixtures = fixture
-                    .current_mode
-                    .sub_fixtures
+                    .channel_mode
+                    .children
                     .iter()
-                    .map(|sub_fixture| {
-                        let controls = FixtureControls::with_values(
-                            &fixture.sub_fixture(sub_fixture.id).unwrap(),
-                            sub_fixture.controls.clone(),
-                        );
+                    .map(|sub_fixture_definition| {
+                        let sub_fixture = fixture.sub_fixture(sub_fixture_definition.id).unwrap();
+                        let channels = sub_fixture_definition.channels.values()
+                            .map(|channel| {
+                                let value = sub_fixture.read_channel(channel.channel);
+
+                                FixtureChannel {
+                                    category: FixtureChannelCategory::from(channel.channel_category()).into(),
+                                    channel: channel.channel.to_string(),
+                                    label: channel.label.as_ref().map(|label| label.to_string()),
+                                    value: value.map(|v| FixtureValue {
+                                        value: Some(fixture_value::Value::Percent(v)),
+                                    }),
+                                    presets: Default::default(),
+                                }
+                            })
+                            .collect();
+                        
                         SubFixture {
-                            id: sub_fixture.id,
-                            name: sub_fixture.name.clone(),
-                            controls,
+                            id: sub_fixture_definition.id,
+                            name: sub_fixture_definition.name.to_string(),
+                            channels,
                         }
                     })
                     .collect();
+                
+                let channels = fixture.channel_mode.channels.values()
+                    .map(|channel| {
+                        let value = fixture.read_channel(channel.channel);
+
+                        FixtureChannel {
+                            category: FixtureChannelCategory::from(channel.channel_category()).into(),
+                            channel: channel.channel.to_string(),
+                            label: channel.label.as_ref().map(|label| label.to_string()),
+                            value: value.map(|v| FixtureValue {
+                                value: Some(fixture_value::Value::Percent(v)),
+                            }),
+                            presets: Default::default(),
+                        }
+                    })
+                    .collect();
+                
                 Fixture {
                     channel: fixture.channel as u32,
                     universe: fixture.universe as u32,
-                    channel_count: fixture.current_mode.dmx_channels() as u32,
+                    channel_count: fixture.channel_mode.dmx_channel_count as u32,
                     id: fixture.id,
                     name: fixture.name,
                     manufacturer: fixture.definition.manufacturer,
                     model: fixture.definition.name,
-                    mode: fixture.current_mode.name,
-                    controls,
+                    mode: fixture.channel_mode.name.to_string(),
+                    channels,
                     children: sub_fixtures,
                     config: Some(FixtureConfig {
                         invert_pan: fixture.configuration.invert_pan,
@@ -60,7 +90,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                             .limits
                             .into_iter()
                             .map(|(control, limits)| FixtureChannelLimit {
-                                control: Some(control.into()),
+                                channel: control.to_string(),
                                 min: limits.min,
                                 max: limits.max,
                             })
@@ -111,13 +141,13 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             let model = Fixture {
                 channel: fixture.channel as u32,
                 universe: fixture.universe as u32,
-                channel_count: fixture.current_mode.dmx_channels() as u32,
+                channel_count: fixture.channel_mode.dmx_channel_count as u32,
                 id: fixture.id,
                 name: fixture.name.clone(),
                 manufacturer: fixture.definition.manufacturer.clone(),
                 model: fixture.definition.name.clone(),
-                mode: fixture.current_mode.name.clone(),
-                controls: Default::default(),
+                mode: fixture.channel_mode.name.to_string(),
+                channels: Default::default(),
                 children: Default::default(),
                 config: None,
             };
@@ -147,7 +177,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             reverse_pixel_order: request.reverse_pixel_order,
             limit: request.limit.map(|limit| {
                 (
-                    limit.control.unwrap().into(),
+                    mizer_fixtures::channels::FixtureChannel::from_str(&limit.channel).unwrap(),
                     ChannelLimit {
                         min: limit.min,
                         max: limit.max,

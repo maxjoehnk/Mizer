@@ -6,7 +6,6 @@ use parking_lot::Mutex;
 use mizer_runtime::NodePreviewRef;
 use mizer_util::StructuredData;
 
-use crate::apis::programmer::FFIColorValue;
 use crate::apis::transport::Timecode;
 use crate::pointer_inventory::PointerInventory;
 use crate::types::{drop_pointer, Array, FFIFromPointer};
@@ -110,6 +109,14 @@ impl FFIStructuredData {
             value: FFIStructuredDataValue { object },
         }
     }
+}
+
+#[derive(Clone, Copy)]
+#[repr(C)]
+pub struct FFIColorValue {
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
 }
 
 #[derive(Clone, Copy)]

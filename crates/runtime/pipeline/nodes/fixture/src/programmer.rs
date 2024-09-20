@@ -55,7 +55,7 @@ impl ProcessingNode for ProgrammerNode {
                 programmer.write_control(FixtureChannel::Intensity, FixtureValue::Percent(intensity));
             }
             if let Some(shutter) = context.read_port_changes::<_, f64>("Shutter") {
-                programmer.write_control(FixtureChannel::Shutter, FixtureValue::Percent(shutter));
+                programmer.write_control(FixtureChannel::Shutter(1), FixtureValue::Percent(shutter));
             }
             if let Some(color) = context.read_port_changes::<_, Color>("Color") {
                 programmer.write_control(FixtureChannel::ColorMixer(FixtureColorChannel::Red), FixtureValue::Percent(color.red));
@@ -69,22 +69,22 @@ impl ProcessingNode for ProgrammerNode {
                 programmer.write_control(FixtureChannel::Tilt, FixtureValue::Percent(tilt));
             }
             if let Some(focus) = context.read_port_changes::<_, f64>("Focus") {
-                programmer.write_control(FixtureChannel::Focus, FixtureValue::Percent(focus));
+                programmer.write_control(FixtureChannel::Focus(1), FixtureValue::Percent(focus));
             }
             if let Some(zoom) = context.read_port_changes::<_, f64>("Zoom") {
-                programmer.write_control(FixtureChannel::Zoom, FixtureValue::Percent(zoom));
+                programmer.write_control(FixtureChannel::Zoom(1), FixtureValue::Percent(zoom));
             }
             if let Some(prism) = context.read_port_changes::<_, f64>("Prism") {
-                programmer.write_control(FixtureChannel::Prism, FixtureValue::Percent(prism));
+                programmer.write_control(FixtureChannel::Prism(1), FixtureValue::Percent(prism));
             }
             if let Some(iris) = context.read_port_changes::<_, f64>("Iris") {
                 programmer.write_control(FixtureChannel::Iris, FixtureValue::Percent(iris));
             }
             if let Some(frost) = context.read_port_changes::<_, f64>("Frost") {
-                programmer.write_control(FixtureChannel::Frost, FixtureValue::Percent(frost));
+                programmer.write_control(FixtureChannel::Frost(1), FixtureValue::Percent(frost));
             }
             if let Some(gobo) = context.read_port_changes::<_, f64>("Gobo") {
-                programmer.write_control(FixtureChannel::GoboWheel, FixtureValue::Percent(gobo));
+                programmer.write_control(FixtureChannel::GoboWheel(1), FixtureValue::Percent(gobo));
             }
             if let Some(highlight) = context.read_port_changes::<_, f64>("Highlight") {
                 if let Some(highlight) = highlight_edge.update(highlight) {

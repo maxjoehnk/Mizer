@@ -47,8 +47,8 @@ class FixtureInstance {
     return fixture?.name ?? subFixture!.name;
   }
 
-  List<FixtureControls> get controls {
-    return subFixture?.controls ?? fixture!.controls;
+  List<FixtureChannel> get controls {
+    return subFixture?.channels ?? fixture!.channels;
   }
 }
 

@@ -53,7 +53,7 @@ impl ProjectManager for FixtureManager {
                 universe: fixture.universe.into(),
                 channel: fixture.channel,
                 fixture: fixture.definition.id.clone(),
-                mode: fixture.current_mode.name.clone().into(),
+                mode: Some(fixture.channel_mode.name.to_string()),
                 configuration: fixture.configuration.clone(),
             });
         }

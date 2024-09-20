@@ -33,7 +33,7 @@ class PositionIndicator extends StatelessWidget {
 
   Preset_Position? getPreset(BuildContext context) {
     var programmerChannel =
-        fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.PAN);
+        fixtureState?.firstWhereOrNull((element) => element.control == "Pan");
     if (programmerChannel == null) {
       return null;
     }
@@ -53,21 +53,21 @@ class PositionIndicator extends StatelessWidget {
     if (preset?.hasPan() == true) {
       return preset!.pan;
     }
-    return getValue(FixtureControl.PAN);
+    return getValue("Pan");
   }
 
   double? getTilt(Preset_Position? preset) {
     if (preset?.hasTilt() == true) {
       return preset!.tilt;
     }
-    return getValue(FixtureControl.TILT);
+    return getValue("Tilt");
   }
 
-  double? getValue(FixtureControl control) {
+  double? getValue(String control) {
     var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == control);
     if (programmerChannel == null) {
       return null;
     }
-    return programmerChannel.fader;
+    return programmerChannel.direct.percent;
   }
 }

@@ -26,7 +26,7 @@ impl TableHandler for FixtureDefinitionModesTable {
 
 impl FixtureDefinitionModesTable {
     fn build_row(mode: FixtureChannelMode) -> TableRow {
-        let dmx_channels = mode.channel_count() as u64;
+        let dmx_channels = mode.dmx_channel_count as u64;
         TableRow {
             id: mode.name.to_string(),
             cells: vec![

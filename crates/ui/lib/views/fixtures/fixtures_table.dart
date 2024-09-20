@@ -144,16 +144,16 @@ class FixturesTable extends StatelessWidget {
         Text(name, style: textStyle),
         IntensityIndicator(
             fixtureState: fixtureState,
-            child: Text(_faderState(context, fixtureState, FixtureControl.INTENSITY), style: textStyle)),
-        Text(_faderState(context, fixtureState, FixtureControl.SHUTTER), style: textStyle),
+            child: Text(_faderState(context, fixtureState, "Intensity"), style: textStyle)),
+        Text(_faderState(context, fixtureState, "Shutter1"), style: textStyle),
         ColorIndicator(fixtureState: fixtureState),
-        Text(_colorState(context, fixtureState, (color) => color.red), style: textStyle),
-        Text(_colorState(context, fixtureState, (color) => color.green), style: textStyle),
-        Text(_colorState(context, fixtureState, (color) => color.blue), style: textStyle),
+        Text(_faderState(context, fixtureState, "ColorMixerRed"), style: textStyle),
+        Text(_faderState(context, fixtureState, "ColorMixerGreen", presetControl: "ColorMixerRed"), style: textStyle),
+        Text(_faderState(context, fixtureState, "ColorMixerBlue", presetControl: "ColorMixerRed"), style: textStyle),
         PositionIndicator(fixtureState: fixtureState),
-        Text(_faderState(context, fixtureState, FixtureControl.PAN), style: textStyle),
-        Text(_faderState(context, fixtureState, FixtureControl.TILT, presetControl: FixtureControl.PAN), style: textStyle),
-        Text(_faderState(context, fixtureState, FixtureControl.GOBO), style: textStyle),
+        Text(_faderState(context, fixtureState, "Pan"), style: textStyle),
+        Text(_faderState(context, fixtureState, "Tilt"), style: textStyle),
+        Text(_faderState(context, fixtureState, "GoboWheel1"), style: textStyle),
       ],
       onTap: () => onSelect(id, !selected),
       onDoubleTap: onSelectSimilar,
@@ -163,7 +163,7 @@ class FixturesTable extends StatelessWidget {
   }
 
   // FIXME: `presetControl` is a hack because currently the preset is only listed in the pan control
-  String _faderState(BuildContext context, Iterable<ProgrammerChannel>? fixtureState, FixtureControl control, { FixtureControl? presetControl }) {
+  String _faderState(BuildContext context, Iterable<ProgrammerChannel>? fixtureState, String control, { String? presetControl }) {
     var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == control);
     var presetChannel = fixtureState?.firstWhereOrNull((element) => element.control == (presetControl ?? control));
     if (programmerChannel == null && presetChannel == null) {
@@ -180,27 +180,7 @@ class FixturesTable extends StatelessWidget {
     if (programmerChannel == null) {
       return "";
     }
-    var value = programmerChannel.fader;
-    return "${(value * 100).toStringAsFixed(1)}%";
-  }
-
-  String _colorState(
-      BuildContext context,
-      Iterable<ProgrammerChannel>? fixtureState, double Function(ColorMixerChannel) colorAccessor) {
-    var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR_MIXER);
-    if (programmerChannel == null) {
-      return "";
-    }
-    if (programmerChannel.hasPreset()) {
-      PresetsBloc bloc = context.read();
-      var preset = bloc.state.getPreset(programmerChannel.preset);
-      if (preset == null) {
-        return "";
-      }
-      return "${presetId(preset)} - ${preset.label}";
-    }
-    var color = programmerChannel.color;
-    var value = colorAccessor(color);
+    var value = programmerChannel.direct.percent;
     return "${(value * 100).toStringAsFixed(1)}%";
   }
 }

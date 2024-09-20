@@ -23,6 +23,8 @@ mod conversion;
 mod definition;
 mod resource_reader;
 
+pub(crate) const PROVIDER_NAME: &str = "QLC+";
+
 #[derive(Default)]
 pub struct QlcPlusProvider {
     file_path: String,
@@ -45,6 +47,10 @@ impl QlcPlusProvider {
 }
 
 impl FixtureLibraryProvider for QlcPlusProvider {
+    fn name(&self) -> &'static str {
+        PROVIDER_NAME
+    }
+
     fn load(&mut self) -> anyhow::Result<()> {
         tracing::info!("Loading QLC+ fixture library...");
         if let Some(path) = find_path(&self.file_path) {
@@ -104,7 +110,16 @@ impl FixtureLibraryProvider for QlcPlusProvider {
         self.definitions
             .get(&id["qlc:".len()..])
             .cloned()
-            .map(|definition| map_fixture_definition(definition, &resource_reader))
+            .and_then(|def| {
+                match map_fixture_definition(def, &resource_reader) {
+                    Ok(def) => Some(def),
+                    Err(err) => {
+                        tracing::error!("Unable to map fixture definition: {err:?}");
+
+                        None
+                    }
+                }
+            })
     }
 
     fn list_definitions(&self) -> Vec<FixtureDefinition> {
@@ -113,7 +128,17 @@ impl FixtureLibraryProvider for QlcPlusProvider {
         self.definitions
             .values()
             .cloned()
-            .map(|definition| map_fixture_definition(definition, &resource_reader))
+            .flat_map(|def| {
+                let name = def.model.clone();
+                match map_fixture_definition(def, &resource_reader) {
+                    Ok(def) => Some(def),
+                    Err(err) => {
+                        tracing::warn!("Unable to map fixture definition {name}: {err:?}");
+
+                        None
+                    }
+                }
+            })
             .collect()
     }
 }
@@ -137,6 +162,8 @@ mod tests {
     use std::path::Path;
 
     use hard_xml::XmlRead;
+    use spectral::prelude::*;
+    use mizer_fixtures::channels::{DmxChannel, DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode, FixtureColorChannel};
 
     use mizer_fixtures::definition::*;
 
@@ -146,124 +173,247 @@ mod tests {
     const GENERIC_RGBW_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGBW.qxf");
     const GENERIC_CMY_DEFINITION: &str = include_str!("../tests/Generic-Generic-CMY.qxf");
     const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
+    const CAMEO_ZENIT_B60_DEFINITION: &str = include_str!("../tests/Cameo-Zenit-B60.qxf");
 
     #[test]
-    fn generic_rgb() {
+    fn should_convert_generic_rgb() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
         let resource_reader = ResourceReader::new(Path::new("."));
-        let definition = map_fixture_definition(file, &resource_reader);
 
-        assert_eq!(definition.name, "Generic RGB");
-        assert_eq!(definition.modes.len(), 5);
-        assert_eq!(definition.modes[0].name, "RGB");
-        assert_eq!(definition.modes[0].get_channels().len(), 3);
-        assert_eq!(definition.modes[1].name, "GRB");
-        assert_eq!(definition.modes[1].get_channels().len(), 3);
-        assert_eq!(definition.modes[2].name, "BGR");
-        assert_eq!(definition.modes[2].get_channels().len(), 3);
-        assert_eq!(definition.modes[3].name, "RGB Dimmer");
-        assert_eq!(definition.modes[3].get_channels().len(), 4);
-        assert_eq!(definition.modes[4].name, "Dimmer RGB");
-        assert_eq!(definition.modes[4].get_channels().len(), 4);
-        for mode in &definition.modes {
-            assert_eq!(
-                mode.controls.color_mixer,
-                Some(ColorGroup::Rgb {
-                    red: FixtureControlChannel::Channel("Red".into()),
-                    green: FixtureControlChannel::Channel("Green".into()),
-                    blue: FixtureControlChannel::Channel("Blue".into()),
-                    amber: None,
-                    white: None,
-                })
-            );
-        }
-        assert_eq!(
-            definition.modes[3].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
-        assert_eq!(
-            definition.modes[4].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        assert_that!(definition.name.as_str()).is_equal_to("Generic RGB");
+        assert_that!(definition.manufacturer.as_str()).is_equal_to("Generic");
+        assert_that!(definition.modes.len()).is_equal_to(5);
     }
 
     #[test]
-    fn generic_rgbw() {
+    fn should_convert_generic_rgb_mode_rgb() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "RGB");
+        assert_that!(mode.channels).has_length(3);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgb_mode_grb() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "GRB");
+        assert_that!(mode.channels).has_length(3);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgb_mode_bgr() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "BGR");
+        assert_that!(mode.channels).has_length(3);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgb_mode_rgb_dimmer() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "RGB Dimmer");
+        assert_that!(mode.channels).has_length(4);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+        let channel = assert_channel(mode, FixtureChannel::Intensity);
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(3) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgb_mode_dimmer_rgb() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "Dimmer RGB");
+        assert_that!(mode.channels).has_length(4);
+        let channel = assert_channel(mode, FixtureChannel::Intensity);
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(3) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgbw() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
         let resource_reader = ResourceReader::new(Path::new("."));
-        let definition = map_fixture_definition(file, &resource_reader);
 
-        assert_eq!(definition.name, "Generic RGBW");
-        assert_eq!(definition.modes.len(), 6);
-        assert_eq!(definition.modes[0].name, "RGBW");
-        assert_eq!(definition.modes[0].get_channels().len(), 4);
-        assert_eq!(definition.modes[1].name, "WRGB");
-        assert_eq!(definition.modes[1].get_channels().len(), 4);
-        assert_eq!(definition.modes[2].name, "RGBW Dimmer");
-        assert_eq!(definition.modes[2].get_channels().len(), 5);
-        assert_eq!(definition.modes[3].name, "WRGB Dimmer");
-        assert_eq!(definition.modes[3].get_channels().len(), 5);
-        assert_eq!(definition.modes[4].name, "Dimmer RGBW");
-        assert_eq!(definition.modes[4].get_channels().len(), 5);
-        assert_eq!(definition.modes[5].name, "Dimmer WRGB");
-        assert_eq!(definition.modes[5].get_channels().len(), 5);
-        for mode in &definition.modes {
-            assert_eq!(
-                mode.controls.color_mixer,
-                Some(ColorGroup::Rgb {
-                    red: FixtureControlChannel::Channel("Red".into()),
-                    green: FixtureControlChannel::Channel("Green".into()),
-                    blue: FixtureControlChannel::Channel("Blue".into()),
-                    amber: None,
-                    white: Some(FixtureControlChannel::Channel("White".into())),
-                })
-            );
-        }
-        assert_eq!(
-            definition.modes[2].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
-        assert_eq!(
-            definition.modes[3].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
-        assert_eq!(
-            definition.modes[4].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
-        assert_eq!(
-            definition.modes[5].controls.intensity,
-            Some(FixtureControlChannel::Channel("Dimmer".into()))
-        );
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        assert_that!(definition.name.as_str()).is_equal_to("Generic RGBW");
+        assert_that!(definition.manufacturer.as_str()).is_equal_to("Generic");
+        assert_that!(definition.modes.len()).is_equal_to(6);
     }
 
     #[test]
-    fn generic_cmy() {
+    fn should_convert_generic_rgbw_mode_rgbw() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "RGBW");
+        assert_that!(mode.channels).has_length(4);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::White));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(3) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgbw_mode_wrgb() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "WRGB");
+        assert_that!(mode.channels).has_length(4);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::White));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(3) });
+    }
+
+    #[test]
+    fn should_convert_generic_rgbw_mode_rgbw_dimmer() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        let mode = assert_mode(&definition, "RGBW Dimmer");
+        assert_that!(mode.channels).has_length(5);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::White));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(3) });
+        let channel = assert_channel(mode, FixtureChannel::Intensity);
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(4) });
+    }
+
+    #[test]
+    fn should_convert_generic_cmy() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_CMY_DEFINITION).unwrap();
         let resource_reader = ResourceReader::new(Path::new("."));
-        let definition = map_fixture_definition(file, &resource_reader);
 
-        assert_eq!(definition.name, "Generic CMY");
-        assert_eq!(definition.modes.len(), 1);
-        assert_eq!(definition.modes[0].name, "CMY");
-        assert_eq!(definition.modes[0].get_channels().len(), 3);
-        for mode in &definition.modes {
-            assert_eq!(
-                mode.controls.color_mixer,
-                Some(ColorGroup::Cmy {
-                    cyan: FixtureControlChannel::Channel("Cyan".into()),
-                    magenta: FixtureControlChannel::Channel("Magenta".into()),
-                    yellow: FixtureControlChannel::Channel("Yellow".into()),
-                })
-            );
-        }
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        assert_that!(definition.name.as_str()).is_equal_to("Generic CMY");
+        assert_that!(definition.manufacturer.as_str()).is_equal_to("Generic");
+        assert_that!(definition.modes).has_length(1);
+        let mode = assert_mode(&definition, "CMY");
+        assert_that!(mode.channels).has_length(3);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Cyan));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Magenta));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Yellow));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(2) });
     }
 
     #[test]
-    fn generic_smoke() {
-        let file = QlcPlusFixtureDefinition::from_str(GENERIC_SMOKE_DEFINITION);
+    fn should_convert_generic_smoke() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_SMOKE_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
 
-        println!("{:#?}", file);
-        assert!(file.is_ok());
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+
+        assert_that!(definition.name.as_str()).is_equal_to("Generic Smoke");
+        assert_that!(definition.manufacturer.as_str()).is_equal_to("Generic");
+        assert_that!(definition.modes).has_length(2);
+        let mode = assert_mode(&definition, "Normal");
+        assert_that!(mode.channels).has_length(2);
+        println!("{:?}", mode.channels);
+        let channel = assert_channel(mode, FixtureChannel::Intensity);
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+        let mode = assert_mode(&definition, "Amount");
+        assert_that!(mode.channels).has_length(1);
+        let channel = assert_channel(mode, FixtureChannel::Intensity);
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution8Bit { coarse: DmxChannel::new(0) });
+    }
+
+    #[test]
+    fn should_convert_16bit_color_channels() {
+        let file = QlcPlusFixtureDefinition::from_str(CAMEO_ZENIT_B60_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+
+        let definition = map_fixture_definition(file, &resource_reader).unwrap();
+        
+        let mode = assert_mode(&definition, "8 Channel Mode 1");
+        assert_that!(mode.channels).has_length(4);
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution16Bit { coarse: DmxChannel::new(0), fine: DmxChannel::new(1) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution16Bit { coarse: DmxChannel::new(2), fine: DmxChannel::new(3) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution16Bit { coarse: DmxChannel::new(4), fine: DmxChannel::new(5) });
+        let channel = assert_channel(mode, FixtureChannel::ColorMixer(FixtureColorChannel::White));
+        assert_that!(channel.channels).is_equal_to(DmxChannels::Resolution16Bit { coarse: DmxChannel::new(6), fine: DmxChannel::new(7) });
+    }
+    
+    fn assert_mode<'a>(definition: &'a FixtureDefinition, name: &str) -> &'a FixtureChannelMode {
+        assert_that!(definition.modes.iter().any(|m| m.name.as_str() == name)).named(&format!("Mode {name} not found"));
+        definition.get_mode(name).unwrap()
+    }
+
+    fn assert_channel(mode: &FixtureChannelMode, channel: FixtureChannel) -> &FixtureChannelDefinition {
+        assert_that!(mode.channels).contains_key(channel);
+        mode.channels.get(&channel).unwrap()
     }
 }

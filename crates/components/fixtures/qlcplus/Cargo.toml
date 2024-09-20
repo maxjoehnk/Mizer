@@ -16,6 +16,9 @@ enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch 
 htmlentity = "1.3"
 cached = { version = "0.49", default-features = false, features = ["proc_macro"] }
 
+[dev-dependencies]
+spectral = "0.6"
+
 [build-dependencies]
 ureq = "2.9"
 zip = "0.6"

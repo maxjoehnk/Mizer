@@ -2,14 +2,14 @@ use crate::types::{drop_pointer, FFIFromPointer};
 use mizer_node::NodePath;
 use mizer_runtime::LayoutsView;
 use parking_lot::Mutex;
-use std::collections::HashMap;
-use std::ffi::{CStr, CString};
+use std::ffi::{CStr};
 use std::os::raw::c_char;
 use std::sync::Arc;
+use crate::pointer_inventory::PointerInventory;
 
 pub struct LayoutRef {
     pub view: LayoutsView,
-    labels: Mutex<HashMap<*const c_char, CString>>,
+    labels: Mutex<PointerInventory>,
 }
 
 impl LayoutRef {
@@ -72,12 +72,10 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
 
     let value = ffi.view.get_label_value(&node_path).unwrap_or_default();
     let value = value.to_string();
-    let value = CString::new(value).unwrap();
-    let value_pointer = value.as_ptr();
-    {
-        let mut labels = ffi.labels.lock();
-        labels.insert(value_pointer, value);
-    }
+    let value_pointer = {
+        let mut pointers = ffi.labels.lock();
+        pointers.allocate_string(value)
+    };
 
     std::mem::forget(ffi);
 

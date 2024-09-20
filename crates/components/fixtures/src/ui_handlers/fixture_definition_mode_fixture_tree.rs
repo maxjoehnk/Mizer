@@ -1,6 +1,7 @@
-use std::collections::HashMap;
+use indexmap::IndexMap;
+use itertools::Itertools;
 use mizer_ui_api::table::*;
-use crate::channels::{FixtureChannel, FixtureChannelDefinition, FixtureChannelMode};
+use crate::channels::{DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode};
 
 pub struct FixtureDefinitionTreeTable;
 
@@ -13,7 +14,16 @@ impl TableHandler for FixtureDefinitionTreeTable {
                 label: "Name".into(),
             },
             TableColumn {
-                label: "DMX Channel".into(),
+                label: "Label".into(),
+            },
+            TableColumn {
+                label: "DMX".into(),
+            },
+            TableColumn {
+                label: "Highlight".into(),
+            },
+            TableColumn {
+                label: "Default".into(),
             },
             TableColumn { label: "".into() },
         ];
@@ -28,6 +38,9 @@ impl TableHandler for FixtureDefinitionTreeTable {
                     },
                     TableCell::empty(),
                     TableCell::empty(),
+                    TableCell::empty(),
+                    TableCell::empty(),
+                    TableCell::empty(),
                 ],
                 children: Self::build_controls(&children.channels),
             })
@@ -39,8 +52,9 @@ impl TableHandler for FixtureDefinitionTreeTable {
 }
 
 impl FixtureDefinitionTreeTable {
-    fn build_controls(controls: &HashMap<FixtureChannel, FixtureChannelDefinition>) -> Vec<TableRow> {
+    fn build_controls(controls: &IndexMap<FixtureChannel, FixtureChannelDefinition>) -> Vec<TableRow> {
         controls.iter()
+            .sorted_by_key(|(_, channel)| channel.first_address())
             .map(|(channel, definition)| {
                 TableRow {
                     id: channel.to_string(),
@@ -49,7 +63,36 @@ impl FixtureDefinitionTreeTable {
                             content: TableCellContent::Text(channel.to_string()),
                         },
                         TableCell {
-                            content: TableCellContent::Text(format!("{:?}", definition.channels)),
+                            content: TableCellContent::Text(match definition.label.as_ref() {
+                                Some(label) => label.to_string(),
+                                None => "None".to_string(),
+                            }),
+                        },
+                        TableCell {
+                            content: TableCellContent::Text(match definition.channels {
+                                DmxChannels::Resolution8Bit { coarse } => format!("8 Bit ({coarse})"),
+                                DmxChannels::Resolution16Bit { coarse, fine } => {
+                                    format!("16 Bit ({coarse}, {fine})")
+                                }
+                                DmxChannels::Resolution24Bit { coarse, fine, finest } => {
+                                    format!("24 Bit ({coarse}, {fine}, {finest})")
+                                }
+                                DmxChannels::Resolution32Bit { coarse, fine, finest, ultra } => {
+                                    format!("32 Bit ({coarse}, {fine}, {finest}, {ultra})")
+                                }
+                            }),
+                        },
+                        TableCell {
+                            content: TableCellContent::Text(match definition.highlight {
+                                Some(highlight) => highlight.to_string(),
+                                None => "None".to_string(),
+                            }),
+                        },
+                        TableCell {
+                            content: TableCellContent::Text(match definition.default {
+                                Some(default) => default.to_string(),
+                                None => "None".to_string(),
+                            })
                         },
                         TableCell::empty(),
                     ],

@@ -40,10 +40,10 @@ pub enum PresetType {
 }
 
 impl PresetType {
-    pub fn contains_control(&self, control: &FixtureChannel) -> bool {
+    pub fn contains_channel(&self, control: &FixtureChannel) -> bool {
         match self {
             Self::Intensity => matches!(control, &FixtureChannel::Intensity),
-            Self::Shutter => matches!(control, &FixtureChannel::Shutter),
+            Self::Shutter => matches!(control, &FixtureChannel::Shutter(_)),
             Self::Color => matches!(control, &FixtureChannel::ColorMixer(_)),
             Self::Position => matches!(
                 control,
@@ -74,7 +74,7 @@ impl PresetValue {
                 value: value.into(),
             }],
             Self::Shutter(value) => vec![FixtureChannelValue {
-                channel: FixtureChannel::Shutter,
+                channel: FixtureChannel::Shutter(1),
                 value: value.into(),
             }],
             Self::Color((red, green, blue)) => vec![

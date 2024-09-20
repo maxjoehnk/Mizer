@@ -10,19 +10,6 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'programmer_control_list.dart';
 import 'programmer_fixture_list.dart';
 
-final NAMES = {
-  FixtureControl.INTENSITY: "Dimmer",
-  FixtureControl.SHUTTER: "Shutter",
-  FixtureControl.COLOR_MIXER: "Color",
-  FixtureControl.COLOR_WHEEL: "Color Wheel",
-  FixtureControl.GOBO: "Gobo",
-  FixtureControl.ZOOM: "Zoom",
-  FixtureControl.FOCUS: "Focus",
-  FixtureControl.PRISM: "Prism",
-  FixtureControl.FROST: "Frost",
-  FixtureControl.IRIS: "Iris",
-};
-
 class SmartViewWrapper extends StatelessWidget {
   const SmartViewWrapper({Key? key}) : super(key: key);
 
@@ -97,8 +84,8 @@ class _SmartViewState extends State<SmartView>
     }, (lhs, rhs) => lhs - rhs).toList();
   }
 
-  List<FixtureControl> _controls() {
-    return _fixtures().map((e) => e.controls).flattened.map((c) => c.control).toList();
+  List<String> _controls() {
+    return _fixtures().map((e) => e.channels).flattened.map((c) => c.channel).toList();
   }
 }
 
@@ -119,7 +106,7 @@ class FixtureEntry {
     return subFixture?.name ?? fixture.name;
   }
 
-  List<FixtureControls> get controls {
-    return subFixture?.controls ?? fixture.controls;
+  List<FixtureChannel> get channels {
+    return subFixture?.channels ?? fixture.channels;
   }
 }

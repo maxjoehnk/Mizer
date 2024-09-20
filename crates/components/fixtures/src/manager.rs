@@ -115,7 +115,7 @@ impl FixtureManager {
                 let value = values
                     .iter()
                     .find_map(|v| match v.channel {
-                        FixtureChannel::Shutter => Some(v.value.get_percent()),
+                        FixtureChannel::Shutter(_) => Some(v.value.get_percent()),
                         _ => None,
                     })
                     .ok_or_else(|| anyhow::anyhow!("Missing shutter value in programmer"))?;
@@ -178,89 +178,94 @@ impl FixtureManager {
     pub fn store_in_preset(
         &self,
         preset_id: PresetId,
-        values: Vec<FixtureChannelValue>,
+        mut values: Vec<FixtureChannelValue>,
     ) -> anyhow::Result<Vec<FixtureChannelValue>> {
-        todo!()
-        // match preset_id {
-        //     PresetId::Intensity(preset_id) => {
-        //         let value = values
-        //             .iter_mut()
-        //             .find_map(|v| match v {
-        //                 FixtureControlValue::Intensity(value) => Some(value),
-        //                 _ => None,
-        //             })
-        //             .ok_or_else(|| anyhow::anyhow!("Missing intensity value in programmer"))?;
-        //         let mut preset = self
-        //             .presets
-        //             .intensity
-        //             .get_mut(&preset_id)
-        //             .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
-        //         std::mem::swap(&mut preset.value, value);
-        // 
-        //         Ok(vec![FixtureControlValue::Intensity(*value)])
-        //     }
-        //     PresetId::Shutter(preset_id) => {
-        //         let value = values
-        //             .iter_mut()
-        //             .find_map(|v| match v {
-        //                 FixtureControlValue::Shutter(value) => Some(value),
-        //                 _ => None,
-        //             })
-        //             .ok_or_else(|| anyhow::anyhow!("Missing shutter value in programmer"))?;
-        //         let mut preset = self
-        //             .presets
-        //             .shutter
-        //             .get_mut(&preset_id)
-        //             .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
-        //         std::mem::swap(&mut preset.value, value);
-        // 
-        //         Ok(vec![FixtureControlValue::Shutter(*value)])
-        //     }
-        //     PresetId::Color(preset_id) => {
-        //         let mut value = values
-        //             .into_iter()
-        //             .find_map(|v| match v {
-        //                 FixtureControlValue::ColorMixer(red, green, blue) => {
-        //                     Some((red, green, blue))
-        //                 }
-        //                 _ => None,
-        //             })
-        //             .ok_or_else(|| anyhow::anyhow!("Missing color value in programmer"))?;
-        //         let mut preset = self
-        //             .presets
-        //             .color
-        //             .get_mut(&preset_id)
-        //             .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
-        // 
-        //         std::mem::swap(&mut preset.value, &mut value);
-        // 
-        //         Ok(vec![FixtureControlValue::ColorMixer(
-        //             value.0, value.1, value.2,
-        //         )])
-        //     }
-        //     PresetId::Position(preset_id) => {
-        //         let pan = values.iter().find_map(|v| match v {
-        //             FixtureControlValue::Pan(value) => Some(*value),
-        //             _ => None,
-        //         });
-        //         let tilt = values.iter().find_map(|v| match v {
-        //             FixtureControlValue::Tilt(value) => Some(*value),
-        //             _ => None,
-        //         });
-        //         let mut preset = self
-        //             .presets
-        //             .position
-        //             .get_mut(&preset_id)
-        //             .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
-        // 
-        //         let mut value = Position::from_pan_tilt(pan, tilt)
-        //             .ok_or_else(|| anyhow::anyhow!("Invalid preset type/value combination"))?;
-        // 
-        //         std::mem::swap(&mut preset.value, &mut value);
-        // 
-        //         Ok(value.into())
-        //     }
-        // }
+        match preset_id {
+            PresetId::Intensity(preset_id) => {
+                let mut value = values
+                    .iter()
+                    .find_map(|v| match v.channel {
+                        FixtureChannel::Intensity => Some(v.value.get_percent()),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing intensity value in programmer"))?;
+                let mut preset = self
+                    .presets
+                    .intensity
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+                std::mem::swap(&mut preset.value, &mut value);
+        
+                Ok(vec![FixtureChannelValue {
+                    value: FixtureValue::Percent(value),
+                    channel: FixtureChannel::Intensity,
+                }])
+            }
+            PresetId::Shutter(preset_id) => {
+                let mut value = values
+                    .iter()
+                    .find_map(|v| match v.channel {
+                        FixtureChannel::Shutter(1) => Some(v.value.get_percent()),
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing shutter value in programmer"))?;
+                let mut preset = self
+                    .presets
+                    .shutter
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+                std::mem::swap(&mut preset.value, &mut value);
+        
+                Ok(vec![FixtureChannelValue {
+                    value: FixtureValue::Percent(value),
+                    channel: FixtureChannel::Shutter(1),
+                }])
+            }
+            PresetId::Color(preset_id) => {
+                let mut value = values
+                    .into_iter()
+                    .find_map(|v| match v {
+                        FixtureControlValue::ColorMixer(red, green, blue) => {
+                            Some((red, green, blue))
+                        }
+                        _ => None,
+                    })
+                    .ok_or_else(|| anyhow::anyhow!("Missing color value in programmer"))?;
+                let mut preset = self
+                    .presets
+                    .color
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+        
+                std::mem::swap(&mut preset.value, &mut value);
+        
+                Ok(vec![FixtureControlValue::ColorMixer(
+                    value.0, value.1, value.2,
+                )])
+            }
+            PresetId::Position(preset_id) => {
+                let pan = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Pan(value) => Some(*value),
+                    _ => None,
+                });
+                let tilt = values.iter().find_map(|v| match v {
+                    FixtureControlValue::Tilt(value) => Some(*value),
+                    _ => None,
+                });
+                let mut preset = self
+                    .presets
+                    .position
+                    .get_mut(&preset_id)
+                    .ok_or_else(|| anyhow::anyhow!("Unknown preset {preset_id}"))?;
+        
+                let mut value = Position::from_pan_tilt(pan, tilt)
+                    .ok_or_else(|| anyhow::anyhow!("Invalid preset type/value combination"))?;
+        
+                std::mem::swap(&mut preset.value, &mut value);
+        
+                Ok(value.into())
+            }
+        }
     }
 
     pub fn delete_preset(&self, preset_id: PresetId) -> Option<GenericPreset> {

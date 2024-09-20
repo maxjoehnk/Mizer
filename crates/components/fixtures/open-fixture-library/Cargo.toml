@@ -14,5 +14,8 @@ simd-json = "0.13"
 mizer-util = { path = "../../../util" }
 base64 = "0.22"
 
+[dev-dependencies]
+spectral = "0.6"
+
 [build-dependencies]
 ureq = "2.9"

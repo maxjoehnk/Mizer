@@ -1,0 +1,92 @@
+{
+  "version": "1.0.0",
+  "fixtures": [
+    {
+      "$schema": "https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/master/schemas/fixture.json",
+      "name": "CMY Fader",
+      "shortName": "CMY",
+      "categories": ["Color Changer"],
+      "meta": {
+        "authors": ["Flo Edelmann"],
+        "createDate": "2017-12-12",
+        "lastModifyDate": "2018-07-21"
+      },
+      "availableChannels": {
+        "Cyan": {
+          "fineChannelAliases": ["Cyan fine", "Cyan fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#0ff0fe"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Magenta": {
+          "fineChannelAliases": ["Magenta fine", "Magenta fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#ff00ff"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Yellow": {
+          "fineChannelAliases": ["Yellow fine", "Yellow fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#ffff00"
+            }
+          ],
+          "singleCapability": true
+        }
+      },
+      "modes": [
+        {
+          "name": "8 bit",
+          "shortName": "8bit",
+          "channels": [
+            "Cyan",
+            "Magenta",
+            "Yellow"
+          ]
+        },
+        {
+          "name": "16 bit",
+          "shortName": "16bit",
+          "channels": [
+            "Cyan",
+            "Cyan fine",
+            "Magenta",
+            "Magenta fine",
+            "Yellow",
+            "Yellow fine"
+          ]
+        },
+        {
+          "name": "24 bit",
+          "shortName": "24bit",
+          "channels": [
+            "Cyan",
+            "Cyan fine",
+            "Cyan fine^2",
+            "Magenta",
+            "Magenta fine",
+            "Magenta fine^2",
+            "Yellow",
+            "Yellow fine",
+            "Yellow fine^2"
+          ]
+        }
+      ],
+      "fixtureKey": "cmy-fader",
+      "manufacturer": {
+        "name": "Generic",
+        "comment": "Use this pseudo manufacturer if you need to quick patch some channels without having to create a new fixture."
+      },
+      "oflURL": "https://open-fixture-library.org/generic/cmy-fader"
+    }
+  ]
+}

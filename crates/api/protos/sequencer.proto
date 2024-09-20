@@ -130,27 +130,9 @@ message CueTrigger {
 }
 
 message CueControl {
-  Type type = 1;
+  string fixtureChannel = 1;
   CueValue value = 2;
   repeated mizer.fixtures.FixtureId fixtures = 3;
-
-  enum Type {
-    INTENSITY = 0;
-    SHUTTER = 1;
-    COLOR_RED = 2;
-    COLOR_GREEN = 3;
-    COLOR_BLUE = 4;
-    COLOR_WHEEL = 5;
-    PAN = 6;
-    TILT = 7;
-    FOCUS = 8;
-    ZOOM = 9;
-    PRISM = 10;
-    IRIS = 11;
-    FROST = 12;
-    GOBO = 13;
-    GENERIC = 14;
-  }
 }
 
 message CueValue {

@@ -1,13 +1,13 @@
 use crate::get_effect_mut;
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_sequencer::{EffectChannel, EffectEngine};
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::channels::FixtureChannel;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddEffectChannelCommand {
     pub effect_id: u32,
-    pub control: FixtureFaderControl,
+    pub control: FixtureChannel,
 }
 
 impl<'a> Command<'a> for AddEffectChannelCommand {

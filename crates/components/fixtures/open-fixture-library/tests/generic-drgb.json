@@ -1,0 +1,130 @@
+{
+  "version": "1.0.0",
+  "fixtures": [
+    {
+      "$schema": "https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/master/schemas/fixture.json",
+      "name": "DRGB Fader",
+      "shortName": "DRGB",
+      "categories": ["Color Changer"],
+      "meta": {
+        "authors": ["Flo Edelmann"],
+        "createDate": "2017-12-07",
+        "lastModifyDate": "2018-07-21"
+      },
+      "availableChannels": {
+        "Dimmer": {
+          "fineChannelAliases": ["Dimmer fine", "Dimmer fine^2"],
+          "capabilities": [
+            {
+              "type": "Intensity"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Red": {
+          "fineChannelAliases": ["Red fine", "Red fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#ff0000"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Green": {
+          "fineChannelAliases": ["Green fine", "Green fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#00ff00"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Blue": {
+          "fineChannelAliases": ["Blue fine", "Blue fine^2"],
+          "capabilities": [
+            {
+              "type": "ColorIntensity",
+              "color": "#0000ff"
+            }
+          ],
+          "singleCapability": true
+        }
+      },
+      "modes": [
+        {
+          "name": "8 bit",
+          "shortName": "8bit",
+          "channels": [
+            "Dimmer",
+            "Red",
+            "Green",
+            "Blue"
+          ]
+        },
+        {
+          "name": "16 bit Dimmer",
+          "shortName": "16bit-dimmer",
+          "channels": [
+            "Dimmer",
+            "Dimmer fine",
+            "Red",
+            "Green",
+            "Blue"
+          ]
+        },
+        {
+          "name": "16 bit",
+          "shortName": "16bit",
+          "channels": [
+            "Dimmer",
+            "Dimmer fine",
+            "Red",
+            "Red fine",
+            "Green",
+            "Green fine",
+            "Blue",
+            "Blue fine"
+          ]
+        },
+        {
+          "name": "24 bit Dimmer",
+          "shortName": "24bit-dimmer",
+          "channels": [
+            "Dimmer",
+            "Dimmer fine",
+            "Dimmer fine^2",
+            "Red",
+            "Green",
+            "Blue"
+          ]
+        },
+        {
+          "name": "24 bit",
+          "shortName": "24bit",
+          "channels": [
+            "Dimmer",
+            "Dimmer fine",
+            "Dimmer fine^2",
+            "Red",
+            "Red fine",
+            "Red fine^2",
+            "Green",
+            "Green fine",
+            "Green fine^2",
+            "Blue",
+            "Blue fine",
+            "Blue fine^2"
+          ]
+        }
+      ],
+      "fixtureKey": "drgb-fader",
+      "manufacturer": {
+        "name": "Generic",
+        "comment": "Use this pseudo manufacturer if you need to quick patch some channels without having to create a new fixture."
+      },
+      "oflURL": "https://open-fixture-library.org/generic/drgb-fader"
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/protos/fixtures.pbenum.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,7 @@ class IntensityIndicator extends StatelessWidget {
   }
 
   double? getValue(BuildContext context) {
-    var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.INTENSITY);
+    var programmerChannel = fixtureState?.firstWhereOrNull((element) => element.control == "Intensity");
     if (programmerChannel == null) {
       return null;
     }
@@ -37,7 +36,7 @@ class IntensityIndicator extends StatelessWidget {
       }
       return preset.fader;
     }
-    return programmerChannel.fader;
+    return programmerChannel.direct.percent;
   }
 }
 

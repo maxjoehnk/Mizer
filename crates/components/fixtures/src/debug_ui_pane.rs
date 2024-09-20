@@ -1,7 +1,6 @@
 use crate::fixture::IFixture;
 use crate::manager::FixtureManager;
 use mizer_module::*;
-use mizer_node::Inject;
 
 pub struct FixturesDebugUiPane;
 
@@ -65,10 +64,10 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                             ui.collapsing_header(mode.name.as_str(), |ui| {
                                 ui.collapsing_header("Channels", |ui| {
                                     ui.columns(2, |columns| {
-                                        // for channel in mode.get_channels() {
-                                        //     columns[0].label(&channel.name);
-                                        //     columns[1].label(format!("{:?}", channel.resolution));
-                                        // }
+                                        for channel in mode.channels.values() {
+                                            columns[0].label(channel.name());
+                                            columns[1].label(format!("{:?}", channel.channels));
+                                        }
                                     });
                                 });
                             });
@@ -96,24 +95,16 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         }
                     });
                 });
-                // ui.collapsing_header("Faders", |ui| {
-                //     ui.columns(3, |columns| {
-                //         for (control, _control_type) in
-                //             fixture.current_mode.controls.controls().into_iter()
-                //         {
-                //             for fader in control.faders() {
-                //                 let channel =
-                //                     fixture.current_mode.controls.get_channel(&fader).unwrap();
-                //                 let channel = format!("{:?}", channel);
-                //                 columns[0].label(format!("{fader:?}"));
-                //                 columns[1].label(
-                //                     fixture.read_control(fader).unwrap_or_default().to_string(),
-                //                 );
-                //                 columns[2].label(channel);
-                //             }
-                //         }
-                //     });
-                // });
+                ui.collapsing_header("Channels", |ui| {
+                    ui.columns(2, |columns| {
+                        for channel in
+                            fixture.channel_mode.channels.values()
+                        {
+                            columns[0].label(channel.name());
+                            columns[1].label(fixture.read_channel(channel.channel).unwrap_or_default().to_string());
+                        }
+                    });
+                });
                 // ui.collapsing_header("Sub Fixtures", |ui| {
                 //     for sub_fixture in &fixture.current_mode.sub_fixtures {
                 //         ui.collapsing_header(&sub_fixture.name, |ui| {

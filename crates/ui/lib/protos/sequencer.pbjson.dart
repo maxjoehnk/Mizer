@@ -373,44 +373,17 @@ final $typed_data.Uint8List cueTriggerDescriptor = $convert.base64Decode(
 const CueControl$json = {
   '1': 'CueControl',
   '2': [
-    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.sequencer.CueControl.Type', '10': 'type'},
+    {'1': 'fixtureChannel', '3': 1, '4': 1, '5': 9, '10': 'fixtureChannel'},
     {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.mizer.sequencer.CueValue', '10': 'value'},
     {'1': 'fixtures', '3': 3, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
-  ],
-  '4': [CueControl_Type$json],
-};
-
-@$core.Deprecated('Use cueControlDescriptor instead')
-const CueControl_Type$json = {
-  '1': 'Type',
-  '2': [
-    {'1': 'INTENSITY', '2': 0},
-    {'1': 'SHUTTER', '2': 1},
-    {'1': 'COLOR_RED', '2': 2},
-    {'1': 'COLOR_GREEN', '2': 3},
-    {'1': 'COLOR_BLUE', '2': 4},
-    {'1': 'COLOR_WHEEL', '2': 5},
-    {'1': 'PAN', '2': 6},
-    {'1': 'TILT', '2': 7},
-    {'1': 'FOCUS', '2': 8},
-    {'1': 'ZOOM', '2': 9},
-    {'1': 'PRISM', '2': 10},
-    {'1': 'IRIS', '2': 11},
-    {'1': 'FROST', '2': 12},
-    {'1': 'GOBO', '2': 13},
-    {'1': 'GENERIC', '2': 14},
   ],
 };
 
 /// Descriptor for `CueControl`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode(
-    'CgpDdWVDb250cm9sEjQKBHR5cGUYASABKA4yIC5taXplci5zZXF1ZW5jZXIuQ3VlQ29udHJvbC'
-    '5UeXBlUgR0eXBlEi8KBXZhbHVlGAIgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2'
-    'YWx1ZRI1CghmaXh0dXJlcxgDIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dH'
-    'VyZXMiwgEKBFR5cGUSDQoJSU5URU5TSVRZEAASCwoHU0hVVFRFUhABEg0KCUNPTE9SX1JFRBAC'
-    'Eg8KC0NPTE9SX0dSRUVOEAMSDgoKQ09MT1JfQkxVRRAEEg8KC0NPTE9SX1dIRUVMEAUSBwoDUE'
-    'FOEAYSCAoEVElMVBAHEgkKBUZPQ1VTEAgSCAoEWk9PTRAJEgkKBVBSSVNNEAoSCAoESVJJUxAL'
-    'EgkKBUZST1NUEAwSCAoER09CTxANEgsKB0dFTkVSSUMQDg==');
+    'CgpDdWVDb250cm9sEiYKDmZpeHR1cmVDaGFubmVsGAEgASgJUg5maXh0dXJlQ2hhbm5lbBIvCg'
+    'V2YWx1ZRgCIAEoCzIZLm1pemVyLnNlcXVlbmNlci5DdWVWYWx1ZVIFdmFsdWUSNQoIZml4dHVy'
+    'ZXMYAyADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVz');
 
 @$core.Deprecated('Use cueValueDescriptor instead')
 const CueValue$json = {

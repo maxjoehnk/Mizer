@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:provider/provider.dart';
@@ -27,27 +26,26 @@ class ColorIndicator extends StatelessWidget {
   }
 
   Color? getColor(BuildContext context) {
-    var programmerChannel =
-        fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR_MIXER);
-    if (programmerChannel == null) {
-      return null;
-    }
-    if (programmerChannel.hasPreset()) {
+    var redChannel = fixtureState?.firstWhereOrNull((element) => element.control == "ColorMixerRed");
+    var greenChannel = fixtureState?.firstWhereOrNull((element) => element.control == "ColorMixerGreen");
+    var blueChannel = fixtureState?.firstWhereOrNull((element) => element.control == "ColorMixerBlue");
+    var presetChannel = fixtureState?.firstWhereOrNull((element) => element.control == "ColorMixerRed");
+    if (presetChannel != null && presetChannel.hasPreset()) {
       PresetsBloc bloc = context.read();
-      var preset = bloc.state.getPreset(programmerChannel.preset);
+      var preset = bloc.state.getPreset(presetChannel.preset);
       if (preset == null) {
         return null;
       }
       return _convertPresetColor(preset.color);
     }
 
-    return _convertColor(programmerChannel.color);
-  }
+    if (redChannel == null && greenChannel == null && blueChannel == null) {
+      return null;
+    }
 
-  Color _convertColor(ColorMixerChannel color) {
-    int red = (color.red * 255).round();
-    int green = (color.green * 255).round();
-    int blue = (color.blue * 255).round();
+    var red = ((redChannel?.direct.percent ?? 0) * 255).round();
+    var green = ((greenChannel?.direct.percent ?? 0) * 255).round();
+    var blue = ((blueChannel?.direct.percent ?? 0) * 255).round();
 
     return Color.fromARGB(255, red, green, blue);
   }

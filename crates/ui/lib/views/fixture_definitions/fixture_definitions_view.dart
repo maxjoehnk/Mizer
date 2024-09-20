@@ -34,49 +34,45 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
             ],
             tabs: [
               Tab(
-                label: "Open Fixture Library",
-                child: MizerDataTable(
-                    tableId: "fixtures/definitions/list/ofl",
-                    onTap: (id) => setState(() {
-                      selectedDefinitionId = id;
-                      selectedMode = null;
-                    }),
-                    query: search,
-                    selectedId: selectedDefinitionId)
-              ),
+                  label: "Open Fixture Library",
+                  child: MizerDataTable(
+                      tableId: "fixtures/definitions/list/ofl",
+                      onTap: (id) => setState(() {
+                            selectedDefinitionId = id;
+                            selectedMode = null;
+                          }),
+                      query: search,
+                      selectedId: selectedDefinitionId)),
               Tab(
                   label: "GDTF",
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/gdtf",
                       onTap: (id) => setState(() {
-                        selectedDefinitionId = id;
-                        selectedMode = null;
-                      }),
+                            selectedDefinitionId = id;
+                            selectedMode = null;
+                          }),
                       query: search,
-                      selectedId: selectedDefinitionId)
-              ),
+                      selectedId: selectedDefinitionId)),
               Tab(
                   label: "QLC+",
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/qlc",
                       onTap: (id) => setState(() {
-                        selectedDefinitionId = id;
-                        selectedMode = null;
-                      }),
+                            selectedDefinitionId = id;
+                            selectedMode = null;
+                          }),
                       query: search,
-                      selectedId: selectedDefinitionId)
-              ),
+                      selectedId: selectedDefinitionId)),
               Tab(
                   label: "Mizer",
                   child: MizerDataTable(
                       tableId: "fixtures/definitions/list/mizer",
                       onTap: (id) => setState(() {
-                        selectedDefinitionId = id;
-                        selectedMode = null;
-                      }),
+                            selectedDefinitionId = id;
+                            selectedMode = null;
+                          }),
                       query: search,
-                      selectedId: selectedDefinitionId)
-              ),
+                      selectedId: selectedDefinitionId)),
             ],
             onSearch: (q) => setState(() {
               search = q;
@@ -101,21 +97,12 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
           Expanded(
               flex: 2,
               child: Panel(
-            label: "Fixture Mode",
-            padding: false,
-            tabs: [
-              Tab(
-                  label: "Controls",
-                  child: MizerDataTable(
-                      tableId: "fixtures/definitions/tree",
-                      arguments: [selectedDefinitionId!, selectedMode!])),
-              Tab(
-                  label: "DMX Channels",
-                  child: MizerDataTable(
-                      tableId: "fixtures/definitions/channels",
-                      arguments: [selectedDefinitionId!, selectedMode!]))
-            ],
-          ))
+                label: "Fixture Mode",
+                padding: false,
+                child: MizerDataTable(
+                    tableId: "fixtures/definitions/tree",
+                    arguments: [selectedDefinitionId!, selectedMode!]),
+              ))
       ],
     );
   }

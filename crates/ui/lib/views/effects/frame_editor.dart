@@ -3,9 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
-import 'package:mizer/extensions/effect_control_extensions.dart';
 import 'package:mizer/i18n.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -14,44 +12,21 @@ import 'frame_painter.dart';
 
 const double FRAME_EDITOR_CHANNEL_HEIGHT = 80;
 
-List<FixtureFaderControl> faderControls = [
-  FixtureFaderControl(control: FixtureControl.INTENSITY),
-  FixtureFaderControl(control: FixtureControl.SHUTTER),
-  FixtureFaderControl(control: FixtureControl.PAN),
-  FixtureFaderControl(control: FixtureControl.TILT),
-  FixtureFaderControl(control: FixtureControl.FOCUS),
-  FixtureFaderControl(control: FixtureControl.ZOOM),
-  FixtureFaderControl(control: FixtureControl.PRISM),
-  FixtureFaderControl(control: FixtureControl.IRIS),
-  FixtureFaderControl(control: FixtureControl.FROST),
-  FixtureFaderControl(control: FixtureControl.GOBO),
-  FixtureFaderControl(control: FixtureControl.COLOR_WHEEL),
-  FixtureFaderControl(
-      control: FixtureControl.COLOR_MIXER,
-      colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.RED),
-  FixtureFaderControl(
-      control: FixtureControl.COLOR_MIXER,
-      colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.GREEN),
-  FixtureFaderControl(
-      control: FixtureControl.COLOR_MIXER,
-      colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.BLUE),
-];
-
-List<EffectControl> effectControls = [
-  EffectControl.INTENSITY,
-  EffectControl.SHUTTER,
-  EffectControl.COLOR_MIXER_RED,
-  EffectControl.COLOR_MIXER_GREEN,
-  EffectControl.COLOR_MIXER_BLUE,
-  EffectControl.COLOR_WHEEL,
-  EffectControl.PAN,
-  EffectControl.TILT,
-  EffectControl.FOCUS,
-  EffectControl.ZOOM,
-  EffectControl.PRISM,
-  EffectControl.IRIS,
-  EffectControl.FROST,
-  EffectControl.GOBO,
+List<String> effectFixtureChannels = [
+  "Intensity"
+  "Shutter",
+  "Pan",
+  "Tilt",
+  "Focus",
+  "Zoom",
+  "Prism",
+  "Iris",
+  "Frost",
+  "GoboWheel",
+  "ColorWheel",
+  "ColorMixerRed",
+  "ColorMixerGreen",
+  "ColorMixerBlue",
 ];
 
 class FrameEditor extends StatelessWidget {
@@ -61,7 +36,7 @@ class FrameEditor extends StatelessWidget {
   final Function(int, int) onFinishInteraction;
   final Function(int, int) onRemoveStep;
   final Function(int) onRemoveChannel;
-  final Function(EffectControl) onAddChannel;
+  final Function(String) onAddChannel;
   final Function(int, EffectStep) onAddStep;
 
   const FrameEditor(
@@ -86,7 +61,7 @@ class FrameEditor extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
-                SizedBox(child: Text(channel.control.toDisplay()), width: 128),
+                SizedBox(child: Text(channel.fixtureChannel), width: 128),
                 MizerIconButton(
                     icon: Icons.close,
                     label: "Remove Channel",
@@ -109,17 +84,17 @@ class FrameEditor extends StatelessWidget {
   }
 
   _addChannel(BuildContext context) async {
-    EffectControl? control = await showDialog(
+    String? control = await showDialog(
         context: context,
         builder: (context) => ActionDialog(
             title: "Add Channel",
             content: Column(
-                children: effectControls
+                children: effectFixtureChannels
                     .whereNot((faderControl) =>
-                        effect.channels.any((channel) => faderControl == channel.control))
-                    .sortedBy((effectControl) => effectControl.toDisplay())
+                        effect.channels.any((channel) => faderControl == channel.fixtureChannel))
+                    .sorted()
                     .map((effectControl) => ListTile(
-                        title: Text(effectControl.toDisplay()),
+                        title: Text(effectControl),
                         onTap: () => Navigator.of(context).pop(effectControl)))
                     .toList()),
             actions: [PopupAction("Cancel", () => Navigator.of(context).pop())]));

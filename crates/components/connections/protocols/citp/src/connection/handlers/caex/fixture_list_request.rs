@@ -82,7 +82,7 @@ impl FixtureListRequestHandler {
                     position: Default::default(),
                     angles: Default::default(),
                 },
-                channel_count: fixture.channel_mode.channel_count(),
+                channel_count: fixture.channel_mode.dmx_channel_count,
                 is_dimmer: 0,
                 identifier_count: 0,
                 identifiers: Default::default(),

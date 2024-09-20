@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/extensions/fixture_fader_control_extensions.dart';
 import 'package:mizer/extensions/number_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -19,44 +18,16 @@ class FixtureChannelLimits extends StatelessWidget {
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       List<Fixture> selectedFixtures =
           fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList();
-      List<FixtureControls> controls = selectedFixtures.firstOrNull?.controls ?? [];
-      List<FixtureFaderControl> faderControls = controls.expand((controls) {
-        if (controls.hasColorMixer()) {
-          return [
-            FixtureFaderControl(
-                control: controls.control,
-                colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.RED),
-            FixtureFaderControl(
-                control: controls.control,
-                colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.GREEN),
-            FixtureFaderControl(
-                control: controls.control,
-                colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.BLUE),
-          ];
-        }
-        if (controls.hasGeneric()) {
-          return [
-            FixtureFaderControl(
-              control: controls.control,
-              genericChannel: controls.generic.name,
-            )
-          ];
-        }
-        return [
-          FixtureFaderControl(
-            control: controls.control,
-          )
-        ];
-      }).toList();
+      List<FixtureChannel> controls = selectedFixtures.firstOrNull?.channels ?? [];
 
       return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: _table(faderControls, selectedFixtures),
+        child: _table(controls, selectedFixtures),
       );
     });
   }
 
-  Widget _table(List<FixtureFaderControl> controls, List<Fixture> selectedFixtures) {
+  Widget _table(List<FixtureChannel> controls, List<Fixture> selectedFixtures) {
     if (controls.isEmpty) {
       return Container();
     }
@@ -77,7 +48,7 @@ class FixtureChannelLimits extends StatelessWidget {
         return limit.min;
       },
           (control, limit, value) => UpdateFixtureRequest_UpdateFixtureLimit(
-                control: control,
+                channel: control.channel,
                 min: value,
                 max: (limit?.hasMax() ?? false) ? limit!.max : null,
               )),
@@ -91,31 +62,31 @@ class FixtureChannelLimits extends StatelessWidget {
         return limit.max;
       },
           (control, limit, value) => UpdateFixtureRequest_UpdateFixtureLimit(
-                control: control,
+                channel: control.channel,
                 min: (limit?.hasMin() ?? false) ? limit!.min : null,
                 max: value,
               )),
     ]);
   }
 
-  String _controlName(FixtureFaderControl control) {
-    return control.toDisplay();
+  String _controlName(FixtureChannel control) {
+    return control.channel;
   }
 
   MizerTableRow _buildRow(
-      List<FixtureFaderControl> controls,
+      List<FixtureChannel> controls,
       List<Fixture> selectedFixtures,
       String title,
       double? Function(FixtureChannelLimit?) getValue,
       UpdateFixtureRequest_UpdateFixtureLimit Function(
-              FixtureFaderControl, FixtureChannelLimit?, double?)
+              FixtureChannel, FixtureChannelLimit?, double?)
           updateLimit) {
     return MizerTableRow(cells: [
       Text(title),
       ...controls.map((control) {
         var limit = selectedFixtures
             .map((fixture) => fixture.config.channelLimits
-                .firstWhereOrNull((channelLimit) => channelLimit.control == control))
+                .firstWhereOrNull((channelLimit) => channelLimit.channel == control.channel))
             .firstOrNull;
         var value = getValue(limit);
         return PopupTableCell(
@@ -128,7 +99,7 @@ class FixtureChannelLimits extends StatelessWidget {
                 newLimit = newLimit == null ? newLimit : newLimit / 100;
                 selectedFixtures.forEach((fixture) {
                   var oldLimit = fixture.config.channelLimits
-                      .firstWhereOrNull((channelLimit) => channelLimit.control == control);
+                      .firstWhereOrNull((channelLimit) => channelLimit.channel == control.channel);
 
                   onUpdateFixture(fixture.id,
                       UpdateFixtureRequest(limit: updateLimit(control, oldLimit, newLimit)));

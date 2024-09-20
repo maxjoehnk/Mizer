@@ -1524,13 +1524,13 @@ class CueTrigger extends $pb.GeneratedMessage {
 
 class CueControl extends $pb.GeneratedMessage {
   factory CueControl({
-    CueControl_Type? type,
+    $core.String? fixtureChannel,
     CueValue? value,
     $core.Iterable<$0.FixtureId>? fixtures,
   }) {
     final $result = create();
-    if (type != null) {
-      $result.type = type;
+    if (fixtureChannel != null) {
+      $result.fixtureChannel = fixtureChannel;
     }
     if (value != null) {
       $result.value = value;
@@ -1545,7 +1545,7 @@ class CueControl extends $pb.GeneratedMessage {
   factory CueControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueControl', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..e<CueControl_Type>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueControl_Type.INTENSITY, valueOf: CueControl_Type.valueOf, enumValues: CueControl_Type.values)
+    ..aOS(1, _omitFieldNames ? '' : 'fixtureChannel', protoName: 'fixtureChannel')
     ..aOM<CueValue>(2, _omitFieldNames ? '' : 'value', subBuilder: CueValue.create)
     ..pc<$0.FixtureId>(3, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..hasRequiredFields = false
@@ -1573,13 +1573,13 @@ class CueControl extends $pb.GeneratedMessage {
   static CueControl? _defaultInstance;
 
   @$pb.TagNumber(1)
-  CueControl_Type get type => $_getN(0);
+  $core.String get fixtureChannel => $_getSZ(0);
   @$pb.TagNumber(1)
-  set type(CueControl_Type v) { setField(1, v); }
+  set fixtureChannel($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasType() => $_has(0);
+  $core.bool hasFixtureChannel() => $_has(0);
   @$pb.TagNumber(1)
-  void clearType() => clearField(1);
+  void clearFixtureChannel() => clearField(1);
 
   @$pb.TagNumber(2)
   CueValue get value => $_getN(1);

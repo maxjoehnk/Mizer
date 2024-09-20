@@ -52,7 +52,7 @@ class RemoveEffectChannel extends EffectsEvent {
 
 class AddEffectChannel extends EffectsEvent {
   final int effectId;
-  final EffectControl control;
+  final String control;
 
   AddEffectChannel({required this.effectId, required this.control});
 }

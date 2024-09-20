@@ -34,8 +34,8 @@ class EffectsPluginApi implements EffectsApi {
   }
 
   @override
-  Future<void> addEffectChannel(int id, EffectControl control) async {
-    var request = new AddEffectChannelRequest(effectId: id, control: control);
+  Future<void> addEffectChannel(int id, String fixtureChannel) async {
+    var request = new AddEffectChannelRequest(effectId: id, fixtureChannel: fixtureChannel);
     await channel.invokeMethod("addEffectChannel", request.writeToBuffer());
   }
 

@@ -13,33 +13,26 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use fixtureControlDescriptor instead')
-const FixtureControl$json = {
-  '1': 'FixtureControl',
+@$core.Deprecated('Use fixtureChannelCategoryDescriptor instead')
+const FixtureChannelCategory$json = {
+  '1': 'FixtureChannelCategory',
   '2': [
     {'1': 'NONE', '2': 0},
-    {'1': 'INTENSITY', '2': 1},
-    {'1': 'SHUTTER', '2': 2},
-    {'1': 'COLOR_MIXER', '2': 3},
-    {'1': 'COLOR_WHEEL', '2': 4},
-    {'1': 'PAN', '2': 5},
-    {'1': 'TILT', '2': 6},
-    {'1': 'FOCUS', '2': 7},
-    {'1': 'ZOOM', '2': 8},
-    {'1': 'PRISM', '2': 9},
-    {'1': 'IRIS', '2': 10},
-    {'1': 'FROST', '2': 11},
-    {'1': 'GOBO', '2': 12},
-    {'1': 'GENERIC', '2': 13},
+    {'1': 'DIMMER', '2': 1},
+    {'1': 'COLOR', '2': 2},
+    {'1': 'POSITION', '2': 3},
+    {'1': 'GOBO', '2': 4},
+    {'1': 'BEAM', '2': 5},
+    {'1': 'SHAPER', '2': 6},
+    {'1': 'CUSTOM', '2': 7},
   ],
 };
 
-/// Descriptor for `FixtureControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode(
-    'Cg5GaXh0dXJlQ29udHJvbBIICgROT05FEAASDQoJSU5URU5TSVRZEAESCwoHU0hVVFRFUhACEg'
-    '8KC0NPTE9SX01JWEVSEAMSDwoLQ09MT1JfV0hFRUwQBBIHCgNQQU4QBRIICgRUSUxUEAYSCQoF'
-    'Rk9DVVMQBxIICgRaT09NEAgSCQoFUFJJU00QCRIICgRJUklTEAoSCQoFRlJPU1QQCxIICgRHT0'
-    'JPEAwSCwoHR0VORVJJQxAN');
+/// Descriptor for `FixtureChannelCategory`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List fixtureChannelCategoryDescriptor = $convert.base64Decode(
+    'ChZGaXh0dXJlQ2hhbm5lbENhdGVnb3J5EggKBE5PTkUQABIKCgZESU1NRVIQARIJCgVDT0xPUh'
+    'ACEgwKCFBPU0lUSU9OEAMSCAoER09CTxAEEggKBEJFQU0QBRIKCgZTSEFQRVIQBhIKCgZDVVNU'
+    'T00QBw==');
 
 @$core.Deprecated('Use addFixturesRequestDescriptor instead')
 const AddFixturesRequest$json = {
@@ -124,7 +117,7 @@ const UpdateFixtureRequest$json = {
 const UpdateFixtureRequest_UpdateFixtureLimit$json = {
   '1': 'UpdateFixtureLimit',
   '2': [
-    {'1': 'control', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureFaderControl', '10': 'control'},
+    {'1': 'channel', '3': 1, '4': 1, '5': 9, '10': 'channel'},
     {'1': 'min', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'min', '17': true},
     {'1': 'max', '3': 3, '4': 1, '5': 1, '9': 1, '10': 'max', '17': true},
   ],
@@ -142,11 +135,10 @@ final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Deco
     'VQaXhlbE9yZGVyiAEBEhcKBG5hbWUYBSABKAlIA1IEbmFtZYgBARI9CgdhZGRyZXNzGAYgASgL'
     'Mh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUFkZHJlc3NIBFIHYWRkcmVzc4gBARJSCgVsaW1pdB'
     'gHIAEoCzI3Lm1pemVyLmZpeHR1cmVzLlVwZGF0ZUZpeHR1cmVSZXF1ZXN0LlVwZGF0ZUZpeHR1'
-    'cmVMaW1pdEgFUgVsaW1pdIgBARqRAQoSVXBkYXRlRml4dHVyZUxpbWl0Ej0KB2NvbnRyb2wYAS'
-    'ABKAsyIy5taXplci5maXh0dXJlcy5GaXh0dXJlRmFkZXJDb250cm9sUgdjb250cm9sEhUKA21p'
-    'bhgCIAEoAUgAUgNtaW6IAQESFQoDbWF4GAMgASgBSAFSA21heIgBAUIGCgRfbWluQgYKBF9tYX'
-    'hCDQoLX2ludmVydF9wYW5CDgoMX2ludmVydF90aWx0QhYKFF9yZXZlcnNlX3BpeGVsX29yZGVy'
-    'QgcKBV9uYW1lQgoKCF9hZGRyZXNzQggKBl9saW1pdA==');
+    'cmVMaW1pdEgFUgVsaW1pdIgBARpsChJVcGRhdGVGaXh0dXJlTGltaXQSGAoHY2hhbm5lbBgBIA'
+    'EoCVIHY2hhbm5lbBIVCgNtaW4YAiABKAFIAFIDbWluiAEBEhUKA21heBgDIAEoAUgBUgNtYXiI'
+    'AQFCBgoEX21pbkIGCgRfbWF4Qg0KC19pbnZlcnRfcGFuQg4KDF9pbnZlcnRfdGlsdEIWChRfcm'
+    'V2ZXJzZV9waXhlbF9vcmRlckIHCgVfbmFtZUIKCghfYWRkcmVzc0IICgZfbGltaXQ=');
 
 @$core.Deprecated('Use fixtureAddressDescriptor instead')
 const FixtureAddress$json = {
@@ -218,7 +210,7 @@ const Fixture$json = {
     {'1': 'universe', '3': 6, '4': 1, '5': 13, '10': 'universe'},
     {'1': 'channel', '3': 7, '4': 1, '5': 13, '10': 'channel'},
     {'1': 'channel_count', '3': 8, '4': 1, '5': 13, '10': 'channelCount'},
-    {'1': 'controls', '3': 9, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureControls', '10': 'controls'},
+    {'1': 'channels', '3': 9, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannel', '10': 'channels'},
     {'1': 'children', '3': 10, '4': 3, '5': 11, '6': '.mizer.fixtures.SubFixture', '10': 'children'},
     {'1': 'config', '3': 11, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureConfig', '10': 'config'},
   ],
@@ -229,10 +221,10 @@ final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode(
     'CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYW'
     'N0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhQKBW1vZGVsGAQgASgJUgVtb2RlbBISCgRtb2Rl'
     'GAUgASgJUgRtb2RlEhoKCHVuaXZlcnNlGAYgASgNUgh1bml2ZXJzZRIYCgdjaGFubmVsGAcgAS'
-    'gNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI7Cghjb250'
-    'cm9scxgJIAMoCzIfLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sc1IIY29udHJvbHMSNg'
-    'oIY2hpbGRyZW4YCiADKAsyGi5taXplci5maXh0dXJlcy5TdWJGaXh0dXJlUghjaGlsZHJlbhI1'
-    'CgZjb25maWcYCyABKAsyHS5taXplci5maXh0dXJlcy5GaXh0dXJlQ29uZmlnUgZjb25maWc=');
+    'gNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI6CghjaGFu'
+    'bmVscxgJIAMoCzIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDaGFubmVsUghjaGFubmVscxI2Cg'
+    'hjaGlsZHJlbhgKIAMoCzIaLm1pemVyLmZpeHR1cmVzLlN1YkZpeHR1cmVSCGNoaWxkcmVuEjUK'
+    'BmNvbmZpZxgLIAEoCzIdLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb25maWdSBmNvbmZpZw==');
 
 @$core.Deprecated('Use fixtureConfigDescriptor instead')
 const FixtureConfig$json = {
@@ -256,7 +248,7 @@ final $typed_data.Uint8List fixtureConfigDescriptor = $convert.base64Decode(
 const FixtureChannelLimit$json = {
   '1': 'FixtureChannelLimit',
   '2': [
-    {'1': 'control', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureFaderControl', '10': 'control'},
+    {'1': 'channel', '3': 1, '4': 1, '5': 9, '10': 'channel'},
     {'1': 'min', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'min', '17': true},
     {'1': 'max', '3': 3, '4': 1, '5': 1, '9': 1, '10': 'max', '17': true},
   ],
@@ -268,9 +260,8 @@ const FixtureChannelLimit$json = {
 
 /// Descriptor for `FixtureChannelLimit`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixtureChannelLimitDescriptor = $convert.base64Decode(
-    'ChNGaXh0dXJlQ2hhbm5lbExpbWl0Ej0KB2NvbnRyb2wYASABKAsyIy5taXplci5maXh0dXJlcy'
-    '5GaXh0dXJlRmFkZXJDb250cm9sUgdjb250cm9sEhUKA21pbhgCIAEoAUgAUgNtaW6IAQESFQoD'
-    'bWF4GAMgASgBSAFSA21heIgBAUIGCgRfbWluQgYKBF9tYXg=');
+    'ChNGaXh0dXJlQ2hhbm5lbExpbWl0EhgKB2NoYW5uZWwYASABKAlSB2NoYW5uZWwSFQoDbWluGA'
+    'IgASgBSABSA21pbogBARIVCgNtYXgYAyABKAFIAVIDbWF4iAEBQgYKBF9taW5CBgoEX21heA==');
 
 @$core.Deprecated('Use subFixtureDescriptor instead')
 const SubFixture$json = {
@@ -278,160 +269,113 @@ const SubFixture$json = {
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
     {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'controls', '3': 3, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureControls', '10': 'controls'},
+    {'1': 'channels', '3': 3, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannel', '10': 'channels'},
   ],
 };
 
 /// Descriptor for `SubFixture`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List subFixtureDescriptor = $convert.base64Decode(
-    'CgpTdWJGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEjsKCGNvbn'
-    'Ryb2xzGAMgAygLMh8ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUNvbnRyb2xzUghjb250cm9scw==');
+    'CgpTdWJGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEjoKCGNoYW'
+    '5uZWxzGAMgAygLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUNoYW5uZWxSCGNoYW5uZWxz');
 
-@$core.Deprecated('Use fixtureControlsDescriptor instead')
-const FixtureControls$json = {
-  '1': 'FixtureControls',
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
+const FixtureChannel$json = {
+  '1': 'FixtureChannel',
   '2': [
-    {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
-    {'1': 'fader', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FaderChannel', '9': 0, '10': 'fader'},
-    {'1': 'color_mixer', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 0, '10': 'colorMixer'},
-    {'1': 'color_wheel', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorWheelChannel', '9': 0, '10': 'colorWheel'},
-    {'1': 'axis', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.AxisChannel', '9': 0, '10': 'axis'},
-    {'1': 'gobo', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.GoboChannel', '9': 0, '10': 'gobo'},
-    {'1': 'generic', '3': 7, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
+    {'1': 'channel', '3': 1, '4': 1, '5': 9, '10': 'channel'},
+    {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'label', '17': true},
+    {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureChannelCategory', '10': 'category'},
+    {'1': 'presets', '3': 4, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannelPreset', '10': 'presets'},
+    {'1': 'value', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureValue', '9': 1, '10': 'value', '17': true},
+  ],
+  '8': [
+    {'1': '_label'},
+    {'1': '_value'},
+  ],
+};
+
+/// Descriptor for `FixtureChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureChannelDescriptor = $convert.base64Decode(
+    'Cg5GaXh0dXJlQ2hhbm5lbBIYCgdjaGFubmVsGAEgASgJUgdjaGFubmVsEhkKBWxhYmVsGAIgAS'
+    'gJSABSBWxhYmVsiAEBEkIKCGNhdGVnb3J5GAMgASgOMiYubWl6ZXIuZml4dHVyZXMuRml4dHVy'
+    'ZUNoYW5uZWxDYXRlZ29yeVIIY2F0ZWdvcnkSPgoHcHJlc2V0cxgEIAMoCzIkLm1pemVyLmZpeH'
+    'R1cmVzLkZpeHR1cmVDaGFubmVsUHJlc2V0UgdwcmVzZXRzEjcKBXZhbHVlGAUgASgLMhwubWl6'
+    'ZXIuZml4dHVyZXMuRml4dHVyZVZhbHVlSAFSBXZhbHVliAEBQggKBl9sYWJlbEIICgZfdmFsdW'
+    'U=');
+
+@$core.Deprecated('Use fixtureChannelDefinitionDescriptor instead')
+const FixtureChannelDefinition$json = {
+  '1': 'FixtureChannelDefinition',
+  '2': [
+    {'1': 'channel', '3': 1, '4': 1, '5': 9, '10': 'channel'},
+    {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'label', '17': true},
+    {'1': 'category', '3': 3, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureChannelCategory', '10': 'category'},
+    {'1': 'presets', '3': 4, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannelPreset', '10': 'presets'},
+  ],
+  '8': [
+    {'1': '_label'},
+  ],
+};
+
+/// Descriptor for `FixtureChannelDefinition`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureChannelDefinitionDescriptor = $convert.base64Decode(
+    'ChhGaXh0dXJlQ2hhbm5lbERlZmluaXRpb24SGAoHY2hhbm5lbBgBIAEoCVIHY2hhbm5lbBIZCg'
+    'VsYWJlbBgCIAEoCUgAUgVsYWJlbIgBARJCCghjYXRlZ29yeRgDIAEoDjImLm1pemVyLmZpeHR1'
+    'cmVzLkZpeHR1cmVDaGFubmVsQ2F0ZWdvcnlSCGNhdGVnb3J5Ej4KB3ByZXNldHMYBCADKAsyJC'
+    '5taXplci5maXh0dXJlcy5GaXh0dXJlQ2hhbm5lbFByZXNldFIHcHJlc2V0c0IICgZfbGFiZWw=');
+
+@$core.Deprecated('Use fixtureChannelPresetDescriptor instead')
+const FixtureChannelPreset$json = {
+  '1': 'FixtureChannelPreset',
+  '2': [
+    {'1': 'value', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureValue', '10': 'value'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'image', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureImage', '9': 0, '10': 'image', '17': true},
+    {'1': 'colors', '3': 4, '4': 3, '5': 9, '10': 'colors'},
+  ],
+  '8': [
+    {'1': '_image'},
+  ],
+};
+
+/// Descriptor for `FixtureChannelPreset`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureChannelPresetDescriptor = $convert.base64Decode(
+    'ChRGaXh0dXJlQ2hhbm5lbFByZXNldBIyCgV2YWx1ZRgBIAEoCzIcLm1pemVyLmZpeHR1cmVzLk'
+    'ZpeHR1cmVWYWx1ZVIFdmFsdWUSEgoEbmFtZRgCIAEoCVIEbmFtZRI3CgVpbWFnZRgDIAEoCzIc'
+    'Lm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJbWFnZUgAUgVpbWFnZYgBARIWCgZjb2xvcnMYBCADKA'
+    'lSBmNvbG9yc0IICgZfaW1hZ2U=');
+
+@$core.Deprecated('Use fixtureValueDescriptor instead')
+const FixtureValue$json = {
+  '1': 'FixtureValue',
+  '2': [
+    {'1': 'percent', '3': 1, '4': 1, '5': 1, '9': 0, '10': 'percent'},
   ],
   '8': [
     {'1': 'value'},
   ],
 };
 
-/// Descriptor for `FixtureControls`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode(
-    'Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeH'
-    'R1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFk'
-    'ZXJDaGFubmVsSABSBWZhZGVyEkQKC2NvbG9yX21peGVyGAMgASgLMiEubWl6ZXIuZml4dHVyZX'
-    'MuQ29sb3JNaXhlckNoYW5uZWxIAFIKY29sb3JNaXhlchJECgtjb2xvcl93aGVlbBgEIAEoCzIh'
-    'Lm1pemVyLmZpeHR1cmVzLkNvbG9yV2hlZWxDaGFubmVsSABSCmNvbG9yV2hlZWwSMQoEYXhpcx'
-    'gFIAEoCzIbLm1pemVyLmZpeHR1cmVzLkF4aXNDaGFubmVsSABSBGF4aXMSMQoEZ29ibxgGIAEo'
-    'CzIbLm1pemVyLmZpeHR1cmVzLkdvYm9DaGFubmVsSABSBGdvYm8SOgoHZ2VuZXJpYxgHIAEoCz'
-    'IeLm1pemVyLmZpeHR1cmVzLkdlbmVyaWNDaGFubmVsSABSB2dlbmVyaWNCBwoFdmFsdWU=');
+/// Descriptor for `FixtureValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureValueDescriptor = $convert.base64Decode(
+    'CgxGaXh0dXJlVmFsdWUSGgoHcGVyY2VudBgBIAEoAUgAUgdwZXJjZW50QgcKBXZhbHVl');
 
-@$core.Deprecated('Use faderChannelDescriptor instead')
-const FaderChannel$json = {
-  '1': 'FaderChannel',
+@$core.Deprecated('Use fixtureImageDescriptor instead')
+const FixtureImage$json = {
+  '1': 'FixtureImage',
   '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
-  ],
-};
-
-/// Descriptor for `FaderChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List faderChannelDescriptor = $convert.base64Decode(
-    'CgxGYWRlckNoYW5uZWwSFAoFdmFsdWUYASABKAFSBXZhbHVl');
-
-@$core.Deprecated('Use colorMixerChannelDescriptor instead')
-const ColorMixerChannel$json = {
-  '1': 'ColorMixerChannel',
-  '2': [
-    {'1': 'red', '3': 1, '4': 1, '5': 1, '10': 'red'},
-    {'1': 'green', '3': 2, '4': 1, '5': 1, '10': 'green'},
-    {'1': 'blue', '3': 3, '4': 1, '5': 1, '10': 'blue'},
-  ],
-};
-
-/// Descriptor for `ColorMixerChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List colorMixerChannelDescriptor = $convert.base64Decode(
-    'ChFDb2xvck1peGVyQ2hhbm5lbBIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3'
-    'JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZQ==');
-
-@$core.Deprecated('Use colorWheelChannelDescriptor instead')
-const ColorWheelChannel$json = {
-  '1': 'ColorWheelChannel',
-  '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'colors', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.ColorWheelSlot', '10': 'colors'},
-  ],
-};
-
-/// Descriptor for `ColorWheelChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List colorWheelChannelDescriptor = $convert.base64Decode(
-    'ChFDb2xvcldoZWVsQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSNgoGY29sb3JzGAIgAy'
-    'gLMh4ubWl6ZXIuZml4dHVyZXMuQ29sb3JXaGVlbFNsb3RSBmNvbG9ycw==');
-
-@$core.Deprecated('Use colorWheelSlotDescriptor instead')
-const ColorWheelSlot$json = {
-  '1': 'ColorWheelSlot',
-  '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'colors', '3': 3, '4': 3, '5': 9, '10': 'colors'},
-  ],
-};
-
-/// Descriptor for `ColorWheelSlot`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List colorWheelSlotDescriptor = $convert.base64Decode(
-    'Cg5Db2xvcldoZWVsU2xvdBISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YW'
-    'x1ZRIWCgZjb2xvcnMYAyADKAlSBmNvbG9ycw==');
-
-@$core.Deprecated('Use axisChannelDescriptor instead')
-const AxisChannel$json = {
-  '1': 'AxisChannel',
-  '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'angle_from', '3': 2, '4': 1, '5': 1, '10': 'angleFrom'},
-    {'1': 'angle_to', '3': 3, '4': 1, '5': 1, '10': 'angleTo'},
-  ],
-};
-
-/// Descriptor for `AxisChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List axisChannelDescriptor = $convert.base64Decode(
-    'CgtBeGlzQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSHQoKYW5nbGVfZnJvbRgCIAEoAV'
-    'IJYW5nbGVGcm9tEhkKCGFuZ2xlX3RvGAMgASgBUgdhbmdsZVRv');
-
-@$core.Deprecated('Use goboChannelDescriptor instead')
-const GoboChannel$json = {
-  '1': 'GoboChannel',
-  '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'gobos', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.Gobo', '10': 'gobos'},
-  ],
-};
-
-/// Descriptor for `GoboChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List goboChannelDescriptor = $convert.base64Decode(
-    'CgtHb2JvQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSKgoFZ29ib3MYAiADKAsyFC5taX'
-    'plci5maXh0dXJlcy5Hb2JvUgVnb2Jvcw==');
-
-@$core.Deprecated('Use goboDescriptor instead')
-const Gobo$json = {
-  '1': 'Gobo',
-  '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'svg', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'svg'},
-    {'1': 'raster', '3': 4, '4': 1, '5': 12, '9': 0, '10': 'raster'},
+    {'1': 'svg', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'svg'},
+    {'1': 'raster', '3': 2, '4': 1, '5': 12, '9': 0, '10': 'raster'},
   ],
   '8': [
     {'1': 'image'},
   ],
 };
 
-/// Descriptor for `Gobo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List goboDescriptor = $convert.base64Decode(
-    'CgRHb2JvEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlEhIKA3N2Zx'
-    'gDIAEoCUgAUgNzdmcSGAoGcmFzdGVyGAQgASgMSABSBnJhc3RlckIHCgVpbWFnZQ==');
-
-@$core.Deprecated('Use genericChannelDescriptor instead')
-const GenericChannel$json = {
-  '1': 'GenericChannel',
-  '2': [
-    {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
-    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-  ],
-};
-
-/// Descriptor for `GenericChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List genericChannelDescriptor = $convert.base64Decode(
-    'Cg5HZW5lcmljQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSEgoEbmFtZRgCIAEoCVIEbm'
-    'FtZQ==');
+/// Descriptor for `FixtureImage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureImageDescriptor = $convert.base64Decode(
+    'CgxGaXh0dXJlSW1hZ2USEgoDc3ZnGAEgASgJSABSA3N2ZxIYCgZyYXN0ZXIYAiABKAxIAFIGcm'
+    'FzdGVyQgcKBWltYWdl');
 
 @$core.Deprecated('Use getFixtureDefinitionsRequestDescriptor instead')
 const GetFixtureDefinitionsRequest$json = {
@@ -482,86 +426,16 @@ const FixtureMode$json = {
   '1': 'FixtureMode',
   '2': [
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannel', '10': 'channels'},
+    {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannelDefinition', '10': 'channels'},
+    {'1': 'dmx_footprint', '3': 3, '4': 1, '5': 13, '10': 'dmxFootprint'},
   ],
 };
 
 /// Descriptor for `FixtureMode`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixtureModeDescriptor = $convert.base64Decode(
-    'CgtGaXh0dXJlTW9kZRISCgRuYW1lGAEgASgJUgRuYW1lEjoKCGNoYW5uZWxzGAIgAygLMh4ubW'
-    'l6ZXIuZml4dHVyZXMuRml4dHVyZUNoYW5uZWxSCGNoYW5uZWxz');
-
-@$core.Deprecated('Use fixtureChannelDescriptor instead')
-const FixtureChannel$json = {
-  '1': 'FixtureChannel',
-  '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'coarse', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.CoarseResolution', '9': 0, '10': 'coarse'},
-    {'1': 'fine', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FineResolution', '9': 0, '10': 'fine'},
-    {'1': 'finest', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FinestResolution', '9': 0, '10': 'finest'},
-    {'1': 'ultra', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.UltraResolution', '9': 0, '10': 'ultra'},
-  ],
-  '3': [FixtureChannel_CoarseResolution$json, FixtureChannel_FineResolution$json, FixtureChannel_FinestResolution$json, FixtureChannel_UltraResolution$json],
-  '8': [
-    {'1': 'resolution'},
-  ],
-};
-
-@$core.Deprecated('Use fixtureChannelDescriptor instead')
-const FixtureChannel_CoarseResolution$json = {
-  '1': 'CoarseResolution',
-  '2': [
-    {'1': 'channel', '3': 1, '4': 1, '5': 13, '10': 'channel'},
-  ],
-};
-
-@$core.Deprecated('Use fixtureChannelDescriptor instead')
-const FixtureChannel_FineResolution$json = {
-  '1': 'FineResolution',
-  '2': [
-    {'1': 'fine_channel', '3': 1, '4': 1, '5': 13, '10': 'fineChannel'},
-    {'1': 'coarse_channel', '3': 2, '4': 1, '5': 13, '10': 'coarseChannel'},
-  ],
-};
-
-@$core.Deprecated('Use fixtureChannelDescriptor instead')
-const FixtureChannel_FinestResolution$json = {
-  '1': 'FinestResolution',
-  '2': [
-    {'1': 'finest_channel', '3': 1, '4': 1, '5': 13, '10': 'finestChannel'},
-    {'1': 'fine_channel', '3': 2, '4': 1, '5': 13, '10': 'fineChannel'},
-    {'1': 'coarse_channel', '3': 3, '4': 1, '5': 13, '10': 'coarseChannel'},
-  ],
-};
-
-@$core.Deprecated('Use fixtureChannelDescriptor instead')
-const FixtureChannel_UltraResolution$json = {
-  '1': 'UltraResolution',
-  '2': [
-    {'1': 'ultra_channel', '3': 1, '4': 1, '5': 13, '10': 'ultraChannel'},
-    {'1': 'finest_channel', '3': 2, '4': 1, '5': 13, '10': 'finestChannel'},
-    {'1': 'fine_channel', '3': 3, '4': 1, '5': 13, '10': 'fineChannel'},
-    {'1': 'coarse_channel', '3': 4, '4': 1, '5': 13, '10': 'coarseChannel'},
-  ],
-};
-
-/// Descriptor for `FixtureChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureChannelDescriptor = $convert.base64Decode(
-    'Cg5GaXh0dXJlQ2hhbm5lbBISCgRuYW1lGAEgASgJUgRuYW1lEkkKBmNvYXJzZRgCIAEoCzIvLm'
-    '1pemVyLmZpeHR1cmVzLkZpeHR1cmVDaGFubmVsLkNvYXJzZVJlc29sdXRpb25IAFIGY29hcnNl'
-    'EkMKBGZpbmUYAyABKAsyLS5taXplci5maXh0dXJlcy5GaXh0dXJlQ2hhbm5lbC5GaW5lUmVzb2'
-    'x1dGlvbkgAUgRmaW5lEkkKBmZpbmVzdBgEIAEoCzIvLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVD'
-    'aGFubmVsLkZpbmVzdFJlc29sdXRpb25IAFIGZmluZXN0EkYKBXVsdHJhGAUgASgLMi4ubWl6ZX'
-    'IuZml4dHVyZXMuRml4dHVyZUNoYW5uZWwuVWx0cmFSZXNvbHV0aW9uSABSBXVsdHJhGiwKEENv'
-    'YXJzZVJlc29sdXRpb24SGAoHY2hhbm5lbBgBIAEoDVIHY2hhbm5lbBpaCg5GaW5lUmVzb2x1dG'
-    'lvbhIhCgxmaW5lX2NoYW5uZWwYASABKA1SC2ZpbmVDaGFubmVsEiUKDmNvYXJzZV9jaGFubmVs'
-    'GAIgASgNUg1jb2Fyc2VDaGFubmVsGoMBChBGaW5lc3RSZXNvbHV0aW9uEiUKDmZpbmVzdF9jaG'
-    'FubmVsGAEgASgNUg1maW5lc3RDaGFubmVsEiEKDGZpbmVfY2hhbm5lbBgCIAEoDVILZmluZUNo'
-    'YW5uZWwSJQoOY29hcnNlX2NoYW5uZWwYAyABKA1SDWNvYXJzZUNoYW5uZWwapwEKD1VsdHJhUm'
-    'Vzb2x1dGlvbhIjCg11bHRyYV9jaGFubmVsGAEgASgNUgx1bHRyYUNoYW5uZWwSJQoOZmluZXN0'
-    'X2NoYW5uZWwYAiABKA1SDWZpbmVzdENoYW5uZWwSIQoMZmluZV9jaGFubmVsGAMgASgNUgtmaW'
-    '5lQ2hhbm5lbBIlCg5jb2Fyc2VfY2hhbm5lbBgEIAEoDVINY29hcnNlQ2hhbm5lbEIMCgpyZXNv'
-    'bHV0aW9u');
+    'CgtGaXh0dXJlTW9kZRISCgRuYW1lGAEgASgJUgRuYW1lEkQKCGNoYW5uZWxzGAIgAygLMigubW'
+    'l6ZXIuZml4dHVyZXMuRml4dHVyZUNoYW5uZWxEZWZpbml0aW9uUghjaGFubmVscxIjCg1kbXhf'
+    'Zm9vdHByaW50GAMgASgNUgxkbXhGb290cHJpbnQ=');
 
 @$core.Deprecated('Use fixturePhysicalDataDescriptor instead')
 const FixturePhysicalData$json = {
@@ -579,39 +453,4 @@ final $typed_data.Uint8List fixturePhysicalDataDescriptor = $convert.base64Decod
     'ChNGaXh0dXJlUGh5c2ljYWxEYXRhEhQKBXdpZHRoGAEgASgCUgV3aWR0aBIWCgZoZWlnaHQYAi'
     'ABKAJSBmhlaWdodBIUCgVkZXB0aBgDIAEoAlIFZGVwdGgSFgoGd2VpZ2h0GAQgASgCUgZ3ZWln'
     'aHQ=');
-
-@$core.Deprecated('Use fixtureFaderControlDescriptor instead')
-const FixtureFaderControl$json = {
-  '1': 'FixtureFaderControl',
-  '2': [
-    {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
-    {'1': 'color_mixer_channel', '3': 2, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureFaderControl.ColorMixerControlChannel', '9': 0, '10': 'colorMixerChannel', '17': true},
-    {'1': 'generic_channel', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'genericChannel', '17': true},
-  ],
-  '4': [FixtureFaderControl_ColorMixerControlChannel$json],
-  '8': [
-    {'1': '_color_mixer_channel'},
-    {'1': '_generic_channel'},
-  ],
-};
-
-@$core.Deprecated('Use fixtureFaderControlDescriptor instead')
-const FixtureFaderControl_ColorMixerControlChannel$json = {
-  '1': 'ColorMixerControlChannel',
-  '2': [
-    {'1': 'RED', '2': 0},
-    {'1': 'GREEN', '2': 1},
-    {'1': 'BLUE', '2': 2},
-  ],
-};
-
-/// Descriptor for `FixtureFaderControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureFaderControlDescriptor = $convert.base64Decode(
-    'ChNGaXh0dXJlRmFkZXJDb250cm9sEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy'
-    '5GaXh0dXJlQ29udHJvbFIHY29udHJvbBJxChNjb2xvcl9taXhlcl9jaGFubmVsGAIgASgOMjwu'
-    'bWl6ZXIuZml4dHVyZXMuRml4dHVyZUZhZGVyQ29udHJvbC5Db2xvck1peGVyQ29udHJvbENoYW'
-    '5uZWxIAFIRY29sb3JNaXhlckNoYW5uZWyIAQESLAoPZ2VuZXJpY19jaGFubmVsGAMgASgJSAFS'
-    'DmdlbmVyaWNDaGFubmVsiAEBIjgKGENvbG9yTWl4ZXJDb250cm9sQ2hhbm5lbBIHCgNSRUQQAB'
-    'IJCgVHUkVFThABEggKBEJMVUUQAkIWChRfY29sb3JfbWl4ZXJfY2hhbm5lbEISChBfZ2VuZXJp'
-    'Y19jaGFubmVs');
 

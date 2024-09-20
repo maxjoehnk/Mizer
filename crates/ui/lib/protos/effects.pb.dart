@@ -13,10 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'effects.pbenum.dart';
 import 'sequencer.pb.dart' as $1;
-
-export 'effects.pbenum.dart';
 
 class AddEffectRequest extends $pb.GeneratedMessage {
   factory AddEffectRequest({
@@ -165,14 +162,14 @@ class UpdateEffectStepRequest extends $pb.GeneratedMessage {
 class AddEffectChannelRequest extends $pb.GeneratedMessage {
   factory AddEffectChannelRequest({
     $core.int? effectId,
-    EffectControl? control,
+    $core.String? fixtureChannel,
   }) {
     final $result = create();
     if (effectId != null) {
       $result.effectId = effectId;
     }
-    if (control != null) {
-      $result.control = control;
+    if (fixtureChannel != null) {
+      $result.fixtureChannel = fixtureChannel;
     }
     return $result;
   }
@@ -182,7 +179,7 @@ class AddEffectChannelRequest extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddEffectChannelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.effects'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'effectId', $pb.PbFieldType.OU3)
-    ..e<EffectControl>(2, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: EffectControl.INTENSITY, valueOf: EffectControl.valueOf, enumValues: EffectControl.values)
+    ..aOS(2, _omitFieldNames ? '' : 'fixtureChannel')
     ..hasRequiredFields = false
   ;
 
@@ -217,13 +214,13 @@ class AddEffectChannelRequest extends $pb.GeneratedMessage {
   void clearEffectId() => clearField(1);
 
   @$pb.TagNumber(2)
-  EffectControl get control => $_getN(1);
+  $core.String get fixtureChannel => $_getSZ(1);
   @$pb.TagNumber(2)
-  set control(EffectControl v) { setField(2, v); }
+  set fixtureChannel($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasControl() => $_has(1);
+  $core.bool hasFixtureChannel() => $_has(1);
   @$pb.TagNumber(2)
-  void clearControl() => clearField(2);
+  void clearFixtureChannel() => clearField(2);
 }
 
 class DeleteEffectChannelRequest extends $pb.GeneratedMessage {
@@ -566,12 +563,12 @@ class Effect extends $pb.GeneratedMessage {
 
 class EffectChannel extends $pb.GeneratedMessage {
   factory EffectChannel({
-    EffectControl? control,
+    $core.String? fixtureChannel,
     $core.Iterable<EffectStep>? steps,
   }) {
     final $result = create();
-    if (control != null) {
-      $result.control = control;
+    if (fixtureChannel != null) {
+      $result.fixtureChannel = fixtureChannel;
     }
     if (steps != null) {
       $result.steps.addAll(steps);
@@ -583,7 +580,7 @@ class EffectChannel extends $pb.GeneratedMessage {
   factory EffectChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'EffectChannel', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.effects'), createEmptyInstance: create)
-    ..e<EffectControl>(1, _omitFieldNames ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: EffectControl.INTENSITY, valueOf: EffectControl.valueOf, enumValues: EffectControl.values)
+    ..aOS(1, _omitFieldNames ? '' : 'fixtureChannel')
     ..pc<EffectStep>(2, _omitFieldNames ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: EffectStep.create)
     ..hasRequiredFields = false
   ;
@@ -610,13 +607,13 @@ class EffectChannel extends $pb.GeneratedMessage {
   static EffectChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
-  EffectControl get control => $_getN(0);
+  $core.String get fixtureChannel => $_getSZ(0);
   @$pb.TagNumber(1)
-  set control(EffectControl v) { setField(1, v); }
+  set fixtureChannel($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasControl() => $_has(0);
+  $core.bool hasFixtureChannel() => $_has(0);
   @$pb.TagNumber(1)
-  void clearControl() => clearField(1);
+  void clearFixtureChannel() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.List<EffectStep> get steps => $_getList(1);

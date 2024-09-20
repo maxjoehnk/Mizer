@@ -146,6 +146,7 @@ class _FixtureSelectorState extends State<FixtureSelector> {
       color: selected ? Colors.black26 : null,
       child: ListTile(
         title: Text(text),
+        subtitle: Text("${mode.dmxFootprint} Channels"),
         onTap: () {
           setState(() => this.mode = mode);
           widget.onSelect(this.definition!, mode);
@@ -229,7 +230,7 @@ class _SelectedFixtureMode extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: mode!.channels
-                        .map((e) => Text(e.name, style: textTheme.bodyMedium))
+                        .map((e) => Text(e.channel.startsWith("Custom") ? e.label : e.channel, style: textTheme.bodySmall))
                         .toList()),
               ),
             )

@@ -229,7 +229,9 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn write_control(&self, req: WriteControlRequest) {
         tracing::trace!("ProgrammerChannel::write_control({:?})", req);
-        self.handler.write_control(req);
+        if let Err(err) = self.handler.write_control(req) {
+            tracing::error!("ProgrammerChannel::write_control: {}", err);
+        }
     }
 
     fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {

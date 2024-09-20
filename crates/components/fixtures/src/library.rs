@@ -109,9 +109,20 @@ impl FixtureLibrary {
             .flat_map(|provider| provider.list_definitions())
             .collect()
     }
+
+    pub fn list_definitions_by_providers(&self, providers: &[&str]) -> Vec<FixtureDefinition> {
+        self.providers
+            .read()
+            .iter()
+            .filter(|provider| providers.contains(&provider.name()))
+            .flat_map(|provider| provider.list_definitions())
+            .collect()
+    }
 }
 
 pub trait FixtureLibraryProvider: std::fmt::Display + Send + Sync {
+    fn name(&self) -> &'static str;
+    
     fn load(&mut self) -> anyhow::Result<()>;
 
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;
@@ -135,7 +146,7 @@ impl Default for FixtureLibrary {
     fn default() -> Self {
         FixtureLibrary {
             providers: Arc::new(RwLock::new(Vec::new())),
-            library_loader: Arc::new(Box::new(EmptyLibraryLoader::default())),
+            library_loader: Arc::new(Box::new(EmptyLibraryLoader)),
             is_loading: Default::default(),
         }
     }

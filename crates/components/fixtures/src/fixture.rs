@@ -115,7 +115,7 @@ impl Fixture {
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
         let start = start.clamp(DMX_START_ADDRESS, DMX_END_ADDRESS);
-        let end = start + self.channel_mode.channel_count() as usize;
+        let end = start + self.channel_mode.dmx_channel_count as usize;
         let end = end.clamp(start, DMX_END_ADDRESS);
         output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }

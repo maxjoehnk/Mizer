@@ -10,46 +10,21 @@ import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/presets/preset_button.dart';
 import 'package:mizer/views/presets/preset_group.dart';
-import 'package:mizer/widgets/inputs/color.dart';
 import 'package:mizer/widgets/inputs/encoder.dart';
 import 'package:provider/provider.dart';
 
 class Control {
   final String? label;
   final WriteControlRequest Function(dynamic) update;
-  final FaderChannel? fader;
-  final ColorMixerChannel? colorMixer;
-  final AxisChannel? axis;
-  final GenericChannel? generic;
   final ProgrammerChannel? channel;
+  final FixtureChannel control;
   final List<ControlPreset>? presets;
-  final FixtureControl control;
 
   Control(this.label,
       {required this.update,
       required this.control,
-      this.fader,
-      this.generic,
-      this.colorMixer,
-      this.axis,
       this.presets,
       required this.channel});
-
-  bool get hasFader {
-    return fader != null;
-  }
-
-  bool get hasGeneric {
-    return generic != null;
-  }
-
-  bool get hasColor {
-    return colorMixer != null;
-  }
-
-  bool get hasAxis {
-    return axis != null;
-  }
 
   bool get hasPresets {
     return presets != null;
@@ -93,73 +68,34 @@ class FixtureGroupControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProgrammerApi api = context.read();
-    Widget widget = Container();
     var presets = getPresets(context);
-    if (control.hasFader || control.hasGeneric) {
-      double? generic =
-          control.channel?.hasGeneric() == true ? control.channel?.generic.value : null;
-      widget = Container(
-          width: 150,
-          child: EncoderInput(
-              label: control.label,
-              globalPresets: presets,
-              controlPresets: control.presets,
-              value: control.channel?.fader ?? generic ?? 0,
-              onValue: (v) => api.writeControl(control.update(v))));
-    }
-    if (control.hasColor) {
-      ColorMixerChannel? color = control.channel?.color;
-      widget = Row(mainAxisSize: MainAxisSize.min, children: [
-        Container(
-            width: 150,
-            margin: const EdgeInsets.only(right: 8),
-            child: EncoderInput(
-                label: "Red",
-                globalPresets: presets,
-                controlPresets: control.presets,
-                value: color?.red ?? 0,
-                onValue: (v) => api.writeControl(control.update(
-                    ColorValue(red: v, green: color?.green ?? 0, blue: color?.blue ?? 0))))),
-        Container(
-            width: 150,
-            margin: const EdgeInsets.only(right: 8),
-            child: EncoderInput(
-                label: "Green",
-                globalPresets: presets,
-                controlPresets: control.presets,
-                value: color?.green ?? 0,
-                onValue: (v) => api.writeControl(control
-                    .update(ColorValue(red: color?.red ?? 0, green: v, blue: color?.blue ?? 0))))),
-        Container(
-            width: 150,
-            margin: const EdgeInsets.only(right: 8),
-            child: EncoderInput(
-                label: "Blue",
-                globalPresets: presets,
-                controlPresets: control.presets,
-                value: color?.blue ?? 0,
-                onValue: (v) => api.writeControl(control
-                    .update(ColorValue(red: color?.red ?? 0, green: color?.green ?? 0, blue: v))))),
-      ]);
-    }
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(8.0, 8.0, 0.0, 8.0),
-      child: widget,
+      child: Container(
+        width: 150,
+        child: EncoderInput(
+            label: control.label,
+            globalPresets: presets,
+            controlPresets: control.presets,
+            value: control.channel?.direct.percent ?? 0.0,
+            onValue: (v) => api.writeControl(control.update(v)))),
     );
   }
 
+  // TODO: This should reference an enum as well? Or maybe it should be returned by the proto api
   List<Preset>? getPresets(BuildContext context) {
     PresetsBloc presets = context.read();
-    if (control.control == FixtureControl.INTENSITY) {
+    if (control.control == "Intensity") {
       return presets.state.getByPresetType(PresetType.Intensity);
     }
-    if (control.control == FixtureControl.SHUTTER) {
+    if (control.control == "Shutter") {
       return presets.state.getByPresetType(PresetType.Shutter);
     }
-    if (control.control == FixtureControl.COLOR_MIXER) {
+    if (control.control == "ColorMixerRed") {
       return presets.state.getByPresetType(PresetType.Color);
     }
-    if (control.control == FixtureControl.PAN || control.control == FixtureControl.TILT) {
+    if (control.control == "Pan" || control.control == "Tilt") {
       return presets.state.getByPresetType(PresetType.Position);
     }
 

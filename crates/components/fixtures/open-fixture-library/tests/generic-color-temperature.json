@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "fixtures": [
+    {
+      "$schema": "https://raw.githubusercontent.com/OpenLightingProject/open-fixture-library/master/schemas/fixture.json",
+      "name": "Color Temperature Fader",
+      "categories": ["Other"],
+      "meta": {
+        "authors": ["Ken Harris"],
+        "createDate": "2024-05-13",
+        "lastModifyDate": "2024-05-13"
+      },
+      "comment": "Generic fader + color temperature",
+      "availableChannels": {
+        "Intensity": {
+          "fineChannelAliases": ["Intensity fine"],
+          "capabilities": [
+            {
+              "type": "Intensity"
+            }
+          ],
+          "singleCapability": true
+        },
+        "Color Temperature": {
+          "fineChannelAliases": ["Color Temperature fine"],
+          "capabilities": [
+            {
+              "type": "ColorTemperature",
+              "colorTemperatureStart": "warm",
+              "colorTemperatureEnd": "cold"
+            }
+          ],
+          "singleCapability": true
+        }
+      },
+      "modes": [
+        {
+          "name": "8 bit",
+          "shortName": "8bit",
+          "channels": [
+            "Intensity",
+            "Color Temperature"
+          ]
+        },
+        {
+          "name": "16 bit",
+          "shortName": "16bit",
+          "channels": [
+            "Intensity",
+            "Intensity fine",
+            "Color Temperature",
+            "Color Temperature fine"
+          ]
+        }
+      ],
+      "fixtureKey": "color-temperature-fader",
+      "manufacturer": {
+        "name": "Generic",
+        "comment": "Use this pseudo manufacturer if you need to quick patch some channels without having to create a new fixture."
+      },
+      "oflURL": "https://open-fixture-library.org/generic/color-temperature-fader"
+    }
+  ]
+}

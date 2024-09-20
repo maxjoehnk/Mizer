@@ -1,8 +1,8 @@
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::definition::FixtureFaderControl;
-use mizer_fixtures::fixture::{ChannelLimit, FixtureConfiguration};
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::{ChannelLimit, FixtureConfiguration};
+use mizer_fixtures::channels::FixtureChannel;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct UpdateFixtureCommand {
@@ -12,7 +12,7 @@ pub struct UpdateFixtureCommand {
     pub reverse_pixel_order: Option<bool>,
     pub name: Option<String>,
     pub address: Option<(u16, u16)>,
-    pub limit: Option<(FixtureFaderControl, ChannelLimit)>,
+    pub limit: Option<(FixtureChannel, ChannelLimit)>,
 }
 
 impl<'a> Command<'a> for UpdateFixtureCommand {

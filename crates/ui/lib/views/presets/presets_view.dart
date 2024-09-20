@@ -22,30 +22,30 @@ class PresetsView extends StatelessWidget {
                       label: "Dimmer",
                       child: PresetList(
                         presets: state.presets.intensities,
-                        effects: effects.getEffectsForControls([EffectControl.INTENSITY]),
+                        effects: effects.getEffectsForControls(["Intensity"]),
                       )),
                   PresetGroup(
                       label: "Shutter",
                       child: PresetList(
                         presets: state.presets.shutters,
-                        effects: effects.getEffectsForControls([EffectControl.SHUTTER]),
+                        effects: effects.getEffectsForControls(["Shutter"]),
                       )),
                   PresetGroup(
                       label: "Color",
                       child: PresetList(
                           presets: state.presets.colors,
                           effects: effects.getEffectsForControls([
-                            EffectControl.COLOR_MIXER_BLUE,
-                            EffectControl.COLOR_MIXER_GREEN,
-                            EffectControl.COLOR_MIXER_RED,
-                            EffectControl.COLOR_WHEEL
+                            "ColorMixerRed",
+                            "ColorMixerGreen",
+                            "ColorMixerBlue",
+                            "ColorWheel"
                           ]))),
                   PresetGroup(
                       label: "Position",
                       child: PresetList(
                         presets: state.presets.positions,
                         effects:
-                            effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]),
+                            effects.getEffectsForControls(["Pan", "Tilt"]),
                       ))
                 ])));
   }

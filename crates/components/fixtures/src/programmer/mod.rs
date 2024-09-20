@@ -13,10 +13,10 @@ use serde::{Deserialize, Serialize};
 pub use groups::*;
 pub use presets::*;
 
-use crate::channels::{FixtureChannel, FixtureChannelValue, FixtureValue};
+use crate::channels::{FixtureChannel, FixtureChannelValue, FixtureColorChannel, FixtureValue};
 use crate::contracts::FixtureController;
 use crate::selection::FixtureSelection;
-use crate::{FixtureId, GroupId, RgbColor};
+use crate::{FixtureId, GroupId};
 
 mod default_presets;
 mod groups;
@@ -390,13 +390,21 @@ impl Programmer {
                 .map(|preset_id| ProgrammerControlValue::Preset(*preset_id))
                 .chain(state.channels.iter().map(|(channel, value)| (*channel, *value)).map(|value| ProgrammerControlValue::Control(value.into())));
             for value in values {
-                match value {
-                    ProgrammerControlValue::Control(channel_value) => {
-                        todo!()
+                let channel = match value {
+                    ProgrammerControlValue::Control(channel) => channel.channel,
+                    ProgrammerControlValue::Preset(PresetId::Intensity(_)) => FixtureChannel::Intensity,
+                    ProgrammerControlValue::Preset(PresetId::Shutter(_)) => FixtureChannel::Shutter(1),
+                    ProgrammerControlValue::Preset(PresetId::Color(_)) => FixtureChannel::ColorMixer(FixtureColorChannel::Red),
+                    ProgrammerControlValue::Preset(PresetId::Position(_)) => FixtureChannel::Pan,
+                };
+                let values = controls.entry(channel).or_default();
+                if let Some((fixtures, _)) = values.iter_mut().find(|(_, v)| &value == v) {
+                    for fixture_id in selection.get_fixtures().iter().flatten() {
+                        fixtures.push(*fixture_id)
                     }
-                    ProgrammerControlValue::Preset(preset_id) => {
-                        todo!()
-                    }
+                } else {
+                    let selection = selection.get_fixtures().iter().flatten().copied().collect();
+                    values.push((selection, value));
                 }
             }
         }

@@ -14,9 +14,9 @@ class MovementEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pan = effect.channels.firstWhereOrNull((element) => element.control == FixtureControl.PAN);
+    var pan = effect.channels.firstWhereOrNull((element) => element.fixtureChannel == "Pan");
     var tilt =
-    effect.channels.firstWhereOrNull((element) => element.control == FixtureControl.TILT);
+    effect.channels.firstWhereOrNull((element) => element.fixtureChannel == "Tilt");
 
     return Panel(
         label: "Movement".i18n,

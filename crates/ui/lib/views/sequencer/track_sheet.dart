@@ -9,24 +9,6 @@ import 'package:mizer/widgets/popup/popup_direct_time_input.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-final LABELS = {
-  CueControl_Type.INTENSITY: 'Dimmer',
-  CueControl_Type.SHUTTER: 'Shutter',
-  CueControl_Type.COLOR_RED: 'Red',
-  CueControl_Type.COLOR_GREEN: 'Green',
-  CueControl_Type.COLOR_BLUE: 'Blue',
-  CueControl_Type.COLOR_WHEEL: 'Color',
-  CueControl_Type.PAN: 'Pan',
-  CueControl_Type.TILT: 'Tilt',
-  CueControl_Type.FOCUS: 'Focus',
-  CueControl_Type.ZOOM: 'Zoom',
-  CueControl_Type.PRISM: 'Prism',
-  CueControl_Type.IRIS: 'Iris',
-  CueControl_Type.FROST: 'Frost',
-  CueControl_Type.GOBO: 'Gobo',
-  CueControl_Type.GENERIC: 'Generic',
-};
-
 class TrackSheet extends StatefulWidget {
   final Sequence sequence;
   final int? activeCue;
@@ -63,7 +45,7 @@ class _TrackSheetState extends State<TrackSheet> {
               Text("Cue"),
               ..._controls.map((c) => Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
+                  children: [Text(c.fixtureId.toDisplay()), Text(c.control)])),
               ..._effectIds.map((c) => Column(
                   mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets")])),
             ],
@@ -74,7 +56,7 @@ class _TrackSheetState extends State<TrackSheet> {
 
   Iterable<FixtureControl> get _controls {
     var controls =
-        widget.sequence.cues.expand((e) => e.controls).map((control) => control.type).toSet();
+        widget.sequence.cues.expand((e) => e.controls).map((control) => control.fixtureChannel).toSet();
 
     return widget.sequence.fixtures
         .expand((f) => controls.map((c) => FixtureControl(f, c)))
@@ -83,7 +65,7 @@ class _TrackSheetState extends State<TrackSheet> {
       if (fixtureId != 0) {
         return fixtureId;
       }
-      return lhs.control.value - rhs.control.value;
+      return lhs.control.compareTo(rhs.control);
     });
   }
 
@@ -101,7 +83,7 @@ class _TrackSheetState extends State<TrackSheet> {
         ..._controls.map((c) => Center(
             child: Text(cue.controls
                     .firstWhereOrNull((element) =>
-                        element.type == c.control &&
+                        element.fixtureChannel == c.control &&
                         element.fixtures.firstWhereOrNull((f) => f == c.fixtureId) != null)
                     ?.value
                     .toDisplay() ??
@@ -162,7 +144,7 @@ extension CueValueDisplayExtensions on CueValue {
 
 class FixtureControl {
   final FixtureId fixtureId;
-  final CueControl_Type control;
+  final String control;
 
   FixtureControl(this.fixtureId, this.control);
 }

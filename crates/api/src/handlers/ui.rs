@@ -93,26 +93,6 @@ impl<R: RuntimeApi> UiHandler<R> {
                     anyhow::bail!("Unknown fixture definition {}", &arguments[0]);
                 }
             }
-            "fixtures/definitions/channels" => {
-                let fixture_definition = self.runtime.query(GetFixtureDefinitionQuery {
-                    definition_id: arguments[0].clone(),
-                })?;
-                if let Some(fixture_definition) = fixture_definition {
-                    if let Some(fixture_mode) = fixture_definition
-                        .modes
-                        .into_iter()
-                        .find(|m| &m.name == arguments[1])
-                    {
-                        let table = FixtureDefinitionDmxChannelTable.get_table(fixture_mode)?;
-
-                        Ok(table.into())
-                    } else {
-                        anyhow::bail!("Unknown fixture mode {}", &arguments[1]);
-                    }
-                } else {
-                    anyhow::bail!("Unknown fixture definition {}", &arguments[0]);
-                }
-            }
             "fixtures/definitions/tree" => {
                 let fixture_definition = self.runtime.query(GetFixtureDefinitionQuery {
                     definition_id: arguments[0].clone(),
@@ -121,7 +101,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                     if let Some(index) = fixture_definition
                         .modes
                         .iter()
-                        .position(|m| &m.name == arguments[1])
+                        .position(|m| m.name.as_str() == arguments[1])
                     {
                         let fixture_mode = fixture_definition.modes.remove(index);
                         let table = FixtureDefinitionTreeTable.get_table(fixture_mode)?;

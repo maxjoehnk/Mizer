@@ -1,17 +1,17 @@
 use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
-use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{GenericPreset, PresetId, PresetType};
 use mizer_node::{NodeDesigner, NodeType};
 use mizer_nodes::PresetNode;
 use mizer_runtime::commands::AddNodeCommand;
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::channels::{FixtureChannelValue};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddPresetCommand {
     pub name: Option<String>,
     pub preset_type: PresetType,
-    pub values: Vec<FixtureControlValue>,
+    pub values: Vec<FixtureChannelValue>,
 }
 
 impl<'a> Command<'a> for AddPresetCommand {

@@ -1,10 +1,11 @@
+use std::str::FromStr;
 use crate::proto::fixtures::*;
 use crate::proto::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use itertools::Itertools;
 use mizer_command_executor::*;
-use mizer_fixtures::definition::FixtureControlValue;
+use mizer_fixtures::channels::FixtureChannelValue;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammerControlValue, ProgrammerView};
 use mizer_fixtures::GroupId;
@@ -33,10 +34,16 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn write_control(&self, request: WriteControlRequest) {
+    pub fn write_control(&self, request: WriteControlRequest) -> anyhow::Result<()> {
         let mut programmer = self.fixture_manager.get_programmer();
-        let control = request.as_controls();
-        programmer.write_control(control);
+        let channel = mizer_fixtures::channels::FixtureChannel::from_str(&request.control).unwrap();
+        let value = match request.value {
+            Some(write_control_request::Value::Percent(value)) => mizer_fixtures::channels::FixtureValue::Percent(value),
+            None => anyhow::bail!("Missing value"),
+        };
+        programmer.write_control(channel, value);
+        
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
@@ -341,7 +348,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     fn get_programmer_values_for_preset_type(
         &self,
         preset_type: mizer_fixtures::programmer::PresetType,
-    ) -> Vec<FixtureControlValue> {
+    ) -> Vec<FixtureChannelValue> {
         self.fixture_manager
             .get_programmer()
             .get_channels()
@@ -354,14 +361,14 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                     None
                 }
             })
-            .filter(|value| preset_type.contains_control(value))
+            .filter(|value| preset_type.contains_channel(value))
             .collect()
     }
 
     fn get_preset_values_for_preset_type(
         &self,
         preset_type: mizer_fixtures::programmer::PresetType,
-    ) -> Vec<FixtureControlValue> {
+    ) -> Vec<FixtureChannelValue> {
         self.fixture_manager
             .get_programmer()
             .active_presets()
@@ -371,7 +378,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                     .presets
                     .get_preset_values(preset.preset_id)
             })
-            .filter(|value| preset_type.contains_control(value))
+            .filter(|value| preset_type.contains_channel(value))
             .collect()
     }
 

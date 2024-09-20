@@ -1,5 +1,6 @@
 use std::num::ParseIntError;
 use std::str::FromStr;
+use mizer_fixtures::builder::DmxChannelBuilder;
 use mizer_fixtures::channels::{DmxChannel, DmxChannels};
 
 #[derive(Debug, Clone)]
@@ -8,6 +9,15 @@ pub struct DmxChannelOffset(Option<Vec<u16>>);
 impl DmxChannelOffset {
     pub fn is_virtual(&self) -> bool {
         self.0.is_none()
+    }
+
+    pub fn into_channels(self) -> Vec<DmxChannelBuilder> {
+        self.0.unwrap_or_default()
+            .into_iter()
+            .map(DmxChannel::new)
+            .enumerate()
+            .map(|(endianess, channel)| DmxChannelBuilder::new(endianess as u8, channel))
+            .collect()
     }
 }
 
@@ -26,7 +36,7 @@ impl FromStr for DmxChannelOffset {
                 if offset > 511 {
                     // Parse again so we throw the proper error
                     u8::from_str(offset_str)?;
-                    Ok(0)
+                    unreachable!()
                 } else {
                     Ok(offset)
                 }

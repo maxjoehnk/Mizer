@@ -8,8 +8,8 @@ use indexmap::IndexMap;
 use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::FixtureConfiguration;
 
-use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};

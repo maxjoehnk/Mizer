@@ -39,23 +39,10 @@ message FixtureSelection {
 
 message ProgrammerChannel {
   repeated mizer.fixtures.FixtureId fixtures = 1;
-  mizer.fixtures.FixtureControl control = 2;
+  string control = 2;
   oneof value {
-    double fader = 3;
-    mizer.fixtures.ColorMixerChannel color = 4;
-    GenericValue generic = 5;
-    PresetId preset = 6;
-  }
-
-  enum ColorChannel {
-    RED = 0;
-    GREEN = 1;
-    BLUE = 2;
-  }
-
-  message GenericValue {
-    string name = 1;
-    double value = 2;
+    mizer.fixtures.FixtureValue direct = 3;
+    PresetId preset = 4;
   }
 }
 
@@ -76,16 +63,9 @@ message WriteEffectOffsetRequest {
 }
 
 message WriteControlRequest {
-  mizer.fixtures.FixtureControl control = 1;
+  string control = 1;
   oneof value {
-    double fader = 2;
-    mizer.fixtures.ColorMixerChannel color = 3;
-    GenericValue generic = 4;
-  }
-
-  message GenericValue {
-    string name = 1;
-    double value = 2;
+    double percent = 2;
   }
 }
 

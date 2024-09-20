@@ -1,4 +1,3 @@
-use mizer_fixtures::definition;
 use mizer_sequencer::effects;
 
 use crate::proto::effects as models;
@@ -38,63 +37,12 @@ impl From<models::EffectStep> for effects::EffectStep {
 impl From<effects::EffectChannel> for models::EffectChannel {
     fn from(channel: effects::EffectChannel) -> Self {
         Self {
-            control: models::EffectControl::from(channel.control) as i32,
+            fixture_channel: channel.control.to_string(),
             steps: channel
                 .steps
                 .into_iter()
                 .map(models::EffectStep::from)
                 .collect(),
-        }
-    }
-}
-
-impl From<definition::FixtureFaderControl> for models::EffectControl {
-    fn from(value: definition::FixtureFaderControl) -> Self {
-        use definition::FixtureFaderControl;
-        match value {
-            FixtureFaderControl::Intensity => Self::Intensity,
-            FixtureFaderControl::Shutter => Self::Shutter,
-            FixtureFaderControl::ColorMixer(definition::ColorChannel::Red) => Self::ColorMixerRed,
-            FixtureFaderControl::ColorMixer(definition::ColorChannel::Green) => {
-                Self::ColorMixerGreen
-            }
-            FixtureFaderControl::ColorMixer(definition::ColorChannel::Blue) => Self::ColorMixerBlue,
-            FixtureFaderControl::ColorWheel => Self::ColorWheel,
-            FixtureFaderControl::Pan => Self::Pan,
-            FixtureFaderControl::Tilt => Self::Tilt,
-            FixtureFaderControl::Focus => Self::Focus,
-            FixtureFaderControl::Zoom => Self::Zoom,
-            FixtureFaderControl::Prism => Self::Prism,
-            FixtureFaderControl::Iris => Self::Iris,
-            FixtureFaderControl::Gobo => Self::Gobo,
-            FixtureFaderControl::Frost => Self::Frost,
-            FixtureFaderControl::Generic(_) => Self::Generic,
-        }
-    }
-}
-
-impl From<models::EffectControl> for definition::FixtureFaderControl {
-    fn from(value: models::EffectControl) -> Self {
-        match value {
-            models::EffectControl::Intensity => Self::Intensity,
-            models::EffectControl::Shutter => Self::Shutter,
-            models::EffectControl::ColorMixerRed => Self::ColorMixer(definition::ColorChannel::Red),
-            models::EffectControl::ColorMixerGreen => {
-                Self::ColorMixer(definition::ColorChannel::Green)
-            }
-            models::EffectControl::ColorMixerBlue => {
-                Self::ColorMixer(definition::ColorChannel::Blue)
-            }
-            models::EffectControl::ColorWheel => Self::ColorWheel,
-            models::EffectControl::Pan => Self::Pan,
-            models::EffectControl::Tilt => Self::Tilt,
-            models::EffectControl::Focus => Self::Focus,
-            models::EffectControl::Zoom => Self::Zoom,
-            models::EffectControl::Prism => Self::Prism,
-            models::EffectControl::Iris => Self::Iris,
-            models::EffectControl::Gobo => Self::Gobo,
-            models::EffectControl::Frost => Self::Frost,
-            models::EffectControl::Generic => unimplemented!(),
         }
     }
 }

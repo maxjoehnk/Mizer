@@ -27,16 +27,22 @@ impl<'a> Query<'a> for ListFixtureDefinitionsQuery {
     type Result = Vec<FixtureDefinition>;
 
     fn query(&self, fixture_library: &FixtureLibrary) -> anyhow::Result<Self::Result> {
-        Ok(fixture_library
-            .list_definitions()
-            .into_iter()
-            .filter(|definition| {
-                (self.gdtf && definition.provider == "GDTF")
-                    || (self.ofl && definition.provider == "Open Fixture Library")
-                    || (self.qlc && definition.provider == "QLC+")
-                    || (self.mizer && definition.provider == "Mizer")
-            })
-            .collect())
+        let mut providers = vec![];
+        if self.qlc {
+            providers.push("QLC+");
+        }
+        if self.ofl {
+            providers.push("Open Fixture Library");
+        }
+        if self.gdtf {
+            providers.push("GDTF");
+        }
+        if self.mizer {
+            providers.push("Mizer");
+        }
+        let definitions = fixture_library.list_definitions_by_providers(&providers);
+        
+        Ok(definitions)
     }
 
     fn requires_main_loop(&self) -> bool {

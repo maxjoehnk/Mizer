@@ -1,199 +1,267 @@
-use std::collections::HashMap;
-use std::ops::Deref;
-use mizer_fixtures::channels::{DmxChannel, DmxChannels, FixtureChannel, FixtureChannelDefinition, FixtureChannelMode, FixtureColorChannel, FixtureValue, SubFixtureChannelMode};
+use mizer_fixtures::builder::{DmxChannelBuilder, FixtureModeBuilder, FixtureDefinitionBuilder};
+use mizer_fixtures::channels::{DmxChannel,FixtureChannel, FixtureChannelPreset, FixtureColorChannel, FixtureValue};
 use mizer_fixtures::definition::*;
-use mizer_fixtures::FixtureId::Fixture;
-use mizer_util::LerpExt;
 
 use crate::definition::*;
+use crate::PROVIDER_NAME;
 use crate::resource_reader::ResourceReader;
 
-pub fn map_fixture_definition(
-    definition: QlcPlusFixtureDefinition,
-    resource_reader: &ResourceReader,
-) -> FixtureDefinition {
-    let channels = definition
-        .channels
-        .into_iter()
-        .map(|channel| (channel.name.to_string(), channel))
-        .collect::<HashMap<_, _>>();
-
-    FixtureDefinition {
-        id: format!("qlc:{}:{}", definition.manufacturer, definition.model),
-        manufacturer: definition.manufacturer,
-        name: definition.model,
-        provider: "QLC+",
-        modes: definition
-            .modes
-            .into_iter()
-            .map(|mode| {
-                let channel_definitions = create_fixture(&mode, &channels, resource_reader);
-                let sub_fixtures = create_sub_fixtures(&mode, &channels, resource_reader);
-                
-                FixtureChannelMode::new(mode.name, channel_definitions, sub_fixtures)
-            })
-            .collect(),
-        tags: vec![definition.fixture_type],
-        physical: PhysicalFixtureData::default(),
-    }
-}
-
-fn create_fixture(
-    mode: &ModeType,
-    channels: &HashMap<String, ChannelType>,
-    resource_reader: &ResourceReader<'_>,
-) -> Vec<FixtureChannelDefinition> {
-    let channels = mode
-        .channels
-        .iter()
-        .filter(|mode_channel| {
-            !mode.heads.iter().any(|head| {
-                head.channels
-                    .iter()
-                    .any(|channel| channel == &mode_channel.number)
-            })
-        })
-        .map(|mode_channel| (mode_channel, &channels[mode_channel.channel.deref()]))
-        .collect::<Vec<_>>();
-
-    build_channels(channels, resource_reader)
-}
-
-fn create_sub_fixtures(
-    mode: &ModeType,
-    channels: &HashMap<String, ChannelType>,
-    resource_reader: &ResourceReader<'_>,
-) -> Vec<SubFixtureChannelMode> {
-    mode.heads
-        .iter()
-        .enumerate()
-        .map(|(i, head)| {
-            let id = i as u32 + 1;
-            let head_channels = head
-                .channels
-                .iter()
-                .filter_map(|channel_number| {
-                    mode.channels.iter().find(|c| c.number == *channel_number)
-                })
-                .map(|mode_channel| (mode_channel, &channels[mode_channel.channel.deref()]))
-                .collect();
-
-            let channel_definitions = build_channels(head_channels, resource_reader);
-            SubFixtureChannelMode::new(id, format!("Head {id}"), channel_definitions)
-        })
-        .collect()
-}
-
-fn build_channels(
-    channels: Vec<(&ModeChannelType, &ChannelType)>,
-    resource_reader: &ResourceReader<'_>,
-) -> Vec<FixtureChannelDefinition> {
-    let mut channel_definitions = Vec::new();
+pub fn map_fixture_definition(definition: QlcPlusFixtureDefinition, resource_reader: &ResourceReader) -> anyhow::Result<FixtureDefinition> {
+    let mut builder = FixtureDefinitionBuilder::default();
+    builder.id(format!("qlc:{}:{}", definition.manufacturer, definition.model))
+        .name(definition.model)
+        .manufacturer(definition.manufacturer)
+        .provider(PROVIDER_NAME);
+    builder.tag(definition.fixture_type);
+    
     let gobo_channel = get_channel(
-        &channels,
+        &definition.channels,
         GroupEnumType::Gobo,
         CapabilityPresetType::GoboMacro,
     );
     let color_channel = get_channel(
-        &channels,
+        &definition.channels,
         GroupEnumType::Colour,
         CapabilityPresetType::ColorMacro,
     );
-    for (mode_channel, channel_type) in channels {
-        let channel = if let Some(group) = channel_type.group {
+
+    let mut custom_channel_number = 1u8;
+
+    let mut custom_channel = || -> FixtureChannel {
+        let n = custom_channel_number;
+        custom_channel_number += 1;
+
+        FixtureChannel::Custom(n)
+    };
+
+    for channel_type in definition.channels {
+        let channel_builder = builder.channel(channel_type.name.to_string());
+        if let Some(default) = channel_type.default {
+            let value = FixtureValue::Percent(default as f64 / u8::MAX as f64);
+            channel_builder.default(value);
+        }
+        if let Some(group) = channel_type.group {
             match group.group {
-                GroupEnumType::Intensity => FixtureChannel::Intensity,
-                GroupEnumType::Shutter => FixtureChannel::Shutter,
-                GroupEnumType::Prism => FixtureChannel::Prism,
-                GroupEnumType::Pan => FixtureChannel::Pan,
-                GroupEnumType::Tilt => FixtureChannel::Tilt,
+                GroupEnumType::Intensity => {
+                    channel_builder.channel(FixtureChannel::Intensity);
+                },
+                GroupEnumType::Shutter => {
+                    channel_builder.channel(FixtureChannel::Shutter(1));
+                },
+                GroupEnumType::Prism => {
+                    channel_builder.channel(FixtureChannel::Prism(1));  
+                },
+                GroupEnumType::Pan => {
+                    channel_builder.channel(FixtureChannel::Pan);
+                },
+                GroupEnumType::Tilt => {
+                    channel_builder.channel(FixtureChannel::Tilt);
+                },
                 GroupEnumType::Colour if color_channel.as_ref() == Some(&channel_type) => {
-                    FixtureChannel::ColorWheel
-                    // controls.color_wheel = Some(ColorWheelGroup {
-                    //     channel: control_channel,
-                    //     colors: channel_type
-                    //         .capabilities
-                    //         .into_iter()
-                    //         .filter(|capability| {
-                    //             capability.preset.is_none()
-                    //                 || capability.preset == Some(CapabilityPresetType::ColorMacro)
-                    //                 || capability.preset
-                    //                 == Some(CapabilityPresetType::ColorDoubleMacro)
-                    //         })
-                    //         .map(|capability| ColorWheelSlot {
-                    //             name: capability.name.to_string(),
-                    //             value: (capability.min as u8)
-                    //                 .linear_extrapolate((0, 255), (0., 1.)),
-                    //             color: vec![capability.resource1, capability.resource2]
-                    //                 .into_iter()
-                    //                 .flatten()
-                    //                 .collect(),
-                    //         })
-                    //         .collect(),
-                    // })
+                    channel_builder.channel(FixtureChannel::ColorWheel);
+                    let presets = channel_type
+                            .capabilities
+                            .into_iter()
+                            .filter(|capability| {
+                                capability.preset.is_none()
+                                    || capability.preset == Some(CapabilityPresetType::ColorMacro)
+                                    || capability.preset
+                                    == Some(CapabilityPresetType::ColorDoubleMacro)
+                            })
+                            .map(|capability| FixtureChannelPreset {
+                                name: capability.name.to_string(),
+                                value: FixtureValue::Percent(capability.min as f64 / 255.),
+                                color: vec![capability.resource1, capability.resource2]
+                                    .into_iter()
+                                    .flatten()
+                                    .collect(),
+                                image: Default::default(),
+                            })
+                            .collect();
+                    channel_builder.presets(presets);
                 }
                 GroupEnumType::Gobo if gobo_channel.as_ref() == Some(&channel_type) => {
-                    FixtureChannel::GoboWheel
-                    // controls.gobo = Some(GoboGroup {
-                    //     channel: control_channel,
-                    //     gobos: channel_type
-                    //         .capabilities
-                    //         .into_iter()
-                    //         .map(|capability| Gobo {
-                    //             name: capability.name.to_string(),
-                    //             value: (capability.min as u8)
-                    //                 .linear_extrapolate((0, 255), (0., 1.)),
-                    //             image: capability
-                    //                 .resource1
-                    //                 .and_then(|file_name| resource_reader.read_gobo(&file_name)),
-                    //         })
-                    //         .collect(),
-                    // })
+                    channel_builder.channel(FixtureChannel::GoboWheel(1));
+                    let presets = channel_type
+                            .capabilities
+                            .into_iter()
+                            .map(|capability| FixtureChannelPreset {
+                                name: capability.name.to_string(),
+                                value: FixtureValue::Percent(capability.min as f64 / 255.),
+                                image: capability
+                                    .resource1
+                                    .and_then(|file_name| resource_reader.read_gobo(&file_name)),
+                                color: Default::default(),
+                            })
+                            .collect();
+                    channel_builder.presets(presets);
                 }
-                _ => todo!(),
+                _ => {
+                    channel_builder.channel(custom_channel()).dmx_channel(DmxChannelBuilder::coarse());
+                },
             }
+            channel_builder.dmx_channel(DmxChannelBuilder::coarse());
         } else if let Some(preset) = channel_type.preset {
             match preset {
-                ChannelPresetType::IntensityRed => FixtureChannel::ColorMixer(FixtureColorChannel::Red),
-                ChannelPresetType::IntensityGreen => FixtureChannel::ColorMixer(FixtureColorChannel::Green),
-                ChannelPresetType::IntensityBlue => FixtureChannel::ColorMixer(FixtureColorChannel::Blue),
-                ChannelPresetType::IntensityWhite => FixtureChannel::ColorMixer(FixtureColorChannel::White),
-                ChannelPresetType::IntensityAmber => FixtureChannel::ColorMixer(FixtureColorChannel::Amber),
-                ChannelPresetType::IntensityCyan => FixtureChannel::ColorMixer(FixtureColorChannel::Cyan),
-                ChannelPresetType::IntensityMagenta => FixtureChannel::ColorMixer(FixtureColorChannel::Magenta),
-                ChannelPresetType::IntensityYellow => FixtureChannel::ColorMixer(FixtureColorChannel::Yellow),
-                ChannelPresetType::IntensityDimmer => FixtureChannel::Intensity,
-                ChannelPresetType::IntensityMasterDimmer => FixtureChannel::Intensity,
-                ChannelPresetType::PositionPan => FixtureChannel::Pan,
-                ChannelPresetType::PositionTilt => FixtureChannel::Tilt,
-                ChannelPresetType::BeamFocusFarNear | ChannelPresetType::BeamFocusNearFar => FixtureChannel::Focus,
-                ChannelPresetType::BeamZoomBigSmall | ChannelPresetType::BeamZoomSmallBig => FixtureChannel::Zoom,
-                _ => todo!()
+                ChannelPresetType::IntensityRed => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityRedFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Red));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityGreen => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityGreenFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Green));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityBlue => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityBlueFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Blue));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityWhite => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::White));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityWhiteFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::White));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                }
+                ChannelPresetType::IntensityAmber => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Amber));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityAmberFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Amber));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityCyan => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Cyan));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityCyanFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Cyan));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityMagenta => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Magenta));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityMagentaFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Magenta));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityYellow => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Yellow));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityYellowFine => {
+                    channel_builder.channel(FixtureChannel::ColorMixer(FixtureColorChannel::Yellow));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityDimmer => {
+                    channel_builder.channel(FixtureChannel::Intensity);
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityDimmerFine => {
+                    channel_builder.channel(FixtureChannel::Intensity);
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::IntensityMasterDimmer => {
+                    channel_builder.channel(FixtureChannel::Intensity);
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::IntensityMasterDimmerFine => {
+                    channel_builder.channel(FixtureChannel::Intensity);
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::PositionPan => {
+                    channel_builder.channel(FixtureChannel::Pan);
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::PositionPanFine => {
+                    channel_builder.channel(FixtureChannel::Pan);
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::PositionTilt => {
+                    channel_builder.channel(FixtureChannel::Tilt);
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::PositionTiltFine => {
+                    channel_builder.channel(FixtureChannel::Tilt);
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::BeamFocusFarNear | ChannelPresetType::BeamFocusNearFar => {
+                    channel_builder.channel(FixtureChannel::Focus(1));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::BeamFocusFine => {
+                    channel_builder.channel(FixtureChannel::Focus(1));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::BeamZoomBigSmall | ChannelPresetType::BeamZoomSmallBig => {
+                    channel_builder.channel(FixtureChannel::Zoom(1));
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                },
+                ChannelPresetType::BeamZoomFine => {
+                    channel_builder.channel(FixtureChannel::Zoom(1));
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                },
+                ChannelPresetType::ShutterIrisMinToMax | ChannelPresetType::ShutterIrisMaxToMin => {
+                    channel_builder.channel(FixtureChannel::Iris);
+                    channel_builder.dmx_channel(DmxChannelBuilder::coarse());
+                }
+                ChannelPresetType::ShutterIrisFine => {
+                    channel_builder.channel(FixtureChannel::Iris);
+                    channel_builder.dmx_channel(DmxChannelBuilder::fine());
+                }
+                _ => {
+                    channel_builder.channel(custom_channel()).dmx_channel(DmxChannelBuilder::coarse());
+                },
             }
-        }else { 
-            todo!()
+        }else {
+            channel_builder.channel(custom_channel()).dmx_channel(DmxChannelBuilder::coarse());
         };
-
-        let channel_builder = FixtureChannelDefinition::builder()
-            .channels(DmxChannels::Resolution8Bit {
-                coarse: DmxChannel::new(mode_channel.number),
-            })
-            .channel(channel)
-            .maybe_default(channel_type.default.map(|d| FixtureValue::Percent(d as f64 / u8::MAX as f64)))
-            .label(channel_type.name.to_string().into());
         
-        channel_definitions.push(channel_builder.build());
+        channel_builder.label(channel_type.name.to_string());
     }
-    
-    channel_definitions
+
+    for mode in definition.modes {
+        let mut mode_builder = FixtureModeBuilder::new(mode.name);
+
+        let head_channels = mode.heads.iter().flat_map(|head| head.channels.clone()).collect::<Vec<_>>();
+
+        for channel in mode.channels.iter() {
+            if head_channels.contains(&channel.number) {
+                continue
+            }
+            if let Err(err) = mode_builder.use_prebuilt_channel(&builder, channel.channel.as_str(), Some(DmxChannel::new(channel.number))) {
+                tracing::warn!("Unable to setup channel {}: {err:?}", channel.channel);
+                continue;
+            }
+        }
+
+
+        builder.mode(mode_builder);
+    }
+
+    builder.build()
 }
 
-fn get_channel<'a>(
-    channels: &[(&ModeChannelType, &'a ChannelType)],
+fn get_channel(
+    channels: &[ChannelType],
     group_type: GroupEnumType,
     preset_type: CapabilityPresetType,
-) -> Option<&'a ChannelType> {
-    let is_channel = |c: &&&ChannelType| {
+) -> Option<ChannelType> {
+    let is_channel = |c: &&ChannelType| {
         matches!(
             c.group,
             Some(GroupType {
@@ -204,7 +272,6 @@ fn get_channel<'a>(
     };
     channels
         .iter()
-        .map(|(_, channel)| channel)
         .filter(is_channel)
         .find(|channel| {
             channel
@@ -212,8 +279,6 @@ fn get_channel<'a>(
                 .iter()
                 .any(|c| c.preset == Some(preset_type))
         })
-        .or_else(|| channels.iter()
-            .map(|(_, channel)| channel)
-            .find(is_channel))
+        .or_else(|| channels.iter().find(is_channel))
         .cloned()
 }

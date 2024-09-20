@@ -69,7 +69,7 @@ impl From<cue_trigger::Type> for mizer_sequencer::CueTrigger {
 impl From<mizer_sequencer::CueControl> for CueControl {
     fn from(channel: mizer_sequencer::CueControl) -> Self {
         Self {
-            r#type: cue_control::Type::from(channel.control) as i32,
+            fixture_channel: channel.control.to_string(),
             value: Some(channel.value.into()),
             fixtures: channel
                 .fixtures
@@ -192,31 +192,6 @@ impl From<mizer_sequencer::SequencerTime> for CueTime {
             mizer_sequencer::SequencerTime::Beats(beats) => Self {
                 time: Some(cue_time::Time::Beats(beats)),
             },
-        }
-    }
-}
-
-impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type {
-    fn from(fixture_control: mizer_fixtures::definition::FixtureFaderControl) -> Self {
-        use mizer_fixtures::definition::ColorChannel;
-        use mizer_fixtures::definition::FixtureFaderControl::*;
-
-        match fixture_control {
-            Intensity => Self::Intensity,
-            Shutter => Self::Shutter,
-            Focus => Self::Focus,
-            Zoom => Self::Zoom,
-            Iris => Self::Iris,
-            Prism => Self::Prism,
-            Frost => Self::Frost,
-            Pan => Self::Pan,
-            Tilt => Self::Tilt,
-            Gobo => Self::Gobo,
-            ColorMixer(ColorChannel::Red) => Self::ColorRed,
-            ColorMixer(ColorChannel::Green) => Self::ColorGreen,
-            ColorMixer(ColorChannel::Blue) => Self::ColorBlue,
-            ColorWheel => Self::ColorWheel,
-            Generic(_) => Self::Generic,
         }
     }
 }

@@ -49,7 +49,7 @@ impl PatchFixturesCommand {
             let (universe, channel) = calculate_address(
                 self.universe as u16,
                 self.start_channel as u16,
-                mode.dmx_channels(),
+                mode.dmx_channel_count,
                 i as u16,
             );
 
@@ -94,7 +94,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
             let (universe, channel) = calculate_address(
                 self.universe as u16,
                 self.start_channel as u16,
-                mode.dmx_channels(),
+                mode.dmx_channel_count,
                 i as u16,
             );
             fixture_manager.add_fixture(

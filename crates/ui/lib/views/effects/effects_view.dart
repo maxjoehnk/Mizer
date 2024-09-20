@@ -178,7 +178,7 @@ class _EffectsViewState extends State<EffectsView> {
     bloc.add(RemoveEffectChannel(effectId: effect!.id, channelIndex: channelIndex));
   }
 
-  void _onAddEffectChannel(EffectsBloc bloc, EffectControl control) {
+  void _onAddEffectChannel(EffectsBloc bloc, String control) {
     if (effect == null) {
       return;
     }

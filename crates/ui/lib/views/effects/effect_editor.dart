@@ -11,7 +11,7 @@ class EffectEditor extends StatelessWidget {
   final Function(int, int) onFinishInteraction;
   final Function(int, int) onRemoveStep;
   final Function(int) onRemoveChannel;
-  final Function(EffectControl) onAddChannel;
+  final Function(String) onAddChannel;
   final Function(int, EffectStep) onAddStep;
 
   const EffectEditor({

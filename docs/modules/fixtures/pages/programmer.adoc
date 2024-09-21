@@ -1,3 +1,88 @@
 = Programmer
 
+Mizer has a classic programmer workflow for creating and storing looks.
+
+You can select fixtures in the btn:[Fixtures] tab, in the btn:[2D Plan] tab or using the groups in the btn:[Presets] tab.
+The selected fixtures will be highlighted in the btn:[Fixtures] tab.
+
+In the btn:[Programmer] (kbd:[Ctrl + P]) pane on the bottom you can control the different parameters of the selected fixtures.
+
 image::programmer.png[]
+
+== Actions
+
+=== Highlight
+
+The btn:[Highlight] (kbd:[Home]) action will highlight the currently selected fixtures.
+Highlighting always overrides values entered in the programmer.
+
+=== Store
+
+The btn:[Store] (kbd:[Insert]) action will open the Store dialog where the current programmer state can be persisted into a Group, Preset or Sequence.
+
+==== Store Mode: Group
+
+When storing into a group the current fixture selection including the selection order and any settings made in the btn:[Selection] pane will be stored as well.
+
+==== Store Mode: Sequence
+
+When storing into a sequence the whole programmer state will be stored into the selected or new sequence.
+
+This includes
+
+* Fixture Selection
+* Applied values
+* Selected presets
+* Applied effects
+
+==== Store Mode: Preset
+
+When storing into a preset you can select between *Intensity*, *Shutter*, *Color* and *Position* Presets.
+
+Each preset type will only store the channels relevant for the given type from the programmer.
+
+== Tabs
+
+The Programmer pane is split into multiple tabs:
+
+=== Dimmer
+
+The dimmer section contains controls for the shutter and the dimmer channel.
+
+=== Position
+
+The position section contains controls for the pan and tilt channels.
+
+=== Gobo
+
+The gobo sections contains controls for the gobo wheel and the gobo rotation.
+
+=== Color
+
+The color section contains controls for the color wheel and RGB color mixing.
+
+=== Beam
+
+The beam section contains controls for the beam parameters like focus, zoom and iris.
+
+=== Channels
+
+The channels section contains all fixture controls that cannot be categorized into the other sections.
+
+These might be control channels for fixture behavior, reset or lamp control.
+
+=== Effects
+
+The effects section will contain controls for any effects applied to the current fixture section.
+The Rate control will control the speed of the effect.
+The Offset control will control the phase of the effect.
+
+== Live/Offline Mode
+
+The Programmer can be switched into offline mode by the toggle in the top right of the programmer pane.
+
+When the programmer is offline it will *never* output anything to the fixtures.
+This is helpful when creating looks live without the audience noticing.
+
+You are currently not able to see the output of an offline programmer in the btn:[2D Plan] view. You will only see the entered values in the btn:[Fixtures] view.
+

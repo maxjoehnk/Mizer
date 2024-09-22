@@ -11,3 +11,4 @@ NOTE: I'm currently working on a new file format which will also include fixture
 | menu:File[Open Recent] | | Open one of the last 10 opened projects
 | menu:File[Save Project] | kbd:[Ctrl + S] | Save the current project
 | menu:File[Save Project As] | kbd:[Ctrl + Shift + S] | Save the current project as a new file
+|===

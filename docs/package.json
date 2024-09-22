@@ -12,6 +12,7 @@
   "private": true,
   "devDependencies": {
     "@antora/cli": "3.1.9",
+    "@antora/pdf-extension": "^1.0.0-alpha.9",
     "@antora/site-generator": "3.1.9",
     "http-server": "^14.1.1"
   },

@@ -13,6 +13,7 @@ ui:
 antora:
   extensions:
     - '@antora/lunr-extension'
+    - '@antora/pdf-extension'
 asciidoc:
   attributes:
     page-pagination: ''

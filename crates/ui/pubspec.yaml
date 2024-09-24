@@ -5,7 +5,7 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: 3.19.0
+  flutter: 3.24.3
 
 dependencies:
   flutter:
@@ -25,8 +25,8 @@ dependencies:
   collection: ^1.16.0
   nativeshell:
     git:
-      url: https://github.com/maxjoehnk/nativeshell.git
-      ref: 94a16e8
+      url: https://github.com/nativeshell/nativeshell.git
+      ref: 231f9d1
       path: nativeshell_dart
   flutter_svg: ^2.0.0
   flex_color_picker: ^3.0.0
@@ -35,7 +35,7 @@ dependencies:
   ffi: ^2.0.1
   filesize: ^2.0.1
   multicast_dns: ^0.3.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   fuzzywuzzy: ^1.1.6
   vector_math: ^2.1.4
   toggle_switch: ^2.1.0

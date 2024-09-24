@@ -1,0 +1,2 @@
+.Examples
+* xref:examples:add-intensity-to-layout-view.adoc[]

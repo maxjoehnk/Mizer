@@ -1,0 +1,82 @@
+= Add Fixture Intensity to Layout View
+
+This example demonstrates how to add a dial for the intensity of multiple fixtures to the layout view.
+
+== Pre-requisites:
+
+- A project with patched fixtures
+
+== 1. Create group of fixtures
+
+Open the btn:[Fixtures] view (kbd:[F5]) and select the desired features.
+
+.Select Fixtures
+image::examples:select-fixtures.png[]
+
+Press the btn:[Store] button (kbd:[Insert]) in the Programmer pane to store the selected fixtures as a new group.
+
+.Select Store Mode
+image::store-mode.png[width=200]
+
+.Create new Group
+image::new-group.png[width=200]
+
+== 2. Create dial
+
+Open the btn:[Nodes] view (kbd:[F3]) to create a dial and assign it to the group intensity.
+
+Double click or right click to create a new xref:nodes:controls/dial/index.adoc[Dial node].
+
+.Create Dial Node
+image::add-dial-node.png[width=300]
+
+Now is a good time to give this node a good name as it will be used later in the layout view.
+
+Select the new node and press btn:[Rename Node] (kbd:[Ctrl + R]) to give it a new name.
+
+.Rename Node
+image::rename-node.png[width=300]
+
+== 3. Create group control node
+
+Double click or right click to create a new xref:nodes:fixtures/group-control/index.adoc[Group Control node].
+
+.Create group control node
+image::add-group-control-node.png[width=300]
+
+Select the new node and in the properties pane, select the group you created in step 1.
+
+.Select Group
+image::assign-group-to-node.png[width=300]
+
+NOTE: Here you could also select other channels like shutter, pan or assign a rgb color.
+
+== 4. Connect the dial to the group control node
+
+Drag from the Output port of the dial node to the Value port of the group control node.
+
+== 5. Add dial to the layout view
+
+Open the btn:[Layout] view (kbd:[F1]).
+
+To add the dial right click on the layout view and select the dial node you created in step 2.
+
+.Add Dial to Layout
+image::add-dial-to-layout.png[width=300]
+
+The dial won't have a label after creation. To add a label right click the dial and select btn:[Rename] to assign a label.
+
+.Result
+image::named-dial.png[width=300]
+
+== 6. (Optional) Assign a midi fader to the dial
+
+If you have a midi controller connected to your computer you can assign the dial to a midi fader.
+
+Go back to the btn:[Nodes] view and create a new xref:nodes:connections/midi-input/index.adoc[Midi Input node].
+
+Select the new node and in the properties pane select the midi controller as well as the fader you want to assign.
+
+Assign the Output port of the Midi Input node to the Input port of the Dial node.
+
+If you now open the btn:[Layout] view again you should see the dial turn when you move the midi fader.

@@ -29,8 +29,8 @@ jobs:
           node-version: '20'
       - name: Install asciidoctor pdf
         run: |
-          apt update
-          apt install -y ruby-asciidoctor-pdf
+          sudo apt update
+          sudo apt install -y ruby-asciidoctor-pdf
       - name: Compile docs
         working-directory: docs
         run: |

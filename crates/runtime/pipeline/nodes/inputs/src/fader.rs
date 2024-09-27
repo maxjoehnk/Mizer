@@ -8,6 +8,7 @@ const OUTPUT_PORT: &str = "Output";
 
 const START_VALUE_SETTING: &str = "Start Value";
 const END_VALUE_SETTING: &str = "End Value";
+const DEFAULT_VALUE_SETTING: &str = "Default Value";
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct FaderNode {
@@ -15,6 +16,8 @@ pub struct FaderNode {
     pub start_value: f64,
     #[serde(default = "default_end_value")]
     pub end_value: f64,
+    #[serde(default)]
+    pub default_value: f64,
 }
 
 impl Default for FaderNode {
@@ -22,6 +25,7 @@ impl Default for FaderNode {
         Self {
             start_value: default_start_value(),
             end_value: default_end_value(),
+            default_value: Default::default(),
         }
     }
 }
@@ -37,6 +41,9 @@ fn default_end_value() -> f64 {
 impl ConfigurableNode for FaderNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
+            setting!(DEFAULT_VALUE_SETTING, self.default_value)
+                .min(0f64)
+                .max(1f64),
             setting!(START_VALUE_SETTING, self.start_value)
                 .min_hint(0f64)
                 .max_hint(1f64),
@@ -47,6 +54,7 @@ impl ConfigurableNode for FaderNode {
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(float setting, DEFAULT_VALUE_SETTING, self.default_value);
         update!(float setting, START_VALUE_SETTING, self.start_value);
         update!(float setting, END_VALUE_SETTING, self.end_value);
 
@@ -76,16 +84,16 @@ impl PipelineNode for FaderNode {
 }
 
 impl ProcessingNode for FaderNode {
-    type State = f64;
+    type State = Option<f64>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(value) = context.read_port_changes::<_, f64>(INPUT_PORT) {
-            *state = value;
+            *state = Some(value);
         }
-        let value = *state;
+        let value = self.value(state);
+        context.push_history_value(value);
         let value: f64 = value.linear_extrapolate((0., 1.), (self.start_value, self.end_value));
         context.write_port(OUTPUT_PORT, value);
-        context.push_history_value(value);
 
         Ok(())
     }
@@ -98,8 +106,14 @@ impl ProcessingNode for FaderNode {
         ui.collapsing_header("State", |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Value");
-                columns[1].label(state.to_string());
+                columns[1].label(self.value(state).to_string());
             });
         });
+    }
+}
+
+impl FaderNode {
+    pub fn value(&self, state: &<FaderNode as ProcessingNode>::State) -> f64 {
+        state.unwrap_or(self.default_value)
     }
 }

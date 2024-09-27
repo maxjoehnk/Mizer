@@ -138,7 +138,7 @@ impl CoordinatorRuntime {
             .filter_map(|path| {
                 pipeline
                     .get_node_with_state::<FaderNode>(path)
-                    .map(|(_node, state)| *state)
+                    .map(|(node, state)| node.value(state))
                     .map(|value| (path.clone(), value))
             })
             .collect::<HashMap<_, _>>();
@@ -150,7 +150,7 @@ impl CoordinatorRuntime {
             .filter_map(|path| {
                 pipeline
                     .get_node_with_state::<DialNode>(path)
-                    .map(|(_node, state)| *state)
+                    .map(|(node, state)| node.value(state))
                     .map(|value| (path.clone(), value))
             })
             .collect::<HashMap<_, _>>();

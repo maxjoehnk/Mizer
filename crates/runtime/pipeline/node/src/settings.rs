@@ -12,6 +12,7 @@ use mizer_util::Spline;
 pub struct NodeSetting {
     pub id: Cow<'static, str>,
     pub label: Option<Cow<'static, str>>,
+    pub category: Option<Cow<'static, str>>,
     pub description: String,
     pub disabled: bool,
     pub value: NodeSettingValue,
@@ -21,6 +22,12 @@ pub struct NodeSetting {
 impl NodeSetting {
     pub fn label(mut self, label: impl Into<Cow<'static, str>>) -> Self {
         self.label = Some(label.into());
+
+        self
+    }
+
+    pub fn category(mut self, category: impl Into<Cow<'static, str>>) -> Self {
+        self.category = Some(category.into());
 
         self
     }

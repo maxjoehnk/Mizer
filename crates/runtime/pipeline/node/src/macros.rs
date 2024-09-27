@@ -46,6 +46,7 @@ macro_rules! setting {
             id: $name.into(),
             value: $value.into(),
             label: Default::default(),
+            category: Default::default(),
             description: Default::default(),
             disabled: Default::default(),
             optional: Default::default(),

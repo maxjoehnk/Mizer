@@ -20,14 +20,18 @@ const TRANSLATION_Z_PORT: &str = "Translate Z";
 const SCALE_X_PORT: &str = "Scale X";
 const SCALE_Y_PORT: &str = "Scale Y";
 
-const ROTATION_X_SETTING: &str = "Rotate X";
-const ROTATION_Y_SETTING: &str = "Rotate Y";
-const ROTATION_Z_SETTING: &str = "Rotate Z";
-const TRANSLATION_X_SETTING: &str = "Translate X";
-const TRANSLATION_Y_SETTING: &str = "Translate Y";
-const TRANSLATION_Z_SETTING: &str = "Translate Z";
-const SCALE_X_SETTING: &str = "Scale X";
-const SCALE_Y_SETTING: &str = "Scale Y";
+const ROTATION_X_SETTING: &str = "rotate-x";
+const ROTATION_Y_SETTING: &str = "rotate-y";
+const ROTATION_Z_SETTING: &str = "rotate-z";
+const TRANSLATION_X_SETTING: &str = "translate-x";
+const TRANSLATION_Y_SETTING: &str = "translate-y";
+const TRANSLATION_Z_SETTING: &str = "translate-z";
+const SCALE_X_SETTING: &str = "scale-x";
+const SCALE_Y_SETTING: &str = "scale-y";
+
+const X_LABEL: &str = "X";
+const Y_LABEL: &str = "Y";
+const Z_LABEL: &str = "Z";
 
 #[rustfmt::skip]
 pub const OPENGL_TO_WGPU_MATRIX: Matrix4<f32> = Matrix4::new(
@@ -68,19 +72,39 @@ impl ConfigurableNode for VideoTransformNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![
             setting!(ROTATION_X_SETTING, self.rotation_x)
+                .category("Rotation")
+                .label(X_LABEL)
                 .min(-360.0)
                 .max(360.0),
             setting!(ROTATION_Y_SETTING, self.rotation_y)
+                .category("Rotation")
+                .label(Y_LABEL)
                 .min(-360.0)
                 .max(360.0),
             setting!(ROTATION_Z_SETTING, self.rotation_z)
+                .category("Rotation")
+                .label(Z_LABEL)
                 .min(-360.0)
                 .max(360.0),
-            setting!(TRANSLATION_X_SETTING, self.translation_x),
-            setting!(TRANSLATION_Y_SETTING, self.translation_y),
-            setting!(TRANSLATION_Z_SETTING, self.translation_z),
-            setting!(SCALE_X_SETTING, self.scale_x).min(0.).max_hint(1.),
-            setting!(SCALE_Y_SETTING, self.scale_y).min(0.).max_hint(1.),
+            setting!(TRANSLATION_X_SETTING, self.translation_x)
+                .category("Translation")
+                .label(X_LABEL),
+            setting!(TRANSLATION_Y_SETTING, self.translation_y)
+                .category("Translation")
+                .label(Y_LABEL),
+            setting!(TRANSLATION_Z_SETTING, self.translation_z)
+                .category("Translation")
+                .label(Z_LABEL),
+            setting!(SCALE_X_SETTING, self.scale_x)
+                .min(0.)
+                .max_hint(1.)
+                .category("Scale")
+                .label(X_LABEL),
+            setting!(SCALE_Y_SETTING, self.scale_y)
+                .min(0.)
+                .max_hint(1.)
+                .category("Scale")
+                .label(Y_LABEL),
         ]
     }
 

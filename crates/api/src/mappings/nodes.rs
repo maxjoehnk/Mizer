@@ -133,6 +133,7 @@ impl From<mizer_node::NodeSetting> for NodeSetting {
         Self {
             id: setting.id.into(),
             label: setting.label.map(|label| label.into()),
+            category: setting.category.map(|category| category.into()),
             description: setting.description,
             disabled: setting.disabled,
             value: Some(setting.value.into()),
@@ -145,6 +146,7 @@ impl From<NodeSetting> for mizer_node::NodeSetting {
         Self {
             id: setting.id.into(),
             label: setting.label.map(|label| label.into()),
+            category: None,
             description: setting.description,
             disabled: setting.disabled,
             value: setting.value.unwrap().into(),

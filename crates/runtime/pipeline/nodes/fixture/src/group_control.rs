@@ -91,12 +91,15 @@ impl ConfigurableNode for GroupControlNode {
             setting!(enum PRIORITY_SETTING, self.priority),
             setting!(SEND_ZERO_SETTING, self.send_zero),
             setting!(PHASE_SETTING, self.phase)
+                .category("Spread")
                 .min_hint(-100i64)
                 .max_hint(100i64),
             setting!(FAN_SETTING, self.fan)
+                .category("Spread")
                 .min_hint(-100f64)
                 .max_hint(100f64),
-            setting!(ASYMMETRICAL_SETTING, self.asymmetrical),
+            setting!(ASYMMETRICAL_SETTING, self.asymmetrical)
+                .category("Spread"),
         ]
     }
 

@@ -1,4 +1,6 @@
-import 'package:flutter/widgets.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
@@ -44,166 +46,177 @@ class NodeSettingsPane extends StatelessWidget {
   }
 
   Iterable<Widget> getSettings(BuildContext context) {
-    return settings.map((setting) {
-      String label = setting.hasLabel() ? setting.label : setting.id;
-      Widget child = Container();
-      if (setting.hasTextValue()) {
-        child = TextPropertyField(
-            label: label,
-            value: setting.textValue.value,
-            multiline: setting.textValue.multiline,
-            onUpdate: (v) {
-              var updated = setting.deepCopy();
-              updated.textValue.value = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasFloatValue()) {
-        child = NumberField(
-          node: nodePath,
+    return settings
+        .groupListsBy((setting) => setting.hasCategory() ? setting.category : "")
+        .mapToList((category, settings) {
+          return [
+            if (category.isNotEmpty) Text(category, style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white.withOpacity(0.9))),
+            ...settings.map((setting) => getSetting(setting)),
+          ];
+        })
+        .flattened
+        .toList();
+  }
+  
+  Widget getSetting(NodeSetting setting) {
+    String label = setting.hasLabel() ? setting.label : setting.id;
+    Widget child = Container();
+    if (setting.hasTextValue()) {
+      child = TextPropertyField(
           label: label,
-          value: setting.floatValue.value,
-          fractions: true,
-          step: setting.floatValue.hasStepSize() ? setting.floatValue.stepSize : null,
-          min: setting.floatValue.hasMin() ? setting.floatValue.min : null,
-          minHint: setting.floatValue.hasMinHint() ? setting.floatValue.minHint : null,
-          max: setting.floatValue.hasMax() ? setting.floatValue.max : null,
-          maxHint: setting.floatValue.hasMaxHint() ? setting.floatValue.maxHint : null,
+          value: setting.textValue.value,
+          multiline: setting.textValue.multiline,
           onUpdate: (v) {
             var updated = setting.deepCopy();
-            updated.floatValue.value = v.toDouble();
+            updated.textValue.value = v;
             onUpdate(updated);
-          },
-        );
-      }
-      if (setting.hasIntValue()) {
-        child = NumberField(
-          node: nodePath,
-          label: label,
-          value: setting.intValue.value,
-          fractions: false,
-          step: setting.intValue.hasStepSize() ? setting.intValue.stepSize : null,
-          min: setting.intValue.hasMin() ? setting.intValue.min : null,
-          minHint: setting.intValue.hasMinHint() ? setting.intValue.minHint : null,
-          max: setting.intValue.hasMax() ? setting.intValue.max : null,
-          maxHint: setting.intValue.hasMaxHint() ? setting.intValue.maxHint : null,
-          onUpdate: (v) {
-            var updated = setting.deepCopy();
-            updated.intValue.value = v.toInt();
-            onUpdate(updated);
-          },
-        );
-      }
-      if (setting.hasUintValue()) {
-        child = NumberField(
-          node: nodePath,
-          label: label,
-          value: setting.uintValue.value,
-          fractions: false,
-          step: setting.uintValue.hasStepSize() ? setting.uintValue.stepSize : null,
-          min: setting.uintValue.hasMin() ? setting.uintValue.min : null,
-          minHint: setting.uintValue.hasMinHint() ? setting.uintValue.minHint : null,
-          max: setting.uintValue.hasMax() ? setting.uintValue.max : null,
-          maxHint: setting.uintValue.hasMaxHint() ? setting.uintValue.maxHint : null,
-          onUpdate: (v) {
-            var updated = setting.deepCopy();
-            updated.uintValue.value = v.toInt();
-            onUpdate(updated);
-          },
-        );
-      }
-      if (setting.hasBoolValue()) {
-        child = BooleanField(
-            label: label,
-            value: setting.boolValue.value,
-            onUpdate: (v) {
-              var updated = setting.deepCopy();
-              updated.boolValue.value = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasSelectValue()) {
-        child = EnumField(
-            disabled: setting.disabled,
-            label: label,
-            initialValue: setting.selectValue.value,
-            items: setting.selectValue.variants.map(mapVariant).toList(),
-            onUpdate: (String v) {
-              var updated = setting.deepCopy();
-              updated.selectValue.value = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasEnumValue()) {
-        child = EnumField(
-            disabled: setting.disabled,
-            label: label,
-            initialValue: setting.enumValue.value,
-            items: setting.enumValue.variants
-                .map((variant) => SelectOption(value: variant.value, label: variant.label))
-                .toList(),
-            onUpdate: (int v) {
-              var updated = setting.deepCopy();
-              updated.enumValue.value = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasIdValue()) {
-        child = EnumField(
-            disabled: setting.disabled,
-            label: label,
-            initialValue: setting.idValue.value,
-            items: setting.idValue.variants
-                .map((variant) => SelectOption(value: variant.value, label: variant.label))
-                .toList(),
-            onUpdate: (int v) {
-              var updated = setting.deepCopy();
-              updated.idValue.value = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasSplineValue()) {
-        child = SplineField(
-            value: setting.splineValue,
-            onUpdate: (v) {
-              var updated = setting.deepCopy();
-              updated.splineValue = v;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasMediaValue()) {
-        child = MediaField(
-            value: setting.mediaValue,
-            label: label,
-            onUpdate: (v) {
-              var updated = setting.deepCopy();
-              updated.mediaValue.value = v.value;
-              onUpdate(updated);
-            });
-      }
-      if (setting.hasStepSequencerValue()) {
-        child = StepSequencerField(
-            value: setting.stepSequencerValue,
-            onUpdate: (v) {
-              var updated = setting.deepCopy();
-              updated.stepSequencerValue = v;
-              onUpdate(updated);
-            });
-      }
-
-      return MouseRegion(
-        onEnter: (event) => onHover(setting),
-        onExit: (event) => onHover(null),
-        child: child,
+          });
+    }
+    if (setting.hasFloatValue()) {
+      child = NumberField(
+        node: nodePath,
+        label: label,
+        value: setting.floatValue.value,
+        fractions: true,
+        step: setting.floatValue.hasStepSize() ? setting.floatValue.stepSize : null,
+        min: setting.floatValue.hasMin() ? setting.floatValue.min : null,
+        minHint: setting.floatValue.hasMinHint() ? setting.floatValue.minHint : null,
+        max: setting.floatValue.hasMax() ? setting.floatValue.max : null,
+        maxHint: setting.floatValue.hasMaxHint() ? setting.floatValue.maxHint : null,
+        onUpdate: (v) {
+          var updated = setting.deepCopy();
+          updated.floatValue.value = v.toDouble();
+          onUpdate(updated);
+        },
       );
-    });
+    }
+    if (setting.hasIntValue()) {
+      child = NumberField(
+        node: nodePath,
+        label: label,
+        value: setting.intValue.value,
+        fractions: false,
+        step: setting.intValue.hasStepSize() ? setting.intValue.stepSize : null,
+        min: setting.intValue.hasMin() ? setting.intValue.min : null,
+        minHint: setting.intValue.hasMinHint() ? setting.intValue.minHint : null,
+        max: setting.intValue.hasMax() ? setting.intValue.max : null,
+        maxHint: setting.intValue.hasMaxHint() ? setting.intValue.maxHint : null,
+        onUpdate: (v) {
+          var updated = setting.deepCopy();
+          updated.intValue.value = v.toInt();
+          onUpdate(updated);
+        },
+      );
+    }
+    if (setting.hasUintValue()) {
+      child = NumberField(
+        node: nodePath,
+        label: label,
+        value: setting.uintValue.value,
+        fractions: false,
+        step: setting.uintValue.hasStepSize() ? setting.uintValue.stepSize : null,
+        min: setting.uintValue.hasMin() ? setting.uintValue.min : null,
+        minHint: setting.uintValue.hasMinHint() ? setting.uintValue.minHint : null,
+        max: setting.uintValue.hasMax() ? setting.uintValue.max : null,
+        maxHint: setting.uintValue.hasMaxHint() ? setting.uintValue.maxHint : null,
+        onUpdate: (v) {
+          var updated = setting.deepCopy();
+          updated.uintValue.value = v.toInt();
+          onUpdate(updated);
+        },
+      );
+    }
+    if (setting.hasBoolValue()) {
+      child = BooleanField(
+          label: label,
+          value: setting.boolValue.value,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.boolValue.value = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasSelectValue()) {
+      child = EnumField(
+          disabled: setting.disabled,
+          label: label,
+          initialValue: setting.selectValue.value,
+          items: setting.selectValue.variants.map(mapVariant).toList(),
+          onUpdate: (String v) {
+            var updated = setting.deepCopy();
+            updated.selectValue.value = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasEnumValue()) {
+      child = EnumField(
+          disabled: setting.disabled,
+          label: label,
+          initialValue: setting.enumValue.value,
+          items: setting.enumValue.variants
+              .map((variant) => SelectOption(value: variant.value, label: variant.label))
+              .toList(),
+          onUpdate: (int v) {
+            var updated = setting.deepCopy();
+            updated.enumValue.value = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasIdValue()) {
+      child = EnumField(
+          disabled: setting.disabled,
+          label: label,
+          initialValue: setting.idValue.value,
+          items: setting.idValue.variants
+              .map((variant) => SelectOption(value: variant.value, label: variant.label))
+              .toList(),
+          onUpdate: (int v) {
+            var updated = setting.deepCopy();
+            updated.idValue.value = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasSplineValue()) {
+      child = SplineField(
+          value: setting.splineValue,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.splineValue = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasMediaValue()) {
+      child = MediaField(
+          value: setting.mediaValue,
+          label: label,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.mediaValue.value = v.value;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasStepSequencerValue()) {
+      child = StepSequencerField(
+          value: setting.stepSequencerValue,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.stepSequencerValue = v;
+            onUpdate(updated);
+          });
+    }
+
+    return MouseRegion(
+      onEnter: (event) => onHover(setting),
+      onExit: (event) => onHover(null),
+      child: child,
+    );
   }
 }
 
 SelectItem<String> mapVariant(NodeSetting_SelectVariant variant) {
   if (variant.hasGroup()) {
-    return SelectGroup<String>(variant.group.label,
-        variant.group.items.map((v) => mapVariant(v)).toList());
+    return SelectGroup<String>(
+        variant.group.label, variant.group.items.map((v) => mapVariant(v)).toList());
   }
   return SelectOption<String>(value: variant.item.value, label: variant.item.label);
 }

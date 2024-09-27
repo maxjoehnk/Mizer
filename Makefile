@@ -26,7 +26,7 @@ build-release:
 	cargo build --no-default-features --features ui --features build-ffmpeg --release -p mizer
 
 run: build
-	target/debug/mizer
+	cargo run -p mizer
 
 clean:
 	rm -rf artifact

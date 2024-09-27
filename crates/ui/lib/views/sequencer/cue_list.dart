@@ -110,6 +110,6 @@ class CueList extends StatelessWidget {
   }
 
   Widget _twoLineHeader(String line1, String line2) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [Text(line1), Text(line2)]);
+    return Center(child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: [Text(line1), Text(line2)]));
   }
 }

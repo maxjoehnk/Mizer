@@ -423,6 +423,6 @@ mod tests {
         let state = pipeline
             .read_state::<<FaderNode as ProcessingNode>::State>(&node.path)
             .unwrap();
-        assert_eq!(state, &Some(0f64));
+        assert_eq!(state, &None);
     }
 }

@@ -225,20 +225,17 @@ jobs:
         run: choco install protoc make wget yasm ffmpeg yq imagemagick pkgconfiglite
         shell: bash
       - name: Cache vcpkg
-        id: cache
+        id: vcpkg-cache
         uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/vcpkg
           key: vcpkg-${{ runner.os }}-x64-windows-static-md
-      - name: Build vcpkg
-        if: steps.cache.outputs.cache-hit != 'true'
+      - name: Setup ffmpeg via vcpkg
+        if: steps.vcpkg-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/microsoft/vcpkg --depth 1
           ./vcpkg/bootstrap-vcpkg.bat
-          echo "VCPKG_ROOT=${{ github.workspace }}/vcpkg" >> "$GITHUB_ENV"
-      - name: Install ffmpeg
-        run: |
           ./vcpkg/vcpkg install ffmpeg:x64-windows
       - uses: actions/checkout@v4
         with:

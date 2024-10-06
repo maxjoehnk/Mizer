@@ -133,27 +133,27 @@ fn main() -> anyhow::Result<()> {
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.copy("mizer.exe")?;
-    artifact.link("data")?;
-    artifact.link("lib")?;
-    artifact.link_to("libmizer_ui_ffi.dll", "lib/libmizer_ui_ffi.dll")?;
-    artifact.link_source(
+    artifact.copy("data")?;
+    artifact.copy("lib")?;
+    artifact.copy_to("libmizer_ui_ffi.dll", "lib/libmizer_ui_ffi.dll")?;
+    artifact.copy_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/fixtures/qlcplus/.fixtures",
         "fixtures/qlcplus",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/fixtures/mizer-definitions/.fixtures",
         "fixtures/mizer",
     )?;
-    artifact.link_source(
+    artifact.copy_source(
         "crates/components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
     )?;
     artifact.copy_settings("settings.toml", |settings| {
-        settings.paths.media_storage = PathBuf::from("~/.mizer-media");
+        settings.paths.media_storage = PathBuf::from("~\\.mizer-media");
         settings.paths.midi_device_profiles = vec![
             PathBuf::from("device-profiles\\midi"),
             PathBuf::from("~\\Documents\\Mizer\\Midi Device Profiles"),

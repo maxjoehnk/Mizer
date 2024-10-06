@@ -10,4 +10,9 @@ cd ../..
 cargo build --no-default-features --features ui --release -p mizer
 
 Write-Output "Packaging Application..."
-make mizer.zip
+# Create artifact
+Remove-Item -Recurse -Force artifact
+cargo run -p mizer-package
+# Bundle as Zip
+cd artifact
+7z a -tzip ../mizer.zip *

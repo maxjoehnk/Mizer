@@ -10,6 +10,7 @@ bench = false
 
 [package]
 name = "mizer"
+description = "A node based visualization tool for live scenarios (e.g. concerts and clubs)."
 version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
@@ -98,3 +99,11 @@ harness = false
 [target.'cfg(target_os = "macos")'.dependencies]
 tracing-oslog = { version = "0.1", optional = true }
 coremidi-hotplug-notification = "0.1"
+
+[target.'cfg(target_os = "windows")'.build-dependencies]
+winresource = "0.1"
+winapi = "0.3"
+ico = "0.3"
+
+[package.metadata.winresource]
+ProductName = "Mizer"

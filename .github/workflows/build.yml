@@ -235,13 +235,8 @@ jobs:
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
-      - name: Build UI
-        working-directory: crates/ui
-        run: make release
-      - name: Build
-        run: cargo build --no-default-features --features ui --release -p mizer
-      - name: Package
-        run: make mizer.zip
+      - name: Build && Package
+        run: scripts/build_windows.ps1
       - uses: actions/upload-artifact@v4
         with:
           name: windows-full

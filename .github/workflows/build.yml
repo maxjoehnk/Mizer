@@ -224,10 +224,22 @@ jobs:
       - name: Install build dependencies
         run: choco install protoc make wget yasm ffmpeg yq
         shell: bash
-      - name: Setup vcpkg
-        uses: lukka/run-vcpkg@v11
+      - name: Cache vcpkg
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+          key: vcpkg-${{ runner.os }}-x64-windows-static-md
+      - name: Build vcpkg
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg --depth 1
+          ./vcpkg/bootstrap-vcpkg.bat
+          echo "VCPKG_ROOT=${{ github.workspace }}/vcpkg" >> "$GITHUB_ENV"
       - name: Install ffmpeg
-        run: vcpkg install ffmpeg:x64-windows
+        run: |
+          ./vcpkg/vcpkg install ffmpeg:x64-windows
       - uses: actions/checkout@v4
         with:
           submodules: recursive

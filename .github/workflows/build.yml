@@ -222,7 +222,7 @@ jobs:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget yasm ffmpeg yq imagemagick
+        run: choco install protoc make wget yasm ffmpeg yq imagemagick pkgconfiglite
         shell: bash
       - name: Cache vcpkg
         id: cache
@@ -247,7 +247,7 @@ jobs:
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
-      - name: Build && Package
+      - name: Build
         run: scripts/build_windows.ps1
       - uses: actions/upload-artifact@v4
         with:

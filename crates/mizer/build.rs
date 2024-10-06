@@ -22,7 +22,7 @@ fn convert_icon() {
     let png_image = ico::IconImage::read_png(png_icon).unwrap();
 
     let mut icon = ico::IconDir::new(ico::ResourceType::Icon);
-    icon.add_entry(ico::IconDirEntry::encode(&image).unwrap());
+    icon.add_entry(ico::IconDirEntry::encode(&png_image).unwrap());
 
     let ico_file = std::fs::File::create("icon.ico").unwrap();
     icon.write(ico_file).unwrap();

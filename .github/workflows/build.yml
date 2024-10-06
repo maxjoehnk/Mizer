@@ -222,7 +222,7 @@ jobs:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget yasm ffmpeg yq
+        run: choco install protoc make wget yasm ffmpeg yq imagemagick
         shell: bash
       - name: Cache vcpkg
         id: cache

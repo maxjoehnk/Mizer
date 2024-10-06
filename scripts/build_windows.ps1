@@ -12,6 +12,10 @@ function Invoke-Utility {
 
 Set-Alias iu Invoke-Utility
 
+## Prepare
+# Convert icon
+convert -define icon:auto-resize=256,128,64,48,32,16 "assets/icon.png" "crates/mizer/icon.ico"
+
 ## Build
 # FFI/UI
 Write-Output "Building FFI..."

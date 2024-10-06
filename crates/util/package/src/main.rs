@@ -134,8 +134,11 @@ fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.copy("mizer.exe")?;
     artifact.copy("data")?;
-    artifact.copy("lib")?;
-    artifact.copy_to("libmizer_ui_ffi.dll", "lib/libmizer_ui_ffi.dll")?;
+    artifact.copy_all_with_suffix_to(".dll", "")?;
+    artifact.copy_to("deps/Processing.NDI.Lib.x64.dll", "Processing.NDI.Lib.x64.dll")?;
+    let ffmpeg_path = format!("{}\\installed\\x64-windows\\bin", env!("VCPKG_ROOT"));
+    artifact.copy_all_with_suffix_from_to(&ffmpeg_path, ".dll", "")?;
+    
     artifact.copy_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",
@@ -288,10 +291,19 @@ impl Artifact {
         suffix: &str,
         target: P,
     ) -> anyhow::Result<()> {
-        let files = self.get_files_with_suffix(suffix)?;
+        self.copy_all_with_suffix_from_to(&self.build_dir, suffix, target)
+    }
+
+    fn copy_all_with_suffix_from_to<P: AsRef<Path>, Q: AsRef<Path>>(
+        &self,
+        source: P,
+        suffix: &str,
+        target: Q,
+    ) -> anyhow::Result<()> {
+        let files = self.get_files_with_suffix(source, suffix)?;
 
         for file in files {
-            self.copy_to(file.path(), target.as_ref().join(&file.file_name()))?;
+            self.copy_to(file.path(), target.as_ref().join(file.file_name()))?;
         }
 
         Ok(())
@@ -330,7 +342,7 @@ impl Artifact {
         suffix: &str,
         target: P,
     ) -> anyhow::Result<()> {
-        let files = self.get_files_with_suffix(suffix)?;
+        let files = self.get_files_with_suffix(&self.build_dir, suffix)?;
 
         for file in files {
             self.link_to(file.path(), target.as_ref().join(&file.file_name()))?;
@@ -339,8 +351,8 @@ impl Artifact {
         Ok(())
     }
 
-    fn get_files_with_suffix(&self, suffix: &str) -> anyhow::Result<Vec<DirEntry>> {
-        let files = fs::read_dir(&self.build_dir)?;
+    fn get_files_with_suffix<P: AsRef<Path>>(&self, source: P, suffix: &str) -> anyhow::Result<Vec<DirEntry>> {
+        let files = fs::read_dir(source)?;
         let files = files
             .into_iter()
             .map(|file| {

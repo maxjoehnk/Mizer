@@ -224,6 +224,10 @@ jobs:
       - name: Install build dependencies
         run: choco install protoc make wget yasm ffmpeg yq
         shell: bash
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+      - name: Install ffmpeg
+        run: vcpkg install ffmpeg:x64-windows
       - uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -231,12 +235,13 @@ jobs:
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
+      - name: Build UI
+        working-directory: crates/ui
+        run: make release
       - name: Build
-        run: make build-release
-        continue-on-error: true
+        run: cargo build --no-default-features --features ui --release -p mizer
       - name: Package
         run: make mizer.zip
-        continue-on-error: true
       - uses: actions/upload-artifact@v4
         with:
           name: windows-full

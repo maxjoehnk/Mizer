@@ -3,3 +3,6 @@ rustflags = ["-C", "target-cpu=native", "-C" , "link-arg=-Wl,-rpath,@executable_
 
 [target.'cfg(target_os = "linux")']
 rustflags = ["-Clink-arg=-fuse-ld=lld", "-C", "target-feature=+avx2,+sse4.2", "-C", "link-arg=-Wl,-rpath,$ORIGIN/lib"]
+
+[target.'cfg(target_os = "windows")']
+rustflags = ["-C", "target-feature=+avx2,+sse4.2"]

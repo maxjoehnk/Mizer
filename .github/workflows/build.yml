@@ -246,7 +246,7 @@ jobs:
           flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Build
         env:
-          VCPKG_ROOT: ${{ github.workspace }}\\vcpkg
+          VCPKG_ROOT: ${{ github.workspace }}\vcpkg
         run: scripts/build_windows.ps1
       - uses: actions/upload-artifact@v4
         with:

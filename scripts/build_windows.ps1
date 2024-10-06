@@ -16,3 +16,4 @@ cargo run -p mizer-package
 # Bundle as Zip
 cd artifact
 7z a -tzip ../mizer.zip *
+cd ..

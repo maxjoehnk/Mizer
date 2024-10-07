@@ -10,6 +10,8 @@ name: Build
 jobs:
   build-linux:
     runs-on: ubuntu-22.04
+    env:
+      SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install native dependencies
         run: |
@@ -176,6 +178,8 @@ jobs:
 
   build-macos:
     runs-on: macos-14
+    env:
+      SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
         run: brew install protobuf ffmpeg pkg-config yasm cbindgen create-dmg
@@ -214,6 +218,8 @@ jobs:
 
   build-windows:
     runs-on: windows-latest
+    env:
+      SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
         run: choco install protoc make wget yasm ffmpeg yq
@@ -238,6 +244,8 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
+    env:
+      SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Docker meta

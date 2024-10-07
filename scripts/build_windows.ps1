@@ -20,11 +20,11 @@ iu magick -define "icon:auto-resize=256,128,64,48,32,16" "assets/logo@512.png" "
 # FFI/UI
 Write-Output "Building FFI..."
 try {
-    cd crates/ui
+    Set-Location crates/ui
     iu make generate_bindings
     iu cargo build --release -p mizer-ui-ffi
 }finally {
-    cd ../..
+    Set-Location ../..
 }
 
 # Build app
@@ -45,8 +45,8 @@ iu cargo run -p mizer-package
 
 # Bundle as Zip
 try {
-    cd artifact
+    Set-Location artifact
     iu 7z a -tzip ../mizer.zip *
 }finally {
-    cd ..
+    Set-Location ..
 }

@@ -106,5 +106,5 @@ winapi = "0.3"
 
 [package.metadata.winresource]
 ProductName = "Mizer"
-ProductDescription = "Mizer"
+FileDescription = "Mizer"
 OriginalFilename = "mizer.exe"

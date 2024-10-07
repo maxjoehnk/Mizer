@@ -135,10 +135,13 @@ fn main() -> anyhow::Result<()> {
     artifact.copy("mizer.exe")?;
     artifact.copy("data")?;
     artifact.copy_all_with_suffix_to(".dll", "")?;
-    artifact.copy_to("deps/Processing.NDI.Lib.x64.dll", "Processing.NDI.Lib.x64.dll")?;
+    artifact.copy_to(
+        "deps/Processing.NDI.Lib.x64.dll",
+        "Processing.NDI.Lib.x64.dll",
+    )?;
     let ffmpeg_path = format!("{}\\installed\\x64-windows\\bin", env!("VCPKG_ROOT"));
     artifact.copy_all_with_suffix_from_to(&ffmpeg_path, ".dll", "")?;
-    
+
     artifact.copy_source(
         "crates/components/fixtures/open-fixture-library/.fixtures",
         "fixtures/open-fixture-library",
@@ -351,7 +354,11 @@ impl Artifact {
         Ok(())
     }
 
-    fn get_files_with_suffix<P: AsRef<Path>>(&self, source: P, suffix: &str) -> anyhow::Result<Vec<DirEntry>> {
+    fn get_files_with_suffix<P: AsRef<Path>>(
+        &self,
+        source: P,
+        suffix: &str,
+    ) -> anyhow::Result<Vec<DirEntry>> {
         let files = fs::read_dir(source)?;
         let files = files
             .into_iter()
@@ -397,13 +404,13 @@ fn link(from: &Path, to: &Path) -> anyhow::Result<()> {
     if fs::symlink_metadata(to).is_ok() {
         fs::remove_file(to)?;
     }
-    
+
     #[cfg(target_family = "unix")]
     {
         println!("Linking from {:?} to {:?}", from, to);
         std::os::unix::fs::symlink(from, to)?;
     }
-    
+
     Ok(())
 }
 

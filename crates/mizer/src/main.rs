@@ -22,8 +22,8 @@ fn main() -> anyhow::Result<()> {
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
     mizer_ui::init()?;
-    let _guard = setup_sentry();
     let (flags, _logging_guard) = init()?;
+    let _guard = setup_sentry();
     let headless = flags.headless;
 
     if headless {

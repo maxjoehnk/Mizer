@@ -129,6 +129,67 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+#[cfg(target_os = "windows")]
+fn main() -> anyhow::Result<()> {
+    let artifact = Artifact::new()?;
+    artifact.copy("mizer.exe")?;
+    artifact.copy("data")?;
+    artifact.copy_all_with_suffix_to(".dll", "")?;
+    artifact.copy_to(
+        "deps/Processing.NDI.Lib.x64.dll",
+        "Processing.NDI.Lib.x64.dll",
+    )?;
+    let ffmpeg_path = format!("{}\\installed\\x64-windows\\bin", env!("VCPKG_ROOT"));
+    artifact.copy_all_with_suffix_from_to(&ffmpeg_path, ".dll", "")?;
+
+    artifact.copy_source(
+        "crates/components/fixtures/open-fixture-library/.fixtures",
+        "fixtures/open-fixture-library",
+    )?;
+    artifact.copy_source(
+        "crates/components/fixtures/qlcplus/.fixtures",
+        "fixtures/qlcplus",
+    )?;
+    artifact.copy_source(
+        "crates/components/fixtures/mizer-definitions/.fixtures",
+        "fixtures/mizer",
+    )?;
+    artifact.copy_source(
+        "crates/components/connections/protocols/midi/device-profiles/profiles",
+        "device-profiles/midi",
+    )?;
+    artifact.copy_settings("settings.toml", |settings| {
+        settings.paths.media_storage = PathBuf::from("~\\.mizer-media");
+        settings.paths.midi_device_profiles = vec![
+            PathBuf::from("device-profiles\\midi"),
+            PathBuf::from("~\\Documents\\Mizer\\Midi Device Profiles"),
+        ]
+        .into();
+        settings.paths.fixture_libraries.open_fixture_library = vec![
+            PathBuf::from("fixtures\\open-fixture-library"),
+            PathBuf::from("~\\Documents\\Mizer\\Fixture Definitions\\Open Fixture Library"),
+        ]
+        .into();
+        settings.paths.fixture_libraries.qlcplus = vec![
+            PathBuf::from("fixtures\\qlcplus"),
+            PathBuf::from("~\\Documents\\Mizer\\Fixture Definitions\\QLC+"),
+        ]
+        .into();
+        settings.paths.fixture_libraries.gdtf = vec![
+            PathBuf::from("fixtures\\gdtf"),
+            PathBuf::from("~\\Documents\\Mizer\\Fixture Definitions\\GDTF"),
+        ]
+        .into();
+        settings.paths.fixture_libraries.mizer = vec![
+            PathBuf::from("fixtures\\mizer"),
+            PathBuf::from("~\\Documents\\Mizer\\Fixture Definitions\\Mizer"),
+        ]
+        .into();
+    })?;
+
+    Ok(())
+}
+
 #[cfg(target_os = "macos")]
 fn generate_icns(source_dir: &Path, artifact_dir: &Path) -> anyhow::Result<()> {
     use icns::*;
@@ -233,10 +294,19 @@ impl Artifact {
         suffix: &str,
         target: P,
     ) -> anyhow::Result<()> {
-        let files = self.get_files_with_suffix(suffix)?;
+        self.copy_all_with_suffix_from_to(&self.build_dir, suffix, target)
+    }
+
+    fn copy_all_with_suffix_from_to<P: AsRef<Path>, Q: AsRef<Path>>(
+        &self,
+        source: P,
+        suffix: &str,
+        target: Q,
+    ) -> anyhow::Result<()> {
+        let files = self.get_files_with_suffix(source, suffix)?;
 
         for file in files {
-            self.copy_to(file.path(), target.as_ref().join(&file.file_name()))?;
+            self.copy_to(file.path(), target.as_ref().join(file.file_name()))?;
         }
 
         Ok(())
@@ -275,7 +345,7 @@ impl Artifact {
         suffix: &str,
         target: P,
     ) -> anyhow::Result<()> {
-        let files = self.get_files_with_suffix(suffix)?;
+        let files = self.get_files_with_suffix(&self.build_dir, suffix)?;
 
         for file in files {
             self.link_to(file.path(), target.as_ref().join(&file.file_name()))?;
@@ -284,8 +354,12 @@ impl Artifact {
         Ok(())
     }
 
-    fn get_files_with_suffix(&self, suffix: &str) -> anyhow::Result<Vec<DirEntry>> {
-        let files = fs::read_dir(&self.build_dir)?;
+    fn get_files_with_suffix<P: AsRef<Path>>(
+        &self,
+        source: P,
+        suffix: &str,
+    ) -> anyhow::Result<Vec<DirEntry>> {
+        let files = fs::read_dir(source)?;
         let files = files
             .into_iter()
             .map(|file| {
@@ -330,13 +404,13 @@ fn link(from: &Path, to: &Path) -> anyhow::Result<()> {
     if fs::symlink_metadata(to).is_ok() {
         fs::remove_file(to)?;
     }
-    
+
     #[cfg(target_family = "unix")]
     {
         println!("Linking from {:?} to {:?}", from, to);
         std::os::unix::fs::symlink(from, to)?;
     }
-    
+
     Ok(())
 }
 

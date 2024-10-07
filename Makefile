@@ -33,7 +33,7 @@ clean:
 	rm -f mizer.zip
 	rm -f mizer.flatpak
 
-artifact: build-release
+artifact:
 	rm -rf artifact || true
 	cargo run -p mizer-package
 

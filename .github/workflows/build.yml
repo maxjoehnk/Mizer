@@ -220,23 +220,35 @@ jobs:
     runs-on: windows-latest
     env:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
+      VCPKG_DISABLE_METRICS: "true"
     steps:
       - name: Install build dependencies
-        run: choco install protoc make wget yasm ffmpeg yq
+        run: choco install protoc make wget yasm ffmpeg yq imagemagick
         shell: bash
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Cache vcpkg
+        id: vcpkg-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/vcpkg
+          key: vcpkg-${{ runner.os }}-x64-windows-static-md
+      - name: Setup ffmpeg via vcpkg
+        if: steps.vcpkg-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/microsoft/vcpkg --depth 1
+          ./vcpkg/bootstrap-vcpkg.bat
+          ./vcpkg/vcpkg install ffmpeg:x64-windows
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
       - name: Build
-        run: make build-release
-        continue-on-error: true
-      - name: Package
-        run: make mizer.zip
-        continue-on-error: true
+        env:
+          VCPKG_ROOT: ${{ github.workspace }}\vcpkg
+        run: scripts/build_windows.ps1
       - uses: actions/upload-artifact@v4
         with:
           name: windows-full

@@ -35,6 +35,7 @@ fn main() -> anyhow::Result<()> {
 
 fn setup_sentry() -> Option<sentry::ClientInitGuard> {
     let sentry_key = option_env!("SENTRY_KEY")?;
+    tracing::info!("Initializing sentry");
     let guard = sentry::init((
         sentry_key,
         sentry::ClientOptions {

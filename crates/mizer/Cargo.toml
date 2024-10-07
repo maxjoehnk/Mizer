@@ -81,7 +81,7 @@ flume = "0.11"
 profiling = "1.0"
 rayon = "1.10"
 serde = { version = "1", features = ["rc"] }
-sentry = { version = "0.34", features = ["anyhow", "tracing", "debug-images"] }
+sentry = { version = "0.34", features = ["anyhow", "tracing", "debug-images", "log"] }
 sentry-tracing = "0.34"
 spin_sleep = "1.2"
 ffmpeg-the-third = { version = "2.0" }

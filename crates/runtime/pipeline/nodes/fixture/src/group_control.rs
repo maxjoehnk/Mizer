@@ -98,8 +98,7 @@ impl ConfigurableNode for GroupControlNode {
                 .category("Spread")
                 .min_hint(-100f64)
                 .max_hint(100f64),
-            setting!(ASYMMETRICAL_SETTING, self.asymmetrical)
-                .category("Spread"),
+            setting!(ASYMMETRICAL_SETTING, self.asymmetrical).category("Spread"),
         ]
     }
 

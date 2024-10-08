@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
-derive_more = "1.0"
+derive_more = { version = "1.0", features = ["from"] }
 mizer-node = { path = "../../node" }
 mizer-util = { path = "../../../../util" }
 mizer-media = { path = "../../../../components/media" }

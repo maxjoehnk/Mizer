@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 dashmap = "6"
-derive_more = "1.0"
+derive_more = { version = "1.0", features = ["from"] }
 mizer-protocol-citp = { path = "./protocols/citp" }
 mizer-protocol-dmx = { path = "./protocols/dmx" }
 mizer-protocol-midi = { path = "./protocols/midi" }

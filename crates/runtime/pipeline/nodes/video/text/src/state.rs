@@ -158,6 +158,7 @@ impl TextTextureState {
                 scale: 1.0,
                 bounds: TextBounds::default(),
                 default_color: glyphon::Color::rgb(0, 0, 0),
+                custom_glyphs: &[],
             }],
             &mut self.swash_cache,
         )?;

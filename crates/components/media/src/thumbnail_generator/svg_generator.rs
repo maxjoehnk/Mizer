@@ -1,6 +1,6 @@
 use std::io::{Read, Write};
 use std::path::Path;
-
+use std::sync::Arc;
 use resvg::tiny_skia::{self, Pixmap};
 use resvg::usvg::{self, Options};
 
@@ -9,7 +9,7 @@ use crate::documents::{MediaDocument, MediaType};
 
 #[derive(Clone)]
 pub struct SvgGenerator {
-    fontdb: fontdb::Database,
+    fontdb: Arc<fontdb::Database>,
 }
 
 impl SvgGenerator {
@@ -17,6 +17,7 @@ impl SvgGenerator {
     pub fn new() -> Self {
         let mut fontdb = fontdb::Database::new();
         fontdb.load_system_fonts();
+        let fontdb = Arc::new(fontdb);
 
         Self { fontdb }
     }
@@ -47,7 +48,10 @@ impl SvgGenerator {
         let mut file = std::fs::File::open(path)?;
         let mut buffer = Vec::new();
         file.read_to_end(&mut buffer)?;
-        let tree = usvg::Tree::from_data(&buffer, &Options::default(), &self.fontdb)?;
+        let tree = usvg::Tree::from_data(&buffer, &Options {
+            fontdb: Arc::clone(&self.fontdb),
+            ..Default::default()
+        })?;
 
         Ok(tree)
     }

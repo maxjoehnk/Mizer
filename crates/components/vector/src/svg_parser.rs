@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use vello_svg::usvg;
 use usvg::fontdb;
 
 use crate::VectorData;

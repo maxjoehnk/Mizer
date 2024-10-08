@@ -40,16 +40,19 @@ impl VideoOutputState {
 impl ConfigurableNode for VideoOutputNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
         let mut screens = if let Some(event_loop) = injector.get::<EventLoopHandle>() {
-            let screens = event_loop.available_screens();
-            let screens: Vec<_> = screens
-                .into_iter()
-                .map(|screen| SelectVariant::Item {
-                    label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1).into(),
-                    value: screen.id.into(),
-                })
-                .collect();
-
-            screens
+            // TODO: available screens is currently not available without a window as the internals of winit have changed
+            // Fixing this requires a rework of the wgpu and window module
+            // let screens = event_loop.available_screens();
+            // let screens: Vec<_> = screens
+            //     .into_iter()
+            //     .map(|screen| SelectVariant::Item {
+            //         label: format!("{} ({}x{})", screen.name, screen.size.0, screen.size.1).into(),
+            //         value: screen.id.into(),
+            //     })
+            //     .collect();
+            //
+            // screens
+            vec![]
         } else {
             vec![]
         };
@@ -112,7 +115,7 @@ impl ProcessingNode for VideoOutputNode {
             state.window.set_title(&self.window_name);
         }
         let target_screen = if !self.screen.is_empty() {
-            event_loop.get_screen(&self.screen)
+            event_loop.get_screen(&state.window, &self.screen)
         } else {
             None
         };

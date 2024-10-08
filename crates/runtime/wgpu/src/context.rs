@@ -227,6 +227,8 @@ impl WgpuContext {
                     alpha_to_coverage_enabled: false,
                 },
                 multiview: None,
+                // TODO: setup pipeline cache
+                cache: None,
             })
     }
 

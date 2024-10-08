@@ -4,11 +4,11 @@ use std::sync::Arc;
 use dashmap::DashMap;
 use wgpu::PresentMode;
 use winit::event::WindowEvent;
-use winit::event_loop::{EventLoop, EventLoopBuilder};
+use winit::event_loop::EventLoop;
 use winit::monitor::MonitorHandle;
 #[cfg(target_os = "linux")]
 use winit::platform::x11::EventLoopBuilderExtX11;
-use winit::window::WindowId;
+use winit::window::{Window, WindowId};
 
 use crate::WgpuContext;
 
@@ -23,7 +23,7 @@ pub struct EventLoopHandle {
 
 impl EventLoopHandle {
     pub fn new() -> anyhow::Result<Self> {
-        let mut builder = EventLoopBuilder::new();
+        let mut builder = EventLoop::builder();
         #[cfg(target_os = "linux")]
         builder.with_any_thread(true);
         let event_loop = builder.build()?;
@@ -40,10 +40,9 @@ impl EventLoopHandle {
         title: Option<&str>,
     ) -> anyhow::Result<WindowRef> {
         let (tx, rx) = std::sync::mpsc::channel();
-        let window = winit::window::WindowBuilder::new()
-            .with_title(title.unwrap_or("Mizer"))
-            .build(&self.event_loop)
-            .unwrap();
+        let window = self.event_loop
+            .create_window(Window::default_attributes()
+                .with_title(title.unwrap_or("Mizer").to_string()))?;
         let window = Arc::new(window);
         let surface = context.instance.create_surface(Arc::clone(&window))?;
         let surface_caps = surface.get_capabilities(&context.adapter);
@@ -76,10 +75,9 @@ impl EventLoopHandle {
 
     pub fn new_raw_window(&self, title: Option<&str>) -> anyhow::Result<RawWindowRef> {
         let (tx, rx) = std::sync::mpsc::channel();
-        let window = winit::window::WindowBuilder::new()
-            .with_title(title.unwrap_or("Mizer"))
-            .build(&self.event_loop)
-            .unwrap();
+        let window = self.event_loop
+            .create_window(Window::default_attributes()
+                .with_title(title.unwrap_or("Mizer").to_string()))?;
         self.window_event_sender.insert(window.id(), tx);
 
         Ok(RawWindowRef {
@@ -88,8 +86,8 @@ impl EventLoopHandle {
         })
     }
 
-    pub fn available_screens(&self) -> Vec<Screen> {
-        self.event_loop
+    pub fn available_screens(&self, window: &WindowRef) -> Vec<Screen> {
+        window.window
             .available_monitors()
             .filter_map(|handle| {
                 let name = handle.name()?;
@@ -105,8 +103,8 @@ impl EventLoopHandle {
             .collect()
     }
 
-    pub fn get_screen(&self, id: &String) -> Option<Screen> {
-        self.available_screens().into_iter().find(|s| &s.id == id)
+    pub fn get_screen(&self, window: &WindowRef, id: &String) -> Option<Screen> {
+        self.available_screens(window).into_iter().find(|s| &s.id == id)
     }
 }
 

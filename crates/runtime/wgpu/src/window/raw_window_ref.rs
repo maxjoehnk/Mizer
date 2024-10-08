@@ -2,7 +2,6 @@ use std::ops::Deref;
 use std::sync::mpsc::Receiver;
 use std::sync::Arc;
 
-use raw_window_handle::{HasRawDisplayHandle, RawDisplayHandle};
 use winit::event::WindowEvent;
 use winit::raw_window_handle::{DisplayHandle, HandleError, HasDisplayHandle};
 
@@ -16,12 +15,6 @@ impl Deref for RawWindowRef {
 
     fn deref(&self) -> &Self::Target {
         &self.window
-    }
-}
-
-unsafe impl HasRawDisplayHandle for RawWindowRef {
-    fn raw_display_handle(&self) -> RawDisplayHandle {
-        self.window.raw_display_handle()
     }
 }
 

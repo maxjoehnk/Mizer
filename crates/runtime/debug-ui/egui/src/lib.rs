@@ -87,7 +87,7 @@ impl DebugUi for EguiDebugUi {
         if let Some(state) = self.egui_state.as_mut() {
             let input = state.take_egui_input(&self.window);
 
-            self.egui_context.begin_frame(input);
+            self.egui_context.begin_pass(input);
         }
 
         EguiRenderHandle::new(
@@ -110,7 +110,7 @@ impl EguiDebugUi {
         let context = Context::default();
         let viewport_id = ViewportId::default();
 
-        let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false);
+        let mut painter = Painter::new(WgpuConfiguration::default(), 1, None, false, false);
         futures::executor::block_on(
             painter.set_window(viewport_id, Some(Arc::clone(&window_ref.window))),
         )?;
@@ -153,6 +153,7 @@ impl EguiDebugUi {
                     &self.window,
                     None,
                     None,
+                    None,
                 ));
             }
             let state = self.egui_state.as_mut().unwrap();
@@ -175,7 +176,7 @@ impl EguiDebugUi {
 
     fn paint(&mut self) {
         if let Some(state) = self.egui_state.as_mut() {
-            let output = self.egui_context.end_frame();
+            let output = self.egui_context.end_pass();
             state.handle_platform_output(&self.window, output.platform_output);
 
             let clipped_primitives = self

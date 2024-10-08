@@ -121,5 +121,3 @@ opt-level = 3
 nokhwa = { git = "https://github.com/tactile-eng/nokhwa.git", rev = "74a98ac" }
 # https://github.com/nannou-org/citp/pull/5
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
-# Upstream but not yet released
-glyphon = { git = "https://github.com/grovesNL/glyphon.git", rev = "47f4126" }

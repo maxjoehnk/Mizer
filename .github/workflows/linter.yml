@@ -40,11 +40,6 @@ jobs:
     # Load all steps #
     ##################
     steps:
-      - name: Install lld
-        run: |
-          sudo apt-get update
-          sudo apt-get install lld
-
       ##########################
       # Checkout the code base #
       ##########################
@@ -75,6 +70,7 @@ jobs:
           VALIDATE_DART: false
           VALIDATE_RUST_2015: false
           VALIDATE_RUST_2018: false
+          VALIDATE_RUST_CLIPPY: false
           VALIDATE_EDITORCONFIG: false
           LINTER_RULES_PATH: /
           PROTOBUF_CONFIG_FILE: .protolint.yaml

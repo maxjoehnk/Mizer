@@ -1,8 +1,8 @@
+use resvg::tiny_skia::{self, Pixmap};
+use resvg::usvg::{self, Options};
 use std::io::{Read, Write};
 use std::path::Path;
 use std::sync::Arc;
-use resvg::tiny_skia::{self, Pixmap};
-use resvg::usvg::{self, Options};
 
 use super::{IThumbnailGenerator, THUMBNAIL_SIZE};
 use crate::documents::{MediaDocument, MediaType};
@@ -48,10 +48,13 @@ impl SvgGenerator {
         let mut file = std::fs::File::open(path)?;
         let mut buffer = Vec::new();
         file.read_to_end(&mut buffer)?;
-        let tree = usvg::Tree::from_data(&buffer, &Options {
-            fontdb: Arc::clone(&self.fontdb),
-            ..Default::default()
-        })?;
+        let tree = usvg::Tree::from_data(
+            &buffer,
+            &Options {
+                fontdb: Arc::clone(&self.fontdb),
+                ..Default::default()
+            },
+        )?;
 
         Ok(tree)
     }

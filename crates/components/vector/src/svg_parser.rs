@@ -1,6 +1,6 @@
 use std::sync::Arc;
-use vello_svg::usvg;
 use usvg::fontdb;
+use vello_svg::usvg;
 
 use crate::VectorData;
 use vello::Scene;

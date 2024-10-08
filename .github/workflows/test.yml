@@ -7,6 +7,10 @@ on:
 
 name: Tests
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test-linux:
     runs-on: ubuntu-22.04

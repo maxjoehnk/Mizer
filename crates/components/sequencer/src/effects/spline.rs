@@ -68,7 +68,16 @@ impl SplinePart {
 
 type Point = geo_nd::FArray<SequencerValue<f64>, 2>;
 
-impl geo_nd::Float for SequencerValue<f64> {}
+impl geo_nd::Float for SequencerValue<f64> {
+    fn pi() -> Self {
+        Self::Direct(f64::pi())
+    }
+
+    fn tau() -> Self {
+        Self::Direct(f64::tau())
+    }
+}
+
 impl num_traits::float::Float for SequencerValue<f64> {
     fn nan() -> Self {
         Self::Direct(f64::nan())

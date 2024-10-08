@@ -246,10 +246,9 @@ jobs:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
       - uses: Swatinem/rust-cache@v2
-# TODO: check if this is necessary for the windows build as well
-#        run: rm -rf target/release/deps/Processing.NDI.Lib.x64.dll target/release/build/Processing.NDI.Lib.x64.dll
-#      - name: Remove linked flutter libs from cache
-#        run: rm -rf target/release/flutter_windows.dll
+      - name: Remove ndi libs from cache
+        run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
+        shell: bash
       - name: Build
         env:
           VCPKG_ROOT: ${{ github.workspace }}\vcpkg

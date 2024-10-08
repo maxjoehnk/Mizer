@@ -245,6 +245,10 @@ jobs:
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
+      - uses: Swatinem/rust-cache@v2
+      - name: Remove ndi libs from cache
+        run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
+        shell: bash
       - name: Build
         env:
           VCPKG_ROOT: ${{ github.workspace }}\vcpkg

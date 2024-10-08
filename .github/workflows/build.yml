@@ -252,6 +252,8 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Remove ndi libs from cache
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
+      - name: Remove linked flutter libs from cache
+        run: rm -rf target/release/file_selector_windows_plugin.dll
         shell: bash
       - name: Build
         env:

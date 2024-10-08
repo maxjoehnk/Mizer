@@ -3314,9 +3314,9 @@ dependencies = [
 
 [[package]]
 name = "geo-nd"
-version = "0.5.0"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83c0f756c4f2fdb69767aa5c1db90f13e49b4c03b7a6f3d8f80753753f8b8559"
+checksum = "9b7b61038ea80c1741bf761ea8780401e9060da7de89c705b12b8d8d42767b8a"
 dependencies = [
  "num-traits",
  "serde",

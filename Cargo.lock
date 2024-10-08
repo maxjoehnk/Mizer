@@ -257,9 +257,9 @@ dependencies = [
 
 [[package]]
 name = "artnet_protocol"
-version = "0.4.2"
+version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "536b2b9cae7ceb995cb11db1d5ec39b1eb305c557e36da01ea32de0c723920be"
+checksum = "6f1ca8f664c611598975a2af1084042d2e44c0532db8b72a7b551153f4753627"
 dependencies = [
  "bitflags 2.6.0",
  "byteorder",

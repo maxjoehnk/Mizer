@@ -17,7 +17,7 @@ image = "0.25"
 futures = "0.3"
 tokio = { version = "1.37", features = ["fs", "rt", "io-util"] }
 async-walkdir = "2.0"
-resvg = "0.41"
+resvg = "0.44"
 fontdb = "0.16"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 ffmpeg-the-third = "2.0"

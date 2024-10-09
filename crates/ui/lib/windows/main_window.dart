@@ -34,10 +34,10 @@ class MainWindowState extends WindowState {
   @override
   Future<void> initializeWindow(Size intrinsicSize) async {
     await window.setTitle("Mizer");
-    await window.setMaximized(true);
     Size contentSize = Size(intrinsicSize.width > WIDTH ? intrinsicSize.width : WIDTH,
         intrinsicSize.height > HEIGHT ? intrinsicSize.height : HEIGHT);
-    await window.setGeometry(Geometry(minContentSize: Size(800, 700), contentSize: contentSize));
+    await window.setGeometry(Geometry(minFrameSize: Size(WIDTH, HEIGHT), minContentSize: contentSize));
     await window.show();
+    await window.setMaximized(true);
   }
 }

@@ -81,7 +81,9 @@ class _TransportControlsState extends State<TransportControls> {
             ),
             _Divider(width: 4),
           ]),
-          Spacer(),
+          SizedBox(width: 4),
+          Expanded(child: CommandLineInput()),
+          SizedBox(width: 4),
           PanelAction(
               width: 80,
               action: PanelActionModel(
@@ -237,8 +239,8 @@ class _SpeedEditorState extends State<SpeedEditor> {
             _dragValue(double.parse(next.toStringAsFixed(3)));
           },
           onTap: () => setState(() => this.isEditing = true),
-          child:
-              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headlineSmall!.copyWith(fontFamily: "RobotoMono", fontSize: 20)),
+          child: Text(value.toStringAsFixed(2),
+              textAlign: TextAlign.center, style: style.headlineSmall!.copyWith(fontFamily: "RobotoMono", fontSize: 20)),
         ),
       ),
     );
@@ -338,5 +340,53 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(width: 2, color: Colors.black26);
+  }
+}
+
+class CommandLineInput extends StatefulWidget {
+  const CommandLineInput({super.key});
+
+  @override
+  State<CommandLineInput> createState() => _CommandLineInputState();
+}
+
+class _CommandLineInputState extends State<CommandLineInput> {
+  TextEditingController controller = TextEditingController(text: '');
+  FocusNode focusNode = FocusNode();
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Container(
+      height: TRANSPORT_CONTROLS_HEIGHT - 8,
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: BorderRadius.circular(2),
+        border: Border.all(color: Colors.black26),
+      ),
+      margin: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(4),
+      child: Stack(
+        children: [
+          if (controller.text.isEmpty)
+            Center(
+                child: Text("Commandline",
+                    style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
+          Center(
+              child: EditableText(
+            controller: controller,
+            focusNode: focusNode,
+            style: textTheme.bodyMedium!,
+            autocorrect: false,
+            cursorColor: Colors.black87,
+            backgroundCursorColor: Colors.black12,
+            textAlign: TextAlign.start,
+            selectionColor: Colors.black38,
+            keyboardType: TextInputType.text,
+            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+          )),
+        ],
+      ),
+    );
   }
 }

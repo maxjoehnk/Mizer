@@ -1,0 +1,13 @@
+Fixtures 1 Thru 10 => SelectFixtures
+
+Select Sequence 1 => Select Sequence 1 in Editor
+
+Store Sequence 1 => Store into Sequence 1
+
+Fixtures 2 @ Full => SelectFixtures 2, Write Intensity 100
+
+Delete Sequence 1 => Delete Sequence 1
+
+@ 20 => Write Intensity 20
+
+Channel Pan @ 10 => Write Pan 10

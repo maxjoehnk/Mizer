@@ -400,13 +400,7 @@ impl Programmer {
     #[tracing::instrument(skip(self))]
     pub fn select_fixtures(&mut self, fixtures: Vec<FixtureId>) {
         tracing::trace!("select_fixtures");
-        if self.has_written_to_selection {
-            self.has_written_to_selection = false;
-            self.tracked_selections
-                .push((self.active_selection.clone(), self.active_channels.clone()));
-            self.active_selection.clear();
-            self.active_channels.clear();
-        }
+        self.move_active_to_tracked();
         self.active_selection.add_fixtures(fixtures);
     }
 
@@ -485,7 +479,20 @@ impl Programmer {
     }
 
     pub fn select_group(&mut self, group: &Group) {
+        self.move_active_to_tracked();
         self.active_selection = group.selection.deref().clone();
+    }
+
+    /// Checks if any channels have been written for the currently active selection
+    /// If any channels have been written to the selection and values will be pushed to the tracked selections
+    fn move_active_to_tracked(&mut self) {
+        if self.has_written_to_selection {
+            self.has_written_to_selection = false;
+            self.tracked_selections
+                .push((self.active_selection.clone(), self.active_channels.clone()));
+            self.active_selection.clear();
+            self.active_channels.clear();
+        }
     }
 
     // TODO: this should probably only be true when only the group is selected

@@ -1,6 +1,6 @@
 = Prerequisites
 
-== Dependecies
+== Dependencies
 
 include::partial$dependencies.adoc[]
 

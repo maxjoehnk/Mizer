@@ -89,6 +89,7 @@ Shows a step sequencer in the ui.
 This trait describes the node interface of this node.
 
 This includes
+
 * the name of the node type
 * the node type
 * the preview type

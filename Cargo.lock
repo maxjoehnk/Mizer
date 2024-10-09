@@ -230,7 +230,7 @@ dependencies = [
  "objc",
  "objc-foundation",
  "objc_id",
- "parking_lot 0.12.3",
+ "parking_lot",
  "thiserror",
  "x11rb",
 ]
@@ -693,29 +693,6 @@ dependencies = [
 
 [[package]]
 name = "bindgen"
-version = "0.59.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2bd2a9a458e8f4304c52c43ebb0cfbd520289f8379a52e329a38afda99bf8eb8"
-dependencies = [
- "bitflags 1.3.2",
- "cexpr",
- "clang-sys",
- "clap 2.34.0",
- "env_logger",
- "lazy_static",
- "lazycell",
- "log",
- "peeking_take_while",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash 1.1.0",
- "shlex",
- "which",
-]
-
-[[package]]
-name = "bindgen"
 version = "0.65.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cfdf7b466f9a4903edc73f95d6d2bcd5baf8ae620638762244d3f60143643cc5"
@@ -781,6 +758,26 @@ dependencies = [
  "shlex",
  "syn 2.0.58",
  "which",
+]
+
+[[package]]
+name = "bindgen"
+version = "0.70.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f49d8fed880d473ea71efb9bf597651e77201bdd4893efe54c9e5d65ae04ce6f"
+dependencies = [
+ "bitflags 2.6.0",
+ "cexpr",
+ "clang-sys",
+ "itertools 0.13.0",
+ "log",
+ "prettyplease",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash 1.1.0",
+ "shlex",
+ "syn 2.0.58",
 ]
 
 [[package]]
@@ -1956,7 +1953,7 @@ dependencies = [
  "hashbrown 0.14.3",
  "lock_api",
  "once_cell",
- "parking_lot_core 0.9.9",
+ "parking_lot_core",
  "serde",
 ]
 
@@ -2558,19 +2555,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "env_logger"
-version = "0.9.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a12e6657c4c97ebab115a42dcee77225f7f482cdd841cf7088c657a42e9e00e7"
-dependencies = [
- "atty",
- "humantime",
- "log",
- "regex",
- "termcolor",
-]
-
-[[package]]
 name = "epaint"
 version = "0.29.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2584,7 +2568,7 @@ dependencies = [
  "epaint_default_fonts",
  "log",
  "nohash-hasher",
- "parking_lot 0.12.3",
+ "parking_lot",
  "serde",
 ]
 
@@ -2840,7 +2824,7 @@ checksum = "1ee447700ac8aa0b2f2bd7bc4462ad686ba06baa6727ac149a2d6277f0d240fd"
 dependencies = [
  "cfg-if 1.0.0",
  "libc",
- "redox_syscall 0.4.1",
+ "redox_syscall",
  "windows-sys 0.52.0",
 ]
 
@@ -3158,7 +3142,7 @@ checksum = "1d930c203dd0b6ff06e0201a4a2fe9149b43c684fd4420555b26d21b1a02956f"
 dependencies = [
  "futures-core",
  "lock_api",
- "parking_lot 0.12.3",
+ "parking_lot",
 ]
 
 [[package]]
@@ -3955,12 +3939,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9"
 
 [[package]]
-name = "humantime"
-version = "2.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
-
-[[package]]
 name = "hyper"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4505,7 +4483,7 @@ checksum = "85c833ca1e66078851dba29046874e38f08b2c883700aa29a03ddd3b23814ee8"
 dependencies = [
  "bitflags 2.6.0",
  "libc",
- "redox_syscall 0.4.1",
+ "redox_syscall",
 ]
 
 [[package]]
@@ -4516,7 +4494,7 @@ checksum = "3af92c55d7d839293953fcd0fda5ecfe93297cfde6ffbdec13b41d99c0ba6607"
 dependencies = [
  "bitflags 2.6.0",
  "libc",
- "redox_syscall 0.4.1",
+ "redox_syscall",
 ]
 
 [[package]]
@@ -4767,7 +4745,7 @@ dependencies = [
  "coremidi",
  "js-sys",
  "libc",
- "parking_lot 0.12.3",
+ "parking_lot",
  "wasm-bindgen",
  "web-sys",
  "windows 0.56.0",
@@ -5031,7 +5009,7 @@ dependencies = [
  "mizer-surfaces",
  "mizer-timecode",
  "mizer-util",
- "parking_lot 0.12.3",
+ "parking_lot",
  "serde",
  "serde_json",
  "tracing",
@@ -5088,7 +5066,7 @@ dependencies = [
  "futures",
  "mizer-message-bus",
  "mizer-module",
- "parking_lot 0.12.3",
+ "parking_lot",
  "tracing",
 ]
 
@@ -5313,7 +5291,7 @@ dependencies = [
  "mizer-util",
  "mockall",
  "palette",
- "parking_lot 0.12.3",
+ "parking_lot",
  "pinboard",
  "postage",
  "profiling",
@@ -5514,7 +5492,7 @@ dependencies = [
  "anyhow",
  "flume 0.11.0",
  "futures",
- "parking_lot 0.12.3",
+ "parking_lot",
  "tracing",
 ]
 
@@ -5625,7 +5603,7 @@ dependencies = [
  "mizer-util",
  "mizer-wgpu",
  "num_enum",
- "parking_lot 0.12.3",
+ "parking_lot",
  "pinboard",
  "serde",
  "test-case",
@@ -5787,7 +5765,7 @@ dependencies = [
  "mizer-util",
  "mizer-video-nodes",
  "mizer-wgpu",
- "parking_lot 0.12.3",
+ "parking_lot",
  "pinboard",
  "profiling",
  "ringbuffer",
@@ -6009,7 +5987,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-util",
- "parking_lot 0.12.3",
+ "parking_lot",
  "profiling",
  "regex",
  "serde",
@@ -6442,7 +6420,7 @@ dependencies = [
  "mizer-sequencer",
  "mizer-timecode",
  "mizer-util",
- "parking_lot 0.12.3",
+ "parking_lot",
  "pinboard",
 ]
 
@@ -6487,7 +6465,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-wgpu",
- "parking_lot 0.12.3",
+ "parking_lot",
  "vello",
  "vello_svg",
 ]
@@ -6571,7 +6549,7 @@ dependencies = [
  "dashmap",
  "image 0.25.2",
  "mizer-module",
- "parking_lot 0.12.3",
+ "parking_lot",
  "profiling",
  "raw-window-handle",
  "tracing",
@@ -7588,37 +7566,12 @@ checksum = "bb813b8af86854136c6922af0598d719255ecb2179515e6e7730d468f05c9cae"
 
 [[package]]
 name = "parking_lot"
-version = "0.11.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d17b78036a60663b797adeaee46f5c9dfebb86948d1255007a1d6be0271ff99"
-dependencies = [
- "instant",
- "lock_api",
- "parking_lot_core 0.8.6",
-]
-
-[[package]]
-name = "parking_lot"
 version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1bf18183cf54e8d6059647fc3063646a1801cf30896933ec2311622cc4b9a27"
 dependencies = [
  "lock_api",
- "parking_lot_core 0.9.9",
-]
-
-[[package]]
-name = "parking_lot_core"
-version = "0.8.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "60a2cfe6f0ad2bfc16aefa463b497d5c7a5ecd44a23efa72aa342d90177356dc"
-dependencies = [
- "cfg-if 1.0.0",
- "instant",
- "libc",
- "redox_syscall 0.2.16",
- "smallvec",
- "winapi 0.3.9",
+ "parking_lot_core",
 ]
 
 [[package]]
@@ -7629,7 +7582,7 @@ checksum = "4c42a9226546d68acdd9c0a280d17ce19bfe27a46bf68784e4066115788d008e"
 dependencies = [
  "cfg-if 1.0.0",
  "libc",
- "redox_syscall 0.4.1",
+ "redox_syscall",
  "smallvec",
  "windows-targets 0.48.5",
 ]
@@ -7957,7 +7910,7 @@ dependencies = [
  "crossbeam-queue",
  "futures",
  "log",
- "parking_lot 0.12.3",
+ "parking_lot",
  "pin-project",
  "pollster",
  "static_assertions",
@@ -8380,15 +8333,6 @@ checksum = "fb94d9ac780fdcf9b6b252253f7d8f221379b84bd3573131139b383df69f85e1"
 dependencies = [
  "bytemuck",
  "font-types 0.7.2",
-]
-
-[[package]]
-name = "redox_syscall"
-version = "0.2.16"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fb5a58c1855b4b6819d59012155603f0b22ad30cad752600aadfcb695265519a"
-dependencies = [
- "bitflags 1.3.2",
 ]
 
 [[package]]
@@ -10303,16 +10247,15 @@ dependencies = [
 
 [[package]]
 name = "tracing-oslog"
-version = "0.1.2"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9bc58223383423483e4bc056c7e7b3f77bdee924a9d33834112c69ead06dc847"
+checksum = "528bdd1f0e27b5dd9a4ededf154e824b0532731e4af73bb531de46276e0aab1e"
 dependencies = [
- "bindgen 0.59.2",
+ "bindgen 0.70.1",
  "cc",
  "cfg-if 1.0.0",
- "fnv",
  "once_cell",
- "parking_lot 0.11.2",
+ "parking_lot",
  "tracing-core",
  "tracing-subscriber",
 ]
@@ -11111,7 +11054,7 @@ dependencies = [
  "js-sys",
  "log",
  "naga",
- "parking_lot 0.12.3",
+ "parking_lot",
  "profiling",
  "raw-window-handle",
  "smallvec",
@@ -11139,7 +11082,7 @@ dependencies = [
  "log",
  "naga",
  "once_cell",
- "parking_lot 0.12.3",
+ "parking_lot",
  "profiling",
  "raw-window-handle",
  "rustc-hash 1.1.0",
@@ -11180,7 +11123,7 @@ dependencies = [
  "ndk-sys 0.5.0+25.2.9519653",
  "objc",
  "once_cell",
- "parking_lot 0.12.3",
+ "parking_lot",
  "profiling",
  "range-alloc",
  "raw-window-handle",
@@ -11731,7 +11674,7 @@ dependencies = [
  "percent-encoding",
  "pin-project",
  "raw-window-handle",
- "redox_syscall 0.4.1",
+ "redox_syscall",
  "rustix 0.38.31",
  "sctk-adwaita",
  "smithay-client-toolkit",

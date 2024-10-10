@@ -18,7 +18,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_sequences(&self) -> Sequences {
-        let sequences = self.runtime.query(ListSequencesQuery).unwrap();
+        let sequences = self.runtime.execute_query(ListSequencesQuery).unwrap();
         let sequences = sequences.into_iter().map(Sequence::from).collect();
 
         Sequences { sequences }
@@ -29,7 +29,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
         let sequence = self
             .runtime
-            .query(GetSequenceQuery { id: sequence_id })
+            .execute_query(GetSequenceQuery { id: sequence_id })
             .unwrap();
         sequence.map(Sequence::from)
     }

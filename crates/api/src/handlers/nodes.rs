@@ -23,8 +23,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn get_nodes(&self) -> Nodes {
         let mut res = Nodes::default();
 
-        let nodes = self.runtime.query(ListNodesQuery).unwrap();
-        let links = self.runtime.query(ListLinksQuery).unwrap();
+        let nodes = self.runtime.execute_query(ListNodesQuery).unwrap();
+        let links = self.runtime.execute_query(ListLinksQuery).unwrap();
 
         for node in nodes.iter() {
             let node: Node = node.clone().into();
@@ -87,7 +87,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_available_nodes(&self) -> AvailableNodes {
-        let nodes = self.runtime.query(ListAvailableNodesQuery).unwrap();
+        let nodes = self.runtime.execute_query(ListAvailableNodesQuery).unwrap();
         let nodes = nodes
             .into_iter()
             .map(|node| {
@@ -134,7 +134,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn get_node(&self, path: String) -> Option<Node> {
         let node = self
             .runtime
-            .query(GetNodeQuery {
+            .execute_query(GetNodeQuery {
                 path: NodePath(path),
             })
             .unwrap()?;

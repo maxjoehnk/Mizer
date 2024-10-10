@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -384,6 +386,11 @@ class _CommandLineInputState extends State<CommandLineInput> {
             selectionColor: Colors.black38,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+            onSubmitted: (value) {
+              context.read<UiApi>().commandLineExecute(value)
+              .then((value) => context.refreshAllStates());
+              controller.clear();
+            },
           )),
         ],
       ),

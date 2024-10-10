@@ -45,6 +45,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for UiChannel<R> {
                 },
                 _ => resp.respond_error(anyhow::anyhow!("Invalid arguments")),
             },
+            "commandLineExecute" => match call.args {
+                Value::String(command) => {
+                    let result = self.handler.command_line_execute(command);
+
+                    resp.respond_unit_result(result);
+                }
+                _ => resp.respond_error(anyhow::anyhow!("Invalid arguments")),
+            }
             _ => resp.not_implemented(),
         }
     }

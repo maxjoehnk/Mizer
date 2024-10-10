@@ -57,9 +57,9 @@ impl<R: RuntimeApi> MediaHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_media(&self) -> anyhow::Result<MediaFiles> {
-        let files = self.runtime.query(ListMediaFilesQuery)?;
-        let folders = self.runtime.query(ListMediaFoldersQuery)?;
-        let tags = self.runtime.query(ListMediaTagsQuery)?;
+        let files = self.runtime.execute_query(ListMediaFilesQuery)?;
+        let folders = self.runtime.execute_query(ListMediaFoldersQuery)?;
+        let tags = self.runtime.execute_query(ListMediaTagsQuery)?;
 
         let files = Self::map_files(files);
         let folders = folders
@@ -119,7 +119,7 @@ impl<R: RuntimeApi> MediaHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_folders(&self) -> anyhow::Result<Vec<String>> {
-        let folders = self.runtime.query(ListMediaFoldersQuery)?;
+        let folders = self.runtime.execute_query(ListMediaFoldersQuery)?;
         let folders = folders
             .into_iter()
             .flat_map(|path| path.to_str().map(|s| s.to_string()))

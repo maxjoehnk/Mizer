@@ -6,7 +6,7 @@ pub use prost::Message;
 use tonic::transport::Server;
 
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_command_executor::{SendableCommand, SendableQuery};
+use mizer_command_executor::{ICommandExecutor, SendableCommand, SendableQuery};
 use mizer_connections::{MidiEvent, OscMessage};
 pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;
@@ -26,16 +26,7 @@ mod mappings;
 pub mod proto;
 pub mod remote;
 
-pub trait RuntimeApi: Clone + Send + Sync {
-    fn run_command<'a, T: SendableCommand<'a> + 'static>(
-        &self,
-        command: T,
-    ) -> anyhow::Result<T::Result>;
-    fn query<'a, T: SendableQuery<'a> + 'static>(&self, query: T) -> anyhow::Result<T::Result>;
-
-    fn undo(&self) -> anyhow::Result<()>;
-    fn redo(&self) -> anyhow::Result<()>;
-
+pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
     #[deprecated(note = "this should be replaced with a subscribe query in the future")]
     fn observe_history(&self) -> Subscriber<(Vec<(String, u128)>, usize)>;
 

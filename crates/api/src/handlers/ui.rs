@@ -32,13 +32,13 @@ impl<R: RuntimeApi> UiHandler<R> {
         match name {
             "fixtures/definitions/list" => {
                 let fixture_definitions =
-                    self.runtime.query(ListFixtureDefinitionsQuery::default())?;
+                    self.runtime.execute_query(ListFixtureDefinitionsQuery::default())?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
             }
             "fixtures/definitions/list/gdtf" => {
-                let fixture_definitions = self.runtime.query(ListFixtureDefinitionsQuery {
+                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
                     gdtf: true,
                     ofl: false,
                     qlc: false,
@@ -49,7 +49,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 Ok(table.into())
             }
             "fixtures/definitions/list/ofl" => {
-                let fixture_definitions = self.runtime.query(ListFixtureDefinitionsQuery {
+                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
                     gdtf: false,
                     ofl: true,
                     qlc: false,
@@ -60,7 +60,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 Ok(table.into())
             }
             "fixtures/definitions/list/qlc" => {
-                let fixture_definitions = self.runtime.query(ListFixtureDefinitionsQuery {
+                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
                     gdtf: false,
                     ofl: false,
                     qlc: true,
@@ -71,7 +71,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 Ok(table.into())
             }
             "fixtures/definitions/list/mizer" => {
-                let fixture_definitions = self.runtime.query(ListFixtureDefinitionsQuery {
+                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
                     gdtf: false,
                     ofl: false,
                     qlc: false,
@@ -82,7 +82,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 Ok(table.into())
             }
             "fixtures/definitions/modes" => {
-                let fixture_definition = self.runtime.query(GetFixtureDefinitionQuery {
+                let fixture_definition = self.runtime.execute_query(GetFixtureDefinitionQuery {
                     definition_id: arguments[0].clone(),
                 })?;
                 if let Some(fixture_definition) = fixture_definition {
@@ -94,7 +94,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 }
             }
             "fixtures/definitions/channels" => {
-                let fixture_definition = self.runtime.query(GetFixtureDefinitionQuery {
+                let fixture_definition = self.runtime.execute_query(GetFixtureDefinitionQuery {
                     definition_id: arguments[0].clone(),
                 })?;
                 if let Some(fixture_definition) = fixture_definition {
@@ -114,7 +114,7 @@ impl<R: RuntimeApi> UiHandler<R> {
                 }
             }
             "fixtures/definitions/tree" => {
-                let fixture_definition = self.runtime.query(GetFixtureDefinitionQuery {
+                let fixture_definition = self.runtime.execute_query(GetFixtureDefinitionQuery {
                     definition_id: arguments[0].clone(),
                 })?;
                 if let Some(mut fixture_definition) = fixture_definition {
@@ -140,6 +140,13 @@ impl<R: RuntimeApi> UiHandler<R> {
             }
             name => anyhow::bail!("Unknown table: {name}"),
         }
+    }
+
+    pub fn command_line_execute(&self, command: String) -> anyhow::Result<()> {
+        let command = mizer_command_line::try_parse_as_command(&command)?;
+        command.execute(&self.runtime)?;
+
+        Ok(())
     }
 }
 

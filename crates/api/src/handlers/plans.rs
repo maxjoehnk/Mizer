@@ -24,7 +24,7 @@ impl<R: RuntimeApi> PlansHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_plans(&self) -> Plans {
-        let plans = self.runtime.query(ListPlansQuery).unwrap();
+        let plans = self.runtime.execute_query(ListPlansQuery).unwrap();
         let plans = plans.into_iter().map(Plan::from).collect();
 
         Plans {

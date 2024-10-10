@@ -18,7 +18,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_fixtures(&self) -> Fixtures {
-        let fixtures = self.runtime.query(ListFixturesQuery).unwrap();
+        let fixtures = self.runtime.execute_query(ListFixturesQuery).unwrap();
         let fixtures = fixtures
             .into_iter()
             .map(|fixture| {
@@ -78,7 +78,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn get_fixture_definitions(&self) -> FixtureDefinitions {
         let definitions = self
             .runtime
-            .query(ListFixtureDefinitionsQuery::default())
+            .execute_query(ListFixtureDefinitionsQuery::default())
             .unwrap();
         let definitions = definitions
             .into_iter()
@@ -100,7 +100,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn preview_fixtures(&self, add_fixtures: AddFixturesRequest) -> anyhow::Result<Fixtures> {
         let definition = self
             .runtime
-            .query(GetFixtureDefinitionQuery {
+            .execute_query(GetFixtureDefinitionQuery {
                 definition_id: add_fixtures.request.as_ref().unwrap().definition_id.clone(),
             })?
             .ok_or_else(|| anyhow::anyhow!("Unknown definition"))?;
@@ -167,7 +167,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn export_patch(&self, path: &str) -> anyhow::Result<()> {
-        let fixtures = self.runtime.query(ListFixturesQuery)?;
+        let fixtures = self.runtime.execute_query(ListFixturesQuery)?;
         let patch_exporter = PatchExporter::new();
         let mut fixture_refs = fixtures.iter().collect::<Vec<_>>();
         fixture_refs.sort_by_key(|fixture| fixture.id);

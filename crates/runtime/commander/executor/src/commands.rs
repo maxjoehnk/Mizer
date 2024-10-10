@@ -19,6 +19,7 @@ pub use mizer_timecode::commands::*;
 
 pub use crate::aggregates::*;
 use crate::executor::{CommandExecutor, CommandKey};
+use crate::ICommandExecutor;
 
 pub trait SendableCommand<'a>: Command<'a> + Into<CommandImpl> + Send + Sync {}
 
@@ -56,6 +57,16 @@ macro_rules! command_impl {
             pub fn label(&self) -> String {
                 match self {
                     $(Self::$x(cmd) => cmd.label(),)*
+                }
+            }
+
+            pub fn execute<E: crate::ICommandExecutor>(self, executor: &E) -> anyhow::Result<()> {
+                match self {
+                    $(Self::$x(cmd) => {
+                        executor.run_command(cmd)?;
+
+                        Ok(())
+                    })*
                 }
             }
         }

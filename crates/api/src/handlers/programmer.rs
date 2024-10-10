@@ -105,10 +105,10 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_presets(&self) -> Presets {
-        let intensities = self.runtime.query(ListIntensityPresetsQuery).unwrap();
-        let shutters = self.runtime.query(ListShutterPresetsQuery).unwrap();
-        let colors = self.runtime.query(ListColorPresetsQuery).unwrap();
-        let positions = self.runtime.query(ListPositionPresetsQuery).unwrap();
+        let intensities = self.runtime.execute_query(ListIntensityPresetsQuery).unwrap();
+        let shutters = self.runtime.execute_query(ListShutterPresetsQuery).unwrap();
+        let colors = self.runtime.execute_query(ListColorPresetsQuery).unwrap();
+        let positions = self.runtime.execute_query(ListPositionPresetsQuery).unwrap();
 
         Presets {
             intensities: intensities
@@ -153,7 +153,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_groups(&self) -> Groups {
-        let groups = self.runtime.query(ListGroupsQuery).unwrap();
+        let groups = self.runtime.execute_query(ListGroupsQuery).unwrap();
         Groups {
             groups: groups.into_iter().map(|group| group.into()).collect(),
         }

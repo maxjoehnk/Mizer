@@ -9,6 +9,7 @@ anyhow = "1"
 tracing = "0.1"
 chumsky = "1.0.0-alpha.7"
 mizer-command-executor = { path = "../../runtime/commander/executor" }
+mizer-fixtures = { path = "../fixtures" }
 
 [dev-dependencies]
 test-case = "3.3"

@@ -370,7 +370,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
       padding: const EdgeInsets.all(4),
       child: Stack(
         children: [
-          if (controller.text.isEmpty)
+          if (!focusNode.hasFocus && controller.text.isEmpty)
             Center(
                 child: Text("Commandline",
                     style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
@@ -380,6 +380,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
             focusNode: focusNode,
             style: textTheme.bodyMedium!,
             autocorrect: false,
+            showCursor: true,
             cursorColor: Colors.black87,
             backgroundCursorColor: Colors.black12,
             textAlign: TextAlign.start,
@@ -390,6 +391,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
               context.read<UiApi>().commandLineExecute(value)
               .then((value) => context.refreshAllStates());
               controller.clear();
+              focusNode.requestFocus();
             },
           )),
         ],

@@ -15,6 +15,9 @@ pub fn try_parse_as_command(input: &str) -> anyhow::Result<CommandImpl> {
         Ast::Delete(Target::Group(id)) => DeleteGroupCommand {
             id: id.into(),
         }.into(),
+        Ast::Select(Target::Fixture(selection)) => SelectFixturesCommand {
+            fixtures: selection.into(),
+        }.into(),
         Ast::Store(Target::Sequence(id)) => todo!("StoreProgrammerInSequenceCommand should fetch data from Programmer itself"), /*StoreProgrammerInSequenceCommand {
             sequence_id: id,
             presets: todo!()
@@ -25,7 +28,8 @@ pub fn try_parse_as_command(input: &str) -> anyhow::Result<CommandImpl> {
                 fixture_ids: todo!("AssignFixturesToGroupCommand should fetch data from Programmer itself"),
             }.into()
         },*/
-        // Ast::Highlight =>
+        Ast::Highlight => ToggleHighlightCommand.into(),
+        _ => anyhow::bail!("Invalid command"),
     };
 
     Ok(command)

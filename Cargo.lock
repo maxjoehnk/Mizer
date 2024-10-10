@@ -5036,6 +5036,7 @@ dependencies = [
  "anyhow",
  "chumsky",
  "mizer-command-executor",
+ "mizer-fixtures",
  "test-case",
  "tracing",
 ]

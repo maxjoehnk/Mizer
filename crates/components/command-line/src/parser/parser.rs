@@ -41,7 +41,8 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
 
     let selection = choice((
         text::int(10).from_str().unwrapped().map(Selection::Single),
-        // text::int(10).from_str().skip(just("..")).and(text::int(10).from_str()).map(|(start, end)| Selection::Range(start, end)),
+        text::int(10).from_str().unwrapped()
+            .then(choice((just("thru"), just("..")))).then(text::int(10).from_str().unwrapped()).map(|((start, _), end)| Selection::Range(start, end)),
     )).padded();
 
     let target = keyword.then(selection)

@@ -86,6 +86,7 @@ command_impl! {
     CallPresetCommand,
     CallEffectCommand,
     CallGroupCommand,
+    ToggleHighlightCommand,
     AddPresetCommand,
     StoreInPresetCommand,
     DeletePresetCommand,

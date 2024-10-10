@@ -14,6 +14,7 @@ pub use call_preset::*;
 pub use call_group::*;
 pub use call_effect::*;
 pub use clear_programmer::*;
+pub use toggle_highlight::*;
 
 mod add_group;
 mod add_preset;
@@ -31,3 +32,4 @@ mod rename_preset;
 mod store_in_preset;
 mod update_fixture;
 mod select_fixtures;
+mod toggle_highlight;

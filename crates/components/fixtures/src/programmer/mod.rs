@@ -576,6 +576,10 @@ impl Programmer {
         self.highlight = highlight;
     }
 
+    pub fn toggle_highlight(&mut self) {
+        self.highlight = !self.highlight;
+    }
+
     pub fn get_controls(&self) -> Vec<ProgrammerControl> {
         self.get_selections()
             .iter()

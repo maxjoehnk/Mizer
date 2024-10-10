@@ -91,7 +91,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 let presets = self.handler.get_presets();
                 reply.respond_msg(presets);
             }
-            "callPreset" => match call.arguments().map(|req| self.handler.call_preset(req)) {
+            "callPreset" => match call.arguments().and_then(|req| self.handler.call_preset(req)) {
                 Ok(()) => reply.send_ok(Value::Null),
                 Err(err) => reply.respond_error(err),
             },
@@ -108,8 +108,8 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
             }
             "selectGroup" => {
                 if let Value::I64(id) = call.args {
-                    self.handler.select_group(id as u32);
-                    reply.send_ok(Value::Null);
+                    let result = self.handler.select_group(id as u32);
+                    reply.respond_unit_result(result);
                 }
             }
             "addGroup" => {
@@ -232,9 +232,11 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         self.handler.write_control(req);
     }
 
-    fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
+    fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) -> anyhow::Result<()> {
         tracing::trace!("ProgrammerChannel::select_fixtures({:?})", fixture_ids);
-        self.handler.select_fixtures(fixture_ids);
+        self.handler.select_fixtures(fixture_ids)?;
+
+        Ok(())
     }
 
     fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {

@@ -26,7 +26,7 @@ impl ProDJLinkDiscoveryService {
             .ipv4
             .first()
             .ok_or(anyhow::anyhow!("No IPv4 address found"))?;
-        let ip = ip.addr;
+        let ip = ip.addr();
         let mac_addr = network_interface
             .mac_addr
             .ok_or(anyhow::anyhow!("No MAC address found"))?;

@@ -1,0 +1,9 @@
+// 1 Thru 10 Channel Pan @ 30
+strict graph {
+    WRITE -- FIXTURES
+    FIXTURES -- "1 Thru 10"
+    WRITE -- CHANNEL
+    CHANNEL -- PAN
+    WRITE -- VALUE
+    VALUE -- 30
+}

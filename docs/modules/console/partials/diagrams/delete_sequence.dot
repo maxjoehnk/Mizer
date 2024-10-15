@@ -1,0 +1,5 @@
+// Delete Sequence 1 Thru 10
+strict graph {
+    DELETE -- SEQUENCES
+    SEQUENCES -- "1 THRU 10"
+}

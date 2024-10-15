@@ -1,0 +1,9 @@
+// Channel Pan @ 30
+strict graph {
+    WRITE -- FIXTURES
+    FIXTURES -- "ACTIVE SELECTION"
+    WRITE -- CHANNEL
+    CHANNEL -- PAN
+    WRITE -- VALUE
+    VALUE -- 30
+}

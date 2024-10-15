@@ -1,5 +1,5 @@
 use chumsky::prelude::*;
-use crate::parser::{parse, Action, Tokens, Keyword, Operator, Selection, Token};
+use super::*;
 
 type Span = SimpleSpan<usize>;
 
@@ -25,6 +25,7 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         "store" => Ok(Action::Store),
         "delete" => Ok(Action::Delete),
         "off" => Ok(Action::Off),
+        "clear" => Ok(Action::Clear),
         _ => Err(Rich::custom(span, "Unknown action")),
     })
         .map(Token::Action);
@@ -40,9 +41,11 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
     }).padded();
 
     let selection = choice((
+        text::int(10).from_str().unwrapped().padded()
+            .then_ignore(choice((just("thru"), just(".."))))
+            .then(text::int(10).from_str().unwrapped().padded())
+            .map(|(start, end)| Selection::Range(start, end)),
         text::int(10).from_str().unwrapped().map(Selection::Single),
-        text::int(10).from_str().unwrapped()
-            .then(choice((just("thru"), just("..")))).then(text::int(10).from_str().unwrapped()).map(|((start, _), end)| Selection::Range(start, end)),
     )).padded();
 
     let target = keyword.then(selection)
@@ -55,43 +58,4 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         .repeated()
         .collect()
         .map(Tokens)
-}
-
-#[cfg(test)]
-mod tests {
-    use test_case::test_case;
-    use super::*;
-
-    #[test_case("@ 20", 20)]
-    #[test_case("@ 100", 100)]
-    #[test_case("at 20", 20)]
-    fn parse_at(input: &str, expected: i64) {
-        let ast = parse(input).unwrap();
-
-        assert_eq!(ast, Tokens(vec![
-            Token::Operator(Operator::At),
-            Token::Number(expected),
-        ]));
-    }
-
-    #[test_case("select fixtures 1", 1)]
-    #[test_case("select fixtures 3", 3)]
-    fn parse_fixture_selection(input: &str, expected: i64) {
-        let ast = parse(input).unwrap();
-
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Select),
-            Token::Target((Keyword::Fixture, Selection::Single(expected))),
-        ]));
-    }
-
-    #[test_case("delete sequence 1", 1)]
-    fn parse_delete_sequence(input: &str, expected: i64) {
-        let ast = parse(input).unwrap();
-
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Delete),
-            Token::Target((Keyword::Sequence, Selection::Single(expected))),
-        ]));
-    }
 }

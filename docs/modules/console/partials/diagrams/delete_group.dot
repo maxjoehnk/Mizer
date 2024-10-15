@@ -1,0 +1,5 @@
+// Delete Group 1
+strict graph {
+    DELETE -- GROUP
+    GROUP -- 1
+}

@@ -244,9 +244,9 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         self.handler.unselect_fixtures(fixture_ids);
     }
 
-    fn clear(&self) {
+    fn clear(&self) -> anyhow::Result<()> {
         tracing::trace!("ProgrammerChannel::clear");
-        self.handler.clear();
+        self.handler.clear()
     }
 
     fn highlight(&self, highlight: bool) {

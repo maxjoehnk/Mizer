@@ -19,7 +19,6 @@ pub use mizer_timecode::commands::*;
 
 pub use crate::aggregates::*;
 use crate::executor::{CommandExecutor, CommandKey};
-use crate::ICommandExecutor;
 
 pub trait SendableCommand<'a>: Command<'a> + Into<CommandImpl> + Send + Sync {}
 

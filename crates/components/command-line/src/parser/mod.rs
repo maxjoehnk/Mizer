@@ -14,6 +14,16 @@ impl IntoIterator for Tokens {
     }
 }
 
+impl Tokens {
+    pub fn iter(&self) -> impl Iterator<Item = &Token> {
+        self.0.iter()
+    }
+
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
     Action(Action),
@@ -31,6 +41,9 @@ pub enum Action {
     Off,
     Highlight,
     Clear,
+    Call,
+    GoForward,
+    GoBackward,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -56,8 +69,9 @@ pub enum Selection {
 }
 
 pub fn parse(input: &str) -> anyhow::Result<Tokens> {
-    let result = parser::lexer().parse(input);
-    println!("{:?}", result);
+    let lowercase = input.to_lowercase();
+    let result = parser::lexer().parse(&lowercase);
+    tracing::debug!("{result:?}");
     let (output, errors) = result.into_output_errors();
     let ast = output.ok_or_else(|| anyhow::anyhow!("Failed to parse: {:?}", errors))?;
 

@@ -79,6 +79,7 @@ command_impl! {
     DeleteGroupCommand,
     RenameGroupCommand,
     AssignFixturesToGroupCommand,
+    AssignProgrammerToGroupCommand,
     UpdateFixtureCommand,
     SelectFixturesCommand,
     ClearProgrammerCommand,

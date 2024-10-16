@@ -14,7 +14,7 @@ impl<'a> Command<'a> for SelectFixturesCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("")
+        format!("Select Fixtures {:?}", self.fixtures)
     }
 
     fn apply(

@@ -1,5 +1,8 @@
+use serde::{Deserialize, Serialize};
+
 pub use add_group::*;
 pub use add_preset::*;
+pub use assign_programmer_to_group::*;
 pub use assign_fixtures_to_group::*;
 pub use delete_fixtures::*;
 pub use delete_group::*;
@@ -18,6 +21,7 @@ pub use toggle_highlight::*;
 
 mod add_group;
 mod add_preset;
+mod assign_programmer_to_group;
 mod assign_fixtures_to_group;
 mod call_preset;
 mod call_group;
@@ -33,3 +37,10 @@ mod store_in_preset;
 mod update_fixture;
 mod select_fixtures;
 mod toggle_highlight;
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+pub enum StoreGroupMode {
+    Overwrite,
+    Merge,
+    Subtract,
+}

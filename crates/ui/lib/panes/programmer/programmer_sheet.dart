@@ -93,7 +93,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
               hotkeyId: "highlight",
               label: "Highlight",
               activated: widget.highlight,
-              onClick: _highlight,
+              command: "highlight",
               menu: Menu(items: [
                 MenuItem(
                     label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
@@ -103,7 +103,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
           PanelActionModel(
               hotkeyId: "clear",
               label: "Clear",
-              onClick: () => _clear(),
+              command: "clear",
               disabled: widget.isEmpty,
               menu: Menu(items: [
                 MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))

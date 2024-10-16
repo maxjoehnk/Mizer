@@ -225,14 +225,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     ) -> anyhow::Result<()> {
         let mode = req.mode();
         let group_id = GroupId(req.id);
-        let selection = {
-            let programmer = self.fixture_manager.get_programmer();
-            programmer.active_selection()
-        };
 
-        self.runtime.run_command(AssignFixturesToGroupCommand {
+        self.runtime.run_command(AssignProgrammerToGroupCommand {
             group_id,
-            selection,
             mode: mode.into(),
         })?;
 

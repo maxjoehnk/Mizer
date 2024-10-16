@@ -7,13 +7,12 @@ use std::ops::Deref;
 use crate::StoreGroupMode;
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct AssignFixturesToGroupCommand {
+pub struct AssignProgrammerToGroupCommand {
     pub group_id: GroupId,
-    pub selection: FixtureSelection,
     pub mode: StoreGroupMode,
 }
 
-impl<'a> Command<'a> for AssignFixturesToGroupCommand {
+impl<'a> Command<'a> for AssignProgrammerToGroupCommand {
     type Dependencies = Ref<FixtureManager>;
     type State = FixtureSelection;
     type Result = ();
@@ -31,13 +30,17 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
             .get_mut(&self.group_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown group {}", self.group_id))?;
         let old = group.selection.deref().clone();
+        let selection = {
+            let programmer = fixture_manager.get_programmer();
+            programmer.active_selection()
+        };
         match self.mode {
             StoreGroupMode::Overwrite => {
-                group.selection = self.selection.clone().into();
+                group.selection = selection.into();
             }
             StoreGroupMode::Merge => {
                 group.selection.add_fixtures(
-                    self.selection
+                    selection
                         .get_fixtures()
                         .into_iter()
                         .flatten()
@@ -45,7 +48,7 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
                 );
             }
             StoreGroupMode::Subtract => {
-                for fixture in self.selection.get_fixtures().into_iter().flatten() {
+                for fixture in selection.get_fixtures().into_iter().flatten() {
                     group.selection.remove(&fixture);
                 }
             }

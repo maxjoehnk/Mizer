@@ -746,7 +746,7 @@ dependencies = [
  "bitflags 2.6.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.10.5",
  "lazy_static",
  "lazycell",
  "log",
@@ -4099,16 +4099,16 @@ dependencies = [
 
 [[package]]
 name = "image"
-version = "0.25.2"
+version = "0.25.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "99314c8a2152b8ddb211f924cdae532d8c5e4c8bb54728e12fff1b0cd5963a10"
+checksum = "bc144d44a31d753b02ce64093d532f55ff8dc4ebf2ffb8a63c0dda691385acae"
 dependencies = [
  "bytemuck",
  "byteorder-lite",
  "color_quant",
  "exr",
  "gif 0.13.1",
- "image-webp",
+ "image-webp 0.2.0",
  "num-traits",
  "png 0.17.14",
  "qoi",
@@ -4125,6 +4125,16 @@ name = "image-webp"
 version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f79afb8cbee2ef20f59ccd477a218c12a93943d075b492015ecb1bb81f8ee904"
+dependencies = [
+ "byteorder-lite",
+ "quick-error",
+]
+
+[[package]]
+name = "image-webp"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e031e8e3d94711a9ccb5d6ea357439ef3dcbed361798bd4071dc4d9793fbe22f"
 dependencies = [
  "byteorder-lite",
  "quick-error",
@@ -5125,7 +5135,7 @@ dependencies = [
  "egui_tiles",
  "egui_tracing",
  "futures",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-debug-ui",
  "mizer-module",
  "mizer-wgpu",
@@ -5459,7 +5469,7 @@ dependencies = [
  "fontdb 0.22.0",
  "futures",
  "id3",
- "image 0.25.2",
+ "image 0.25.4",
  "infer",
  "mime_guess",
  "mizer-commander",
@@ -5557,7 +5567,7 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.0",
  "futures",
- "image 0.25.2",
+ "image 0.25.4",
  "ndi",
  "pinboard",
  "tracing",
@@ -5569,7 +5579,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-devices",
  "mizer-ndi",
  "mizer-node",
@@ -5678,7 +5688,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bytes 1.7.2",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-node",
  "mizer-pixel-nodes",
  "mizer-util",
@@ -5774,7 +5784,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
@@ -6105,7 +6115,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-node",
  "mizer-video-nodes",
  "mizer-wgpu",
@@ -6243,7 +6253,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.0",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-node",
  "mizer-surfaces",
  "mizer-wgpu",
@@ -6278,7 +6288,7 @@ dependencies = [
  "enum-iterator",
  "font-kit",
  "glyphon",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-node",
  "mizer-wgpu",
  "num_enum",
@@ -6490,7 +6500,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.0",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
@@ -6507,7 +6517,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-devices",
  "mizer-node",
  "mizer-video-nodes",
@@ -6541,7 +6551,7 @@ dependencies = [
  "anyhow",
  "bytemuck",
  "dashmap",
- "image 0.25.2",
+ "image 0.25.4",
  "mizer-module",
  "parking_lot",
  "profiling",
@@ -8478,7 +8488,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a325d5e8d1cebddd070b13f44cec8071594ab67d1012797c121f27a669b7958"
 dependencies = [
  "gif 0.13.1",
- "image-webp",
+ "image-webp 0.1.3",
  "log",
  "pico-args",
  "rgb",
@@ -8490,9 +8500,9 @@ dependencies = [
 
 [[package]]
 name = "rgb"
-version = "0.8.37"
+version = "0.8.50"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05aaa8004b64fd573fc9d002f4e632d51ad4f026c2b5ba95fcb6c2f32c2c47d8"
+checksum = "57397d16646700483b67d2dd6511d79318f9d057fdbd21a4066aeac8b41d310a"
 dependencies = [
  "bytemuck",
 ]
@@ -10747,7 +10757,7 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47ca63b9321e371196c2645343bde868b1854d433608043ef1abbad6c8a83484"
 dependencies = [
- "image 0.25.2",
+ "image 0.25.4",
  "thiserror",
  "usvg 0.43.0",
  "vello",
@@ -12081,9 +12091,9 @@ dependencies = [
 
 [[package]]
 name = "zune-jpeg"
-version = "0.4.11"
+version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec866b44a2a1fd6133d363f073ca1b179f438f99e7e5bfb1e33f7181facfe448"
+checksum = "16099418600b4d8f028622f73ff6e3deaabdff330fb9a2a131dea781ee8b0768"
 dependencies = [
  "zune-core",
 ]

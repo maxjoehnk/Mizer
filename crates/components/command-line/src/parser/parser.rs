@@ -58,7 +58,7 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
     
     let selection = selection.map(Token::Selection);
 
-    let token = choice((num, operator, action, target, selection));
+    let token = choice((selection, num, operator, action, target));
 
     token
         .padded()

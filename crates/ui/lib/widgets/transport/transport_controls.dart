@@ -11,6 +11,7 @@ import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'time_control.dart';
@@ -355,6 +356,8 @@ class CommandLineInput extends StatefulWidget {
 class _CommandLineInputState extends State<CommandLineInput> {
   TextEditingController controller = TextEditingController(text: '');
   FocusNode focusNode = FocusNode();
+  bool success = false;
+  bool error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -374,28 +377,50 @@ class _CommandLineInputState extends State<CommandLineInput> {
             Center(
                 child: Text("Commandline",
                     style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
+          if (success) Positioned(child: Icon(Icons.check, color: Colors.green), right: 4),
+          if (error)
+            Positioned(child: Icon(Icons.warning_amber_outlined, color: Colors.red), right: 4),
           Center(
-              child: EditableText(
-            controller: controller,
-            focusNode: focusNode,
-            style: textTheme.bodyMedium!,
-            autocorrect: false,
-            showCursor: true,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            textAlign: TextAlign.start,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.text,
-            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-            onSubmitted: (value) {
-              context.read<UiApi>().commandLineExecute(value)
-              .then((value) => context.refreshAllStates());
-              controller.clear();
-              focusNode.requestFocus();
-            },
+              child: TextFieldFocus(
+            child: EditableText(
+              controller: controller,
+              focusNode: focusNode,
+              style: textTheme.bodyMedium!,
+              autocorrect: false,
+              showCursor: true,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              textAlign: TextAlign.start,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.text,
+              inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+              onSubmitted: (value) {
+                execute(value);
+                controller.clear();
+                focusNode.requestFocus();
+              },
+            ),
           )),
         ],
       ),
     );
+  }
+
+  void execute(String cmd) {
+    context.read<UiApi>().commandLineExecute(cmd).then((value) {
+      setIconState(success: true);
+      context.refreshAllStates();
+      Future.delayed(Duration(seconds: 3)).then((value) => setIconState());
+    }).catchError((err) {
+      setIconState(error: true);
+      Future.delayed(Duration(seconds: 3)).then((value) => setIconState());
+    });
+  }
+
+  void setIconState({ bool success = false, bool error = false }) {
+    setState(() {
+      this.success = success;
+      this.error = error;
+    });
   }
 }

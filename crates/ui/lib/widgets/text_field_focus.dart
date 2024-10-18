@@ -28,6 +28,7 @@ const letters = [
   LogicalKeyboardKey.keyX,
   LogicalKeyboardKey.keyY,
   LogicalKeyboardKey.keyZ,
+  LogicalKeyboardKey.backspace,
 ];
 
 class TextFieldFocus extends StatelessWidget {

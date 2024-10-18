@@ -26,6 +26,10 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         "delete" => Ok(Action::Delete),
         "off" => Ok(Action::Off),
         "clear" => Ok(Action::Clear),
+        "call" => Ok(Action::Call),
+        "go" => Ok(Action::GoForward),
+        "go+" => Ok(Action::GoForward),
+        "go-" => Ok(Action::GoBackward),
         _ => Err(Rich::custom(span, "Unknown action")),
     })
         .map(Token::Action);
@@ -35,6 +39,7 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         "fixture" => Ok(Keyword::Fixture),
         "sequences" => Ok(Keyword::Sequence),
         "sequence" => Ok(Keyword::Sequence),
+        "seq" => Ok(Keyword::Sequence),
         "groups" => Ok(Keyword::Group),
         "group" => Ok(Keyword::Group),
         _ => Err(Rich::custom(span, "Unknown keyword")),
@@ -50,8 +55,10 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
 
     let target = keyword.then(selection)
         .map(|(keyword, selection)| Token::Target((keyword, selection)));
+    
+    let selection = selection.map(Token::Selection);
 
-    let token = choice((num, operator, action, target));
+    let token = choice((num, operator, action, target, selection));
 
     token
         .padded()

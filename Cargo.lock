@@ -5190,8 +5190,10 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "chumsky",
+ "futures",
  "mizer-command-executor",
  "mizer-fixtures",
+ "mizer-ui-api",
  "test-case",
  "tracing",
 ]
@@ -6559,6 +6561,7 @@ name = "mizer-ui"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-trait",
  "futures",
  "mizer-api",
  "mizer-ui-ffi",
@@ -6576,6 +6579,7 @@ name = "mizer-ui-api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "flume 0.11.0",
  "futures",
  "mizer-message-bus",
  "mizer-module",

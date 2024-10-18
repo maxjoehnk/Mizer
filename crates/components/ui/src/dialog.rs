@@ -14,12 +14,24 @@ impl DialogService {
 
         Ok(())
     }
+
+    pub async fn show_dialog_with_result(&self, mut dialog: Dialog) -> anyhow::Result<Option<String>> {
+        let (sender, receiver) = flume::bounded(1);
+        dialog.return_channel = Some(sender);
+        self.api.emit(UiEvent::ShowDialog(dialog));
+        
+        let result = receiver.recv_async().await?;
+        
+        Ok(result)
+    }
 }
 
 #[derive(Clone, Debug)]
 pub struct Dialog {
     pub title: String,
     pub elements: Vec<DialogElement>,
+    pub actions: Vec<DialogAction>,
+    return_channel: Option<flume::Sender<Option<String>>>,
 }
 
 impl Dialog {
@@ -32,6 +44,7 @@ impl Dialog {
 pub struct DialogBuilder {
     title: Option<String>,
     elements: Vec<DialogElement>,
+    actions: Vec<DialogAction>,
 }
 
 impl DialogBuilder {
@@ -48,6 +61,11 @@ impl DialogBuilder {
         self.elements.push(DialogElement::Text(text));
         self
     }
+    
+    pub fn action(mut self, title: String, action: String) -> Self {
+        self.actions.push(DialogAction { label: title, action });
+        self
+    }
 
     pub fn build(self) -> anyhow::Result<Dialog> {
         anyhow::ensure!(
@@ -59,6 +77,8 @@ impl DialogBuilder {
                 .title
                 .ok_or_else(|| anyhow::anyhow!("title is required"))?,
             elements: self.elements,
+            actions: self.actions,
+            return_channel: None,
         })
     }
 }
@@ -66,4 +86,10 @@ impl DialogBuilder {
 #[derive(Clone, Debug)]
 pub enum DialogElement {
     Text(String),
+}
+
+#[derive(Clone, Debug)]
+pub struct DialogAction {
+    pub label: String,
+    pub action: String,
 }

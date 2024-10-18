@@ -2,7 +2,8 @@ use crate::proto::ui::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 use itertools::Itertools;
-use mizer_command_executor::{GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery};
+use mizer_command_executor::{GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery, SendableCommand};
+use mizer_command_line::CommandLineContext;
 use mizer_fixtures::ui_handlers::*;
 use mizer_ui_api::dialog;
 use mizer_ui_api::table::TableHandler;
@@ -142,23 +143,40 @@ impl<R: RuntimeApi> UiHandler<R> {
         }
     }
 
-    pub fn command_line_execute(&self, command: String) -> anyhow::Result<()> {
-        let command = mizer_command_line::try_parse_as_command(&command)?;
-        command.execute(&self.runtime)?;
+    pub async fn command_line_execute(&self, command: String) -> anyhow::Result<()> {
+        mizer_command_line::try_parse_as_command(self, &command).await?;
 
         Ok(())
+    }
+}
+
+impl<R: RuntimeApi> CommandLineContext for UiHandler<R> {
+    fn execute_command<'a>(&self, command: impl SendableCommand<'a> + 'static) -> anyhow::Result<()> {
+        self.runtime.run_command(command)?;
+
+        Ok(())
+    }
+
+    async fn show_dialog(&self, dialog: dialog::Dialog) -> anyhow::Result<Option<String>> {
+        todo!()
     }
 }
 
 impl From<dialog::Dialog> for ShowDialog {
     fn from(value: dialog::Dialog) -> Self {
         ShowDialog {
+            id: todo!(),
             title: value.title,
             elements: value
                 .elements
                 .into_iter()
                 .map(DialogElement::from)
                 .collect(),
+            actions: value.actions
+                .into_iter()
+                .map(DialogAction::from)
+                .collect(),
+
         }
     }
 }
@@ -169,6 +187,15 @@ impl From<dialog::DialogElement> for DialogElement {
             dialog::DialogElement::Text(text) => DialogElement {
                 element: Some(dialog_element::Element::Text(text)),
             },
+        }
+    }
+}
+
+impl From<dialog::DialogAction> for DialogAction {
+    fn from(value: dialog::DialogAction) -> Self {
+        DialogAction {
+            text: value.label,
+            action: value.action,
         }
     }
 }

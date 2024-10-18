@@ -1,47 +1,24 @@
 use mizer_command_executor::*;
 use mizer_fixtures::FixtureId;
-use crate::Command;
-use crate::parser::*;
+use crate::{Command, CommandLineContext};
 use crate::ast::*;
 
 impl Command for Select<Fixtures, Single> {
-    fn try_parse(&self, tokens: &Tokens) -> Option<CommandImpl> {
-        let mut iter = tokens.iter();
-        if let Some(Token::Target((Keyword::Fixture, Selection::Single(id)))) = iter.next() {
-            return Some(SelectFixturesCommand {
-                fixtures: vec![FixtureId::Fixture(*id as u32)]
-            }.into());
-        }
-        let mut iter = tokens.iter();
-        if let Some(Token::Action(Action::Select)) = iter.next() {
-            if let Some(Token::Target((Keyword::Fixture, Selection::Single(id)))) = iter.next() {
-                return Some(SelectFixturesCommand {
-                    fixtures: vec![FixtureId::Fixture(*id as u32)]
-                }.into());
-            }
-        }
+    async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
+        context.execute_command(SelectFixturesCommand {
+            fixtures: vec![FixtureId::Fixture(self.target_entity.id)]
+        })?;
 
-        None
+        Ok(())
     }
 }
 
 impl Command for Select<Fixtures, Range> {
-    fn try_parse(&self, tokens: &Tokens) -> Option<CommandImpl> {
-        let mut iter = tokens.iter();
-        if let Some(Token::Target((Keyword::Fixture, Selection::Range(from, to)))) = iter.next() {
-            return Some(SelectFixturesCommand {
-                fixtures: (*from..=*to).map(|id| FixtureId::Fixture(id as u32)).collect()
-            }.into());
-        }
-        let mut iter = tokens.iter();
-        if let Some(Token::Action(Action::Select)) = iter.next() {
-            if let Some(Token::Target((Keyword::Fixture, Selection::Range(from, to)))) = iter.next() {
-                return Some(SelectFixturesCommand {
-                    fixtures: (*from..=*to).map(|id| FixtureId::Fixture(id as u32)).collect()
-                }.into());
-            }
-        }
+    async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
+        context.execute_command(SelectFixturesCommand {
+            fixtures: (self.target_entity.from..=self.target_entity.to).map(|id| FixtureId::Fixture(id)).collect()
+        })?;
 
-        None
+        Ok(())
     }
 }

@@ -10,6 +10,8 @@ tracing = "0.1"
 chumsky = "1.0.0-alpha.7"
 mizer-command-executor = { path = "../../runtime/commander/executor" }
 mizer-fixtures = { path = "../fixtures" }
+futures = "0.3"
+mizer-ui-api = { path = "../ui" }
 
 [dev-dependencies]
 test-case = "3.3"

@@ -28,6 +28,7 @@ impl Tokens {
 pub enum Token {
     Action(Action),
     Target((Keyword, Selection)),
+    Selection(Selection),
     Number(i64),
     Operator(Operator),
     Full,
@@ -44,6 +45,7 @@ pub enum Action {
     Call,
     GoForward,
     GoBackward,
+    Write,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

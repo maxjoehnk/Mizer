@@ -1,0 +1,7 @@
+// Select Fixtures 1 Thru 10
+// Fixtures 1 Thru 10
+// 1 Thru 10
+strict graph {
+    SELECT -- FIXTURES
+    FIXTURES -- "1 THRU 10"
+}

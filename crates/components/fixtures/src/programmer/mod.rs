@@ -405,6 +405,12 @@ impl Programmer {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn set_selection(&mut self, selection: FixtureSelection) {
+        // TODO: move_active_to_tracked?
+        self.active_selection = selection;
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn unselect_fixtures(&mut self, fixtures: Vec<FixtureId>) {
         tracing::trace!("unselect_fixtures");
         for fixture in fixtures {
@@ -568,6 +574,10 @@ impl Programmer {
 
     pub fn set_highlight(&mut self, highlight: bool) {
         self.highlight = highlight;
+    }
+
+    pub fn toggle_highlight(&mut self) {
+        self.highlight = !self.highlight;
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerControl> {

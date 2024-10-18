@@ -4,19 +4,13 @@ use mizer_fixtures::selection::FixtureSelection;
 use mizer_fixtures::GroupId;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
+use crate::StoreGroupMode;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {
     pub group_id: GroupId,
     pub selection: FixtureSelection,
     pub mode: StoreGroupMode,
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
-pub enum StoreGroupMode {
-    Overwrite,
-    Merge,
-    Subtract,
 }
 
 impl<'a> Command<'a> for AssignFixturesToGroupCommand {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/api/contracts/ui.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
@@ -212,6 +213,7 @@ class _PanelState extends State<Panel> {
 class PanelActionModel {
   final String label;
   final Function()? onClick;
+  final String? command;
   final bool disabled;
   final bool activated;
   final String? hotkeyId;
@@ -220,6 +222,7 @@ class PanelActionModel {
   PanelActionModel(
       {required this.label,
       this.onClick,
+      this.command,
       this.disabled = false,
       this.activated = false,
       this.hotkeyId,
@@ -258,12 +261,20 @@ class PanelAction extends StatelessWidget {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
     var hotkey = _getHotkey(context);
+    bool hasAction = action.onClick != null || action.command != null;
     return GestureDetector(
       onSecondaryTapDown: (event) => _openActionMenu(context, event.globalPosition),
       onLongPressEnd: (event) => _openActionMenu(context, event.globalPosition),
       child: Hoverable(
-        disabled: action.disabled || action.onClick == null,
-        onTap: action.onClick,
+        disabled: action.disabled || !hasAction,
+        onTap: hasAction ? () {
+          if (action.onClick != null) {
+            action.onClick!();
+          }
+          if (action.command != null) {
+            context.read<UiApi>().commandLineExecute(action.command!);
+          }
+        } : null,
         builder: (hovered) => Container(
           color: _getBackground(hovered),
           height: height,

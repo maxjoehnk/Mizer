@@ -23,4 +23,9 @@ class UiPluginApi implements UiApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
+  @override
+  Future<void> commandLineExecute(String command) {
+    return this.channel.invokeMethod("commandLineExecute", command);
+  }
 }

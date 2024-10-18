@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'time_control.dart';
@@ -81,7 +84,9 @@ class _TransportControlsState extends State<TransportControls> {
             ),
             _Divider(width: 4),
           ]),
-          Spacer(),
+          SizedBox(width: 4),
+          Expanded(child: CommandLineInput()),
+          SizedBox(width: 4),
           PanelAction(
               width: 80,
               action: PanelActionModel(
@@ -237,8 +242,8 @@ class _SpeedEditorState extends State<SpeedEditor> {
             _dragValue(double.parse(next.toStringAsFixed(3)));
           },
           onTap: () => setState(() => this.isEditing = true),
-          child:
-              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headlineSmall),
+          child: Text(value.toStringAsFixed(2),
+              textAlign: TextAlign.center, style: style.headlineSmall),
         ),
       ),
     );
@@ -338,5 +343,84 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(width: 2, color: Colors.black26);
+  }
+}
+
+class CommandLineInput extends StatefulWidget {
+  const CommandLineInput({super.key});
+
+  @override
+  State<CommandLineInput> createState() => _CommandLineInputState();
+}
+
+class _CommandLineInputState extends State<CommandLineInput> {
+  TextEditingController controller = TextEditingController(text: '');
+  FocusNode focusNode = FocusNode();
+  bool success = false;
+  bool error = false;
+
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    return Container(
+      height: TRANSPORT_CONTROLS_HEIGHT - 8,
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: BorderRadius.circular(2),
+        border: Border.all(color: Colors.black26),
+      ),
+      margin: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(4),
+      child: Stack(
+        children: [
+          if (!focusNode.hasFocus && controller.text.isEmpty)
+            Center(
+                child: Text("Commandline",
+                    style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
+          if (success) Positioned(child: Icon(Icons.check, color: Colors.green), right: 4),
+          if (error)
+            Positioned(child: Icon(Icons.warning_amber_outlined, color: Colors.red), right: 4),
+          Center(
+              child: TextFieldFocus(
+            child: EditableText(
+              controller: controller,
+              focusNode: focusNode,
+              style: textTheme.bodyMedium!,
+              autocorrect: false,
+              showCursor: true,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              textAlign: TextAlign.start,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.text,
+              inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+              onSubmitted: (value) {
+                execute(value);
+                controller.clear();
+                focusNode.requestFocus();
+              },
+            ),
+          )),
+        ],
+      ),
+    );
+  }
+
+  void execute(String cmd) {
+    context.read<UiApi>().commandLineExecute(cmd).then((value) {
+      setIconState(success: true);
+      context.refreshAllStates();
+      Future.delayed(Duration(seconds: 3)).then((value) => setIconState());
+    }).catchError((err) {
+      setIconState(error: true);
+      Future.delayed(Duration(seconds: 3)).then((value) => setIconState());
+    });
+  }
+
+  void setIconState({ bool success = false, bool error = false }) {
+    setState(() {
+      this.success = success;
+      this.error = error;
+    });
   }
 }

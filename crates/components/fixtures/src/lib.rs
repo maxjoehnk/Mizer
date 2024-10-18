@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
+use std::ops::Add;
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
@@ -42,6 +43,17 @@ impl From<u32> for FixtureId {
 impl From<(u32, u32)> for FixtureId {
     fn from((fixture_id, child_id): (u32, u32)) -> Self {
         Self::SubFixture(fixture_id, child_id)
+    }
+}
+
+impl Add<u32> for FixtureId {
+    type Output = Self;
+
+    fn add(self, rhs: u32) -> Self::Output {
+        match self {
+            FixtureId::Fixture(id) => FixtureId::Fixture(id + rhs),
+            FixtureId::SubFixture(pid, cid) => FixtureId::SubFixture(pid, cid + 1),
+        }
     }
 }
 

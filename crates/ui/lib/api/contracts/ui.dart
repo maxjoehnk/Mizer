@@ -4,4 +4,6 @@ abstract class UiApi {
   Stream<ShowDialog> dialogRequests();
 
   Future<TabularData> showTable(String table, List<String> arguments);
+
+  Future<void> commandLineExecute(String command);
 }

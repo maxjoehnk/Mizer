@@ -35,6 +35,7 @@ trait Command: Send + Sync {
 
 pub async fn try_parse_as_command<TContext: CommandLineContext>(context: &TContext, input: &str) -> anyhow::Result<()> {
     let tokens = parser::parse(input)?;
+    tracing::debug!("Tokens: {tokens:?}");
     let command = ast::parse(tokens)?;
 
     command.execute(context).await?;

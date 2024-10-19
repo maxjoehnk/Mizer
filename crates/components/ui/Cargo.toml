@@ -11,4 +11,3 @@ profiling = "1"
 tracing = "0.1"
 futures = "0.3"
 mizer-message-bus = { path = "../../util/bus" }
-flume = "0.11"

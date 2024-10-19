@@ -3,21 +3,14 @@ syntax = "proto3";
 package mizer.ui;
 
 message ShowDialog {
-  string id = 1;
-  string title = 2;
-  repeated DialogElement elements = 3;
-  repeated DialogAction actions = 4;
+  string title = 1;
+  repeated DialogElement elements = 2;
 }
 
 message DialogElement {
   oneof element {
     string text = 1;
   }
-}
-
-message DialogAction {
-  string text = 1;
-  string action = 2;
 }
 
 message TabularData {

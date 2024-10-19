@@ -10,7 +10,6 @@ mod commands;
 
 pub trait CommandLineContext: Send + Sync {
     fn execute_command<'a>(&self, command: impl SendableCommand<'a> + 'static) -> anyhow::Result<()>;
-    async fn show_dialog(&self, dialog: Dialog) -> anyhow::Result<Option<String>>;
 }
 
 trait BoxCommand<TContext: CommandLineContext> {

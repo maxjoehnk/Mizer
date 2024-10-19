@@ -6424,7 +6424,6 @@ name = "mizer-ui-api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "flume 0.11.0",
  "futures",
  "mizer-message-bus",
  "mizer-module",

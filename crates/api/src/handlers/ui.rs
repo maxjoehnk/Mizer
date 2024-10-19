@@ -156,27 +156,17 @@ impl<R: RuntimeApi> CommandLineContext for UiHandler<R> {
 
         Ok(())
     }
-
-    async fn show_dialog(&self, dialog: dialog::Dialog) -> anyhow::Result<Option<String>> {
-        todo!()
-    }
 }
 
 impl From<dialog::Dialog> for ShowDialog {
     fn from(value: dialog::Dialog) -> Self {
         ShowDialog {
-            id: todo!(),
             title: value.title,
             elements: value
                 .elements
                 .into_iter()
                 .map(DialogElement::from)
                 .collect(),
-            actions: value.actions
-                .into_iter()
-                .map(DialogAction::from)
-                .collect(),
-
         }
     }
 }
@@ -187,15 +177,6 @@ impl From<dialog::DialogElement> for DialogElement {
             dialog::DialogElement::Text(text) => DialogElement {
                 element: Some(dialog_element::Element::Text(text)),
             },
-        }
-    }
-}
-
-impl From<dialog::DialogAction> for DialogAction {
-    fn from(value: dialog::DialogAction) -> Self {
-        DialogAction {
-            text: value.label,
-            action: value.action,
         }
     }
 }

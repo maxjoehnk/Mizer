@@ -28,6 +28,7 @@ impl<'a> Command<'a> for AddGroupCommand {
             id: group_id,
             name: self.name.clone(),
             selection: Default::default(),
+            appearance: Default::default(),
         };
 
         Ok((group, group_id))

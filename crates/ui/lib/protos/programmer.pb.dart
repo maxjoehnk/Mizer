@@ -10,6 +10,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
+import 'appearance.pb.dart' as $2;
 
 import 'fixtures.pbenum.dart' as $0;
 import 'programmer.pbenum.dart';
@@ -1617,18 +1618,19 @@ enum Preset_Value {
 
 class Preset extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Preset_Value> _Preset_ValueByTag = {
-    3 : Preset_Value.fader,
-    4 : Preset_Value.color,
-    5 : Preset_Value.position,
+    4 : Preset_Value.fader,
+    5 : Preset_Value.color,
+    6 : Preset_Value.position,
     0 : Preset_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5])
+    ..oo(0, [4, 5, 6])
     ..aOM<PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: PresetId.create)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
-    ..aOM<Preset_Color>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Preset_Color.create)
-    ..aOM<Preset_Position>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: Preset_Position.create)
+    ..aOM<$2.Appearance>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appearance', subBuilder: $2.Appearance.create)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<Preset_Color>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Preset_Color.create)
+    ..aOM<Preset_Position>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: Preset_Position.create)
     ..hasRequiredFields = false
   ;
 
@@ -1636,6 +1638,7 @@ class Preset extends $pb.GeneratedMessage {
   factory Preset({
     PresetId? id,
     $core.String? label,
+    $2.Appearance? appearance,
     $core.double? fader,
     Preset_Color? color,
     Preset_Position? position,
@@ -1646,6 +1649,9 @@ class Preset extends $pb.GeneratedMessage {
     }
     if (label != null) {
       _result.label = label;
+    }
+    if (appearance != null) {
+      _result.appearance = appearance;
     }
     if (fader != null) {
       _result.fader = fader;
@@ -1703,35 +1709,46 @@ class Preset extends $pb.GeneratedMessage {
   void clearLabel() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.double get fader => $_getN(2);
+  $2.Appearance get appearance => $_getN(2);
   @$pb.TagNumber(3)
-  set fader($core.double v) { $_setDouble(2, v); }
+  set appearance($2.Appearance v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasFader() => $_has(2);
+  $core.bool hasAppearance() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFader() => clearField(3);
+  void clearAppearance() => clearField(3);
+  @$pb.TagNumber(3)
+  $2.Appearance ensureAppearance() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  Preset_Color get color => $_getN(3);
+  $core.double get fader => $_getN(3);
   @$pb.TagNumber(4)
-  set color(Preset_Color v) { setField(4, v); }
+  set fader($core.double v) { $_setDouble(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasColor() => $_has(3);
+  $core.bool hasFader() => $_has(3);
   @$pb.TagNumber(4)
-  void clearColor() => clearField(4);
-  @$pb.TagNumber(4)
-  Preset_Color ensureColor() => $_ensure(3);
+  void clearFader() => clearField(4);
 
   @$pb.TagNumber(5)
-  Preset_Position get position => $_getN(4);
+  Preset_Color get color => $_getN(4);
   @$pb.TagNumber(5)
-  set position(Preset_Position v) { setField(5, v); }
+  set color(Preset_Color v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPosition() => $_has(4);
+  $core.bool hasColor() => $_has(4);
   @$pb.TagNumber(5)
-  void clearPosition() => clearField(5);
+  void clearColor() => clearField(5);
   @$pb.TagNumber(5)
-  Preset_Position ensurePosition() => $_ensure(4);
+  Preset_Color ensureColor() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  Preset_Position get position => $_getN(5);
+  @$pb.TagNumber(6)
+  set position(Preset_Position v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPosition() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPosition() => clearField(6);
+  @$pb.TagNumber(6)
+  Preset_Position ensurePosition() => $_ensure(5);
 }
 
 class CallPresetResponse extends $pb.GeneratedMessage {
@@ -1837,6 +1854,7 @@ class Group extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Group', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<$2.Appearance>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'appearance', subBuilder: $2.Appearance.create)
     ..hasRequiredFields = false
   ;
 
@@ -1844,6 +1862,7 @@ class Group extends $pb.GeneratedMessage {
   factory Group({
     $core.int? id,
     $core.String? name,
+    $2.Appearance? appearance,
   }) {
     final _result = create();
     if (id != null) {
@@ -1851,6 +1870,9 @@ class Group extends $pb.GeneratedMessage {
     }
     if (name != null) {
       _result.name = name;
+    }
+    if (appearance != null) {
+      _result.appearance = appearance;
     }
     return _result;
   }
@@ -1892,6 +1914,17 @@ class Group extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $2.Appearance get appearance => $_getN(2);
+  @$pb.TagNumber(3)
+  set appearance($2.Appearance v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAppearance() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAppearance() => clearField(3);
+  @$pb.TagNumber(3)
+  $2.Appearance ensureAppearance() => $_ensure(2);
 }
 
 class SelectGroupRequest extends $pb.GeneratedMessage {

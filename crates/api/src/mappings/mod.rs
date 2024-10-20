@@ -1,3 +1,4 @@
+mod appearance;
 mod connections;
 mod console;
 mod effects;

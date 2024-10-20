@@ -1,42 +1,37 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: ui.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ShowDialog extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShowDialog', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.ui'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..pc<DialogElement>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'elements', $pb.PbFieldType.PM, subBuilder: DialogElement.create)
+    ..hasRequiredFields = false
+  ;
+
+  ShowDialog._() : super();
   factory ShowDialog({
     $core.String? title,
     $core.Iterable<DialogElement>? elements,
   }) {
-    final $result = create();
+    final _result = create();
     if (title != null) {
-      $result.title = title;
+      _result.title = title;
     }
     if (elements != null) {
-      $result.elements.addAll(elements);
+      _result.elements.addAll(elements);
     }
-    return $result;
+    return _result;
   }
-  ShowDialog._() : super();
   factory ShowDialog.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ShowDialog.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ShowDialog', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'title')
-    ..pc<DialogElement>(2, _omitFieldNames ? '' : 'elements', $pb.PbFieldType.PM, subBuilder: DialogElement.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -46,10 +41,8 @@ class ShowDialog extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ShowDialog copyWith(void Function(ShowDialog) updates) => super.copyWith((message) => updates(message as ShowDialog)) as ShowDialog;
-
+  ShowDialog copyWith(void Function(ShowDialog) updates) => super.copyWith((message) => updates(message as ShowDialog)) as ShowDialog; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ShowDialog create() => ShowDialog._();
   ShowDialog createEmptyInstance() => create();
@@ -77,29 +70,28 @@ enum DialogElement_Element {
 }
 
 class DialogElement extends $pb.GeneratedMessage {
-  factory DialogElement({
-    $core.String? text,
-  }) {
-    final $result = create();
-    if (text != null) {
-      $result.text = text;
-    }
-    return $result;
-  }
-  DialogElement._() : super();
-  factory DialogElement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DialogElement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, DialogElement_Element> _DialogElement_ElementByTag = {
     1 : DialogElement_Element.text,
     0 : DialogElement_Element.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DialogElement', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DialogElement', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.ui'), createEmptyInstance: create)
     ..oo(0, [1])
-    ..aOS(1, _omitFieldNames ? '' : 'text')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'text')
     ..hasRequiredFields = false
   ;
 
+  DialogElement._() : super();
+  factory DialogElement({
+    $core.String? text,
+  }) {
+    final _result = create();
+    if (text != null) {
+      _result.text = text;
+    }
+    return _result;
+  }
+  factory DialogElement.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DialogElement.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -109,10 +101,8 @@ class DialogElement extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DialogElement copyWith(void Function(DialogElement) updates) => super.copyWith((message) => updates(message as DialogElement)) as DialogElement;
-
+  DialogElement copyWith(void Function(DialogElement) updates) => super.copyWith((message) => updates(message as DialogElement)) as DialogElement; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static DialogElement create() => DialogElement._();
   DialogElement createEmptyInstance() => create();
@@ -135,29 +125,28 @@ class DialogElement extends $pb.GeneratedMessage {
 }
 
 class TabularData extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TabularData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.ui'), createEmptyInstance: create)
+    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'columns')
+    ..pc<Row>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rows', $pb.PbFieldType.PM, subBuilder: Row.create)
+    ..hasRequiredFields = false
+  ;
+
+  TabularData._() : super();
   factory TabularData({
     $core.Iterable<$core.String>? columns,
     $core.Iterable<Row>? rows,
   }) {
-    final $result = create();
+    final _result = create();
     if (columns != null) {
-      $result.columns.addAll(columns);
+      _result.columns.addAll(columns);
     }
     if (rows != null) {
-      $result.rows.addAll(rows);
+      _result.rows.addAll(rows);
     }
-    return $result;
+    return _result;
   }
-  TabularData._() : super();
   factory TabularData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory TabularData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TabularData', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
-    ..pPS(1, _omitFieldNames ? '' : 'columns')
-    ..pc<Row>(2, _omitFieldNames ? '' : 'rows', $pb.PbFieldType.PM, subBuilder: Row.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -167,10 +156,8 @@ class TabularData extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  TabularData copyWith(void Function(TabularData) updates) => super.copyWith((message) => updates(message as TabularData)) as TabularData;
-
+  TabularData copyWith(void Function(TabularData) updates) => super.copyWith((message) => updates(message as TabularData)) as TabularData; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static TabularData create() => TabularData._();
   TabularData createEmptyInstance() => create();
@@ -187,34 +174,33 @@ class TabularData extends $pb.GeneratedMessage {
 }
 
 class Row extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Row', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.ui'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cells')
+    ..pc<Row>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: Row.create)
+    ..hasRequiredFields = false
+  ;
+
+  Row._() : super();
   factory Row({
     $core.String? id,
     $core.Iterable<$core.String>? cells,
     $core.Iterable<Row>? children,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (cells != null) {
-      $result.cells.addAll(cells);
+      _result.cells.addAll(cells);
     }
     if (children != null) {
-      $result.children.addAll(children);
+      _result.children.addAll(children);
     }
-    return $result;
+    return _result;
   }
-  Row._() : super();
   factory Row.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Row.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Row', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.ui'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..pPS(2, _omitFieldNames ? '' : 'cells')
-    ..pc<Row>(3, _omitFieldNames ? '' : 'children', $pb.PbFieldType.PM, subBuilder: Row.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -224,10 +210,8 @@ class Row extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Row copyWith(void Function(Row) updates) => super.copyWith((message) => updates(message as Row)) as Row;
-
+  Row copyWith(void Function(Row) updates) => super.copyWith((message) => updates(message as Row)) as Row; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Row create() => Row._();
   Row createEmptyInstance() => create();
@@ -252,6 +236,3 @@ class Row extends $pb.GeneratedMessage {
   $core.List<Row> get children => $_getList(2);
 }
 
-
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -328,9 +328,10 @@ const Preset$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'id'},
     const {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
-    const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Color', '9': 0, '10': 'color'},
-    const {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Position', '9': 0, '10': 'position'},
+    const {'1': 'appearance', '3': 3, '4': 1, '5': 11, '6': '.mizer.appearance.Appearance', '10': 'appearance'},
+    const {'1': 'fader', '3': 4, '4': 1, '5': 1, '9': 0, '10': 'fader'},
+    const {'1': 'color', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Color', '9': 0, '10': 'color'},
+    const {'1': 'position', '3': 6, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Position', '9': 0, '10': 'position'},
   ],
   '3': const [Preset_Color$json, Preset_Position$json],
   '8': const [
@@ -363,7 +364,7 @@ const Preset_Position$json = const {
 };
 
 /// Descriptor for `Preset`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARIWCgVmYWRlchgDIAEoAUgAUgVmYWRlchI2CgVjb2xvchgEIAEoCzIeLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0LkNvbG9ySABSBWNvbG9yEj8KCHBvc2l0aW9uGAUgASgLMiEubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuUG9zaXRpb25IAFIIcG9zaXRpb24aQwoFQ29sb3ISEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWUaSwoIUG9zaXRpb24SFwoEdGlsdBgBIAEoAUgAUgR0aWx0iAEBEhUKA3BhbhgCIAEoAUgBUgNwYW6IAQFCBwoFX3RpbHRCBgoEX3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
+final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARI8CgphcHBlYXJhbmNlGAMgASgLMhwubWl6ZXIuYXBwZWFyYW5jZS5BcHBlYXJhbmNlUgphcHBlYXJhbmNlEhYKBWZhZGVyGAQgASgBSABSBWZhZGVyEjYKBWNvbG9yGAUgASgLMh4ubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuQ29sb3JIAFIFY29sb3ISPwoIcG9zaXRpb24YBiABKAsyIS5taXplci5wcm9ncmFtbWVyLlByZXNldC5Qb3NpdGlvbkgAUghwb3NpdGlvbhpDCgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZRpLCghQb3NpdGlvbhIXCgR0aWx0GAEgASgBSABSBHRpbHSIAQESFQoDcGFuGAIgASgBSAFSA3BhbogBAUIHCgVfdGlsdEIGCgRfcGFuQgcKBXZhbHVlQggKBl9sYWJlbA==');
 @$core.Deprecated('Use callPresetResponseDescriptor instead')
 const CallPresetResponse$json = const {
   '1': 'CallPresetResponse',
@@ -394,11 +395,12 @@ const Group$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'appearance', '3': 3, '4': 1, '5': 11, '6': '.mizer.appearance.Appearance', '10': 'appearance'},
   ],
 };
 
 /// Descriptor for `Group`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List groupDescriptor = $convert.base64Decode('CgVHcm91cBIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
+final $typed_data.Uint8List groupDescriptor = $convert.base64Decode('CgVHcm91cBIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRI8CgphcHBlYXJhbmNlGAMgASgLMhwubWl6ZXIuYXBwZWFyYW5jZS5BcHBlYXJhbmNlUgphcHBlYXJhbmNl');
 @$core.Deprecated('Use selectGroupRequestDescriptor instead')
 const SelectGroupRequest$json = const {
   '1': 'SelectGroupRequest',

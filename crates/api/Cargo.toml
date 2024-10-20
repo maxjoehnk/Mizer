@@ -10,6 +10,7 @@ default = []
 [dependencies]
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
+mizer-appearance = { path = "../components/apperance" }
 mizer-console = { path = "../components/console" }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-fixture-patch-export = { path = "../components/fixtures/patch-export" }

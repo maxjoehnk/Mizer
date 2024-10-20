@@ -1,3 +1,6 @@
+pub mod appearance {
+    tonic::include_proto!("mizer.appearance");
+}
 pub mod console {
     tonic::include_proto!("mizer.console");
 }

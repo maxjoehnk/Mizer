@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1081 1081" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-2274,0)">
+        <g id="tube" transform="matrix(1,0,0,1,2274.53,0.98915)">
+            <rect x="0" y="0" width="1080" height="1080" style="fill:none;"/>
+            <g transform="matrix(1.38767,0,0,1.38767,-257.034,-162.637)">
+                <g transform="matrix(0.707107,0.707107,-0.707107,0.707107,-965.329,-1750.38)">
+                    <path d="M2723.41,90.515L2723.41,1015.76C2723.41,1017.94 2721.64,1019.71 2719.46,1019.71L2648.48,1019.71C2646.3,1019.71 2644.53,1017.94 2644.53,1015.76L2644.53,90.515L2723.41,90.515Z"/>
+                </g>
+                <g transform="matrix(0.707107,0.707107,-0.0599658,0.0599658,-957.496,-1757.49)">
+                    <path d="M2719.46,90.515C2720.51,90.515 2721.51,95.426 2722.25,104.167C2723,112.909 2723.41,124.765 2723.41,137.127C2723.41,325.402 2723.41,1019.71 2723.41,1019.71L2644.53,1019.71L2644.53,137.127C2644.53,124.765 2644.94,112.909 2645.68,104.167C2646.43,95.426 2647.43,90.515 2648.48,90.515C2661.95,90.515 2705.99,90.515 2719.46,90.515Z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

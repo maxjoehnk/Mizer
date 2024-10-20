@@ -10,6 +10,7 @@ nightly = ["mockall/nightly"]
 [dependencies]
 anyhow = "1"
 dashmap = { version = "6", features = ["serde"] }
+mizer-appearance = { path = "../apperance" }
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
 mizer-commander = { path = "../../runtime/commander" }

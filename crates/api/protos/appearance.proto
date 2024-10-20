@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package mizer.appearance;
+
+message Appearance {
+  optional string icon = 1;
+  optional Color color = 2;
+  optional Color background = 3;
+}
+
+message Color {
+  float red = 1;
+  float green = 2;
+  float blue = 3;
+  float alpha = 4;
+}

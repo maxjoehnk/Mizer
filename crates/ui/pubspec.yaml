@@ -54,6 +54,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/icons/fixtures/
     - assets/locales/
 
 ffigen:

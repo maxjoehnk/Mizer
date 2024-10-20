@@ -79,6 +79,7 @@ impl FixtureManager {
             id: group_id,
             selection: Default::default(),
             name,
+            appearance: Default::default(),
         };
         self.groups.insert(group_id, group);
 

@@ -136,6 +136,7 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Fader(preset.value)),
             label: preset.label,
+            appearance: Default::default(),
         }
     }
 }
@@ -156,6 +157,7 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Color(preset.value.into())),
             label: preset.label,
+            appearance: Default::default(),
         }
     }
 }
@@ -182,6 +184,7 @@ impl
             id: Some(id.into()),
             value: Some(preset::Value::Position(preset.value.into())),
             label: preset.label,
+            appearance: Default::default(),
         }
     }
 }
@@ -212,6 +215,7 @@ impl From<mizer_fixtures::programmer::Group> for Group {
         Self {
             id: group.id.into(),
             name: group.name,
+            appearance: Some(group.appearance.into()),
         }
     }
 }

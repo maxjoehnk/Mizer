@@ -2198,6 +2198,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.58",
+ "unicode-xid",
 ]
 
 [[package]]
@@ -4899,6 +4900,7 @@ dependencies = [
  "futures",
  "itertools 0.13.0",
  "lazy_static",
+ "mizer-appearance",
  "mizer-clock",
  "mizer-command-executor",
  "mizer-connections",
@@ -4935,6 +4937,15 @@ dependencies = [
  "tonic",
  "tonic-build",
  "tracing",
+]
+
+[[package]]
+name = "mizer-appearance"
+version = "0.1.0"
+dependencies = [
+ "derive_more",
+ "serde",
+ "serde_derive",
 ]
 
 [[package]]
@@ -5285,6 +5296,7 @@ dependencies = [
  "futures",
  "indexmap 2.6.0",
  "itertools 0.13.0",
+ "mizer-appearance",
  "mizer-commander",
  "mizer-message-bus",
  "mizer-module",

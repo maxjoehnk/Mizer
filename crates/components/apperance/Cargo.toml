@@ -1,0 +1,10 @@
+[package]
+name = "mizer-appearance"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+serde = "1"
+serde_derive = "1"
+derive_more = { version = "1", features = ["display", "from_str"] }

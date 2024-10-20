@@ -3,6 +3,7 @@ syntax = "proto3";
 package mizer.programmer;
 
 import "fixtures.proto";
+import "appearance.proto";
 
 service ProgrammerApi {
   rpc SubscribeToProgrammer (EmptyRequest) returns (stream ProgrammerState) {}
@@ -162,10 +163,11 @@ message Presets {
 message Preset {
   PresetId id = 1;
   optional string label = 2;
+  mizer.appearance.Appearance appearance = 3;
   oneof value {
-    double fader = 3;
-    Color color = 4;
-    Position position = 5;
+    double fader = 4;
+    Color color = 5;
+    Position position = 6;
   }
 
   message Color {
@@ -192,6 +194,7 @@ message Groups {
 message Group {
   uint32 id = 1;
   string name = 2;
+  mizer.appearance.Appearance appearance = 3;
 }
 
 message SelectGroupRequest {

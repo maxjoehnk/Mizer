@@ -10,4 +10,5 @@ nav:
   - modules/media/nav.adoc
   - modules/surfaces/nav.adoc
   - modules/timecode/nav.adoc
+  - modules/console/nav.adoc
   - modules/examples/nav.adoc

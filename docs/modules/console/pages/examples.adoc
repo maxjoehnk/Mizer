@@ -1,0 +1,19 @@
+= Examples
+
+|===
+|*Command* |*Note*
+|1 Thru 10 |SelectFixtures 1 Thru 10
+|Fixtures 1 Thru 10 |SelectFixtures 1 Thru 10
+|Select Fixtures 1 Thru 10 |SelectFixtures 1 Thru 10
+|@ Full |Write Intensity 100 of current Fixture Selection
+|@ 20 |Write Intensity 20 of current Fixture Selection
+|1 Thru 10 @ 20 |Write Intensity 20 of fixtures 1 to 10
+|Channel Pan @ 10 |Write Pan 10 of current Fixture Selection
+|1 Thru 10 Channel Pan @ 10 |Write Pan 10 of fixtures 1 to 10
+|Select Sequence 1 |Select Sequence 1 in Editor
+|Store Sequence 1 |Store into Sequence 1
+|Delete Sequence 1 |Delete Sequence 1
+|Highlight | Toggle Highlight mode
+|Store Group 1 | Store Fixture Selection into Group 1
+|===
+

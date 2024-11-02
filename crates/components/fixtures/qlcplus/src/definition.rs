@@ -336,3 +336,74 @@ impl Display for HtmlEntityString {
         f.write_str(&self.0)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use serde_derive::Deserialize;
+
+    #[derive(Deserialize, Debug)]
+    struct Test {
+        #[serde(rename = "$value")]
+        pub child: Vec<ChildOrText>,
+        // #[serde(rename = "$text")]
+        // pub text: String,
+        // pub child: Vec<Child>,
+    }
+
+    #[derive(Deserialize, PartialEq, Eq, Debug)]
+    enum ChildOrText {
+        Child(Child),
+        #[serde(rename = "$text")]
+        Text(String),
+    }
+
+    #[derive(Deserialize, PartialEq, Eq, Debug)]
+    struct Child {}
+
+    #[derive(Deserialize)]
+    struct TextTest {
+        #[serde(rename = "$value")]
+        child: String,
+    }
+
+    #[derive(Deserialize)]
+    struct ChildTest {
+        #[serde(rename = "$value")]
+        child: Vec<Child>,
+    }
+
+    #[test]
+    fn xml_edgecase() {
+        let xml = r#"<Test>Text
+          <Child />
+        </Test>"#;
+
+        let result: Test = quick_xml::de::from_str(xml).unwrap();
+
+        println!("{result:?}");
+        assert_eq!(result.child.len(), 2);
+        assert_eq!(&result.child[0], &ChildOrText::Text("Text".to_string()));
+        assert_eq!(&result.child[1], &ChildOrText::Child(Child {}));
+    }
+
+    #[test]
+    fn text_child() {
+        let xml = r#"<TextTest>Text
+        </TextTest>"#;
+
+        let result: TextTest = quick_xml::de::from_str(xml).unwrap();
+
+        assert_eq!(&result.child, "Text");
+    }
+
+    #[test]
+    fn child() {
+        let xml = r#"<ChildTest>
+            <Child />
+        </ChildTest>"#;
+
+        let result: ChildTest = quick_xml::de::from_str(xml).unwrap();
+
+        assert_eq!(result.child.len(), 1);
+    }
+}

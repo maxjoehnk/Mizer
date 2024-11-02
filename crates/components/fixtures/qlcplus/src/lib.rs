@@ -146,6 +146,7 @@ mod tests {
     const GENERIC_RGBW_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGBW.qxf");
     const GENERIC_CMY_DEFINITION: &str = include_str!("../tests/Generic-Generic-CMY.qxf");
     const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
+    const XML_EDGECASE: &str = include_str!("../tests/Eurolite-LED-Bar-RGB-252_10_40__Indoor.qxf");
 
     #[test]
     fn generic_rgb() {
@@ -262,6 +263,14 @@ mod tests {
     #[test]
     fn generic_smoke() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_SMOKE_DEFINITION);
+
+        println!("{:#?}", file);
+        assert!(file.is_ok());
+    }
+
+    #[test]
+    fn xml_edgecase() {
+        let file = QlcPlusFixtureDefinition::from_str(XML_EDGECASE);
 
         println!("{:#?}", file);
         assert!(file.is_ok());

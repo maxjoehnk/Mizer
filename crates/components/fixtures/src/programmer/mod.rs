@@ -16,7 +16,7 @@ pub use presets::*;
 use crate::contracts::FixtureController;
 use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
 use crate::selection::FixtureSelection;
-use crate::{FixtureId, GroupId, RgbColor};
+use crate::{FixtureId, FixturePriority, GroupId, RgbColor};
 
 mod default_presets;
 mod groups;
@@ -356,7 +356,7 @@ impl Programmer {
             }
         }
         for ((fixture_id, control), value) in values {
-            fixture_controller.write(fixture_id, control, value);
+            fixture_controller.write(fixture_id, control, value, FixturePriority::Programmer);
         }
         if self.highlight {
             if let Some(x) = self.x {
@@ -746,7 +746,7 @@ mod tests {
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
     use crate::programmer::{Group, Presets, Programmer, ProgrammerControlValue, ProgrammerState};
     use crate::selection::FixtureSelection;
-    use crate::FixtureId;
+    use crate::{FixtureId, FixturePriority};
 
     #[test]
     fn selecting_fixtures_should_select_fixtures() {
@@ -1138,6 +1138,7 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(control),
                 predicate::eq(value),
+                predicate::eq(FixturePriority::Programmer),
             )
             .return_const(());
     }

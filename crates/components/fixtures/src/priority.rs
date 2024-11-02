@@ -5,10 +5,14 @@ use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
 
 #[derive(
-    Debug, Clone, Copy, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize, Sequence,
+    Debug, Clone, Copy, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize,
 )]
 #[repr(u8)]
 pub enum FixturePriority {
+    /**
+     * Programmer always overrides everything else
+     */
+    Programmer = 10,
     /**
      * Highest takes precedence
      */
@@ -17,6 +21,43 @@ pub enum FixturePriority {
      * Latest takes precedence
      */
     LTP(LTPPriority) = 0,
+}
+
+// We ignore the Programmer priority here as it is not supposed to be exposed to the user
+impl Sequence for FixturePriority {
+    const CARDINALITY: usize = LTPPriority::CARDINALITY + 1;
+
+    fn next(&self) -> Option<Self> {
+        match self {
+            Self::Programmer => None,
+            Self::HTP => Some(Self::LTP(LTPPriority::Highest)),
+            Self::LTP(LTPPriority::Highest) => Some(Self::LTP(LTPPriority::High)),
+            Self::LTP(LTPPriority::High) => Some(Self::LTP(LTPPriority::Normal)),
+            Self::LTP(LTPPriority::Normal) => Some(Self::LTP(LTPPriority::Low)),
+            Self::LTP(LTPPriority::Low) => Some(Self::LTP(LTPPriority::Lowest)),
+            Self::LTP(LTPPriority::Lowest) => None,
+        }
+    }
+
+    fn previous(&self) -> Option<Self> {
+        match self {
+            Self::Programmer => None,
+            Self::HTP => None,
+            Self::LTP(LTPPriority::Highest) => Some(Self::HTP),
+            Self::LTP(LTPPriority::High) => Some(Self::LTP(LTPPriority::Highest)),
+            Self::LTP(LTPPriority::Normal) => Some(Self::LTP(LTPPriority::High)),
+            Self::LTP(LTPPriority::Low) => Some(Self::LTP(LTPPriority::Normal)),
+            Self::LTP(LTPPriority::Lowest) => Some(Self::LTP(LTPPriority::Low)),
+        }
+    }
+
+    fn first() -> Option<Self> {
+        Some(Self::HTP)
+    }
+
+    fn last() -> Option<Self> {
+        Some(Self::LTP(LTPPriority::Lowest))
+    }
 }
 
 impl FixturePriority {
@@ -65,6 +106,7 @@ impl From<LTPPriority> for FixturePriority {
 impl From<FixturePriority> for u8 {
     fn from(value: FixturePriority) -> Self {
         match value {
+            FixturePriority::Programmer => 10,
             FixturePriority::HTP => 5,
             FixturePriority::LTP(LTPPriority::Highest) => 4,
             FixturePriority::LTP(LTPPriority::High) => 3,
@@ -80,6 +122,7 @@ impl TryFrom<u8> for FixturePriority {
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
         match value {
+            10 => Ok(Self::Programmer),
             5 => Ok(Self::HTP),
             4 => Ok(Self::LTP(LTPPriority::Highest)),
             3 => Ok(Self::LTP(LTPPriority::High)),
@@ -105,6 +148,7 @@ impl Error for InvalidFixturePriorityError {}
 impl Display for FixturePriority {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            Self::Programmer => write!(f, "Programmer"),
             Self::HTP => write!(f, "HTP"),
             Self::LTP(level) => write!(f, "LTP {:?}", level),
         }

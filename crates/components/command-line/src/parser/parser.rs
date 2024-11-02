@@ -50,7 +50,7 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         text::int(10).from_str().unwrapped()
             .then_ignore(just("."))
             .then(text::int(10).from_str().unwrapped())
-            .map(|(a, b)| Id::new(&[a, b])),
+            .map(|(a, b)| Id::new([a, b])),
     ));
     
     let selection = choice((

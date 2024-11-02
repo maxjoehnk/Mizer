@@ -1,5 +1,6 @@
 mod parser;
 
+use std::ops::Deref;
 pub use parser::parse;
 use crate::Id;
 
@@ -38,7 +39,12 @@ pub struct Range {
 
 impl Range {
     pub fn evaluate_range(&self) -> Vec<Id> {
-        todo!()
+        match (self.from.deref(), self.to.deref()) {
+            (&[from], &[to]) => {
+                (from..=to).map(|id| Id::single(id)).collect()
+            }
+            _ => todo!()
+        }
     }
 }
 
@@ -109,12 +115,15 @@ mod tests {
     use super::*;
     
     #[test_case(Id::single(1), Id::single(4), vec![Id::single(1), Id::single(2), Id::single(3), Id::single(4)])]
-    #[test_case(Id::new(&[1, 1]), Id::new(&[1, 4]), vec![Id::new(&[1, 1]), Id::new(&[1, 2]), Id::new(&[1, 3]), Id::new(&[1, 4])])]
+    #[test_case(Id::new([1, 1]), Id::new([1, 4]), vec![Id::new([1, 1]), Id::new([1, 2]), Id::new([1, 3]), Id::new([1, 4])])]
     fn range_evaluate_range(from: Id, to: Id, expected: Vec<Id>) {
         let range = Range {
             from,
             to,
         };
-        assert_eq!(range.evaluate_range(), expected);
+        
+        let result = range.evaluate_range();
+        
+        assert_eq!(result, expected);
     }
 }

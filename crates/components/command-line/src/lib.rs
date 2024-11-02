@@ -3,42 +3,46 @@ use std::ops::Deref;
 use mizer_command_executor::{SendableCommand};
 use futures::future::BoxFuture;
 use futures::FutureExt;
-use smallvec::SmallVec;
 
 mod ast;
 mod parser;
 mod commands;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub(crate) struct Id(SmallVec<[u32; 2]>);
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) struct Id {
+    array: [u32; 2],
+    len: usize,
+}
 
 impl Deref for Id {
     type Target = [u32];
 
     fn deref(&self) -> &Self::Target {
-        &self.0
+        &self.array[..self.len]
     }
 }
 
 impl Id {
     pub fn single(id: u32) -> Self {
-        Self(SmallVec::from_slice(&[id]))
+        Self {
+            array: [id, 0],
+            len: 1,
+        }
     }
     
-    pub fn new(slice: &[u32]) -> Self {
-        if slice.is_empty() {
-            panic!("Id cannot be empty");
+    pub fn new(slice: [u32; 2]) -> Self {
+        Self {
+            array: slice,
+            len: 2,
         }
-        
-        Self(SmallVec::from_slice(slice))
     }
     
     pub fn first(&self) -> u32 {
-        self.0[0]
+        self.array[0]
     }
     
     pub fn depth(&self) -> usize {
-        self.0.len()
+        self.len
     }
 }
 

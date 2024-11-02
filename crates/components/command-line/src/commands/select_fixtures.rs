@@ -16,7 +16,7 @@ impl Command for Select<Fixtures, Single> {
 impl Command for Select<Fixtures, Range> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
         context.execute_command(SelectFixturesCommand {
-            fixtures: (self.target_entity.from..=self.target_entity.to).map(|id| FixtureId::from(&id)).collect()
+            fixtures: self.target_entity.evaluate_range().into_iter().map(|id| FixtureId::from(&id)).collect()
         })?;
 
         Ok(())

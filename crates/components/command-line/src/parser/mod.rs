@@ -1,6 +1,5 @@
 use std::ops::Deref;
 use chumsky::Parser;
-use smallvec::SmallVec;
 use crate::Id;
 
 mod parser;
@@ -102,23 +101,23 @@ mod tests {
 
     #[test_case("select fixtures 1", 1)]
     #[test_case("select fixtures 3", 3)]
-    fn parse_fixture_selection(input: &str, expected: i64) {
+    fn parse_fixture_selection(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
         assert_eq!(ast, Tokens(vec![
             Token::Action(Action::Select),
-            Token::Target((Keyword::Fixture, Selection::Single(expected))),
+            Token::Target((Keyword::Fixture, Selection::Single(Id::single(expected)))),
         ]));
     }
 
     #[test_case("select 1", 1)]
     #[test_case("select 3", 3)]
-    fn parse_implicit_fixture_selection(input: &str, expected: i64) {
+    fn parse_implicit_fixture_selection(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
         assert_eq!(ast, Tokens(vec![
             Token::Action(Action::Select),
-            Token::Target((Keyword::Fixture, Selection::Single(expected))),
+            Token::Target((Keyword::Fixture, Selection::Single(Id::single(expected)))),
         ]));
     }
 
@@ -126,22 +125,22 @@ mod tests {
     #[test_case("select fixtures 1..3", 1, 3)]
     #[test_case("select fixtures 2 .. 4", 2, 4)]
     #[test_case("select fixtures 3 thru 5", 3, 5)]
-    fn parse_multiple_fixture_selection(input: &str, from: i64, to: i64) {
+    fn parse_multiple_fixture_selection(input: &str, from: u32, to: u32) {
         let ast = parse(input).unwrap();
 
         assert_eq!(ast, Tokens(vec![
             Token::Action(Action::Select),
-            Token::Target((Keyword::Fixture, Selection::Range(from, to))),
+            Token::Target((Keyword::Fixture, Selection::Range(Id::single(from), Id::single(to)))),
         ]));
     }
 
     #[test_case("delete sequence 1", 1)]
-    fn parse_delete_sequence(input: &str, expected: i64) {
+    fn parse_delete_sequence(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
         assert_eq!(ast, Tokens(vec![
             Token::Action(Action::Delete),
-            Token::Target((Keyword::Sequence, Selection::Single(expected))),
+            Token::Target((Keyword::Sequence, Selection::Single(Id::single(expected)))),
         ]));
     }
 }

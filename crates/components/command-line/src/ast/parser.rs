@@ -9,15 +9,15 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
         Some(Token::Selection(Selection::Single(id))) => {
             Ok(ast::Select {
                 target_type: ast::Fixtures,
-                target_entity: ast::Single { id: id as u32 },
+                target_entity: ast::Single { id },
             }.boxed())
         }
         Some(Token::Selection(Selection::Range(from, to))) => {
             Ok(ast::Select {
                 target_type: ast::Fixtures,
                 target_entity: ast::Range {
-                    from: from as u32,
-                    to: to as u32,
+                    from,
+                    to,
                 },
             }.boxed())
         }
@@ -38,15 +38,15 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Fixture, Selection::Single(id)))) => {
                     Ok(ast::Select {
                         target_type: ast::Fixtures,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 Some(Token::Target((Keyword::Fixture, Selection::Range(from, to)))) => {
                     Ok(ast::Select {
                         target_type: ast::Fixtures,
                         target_entity: ast::Range {
-                            from: from as u32,
-                            to: to as u32,
+                            from,
+                            to,
                         },
                     }.boxed())
                 }
@@ -58,13 +58,13 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Group, Selection::Single(id)))) => {
                     Ok(ast::Call {
                         target_type: ast::Groups,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 // Some(Token::Target((Keyword::Sequence, Selection::Single(id)))) => {
                 //     Ok(ast::Call {
                 //         target_type: ast::Sequences,
-                //         target_entity: ast::Single { id: id as u32 },
+                //         target_entity: ast::Single { id },
                 //     }.boxed())
                 // }
                 _ => Err(anyhow::anyhow!("Invalid token"))
@@ -75,13 +75,13 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Group, Selection::Single(id)))) => {
                     Ok(ast::Delete {
                         target_type: ast::Groups,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 Some(Token::Target((Keyword::Sequence, Selection::Single(id)))) => {
                     Ok(ast::Delete {
                         target_type: ast::Sequences,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 _ => Err(anyhow::anyhow!("Invalid token"))
@@ -92,7 +92,7 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Sequence, Selection::Single(id)))) => {
                     Ok(ast::Off {
                         target_type: ast::Sequences,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 _ => Err(anyhow::anyhow!("Invalid token"))
@@ -103,7 +103,7 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Sequence, Selection::Single(id)))) => {
                     Ok(ast::GoForward {
                         target_type: ast::Sequences,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 _ => Err(anyhow::anyhow!("Invalid token"))
@@ -114,7 +114,7 @@ pub fn parse<TContext: CommandLineContext>(tokens: Tokens) -> anyhow::Result<Box
                 Some(Token::Target((Keyword::Sequence, Selection::Single(id)))) => {
                     Ok(ast::GoBackward {
                         target_type: ast::Sequences,
-                        target_entity: ast::Single { id: id as u32 },
+                        target_entity: ast::Single { id },
                     }.boxed())
                 }
                 _ => Err(anyhow::anyhow!("Invalid token"))

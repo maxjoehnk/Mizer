@@ -1,4 +1,7 @@
+use std::ops::Deref;
 use chumsky::Parser;
+use smallvec::SmallVec;
+use crate::Id;
 
 mod parser;
 
@@ -64,10 +67,10 @@ pub enum Operator {
     DividedBy,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Selection {
-    Single(i64),
-    Range(i64, i64),
+    Single(Id),
+    Range(Id, Id),
 }
 
 pub fn parse(input: &str) -> anyhow::Result<Tokens> {
@@ -107,6 +110,18 @@ mod tests {
             Token::Target((Keyword::Fixture, Selection::Single(expected))),
         ]));
     }
+
+    #[test_case("select 1", 1)]
+    #[test_case("select 3", 3)]
+    fn parse_implicit_fixture_selection(input: &str, expected: i64) {
+        let ast = parse(input).unwrap();
+
+        assert_eq!(ast, Tokens(vec![
+            Token::Action(Action::Select),
+            Token::Target((Keyword::Fixture, Selection::Single(expected))),
+        ]));
+    }
+
 
     #[test_case("select fixtures 1..3", 1, 3)]
     #[test_case("select fixtures 2 .. 4", 2, 4)]

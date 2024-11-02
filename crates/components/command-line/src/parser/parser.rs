@@ -45,12 +45,20 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         _ => Err(Rich::custom(span, "Unknown keyword")),
     }).padded();
 
+    let id = choice((
+        text::int(10).from_str().unwrapped().map(Id::single),
+        text::int(10).from_str().unwrapped()
+            .then_ignore(just("."))
+            .then(text::int(10).from_str().unwrapped())
+            .map(|(a, b)| Id::new(&[a, b])),
+    ));
+    
     let selection = choice((
-        text::int(10).from_str().unwrapped().padded()
+        id.padded()
             .then_ignore(choice((just("thru"), just(".."))))
-            .then(text::int(10).from_str().unwrapped().padded())
+            .then(id.padded())
             .map(|(start, end)| Selection::Range(start, end)),
-        text::int(10).from_str().unwrapped().map(Selection::Single),
+        id.map(Selection::Single),
     )).padded();
 
     let target = keyword.then(selection)

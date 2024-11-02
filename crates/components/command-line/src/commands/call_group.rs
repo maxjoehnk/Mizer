@@ -6,7 +6,7 @@ use crate::ast::*;
 impl Command for Call<Groups, Single> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
         context.execute_command(CallGroupCommand {
-            group_id: GroupId(self.target_entity.id),
+            group_id: GroupId(self.target_entity.id.first()),
         })?;
         
         Ok(())

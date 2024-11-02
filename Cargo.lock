@@ -5194,6 +5194,7 @@ dependencies = [
  "mizer-command-executor",
  "mizer-fixtures",
  "mizer-ui-api",
+ "smallvec",
  "test-case",
  "tracing",
 ]

@@ -1,6 +1,7 @@
 mod parser;
 
 pub use parser::parse;
+use crate::Id;
 
 pub struct Value(u32);
 
@@ -27,12 +28,18 @@ impl Type for Presets {}
 pub struct ActiveSelection;
 
 pub struct Single {
-    pub id: u32,
+    pub id: Id,
 }
 
 pub struct Range {
-    pub from: u32,
-    pub to: u32,
+    pub from: Id,
+    pub to: Id,
+}
+
+impl Range {
+    pub fn evaluate_range(&self) -> Vec<Id> {
+        todo!()
+    }
 }
 
 trait Entity {}
@@ -93,4 +100,21 @@ pub struct Write<TargetType, TargetEntity, Value> {
 pub struct Name<TargetType, TargetEntity> {
     pub target_type: TargetType,
     pub target_entity: TargetEntity,
+}
+
+#[cfg(test)]
+mod tests {
+    use test_case::test_case;
+    
+    use super::*;
+    
+    #[test_case(Id::single(1), Id::single(4), vec![Id::single(1), Id::single(2), Id::single(3), Id::single(4)])]
+    #[test_case(Id::new(&[1, 1]), Id::new(&[1, 4]), vec![Id::new(&[1, 1]), Id::new(&[1, 2]), Id::new(&[1, 3]), Id::new(&[1, 4])])]
+    fn range_evaluate_range(from: Id, to: Id, expected: Vec<Id>) {
+        let range = Range {
+            from,
+            to,
+        };
+        assert_eq!(range.evaluate_range(), expected);
+    }
 }

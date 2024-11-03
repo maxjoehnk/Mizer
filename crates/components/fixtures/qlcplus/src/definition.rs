@@ -1,338 +1,312 @@
-// This happens in the XmlRead macro
-#![allow(clippy::needless_late_init)]
-
 use std::fmt::{Display, Formatter};
 use std::ops::Deref;
 use std::str::FromStr;
 
-use custom_derive::custom_derive;
-use enum_derive::*;
-use hard_xml::XmlRead;
+use serde_derive::Deserialize;
 
-#[derive(Debug, Clone, XmlRead)]
-#[xml(tag = "FixtureDefinition")]
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub struct QlcPlusFixtureDefinition {
-    #[xml(flatten_text = "Manufacturer")]
     pub manufacturer: String,
-    #[xml(flatten_text = "Model")]
     pub model: String,
-    #[xml(flatten_text = "Type")]
+    #[serde(rename = "Type")]
     pub fixture_type: String,
-    #[xml(child = "Channel")]
+    #[serde(default, rename = "Channel")]
     pub channels: Vec<ChannelType>,
-    #[xml(child = "Mode")]
+    #[serde(default, rename = "Mode")]
     pub modes: Vec<ModeType>,
-    #[xml(default, child = "Physical")]
+    #[serde(default)]
     pub physical: Option<PhysicalType>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
-#[xml(tag = "Physical")]
+impl FromStr for QlcPlusFixtureDefinition {
+    type Err = quick_xml::de::DeError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        quick_xml::de::from_str(s)
+    }
+}
+
+#[derive(Debug, Clone, Deserialize)]
 pub struct PhysicalType {}
 
-#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
-#[xml(tag = "Channel")]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub struct ChannelType {
-    #[xml(attr = "Name")]
-    pub name: HtmlEntityString,
-    #[xml(default, attr = "Default")]
+    #[serde(rename = "@Name")]
+    pub name: String,
+    #[serde(default)]
     pub default: Option<DmxValueType>,
-    #[xml(attr = "Preset")]
+    #[serde(rename = "@Preset")]
     pub preset: Option<ChannelPresetType>,
-    #[xml(default, child = "Capability")]
+    #[serde(rename = "Capability", default)]
     pub capabilities: Vec<CapabilityType>,
-    #[xml(default, child = "Group")]
+    #[serde(rename = "Group", default)]
     pub group: Option<GroupType>,
-    #[xml(default, flatten_text = "Colour")]
+    #[serde(rename = "Colour", default)]
     pub color: Option<ColorType>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
-#[xml(tag = "Capability")]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub struct CapabilityType {
-    #[xml(text)]
-    pub name: HtmlEntityString,
-    #[xml(attr = "Min")]
+    #[serde(default, rename = "$value")]
+    pub children: Vec<CapabilityChild>,
+    #[serde(rename = "@Min")]
     pub min: DmxValueType,
-    #[xml(attr = "Max")]
+    #[serde(rename = "@Max")]
     pub max: DmxValueType,
-    #[xml(default, attr = "Preset")]
+    #[serde(default, rename = "@Preset")]
     pub preset: Option<CapabilityPresetType>,
-    #[xml(default, child = "Alias")]
-    pub alias: Vec<AliasType>,
-    #[xml(attr = "Res1")]
+    #[serde(rename = "@Res1", default)]
     pub resource1: Option<String>,
-    #[xml(attr = "Res2")]
+    #[serde(rename = "@Res2", default)]
     pub resource2: Option<String>,
-    #[xml(attr = "Res")]
+    #[serde(rename = "@Res", default)]
     pub resource: Option<String>,
-    #[xml(attr = "Color")]
+    #[serde(default, rename = "@Color")]
     pub color: Option<String>,
-    #[xml(attr = "Color2")]
+    #[serde(default, rename = "@Color2")]
     pub color2: Option<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
-#[xml(tag = "Alias")]
+impl CapabilityType {
+    pub fn name(&self) -> String {
+        self.children.iter()
+            .find_map(|child| match child {
+                CapabilityChild::Name(name) => Some(name.clone()),
+                _ => None,
+            })
+            .expect("Capability has no name")
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub enum CapabilityChild {
+    Alias(AliasType),
+    #[serde(rename = "$text")]
+    Name(String),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub struct AliasType {
-    #[xml(attr = "Mode")]
+    #[serde(rename = "@Mode")]
     pub mode: String,
-    #[xml(attr = "Channel")]
-    pub channel: HtmlEntityString,
-    #[xml(attr = "With")]
+    #[serde(rename = "@Channel")]
+    pub channel: String,
+    #[serde(rename = "@With")]
     pub with: String,
 }
 
-#[derive(Debug, Clone, XmlRead)]
-#[xml(tag = "Mode")]
+#[derive(Debug, Clone, Deserialize)]
 pub struct ModeType {
-    #[xml(attr = "Name")]
+    #[serde(rename = "@Name")]
     pub name: String,
-    #[xml(child = "Channel")]
+    #[serde(rename = "Channel", default)]
     pub channels: Vec<ModeChannelType>,
-    #[xml(child = "Physical")]
+    #[serde(default)]
     pub physical: Vec<PhysicalType>,
-    #[xml(child = "Head")]
+    #[serde(rename = "Head", default)]
     pub heads: Vec<HeadType>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
-#[xml(tag = "Head")]
+#[derive(Debug, Clone, Deserialize)]
 pub struct HeadType {
-    #[xml(flatten_text = "Channel")]
+    #[serde(rename = "Channel")]
     pub channels: Vec<u16>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
-#[xml(tag = "Channel")]
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "PascalCase")]
 pub struct ModeChannelType {
-    #[xml(attr = "Number")]
+    #[serde(rename = "@Number")]
     pub number: u16,
-    #[xml(default, attr = "ActsOn")]
+    #[serde(default)]
     pub acts_on: Option<u64>,
-    #[xml(text)]
-    pub channel: HtmlEntityString,
+    #[serde(rename = "$value")]
+    pub channel: String,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, XmlRead)]
-#[xml(tag = "Group")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
 pub struct GroupType {
-    #[xml(attr = "Byte")]
+    #[serde(rename = "@Byte")]
     pub byte: u8,
-    #[xml(text)]
+    #[serde(rename = "$text")]
     pub group: GroupEnumType,
 }
 
 pub type DmxValueType = u64;
 
-custom_derive! {
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
-    pub enum ChannelPresetType {
-        IntensityMasterDimmer,
-        IntensityMasterDimmerFine,
-        IntensityDimmer,
-        IntensityDimmerFine,
-        IntensityRed,
-        IntensityRedFine,
-        IntensityGreen,
-        IntensityGreenFine,
-        IntensityBlue,
-        IntensityBlueFine,
-        IntensityCyan,
-        IntensityCyanFine,
-        IntensityMagenta,
-        IntensityMagentaFine,
-        IntensityYellow,
-        IntensityYellowFine,
-        IntensityAmber,
-        IntensityAmberFine,
-        IntensityWhite,
-        IntensityWhiteFine,
-        IntensityUV,
-        IntensityUVFine,
-        IntensityIndigo,
-        IntensityIndigoFine,
-        IntensityLime,
-        IntensityLimeFine,
-        IntensityHue,
-        IntensityHueFine,
-        IntensitySaturation,
-        IntensitySaturationFine,
-        IntensityLightness,
-        IntensityLightnessFine,
-        IntensityValue,
-        IntensityValueFine,
-        PositionPan,
-        PositionPanFine,
-        PositionTilt,
-        PositionTiltFine,
-        PositionXAxis,
-        PositionYAxis,
-        SpeedPanSlowFast,
-        SpeedPanFastSlow,
-        SpeedTiltSlowFast,
-        SpeedTiltFastSlow,
-        SpeedPanTiltSlowFast,
-        SpeedPanTiltFastSlow,
-        ColorMacro,
-        ColorWheel,
-        ColorWheelFine,
-        ColorRGBMixer,
-        ColorCTOMixer,
-        ColorCTCMixer,
-        ColorCTBMixer,
-        GoboWheel,
-        GoboWheelFine,
-        GoboIndex,
-        GoboIndexFine,
-        ShutterStrobeSlowFast,
-        ShutterStrobeFastSlow,
-        ShutterIrisMinToMax,
-        ShutterIrisMaxToMin,
-        ShutterIrisFine,
-        BeamFocusNearFar,
-        BeamFocusFarNear,
-        BeamFocusFine,
-        BeamZoomSmallBig,
-        BeamZoomBigSmall,
-        BeamZoomFine,
-        PrismRotationSlowFast,
-        PrismRotationFastSlow,
-        NoFunction,
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+pub enum ChannelPresetType {
+    IntensityMasterDimmer,
+    IntensityMasterDimmerFine,
+    IntensityDimmer,
+    IntensityDimmerFine,
+    IntensityRed,
+    IntensityRedFine,
+    IntensityGreen,
+    IntensityGreenFine,
+    IntensityBlue,
+    IntensityBlueFine,
+    IntensityCyan,
+    IntensityCyanFine,
+    IntensityMagenta,
+    IntensityMagentaFine,
+    IntensityYellow,
+    IntensityYellowFine,
+    IntensityAmber,
+    IntensityAmberFine,
+    IntensityWhite,
+    IntensityWhiteFine,
+    IntensityUV,
+    IntensityUVFine,
+    IntensityIndigo,
+    IntensityIndigoFine,
+    IntensityLime,
+    IntensityLimeFine,
+    IntensityHue,
+    IntensityHueFine,
+    IntensitySaturation,
+    IntensitySaturationFine,
+    IntensityLightness,
+    IntensityLightnessFine,
+    IntensityValue,
+    IntensityValueFine,
+    PositionPan,
+    PositionPanFine,
+    PositionTilt,
+    PositionTiltFine,
+    PositionXAxis,
+    PositionYAxis,
+    SpeedPanSlowFast,
+    SpeedPanFastSlow,
+    SpeedTiltSlowFast,
+    SpeedTiltFastSlow,
+    SpeedPanTiltSlowFast,
+    SpeedPanTiltFastSlow,
+    ColorMacro,
+    ColorWheel,
+    ColorWheelFine,
+    ColorRGBMixer,
+    ColorCTOMixer,
+    ColorCTCMixer,
+    ColorCTBMixer,
+    GoboWheel,
+    GoboWheelFine,
+    GoboIndex,
+    GoboIndexFine,
+    ShutterStrobeSlowFast,
+    ShutterStrobeFastSlow,
+    ShutterIrisMinToMax,
+    ShutterIrisMaxToMin,
+    ShutterIrisFine,
+    BeamFocusNearFar,
+    BeamFocusFarNear,
+    BeamFocusFine,
+    BeamZoomSmallBig,
+    BeamZoomBigSmall,
+    BeamZoomFine,
+    PrismRotationSlowFast,
+    PrismRotationFastSlow,
+    NoFunction,
 }
 
-custom_derive! {
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
-    pub enum CapabilityPresetType {
-        SlowToFast,
-        FastToSlow,
-        NearToFar,
-        FarToNear,
-        BigToSmall,
-        SmallToBig,
-        ShutterOpen,
-        ShutterClose,
-        StrobeSlowToFast,
-        StrobeFastToSlow,
-        StrobeRandom,
-        StrobeRandomSlowToFast,
-        StrobeRandomFastToSlow,
-        PulseSlowToFast,
-        PulseFastToSlow,
-        RampUpSlowToFast,
-        RampUpFastToSlow,
-        RampDownSlowToFast,
-        RampDownFastToSlow,
-        StrobeFrequency,
-        StrobeFreqRange,
-        PulseFrequency,
-        PulseFreqRange,
-        RampUpFrequency,
-        RampUpFreqRange,
-        RampDownFrequency,
-        RampDownFreqRange,
-        RotationStop,
-        RotationIndexed,
-        RotationClockwise,
-        RotationClockwiseSlowToFast,
-        RotationClockwiseFastToSlow,
-        RotationCounterClockwise,
-        RotationCounterClockwiseSlowToFast,
-        RotationCounterClockwiseFastToSlow,
-        ColorMacro,
-        ColorDoubleMacro,
-        ColorWheelIndex,
-        GoboMacro,
-        GoboShakeMacro,
-        GenericPicture,
-        PrismEffectOn,
-        PrismEffectOff,
-        LampOn,
-        LampOff,
-        ResetAll,
-        ResetPanTilt,
-        ResetPan,
-        ResetTilt,
-        ResetMotors,
-        ResetGobo,
-        ResetColor,
-        ResetCMY,
-        ResetCTO,
-        ResetEffects,
-        ResetPrism,
-        ResetBlades,
-        ResetIris,
-        ResetFrost,
-        ResetZoom,
-        SilentModeOn,
-        SilentModeOff,
-        SilentModeAutomatic,
-        Alias,
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+pub enum CapabilityPresetType {
+    SlowToFast,
+    FastToSlow,
+    NearToFar,
+    FarToNear,
+    BigToSmall,
+    SmallToBig,
+    ShutterOpen,
+    ShutterClose,
+    StrobeSlowToFast,
+    StrobeFastToSlow,
+    StrobeRandom,
+    StrobeRandomSlowToFast,
+    StrobeRandomFastToSlow,
+    PulseSlowToFast,
+    PulseFastToSlow,
+    RampUpSlowToFast,
+    RampUpFastToSlow,
+    RampDownSlowToFast,
+    RampDownFastToSlow,
+    StrobeFrequency,
+    StrobeFreqRange,
+    PulseFrequency,
+    PulseFreqRange,
+    RampUpFrequency,
+    RampUpFreqRange,
+    RampDownFrequency,
+    RampDownFreqRange,
+    RotationStop,
+    RotationIndexed,
+    RotationClockwise,
+    RotationClockwiseSlowToFast,
+    RotationClockwiseFastToSlow,
+    RotationCounterClockwise,
+    RotationCounterClockwiseSlowToFast,
+    RotationCounterClockwiseFastToSlow,
+    ColorMacro,
+    ColorDoubleMacro,
+    ColorWheelIndex,
+    GoboMacro,
+    GoboShakeMacro,
+    GenericPicture,
+    PrismEffectOn,
+    PrismEffectOff,
+    LampOn,
+    LampOff,
+    ResetAll,
+    ResetPanTilt,
+    ResetPan,
+    ResetTilt,
+    ResetMotors,
+    ResetGobo,
+    ResetColor,
+    ResetCMY,
+    ResetCTO,
+    ResetEffects,
+    ResetPrism,
+    ResetBlades,
+    ResetIris,
+    ResetFrost,
+    ResetZoom,
+    SilentModeOn,
+    SilentModeOff,
+    SilentModeAutomatic,
+    Alias,
 }
 
-custom_derive! {
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
-    pub enum GroupEnumType {
-        Intensity,
-        Colour,
-        Gobo,
-        Prism,
-        Shutter,
-        Beam,
-        Speed,
-        Effect,
-        Pan,
-        Tilt,
-        Maintenance,
-        Nothing,
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+pub enum GroupEnumType {
+    Intensity,
+    Colour,
+    Gobo,
+    Prism,
+    Shutter,
+    Beam,
+    Speed,
+    Effect,
+    Pan,
+    Tilt,
+    Maintenance,
+    Nothing,
 }
 
-custom_derive! {
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
-    pub enum ColorType {
-        Generic,
-        Red,
-        Green,
-        Blue,
-        Cyan,
-        Magenta,
-        Yellow,
-        Amber,
-        White,
-        UV,
-        Lime,
-        Indigo,
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[repr(transparent)]
-pub struct HtmlEntityString(String);
-
-impl FromStr for HtmlEntityString {
-    type Err = anyhow::Error;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        use htmlentity::entity::ICodedDataTrait;
-        let string = htmlentity::entity::decode(s.as_bytes()).to_string()?;
-
-        Ok(Self(string))
-    }
-}
-
-impl Deref for HtmlEntityString {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl Display for HtmlEntityString {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.write_str(&self.0)
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+pub enum ColorType {
+    Generic,
+    Red,
+    Green,
+    Blue,
+    Cyan,
+    Magenta,
+    Yellow,
+    Amber,
+    White,
+    UV,
+    Lime,
+    Indigo,
 }

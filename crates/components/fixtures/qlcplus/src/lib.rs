@@ -1,13 +1,9 @@
-// This is required because of the EnumFromStr macro from the enum_derive crate
-#![recursion_limit = "256"]
-
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::fs::{DirEntry, File};
 use std::io::Read;
 use std::path::Path;
-
-use hard_xml::XmlRead;
+use std::str::FromStr;
 use rayon::prelude::*;
 
 use mizer_fixtures::definition::*;
@@ -135,8 +131,7 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
 #[cfg(test)]
 mod tests {
     use std::path::Path;
-
-    use hard_xml::XmlRead;
+    use std::str::FromStr;
 
     use mizer_fixtures::definition::*;
 
@@ -146,11 +141,14 @@ mod tests {
     const GENERIC_RGBW_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGBW.qxf");
     const GENERIC_CMY_DEFINITION: &str = include_str!("../tests/Generic-Generic-CMY.qxf");
     const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
+    const XML_EDGECASE: &str = include_str!("../tests/Eurolite-LED-Bar-RGB-252_10_40__Indoor.qxf");
 
     #[test]
     fn generic_rgb() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        println!("{file:#?}");
         let resource_reader = ResourceReader::new(Path::new("."));
+
         let definition = map_fixture_definition(file, &resource_reader);
 
         assert_eq!(definition.name, "Generic RGB");
@@ -190,7 +188,9 @@ mod tests {
     #[test]
     fn generic_rgbw() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
+        println!("{file:#?}");
         let resource_reader = ResourceReader::new(Path::new("."));
+
         let definition = map_fixture_definition(file, &resource_reader);
 
         assert_eq!(definition.name, "Generic RGBW");
@@ -240,7 +240,9 @@ mod tests {
     #[test]
     fn generic_cmy() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_CMY_DEFINITION).unwrap();
+        println!("{file:#?}");
         let resource_reader = ResourceReader::new(Path::new("."));
+
         let definition = map_fixture_definition(file, &resource_reader);
 
         assert_eq!(definition.name, "Generic CMY");
@@ -262,6 +264,14 @@ mod tests {
     #[test]
     fn generic_smoke() {
         let file = QlcPlusFixtureDefinition::from_str(GENERIC_SMOKE_DEFINITION);
+
+        println!("{:#?}", file);
+        assert!(file.is_ok());
+    }
+
+    #[test]
+    fn xml_edgecase() {
+        let file = QlcPlusFixtureDefinition::from_str(XML_EDGECASE);
 
         println!("{:#?}", file);
         assert!(file.is_ok());

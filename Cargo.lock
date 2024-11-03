@@ -9327,9 +9327,9 @@ dependencies = [
 
 [[package]]
 name = "splines"
-version = "4.3.1"
+version = "4.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "228c4551e53c672e86439509545dd7ffcb966b6876c58b108e433a30e6117101"
+checksum = "35abfe290b05ab81e1773eb1849e23d024b2571640444d5024308871308ae805"
 
 [[package]]
 name = "static_assertions"

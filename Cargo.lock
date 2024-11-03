@@ -1856,12 +1856,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96a6ac251f4a2aca6b3f91340350eab87ae57c3f127ffeb585e92bd336717991"
 
 [[package]]
-name = "custom_derive"
-version = "0.1.7"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ef8ae57c4978a2acd8b869ce6b9ca1dfe817bff704c220209fdef2c0b75a01b9"
-
-[[package]]
 name = "d3d12"
 version = "22.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2504,11 +2498,6 @@ dependencies = [
  "quote",
  "syn 2.0.58",
 ]
-
-[[package]]
-name = "enum_derive"
-version = "0.1.7"
-source = "git+https://github.com/maxjoehnk/rust-custom-derive?branch=feature/better-error-reporting#2f955fb6d72fdfb404bb26c1f65b87f762882e57"
 
 [[package]]
 name = "enum_dispatch"
@@ -3879,17 +3868,6 @@ dependencies = [
  "cfg-if 1.0.0",
  "libc",
  "windows 0.52.0",
-]
-
-[[package]]
-name = "htmlentity"
-version = "1.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dd54ae4f69adcc1a43637dcff230852832c3ad50df31a90e0cb5f001dd441359"
-dependencies = [
- "anyhow",
- "lazy_static",
- "thiserror",
 ]
 
 [[package]]
@@ -6058,11 +6036,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cached",
- "custom_derive",
- "enum_derive",
  "fs_extra",
- "hard-xml",
- "htmlentity",
  "mizer-fixtures",
  "mizer-util",
  "quick-xml 0.37.0",

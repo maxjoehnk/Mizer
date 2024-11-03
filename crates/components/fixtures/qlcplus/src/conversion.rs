@@ -14,7 +14,7 @@ pub fn map_fixture_definition(
     let channels = definition
         .channels
         .into_iter()
-        .map(|channel| (channel.name.to_string(), channel))
+        .map(|channel| (channel.name.trim().to_string(), channel))
         .collect::<HashMap<_, _>>();
 
     FixtureDefinition {
@@ -64,7 +64,13 @@ fn create_controls(
                     .any(|channel| channel == &mode_channel.number)
             })
         })
-        .map(|mode_channel| channels[mode_channel.channel.deref()].clone())
+        .map(|mode_channel| {
+            if let Some(channel) = channels.get(mode_channel.channel.deref()) {
+                channel.clone()
+            } else {
+                panic!("Channel not found: \"{}\"\nAvailable channels: {:?}", mode_channel.channel, channels.keys().collect::<Vec<_>>());
+            }
+        })
         .collect::<Vec<_>>();
 
     build_controls(
@@ -159,7 +165,7 @@ fn build_controls<TChannel>(
                                         == Some(CapabilityPresetType::ColorDoubleMacro)
                             })
                             .map(|capability| ColorWheelSlot {
-                                name: capability.name.to_string(),
+                                name: capability.name(),
                                 value: (capability.min as u8)
                                     .linear_extrapolate((0, 255), (0., 1.)),
                                 color: vec![capability.resource1, capability.resource2]
@@ -177,7 +183,7 @@ fn build_controls<TChannel>(
                             .capabilities
                             .into_iter()
                             .map(|capability| Gobo {
-                                name: capability.name.to_string(),
+                                name: capability.name(),
                                 value: (capability.min as u8)
                                     .linear_extrapolate((0, 255), (0., 1.)),
                                 image: capability

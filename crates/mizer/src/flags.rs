@@ -1,21 +1,22 @@
 use std::path::PathBuf;
 
-use structopt::StructOpt;
+use clap::Parser;
 
-#[derive(StructOpt, Debug, Clone, Default)]
+#[derive(Parser, Debug, Clone, Default)]
+#[command(version, about)]
 pub struct Flags {
-    #[structopt(long)]
+    #[arg(long)]
     pub generate_graph: bool,
-    #[structopt(name = "FILE", parse(from_os_str))]
+    #[arg(name = "FILE")]
     pub file: Option<PathBuf>,
     /// Open the debug ui
     #[cfg(feature = "debug-ui")]
-    #[structopt(long)]
+    #[arg(long)]
     pub debug: bool,
     /// Join an existing session or start a new session
-    #[structopt(long)]
+    #[arg(long)]
     pub join: bool,
     #[cfg(feature = "ui")]
-    #[structopt(long)]
+    #[arg(long)]
     pub headless: bool,
 }

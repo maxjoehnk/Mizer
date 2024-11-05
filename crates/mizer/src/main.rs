@@ -1,7 +1,6 @@
 #![windows_subsystem = "windows"]
 use std::sync::mpsc;
-
-use structopt::StructOpt;
+use clap::Parser;
 
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
@@ -61,7 +60,7 @@ fn run_headless(flags: Flags) -> anyhow::Result<()> {
 
 fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
     mizer_util::tracing::init();
-    let flags = Flags::from_args();
+    let flags = Flags::parse();
     let guard = logger::init(&flags)?;
     tracing::debug!("flags: {:?}", flags);
     init_ffmpeg()?;

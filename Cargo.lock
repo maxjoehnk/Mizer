@@ -599,9 +599,9 @@ dependencies = [
 
 [[package]]
 name = "avif-serialize"
-version = "0.8.1"
+version = "0.8.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "876c75a42f6364451a033496a14c44bffe41f5f4a8236f697391f11024e596d2"
+checksum = "e335041290c43101ca215eed6f43ec437eb5a42125573f600fc3fa42b9bddd62"
 dependencies = [
  "arrayvec",
 ]
@@ -769,7 +769,7 @@ dependencies = [
  "bitflags 2.6.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.10.5",
  "lazy_static",
  "lazycell",
  "log",
@@ -4243,9 +4243,9 @@ dependencies = [
 
 [[package]]
 name = "image"
-version = "0.25.4"
+version = "0.25.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc144d44a31d753b02ce64093d532f55ff8dc4ebf2ffb8a63c0dda691385acae"
+checksum = "cd6f44aed642f18953a158afeb30206f4d50da59fbc66ecb53c66488de73563b"
 dependencies = [
  "bytemuck",
  "byteorder-lite",
@@ -5291,7 +5291,7 @@ dependencies = [
  "egui_tiles",
  "egui_tracing",
  "futures",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-debug-ui",
  "mizer-module",
  "mizer-wgpu",
@@ -5625,7 +5625,7 @@ dependencies = [
  "fontdb 0.22.0",
  "futures",
  "id3",
- "image 0.25.4",
+ "image 0.25.5",
  "infer",
  "mime_guess",
  "mizer-commander",
@@ -5723,7 +5723,7 @@ dependencies = [
  "enum-iterator",
  "flume 0.11.1",
  "futures",
- "image 0.25.4",
+ "image 0.25.5",
  "ndi",
  "pinboard",
  "tracing",
@@ -5735,7 +5735,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "futures",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-devices",
  "mizer-ndi",
  "mizer-node",
@@ -5844,7 +5844,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bytes 1.8.0",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-node",
  "mizer-pixel-nodes",
  "mizer-util",
@@ -5940,7 +5940,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-node",
  "mizer-protocol-dmx",
  "mizer-util",
@@ -6270,7 +6270,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-node",
  "mizer-video-nodes",
  "mizer-wgpu",
@@ -6408,7 +6408,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.1",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-node",
  "mizer-surfaces",
  "mizer-wgpu",
@@ -6443,7 +6443,7 @@ dependencies = [
  "enum-iterator",
  "font-kit",
  "glyphon",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-node",
  "mizer-wgpu",
  "num_enum",
@@ -6655,7 +6655,7 @@ dependencies = [
  "enum-iterator",
  "ffmpeg-the-third",
  "flume 0.11.1",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
@@ -6672,7 +6672,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "enum-iterator",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-devices",
  "mizer-node",
  "mizer-video-nodes",
@@ -6706,7 +6706,7 @@ dependencies = [
  "anyhow",
  "bytemuck",
  "dashmap",
- "image 0.25.4",
+ "image 0.25.5",
  "mizer-module",
  "parking_lot",
  "profiling",
@@ -8430,9 +8430,9 @@ dependencies = [
 
 [[package]]
 name = "ravif"
-version = "0.11.5"
+version = "0.11.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc13288f5ab39e6d7c9d501759712e6969fcc9734220846fc9ed26cae2cc4234"
+checksum = "2413fd96bd0ea5cdeeb37eaf446a22e6ed7b981d792828721e74ded1980a45c6"
 dependencies = [
  "avif-serialize",
  "imgref",
@@ -10925,7 +10925,7 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47ca63b9321e371196c2645343bde868b1854d433608043ef1abbad6c8a83484"
 dependencies = [
- "image 0.25.4",
+ "image 0.25.5",
  "thiserror",
  "usvg 0.43.0",
  "vello",

@@ -769,7 +769,7 @@ dependencies = [
  "bitflags 2.6.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.10.5",
  "lazy_static",
  "lazycell",
  "log",
@@ -6876,7 +6876,7 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=c13ecad#c13ecad5e88e42e59dd2e143d3a83009fa402fb3"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=94a16e8#94a16e84ab5d11d9be0e4b13c86a30e68645c0eb"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -6924,7 +6924,7 @@ dependencies = [
 [[package]]
 name = "nativeshell_build"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=c13ecad#c13ecad5e88e42e59dd2e143d3a83009fa402fb3"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=94a16e8#94a16e84ab5d11d9be0e4b13c86a30e68645c0eb"
 dependencies = [
  "base64 0.13.1",
  "cargo-emit",

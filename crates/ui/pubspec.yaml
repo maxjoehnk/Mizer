@@ -26,7 +26,7 @@ dependencies:
   nativeshell:
     git:
       url: https://github.com/maxjoehnk/nativeshell.git
-      ref: c13ecad
+      ref: 94a16e8
       path: nativeshell_dart
   flutter_svg: ^2.0.0
   flex_color_picker: ^3.0.0

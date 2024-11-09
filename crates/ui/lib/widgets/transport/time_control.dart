@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/transport.dart';
@@ -56,8 +57,9 @@ class _StreamTimeControl extends StatelessWidget {
 class FFITimeControl extends StatefulWidget {
   final TimecodeReader pointer;
   final TextStyle? textStyle;
+  final bool autoSize;
 
-  const FFITimeControl({required this.pointer, Key? key, this.textStyle}) : super(key: key);
+  const FFITimeControl({required this.pointer, Key? key, this.textStyle, this.autoSize = false}) : super(key: key);
 
   @override
   _FFITimeControlState createState() => _FFITimeControlState(pointer);
@@ -95,7 +97,8 @@ class _FFITimeControlState extends State<FFITimeControl> with SingleTickerProvid
         seconds: timecode!.seconds,
         frames: timecode!.frames,
         negative: timecode!.is_negative > 0,
-        textStyle: widget.textStyle);
+        textStyle: widget.textStyle,
+        autoSize: widget.autoSize);
   }
 }
 
@@ -105,6 +108,7 @@ class _TimeFormat extends StatelessWidget {
   final int seconds;
   final int frames;
   final bool negative;
+  final bool autoSize;
   final TextStyle? textStyle;
 
   const _TimeFormat(
@@ -113,6 +117,7 @@ class _TimeFormat extends StatelessWidget {
       required this.minutes,
       required this.seconds,
       required this.frames,
+      this.autoSize = false,
       this.negative = false,
       this.textStyle})
       : super(key: key);
@@ -120,8 +125,13 @@ class _TimeFormat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
+    var timeStyle = textStyle ?? style.headlineSmall;
+    var time = _formatTime();
 
-    return Text(_formatTime(), textAlign: TextAlign.center, style: textStyle ?? style.headlineSmall);
+    if (autoSize) {
+      return AutoSizeText(time, textAlign: TextAlign.center, style: TextStyle(fontSize: 200), minFontSize: 10, wrapWords: false, softWrap: false);
+    }
+    return Text(time, textAlign: TextAlign.center, style: timeStyle);
   }
 
   String _formatTime() {

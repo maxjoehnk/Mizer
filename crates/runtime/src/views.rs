@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
-
+use mizer_clock::Timecode;
 use mizer_node::NodePath;
 use mizer_ports::Color;
 
@@ -14,6 +14,7 @@ pub struct LayoutsView {
     dials: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
     colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>,
+    clocks: Arc<NonEmptyPinboard<HashMap<NodePath, Timecode>>>,
 }
 
 impl Default for LayoutsView {
@@ -24,6 +25,7 @@ impl Default for LayoutsView {
             dials: Arc::new(NonEmptyPinboard::new(Default::default())),
             labels: Arc::new(NonEmptyPinboard::new(Default::default())),
             colors: Arc::new(NonEmptyPinboard::new(Default::default())),
+            clocks: Arc::new(NonEmptyPinboard::new(Default::default())),
         }
     }
 }
@@ -67,6 +69,16 @@ impl LayoutsView {
 
     pub(crate) fn write_label_values(&self, values: HashMap<NodePath, Arc<String>>) {
         self.labels.set(values);
+    }
+
+    pub(crate) fn write_clock_values(&self, values: HashMap<NodePath, Timecode>) {
+        self.clocks.set(values);
+    }
+
+    pub fn get_clock_value(&self, path: &NodePath) -> Option<Timecode> {
+        let values = self.clocks.read();
+
+        values.get(path).copied()
     }
 
     pub(crate) fn write_control_colors(&self, values: HashMap<NodePath, Color>) {

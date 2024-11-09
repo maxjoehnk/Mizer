@@ -1,43 +1,39 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'layouts.pbenum.dart';
 import 'programmer.pb.dart' as $1;
+
+import 'layouts.pbenum.dart';
 
 export 'layouts.pbenum.dart';
 
 class AddLayoutRequest extends $pb.GeneratedMessage {
-  factory AddLayoutRequest({
-    $core.String? name,
-  }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    return $result;
-  }
-  AddLayoutRequest._() : super();
-  factory AddLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddLayoutRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..hasRequiredFields = false
   ;
 
+  AddLayoutRequest._() : super();
+  factory AddLayoutRequest({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory AddLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -47,10 +43,8 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddLayoutRequest copyWith(void Function(AddLayoutRequest) updates) => super.copyWith((message) => updates(message as AddLayoutRequest)) as AddLayoutRequest;
-
+  AddLayoutRequest copyWith(void Function(AddLayoutRequest) updates) => super.copyWith((message) => updates(message as AddLayoutRequest)) as AddLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddLayoutRequest create() => AddLayoutRequest._();
   AddLayoutRequest createEmptyInstance() => create();
@@ -70,24 +64,23 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
 }
 
 class RemoveLayoutRequest extends $pb.GeneratedMessage {
-  factory RemoveLayoutRequest({
-    $core.String? id,
-  }) {
-    final $result = create();
-    if (id != null) {
-      $result.id = id;
-    }
-    return $result;
-  }
-  RemoveLayoutRequest._() : super();
-  factory RemoveLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RemoveLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveLayoutRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..hasRequiredFields = false
   ;
 
+  RemoveLayoutRequest._() : super();
+  factory RemoveLayoutRequest({
+    $core.String? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory RemoveLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RemoveLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -97,10 +90,8 @@ class RemoveLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveLayoutRequest copyWith(void Function(RemoveLayoutRequest) updates) => super.copyWith((message) => updates(message as RemoveLayoutRequest)) as RemoveLayoutRequest;
-
+  RemoveLayoutRequest copyWith(void Function(RemoveLayoutRequest) updates) => super.copyWith((message) => updates(message as RemoveLayoutRequest)) as RemoveLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RemoveLayoutRequest create() => RemoveLayoutRequest._();
   RemoveLayoutRequest createEmptyInstance() => create();
@@ -120,29 +111,28 @@ class RemoveLayoutRequest extends $pb.GeneratedMessage {
 }
 
 class RenameLayoutRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  RenameLayoutRequest._() : super();
   factory RenameLayoutRequest({
     $core.String? id,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  RenameLayoutRequest._() : super();
   factory RenameLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RenameLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RenameLayoutRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -152,10 +142,8 @@ class RenameLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenameLayoutRequest copyWith(void Function(RenameLayoutRequest) updates) => super.copyWith((message) => updates(message as RenameLayoutRequest)) as RenameLayoutRequest;
-
+  RenameLayoutRequest copyWith(void Function(RenameLayoutRequest) updates) => super.copyWith((message) => updates(message as RenameLayoutRequest)) as RenameLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RenameLayoutRequest create() => RenameLayoutRequest._();
   RenameLayoutRequest createEmptyInstance() => create();
@@ -184,34 +172,33 @@ class RenameLayoutRequest extends $pb.GeneratedMessage {
 }
 
 class RenameControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  RenameControlRequest._() : super();
   factory RenameControlRequest({
     $core.String? layoutId,
     $core.String? controlId,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  RenameControlRequest._() : super();
   factory RenameControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RenameControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RenameControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..aOS(3, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -221,10 +208,8 @@ class RenameControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenameControlRequest copyWith(void Function(RenameControlRequest) updates) => super.copyWith((message) => updates(message as RenameControlRequest)) as RenameControlRequest;
-
+  RenameControlRequest copyWith(void Function(RenameControlRequest) updates) => super.copyWith((message) => updates(message as RenameControlRequest)) as RenameControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RenameControlRequest create() => RenameControlRequest._();
   RenameControlRequest createEmptyInstance() => create();
@@ -262,34 +247,33 @@ class RenameControlRequest extends $pb.GeneratedMessage {
 }
 
 class MoveControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MoveControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  MoveControlRequest._() : super();
   factory MoveControlRequest({
     $core.String? layoutId,
     $core.String? controlId,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  MoveControlRequest._() : super();
   factory MoveControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MoveControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MoveControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -299,10 +283,8 @@ class MoveControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveControlRequest copyWith(void Function(MoveControlRequest) updates) => super.copyWith((message) => updates(message as MoveControlRequest)) as MoveControlRequest;
-
+  MoveControlRequest copyWith(void Function(MoveControlRequest) updates) => super.copyWith((message) => updates(message as MoveControlRequest)) as MoveControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static MoveControlRequest create() => MoveControlRequest._();
   MoveControlRequest createEmptyInstance() => create();
@@ -342,34 +324,33 @@ class MoveControlRequest extends $pb.GeneratedMessage {
 }
 
 class ResizeControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ResizeControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlSize>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', subBuilder: ControlSize.create)
+    ..hasRequiredFields = false
+  ;
+
+  ResizeControlRequest._() : super();
   factory ResizeControlRequest({
     $core.String? layoutId,
     $core.String? controlId,
     ControlSize? size,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
     if (size != null) {
-      $result.size = size;
+      _result.size = size;
     }
-    return $result;
+    return _result;
   }
-  ResizeControlRequest._() : super();
   factory ResizeControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ResizeControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResizeControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..aOM<ControlSize>(3, _omitFieldNames ? '' : 'size', subBuilder: ControlSize.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -379,10 +360,8 @@ class ResizeControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ResizeControlRequest copyWith(void Function(ResizeControlRequest) updates) => super.copyWith((message) => updates(message as ResizeControlRequest)) as ResizeControlRequest;
-
+  ResizeControlRequest copyWith(void Function(ResizeControlRequest) updates) => super.copyWith((message) => updates(message as ResizeControlRequest)) as ResizeControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ResizeControlRequest create() => ResizeControlRequest._();
   ResizeControlRequest createEmptyInstance() => create();
@@ -422,34 +401,33 @@ class ResizeControlRequest extends $pb.GeneratedMessage {
 }
 
 class UpdateControlDecorationRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateControlDecorationRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlDecorations>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decorations', subBuilder: ControlDecorations.create)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateControlDecorationRequest._() : super();
   factory UpdateControlDecorationRequest({
     $core.String? layoutId,
     $core.String? controlId,
     ControlDecorations? decorations,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
     if (decorations != null) {
-      $result.decorations = decorations;
+      _result.decorations = decorations;
     }
-    return $result;
+    return _result;
   }
-  UpdateControlDecorationRequest._() : super();
   factory UpdateControlDecorationRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UpdateControlDecorationRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateControlDecorationRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..aOM<ControlDecorations>(3, _omitFieldNames ? '' : 'decorations', subBuilder: ControlDecorations.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -459,10 +437,8 @@ class UpdateControlDecorationRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateControlDecorationRequest copyWith(void Function(UpdateControlDecorationRequest) updates) => super.copyWith((message) => updates(message as UpdateControlDecorationRequest)) as UpdateControlDecorationRequest;
-
+  UpdateControlDecorationRequest copyWith(void Function(UpdateControlDecorationRequest) updates) => super.copyWith((message) => updates(message as UpdateControlDecorationRequest)) as UpdateControlDecorationRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static UpdateControlDecorationRequest create() => UpdateControlDecorationRequest._();
   UpdateControlDecorationRequest createEmptyInstance() => create();
@@ -502,34 +478,33 @@ class UpdateControlDecorationRequest extends $pb.GeneratedMessage {
 }
 
 class UpdateControlBehaviorRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateControlBehaviorRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlBehavior>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'behavior', subBuilder: ControlBehavior.create)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateControlBehaviorRequest._() : super();
   factory UpdateControlBehaviorRequest({
     $core.String? layoutId,
     $core.String? controlId,
     ControlBehavior? behavior,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
     if (behavior != null) {
-      $result.behavior = behavior;
+      _result.behavior = behavior;
     }
-    return $result;
+    return _result;
   }
-  UpdateControlBehaviorRequest._() : super();
   factory UpdateControlBehaviorRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UpdateControlBehaviorRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UpdateControlBehaviorRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..aOM<ControlBehavior>(3, _omitFieldNames ? '' : 'behavior', subBuilder: ControlBehavior.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -539,10 +514,8 @@ class UpdateControlBehaviorRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateControlBehaviorRequest copyWith(void Function(UpdateControlBehaviorRequest) updates) => super.copyWith((message) => updates(message as UpdateControlBehaviorRequest)) as UpdateControlBehaviorRequest;
-
+  UpdateControlBehaviorRequest copyWith(void Function(UpdateControlBehaviorRequest) updates) => super.copyWith((message) => updates(message as UpdateControlBehaviorRequest)) as UpdateControlBehaviorRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static UpdateControlBehaviorRequest create() => UpdateControlBehaviorRequest._();
   UpdateControlBehaviorRequest createEmptyInstance() => create();
@@ -582,29 +555,28 @@ class UpdateControlBehaviorRequest extends $pb.GeneratedMessage {
 }
 
 class RemoveControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..hasRequiredFields = false
+  ;
+
+  RemoveControlRequest._() : super();
   factory RemoveControlRequest({
     $core.String? layoutId,
     $core.String? controlId,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlId != null) {
-      $result.controlId = controlId;
+      _result.controlId = controlId;
     }
-    return $result;
+    return _result;
   }
-  RemoveControlRequest._() : super();
   factory RemoveControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'controlId')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -614,10 +586,8 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveControlRequest copyWith(void Function(RemoveControlRequest) updates) => super.copyWith((message) => updates(message as RemoveControlRequest)) as RemoveControlRequest;
-
+  RemoveControlRequest copyWith(void Function(RemoveControlRequest) updates) => super.copyWith((message) => updates(message as RemoveControlRequest)) as RemoveControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RemoveControlRequest create() => RemoveControlRequest._();
   RemoveControlRequest createEmptyInstance() => create();
@@ -646,34 +616,33 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
 }
 
 class AddControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..e<ControlType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: ControlType.NONE, valueOf: ControlType.valueOf, enumValues: ControlType.values)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddControlRequest._() : super();
   factory AddControlRequest({
     $core.String? layoutId,
     ControlType? controlType,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (controlType != null) {
-      $result.controlType = controlType;
+      _result.controlType = controlType;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  AddControlRequest._() : super();
   factory AddControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..e<ControlType>(2, _omitFieldNames ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: ControlType.NONE, valueOf: ControlType.valueOf, enumValues: ControlType.values)
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -683,10 +652,8 @@ class AddControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddControlRequest copyWith(void Function(AddControlRequest) updates) => super.copyWith((message) => updates(message as AddControlRequest)) as AddControlRequest;
-
+  AddControlRequest copyWith(void Function(AddControlRequest) updates) => super.copyWith((message) => updates(message as AddControlRequest)) as AddControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddControlRequest create() => AddControlRequest._();
   AddControlRequest createEmptyInstance() => create();
@@ -726,34 +693,33 @@ class AddControlRequest extends $pb.GeneratedMessage {
 }
 
 class AddExistingControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddExistingControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node')
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddExistingControlRequest._() : super();
   factory AddExistingControlRequest({
     $core.String? layoutId,
     $core.String? node,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (node != null) {
-      $result.node = node;
+      _result.node = node;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  AddExistingControlRequest._() : super();
   factory AddExistingControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddExistingControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddExistingControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOS(2, _omitFieldNames ? '' : 'node')
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -763,10 +729,8 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddExistingControlRequest copyWith(void Function(AddExistingControlRequest) updates) => super.copyWith((message) => updates(message as AddExistingControlRequest)) as AddExistingControlRequest;
-
+  AddExistingControlRequest copyWith(void Function(AddExistingControlRequest) updates) => super.copyWith((message) => updates(message as AddExistingControlRequest)) as AddExistingControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddExistingControlRequest create() => AddExistingControlRequest._();
   AddExistingControlRequest createEmptyInstance() => create();
@@ -806,34 +770,33 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
 }
 
 class AddSequenceControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddSequenceControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddSequenceControlRequest._() : super();
   factory AddSequenceControlRequest({
     $core.String? layoutId,
     $core.int? sequenceId,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (sequenceId != null) {
-      $result.sequenceId = sequenceId;
+      _result.sequenceId = sequenceId;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  AddSequenceControlRequest._() : super();
   factory AddSequenceControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddSequenceControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddSequenceControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'sequenceId', $pb.PbFieldType.OU3)
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -843,10 +806,8 @@ class AddSequenceControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddSequenceControlRequest copyWith(void Function(AddSequenceControlRequest) updates) => super.copyWith((message) => updates(message as AddSequenceControlRequest)) as AddSequenceControlRequest;
-
+  AddSequenceControlRequest copyWith(void Function(AddSequenceControlRequest) updates) => super.copyWith((message) => updates(message as AddSequenceControlRequest)) as AddSequenceControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddSequenceControlRequest create() => AddSequenceControlRequest._();
   AddSequenceControlRequest createEmptyInstance() => create();
@@ -886,34 +847,33 @@ class AddSequenceControlRequest extends $pb.GeneratedMessage {
 }
 
 class AddGroupControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddGroupControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddGroupControlRequest._() : super();
   factory AddGroupControlRequest({
     $core.String? layoutId,
     $core.int? groupId,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (groupId != null) {
-      $result.groupId = groupId;
+      _result.groupId = groupId;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  AddGroupControlRequest._() : super();
   factory AddGroupControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddGroupControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddGroupControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'groupId', $pb.PbFieldType.OU3)
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -923,10 +883,8 @@ class AddGroupControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddGroupControlRequest copyWith(void Function(AddGroupControlRequest) updates) => super.copyWith((message) => updates(message as AddGroupControlRequest)) as AddGroupControlRequest;
-
+  AddGroupControlRequest copyWith(void Function(AddGroupControlRequest) updates) => super.copyWith((message) => updates(message as AddGroupControlRequest)) as AddGroupControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddGroupControlRequest create() => AddGroupControlRequest._();
   AddGroupControlRequest createEmptyInstance() => create();
@@ -966,34 +924,33 @@ class AddGroupControlRequest extends $pb.GeneratedMessage {
 }
 
 class AddPresetControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddPresetControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOM<$1.PresetId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
+    ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddPresetControlRequest._() : super();
   factory AddPresetControlRequest({
     $core.String? layoutId,
     $1.PresetId? presetId,
     ControlPosition? position,
   }) {
-    final $result = create();
+    final _result = create();
     if (layoutId != null) {
-      $result.layoutId = layoutId;
+      _result.layoutId = layoutId;
     }
     if (presetId != null) {
-      $result.presetId = presetId;
+      _result.presetId = presetId;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
-    return $result;
+    return _result;
   }
-  AddPresetControlRequest._() : super();
   factory AddPresetControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddPresetControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddPresetControlRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'layoutId')
-    ..aOM<$1.PresetId>(2, _omitFieldNames ? '' : 'presetId', subBuilder: $1.PresetId.create)
-    ..aOM<ControlPosition>(3, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1003,10 +960,8 @@ class AddPresetControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddPresetControlRequest copyWith(void Function(AddPresetControlRequest) updates) => super.copyWith((message) => updates(message as AddPresetControlRequest)) as AddPresetControlRequest;
-
+  AddPresetControlRequest copyWith(void Function(AddPresetControlRequest) updates) => super.copyWith((message) => updates(message as AddPresetControlRequest)) as AddPresetControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AddPresetControlRequest create() => AddPresetControlRequest._();
   AddPresetControlRequest createEmptyInstance() => create();
@@ -1048,24 +1003,23 @@ class AddPresetControlRequest extends $pb.GeneratedMessage {
 }
 
 class Layouts extends $pb.GeneratedMessage {
-  factory Layouts({
-    $core.Iterable<Layout>? layouts,
-  }) {
-    final $result = create();
-    if (layouts != null) {
-      $result.layouts.addAll(layouts);
-    }
-    return $result;
-  }
-  Layouts._() : super();
-  factory Layouts.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Layouts.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Layouts', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..pc<Layout>(1, _omitFieldNames ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layouts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..pc<Layout>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)
     ..hasRequiredFields = false
   ;
 
+  Layouts._() : super();
+  factory Layouts({
+    $core.Iterable<Layout>? layouts,
+  }) {
+    final _result = create();
+    if (layouts != null) {
+      _result.layouts.addAll(layouts);
+    }
+    return _result;
+  }
+  factory Layouts.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Layouts.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1075,10 +1029,8 @@ class Layouts extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Layouts copyWith(void Function(Layouts) updates) => super.copyWith((message) => updates(message as Layouts)) as Layouts;
-
+  Layouts copyWith(void Function(Layouts) updates) => super.copyWith((message) => updates(message as Layouts)) as Layouts; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Layouts create() => Layouts._();
   Layouts createEmptyInstance() => create();
@@ -1092,29 +1044,28 @@ class Layouts extends $pb.GeneratedMessage {
 }
 
 class Layout extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layout', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..pc<LayoutControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: LayoutControl.create)
+    ..hasRequiredFields = false
+  ;
+
+  Layout._() : super();
   factory Layout({
     $core.String? id,
     $core.Iterable<LayoutControl>? controls,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (controls != null) {
-      $result.controls.addAll(controls);
+      _result.controls.addAll(controls);
     }
-    return $result;
+    return _result;
   }
-  Layout._() : super();
   factory Layout.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Layout.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Layout', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..pc<LayoutControl>(2, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: LayoutControl.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1124,10 +1075,8 @@ class Layout extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Layout copyWith(void Function(Layout) updates) => super.copyWith((message) => updates(message as Layout)) as Layout;
-
+  Layout copyWith(void Function(Layout) updates) => super.copyWith((message) => updates(message as Layout)) as Layout; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Layout create() => Layout._();
   Layout createEmptyInstance() => create();
@@ -1150,24 +1099,23 @@ class Layout extends $pb.GeneratedMessage {
 }
 
 class LayoutControl_NodeControlType extends $pb.GeneratedMessage {
-  factory LayoutControl_NodeControlType({
-    $core.String? path,
-  }) {
-    final $result = create();
-    if (path != null) {
-      $result.path = path;
-    }
-    return $result;
-  }
-  LayoutControl_NodeControlType._() : super();
-  factory LayoutControl_NodeControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LayoutControl_NodeControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LayoutControl.NodeControlType', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'path')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.NodeControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..hasRequiredFields = false
   ;
 
+  LayoutControl_NodeControlType._() : super();
+  factory LayoutControl_NodeControlType({
+    $core.String? path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory LayoutControl_NodeControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_NodeControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1177,10 +1125,8 @@ class LayoutControl_NodeControlType extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl_NodeControlType copyWith(void Function(LayoutControl_NodeControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_NodeControlType)) as LayoutControl_NodeControlType;
-
+  LayoutControl_NodeControlType copyWith(void Function(LayoutControl_NodeControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_NodeControlType)) as LayoutControl_NodeControlType; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LayoutControl_NodeControlType create() => LayoutControl_NodeControlType._();
   LayoutControl_NodeControlType createEmptyInstance() => create();
@@ -1200,24 +1146,23 @@ class LayoutControl_NodeControlType extends $pb.GeneratedMessage {
 }
 
 class LayoutControl_SequencerControlType extends $pb.GeneratedMessage {
-  factory LayoutControl_SequencerControlType({
-    $core.int? sequenceId,
-  }) {
-    final $result = create();
-    if (sequenceId != null) {
-      $result.sequenceId = sequenceId;
-    }
-    return $result;
-  }
-  LayoutControl_SequencerControlType._() : super();
-  factory LayoutControl_SequencerControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LayoutControl_SequencerControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LayoutControl.SequencerControlType', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.SequencerControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  LayoutControl_SequencerControlType._() : super();
+  factory LayoutControl_SequencerControlType({
+    $core.int? sequenceId,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    return _result;
+  }
+  factory LayoutControl_SequencerControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_SequencerControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1227,10 +1172,8 @@ class LayoutControl_SequencerControlType extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl_SequencerControlType copyWith(void Function(LayoutControl_SequencerControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_SequencerControlType)) as LayoutControl_SequencerControlType;
-
+  LayoutControl_SequencerControlType copyWith(void Function(LayoutControl_SequencerControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_SequencerControlType)) as LayoutControl_SequencerControlType; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LayoutControl_SequencerControlType create() => LayoutControl_SequencerControlType._();
   LayoutControl_SequencerControlType createEmptyInstance() => create();
@@ -1250,24 +1193,23 @@ class LayoutControl_SequencerControlType extends $pb.GeneratedMessage {
 }
 
 class LayoutControl_GroupControlType extends $pb.GeneratedMessage {
-  factory LayoutControl_GroupControlType({
-    $core.int? groupId,
-  }) {
-    final $result = create();
-    if (groupId != null) {
-      $result.groupId = groupId;
-    }
-    return $result;
-  }
-  LayoutControl_GroupControlType._() : super();
-  factory LayoutControl_GroupControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LayoutControl_GroupControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LayoutControl.GroupControlType', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'groupId', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.GroupControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  LayoutControl_GroupControlType._() : super();
+  factory LayoutControl_GroupControlType({
+    $core.int? groupId,
+  }) {
+    final _result = create();
+    if (groupId != null) {
+      _result.groupId = groupId;
+    }
+    return _result;
+  }
+  factory LayoutControl_GroupControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_GroupControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1277,10 +1219,8 @@ class LayoutControl_GroupControlType extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl_GroupControlType copyWith(void Function(LayoutControl_GroupControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_GroupControlType)) as LayoutControl_GroupControlType;
-
+  LayoutControl_GroupControlType copyWith(void Function(LayoutControl_GroupControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_GroupControlType)) as LayoutControl_GroupControlType; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LayoutControl_GroupControlType create() => LayoutControl_GroupControlType._();
   LayoutControl_GroupControlType createEmptyInstance() => create();
@@ -1300,24 +1240,23 @@ class LayoutControl_GroupControlType extends $pb.GeneratedMessage {
 }
 
 class LayoutControl_PresetControlType extends $pb.GeneratedMessage {
-  factory LayoutControl_PresetControlType({
-    $1.PresetId? presetId,
-  }) {
-    final $result = create();
-    if (presetId != null) {
-      $result.presetId = presetId;
-    }
-    return $result;
-  }
-  LayoutControl_PresetControlType._() : super();
-  factory LayoutControl_PresetControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LayoutControl_PresetControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LayoutControl.PresetControlType', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOM<$1.PresetId>(1, _omitFieldNames ? '' : 'presetId', subBuilder: $1.PresetId.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl.PresetControlType', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOM<$1.PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
     ..hasRequiredFields = false
   ;
 
+  LayoutControl_PresetControlType._() : super();
+  factory LayoutControl_PresetControlType({
+    $1.PresetId? presetId,
+  }) {
+    final _result = create();
+    if (presetId != null) {
+      _result.presetId = presetId;
+    }
+    return _result;
+  }
+  factory LayoutControl_PresetControlType.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LayoutControl_PresetControlType.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1327,10 +1266,8 @@ class LayoutControl_PresetControlType extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl_PresetControlType copyWith(void Function(LayoutControl_PresetControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_PresetControlType)) as LayoutControl_PresetControlType;
-
+  LayoutControl_PresetControlType copyWith(void Function(LayoutControl_PresetControlType) updates) => super.copyWith((message) => updates(message as LayoutControl_PresetControlType)) as LayoutControl_PresetControlType; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LayoutControl_PresetControlType create() => LayoutControl_PresetControlType._();
   LayoutControl_PresetControlType createEmptyInstance() => create();
@@ -1360,6 +1297,29 @@ enum LayoutControl_ControlType {
 }
 
 class LayoutControl extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, LayoutControl_ControlType> _LayoutControl_ControlTypeByTag = {
+    7 : LayoutControl_ControlType.node,
+    8 : LayoutControl_ControlType.sequencer,
+    9 : LayoutControl_ControlType.group,
+    10 : LayoutControl_ControlType.preset,
+    0 : LayoutControl_ControlType.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LayoutControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..oo(0, [7, 8, 9, 10])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOM<ControlPosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
+    ..aOM<ControlSize>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', subBuilder: ControlSize.create)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOM<ControlDecorations>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decoration', subBuilder: ControlDecorations.create)
+    ..aOM<ControlBehavior>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'behavior', subBuilder: ControlBehavior.create)
+    ..aOM<LayoutControl_NodeControlType>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node', subBuilder: LayoutControl_NodeControlType.create)
+    ..aOM<LayoutControl_SequencerControlType>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', subBuilder: LayoutControl_SequencerControlType.create)
+    ..aOM<LayoutControl_GroupControlType>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'group', subBuilder: LayoutControl_GroupControlType.create)
+    ..aOM<LayoutControl_PresetControlType>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preset', subBuilder: LayoutControl_PresetControlType.create)
+    ..hasRequiredFields = false
+  ;
+
+  LayoutControl._() : super();
   factory LayoutControl({
     $core.String? id,
     ControlPosition? position,
@@ -1372,65 +1332,41 @@ class LayoutControl extends $pb.GeneratedMessage {
     LayoutControl_GroupControlType? group,
     LayoutControl_PresetControlType? preset,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (position != null) {
-      $result.position = position;
+      _result.position = position;
     }
     if (size != null) {
-      $result.size = size;
+      _result.size = size;
     }
     if (label != null) {
-      $result.label = label;
+      _result.label = label;
     }
     if (decoration != null) {
-      $result.decoration = decoration;
+      _result.decoration = decoration;
     }
     if (behavior != null) {
-      $result.behavior = behavior;
+      _result.behavior = behavior;
     }
     if (node != null) {
-      $result.node = node;
+      _result.node = node;
     }
     if (sequencer != null) {
-      $result.sequencer = sequencer;
+      _result.sequencer = sequencer;
     }
     if (group != null) {
-      $result.group = group;
+      _result.group = group;
     }
     if (preset != null) {
-      $result.preset = preset;
+      _result.preset = preset;
     }
-    return $result;
+    return _result;
   }
-  LayoutControl._() : super();
   factory LayoutControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory LayoutControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static const $core.Map<$core.int, LayoutControl_ControlType> _LayoutControl_ControlTypeByTag = {
-    7 : LayoutControl_ControlType.node,
-    8 : LayoutControl_ControlType.sequencer,
-    9 : LayoutControl_ControlType.group,
-    10 : LayoutControl_ControlType.preset,
-    0 : LayoutControl_ControlType.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LayoutControl', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..oo(0, [7, 8, 9, 10])
-    ..aOS(1, _omitFieldNames ? '' : 'id')
-    ..aOM<ControlPosition>(2, _omitFieldNames ? '' : 'position', subBuilder: ControlPosition.create)
-    ..aOM<ControlSize>(3, _omitFieldNames ? '' : 'size', subBuilder: ControlSize.create)
-    ..aOS(4, _omitFieldNames ? '' : 'label')
-    ..aOM<ControlDecorations>(5, _omitFieldNames ? '' : 'decoration', subBuilder: ControlDecorations.create)
-    ..aOM<ControlBehavior>(6, _omitFieldNames ? '' : 'behavior', subBuilder: ControlBehavior.create)
-    ..aOM<LayoutControl_NodeControlType>(7, _omitFieldNames ? '' : 'node', subBuilder: LayoutControl_NodeControlType.create)
-    ..aOM<LayoutControl_SequencerControlType>(8, _omitFieldNames ? '' : 'sequencer', subBuilder: LayoutControl_SequencerControlType.create)
-    ..aOM<LayoutControl_GroupControlType>(9, _omitFieldNames ? '' : 'group', subBuilder: LayoutControl_GroupControlType.create)
-    ..aOM<LayoutControl_PresetControlType>(10, _omitFieldNames ? '' : 'preset', subBuilder: LayoutControl_PresetControlType.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1440,10 +1376,8 @@ class LayoutControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl copyWith(void Function(LayoutControl) updates) => super.copyWith((message) => updates(message as LayoutControl)) as LayoutControl;
-
+  LayoutControl copyWith(void Function(LayoutControl) updates) => super.copyWith((message) => updates(message as LayoutControl)) as LayoutControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static LayoutControl create() => LayoutControl._();
   LayoutControl createEmptyInstance() => create();
@@ -1563,29 +1497,28 @@ class LayoutControl extends $pb.GeneratedMessage {
 }
 
 class ControlPosition extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlPosition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  ControlPosition._() : super();
   factory ControlPosition({
     $fixnum.Int64? x,
     $fixnum.Int64? y,
   }) {
-    final $result = create();
+    final _result = create();
     if (x != null) {
-      $result.x = x;
+      _result.x = x;
     }
     if (y != null) {
-      $result.y = y;
+      _result.y = y;
     }
-    return $result;
+    return _result;
   }
-  ControlPosition._() : super();
   factory ControlPosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ControlPosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ControlPosition', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'x', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'y', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1595,10 +1528,8 @@ class ControlPosition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlPosition copyWith(void Function(ControlPosition) updates) => super.copyWith((message) => updates(message as ControlPosition)) as ControlPosition;
-
+  ControlPosition copyWith(void Function(ControlPosition) updates) => super.copyWith((message) => updates(message as ControlPosition)) as ControlPosition; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ControlPosition create() => ControlPosition._();
   ControlPosition createEmptyInstance() => create();
@@ -1627,29 +1558,28 @@ class ControlPosition extends $pb.GeneratedMessage {
 }
 
 class ControlSize extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlSize', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  ControlSize._() : super();
   factory ControlSize({
     $fixnum.Int64? width,
     $fixnum.Int64? height,
   }) {
-    final $result = create();
+    final _result = create();
     if (width != null) {
-      $result.width = width;
+      _result.width = width;
     }
     if (height != null) {
-      $result.height = height;
+      _result.height = height;
     }
-    return $result;
+    return _result;
   }
-  ControlSize._() : super();
   factory ControlSize.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ControlSize.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ControlSize', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1659,10 +1589,8 @@ class ControlSize extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlSize copyWith(void Function(ControlSize) updates) => super.copyWith((message) => updates(message as ControlSize)) as ControlSize;
-
+  ControlSize copyWith(void Function(ControlSize) updates) => super.copyWith((message) => updates(message as ControlSize)) as ControlSize; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ControlSize create() => ControlSize._();
   ControlSize createEmptyInstance() => create();
@@ -1691,39 +1619,38 @@ class ControlSize extends $pb.GeneratedMessage {
 }
 
 class ControlDecorations extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlDecorations', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasColor')
+    ..aOM<Color>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Color.create)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasImage')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  ControlDecorations._() : super();
   factory ControlDecorations({
     $core.bool? hasColor,
     Color? color_2,
     $core.bool? hasImage,
     $core.List<$core.int>? image_4,
   }) {
-    final $result = create();
+    final _result = create();
     if (hasColor != null) {
-      $result.hasColor = hasColor;
+      _result.hasColor = hasColor;
     }
     if (color_2 != null) {
-      $result.color_2 = color_2;
+      _result.color_2 = color_2;
     }
     if (hasImage != null) {
-      $result.hasImage = hasImage;
+      _result.hasImage = hasImage;
     }
     if (image_4 != null) {
-      $result.image_4 = image_4;
+      _result.image_4 = image_4;
     }
-    return $result;
+    return _result;
   }
-  ControlDecorations._() : super();
   factory ControlDecorations.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ControlDecorations.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ControlDecorations', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'hasColor')
-    ..aOM<Color>(2, _omitFieldNames ? '' : 'color', subBuilder: Color.create)
-    ..aOB(3, _omitFieldNames ? '' : 'hasImage')
-    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'image', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1733,10 +1660,8 @@ class ControlDecorations extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlDecorations copyWith(void Function(ControlDecorations) updates) => super.copyWith((message) => updates(message as ControlDecorations)) as ControlDecorations;
-
+  ControlDecorations copyWith(void Function(ControlDecorations) updates) => super.copyWith((message) => updates(message as ControlDecorations)) as ControlDecorations; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ControlDecorations create() => ControlDecorations._();
   ControlDecorations createEmptyInstance() => create();
@@ -1785,34 +1710,33 @@ class ControlDecorations extends $pb.GeneratedMessage {
 }
 
 class Color extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Color', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Color._() : super();
   factory Color({
     $core.double? red,
     $core.double? green,
     $core.double? blue,
   }) {
-    final $result = create();
+    final _result = create();
     if (red != null) {
-      $result.red = red;
+      _result.red = red;
     }
     if (green != null) {
-      $result.green = green;
+      _result.green = green;
     }
     if (blue != null) {
-      $result.blue = blue;
+      _result.blue = blue;
     }
-    return $result;
+    return _result;
   }
-  Color._() : super();
   factory Color.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Color.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Color', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'red', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'green', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'blue', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1822,10 +1746,8 @@ class Color extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Color copyWith(void Function(Color) updates) => super.copyWith((message) => updates(message as Color)) as Color;
-
+  Color copyWith(void Function(Color) updates) => super.copyWith((message) => updates(message as Color)) as Color; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Color create() => Color._();
   Color createEmptyInstance() => create();
@@ -1863,24 +1785,23 @@ class Color extends $pb.GeneratedMessage {
 }
 
 class ControlBehavior extends $pb.GeneratedMessage {
-  factory ControlBehavior({
-    SequencerControlBehavior? sequencer,
-  }) {
-    final $result = create();
-    if (sequencer != null) {
-      $result.sequencer = sequencer;
-    }
-    return $result;
-  }
-  ControlBehavior._() : super();
-  factory ControlBehavior.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ControlBehavior.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ControlBehavior', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOM<SequencerControlBehavior>(1, _omitFieldNames ? '' : 'sequencer', subBuilder: SequencerControlBehavior.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlBehavior', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOM<SequencerControlBehavior>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', subBuilder: SequencerControlBehavior.create)
     ..hasRequiredFields = false
   ;
 
+  ControlBehavior._() : super();
+  factory ControlBehavior({
+    SequencerControlBehavior? sequencer,
+  }) {
+    final _result = create();
+    if (sequencer != null) {
+      _result.sequencer = sequencer;
+    }
+    return _result;
+  }
+  factory ControlBehavior.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ControlBehavior.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1890,10 +1811,8 @@ class ControlBehavior extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlBehavior copyWith(void Function(ControlBehavior) updates) => super.copyWith((message) => updates(message as ControlBehavior)) as ControlBehavior;
-
+  ControlBehavior copyWith(void Function(ControlBehavior) updates) => super.copyWith((message) => updates(message as ControlBehavior)) as ControlBehavior; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ControlBehavior create() => ControlBehavior._();
   ControlBehavior createEmptyInstance() => create();
@@ -1915,24 +1834,23 @@ class ControlBehavior extends $pb.GeneratedMessage {
 }
 
 class SequencerControlBehavior extends $pb.GeneratedMessage {
-  factory SequencerControlBehavior({
-    SequencerControlBehavior_ClickBehavior? clickBehavior,
-  }) {
-    final $result = create();
-    if (clickBehavior != null) {
-      $result.clickBehavior = clickBehavior;
-    }
-    return $result;
-  }
-  SequencerControlBehavior._() : super();
-  factory SequencerControlBehavior.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SequencerControlBehavior.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequencerControlBehavior', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..e<SequencerControlBehavior_ClickBehavior>(1, _omitFieldNames ? '' : 'clickBehavior', $pb.PbFieldType.OE, defaultOrMaker: SequencerControlBehavior_ClickBehavior.GO_FORWARD, valueOf: SequencerControlBehavior_ClickBehavior.valueOf, enumValues: SequencerControlBehavior_ClickBehavior.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequencerControlBehavior', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..e<SequencerControlBehavior_ClickBehavior>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clickBehavior', $pb.PbFieldType.OE, defaultOrMaker: SequencerControlBehavior_ClickBehavior.GO_FORWARD, valueOf: SequencerControlBehavior_ClickBehavior.valueOf, enumValues: SequencerControlBehavior_ClickBehavior.values)
     ..hasRequiredFields = false
   ;
 
+  SequencerControlBehavior._() : super();
+  factory SequencerControlBehavior({
+    SequencerControlBehavior_ClickBehavior? clickBehavior,
+  }) {
+    final _result = create();
+    if (clickBehavior != null) {
+      _result.clickBehavior = clickBehavior;
+    }
+    return _result;
+  }
+  factory SequencerControlBehavior.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequencerControlBehavior.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1942,10 +1860,8 @@ class SequencerControlBehavior extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequencerControlBehavior copyWith(void Function(SequencerControlBehavior) updates) => super.copyWith((message) => updates(message as SequencerControlBehavior)) as SequencerControlBehavior;
-
+  SequencerControlBehavior copyWith(void Function(SequencerControlBehavior) updates) => super.copyWith((message) => updates(message as SequencerControlBehavior)) as SequencerControlBehavior; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequencerControlBehavior create() => SequencerControlBehavior._();
   SequencerControlBehavior createEmptyInstance() => create();
@@ -1965,24 +1881,23 @@ class SequencerControlBehavior extends $pb.GeneratedMessage {
 }
 
 class ReadFaderValueRequest extends $pb.GeneratedMessage {
-  factory ReadFaderValueRequest({
-    $core.String? node,
-  }) {
-    final $result = create();
-    if (node != null) {
-      $result.node = node;
-    }
-    return $result;
-  }
-  ReadFaderValueRequest._() : super();
-  factory ReadFaderValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReadFaderValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReadFaderValueRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'node')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ReadFaderValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node')
     ..hasRequiredFields = false
   ;
 
+  ReadFaderValueRequest._() : super();
+  factory ReadFaderValueRequest({
+    $core.String? node,
+  }) {
+    final _result = create();
+    if (node != null) {
+      _result.node = node;
+    }
+    return _result;
+  }
+  factory ReadFaderValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReadFaderValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1992,10 +1907,8 @@ class ReadFaderValueRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ReadFaderValueRequest copyWith(void Function(ReadFaderValueRequest) updates) => super.copyWith((message) => updates(message as ReadFaderValueRequest)) as ReadFaderValueRequest;
-
+  ReadFaderValueRequest copyWith(void Function(ReadFaderValueRequest) updates) => super.copyWith((message) => updates(message as ReadFaderValueRequest)) as ReadFaderValueRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static ReadFaderValueRequest create() => ReadFaderValueRequest._();
   ReadFaderValueRequest createEmptyInstance() => create();
@@ -2015,24 +1928,23 @@ class ReadFaderValueRequest extends $pb.GeneratedMessage {
 }
 
 class FaderValueResponse extends $pb.GeneratedMessage {
-  factory FaderValueResponse({
-    $core.double? value,
-  }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    return $result;
-  }
-  FaderValueResponse._() : super();
-  factory FaderValueResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FaderValueResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FaderValueResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.layouts'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaderValueResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.layouts'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
+  FaderValueResponse._() : super();
+  factory FaderValueResponse({
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory FaderValueResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaderValueResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -2042,10 +1954,8 @@ class FaderValueResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FaderValueResponse copyWith(void Function(FaderValueResponse) updates) => super.copyWith((message) => updates(message as FaderValueResponse)) as FaderValueResponse;
-
+  FaderValueResponse copyWith(void Function(FaderValueResponse) updates) => super.copyWith((message) => updates(message as FaderValueResponse)) as FaderValueResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static FaderValueResponse create() => FaderValueResponse._();
   FaderValueResponse createEmptyInstance() => create();
@@ -2064,6 +1974,3 @@ class FaderValueResponse extends $pb.GeneratedMessage {
   void clearValue() => clearField(1);
 }
 
-
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

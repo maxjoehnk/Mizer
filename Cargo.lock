@@ -5114,6 +5114,7 @@ name = "mizer-clock-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "chrono",
  "mizer-clock",
  "mizer-node",
  "serde",
@@ -5539,6 +5540,7 @@ name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "mizer-clock",
  "mizer-node",
  "mizer-util",
  "serde",

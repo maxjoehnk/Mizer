@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 use std::sync::Arc;
+use crate::apis::transport::Timecode;
 
 pub struct LayoutRef {
     pub view: LayoutsView,
@@ -82,6 +83,20 @@ pub extern "C" fn read_label_value(ptr: *const LayoutRef, path: *const c_char) -
     std::mem::forget(ffi);
 
     value_pointer
+}
+
+#[no_mangle]
+pub extern "C" fn read_clock_value(ptr: *const LayoutRef, path: *const c_char) -> Timecode {
+    let path = unsafe { CStr::from_ptr(path) };
+    let path = path.to_str().unwrap();
+    let node_path = NodePath(path.to_string());
+    let ffi = Arc::from_pointer(ptr);
+
+    let value = ffi.view.get_clock_value(&node_path).unwrap_or_default();
+
+    std::mem::forget(ffi);
+
+    value.into()
 }
 
 #[no_mangle]

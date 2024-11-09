@@ -136,6 +136,18 @@ pub struct ClockFrame {
     pub frames: u64,
 }
 
+impl ClockFrame {
+    pub fn to_duration(&self, fps: f64) -> Duration {
+        let frames = self.frames as f64;
+        let seconds = frames / fps;
+        let seconds = seconds as u64;
+        let frames = frames - (seconds as f64 * fps);
+        let nanos = (frames / fps * 1_000_000_000f64) as u32;
+
+        Duration::new(seconds, nanos)
+    }
+}
+
 impl Default for ClockFrame {
     fn default() -> Self {
         Self {

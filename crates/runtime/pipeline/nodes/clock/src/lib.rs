@@ -1,53 +1,34 @@
+use chrono::{DateTime, Duration, Local, NaiveTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use mizer_clock::*;
 use mizer_node::*;
 
-const BPM_SETTING: &str = "BPM";
+const MINUTE: u64 = 60;
+const HOUR: u64 = 60 * MINUTE;
 
-#[derive(Clone, Deserialize, Serialize, PartialEq)]
-pub struct ClockNode {
-    /// BPM
-    pub speed: f64,
-}
+const TIMECODE_OUTPUT: &str = "Timecode";
 
-impl std::fmt::Debug for ClockNode {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.debug_struct("ClockNode")
-            .field("speed", &format!("{} BPM", &self.speed))
-            .finish()
-    }
-}
+#[derive(Clone, Default, Debug, Deserialize, Serialize, PartialEq)]
+pub struct ClockNode {}
 
-impl Default for ClockNode {
-    fn default() -> Self {
-        ClockNode { speed: 90. }
-    }
-}
-
-impl ConfigurableNode for ClockNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(BPM_SETTING, self.speed)
-            .min(1.)
-            .max_hint(200.)
-            .step_size(5.)]
-    }
-
-    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(float setting, BPM_SETTING, self.speed);
-
-        update_fallback!(setting)
-    }
-}
+impl ConfigurableNode for ClockNode {}
 
 impl PipelineNode for ClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            node_type_name: "Clock".into(),
-            preview_type: PreviewType::None,
+            node_type_name: "System Clock".into(),
+            preview_type: PreviewType::Timecode,
             category: NodeCategory::Standard,
         }
     }
+
+    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+        vec![
+            output_port!(TIMECODE_OUTPUT, PortType::Clock),
+        ]
+    }
+
 
     fn node_type(&self) -> NodeType {
         NodeType::Clock
@@ -55,38 +36,47 @@ impl PipelineNode for ClockNode {
 }
 
 impl ProcessingNode for ClockNode {
-    type State = SystemClock;
+    type State = ();
 
-    fn process(&self, _: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let speed = state.speed_mut();
-        *speed = self.speed;
-        state.tick();
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        let now = self.now();
+        let duration = now.signed_duration_since(self.today());
+        let timecode = to_timecode(duration);
+
+        context.write_timecode_preview(timecode);
+
+        context.write_port::<_, port_types::CLOCK>(TIMECODE_OUTPUT, duration.to_std()?);
+
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        let mut clock = SystemClock::default();
-        *clock.speed_mut() = self.speed;
+        Default::default()
+    }
+}
 
-        clock
+impl ClockNode {
+    fn now(&self) -> DateTime<Local> {
+        Local::now()
     }
 
-    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
-        ui.collapsing_header("Config", |ui| {
-            ui.columns(2, |columns| {
-                columns[0].label("BPM");
-                columns[1].label(self.speed.to_string());
-            });
-        });
-        ui.collapsing_header("State", |ui| {
-            ui.columns(2, |columns| {
-                columns[0].label("Speed");
-                columns[1].label(state.speed().to_string());
+    fn today(&self) -> DateTime<Local> {
+        Local::now().with_time(NaiveTime::default()).unwrap()
+    }
+}
 
-                let snapshot = state.snapshot();
-                columns[0].label("Timecode");
-                columns[1].label(snapshot.time.to_string());
-            });
-        });
+fn to_timecode(duration: Duration) -> Timecode {
+    let seconds = duration.num_seconds() as u64;
+    let hours = seconds / HOUR;
+    let seconds = seconds.saturating_sub(hours * HOUR);
+    let minutes = seconds / MINUTE;
+    let seconds = seconds.saturating_sub(minutes * MINUTE);
+
+    Timecode {
+        frames: 0,
+        seconds,
+        minutes,
+        hours,
+        negative: true,
     }
 }

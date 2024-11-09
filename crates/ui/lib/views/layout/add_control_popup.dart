@@ -66,6 +66,7 @@ class AddControlPopup extends StatelessWidget {
             PopupItem(ControlType.FADER, "Fader".i18n),
             PopupItem(ControlType.DIAL, "Dial".i18n),
             PopupItem(ControlType.LABEL, "Label".i18n),
+            PopupItem(ControlType.TIMECODE, "Timecode".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -117,6 +118,7 @@ List<String> CONTROL_NODES = [
   "dial",
   "button",
   "label",
+  "timecode",
 ];
 
 bool isControlNode(Node node) {

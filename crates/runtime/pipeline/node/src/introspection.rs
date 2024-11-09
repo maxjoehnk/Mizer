@@ -75,6 +75,7 @@ node_type_name! {
         ButtonGrid,
         Dial,
         Label,
+        Timecode,
         DmxInput,
         DmxOutput,
         Oscillator,

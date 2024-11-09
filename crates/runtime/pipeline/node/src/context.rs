@@ -60,6 +60,9 @@ pub trait NodeContext: PreviewContext + Sized + Inject {
     fn text_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::TEXT, Self> {
         self.input(port)
     }
+    fn clock_input<P: Into<PortId>>(&self, port: P) -> PortReader<port_types::CLOCK, Self> {
+        self.input(port)
+    }
 
     fn input<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> PortReader<V, Self> {
         PortReader {

@@ -172,4 +172,5 @@ enum ControlType {
   FADER = 2;
   DIAL = 3;
   LABEL = 4;
+  TIMECODE = 5;
 }

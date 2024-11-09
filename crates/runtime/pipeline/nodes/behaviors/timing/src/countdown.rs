@@ -10,6 +10,7 @@ const STOP_INPUT: &str = "Stop";
 
 const ACTIVE_OUTPUT: &str = "Active";
 const FINISHED_OUTPUT: &str = "Finished";
+const CLOCK_OUTPUT: &str = "Clock";
 
 const SECONDS_SETTING: &str = "Seconds";
 const MINUTES_SETTING: &str = "Minutes";
@@ -71,6 +72,7 @@ impl PipelineNode for CountdownNode {
             input_port!(STOP_INPUT, PortType::Single),
             output_port!(ACTIVE_OUTPUT, PortType::Single),
             output_port!(FINISHED_OUTPUT, PortType::Single),
+            output_port!(CLOCK_OUTPUT, PortType::Clock),
         ]
     }
 
@@ -94,6 +96,7 @@ impl ProcessingNode for CountdownNode {
             let elapsed = start.elapsed();
             let duration = self.duration();
             let timecode = get_timecode(elapsed, duration, context.fps());
+            context.write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, duration.saturating_sub(elapsed));
             context.write_timecode_preview(timecode);
             if elapsed >= duration {
                 self.stop_timer(state);
@@ -106,6 +109,7 @@ impl ProcessingNode for CountdownNode {
         } else {
             context.write_port(ACTIVE_OUTPUT, SINGLE_LOW);
             context.write_port(FINISHED_OUTPUT, SINGLE_LOW);
+            context.write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, Duration::default());
             context.write_timecode_preview(Timecode::default());
         }
 

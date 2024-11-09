@@ -11,6 +11,7 @@ const STOP_INPUT: &str = "Stop";
 const BPM_INPUT: &str = "Tempo";
 const BPM_OUTPUT: &str = "Tempo";
 const PLAYING_OUTPUT: &str = "Playing";
+const CLOCK_OUTPUT: &str = "Clock";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct TransportNode;
@@ -36,6 +37,7 @@ impl PipelineNode for TransportNode {
             input_port!(BPM_INPUT, PortType::Single),
             output_port!(BPM_OUTPUT, PortType::Single),
             output_port!(PLAYING_OUTPUT, PortType::Single),
+            output_port!(CLOCK_OUTPUT, PortType::Clock),
         ]
     }
 
@@ -90,6 +92,7 @@ impl ProcessingNode for TransportNode {
                 0f64
             },
         );
+        context.write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, context.clock().to_duration(context.fps()));
         Ok(())
     }
 

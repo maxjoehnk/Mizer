@@ -196,6 +196,7 @@ impl From<ControlType> for mizer_node::NodeType {
             ControlType::Fader => Self::Fader,
             ControlType::Dial => Self::Dial,
             ControlType::Label => Self::Label,
+            ControlType::Timecode => Self::Timecode,
         }
     }
 }

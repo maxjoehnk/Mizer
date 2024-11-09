@@ -180,6 +180,18 @@ impl CoordinatorRuntime {
 
         self.layout_fader_view.write_label_values(label_values);
 
+        let clock_values = nodes
+            .iter()
+            .filter_map(|path| {
+                pipeline
+                    .get_node_with_state::<TimecodeNode>(path)
+                    .and_then(|(node, state)| node.timecode(state))
+                    .map(|value| (path.clone(), value))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_clock_values(clock_values);
+
         let button_colors = nodes
             .iter()
             .filter_map(|path| {

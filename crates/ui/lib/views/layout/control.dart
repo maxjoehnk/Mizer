@@ -24,6 +24,7 @@ import 'controls/group.dart';
 import 'controls/label.dart';
 import 'controls/preset.dart';
 import 'controls/sequencer.dart';
+import 'controls/timecode.dart';
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
 import 'dialogs/edit_sequencer_control_behavior_dialog.dart';
@@ -141,6 +142,8 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       );
     } else if (node?.type == "label") {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
+    } else if (node?.type == "timecode") {
+      return TimecodeControl(pointer: widget.pointer, control: widget.control, color: _color);
     }
     return null;
   }

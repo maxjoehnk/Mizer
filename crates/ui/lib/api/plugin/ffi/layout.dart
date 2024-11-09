@@ -39,6 +39,13 @@ class LayoutsRefPointer extends FFIPointer<LayoutRef> {
     return result.cast<Utf8>().toDartString();
   }
 
+  Timecode readClockValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    var result = this._bindings.read_clock_value(ptr, ffiPath.cast<ffi.Char>());
+
+    return result;
+  }
+
   Color? readControlColor(String path) {
     var ffiPath = path.toNativeUtf8();
     var result = this._bindings.read_control_color(ptr, ffiPath.cast<ffi.Char>());

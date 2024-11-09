@@ -23,7 +23,7 @@ pub use mizer_fixture_nodes::{
 };
 pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
-pub use mizer_input_nodes::{ButtonGridNode, ButtonNode, DialNode, FaderNode, LabelNode};
+pub use mizer_input_nodes::{ButtonGridNode, ButtonNode, DialNode, FaderNode, LabelNode, TimecodeNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{
@@ -254,6 +254,7 @@ node_impl! {
     Button(ButtonNode),
     ButtonGrid(ButtonGridNode),
     Label(LabelNode),
+    Timecode(TimecodeNode),
     MidiInput(MidiInputNode),
     MidiOutput(MidiOutputNode),
     MidiInputGrid(MidiInputGridNode),

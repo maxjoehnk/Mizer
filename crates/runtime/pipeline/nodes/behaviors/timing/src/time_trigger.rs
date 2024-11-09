@@ -11,6 +11,7 @@ const MINUTE: u64 = 60;
 const HOUR: u64 = 60 * MINUTE;
 
 const VALUE_OUTPUT: &str = "Value";
+const TIME_REMAINING_OUTPUT: &str = "Time Remaining";
 
 const SECOND_SETTING: &str = "Second";
 const MINUTE_SETTING: &str = "Minute";
@@ -67,7 +68,10 @@ impl PipelineNode for TimeTriggerNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
+        vec![
+            output_port!(VALUE_OUTPUT, PortType::Single),
+            output_port!(TIME_REMAINING_OUTPUT, PortType::Clock),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -93,6 +97,8 @@ impl ProcessingNode for TimeTriggerNode {
                 VALUE_OUTPUT,
                 if has_passed { SINGLE_HIGH } else { SINGLE_LOW },
             );
+            
+            context.write_port::<_, port_types::CLOCK>(TIME_REMAINING_OUTPUT, duration.to_std()?);
         }
 
         Ok(())

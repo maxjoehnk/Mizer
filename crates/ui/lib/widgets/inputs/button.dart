@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'decoration.dart';
@@ -51,10 +52,17 @@ class _ButtonInputState extends State<ButtonInput> {
                       ),
                     ),
                     if (widget.label != null)
-                      Center(
-                          child: Text(widget.label!,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall)),
+                      Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Center(
+                            child: AutoSizeText(widget.label!,
+                                minFontSize: 10,
+                                wrapWords: false,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!.copyWith(fontSize: 15))),
+                      ),
                   ],
                 ),
               )),

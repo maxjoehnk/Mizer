@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 tracing = "0.1"
 mizer-api = { path = "../api" }
-nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "94a16e8" }
+nativeshell = { git = "https://github.com/maxjoehnk/nativeshell", rev = "2f29f9e" }
 mizer-util = { path = "../util" }
 mizer-ui-ffi = { path = "ffi" }
 futures = "0.3"
@@ -17,5 +17,5 @@ profiling = "1"
 system_shutdown = "4"
 
 [build-dependencies]
-nativeshell_build = { git = "https://github.com/maxjoehnk/nativeshell", rev = "94a16e8" }
+nativeshell_build = { git = "https://github.com/maxjoehnk/nativeshell", rev = "2f29f9e" }
 

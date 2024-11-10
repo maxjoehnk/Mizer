@@ -23,10 +23,10 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### android internal
+### android beta
 
 ```sh
-[bundle exec] fastlane android internal
+[bundle exec] fastlane android beta
 ```
 
 

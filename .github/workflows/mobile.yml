@@ -3,6 +3,7 @@ on:
   push:
     branches: [main, feature/android-release-pipeline]
     paths:
+      - ".github/workflows/mobile.yml"
       - "crates/ui/android/**"
       - "crates/ui/lib/mobile/**"
       - "crates/ui/pubspec.yaml"

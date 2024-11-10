@@ -49,3 +49,6 @@ icons:
 
 companion:
 	flutter run -t lib/mobile/main.dart
+
+android_bundle: generate_bindings
+	flutter build appbundle --release -t lib/mobile/main.dart

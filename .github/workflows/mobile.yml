@@ -1,0 +1,64 @@
+---
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/mobile.yml"
+      - "crates/ui/android/**"
+      - "crates/ui/lib/mobile/**"
+      - "crates/ui/pubspec.yaml"
+      - "crates/ui/pubspec.lock"
+
+name: Mobile App
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build-android-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Build android release bundle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
+      - name: Decode keystore
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: echo "$ANDROID_KEYSTORE" | base64 -d > keystore.jks
+        working-directory: crates/ui/android/app
+      - name: Create properties file
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
+          ANDROID_SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
+        run: |
+          echo "storePassword=$ANDROID_KEYSTORE_PASSWORD" > key.properties
+          echo "keyPassword=$ANDROID_SIGNING_KEY_PASSWORD" >> key.properties
+          echo "keyAlias=$ANDROID_SIGNING_KEY_ALIAS" >> key.properties
+          echo "storeFile=keystore.jks" >> key.properties
+        working-directory: crates/ui/android
+      - name: Build
+        run: make android_bundle
+        working-directory: crates/ui
+      # Upload to play store
+      - name: Decode service account file
+        env:
+          SERVICE_ACCOUNT_KEY_JSON: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }}
+        run: echo $SERVICE_ACCOUNT_KEY_JSON | base64 -d > service_account_key.json
+        working-directory: crates/ui/android
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+      - name: Deploy
+        run: |
+          bundle install
+          bundle exec fastlane beta
+        working-directory: crates/ui/android

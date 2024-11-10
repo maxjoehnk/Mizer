@@ -7,7 +7,9 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
 class FixtureList extends StatefulWidget {
-  const FixtureList({super.key});
+  final Function() onDisconnect;
+
+  const FixtureList({super.key, required this.onDisconnect});
 
   @override
   State<FixtureList> createState() => _FixtureListState();
@@ -23,6 +25,9 @@ class _FixtureListState extends State<FixtureList> {
     this._fixtures =
         Stream.periodic(Duration(seconds: 1)).asyncMap((_) => _fixturesApi.getFixtures());
     this._programmer = _programmerApi.observe().asBroadcastStream();
+    this._programmer.handleError((_) {
+      this._programmer = _programmerApi.observe().asBroadcastStream();
+    });
   }
 
   @override
@@ -30,6 +35,16 @@ class _FixtureListState extends State<FixtureList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mizer'),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text('Disconnect'),
+                onTap: () => widget.onDisconnect(),
+              )
+            ],
+          )
+        ],
       ),
       body: StreamBuilder<Fixtures>(
           stream: _fixtures,

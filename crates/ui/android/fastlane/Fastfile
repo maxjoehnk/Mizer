@@ -1,0 +1,31 @@
+default_platform(:android)
+
+platform :android do
+  lane :build do
+    gradle(task: "clean")
+    gradle(task: "bundle", build_type: "Release")
+   end
+
+  lane :beta do
+    increment_build_num
+    build
+    upload_to_play_store(
+        track: 'beta',
+        aab: '../build/app/outputs/bundle/release/app-release.aab',
+        skip_upload_apk: true
+    )
+  end
+
+  lane :increment_build_num do
+      previous_build_number = google_play_track_version_codes(
+        track: "beta",
+      )[0]
+
+      current_build_number = previous_build_number + 1
+
+      increment_version_code(
+        gradle_file_path: "./app/build.gradle",
+        version_code: current_build_number
+      )
+   end
+end

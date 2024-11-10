@@ -1,4 +1,4 @@
-package me.maxjoehnk.ui
+package me.maxjoehnk.mizer
 
 import io.flutter.embedding.android.FlutterActivity
 

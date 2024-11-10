@@ -1,0 +1,3 @@
+Control Mizer from the same network.
+
+View your patch and highlight fixtures to quickly diagnose any dmx issues.

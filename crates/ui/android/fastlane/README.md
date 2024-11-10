@@ -21,12 +21,20 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane android build
 ```
 
-Submit a new Beta Build to Crashlytics Beta
+
 
 ### android internal
 
 ```sh
 [bundle exec] fastlane android internal
+```
+
+
+
+### android increment_build_num
+
+```sh
+[bundle exec] fastlane android increment_build_num
 ```
 
 

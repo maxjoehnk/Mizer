@@ -25,7 +25,9 @@ jobs:
           ruby-version: 2.7.2
           bundler-cache: true
       - name: Create keystore
-        run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -d > keystore.jks
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: echo "$ANDROID_KEYSTORE" | base64 -d > keystore.jks
         working-directory: crates/ui
       - name: Create properties file
         env:

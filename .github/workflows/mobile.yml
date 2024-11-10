@@ -56,5 +56,7 @@ jobs:
         run: echo $SERVICE_ACCOUNT_KEY_JSON | base64 -d > service_account_key.json
         working-directory: crates/ui/android
       - name: Deploy
-        run: bundle exec fastlane beta
+        run: |
+          bundle install
+          bundle exec fastlane beta
         working-directory: crates/ui/android

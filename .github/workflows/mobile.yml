@@ -1,7 +1,7 @@
 ---
 on:
   push:
-    branches: [main, feature/android-release-pipeline]
+    branches: [main]
     paths:
       - ".github/workflows/mobile.yml"
       - "crates/ui/android/**"

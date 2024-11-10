@@ -18,7 +18,7 @@ platform :android do
 
   lane :increment_build_num do
       previous_build_number = google_play_track_version_codes(
-        track: "internal",
+        track: "beta",
       )[0]
 
       current_build_number = previous_build_number + 1

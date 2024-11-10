@@ -8,6 +8,12 @@ on:
       - "crates/ui/pubspec.yaml"
       - "crates/ui/pubspec.lock"
 
+name: Mobile App
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
   build-android-remote:
     runs-on: ubuntu-latest

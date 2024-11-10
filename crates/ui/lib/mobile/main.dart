@@ -17,8 +17,10 @@ class MizerMobileUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return MizerApp(
       child: SessionSelector(
-          builder: (context, session) => MobileApiProvider(
-              child: FixtureList(), host: session.host.host, port: session.host.port)),
+          builder: (context, connection) => MobileApiProvider(
+              child: FixtureList(onDisconnect: connection.disconnect),
+              host: connection.session.host.host,
+              port: connection.session.host.port)),
     );
   }
 }

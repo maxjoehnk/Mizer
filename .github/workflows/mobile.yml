@@ -46,14 +46,19 @@ jobs:
           echo "keyAlias=$ANDROID_SIGNING_KEY_ALIAS" >> key.properties
           echo "storeFile=keystore.jks" >> key.properties
         working-directory: crates/ui
-      - name: Build
-        run: make android_bundle
-        working-directory: crates/ui
       - name: Create service account file
         env:
           SERVICE_ACCOUNT_KEY_JSON: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }}
         run: echo $SERVICE_ACCOUNT_KEY_JSON | base64 -d > service_account_key.json
         working-directory: crates/ui/android
+      - name: Debug
+        working-directory: crates/ui
+        run: |
+          ls -la
+          ls -la android
+      - name: Build
+        run: make android_bundle
+        working-directory: crates/ui
       - name: Deploy
         run: bundle exec fastlane beta
         working-directory: crates/ui/android

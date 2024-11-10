@@ -22,15 +22,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+      # Build android release bundle
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
-      - name: Set up ruby env
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
       - name: Decode keystore
         env:
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
@@ -50,11 +46,17 @@ jobs:
       - name: Build
         run: make android_bundle
         working-directory: crates/ui
+      # Upload to play store
       - name: Decode service account file
         env:
           SERVICE_ACCOUNT_KEY_JSON: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }}
         run: echo $SERVICE_ACCOUNT_KEY_JSON | base64 -d > service_account_key.json
         working-directory: crates/ui/android
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
       - name: Deploy
         run: |
           bundle install

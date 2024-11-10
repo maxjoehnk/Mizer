@@ -1,0 +1,51 @@
+---
+on:
+  push:
+    branches: [main, feature/android-release-pipeline]
+    paths:
+      - "crates/ui/android/**"
+      - "crates/ui/lib/mobile/**"
+      - "crates/ui/pubspec.yaml"
+      - "crates/ui/pubspec.lock"
+
+jobs:
+  build-android-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+      - name: Create keystore
+        run: echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -d > keystore.jks
+        working-directory: crates/ui
+      - name: Create properties file
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
+          ANDROID_SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
+        run: |
+          echo "storePassword=$ANDROID_KEYSTORE_PASSWORD" > key.properties
+          echo "keyPassword=$ANDROID_SIGNING_KEY_PASSWORD" >> key.properties
+          echo "keyAlias=$ANDROID_SIGNING_KEY_ALIAS" >> key.properties
+          echo "storeFile=keystore.jks" >> key.properties
+        working-directory: crates/ui
+      - name: Build
+        run: make android_bundle
+        working-directory: crates/ui
+      - name: Create service account file
+        env:
+          SERVICE_ACCOUNT_KEY_JSON: ${{ secrets.SERVICE_ACCOUNT_KEY_JSON }}
+        run: echo $SERVICE_ACCOUNT_KEY_JSON | base64 -d > service_account_key.json
+        working-directory: crates/ui/android
+      - name: Deploy
+        run: bundle exec fastlane internal
+        working-directory: crates/ui/android

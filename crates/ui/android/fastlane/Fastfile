@@ -1,0 +1,21 @@
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new Beta Build to Crashlytics Beta"
+
+  lane :build do
+    gradle(task: "clean")
+    gradle(task: "bundle", build_type: "Release")
+   end
+
+  lane :internal do
+    build
+
+    upload_to_play_store(
+        track: 'internal',
+        version_code: flutter_version()['version_code'],
+        aab: '../build/app/outputs/bundle/release/app-release.aab',
+        skip_upload_apk: true
+    )
+  end
+end

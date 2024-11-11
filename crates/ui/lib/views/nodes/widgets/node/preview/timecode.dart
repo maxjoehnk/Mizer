@@ -29,7 +29,7 @@ class _TimecodeRendererState extends State<TimecodeRenderer> {
 
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: FFITimeControl(pointer: snapshot.requireData),
+            child: FFITimeControl(pointer: snapshot.requireData, textStyle: TextStyle(fontSize: 40)),
           );
         });
   }

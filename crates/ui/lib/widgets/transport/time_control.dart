@@ -125,11 +125,12 @@ class _TimeFormat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
-    var timeStyle = textStyle ?? style.headlineSmall;
+    var baseStyle = style.headlineSmall!.copyWith(fontWeight: FontWeight.w400, fontSize: 20);
+    var timeStyle = (textStyle ?? baseStyle).copyWith(fontFamily: 'RobotoMono');
     var time = _formatTime();
 
     if (autoSize) {
-      return AutoSizeText(time, textAlign: TextAlign.center, style: TextStyle(fontSize: 200), minFontSize: 10, wrapWords: false, softWrap: false);
+      return AutoSizeText(time, textAlign: TextAlign.center, style: TextStyle(fontSize: 200, fontFamily: 'RobotoMono'), minFontSize: 10, wrapWords: false, softWrap: false);
     }
     return Text(time, textAlign: TextAlign.center, style: timeStyle);
   }

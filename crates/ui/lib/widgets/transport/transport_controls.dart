@@ -238,7 +238,7 @@ class _SpeedEditorState extends State<SpeedEditor> {
           },
           onTap: () => setState(() => this.isEditing = true),
           child:
-              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headlineSmall),
+              Text(value.toStringAsFixed(2), textAlign: TextAlign.center, style: style.headlineSmall!.copyWith(fontFamily: "RobotoMono", fontSize: 20)),
         ),
       ),
     );

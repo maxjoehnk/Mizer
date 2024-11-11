@@ -86,7 +86,7 @@ class _StatusBarFpsState extends State<StatusBarFps> with SingleTickerProviderSt
       return Container();
     }
     var fps = _fps!.toStringAsFixed(2);
-    return Text('FPS $fps'.i18n, style: Theme.of(context).textTheme.bodySmall);
+    return Text('FPS $fps'.i18n, style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
   }
 }
 
@@ -117,6 +117,6 @@ class _StatusBarClockState extends State<StatusBarClock> {
   @override
   Widget build(BuildContext context) {
     return Text(DateFormat('Hms').format(DateTime.now()),
-        style: Theme.of(context).textTheme.bodySmall);
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(fontFamily: "RobotoMono"));
   }
 }

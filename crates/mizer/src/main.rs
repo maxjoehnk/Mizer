@@ -43,9 +43,15 @@ fn setup_sentry() -> Option<sentry::ClientInitGuard> {
             traces_sample_rate: 1.0,
             default_integrations: true,
             attach_stacktrace: true,
+            session_mode: sentry::SessionMode::Application,
             ..Default::default()
         },
     ));
+    sentry::configure_scope(|scope| {
+        if let Some(commit) = option_env!("GIT_COMMIT") {
+            scope.set_tag("commit", commit);
+        }
+    });
 
     Some(guard)
 }

@@ -105,7 +105,7 @@ class _StatusBarClockState extends State<StatusBarClock> {
   @override
   void initState() {
     super.initState();
-    timer = new Timer.periodic(Duration(seconds: 1), (timer) => setState(() {}));
+    timer = new Timer.periodic(Duration(milliseconds: 50), (timer) => setState(() {}));
   }
 
   @override

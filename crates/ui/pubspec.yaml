@@ -134,9 +134,13 @@ ffigen:
     include-directives:
       - 'ffi.h'
 
-flutter_icons:
+flutter_launcher_icons:
   image_path: ../../assets/logo@512.png
   android: true
+  min_sdk_android: 19
+  adaptive_icon_background: "#303030"
+  adaptive_icon_foreground: "../../assets/logo_foreground.png"
+  adaptive_icon_monochrome: "../../assets/logo_monochrome.png"
   ios: true
   windows:
     generate: true

@@ -40,7 +40,7 @@ dependencies:
   vector_math: ^2.1.4
   toggle_switch: ^2.1.0
   change_case: ^2.0.1
-  battery_plus: ^5.0.3
+  battery_plus: ^6.0.0
 
 dev_dependencies:
   flutter_test:

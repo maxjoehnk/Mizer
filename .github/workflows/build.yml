@@ -120,6 +120,8 @@ jobs:
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
       - name: Remove linked flutter libs from cache
         run: rm -rf target/release/lib target/release/deps/libflutter_linux_gtk.so
+      - name: Remove flutter native assets from cache
+        run: rm -rf target/release/native_assets
       - name: Build Headless
         run: make build-headless
       - uses: actions/upload-artifact@v4

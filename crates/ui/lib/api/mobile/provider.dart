@@ -1,15 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/api/contracts/sequencer.dart';
 
 import '../demo/fixtures.dart';
 import '../demo/programmer.dart';
+import '../demo/sequencer.dart';
 import 'fixtures.dart';
 import 'programmer.dart';
+import 'sequencer.dart';
 
 class MobileApiProvider extends StatelessWidget {
   final Widget child;
@@ -24,6 +25,7 @@ class MobileApiProvider extends StatelessWidget {
       return MultiRepositoryProvider(child: child, providers: [
         RepositoryProvider<FixturesApi>(create: (context) => FixturesDemoApi()),
         RepositoryProvider<ProgrammerApi>(create: (context) => ProgrammerDemoApi()),
+        RepositoryProvider<SequencerRemoteApi>(create: (context) => SequencerDemoApi()),
       ]);
     }
 
@@ -32,6 +34,7 @@ class MobileApiProvider extends StatelessWidget {
     return MultiRepositoryProvider(child: child, providers: [
       RepositoryProvider<FixturesApi>(create: (context) => FixturesMobileApi(clientChannel)),
       RepositoryProvider<ProgrammerApi>(create: (context) => ProgrammerMobileApi(clientChannel)),
+      RepositoryProvider<SequencerRemoteApi>(create: (context) => SequencerMobileApi(clientChannel)),
     ]);
   }
 }

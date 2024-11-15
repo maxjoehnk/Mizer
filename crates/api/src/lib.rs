@@ -19,6 +19,7 @@ use mizer_settings::Settings;
 use crate::handlers::Handlers;
 use crate::proto::fixtures::fixtures_api_server::FixturesApiServer;
 use crate::proto::programmer::programmer_api_server::ProgrammerApiServer;
+use crate::proto::sequencer::sequencer_remote_api_server::SequencerRemoteApiServer;
 
 pub mod handlers;
 mod mappings;
@@ -110,6 +111,7 @@ pub fn start_remote_api<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyho
             .trace_fn(|_| tracing::info_span!("remote_api"))
             .add_service(FixturesApiServer::new(handlers.fixtures))
             .add_service(ProgrammerApiServer::new(handlers.programmer))
+            .add_service(SequencerRemoteApiServer::new(handlers.sequencer))
             .serve(addr)
             .await;
 

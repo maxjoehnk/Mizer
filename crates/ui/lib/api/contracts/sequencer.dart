@@ -2,7 +2,7 @@ import 'package:mizer/protos/sequencer.pb.dart';
 
 import '../plugin/ffi/sequencer.dart';
 
-export 'package:mizer/protos/sequencer.pb.dart';
+export 'package:mizer/protos/sequencer.pb.dart' hide SequenceState, SequencerState;
 
 abstract class SequencerApi {
   Future<Sequences> getSequences();
@@ -32,4 +32,10 @@ abstract class SequencerApi {
   Future<void> updatePriority(int sequence, FixturePriority priority);
 
   Future<SequencerPointer?> getSequencerPointer();
+}
+
+abstract class SequencerRemoteApi {
+  Stream<SequencerState> getSequencerState();
+  Future<void> sequenceGoForward(int sequence);
+  Future<void> sequenceStop(int sequence);
 }

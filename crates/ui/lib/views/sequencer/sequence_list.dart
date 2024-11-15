@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/list_extensions.dart';
-import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';

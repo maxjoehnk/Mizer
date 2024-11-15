@@ -1,42 +1,226 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: sequencer.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
+
 import 'sequencer.pbenum.dart';
 
 export 'sequencer.pbenum.dart';
 
-class GetSequenceRequest extends $pb.GeneratedMessage {
-  factory GetSequenceRequest({
-    $core.int? sequence,
-  }) {
-    final $result = create();
-    if (sequence != null) {
-      $result.sequence = sequence;
-    }
-    return $result;
-  }
-  GetSequenceRequest._() : super();
-  factory GetSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSequenceRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
+class GetSequencesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSequencesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
+  GetSequencesRequest._() : super();
+  factory GetSequencesRequest() => create();
+  factory GetSequencesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetSequencesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetSequencesRequest clone() => GetSequencesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetSequencesRequest copyWith(void Function(GetSequencesRequest) updates) => super.copyWith((message) => updates(message as GetSequencesRequest)) as GetSequencesRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetSequencesRequest create() => GetSequencesRequest._();
+  GetSequencesRequest createEmptyInstance() => create();
+  static $pb.PbList<GetSequencesRequest> createRepeated() => $pb.PbList<GetSequencesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetSequencesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSequencesRequest>(create);
+  static GetSequencesRequest? _defaultInstance;
+}
+
+class Empty extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Empty', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  Empty._() : super();
+  factory Empty() => create();
+  factory Empty.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Empty.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Empty clone() => Empty()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Empty copyWith(void Function(Empty) updates) => super.copyWith((message) => updates(message as Empty)) as Empty; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Empty create() => Empty._();
+  Empty createEmptyInstance() => create();
+  static $pb.PbList<Empty> createRepeated() => $pb.PbList<Empty>();
+  @$core.pragma('dart2js:noInline')
+  static Empty getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Empty>(create);
+  static Empty? _defaultInstance;
+}
+
+class SequencerState extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequencerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..pc<SequenceState>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequences', $pb.PbFieldType.PM, subBuilder: SequenceState.create)
+    ..hasRequiredFields = false
+  ;
+
+  SequencerState._() : super();
+  factory SequencerState({
+    $core.Iterable<SequenceState>? sequences,
+  }) {
+    final _result = create();
+    if (sequences != null) {
+      _result.sequences.addAll(sequences);
+    }
+    return _result;
+  }
+  factory SequencerState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequencerState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequencerState clone() => SequencerState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequencerState copyWith(void Function(SequencerState) updates) => super.copyWith((message) => updates(message as SequencerState)) as SequencerState; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequencerState create() => SequencerState._();
+  SequencerState createEmptyInstance() => create();
+  static $pb.PbList<SequencerState> createRepeated() => $pb.PbList<SequencerState>();
+  @$core.pragma('dart2js:noInline')
+  static SequencerState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequencerState>(create);
+  static SequencerState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<SequenceState> get sequences => $_getList(0);
+}
+
+class SequenceState extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'active')
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rate', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  SequenceState._() : super();
+  factory SequenceState({
+    $core.int? sequence,
+    $core.String? name,
+    $core.bool? active,
+    $core.double? rate,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (active != null) {
+      _result.active = active;
+    }
+    if (rate != null) {
+      _result.rate = rate;
+    }
+    return _result;
+  }
+  factory SequenceState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequenceState clone() => SequenceState()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequenceState copyWith(void Function(SequenceState) updates) => super.copyWith((message) => updates(message as SequenceState)) as SequenceState; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequenceState create() => SequenceState._();
+  SequenceState createEmptyInstance() => create();
+  static $pb.PbList<SequenceState> createRepeated() => $pb.PbList<SequenceState>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceState>(create);
+  static SequenceState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get active => $_getBF(2);
+  @$pb.TagNumber(3)
+  set active($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasActive() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearActive() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get rate => $_getN(3);
+  @$pb.TagNumber(4)
+  set rate($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRate() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRate() => clearField(4);
+}
+
+class GetSequenceRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  GetSequenceRequest._() : super();
+  factory GetSequenceRequest({
+    $core.int? sequence,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    return _result;
+  }
+  factory GetSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -46,10 +230,8 @@ class GetSequenceRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetSequenceRequest copyWith(void Function(GetSequenceRequest) updates) => super.copyWith((message) => updates(message as GetSequenceRequest)) as GetSequenceRequest;
-
+  GetSequenceRequest copyWith(void Function(GetSequenceRequest) updates) => super.copyWith((message) => updates(message as GetSequenceRequest)) as GetSequenceRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static GetSequenceRequest create() => GetSequenceRequest._();
   GetSequenceRequest createEmptyInstance() => create();
@@ -69,24 +251,23 @@ class GetSequenceRequest extends $pb.GeneratedMessage {
 }
 
 class DeleteSequenceRequest extends $pb.GeneratedMessage {
-  factory DeleteSequenceRequest({
-    $core.int? sequence,
-  }) {
-    final $result = create();
-    if (sequence != null) {
-      $result.sequence = sequence;
-    }
-    return $result;
-  }
-  DeleteSequenceRequest._() : super();
-  factory DeleteSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DeleteSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteSequenceRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  DeleteSequenceRequest._() : super();
+  factory DeleteSequenceRequest({
+    $core.int? sequence,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    return _result;
+  }
+  factory DeleteSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -96,10 +277,8 @@ class DeleteSequenceRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteSequenceRequest copyWith(void Function(DeleteSequenceRequest) updates) => super.copyWith((message) => updates(message as DeleteSequenceRequest)) as DeleteSequenceRequest;
-
+  DeleteSequenceRequest copyWith(void Function(DeleteSequenceRequest) updates) => super.copyWith((message) => updates(message as DeleteSequenceRequest)) as DeleteSequenceRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static DeleteSequenceRequest create() => DeleteSequenceRequest._();
   DeleteSequenceRequest createEmptyInstance() => create();
@@ -119,24 +298,23 @@ class DeleteSequenceRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceGoRequest extends $pb.GeneratedMessage {
-  factory SequenceGoRequest({
-    $core.int? sequence,
-  }) {
-    final $result = create();
-    if (sequence != null) {
-      $result.sequence = sequence;
-    }
-    return $result;
-  }
-  SequenceGoRequest._() : super();
-  factory SequenceGoRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SequenceGoRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceGoRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceGoRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  SequenceGoRequest._() : super();
+  factory SequenceGoRequest({
+    $core.int? sequence,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    return _result;
+  }
+  factory SequenceGoRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceGoRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -146,10 +324,8 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceGoRequest copyWith(void Function(SequenceGoRequest) updates) => super.copyWith((message) => updates(message as SequenceGoRequest)) as SequenceGoRequest;
-
+  SequenceGoRequest copyWith(void Function(SequenceGoRequest) updates) => super.copyWith((message) => updates(message as SequenceGoRequest)) as SequenceGoRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequenceGoRequest create() => SequenceGoRequest._();
   SequenceGoRequest createEmptyInstance() => create();
@@ -169,24 +345,23 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceStopRequest extends $pb.GeneratedMessage {
-  factory SequenceStopRequest({
-    $core.int? sequence,
-  }) {
-    final $result = create();
-    if (sequence != null) {
-      $result.sequence = sequence;
-    }
-    return $result;
-  }
-  SequenceStopRequest._() : super();
-  factory SequenceStopRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SequenceStopRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceStopRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceStopRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
+  SequenceStopRequest._() : super();
+  factory SequenceStopRequest({
+    $core.int? sequence,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    return _result;
+  }
+  factory SequenceStopRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceStopRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -196,10 +371,8 @@ class SequenceStopRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceStopRequest copyWith(void Function(SequenceStopRequest) updates) => super.copyWith((message) => updates(message as SequenceStopRequest)) as SequenceStopRequest;
-
+  SequenceStopRequest copyWith(void Function(SequenceStopRequest) updates) => super.copyWith((message) => updates(message as SequenceStopRequest)) as SequenceStopRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequenceStopRequest create() => SequenceStopRequest._();
   SequenceStopRequest createEmptyInstance() => create();
@@ -219,34 +392,33 @@ class SequenceStopRequest extends $pb.GeneratedMessage {
 }
 
 class CueTriggerRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTriggerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..e<CueTrigger_Type>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
+    ..hasRequiredFields = false
+  ;
+
+  CueTriggerRequest._() : super();
   factory CueTriggerRequest({
     $core.int? sequence,
     $core.int? cue,
     CueTrigger_Type? trigger,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (cue != null) {
-      $result.cue = cue;
+      _result.cue = cue;
     }
     if (trigger != null) {
-      $result.trigger = trigger;
+      _result.trigger = trigger;
     }
-    return $result;
+    return _result;
   }
-  CueTriggerRequest._() : super();
   factory CueTriggerRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTriggerRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTriggerRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cue', $pb.PbFieldType.OU3)
-    ..e<CueTrigger_Type>(3, _omitFieldNames ? '' : 'trigger', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -256,10 +428,8 @@ class CueTriggerRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTriggerRequest copyWith(void Function(CueTriggerRequest) updates) => super.copyWith((message) => updates(message as CueTriggerRequest)) as CueTriggerRequest;
-
+  CueTriggerRequest copyWith(void Function(CueTriggerRequest) updates) => super.copyWith((message) => updates(message as CueTriggerRequest)) as CueTriggerRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTriggerRequest create() => CueTriggerRequest._();
   CueTriggerRequest createEmptyInstance() => create();
@@ -297,34 +467,33 @@ class CueTriggerRequest extends $pb.GeneratedMessage {
 }
 
 class CueTriggerTimeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTriggerTimeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..aOM<CueTime>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTime.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTriggerTimeRequest._() : super();
   factory CueTriggerTimeRequest({
     $core.int? sequence,
     $core.int? cue,
     CueTime? time,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (cue != null) {
-      $result.cue = cue;
+      _result.cue = cue;
     }
     if (time != null) {
-      $result.time = time;
+      _result.time = time;
     }
-    return $result;
+    return _result;
   }
-  CueTriggerTimeRequest._() : super();
   factory CueTriggerTimeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTriggerTimeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTriggerTimeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cue', $pb.PbFieldType.OU3)
-    ..aOM<CueTime>(3, _omitFieldNames ? '' : 'time', subBuilder: CueTime.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -334,10 +503,8 @@ class CueTriggerTimeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTriggerTimeRequest copyWith(void Function(CueTriggerTimeRequest) updates) => super.copyWith((message) => updates(message as CueTriggerTimeRequest)) as CueTriggerTimeRequest;
-
+  CueTriggerTimeRequest copyWith(void Function(CueTriggerTimeRequest) updates) => super.copyWith((message) => updates(message as CueTriggerTimeRequest)) as CueTriggerTimeRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTriggerTimeRequest create() => CueTriggerTimeRequest._();
   CueTriggerTimeRequest createEmptyInstance() => create();
@@ -377,39 +544,38 @@ class CueTriggerTimeRequest extends $pb.GeneratedMessage {
 }
 
 class CueEffectOffsetTimeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueEffectOffsetTimeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effect', $pb.PbFieldType.OU3)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CueEffectOffsetTimeRequest._() : super();
   factory CueEffectOffsetTimeRequest({
     $core.int? sequence,
     $core.int? cue,
     $core.int? effect,
     $core.double? time,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (cue != null) {
-      $result.cue = cue;
+      _result.cue = cue;
     }
     if (effect != null) {
-      $result.effect = effect;
+      _result.effect = effect;
     }
     if (time != null) {
-      $result.time = time;
+      _result.time = time;
     }
-    return $result;
+    return _result;
   }
-  CueEffectOffsetTimeRequest._() : super();
   factory CueEffectOffsetTimeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueEffectOffsetTimeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueEffectOffsetTimeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cue', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'effect', $pb.PbFieldType.OU3)
-    ..a<$core.double>(4, _omitFieldNames ? '' : 'time', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -419,10 +585,8 @@ class CueEffectOffsetTimeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueEffectOffsetTimeRequest copyWith(void Function(CueEffectOffsetTimeRequest) updates) => super.copyWith((message) => updates(message as CueEffectOffsetTimeRequest)) as CueEffectOffsetTimeRequest;
-
+  CueEffectOffsetTimeRequest copyWith(void Function(CueEffectOffsetTimeRequest) updates) => super.copyWith((message) => updates(message as CueEffectOffsetTimeRequest)) as CueEffectOffsetTimeRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueEffectOffsetTimeRequest create() => CueEffectOffsetTimeRequest._();
   CueEffectOffsetTimeRequest createEmptyInstance() => create();
@@ -469,34 +633,33 @@ class CueEffectOffsetTimeRequest extends $pb.GeneratedMessage {
 }
 
 class CueNameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  CueNameRequest._() : super();
   factory CueNameRequest({
     $core.int? sequence,
     $core.int? cue,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (cue != null) {
-      $result.cue = cue;
+      _result.cue = cue;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  CueNameRequest._() : super();
   factory CueNameRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueNameRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueNameRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cue', $pb.PbFieldType.OU3)
-    ..aOS(3, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -506,10 +669,8 @@ class CueNameRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueNameRequest copyWith(void Function(CueNameRequest) updates) => super.copyWith((message) => updates(message as CueNameRequest)) as CueNameRequest;
-
+  CueNameRequest copyWith(void Function(CueNameRequest) updates) => super.copyWith((message) => updates(message as CueNameRequest)) as CueNameRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueNameRequest create() => CueNameRequest._();
   CueNameRequest createEmptyInstance() => create();
@@ -547,39 +708,38 @@ class CueNameRequest extends $pb.GeneratedMessage {
 }
 
 class CueValueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlIndex', $pb.PbFieldType.OU3)
+    ..aOM<CueValue>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueValueRequest._() : super();
   factory CueValueRequest({
     $core.int? sequenceId,
     $core.int? cueId,
     $core.int? controlIndex,
     CueValue? value,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequenceId != null) {
-      $result.sequenceId = sequenceId;
+      _result.sequenceId = sequenceId;
     }
     if (cueId != null) {
-      $result.cueId = cueId;
+      _result.cueId = cueId;
     }
     if (controlIndex != null) {
-      $result.controlIndex = controlIndex;
+      _result.controlIndex = controlIndex;
     }
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
-    return $result;
+    return _result;
   }
-  CueValueRequest._() : super();
   factory CueValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueValueRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequenceId', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cueId', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'controlIndex', $pb.PbFieldType.OU3)
-    ..aOM<CueValue>(4, _omitFieldNames ? '' : 'value', subBuilder: CueValue.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -589,10 +749,8 @@ class CueValueRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueValueRequest copyWith(void Function(CueValueRequest) updates) => super.copyWith((message) => updates(message as CueValueRequest)) as CueValueRequest;
-
+  CueValueRequest copyWith(void Function(CueValueRequest) updates) => super.copyWith((message) => updates(message as CueValueRequest)) as CueValueRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueValueRequest create() => CueValueRequest._();
   CueValueRequest createEmptyInstance() => create();
@@ -641,34 +799,33 @@ class CueValueRequest extends $pb.GeneratedMessage {
 }
 
 class CueTimingRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimingRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
+    ..aOM<CueTimer>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTimer.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTimingRequest._() : super();
   factory CueTimingRequest({
     $core.int? sequenceId,
     $core.int? cueId,
     CueTimer? time,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequenceId != null) {
-      $result.sequenceId = sequenceId;
+      _result.sequenceId = sequenceId;
     }
     if (cueId != null) {
-      $result.cueId = cueId;
+      _result.cueId = cueId;
     }
     if (time != null) {
-      $result.time = time;
+      _result.time = time;
     }
-    return $result;
+    return _result;
   }
-  CueTimingRequest._() : super();
   factory CueTimingRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTimingRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTimingRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequenceId', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'cueId', $pb.PbFieldType.OU3)
-    ..aOM<CueTimer>(3, _omitFieldNames ? '' : 'time', subBuilder: CueTimer.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -678,10 +835,8 @@ class CueTimingRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimingRequest copyWith(void Function(CueTimingRequest) updates) => super.copyWith((message) => updates(message as CueTimingRequest)) as CueTimingRequest;
-
+  CueTimingRequest copyWith(void Function(CueTimingRequest) updates) => super.copyWith((message) => updates(message as CueTimingRequest)) as CueTimingRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTimingRequest create() => CueTimingRequest._();
   CueTimingRequest createEmptyInstance() => create();
@@ -721,29 +876,28 @@ class CueTimingRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceWrapAroundRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceWrapAroundRequest._() : super();
   factory SequenceWrapAroundRequest({
     $core.int? sequence,
     $core.bool? wrapAround,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (wrapAround != null) {
-      $result.wrapAround = wrapAround;
+      _result.wrapAround = wrapAround;
     }
-    return $result;
+    return _result;
   }
-  SequenceWrapAroundRequest._() : super();
   factory SequenceWrapAroundRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceWrapAroundRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceWrapAroundRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..aOB(2, _omitFieldNames ? '' : 'wrapAround')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -753,10 +907,8 @@ class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceWrapAroundRequest copyWith(void Function(SequenceWrapAroundRequest) updates) => super.copyWith((message) => updates(message as SequenceWrapAroundRequest)) as SequenceWrapAroundRequest;
-
+  SequenceWrapAroundRequest copyWith(void Function(SequenceWrapAroundRequest) updates) => super.copyWith((message) => updates(message as SequenceWrapAroundRequest)) as SequenceWrapAroundRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequenceWrapAroundRequest create() => SequenceWrapAroundRequest._();
   SequenceWrapAroundRequest createEmptyInstance() => create();
@@ -785,29 +937,28 @@ class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceStopOnLastCueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceStopOnLastCueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceStopOnLastCueRequest._() : super();
   factory SequenceStopOnLastCueRequest({
     $core.int? sequence,
     $core.bool? stopOnLastCue,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (stopOnLastCue != null) {
-      $result.stopOnLastCue = stopOnLastCue;
+      _result.stopOnLastCue = stopOnLastCue;
     }
-    return $result;
+    return _result;
   }
-  SequenceStopOnLastCueRequest._() : super();
   factory SequenceStopOnLastCueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceStopOnLastCueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceStopOnLastCueRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..aOB(2, _omitFieldNames ? '' : 'stopOnLastCue')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -817,10 +968,8 @@ class SequenceStopOnLastCueRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceStopOnLastCueRequest copyWith(void Function(SequenceStopOnLastCueRequest) updates) => super.copyWith((message) => updates(message as SequenceStopOnLastCueRequest)) as SequenceStopOnLastCueRequest;
-
+  SequenceStopOnLastCueRequest copyWith(void Function(SequenceStopOnLastCueRequest) updates) => super.copyWith((message) => updates(message as SequenceStopOnLastCueRequest)) as SequenceStopOnLastCueRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequenceStopOnLastCueRequest create() => SequenceStopOnLastCueRequest._();
   SequenceStopOnLastCueRequest createEmptyInstance() => create();
@@ -849,29 +998,28 @@ class SequenceStopOnLastCueRequest extends $pb.GeneratedMessage {
 }
 
 class SequencePriorityRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequencePriorityRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..e<FixturePriority>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
+    ..hasRequiredFields = false
+  ;
+
+  SequencePriorityRequest._() : super();
   factory SequencePriorityRequest({
     $core.int? sequence,
     FixturePriority? priority,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (priority != null) {
-      $result.priority = priority;
+      _result.priority = priority;
     }
-    return $result;
+    return _result;
   }
-  SequencePriorityRequest._() : super();
   factory SequencePriorityRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequencePriorityRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequencePriorityRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..e<FixturePriority>(2, _omitFieldNames ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -881,10 +1029,8 @@ class SequencePriorityRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequencePriorityRequest copyWith(void Function(SequencePriorityRequest) updates) => super.copyWith((message) => updates(message as SequencePriorityRequest)) as SequencePriorityRequest;
-
+  SequencePriorityRequest copyWith(void Function(SequencePriorityRequest) updates) => super.copyWith((message) => updates(message as SequencePriorityRequest)) as SequencePriorityRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequencePriorityRequest create() => SequencePriorityRequest._();
   SequencePriorityRequest createEmptyInstance() => create();
@@ -913,29 +1059,28 @@ class SequencePriorityRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceNameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceNameRequest._() : super();
   factory SequenceNameRequest({
     $core.int? sequence,
     $core.String? name,
   }) {
-    final $result = create();
+    final _result = create();
     if (sequence != null) {
-      $result.sequence = sequence;
+      _result.sequence = sequence;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
-    return $result;
+    return _result;
   }
-  SequenceNameRequest._() : super();
   factory SequenceNameRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceNameRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceNameRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU3)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -945,10 +1090,8 @@ class SequenceNameRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceNameRequest copyWith(void Function(SequenceNameRequest) updates) => super.copyWith((message) => updates(message as SequenceNameRequest)) as SequenceNameRequest;
-
+  SequenceNameRequest copyWith(void Function(SequenceNameRequest) updates) => super.copyWith((message) => updates(message as SequenceNameRequest)) as SequenceNameRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SequenceNameRequest create() => SequenceNameRequest._();
   SequenceNameRequest createEmptyInstance() => create();
@@ -977,24 +1120,23 @@ class SequenceNameRequest extends $pb.GeneratedMessage {
 }
 
 class Sequences extends $pb.GeneratedMessage {
-  factory Sequences({
-    $core.Iterable<Sequence>? sequences,
-  }) {
-    final $result = create();
-    if (sequences != null) {
-      $result.sequences.addAll(sequences);
-    }
-    return $result;
-  }
-  Sequences._() : super();
-  factory Sequences.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Sequences.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Sequences', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..pc<Sequence>(1, _omitFieldNames ? '' : 'sequences', $pb.PbFieldType.PM, subBuilder: Sequence.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Sequences', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..pc<Sequence>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequences', $pb.PbFieldType.PM, subBuilder: Sequence.create)
     ..hasRequiredFields = false
   ;
 
+  Sequences._() : super();
+  factory Sequences({
+    $core.Iterable<Sequence>? sequences,
+  }) {
+    final _result = create();
+    if (sequences != null) {
+      _result.sequences.addAll(sequences);
+    }
+    return _result;
+  }
+  factory Sequences.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Sequences.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1004,10 +1146,8 @@ class Sequences extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Sequences copyWith(void Function(Sequences) updates) => super.copyWith((message) => updates(message as Sequences)) as Sequences;
-
+  Sequences copyWith(void Function(Sequences) updates) => super.copyWith((message) => updates(message as Sequences)) as Sequences; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Sequences create() => Sequences._();
   Sequences createEmptyInstance() => create();
@@ -1021,6 +1161,18 @@ class Sequences extends $pb.GeneratedMessage {
 }
 
 class Sequence extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Sequence', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
+    ..pc<$0.FixtureId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
+    ..e<FixturePriority>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
+    ..hasRequiredFields = false
+  ;
+
+  Sequence._() : super();
   factory Sequence({
     $core.int? id,
     $core.String? name,
@@ -1030,45 +1182,32 @@ class Sequence extends $pb.GeneratedMessage {
     $core.bool? stopOnLastCue,
     FixturePriority? priority,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (cues != null) {
-      $result.cues.addAll(cues);
+      _result.cues.addAll(cues);
     }
     if (fixtures != null) {
-      $result.fixtures.addAll(fixtures);
+      _result.fixtures.addAll(fixtures);
     }
     if (wrapAround != null) {
-      $result.wrapAround = wrapAround;
+      _result.wrapAround = wrapAround;
     }
     if (stopOnLastCue != null) {
-      $result.stopOnLastCue = stopOnLastCue;
+      _result.stopOnLastCue = stopOnLastCue;
     }
     if (priority != null) {
-      $result.priority = priority;
+      _result.priority = priority;
     }
-    return $result;
+    return _result;
   }
-  Sequence._() : super();
   factory Sequence.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Sequence.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Sequence', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..pc<Cue>(3, _omitFieldNames ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
-    ..pc<$0.FixtureId>(4, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..aOB(5, _omitFieldNames ? '' : 'wrapAround')
-    ..aOB(6, _omitFieldNames ? '' : 'stopOnLastCue')
-    ..e<FixturePriority>(7, _omitFieldNames ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1078,10 +1217,8 @@ class Sequence extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Sequence copyWith(void Function(Sequence) updates) => super.copyWith((message) => updates(message as Sequence)) as Sequence;
-
+  Sequence copyWith(void Function(Sequence) updates) => super.copyWith((message) => updates(message as Sequence)) as Sequence; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Sequence create() => Sequence._();
   Sequence createEmptyInstance() => create();
@@ -1143,6 +1280,20 @@ class Sequence extends $pb.GeneratedMessage {
 }
 
 class Cue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Cue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<CueTrigger>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', subBuilder: CueTrigger.create)
+    ..pc<CueControl>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: CueControl.create)
+    ..aOM<CueTimings>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dimmerTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positionTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorTimings', subBuilder: CueTimings.create)
+    ..pc<CueEffect>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: CueEffect.create)
+    ..hasRequiredFields = false
+  ;
+
+  Cue._() : super();
   factory Cue({
     $core.int? id,
     $core.String? name,
@@ -1154,53 +1305,38 @@ class Cue extends $pb.GeneratedMessage {
     CueTimings? colorTimings,
     $core.Iterable<CueEffect>? effects,
   }) {
-    final $result = create();
+    final _result = create();
     if (id != null) {
-      $result.id = id;
+      _result.id = id;
     }
     if (name != null) {
-      $result.name = name;
+      _result.name = name;
     }
     if (trigger != null) {
-      $result.trigger = trigger;
+      _result.trigger = trigger;
     }
     if (controls != null) {
-      $result.controls.addAll(controls);
+      _result.controls.addAll(controls);
     }
     if (cueTimings != null) {
-      $result.cueTimings = cueTimings;
+      _result.cueTimings = cueTimings;
     }
     if (dimmerTimings != null) {
-      $result.dimmerTimings = dimmerTimings;
+      _result.dimmerTimings = dimmerTimings;
     }
     if (positionTimings != null) {
-      $result.positionTimings = positionTimings;
+      _result.positionTimings = positionTimings;
     }
     if (colorTimings != null) {
-      $result.colorTimings = colorTimings;
+      _result.colorTimings = colorTimings;
     }
     if (effects != null) {
-      $result.effects.addAll(effects);
+      _result.effects.addAll(effects);
     }
-    return $result;
+    return _result;
   }
-  Cue._() : super();
   factory Cue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Cue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Cue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OU3)
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOM<CueTrigger>(3, _omitFieldNames ? '' : 'trigger', subBuilder: CueTrigger.create)
-    ..pc<CueControl>(4, _omitFieldNames ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: CueControl.create)
-    ..aOM<CueTimings>(5, _omitFieldNames ? '' : 'cueTimings', subBuilder: CueTimings.create)
-    ..aOM<CueTimings>(6, _omitFieldNames ? '' : 'dimmerTimings', subBuilder: CueTimings.create)
-    ..aOM<CueTimings>(7, _omitFieldNames ? '' : 'positionTimings', subBuilder: CueTimings.create)
-    ..aOM<CueTimings>(8, _omitFieldNames ? '' : 'colorTimings', subBuilder: CueTimings.create)
-    ..pc<CueEffect>(9, _omitFieldNames ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: CueEffect.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1210,10 +1346,8 @@ class Cue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Cue copyWith(void Function(Cue) updates) => super.copyWith((message) => updates(message as Cue)) as Cue;
-
+  Cue copyWith(void Function(Cue) updates) => super.copyWith((message) => updates(message as Cue)) as Cue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static Cue create() => Cue._();
   Cue createEmptyInstance() => create();
@@ -1303,39 +1437,38 @@ class Cue extends $pb.GeneratedMessage {
 }
 
 class CueEffect extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueEffect', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectOffsets', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectRate', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CueEffect._() : super();
   factory CueEffect({
     $core.int? effectId,
     $core.Iterable<$0.FixtureId>? fixtures,
     $core.double? effectOffsets,
     $core.double? effectRate,
   }) {
-    final $result = create();
+    final _result = create();
     if (effectId != null) {
-      $result.effectId = effectId;
+      _result.effectId = effectId;
     }
     if (fixtures != null) {
-      $result.fixtures.addAll(fixtures);
+      _result.fixtures.addAll(fixtures);
     }
     if (effectOffsets != null) {
-      $result.effectOffsets = effectOffsets;
+      _result.effectOffsets = effectOffsets;
     }
     if (effectRate != null) {
-      $result.effectRate = effectRate;
+      _result.effectRate = effectRate;
     }
-    return $result;
+    return _result;
   }
-  CueEffect._() : super();
   factory CueEffect.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueEffect.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueEffect', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'effectId', $pb.PbFieldType.OU3)
-    ..pc<$0.FixtureId>(2, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'effectOffsets', $pb.PbFieldType.OD)
-    ..a<$core.double>(4, _omitFieldNames ? '' : 'effectRate', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1345,10 +1478,8 @@ class CueEffect extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueEffect copyWith(void Function(CueEffect) updates) => super.copyWith((message) => updates(message as CueEffect)) as CueEffect;
-
+  CueEffect copyWith(void Function(CueEffect) updates) => super.copyWith((message) => updates(message as CueEffect)) as CueEffect; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueEffect create() => CueEffect._();
   CueEffect createEmptyInstance() => create();
@@ -1389,29 +1520,28 @@ class CueEffect extends $pb.GeneratedMessage {
 }
 
 class CueTimings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..aOM<CueTimer>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fade', subBuilder: CueTimer.create)
+    ..aOM<CueTimer>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delay', subBuilder: CueTimer.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTimings._() : super();
   factory CueTimings({
     CueTimer? fade,
     CueTimer? delay,
   }) {
-    final $result = create();
+    final _result = create();
     if (fade != null) {
-      $result.fade = fade;
+      _result.fade = fade;
     }
     if (delay != null) {
-      $result.delay = delay;
+      _result.delay = delay;
     }
-    return $result;
+    return _result;
   }
-  CueTimings._() : super();
   factory CueTimings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTimings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTimings', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..aOM<CueTimer>(8, _omitFieldNames ? '' : 'fade', subBuilder: CueTimer.create)
-    ..aOM<CueTimer>(9, _omitFieldNames ? '' : 'delay', subBuilder: CueTimer.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1421,10 +1551,8 @@ class CueTimings extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimings copyWith(void Function(CueTimings) updates) => super.copyWith((message) => updates(message as CueTimings)) as CueTimings;
-
+  CueTimings copyWith(void Function(CueTimings) updates) => super.copyWith((message) => updates(message as CueTimings)) as CueTimings; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTimings create() => CueTimings._();
   CueTimings createEmptyInstance() => create();
@@ -1457,29 +1585,28 @@ class CueTimings extends $pb.GeneratedMessage {
 }
 
 class CueTrigger extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTrigger', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..e<CueTrigger_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
+    ..aOM<CueTime>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTime.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTrigger._() : super();
   factory CueTrigger({
     CueTrigger_Type? type,
     CueTime? time,
   }) {
-    final $result = create();
+    final _result = create();
     if (type != null) {
-      $result.type = type;
+      _result.type = type;
     }
     if (time != null) {
-      $result.time = time;
+      _result.time = time;
     }
-    return $result;
+    return _result;
   }
-  CueTrigger._() : super();
   factory CueTrigger.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTrigger.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTrigger', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..e<CueTrigger_Type>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
-    ..aOM<CueTime>(2, _omitFieldNames ? '' : 'time', subBuilder: CueTime.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1489,10 +1616,8 @@ class CueTrigger extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTrigger copyWith(void Function(CueTrigger) updates) => super.copyWith((message) => updates(message as CueTrigger)) as CueTrigger;
-
+  CueTrigger copyWith(void Function(CueTrigger) updates) => super.copyWith((message) => updates(message as CueTrigger)) as CueTrigger; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTrigger create() => CueTrigger._();
   CueTrigger createEmptyInstance() => create();
@@ -1523,34 +1648,33 @@ class CueTrigger extends $pb.GeneratedMessage {
 }
 
 class CueControl extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..e<CueControl_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueControl_Type.INTENSITY, valueOf: CueControl_Type.valueOf, enumValues: CueControl_Type.values)
+    ..aOM<CueValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
+    ..pc<$0.FixtureId>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueControl._() : super();
   factory CueControl({
     CueControl_Type? type,
     CueValue? value,
     $core.Iterable<$0.FixtureId>? fixtures,
   }) {
-    final $result = create();
+    final _result = create();
     if (type != null) {
-      $result.type = type;
+      _result.type = type;
     }
     if (value != null) {
-      $result.value = value;
+      _result.value = value;
     }
     if (fixtures != null) {
-      $result.fixtures.addAll(fixtures);
+      _result.fixtures.addAll(fixtures);
     }
-    return $result;
+    return _result;
   }
-  CueControl._() : super();
   factory CueControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueControl', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..e<CueControl_Type>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueControl_Type.INTENSITY, valueOf: CueControl_Type.valueOf, enumValues: CueControl_Type.values)
-    ..aOM<CueValue>(2, _omitFieldNames ? '' : 'value', subBuilder: CueValue.create)
-    ..pc<$0.FixtureId>(3, _omitFieldNames ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1560,10 +1684,8 @@ class CueControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueControl copyWith(void Function(CueControl) updates) => super.copyWith((message) => updates(message as CueControl)) as CueControl;
-
+  CueControl copyWith(void Function(CueControl) updates) => super.copyWith((message) => updates(message as CueControl)) as CueControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueControl create() => CueControl._();
   CueControl createEmptyInstance() => create();
@@ -1603,35 +1725,34 @@ enum CueValue_Value {
 }
 
 class CueValue extends $pb.GeneratedMessage {
-  factory CueValue({
-    $core.double? direct,
-    CueValueRange? range,
-  }) {
-    final $result = create();
-    if (direct != null) {
-      $result.direct = direct;
-    }
-    if (range != null) {
-      $result.range = range;
-    }
-    return $result;
-  }
-  CueValue._() : super();
-  factory CueValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CueValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, CueValue_Value> _CueValue_ValueByTag = {
     3 : CueValue_Value.direct,
     4 : CueValue_Value.range,
     0 : CueValue_Value.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueValue', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..oo(0, [3, 4])
-    ..a<$core.double>(3, _omitFieldNames ? '' : 'direct', $pb.PbFieldType.OD)
-    ..aOM<CueValueRange>(4, _omitFieldNames ? '' : 'range', subBuilder: CueValueRange.create)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'direct', $pb.PbFieldType.OD)
+    ..aOM<CueValueRange>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'range', subBuilder: CueValueRange.create)
     ..hasRequiredFields = false
   ;
 
+  CueValue._() : super();
+  factory CueValue({
+    $core.double? direct,
+    CueValueRange? range,
+  }) {
+    final _result = create();
+    if (direct != null) {
+      _result.direct = direct;
+    }
+    if (range != null) {
+      _result.range = range;
+    }
+    return _result;
+  }
+  factory CueValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1641,10 +1762,8 @@ class CueValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueValue copyWith(void Function(CueValue) updates) => super.copyWith((message) => updates(message as CueValue)) as CueValue;
-
+  CueValue copyWith(void Function(CueValue) updates) => super.copyWith((message) => updates(message as CueValue)) as CueValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueValue create() => CueValue._();
   CueValue createEmptyInstance() => create();
@@ -1684,40 +1803,39 @@ enum CueTimer_Timer {
 }
 
 class CueTimer extends $pb.GeneratedMessage {
-  factory CueTimer({
-    $core.bool? hasTimer,
-    CueTime? direct,
-    CueTimerRange? range,
-  }) {
-    final $result = create();
-    if (hasTimer != null) {
-      $result.hasTimer = hasTimer;
-    }
-    if (direct != null) {
-      $result.direct = direct;
-    }
-    if (range != null) {
-      $result.range = range;
-    }
-    return $result;
-  }
-  CueTimer._() : super();
-  factory CueTimer.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CueTimer.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, CueTimer_Timer> _CueTimer_TimerByTag = {
     2 : CueTimer_Timer.direct,
     3 : CueTimer_Timer.range,
     0 : CueTimer_Timer.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTimer', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimer', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..oo(0, [2, 3])
-    ..aOB(1, _omitFieldNames ? '' : 'hasTimer')
-    ..aOM<CueTime>(2, _omitFieldNames ? '' : 'direct', subBuilder: CueTime.create)
-    ..aOM<CueTimerRange>(3, _omitFieldNames ? '' : 'range', subBuilder: CueTimerRange.create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasTimer')
+    ..aOM<CueTime>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'direct', subBuilder: CueTime.create)
+    ..aOM<CueTimerRange>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'range', subBuilder: CueTimerRange.create)
     ..hasRequiredFields = false
   ;
 
+  CueTimer._() : super();
+  factory CueTimer({
+    $core.bool? hasTimer,
+    CueTime? direct,
+    CueTimerRange? range,
+  }) {
+    final _result = create();
+    if (hasTimer != null) {
+      _result.hasTimer = hasTimer;
+    }
+    if (direct != null) {
+      _result.direct = direct;
+    }
+    if (range != null) {
+      _result.range = range;
+    }
+    return _result;
+  }
+  factory CueTimer.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTimer.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1727,10 +1845,8 @@ class CueTimer extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimer copyWith(void Function(CueTimer) updates) => super.copyWith((message) => updates(message as CueTimer)) as CueTimer;
-
+  CueTimer copyWith(void Function(CueTimer) updates) => super.copyWith((message) => updates(message as CueTimer)) as CueTimer; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTimer create() => CueTimer._();
   CueTimer createEmptyInstance() => create();
@@ -1775,29 +1891,28 @@ class CueTimer extends $pb.GeneratedMessage {
 }
 
 class CueValueRange extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueValueRange', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CueValueRange._() : super();
   factory CueValueRange({
     $core.double? from,
     $core.double? to,
   }) {
-    final $result = create();
+    final _result = create();
     if (from != null) {
-      $result.from = from;
+      _result.from = from;
     }
     if (to != null) {
-      $result.to = to;
+      _result.to = to;
     }
-    return $result;
+    return _result;
   }
-  CueValueRange._() : super();
   factory CueValueRange.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueValueRange.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueValueRange', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'from', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'to', $pb.PbFieldType.OD)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1807,10 +1922,8 @@ class CueValueRange extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueValueRange copyWith(void Function(CueValueRange) updates) => super.copyWith((message) => updates(message as CueValueRange)) as CueValueRange;
-
+  CueValueRange copyWith(void Function(CueValueRange) updates) => super.copyWith((message) => updates(message as CueValueRange)) as CueValueRange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueValueRange create() => CueValueRange._();
   CueValueRange createEmptyInstance() => create();
@@ -1845,35 +1958,34 @@ enum CueTime_Time {
 }
 
 class CueTime extends $pb.GeneratedMessage {
-  factory CueTime({
-    $core.double? seconds,
-    $core.double? beats,
-  }) {
-    final $result = create();
-    if (seconds != null) {
-      $result.seconds = seconds;
-    }
-    if (beats != null) {
-      $result.beats = beats;
-    }
-    return $result;
-  }
-  CueTime._() : super();
-  factory CueTime.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CueTime.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
   static const $core.Map<$core.int, CueTime_Time> _CueTime_TimeByTag = {
     1 : CueTime_Time.seconds,
     2 : CueTime_Time.beats,
     0 : CueTime_Time.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTime', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTime', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..oo(0, [1, 2])
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'seconds', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, _omitFieldNames ? '' : 'beats', $pb.PbFieldType.OD)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'seconds', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'beats', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
+  CueTime._() : super();
+  factory CueTime({
+    $core.double? seconds,
+    $core.double? beats,
+  }) {
+    final _result = create();
+    if (seconds != null) {
+      _result.seconds = seconds;
+    }
+    if (beats != null) {
+      _result.beats = beats;
+    }
+    return _result;
+  }
+  factory CueTime.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTime.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1883,10 +1995,8 @@ class CueTime extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTime copyWith(void Function(CueTime) updates) => super.copyWith((message) => updates(message as CueTime)) as CueTime;
-
+  CueTime copyWith(void Function(CueTime) updates) => super.copyWith((message) => updates(message as CueTime)) as CueTime; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTime create() => CueTime._();
   CueTime createEmptyInstance() => create();
@@ -1918,29 +2028,28 @@ class CueTime extends $pb.GeneratedMessage {
 }
 
 class CueTimerRange extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimerRange', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..aOM<CueTime>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', subBuilder: CueTime.create)
+    ..aOM<CueTime>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', subBuilder: CueTime.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTimerRange._() : super();
   factory CueTimerRange({
     CueTime? from,
     CueTime? to,
   }) {
-    final $result = create();
+    final _result = create();
     if (from != null) {
-      $result.from = from;
+      _result.from = from;
     }
     if (to != null) {
-      $result.to = to;
+      _result.to = to;
     }
-    return $result;
+    return _result;
   }
-  CueTimerRange._() : super();
   factory CueTimerRange.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CueTimerRange.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CueTimerRange', package: const $pb.PackageName(_omitMessageNames ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..aOM<CueTime>(1, _omitFieldNames ? '' : 'from', subBuilder: CueTime.create)
-    ..aOM<CueTime>(2, _omitFieldNames ? '' : 'to', subBuilder: CueTime.create)
-    ..hasRequiredFields = false
-  ;
-
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1950,10 +2059,8 @@ class CueTimerRange extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimerRange copyWith(void Function(CueTimerRange) updates) => super.copyWith((message) => updates(message as CueTimerRange)) as CueTimerRange;
-
+  CueTimerRange copyWith(void Function(CueTimerRange) updates) => super.copyWith((message) => updates(message as CueTimerRange)) as CueTimerRange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static CueTimerRange create() => CueTimerRange._();
   CueTimerRange createEmptyInstance() => create();
@@ -1985,6 +2092,3 @@ class CueTimerRange extends $pb.GeneratedMessage {
   CueTime ensureTo() => $_ensure(1);
 }
 
-
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -4,6 +4,28 @@ package mizer.sequencer;
 
 import "fixtures.proto";
 
+service SequencerRemoteApi {
+  rpc SubscribeToSequences (GetSequencesRequest) returns (stream SequencerState) {}
+  rpc GoSequence (SequenceGoRequest) returns (Empty) {}
+  rpc StopSequence (SequenceStopRequest) returns (Empty) {}
+}
+
+message GetSequencesRequest {
+}
+
+message Empty {}
+
+message SequencerState {
+  repeated SequenceState sequences = 1;
+}
+
+message SequenceState {
+  uint32 sequence = 1;
+  string name = 2;
+  bool active = 3;
+  double rate = 4;
+}
+
 message GetSequenceRequest {
   uint32 sequence = 1;
 }

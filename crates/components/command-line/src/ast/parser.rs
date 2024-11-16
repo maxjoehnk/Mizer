@@ -112,6 +112,12 @@ pub fn parse<TContext: CommandLineContext>(
             }
             .boxed())
         }
+        &[Token::Value(ref id), Token::Operator(Operator::At), Token::Full] => Ok(ast::Write {
+            target_type: ast::Fixtures,
+            target_entity: ast::Single { id: id.as_id()? },
+            value: ast::Full,
+        }
+        .boxed()),
         &[Token::Action(Action::Highlight)] => Ok(ast::Highlight.boxed()),
         &[Token::Action(Action::Clear)] => Ok(ast::Clear.boxed()),
         _ => Err(anyhow::anyhow!("Invalid token")),

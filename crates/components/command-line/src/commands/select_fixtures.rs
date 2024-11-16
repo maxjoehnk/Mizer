@@ -1,4 +1,5 @@
 use crate::ast::*;
+use crate::commands::CommandLineContextFixtureExt;
 use crate::{Command, CommandLineContext, Id};
 use mizer_command_executor::*;
 use mizer_fixtures::FixtureId;
@@ -15,27 +16,7 @@ impl Command for Select<Fixtures, Single> {
 
 impl Command for Select<Fixtures, Range> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
-        let fixtures = context.execute_query(ListFixturesQuery)?;
-        let ids = fixtures
-            .into_iter()
-            .flat_map(|f| {
-                let fixture_id = FixtureId::Fixture(f.id);
-                if f.current_mode.sub_fixtures.is_empty() {
-                    vec![fixture_id]
-                } else {
-                    let mut sub_fixtures = f
-                        .current_mode
-                        .sub_fixtures
-                        .iter()
-                        .map(|sf| FixtureId::SubFixture(f.id, sf.id))
-                        .collect::<Vec<_>>();
-                    sub_fixtures.insert(0, fixture_id);
-
-                    sub_fixtures
-                }
-            })
-            .map(Id::from)
-            .collect::<Vec<_>>();
+        let ids = context.fixture_ids()?;
 
         context.execute_command(SelectFixturesCommand {
             fixtures: self

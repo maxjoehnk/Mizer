@@ -30,6 +30,8 @@ impl<'a> Command<'a> for CallGroupCommand {
     }
 
     fn revert(&self, fixture_manager: &FixtureManager, _: Self::State) -> anyhow::Result<()> {
-        todo!()
+        // TODO: Implement revert for programmer
+
+        Ok(())
     }
 }

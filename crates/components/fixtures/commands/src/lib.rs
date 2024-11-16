@@ -18,6 +18,7 @@ pub use select_fixtures::*;
 pub use store_in_preset::*;
 pub use toggle_highlight::*;
 pub use update_fixture::*;
+pub use write_programmer::*;
 
 mod add_group;
 mod add_preset;
@@ -37,6 +38,7 @@ mod select_fixtures;
 mod store_in_preset;
 mod toggle_highlight;
 mod update_fixture;
+mod write_programmer;
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize)]
 pub enum StoreGroupMode {

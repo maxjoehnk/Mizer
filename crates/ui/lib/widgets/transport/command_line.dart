@@ -36,7 +36,7 @@ class _CommandLineInputState extends State<CommandLineInput> {
         children: [
           if (!focusNode.hasFocus && controller.text.isEmpty)
             Center(
-                child: Text("Commandline",
+                child: Text("Command Line",
                     style: textTheme.bodyMedium!.copyWith(color: Colors.white54))),
           if (success) Positioned(child: Icon(Icons.check, color: Colors.green), right: 4),
           if (error)

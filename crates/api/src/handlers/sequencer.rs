@@ -18,7 +18,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_sequences(&self) -> Sequences {
-        let sequences = self.runtime.query(ListSequencesQuery).unwrap();
+        let sequences = self.runtime.execute_query(ListSequencesQuery).unwrap();
         let sequences = sequences.into_iter().map(Sequence::from).collect();
 
         Sequences { sequences }
@@ -29,7 +29,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
         let sequence = self
             .runtime
-            .query(GetSequenceQuery { id: sequence_id })
+            .execute_query(GetSequenceQuery { id: sequence_id })
             .unwrap();
         sequence.map(Sequence::from)
     }
@@ -58,19 +58,31 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn sequence_go_forward(&self, sequence: u32) {
-        self.sequencer.sequence_go_forward(sequence);
+        self.runtime
+            .run_command(SequenceGoForwardCommand {
+                sequence_id: sequence,
+            })
+            .unwrap();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn sequence_go_backward(&self, sequence: u32) {
-        self.sequencer.sequence_go_backward(sequence);
+        self.runtime
+            .run_command(SequenceGoBackwardCommand {
+                sequence_id: sequence,
+            })
+            .unwrap();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn sequence_stop(&self, sequence: u32) {
-        self.sequencer.sequence_stop(sequence);
+    pub fn sequence_stop(&self, sequence: u32) -> anyhow::Result<()> {
+        self.runtime.run_command(StopSequenceCommand {
+            sequence_id: sequence,
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]

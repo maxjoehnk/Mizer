@@ -1,5 +1,9 @@
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+use async_trait::async_trait;
+use nativeshell::codec::{MethodCall, MethodCallError, MethodCallReply, MethodCallResult, Value};
+use nativeshell::shell::{
+    AsyncMethodCallHandler, Context, EngineHandle, MethodCallHandler, MethodChannel,
+    RegisteredAsyncMethodCallHandler,
+};
 
 use mizer_api::handlers::UiHandler;
 use mizer_api::RuntimeApi;
@@ -16,7 +20,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for UiChannel<R> {
         &mut self,
         call: MethodCall<Value>,
         resp: MethodCallReply<Value>,
-        _: EngineHandle,
+        engine_handle: EngineHandle,
     ) {
         match call.method.as_str() {
             "showTable" => match call.args {
@@ -50,6 +54,39 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for UiChannel<R> {
     }
 }
 
+#[async_trait(?Send)]
+impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
+    async fn on_method_call(
+        &self,
+        call: MethodCall<Value>,
+        _engine: EngineHandle,
+    ) -> MethodCallResult<Value> {
+        match call.method.as_str() {
+            "commandLineExecute" => match call.args {
+                Value::String(command) => {
+                    let result = self.handler.command_line_execute(command).await;
+
+                    match result {
+                        Ok(_) => Ok(Value::Null),
+                        Err(e) => Err(MethodCallError::from_code_message(
+                            &format!("{e:?}"),
+                            &format!("{e:?}"),
+                        )),
+                    }
+                }
+                _ => Err(MethodCallError::from_code_message(
+                    "invalid-arguments",
+                    "Invalid arguments",
+                )),
+            },
+            _ => Err(MethodCallError::from_code_message(
+                "not-implemented",
+                "Not implemented",
+            )),
+        }
+    }
+}
+
 impl<R: RuntimeApi + 'static> UiChannel<R> {
     pub fn new(handler: UiHandler<R>) -> Self {
         Self { handler }
@@ -57,5 +94,9 @@ impl<R: RuntimeApi + 'static> UiChannel<R> {
 
     pub fn channel(self, context: Context) -> MethodChannel {
         MethodChannel::new(context, "mizer.live/ui", self)
+    }
+
+    pub fn async_channel(self, context: Context) -> RegisteredAsyncMethodCallHandler<UiChannel<R>> {
+        RegisteredAsyncMethodCallHandler::new(context, "mizer.live/ui", self)
     }
 }

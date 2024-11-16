@@ -23,18 +23,31 @@ mod module;
 mod processor;
 mod queries;
 
+pub trait ICommandExecutor {
+    fn run_command<'a, T: SendableCommand<'a> + 'static>(
+        &self,
+        command: T,
+    ) -> anyhow::Result<T::Result>
+    where
+        T::Result: Send + Sync;
+
+    fn execute_query<'a, T: SendableQuery<'a> + 'static>(
+        &self,
+        query: T,
+    ) -> anyhow::Result<T::Result>;
+
+    fn undo(&self) -> anyhow::Result<()>;
+    fn redo(&self) -> anyhow::Result<()>;
+}
+
 #[derive(Clone)]
 pub struct CommandExecutorApi {
     executor: InMainLoopExecutor,
     api_injector: Arc<RwLock<Option<ApiInjector>>>,
 }
 
-impl CommandExecutorApi {
-    pub fn provide_injector(&self, api_injector: ApiInjector) {
-        self.api_injector.write().replace(api_injector);
-    }
-
-    pub fn run_command<'a, T: SendableCommand<'a> + 'static>(
+impl ICommandExecutor for CommandExecutorApi {
+    fn run_command<'a, T: SendableCommand<'a> + 'static>(
         &self,
         command: T,
     ) -> anyhow::Result<T::Result>
@@ -56,7 +69,7 @@ impl CommandExecutorApi {
         Ok(*result)
     }
 
-    pub fn execute_query<'a, T: SendableQuery<'a> + 'static>(
+    fn execute_query<'a, T: SendableQuery<'a> + 'static>(
         &self,
         query: T,
     ) -> anyhow::Result<T::Result>
@@ -84,7 +97,7 @@ impl CommandExecutorApi {
         Ok(*result)
     }
 
-    pub fn undo(&self) -> anyhow::Result<()> {
+    fn undo(&self) -> anyhow::Result<()> {
         self.executor.run_in_main_loop(move |executor, injector| {
             let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
             let history = injector1.get_mut::<CommandHistory>().unwrap();
@@ -94,7 +107,7 @@ impl CommandExecutorApi {
         Ok(())
     }
 
-    pub fn redo(&self) -> anyhow::Result<()> {
+    fn redo(&self) -> anyhow::Result<()> {
         self.executor.run_in_main_loop(move |executor, injector| {
             let injector1: &mut Injector = unsafe { std::mem::transmute_copy(&injector) };
             let history = injector1.get_mut::<CommandHistory>().unwrap();
@@ -102,5 +115,11 @@ impl CommandExecutorApi {
         })??;
 
         Ok(())
+    }
+}
+
+impl CommandExecutorApi {
+    pub fn provide_injector(&self, api_injector: ApiInjector) {
+        self.api_injector.write().replace(api_injector);
     }
 }

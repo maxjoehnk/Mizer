@@ -58,6 +58,16 @@ macro_rules! command_impl {
                     $(Self::$x(cmd) => cmd.label(),)*
                 }
             }
+
+            pub fn execute<E: crate::ICommandExecutor>(self, executor: &E) -> anyhow::Result<()> {
+                match self {
+                    $(Self::$x(cmd) => {
+                        executor.run_command(cmd)?;
+
+                        Ok(())
+                    })*
+                }
+            }
         }
     }
 }
@@ -69,7 +79,15 @@ command_impl! {
     DeleteGroupCommand,
     RenameGroupCommand,
     AssignFixturesToGroupCommand,
+    AssignProgrammerToGroupCommand,
     UpdateFixtureCommand,
+    SelectFixturesCommand,
+    ClearProgrammerCommand,
+    CallPresetCommand,
+    CallEffectCommand,
+    CallGroupCommand,
+    ToggleHighlightCommand,
+    WriteProgrammerCommand,
     AddPresetCommand,
     StoreInPresetCommand,
     DeletePresetCommand,
@@ -127,6 +145,9 @@ command_impl! {
     UpdateSequenceWrapAroundCommand,
     UpdateSequenceStopOnLastCueCommand,
     UpdateSequencePriorityCommand,
+    StopSequenceCommand,
+    SequenceGoForwardCommand,
+    SequenceGoBackwardCommand,
     AddEffectCommand,
     AddEffectChannelCommand,
     AddEffectStepCommand,

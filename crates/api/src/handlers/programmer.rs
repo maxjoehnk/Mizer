@@ -41,10 +41,13 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
+    pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) -> anyhow::Result<()> {
         tracing::debug!("select_fixtures {:?}", fixture_ids);
-        let mut programmer = self.fixture_manager.get_programmer();
-        programmer.select_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
+        self.runtime.run_command(SelectFixturesCommand {
+            fixtures: fixture_ids.into_iter().map(|id| id.into()).collect(),
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
@@ -57,19 +60,21 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn select_group(&self, group_id: u32) {
+    pub fn select_group(&self, group_id: u32) -> anyhow::Result<()> {
         tracing::debug!("select_group {:?}", group_id);
-        if let Some(group) = self.fixture_manager.get_group(GroupId(group_id)) {
-            let mut programmer = self.fixture_manager.get_programmer();
-            programmer.select_group(&group);
-        }
+        self.runtime.run_command(CallGroupCommand {
+            group_id: GroupId(group_id),
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn clear(&self) {
-        let mut programmer = self.fixture_manager.get_programmer();
-        programmer.clear();
+    pub fn clear(&self) -> anyhow::Result<()> {
+        self.runtime.run_command(ClearProgrammerCommand)?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
@@ -105,10 +110,16 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_presets(&self) -> Presets {
-        let intensities = self.runtime.query(ListIntensityPresetsQuery).unwrap();
-        let shutters = self.runtime.query(ListShutterPresetsQuery).unwrap();
-        let colors = self.runtime.query(ListColorPresetsQuery).unwrap();
-        let positions = self.runtime.query(ListPositionPresetsQuery).unwrap();
+        let intensities = self
+            .runtime
+            .execute_query(ListIntensityPresetsQuery)
+            .unwrap();
+        let shutters = self.runtime.execute_query(ListShutterPresetsQuery).unwrap();
+        let colors = self.runtime.execute_query(ListColorPresetsQuery).unwrap();
+        let positions = self
+            .runtime
+            .execute_query(ListPositionPresetsQuery)
+            .unwrap();
 
         Presets {
             intensities: intensities
@@ -136,24 +147,28 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn call_preset(&self, preset_id: PresetId) {
+    pub fn call_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
         tracing::debug!("call_preset {:?}", preset_id);
-        let mut programmer = self.fixture_manager.get_programmer();
-        programmer.call_preset(preset_id.into());
+        self.runtime.run_command(CallPresetCommand {
+            preset_id: preset_id.into(),
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn call_effect(&self, effect_id: u32) {
+    pub fn call_effect(&self, effect_id: u32) -> anyhow::Result<()> {
         tracing::debug!("call_effect {:?}", effect_id);
-        let mut programmer = self.fixture_manager.get_programmer();
-        programmer.call_effect(effect_id);
+        self.runtime.run_command(CallEffectCommand { effect_id })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_groups(&self) -> Groups {
-        let groups = self.runtime.query(ListGroupsQuery).unwrap();
+        let groups = self.runtime.execute_query(ListGroupsQuery).unwrap();
         Groups {
             groups: groups.into_iter().map(|group| group.into()).collect(),
         }
@@ -214,14 +229,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     ) -> anyhow::Result<()> {
         let mode = req.mode();
         let group_id = GroupId(req.id);
-        let selection = {
-            let programmer = self.fixture_manager.get_programmer();
-            programmer.active_selection()
-        };
 
-        self.runtime.run_command(AssignFixturesToGroupCommand {
+        self.runtime.run_command(AssignProgrammerToGroupCommand {
             group_id,
-            selection,
             mode: mode.into(),
         })?;
 

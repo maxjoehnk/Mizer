@@ -16,7 +16,7 @@ impl<R: RuntimeApi> EffectsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_effects(&self) -> Effects {
-        let effects = self.runtime.query(ListEffectsQuery).unwrap();
+        let effects = self.runtime.execute_query(ListEffectsQuery).unwrap();
 
         let effects = effects.into_iter().map(Effect::from).collect();
 

@@ -1,3 +1,4 @@
+use crate::StoreGroupMode;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
@@ -10,13 +11,6 @@ pub struct AssignFixturesToGroupCommand {
     pub group_id: GroupId,
     pub selection: FixtureSelection,
     pub mode: StoreGroupMode,
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
-pub enum StoreGroupMode {
-    Overwrite,
-    Merge,
-    Subtract,
 }
 
 impl<'a> Command<'a> for AssignFixturesToGroupCommand {

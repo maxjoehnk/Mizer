@@ -1,0 +1,6 @@
+// Store Group 1
+strict graph {
+    STORE -- "ACTIVE SELECTION"
+    STORE -- GROUP
+    GROUP -- 1
+}

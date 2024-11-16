@@ -1,0 +1,18 @@
+[package]
+name = "mizer-command-line"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+chumsky = "1.0.0-alpha.7"
+mizer-command-executor = { path = "../../runtime/commander/executor" }
+mizer-fixtures = { path = "../fixtures" }
+futures = "0.3"
+mizer-ui-api = { path = "../ui" }
+downcast = "0.11"
+
+[dev-dependencies]
+test-case = "3.3"

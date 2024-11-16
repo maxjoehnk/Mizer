@@ -1,0 +1,9 @@
+// @ Full
+strict graph {
+    WRITE -- FIXTURES
+    FIXTURES -- "ACTIVE SELECTION"
+    WRITE -- CHANNEL
+    CHANNEL -- INTENSITY
+    WRITE -- VALUE
+    VALUE -- 100
+}

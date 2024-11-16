@@ -12,19 +12,18 @@ ui:
   supplemental_files: ./ui
 antora:
   extensions:
-    - '@antora/lunr-extension'
-    - '@antora/pdf-extension'
+    - "@antora/lunr-extension"
+    - "@antora/pdf-extension"
 asciidoc:
   extensions:
     - asciidoctor-kroki
   attributes:
-    page-pagination: ''
-    experimental: ''
-    idprefix: '@'
-    idseparator: '-@'
+    page-pagination: ""
+    experimental: ""
+    idprefix: "@"
+    idseparator: "-@"
     table-caption: false
     example-caption: false
     listing-caption: false
-    hide-uri-scheme: '@'
+    hide-uri-scheme: "@"
     kroki-fetch-diagram: true
-

@@ -1,6 +1,6 @@
-use std::ops::Deref;
-use chumsky::Parser;
 use crate::Id;
+use chumsky::Parser;
+use std::ops::Deref;
 
 mod parser;
 
@@ -88,8 +88,8 @@ pub fn parse(input: &str) -> anyhow::Result<Tokens> {
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
     use super::*;
+    use test_case::test_case;
 
     #[test_case("@ 20", 20)]
     #[test_case("@ 100", 100)]
@@ -97,31 +97,37 @@ mod tests {
     fn parse_at(input: &str, expected: i64) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Operator(Operator::At),
-            Token::Value(ValueToken::Number(expected)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Operator(Operator::At),
+                Token::Value(ValueToken::Number(expected)),
+            ])
+        );
     }
 
     #[test]
     fn parse_at_full() {
         let ast = parse("@ full").unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Operator(Operator::At),
-            Token::Full,
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![Token::Operator(Operator::At), Token::Full,])
+        );
     }
 
     #[test]
     fn parse_write_at_full() {
         let ast = parse("write @ full").unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Write),
-            Token::Operator(Operator::At),
-            Token::Full,
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Write),
+                Token::Operator(Operator::At),
+                Token::Full,
+            ])
+        );
     }
 
     #[test_case("select fixtures 1", 1)]
@@ -129,11 +135,14 @@ mod tests {
     fn parse_fixture_selection(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Select),
-            Token::Keyword(Keyword::Fixture),
-            Token::Value(ValueToken::Number(expected as i64)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Select),
+                Token::Keyword(Keyword::Fixture),
+                Token::Value(ValueToken::Number(expected as i64)),
+            ])
+        );
     }
 
     #[test_case("select 1", 1)]
@@ -141,10 +150,13 @@ mod tests {
     fn parse_implicit_selection(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Select),
-            Token::Value(ValueToken::Number(expected as i64)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Select),
+                Token::Value(ValueToken::Number(expected as i64)),
+            ])
+        );
     }
 
     #[test_case("select 1.1", vec![1, 1])]
@@ -152,10 +164,13 @@ mod tests {
     fn parse_deep_selection(input: &str, expected: Vec<i64>) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Select),
-            Token::Value(ValueToken::NumericPath(expected)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Select),
+                Token::Value(ValueToken::NumericPath(expected)),
+            ])
+        );
     }
 
     #[test_case("select fixtures 1..3", 1, 3)]
@@ -164,22 +179,31 @@ mod tests {
     fn parse_multiple_fixture_selection(input: &str, from: u32, to: u32) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Select),
-            Token::Keyword(Keyword::Fixture),
-            Token::Range(ValueToken::Number(from as i64), ValueToken::Number(to as i64)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Select),
+                Token::Keyword(Keyword::Fixture),
+                Token::Range(
+                    ValueToken::Number(from as i64),
+                    ValueToken::Number(to as i64)
+                ),
+            ])
+        );
     }
 
     #[test_case("delete sequence 1", 1)]
     fn parse_delete_sequence(input: &str, expected: u32) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::Delete),
-            Token::Keyword(Keyword::Sequence),
-            Token::Value(ValueToken::Number(expected as i64)),
-        ]));
+        assert_eq!(
+            ast,
+            Tokens(vec![
+                Token::Action(Action::Delete),
+                Token::Keyword(Keyword::Sequence),
+                Token::Value(ValueToken::Number(expected as i64)),
+            ])
+        );
     }
 
     #[test_case("go"; "go")]
@@ -187,17 +211,13 @@ mod tests {
     fn parse_go_forward_sequence(input: &str) {
         let ast = parse(input).unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::GoForward),
-        ]));
+        assert_eq!(ast, Tokens(vec![Token::Action(Action::GoForward),]));
     }
 
     #[test]
     fn parse_go_backward_sequence() {
         let ast = parse("go-").unwrap();
 
-        assert_eq!(ast, Tokens(vec![
-            Token::Action(Action::GoBackward),
-        ]));
+        assert_eq!(ast, Tokens(vec![Token::Action(Action::GoBackward),]));
     }
 }

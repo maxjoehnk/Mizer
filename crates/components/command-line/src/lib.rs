@@ -1,14 +1,14 @@
+use downcast::downcast;
+use futures::future::BoxFuture;
+use futures::FutureExt;
+use mizer_command_executor::{SendableCommand, SendableQuery};
 use std::fmt::Debug;
 use std::future::Future;
 use std::ops::Deref;
-use downcast::downcast;
-use mizer_command_executor::{SendableCommand, SendableQuery};
-use futures::future::BoxFuture;
-use futures::FutureExt;
 
 mod ast;
-mod parser;
 mod commands;
+mod parser;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) struct Id {
@@ -25,7 +25,9 @@ impl Deref for Id {
 }
 
 impl PartialOrd for Id {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> { Some(self.cmp(other)) }
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Ord for Id {
@@ -41,26 +43,32 @@ impl Id {
             len: 1,
         }
     }
-    
+
     pub fn new(slice: [u32; 2]) -> Self {
         Self {
             array: slice,
             len: 2,
         }
     }
-    
+
     pub fn first(&self) -> u32 {
         self.array[0]
     }
-    
+
     pub fn depth(&self) -> usize {
         self.len
     }
 }
 
 pub trait CommandLineContext: Send + Sync {
-    fn execute_command<'a>(&self, command: impl SendableCommand<'a> + 'static) -> anyhow::Result<()>;
-    fn execute_query<'a, TQuery: SendableQuery<'a> + 'static>(&self, query: TQuery) -> anyhow::Result<TQuery::Result>;
+    fn execute_command<'a>(
+        &self,
+        command: impl SendableCommand<'a> + 'static,
+    ) -> anyhow::Result<()>;
+    fn execute_query<'a, TQuery: SendableQuery<'a> + 'static>(
+        &self,
+        query: TQuery,
+    ) -> anyhow::Result<TQuery::Result>;
 }
 
 trait BoxCommand<TContext: CommandLineContext>: downcast::Any {
@@ -82,10 +90,15 @@ impl<T: Command + 'static, TContext: CommandLineContext> BoxCommand<TContext> fo
 }
 
 trait Command: Debug + Send + Sync + PartialEq {
-    fn execute(&self, context: &impl CommandLineContext) -> impl Future<Output = anyhow::Result<()>> + Send;
+    fn execute(
+        &self,
+        context: &impl CommandLineContext,
+    ) -> impl Future<Output = anyhow::Result<()>> + Send;
 }
 
-pub(crate) fn try_parse_as_command<TContext: CommandLineContext>(input: &str) -> anyhow::Result<Box<dyn BoxCommand<TContext>>> {
+pub(crate) fn try_parse_as_command<TContext: CommandLineContext>(
+    input: &str,
+) -> anyhow::Result<Box<dyn BoxCommand<TContext>>> {
     let tokens = parser::parse(input)?;
     tracing::debug!("Tokens: {tokens:?}");
     let command = ast::parse(tokens)?;
@@ -93,7 +106,10 @@ pub(crate) fn try_parse_as_command<TContext: CommandLineContext>(input: &str) ->
     Ok(command)
 }
 
-pub async fn try_execute<TContext: CommandLineContext + 'static>(context: &TContext, input: &str) -> anyhow::Result<()> {
+pub async fn try_execute<TContext: CommandLineContext + 'static>(
+    context: &TContext,
+    input: &str,
+) -> anyhow::Result<()> {
     let command = try_parse_as_command(input)?;
 
     command.execute(context).await?;
@@ -103,9 +119,9 @@ pub async fn try_execute<TContext: CommandLineContext + 'static>(context: &TCont
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use std::cmp::Ordering;
     use test_case::test_case;
-    use super::*;
 
     #[test_case(Id::single(1), Id::single(2), Ordering::Less)]
     #[test_case(Id::single(2), Id::single(1), Ordering::Greater)]

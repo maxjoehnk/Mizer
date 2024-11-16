@@ -16,13 +16,19 @@ impl Command for Select<Fixtures, Single> {
 impl Command for Select<Fixtures, Range> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
         let fixtures = context.execute_query(ListFixturesQuery)?;
-        let ids = fixtures.into_iter()
+        let ids = fixtures
+            .into_iter()
             .flat_map(|f| {
                 let fixture_id = FixtureId::Fixture(f.id);
                 if f.current_mode.sub_fixtures.is_empty() {
                     vec![fixture_id]
                 } else {
-                    let mut sub_fixtures = f.current_mode.sub_fixtures.iter().map(|sf| FixtureId::SubFixture(f.id, sf.id)).collect::<Vec<_>>();
+                    let mut sub_fixtures = f
+                        .current_mode
+                        .sub_fixtures
+                        .iter()
+                        .map(|sf| FixtureId::SubFixture(f.id, sf.id))
+                        .collect::<Vec<_>>();
                     sub_fixtures.insert(0, fixture_id);
 
                     sub_fixtures
@@ -58,7 +64,9 @@ impl From<FixtureId> for Id {
     fn from(id: FixtureId) -> Self {
         match id {
             FixtureId::Fixture(id) => Id::single(id),
-            FixtureId::SubFixture(fixture_id, sub_fixture_id) => Id::new([fixture_id, sub_fixture_id]),
+            FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                Id::new([fixture_id, sub_fixture_id])
+            }
         }
     }
 }
@@ -87,7 +95,9 @@ mod tests {
     pub fn parse_sub_fixture(input: &str) {
         let expected = Select {
             target_type: Fixtures,
-            target_entity: Single { id: Id::new([1, 1]) },
+            target_entity: Single {
+                id: Id::new([1, 1]),
+            },
         };
 
         assert_command(input, expected);

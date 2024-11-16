@@ -1,6 +1,6 @@
-use mizer_command_executor::*;
-use crate::{Command, CommandLineContext};
 use crate::ast::*;
+use crate::{Command, CommandLineContext};
+use mizer_command_executor::*;
 
 impl Command for Off<Sequences, Single> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
@@ -12,8 +12,8 @@ impl Command for Off<Sequences, Single> {
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::tests::assert_command;
     use super::*;
+    use crate::commands::tests::assert_command;
 
     #[test]
     pub fn parse() {

@@ -1,6 +1,9 @@
 use async_trait::async_trait;
 use nativeshell::codec::{MethodCall, MethodCallError, MethodCallReply, MethodCallResult, Value};
-use nativeshell::shell::{AsyncMethodCallHandler, Context, EngineHandle, MethodCallHandler, MethodChannel, RegisteredAsyncMethodCallHandler};
+use nativeshell::shell::{
+    AsyncMethodCallHandler, Context, EngineHandle, MethodCallHandler, MethodChannel,
+    RegisteredAsyncMethodCallHandler,
+};
 
 use mizer_api::handlers::UiHandler;
 use mizer_api::RuntimeApi;
@@ -53,7 +56,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for UiChannel<R> {
 
 #[async_trait(?Send)]
 impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
-    async fn on_method_call(&self, call: MethodCall<Value>, _engine: EngineHandle) -> MethodCallResult<Value> {
+    async fn on_method_call(
+        &self,
+        call: MethodCall<Value>,
+        _engine: EngineHandle,
+    ) -> MethodCallResult<Value> {
         match call.method.as_str() {
             "commandLineExecute" => match call.args {
                 Value::String(command) => {
@@ -61,12 +68,21 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
 
                     match result {
                         Ok(_) => Ok(Value::Null),
-                        Err(e) => Err(MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e:?}"))),
+                        Err(e) => Err(MethodCallError::from_code_message(
+                            &format!("{e:?}"),
+                            &format!("{e:?}"),
+                        )),
                     }
                 }
-                _ => Err(MethodCallError::from_code_message("invalid-arguments", "Invalid arguments"))
-            }
-            _ => Err(MethodCallError::from_code_message("not-implemented", "Not implemented"))
+                _ => Err(MethodCallError::from_code_message(
+                    "invalid-arguments",
+                    "Invalid arguments",
+                )),
+            },
+            _ => Err(MethodCallError::from_code_message(
+                "not-implemented",
+                "Not implemented",
+            )),
         }
     }
 }

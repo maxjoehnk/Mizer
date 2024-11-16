@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::GroupId;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::GroupId;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct CallGroupCommand {
@@ -29,11 +29,7 @@ impl<'a> Command<'a> for CallGroupCommand {
         Ok(((), ()))
     }
 
-    fn revert(
-        &self,
-        fixture_manager: &FixtureManager,
-        _: Self::State,
-    ) -> anyhow::Result<()> {
+    fn revert(&self, fixture_manager: &FixtureManager, _: Self::State) -> anyhow::Result<()> {
         todo!()
     }
 }

@@ -25,5 +25,4 @@ impl ConsoleHandler {
         let subscriber = self.console_history.subscribe();
         subscriber.into_stream().map(ConsoleMessage::from)
     }
-
 }

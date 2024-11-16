@@ -70,8 +70,10 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn sequence_stop(&self, sequence: u32) -> anyhow::Result<()> {
-        self.runtime.run_command(StopSequenceCommand { sequence_id: sequence })?;
-        
+        self.runtime.run_command(StopSequenceCommand {
+            sequence_id: sequence,
+        })?;
+
         Ok(())
     }
 

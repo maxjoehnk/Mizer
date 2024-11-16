@@ -31,7 +31,10 @@ pub trait ICommandExecutor {
     where
         T::Result: Send + Sync;
 
-    fn execute_query<'a, T: SendableQuery<'a> + 'static>(&self, query: T) -> anyhow::Result<T::Result>;
+    fn execute_query<'a, T: SendableQuery<'a> + 'static>(
+        &self,
+        query: T,
+    ) -> anyhow::Result<T::Result>;
 
     fn undo(&self) -> anyhow::Result<()>;
     fn redo(&self) -> anyhow::Result<()>;

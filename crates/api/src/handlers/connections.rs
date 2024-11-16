@@ -150,7 +150,10 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
-        let profiles = self.runtime.execute_query(ListMidiDeviceProfilesQuery).unwrap();
+        let profiles = self
+            .runtime
+            .execute_query(ListMidiDeviceProfilesQuery)
+            .unwrap();
         let profiles = profiles.into_iter().map(MidiDeviceProfile::from).collect();
 
         MidiDeviceProfiles { profiles }

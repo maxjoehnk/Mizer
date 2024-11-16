@@ -1,10 +1,10 @@
+use crate::StoreGroupMode;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
 use mizer_fixtures::GroupId;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
-use crate::StoreGroupMode;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignProgrammerToGroupCommand {
@@ -39,13 +39,9 @@ impl<'a> Command<'a> for AssignProgrammerToGroupCommand {
                 group.selection = selection.into();
             }
             StoreGroupMode::Merge => {
-                group.selection.add_fixtures(
-                    selection
-                        .get_fixtures()
-                        .into_iter()
-                        .flatten()
-                        .collect(),
-                );
+                group
+                    .selection
+                    .add_fixtures(selection.get_fixtures().into_iter().flatten().collect());
             }
             StoreGroupMode::Subtract => {
                 for fixture in selection.get_fixtures().into_iter().flatten() {

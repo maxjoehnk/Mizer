@@ -91,7 +91,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 let presets = self.handler.get_presets();
                 reply.respond_msg(presets);
             }
-            "callPreset" => match call.arguments().and_then(|req| self.handler.call_preset(req)) {
+            "callPreset" => match call
+                .arguments()
+                .and_then(|req| self.handler.call_preset(req))
+            {
                 Ok(()) => reply.send_ok(Value::Null),
                 Err(err) => reply.respond_error(err),
             },

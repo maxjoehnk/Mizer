@@ -2,7 +2,9 @@ use crate::proto::ui::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 use itertools::Itertools;
-use mizer_command_executor::{GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery, SendableCommand, SendableQuery};
+use mizer_command_executor::{
+    GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery, SendableCommand, SendableQuery,
+};
 use mizer_command_line::CommandLineContext;
 use mizer_fixtures::ui_handlers::*;
 use mizer_ui_api::dialog;
@@ -32,52 +34,57 @@ impl<R: RuntimeApi + 'static> UiHandler<R> {
     pub fn show_table(&self, name: &str, arguments: &[&String]) -> anyhow::Result<TabularData> {
         match name {
             "fixtures/definitions/list" => {
-                let fixture_definitions =
-                    self.runtime.execute_query(ListFixtureDefinitionsQuery::default())?;
+                let fixture_definitions = self
+                    .runtime
+                    .execute_query(ListFixtureDefinitionsQuery::default())?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
             }
             "fixtures/definitions/list/gdtf" => {
-                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
-                    gdtf: true,
-                    ofl: false,
-                    qlc: false,
-                    mizer: false,
-                })?;
+                let fixture_definitions =
+                    self.runtime.execute_query(ListFixtureDefinitionsQuery {
+                        gdtf: true,
+                        ofl: false,
+                        qlc: false,
+                        mizer: false,
+                    })?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
             }
             "fixtures/definitions/list/ofl" => {
-                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
-                    gdtf: false,
-                    ofl: true,
-                    qlc: false,
-                    mizer: false,
-                })?;
+                let fixture_definitions =
+                    self.runtime.execute_query(ListFixtureDefinitionsQuery {
+                        gdtf: false,
+                        ofl: true,
+                        qlc: false,
+                        mizer: false,
+                    })?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
             }
             "fixtures/definitions/list/qlc" => {
-                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
-                    gdtf: false,
-                    ofl: false,
-                    qlc: true,
-                    mizer: false,
-                })?;
+                let fixture_definitions =
+                    self.runtime.execute_query(ListFixtureDefinitionsQuery {
+                        gdtf: false,
+                        ofl: false,
+                        qlc: true,
+                        mizer: false,
+                    })?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
             }
             "fixtures/definitions/list/mizer" => {
-                let fixture_definitions = self.runtime.execute_query(ListFixtureDefinitionsQuery {
-                    gdtf: false,
-                    ofl: false,
-                    qlc: false,
-                    mizer: true,
-                })?;
+                let fixture_definitions =
+                    self.runtime.execute_query(ListFixtureDefinitionsQuery {
+                        gdtf: false,
+                        ofl: false,
+                        qlc: false,
+                        mizer: true,
+                    })?;
                 let table = FixtureDefinitionTable.get_table(fixture_definitions)?;
 
                 Ok(table.into())
@@ -151,13 +158,19 @@ impl<R: RuntimeApi + 'static> UiHandler<R> {
 }
 
 impl<R: RuntimeApi> CommandLineContext for UiHandler<R> {
-    fn execute_command<'a>(&self, command: impl SendableCommand<'a> + 'static) -> anyhow::Result<()> {
+    fn execute_command<'a>(
+        &self,
+        command: impl SendableCommand<'a> + 'static,
+    ) -> anyhow::Result<()> {
         self.runtime.run_command(command)?;
 
         Ok(())
     }
 
-    fn execute_query<'a, TQuery: SendableQuery<'a> + 'static>(&self, query: TQuery) -> anyhow::Result<TQuery::Result> {
+    fn execute_query<'a, TQuery: SendableQuery<'a> + 'static>(
+        &self,
+        query: TQuery,
+    ) -> anyhow::Result<TQuery::Result> {
         self.runtime.execute_query(query)
     }
 }

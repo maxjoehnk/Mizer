@@ -5,7 +5,9 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_command_executor::{CommandExecutorApi, GetCommandHistoryQuery, ICommandExecutor, SendableCommand, SendableQuery};
+use mizer_command_executor::{
+    CommandExecutorApi, GetCommandHistoryQuery, ICommandExecutor, SendableCommand, SendableQuery,
+};
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
@@ -46,7 +48,10 @@ impl ICommandExecutor for Api {
     }
 
     #[profiling::function]
-    fn execute_query<'a, T: SendableQuery<'a> + 'static>(&self, query: T) -> anyhow::Result<T::Result> {
+    fn execute_query<'a, T: SendableQuery<'a> + 'static>(
+        &self,
+        query: T,
+    ) -> anyhow::Result<T::Result> {
         let result = self.command_executor_api.execute_query(query)?;
 
         Ok(result)

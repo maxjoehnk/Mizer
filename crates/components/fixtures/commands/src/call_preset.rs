@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct CallPresetCommand {
@@ -27,11 +27,7 @@ impl<'a> Command<'a> for CallPresetCommand {
         Ok(((), ()))
     }
 
-    fn revert(
-        &self,
-        fixture_manager: &FixtureManager,
-        _: Self::State,
-    ) -> anyhow::Result<()> {
+    fn revert(&self, fixture_manager: &FixtureManager, _: Self::State) -> anyhow::Result<()> {
         todo!()
     }
 }

@@ -1,6 +1,6 @@
-use mizer_command_executor::*;
-use crate::{Command, CommandLineContext};
 use crate::ast::*;
+use crate::{Command, CommandLineContext};
+use mizer_command_executor::*;
 
 impl Command for Write<Fixtures, Single, Value> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
@@ -34,9 +34,9 @@ impl Command for Write<Fixtures, ActiveSelection, Full> {
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
     use super::*;
     use crate::commands::tests::assert_command;
+    use test_case::test_case;
 
     #[test_case("@ full")]
     #[test_case("write @ full")]

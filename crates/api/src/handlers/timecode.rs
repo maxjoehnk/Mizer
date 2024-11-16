@@ -37,7 +37,10 @@ impl<R: RuntimeApi> TimecodeHandler<R> {
     #[profiling::function]
     pub fn get_timecodes(&self) -> AllTimecodes {
         let timecodes = self.runtime.execute_query(ListTimecodeTracksQuery).unwrap();
-        let controls = self.runtime.execute_query(ListTimecodeControlsQuery).unwrap();
+        let controls = self
+            .runtime
+            .execute_query(ListTimecodeControlsQuery)
+            .unwrap();
         let timecodes = timecodes.into_iter().map(Timecode::from).collect();
         let controls = controls.into_iter().map(TimecodeControl::from).collect();
 

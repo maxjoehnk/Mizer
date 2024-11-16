@@ -1,10 +1,10 @@
+use crate::StoreGroupMode;
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
 use mizer_fixtures::GroupId;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
-use crate::StoreGroupMode;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AssignFixturesToGroupCommand {

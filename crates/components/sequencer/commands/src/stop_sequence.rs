@@ -1,5 +1,5 @@
 use mizer_commander::{Command, Ref};
-use mizer_sequencer::{Sequencer};
+use mizer_sequencer::Sequencer;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -13,10 +13,7 @@ impl<'a> Command<'a> for StopSequenceCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!(
-            "Off Sequence {}",
-            self.sequence_id
-        )
+        format!("Off Sequence {}", self.sequence_id)
     }
 
     fn apply(&self, sequencer: &Sequencer) -> anyhow::Result<(Self::Result, Self::State)> {

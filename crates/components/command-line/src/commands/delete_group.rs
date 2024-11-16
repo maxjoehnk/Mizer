@@ -1,6 +1,6 @@
-use mizer_command_executor::*;
-use crate::{Command, CommandLineContext};
 use crate::ast::*;
+use crate::{Command, CommandLineContext};
+use mizer_command_executor::*;
 
 impl Command for Delete<Groups, Single> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {

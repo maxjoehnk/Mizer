@@ -46,7 +46,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.runtime.run_command(SelectFixturesCommand {
             fixtures: fixture_ids.into_iter().map(|id| id.into()).collect(),
         })?;
-        
+
         Ok(())
     }
 
@@ -65,7 +65,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         self.runtime.run_command(CallGroupCommand {
             group_id: GroupId(group_id),
         })?;
-        
+
         Ok(())
     }
 
@@ -110,10 +110,16 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn get_presets(&self) -> Presets {
-        let intensities = self.runtime.execute_query(ListIntensityPresetsQuery).unwrap();
+        let intensities = self
+            .runtime
+            .execute_query(ListIntensityPresetsQuery)
+            .unwrap();
         let shutters = self.runtime.execute_query(ListShutterPresetsQuery).unwrap();
         let colors = self.runtime.execute_query(ListColorPresetsQuery).unwrap();
-        let positions = self.runtime.execute_query(ListPositionPresetsQuery).unwrap();
+        let positions = self
+            .runtime
+            .execute_query(ListPositionPresetsQuery)
+            .unwrap();
 
         Presets {
             intensities: intensities
@@ -154,9 +160,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[profiling::function]
     pub fn call_effect(&self, effect_id: u32) -> anyhow::Result<()> {
         tracing::debug!("call_effect {:?}", effect_id);
-        self.runtime.run_command(CallEffectCommand {
-            effect_id,
-        })?;
+        self.runtime.run_command(CallEffectCommand { effect_id })?;
 
         Ok(())
     }

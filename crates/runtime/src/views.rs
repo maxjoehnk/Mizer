@@ -2,10 +2,10 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use pinboard::NonEmptyPinboard;
 use mizer_clock::Timecode;
 use mizer_node::NodePath;
 use mizer_ports::Color;
+use pinboard::NonEmptyPinboard;
 
 #[derive(Clone)]
 pub struct LayoutsView {

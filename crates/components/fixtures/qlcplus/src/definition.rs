@@ -69,7 +69,8 @@ pub struct CapabilityType {
 
 impl CapabilityType {
     pub fn name(&self) -> String {
-        self.children.iter()
+        self.children
+            .iter()
             .find_map(|child| match child {
                 CapabilityChild::Name(name) => Some(name.clone()),
                 _ => None,

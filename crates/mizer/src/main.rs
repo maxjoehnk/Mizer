@@ -1,6 +1,6 @@
 #![windows_subsystem = "windows"]
-use std::sync::mpsc;
 use clap::Parser;
+use std::sync::mpsc;
 
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;

@@ -250,7 +250,9 @@ impl From<mizer_fixtures::FixturePriority> for FixturePriority {
         use mizer_fixtures::LTPPriority::*;
 
         match priority {
-            mizer_fixtures::FixturePriority::Programmer => unreachable!("Programmer priority is not exposed to frontend"),
+            mizer_fixtures::FixturePriority::Programmer => {
+                unreachable!("Programmer priority is not exposed to frontend")
+            }
             mizer_fixtures::FixturePriority::HTP => Self::PriorityHtp,
             mizer_fixtures::FixturePriority::LTP(Highest) => Self::PriorityLtpHighest,
             mizer_fixtures::FixturePriority::LTP(High) => Self::PriorityLtpHigh,

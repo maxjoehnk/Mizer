@@ -4,9 +4,7 @@ use std::fmt::{Display, Formatter};
 use enum_iterator::Sequence;
 use serde::{Deserialize, Serialize};
 
-#[derive(
-    Debug, Clone, Copy, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize,
-)]
+#[derive(Debug, Clone, Copy, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize)]
 #[repr(u8)]
 pub enum FixturePriority {
     /**

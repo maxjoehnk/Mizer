@@ -1,10 +1,10 @@
+use rayon::prelude::*;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::fs::{DirEntry, File};
 use std::io::Read;
 use std::path::Path;
 use std::str::FromStr;
-use rayon::prelude::*;
 
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;

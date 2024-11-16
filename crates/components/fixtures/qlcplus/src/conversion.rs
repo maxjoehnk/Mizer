@@ -68,7 +68,11 @@ fn create_controls(
             if let Some(channel) = channels.get(mode_channel.channel.deref()) {
                 channel.clone()
             } else {
-                panic!("Channel not found: \"{}\"\nAvailable channels: {:?}", mode_channel.channel, channels.keys().collect::<Vec<_>>());
+                panic!(
+                    "Channel not found: \"{}\"\nAvailable channels: {:?}",
+                    mode_channel.channel,
+                    channels.keys().collect::<Vec<_>>()
+                );
             }
         })
         .collect::<Vec<_>>();

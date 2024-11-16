@@ -9,12 +9,24 @@ use crate::{FixtureId, FixturePriority};
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait FixtureController {
-fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64, priority: FixturePriority);
-fn highlight(&self, fixture_id: FixtureId);
+    fn write(
+        &self,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    );
+    fn highlight(&self, fixture_id: FixtureId);
 }
 
 impl FixtureController for Arc<DashMap<u32, Fixture>> {
-    fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64, priority: FixturePriority) {
+    fn write(
+        &self,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+    ) {
         act_on_fixture(fixture_id, self, |fixture| {
             fixture.write_fader_control(control, value, priority)
         });

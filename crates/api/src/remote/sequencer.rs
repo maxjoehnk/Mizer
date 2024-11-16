@@ -1,13 +1,13 @@
-use std::time::Duration;
-use tonic::{Request, Response, Status};
-use futures::{Stream, StreamExt};
-use itertools::Itertools;
-use tonic::codegen::BoxStream;
-use tonic::codegen::tokio_stream::wrappers::IntervalStream;
 use crate::handlers::SequencerHandler;
 use crate::proto::sequencer::sequencer_remote_api_server::SequencerRemoteApi;
 use crate::proto::sequencer::*;
 use crate::RuntimeApi;
+use futures::{Stream, StreamExt};
+use itertools::Itertools;
+use std::time::Duration;
+use tonic::codegen::tokio_stream::wrappers::IntervalStream;
+use tonic::codegen::BoxStream;
+use tonic::{Request, Response, Status};
 
 #[tonic::async_trait]
 impl<R: RuntimeApi + 'static> SequencerRemoteApi for SequencerHandler<R> {
@@ -22,14 +22,19 @@ impl<R: RuntimeApi + 'static> SequencerRemoteApi for SequencerHandler<R> {
         Ok(Response::new(stream))
     }
 
-    async fn go_sequence(&self, req: Request<SequenceGoRequest>) -> Result<Response<Empty>, Status> {
+    async fn go_sequence(
+        &self,
+        req: Request<SequenceGoRequest>,
+    ) -> Result<Response<Empty>, Status> {
         self.sequence_go_forward(req.into_inner().sequence);
 
         Ok(Response::new(Empty {}))
     }
-    
-    
-    async fn stop_sequence(&self, req: Request<SequenceStopRequest>) -> Result<Response<Empty>, Status> {
+
+    async fn stop_sequence(
+        &self,
+        req: Request<SequenceStopRequest>,
+    ) -> Result<Response<Empty>, Status> {
         self.sequence_stop(req.into_inner().sequence);
 
         Ok(Response::new(Empty {}))
@@ -47,13 +52,21 @@ impl<R: RuntimeApi + 'static> SequencerHandler<R> {
             let state = view.read();
 
             SequencerState {
-                sequences: sequences.sequences.into_iter()
+                sequences: sequences
+                    .sequences
+                    .into_iter()
                     .sorted_by_key(|sequence| sequence.id)
                     .map(|sequence| SequenceState {
                         sequence: sequence.id,
                         name: sequence.name.clone(),
-                        active: state.get(&sequence.id).map(|state| state.active).unwrap_or_default(),
-                        rate: state.get(&sequence.id).map(|state| state.rate).unwrap_or(1.0),
+                        active: state
+                            .get(&sequence.id)
+                            .map(|state| state.active)
+                            .unwrap_or_default(),
+                        rate: state
+                            .get(&sequence.id)
+                            .map(|state| state.rate)
+                            .unwrap_or(1.0),
                     })
                     .collect(),
             }

@@ -24,11 +24,8 @@ impl PipelineNode for ClockNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            output_port!(TIMECODE_OUTPUT, PortType::Clock),
-        ]
+        vec![output_port!(TIMECODE_OUTPUT, PortType::Clock)]
     }
-
 
     fn node_type(&self) -> NodeType {
         NodeType::Clock

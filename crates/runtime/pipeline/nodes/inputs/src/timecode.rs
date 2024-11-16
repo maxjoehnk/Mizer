@@ -1,6 +1,6 @@
+use mizer_clock::Timecode;
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
-use mizer_clock::Timecode;
 
 const INPUT_CLOCK_PORT: &str = "Clock";
 

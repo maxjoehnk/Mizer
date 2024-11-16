@@ -96,7 +96,8 @@ impl ProcessingNode for CountdownNode {
             let elapsed = start.elapsed();
             let duration = self.duration();
             let timecode = get_timecode(elapsed, duration, context.fps());
-            context.write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, duration.saturating_sub(elapsed));
+            context
+                .write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, duration.saturating_sub(elapsed));
             context.write_timecode_preview(timecode);
             if elapsed >= duration {
                 self.stop_timer(state);

@@ -92,7 +92,10 @@ impl ProcessingNode for TransportNode {
                 0f64
             },
         );
-        context.write_port::<_, port_types::CLOCK>(CLOCK_OUTPUT, context.clock().to_duration(context.fps()));
+        context.write_port::<_, port_types::CLOCK>(
+            CLOCK_OUTPUT,
+            context.clock().to_duration(context.fps()),
+        );
         Ok(())
     }
 

@@ -97,7 +97,7 @@ impl ProcessingNode for TimeTriggerNode {
                 VALUE_OUTPUT,
                 if has_passed { SINGLE_HIGH } else { SINGLE_LOW },
             );
-            
+
             context.write_port::<_, port_types::CLOCK>(TIME_REMAINING_OUTPUT, duration.to_std()?);
         }
 

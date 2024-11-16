@@ -1,6 +1,4 @@
-use crate::Id;
 use chumsky::Parser;
-use std::ops::Deref;
 
 mod parser;
 

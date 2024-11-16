@@ -6,7 +6,7 @@ pub use prost::Message;
 use tonic::transport::Server;
 
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_command_executor::{ICommandExecutor, SendableCommand, SendableQuery};
+use mizer_command_executor::ICommandExecutor;
 use mizer_connections::{MidiEvent, OscMessage};
 pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;

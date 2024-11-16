@@ -142,4 +142,16 @@ mod tests {
 
         assert_command(input, expected);
     }
+
+    #[test_case("1.1 thru 1.10 @ full", Id::new([1, 1]), Id::new([1, 10]))]
+    #[test_case("1 thru 4 @ full", Id::single(1), Id::single(4))]
+    pub fn parse_range_write_full(input: &str, from: Id, to: Id) {
+        let expected = Write {
+            value: Full,
+            target_type: Fixtures,
+            target_entity: Range { from, to },
+        };
+
+        assert_command(input, expected);
+    }
 }

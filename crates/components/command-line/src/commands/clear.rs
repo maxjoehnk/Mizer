@@ -9,3 +9,14 @@ impl Command for Clear {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::commands::tests::assert_command;
+    use super::*;
+
+    #[test]
+    pub fn parse() {
+        assert_command("clear", Clear);
+    }
+}

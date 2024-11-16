@@ -12,6 +12,7 @@ mizer-command-executor = { path = "../../runtime/commander/executor" }
 mizer-fixtures = { path = "../fixtures" }
 futures = "0.3"
 mizer-ui-api = { path = "../ui" }
+downcast = "0.11"
 
 [dev-dependencies]
 test-case = "3.3"

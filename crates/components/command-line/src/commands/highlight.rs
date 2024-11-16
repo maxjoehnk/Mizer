@@ -9,3 +9,16 @@ impl Command for Highlight {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::commands::tests::assert_command;
+    use super::*;
+
+    #[test]
+    pub fn parse() {
+        let expected = Highlight;
+
+        assert_command("highlight", expected);
+    }
+}

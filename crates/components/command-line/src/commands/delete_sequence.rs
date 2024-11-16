@@ -11,3 +11,19 @@ impl Command for Delete<Sequences, Single> {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::commands::tests::assert_command;
+    use super::*;
+
+    #[test]
+    pub fn parse() {
+        let expected = Delete {
+            target_type: Sequences,
+            target_entity: Single { id: Id::single(1) },
+        };
+
+        assert_command("delete sequence 1", expected);
+    }
+}

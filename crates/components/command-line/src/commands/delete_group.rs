@@ -11,3 +11,20 @@ impl Command for Delete<Groups, Single> {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::commands::tests::assert_command;
+
+    use super::*;
+
+    #[test]
+    pub fn parse() {
+        let expected = Delete {
+            target_type: Groups,
+            target_entity: Single { id: Id::single(1) },
+        };
+
+        assert_command("delete group 1", expected);
+    }
+}

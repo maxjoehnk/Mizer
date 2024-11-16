@@ -5190,6 +5190,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "chumsky",
+ "downcast",
  "futures",
  "mizer-command-executor",
  "mizer-fixtures",

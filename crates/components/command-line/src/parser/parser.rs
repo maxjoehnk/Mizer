@@ -6,8 +6,17 @@ type Span = SimpleSpan<usize>;
 pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'src, char, Span>>> {
     let num = text::int(10)
         .from_str()
-        .unwrapped()
-        .map(Token::Number);
+        .unwrapped();
+
+    let num_path = text::int(10).from_str().unwrapped()
+            .then_ignore(just("."))
+            .then(text::int(10).from_str().unwrapped())
+            .map(|(a, b)| vec![a, b]);
+
+    let value = choice((
+        num_path.map(ValueToken::NumericPath),
+        num.map(ValueToken::Number),
+    ));
 
     let operator = choice((
         just("@").to(Operator::At),
@@ -22,16 +31,18 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
     let action = text::ascii::ident().try_map(|ident: &str, span: Span| match ident {
         "highlight" => Ok(Action::Highlight),
         "select" => Ok(Action::Select),
+        "write" => Ok(Action::Write),
         "store" => Ok(Action::Store),
         "delete" => Ok(Action::Delete),
         "off" => Ok(Action::Off),
         "clear" => Ok(Action::Clear),
         "call" => Ok(Action::Call),
         "go" => Ok(Action::GoForward),
-        "go+" => Ok(Action::GoForward),
-        "go-" => Ok(Action::GoBackward),
         _ => Err(Rich::custom(span, "Unknown action")),
-    })
+    });
+    let go_forward = just("go+").to(Action::GoForward);
+    let go_backward = just("go-").to(Action::GoBackward);
+    let action = choice((go_forward, go_backward, action))
         .map(Token::Action);
 
     let keyword = text::ascii::ident().try_map(|ident: &str, span: Span| match ident {
@@ -43,30 +54,18 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
         "groups" => Ok(Keyword::Group),
         "group" => Ok(Keyword::Group),
         _ => Err(Rich::custom(span, "Unknown keyword")),
-    }).padded();
+    }).map(Token::Keyword);
 
-    let id = choice((
-        text::int(10).from_str().unwrapped().map(Id::single),
-        text::int(10).from_str().unwrapped()
-            .then_ignore(just("."))
-            .then(text::int(10).from_str().unwrapped())
-            .map(|(a, b)| Id::new([a, b])),
-    ));
-    
-    let selection = choice((
-        id.padded()
+    let range = value.padded()
             .then_ignore(choice((just("thru"), just(".."))))
-            .then(id.padded())
-            .map(|(start, end)| Selection::Range(start, end)),
-        id.map(Selection::Single),
-    )).padded();
+            .then(value.padded())
+            .map(|(start, end)| Token::Range(start, end));
 
-    let target = keyword.then(selection)
-        .map(|(keyword, selection)| Token::Target((keyword, selection)));
-    
-    let selection = selection.map(Token::Selection);
+    let single = value.map(Token::Value);
 
-    let token = choice((selection, num, operator, action, target));
+    let full = just("full").to(Token::Full);
+
+    let token = choice((range, single, operator, action, keyword, full));
 
     token
         .padded()

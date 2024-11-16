@@ -145,6 +145,8 @@ command_impl! {
     UpdateSequenceStopOnLastCueCommand,
     UpdateSequencePriorityCommand,
     StopSequenceCommand,
+    SequenceGoForwardCommand,
+    SequenceGoBackwardCommand,
     AddEffectCommand,
     AddEffectChannelCommand,
     AddEffectStepCommand,

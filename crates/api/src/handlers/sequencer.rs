@@ -58,13 +58,21 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn sequence_go_forward(&self, sequence: u32) {
-        self.sequencer.sequence_go_forward(sequence);
+        self.runtime
+            .run_command(SequenceGoForwardCommand {
+                sequence_id: sequence,
+            })
+            .unwrap();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn sequence_go_backward(&self, sequence: u32) {
-        self.sequencer.sequence_go_backward(sequence);
+        self.runtime
+            .run_command(SequenceGoBackwardCommand {
+                sequence_id: sequence,
+            })
+            .unwrap();
     }
 
     #[tracing::instrument(skip(self))]

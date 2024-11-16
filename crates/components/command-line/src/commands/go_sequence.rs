@@ -4,13 +4,17 @@ use mizer_command_executor::*;
 
 impl Command for GoForward<Sequences, Single> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
-        todo!()
+        context.execute_command(SequenceGoForwardCommand {
+            sequence_id: self.target_entity.id.first(),
+        })
     }
 }
 
 impl Command for GoBackward<Sequences, Single> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
-        todo!()
+        context.execute_command(SequenceGoBackwardCommand {
+            sequence_id: self.target_entity.id.first(),
+        })
     }
 }
 

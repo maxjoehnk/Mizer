@@ -21,7 +21,7 @@ impl<'a> ResourceReader<'a> {
 
 // TODO: this should probably be bounded.
 #[cached(
-    type = "UnboundCache<String, Option<GoboImage>>",
+    ty = "UnboundCache<String, Option<GoboImage>>",
     create = r#"{ UnboundCache::new() }"#,
     convert = r#"{ filename.to_string() }"#
 )]

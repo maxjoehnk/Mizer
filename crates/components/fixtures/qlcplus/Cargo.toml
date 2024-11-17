@@ -10,7 +10,7 @@ anyhow = "1"
 mizer-fixtures = { path = ".." }
 mizer-util = { path = "../../../util" }
 rayon = "1.10"
-cached = { version = "0.49", default-features = false, features = ["proc_macro"] }
+cached = { version = "0.54", default-features = false, features = ["proc_macro"] }
 quick-xml = { version = "0.37", features = ["serialize"] }
 serde = "1"
 serde_derive = "1"

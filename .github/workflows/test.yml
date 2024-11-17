@@ -121,6 +121,8 @@ jobs:
         run: rm -rf target/debug/deps/libndi* target/debug/build/ndi-*
       - name: Remove linked flutter libs from cache
         run: rm -rf target/debug/lib target/debug/deps/libflutter_linux_gtk.so
+      - name: Remove flutter native assets from cache
+        run: rm -rf target/release/native_assets
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: crates/ui

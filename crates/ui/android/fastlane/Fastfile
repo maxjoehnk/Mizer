@@ -3,7 +3,7 @@ default_platform(:android)
 platform :android do
   lane :build do
     gradle(task: "clean")
-    gradle(task: "bundle", build_type: "Release")
+    gradle(task: "bundle", build_type: "Release", flags: "-Ptarget=lib/mobile/main.dart")
    end
 
   lane :beta do

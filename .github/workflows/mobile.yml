@@ -8,6 +8,7 @@ on:
       - "crates/ui/lib/mobile/**"
       - "crates/ui/pubspec.yaml"
       - "crates/ui/pubspec.lock"
+  workflow_dispatch:
 
 name: Mobile App
 

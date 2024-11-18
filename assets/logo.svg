@@ -3,15 +3,15 @@
 
 <svg
    sodipodi:docname="logo.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04, custom)"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
    id="svg5"
    version="1.1"
    viewBox="0 0 512 512"
    height="512"
    width="512"
-   inkscape:export-filename="/home/max/Code/0_mizer/node-based-mizer/assets/logo@512.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
+   inkscape:export-filename="logo@64.png"
+   inkscape:export-xdpi="12"
+   inkscape:export-ydpi="12"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -27,18 +27,25 @@
      inkscape:pagecheckerboard="true"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="2"
-     inkscape:cx="245.25"
-     inkscape:cy="433.25"
-     inkscape:window-width="1914"
-     inkscape:window-height="1039"
-     inkscape:window-x="1280"
-     inkscape:window-y="16"
+     inkscape:zoom="1.34375"
+     inkscape:cx="256"
+     inkscape:cy="256"
+     inkscape:window-width="1752"
+     inkscape:window-height="1097"
+     inkscape:window-x="52"
+     inkscape:window-y="44"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer1"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
-       id="grid1307" />
+       id="grid1307"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
   </sodipodi:namedview>
   <defs
      id="defs2">
@@ -58,7 +65,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,8.4397209,0,1" />
     <inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect4469"
@@ -75,7 +83,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1" />
     <inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect4465"
@@ -92,7 +101,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1" />
     <inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect3167"
@@ -109,7 +119,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1" />
     <inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect3163"
@@ -126,7 +137,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1" />
     <inkscape:path-effect
        effect="offset"
        id="path-effect2322"
@@ -154,7 +166,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1" />
     <inkscape:path-effect
        effect="fillet_chamfer"
        id="path-effect1845"
@@ -171,7 +184,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,4,0,1 @ F,0,0,1,0,4,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1" />
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Drop Shadow"
@@ -224,7 +238,8 @@
        apply_no_radius="true"
        apply_with_radius="true"
        only_selected="false"
-       hide_knots="false" />
+       hide_knots="false"
+       nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,4,0,1" />
     <filter
        inkscape:collect="always"
        style="color-interpolation-filters:sRGB"
@@ -296,13 +311,13 @@
      id="layer1"
      style="display:inline">
     <rect
-       style="fill:#303030;fill-opacity:1;stroke-width:1.00157"
+       style="fill:#303030;fill-opacity:1;stroke-width:1.03388"
        id="rect31"
-       width="496"
-       height="496"
-       x="8"
-       y="8"
-       ry="62" />
+       width="512"
+       height="512"
+       x="0"
+       y="0"
+       ry="64" />
   </g>
   <g
      inkscape:groupmode="layer"

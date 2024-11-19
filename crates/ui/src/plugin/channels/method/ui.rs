@@ -8,50 +8,11 @@ use nativeshell::shell::{
 use mizer_api::handlers::UiHandler;
 use mizer_api::RuntimeApi;
 
-use crate::plugin::channels::MethodReplyExt;
+use crate::plugin::channels::{MessageExt, MethodReplyExt};
 
 #[derive(Clone)]
 pub struct UiChannel<R> {
     handler: UiHandler<R>,
-}
-
-impl<R: RuntimeApi + 'static> MethodCallHandler for UiChannel<R> {
-    fn on_method_call(
-        &mut self,
-        call: MethodCall<Value>,
-        resp: MethodCallReply<Value>,
-        engine_handle: EngineHandle,
-    ) {
-        match call.method.as_str() {
-            "showTable" => match call.args {
-                Value::String(name) => {
-                    let tabular_data = self.handler.show_table(&name, &[]);
-
-                    resp.respond_result(tabular_data);
-                }
-                Value::List(args) => match &args[..] {
-                    [Value::String(name), Value::List(args)] => {
-                        let args = args
-                            .into_iter()
-                            .filter_map(|v| {
-                                if let Value::String(s) = v {
-                                    Some(s)
-                                } else {
-                                    None
-                                }
-                            })
-                            .collect::<Vec<_>>();
-                        let tabular_data = self.handler.show_table(name, &args);
-
-                        resp.respond_result(tabular_data);
-                    }
-                    _ => unreachable!("Invalid showTable call"),
-                },
-                _ => resp.respond_error(anyhow::anyhow!("Invalid arguments")),
-            },
-            _ => resp.not_implemented(),
-        }
-    }
 }
 
 #[async_trait(?Send)]
@@ -79,6 +40,39 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
                     "Invalid arguments",
                 )),
             },
+            "showTable" => match call.args {
+                Value::String(name) => {
+                    let tabular_data = self.handler.show_table(&name, &[]);
+
+                    tabular_data
+                        .map(|r| r.into_value())
+                        .map_err(|e| MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}")))
+                }
+                Value::List(args) => match &args[..] {
+                    [Value::String(name), Value::List(args)] => {
+                        let args = args
+                            .into_iter()
+                            .filter_map(|v| {
+                                if let Value::String(s) = v {
+                                    Some(s)
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect::<Vec<_>>();
+                        let tabular_data = self.handler.show_table(name, &args);
+
+                        tabular_data
+                            .map(|r| r.into_value())
+                            .map_err(|e| MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}")))
+                    }
+                    _ => unreachable!("Invalid showTable call"),
+                },
+                _ => Err(MethodCallError::from_code_message(
+                    "invalid-arguments",
+                    "Invalid arguments",
+                )),
+            },
             _ => Err(MethodCallError::from_code_message(
                 "not-implemented",
                 "Not implemented",
@@ -90,10 +84,6 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
 impl<R: RuntimeApi + 'static> UiChannel<R> {
     pub fn new(handler: UiHandler<R>) -> Self {
         Self { handler }
-    }
-
-    pub fn channel(self, context: Context) -> MethodChannel {
-        MethodChannel::new(context, "mizer.live/ui", self)
     }
 
     pub fn async_channel(self, context: Context) -> RegisteredAsyncMethodCallHandler<UiChannel<R>> {

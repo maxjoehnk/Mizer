@@ -65,3 +65,15 @@ impl MethodReplyExt for MethodCallReply<Value> {
         todo!()
     }
 }
+
+trait MessageExt {
+    fn into_value(self) -> Value;
+}
+
+impl<T: mizer_api::Message> MessageExt for T {
+    fn into_value(self) -> Value {
+        let msg = self.encode_to_vec();
+        
+        Value::U8List(msg)
+    }
+}

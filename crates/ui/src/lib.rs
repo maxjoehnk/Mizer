@@ -101,7 +101,6 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _ui_dialog_events =
         UiDialogChannel::new(handlers.ui.clone(), async_runtime, context.weak())
             .event_channel(context.weak());
-    let _ui = UiChannel::new(handlers.ui.clone()).channel(context.weak());
     let _ui = UiChannel::new(handlers.ui).async_channel(context.weak());
 
     context

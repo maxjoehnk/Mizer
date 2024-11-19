@@ -10,6 +10,12 @@ impl Command for Off<Sequences, Single> {
     }
 }
 
+impl Command for Off<Sequences, All> {
+    async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
+        todo!()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

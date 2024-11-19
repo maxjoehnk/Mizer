@@ -66,8 +66,9 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
     let single = value.map(Token::Value);
 
     let full = just("full").to(Token::Full);
+    let all = just("all").to(Token::All);
 
-    let token = choice((range, single, operator, action, keyword, full));
+    let token = choice((range, single, operator, action, keyword, full, all));
 
     token.padded().repeated().collect().map(Tokens)
 }

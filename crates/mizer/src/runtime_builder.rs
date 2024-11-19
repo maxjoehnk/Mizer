@@ -109,8 +109,6 @@ pub fn build_runtime(
 
     let remote_api_port = start_remote_api(handlers.clone())?;
 
-    Session::new(remote_api_port)?;
-
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
         flags,
@@ -121,6 +119,8 @@ pub fn build_runtime(
         project_history: ProjectHistory,
         status_bus,
     };
+
+    Session::new(remote_api_port, mizer.session_events.clone())?;
 
     if let Some(fixture_library) = mizer.runtime.injector().get::<FixtureLibrary>() {
         fixture_library.wait_for_load();

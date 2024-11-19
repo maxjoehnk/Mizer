@@ -6385,6 +6385,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "hostname",
+ "mizer-message-bus",
  "serde",
  "tracing",
  "zeroconf",

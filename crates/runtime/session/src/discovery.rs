@@ -7,30 +7,45 @@ use zeroconf::prelude::*;
 use zeroconf::{
     MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord,
 };
+use mizer_message_bus::MessageBus;
+use crate::{Session, SessionState};
 
 const POLL_TIMEOUT: u64 = 1;
 
-pub(crate) fn announce_device(port: u16) {
+pub(crate) fn announce_device(port: u16, bus: MessageBus<SessionState>) {
     let service_type = build_service_type().unwrap();
     thread::Builder::new()
         .name("Session MDNS Broadcast".into())
         .spawn(move || {
             tracing::info!("Announcing api on mdns");
-            let mut service = MdnsService::new(service_type, port);
-            let mut txt_record = TxtRecord::new();
-            txt_record.insert("project", "video.yml").unwrap();
-            service.set_name("Mizer");
-            service.set_txt_record(txt_record);
-            service.set_registered_callback(Box::new(on_service_registered));
-            let event_loop = service.register().unwrap();
             loop {
-                event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
-                #[cfg(target_os = "linux")]
-                // poll doesn't sleep in avahi implementation
-                thread::sleep(Duration::from_secs(POLL_TIMEOUT));
+                announce_service(service_type.clone(), port, &bus).unwrap();
             }
         })
         .unwrap();
+}
+
+fn announce_service(service_type: ServiceType, port: u16, bus: &MessageBus<SessionState>) -> anyhow::Result<()> {
+    let subscriber = bus.subscribe();
+    let mut service = MdnsService::new(service_type, port);
+    let mut txt_record = TxtRecord::new();
+    if let Some(path) = subscriber.read_last().and_then(|s| s.project_path) {
+        txt_record.insert("project", &path)?;
+    }
+    service.set_name("Mizer");
+    service.set_txt_record(txt_record);
+    service.set_registered_callback(Box::new(on_service_registered));
+    let event_loop = service.register()?;
+    loop {
+        if subscriber.read_last().is_some() {
+            break Ok(());
+        }
+
+        event_loop.poll(Duration::from_secs(POLL_TIMEOUT))?;
+        // poll doesn't sleep in avahi implementation
+        #[cfg(target_os = "linux")]
+        thread::sleep(Duration::from_secs(POLL_TIMEOUT));
+    }
 }
 
 pub fn discover_sessions() -> anyhow::Result<()> {

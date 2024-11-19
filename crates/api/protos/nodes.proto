@@ -11,6 +11,21 @@ message AddNodeRequest {
   optional string template = 4;
 }
 
+message AddCommentRequest {
+  NodePosition position = 1;
+  double width = 2;
+  double height = 3;
+  optional string parent = 4;
+}
+
+message UpdateCommentRequest {
+  string id = 1;
+  optional NodeColor color = 2;
+  optional string label = 3;
+  optional bool show_background = 4;
+  optional bool show_border = 5;
+}
+
 message DuplicateNodesRequest {
   repeated string paths = 1;
   optional string parent = 2;
@@ -360,11 +375,12 @@ message Port {
 }
 
 message NodeCommentArea {
-  double width = 1;
-  double height = 2;
-  NodeDesigner designer = 3;
-  optional string label = 4;
-  bool show_background = 5;
-  bool show_border = 6;
-  optional string parent = 7;
+  string id = 1;
+  double width = 2;
+  double height = 3;
+  NodeDesigner designer = 4;
+  optional string label = 5;
+  bool show_background = 6;
+  bool show_border = 7;
+  optional string parent = 8;
 }

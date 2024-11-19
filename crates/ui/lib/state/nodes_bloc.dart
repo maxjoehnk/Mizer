@@ -175,6 +175,20 @@ class ShowNode extends NodesEvent {
   }
 }
 
+class AddComment extends NodesEvent {
+  final Offset position;
+  final Size size;
+  final String? parent;
+
+  AddComment(this.position, this.size, { this.parent });
+}
+
+class DeleteComment extends NodesEvent {
+  final NodeCommentArea comment;
+
+  DeleteComment(this.comment);
+}
+
 class NodesBloc extends Bloc<NodesEvent, PipelineState> {
   final NodesApi api;
 
@@ -256,6 +270,20 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
     });
     on<GroupNodes>((event, emit) async {
       await api.groupNodes(event.nodes, parent: event.parent);
+      emit(await _fetchNodes());
+    });
+    on<AddComment>((event, emit) async {
+      var request = AddCommentRequest(
+        position: NodePosition(x: event.position.dx, y: event.position.dy),
+        width: event.size.width,
+        height: event.size.height,
+        parent: event.parent,
+      );
+      await api.addComment(request);
+      emit(await _fetchNodes());
+    });
+    on<DeleteComment>((event, emit) async {
+      await api.deleteComment(event.comment.id);
       emit(await _fetchNodes());
     });
     this.add(FetchNodes());

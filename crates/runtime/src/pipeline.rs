@@ -4,7 +4,7 @@ use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{NodeCommentArea, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
+use mizer_node::{NodeCommentArea, NodeCommentId, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
@@ -21,7 +21,7 @@ use std::sync::Arc;
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
     links: Vec<NodeLink>,
-    comments: Vec<NodeCommentArea>,
+    comments: IndexMap<NodeCommentId, NodeCommentArea>,
     worker: PipelineWorker,
 }
 
@@ -38,7 +38,7 @@ impl Pipeline {
         Self {
             nodes: IndexMap::new(),
             links: Vec::new(),
-            comments: Vec::new(),
+            comments: Default::default(),
             worker: PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default()))),
         }
     }
@@ -189,7 +189,19 @@ impl Pipeline {
     }
     
     pub(crate) fn list_comments(&self) -> impl Iterator<Item = &NodeCommentArea> {
-        self.comments.iter()
+        self.comments.values()
+    }
+    
+    pub(crate) fn add_comment(&mut self, comment: NodeCommentArea) {
+        self.comments.insert(comment.id, comment);
+    }
+    
+    pub(crate) fn delete_comment(&mut self, id: &NodeCommentId) -> Option<NodeCommentArea> {
+        self.comments.shift_remove(id)
+    }
+    
+    pub(crate) fn get_comment_mut(&mut self, id: &NodeCommentId) -> Option<&mut NodeCommentArea> {
+        self.comments.get_mut(id)
     }
 
     pub(crate) fn delete_link(&mut self, link: &NodeLink) {
@@ -715,7 +727,7 @@ impl Pipeline {
                 local: true,
             })?;
         }
-        self.comments = project.comments.clone();
+        self.comments = project.comments.iter().cloned().map(|comment| (comment.id, comment)).collect();
 
         Ok(())
     }
@@ -742,7 +754,7 @@ impl Pipeline {
                 }
             })
             .collect();
-        project.comments = self.comments.clone();
+        project.comments = self.comments.values().cloned().collect();
     }
 
     pub fn clear(&mut self) {

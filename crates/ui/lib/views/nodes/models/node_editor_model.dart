@@ -19,6 +19,8 @@ class NodeEditorModel extends ChangeNotifier {
   List<NodeModel> connectedToSelectedNodes = [];
   NewConnectionModel? connecting;
 
+  NodeCommentArea? selectedComment;
+
   NodeModel? parent;
   List<NodeModel>? currentNodes;
   List<String> path = [];
@@ -70,6 +72,7 @@ class NodeEditorModel extends ChangeNotifier {
     }).toList();
     this.rootNodes.sortBy((element) => element.node.path);
     this._channels = nodes.channels;
+    this._comments = nodes.comments;
     var parent =
         this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
     if (parent != null) {
@@ -156,6 +159,7 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   selectNode(NodeModel nodeModel) {
+    this.selectedComment = null;
     this.selectedNode = nodeModel;
     this.otherSelectedNodes.clear();
     this.connectedToSelectedNodes = this
@@ -174,12 +178,19 @@ class NodeEditorModel extends ChangeNotifier {
   
   selectNodes(List<NodeModel> nodes) {
     this.selectedNode = null;
+    this.selectedComment = null;
     this.otherSelectedNodes = nodes;
     this.update();
   }
 
   selectAdditionalNode(NodeModel node) {
     this.otherSelectedNodes.add(node);
+    this.update();
+  }
+
+  selectComment(NodeCommentArea comment) {
+    this.selectedNode = null;
+    this.selectedComment = comment;
     this.update();
   }
 

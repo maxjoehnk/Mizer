@@ -44,9 +44,9 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
                 Value::String(name) => {
                     let tabular_data = self.handler.show_table(&name, &[]);
 
-                    tabular_data
-                        .map(|r| r.into_value())
-                        .map_err(|e| MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}")))
+                    tabular_data.map(|r| r.into_value()).map_err(|e| {
+                        MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}"))
+                    })
                 }
                 Value::List(args) => match &args[..] {
                     [Value::String(name), Value::List(args)] => {
@@ -62,9 +62,9 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
                             .collect::<Vec<_>>();
                         let tabular_data = self.handler.show_table(name, &args);
 
-                        tabular_data
-                            .map(|r| r.into_value())
-                            .map_err(|e| MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}")))
+                        tabular_data.map(|r| r.into_value()).map_err(|e| {
+                            MethodCallError::from_code_message(&format!("{e:?}"), &format!("{e}"))
+                        })
                     }
                     _ => unreachable!("Invalid showTable call"),
                 },

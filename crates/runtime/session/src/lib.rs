@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mizer_message_bus::MessageBus;
+use serde::{Deserialize, Serialize};
 
 #[cfg(unix)]
 mod discovery;
@@ -19,7 +19,7 @@ impl Session {
     pub fn new(port: u16, bus: MessageBus<SessionState>) -> anyhow::Result<Self> {
         #[cfg(unix)]
         discovery::announce_device(port, bus);
-        
+
         Ok(Session {
             clients: vec![SessionClient::get_self()?],
         })

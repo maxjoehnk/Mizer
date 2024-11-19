@@ -3,12 +3,12 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
+use crate::{Session, SessionState};
+use mizer_message_bus::MessageBus;
 use zeroconf::prelude::*;
 use zeroconf::{
     MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord,
 };
-use mizer_message_bus::MessageBus;
-use crate::{Session, SessionState};
 
 const POLL_TIMEOUT: u64 = 1;
 
@@ -25,7 +25,11 @@ pub(crate) fn announce_device(port: u16, bus: MessageBus<SessionState>) {
         .unwrap();
 }
 
-fn announce_service(service_type: ServiceType, port: u16, bus: &MessageBus<SessionState>) -> anyhow::Result<()> {
+fn announce_service(
+    service_type: ServiceType,
+    port: u16,
+    bus: &MessageBus<SessionState>,
+) -> anyhow::Result<()> {
     let subscriber = bus.subscribe();
     let mut service = MdnsService::new(service_type, port);
     let mut txt_record = TxtRecord::new();

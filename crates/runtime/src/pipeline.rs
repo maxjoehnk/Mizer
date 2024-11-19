@@ -4,10 +4,7 @@ use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
 use mizer_debug_ui_impl::{Injector, NodeStateAccess};
-use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
-    PortDirection, PortMetadata, ProcessingNode,
-};
+use mizer_node::{NodeCommentArea, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode};
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
@@ -24,6 +21,7 @@ use std::sync::Arc;
 pub struct Pipeline {
     nodes: IndexMap<NodePath, NodeState>,
     links: Vec<NodeLink>,
+    comments: Vec<NodeCommentArea>,
     worker: PipelineWorker,
 }
 
@@ -40,6 +38,7 @@ impl Pipeline {
         Self {
             nodes: IndexMap::new(),
             links: Vec::new(),
+            comments: Vec::new(),
             worker: PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default()))),
         }
     }
@@ -187,6 +186,10 @@ impl Pipeline {
 
     pub(crate) fn list_links(&self) -> impl Iterator<Item = &NodeLink> {
         self.links.iter()
+    }
+    
+    pub(crate) fn list_comments(&self) -> impl Iterator<Item = &NodeCommentArea> {
+        self.comments.iter()
     }
 
     pub(crate) fn delete_link(&mut self, link: &NodeLink) {
@@ -712,6 +715,8 @@ impl Pipeline {
                 local: true,
             })?;
         }
+        self.comments = project.comments.clone();
+
         Ok(())
     }
 
@@ -737,11 +742,13 @@ impl Pipeline {
                 }
             })
             .collect();
+        project.comments = self.comments.clone();
     }
 
     pub fn clear(&mut self) {
         self.nodes.clear();
         self.links.clear();
+        self.comments.clear();
         self.worker = PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default())));
     }
 }

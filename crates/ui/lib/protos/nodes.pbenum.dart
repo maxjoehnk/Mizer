@@ -1,29 +1,33 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class NodeCategory extends $pb.ProtobufEnum {
-  static const NodeCategory NODE_CATEGORY_NONE = NodeCategory._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_NONE');
-  static const NodeCategory NODE_CATEGORY_STANDARD = NodeCategory._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_STANDARD');
-  static const NodeCategory NODE_CATEGORY_CONNECTIONS = NodeCategory._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONNECTIONS');
-  static const NodeCategory NODE_CATEGORY_CONVERSIONS = NodeCategory._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONVERSIONS');
-  static const NodeCategory NODE_CATEGORY_CONTROLS = NodeCategory._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_CONTROLS');
-  static const NodeCategory NODE_CATEGORY_DATA = NodeCategory._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_DATA');
-  static const NodeCategory NODE_CATEGORY_COLOR = NodeCategory._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_COLOR');
-  static const NodeCategory NODE_CATEGORY_AUDIO = NodeCategory._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_AUDIO');
-  static const NodeCategory NODE_CATEGORY_VIDEO = NodeCategory._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_VIDEO');
-  static const NodeCategory NODE_CATEGORY_LASER = NodeCategory._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_LASER');
-  static const NodeCategory NODE_CATEGORY_PIXEL = NodeCategory._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_PIXEL');
-  static const NodeCategory NODE_CATEGORY_VECTOR = NodeCategory._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_VECTOR');
-  static const NodeCategory NODE_CATEGORY_FIXTURES = NodeCategory._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_FIXTURES');
-  static const NodeCategory NODE_CATEGORY_UI = NodeCategory._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_CATEGORY_UI');
+  static const NodeCategory NODE_CATEGORY_NONE = NodeCategory._(0, _omitEnumNames ? '' : 'NODE_CATEGORY_NONE');
+  static const NodeCategory NODE_CATEGORY_STANDARD = NodeCategory._(1, _omitEnumNames ? '' : 'NODE_CATEGORY_STANDARD');
+  static const NodeCategory NODE_CATEGORY_CONNECTIONS = NodeCategory._(2, _omitEnumNames ? '' : 'NODE_CATEGORY_CONNECTIONS');
+  static const NodeCategory NODE_CATEGORY_CONVERSIONS = NodeCategory._(3, _omitEnumNames ? '' : 'NODE_CATEGORY_CONVERSIONS');
+  static const NodeCategory NODE_CATEGORY_CONTROLS = NodeCategory._(4, _omitEnumNames ? '' : 'NODE_CATEGORY_CONTROLS');
+  static const NodeCategory NODE_CATEGORY_DATA = NodeCategory._(5, _omitEnumNames ? '' : 'NODE_CATEGORY_DATA');
+  static const NodeCategory NODE_CATEGORY_COLOR = NodeCategory._(6, _omitEnumNames ? '' : 'NODE_CATEGORY_COLOR');
+  static const NodeCategory NODE_CATEGORY_AUDIO = NodeCategory._(7, _omitEnumNames ? '' : 'NODE_CATEGORY_AUDIO');
+  static const NodeCategory NODE_CATEGORY_VIDEO = NodeCategory._(8, _omitEnumNames ? '' : 'NODE_CATEGORY_VIDEO');
+  static const NodeCategory NODE_CATEGORY_LASER = NodeCategory._(9, _omitEnumNames ? '' : 'NODE_CATEGORY_LASER');
+  static const NodeCategory NODE_CATEGORY_PIXEL = NodeCategory._(10, _omitEnumNames ? '' : 'NODE_CATEGORY_PIXEL');
+  static const NodeCategory NODE_CATEGORY_VECTOR = NodeCategory._(11, _omitEnumNames ? '' : 'NODE_CATEGORY_VECTOR');
+  static const NodeCategory NODE_CATEGORY_FIXTURES = NodeCategory._(12, _omitEnumNames ? '' : 'NODE_CATEGORY_FIXTURES');
+  static const NodeCategory NODE_CATEGORY_UI = NodeCategory._(13, _omitEnumNames ? '' : 'NODE_CATEGORY_UI');
 
   static const $core.List<NodeCategory> values = <NodeCategory> [
     NODE_CATEGORY_NONE,
@@ -49,26 +53,26 @@ class NodeCategory extends $pb.ProtobufEnum {
 }
 
 class NodeColor extends $pb.ProtobufEnum {
-  static const NodeColor NODE_COLOR_NONE = NodeColor._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_NONE');
-  static const NodeColor NODE_COLOR_GREY = NodeColor._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_GREY');
-  static const NodeColor NODE_COLOR_RED = NodeColor._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_RED');
-  static const NodeColor NODE_COLOR_DEEP_ORANGE = NodeColor._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_DEEP_ORANGE');
-  static const NodeColor NODE_COLOR_ORANGE = NodeColor._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_ORANGE');
-  static const NodeColor NODE_COLOR_AMBER = NodeColor._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_AMBER');
-  static const NodeColor NODE_COLOR_YELLOW = NodeColor._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_YELLOW');
-  static const NodeColor NODE_COLOR_LIME = NodeColor._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_LIME');
-  static const NodeColor NODE_COLOR_LIGHT_GREEN = NodeColor._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_LIGHT_GREEN');
-  static const NodeColor NODE_COLOR_GREEN = NodeColor._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_GREEN');
-  static const NodeColor NODE_COLOR_TEAL = NodeColor._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_TEAL');
-  static const NodeColor NODE_COLOR_CYAN = NodeColor._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_CYAN');
-  static const NodeColor NODE_COLOR_LIGHT_BLUE = NodeColor._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_LIGHT_BLUE');
-  static const NodeColor NODE_COLOR_BLUE = NodeColor._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_BLUE');
-  static const NodeColor NODE_COLOR_INDIGO = NodeColor._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_INDIGO');
-  static const NodeColor NODE_COLOR_PURPLE = NodeColor._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_PURPLE');
-  static const NodeColor NODE_COLOR_DEEP_PURPLE = NodeColor._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_DEEP_PURPLE');
-  static const NodeColor NODE_COLOR_PINK = NodeColor._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_PINK');
-  static const NodeColor NODE_COLOR_BLUE_GREY = NodeColor._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_BLUE_GREY');
-  static const NodeColor NODE_COLOR_BROWN = NodeColor._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NODE_COLOR_BROWN');
+  static const NodeColor NODE_COLOR_NONE = NodeColor._(0, _omitEnumNames ? '' : 'NODE_COLOR_NONE');
+  static const NodeColor NODE_COLOR_GREY = NodeColor._(1, _omitEnumNames ? '' : 'NODE_COLOR_GREY');
+  static const NodeColor NODE_COLOR_RED = NodeColor._(2, _omitEnumNames ? '' : 'NODE_COLOR_RED');
+  static const NodeColor NODE_COLOR_DEEP_ORANGE = NodeColor._(3, _omitEnumNames ? '' : 'NODE_COLOR_DEEP_ORANGE');
+  static const NodeColor NODE_COLOR_ORANGE = NodeColor._(4, _omitEnumNames ? '' : 'NODE_COLOR_ORANGE');
+  static const NodeColor NODE_COLOR_AMBER = NodeColor._(5, _omitEnumNames ? '' : 'NODE_COLOR_AMBER');
+  static const NodeColor NODE_COLOR_YELLOW = NodeColor._(6, _omitEnumNames ? '' : 'NODE_COLOR_YELLOW');
+  static const NodeColor NODE_COLOR_LIME = NodeColor._(7, _omitEnumNames ? '' : 'NODE_COLOR_LIME');
+  static const NodeColor NODE_COLOR_LIGHT_GREEN = NodeColor._(8, _omitEnumNames ? '' : 'NODE_COLOR_LIGHT_GREEN');
+  static const NodeColor NODE_COLOR_GREEN = NodeColor._(9, _omitEnumNames ? '' : 'NODE_COLOR_GREEN');
+  static const NodeColor NODE_COLOR_TEAL = NodeColor._(10, _omitEnumNames ? '' : 'NODE_COLOR_TEAL');
+  static const NodeColor NODE_COLOR_CYAN = NodeColor._(11, _omitEnumNames ? '' : 'NODE_COLOR_CYAN');
+  static const NodeColor NODE_COLOR_LIGHT_BLUE = NodeColor._(12, _omitEnumNames ? '' : 'NODE_COLOR_LIGHT_BLUE');
+  static const NodeColor NODE_COLOR_BLUE = NodeColor._(13, _omitEnumNames ? '' : 'NODE_COLOR_BLUE');
+  static const NodeColor NODE_COLOR_INDIGO = NodeColor._(14, _omitEnumNames ? '' : 'NODE_COLOR_INDIGO');
+  static const NodeColor NODE_COLOR_PURPLE = NodeColor._(15, _omitEnumNames ? '' : 'NODE_COLOR_PURPLE');
+  static const NodeColor NODE_COLOR_DEEP_PURPLE = NodeColor._(16, _omitEnumNames ? '' : 'NODE_COLOR_DEEP_PURPLE');
+  static const NodeColor NODE_COLOR_PINK = NodeColor._(17, _omitEnumNames ? '' : 'NODE_COLOR_PINK');
+  static const NodeColor NODE_COLOR_BLUE_GREY = NodeColor._(18, _omitEnumNames ? '' : 'NODE_COLOR_BLUE_GREY');
+  static const NodeColor NODE_COLOR_BROWN = NodeColor._(19, _omitEnumNames ? '' : 'NODE_COLOR_BROWN');
 
   static const $core.List<NodeColor> values = <NodeColor> [
     NODE_COLOR_NONE,
@@ -100,17 +104,17 @@ class NodeColor extends $pb.ProtobufEnum {
 }
 
 class ChannelProtocol extends $pb.ProtobufEnum {
-  static const ChannelProtocol SINGLE = ChannelProtocol._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SINGLE');
-  static const ChannelProtocol MULTI = ChannelProtocol._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTI');
-  static const ChannelProtocol TEXTURE = ChannelProtocol._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXTURE');
-  static const ChannelProtocol VECTOR = ChannelProtocol._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VECTOR');
-  static const ChannelProtocol LASER = ChannelProtocol._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LASER');
-  static const ChannelProtocol POLY = ChannelProtocol._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POLY');
-  static const ChannelProtocol DATA = ChannelProtocol._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
-  static const ChannelProtocol MATERIAL = ChannelProtocol._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MATERIAL');
-  static const ChannelProtocol COLOR = ChannelProtocol._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
-  static const ChannelProtocol CLOCK = ChannelProtocol._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLOCK');
-  static const ChannelProtocol TEXT = ChannelProtocol._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXT');
+  static const ChannelProtocol SINGLE = ChannelProtocol._(0, _omitEnumNames ? '' : 'SINGLE');
+  static const ChannelProtocol MULTI = ChannelProtocol._(1, _omitEnumNames ? '' : 'MULTI');
+  static const ChannelProtocol TEXTURE = ChannelProtocol._(2, _omitEnumNames ? '' : 'TEXTURE');
+  static const ChannelProtocol VECTOR = ChannelProtocol._(3, _omitEnumNames ? '' : 'VECTOR');
+  static const ChannelProtocol LASER = ChannelProtocol._(4, _omitEnumNames ? '' : 'LASER');
+  static const ChannelProtocol POLY = ChannelProtocol._(5, _omitEnumNames ? '' : 'POLY');
+  static const ChannelProtocol DATA = ChannelProtocol._(6, _omitEnumNames ? '' : 'DATA');
+  static const ChannelProtocol MATERIAL = ChannelProtocol._(7, _omitEnumNames ? '' : 'MATERIAL');
+  static const ChannelProtocol COLOR = ChannelProtocol._(9, _omitEnumNames ? '' : 'COLOR');
+  static const ChannelProtocol CLOCK = ChannelProtocol._(10, _omitEnumNames ? '' : 'CLOCK');
+  static const ChannelProtocol TEXT = ChannelProtocol._(11, _omitEnumNames ? '' : 'TEXT');
 
   static const $core.List<ChannelProtocol> values = <ChannelProtocol> [
     SINGLE,
@@ -133,14 +137,14 @@ class ChannelProtocol extends $pb.ProtobufEnum {
 }
 
 class Node_NodePreviewType extends $pb.ProtobufEnum {
-  static const Node_NodePreviewType NONE = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NONE');
-  static const Node_NodePreviewType HISTORY = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HISTORY');
-  static const Node_NodePreviewType WAVEFORM = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WAVEFORM');
-  static const Node_NodePreviewType MULTIPLE = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MULTIPLE');
-  static const Node_NodePreviewType TEXTURE = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TEXTURE');
-  static const Node_NodePreviewType TIMECODE = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
-  static const Node_NodePreviewType DATA = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
-  static const Node_NodePreviewType COLOR = Node_NodePreviewType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
+  static const Node_NodePreviewType NONE = Node_NodePreviewType._(0, _omitEnumNames ? '' : 'NONE');
+  static const Node_NodePreviewType HISTORY = Node_NodePreviewType._(1, _omitEnumNames ? '' : 'HISTORY');
+  static const Node_NodePreviewType WAVEFORM = Node_NodePreviewType._(2, _omitEnumNames ? '' : 'WAVEFORM');
+  static const Node_NodePreviewType MULTIPLE = Node_NodePreviewType._(3, _omitEnumNames ? '' : 'MULTIPLE');
+  static const Node_NodePreviewType TEXTURE = Node_NodePreviewType._(4, _omitEnumNames ? '' : 'TEXTURE');
+  static const Node_NodePreviewType TIMECODE = Node_NodePreviewType._(5, _omitEnumNames ? '' : 'TIMECODE');
+  static const Node_NodePreviewType DATA = Node_NodePreviewType._(6, _omitEnumNames ? '' : 'DATA');
+  static const Node_NodePreviewType COLOR = Node_NodePreviewType._(7, _omitEnumNames ? '' : 'COLOR');
 
   static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
     NONE,
@@ -160,8 +164,8 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
 }
 
 class MidiNodeConfig_NoteBinding_MidiType extends $pb.ProtobufEnum {
-  static const MidiNodeConfig_NoteBinding_MidiType CC = MidiNodeConfig_NoteBinding_MidiType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
-  static const MidiNodeConfig_NoteBinding_MidiType NOTE = MidiNodeConfig_NoteBinding_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOTE');
+  static const MidiNodeConfig_NoteBinding_MidiType CC = MidiNodeConfig_NoteBinding_MidiType._(0, _omitEnumNames ? '' : 'CC');
+  static const MidiNodeConfig_NoteBinding_MidiType NOTE = MidiNodeConfig_NoteBinding_MidiType._(1, _omitEnumNames ? '' : 'NOTE');
 
   static const $core.List<MidiNodeConfig_NoteBinding_MidiType> values = <MidiNodeConfig_NoteBinding_MidiType> [
     CC,
@@ -174,3 +178,5 @@ class MidiNodeConfig_NoteBinding_MidiType extends $pb.ProtobufEnum {
   const MidiNodeConfig_NoteBinding_MidiType._($core.int v, $core.String n) : super(v, n);
 }
 
+
+const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

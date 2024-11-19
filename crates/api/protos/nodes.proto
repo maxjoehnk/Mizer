@@ -75,6 +75,7 @@ message Nodes {
   repeated NodeConnection channels = 2;
   // Flat list of all nodes
   repeated Node all_nodes = 3;
+  repeated NodeCommentArea comments = 4;
 }
 
 message AvailableNodes {
@@ -356,4 +357,14 @@ message Port {
   string name = 1;
   ChannelProtocol protocol = 2;
   bool multiple = 3;
+}
+
+message NodeCommentArea {
+  double width = 1;
+  double height = 2;
+  NodeDesigner designer = 3;
+  optional string label = 4;
+  bool show_background = 5;
+  bool show_border = 6;
+  optional string parent = 7;
 }

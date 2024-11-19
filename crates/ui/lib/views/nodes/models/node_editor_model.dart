@@ -10,6 +10,7 @@ import 'node_model.dart';
 class NodeEditorModel extends ChangeNotifier {
   List<NodeModel> rootNodes = [];
   List<NodeConnection> _channels = [];
+  List<NodeCommentArea> _comments = [];
   final GlobalKey painterKey = GlobalKey(debugLabel: "GraphPaintLayer");
 
   late TransformationController transformationController;
@@ -36,6 +37,13 @@ class NodeEditorModel extends ChangeNotifier {
       return currentNodes!;
     }
     return rootNodes;
+  }
+  
+  Iterable<NodeCommentArea> get comments {
+    if (parent != null) {
+      return this._comments.where((c) => c.parent == parent!.node.path);
+    }
+    return this._comments.where((c) => !c.hasParent());
   }
 
   List<NodeConnection> get channels {

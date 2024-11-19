@@ -25,6 +25,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let nodes = self.runtime.execute_query(ListNodesQuery).unwrap();
         let links = self.runtime.execute_query(ListLinksQuery).unwrap();
+        let comments = self.runtime.execute_query(ListCommentsQuery).unwrap();
+        res.comments = comments.into_iter().map(Into::into).collect();
 
         for node in nodes.iter() {
             let node: Node = node.clone().into();

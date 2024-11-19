@@ -11,11 +11,12 @@ class PipelineState {
   final List<NodeConnection> channels;
   final List<AvailableNode> availableNodes;
   final List<String> selectedNodes;
+  final List<NodeCommentArea> comments;
 
-  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes, { this.selectedNodes = const [] });
+  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes, this.comments, { this.selectedNodes = const [] });
 
   factory PipelineState.empty() {
-    return PipelineState([], [], [], []);
+    return PipelineState([], [], [], [], []);
   }
 
   List<NodeConnection> getInputs(String targetPath) {
@@ -32,12 +33,14 @@ class PipelineState {
     List<NodeConnection>? channels,
     List<AvailableNode>? availableNodes,
     List<String>? selectedNodes,
+    List<NodeCommentArea>? comments,
   }) {
     return PipelineState(
       nodes ?? this.nodes,
       allNodes ?? this.allNodes,
       channels ?? this.channels,
       availableNodes ?? this.availableNodes,
+      comments ?? this.comments,
       selectedNodes: selectedNodes ?? [],
     );
   }
@@ -266,6 +269,7 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       nodes: nodes.nodes,
       channels: nodes.channels,
       allNodes: nodes.allNodes,
+      comments: nodes.comments,
     );
   }
 

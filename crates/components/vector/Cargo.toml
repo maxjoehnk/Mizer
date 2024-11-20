@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 vello = { version = "0.3", features = ["wgpu"] }
-vello_svg = "0.4"
+vello_svg = "0.5"
 mizer-wgpu = { path = "../../runtime/wgpu" }
 mizer-module = { path = "../../runtime/module"}
 mizer-processing = { path = "../../runtime/processing"}

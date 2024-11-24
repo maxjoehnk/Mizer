@@ -188,7 +188,7 @@ jobs:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
       - name: Install build dependencies
-        run: brew install protobuf ffmpeg pkg-config yasm cbindgen create-dmg
+        run: brew install protobuf ffmpeg yasm cbindgen create-dmg
       - uses: actions/checkout@v4
         with:
           submodules: recursive

@@ -1,5 +1,8 @@
-use anyhow::anyhow;
+use std::borrow::Cow;
 use flume::{bounded, unbounded};
+use ringbuffer::{AllocRingBuffer, RingBuffer};
+use mizer_wgpu::TextureProvider;
+use mizer_wgpu::wgpu::TextureFormat;
 
 #[derive(Debug, Clone, Copy)]
 pub struct VideoMetadata {
@@ -9,6 +12,17 @@ pub struct VideoMetadata {
     pub frames: usize,
 }
 
+impl Default for VideoMetadata {
+    fn default() -> Self {
+        Self {
+            width: 1920,
+            height: 1080,
+            fps: 30.0,
+            frames: 0,
+        }
+    }
+}
+
 pub struct BackgroundDecoderThreadHandle<TDecoder: VideoDecoder> {
     sender:
         flume::Sender<BackgroundDecoderThreadMessage<TDecoder::CreateDecoder, TDecoder::Commands>>,
@@ -16,22 +30,25 @@ pub struct BackgroundDecoderThreadHandle<TDecoder: VideoDecoder> {
 }
 
 impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
-    pub fn decode(&mut self, args: TDecoder::CreateDecoder) -> anyhow::Result<VideoMetadata> {
+    pub fn is_alive(&self) -> bool {
+        !self.sender.is_disconnected()
+    }
+    
+    pub fn decode(&mut self, args: TDecoder::CreateDecoder) -> anyhow::Result<Option<VideoMetadata>> {
+        tracing::trace!("BackgroundDecoderThreadHandle::decode");
         let (message_tx, message_rx) = bounded(5);
         self.sender
-            .send(BackgroundDecoderThreadMessage::DecodeFile(args, message_tx))
-            .unwrap();
+            .send(BackgroundDecoderThreadMessage::DecodeFile(args, message_tx))?;
         self.receiver = message_rx;
 
         let metadata = self
             .receiver
-            .iter()
-            .find_map(|event| match event {
-                VideoThreadEvent::Metadata(metadata) => Some(Ok(metadata)),
-                VideoThreadEvent::DecodeError(err) => Some(Err(err)),
+            .recv_timeout(std::time::Duration::from_millis(5))
+            .ok()
+            .and_then(|event| match event {
+                VideoThreadEvent::Metadata(metadata) => Some(metadata),
                 _ => None,
-            })
-            .ok_or_else(|| anyhow!("No metadata received"))??;
+            });
 
         Ok(metadata)
     }
@@ -42,8 +59,7 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
             .send(BackgroundDecoderThreadMessage::Command(
                 command,
                 Some(message_tx),
-            ))
-            .unwrap();
+            ))?;
         self.receiver = message_rx;
 
         Ok(())
@@ -56,9 +72,9 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
 
 impl<TDecoder: VideoDecoder> Drop for BackgroundDecoderThreadHandle<TDecoder> {
     fn drop(&mut self) {
-        self.sender
-            .send(BackgroundDecoderThreadMessage::Exit)
-            .unwrap();
+        if self.sender.send(BackgroundDecoderThreadMessage::Exit).is_err() {
+            tracing::debug!("Error sending exit message, thread seems to be shut down already");
+        }
     }
 }
 
@@ -133,8 +149,9 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                                             self.sender.send(VideoThreadEvent::Metadata(metadata))
                                         {
                                             tracing::error!(
-                                                "Error sending video metadata: {err:?}"
+                                                "Closing decoder thread. Error sending video metadata: {err:?}"
                                             );
+                                            return;
                                         }
                                     }
                                     Err(err) => {
@@ -148,7 +165,8 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                                 if let Err(err) =
                                     self.sender.send(VideoThreadEvent::DecodeError(err))
                                 {
-                                    tracing::error!("Error sending video decode error: {err:?}");
+                                    tracing::error!("Closing decoder thread. Error sending video decode error: {err:?}");
+                                    return;
                                 }
                                 continue;
                             }
@@ -177,7 +195,8 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                 match decoder.decode() {
                     Ok(Some(frame)) => {
                         if let Err(err) = self.sender.send(VideoThreadEvent::DecodedFrame(frame)) {
-                            tracing::error!("Error sending decoded frame: {err:?}");
+                            tracing::error!("Closing decoder thread. Error sending decoded frame: {err:?}");
+                            return;
                         }
                     }
                     Ok(None) => {}
@@ -185,5 +204,68 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                 }
             }
         }
+    }
+}
+
+pub struct BackgroundDecoderTexture {
+    buffer: AllocRingBuffer<Vec<u8>>,
+    metadata: Option<VideoMetadata>,
+}
+
+impl BackgroundDecoderTexture {
+    pub fn new(metadata: Option<VideoMetadata>) -> Self {
+        tracing::trace!("BackgroundThreadTexture::new");
+        Self {
+            buffer: AllocRingBuffer::new(10),
+            metadata,
+        }
+    }
+
+    pub fn is_ready(&self) -> bool {
+        self.metadata.is_some()
+    }
+
+    pub fn receive_frames<TDecoder: VideoDecoder>(&mut self, handle: &mut BackgroundDecoderThreadHandle<TDecoder>) {
+        profiling::scope!("BackgroundThreadTexture::receive_frames");
+        for event in handle.receiver.drain() {
+            match event {
+                VideoThreadEvent::Metadata(metadata) => {
+                    tracing::debug!("Received video metadata: {metadata:?}");
+                    self.metadata = Some(metadata);
+                }
+                VideoThreadEvent::DecodedFrame(frame) => {
+                    self.buffer.push(frame);
+                }
+                VideoThreadEvent::DecodeError(error) => {
+                    tracing::error!("Error decoding frame: {error}");
+                }
+            }
+        }
+    }
+}
+
+impl TextureProvider for BackgroundDecoderTexture {
+    fn texture_format(&self) -> TextureFormat {
+        TextureFormat::Rgba8UnormSrgb
+    }
+
+    fn width(&self) -> u32 {
+        self.metadata.unwrap_or_default().width
+    }
+
+    fn height(&self) -> u32 {
+        self.metadata.unwrap_or_default().height
+    }
+
+    fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
+        profiling::scope!("BackgroundThreadTexture::data");
+        if self.buffer.is_empty() {
+            return Ok(None);
+        }
+
+        Ok(self
+            .buffer
+            .back()
+            .map(|data| Cow::Borrowed(data.as_slice())))
     }
 }

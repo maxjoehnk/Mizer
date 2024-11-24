@@ -1,14 +1,10 @@
-use std::borrow::Cow;
-
 use anyhow::{anyhow, Context};
-use ringbuffer::{AllocRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
 use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
 use mizer_webcams::{Webcam, WebcamRef, WebcamSetting, WebcamSettingValue};
-use mizer_wgpu::wgpu::TextureFormat;
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
@@ -227,6 +223,9 @@ impl ProcessingNode for WebcamNode {
                 .context("Changing webcam")?;
         }
         state.receive_frames();
+        if !state.texture.is_ready() {
+            return Ok(());
+        }
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
             .get(&state.transfer_texture)
@@ -247,7 +246,7 @@ impl ProcessingNode for WebcamNode {
 
 pub struct WebcamState {
     webcam_ref: WebcamRef,
-    texture: WebcamTexture,
+    texture: BackgroundDecoderTexture,
     pipeline: TextureSourceStage,
     transfer_texture: TextureHandle,
     decode_handle: BackgroundDecoderThreadHandle<WebcamDecoder>,
@@ -261,7 +260,7 @@ impl WebcamState {
     ) -> anyhow::Result<Self> {
         let mut decode_handle = BackgroundDecoderThread::spawn()?;
         let metadata = decode_handle.decode(webcam_ref.clone())?;
-        let mut texture = WebcamTexture::new(metadata);
+        let mut texture = BackgroundDecoderTexture::new(metadata);
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
         let transfer_texture = registry.register(context, texture.width(), texture.height(), None);
@@ -281,56 +280,9 @@ impl WebcamState {
 
     fn change_webcam(&mut self, webcam_ref: WebcamRef) -> anyhow::Result<()> {
         let metadata = self.decode_handle.decode(webcam_ref)?;
-        self.texture = WebcamTexture::new(metadata);
+        self.texture = BackgroundDecoderTexture::new(metadata);
 
         Ok(())
-    }
-}
-
-struct WebcamTexture {
-    buffer: AllocRingBuffer<Vec<u8>>,
-    metadata: VideoMetadata,
-}
-
-impl WebcamTexture {
-    pub fn new(metadata: VideoMetadata) -> Self {
-        Self {
-            buffer: AllocRingBuffer::new(10),
-            metadata,
-        }
-    }
-
-    pub fn receive_frames(&mut self, handle: &mut BackgroundDecoderThreadHandle<WebcamDecoder>) {
-        profiling::scope!("WebcamTexture::receive_frames");
-        while let Some(VideoThreadEvent::DecodedFrame(frame)) = handle.try_recv() {
-            self.buffer.push(frame);
-        }
-    }
-}
-
-impl TextureProvider for WebcamTexture {
-    fn texture_format(&self) -> TextureFormat {
-        TextureFormat::Rgba8UnormSrgb
-    }
-
-    fn width(&self) -> u32 {
-        self.metadata.width
-    }
-
-    fn height(&self) -> u32 {
-        self.metadata.height
-    }
-
-    fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
-        profiling::scope!("WebcamTexture::data");
-        if self.buffer.is_empty() {
-            return Ok(None);
-        }
-
-        Ok(self
-            .buffer
-            .back()
-            .map(|data| Cow::Borrowed(data.as_slice())))
     }
 }
 

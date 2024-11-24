@@ -18,12 +18,12 @@ pub struct VideoTexture {
     buffer: AllocRingBuffer<Vec<u8>>,
     buffer_frame: usize,
     frame: f64,
-    metadata: VideoMetadata,
+    metadata: Option<VideoMetadata>,
     playback_fps: f64,
 }
 
 impl VideoTexture {
-    pub fn new(path: PathBuf, metadata: VideoMetadata) -> anyhow::Result<Self> {
+    pub fn new(path: PathBuf, metadata: Option<VideoMetadata>) -> anyhow::Result<Self> {
         Ok(Self {
             clock_state: ClockState::Playing,
             file_path: path,
@@ -38,11 +38,23 @@ impl VideoTexture {
 
     pub fn receive_frames(&mut self, handle: &mut VideoDecodeThreadHandle) {
         profiling::scope!("VideoTexture::receive_frames");
-        while !self.buffer.is_full() {
-            if let Some(VideoThreadEvent::DecodedFrame(frame)) = handle.try_recv() {
-                self.buffer.push(frame);
-            } else {
-                break;
+        if self.buffer.is_full() {
+            return;
+        }
+        while let Some(event) = handle.try_recv() {
+            match event {
+                VideoThreadEvent::Metadata(metadata) => {
+                    self.metadata = Some(metadata);
+                }
+                VideoThreadEvent::DecodedFrame(frame) => {
+                    self.buffer.push(frame);
+                    if self.buffer.is_full() {
+                        break;
+                    }
+                }
+                VideoThreadEvent::DecodeError(error) => {
+                    tracing::error!("Error decoding frame: {error}");
+                }
             }
         }
     }
@@ -50,10 +62,18 @@ impl VideoTexture {
     pub fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>) {
         ui.columns(2, |columns| {
             columns[0].label("Texture Size");
-            columns[1].label(format!("{}x{}", self.width(), self.height()));
+            if let Some(ref metadata) = self.metadata {
+                columns[1].label(format!("{}x{}", metadata.width, metadata.height));
+            }else {
+                columns[1].label("N/A");
+            }
 
             columns[0].label("Video FPS");
-            columns[1].label(format!("{}", self.metadata.fps));
+            if let Some(ref metadata) = self.metadata {
+                columns[1].label(format!("{}", metadata.fps));
+            }else {
+                columns[1].label("N/A");
+            }
 
             columns[0].label("Playback Speed");
             columns[1].label(format!("{}", self.playback_speed));
@@ -96,15 +116,18 @@ impl TextureProvider for VideoTexture {
     }
 
     fn width(&self) -> u32 {
-        self.metadata.width
+        self.metadata.unwrap_or_default().width
     }
 
     fn height(&self) -> u32 {
-        self.metadata.height
+        self.metadata.unwrap_or_default().height
     }
 
     fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
         profiling::scope!("VideoTexture::data");
+        if self.metadata.is_none() {
+            return Ok(None);
+        }
         if self.buffer.is_empty() {
             return Ok(None);
         }
@@ -115,7 +138,7 @@ impl TextureProvider for VideoTexture {
             return Ok(None);
         }
         let frame = self.frame;
-        let frame = frame * (self.metadata.fps / self.playback_fps);
+        let frame = frame * (self.metadata.unwrap().fps / self.playback_fps);
         let frame = frame.floor() as usize;
         let mut frame_in_buffer = frame.saturating_sub(self.buffer_frame);
         while frame_in_buffer > 1 {

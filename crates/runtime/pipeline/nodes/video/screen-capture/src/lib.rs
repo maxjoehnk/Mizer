@@ -120,6 +120,9 @@ impl ProcessingNode for ScreenCaptureNode {
                 }
             }
             state.receive_frames();
+            if !state.texture.is_ready() {
+                return Ok(());
+            }
             let texture = texture_registry
                 .get(&state.transfer_texture)
                 .ok_or_else(|| anyhow!("Texture not found in registry"))?;
@@ -155,7 +158,7 @@ impl ScreenCaptureNode {
 
 pub struct ScreenCaptureState {
     screen: Monitor,
-    texture: ScreenCaptureTexture,
+    texture: BackgroundDecoderTexture,
     pipeline: TextureSourceStage,
     transfer_texture: TextureHandle,
     decode_handle: BackgroundDecoderThreadHandle<ScreenCaptureDecoder>,
@@ -169,7 +172,7 @@ impl ScreenCaptureState {
     ) -> anyhow::Result<Self> {
         let mut decode_handle = BackgroundDecoderThread::spawn()?;
         let metadata = decode_handle.decode(screen.clone())?;
-        let mut texture = ScreenCaptureTexture::new(metadata);
+        let mut texture = BackgroundDecoderTexture::new(metadata);
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
         let transfer_texture = registry.register(context, texture.width(), texture.height(), None);
@@ -190,59 +193,9 @@ impl ScreenCaptureState {
     fn change_screen(&mut self, screen: Monitor) -> anyhow::Result<()> {
         self.screen = screen.clone();
         let metadata = self.decode_handle.decode(screen)?;
-        self.texture = ScreenCaptureTexture::new(metadata);
+        self.texture = BackgroundDecoderTexture::new(metadata);
 
         Ok(())
-    }
-}
-
-struct ScreenCaptureTexture {
-    buffer: AllocRingBuffer<Vec<u8>>,
-    metadata: VideoMetadata,
-}
-
-impl ScreenCaptureTexture {
-    pub fn new(metadata: VideoMetadata) -> Self {
-        Self {
-            buffer: AllocRingBuffer::new(10),
-            metadata,
-        }
-    }
-
-    pub fn receive_frames(
-        &mut self,
-        handle: &mut BackgroundDecoderThreadHandle<ScreenCaptureDecoder>,
-    ) {
-        profiling::scope!("ScreenCaptureTexture::receive_frames");
-        while let Some(VideoThreadEvent::DecodedFrame(frame)) = handle.try_recv() {
-            self.buffer.push(frame);
-        }
-    }
-}
-
-impl TextureProvider for ScreenCaptureTexture {
-    fn texture_format(&self) -> TextureFormat {
-        TextureFormat::Rgba8UnormSrgb
-    }
-
-    fn width(&self) -> u32 {
-        self.metadata.width
-    }
-
-    fn height(&self) -> u32 {
-        self.metadata.height
-    }
-
-    fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
-        profiling::scope!("ScreenCaptureTexture::data");
-        if self.buffer.is_empty() {
-            return Ok(None);
-        }
-
-        Ok(self
-            .buffer
-            .back()
-            .map(|data| Cow::Borrowed(data.as_slice())))
     }
 }
 

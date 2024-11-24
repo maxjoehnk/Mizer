@@ -1,14 +1,10 @@
-use std::borrow::Cow;
-
 use anyhow::{anyhow, Context};
-use ringbuffer::{AllocRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
 use mizer_devices::{DeviceManager, DeviceRef};
 use mizer_ndi::{NdiSource, NdiSourceRef};
 use mizer_node::*;
 use mizer_video_nodes::background_thread_decoder::*;
-use mizer_wgpu::wgpu::TextureFormat;
 use mizer_wgpu::{
     TextureHandle, TextureProvider, TextureRegistry, TextureSourceStage, WgpuContext, WgpuPipeline,
 };
@@ -112,12 +108,16 @@ impl ProcessingNode for NdiInputNode {
         }
 
         let state = state.as_mut().unwrap();
+        state.check_background_decoder()?;
         if &state.ndi_source_ref != ndi_source_ref.value() {
             state
                 .change_source(ndi_source_ref.clone())
-                .context("Changing webcam")?;
+                .context("Changing ndi source")?;
         }
         state.receive_frames();
+        if !state.texture.is_ready() {
+            return Ok(());
+        }
         context.write_port(OUTPUT_PORT, state.transfer_texture);
         let texture = texture_registry
             .get(&state.transfer_texture)
@@ -138,7 +138,7 @@ impl ProcessingNode for NdiInputNode {
 
 pub struct NdiInputState {
     ndi_source_ref: NdiSourceRef,
-    texture: NdiSourceTexture,
+    texture: BackgroundDecoderTexture,
     pipeline: TextureSourceStage,
     transfer_texture: TextureHandle,
     decode_handle: BackgroundDecoderThreadHandle<NdiSourceDecoder>,
@@ -150,9 +150,10 @@ impl NdiInputState {
         registry: &TextureRegistry,
         ndi_source_ref: NdiSourceRef,
     ) -> anyhow::Result<Self> {
+        tracing::trace!("Creating ndi input state for {ndi_source_ref:?}");
         let mut decode_handle = BackgroundDecoderThread::spawn()?;
         let metadata = decode_handle.decode(ndi_source_ref.clone())?;
-        let mut texture = NdiSourceTexture::new(metadata);
+        let mut texture = BackgroundDecoderTexture::new(metadata);
         let pipeline = TextureSourceStage::new(context, &mut texture)
             .context("Creating texture source stage")?;
         let transfer_texture = registry.register(context, texture.width(), texture.height(), None);
@@ -165,63 +166,29 @@ impl NdiInputState {
             decode_handle,
         })
     }
+    
+    fn check_background_decoder(&mut self) -> anyhow::Result<()> {
+        if !self.decode_handle.is_alive() {
+            tracing::warn!("Background decoder thread died, restarting");
+            self.decode_handle = BackgroundDecoderThread::spawn()?;
+            let metadata = self.decode_handle.decode(self.ndi_source_ref.clone())?;
+            self.texture = BackgroundDecoderTexture::new(metadata);
+        }
+        
+        Ok(())
+    }
 
     fn receive_frames(&mut self) {
         self.texture.receive_frames(&mut self.decode_handle);
     }
 
     fn change_source(&mut self, ndi_source_ref: NdiSourceRef) -> anyhow::Result<()> {
-        let metadata = self.decode_handle.decode(ndi_source_ref)?;
-        self.texture = NdiSourceTexture::new(metadata);
+        tracing::trace!("Changing ndi source from {:?} to {ndi_source_ref:?}", self.ndi_source_ref);
+        let metadata = self.decode_handle.decode(ndi_source_ref.clone())?;
+        self.texture = BackgroundDecoderTexture::new(metadata);
+        self.ndi_source_ref = ndi_source_ref;
 
         Ok(())
-    }
-}
-
-struct NdiSourceTexture {
-    buffer: AllocRingBuffer<Vec<u8>>,
-    metadata: VideoMetadata,
-}
-
-impl NdiSourceTexture {
-    pub fn new(metadata: VideoMetadata) -> Self {
-        Self {
-            buffer: AllocRingBuffer::new(10),
-            metadata,
-        }
-    }
-
-    pub fn receive_frames(&mut self, handle: &mut BackgroundDecoderThreadHandle<NdiSourceDecoder>) {
-        profiling::scope!("NdiSourceTexture::receive_frames");
-        while let Some(VideoThreadEvent::DecodedFrame(frame)) = handle.try_recv() {
-            self.buffer.push(frame);
-        }
-    }
-}
-
-impl TextureProvider for NdiSourceTexture {
-    fn texture_format(&self) -> TextureFormat {
-        TextureFormat::Rgba8UnormSrgb
-    }
-
-    fn width(&self) -> u32 {
-        self.metadata.width
-    }
-
-    fn height(&self) -> u32 {
-        self.metadata.height
-    }
-
-    fn data(&mut self) -> anyhow::Result<Option<Cow<[u8]>>> {
-        profiling::scope!("NdiSourceTexture::data");
-        if self.buffer.is_empty() {
-            return Ok(None);
-        }
-
-        Ok(self
-            .buffer
-            .back()
-            .map(|data| Cow::Borrowed(data.as_slice())))
     }
 }
 
@@ -247,8 +214,13 @@ impl VideoDecoder for NdiSourceDecoder {
     }
 
     fn decode(&mut self) -> anyhow::Result<Option<Vec<u8>>> {
+        tracing::trace!("NdiSourceDecoder::decode");
         let frame = self.source.frame()?;
-        let data = frame.data()?;
+        if frame.is_none() {
+            tracing::trace!("Timeout waiting for frame");
+            return Ok(None);
+        }
+        let data = frame.unwrap().data()?;
 
         Ok(Some(data))
     }

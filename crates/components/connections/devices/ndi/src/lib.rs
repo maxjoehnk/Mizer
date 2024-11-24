@@ -5,10 +5,18 @@ pub use discovery::NdiSourceDiscovery;
 
 mod discovery;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct NdiSourceRef {
     source: Source,
     name: String,
+}
+
+impl std::fmt::Debug for NdiSourceRef {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("NdiSourceRef")
+            .field("name", &self.name)
+            .finish()
+    }
 }
 
 impl PartialEq for NdiSourceRef {
@@ -48,17 +56,47 @@ impl NdiSourceRef {
 
 pub struct NdiSource {
     recv: Recv,
+    metadata: Option<NdiSourceMetadata>,
+    source: Source,
+}
+
+#[derive(Debug, Clone, Copy)]
+struct NdiSourceMetadata {
     width: u32,
     height: u32,
     frame_rate: f32,
-    _source: Source,
+}
+
+impl Default for NdiSourceMetadata {
+    fn default() -> Self {
+        Self {
+            width: 1920,
+            height: 1080,
+            frame_rate: 30.0,
+        }
+    }
+}
+
+impl NdiSourceMetadata {
+    fn new(video_data: &VideoData) -> Self {
+        let width = video_data.width();
+        let height = video_data.height();
+        let frame_rate = video_data.frame_rate();
+
+        Self {
+            width,
+            height,
+            frame_rate,
+        }
+    }
 }
 
 impl NdiSource {
     fn new(mut recv: Recv, source: &Source) -> anyhow::Result<Self> {
-        tracing::debug!("Connecting to source: {source:?}");
-        recv.connect(source);
-        tracing::info!("Connected to source {source:?}");
+        let source = source.clone();
+        tracing::debug!("Connecting to source: {:?}", source.get_name());
+        recv.disconnect();
+        recv.connect(&source);
 
         tracing::debug!("Receiving first frame to get video metadata");
         let mut video_data = None;
@@ -69,47 +107,52 @@ impl NdiSource {
             }
             i += 1;
             if i > 10 {
-                anyhow::bail!("Failed to receive video data");
+                break;
             }
         }
-        let video_data = video_data.unwrap();
-        tracing::debug!("Received video frame: {video_data:?}");
-        let width = video_data.width();
-        let height = video_data.height();
-        let frame_rate = video_data.frame_rate();
+        let metadata = video_data.map(|video_data| {
+            tracing::debug!("Received video frame: {video_data:?}");
+            NdiSourceMetadata::new(&video_data)
+        });
 
         Ok(Self {
             recv,
-            width,
-            height,
-            frame_rate,
-            _source: source.clone(),
+            metadata,
+            source,
         })
     }
 
     pub fn width(&self) -> u32 {
-        self.width
+        self.metadata.unwrap_or_default().width
     }
 
     pub fn height(&self) -> u32 {
-        self.height
+        self.metadata.unwrap_or_default().height
     }
 
     pub fn frame_rate(&self) -> f32 {
-        self.frame_rate
+        self.metadata.unwrap_or_default().frame_rate
     }
 
-    pub fn frame(&mut self) -> anyhow::Result<NdiFrame> {
+    pub fn frame(&mut self) -> anyhow::Result<Option<NdiFrame>> {
+        if self.recv.get_no_connections() == 0 {
+            tracing::warn!("Connected to no sources, trying to reconnect to {}", self.source.get_name());
+            self.recv.connect(&self.source);
+        }
+        tracing::trace!("Waiting for frame");
         let mut video_data = None;
-        match self.recv.capture_video(&mut video_data, u32::MAX) {
+
+        const TIMEOUT: u32 = 1000;
+        match self.recv.capture_video(&mut video_data, TIMEOUT) {
+            FrameType::None => {
+                Ok(None)
+            }
             FrameType::Video => {
                 if let Some(video_data) = video_data {
                     tracing::debug!("Received video frame: {video_data:?}");
-                    self.width = video_data.width();
-                    self.height = video_data.height();
-                    self.frame_rate = video_data.frame_rate();
+                    self.metadata = Some(NdiSourceMetadata::new(&video_data));
 
-                    Ok(NdiFrame(video_data))
+                    Ok(Some(NdiFrame(video_data)))
                 } else {
                     tracing::warn!("Received video frame with no data");
                     Err(anyhow::anyhow!("Video data was null"))

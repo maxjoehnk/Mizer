@@ -1,0 +1,6 @@
+.Developing on Mizer
+* xref:development:prerequisites.adoc[]
+* xref:development:architecture/index.adoc[]
+** xref:development:architecture/modules.adoc[]
+** xref:development:architecture/nodes.adoc[]
+** xref:development:architecture/commands_and_queries.adoc[]

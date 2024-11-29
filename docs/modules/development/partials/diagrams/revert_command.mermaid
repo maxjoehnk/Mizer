@@ -1,0 +1,13 @@
+---
+title: Revert Command
+---
+sequenceDiagram
+    Api->>CommandExecutorApi: undo
+    CommandExecutorApi->>CommandExecutor: revert
+    Note over CommandExecutorApi,CommandExecutor: Previous commands are stored in a history
+    critical In Main Loop
+        CommandExecutor->>Command: revert with state
+        Command-->>CommandExecutor: ()
+    end
+    CommandExecutor-->>CommandExecutorApi: ()
+    CommandExecutorApi-->>Api: ()

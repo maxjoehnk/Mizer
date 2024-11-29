@@ -1,0 +1,10 @@
+= Prerequisites
+
+== Dependencies
+
+include::partial$dependencies.adoc[]
+
+== Building
+
+include::partial$building.adoc[leveloffset=-1]
+

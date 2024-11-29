@@ -1,0 +1,111 @@
+= Nodes
+
+Each node is composed of multiple parts
+
+// TODO: which parts of this documentation should be moved into rust docs?
+// Can we include or link rust docs in this documentation as well?
+
+== Configuration
+
+A basic struct which will be (de-)serialized to the project file.
+
+== ConfigurableNode trait
+
+This trait is composed of two methods which make the configuration available to the user in the ui.
+
+The `settings` method can return a list of `NodeSetting`s which describe a configuration option.
+
+Each `NodeSetting` is composed of at least an `id` and a `value`. It's recommended to use the `setting!` macro to define each setting as it automatically creates the `NodeSetting` struct and is also able to derive the value type out of the given field.
+
+When no `label` is defined the `id` is also what will be shown to the user in the node settings pane.
+
+Settings can be marked as `optional` and `disabled` if necessary.
+
+The `value` also contains any options or parameter which might be necessary for the ui to allow proper configuration.
+
+=== NodeSettingValue::Text
+
+Plaintext input. Can support multiple lines with the `multiline` flag.
+
+=== NodeSettingValue::Float
+
+Will display a slider in the ui supporting arbitrary floating values.
+
+The `min` and `max` options configure the supported value range while `min_hint` and `max_hint` configure the start and end point of the slider.
+The `step_size` is used when scrolling on the slider.
+
+=== NodeSettingValue::Uint
+
+Will display a slider in the ui supporting 32bit unsigned integers.
+
+The `min` and `max` options configure the supported value range while `min_hint` and `max_hint` configure the start and end point of the slider.
+The `step_size` is used when scrolling on the slider.
+
+=== NodeSettingValue::Int
+
+Will display a slider in the ui supporting 64bit signed integers.
+
+The `min` and `max` options configure the supported value range while `min_hint` and `max_hint` configure the start and end point of the slider.
+The `step_size` is used when scrolling on the slider.
+
+=== NodeSettingValue::Bool
+
+Displays a checkbox in the ui.
+
+=== NodeSettingValue::Select
+
+Displays a dropdown in the ui.
+
+The `variant` option configures the available options. These can be nested as well.
+
+=== NodeSettingValue::Enum
+
+Displays a dropdown in the ui.
+
+The Enum value can be auto-generated from any rust `enum` as long as it implements the `enum_iterator::Sequence`, `Into<u8>` and `Display` traits.
+
+=== NodeSettingValue::Id
+
+Displays a dropdown in the ui.
+
+This differs to the `Select` value in only supporting `u32` values and not supporting nesting.
+
+=== NodeSettingValue::Spline
+
+Shows a spline editor in the ui.
+
+=== NodeSettingValue::Media
+
+Shows a media selector in the ui.
+
+With the `content_type` option the supported media type can be configured.
+
+=== NodeSettingValue::Steps
+
+Shows a step sequencer in the ui.
+
+== PipelineNode trait
+
+This trait describes the node interface of this node.
+
+This includes
+
+* the name of the node type
+* the node type
+* the preview type
+* the category
+* an optional display name
+* the list of inputs and outputs
+
+== ProcessingNode trait
+
+This trait describes the actual implementation of the node.
+For processing every node can create a state object which will always be kept running in the same instance and does not have to be thread safe.
+
+A node can run code in all three processing stages (pre_process, process, post_process).
+Nodes will be executed based on the dependencies defined by the node links.
+Execution order is not deterministic as the node pipeline is composed of multiple small graphs which could be run in any order.
+
+The `ProcessingNode` trait also allows you to define templates for different Configurations.
+
+The `debug_ui` method can be implemented as well which allows to add node internals to the egui debug ui available on Linux.

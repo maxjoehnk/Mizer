@@ -12,3 +12,4 @@ nav:
   - modules/timecode/nav.adoc
   - modules/console/nav.adoc
   - modules/examples/nav.adoc
+  - modules/development/nav.adoc

@@ -1,6 +1,6 @@
 # Mizer
 
-<img src="assets/logo@512.png" width="128px" />
+<img src="assets/logo@512.png" width="128px" alt="Mizer Logo" />
 
 A node based visualization tool for live scenarios (e.g. concerts and clubs).
 
@@ -12,18 +12,25 @@ A node based visualization tool for live scenarios (e.g. concerts and clubs).
 
 You need to have the following tools installed:
 
-* Rust
-* cbindgen
-* Flutter SDK
-* protoc
-* LLVM
+- Rust (stable)
+- cbindgen
+- Flutter SDK (v3.19.6)
+- protoc
+- LLVM
 
 ### Building
 
-Run `make build` in the Project root. This will place the `mizer` binary in the `target/debug` folder.
+#### 1. Clone the repository
 
-After running `make build` once you can also use all `cargo` commands directly.
+```bash
+git clone https://github.com/maxjoehnk/Mizer.git
+cd Mizer
+```
 
-### Running
+#### 2. Initial build with make
 
-To run just execute the binary or use `make run`.
+Run `make build` in the Project root. This will generate any necessary source files and also build the dynamic libraries required for the ui.
+
+#### 3. Running
+
+After running `make build` once you can just use `cargo run` to start Mizer.

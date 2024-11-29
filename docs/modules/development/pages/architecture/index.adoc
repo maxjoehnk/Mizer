@@ -1,0 +1,34 @@
+= Architecture
+
+Mizer is built with a combination of modules on top of a main loop.
+
+Each module can provide multiple processors which can hook into different stages of the main loop life cylce.
+
+// Graphic showing the main loop iteration
+
+[mermaid,format=svg]
+....
+include::partial$diagrams/main-loop.mermaid[]
+....
+
+The main loop is composed of three stages:
+
+* pre_process
+* process
+* post_process
+
+Each processor can define a priority for each hook to control in which order they are executed.
+
+Everything, even the node graph, is running as part of a processor.
+
+The node graph runs with the following priorities:
+
+|===
+|Stage |Priority
+
+|Pre Process |-50
+
+|Process |0
+
+|Post Process |50
+|===

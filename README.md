@@ -1,6 +1,6 @@
 # Mizer
 
-<img src="assets/logo@512.png" width="128px" />
+<img src="assets/logo@512.png" width="128px" alt="Mizer Logo" />
 
 A node based visualization tool for live scenarios (e.g. concerts and clubs).
 
@@ -12,11 +12,11 @@ A node based visualization tool for live scenarios (e.g. concerts and clubs).
 
 You need to have the following tools installed:
 
-* Rust (stable)
-* cbindgen
-* Flutter SDK (v3.19.0)
-* protoc
-* LLVM
+- Rust (stable)
+- cbindgen
+- Flutter SDK (v3.19.6)
+- protoc
+- LLVM
 
 ### Building
 

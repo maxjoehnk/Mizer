@@ -110,6 +110,8 @@ jobs:
             libwavpack-dev \
             libzimg-dev \
             yasm
+      - name: Install cbindgen
+        run: cargo install --force cbindgen
       - uses: taiki-e/install-action@protoc
       - uses: nschloe/action-cached-lfs-checkout@v1
       - uses: subosito/flutter-action@v2

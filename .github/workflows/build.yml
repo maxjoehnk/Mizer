@@ -108,6 +108,8 @@ jobs:
             libzimg-dev \
             yasm
       - uses: taiki-e/install-action@protoc
+      - name: Install cbindgen
+        run: cargo install --force cbindgen
       - uses: actions/checkout@v4
         with:
           submodules: recursive

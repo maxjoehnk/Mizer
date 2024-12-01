@@ -56,7 +56,7 @@ pub fn parse<TContext: CommandLineContext>(
                 target_type: ast::Sequences,
                 target_entity: ast::All,
             }
-                .boxed())
+            .boxed())
         }
         [Token::Action(Action::GoForward), Token::Keyword(Keyword::Sequence), Token::Value(ref value)] => {
             Ok(ast::GoForward {

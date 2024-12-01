@@ -224,12 +224,6 @@ mod tests {
     fn parse_off_all() {
         let ast = parse("off all").unwrap();
 
-        assert_eq!(
-            ast,
-            Tokens(vec![
-                Token::Action(Action::Off),
-                Token::All,
-            ])
-        );
+        assert_eq!(ast, Tokens(vec![Token::Action(Action::Off), Token::All,]));
     }
 }

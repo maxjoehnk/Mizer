@@ -36,6 +36,7 @@ pub enum Token {
     Value(ValueToken),
     Operator(Operator),
     Full,
+    All,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -217,5 +218,12 @@ mod tests {
         let ast = parse("go-").unwrap();
 
         assert_eq!(ast, Tokens(vec![Token::Action(Action::GoBackward),]));
+    }
+
+    #[test]
+    fn parse_off_all() {
+        let ast = parse("off all").unwrap();
+
+        assert_eq!(ast, Tokens(vec![Token::Action(Action::Off), Token::All,]));
     }
 }

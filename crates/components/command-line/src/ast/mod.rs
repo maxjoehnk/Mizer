@@ -72,6 +72,9 @@ impl Range {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct All;
+
 pub trait Entity {}
 
 impl Entity for ActiveSelection {}
@@ -79,6 +82,8 @@ impl Entity for ActiveSelection {}
 impl Entity for Single {}
 
 impl Entity for Range {}
+
+impl Entity for All {}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Delete<TTargetType: Type, TTargetEntity: Entity> {

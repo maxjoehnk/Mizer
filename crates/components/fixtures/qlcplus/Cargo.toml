@@ -17,6 +17,6 @@ serde_derive = "1"
 
 [build-dependencies]
 ureq = "2.9"
-zip = "0.6"
+zip = "2.0"
 temp-dir = "0.1"
 fs_extra = "1.3"

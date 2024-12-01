@@ -12,7 +12,14 @@ impl Command for Off<Sequences, Single> {
 
 impl Command for Off<Sequences, All> {
     async fn execute(&self, context: &impl CommandLineContext) -> anyhow::Result<()> {
-        todo!()
+        let sequences = context.execute_query(ListSequencesQuery)?;
+        for sequence in sequences {
+            context.execute_command(StopSequenceCommand {
+                sequence_id: sequence.id,
+            })?;
+        }
+
+        Ok(())
     }
 }
 

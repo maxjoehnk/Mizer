@@ -21,6 +21,7 @@ impl Module for SurfaceModule {
         let api = SurfaceRegistryApi {
             bus: registry.bus.clone(),
         };
+        context.provide(registry);
         context.provide(SurfaceProjectHandler);
         
         context.provide_api(api);

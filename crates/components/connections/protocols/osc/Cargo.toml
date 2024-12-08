@@ -15,3 +15,4 @@ mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
 tokio = { version = "1.37", features = ["net", "rt"] }
 serde = { version = "1", features = ["derive"] }
+profiling = "1"

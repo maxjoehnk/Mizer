@@ -5,7 +5,7 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 use zip::unstable::LittleEndianWriteExt;
 use mizer_console::ConsoleCategory;
-use mizer_module::{Injector, LoadProjectContext, ProjectHandlerContext, SaveProjectContext};
+use mizer_module::{LoadProjectContext, ProjectHandlerContext, SaveProjectContext};
 use crate::project_file::{ProjectArchive, ProjectFile};
 use crate::versioning::{migrate, Migrations};
 

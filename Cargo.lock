@@ -4871,9 +4871,9 @@ dependencies = [
 
 [[package]]
 name = "memchr"
-version = "2.7.1"
+version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
+checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "memmap2"
@@ -5766,6 +5766,7 @@ dependencies = [
  "mizer-processing",
  "mizer-settings",
  "mizer-status-bus",
+ "serde",
  "test-case",
  "tracing",
 ]
@@ -5986,7 +5987,6 @@ dependencies = [
  "mizer-nodes",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-util",
  "mizer-video-nodes",
@@ -6123,6 +6123,7 @@ dependencies = [
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
+ "mizer-module",
  "mizer-node",
  "mizer-nodes",
  "mizer-pixel-nodes",
@@ -6130,6 +6131,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
+ "mizer-runtime",
  "mizer-sequencer",
  "mizer-surfaces",
  "mizer-timecode",
@@ -6140,6 +6142,7 @@ dependencies = [
  "serde_yaml",
  "test-case",
  "tracing",
+ "zip",
 ]
 
 [[package]]
@@ -6305,6 +6308,7 @@ dependencies = [
  "indexmap 2.7.0",
  "insta",
  "itertools 0.13.0",
+ "lazy_static",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -6318,12 +6322,12 @@ dependencies = [
  "mizer-plan",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-session",
  "mizer-status-bus",
  "mizer-util",
  "pinboard",
  "profiling",
+ "regex",
  "serde",
  "test-case",
  "tracing",

@@ -136,7 +136,8 @@ impl Mizer {
     }
 
     #[profiling::function]
-    pub fn save_project_as(&mut self, path: PathBuf) -> anyhow::Result<()> {
+    pub fn save_project_as(&mut self, mut path: PathBuf) -> anyhow::Result<()> {
+        path.set_extension("zip");
         self.project_path = Some(path.clone());
         self.save_project()?;
         self.project_history.add_project(&path)?;

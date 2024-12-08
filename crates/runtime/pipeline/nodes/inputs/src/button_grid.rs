@@ -29,7 +29,7 @@ impl Default for ButtonGridNode {
 }
 
 impl ConfigurableNode for ButtonGridNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(TOGGLE_SETTING, self.toggle),
             setting!(ROWS_SETTING, self.rows).min(1u32).max_hint(16u32),
@@ -57,7 +57,7 @@ impl PipelineNode for ButtonGridNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Multi),
             output_port!(OUTPUT_PORT, PortType::Multi),

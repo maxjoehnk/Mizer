@@ -23,7 +23,7 @@ pub struct G13InputNode {
 }
 
 impl ConfigurableNode for G13InputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let devices = injector.get_devices();
 
         vec![
@@ -49,7 +49,7 @@ impl PipelineNode for G13InputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Single)]
     }
 

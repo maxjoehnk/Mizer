@@ -19,7 +19,7 @@ impl PipelineNode for ProgrammerNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!("Intensity", PortType::Single),
             input_port!("Shutter", PortType::Single),

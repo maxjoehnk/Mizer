@@ -27,7 +27,7 @@ impl PipelineNode for TransportNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(TAP_INPUT, PortType::Single),
             input_port!(RESYNC_INPUT, PortType::Single),

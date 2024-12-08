@@ -19,3 +19,4 @@ mizer-message-bus = { path = "../../../../util/bus" }
 mizer-util = { path = "../../../../util" }
 url = { version = "2.5", features = ["serde"] }
 tokio = { version = "1", features = ["rt"] }
+profiling = "1"

@@ -7,7 +7,7 @@ use mizer_api::handlers::Handlers;
 use mizer_console::ConsoleCategory;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::{Injector, ProjectHandlerContext, Runtime};
+use mizer_module::{ProjectHandlerContext, Runtime};
 use mizer_project_files::{HandlerContext, history::ProjectHistory};
 use mizer_runtime::DefaultRuntime;
 use mizer_session::SessionState;

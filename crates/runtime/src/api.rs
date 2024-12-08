@@ -5,6 +5,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
+use mizer_node::NodeCommentArea;
 use mizer_plan::Plan;
 use mizer_status_bus::StatusBus;
 

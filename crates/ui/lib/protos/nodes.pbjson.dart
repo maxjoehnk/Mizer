@@ -97,6 +97,42 @@ const AddNodeRequest$json = const {
 
 /// Descriptor for `AddNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode('Cg5BZGROb2RlUmVxdWVzdBISCgR0eXBlGAEgASgJUgR0eXBlEjUKCHBvc2l0aW9uGAIgASgLMhkubWl6ZXIubm9kZXMuTm9kZVBvc2l0aW9uUghwb3NpdGlvbhIbCgZwYXJlbnQYAyABKAlIAFIGcGFyZW50iAEBEh8KCHRlbXBsYXRlGAQgASgJSAFSCHRlbXBsYXRliAEBQgkKB19wYXJlbnRCCwoJX3RlbXBsYXRl');
+@$core.Deprecated('Use addCommentRequestDescriptor instead')
+const AddCommentRequest$json = const {
+  '1': 'AddCommentRequest',
+  '2': const [
+    const {'1': 'position', '3': 1, '4': 1, '5': 11, '6': '.mizer.nodes.NodePosition', '10': 'position'},
+    const {'1': 'width', '3': 2, '4': 1, '5': 1, '10': 'width'},
+    const {'1': 'height', '3': 3, '4': 1, '5': 1, '10': 'height'},
+    const {'1': 'parent', '3': 4, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
+  ],
+  '8': const [
+    const {'1': '_parent'},
+  ],
+};
+
+/// Descriptor for `AddCommentRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addCommentRequestDescriptor = $convert.base64Decode('ChFBZGRDb21tZW50UmVxdWVzdBI1Cghwb3NpdGlvbhgBIAEoCzIZLm1pemVyLm5vZGVzLk5vZGVQb3NpdGlvblIIcG9zaXRpb24SFAoFd2lkdGgYAiABKAFSBXdpZHRoEhYKBmhlaWdodBgDIAEoAVIGaGVpZ2h0EhsKBnBhcmVudBgEIAEoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
+@$core.Deprecated('Use updateCommentRequestDescriptor instead')
+const UpdateCommentRequest$json = const {
+  '1': 'UpdateCommentRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'color', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.NodeColor', '9': 0, '10': 'color', '17': true},
+    const {'1': 'label', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
+    const {'1': 'show_background', '3': 4, '4': 1, '5': 8, '9': 2, '10': 'showBackground', '17': true},
+    const {'1': 'show_border', '3': 5, '4': 1, '5': 8, '9': 3, '10': 'showBorder', '17': true},
+  ],
+  '8': const [
+    const {'1': '_color'},
+    const {'1': '_label'},
+    const {'1': '_show_background'},
+    const {'1': '_show_border'},
+  ],
+};
+
+/// Descriptor for `UpdateCommentRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateCommentRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVDb21tZW50UmVxdWVzdBIOCgJpZBgBIAEoCVICaWQSMQoFY29sb3IYAiABKA4yFi5taXplci5ub2Rlcy5Ob2RlQ29sb3JIAFIFY29sb3KIAQESGQoFbGFiZWwYAyABKAlIAVIFbGFiZWyIAQESLAoPc2hvd19iYWNrZ3JvdW5kGAQgASgISAJSDnNob3dCYWNrZ3JvdW5kiAEBEiQKC3Nob3dfYm9yZGVyGAUgASgISANSCnNob3dCb3JkZXKIAQFCCAoGX2NvbG9yQggKBl9sYWJlbEISChBfc2hvd19iYWNrZ3JvdW5kQg4KDF9zaG93X2JvcmRlcg==');
 @$core.Deprecated('Use duplicateNodesRequestDescriptor instead')
 const DuplicateNodesRequest$json = const {
   '1': 'DuplicateNodesRequest',
@@ -247,11 +283,12 @@ const Nodes$json = const {
     const {'1': 'nodes', '3': 1, '4': 3, '5': 11, '6': '.mizer.nodes.Node', '10': 'nodes'},
     const {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.nodes.NodeConnection', '10': 'channels'},
     const {'1': 'all_nodes', '3': 3, '4': 3, '5': 11, '6': '.mizer.nodes.Node', '10': 'allNodes'},
+    const {'1': 'comments', '3': 4, '4': 3, '5': 11, '6': '.mizer.nodes.NodeCommentArea', '10': 'comments'},
   ],
 };
 
 /// Descriptor for `Nodes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxInCgVub2RlcxgBIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSBW5vZGVzEjcKCGNoYW5uZWxzGAIgAygLMhsubWl6ZXIubm9kZXMuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxzEi4KCWFsbF9ub2RlcxgDIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSCGFsbE5vZGVz');
+final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxInCgVub2RlcxgBIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSBW5vZGVzEjcKCGNoYW5uZWxzGAIgAygLMhsubWl6ZXIubm9kZXMuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxzEi4KCWFsbF9ub2RlcxgDIAMoCzIRLm1pemVyLm5vZGVzLk5vZGVSCGFsbE5vZGVzEjgKCGNvbW1lbnRzGAQgAygLMhwubWl6ZXIubm9kZXMuTm9kZUNvbW1lbnRBcmVhUghjb21tZW50cw==');
 @$core.Deprecated('Use availableNodesDescriptor instead')
 const AvailableNodes$json = const {
   '1': 'AvailableNodes',
@@ -672,3 +709,24 @@ const Port$json = const {
 
 /// Descriptor for `Port`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List portDescriptor = $convert.base64Decode('CgRQb3J0EhIKBG5hbWUYASABKAlSBG5hbWUSOAoIcHJvdG9jb2wYAiABKA4yHC5taXplci5ub2Rlcy5DaGFubmVsUHJvdG9jb2xSCHByb3RvY29sEhoKCG11bHRpcGxlGAMgASgIUghtdWx0aXBsZQ==');
+@$core.Deprecated('Use nodeCommentAreaDescriptor instead')
+const NodeCommentArea$json = const {
+  '1': 'NodeCommentArea',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'width', '3': 2, '4': 1, '5': 1, '10': 'width'},
+    const {'1': 'height', '3': 3, '4': 1, '5': 1, '10': 'height'},
+    const {'1': 'designer', '3': 4, '4': 1, '5': 11, '6': '.mizer.nodes.NodeDesigner', '10': 'designer'},
+    const {'1': 'label', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'label', '17': true},
+    const {'1': 'show_background', '3': 6, '4': 1, '5': 8, '10': 'showBackground'},
+    const {'1': 'show_border', '3': 7, '4': 1, '5': 8, '10': 'showBorder'},
+    const {'1': 'parent', '3': 8, '4': 1, '5': 9, '9': 1, '10': 'parent', '17': true},
+  ],
+  '8': const [
+    const {'1': '_label'},
+    const {'1': '_parent'},
+  ],
+};
+
+/// Descriptor for `NodeCommentArea`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeCommentAreaDescriptor = $convert.base64Decode('Cg9Ob2RlQ29tbWVudEFyZWESDgoCaWQYASABKAlSAmlkEhQKBXdpZHRoGAIgASgBUgV3aWR0aBIWCgZoZWlnaHQYAyABKAFSBmhlaWdodBI1CghkZXNpZ25lchgEIAEoCzIZLm1pemVyLm5vZGVzLk5vZGVEZXNpZ25lclIIZGVzaWduZXISGQoFbGFiZWwYBSABKAlIAFIFbGFiZWyIAQESJwoPc2hvd19iYWNrZ3JvdW5kGAYgASgIUg5zaG93QmFja2dyb3VuZBIfCgtzaG93X2JvcmRlchgHIAEoCFIKc2hvd0JvcmRlchIbCgZwYXJlbnQYCCABKAlIAVIGcGFyZW50iAEBQggKBl9sYWJlbEIJCgdfcGFyZW50');

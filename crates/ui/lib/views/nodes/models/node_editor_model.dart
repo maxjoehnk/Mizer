@@ -10,6 +10,7 @@ import 'node_model.dart';
 class NodeEditorModel extends ChangeNotifier {
   List<NodeModel> rootNodes = [];
   List<NodeConnection> _channels = [];
+  List<NodeCommentArea> _comments = [];
   final GlobalKey painterKey = GlobalKey(debugLabel: "GraphPaintLayer");
 
   late TransformationController transformationController;
@@ -17,6 +18,8 @@ class NodeEditorModel extends ChangeNotifier {
   List<NodeModel> otherSelectedNodes = [];
   List<NodeModel> connectedToSelectedNodes = [];
   NewConnectionModel? connecting;
+
+  NodeCommentArea? selectedComment;
 
   NodeModel? parent;
   List<NodeModel>? currentNodes;
@@ -36,6 +39,13 @@ class NodeEditorModel extends ChangeNotifier {
       return currentNodes!;
     }
     return rootNodes;
+  }
+  
+  Iterable<NodeCommentArea> get comments {
+    if (parent != null) {
+      return this._comments.where((c) => c.parent == parent!.node.path);
+    }
+    return this._comments.where((c) => !c.hasParent());
   }
 
   List<NodeConnection> get channels {
@@ -62,6 +72,7 @@ class NodeEditorModel extends ChangeNotifier {
     }).toList();
     this.rootNodes.sortBy((element) => element.node.path);
     this._channels = nodes.channels;
+    this._comments = nodes.comments;
     var parent =
         this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
     if (parent != null) {
@@ -148,6 +159,7 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   selectNode(NodeModel nodeModel) {
+    this.selectedComment = null;
     this.selectedNode = nodeModel;
     this.otherSelectedNodes.clear();
     this.connectedToSelectedNodes = this
@@ -166,12 +178,19 @@ class NodeEditorModel extends ChangeNotifier {
   
   selectNodes(List<NodeModel> nodes) {
     this.selectedNode = null;
+    this.selectedComment = null;
     this.otherSelectedNodes = nodes;
     this.update();
   }
 
   selectAdditionalNode(NodeModel node) {
     this.otherSelectedNodes.add(node);
+    this.update();
+  }
+
+  selectComment(NodeCommentArea comment) {
+    this.selectedNode = null;
+    this.selectedComment = comment;
     this.update();
   }
 

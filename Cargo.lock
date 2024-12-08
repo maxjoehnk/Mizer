@@ -5824,6 +5824,7 @@ dependencies = [
  "serde",
  "test-case",
  "tracing",
+ "uuid 1.11.0",
 ]
 
 [[package]]

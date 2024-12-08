@@ -4,7 +4,7 @@ use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{InjectDyn, Inject, SelectVariant};
+use mizer_node::{InjectDyn, Inject, SelectVariant, Injector};
 use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};
@@ -130,7 +130,7 @@ fn get_pages_and_controls(
 }
 
 fn get_pages_and_grid(
-    injector: &Injector,
+    injector: &dyn InjectDyn,
     device: &str,
     page_name: &str,
 ) -> (
@@ -138,7 +138,7 @@ fn get_pages_and_grid(
     Option<(u32, u32)>,
     Option<Vec<SelectVariant>>,
 ) {
-    let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+    let connection_manager = injector.inject::<MidiConnectionManager>();
     let pages = connection_manager
         .request_device(device)
         .ok()

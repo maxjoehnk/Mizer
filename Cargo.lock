@@ -789,7 +789,7 @@ dependencies = [
  "bitflags 2.6.0",
  "cexpr",
  "clang-sys",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "log",
  "prettyplease",
  "proc-macro2",
@@ -4861,9 +4861,9 @@ dependencies = [
 
 [[package]]
 name = "memchr"
-version = "2.7.1"
+version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
+checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "memmap2"
@@ -5756,6 +5756,7 @@ dependencies = [
  "mizer-processing",
  "mizer-settings",
  "mizer-status-bus",
+ "serde",
  "test-case",
  "tracing",
 ]
@@ -5976,7 +5977,6 @@ dependencies = [
  "mizer-nodes",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-util",
  "mizer-video-nodes",
@@ -6113,6 +6113,7 @@ dependencies = [
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
+ "mizer-module",
  "mizer-node",
  "mizer-nodes",
  "mizer-pixel-nodes",
@@ -6120,6 +6121,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mizer-protocol-mqtt",
  "mizer-protocol-osc",
+ "mizer-runtime",
  "mizer-sequencer",
  "mizer-surfaces",
  "mizer-timecode",
@@ -6130,6 +6132,7 @@ dependencies = [
  "serde_yaml",
  "test-case",
  "tracing",
+ "zip",
 ]
 
 [[package]]
@@ -6295,6 +6298,7 @@ dependencies = [
  "indexmap 2.7.0",
  "insta",
  "itertools 0.13.0",
+ "lazy_static",
  "mizer-clock",
  "mizer-commander",
  "mizer-debug-ui-impl",
@@ -6308,12 +6312,12 @@ dependencies = [
  "mizer-plan",
  "mizer-ports",
  "mizer-processing",
- "mizer-project-files",
  "mizer-session",
  "mizer-status-bus",
  "mizer-util",
  "pinboard",
  "profiling",
+ "regex",
  "serde",
  "test-case",
  "tracing",
@@ -8281,7 +8285,7 @@ checksum = "0c1318b19085f08681016926435853bbf7858f9c082d0999b80550ff5d9abe15"
 dependencies = [
  "bytes 1.9.0",
  "heck 0.5.0",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "log",
  "multimap",
  "once_cell",
@@ -8301,7 +8305,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "157c5a9d7ea5c2ed2d9fb8f495b64759f7816c7eaea54ba3978f0d63000162e3"
 dependencies = [
  "anyhow",
- "itertools 0.12.1",
+ "itertools 0.13.0",
  "proc-macro2",
  "quote",
  "syn 2.0.87",
@@ -12314,9 +12318,9 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "2.0.0"
+version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fccb210625924ecbbe92f9bb497d04b167b64fe5540cec75f10b16e0c51ee92b"
+checksum = "1dd56a4d5921bc2f99947ac5b3abe5f510b1be7376fdc5e9fce4a23c6a93e87c"
 dependencies = [
  "aes",
  "arbitrary",
@@ -12330,6 +12334,7 @@ dependencies = [
  "hmac",
  "indexmap 2.7.0",
  "lzma-rs",
+ "memchr",
  "pbkdf2",
  "rand 0.8.5",
  "sha1",

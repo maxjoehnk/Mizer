@@ -51,6 +51,7 @@ assign_group = "cmd+g"
 
 [hotkeys.nodes]
 add_node = "alt+a"
+add_comment = "alt+c"
 duplicate_node = "cmd+d"
 group_nodes = "cmd+g"
 delete_node = "cmd+backspace"

@@ -105,6 +105,200 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   void clearTemplate() => clearField(4);
 }
 
+class AddCommentRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddCommentRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOM<NodePosition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OD)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
+  AddCommentRequest._() : super();
+  factory AddCommentRequest({
+    NodePosition? position,
+    $core.double? width,
+    $core.double? height,
+    $core.String? parent,
+  }) {
+    final _result = create();
+    if (position != null) {
+      _result.position = position;
+    }
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
+    }
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    return _result;
+  }
+  factory AddCommentRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddCommentRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddCommentRequest clone() => AddCommentRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddCommentRequest copyWith(void Function(AddCommentRequest) updates) => super.copyWith((message) => updates(message as AddCommentRequest)) as AddCommentRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddCommentRequest create() => AddCommentRequest._();
+  AddCommentRequest createEmptyInstance() => create();
+  static $pb.PbList<AddCommentRequest> createRepeated() => $pb.PbList<AddCommentRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddCommentRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddCommentRequest>(create);
+  static AddCommentRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  NodePosition get position => $_getN(0);
+  @$pb.TagNumber(1)
+  set position(NodePosition v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPosition() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPosition() => clearField(1);
+  @$pb.TagNumber(1)
+  NodePosition ensurePosition() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.double get width => $_getN(1);
+  @$pb.TagNumber(2)
+  set width($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasWidth() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWidth() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get height => $_getN(2);
+  @$pb.TagNumber(3)
+  set height($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHeight() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHeight() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get parent => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set parent($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasParent() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearParent() => clearField(4);
+}
+
+class UpdateCommentRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateCommentRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..e<NodeColor>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', $pb.PbFieldType.OE, defaultOrMaker: NodeColor.NODE_COLOR_NONE, valueOf: NodeColor.valueOf, enumValues: NodeColor.values)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'showBackground')
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'showBorder')
+    ..hasRequiredFields = false
+  ;
+
+  UpdateCommentRequest._() : super();
+  factory UpdateCommentRequest({
+    $core.String? id,
+    NodeColor? color,
+    $core.String? label,
+    $core.bool? showBackground,
+    $core.bool? showBorder,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (showBackground != null) {
+      _result.showBackground = showBackground;
+    }
+    if (showBorder != null) {
+      _result.showBorder = showBorder;
+    }
+    return _result;
+  }
+  factory UpdateCommentRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateCommentRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateCommentRequest clone() => UpdateCommentRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateCommentRequest copyWith(void Function(UpdateCommentRequest) updates) => super.copyWith((message) => updates(message as UpdateCommentRequest)) as UpdateCommentRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateCommentRequest create() => UpdateCommentRequest._();
+  UpdateCommentRequest createEmptyInstance() => create();
+  static $pb.PbList<UpdateCommentRequest> createRepeated() => $pb.PbList<UpdateCommentRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateCommentRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateCommentRequest>(create);
+  static UpdateCommentRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  NodeColor get color => $_getN(1);
+  @$pb.TagNumber(2)
+  set color(NodeColor v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasColor() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearColor() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get label => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set label($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLabel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLabel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get showBackground => $_getBF(3);
+  @$pb.TagNumber(4)
+  set showBackground($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasShowBackground() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearShowBackground() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get showBorder => $_getBF(4);
+  @$pb.TagNumber(5)
+  set showBorder($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasShowBorder() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearShowBorder() => clearField(5);
+}
+
 class DuplicateNodesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DuplicateNodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths')
@@ -816,6 +1010,7 @@ class Nodes extends $pb.GeneratedMessage {
     ..pc<Node>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
     ..pc<NodeConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: NodeConnection.create)
     ..pc<Node>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allNodes', $pb.PbFieldType.PM, subBuilder: Node.create)
+    ..pc<NodeCommentArea>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'comments', $pb.PbFieldType.PM, subBuilder: NodeCommentArea.create)
     ..hasRequiredFields = false
   ;
 
@@ -824,6 +1019,7 @@ class Nodes extends $pb.GeneratedMessage {
     $core.Iterable<Node>? nodes,
     $core.Iterable<NodeConnection>? channels,
     $core.Iterable<Node>? allNodes,
+    $core.Iterable<NodeCommentArea>? comments,
   }) {
     final _result = create();
     if (nodes != null) {
@@ -834,6 +1030,9 @@ class Nodes extends $pb.GeneratedMessage {
     }
     if (allNodes != null) {
       _result.allNodes.addAll(allNodes);
+    }
+    if (comments != null) {
+      _result.comments.addAll(comments);
     }
     return _result;
   }
@@ -866,6 +1065,9 @@ class Nodes extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.List<Node> get allNodes => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<NodeCommentArea> get comments => $_getList(3);
 }
 
 class AvailableNodes extends $pb.GeneratedMessage {
@@ -3462,5 +3664,152 @@ class Port extends $pb.GeneratedMessage {
   $core.bool hasMultiple() => $_has(2);
   @$pb.TagNumber(3)
   void clearMultiple() => clearField(3);
+}
+
+class NodeCommentArea extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeCommentArea', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OD)
+    ..aOM<NodeDesigner>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'showBackground')
+    ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'showBorder')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
+    ..hasRequiredFields = false
+  ;
+
+  NodeCommentArea._() : super();
+  factory NodeCommentArea({
+    $core.String? id,
+    $core.double? width,
+    $core.double? height,
+    NodeDesigner? designer,
+    $core.String? label,
+    $core.bool? showBackground,
+    $core.bool? showBorder,
+    $core.String? parent,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
+    }
+    if (designer != null) {
+      _result.designer = designer;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (showBackground != null) {
+      _result.showBackground = showBackground;
+    }
+    if (showBorder != null) {
+      _result.showBorder = showBorder;
+    }
+    if (parent != null) {
+      _result.parent = parent;
+    }
+    return _result;
+  }
+  factory NodeCommentArea.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeCommentArea.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeCommentArea clone() => NodeCommentArea()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeCommentArea copyWith(void Function(NodeCommentArea) updates) => super.copyWith((message) => updates(message as NodeCommentArea)) as NodeCommentArea; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeCommentArea create() => NodeCommentArea._();
+  NodeCommentArea createEmptyInstance() => create();
+  static $pb.PbList<NodeCommentArea> createRepeated() => $pb.PbList<NodeCommentArea>();
+  @$core.pragma('dart2js:noInline')
+  static NodeCommentArea getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeCommentArea>(create);
+  static NodeCommentArea? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get width => $_getN(1);
+  @$pb.TagNumber(2)
+  set width($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasWidth() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWidth() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get height => $_getN(2);
+  @$pb.TagNumber(3)
+  set height($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHeight() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHeight() => clearField(3);
+
+  @$pb.TagNumber(4)
+  NodeDesigner get designer => $_getN(3);
+  @$pb.TagNumber(4)
+  set designer(NodeDesigner v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDesigner() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDesigner() => clearField(4);
+  @$pb.TagNumber(4)
+  NodeDesigner ensureDesigner() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.String get label => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set label($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasLabel() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLabel() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get showBackground => $_getBF(5);
+  @$pb.TagNumber(6)
+  set showBackground($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasShowBackground() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearShowBackground() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.bool get showBorder => $_getBF(6);
+  @$pb.TagNumber(7)
+  set showBorder($core.bool v) { $_setBool(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasShowBorder() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearShowBorder() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get parent => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set parent($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasParent() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearParent() => clearField(8);
 }
 

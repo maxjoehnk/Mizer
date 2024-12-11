@@ -124,6 +124,21 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
+  Future<void> addComment(AddCommentRequest request) async {
+    await channel.invokeMethod("addComment", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> updateComment(UpdateCommentRequest request) async {
+    await channel.invokeMethod("updateComment", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> deleteComment(String id) async {
+    await channel.invokeMethod("deleteComment", id);
+  }
+
+  @override
   Future<NodesPointer> getNodesPointer() async {
     int pointer = await channel.invokeMethod("getMetadataPointer");
 

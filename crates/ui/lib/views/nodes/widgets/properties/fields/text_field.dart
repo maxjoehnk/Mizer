@@ -108,25 +108,21 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
 
   Widget _readMultilineView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(widget.label),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            color: Colors.grey.shade700,
-          ),
-          child: Text(
-            controller.text,
-            style: textStyle,
-            maxLines: 10,
-            textAlign: TextAlign.start,
-          ),
-        )
-      ],
+    return Field(
+      label: this.widget.label,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(2),
+          color: Colors.grey.shade700,
+        ),
+        child: Text(
+          controller.text,
+          style: textStyle,
+          maxLines: 10,
+          textAlign: TextAlign.start,
+        ),
+      )
     );
   }
 
@@ -167,33 +163,29 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   Widget _editMultilineView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.label),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              color: Colors.grey.shade700,
+    return Field(
+        label: this.widget.label,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: Colors.grey.shade700,
+          ),
+          child: TextFieldFocus(
+            child: EditableText(
+              focusNode: focusNode,
+              controller: controller,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              style: textStyle,
+              textAlign: TextAlign.start,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.multiline,
+              autofocus: true,
+              maxLines: null,
             ),
-            child: TextFieldFocus(
-              child: EditableText(
-                focusNode: focusNode,
-                controller: controller,
-                cursorColor: Colors.black87,
-                backgroundCursorColor: Colors.black12,
-                style: textStyle,
-                textAlign: TextAlign.start,
-                selectionColor: Colors.black38,
-                keyboardType: TextInputType.multiline,
-                autofocus: true,
-                maxLines: null,
-              ),
-            ),
-          )
-        ]);
+          ),
+        ));
   }
 
   void _setValue(String value) {

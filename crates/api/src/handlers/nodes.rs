@@ -1,5 +1,5 @@
 use std::fmt::Debug;
-
+use std::str::FromStr;
 use mizer_command_executor::*;
 use mizer_docs::get_node_template_description;
 use mizer_node::{NodePath, NodeType, PortId};
@@ -25,6 +25,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let nodes = self.runtime.execute_query(ListNodesQuery).unwrap();
         let links = self.runtime.execute_query(ListLinksQuery).unwrap();
+        let comments = self.runtime.execute_query(ListCommentsQuery).unwrap();
+        res.comments = comments.into_iter().map(Into::into).collect();
 
         for node in nodes.iter() {
             let node: Node = node.clone().into();
@@ -342,5 +344,43 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[profiling::function]
     pub fn close_nodes_view(&self) {
         self.runtime.close_nodes_view();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_comment(&self, request: AddCommentRequest) -> anyhow::Result<()> {
+        let position = request.position.as_ref().unwrap();
+
+        let cmd = AddCommentCommand {
+            position: mizer_node::NodePosition {
+                x: position.x,
+                y: position.y,
+            },
+            width: request.width,
+            height: request.height,
+            parent: request.parent.map(NodePath::from),
+        };
+        self.runtime.run_command(cmd)?;
+
+        Ok(())
+    }
+
+    pub fn update_comment(&self, request: UpdateCommentRequest) -> anyhow::Result<()> {
+        let cmd = UpdateCommentCommand {
+            id: mizer_node::NodeCommentId::from_str(&request.id)?,
+            color: request.color.and_then(|color| (color as u8).try_into().ok()),
+            label: request.label,
+            show_background: request.show_background,
+            show_border: request.show_border,
+        };
+        self.runtime.run_command(cmd)?;
+
+        Ok(())
+    }
+
+    pub fn delete_comment(&self, comment_id: mizer_node::NodeCommentId) -> anyhow::Result<()> {
+        self.runtime.run_command(DeleteCommentCommand { comment_id })?;
+
+        Ok(())
     }
 }

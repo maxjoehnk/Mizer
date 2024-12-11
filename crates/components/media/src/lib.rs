@@ -24,6 +24,7 @@ pub mod media_handlers;
 mod module;
 pub mod queries;
 mod thumbnail_generator;
+mod project_loading;
 
 #[derive(Clone)]
 #[repr(transparent)]

@@ -25,7 +25,7 @@ pub struct PixelPatternGeneratorNode {
 }
 
 impl ConfigurableNode for PixelPatternGeneratorNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(enum PATTERN_SETTING, self.pattern)]
     }
 
@@ -45,7 +45,7 @@ impl PipelineNode for PixelPatternGeneratorNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(COLOR_INPUT, PortType::Color),
             output_port!(OUTPUT_PORT, PortType::Multi),

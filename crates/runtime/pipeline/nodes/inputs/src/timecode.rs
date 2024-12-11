@@ -18,7 +18,7 @@ impl PipelineNode for TimecodeNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_CLOCK_PORT, PortType::Clock)]
     }
 

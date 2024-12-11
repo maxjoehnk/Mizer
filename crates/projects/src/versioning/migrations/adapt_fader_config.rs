@@ -8,14 +8,14 @@ use crate::versioning::migrations::ProjectFileMigration;
 pub struct AdaptFaderConfig;
 
 impl ProjectFileMigration for AdaptFaderConfig {
-    const VERSION: usize = 5;
+    const VERSION: u32 = 5;
 
-    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut Vec<u8>) -> anyhow::Result<()> {
         profiling::scope!("AdaptFaderConfig::migrate");
-        let project: ProjectConfig<OldFaderConfig> = serde_yaml::from_str(project_file)?;
+        let project: ProjectConfig<OldFaderConfig> = serde_yaml::from_slice(&project_file)?;
         let project: ProjectConfig<NewFaderConfig> = project.into();
 
-        *project_file = serde_yaml::to_string(&project)?;
+        *project_file = serde_yaml::to_vec(&project)?;
 
         Ok(())
     }

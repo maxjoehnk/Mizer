@@ -22,7 +22,7 @@ pub struct ImageFileNode {
 }
 
 impl ConfigurableNode for ImageFileNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(media FILE_SETTING, &self.file, vec![MediaContentType::Image])]
     }
 
@@ -42,9 +42,9 @@ impl PipelineNode for ImageFileNode {
         }
     }
 
-    fn display_name(&self, injector: &Injector) -> String {
+    fn display_name(&self, injector: &dyn InjectDyn) -> String {
         if let Some(document) = injector
-            .get::<MediaServer>()
+            .try_inject::<MediaServer>()
             .zip(MediaId::try_from(self.file.clone()).ok())
             .and_then(|(media_server, media_id)| media_server.get_media_file(media_id))
         {
@@ -54,7 +54,7 @@ impl PipelineNode for ImageFileNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Texture)]
     }
 

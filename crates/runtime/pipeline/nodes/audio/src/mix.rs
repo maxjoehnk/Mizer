@@ -19,7 +19,7 @@ impl PipelineNode for AudioMixNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(AUDIO_INPUT, PortType::Multi, multiple),
             output_port!(AUDIO_OUTPUT, PortType::Multi),

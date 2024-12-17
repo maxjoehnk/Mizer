@@ -3,6 +3,7 @@ use std::marker::PhantomData;
 pub use mizer_clock::ClockFrame;
 pub use mizer_clock::ClockState;
 pub use mizer_injector::Inject;
+use mizer_injector::InjectDyn;
 use mizer_ports::port_types;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
@@ -12,7 +13,7 @@ use crate::{PortMetadata, PreviewContext};
 pub const SINGLE_HIGH: f64 = 1.0;
 pub const SINGLE_LOW: f64 = 0.0;
 
-pub trait NodeContext: PreviewContext + Sized + Inject {
+pub trait NodeContext: PreviewContext + Sized + InjectDyn {
     fn clock(&self) -> ClockFrame;
     fn write_clock_tempo(&self, speed: f64);
     fn write_clock_state(&self, state: ClockState);

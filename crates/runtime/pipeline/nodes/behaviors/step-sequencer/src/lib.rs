@@ -62,7 +62,7 @@ impl Default for StepSequencerNode {
 }
 
 impl ConfigurableNode for StepSequencerNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(STEPS_SETTING, self.steps.clone()),
             // setting!(BAR_COUNT_SETTING, self.bar_count) // TODO: implement support for variable bar count
@@ -90,7 +90,7 @@ impl PipelineNode for StepSequencerNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             output_port!(VALUE_OUTPUT, PortType::Single),
             input_port!(STEPS_INPUT, PortType::Multi),

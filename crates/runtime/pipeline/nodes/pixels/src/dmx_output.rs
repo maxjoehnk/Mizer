@@ -38,7 +38,7 @@ impl Default for PixelDmxNode {
 const INPUT_PORT: &str = "Input";
 
 impl ConfigurableNode for PixelDmxNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(WIDTH_SETTING, self.width).min(1u32),
             setting!(HEIGHT_SETTING, self.height).min(1u32),
@@ -70,7 +70,7 @@ impl PipelineNode for PixelDmxNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
             INPUT_PORT, PortType::Texture, dimensions: (self.width as u64, self.height as u64)
         )]

@@ -9,14 +9,14 @@ use crate::versioning::migrations::ProjectFileMigration;
 pub struct ReworkLayoutControlsToNotUseNodes;
 
 impl ProjectFileMigration for ReworkLayoutControlsToNotUseNodes {
-    const VERSION: usize = 3;
+    const VERSION: u32 = 3;
 
-    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut Vec<u8>) -> anyhow::Result<()> {
         profiling::scope!("ReworkLayoutControlsToNotUseNodes::migrate");
-        let project: ProjectConfig<OldControlConfig> = serde_yaml::from_str(project_file)?;
+        let project: ProjectConfig<OldControlConfig> = serde_yaml::from_slice(&project_file)?;
         let project: ProjectConfig<NewControlConfig> = project.into();
 
-        *project_file = serde_yaml::to_string(&project)?;
+        *project_file = serde_yaml::to_vec(&project)?;
 
         Ok(())
     }
@@ -141,7 +141,7 @@ mod tests {
 
     #[test]
     fn migration_should_migrate_button_control() {
-        let input = r#"
+        let input = br#"
 layouts:
     Test:
         - node: /test
@@ -151,13 +151,13 @@ nodes:
       config:
         toggle: false
         "#;
-        let mut input = input.to_string();
+        let mut input = input.to_vec();
 
         ReworkLayoutControlsToNotUseNodes
             .migrate(&mut input)
             .unwrap();
 
-        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_str(&input).unwrap();
+        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_slice(&input).unwrap();
         assert_eq!(
             NewControlConfig::Node {
                 path: "/test".to_string()
@@ -168,7 +168,7 @@ nodes:
 
     #[test]
     fn migration_should_migrate_group_control() {
-        let input = r#"
+        let input = br#"
 layouts:
     Test:
         - node: /test
@@ -178,13 +178,13 @@ nodes:
       config:
         id: 1
         "#;
-        let mut input = input.to_string();
+        let mut input = input.to_vec();
 
         ReworkLayoutControlsToNotUseNodes
             .migrate(&mut input)
             .unwrap();
 
-        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_str(&input).unwrap();
+        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_slice(&input).unwrap();
         assert_eq!(
             NewControlConfig::Group { group_id: 1 },
             config.layouts["Test"][0].config
@@ -193,7 +193,7 @@ nodes:
 
     #[test]
     fn migration_should_migrate_preset_control() {
-        let input = r#"
+        let input = br#"
 layouts:
     Test:
         - node: /test
@@ -204,13 +204,13 @@ nodes:
         id:
           Intensity: 1
         "#;
-        let mut input = input.to_string();
+        let mut input = input.to_vec();
 
         ReworkLayoutControlsToNotUseNodes
             .migrate(&mut input)
             .unwrap();
 
-        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_str(&input).unwrap();
+        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_slice(&input).unwrap();
         assert_eq!(
             NewControlConfig::Preset {
                 preset_id: PresetId::Intensity(1),
@@ -221,7 +221,7 @@ nodes:
 
     #[test]
     fn migration_should_migrate_sequence_control() {
-        let input = r#"
+        let input = br#"
 layouts:
     Test:
         - node: /test
@@ -231,13 +231,13 @@ nodes:
       config:
         sequence: 1
         "#;
-        let mut input = input.to_string();
+        let mut input = input.to_vec();
 
         ReworkLayoutControlsToNotUseNodes
             .migrate(&mut input)
             .unwrap();
 
-        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_str(&input).unwrap();
+        let config: ProjectConfig<NewControlConfig> = serde_yaml::from_slice(&input).unwrap();
         assert_eq!(
             NewControlConfig::Sequencer { sequence_id: 1 },
             config.layouts["Test"][0].config

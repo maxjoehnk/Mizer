@@ -1,4 +1,4 @@
-use mizer_project_files::Project;
+use mizer_project_files::{HandlerContext, Project};
 use test_case::test_case;
 
 #[test_case("artnet"; "artnet")]
@@ -24,6 +24,6 @@ fn test_load_project(project: &str) {
         env!("CARGO_MANIFEST_DIR"),
         project
     );
-
-    let _ = Project::load_file(path).unwrap();
+    
+    let _ = HandlerContext::open(path).unwrap();
 }

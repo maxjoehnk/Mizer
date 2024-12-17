@@ -11,6 +11,21 @@ message AddNodeRequest {
   optional string template = 4;
 }
 
+message AddCommentRequest {
+  NodePosition position = 1;
+  double width = 2;
+  double height = 3;
+  optional string parent = 4;
+}
+
+message UpdateCommentRequest {
+  string id = 1;
+  optional NodeColor color = 2;
+  optional string label = 3;
+  optional bool show_background = 4;
+  optional bool show_border = 5;
+}
+
 message DuplicateNodesRequest {
   repeated string paths = 1;
   optional string parent = 2;
@@ -75,6 +90,7 @@ message Nodes {
   repeated NodeConnection channels = 2;
   // Flat list of all nodes
   repeated Node all_nodes = 3;
+  repeated NodeCommentArea comments = 4;
 }
 
 message AvailableNodes {
@@ -356,4 +372,15 @@ message Port {
   string name = 1;
   ChannelProtocol protocol = 2;
   bool multiple = 3;
+}
+
+message NodeCommentArea {
+  string id = 1;
+  double width = 2;
+  double height = 3;
+  NodeDesigner designer = 4;
+  optional string label = 5;
+  bool show_background = 6;
+  bool show_border = 7;
+  optional string parent = 8;
 }

@@ -555,3 +555,18 @@ impl From<mizer_node::NodeCategory> for NodeCategory {
         }
     }
 }
+
+impl From<mizer_node::NodeCommentArea> for NodeCommentArea {
+    fn from(comment_area: mizer_node::NodeCommentArea) -> Self {
+        Self {
+            id: comment_area.id.to_string(),
+            parent: comment_area.parent.map(|path| path.to_string()),
+            designer: Some(comment_area.designer.into()),
+            width: comment_area.width,
+            height: comment_area.height,
+            label: comment_area.label,
+            show_background: comment_area.show_background,
+            show_border: comment_area.show_border,
+        }
+    }
+}

@@ -1,5 +1,4 @@
 use std::net::Ipv4Addr;
-use std::path::Path;
 
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
@@ -17,8 +16,6 @@ use mizer_surfaces::Surface;
 use mizer_timecode::{TimecodeControl, TimecodeTrack};
 
 use crate::fixtures::PresetsStore;
-use crate::project_file::ProjectFile;
-use crate::versioning::{migrate, Migrations};
 pub use crate::handler_context::HandlerContext;
 
 mod fixtures;
@@ -66,32 +63,6 @@ pub struct Project {
 pub struct Timecodes {
     pub timecodes: Vec<TimecodeTrack>,
     pub controls: Vec<TimecodeControl>,
-}
-
-impl Project {
-    pub fn new() -> Self {
-        Self {
-            version: Migrations::latest_version(),
-            ..Default::default()
-        }
-    }
-
-    #[profiling::function]
-    pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
-        let path = path.as_ref();
-        let mut project_file = ProjectFile::open(path.as_ref())?;
-        migrate(&mut project_file)?;
-        todo!();
-    }
-
-    // pub fn load(content: &str) -> anyhow::Result<Project> {
-    //     let mut content = content.to_string();
-    //     let file_content = unsafe { content.as_mut_vec() };
-    //     migrate(file_content)?;
-    //     let project = serde_yaml::from_str(&content)?;
-    // 
-    //     Ok(project)
-    // }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

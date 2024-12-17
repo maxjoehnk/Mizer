@@ -1,7 +1,8 @@
+use std::any::{Any, TypeId};
 use std::cell::RefCell;
 
 use mizer_clock::{ClockState, Timecode};
-use mizer_injector::Inject;
+use mizer_injector::InjectDyn;
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
@@ -108,8 +109,8 @@ impl NodeContext for NodeContextMock {
     }
 }
 
-impl Inject for NodeContextMock {
-    fn try_inject<T: 'static>(&self) -> Option<&T> {
+impl InjectDyn for NodeContextMock {
+    fn try_inject_dyn(&self, type_id: TypeId) -> Option<&Box<dyn Any>> {
         todo!()
     }
 }

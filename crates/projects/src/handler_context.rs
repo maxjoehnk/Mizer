@@ -9,15 +9,14 @@ use mizer_module::{LoadProjectContext, ProjectHandlerContext, SaveProjectContext
 use crate::project_file::{ProjectArchive, ProjectFile};
 use crate::versioning::{migrate, Migrations};
 
+#[derive(Default)]
 pub struct HandlerContext {
     archive: ProjectArchive,
 }
 
 impl HandlerContext {
     pub fn new() -> Self {
-        Self {
-            archive: Default::default(),
-        }
+        Self::default()
     }
     
     pub fn open(path: impl AsRef<Path>) -> anyhow::Result<Self> {

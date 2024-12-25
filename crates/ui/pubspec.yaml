@@ -50,6 +50,7 @@ dev_dependencies:
   bloc_test: ^9.1.0
   ffigen: ^8.0.0
   flutter_launcher_icons: ^0.14.0
+  flutter_native_splash: 2.2.19
 
 flutter:
   uses-material-design: true
@@ -147,3 +148,9 @@ flutter_launcher_icons:
     icon_size: 256
   macos:
     generate: true
+
+flutter_native_splash:
+  color: "#303030"
+  android: false
+  web: false
+  image: ../../assets/logo@512.png

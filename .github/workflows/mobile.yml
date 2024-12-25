@@ -63,3 +63,29 @@ jobs:
           bundle install
           bundle exec fastlane beta
         working-directory: crates/ui/android
+
+  build-ios-remote:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Build android release bundle
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: "crates/ui/pubspec.yaml"
+      - name: Build
+        run: make ios_bundle
+        working-directory: crates/ui
+      # Upload to app store
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+      - name: Deploy
+        run: |
+          bundle install
+          bundle exec fastlane beta
+        working-directory: crates/ui/ios

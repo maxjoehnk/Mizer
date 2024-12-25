@@ -47,8 +47,14 @@ i18n:
 icons:
 	flutter pub run flutter_launcher_icons
 
+splash:
+	flutter pub run flutter_native_splash:create
+
 companion:
 	flutter run -t lib/mobile/main.dart
 
 android_bundle: generate_bindings
 	flutter build appbundle --release -t lib/mobile/main.dart
+
+ios_bundle: generate_bindings
+	flutter build ipa --release -t lib/mobile/main.dart

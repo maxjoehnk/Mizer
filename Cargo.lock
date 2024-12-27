@@ -141,7 +141,7 @@ dependencies = [
  "ndk-context",
  "ndk-sys 0.6.0+11769913",
  "num_enum",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -268,7 +268,7 @@ dependencies = [
  "objc-foundation",
  "objc_id",
  "parking_lot",
- "thiserror",
+ "thiserror 1.0.64",
  "x11rb",
 ]
 
@@ -531,7 +531,7 @@ checksum = "20235b6899dd1cb74a9afac0abf5b4a20c0e500dd6537280f4096e1b9f14da20"
 dependencies = [
  "async-fs 2.1.1",
  "futures-lite 2.2.0",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -1002,7 +1002,7 @@ dependencies = [
  "cached_proc_macro_types",
  "hashbrown 0.14.3",
  "once_cell",
- "thiserror",
+ "thiserror 1.0.64",
  "web-time",
 ]
 
@@ -1034,7 +1034,7 @@ dependencies = [
  "cairo-sys-rs",
  "glib",
  "libc",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -1059,7 +1059,7 @@ dependencies = [
  "polling 3.4.0",
  "rustix 0.38.31",
  "slab",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -1862,9 +1862,9 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-utils"
-version = "0.8.19"
+version = "0.8.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "248e3bacc7dc6baa3b21e405ee045c3047101a49145e7e9eca583ab4c2ca5345"
+checksum = "d0a5c400df2834b80a4c3327b3aad3a4c4cd4de0629063962b03235697506a28"
 
 [[package]]
 name = "crunchy"
@@ -2466,7 +2466,7 @@ dependencies = [
  "egui",
  "epaint",
  "log",
- "thiserror",
+ "thiserror 1.0.64",
  "type-map",
  "web-time",
  "wgpu",
@@ -3295,7 +3295,7 @@ dependencies = [
  "bitflags 1.3.2",
  "log",
  "rusb",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -3486,7 +3486,7 @@ dependencies = [
  "glib",
  "libc",
  "once_cell",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -3658,7 +3658,7 @@ checksum = "fdd4240fc91d3433d5e5b0fc5b67672d771850dc19bbee03c1381e19322803d7"
 dependencies = [
  "log",
  "presser",
- "thiserror",
+ "thiserror 1.0.64",
  "winapi 0.3.9",
  "windows 0.52.0",
 ]
@@ -3860,7 +3860,7 @@ dependencies = [
  "com",
  "libc",
  "libloading",
- "thiserror",
+ "thiserror 1.0.64",
  "widestring 1.0.2",
  "winapi 0.3.9",
 ]
@@ -3888,7 +3888,7 @@ checksum = "a822882350e060c3cde45bb95bbff01d70874d4cd553b951044522c910e6dc5c"
 dependencies = [
  "bitflags 1.3.2",
  "rusb",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -4521,7 +4521,7 @@ dependencies = [
  "combine",
  "jni-sys",
  "log",
- "thiserror",
+ "thiserror 1.0.64",
  "walkdir",
  "windows-sys 0.45.0",
 ]
@@ -6907,7 +6907,7 @@ dependencies = [
  "rustc-hash 1.1.0",
  "spirv",
  "termcolor",
- "thiserror",
+ "thiserror 1.0.64",
  "unicode-xid",
 ]
 
@@ -7030,7 +7030,7 @@ dependencies = [
  "log",
  "ndk-sys 0.5.0+25.2.9519653",
  "num_enum",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -7045,7 +7045,7 @@ dependencies = [
  "ndk-sys 0.6.0+11769913",
  "num_enum",
  "raw-window-handle",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -7134,7 +7134,7 @@ dependencies = [
  "anyhow",
  "byteorder",
  "paste",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -7196,7 +7196,7 @@ dependencies = [
  "nokhwa-bindings-windows",
  "nokhwa-core",
  "paste",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -7243,7 +7243,7 @@ dependencies = [
  "bytes 1.9.0",
  "image 0.24.8",
  "mozjpeg",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -8128,7 +8128,7 @@ dependencies = [
  "pin-project",
  "pollster",
  "static_assertions",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -8195,7 +8195,7 @@ version = "0.1.0"
 source = "git+https://github.com/maxjoehnk/pro-dj-link-rs.git#6c8b4cb3940ada3744872df6b40e3e91791a3804"
 dependencies = [
  "bitflags 1.3.2",
- "thiserror",
+ "thiserror 1.0.64",
  "tokio",
  "tracing",
 ]
@@ -8487,7 +8487,7 @@ dependencies = [
  "rand_chacha",
  "simd_helpers",
  "system-deps 6.2.2",
- "thiserror",
+ "thiserror 1.0.64",
  "v_frame",
  "wasm-bindgen",
 ]
@@ -8585,7 +8585,7 @@ checksum = "a18479200779601e498ada4e8c1e1f50e3ee19deb0259c25825a98b5603b2cb4"
 dependencies = [
  "getrandom",
  "libredox 0.0.1",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -9038,7 +9038,7 @@ dependencies = [
  "image 0.24.8",
  "log",
  "percent-encoding",
- "thiserror",
+ "thiserror 1.0.64",
  "windows 0.52.0",
  "xcb",
 ]
@@ -9216,7 +9216,7 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "serde_json",
- "thiserror",
+ "thiserror 1.0.64",
  "time",
  "url",
  "uuid 1.11.0",
@@ -9489,7 +9489,7 @@ dependencies = [
  "log",
  "memmap2",
  "rustix 0.38.31",
- "thiserror",
+ "thiserror 1.0.64",
  "wayland-backend",
  "wayland-client",
  "wayland-csd-frame",
@@ -9965,7 +9965,7 @@ dependencies = [
  "pkg-config",
  "strum",
  "strum_macros",
- "thiserror",
+ "thiserror 1.0.64",
  "toml 0.5.11",
  "version-compare 0.0.11",
 ]
@@ -10088,7 +10088,16 @@ version = "1.0.64"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d50af8abc119fb8bb6dbabcfa89656f46f84aa0ac7688088608076ad2b459a84"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 1.0.64",
+]
+
+[[package]]
+name = "thiserror"
+version = "2.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f072643fd0190df67a8bab670c20ef5d8737177d6ac6b2e9a236cb096206b2cc"
+dependencies = [
+ "thiserror-impl 2.0.9",
 ]
 
 [[package]]
@@ -10096,6 +10105,17 @@ name = "thiserror-impl"
 version = "1.0.64"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08904e7672f5eb876eaaf87e0ce17857500934f4981c4a0ab2b4aa98baac7fc3"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.87",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "2.0.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7b50fa271071aae2e6ee85f842e2e28ba8cd2c5fb67f11fcb1fd70b276f9e7d4"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -10434,7 +10454,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3566e8ce28cc0a3fe42519fc80e6b4c943cc4c8cef275620eb8dac2d3d4e06cf"
 dependencies = [
  "crossbeam-channel",
- "thiserror",
+ "thiserror 1.0.64",
  "time",
  "tracing-subscriber",
 ]
@@ -10552,7 +10572,7 @@ version = "0.1.0"
 source = "git+https://github.com/maxjoehnk/traktor-kontrol-x1-rs.git#ba61422b62ae895eb13a70f968bfe62ce35690b2"
 dependencies = [
  "rusb",
- "thiserror",
+ "thiserror 1.0.64",
 ]
 
 [[package]]
@@ -10924,7 +10944,7 @@ dependencies = [
  "raw-window-handle",
  "skrifa 0.22.3",
  "static_assertions",
- "thiserror",
+ "thiserror 1.0.64",
  "vello_encoding",
  "vello_shaders",
  "wgpu",
@@ -10951,7 +10971,7 @@ checksum = "07cad02d6f29f2212a6ee382a8fec6f9977d0cceefacf07f8e361607ffe3988d"
 dependencies = [
  "bytemuck",
  "naga",
- "thiserror",
+ "thiserror 1.0.64",
  "vello_encoding",
 ]
 
@@ -10962,7 +10982,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bbf8bc9b79b81a290cb8dfa3506c281c7300cc0fcf23e76ec5e2f0174bac4f03"
 dependencies = [
  "image 0.25.5",
- "thiserror",
+ "thiserror 1.0.64",
  "usvg",
  "vello",
 ]
@@ -11296,7 +11316,7 @@ dependencies = [
  "raw-window-handle",
  "rustc-hash 1.1.0",
  "smallvec",
- "thiserror",
+ "thiserror 1.0.64",
  "wgpu-hal",
  "wgpu-types",
 ]
@@ -11339,7 +11359,7 @@ dependencies = [
  "renderdoc-sys",
  "rustc-hash 1.1.0",
  "smallvec",
- "thiserror",
+ "thiserror 1.0.64",
  "wasm-bindgen",
  "web-sys",
  "wgpu-types",
@@ -12283,9 +12303,9 @@ dependencies = [
 
 [[package]]
 name = "zeroize"
-version = "1.7.0"
+version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "525b4ec142c6b68a2d10f01f7bbf6755599ca3f81ea53b8431b7dd348f5fdb2d"
+checksum = "ced3678a2879b30306d323f4542626697a464a97c0a07c9aebf7ebca65cd4dde"
 dependencies = [
  "zeroize_derive",
 ]
@@ -12325,9 +12345,9 @@ dependencies = [
 
 [[package]]
 name = "zip"
-version = "2.0.0"
+version = "2.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fccb210625924ecbbe92f9bb497d04b167b64fe5540cec75f10b16e0c51ee92b"
+checksum = "ae9c1ea7b3a5e1f4b922ff856a129881167511563dc219869afe3787fc0c1a45"
 dependencies = [
  "aes",
  "arbitrary",
@@ -12341,10 +12361,11 @@ dependencies = [
  "hmac",
  "indexmap 2.7.0",
  "lzma-rs",
+ "memchr",
  "pbkdf2",
  "rand 0.8.5",
  "sha1",
- "thiserror",
+ "thiserror 2.0.9",
  "time",
  "zeroize",
  "zopfli",

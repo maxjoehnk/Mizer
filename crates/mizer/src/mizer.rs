@@ -17,6 +17,8 @@ use crate::api::*;
 use crate::flags::Flags;
 use crate::project_handler::ErasedProjectHandler;
 
+const SHOWFILE_EXTENSION: &str = "mshow";
+
 pub struct Mizer {
     pub flags: Flags,
     pub runtime: DefaultRuntime,
@@ -137,7 +139,7 @@ impl Mizer {
 
     #[profiling::function]
     pub fn save_project_as(&mut self, mut path: PathBuf) -> anyhow::Result<()> {
-        path.set_extension("zip");
+        path.set_extension(SHOWFILE_EXTENSION);
         self.project_path = Some(path.clone());
         self.save_project()?;
         self.project_history.add_project(&path)?;
@@ -149,14 +151,15 @@ impl Mizer {
     #[profiling::function]
     pub fn save_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Saving Project", 0);
-        if let Some(ref path) = self.project_path {
+        if let Some(ref mut path) = self.project_path {
+            path.set_extension(SHOWFILE_EXTENSION);
             self.runtime.add_status_message("Saving project...", None);
             tracing::info!("Saving project to {:?}...", path);
             let mut context = HandlerContext::new();
             for project_handler in &mut self.project_handlers {
                 project_handler.save_project(&mut context, self.runtime.injector())?;
             }
-            context.save(path)?;
+            context.save(&path)?;
             tracing::info!("Saving project...Done");
             self.runtime.add_status_message(
                 format!("Project saved ({path:?})"),
@@ -173,13 +176,10 @@ impl Mizer {
 
     #[profiling::function]
     fn send_session_update(&self) {
-        let history = match self.project_history.load() {
-            Ok(history) => history,
-            Err(err) => {
-                tracing::error!("Error loading project history {:?}", err);
-                Default::default()
-            }
-        };
+        let history = self.project_history.load().unwrap_or_else(|err| {
+            tracing::error!("Error loading project history {:?}", err);
+            Default::default()
+        });
         self.session_events.send(SessionState {
             project_path: self.project_path.clone().map(|path| {
                 path.into_os_string()

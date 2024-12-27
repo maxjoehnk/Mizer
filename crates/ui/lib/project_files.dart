@@ -6,11 +6,11 @@ import 'package:mizer/i18n.dart';
 import 'package:provider/provider.dart';
 
 const PROJECT_V1_EXTENSION = 'yml';
-const PROJECT_V2_EXTENSION = 'zip';
+const PROJECT_V2_EXTENSION = 'mshow';
 
 class ProjectFiles {
   static Future<void> openProject(BuildContext context) async {
-    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: [PROJECT_V1_EXTENSION, PROJECT_V2_EXTENSION]);
+    final typeGroup = XTypeGroup(label: 'Mizer Showfiles'.i18n, extensions: [PROJECT_V1_EXTENSION, PROJECT_V2_EXTENSION]);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
     if (file == null) {
       return;
@@ -29,7 +29,7 @@ class ProjectFiles {
   }
 
   static Future<void> saveProjectAs(BuildContext context) async {
-    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: [PROJECT_V2_EXTENSION]);
+    final typeGroup = XTypeGroup(label: 'Mizer Showfiles'.i18n, extensions: [PROJECT_V2_EXTENSION]);
     final location = await getSaveLocation(acceptedTypeGroups: [typeGroup]);
     if (location == null) {
       return;

@@ -25,6 +25,8 @@ mod handler_context;
 mod project_file;
 mod media;
 
+pub const SHOWFILE_EXTENSION: &str = "mshow";
+
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
     #[serde(default)]

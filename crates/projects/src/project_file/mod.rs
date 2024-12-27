@@ -5,6 +5,7 @@ use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 use zip::unstable::{LittleEndianReadExt, LittleEndianWriteExt};
 pub(crate) use self::archive_file::ProjectArchive;
+use crate::SHOWFILE_EXTENSION;
 
 mod archive_file;
 
@@ -20,7 +21,7 @@ impl TryFrom<&Path> for ProjectFileType {
     fn try_from(value: &Path) -> Result<Self, Self::Error> {
         match value.extension().and_then(|ext| ext.to_str()) {
             Some("yaml") | Some("yml") => Ok(Self::Yaml),
-            Some("zip") => Ok(Self::Zip),
+            Some(SHOWFILE_EXTENSION) => Ok(Self::Zip),
             _ => anyhow::bail!("unsupported file type"),
         }
     }

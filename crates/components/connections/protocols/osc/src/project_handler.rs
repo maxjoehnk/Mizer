@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-use mizer_module::*;
 use crate::{OscAddress, OscConnectionManager};
+use mizer_module::*;
+use std::collections::HashMap;
 
 const CONNECTIONS_FILE_NAME: &str = "osc";
 
@@ -11,7 +11,11 @@ impl ProjectHandler for OscProjectHandler {
         "connections"
     }
 
-    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn new_project(
+        &mut self,
+        _context: &mut impl ProjectHandlerContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         let Some(osc_manager) = injector.try_inject_mut::<OscConnectionManager>() else {
             tracing::warn!("OSC connection manager not found");
             return Ok(());
@@ -22,7 +26,11 @@ impl ProjectHandler for OscProjectHandler {
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         profiling::scope!("OscProjectHandler::load_project");
         let Some(osc_manager) = injector.try_inject_mut::<OscConnectionManager>() else {
             tracing::warn!("OSC connection manager not found");
@@ -37,7 +45,11 @@ impl ProjectHandler for OscProjectHandler {
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()> {
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()> {
         profiling::scope!("OscProjectHandler::save_project");
         let Some(osc_manager) = injector.try_inject::<OscConnectionManager>() else {
             tracing::warn!("OSC connection manager not found");

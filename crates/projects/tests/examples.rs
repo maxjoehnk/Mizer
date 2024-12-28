@@ -24,6 +24,6 @@ fn test_load_project(project: &str) {
         env!("CARGO_MANIFEST_DIR"),
         project
     );
-    
+
     let _ = HandlerContext::open(path).unwrap();
 }

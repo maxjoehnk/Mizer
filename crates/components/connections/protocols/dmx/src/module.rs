@@ -2,8 +2,8 @@ use crate::dmx_monitor::create_monitor;
 use mizer_module::*;
 
 use crate::processor::DmxProcessor;
-use crate::DmxConnectionManager;
 use crate::project_handler::DmxProjectHandler;
+use crate::DmxConnectionManager;
 
 pub struct DmxModule;
 

@@ -8,7 +8,7 @@ use mizer_console::ConsoleCategory;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{ProjectHandlerContext, Runtime};
-use mizer_project_files::{HandlerContext, history::ProjectHistory, SHOWFILE_EXTENSION};
+use mizer_project_files::{history::ProjectHistory, HandlerContext, SHOWFILE_EXTENSION};
 use mizer_runtime::DefaultRuntime;
 use mizer_session::SessionState;
 use mizer_status_bus::{ProjectStatus, StatusBus};

@@ -1,5 +1,5 @@
-use enum_iterator::all;
 use crate::project_file::ProjectFile;
+use enum_iterator::all;
 
 use self::migrations::*;
 

@@ -47,14 +47,15 @@ impl PipelineNode for TimecodeControlNode {
     }
 
     fn display_name(&self, injector: &dyn InjectDyn) -> String {
-        if let Some(timecode) = injector
-            .try_inject::<TimecodeManager>()
-            .and_then(|timecode_manager| {
-                timecode_manager
-                    .timecodes()
-                    .into_iter()
-                    .find(|timecode| timecode.id == self.timecode_id)
-            })
+        if let Some(timecode) =
+            injector
+                .try_inject::<TimecodeManager>()
+                .and_then(|timecode_manager| {
+                    timecode_manager
+                        .timecodes()
+                        .into_iter()
+                        .find(|timecode| timecode.id == self.timecode_id)
+                })
         {
             format!("Timecode Control ({})", timecode.name)
         } else {

@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use crate::fixture::FixtureConfiguration;
 use crate::programmer::{Color, Position, Preset, Presets};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {

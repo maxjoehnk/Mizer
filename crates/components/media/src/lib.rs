@@ -22,9 +22,9 @@ mod file_storage;
 mod import_handler;
 pub mod media_handlers;
 mod module;
+mod project_loading;
 pub mod queries;
 mod thumbnail_generator;
-mod project_loading;
 
 #[derive(Clone)]
 #[repr(transparent)]

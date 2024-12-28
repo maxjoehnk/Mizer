@@ -1,6 +1,6 @@
 use crate::debug_ui_pane::LayoutsDebugUiPane;
-use mizer_module::{module_name, Module, ModuleContext};
 use crate::project_handler::LayoutProjectHandler;
+use mizer_module::{module_name, Module, ModuleContext};
 
 pub struct LayoutsModule;
 

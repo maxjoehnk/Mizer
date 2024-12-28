@@ -3,13 +3,15 @@ use crate::context::CoordinatorRuntimeContext;
 use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
-use mizer_debug_ui_impl::{NodeStateAccess};
-use mizer_node::{InjectDyn, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode, PortDirection, PortMetadata, ProcessingNode,
+use mizer_debug_ui_impl::NodeStateAccess;
+use mizer_node::{
+    InjectDyn, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
+    PortDirection, PortMetadata, ProcessingNode,
 };
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
-use mizer_processing::{Processor, Injector, ProcessorPriorities};
+use mizer_processing::{Injector, Processor, ProcessorPriorities};
 use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
 use std::collections::HashMap;

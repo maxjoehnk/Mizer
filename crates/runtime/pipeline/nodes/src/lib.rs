@@ -35,8 +35,8 @@ pub use mizer_midi_nodes::{
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
 use mizer_node::{
-    ConfigurableNode, DebugUiDrawHandle, NodeDetails, NodeSetting, NodeTemplate,
-    NodeType, PipelineNode, PortId, PortMetadata, InjectDyn,
+    ConfigurableNode, DebugUiDrawHandle, InjectDyn, NodeDetails, NodeSetting, NodeTemplate,
+    NodeType, PipelineNode, PortId, PortMetadata,
 };
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
@@ -69,14 +69,14 @@ pub use mizer_webcam_nodes::WebcamNode;
 
 use crate::test_sink::TestSink;
 
-pub use self::container_node::ContainerNode;
 pub use self::config::NodeConfig;
+pub use self::container_node::ContainerNode;
 
+mod config;
 mod container_node;
 mod downcast;
 #[doc(hidden)]
 pub mod test_sink;
-mod config;
 
 macro_rules! node_impl {
     ($($node_type:ident($node:ty),)*) => {

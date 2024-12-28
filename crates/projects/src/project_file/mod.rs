@@ -1,11 +1,11 @@
+pub(crate) use self::archive_file::ProjectArchive;
+use crate::SHOWFILE_EXTENSION;
+use indexmap::IndexMap;
+use serde::{Deserialize, Serialize};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use indexmap::IndexMap;
-use serde::{Deserialize, Serialize};
 use zip::unstable::{LittleEndianReadExt, LittleEndianWriteExt};
-pub(crate) use self::archive_file::ProjectArchive;
-use crate::SHOWFILE_EXTENSION;
 
 mod archive_file;
 
@@ -39,12 +39,8 @@ impl ProjectFile {
         let mut file_content = Vec::new();
         file.read_to_end(&mut file_content)?;
         match file_type {
-            ProjectFileType::Yaml => {
-                Ok(Self::Yaml(file_content))
-            }
-            ProjectFileType::Zip => {
-                Ok(Self::Archive(ProjectArchive(file_content)))
-            }
+            ProjectFileType::Yaml => Ok(Self::Yaml(file_content)),
+            ProjectFileType::Zip => Ok(Self::Archive(ProjectArchive(file_content))),
         }
     }
 
@@ -60,7 +56,7 @@ impl ProjectFile {
                 let mut reader = archive.read()?;
                 let mut file = reader.read_file("VERSION")?;
                 let version = file.read_u32_le()?;
-                
+
                 Ok(version)
             }
         }
@@ -83,7 +79,7 @@ impl ProjectFile {
 
         Ok(())
     }
-    
+
     pub(crate) fn as_yaml(&mut self) -> Option<&mut Vec<u8>> {
         match self {
             Self::Yaml(content) => Some(content),
@@ -96,14 +92,14 @@ impl ProjectFile {
             Self::Archive(content) => Some(content),
             _ => None,
         }
-    }}
+    }
+}
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 struct ProjectVersion {
     #[serde(default)]
     pub version: u32,
 }
-
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 struct ProjectVersionWithContent {

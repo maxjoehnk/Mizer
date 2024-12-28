@@ -10,8 +10,8 @@ use uuid::Uuid;
 pub mod commands;
 mod debug_ui_pane;
 mod module;
-pub mod queries;
 mod project_handler;
+pub mod queries;
 
 pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 

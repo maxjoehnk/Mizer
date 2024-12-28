@@ -1,8 +1,8 @@
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::fmt::Display;
 use std::future::Future;
 use std::time::Duration;
-use serde::de::DeserializeOwned;
-use serde::Serialize;
 
 pub use mizer_processing::*;
 pub use mizer_settings::*;
@@ -15,9 +15,21 @@ mod api_injector;
 pub trait ProjectHandler {
     fn get_name(&self) -> &'static str;
 
-    fn new_project(&mut self, context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
-    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()>;
-    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()>;
+    fn new_project(
+        &mut self,
+        context: &mut impl ProjectHandlerContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()>;
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()>;
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()>;
 }
 
 pub trait ProjectHandlerContext {

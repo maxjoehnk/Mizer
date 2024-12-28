@@ -8,6 +8,7 @@ use mizer_module::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 use rayon::prelude::*;
 
+use crate::config::{FixtureConfig, PresetsStore};
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureControlValue, FixtureDefinition, FixtureFaderControl,
 };
@@ -17,7 +18,6 @@ use crate::programmer::{
     GenericPreset, Group, Position, Preset, PresetId, PresetType, Presets, Programmer,
 };
 use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
-use crate::config::{FixtureConfig, PresetsStore};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -437,14 +437,22 @@ impl ProjectHandler for FixtureManager {
         "fixtures"
     }
 
-    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn new_project(
+        &mut self,
+        _context: &mut impl ProjectHandlerContext,
+        _injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         self.clear();
         self.presets.load_defaults();
 
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext, _injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        _injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         profiling::scope!("FixtureManager::load_project");
         self.clear();
         let fixtures = context.read_file::<Vec<FixtureConfig>>("patch")?;
@@ -468,8 +476,7 @@ impl ProjectHandler for FixtureManager {
                 );
                 context.report_issue(format!(
                     "No fixture definition for fixture id {}. Missing fixture definition: {}",
-                    fixture.id,
-                    fixture.fixture
+                    fixture.id, fixture.fixture
                 ));
             }
         }
@@ -483,7 +490,11 @@ impl ProjectHandler for FixtureManager {
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext, _injector: &dyn InjectDyn) -> anyhow::Result<()> {
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        _injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()> {
         profiling::scope!("FixtureManager::save_project");
         let mut fixtures = Vec::with_capacity(self.fixtures.len());
         for fixture in self.get_fixtures() {

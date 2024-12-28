@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mizer_node::{NodeDesigner, NodePath};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NodeConfig {

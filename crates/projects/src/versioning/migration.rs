@@ -61,9 +61,14 @@ macro_rules! yaml_migration {
 
             fn migrate(&self, project_file: &mut ProjectFile) -> anyhow::Result<()> {
                 let version = project_file.get_version()?;
-                tracing::info!("Migrating project file from {} to {}", version, <$variant as ProjectFileMigration>::VERSION);
-                let file_content = project_file.as_yaml()
-                    .ok_or_else(|| anyhow::anyhow!("Trying to apply yaml migration on new project file"))?;
+                tracing::info!(
+                    "Migrating project file from {} to {}",
+                    version,
+                    <$variant as ProjectFileMigration>::VERSION
+                );
+                let file_content = project_file.as_yaml().ok_or_else(|| {
+                    anyhow::anyhow!("Trying to apply yaml migration on new project file")
+                })?;
                 ProjectFileMigration::migrate(self, file_content)?;
                 project_file.write_version(<$variant as ProjectFileMigration>::VERSION)?;
 
@@ -93,9 +98,14 @@ macro_rules! archive_migration {
 
             fn migrate(&self, project_file: &mut ProjectFile) -> anyhow::Result<()> {
                 let version = project_file.get_version()?;
-                tracing::info!("Migrating project file from {} to {}", version, <$variant as ProjectArchiveMigration>::VERSION);
-                let file_content = project_file.as_archive()
-                    .ok_or_else(|| anyhow::anyhow!("Trying to apply archive migration on old project file"))?;
+                tracing::info!(
+                    "Migrating project file from {} to {}",
+                    version,
+                    <$variant as ProjectArchiveMigration>::VERSION
+                );
+                let file_content = project_file.as_archive().ok_or_else(|| {
+                    anyhow::anyhow!("Trying to apply archive migration on old project file")
+                })?;
                 ProjectArchiveMigration::migrate(self, file_content)?;
                 project_file.write_version(<$variant as ProjectArchiveMigration>::VERSION)?;
 

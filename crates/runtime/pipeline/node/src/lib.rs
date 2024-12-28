@@ -4,7 +4,7 @@ use std::fmt::Debug;
 use downcast::*;
 
 pub use mizer_debug_ui::DebugUiDrawHandle;
-pub use mizer_injector::{Injector, InjectDynMut, InjectMut, Inject, InjectDyn};
+pub use mizer_injector::{Inject, InjectDyn, InjectDynMut, InjectMut, Injector};
 pub use mizer_ports::{port_types, Color, PortId, PortType};
 
 pub use self::context::*;

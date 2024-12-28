@@ -1,8 +1,11 @@
+use crate::{
+    ArtnetInput, ArtnetOutput, DmxConnectionManager, DmxInput, DmxInputConnection,
+    DmxOutputConnection, SacnOutput,
+};
+use mizer_module::*;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::net::Ipv4Addr;
-use serde::{Deserialize, Serialize};
-use mizer_module::*;
-use crate::{ArtnetInput, ArtnetOutput, DmxConnectionManager, DmxInput, DmxInputConnection, DmxOutputConnection, SacnOutput};
 
 pub struct DmxProjectHandler;
 
@@ -28,7 +31,11 @@ impl ProjectHandler for DmxProjectHandler {
         "connections"
     }
 
-    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn new_project(
+        &mut self,
+        _context: &mut impl ProjectHandlerContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         let Some(dmx_manager) = injector.try_inject_mut::<DmxConnectionManager>() else {
             anyhow::bail!("DMX connection manager not found");
         };
@@ -39,7 +46,11 @@ impl ProjectHandler for DmxProjectHandler {
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         profiling::scope!("DmxProjectHandler::load_project");
         let Some(dmx_manager) = injector.try_inject_mut::<DmxConnectionManager>() else {
             anyhow::bail!("DMX connection manager not found");
@@ -51,21 +62,23 @@ impl ProjectHandler for DmxProjectHandler {
                 DmxConfig::Sacn { priority } => {
                     dmx_manager.add_output(id, SacnOutput::new(priority))
                 }
-                DmxConfig::ArtnetOutput { port, host } => dmx_manager.add_output(
-                    id,
-                    ArtnetOutput::new(host, port)?,
-                ),
-                DmxConfig::ArtnetInput { port, host, name } => dmx_manager.add_input(
-                    id,
-                    ArtnetInput::new(host, port, name)?,
-                ),
+                DmxConfig::ArtnetOutput { port, host } => {
+                    dmx_manager.add_output(id, ArtnetOutput::new(host, port)?)
+                }
+                DmxConfig::ArtnetInput { port, host, name } => {
+                    dmx_manager.add_input(id, ArtnetInput::new(host, port, name)?)
+                }
             }
         }
 
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()> {
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()> {
         profiling::scope!("DmxProjectHandler::save_project");
         let Some(dmx_manager) = injector.try_inject::<DmxConnectionManager>() else {
             anyhow::bail!("DMX connection manager not found");
@@ -108,4 +121,3 @@ fn get_input_config(connection: &DmxInputConnection) -> DmxConfig {
         },
     }
 }
-

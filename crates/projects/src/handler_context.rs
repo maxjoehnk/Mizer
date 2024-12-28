@@ -1,13 +1,13 @@
+use crate::project_file::{ProjectArchive, ProjectFile};
+use crate::versioning::{migrate, Migrations};
+use mizer_console::ConsoleCategory;
+use mizer_module::{LoadProjectContext, ProjectHandlerContext, SaveProjectContext};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
-use serde::de::DeserializeOwned;
-use serde::Serialize;
 use zip::unstable::LittleEndianWriteExt;
-use mizer_console::ConsoleCategory;
-use mizer_module::{LoadProjectContext, ProjectHandlerContext, SaveProjectContext};
-use crate::project_file::{ProjectArchive, ProjectFile};
-use crate::versioning::{migrate, Migrations};
 
 #[derive(Default)]
 pub struct HandlerContext {
@@ -18,7 +18,7 @@ impl HandlerContext {
     pub fn new() -> Self {
         Self::default()
     }
-    
+
     pub fn open(path: impl AsRef<Path>) -> anyhow::Result<Self> {
         let mut file = ProjectFile::open(path.as_ref())?;
         migrate(&mut file)?;
@@ -27,9 +27,7 @@ impl HandlerContext {
             _ => return Err(anyhow::anyhow!("Invalid project file")),
         };
 
-        Ok(Self {
-            archive,
-        })
+        Ok(Self { archive })
     }
 
     pub fn save(mut self, path: impl AsRef<Path>) -> anyhow::Result<()> {

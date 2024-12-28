@@ -11,11 +11,11 @@ mod cue_preset;
 pub mod effects;
 mod module;
 mod processor;
+mod project_loading;
 mod sequence;
 mod sequencer;
 mod state;
 mod value;
-mod project_loading;
 
 #[cfg(test)]
 mod tests {

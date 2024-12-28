@@ -1,8 +1,8 @@
-use mizer_message_bus::MessageBus;
-use mizer_module::*;
 use crate::project_loading::SurfaceProjectHandler;
 use crate::registry::SurfaceRegistry;
 use crate::Surface;
+use mizer_message_bus::MessageBus;
+use mizer_module::*;
 
 pub struct SurfaceModule;
 
@@ -23,7 +23,7 @@ impl Module for SurfaceModule {
         };
         context.provide(registry);
         context.provide(SurfaceProjectHandler);
-        
+
         context.provide_api(api);
 
         Ok(())

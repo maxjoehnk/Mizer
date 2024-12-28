@@ -96,7 +96,10 @@ impl NodePreviewState {
 
 impl<'a> InjectDyn for PipelineContext<'a> {
     fn try_inject_dyn(&self, type_id: TypeId) -> Option<&Box<dyn Any>> {
-        self.processing_context.borrow().injector().try_inject_dyn(type_id)
+        self.processing_context
+            .borrow()
+            .injector()
+            .try_inject_dyn(type_id)
     }
 }
 

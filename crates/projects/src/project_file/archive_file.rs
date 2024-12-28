@@ -1,5 +1,5 @@
-use std::io::{Cursor, Read, Write};
 use anyhow::Context;
+use std::io::{Cursor, Read, Write};
 use zip::{ZipArchive, ZipWriter};
 
 #[derive(Default)]
@@ -9,7 +9,7 @@ impl ProjectArchive {
     pub fn new() -> Self {
         Self::default()
     }
-    
+
     pub fn read(&self) -> anyhow::Result<ProjectArchiveReader> {
         let archive = ZipArchive::new(Cursor::new(self.0.as_slice()))?;
 
@@ -19,7 +19,7 @@ impl ProjectArchive {
     pub fn write(&mut self) -> anyhow::Result<ProjectArchiveWriter> {
         let archive = if self.0.is_empty() {
             ZipWriter::new(Cursor::new(&mut self.0))
-        }else {
+        } else {
             ZipWriter::new_append(Cursor::new(&mut self.0))?
         };
 
@@ -31,8 +31,11 @@ pub(crate) struct ProjectArchiveReader<'a>(ZipArchive<Cursor<&'a [u8]>>);
 
 impl<'a> ProjectArchiveReader<'a> {
     pub fn read_file(&mut self, file_name: &str) -> anyhow::Result<impl Read + '_> {
-        let file = self.0.by_name(file_name).context(format!("Reading {file_name}"))?;
-        
+        let file = self
+            .0
+            .by_name(file_name)
+            .context(format!("Reading {file_name}"))?;
+
         Ok(file)
     }
 }
@@ -41,8 +44,10 @@ pub(crate) struct ProjectArchiveWriter<'a>(ZipWriter<Cursor<&'a mut Vec<u8>>>);
 
 impl<'a> ProjectArchiveWriter<'a> {
     pub fn write_file(&mut self, file_name: &str) -> anyhow::Result<()> {
-        self.0.start_file::<_, (), _>(file_name, Default::default()).context(format!("Starting {file_name}"))?;
-        
+        self.0
+            .start_file::<_, (), _>(file_name, Default::default())
+            .context(format!("Starting {file_name}"))?;
+
         Ok(())
     }
 }

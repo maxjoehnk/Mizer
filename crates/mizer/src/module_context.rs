@@ -1,12 +1,12 @@
 use mizer_debug_ui_impl::{DebugUiImpl, DebugUiPane};
 use std::future::Future;
 
+use crate::project_handler::ErasedProjectHandler;
 use mizer_module::{ApiInjector, ModuleContext, ProjectHandler, Runtime};
 use mizer_processing::Processor;
 use mizer_runtime::DefaultRuntime;
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
-use crate::project_handler::ErasedProjectHandler;
 
 pub struct SetupContext {
     pub runtime: DefaultRuntime,

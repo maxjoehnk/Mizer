@@ -1,11 +1,11 @@
-use serde::{Deserialize, Serialize};
+use crate::Pipeline;
 use lazy_static::lazy_static;
 use mizer_module::*;
 use mizer_node::{NodeLink, NodePath, NodeType};
 use mizer_nodes::{NodeConfig, NodeDowncast};
 use mizer_ports::PortId;
 use regex::{Regex, RegexBuilder};
-use crate::{Pipeline};
+use serde::{Deserialize, Serialize};
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -23,16 +23,40 @@ impl ProjectHandler for PipelineProjectHandler {
         "pipeline"
     }
 
-    fn new_project(&mut self, _context: &mut impl ProjectHandlerContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn new_project(
+        &mut self,
+        _context: &mut impl ProjectHandlerContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
         pipeline.clear();
-        pipeline.add_node(&injector, NodeType::Programmer, Default::default(), None, None).unwrap();
-        pipeline.add_node(&injector, NodeType::Transport, Default::default(), None, None).unwrap();
+        pipeline
+            .add_node(
+                &injector,
+                NodeType::Programmer,
+                Default::default(),
+                None,
+                None,
+            )
+            .unwrap();
+        pipeline
+            .add_node(
+                &injector,
+                NodeType::Transport,
+                Default::default(),
+                None,
+                None,
+            )
+            .unwrap();
 
         Ok(())
     }
 
-    fn load_project(&mut self, context: &mut impl LoadProjectContext, injector: &mut dyn InjectDynMut) -> anyhow::Result<()> {
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()> {
         profiling::scope!("CoordinatorRuntime::load_project");
         let (pipeline, injector) = injector.inject_mut_with_slice::<Pipeline>();
         pipeline.clear();
@@ -44,8 +68,7 @@ impl ProjectHandler for PipelineProjectHandler {
         for link in channels {
             let source_port =
                 pipeline.get_output_port_metadata(&link.from_path, &link.from_channel);
-            let target_port =
-                pipeline.get_input_port_metadata(&link.to_path, &link.to_channel);
+            let target_port = pipeline.get_input_port_metadata(&link.to_path, &link.to_channel);
             anyhow::ensure!(
                 source_port.port_type == target_port.port_type,
                 "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",
@@ -67,7 +90,11 @@ impl ProjectHandler for PipelineProjectHandler {
         Ok(())
     }
 
-    fn save_project(&self, context: &mut impl SaveProjectContext, injector: &dyn InjectDyn) -> anyhow::Result<()> {
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()> {
         // let playback_settings = PlaybackSettings {
         //     fps: self.
         // }

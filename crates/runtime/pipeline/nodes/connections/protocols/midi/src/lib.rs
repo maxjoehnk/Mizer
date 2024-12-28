@@ -4,7 +4,7 @@ use enum_iterator::Sequence;
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{InjectDyn, Inject, SelectVariant, Injector};
+use mizer_node::{Inject, InjectDyn, Injector, SelectVariant};
 use mizer_protocol_midi::{ControlStep, MidiConnectionManager};
 
 pub use self::input::{MidiInputConfig, MidiInputNode};

@@ -1,4 +1,4 @@
-use mizer_node::{InjectDyn, Inject, SelectVariant};
+use mizer_node::{Inject, InjectDyn, SelectVariant};
 use mizer_protocol_mqtt::MqttConnectionManager;
 
 pub use self::input::*;

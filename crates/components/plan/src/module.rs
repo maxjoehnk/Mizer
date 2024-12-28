@@ -1,6 +1,6 @@
 use crate::debug_ui_pane::PlanDebugUiPane;
-use mizer_module::{module_name, Module, ModuleContext};
 use crate::project_handler::PlanProjectHandler;
+use mizer_module::{module_name, Module, ModuleContext};
 
 pub struct PlansModule;
 

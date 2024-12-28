@@ -1,6 +1,6 @@
 pub use argument_type::OscArgumentType;
 pub use input::*;
-use mizer_node::{InjectDyn, Inject, SelectVariant};
+use mizer_node::{Inject, InjectDyn, SelectVariant};
 use mizer_protocol_osc::OscConnectionManager;
 pub use output::*;
 

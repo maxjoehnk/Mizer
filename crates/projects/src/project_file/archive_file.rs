@@ -45,7 +45,7 @@ pub(crate) struct ProjectArchiveWriter<'a>(ZipWriter<Cursor<&'a mut Vec<u8>>>);
 impl<'a> ProjectArchiveWriter<'a> {
     pub fn write_file(&mut self, file_name: &str) -> anyhow::Result<()> {
         self.0
-            .start_file::<_, (), _>(file_name, Default::default())
+            .start_file::<_, ()>(file_name, Default::default())
             .context(format!("Starting {file_name}"))?;
 
         Ok(())

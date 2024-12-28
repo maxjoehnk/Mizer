@@ -85,7 +85,7 @@ serde = { version = "1", features = ["rc"] }
 sentry = { version = "0.35", features = ["anyhow", "tracing", "log"] }
 sentry-tracing = "0.35"
 spin_sleep = "1.2"
-ffmpeg-the-third = { version = "2.0" }
+ffmpeg-the-third = { version = "3.0" }
 rolling-file = "0.2"
 
 [dev-dependencies]

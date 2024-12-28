@@ -12,7 +12,7 @@ use serde::{Deserialize, Serialize};
 use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
-use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_node::{NodeCommentArea, NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
@@ -53,6 +53,8 @@ pub struct Project {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub channels: Vec<Channel>,
+    #[serde(default)]
+    pub comments: Vec<NodeCommentArea>,
     #[serde(default)]
     pub media: Media,
     #[serde(default)]

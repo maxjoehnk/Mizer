@@ -69,6 +69,7 @@ query_impl! {
     GetNodeQuery,
     ListLinksQuery,
     ListAvailableNodesQuery,
+    ListCommentsQuery,
 }
 
 impl QueryImpl {

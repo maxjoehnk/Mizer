@@ -6,4 +6,5 @@ pub mod commands;
 mod connections;
 mod module;
 mod output;
+mod project_handler;
 mod subscription;

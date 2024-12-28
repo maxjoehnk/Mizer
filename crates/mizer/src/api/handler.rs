@@ -97,9 +97,9 @@ impl ApiHandler {
             }
             ApiCommand::NewProject(sender) => {
                 profiling::scope!("ApiCommand::NewProject");
-                mizer.new_project();
+                let result = mizer.new_project();
                 sender
-                    .send(Ok(()))
+                    .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::LoadProject(path, sender) => {

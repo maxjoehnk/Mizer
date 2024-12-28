@@ -6,4 +6,5 @@ pub use registry::SurfaceRegistry;
 pub mod commands;
 mod models;
 mod module;
+mod project_loading;
 mod registry;

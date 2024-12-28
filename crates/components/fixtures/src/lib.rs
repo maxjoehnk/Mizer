@@ -11,6 +11,7 @@ pub use crate::module::*;
 pub use crate::priority::*;
 use crate::programmer::Color;
 
+mod config;
 mod contracts;
 pub mod definition;
 pub mod fixture;

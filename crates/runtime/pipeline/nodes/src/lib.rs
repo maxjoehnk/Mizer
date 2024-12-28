@@ -35,7 +35,7 @@ pub use mizer_midi_nodes::{
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 pub use mizer_ndi_nodes::{NdiInputNode, NdiOutputNode};
 use mizer_node::{
-    ConfigurableNode, DebugUiDrawHandle, Injector, NodeDetails, NodeSetting, NodeTemplate,
+    ConfigurableNode, DebugUiDrawHandle, InjectDyn, NodeDetails, NodeSetting, NodeTemplate,
     NodeType, PipelineNode, PortId, PortMetadata,
 };
 pub use mizer_opc_nodes::OpcOutputNode;
@@ -69,8 +69,10 @@ pub use mizer_webcam_nodes::WebcamNode;
 
 use crate::test_sink::TestSink;
 
+pub use self::config::NodeConfig;
 pub use self::container_node::ContainerNode;
 
+mod config;
 mod container_node;
 mod downcast;
 #[doc(hidden)]
@@ -143,14 +145,14 @@ macro_rules! node_impl {
                 }
             }
 
-            pub fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+            pub fn list_ports(&self, injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
                 match self {
                     $(Node::$node_type(node) => node.list_ports(injector),)*
                     Node::TestSink(node) => node.list_ports(injector),
                 }
             }
 
-            pub fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+            pub fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
                 match self {
                     $(Node::$node_type(node) => node.settings(injector),)*
                     Node::TestSink(node) => node.settings(injector),

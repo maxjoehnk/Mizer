@@ -26,8 +26,8 @@ impl Default for SurfaceMappingNode {
 }
 
 impl ConfigurableNode for SurfaceMappingNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let registry = injector.get::<SurfaceRegistry>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let registry = injector.inject::<SurfaceRegistry>();
         let surfaces = registry
             .list_surfaces()
             .into_iter()
@@ -50,7 +50,7 @@ impl PipelineNode for SurfaceMappingNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             output_port!(OUTPUT_PORT, PortType::Texture),

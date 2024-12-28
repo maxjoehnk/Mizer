@@ -26,7 +26,7 @@ impl Default for MqttInputNode {
 }
 
 impl ConfigurableNode for MqttInputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let connections = injector.get_connections();
 
         vec![
@@ -52,7 +52,7 @@ impl PipelineNode for MqttInputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(VALUE_PORT, PortType::Data)]
     }
 

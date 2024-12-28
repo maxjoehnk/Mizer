@@ -3,16 +3,15 @@ use crate::context::CoordinatorRuntimeContext;
 use anyhow::Context;
 use indexmap::IndexMap;
 use mizer_clock::{BoxedClock, ClockFrame};
-use mizer_debug_ui_impl::{Injector, NodeStateAccess};
+use mizer_debug_ui_impl::NodeStateAccess;
 use mizer_node::{
-    NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
+    InjectDyn, NodeDesigner, NodeLink, NodeMetadata, NodePath, NodeSetting, NodeType, PipelineNode,
     PortDirection, PortMetadata, ProcessingNode,
 };
 use mizer_nodes::{ContainerNode, Node, NodeDowncast, NodeExt};
 use mizer_pipeline::{NodePortReader, NodePreviewRef, PipelineWorker, ProcessingNodeExt};
 use mizer_ports::PortId;
-use mizer_processing::{Processor, ProcessorPriorities};
-use mizer_project_files::{Channel, Project};
+use mizer_processing::{Injector, Processor, ProcessorPriorities};
 use pinboard::NonEmptyPinboard;
 use std::cmp::Ordering;
 use std::collections::HashMap;
@@ -46,7 +45,7 @@ impl Pipeline {
 
     pub fn add_node(
         &mut self,
-        injector: &Injector,
+        injector: &dyn InjectDyn,
         node_type: NodeType,
         designer: NodeDesigner,
         node: Option<Node>,
@@ -58,9 +57,9 @@ impl Pipeline {
         self.add_node_with_path(injector, path, designer, node, parent)
     }
 
-    fn add_node_with_path(
+    pub(crate) fn add_node_with_path(
         &mut self,
-        injector: &Injector,
+        injector: &dyn InjectDyn,
         path: NodePath,
         designer: NodeDesigner,
         node: Node,
@@ -277,6 +276,10 @@ impl Pipeline {
         self.nodes
             .get_mut(path)
             .and_then(|state| state.node.downcast_mut::<TNode>().ok())
+    }
+
+    pub fn get_node_designer(&self, path: &NodePath) -> Option<&NodeDesigner> {
+        self.nodes.get(path).map(|state| &state.designer)
     }
 
     pub fn get_node_designer_mut(&mut self, path: &NodePath) -> Option<&mut NodeDesigner> {
@@ -544,6 +547,12 @@ impl Pipeline {
     pub fn read_state<TValue: 'static>(&self, path: &NodePath) -> Option<&TValue> {
         self.worker.get_state(path)
     }
+
+    pub fn clear(&mut self) {
+        self.nodes.clear();
+        self.links.clear();
+        self.worker = PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default())));
+    }
 }
 
 impl NodeStateAccess for Pipeline {
@@ -658,91 +667,6 @@ impl Processor for RuntimeProcessor {
             clock.deref_mut(),
             &NodeStatePortReader(&pipeline.nodes),
         );
-    }
-}
-
-impl Pipeline {
-    pub fn new_project(&mut self, injector: &Injector) {
-        self.add_node(
-            injector,
-            NodeType::Programmer,
-            Default::default(),
-            None,
-            None,
-        )
-        .unwrap();
-        self.add_node(
-            injector,
-            NodeType::Transport,
-            Default::default(),
-            None,
-            None,
-        )
-        .unwrap();
-    }
-
-    pub fn load(&mut self, project: &Project, injector: &Injector) -> anyhow::Result<()> {
-        for node in &project.nodes {
-            self.add_node_with_path(
-                injector,
-                node.path.clone(),
-                node.designer.clone(),
-                node.config.clone(),
-                None,
-            )?;
-        }
-        for channel in &project.channels {
-            let source_port =
-                self.get_output_port_metadata(&channel.from_path, &channel.from_channel);
-            let target_port = self.get_input_port_metadata(&channel.to_path, &channel.to_channel);
-            anyhow::ensure!(
-                source_port.port_type == target_port.port_type,
-                "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",
-                &source_port,
-                &target_port,
-                &channel
-            );
-
-            self.add_link(NodeLink {
-                source: channel.from_path.clone(),
-                target: channel.to_path.clone(),
-                source_port: channel.from_channel.clone(),
-                target_port: channel.to_channel.clone(),
-                port_type: source_port.port_type,
-                local: true,
-            })?;
-        }
-        Ok(())
-    }
-
-    pub fn save(&self, project: &mut Project) {
-        project.channels = self
-            .list_links()
-            .map(|link| Channel {
-                from_channel: link.source_port.clone(),
-                from_path: link.source.clone(),
-                to_channel: link.target_port.clone(),
-                to_path: link.target.clone(),
-            })
-            .collect();
-        project.nodes = self
-            .nodes
-            .iter()
-            .map(|(name, state)| {
-                let node = NodeDowncast::downcast(&state.node);
-                mizer_project_files::Node {
-                    designer: state.designer.clone(),
-                    path: name.clone(),
-                    config: node,
-                }
-            })
-            .collect();
-    }
-
-    pub fn clear(&mut self) {
-        self.nodes.clear();
-        self.links.clear();
-        self.worker = PipelineWorker::new(Arc::new(NonEmptyPinboard::new(Default::default())));
     }
 }
 

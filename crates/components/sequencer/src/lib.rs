@@ -11,6 +11,7 @@ mod cue_preset;
 pub mod effects;
 mod module;
 mod processor;
+mod project_loading;
 mod sequence;
 mod sequencer;
 mod state;

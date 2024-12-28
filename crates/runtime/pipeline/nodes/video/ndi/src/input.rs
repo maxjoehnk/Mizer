@@ -166,7 +166,7 @@ impl NdiInputState {
             decode_handle,
         })
     }
-    
+
     fn check_background_decoder(&mut self) -> anyhow::Result<()> {
         if !self.decode_handle.is_alive() {
             tracing::warn!("Background decoder thread died, restarting");
@@ -174,7 +174,7 @@ impl NdiInputState {
             let metadata = self.decode_handle.decode(self.ndi_source_ref.clone())?;
             self.texture = BackgroundDecoderTexture::new(metadata);
         }
-        
+
         Ok(())
     }
 
@@ -183,7 +183,10 @@ impl NdiInputState {
     }
 
     fn change_source(&mut self, ndi_source_ref: NdiSourceRef) -> anyhow::Result<()> {
-        tracing::trace!("Changing ndi source from {:?} to {ndi_source_ref:?}", self.ndi_source_ref);
+        tracing::trace!(
+            "Changing ndi source from {:?} to {ndi_source_ref:?}",
+            self.ndi_source_ref
+        );
         let metadata = self.decode_handle.decode(ndi_source_ref.clone())?;
         self.texture = BackgroundDecoderTexture::new(metadata);
         self.ndi_source_ref = ndi_source_ref;

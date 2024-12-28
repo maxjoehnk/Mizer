@@ -136,7 +136,10 @@ impl NdiSource {
 
     pub fn frame(&mut self) -> anyhow::Result<Option<NdiFrame>> {
         if self.recv.get_no_connections() == 0 {
-            tracing::warn!("Connected to no sources, trying to reconnect to {}", self.source.get_name());
+            tracing::warn!(
+                "Connected to no sources, trying to reconnect to {}",
+                self.source.get_name()
+            );
             self.recv.connect(&self.source);
         }
         tracing::trace!("Waiting for frame");
@@ -144,9 +147,7 @@ impl NdiSource {
 
         const TIMEOUT: u32 = 1000;
         match self.recv.capture_video(&mut video_data, TIMEOUT) {
-            FrameType::None => {
-                Ok(None)
-            }
+            FrameType::None => Ok(None),
             FrameType::Video => {
                 if let Some(video_data) = video_data {
                     tracing::debug!("Received video frame: {video_data:?}");

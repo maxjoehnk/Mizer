@@ -64,14 +64,14 @@ impl VideoTexture {
             columns[0].label("Texture Size");
             if let Some(ref metadata) = self.metadata {
                 columns[1].label(format!("{}x{}", metadata.width, metadata.height));
-            }else {
+            } else {
                 columns[1].label("N/A");
             }
 
             columns[0].label("Video FPS");
             if let Some(ref metadata) = self.metadata {
                 columns[1].label(format!("{}", metadata.fps));
-            }else {
+            } else {
                 columns[1].label("N/A");
             }
 

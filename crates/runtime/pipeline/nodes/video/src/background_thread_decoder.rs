@@ -1,8 +1,8 @@
-use std::borrow::Cow;
 use flume::{bounded, unbounded};
-use ringbuffer::{AllocRingBuffer, RingBuffer};
-use mizer_wgpu::TextureProvider;
 use mizer_wgpu::wgpu::TextureFormat;
+use mizer_wgpu::TextureProvider;
+use ringbuffer::{AllocRingBuffer, RingBuffer};
+use std::borrow::Cow;
 
 #[derive(Debug, Clone, Copy)]
 pub struct VideoMetadata {
@@ -33,8 +33,11 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
     pub fn is_alive(&self) -> bool {
         !self.sender.is_disconnected()
     }
-    
-    pub fn decode(&mut self, args: TDecoder::CreateDecoder) -> anyhow::Result<Option<VideoMetadata>> {
+
+    pub fn decode(
+        &mut self,
+        args: TDecoder::CreateDecoder,
+    ) -> anyhow::Result<Option<VideoMetadata>> {
         tracing::trace!("BackgroundDecoderThreadHandle::decode");
         let (message_tx, message_rx) = bounded(5);
         self.sender
@@ -55,11 +58,10 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
 
     pub fn send(&mut self, command: TDecoder::Commands) -> anyhow::Result<()> {
         let (message_tx, message_rx) = bounded(5);
-        self.sender
-            .send(BackgroundDecoderThreadMessage::Command(
-                command,
-                Some(message_tx),
-            ))?;
+        self.sender.send(BackgroundDecoderThreadMessage::Command(
+            command,
+            Some(message_tx),
+        ))?;
         self.receiver = message_rx;
 
         Ok(())
@@ -72,7 +74,11 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThreadHandle<TDecoder> {
 
 impl<TDecoder: VideoDecoder> Drop for BackgroundDecoderThreadHandle<TDecoder> {
     fn drop(&mut self) {
-        if self.sender.send(BackgroundDecoderThreadMessage::Exit).is_err() {
+        if self
+            .sender
+            .send(BackgroundDecoderThreadMessage::Exit)
+            .is_err()
+        {
             tracing::debug!("Error sending exit message, thread seems to be shut down already");
         }
     }
@@ -195,7 +201,9 @@ impl<TDecoder: VideoDecoder> BackgroundDecoderThread<TDecoder> {
                 match decoder.decode() {
                     Ok(Some(frame)) => {
                         if let Err(err) = self.sender.send(VideoThreadEvent::DecodedFrame(frame)) {
-                            tracing::error!("Closing decoder thread. Error sending decoded frame: {err:?}");
+                            tracing::error!(
+                                "Closing decoder thread. Error sending decoded frame: {err:?}"
+                            );
                             return;
                         }
                     }
@@ -225,7 +233,10 @@ impl BackgroundDecoderTexture {
         self.metadata.is_some()
     }
 
-    pub fn receive_frames<TDecoder: VideoDecoder>(&mut self, handle: &mut BackgroundDecoderThreadHandle<TDecoder>) {
+    pub fn receive_frames<TDecoder: VideoDecoder>(
+        &mut self,
+        handle: &mut BackgroundDecoderThreadHandle<TDecoder>,
+    ) {
         profiling::scope!("BackgroundThreadTexture::receive_frames");
         for event in handle.receiver.drain() {
             match event {

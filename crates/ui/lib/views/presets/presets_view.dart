@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
@@ -8,22 +9,6 @@ import 'preset_button.dart';
 import 'preset_group.dart';
 
 class PresetsView extends StatelessWidget {
-  const PresetsView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<EffectsBloc, EffectState>(
-        builder: (context, effects) => BlocBuilder<PresetsBloc, PresetsState>(
-            builder: (context, state) => PresetGroup(
-                label: "Groups",
-                child: PresetButtonList(
-                    children:
-                    state.groups.map((group) => GroupButton(group: group)).toList()))));
-  }
-}
-
-
-class PresetsView_ extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EffectsBloc, EffectState>(

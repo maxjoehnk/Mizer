@@ -6,7 +6,6 @@ import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
-import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/grid/panel_sizing.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
@@ -61,6 +60,7 @@ class SequenceList extends StatelessWidget {
     return PanelGridTile(
       onTap: onTap,
       active: active,
+      selected: selected,
       onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
           position: details.globalPosition,
           child: PopupInput(

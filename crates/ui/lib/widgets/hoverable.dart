@@ -5,6 +5,7 @@ class Hoverable extends StatefulWidget {
   final bool disabled;
   final void Function()? onTap;
   final void Function()? onSecondaryTap;
+  final void Function(TapDownDetails)? onSecondaryTapDown;
   final void Function()? onDoubleTap;
   final Widget Function(bool) builder;
 
@@ -12,6 +13,7 @@ class Hoverable extends StatefulWidget {
       {this.disabled = false,
       this.onTap,
       this.onSecondaryTap,
+      this.onSecondaryTapDown,
       this.onDoubleTap,
       required this.builder,
       Key? key})
@@ -34,12 +36,16 @@ class _HoverableState extends State<Hoverable> {
         if (e.kind == PointerDeviceKind.touch) {
           return;
         }
+        if (widget.onTap == null) {
+          return;
+        }
         setState(() => hovering = !widget.disabled);
       },
       onExit: (e) => setState(() => hovering = false),
       child: GestureDetector(
         onTap: _callWhenNotDisabled(widget.onTap),
         onSecondaryTap: _callWhenNotDisabled(widget.onSecondaryTap),
+        onSecondaryTapDown: _callDownWhenNotDisabled(widget.onSecondaryTapDown),
         onDoubleTap: _callWhenNotDisabled(widget.onDoubleTap),
         behavior: HitTestBehavior.opaque,
         child: widget.builder(hovering),
@@ -56,6 +62,18 @@ class _HoverableState extends State<Hoverable> {
         return;
       }
       function();
+    };
+  }
+
+  void Function(TapDownDetails)? _callDownWhenNotDisabled(void Function(TapDownDetails)? function) {
+    if (function == null) {
+      return null;
+    }
+    return (TapDownDetails details) {
+      if (widget.disabled) {
+        return;
+      }
+      function(details);
     };
   }
 }

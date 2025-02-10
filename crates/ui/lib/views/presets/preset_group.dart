@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
+import 'package:mizer/widgets/grid/panel_sizing.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 
 import 'preset_button.dart';
 
@@ -54,8 +56,13 @@ class PresetGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Panel(child: child, label: label),
+    return Panel(
+      label: label,
+      child: PanelSizing(
+        rows: 2,
+        columns: 8,
+        child: child,
+      ),
     );
   }
 }
@@ -67,16 +74,9 @@ class PresetButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Wrap(direction: Axis.horizontal, spacing: 4, runSpacing: 4, children: children),
-      ),
-    );
+    return PanelGrid(children: children);
   }
 }
-
 
 class PresetList extends StatelessWidget {
   final List<Preset>? presets;

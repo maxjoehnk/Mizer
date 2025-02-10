@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
 import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
@@ -246,60 +248,42 @@ class PresetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    return Hoverable(
-        onTap: () => this.onTap(context),
-        builder: (hovered) {
-          return Container(
-            width: 72,
-            height: 80,
-            decoration: ControlDecoration(
-                color: hovered ? Colors.grey.shade900 : Colors.black, hover: hovered),
-            child: Stack(
-              children: [
-                if (active == true)
-                  Align(
-                      child: Container(
-                        height: 30,
-                        width: 72,
-                        decoration: BoxDecoration(
-                          color: Colors.deepOrange.shade900,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                        margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 2),
+    return PanelGridTile(
+      onTap: () => this.onTap(context),
+      active: active ?? false,
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 4, left: 4, right: 4),
+            alignment: Alignment.topCenter,
+            child: Container(width: 48, height: 48, child: child),
+          ),
+          Align(
+              child: Stack(
+                children: [
+                  Text(label,
+                      style: textTheme.bodySmall!.copyWith(
+                        foreground: Paint()
+                          ..color = Colors.black
+                          ..strokeWidth = 3
+                          ..style = PaintingStyle.stroke,
                       ),
-                      alignment: Alignment.bottomCenter),
-                Container(
-                  margin: const EdgeInsets.only(top: 4, left: 4, right: 4),
-                  alignment: Alignment.topCenter,
-                  child: Container(width: 48, height: 48, child: child),
-                ),
-                Align(
-                    child: Stack(
-                      children: [
-                        Text(label,
-                            style: textTheme.bodySmall!.copyWith(
-                              foreground: Paint()
-                                ..color = Colors.black
-                                ..strokeWidth = 3
-                                ..style = PaintingStyle.stroke,
-                            ),
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            maxLines: 2),
-                        Text(label,
-                            style: textTheme.bodySmall!,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            maxLines: 2),
-                      ],
-                    ),
-                    alignment: Alignment.bottomCenter),
-                if (id != null)
-                  Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
-              ],
-            ),
-          );
-        });
+                      overflow: TextOverflow.clip,
+                      textAlign: TextAlign.center,
+                      maxLines: 2),
+                  Text(label,
+                      style: textTheme.bodySmall!,
+                      overflow: TextOverflow.clip,
+                      textAlign: TextAlign.center,
+                      maxLines: 2),
+                ],
+              ),
+              alignment: Alignment.bottomCenter),
+          if (id != null)
+            Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+        ],
+      ),
+    );
   }
 
   String? get id {

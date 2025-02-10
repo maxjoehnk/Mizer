@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
@@ -123,9 +124,10 @@ class _PanelState extends State<Panel> {
     if (widget.label == null && widget.tabs == null) {
       return Container();
     }
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
         color: Colors.grey.shade800,
-        height: 32,
+        height: PANEL_HEADER_HEIGHT,
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -134,7 +136,7 @@ class _PanelState extends State<Panel> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
                   color: Colors.grey.shade800,
-                  child: Text(widget.label!, textAlign: TextAlign.start),
+                  child: Text(widget.label!, textAlign: TextAlign.start, style: textTheme.titleMedium),
                 ),
               if (widget.label != null) Container(width: 8),
               ...(this.widget.tabs ?? [])
@@ -254,7 +256,7 @@ class PanelAction extends StatelessWidget {
   final double height;
 
   const PanelAction(
-      {required this.action, this.hotkeys, this.width = 64, this.height = 64, super.key});
+      {required this.action, this.hotkeys, this.width = PANEL_ACTION_SIZE, this.height = PANEL_ACTION_SIZE, super.key});
 
   @override
   Widget build(BuildContext context) {

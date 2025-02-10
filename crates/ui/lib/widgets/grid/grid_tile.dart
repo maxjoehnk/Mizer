@@ -26,7 +26,7 @@ class PanelGridTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(0),
-          color: empty ? Colors.grey.shade900 : (hovered ? Colors.grey.shade700 : Colors.grey.shade800),
+          color: empty ? Color(0xFF303030) : (hovered ? Colors.grey.shade800 : Colors.grey.shade900),
         ),
         child: Stack(children: [
           if (selected) Container(

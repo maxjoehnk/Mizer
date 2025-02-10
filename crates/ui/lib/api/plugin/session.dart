@@ -22,8 +22,9 @@ class SessionPluginApi implements SessionApi {
   }
 
   @override
-  Future<void> loadProject(String path) async {
-    await channel.invokeMethod("loadProject", path);
+  Future<LoadProjectResult> loadProject(String path) async {
+    var buffer = await channel.invokeMethod("loadProject", path);
+    return LoadProjectResult.fromBuffer(_convertBuffer(buffer));
   }
 
   @override

@@ -2,6 +2,7 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::SessionHandler;
+use mizer_api::proto::session::LoadProjectResult;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
@@ -37,10 +38,8 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
             },
             "loadProject" => {
                 if let Value::String(path) = call.args {
-                    match self.load_project(path) {
-                        Ok(()) => resp.send_ok(Value::Null),
-                        Err(e) => resp.respond_error(e),
-                    }
+                    let result = self.load_project(path);
+                    resp.respond_msg(result);
                 }
             }
             "undo" => match self.handler.undo() {
@@ -77,7 +76,7 @@ impl<R: RuntimeApi + 'static> SessionChannel<R> {
         self.handler.new_project()
     }
 
-    fn load_project(&self, path: String) -> anyhow::Result<()> {
+    fn load_project(&self, path: String) -> LoadProjectResult {
         self.handler.load_project(path)
     }
 }

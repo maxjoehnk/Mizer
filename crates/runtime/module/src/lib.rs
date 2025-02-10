@@ -12,6 +12,36 @@ pub use crate::api_injector::ApiInjector;
 
 mod api_injector;
 
+pub struct ProjectLoadingResult {
+    pub warnings: Vec<String>,
+    pub error: Option<ProjectLoadingError>,
+    pub migration_result: Option<(u32, u32)>,
+}
+
+impl<T: Into<anyhow::Error>> From<T> for ProjectLoadingResult {
+    fn from(err: T) -> Self {
+        Self {
+            warnings: Default::default(),
+            error: Some(ProjectLoadingError::Unknown(err.into())),
+            migration_result: None,
+        }
+    }
+}
+
+pub enum ProjectLoadingError {
+    MissingFile,
+    InvalidFile,
+    UnsupportedFileType,
+    MigrationIssue(anyhow::Error),
+    Unknown(anyhow::Error),
+}
+
+impl<T: Into<anyhow::Error>> From<T> for ProjectLoadingError {
+    fn from(err: T) -> Self {
+        Self::Unknown(err.into())
+    }
+}
+
 pub trait ProjectHandler {
     fn get_name(&self) -> &'static str;
 

@@ -1,6 +1,7 @@
 use crate::proto::session::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
+use mizer_module::{ProjectLoadingError, ProjectLoadingResult};
 
 #[derive(Clone)]
 pub struct SessionHandler<R: RuntimeApi> {
@@ -44,8 +45,27 @@ impl<R: RuntimeApi> SessionHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn load_project(&self, path: String) -> anyhow::Result<()> {
-        self.runtime.load_project(path)
+    pub fn load_project(&self, path: String) -> LoadProjectResult {
+        let result = self.runtime.load_project(path);
+
+        let (state, error) = match result.error {
+            None => (load_project_result::State::Ok, None),
+            Some(ProjectLoadingError::MissingFile) => (load_project_result::State::MissingFile, None),
+            Some(ProjectLoadingError::InvalidFile) => (load_project_result::State::InvalidFile, None),
+            Some(ProjectLoadingError::UnsupportedFileType) => (load_project_result::State::UnsupportedFileType, None),
+            Some(ProjectLoadingError::MigrationIssue(err)) => (load_project_result::State::MigrationIssue, Some(err.to_string())),
+            Some(ProjectLoadingError::Unknown(err)) => (load_project_result::State::Unknown, Some(err.to_string())),
+        };
+
+        LoadProjectResult {
+            state: state as i32,
+            error,
+            migration: result.migration_result.map(|(from, to)| load_project_result::MigrationResult {
+                from,
+                to,
+            }),
+            issues: result.warnings,
+        }
     }
 
     #[tracing::instrument(skip(self))]

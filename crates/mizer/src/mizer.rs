@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use anyhow::Context;
@@ -7,7 +7,7 @@ use mizer_api::handlers::Handlers;
 use mizer_console::ConsoleCategory;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::{ProjectHandlerContext, Runtime};
+use mizer_module::{ProjectHandlerContext, ProjectLoadingError, ProjectLoadingResult, Runtime};
 use mizer_project_files::{history::ProjectHistory, HandlerContext, SHOWFILE_EXTENSION};
 use mizer_runtime::DefaultRuntime;
 use mizer_session::SessionState;
@@ -90,31 +90,27 @@ impl Mizer {
     }
 
     #[profiling::function]
-    pub fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
+    pub fn load_project_from(&mut self, path: PathBuf) -> ProjectLoadingResult {
         self.project_path = Some(path);
-        self.load_project()?;
-
-        Ok(())
+        self.load_project()
     }
 
     #[profiling::function]
-    pub fn load_project(&mut self) -> anyhow::Result<()> {
+    pub fn load_project(&mut self) -> ProjectLoadingResult {
         mizer_util::message!("Loading Project", 0);
-        if let Some(ref path) = self.project_path {
-            self.runtime.add_status_message("Loading project...", None);
-            tracing::info!("Loading project {:?}...", path);
-            let mut context = HandlerContext::open(path)?;
-            for project_handler in &mut self.project_handlers {
-                project_handler.load_project(&mut context, self.runtime.injector_mut())?;
-            }
-            tracing::info!("Loading project...Done");
+        let mut warnings = Vec::new();
+        let result: Result<_, ProjectLoadingError> = if let Some(ref path) = self.project_path {
+            let result = load_project(path, &mut self.runtime, &mut warnings, &mut self.project_handlers);
 
             if self.flags.generate_graph {
-                self.runtime.generate_pipeline_graph()?;
+                if let Err(err) = self.runtime.generate_pipeline_graph() {
+                    tracing::error!("Error generating pipeline graph {err:?}");
+                }
             }
-            self.project_history
-                .add_project(path)
-                .context("updating history")?;
+            if let Err(err) = self.project_history
+                .add_project(path) {
+                tracing::error!("Error updating project history {:?}", err);
+            }
             self.send_session_update();
             self.runtime.add_status_message(
                 format!("Project loaded ({path:?})"),
@@ -130,9 +126,28 @@ impl Mizer {
                     .map(|name| name.to_string_lossy().to_string())
                     .unwrap_or_default(),
             ));
-        }
 
-        Ok(())
+            result
+        }else {
+            Err(ProjectLoadingError::Unknown(anyhow::format_err!("No project path")))
+        };
+
+        match result {
+            Ok(migration_result) => {
+                ProjectLoadingResult {
+                    warnings,
+                    migration_result,
+                    error: None,
+                }
+            }
+            Err(err) => {
+                ProjectLoadingResult {
+                    warnings,
+                    migration_result: None,
+                    error: Some(err),
+                }
+            }
+        }
     }
 
     #[profiling::function]
@@ -150,10 +165,11 @@ impl Mizer {
     pub fn save_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Saving Project", 0);
         if let Some(ref mut path) = self.project_path {
+            let mut warnings = Vec::new();
             path.set_extension(SHOWFILE_EXTENSION);
             self.runtime.add_status_message("Saving project...", None);
             tracing::info!("Saving project to {:?}...", path);
-            let mut context = HandlerContext::new();
+            let mut context = HandlerContext::new(&mut warnings);
             for project_handler in &mut self.project_handlers {
                 project_handler.save_project(&mut context, self.runtime.injector())?;
             }
@@ -203,4 +219,16 @@ fn start_media_discovery(
         handle.spawn(async move { media_discovery.discover().await });
     }
     Ok(())
+}
+
+fn load_project(path: &Path, runtime: &mut DefaultRuntime, warnings: &mut Vec<String>, project_handlers: &mut [Box<dyn ErasedProjectHandler>]) -> Result<Option<(u32, u32)>, ProjectLoadingError> {
+    runtime.add_status_message("Loading project...", None);
+    tracing::info!("Loading project {:?}...", path);
+    let mut context = HandlerContext::open(path, warnings)?;
+    for project_handler in project_handlers {
+        project_handler.load_project(&mut context, runtime.injector_mut())?;
+    }
+    tracing::info!("Loading project...Done");
+
+    Ok(context.migration_result())
 }

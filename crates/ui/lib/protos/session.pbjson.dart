@@ -28,6 +28,47 @@ const SaveProjectAsRequest$json = const {
 
 /// Descriptor for `SaveProjectAsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List saveProjectAsRequestDescriptor = $convert.base64Decode('ChRTYXZlUHJvamVjdEFzUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRo');
+@$core.Deprecated('Use loadProjectResultDescriptor instead')
+const LoadProjectResult$json = const {
+  '1': 'LoadProjectResult',
+  '2': const [
+    const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.session.LoadProjectResult.State', '10': 'state'},
+    const {'1': 'error', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'error', '17': true},
+    const {'1': 'issues', '3': 3, '4': 3, '5': 9, '10': 'issues'},
+    const {'1': 'migration', '3': 4, '4': 1, '5': 11, '6': '.mizer.session.LoadProjectResult.MigrationResult', '9': 1, '10': 'migration', '17': true},
+  ],
+  '3': const [LoadProjectResult_MigrationResult$json],
+  '4': const [LoadProjectResult_State$json],
+  '8': const [
+    const {'1': '_error'},
+    const {'1': '_migration'},
+  ],
+};
+
+@$core.Deprecated('Use loadProjectResultDescriptor instead')
+const LoadProjectResult_MigrationResult$json = const {
+  '1': 'MigrationResult',
+  '2': const [
+    const {'1': 'from', '3': 1, '4': 1, '5': 13, '10': 'from'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 13, '10': 'to'},
+  ],
+};
+
+@$core.Deprecated('Use loadProjectResultDescriptor instead')
+const LoadProjectResult_State$json = const {
+  '1': 'State',
+  '2': const [
+    const {'1': 'OK', '2': 0},
+    const {'1': 'MISSING_FILE', '2': 1},
+    const {'1': 'INVALID_FILE', '2': 2},
+    const {'1': 'UNSUPPORTED_FILE_TYPE', '2': 3},
+    const {'1': 'MIGRATION_ISSUE', '2': 4},
+    const {'1': 'UNKNOWN', '2': 255},
+  ],
+};
+
+/// Descriptor for `LoadProjectResult`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List loadProjectResultDescriptor = $convert.base64Decode('ChFMb2FkUHJvamVjdFJlc3VsdBI8CgVzdGF0ZRgBIAEoDjImLm1pemVyLnNlc3Npb24uTG9hZFByb2plY3RSZXN1bHQuU3RhdGVSBXN0YXRlEhkKBWVycm9yGAIgASgJSABSBWVycm9yiAEBEhYKBmlzc3VlcxgDIAMoCVIGaXNzdWVzElMKCW1pZ3JhdGlvbhgEIAEoCzIwLm1pemVyLnNlc3Npb24uTG9hZFByb2plY3RSZXN1bHQuTWlncmF0aW9uUmVzdWx0SAFSCW1pZ3JhdGlvbogBARo1Cg9NaWdyYXRpb25SZXN1bHQSEgoEZnJvbRgBIAEoDVIEZnJvbRIOCgJ0bxgCIAEoDVICdG8icQoFU3RhdGUSBgoCT0sQABIQCgxNSVNTSU5HX0ZJTEUQARIQCgxJTlZBTElEX0ZJTEUQAhIZChVVTlNVUFBPUlRFRF9GSUxFX1RZUEUQAxITCg9NSUdSQVRJT05fSVNTVUUQBBIMCgdVTktOT1dOEP8BQggKBl9lcnJvckIMCgpfbWlncmF0aW9u');
 @$core.Deprecated('Use clientAnnouncementDescriptor instead')
 const ClientAnnouncement$json = const {
   '1': 'ClientAnnouncement',

@@ -59,14 +59,14 @@ class ApplicationMenu extends StatelessWidget {
                 label: 'Undo'.i18n,
                 action: () async {
                   await context.read<SessionApi>().undo();
-                  _refreshViews(context);
+                  context.refreshAllStates();
                 },
               ),
               MenuItem(
                 label: 'Redo'.i18n,
                 action: () async {
                   await context.read<SessionApi>().redo();
-                  _refreshViews(context);
+                  context.refreshAllStates();
                 },
               )
             ]),
@@ -86,15 +86,14 @@ class ApplicationMenu extends StatelessWidget {
   }
 
   Future<void> _newProject(BuildContext context) async {
-    await context.read<SessionApi>().newProject();
-    _refreshViews(context);
+    await ProjectFiles.newProject(context);
   }
 
   Future<void> _openProject(BuildContext context) async {
     try {
       await ProjectFiles.openProject(context);
     } on PlatformException catch (err) {
-      showDialog(
+      await showDialog(
           context: context,
           builder: (context) => ErrorDialog(
               title: "Unable to load project file".i18n, text: err.message ?? err.toString()));
@@ -104,10 +103,6 @@ class ApplicationMenu extends StatelessWidget {
   Future<void> _openProjectFromHistory(
       BuildContext context, SessionApi api, String filePath) async {
     await ProjectFiles.openProjectFrom(context, filePath);
-  }
-
-  void _refreshViews(BuildContext context) {
-    context.refreshAllStates();
   }
 }
 

@@ -145,20 +145,22 @@ fn load_settings() -> anyhow::Result<Arc<NonEmptyPinboard<SettingsManager>>> {
 
 fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
     if let Some(project_file) = mizer.project_path.clone() {
-        mizer
-            .load_project()
-            .context(format!("Failed to load project file {project_file:?}"))?;
+        todo!("report issues to ui, offer to create new project from ui");
+        // TODO: report issues to ui
+        // mizer
+        //     .load_project()
+        //     .context(format!("Failed to load project file {project_file:?}"))?;
     } else if settings.general.auto_load_last_project {
         let history = ProjectHistory.load()?;
         if let Some(last_project) = history.first() {
             tracing::info!("Loading last project {:?}", last_project);
-            if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
-                tracing::error!("Failed to load last project: {:?}", err);
-                mizer_console::error!(
-                    mizer_console::ConsoleCategory::Projects,
-                    "Failed to load last project"
-                );
-            }
+            // if let Err(err) = mizer.load_project_from(last_project.path.clone()) {
+            //     tracing::error!("Failed to load last project: {:?}", err);
+            //     mizer_console::error!(
+            //         mizer_console::ConsoleCategory::Projects,
+            //         "Failed to load last project"
+            //     );
+            // }
         } else {
             mizer.new_project()?;
         }

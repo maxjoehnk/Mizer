@@ -33,8 +33,14 @@ impl Migrations {
     }
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct MigrationResult {
+    pub from_version: u32,
+    pub to_version: u32,
+}
+
 #[profiling::function]
-pub fn migrate(project_file: &mut ProjectFile) -> anyhow::Result<()> {
+pub fn migrate(project_file: &mut ProjectFile) -> anyhow::Result<MigrationResult> {
     let version = project_file.get_version()?;
     let mut migrations = all::<Migrations>()
         .filter(|migration| migration.version() > version)
@@ -45,5 +51,8 @@ pub fn migrate(project_file: &mut ProjectFile) -> anyhow::Result<()> {
         migration.migrate(project_file)?;
     }
 
-    Ok(())
+    Ok(MigrationResult {
+        from_version: version,
+        to_version: Migrations::latest_version(),
+    })
 }

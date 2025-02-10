@@ -9,6 +9,27 @@ message SaveProjectAsRequest {
   string path = 1;
 }
 
+message LoadProjectResult {
+  State state = 1;
+  optional string error = 2;
+  repeated string issues = 3;
+  optional MigrationResult migration = 4;
+
+  message MigrationResult {
+    uint32 from = 1;
+    uint32 to = 2;
+  }
+
+  enum State {
+    OK = 0;
+    MISSING_FILE = 1;
+    INVALID_FILE = 2;
+    UNSUPPORTED_FILE_TYPE = 3;
+    MIGRATION_ISSUE = 4;
+    UNKNOWN = 255;
+  }
+}
+
 message ClientAnnouncement {
   string name = 1;
 }

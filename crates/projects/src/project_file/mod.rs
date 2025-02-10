@@ -6,6 +6,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 use zip::unstable::{LittleEndianReadExt, LittleEndianWriteExt};
+use mizer_module::ProjectLoadingError;
 
 mod archive_file;
 
@@ -16,13 +17,13 @@ pub(crate) enum ProjectFileType {
 }
 
 impl TryFrom<&Path> for ProjectFileType {
-    type Error = anyhow::Error;
+    type Error = ProjectLoadingError;
 
     fn try_from(value: &Path) -> Result<Self, Self::Error> {
         match value.extension().and_then(|ext| ext.to_str()) {
             Some("yaml") | Some("yml") => Ok(Self::Yaml),
             Some(SHOWFILE_EXTENSION) => Ok(Self::Zip),
-            _ => anyhow::bail!("unsupported file type"),
+            _ => Err(ProjectLoadingError::UnsupportedFileType),
         }
     }
 }
@@ -33,8 +34,11 @@ pub(crate) enum ProjectFile {
 }
 
 impl ProjectFile {
-    pub fn open(path: &Path) -> anyhow::Result<Self> {
+    pub fn open(path: &Path) -> Result<Self, ProjectLoadingError> {
         let file_type = ProjectFileType::try_from(path)?;
+        if !path.exists() {
+            return Err(ProjectLoadingError::MissingFile);
+        }
         let mut file = File::open(path)?;
         let mut file_content = Vec::new();
         file.read_to_end(&mut file_content)?;

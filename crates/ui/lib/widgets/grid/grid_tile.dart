@@ -5,12 +5,13 @@ import 'package:mizer/widgets/hoverable.dart';
 class PanelGridTile extends StatelessWidget {
   final Widget child;
   final bool active;
+  final bool selected;
   final bool empty;
   final Function()? onTap;
   final Function()? onSecondaryTap;
   final Function(TapDownDetails)? onSecondaryTapDown;
 
-  const PanelGridTile({ required this.child, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.empty = false, super.key});
+  const PanelGridTile({ required this.child, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
 
@@ -28,6 +29,11 @@ class PanelGridTile extends StatelessWidget {
           color: empty ? Colors.grey.shade900 : (hovered ? Colors.grey.shade700 : Colors.grey.shade800),
         ),
         child: Stack(children: [
+          if (selected) Container(
+              width: GRID_MAIN_SIZE,
+              height: GRID_MAIN_SIZE,
+              decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 2)),
+          ),
           if (active) Align(
             alignment: Alignment.topCenter,
             child: Container(

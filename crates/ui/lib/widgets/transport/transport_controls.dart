@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -10,8 +11,6 @@ import 'command_line.dart';
 import 'fps_control.dart';
 import 'speed_control.dart';
 import 'time_control.dart';
-
-const double TRANSPORT_CONTROLS_HEIGHT = 40;
 
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;

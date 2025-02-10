@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
-
-import 'transport_controls.dart';
 
 class CommandLineInput extends StatefulWidget {
   const CommandLineInput({super.key});

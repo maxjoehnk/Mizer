@@ -5,7 +5,10 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/grid/panel_sizing.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 
@@ -31,23 +34,21 @@ class SequenceList extends StatelessWidget {
   }
 
   Widget _list(BuildContext context, List<Sequence> sequences) {
-    return GridView(
-      padding: const EdgeInsets.all(4),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 100,
-        mainAxisExtent: 100,
-        crossAxisSpacing: 4,
-        mainAxisSpacing: 4,
-        childAspectRatio: 1,
+    return PanelSizing(
+      columns: 18,
+      rows: 3,
+      child: PanelGrid(
+        children: [
+          ...sequences
+              .search([(s) => s.name], searchQuery)
+              .map((sequence) => _sequence(context, sequence)),
+          ...List.filled((18 * 3) - sequences.length, PanelGridTile.empty())
+        ]
       ),
-      children: sequences
-          .search([(s) => s.name], searchQuery)
-          .map((sequence) => _sequenceRow(context, sequence))
-          .toList(),
     );
   }
 
-  Widget _sequenceRow(BuildContext context, Sequence sequence) {
+  Widget _sequence(BuildContext context, Sequence sequence) {
     bool selected = sequence == selectedSequence;
     bool active = this.sequenceStates[sequence.id]?.active ?? false;
     double rate = this.sequenceStates[sequence.id]?.rate ?? 1;
@@ -57,7 +58,9 @@ class SequenceList extends StatelessWidget {
       }
     };
 
-    return GestureDetector(
+    return PanelGridTile(
+      onTap: onTap,
+      active: active,
       onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
           position: details.globalPosition,
           child: PopupInput(
@@ -65,27 +68,15 @@ class SequenceList extends StatelessWidget {
             value: sequence.name,
             onChange: (name) => _updateSequenceName(context, sequence, name),
           ))),
-      child: Hoverable(
-        onTap: onTap,
-        builder: (hovered) => Container(
-          padding: const EdgeInsets.all(2),
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            color: hovered ? Colors.white10 : Colors.transparent,
-            border: Border.all(color: selected ? Colors.deepOrange : Colors.white10, width: 4),
-          ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Row(children: [
-              Expanded(child: Text(sequence.id.toString(), textAlign: TextAlign.start)),
-              Text((rate * 100).toStringAsFixed(0) + "%"),
-            ]),
-            Spacer(),
-            AutoSizeText(sequence.name, textAlign: TextAlign.center, maxLines: 2),
-            Container(height: 24, child: active ? Icon(Icons.play_arrow) : null),
-          ]),
-        ),
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Row(children: [
+          Expanded(child: Text(sequence.id.toString(), textAlign: TextAlign.start)),
+          Text((rate * 100).toStringAsFixed(0) + "%"),
+        ]),
+        Spacer(),
+        AutoSizeText(sequence.name, textAlign: TextAlign.center, maxLines: 2),
+        Container(height: 24, child: active ? Icon(Icons.play_arrow) : null),
+      ])
     );
   }
 

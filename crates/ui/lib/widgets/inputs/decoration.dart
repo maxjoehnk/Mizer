@@ -13,10 +13,10 @@ ShapeDecoration ControlDecoration(
         color: hover == true
             ? HOVER_CONTROL_COLOR
             : (highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR),
-        width: 4,
+        width: 2,
         style: BorderStyle.solid,
       ),
-      borderRadius: BorderRadius.all(Radius.circular(4)),
+      borderRadius: BorderRadius.all(Radius.circular(2)),
     ),
     color: gradient == null ? (color ?? DEFAULT_CONTROL_BACKGROUND) : null,
     gradient: gradient,

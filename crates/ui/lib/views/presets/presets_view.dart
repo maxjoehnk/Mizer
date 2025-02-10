@@ -8,11 +8,27 @@ import 'preset_button.dart';
 import 'preset_group.dart';
 
 class PresetsView extends StatelessWidget {
+  const PresetsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EffectsBloc, EffectState>(
         builder: (context, effects) => BlocBuilder<PresetsBloc, PresetsState>(
-            builder: (context, state) => Column(children: [
+            builder: (context, state) => PresetGroup(
+                label: "Groups",
+                child: PresetButtonList(
+                    children:
+                    state.groups.map((group) => GroupButton(group: group)).toList()))));
+  }
+}
+
+
+class PresetsView_ extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EffectsBloc, EffectState>(
+        builder: (context, effects) => BlocBuilder<PresetsBloc, PresetsState>(
+            builder: (context, state) => ListView(children: [
                   PresetGroup(
                       label: "Groups",
                       child: PresetButtonList(

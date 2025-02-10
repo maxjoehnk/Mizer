@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide View;
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/actions/actions.dart';
@@ -12,7 +13,7 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.grey.shade800,
-        width: 64,
+        width: NAVIGATION_BAR_SIZE,
         child: ListView(children: children));
   }
 }
@@ -35,7 +36,7 @@ class NavigationBarItem extends StatelessWidget {
     return Hoverable(
         onTap: onSelect,
         builder: (hovering) => Container(
-          height: 56,
+          height: NAVIGATION_BAR_SIZE,
           color: getBackgroundColor(hovering),
           child: Stack(
             children: [

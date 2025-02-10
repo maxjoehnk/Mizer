@@ -43,7 +43,7 @@ fn default_low_value() -> f64 {
 }
 
 impl ConfigurableNode for ButtonNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(TOGGLE_SETTING, self.toggle),
             setting!(HIGH_VALUE_SETTING, self.high_value)
@@ -73,7 +73,7 @@ impl PipelineNode for ButtonNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Single),
             input_port!(SET_PORT, PortType::Single),

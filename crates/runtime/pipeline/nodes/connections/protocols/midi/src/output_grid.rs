@@ -31,7 +31,7 @@ pub struct MidiOutputGridNode {
 }
 
 impl ConfigurableNode for MidiOutputGridNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let devices = get_devices(injector);
         let (pages, grid_size, mut steps) = get_pages_and_grid(injector, &self.device, &self.page);
         let (max_rows, max_cols) = grid_size.unwrap_or((u32::MAX, u32::MAX));
@@ -108,7 +108,7 @@ impl PipelineNode for MidiOutputGridNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Multi)]
     }
 

@@ -7,5 +7,6 @@ mod manager;
 mod model;
 mod module;
 mod processor;
+mod project_loading;
 pub mod queries;
 mod spline;

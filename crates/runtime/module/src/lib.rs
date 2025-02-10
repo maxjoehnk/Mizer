@@ -1,3 +1,5 @@
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::fmt::Display;
 use std::future::Future;
 use std::time::Duration;
@@ -9,6 +11,68 @@ use mizer_status_bus::StatusHandle;
 pub use crate::api_injector::ApiInjector;
 
 mod api_injector;
+
+pub struct ProjectLoadingResult {
+    pub warnings: Vec<String>,
+    pub error: Option<ProjectLoadingError>,
+    pub migration_result: Option<(u32, u32)>,
+}
+
+impl<T: Into<anyhow::Error>> From<T> for ProjectLoadingResult {
+    fn from(err: T) -> Self {
+        Self {
+            warnings: Default::default(),
+            error: Some(ProjectLoadingError::Unknown(err.into())),
+            migration_result: None,
+        }
+    }
+}
+
+pub enum ProjectLoadingError {
+    MissingFile,
+    InvalidFile,
+    UnsupportedFileType,
+    MigrationIssue(anyhow::Error),
+    Unknown(anyhow::Error),
+}
+
+impl<T: Into<anyhow::Error>> From<T> for ProjectLoadingError {
+    fn from(err: T) -> Self {
+        Self::Unknown(err.into())
+    }
+}
+
+pub trait ProjectHandler {
+    fn get_name(&self) -> &'static str;
+
+    fn new_project(
+        &mut self,
+        context: &mut impl ProjectHandlerContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()>;
+    fn load_project(
+        &mut self,
+        context: &mut impl LoadProjectContext,
+        injector: &mut dyn InjectDynMut,
+    ) -> anyhow::Result<()>;
+    fn save_project(
+        &self,
+        context: &mut impl SaveProjectContext,
+        injector: &dyn InjectDyn,
+    ) -> anyhow::Result<()>;
+}
+
+pub trait ProjectHandlerContext {
+    fn report_issue(&mut self, issue: impl Into<String>);
+}
+
+pub trait LoadProjectContext: ProjectHandlerContext {
+    fn read_file<T: DeserializeOwned>(&self, filename: &str) -> anyhow::Result<T>;
+}
+
+pub trait SaveProjectContext: ProjectHandlerContext {
+    fn write_file<T: Serialize>(&mut self, filename: &str, content: T) -> anyhow::Result<()>;
+}
 
 pub trait Module: Sized + Display {
     const IS_REQUIRED: bool;
@@ -102,4 +166,6 @@ pub trait ModuleContext {
         <F as Future>::Output: Send;
 
     fn status_handle(&self) -> StatusHandle;
+
+    fn add_project_handler(&mut self, handler: impl ProjectHandler + 'static);
 }

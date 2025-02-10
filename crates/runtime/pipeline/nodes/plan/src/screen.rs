@@ -54,7 +54,7 @@ impl PartialEq for PlanScreenNode {
 }
 
 impl ConfigurableNode for PlanScreenNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         let storage = injector.inject::<PlanStorage>();
         let plans = storage.read();
         let screens = plans
@@ -101,7 +101,7 @@ impl ConfigurableNode for PlanScreenNode {
 }
 
 impl PlanScreenNode {
-    fn get_plan(&self, injector: &impl Inject) -> Option<Plan> {
+    fn get_plan(&self, injector: &dyn InjectDyn) -> Option<Plan> {
         let storage = injector.try_inject::<PlanStorage>()?;
         let plans = storage.read();
         let plan = plans.into_iter().find(|p| p.name == self.plan)?;
@@ -109,7 +109,7 @@ impl PlanScreenNode {
         Some(plan)
     }
 
-    fn get_screen(&self, injector: &impl Inject) -> Option<PlanScreen> {
+    fn get_screen(&self, injector: &dyn InjectDyn) -> Option<PlanScreen> {
         let plan = self.get_plan(injector)?;
         plan.screens.into_iter().find(|s| s.id == self.screen_id)
     }
@@ -124,7 +124,7 @@ impl PipelineNode for PlanScreenNode {
         }
     }
 
-    fn list_ports(&self, injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(
             INPUT_PORT,
             PortType::Texture,

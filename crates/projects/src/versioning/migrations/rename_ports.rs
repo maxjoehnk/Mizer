@@ -9,11 +9,11 @@ use serde_yaml::Value;
 pub struct RenamePorts;
 
 impl ProjectFileMigration for RenamePorts {
-    const VERSION: usize = 1;
+    const VERSION: u32 = 1;
 
-    fn migrate(&self, project_file: &mut String) -> anyhow::Result<()> {
+    fn migrate(&self, project_file: &mut Vec<u8>) -> anyhow::Result<()> {
         profiling::scope!("RenamePorts::migrate");
-        let mut project: ProjectConfig = serde_yaml::from_str(project_file)?;
+        let mut project: ProjectConfig = serde_yaml::from_slice(&project_file)?;
 
         project.rename_input(NodeType::Select, "channel", "Channel");
         project.rename_input(NodeType::Select, "input", "Inputs");
@@ -77,13 +77,13 @@ impl ProjectFileMigration for RenamePorts {
         project.rename_output(NodeType::IldaFile, "frames", "Frames");
         project.rename_input(NodeType::Laser, "input", "Frames");
 
-        *project_file = serde_yaml::to_string(&project)?;
+        *project_file = serde_yaml::to_vec(&project)?;
 
         Ok(())
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct ProjectConfig {
     #[serde(default)]
     pub nodes: Vec<Node>,
@@ -131,7 +131,7 @@ impl ProjectConfig {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Node {
     #[serde(rename = "type")]
     node_type: NodeType,

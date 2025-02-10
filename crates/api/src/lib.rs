@@ -11,6 +11,7 @@ use mizer_connections::{MidiEvent, OscMessage};
 pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;
 use mizer_message_bus::Subscriber;
+use mizer_module::{ProjectLoadingError, ProjectLoadingResult};
 use mizer_node::{NodePath, PortId};
 use mizer_runtime::{LayoutsView, NodeMetadataRef, NodePreviewRef};
 use mizer_session::SessionState;
@@ -51,7 +52,7 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
     fn new_project(&self) -> anyhow::Result<()>;
     fn save_project(&self) -> anyhow::Result<()>;
     fn save_project_as(&self, path: String) -> anyhow::Result<()>;
-    fn load_project(&self, path: String) -> anyhow::Result<()>;
+    fn load_project(&self, path: String) -> ProjectLoadingResult;
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
     fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>>;

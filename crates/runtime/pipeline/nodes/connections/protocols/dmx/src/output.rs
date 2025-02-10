@@ -29,7 +29,7 @@ fn default_universe() -> u16 {
 }
 
 impl ConfigurableNode for DmxOutputNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![
             setting!(UNIVERSE_SETTING, self.universe as u32)
                 .min(1u32)
@@ -57,7 +57,7 @@ impl PipelineNode for DmxOutputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![input_port!(INPUT_PORT, PortType::Single)]
     }
 

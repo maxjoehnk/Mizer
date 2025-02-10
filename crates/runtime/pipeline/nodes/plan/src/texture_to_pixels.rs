@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use mizer_node::{NodeContext, PortId};
+use mizer_node::{Inject, NodeContext, PortId};
 use mizer_wgpu::{BufferHandle, TextureHandle, TextureRegistry, WgpuContext, WgpuPipeline};
 
 pub struct TextureToPixelsConverter {

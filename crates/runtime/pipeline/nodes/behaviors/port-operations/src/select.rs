@@ -18,7 +18,7 @@ pub struct SelectNode {
 }
 
 impl ConfigurableNode for SelectNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(enum PORT_TYPE_SETTING, self.port_type)]
     }
 
@@ -46,7 +46,7 @@ impl PipelineNode for SelectNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(CHANNEL_PORT, PortType::Single),
             input_port!(INPUT_PORT, self.port_type, multiple),

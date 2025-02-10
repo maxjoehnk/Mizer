@@ -19,8 +19,8 @@ pub struct NdiInputNode {
 }
 
 impl ConfigurableNode for NdiInputNode {
-    fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let device_manager = injector.get::<DeviceManager>().unwrap();
+    fn settings(&self, injector: &dyn InjectDyn) -> Vec<NodeSetting> {
+        let device_manager = injector.inject::<DeviceManager>();
         let devices = device_manager
             .current_devices()
             .into_iter()
@@ -59,7 +59,7 @@ impl PipelineNode for NdiInputNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Texture)]
     }
 

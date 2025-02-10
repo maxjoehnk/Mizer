@@ -22,7 +22,7 @@ impl PipelineNode for NumberToClockNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VALUE_INPUT, PortType::Single),
             output_port!(VALUE_OUTPUT, PortType::Clock),

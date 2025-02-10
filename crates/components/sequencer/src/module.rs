@@ -13,6 +13,7 @@ impl Module for SequencerModule {
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
         let sequencer = Sequencer::new();
         context.provide_api(sequencer.clone());
+        context.add_project_handler(sequencer.clone());
         context.provide(sequencer);
         context.add_processor(SequenceProcessor);
 

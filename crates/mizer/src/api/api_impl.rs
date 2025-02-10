@@ -10,7 +10,7 @@ use mizer_command_executor::{
 };
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
-use mizer_module::ApiInjector;
+use mizer_module::{ApiInjector, ProjectLoadingResult};
 use mizer_node::{NodePath, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
@@ -161,14 +161,18 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
-    fn load_project(&self, path: String) -> anyhow::Result<()> {
+    fn load_project(&self, path: String) -> ProjectLoadingResult {
         let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::LoadProject(path, tx))?;
-        rx.recv()??;
+        if let Err(err) = self.sender.send(ApiCommand::LoadProject(path, tx)) {
+            return ProjectLoadingResult::from(err);
+        }
+        let result = rx.recv().unwrap_or_else(ProjectLoadingResult::from);
 
-        self.emit_history()?;
+        if let Err(err) = self.emit_history() {
+            tracing::error!("Error emitting history {:?}", err);
+        }
 
-        Ok(())
+        result
     }
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot> {

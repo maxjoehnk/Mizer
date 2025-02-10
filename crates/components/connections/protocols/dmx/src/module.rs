@@ -2,6 +2,7 @@ use crate::dmx_monitor::create_monitor;
 use mizer_module::*;
 
 use crate::processor::DmxProcessor;
+use crate::project_handler::DmxProjectHandler;
 use crate::DmxConnectionManager;
 
 pub struct DmxModule;
@@ -17,6 +18,7 @@ impl Module for DmxModule {
         context.provide(dmx_manager);
         context.provide_api(public_monitor);
         context.add_processor(DmxProcessor);
+        context.add_project_handler(DmxProjectHandler);
 
         Ok(())
     }

@@ -14,6 +14,7 @@ mod inputs;
 mod module;
 mod outputs;
 mod processor;
+mod project_handler;
 
 pub struct DmxConnectionManager {
     dmx_monitor: DmxMonitorInternalHandle,
@@ -61,6 +62,7 @@ impl DmxConnectionManager {
     }
 
     pub fn clear(&mut self) {
+        self.inputs.clear();
         self.outputs.clear();
     }
 

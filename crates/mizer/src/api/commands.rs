@@ -1,5 +1,6 @@
 use mizer_clock::ClockState;
 use mizer_message_bus::Subscriber;
+use mizer_module::ProjectLoadingResult;
 use mizer_node::{NodePath, PortId};
 use mizer_protocol_midi::MidiEvent;
 use mizer_protocol_osc::OscMessage;
@@ -26,7 +27,7 @@ pub enum ApiCommand {
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),
-    LoadProject(String, flume::Sender<anyhow::Result<()>>),
+    LoadProject(String, flume::Sender<ProjectLoadingResult>),
     ObserveSession(flume::Sender<Subscriber<SessionState>>),
     ReloadFixtureLibraries(FixtureLibraryPaths, flume::Sender<anyhow::Result<()>>),
 }

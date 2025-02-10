@@ -29,7 +29,7 @@ pub struct TextureOpacityState {
 }
 
 impl ConfigurableNode for TextureOpacityNode {
-    fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
+    fn settings(&self, _injector: &dyn InjectDyn) -> Vec<NodeSetting> {
         vec![setting!(OPACITY_SETTING, self.opacity).min(0.0).max(1.0)]
     }
 
@@ -49,7 +49,7 @@ impl PipelineNode for TextureOpacityNode {
         }
     }
 
-    fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
+    fn list_ports(&self, _injector: &dyn InjectDyn) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_PORT, PortType::Texture),
             input_port!(OPACITY_PORT, PortType::Single),

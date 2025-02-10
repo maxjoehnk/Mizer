@@ -10,6 +10,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'session.pbenum.dart';
+
+export 'session.pbenum.dart';
+
 class LoadProjectRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
@@ -102,6 +106,152 @@ class SaveProjectAsRequest extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(0);
   @$pb.TagNumber(1)
   void clearPath() => clearField(1);
+}
+
+class LoadProjectResult_MigrationResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadProjectResult.MigrationResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  LoadProjectResult_MigrationResult._() : super();
+  factory LoadProjectResult_MigrationResult({
+    $core.int? from,
+    $core.int? to,
+  }) {
+    final _result = create();
+    if (from != null) {
+      _result.from = from;
+    }
+    if (to != null) {
+      _result.to = to;
+    }
+    return _result;
+  }
+  factory LoadProjectResult_MigrationResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoadProjectResult_MigrationResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoadProjectResult_MigrationResult clone() => LoadProjectResult_MigrationResult()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoadProjectResult_MigrationResult copyWith(void Function(LoadProjectResult_MigrationResult) updates) => super.copyWith((message) => updates(message as LoadProjectResult_MigrationResult)) as LoadProjectResult_MigrationResult; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LoadProjectResult_MigrationResult create() => LoadProjectResult_MigrationResult._();
+  LoadProjectResult_MigrationResult createEmptyInstance() => create();
+  static $pb.PbList<LoadProjectResult_MigrationResult> createRepeated() => $pb.PbList<LoadProjectResult_MigrationResult>();
+  @$core.pragma('dart2js:noInline')
+  static LoadProjectResult_MigrationResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoadProjectResult_MigrationResult>(create);
+  static LoadProjectResult_MigrationResult? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get from => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set from($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFrom() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFrom() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get to => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set to($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTo() => clearField(2);
+}
+
+class LoadProjectResult extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadProjectResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
+    ..e<LoadProjectResult_State>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: LoadProjectResult_State.OK, valueOf: LoadProjectResult_State.valueOf, enumValues: LoadProjectResult_State.values)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'error')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'issues')
+    ..aOM<LoadProjectResult_MigrationResult>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'migration', subBuilder: LoadProjectResult_MigrationResult.create)
+    ..hasRequiredFields = false
+  ;
+
+  LoadProjectResult._() : super();
+  factory LoadProjectResult({
+    LoadProjectResult_State? state,
+    $core.String? error,
+    $core.Iterable<$core.String>? issues,
+    LoadProjectResult_MigrationResult? migration,
+  }) {
+    final _result = create();
+    if (state != null) {
+      _result.state = state;
+    }
+    if (error != null) {
+      _result.error = error;
+    }
+    if (issues != null) {
+      _result.issues.addAll(issues);
+    }
+    if (migration != null) {
+      _result.migration = migration;
+    }
+    return _result;
+  }
+  factory LoadProjectResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoadProjectResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LoadProjectResult clone() => LoadProjectResult()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LoadProjectResult copyWith(void Function(LoadProjectResult) updates) => super.copyWith((message) => updates(message as LoadProjectResult)) as LoadProjectResult; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LoadProjectResult create() => LoadProjectResult._();
+  LoadProjectResult createEmptyInstance() => create();
+  static $pb.PbList<LoadProjectResult> createRepeated() => $pb.PbList<LoadProjectResult>();
+  @$core.pragma('dart2js:noInline')
+  static LoadProjectResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoadProjectResult>(create);
+  static LoadProjectResult? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LoadProjectResult_State get state => $_getN(0);
+  @$pb.TagNumber(1)
+  set state(LoadProjectResult_State v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasState() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearState() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get error => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set error($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasError() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearError() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.String> get issues => $_getList(2);
+
+  @$pb.TagNumber(4)
+  LoadProjectResult_MigrationResult get migration => $_getN(3);
+  @$pb.TagNumber(4)
+  set migration(LoadProjectResult_MigrationResult v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMigration() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMigration() => clearField(4);
+  @$pb.TagNumber(4)
+  LoadProjectResult_MigrationResult ensureMigration() => $_ensure(3);
 }
 
 class ClientAnnouncement extends $pb.GeneratedMessage {

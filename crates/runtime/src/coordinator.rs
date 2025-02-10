@@ -18,7 +18,6 @@ use mizer_nodes::*;
 use mizer_pipeline::*;
 use mizer_plan::PlanStorage;
 use mizer_processing::*;
-use mizer_project_files::{Project, ProjectManagerMut};
 use mizer_status_bus::StatusBus;
 
 use crate::api::RuntimeAccess;
@@ -75,15 +74,6 @@ impl CoordinatorRuntime {
         self.injector.provide(self.plans.clone());
         self.injector.provide(self.layouts.clone());
         self.injector.provide(clock);
-    }
-
-    fn add_layouts(&self, layouts: impl IntoIterator<Item = (String, Vec<ControlConfig>)>) {
-        let layouts = layouts
-            .into_iter()
-            .map(|(id, controls)| Layout { id, controls })
-            .collect();
-
-        self.layouts.set(layouts);
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
@@ -351,64 +341,38 @@ impl Runtime for CoordinatorRuntime {
     }
 }
 
-impl ProjectManagerMut for CoordinatorRuntime {
-    fn new_project(&mut self) {
-        profiling::scope!("CoordinatorRuntime::new_project");
-        self.set_fps(DEFAULT_FPS);
-        let preset_ids = self.get_preset_ids();
-        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
-        pipeline.new_project(injector);
-        for preset_id in preset_ids {
-            pipeline
-                .add_node(
-                    injector,
-                    NodeType::Preset,
-                    NodeDesigner {
-                        hidden: true,
-                        ..Default::default()
-                    },
-                    Some(Node::Preset(PresetNode { id: preset_id })),
-                    None,
-                )
-                .unwrap();
-        }
-    }
-
-    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
-        profiling::scope!("CoordinatorRuntime::load");
-        self.set_fps(project.playback.fps);
-        let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
-        pipeline.load(project, injector)?;
-        self.add_layouts(project.layouts.clone());
-        self.plans.set(project.plans.clone());
-        Ok(())
-    }
-
-    fn save(&self, project: &mut Project) {
-        profiling::scope!("CoordinatorRuntime::save");
-        project.playback.fps = self.fps();
-        let pipeline = self.injector.inject::<Pipeline>();
-        pipeline.save(project);
-        project.layouts = self
-            .layouts
-            .read()
-            .into_iter()
-            .map(|layout| (layout.id, layout.controls))
-            .collect();
-        project.plans = self.plans.read();
-    }
-
-    fn clear(&mut self) {
-        self.set_fps(DEFAULT_FPS);
-        let pipeline = self.injector.get_mut::<Pipeline>().unwrap();
-        pipeline.clear();
-        self.layouts.set(vec![Layout {
-            id: "Default".into(),
-            controls: Vec::new(),
-        }]);
-        self.plans.set(Default::default());
-    }
-}
+// impl ProjectManagerMut for CoordinatorRuntime {
+//     fn new_project(&mut self) {
+//         profiling::scope!("CoordinatorRuntime::new_project");
+//         self.set_fps(DEFAULT_FPS);
+//         let preset_ids = self.get_preset_ids();
+//         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
+//         pipeline.new_project(injector);
+//         for preset_id in preset_ids {
+//             pipeline
+//                 .add_node(
+//                     injector,
+//                     NodeType::Preset,
+//                     NodeDesigner {
+//                         hidden: true,
+//                         ..Default::default()
+//                     },
+//                     Some(Node::Preset(PresetNode { id: preset_id })),
+//                     None,
+//                 )
+//                 .unwrap();
+//         }
+//     }
+//
+//     fn save(&self, project: &mut Project) {
+//         profiling::scope!("CoordinatorRuntime::save");
+//         project.playback.fps = self.fps();
+//     }
+//
+//     fn clear(&mut self) {
+//         self.set_fps(DEFAULT_FPS);
+//     }
+// }
 
 #[cfg(test)]
 mod tests {

@@ -13,6 +13,7 @@ impl Module for TimecodeModule {
     fn register(self, context: &mut impl ModuleContext) -> anyhow::Result<()> {
         let manager = TimecodeManager::new();
         context.provide_api(manager.clone());
+        context.add_project_handler(manager.clone());
         context.add_processor(TimecodeProcessor::new(manager.clone()));
         context.provide(manager);
 

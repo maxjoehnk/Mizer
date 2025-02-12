@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:
@@ -108,6 +108,8 @@ jobs:
             libzimg-dev \
             yasm
       - uses: taiki-e/install-action@protoc
+      - name: Install cbindgen
+        run: cargo install --force cbindgen
       - uses: actions/checkout@v4
         with:
           submodules: recursive

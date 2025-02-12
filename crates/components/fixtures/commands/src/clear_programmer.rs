@@ -25,6 +25,7 @@ impl<'a> Command<'a> for ClearProgrammerCommand {
     }
 
     fn revert(&self, fixture_manager: &FixtureManager, _: Self::State) -> anyhow::Result<()> {
-        todo!()
+        // TODO: actually revert the programmer state
+        Ok(())
     }
 }

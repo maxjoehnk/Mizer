@@ -35,6 +35,10 @@ abstract class NodesApi {
 
   Future<void> groupNodes(List<String> nodes, {String? parent});
 
+  Future<void> addComment(AddCommentRequest request);
+  Future<void> updateComment(UpdateCommentRequest request);
+  Future<void> deleteComment(String id);
+
   Future<NodesPointer> getNodesPointer();
 
   Future<void> openNodesView();

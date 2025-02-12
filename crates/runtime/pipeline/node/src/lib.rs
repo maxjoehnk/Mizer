@@ -7,6 +7,7 @@ pub use mizer_debug_ui::DebugUiDrawHandle;
 pub use mizer_injector::Injector;
 pub use mizer_ports::{port_types, Color, PortId, PortType};
 
+pub use self::comment_area::*;
 pub use self::context::*;
 pub use self::introspection::*;
 pub use self::path::*;
@@ -14,6 +15,7 @@ pub use self::ports::*;
 pub use self::preview::*;
 pub use self::settings::*;
 
+mod comment_area;
 mod context;
 mod path;
 mod ports;

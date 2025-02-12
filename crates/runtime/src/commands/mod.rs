@@ -5,8 +5,10 @@ use mizer_node::{
 use mizer_nodes::ContainerNode;
 use mizer_ports::PortId;
 
+pub use self::add_comment::*;
 pub use self::add_link::*;
 pub use self::add_node::*;
+pub use self::delete_comment::*;
 pub use self::delete_nodes::*;
 pub use self::disconnect_port::*;
 pub use self::disconnect_ports::*;
@@ -17,11 +19,14 @@ pub use self::move_node::*;
 pub use self::remove_link::*;
 pub use self::rename_node::*;
 pub use self::show_node::*;
+pub use self::update_comment::*;
 pub use self::update_node_color::*;
 pub use self::update_node_setting::*;
 
+mod add_comment;
 mod add_link;
 mod add_node;
+mod delete_comment;
 mod delete_nodes;
 mod disconnect_port;
 mod disconnect_ports;
@@ -32,6 +37,7 @@ mod move_node;
 mod remove_link;
 mod rename_node;
 mod show_node;
+mod update_comment;
 mod update_node_color;
 mod update_node_setting;
 

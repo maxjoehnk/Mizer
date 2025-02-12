@@ -174,6 +174,25 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
+            "addComment" => {
+                let response = call.arguments().and_then(|args| self.handler.add_comment(args));
+
+                resp.respond_unit_result(response);
+            }
+            "updateComment" => {
+                let response = call.arguments().and_then(|args| self.handler.update_comment(args));
+
+                resp.respond_unit_result(response);
+            }
+            "deleteComment" => {
+                if let Value::String(path) = call.args {
+                    let result = path.parse()
+                        .map_err(anyhow::Error::from)
+                        .and_then(|path| self.handler.delete_comment(path));
+                    
+                    resp.respond_unit_result(result);
+                }
+            }
             "openNodesView" => {
                 self.handler.open_nodes_view();
                 resp.send_ok(Value::Null);

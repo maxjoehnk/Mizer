@@ -23,6 +23,7 @@ pinboard = "2.2"
 enum-iterator = "2.0"
 parking_lot = "0.12"
 num_enum = "0.7"
+uuid = { version = "1.11", features = ["v4", "serde"] }
 
 [dev-dependencies]
 test-case = "3.3"

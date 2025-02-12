@@ -11,11 +11,12 @@ class PipelineState {
   final List<NodeConnection> channels;
   final List<AvailableNode> availableNodes;
   final List<String> selectedNodes;
+  final List<NodeCommentArea> comments;
 
-  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes, { this.selectedNodes = const [] });
+  PipelineState(this.nodes, this.allNodes, this.channels, this.availableNodes, this.comments, { this.selectedNodes = const [] });
 
   factory PipelineState.empty() {
-    return PipelineState([], [], [], []);
+    return PipelineState([], [], [], [], []);
   }
 
   List<NodeConnection> getInputs(String targetPath) {
@@ -32,12 +33,14 @@ class PipelineState {
     List<NodeConnection>? channels,
     List<AvailableNode>? availableNodes,
     List<String>? selectedNodes,
+    List<NodeCommentArea>? comments,
   }) {
     return PipelineState(
       nodes ?? this.nodes,
       allNodes ?? this.allNodes,
       channels ?? this.channels,
       availableNodes ?? this.availableNodes,
+      comments ?? this.comments,
       selectedNodes: selectedNodes ?? [],
     );
   }
@@ -172,6 +175,20 @@ class ShowNode extends NodesEvent {
   }
 }
 
+class AddComment extends NodesEvent {
+  final Offset position;
+  final Size size;
+  final String? parent;
+
+  AddComment(this.position, this.size, { this.parent });
+}
+
+class DeleteComment extends NodesEvent {
+  final NodeCommentArea comment;
+
+  DeleteComment(this.comment);
+}
+
 class NodesBloc extends Bloc<NodesEvent, PipelineState> {
   final NodesApi api;
 
@@ -255,6 +272,20 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       await api.groupNodes(event.nodes, parent: event.parent);
       emit(await _fetchNodes());
     });
+    on<AddComment>((event, emit) async {
+      var request = AddCommentRequest(
+        position: NodePosition(x: event.position.dx, y: event.position.dy),
+        width: event.size.width,
+        height: event.size.height,
+        parent: event.parent,
+      );
+      await api.addComment(request);
+      emit(await _fetchNodes());
+    });
+    on<DeleteComment>((event, emit) async {
+      await api.deleteComment(event.comment.id);
+      emit(await _fetchNodes());
+    });
     this.add(FetchNodes());
     this.add(FetchAvailableNodes());
   }
@@ -266,6 +297,7 @@ class NodesBloc extends Bloc<NodesEvent, PipelineState> {
       nodes: nodes.nodes,
       channels: nodes.channels,
       allNodes: nodes.allNodes,
+      comments: nodes.comments,
     );
   }
 

@@ -9,6 +9,7 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/node_documenter.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/comments_layer.dart';
 import 'package:mizer/views/nodes/widgets/minimap/minimap.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
@@ -20,6 +21,7 @@ import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
 import 'models/node_model.dart';
+import 'widgets/editor_layers/add_comment_layer.dart';
 import 'widgets/editor_layers/canvas_drop_layer.dart';
 import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
@@ -57,6 +59,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   Offset? addMenuPosition;
   SelectionState? _selectionState;
   String? nodeSearch;
+  bool _isAddingComment = false;
 
   NodeEditorModel get model {
     return widget.nodeEditorModel;
@@ -73,6 +76,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       hotkeyMap: {
         // TODO: determine position for new node
         "add_node": () => {},
+        "add_comment": () => _toggleCommentEditor(context),
         "duplicate_node": () => _duplicateNodes(context),
         "delete_node": () => _deleteNodes(context),
         "group_nodes": () => _groupNodes(context),
@@ -97,10 +101,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                           builder: (context) => Stack(children: [
                             CanvasBackgroundLayer(model.transformationController.value),
                             TransformLayer(transformationController: model.transformationController),
+                            CommentsTarget(),
                             Transform(
                                 transform: model.transformationController.value,
                                 child: IgnorePointer(child: GraphPaintLayer(model: model))),
-                            GestureDetector(
+                            if (!_isAddingComment) GestureDetector(
                               behavior: HitTestBehavior.translucent,
                               onDoubleTapDown: (event) {
                                 _openAddNodeMenu(context,
@@ -114,6 +119,12 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                                   onUpdateSelection: (selection) =>
                                       setState(() => _selectionState = selection)),
                             ),
+                            if (_isAddingComment) AddCommentLayer(
+                              onAddComment: (rect) => _addComment(context, rect),
+                              transformation: model.transformationController.value,
+                              selectionState: _selectionState,
+                                  onUpdateSelection: (selection) =>
+                                      setState(() => _selectionState = selection)),
                             CanvasDropLayer(),
                             NodesTarget(),
                             if (_selectionState != null) SelectionIndicator(_selectionState!),
@@ -164,6 +175,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                     disabled: model.selection.isEmpty,
                     onClick: () => _alignNodes(context),
                     hotkeyId: "align_nodes"),
+                PanelActionModel(
+                    label: "Add Comment".i18n,
+                    activated: _isAddingComment,
+                    onClick: () => _toggleCommentEditor(context),
+                    hotkeyId: "add_comment"),
                 if (EnableScreenshot)
                   PanelActionModel(
                       label: "Document Node",
@@ -184,7 +200,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                         child: Panel(
                           padding: false,
                           label: "Properties".i18n,
-                          child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
+                          child: NodePropertiesPane(node: model.selectedNode?.node, comment: model.selectedComment, onUpdate: _refresh)),
                       ),
                       Expanded(
                         flex: 3,
@@ -316,6 +332,23 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     await documentNode(context, nodeState);
   }
 
+  void _toggleCommentEditor(BuildContext context) {
+    setState(() {
+      _isAddingComment = !_isAddingComment;
+    });
+  }
+
+  void _addComment(BuildContext context, Rect rect) {
+    var position = rect.topLeft / MULTIPLIER;
+    var size = rect.size / MULTIPLIER;
+
+    context.read<NodesBloc>().add(AddComment(position, size, parent: model.parent?.node.path));
+
+    setState(() {
+      _isAddingComment = false;
+    });
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -357,6 +390,12 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   void _addNode(NodeEditorModel model, CreateNode req) {
     var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
+
+    print("add");
+    print(addMenuPosition);
+    print(transformedPosition);
+    print(position);
+
     context
         .read<NodesBloc>()
         .add(AddNode(nodeType: req.nodeType, template: req.template, position: position, parent: model.parent?.node.path));

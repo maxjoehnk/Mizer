@@ -151,6 +151,15 @@ impl PipelineNode for MidiInputNode {
         }
     }
 
+    fn display_name(&self, _injector: &Injector) -> String {
+        match &self.config {
+            MidiInputConfig::Control { page, control, .. } => {
+                format!("MIDI Input ({} - {}/{})", self.device, page, control)
+            }
+            MidiInputConfig::Note { mode, channel, port, .. } => format!("MIDI Input ({} - Ch {channel} {mode} {port})", self.device),
+        }
+    }
+
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![output_port!(OUTPUT_PORT, PortType::Single)]
     }

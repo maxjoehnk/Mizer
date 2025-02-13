@@ -37,7 +37,8 @@ pub struct CoordinatorRuntime {
     layout_fader_view: LayoutsView,
     node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeRuntimeMetadata>>>,
     status_bus: StatusBus,
-    read_node_settings: Arc<AtomicBool>,
+    read_node_metadata: Arc<AtomicBool>,
+    read_node_settings: Arc<NonEmptyPinboard<Vec<NodePath>>>,
 }
 
 impl CoordinatorRuntime {
@@ -64,7 +65,8 @@ impl CoordinatorRuntime {
             layout_fader_view: Default::default(),
             node_metadata,
             status_bus: Default::default(),
-            read_node_settings: Arc::new(AtomicBool::new(false)),
+            read_node_metadata: Arc::new(AtomicBool::new(false)),
+            read_node_settings: NonEmptyPinboard::new(Default::default()).into(),
         };
         runtime.bootstrap(Box::new(clock));
 
@@ -105,6 +107,7 @@ impl CoordinatorRuntime {
             clock_snapshot: self.clock_snapshot.clone(),
             layouts_view: self.layout_fader_view.clone(),
             status_bus: self.status_bus.clone(),
+            read_node_metadata: self.read_node_metadata.clone(),
             read_node_settings: self.read_node_settings.clone(),
         }
     }
@@ -237,9 +240,9 @@ impl CoordinatorRuntime {
     }
 
     #[profiling::function]
-    pub(crate) fn read_node_settings(&mut self) {
+    pub(crate) fn read_node_settings(&mut self, paths: &[NodePath]) {
         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
-        pipeline.refresh_settings(injector);
+        pipeline.refresh_settings(injector, paths);
     }
 
     #[profiling::function]
@@ -318,11 +321,12 @@ impl Runtime for CoordinatorRuntime {
         {
             processor.post_process(&mut self.injector, frame);
         }
+        let paths = self.read_node_settings.get_ref();
+        self.read_node_settings(&paths);
         if self
-            .read_node_settings
+            .read_node_metadata
             .load(std::sync::atomic::Ordering::Relaxed)
         {
-            self.read_node_settings();
             self.read_node_metadata();
             self.read_node_ports();
         }

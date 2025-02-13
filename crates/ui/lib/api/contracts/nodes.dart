@@ -39,4 +39,6 @@ abstract class NodesApi {
 
   Future<void> openNodesView();
   Future<void> closeNodesView();
+  
+  Future<void> openNodeSettings(List<String> paths);
 }

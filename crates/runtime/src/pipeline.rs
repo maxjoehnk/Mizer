@@ -474,13 +474,15 @@ impl Pipeline {
     }
 
     #[profiling::function]
-    pub(crate) fn refresh_settings(&mut self, injector: &Injector) {
-        for (_path, state) in self.nodes.iter_mut() {
-            let _scope = format!("{:?}Node::settings", state.node.node_type());
-            profiling::scope!(&_scope);
-            let settings = state.node.settings(injector);
+    pub(crate) fn refresh_settings(&mut self, injector: &Injector, paths: &[NodePath]) {
+        for path in paths {
+            if let Some(state) = self.nodes.get_mut(path) {
+                let _scope = format!("{:?}Node::settings", state.node.node_type());
+                profiling::scope!(&_scope);
+                let settings = state.node.settings(injector);
 
-            state.settings = settings;
+                state.settings = settings;
+            }
         }
     }
 

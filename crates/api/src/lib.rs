@@ -90,6 +90,8 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
 
     fn open_nodes_view(&self);
     fn close_nodes_view(&self);
+    
+    fn open_node_settings(&self, paths: Vec<NodePath>);
 }
 
 pub fn start_remote_api<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<u16> {

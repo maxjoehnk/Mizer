@@ -5,6 +5,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
+use mizer_node::NodePath;
 use mizer_plan::Plan;
 use mizer_status_bus::StatusBus;
 
@@ -19,5 +20,6 @@ pub struct RuntimeAccess {
     pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     pub layouts_view: LayoutsView,
     pub status_bus: StatusBus,
-    pub read_node_settings: Arc<AtomicBool>,
+    pub read_node_metadata: Arc<AtomicBool>,
+    pub read_node_settings: Arc<NonEmptyPinboard<Vec<NodePath>>>,
 }

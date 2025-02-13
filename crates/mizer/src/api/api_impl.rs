@@ -19,7 +19,6 @@ use mizer_runtime::{DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_status_bus::StatusHandle;
-
 use crate::{ApiCommand, ApiHandler};
 
 #[derive(Clone)]
@@ -271,14 +270,6 @@ impl RuntimeApi for Api {
         self.access.layouts_view.clone()
     }
 
-    #[profiling::function]
-    fn open_nodes_view(&self) {
-        tracing::debug!("Opening nodes view");
-        self.open_node_views
-            .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-        self.update_read_node_settings();
-    }
-
     fn reload_midi_device_profiles(&self) -> anyhow::Result<()> {
         let status_handle = self.api_injector.require_service::<StatusHandle>();
         let registry = self
@@ -306,11 +297,27 @@ impl RuntimeApi for Api {
     }
 
     #[profiling::function]
+    fn open_nodes_view(&self) {
+        tracing::debug!("Opening nodes view");
+        self.open_node_views
+            .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        self.update_read_node_metadata();
+    }
+
+    #[profiling::function]
     fn close_nodes_view(&self) {
         tracing::debug!("Closing nodes view");
         self.open_node_views
             .fetch_sub(1, std::sync::atomic::Ordering::SeqCst);
-        self.update_read_node_settings();
+        self.update_read_node_metadata();
+    }
+
+    #[profiling::function]
+    fn open_node_settings(&self, paths: Vec<NodePath>) {
+        tracing::debug!("Opening node settings {paths:?}");
+        self.access
+            .read_node_settings
+            .set(paths);
     }
 }
 
@@ -355,13 +362,13 @@ impl Api {
             .map(|gamepad| gamepad.value().clone())
     }
 
-    fn update_read_node_settings(&self) {
+    fn update_read_node_metadata(&self) {
         let open_views = self
             .open_node_views
             .load(std::sync::atomic::Ordering::SeqCst);
         tracing::debug!("Open views: {open_views}");
         self.access
-            .read_node_settings
+            .read_node_metadata
             .store(open_views > 0, std::sync::atomic::Ordering::SeqCst);
     }
 }

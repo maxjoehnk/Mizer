@@ -174,6 +174,19 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
+            "openNodeSettings" => {
+                if let Value::List(paths) = call.args {
+                    let paths = paths
+                        .into_iter()
+                        .filter_map(|value| match value {
+                            Value::String(path) => Some(path),
+                            _ => None,
+                        })
+                        .collect();
+                    self.handler.open_node_settings(paths);
+                    resp.send_ok(Value::Null);
+                }
+            }
             "openNodesView" => {
                 self.handler.open_nodes_view();
                 resp.send_ok(Value::Null);

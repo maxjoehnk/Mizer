@@ -22,6 +22,29 @@ class NodePropertiesPane extends StatefulWidget {
 class _NodePropertiesPaneState extends State<NodePropertiesPane> {
   String? hoveredSetting;
 
+
+  @override
+  void didUpdateWidget(NodePropertiesPane oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.node?.path != this.widget.node?.path) {
+      context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
+    }
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    if (this.widget.node != null) {
+      context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
+    }
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    context.read<NodesApi>().openNodeSettings([]);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (this.widget.node == null) {

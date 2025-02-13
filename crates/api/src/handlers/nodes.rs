@@ -343,4 +343,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn close_nodes_view(&self) {
         self.runtime.close_nodes_view();
     }
+
+    #[profiling::function]
+    pub fn open_node_settings(&self, paths: Vec<impl Into<NodePath>>) {
+        let paths = paths.into_iter().map(|path| path.into()).collect();
+        self.runtime.open_node_settings(paths);
+    }
 }

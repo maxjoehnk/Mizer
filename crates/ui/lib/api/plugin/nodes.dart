@@ -139,4 +139,9 @@ class NodesPluginApi implements NodesApi {
   Future<void> openNodesView() async {
     await channel.invokeMethod("openNodesView");
   }
+
+  @override
+  Future<void> openNodeSettings(List<String> paths) async {
+    await channel.invokeMethod("openNodeSettings", paths);
+  }
 }

@@ -143,7 +143,7 @@ class _PopupProgrammerInputState extends State<PopupProgrammerInput> {
                         label: "Fixture Slots",
                         child: FixtureControlPresets(widget.controlPresets!, onSelect: (double v) {
                           setState(() {
-                            _ast = ValueAst([Value.fromDouble(v)]);
+                            _ast = ValueAst([Value.fromDouble(v * 100)]);
                           });
                           _build(context);
                         })),

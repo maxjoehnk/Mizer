@@ -19,6 +19,7 @@ const COLOR_MAGENTA: &str = "#ff00ff";
 const COLOR_YELLOW: &str = "#ffff00";
 
 const DMX_CHANNEL_RANGE: (u16, u16) = (0, 511);
+const DMX_VALUE_RANGE: (u16, u16) = (0, 255);
 
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
@@ -592,7 +593,7 @@ fn group_controls(
                         gobos: used_slots
                             .filter_map(|(slot_index, dmx_range)| {
                                 let value =
-                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
+                                    dmx_range.0.linear_extrapolate(DMX_VALUE_RANGE, (0., 1.));
                                 if let WheelSlotDefinition::Gobo { name, resource } =
                                     &wheel.slots[(*slot_index as usize) - 1]
                                 {
@@ -623,7 +624,7 @@ fn group_controls(
                         colors: used_slots
                             .filter_map(|(slot_index, dmx_range)| {
                                 let value =
-                                    dmx_range.0.linear_extrapolate(DMX_CHANNEL_RANGE, (0., 1.));
+                                    dmx_range.0.linear_extrapolate(DMX_VALUE_RANGE, (0., 1.));
                                 if let WheelSlotDefinition::Color { name, colors } =
                                     &wheel.slots[(*slot_index as usize) - 1]
                                 {

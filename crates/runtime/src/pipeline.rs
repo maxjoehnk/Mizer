@@ -144,6 +144,9 @@ impl Pipeline {
     }
 
     pub(crate) fn rename_node(&mut self, from: &NodePath, to: NodePath) -> anyhow::Result<()> {
+        if self.nodes.contains_key(&to) {
+            anyhow::bail!("A node with the path {to} already exists!");
+        }
         let state = self.nodes.shift_remove(from).unwrap();
         self.nodes.insert(to.clone(), state);
         for link in self.links.iter_mut() {

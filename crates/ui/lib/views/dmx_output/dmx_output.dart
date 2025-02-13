@@ -114,6 +114,7 @@ class AddressObserver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Panel(
         label: "DMX".i18n,
         child: SingleChildScrollView(
@@ -137,7 +138,13 @@ class AddressObserver extends StatelessWidget {
                       width: 40,
                       height: 40,
                       alignment: Alignment.center,
-                      child: Text("${index + 1}"));
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("${index + 1}"),
+                          Text("$value", style: textTheme.bodySmall),
+                        ],
+                      ));
                 })),
           ),
         ));

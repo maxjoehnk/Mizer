@@ -26,7 +26,7 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
   @override
   void didUpdateWidget(NodePropertiesPane oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.node?.path != this.widget.node?.path) {
+    if (oldWidget.node?.path != this.widget.node?.path && this.widget.node?.path != null) {
       context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
     }
   }
@@ -34,7 +34,7 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
   @override
   void activate() {
     super.activate();
-    if (this.widget.node != null) {
+    if (this.widget.node?.path != null) {
       context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
     }
   }

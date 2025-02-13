@@ -21,7 +21,10 @@ impl<'a> Command<'a> for RenameNodeCommand {
         format!("Renaming Node '{}' to '{}'", self.path, self.new_name)
     }
 
-    fn apply(&self, (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage)) -> anyhow::Result<(Self::Result, Self::State)> {
+    fn apply(
+        &self,
+        (pipeline, layout_storage): (&mut Pipeline, &LayoutStorage),
+    ) -> anyhow::Result<(Self::Result, Self::State)> {
         pipeline.rename_node(&self.path, self.new_name.clone())?;
         let previous_containers = self.rename_node_in_containers(pipeline)?;
         self.rename_node_in_layouts(layout_storage, &self.path, &self.new_name);
@@ -45,7 +48,12 @@ impl<'a> Command<'a> for RenameNodeCommand {
 }
 
 impl RenameNodeCommand {
-    fn rename_node_in_layouts(&self, layout_storage: &LayoutStorage, from: &NodePath, to: &NodePath) {
+    fn rename_node_in_layouts(
+        &self,
+        layout_storage: &LayoutStorage,
+        from: &NodePath,
+        to: &NodePath,
+    ) {
         let mut layouts = layout_storage.read();
         for layout in &mut layouts {
             for control in &mut layout.controls {
@@ -58,7 +66,7 @@ impl RenameNodeCommand {
         }
         layout_storage.set(layouts);
     }
-    
+
     fn rename_node_in_containers(
         &self,
         pipeline: &mut Pipeline,

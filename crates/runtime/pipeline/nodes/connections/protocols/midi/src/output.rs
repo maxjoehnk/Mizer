@@ -206,7 +206,12 @@ impl PipelineNode for MidiOutputNode {
             MidiOutputConfig::Control { page, control, .. } => {
                 format!("MIDI Output ({} - {}/{})", self.device, page, control)
             }
-            MidiOutputConfig::Note { mode, channel, port, .. } => format!("MIDI Output ({} - Ch {channel} {mode} {port})", self.device),
+            MidiOutputConfig::Note {
+                mode,
+                channel,
+                port,
+                ..
+            } => format!("MIDI Output ({} - Ch {channel} {mode} {port})", self.device),
         }
     }
 

@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
 
+use crate::{ApiCommand, ApiHandler};
 use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::{
@@ -19,7 +20,6 @@ use mizer_runtime::{DefaultRuntime, LayoutsView, NodeMetadataRef, NodePreviewRef
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
 use mizer_status_bus::StatusHandle;
-use crate::{ApiCommand, ApiHandler};
 
 #[derive(Clone)]
 pub struct Api {
@@ -315,9 +315,7 @@ impl RuntimeApi for Api {
     #[profiling::function]
     fn open_node_settings(&self, paths: Vec<NodePath>) {
         tracing::debug!("Opening node settings {paths:?}");
-        self.access
-            .read_node_settings
-            .set(paths);
+        self.access.read_node_settings.set(paths);
     }
 }
 

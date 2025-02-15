@@ -6312,6 +6312,7 @@ dependencies = [
  "mizer-docs",
  "mizer-fixtures",
  "mizer-layouts",
+ "mizer-message-bus",
  "mizer-module",
  "mizer-node",
  "mizer-nodes",
@@ -6951,7 +6952,7 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=36ceab5#36ceab5914551cf8c7e9e5adfda1806fded5383a"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=0471c52#0471c52c7b0e99fe26fc92c498035bb94c58b156"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -6999,7 +7000,7 @@ dependencies = [
 [[package]]
 name = "nativeshell_build"
 version = "0.1.16"
-source = "git+https://github.com/maxjoehnk/nativeshell?rev=36ceab5#36ceab5914551cf8c7e9e5adfda1806fded5383a"
+source = "git+https://github.com/maxjoehnk/nativeshell?rev=0471c52#0471c52c7b0e99fe26fc92c498035bb94c58b156"
 dependencies = [
  "base64 0.13.1",
  "cargo-emit",

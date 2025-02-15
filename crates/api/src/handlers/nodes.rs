@@ -1,5 +1,6 @@
 use std::fmt::Debug;
-
+use futures::Stream;
+use futures::StreamExt;
 use mizer_command_executor::*;
 use mizer_docs::get_node_template_description;
 use mizer_node::{NodePath, NodeType, PortId};
@@ -9,7 +10,7 @@ use crate::proto::nodes::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]
-pub struct NodesHandler<R: RuntimeApi> {
+pub struct NodesHandler<R> {
     runtime: R,
 }
 
@@ -348,5 +349,16 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn open_node_settings(&self, paths: Vec<impl Into<NodePath>>) {
         let paths = paths.into_iter().map(|path| path.into()).collect();
         self.runtime.open_node_settings(paths);
+    }
+
+    pub fn observe_node_settings(&self, path: impl Into<NodePath>) -> impl Stream<Item = NodeSettings> {
+        let path = path.into();
+        self.runtime
+            .observe_node_settings()
+            .into_stream()
+            .filter_map(move |settings| futures::future::ready(settings.get(&path).cloned()))
+            .map(|settings| NodeSettings {
+                settings: settings.into_iter().map(NodeSetting::from).collect(),
+            })
     }
 }

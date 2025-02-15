@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 
@@ -5,7 +6,8 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
-use mizer_node::NodePath;
+use mizer_message_bus::MessageBus;
+use mizer_node::{NodePath, NodeSetting};
 use mizer_plan::Plan;
 use mizer_status_bus::StatusBus;
 
@@ -22,4 +24,5 @@ pub struct RuntimeAccess {
     pub status_bus: StatusBus,
     pub read_node_metadata: Arc<AtomicBool>,
     pub read_node_settings: Arc<NonEmptyPinboard<Vec<NodePath>>>,
+    pub node_settings_bus: MessageBus<HashMap<NodePath, Vec<NodeSetting>>>
 }

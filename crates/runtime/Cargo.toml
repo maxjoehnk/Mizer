@@ -24,6 +24,7 @@ mizer-module = { path = "module" }
 mizer-layouts = { path = "layouts" }
 mizer-plan = { path = "../components/plan" }
 mizer-commander = { path = "commander" }
+mizer-message-bus = { path = "../util/bus" }
 mizer-util = { path = "../util" }
 mizer-docs = { path = "../../docs" }
 mizer-status-bus = { path = "status" }

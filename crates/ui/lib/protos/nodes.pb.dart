@@ -105,6 +105,47 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   void clearTemplate() => clearField(4);
 }
 
+class NodeSettings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<NodeSetting>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'settings', $pb.PbFieldType.PM, subBuilder: NodeSetting.create)
+    ..hasRequiredFields = false
+  ;
+
+  NodeSettings._() : super();
+  factory NodeSettings({
+    $core.Iterable<NodeSetting>? settings,
+  }) {
+    final _result = create();
+    if (settings != null) {
+      _result.settings.addAll(settings);
+    }
+    return _result;
+  }
+  factory NodeSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSettings clone() => NodeSettings()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSettings copyWith(void Function(NodeSettings) updates) => super.copyWith((message) => updates(message as NodeSettings)) as NodeSettings; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeSettings create() => NodeSettings._();
+  NodeSettings createEmptyInstance() => create();
+  static $pb.PbList<NodeSettings> createRepeated() => $pb.PbList<NodeSettings>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSettings>(create);
+  static NodeSettings? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<NodeSetting> get settings => $_getList(0);
+}
+
 class DuplicateNodesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DuplicateNodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths')

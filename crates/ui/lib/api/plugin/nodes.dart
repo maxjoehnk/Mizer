@@ -12,6 +12,7 @@ export 'ffi/history.dart' show NodeHistoryPointer;
 class NodesPluginApi implements NodesApi {
   final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/nodes");
+  final EventChannel settings = const EventChannel("mizer.live/nodes/settings");
 
   NodesPluginApi(this.bindings);
 
@@ -143,5 +144,12 @@ class NodesPluginApi implements NodesApi {
   @override
   Future<void> openNodeSettings(List<String> paths) async {
     await channel.invokeMethod("openNodeSettings", paths);
+  }
+
+  @override
+  Stream<List<NodeSetting>> nodeSettings(String path) {
+    return settings
+        .receiveBroadcastStream(path)
+        .map((buffer) => NodeSettings.fromBuffer(_convertBuffer(buffer)).settings);
   }
 }

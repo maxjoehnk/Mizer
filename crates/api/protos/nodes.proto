@@ -11,6 +11,10 @@ message AddNodeRequest {
   optional string template = 4;
 }
 
+message NodeSettings {
+  repeated NodeSetting settings = 1;
+}
+
 message DuplicateNodesRequest {
   repeated string paths = 1;
   optional string parent = 2;

@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::sync::atomic::AtomicU8;
 use std::sync::Arc;
 
@@ -12,7 +13,7 @@ use mizer_command_executor::{
 use mizer_devices::DeviceManager;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_module::ApiInjector;
-use mizer_node::{NodePath, PortId};
+use mizer_node::{NodePath, NodeSetting, PortId};
 use mizer_protocol_dmx::DmxMonitorHandle;
 use mizer_protocol_midi::{MidiDeviceProfileRegistry, MidiEvent};
 use mizer_protocol_osc::OscMessage;
@@ -316,6 +317,11 @@ impl RuntimeApi for Api {
     fn open_node_settings(&self, paths: Vec<NodePath>) {
         tracing::debug!("Opening node settings {paths:?}");
         self.access.read_node_settings.set(paths);
+    }
+
+    #[profiling::function]
+    fn observe_node_settings(&self) -> Subscriber<HashMap<NodePath, Vec<NodeSetting>>> {
+        self.access.node_settings_bus.subscribe()
     }
 }
 

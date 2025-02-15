@@ -21,21 +21,35 @@ class NodePropertiesPane extends StatefulWidget {
 
 class _NodePropertiesPaneState extends State<NodePropertiesPane> {
   String? hoveredSetting;
+  Stream<NodePathSettings>? _settings$;
 
+  @override
+  void initState() {
+    super.initState();
+    _observeSettings();
+  }
 
   @override
   void didUpdateWidget(NodePropertiesPane oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.node?.path != this.widget.node?.path && this.widget.node?.path != null) {
-      context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
+    if (oldWidget.node?.path != this.widget.node?.path) {
+      this._settings$ = null;
+      _observeSettings();
     }
   }
 
   @override
   void activate() {
     super.activate();
+    _observeSettings();
+  }
+
+  void _observeSettings() {
     if (this.widget.node?.path != null) {
-      context.read<NodesApi>().openNodeSettings([this.widget.node!.path]);
+      var path = this.widget.node!.path;
+      context.read<NodesApi>().openNodeSettings([path]);
+      _settings$ = context.read<NodesApi>().nodeSettings(path).map((settings) =>
+          NodePathSettings(path: path, settings: settings));
     }
   }
 
@@ -62,28 +76,44 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
 
   List<Widget> _getPropertyPanes(Node node, NodesApi nodesApi) {
     List<Widget> widgets = [
-      NodeProperties(node: node,
-        onUpdateColor: (color) {
-          nodesApi.updateNodeColor(UpdateNodeColorRequest(path: node.path, color: color));
-          widget.onUpdate();
-        }
-      ),
-      NodeSettingsPane(
-          nodePath: node.path,
-          title: "Settings".i18n,
-          type: node.type,
-          settings: node.settings,
-          onUpdate: (updated) {
-            nodesApi.updateNodeSetting(UpdateNodeSettingRequest(path: node.path, setting: updated));
+      NodeProperties(
+          node: node,
+          onUpdateColor: (color) {
+            nodesApi.updateNodeColor(UpdateNodeColorRequest(path: node.path, color: color));
             widget.onUpdate();
-          },
-          onHover: (setting) => setState(() {
-                hoveredSetting = setting?.id;
-              })),
+          }),
+      if (_settings$ != null)
+        StreamBuilder(
+            stream: _settings$,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              }
+              return NodeSettingsPane(
+                  nodePath: snapshot.requireData.path,
+                  title: "Settings".i18n,
+                  type: node.type,
+                  settings: snapshot.requireData.settings,
+                  onUpdate: (updated) {
+                    nodesApi.updateNodeSetting(
+                        UpdateNodeSettingRequest(path: snapshot.requireData.path, setting: updated));
+                    widget.onUpdate();
+                  },
+                  onHover: (setting) => setState(() {
+                        hoveredSetting = setting?.id;
+                      }));
+            }),
       NodeInputsPane(node: node),
       NodeOutputsPane(node: node),
       HelpGroup(nodeType: node.type, hoveredSetting: hoveredSetting)
     ];
     return widgets;
   }
+}
+
+class NodePathSettings {
+  final String path;
+  final List<NodeSetting> settings;
+
+  NodePathSettings({required this.path, required this.settings});
 }

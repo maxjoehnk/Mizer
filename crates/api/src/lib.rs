@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener};
 use std::sync::Arc;
 
@@ -11,7 +12,7 @@ use mizer_connections::{MidiEvent, OscMessage};
 pub use mizer_devices::DeviceManager;
 pub use mizer_gamepads::GamepadRef;
 use mizer_message_bus::Subscriber;
-use mizer_node::{NodePath, PortId};
+use mizer_node::{NodePath, NodeSetting, PortId};
 use mizer_runtime::{LayoutsView, NodeMetadataRef, NodePreviewRef};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
@@ -92,6 +93,8 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
     fn close_nodes_view(&self);
 
     fn open_node_settings(&self, paths: Vec<NodePath>);
+    
+    fn observe_node_settings(&self) -> Subscriber<HashMap<NodePath, Vec<NodeSetting>>>;
 }
 
 pub fn start_remote_api<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<u16> {

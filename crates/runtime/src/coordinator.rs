@@ -12,6 +12,7 @@ use mizer_debug_ui_impl::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
 use mizer_layouts::{ControlConfig, ControlType, Layout, LayoutStorage};
+use mizer_message_bus::MessageBus;
 use mizer_module::Runtime;
 use mizer_node::*;
 use mizer_nodes::*;
@@ -39,6 +40,7 @@ pub struct CoordinatorRuntime {
     status_bus: StatusBus,
     read_node_metadata: Arc<AtomicBool>,
     read_node_settings: Arc<NonEmptyPinboard<Vec<NodePath>>>,
+    node_settings_bus: MessageBus<HashMap<NodePath, Vec<NodeSetting>>>,
 }
 
 impl CoordinatorRuntime {
@@ -67,6 +69,7 @@ impl CoordinatorRuntime {
             status_bus: Default::default(),
             read_node_metadata: Arc::new(AtomicBool::new(false)),
             read_node_settings: NonEmptyPinboard::new(Default::default()).into(),
+            node_settings_bus: Default::default(),
         };
         runtime.bootstrap(Box::new(clock));
 
@@ -109,6 +112,7 @@ impl CoordinatorRuntime {
             status_bus: self.status_bus.clone(),
             read_node_metadata: self.read_node_metadata.clone(),
             read_node_settings: self.read_node_settings.clone(),
+            node_settings_bus: self.node_settings_bus.clone(),
         }
     }
 
@@ -243,6 +247,8 @@ impl CoordinatorRuntime {
     pub(crate) fn read_node_settings(&mut self, paths: &[NodePath]) {
         let (pipeline, injector) = self.injector.get_slice_mut::<Pipeline>().unwrap();
         pipeline.refresh_settings(injector, paths);
+        let settings = pipeline.get_settings(paths);
+        self.node_settings_bus.send(settings);
     }
 
     #[profiling::function]

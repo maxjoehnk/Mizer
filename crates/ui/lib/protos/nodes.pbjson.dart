@@ -97,6 +97,16 @@ const AddNodeRequest$json = const {
 
 /// Descriptor for `AddNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode('Cg5BZGROb2RlUmVxdWVzdBISCgR0eXBlGAEgASgJUgR0eXBlEjUKCHBvc2l0aW9uGAIgASgLMhkubWl6ZXIubm9kZXMuTm9kZVBvc2l0aW9uUghwb3NpdGlvbhIbCgZwYXJlbnQYAyABKAlIAFIGcGFyZW50iAEBEh8KCHRlbXBsYXRlGAQgASgJSAFSCHRlbXBsYXRliAEBQgkKB19wYXJlbnRCCwoJX3RlbXBsYXRl');
+@$core.Deprecated('Use nodeSettingsDescriptor instead')
+const NodeSettings$json = const {
+  '1': 'NodeSettings',
+  '2': const [
+    const {'1': 'settings', '3': 1, '4': 3, '5': 11, '6': '.mizer.nodes.NodeSetting', '10': 'settings'},
+  ],
+};
+
+/// Descriptor for `NodeSettings`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeSettingsDescriptor = $convert.base64Decode('CgxOb2RlU2V0dGluZ3MSNAoIc2V0dGluZ3MYASADKAsyGC5taXplci5ub2Rlcy5Ob2RlU2V0dGluZ1IIc2V0dGluZ3M=');
 @$core.Deprecated('Use duplicateNodesRequestDescriptor instead')
 const DuplicateNodesRequest$json = const {
   '1': 'DuplicateNodesRequest',

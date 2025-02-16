@@ -171,6 +171,7 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
 
     fn add_osc(&self, request: OscConnection) -> anyhow::Result<()> {
         self.handler.add_osc(
+            request.name,
             request.output_address,
             request.output_port.try_into()?,
             request.input_port.try_into()?,

@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AddOscConnectionCommand {
+    pub name: String,
     pub output_host: String,
     pub output_port: u16,
     pub input_port: u16,
@@ -16,8 +17,8 @@ impl<'a> Command<'a> for AddOscConnectionCommand {
 
     fn label(&self) -> String {
         format!(
-            "Add OSC Connection '{}:{}'",
-            self.output_host, self.output_port
+            "Add OSC Connection {} ({}:{})",
+            self.name, self.output_host, self.output_port
         )
     }
 
@@ -33,7 +34,7 @@ impl<'a> Command<'a> for AddOscConnectionCommand {
             output_port: self.output_port,
             input_port: self.input_port,
         };
-        osc_manager.add_connection(id.clone(), address)?;
+        osc_manager.add_connection(id.clone(), self.name.clone(), address)?;
 
         Ok((id.clone(), id))
     }

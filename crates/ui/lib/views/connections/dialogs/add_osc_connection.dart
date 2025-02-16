@@ -15,12 +15,14 @@ class ConfigureOscConnectionDialog extends StatefulWidget {
 
 class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController;
   final TextEditingController _hostController;
   final TextEditingController _outputPortController;
   final TextEditingController _inputPortController;
 
   _ConfigureOscConnectionDialogState()
-      : _hostController = TextEditingController(),
+      : _nameController = TextEditingController(),
+        _hostController = TextEditingController(),
         _outputPortController = TextEditingController(),
         _inputPortController = TextEditingController();
 
@@ -28,6 +30,7 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
   void initState() {
     super.initState();
     if (widget.config != null) {
+      this._nameController.text = widget.config!.name;
       this._hostController.text = widget.config!.outputAddress;
       this._outputPortController.text = widget.config!.outputPort.toString();
       this._inputPortController.text = widget.config!.inputPort.toString();
@@ -44,6 +47,19 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
           TextFormField(
             validator: (value) {
               if (value == null || value.isEmpty) {
+                return 'Name is required'.i18n;
+              }
+              return null;
+            },
+            decoration: InputDecoration(labelText: "Name".i18n),
+            controller: _nameController,
+            keyboardType: TextInputType.name,
+            autofocus: true,
+            textInputAction: TextInputAction.next,
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
                 return 'Host is required'.i18n;
               }
               return null;
@@ -51,7 +67,6 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
             decoration: InputDecoration(labelText: "Output Host".i18n),
             controller: _hostController,
             keyboardType: TextInputType.name,
-            autofocus: true,
             textInputAction: TextInputAction.next,
           ),
           TextFormField(
@@ -93,6 +108,7 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
       return;
     }
     Navigator.of(context).pop(OscConnection(
+      name: _nameController.text,
       outputAddress: _hostController.text,
       outputPort: int.tryParse(_outputPortController.text.trimToMaybeNull()!)!,
       inputPort: int.tryParse(_inputPortController.text.trimToMaybeNull()!)!,

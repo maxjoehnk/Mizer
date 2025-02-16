@@ -136,12 +136,7 @@ impl ListConnectionsQuery {
             .into_iter()
             .map(|(id, connection)| OscView {
                 connection_id: id.clone(),
-                name: format!(
-                    "{}://{}:{}",
-                    connection.address.protocol,
-                    connection.address.output_host,
-                    connection.address.output_port
-                ),
+                name: connection.name.clone(),
                 output_host: connection.address.output_host.to_string(),
                 output_port: connection.address.output_port,
                 input_port: connection.address.input_port,

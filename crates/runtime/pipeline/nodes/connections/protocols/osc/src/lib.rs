@@ -21,7 +21,7 @@ impl OscInjectorExt for Injector {
             .into_iter()
             .map(|(id, connection)| SelectVariant::Item {
                 value: id.clone().into(),
-                label: connection.address.output_host.to_string().into(),
+                label: connection.name.clone().into(),
             })
             .collect()
     }

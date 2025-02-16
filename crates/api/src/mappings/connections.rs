@@ -62,6 +62,7 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 password: mqtt.password,
             }),
             Osc(osc) => Self::Osc(OscConnection {
+                name: osc.name,
                 connection_id: osc.connection_id,
                 output_address: osc.output_host,
                 output_port: osc.output_port as u32,

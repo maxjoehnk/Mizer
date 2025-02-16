@@ -9,7 +9,7 @@ pub struct DeleteOscConnectionCommand {
 
 impl<'a> Command<'a> for DeleteOscConnectionCommand {
     type Dependencies = RefMut<OscConnectionManager>;
-    type State = OscAddress;
+    type State = (String, OscAddress);
     type Result = ();
 
     fn label(&self) -> String {
@@ -20,19 +20,19 @@ impl<'a> Command<'a> for DeleteOscConnectionCommand {
         &self,
         osc_manager: &mut OscConnectionManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let address = osc_manager
+        let config = osc_manager
             .delete_connection(&self.id)
             .ok_or_else(|| anyhow::anyhow!("Unknown osc connection"))?;
 
-        Ok(((), address))
+        Ok(((), config))
     }
 
     fn revert(
         &self,
         osc_manager: &mut OscConnectionManager,
-        address: Self::State,
+        (name, address): Self::State,
     ) -> anyhow::Result<()> {
-        osc_manager.add_connection(self.id.clone(), address)?;
+        osc_manager.add_connection(self.id.clone(), name, address)?;
 
         Ok(())
     }

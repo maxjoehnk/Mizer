@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ConfigureOscConnectionCommand {
+    pub name: String,
     pub connection_id: String,
     pub output_host: String,
     pub output_port: u16,
@@ -12,7 +13,7 @@ pub struct ConfigureOscConnectionCommand {
 
 impl<'a> Command<'a> for ConfigureOscConnectionCommand {
     type Dependencies = RefMut<OscConnectionManager>;
-    type State = OscAddress;
+    type State = (String, OscAddress);
     type Result = ();
 
     fn label(&self) -> String {
@@ -29,17 +30,17 @@ impl<'a> Command<'a> for ConfigureOscConnectionCommand {
             output_port: self.output_port,
             input_port: self.input_port,
         };
-        let previous_address = osc_manager.reconfigure_connection(&self.connection_id, address)?;
+        let previous_config = osc_manager.reconfigure_connection(&self.connection_id, self.name.clone(), address)?;
 
-        Ok(((), previous_address))
+        Ok(((), previous_config))
     }
 
     fn revert(
         &self,
         osc_manager: &mut OscConnectionManager,
-        previous_address: Self::State,
+        (previous_name, previous_address): Self::State,
     ) -> anyhow::Result<()> {
-        osc_manager.reconfigure_connection(&self.connection_id, previous_address)?;
+        osc_manager.reconfigure_connection(&self.connection_id, previous_name, previous_address)?;
 
         Ok(())
     }

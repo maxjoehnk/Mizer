@@ -111,7 +111,8 @@ impl ProjectManagerMut for OscConnectionManager {
         profiling::scope!("OscConnectionManager::load");
         for connection in &project.connections {
             if let ConnectionTypes::Osc(ref address) = connection.config {
-                self.add_connection(connection.id.clone(), *address)?;
+                let name = if connection.name.is_empty() { connection.id.clone() } else { connection.name.clone() };
+                self.add_connection(connection.id.clone(), name, *address)?;
             }
         }
 
@@ -123,7 +124,7 @@ impl ProjectManagerMut for OscConnectionManager {
         for (id, connection) in self.list_connections() {
             project.connections.push(ConnectionConfig {
                 id: id.clone(),
-                name: Default::default(),
+                name: connection.name.clone(),
                 config: ConnectionTypes::Osc(connection.address),
             });
         }

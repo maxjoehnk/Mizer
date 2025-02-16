@@ -42,7 +42,7 @@ class _OscConnectionsViewState extends State<OscConnectionsView> {
           ],
           rows: _connections
               .map((c) => MizerTableRow(cells: [
-                    Text(c.osc.connectionId),
+                    Text(c.osc.name),
                     Text("0.0.0.0:${c.osc.inputPort}"),
                     Text("${c.osc.outputAddress}:${c.osc.outputPort}"),
                     Row(children: [

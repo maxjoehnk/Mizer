@@ -62,8 +62,8 @@ impl OscConnectionManager {
         Self::default()
     }
 
-    pub fn add_connection(&mut self, id: String, address: OscAddress) -> anyhow::Result<()> {
-        let (connection, background_client) = OscConnection::new(address)?;
+    pub fn add_connection(&mut self, id: String, name: String, address: OscAddress) -> anyhow::Result<()> {
+        let (connection, background_client) = OscConnection::new(name, address)?;
         self.connections.insert(id, connection);
         tokio::spawn(async {
             let client = background_client.await.unwrap();
@@ -77,25 +77,26 @@ impl OscConnectionManager {
         self.connections.iter().collect()
     }
 
-    pub fn delete_connection(&mut self, id: &str) -> Option<OscAddress> {
+    pub fn delete_connection(&mut self, id: &str) -> Option<(String, OscAddress)> {
         self.connections
             .remove(id)
-            .map(|connection| connection.address)
+            .map(|connection| (connection.name.clone(), connection.address))
     }
 
     pub(crate) fn reconfigure_connection(
         &mut self,
         id: &str,
+        name: String,
         address: OscAddress,
-    ) -> anyhow::Result<OscAddress> {
+    ) -> anyhow::Result<(String, OscAddress)> {
         tracing::debug!("reconfigure_connection {id}");
         let connection = self
             .connections
             .get_mut(id)
             .ok_or_else(|| anyhow::anyhow!("Unknown connection"))?;
-        let previous_address = connection.reconfigure(address)?;
+        let previous_config = connection.reconfigure(name, address)?;
 
-        Ok(previous_address)
+        Ok(previous_config)
     }
 
     pub fn clear(&mut self) {
@@ -124,6 +125,7 @@ impl OscConnectionManager {
 }
 
 pub struct OscConnection {
+    pub name: String,
     pub address: OscAddress,
     command_publisher: Sender<OscClientCommand>,
     event_publisher: MessageBus<OscMessage>,
@@ -131,6 +133,7 @@ pub struct OscConnection {
 
 impl OscConnection {
     fn new(
+        name: String,
         address: OscAddress,
     ) -> anyhow::Result<(
         Self,
@@ -140,6 +143,7 @@ impl OscConnection {
         let event_publisher = MessageBus::new();
 
         let connection = Self {
+            name,
             address,
             command_publisher,
             event_publisher: event_publisher.clone(),
@@ -156,13 +160,15 @@ impl OscConnection {
         Ok((connection, background_client))
     }
 
-    fn reconfigure(&mut self, address: OscAddress) -> anyhow::Result<OscAddress> {
+    fn reconfigure(&mut self, name: String, address: OscAddress) -> anyhow::Result<(String, OscAddress)> {
+        let mut previous_name = name;
         let mut previous_address = address;
         std::mem::swap(&mut self.address, &mut previous_address);
+        std::mem::swap(&mut self.name, &mut previous_name);
         self.command_publisher
             .send(OscClientCommand::Reconfigure(address))?;
 
-        Ok(previous_address)
+        Ok((previous_name, previous_address))
     }
 
     fn subscribe(&self) -> anyhow::Result<Subscriber<OscMessage>> {

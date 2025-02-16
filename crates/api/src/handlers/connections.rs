@@ -134,11 +134,13 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[profiling::function]
     pub fn add_osc(
         &self,
+        name: String,
         output_host: String,
         output_port: u16,
         input_port: u16,
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddOscConnectionCommand {
+            name,
             output_host,
             output_port,
             input_port,
@@ -263,6 +265,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             Some(configure_connection_request::Config::Osc(connection)) => {
                 self.runtime.run_command(ConfigureOscConnectionCommand {
                     connection_id: connection.connection_id,
+                    name: connection.name,
                     output_host: connection.output_address,
                     output_port: connection.output_port as u16,
                     input_port: connection.input_port as u16,

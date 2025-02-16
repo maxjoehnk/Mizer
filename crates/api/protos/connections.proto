@@ -207,9 +207,10 @@ message MidiDeviceProfile {
 
 message OscConnection {
   string connection_id = 1;
-  uint32 input_port = 2;
-  uint32 output_port = 3;
-  string output_address = 4;
+  string name = 2;
+  uint32 input_port = 3;
+  uint32 output_port = 4;
+  string output_address = 5;
 }
 
 message PioneerCdjConnection {

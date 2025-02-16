@@ -357,8 +357,27 @@ impl<R: RuntimeApi> NodesHandler<R> {
             .observe_node_settings()
             .into_stream()
             .filter_map(move |settings| futures::future::ready(settings.get(&path).cloned()))
+            .distinct()
             .map(|settings| NodeSettings {
                 settings: settings.into_iter().map(NodeSetting::from).collect(),
             })
+    }
+}
+
+trait DistinctStream: Stream where Self::Item: PartialEq {
+    fn distinct(self) -> impl Stream<Item = Self::Item>;
+}
+
+impl<T: Stream> DistinctStream for T where T::Item: PartialEq + Clone {
+    fn distinct(self) -> impl Stream<Item=Self::Item> {
+        let mut last_event = None;
+        self.filter_map(move |event| {
+            if last_event.as_ref() == Some(&event) {
+                futures::future::ready(None)
+            } else {
+                last_event = Some(event.clone());
+                futures::future::ready(Some(event))
+            }
+        })
     }
 }

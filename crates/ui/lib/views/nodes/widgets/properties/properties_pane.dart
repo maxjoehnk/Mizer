@@ -89,6 +89,9 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
               if (!snapshot.hasData) {
                 return Container();
               }
+              if (snapshot.requireData.path != node.path) {
+                return Container();
+              }
               return NodeSettingsPane(
                   nodePath: snapshot.requireData.path,
                   title: "Settings".i18n,

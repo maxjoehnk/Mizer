@@ -4,7 +4,7 @@ use nativeshell::codec::Value;
 use nativeshell::shell::{EventChannelHandler, EventSink, RegisteredEventChannel};
 use nativeshell::Context;
 
-use mizer_api::handlers::{NodesHandler};
+use mizer_api::handlers::NodesHandler;
 use mizer_api::proto::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_util::{AsyncRuntime, StreamSubscription};
@@ -28,7 +28,7 @@ impl<AR: AsyncRuntime + 'static, R: RuntimeApi + 'static> EventChannelHandler
         let Value::String(path) = value else {
             return;
         };
-        
+
         let id = sink.id();
         tracing::debug!("register_event_sink {}", id);
         let stream = self.handler.observe_node_settings(path);

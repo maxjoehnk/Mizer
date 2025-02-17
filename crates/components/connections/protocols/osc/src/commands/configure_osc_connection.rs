@@ -30,7 +30,8 @@ impl<'a> Command<'a> for ConfigureOscConnectionCommand {
             output_port: self.output_port,
             input_port: self.input_port,
         };
-        let previous_config = osc_manager.reconfigure_connection(&self.connection_id, self.name.clone(), address)?;
+        let previous_config =
+            osc_manager.reconfigure_connection(&self.connection_id, self.name.clone(), address)?;
 
         Ok(((), previous_config))
     }

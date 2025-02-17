@@ -491,9 +491,14 @@ impl Pipeline {
 
     #[profiling::function]
     pub(crate) fn get_settings(&self, paths: &[NodePath]) -> HashMap<NodePath, Vec<NodeSetting>> {
-        paths.iter().filter_map(move |path| {
-            self.nodes.get(path).map(|state| (path.clone(), state.settings.clone()))
-        }).collect()
+        paths
+            .iter()
+            .filter_map(move |path| {
+                self.nodes
+                    .get(path)
+                    .map(|state| (path.clone(), state.settings.clone()))
+            })
+            .collect()
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {

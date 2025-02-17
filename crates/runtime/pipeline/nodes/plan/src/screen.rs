@@ -202,7 +202,6 @@ impl ProcessingNode for PlanScreenNode {
                     let red = pixels[pixel_index + 2] as f64 / 255.0;
                     let alpha = pixels[pixel_index + 3] as f64 / 255.0;
 
-
                     if self.write_intensity {
                         let brightness = ((red * 0.299) + (green * 0.587) + (blue * 0.114)) * alpha;
                         manager.write_fixture_control(

@@ -62,7 +62,12 @@ impl OscConnectionManager {
         Self::default()
     }
 
-    pub fn add_connection(&mut self, id: String, name: String, address: OscAddress) -> anyhow::Result<()> {
+    pub fn add_connection(
+        &mut self,
+        id: String,
+        name: String,
+        address: OscAddress,
+    ) -> anyhow::Result<()> {
         let (connection, background_client) = OscConnection::new(name, address)?;
         self.connections.insert(id, connection);
         tokio::spawn(async {
@@ -160,7 +165,11 @@ impl OscConnection {
         Ok((connection, background_client))
     }
 
-    fn reconfigure(&mut self, name: String, address: OscAddress) -> anyhow::Result<(String, OscAddress)> {
+    fn reconfigure(
+        &mut self,
+        name: String,
+        address: OscAddress,
+    ) -> anyhow::Result<(String, OscAddress)> {
         let mut previous_name = name;
         let mut previous_address = address;
         std::mem::swap(&mut self.address, &mut previous_address);

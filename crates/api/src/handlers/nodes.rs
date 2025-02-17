@@ -1,10 +1,10 @@
-use std::fmt::Debug;
 use futures::Stream;
 use futures::StreamExt;
 use mizer_command_executor::*;
 use mizer_docs::get_node_template_description;
 use mizer_node::{NodePath, NodeType, PortId};
 use mizer_runtime::{NodeMetadataRef, NodePreviewRef};
+use std::fmt::Debug;
 
 use crate::proto::nodes::*;
 use crate::RuntimeApi;
@@ -351,7 +351,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
         self.runtime.open_node_settings(paths);
     }
 
-    pub fn observe_node_settings(&self, path: impl Into<NodePath>) -> impl Stream<Item = NodeSettings> {
+    pub fn observe_node_settings(
+        &self,
+        path: impl Into<NodePath>,
+    ) -> impl Stream<Item = NodeSettings> {
         let path = path.into();
         self.runtime
             .observe_node_settings()
@@ -364,12 +367,18 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 }
 
-trait DistinctStream: Stream where Self::Item: PartialEq {
+trait DistinctStream: Stream
+where
+    Self::Item: PartialEq,
+{
     fn distinct(self) -> impl Stream<Item = Self::Item>;
 }
 
-impl<T: Stream> DistinctStream for T where T::Item: PartialEq + Clone {
-    fn distinct(self) -> impl Stream<Item=Self::Item> {
+impl<T: Stream> DistinctStream for T
+where
+    T::Item: PartialEq + Clone,
+{
+    fn distinct(self) -> impl Stream<Item = Self::Item> {
         let mut last_event = None;
         self.filter_map(move |event| {
             if last_event.as_ref() == Some(&event) {

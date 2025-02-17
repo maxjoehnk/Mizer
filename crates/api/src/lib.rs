@@ -93,7 +93,7 @@ pub trait RuntimeApi: Clone + Send + Sync + ICommandExecutor {
     fn close_nodes_view(&self);
 
     fn open_node_settings(&self, paths: Vec<NodePath>);
-    
+
     fn observe_node_settings(&self) -> Subscriber<HashMap<NodePath, Vec<NodeSetting>>>;
 }
 

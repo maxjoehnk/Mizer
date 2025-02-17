@@ -24,5 +24,5 @@ pub struct RuntimeAccess {
     pub status_bus: StatusBus,
     pub read_node_metadata: Arc<AtomicBool>,
     pub read_node_settings: Arc<NonEmptyPinboard<Vec<NodePath>>>,
-    pub node_settings_bus: MessageBus<HashMap<NodePath, Vec<NodeSetting>>>
+    pub node_settings_bus: MessageBus<HashMap<NodePath, Vec<NodeSetting>>>,
 }

@@ -17,6 +17,7 @@ You need to have the following tools installed:
 - Flutter SDK (v3.19.6)
 - protoc
 - LLVM
+- lld (only on linux)
 
 ### Building
 

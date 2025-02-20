@@ -5,7 +5,7 @@ version: 1.1.0+1
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
-  flutter: 3.19.0
+  flutter: 3.29.0
 
 dependencies:
   flutter:
@@ -35,7 +35,7 @@ dependencies:
   ffi: ^2.0.1
   filesize: ^2.0.1
   multicast_dns: ^0.3.0
-  intl: ^0.18.1
+  intl: ^0.19.0
   fuzzywuzzy: ^1.1.6
   vector_math: ^2.1.4
   toggle_switch: ^2.1.0

@@ -133,6 +133,7 @@ fn main() -> anyhow::Result<()> {
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.copy("mizer.exe")?;
+    #[cfg(feature = "ui")]
     artifact.copy("data")?;
     artifact.copy_all_with_suffix_to(".dll", "")?;
     artifact.copy_to(

@@ -28,6 +28,7 @@ fn download(download_dir: &Path) -> PathBuf {
         ureq::get("https://github.com/mcallegari/qlcplus/archive/refs/heads/master.zip")
             .call()
             .unwrap()
+            .into_body()
             .into_reader();
     let archive_file_path = download_dir.join("master.zip");
     let mut archive_file = File::create(&archive_file_path).unwrap();

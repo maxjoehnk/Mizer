@@ -1,12 +1,12 @@
 use std::fs;
 use std::path::PathBuf;
-
+use std::str::FromStr;
 use anyhow::Context;
 use directories_next::ProjectDirs;
 use rolling_file::{BasicRollingFileAppender, RollingConditionBasic, RollingFileAppender};
 use tracing::{Level, Subscriber};
 use tracing_appender::non_blocking::{NonBlocking, WorkerGuard};
-use tracing_subscriber::filter::{EnvFilter, LevelFilter};
+use tracing_subscriber::filter::{Directive, EnvFilter, LevelFilter};
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::registry::LookupSpan;
 use tracing_subscriber::Layer;
@@ -40,7 +40,7 @@ fn console_layer<S: Subscriber + for<'a> LookupSpan<'a>>() -> impl Layer<S> {
         .with_level(true)
         .with_thread_names(true)
         .with_filter(EnvFilter::builder()
-            .with_default_directive(LevelFilter::INFO.into())
+            .with_default_directive(Directive::from_str("mizer=info").unwrap())
             .from_env_lossy())
 }
 

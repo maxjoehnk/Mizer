@@ -13,7 +13,7 @@ pub struct WgpuContext {
 
 impl WgpuContext {
     pub async fn new() -> anyhow::Result<Self> {
-        let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
+        let instance = wgpu::Instance::new(&wgpu::InstanceDescriptor {
             backends: wgpu::Backends::VULKAN | wgpu::Backends::METAL,
             ..Default::default()
         });
@@ -113,14 +113,14 @@ impl WgpuContext {
         };
 
         self.queue.write_texture(
-            wgpu::ImageCopyTexture {
+            wgpu::TexelCopyTextureInfo {
                 texture,
                 mip_level: 0,
                 origin: wgpu::Origin3d::ZERO,
                 aspect: wgpu::TextureAspect::All,
             },
             data,
-            wgpu::ImageDataLayout {
+            wgpu::TexelCopyBufferLayout {
                 offset: 0,
                 bytes_per_row: Some(4 * size.width),
                 rows_per_image: Some(size.height),
@@ -197,13 +197,13 @@ impl WgpuContext {
                 layout: Some(&pipeline_layout),
                 vertex: wgpu::VertexState {
                     module: shader,
-                    entry_point: "vs_main",
+                    entry_point: Some("vs_main"),
                     buffers: &[Vertex::desc()],
                     compilation_options: Default::default(),
                 },
                 fragment: Some(wgpu::FragmentState {
                     module: shader,
-                    entry_point: "fs_main",
+                    entry_point: Some("fs_main"),
                     targets: &[Some(wgpu::ColorTargetState {
                         format: crate::TEXTURE_FORMAT,
                         blend: Some(wgpu::BlendState::REPLACE),

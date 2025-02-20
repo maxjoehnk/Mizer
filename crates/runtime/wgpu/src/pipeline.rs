@@ -98,15 +98,15 @@ impl WgpuPipeline {
                         label: Some("NDI Output Encoder"),
                     });
             encoder.copy_texture_to_buffer(
-                wgpu::ImageCopyTexture {
+                wgpu::TexelCopyTextureInfo {
                     texture,
                     mip_level: 0,
                     origin: wgpu::Origin3d::ZERO,
                     aspect: wgpu::TextureAspect::All,
                 },
-                wgpu::ImageCopyBuffer {
+                wgpu::TexelCopyBufferInfo {
                     buffer,
-                    layout: wgpu::ImageDataLayout {
+                    layout: wgpu::TexelCopyBufferLayout {
                         offset: 0,
                         bytes_per_row: Some(U32_SIZE * 1920),
                         rows_per_image: Some(1080),

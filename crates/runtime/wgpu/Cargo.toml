@@ -5,7 +5,7 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
 [dependencies]
-wgpu = { version = "22.1" }
+wgpu = { version = "24.0" }
 anyhow = "1"
 winit = { version = "0.30", features = ["rwh_06"] }
 bytemuck = { version = "1.15", features = ["derive"] }

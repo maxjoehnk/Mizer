@@ -18,7 +18,6 @@ impl VectorWgpuRenderer {
             &wgpu_context.device,
             RendererOptions {
                 antialiasing_support: AaSupport::all(),
-                surface_format: None,
                 use_cpu: false,
                 num_init_threads: Some(NonZeroUsize::new(1).unwrap()),
             },

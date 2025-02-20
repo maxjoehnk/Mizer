@@ -58,7 +58,7 @@ impl NodePipeline {
             render_pass.set_vertex_buffer(0, self.vertex_buffer.slice(..));
             render_pass.set_index_buffer(self.index_buffer.slice(..), wgpu::IndexFormat::Uint16);
             for (index, bind_group) in bind_groups.iter().enumerate() {
-                render_pass.set_bind_group(index as u32, bind_group, &[]);
+                render_pass.set_bind_group(index as u32, Some(*bind_group), &[]);
             }
             render_pass.draw_indexed(0..(RECT_INDICES.len() as u32), 0, 0..1);
         }

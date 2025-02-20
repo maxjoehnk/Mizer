@@ -6,6 +6,7 @@ fn main() {
     let mut fixtures = ureq::get("https://open-fixture-library.org/download.aglight")
         .call()
         .unwrap()
+        .into_body()
         .into_reader();
 
     let mut file = std::fs::File::create(".fixtures/fixtures.json").unwrap();

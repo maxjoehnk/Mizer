@@ -1,9 +1,9 @@
-use std::fs;
-use std::path::PathBuf;
-use std::str::FromStr;
 use anyhow::Context;
 use directories_next::ProjectDirs;
 use rolling_file::{BasicRollingFileAppender, RollingConditionBasic, RollingFileAppender};
+use std::fs;
+use std::path::PathBuf;
+use std::str::FromStr;
 use tracing::{Level, Subscriber};
 use tracing_appender::non_blocking::{NonBlocking, WorkerGuard};
 use tracing_subscriber::filter::{Directive, EnvFilter, LevelFilter};
@@ -39,9 +39,11 @@ fn console_layer<S: Subscriber + for<'a> LookupSpan<'a>>() -> impl Layer<S> {
         .with_target(true)
         .with_level(true)
         .with_thread_names(true)
-        .with_filter(EnvFilter::builder()
-            .with_default_directive(Directive::from_str("mizer=info").unwrap())
-            .from_env_lossy())
+        .with_filter(
+            EnvFilter::builder()
+                .with_default_directive(Directive::from_str("mizer=info").unwrap())
+                .from_env_lossy(),
+        )
 }
 
 #[cfg(feature = "debug-ui")]

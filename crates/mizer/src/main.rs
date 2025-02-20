@@ -13,8 +13,7 @@ mod logger;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
-    let _guard = setup_sentry();
-    let (flags, _logging_guard) = init()?;
+    let (flags, _logging_guard, _sentry_guard) = init()?;
 
     run_headless(flags)
 }
@@ -22,8 +21,7 @@ fn main() -> anyhow::Result<()> {
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
     mizer_ui::init()?;
-    let (flags, _logging_guard) = init()?;
-    let _guard = setup_sentry();
+    let (flags, _logging_guard, _sentry_guard) = init()?;
     let headless = flags.headless;
 
     if headless {
@@ -31,6 +29,33 @@ fn main() -> anyhow::Result<()> {
     } else {
         ui::run(flags)
     }
+}
+
+fn run_headless(flags: Flags) -> anyhow::Result<()> {
+    let runtime = build_tokio_runtime();
+
+    start_runtime(runtime.handle(), flags, None).unwrap();
+
+    Ok(())
+}
+
+fn init() -> anyhow::Result<(Flags, LoggingGuard, Option<sentry::ClientInitGuard>)> {
+    mizer_util::tracing::init();
+    let flags = Flags::parse();
+    let logging_guard = logger::init(&flags)?;
+    tracing::debug!("flags: {:?}", flags);
+    tracing::info!("Initializing Mizer");
+    let sentry_guard = setup_sentry();
+    init_ffmpeg()?;
+    #[cfg(target_os = "macos")]
+    {
+        use anyhow::Context;
+        coremidi_hotplug_notification::receive_device_updates(|| {})
+            .map_err(|err| anyhow::anyhow!(err))
+            .context("Registering coremidi callback for MIDI device hotplug")?;
+    }
+
+    Ok((flags, logging_guard, sentry_guard))
 }
 
 fn setup_sentry() -> Option<sentry::ClientInitGuard> {
@@ -54,31 +79,6 @@ fn setup_sentry() -> Option<sentry::ClientInitGuard> {
     });
 
     Some(guard)
-}
-
-fn run_headless(flags: Flags) -> anyhow::Result<()> {
-    let runtime = build_tokio_runtime();
-
-    start_runtime(runtime.handle(), flags, None).unwrap();
-
-    Ok(())
-}
-
-fn init() -> anyhow::Result<(Flags, LoggingGuard)> {
-    mizer_util::tracing::init();
-    let flags = Flags::parse();
-    let guard = logger::init(&flags)?;
-    tracing::debug!("flags: {:?}", flags);
-    init_ffmpeg()?;
-    #[cfg(target_os = "macos")]
-    {
-        use anyhow::Context;
-        coremidi_hotplug_notification::receive_device_updates(|| {})
-            .map_err(|err| anyhow::anyhow!(err))
-            .context("Registering coremidi callback for MIDI device hotplug")?;
-    }
-
-    Ok((flags, guard))
 }
 
 fn init_ffmpeg() -> anyhow::Result<()> {

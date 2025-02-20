@@ -1,3 +1,4 @@
+use std::fs;
 use std::path::PathBuf;
 
 use anyhow::Context;
@@ -38,7 +39,9 @@ fn console_layer<S: Subscriber + for<'a> LookupSpan<'a>>() -> impl Layer<S> {
         .with_target(true)
         .with_level(true)
         .with_thread_names(true)
-        .with_filter(EnvFilter::from_default_env())
+        .with_filter(EnvFilter::builder()
+            .with_default_directive(LevelFilter::INFO.into())
+            .from_env_lossy())
 }
 
 #[cfg(feature = "debug-ui")]
@@ -55,21 +58,25 @@ fn macos_oslog_layer<S: Subscriber + for<'a> LookupSpan<'a>>() -> impl Layer<S> 
 
 fn file_layer<S: Subscriber + for<'a> LookupSpan<'a>>(
 ) -> (Option<WorkerGuard>, Option<impl Layer<S>>) {
-    if let Ok(file_target) = file_target() {
-        let (file_appender, guard) = NonBlocking::new(file_target);
-        let file_layer = tracing_subscriber::fmt::layer()
-            .with_thread_names(true)
-            .with_target(true)
-            .with_level(true)
-            .with_file(false)
-            .with_line_number(false)
-            .json()
-            .with_writer(file_appender)
-            .with_filter(LevelFilter::from_level(Level::INFO));
+    match file_target() {
+        Ok(file_target) => {
+            let (file_appender, guard) = NonBlocking::new(file_target);
+            let file_layer = tracing_subscriber::fmt::layer()
+                .with_thread_names(true)
+                .with_target(true)
+                .with_level(true)
+                .with_file(false)
+                .with_line_number(false)
+                .json()
+                .with_writer(file_appender)
+                .with_filter(LevelFilter::from_level(Level::INFO));
 
-        (Some(guard), Some(file_layer))
-    } else {
-        (None, None)
+            (Some(guard), Some(file_layer))
+        }
+        Err(err) => {
+            eprintln!("Unable to create file logger: {err:?}");
+            (None, None)
+        }
     }
 }
 
@@ -82,6 +89,9 @@ fn file_target() -> anyhow::Result<RollingFileAppender<RollingConditionBasic>> {
     } else {
         PathBuf::from("mizer.log")
     };
+    if let Some(parent) = path.parent() {
+        fs::create_dir_all(parent).context("Creating log directory")?;
+    }
     let file_appender = BasicRollingFileAppender::new(
         path,
         RollingConditionBasic::new()

@@ -118,8 +118,6 @@ opt-level = 1
 opt-level = 3
 
 [patch.crates-io]
-# https://github.com/l1npengtul/nokhwa/pull/178
-nokhwa = { git = "https://github.com/tactile-eng/nokhwa.git", rev = "74a98ac" }
 # https://github.com/nannou-org/citp/pull/5
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
 # Until vello with wgpu 24 support is released

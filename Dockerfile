@@ -1,4 +1,4 @@
-FROM rust:1.83 as base
+FROM rust:1.85 as base
 
 RUN apt-get update && \
     apt-get upgrade -y && \

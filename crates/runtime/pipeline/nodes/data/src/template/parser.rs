@@ -4,13 +4,13 @@ use nom::character::complete::{alpha1, alphanumeric0, char, digit1, i64, multisp
 use nom::combinator::{complete, map, opt, recognize};
 use nom::multi::{many0, separated_list1};
 use nom::number::complete::double;
-use nom::sequence::{delimited, pair, separated_pair, tuple};
+use nom::sequence::{delimited, pair, separated_pair};
 use nom::{IResult, Parser};
 
 use super::ast::*;
 
 pub fn parse(input: &str) -> anyhow::Result<Ast> {
-    let (_, ast) = complete(delimited(multispace0, parse_ast, multispace0))(input)
+    let (_, ast) = complete(delimited(multispace0, parse_ast, multispace0)).parse(input)
         .map_err(|err| anyhow::anyhow!("Unable to parse template: {err:?}"))?;
 
     Ok(ast)
@@ -22,14 +22,14 @@ fn parse_ast(input: &str) -> IResult<&str, Ast> {
         parse_expressions,
         map(parse_object, Ast::Object),
         map(parse_array, Ast::Array),
-    ))(input)
+    )).parse(input)
 }
 
 fn parse_expressions(input: &str) -> IResult<&str, Ast> {
     alt((
         map(parse_literal, Ast::Literal),
         map(parse_property_access, Ast::PropertyAccess),
-    ))(input)
+    )).parse(input)
 }
 
 fn parse_literal(input: &str) -> IResult<&str, Literal> {
@@ -39,7 +39,7 @@ fn parse_literal(input: &str) -> IResult<&str, Literal> {
         parse_float,
         parse_int,
         parse_string,
-    ))(input)
+    )).parse(input)
 }
 
 fn parse_property_access(input: &str) -> IResult<&str, PropertyAccess> {
@@ -50,11 +50,11 @@ fn parse_property_access(input: &str) -> IResult<&str, PropertyAccess> {
 
             PropertyAccess { path }
         },
-    )(input)
+    ).parse(input)
 }
 
 fn parse_identifier(input: &str) -> IResult<&str, &str> {
-    map(pair(alpha1, alphanumeric0), |(lhs, _)| lhs)(input)
+    map(pair(alpha1, alphanumeric0), |(lhs, _)| lhs).parse(input)
 }
 
 fn parse_float(input: &str) -> IResult<&str, Literal> {
@@ -65,18 +65,18 @@ fn parse_float(input: &str) -> IResult<&str, Literal> {
         ))
         .and_then(double),
         Literal::Float,
-    )(input)
+    ).parse(input)
 }
 
 fn parse_int(input: &str) -> IResult<&str, Literal> {
-    map(i64, Literal::Int)(input)
+    map(i64, Literal::Int).parse(input)
 }
 
 fn parse_string(input: &str) -> IResult<&str, Literal> {
     map(
         delimited(char('"'), take_until("\""), char('"')),
         |text: &str| Literal::String(text.to_string()),
-    )(input)
+    ).parse(input)
 }
 
 fn parse_object(input: &str) -> IResult<&str, Object> {
@@ -84,7 +84,7 @@ fn parse_object(input: &str) -> IResult<&str, Object> {
         delimited(
             char('{'),
             many0(map(
-                tuple((
+                (
                     multispace0,
                     parse_identifier,
                     multispace0,
@@ -93,7 +93,7 @@ fn parse_object(input: &str) -> IResult<&str, Object> {
                     parse_ast,
                     char(','),
                     multispace0,
-                )),
+                ),
                 |(_, identifier, _, _, _, ast, _, _)| (identifier.to_string(), ast),
             )),
             char('}'),
@@ -103,7 +103,7 @@ fn parse_object(input: &str) -> IResult<&str, Object> {
 
             Object { children }
         },
-    )(input)
+    ).parse(input)
 }
 
 fn parse_array(input: &str) -> IResult<&str, Array> {
@@ -111,18 +111,18 @@ fn parse_array(input: &str) -> IResult<&str, Array> {
         delimited(
             char('['),
             many0(map(
-                tuple((multispace0, parse_ast, char(','), multispace0)),
+                (multispace0, parse_ast, char(','), multispace0),
                 |(_, ast, _, _)| ast,
             )),
             char(']'),
         ),
         |children| Array { children },
-    )(input)
+    ).parse(input)
 }
 
 fn parse_conditional(input: &str) -> IResult<&str, Conditional> {
     map(
-        tuple((
+        (
             multispace0,
             parse_expressions,
             multispace0,
@@ -138,7 +138,7 @@ fn parse_conditional(input: &str) -> IResult<&str, Conditional> {
             multispace0,
             parse_expressions,
             multispace0,
-        )),
+        ),
         |(_, lhs, _, op, _, rhs, _, _, _, success, _, _, _, failure, _)| Conditional {
             lhs: Box::new(lhs),
             op,
@@ -146,7 +146,7 @@ fn parse_conditional(input: &str) -> IResult<&str, Conditional> {
             success: Box::new(success),
             failure: Box::new(failure),
         },
-    )(input)
+    ).parse(input)
 }
 
 fn parse_op(input: &str) -> IResult<&str, Operator> {
@@ -157,7 +157,7 @@ fn parse_op(input: &str) -> IResult<&str, Operator> {
         map(tag("<="), |_| Operator::LessOrEqual),
         map(tag(">"), |_| Operator::Greater),
         map(tag("<"), |_| Operator::Less),
-    ))(input)
+    )).parse(input)
 }
 
 #[cfg(test)]

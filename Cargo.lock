@@ -74,7 +74,7 @@ checksum = "e89da841a80418a9b391ebaea17f5c112ffaaa96f621d2c285b5174da76b9011"
 dependencies = [
  "cfg-if 1.0.0",
  "const-random",
- "getrandom",
+ "getrandom 0.2.12",
  "once_cell",
  "serde",
  "version_check",
@@ -1126,7 +1126,7 @@ checksum = "d38f2da7a0a2c4ccf0065be06397cc26a81f4e528be095826eee9d4adbb8c60f"
 dependencies = [
  "byteorder",
  "fnv",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -1445,7 +1445,7 @@ version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9d839f2a20b0aee515dc581a6172f2321f96cab76c1a38a4c584a194955390e"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.12",
  "once_cell",
  "tiny-keccak",
 ]
@@ -2114,7 +2114,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef552e6f588e446098f6ba40d89ac146c8c7b64aade83c051ee00bb5d2bc18d"
 dependencies = [
  "serde",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -3372,8 +3372,20 @@ dependencies = [
  "cfg-if 1.0.0",
  "js-sys",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "getrandom"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "43a49c392881ce6d5c3b8cb70f98717b7c07aabbdff06687b9030dbfbe2725f8"
+dependencies = [
+ "cfg-if 1.0.0",
+ "libc",
+ "wasi 0.13.3+wasi-0.2.2",
+ "windows-targets 0.52.6",
 ]
 
 [[package]]
@@ -3405,7 +3417,7 @@ dependencies = [
  "fnv",
  "gilrs-core",
  "log",
- "uuid 1.11.0",
+ "uuid 1.14.0",
  "vec_map",
 ]
 
@@ -3423,7 +3435,7 @@ dependencies = [
  "libudev-sys",
  "log",
  "nix 0.29.0",
- "uuid 1.11.0",
+ "uuid 1.14.0",
  "vec_map",
  "wasm-bindgen",
  "web-sys",
@@ -4970,7 +4982,7 @@ checksum = "4569e456d394deccd22ce1c1913e6ea0e54519f577285001215d33557431afe4"
 dependencies = [
  "hermit-abi",
  "libc",
- "wasi",
+ "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys 0.52.0",
 ]
 
@@ -5492,7 +5504,7 @@ dependencies = [
  "pinboard",
  "rusb",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -5618,7 +5630,7 @@ dependencies = [
  "mizer-util",
  "pinboard",
  "serde",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -5661,7 +5673,7 @@ dependencies = [
  "test-case",
  "tokio",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -5988,7 +6000,7 @@ dependencies = [
  "spectral",
  "test-case",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6112,7 +6124,7 @@ dependencies = [
  "profiling",
  "tokio",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6335,7 +6347,7 @@ dependencies = [
  "serde",
  "test-case",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6453,7 +6465,7 @@ dependencies = [
  "profiling",
  "serde",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6540,7 +6552,7 @@ dependencies = [
  "pinboard",
  "tracing",
  "traktor-kontrol-x1",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6635,7 +6647,7 @@ dependencies = [
  "test-case",
  "tracing",
  "tracy-client",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -6734,7 +6746,7 @@ dependencies = [
  "profiling",
  "raw-window-handle",
  "tracing",
- "uuid 1.11.0",
+ "uuid 1.14.0",
  "weak-table",
  "wgpu",
  "winit",
@@ -6872,7 +6884,7 @@ version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a51313c5820b0b02bd422f4b44776fbf47961755c74ce64afc73bfad10226c3"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.12",
 ]
 
 [[package]]
@@ -8411,7 +8423,7 @@ version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.12",
 ]
 
 [[package]]
@@ -8552,7 +8564,7 @@ version = "0.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a18479200779601e498ada4e8c1e1f50e3ee19deb0259c25825a98b5603b2cb4"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.12",
  "libredox 0.0.1",
  "thiserror 1.0.69",
 ]
@@ -8757,7 +8769,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "688c63d65483050968b2a8937f7995f443e27041a0f7700aa59b0822aedebb74"
 dependencies = [
  "cc",
- "getrandom",
+ "getrandom 0.2.12",
  "libc",
  "spin",
  "untrusted",
@@ -9188,7 +9200,7 @@ dependencies = [
  "thiserror 1.0.69",
  "time",
  "url",
- "uuid 1.11.0",
+ "uuid 1.14.0",
 ]
 
 [[package]]
@@ -9332,7 +9344,7 @@ version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aa2bcf6c6e164e81bc7a5d49fc6988b3d515d9e8c07457d7b74ffb9324b9cd40"
 dependencies = [
- "getrandom",
+ "getrandom 0.2.12",
  "halfbrown",
  "ref-cast",
  "serde",
@@ -10849,11 +10861,11 @@ dependencies = [
 
 [[package]]
 name = "uuid"
-version = "1.11.0"
+version = "1.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f8c5f0a0af699448548ad1a2fbf920fb4bee257eae39953ba95cb84891a0446a"
+checksum = "93d59ca99a559661b96bf898d8fce28ed87935fd2bea9f05983c1464dd6c71b1"
 dependencies = [
- "getrandom",
+ "getrandom 0.3.1",
  "serde",
 ]
 
@@ -11049,6 +11061,15 @@ name = "wasi"
 version = "0.11.0+wasi-snapshot-preview1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c8d87e72b64a3b4db28d11ce29237c246188f4f51057d65a7eab63b7987e423"
+
+[[package]]
+name = "wasi"
+version = "0.13.3+wasi-0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "26816d2e1a4a36a2940b96c5296ce403917633dff8f3440e9b236ed6f6bacad2"
+dependencies = [
+ "wit-bindgen-rt",
+]
 
 [[package]]
 name = "wasm-bindgen"
@@ -12053,6 +12074,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5d129932f4644ac2396cb456385cbf9e63b5b30c6e8dc4820bdca4eb082037a5"
 dependencies = [
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "wit-bindgen-rt"
+version = "0.33.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3268f3d866458b787f390cf61f4bbb563b922d091359f9608842999eaee3943c"
+dependencies = [
+ "bitflags 2.8.0",
 ]
 
 [[package]]

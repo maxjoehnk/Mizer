@@ -10,7 +10,8 @@ use nom::{IResult, Parser};
 use super::ast::*;
 
 pub fn parse(input: &str) -> anyhow::Result<Ast> {
-    let (_, ast) = complete(delimited(multispace0, parse_ast, multispace0)).parse(input)
+    let (_, ast) = complete(delimited(multispace0, parse_ast, multispace0))
+        .parse(input)
         .map_err(|err| anyhow::anyhow!("Unable to parse template: {err:?}"))?;
 
     Ok(ast)
@@ -22,14 +23,16 @@ fn parse_ast(input: &str) -> IResult<&str, Ast> {
         parse_expressions,
         map(parse_object, Ast::Object),
         map(parse_array, Ast::Array),
-    )).parse(input)
+    ))
+    .parse(input)
 }
 
 fn parse_expressions(input: &str) -> IResult<&str, Ast> {
     alt((
         map(parse_literal, Ast::Literal),
         map(parse_property_access, Ast::PropertyAccess),
-    )).parse(input)
+    ))
+    .parse(input)
 }
 
 fn parse_literal(input: &str) -> IResult<&str, Literal> {
@@ -39,7 +42,8 @@ fn parse_literal(input: &str) -> IResult<&str, Literal> {
         parse_float,
         parse_int,
         parse_string,
-    )).parse(input)
+    ))
+    .parse(input)
 }
 
 fn parse_property_access(input: &str) -> IResult<&str, PropertyAccess> {
@@ -50,7 +54,8 @@ fn parse_property_access(input: &str) -> IResult<&str, PropertyAccess> {
 
             PropertyAccess { path }
         },
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_identifier(input: &str) -> IResult<&str, &str> {
@@ -65,7 +70,8 @@ fn parse_float(input: &str) -> IResult<&str, Literal> {
         ))
         .and_then(double),
         Literal::Float,
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_int(input: &str) -> IResult<&str, Literal> {
@@ -76,7 +82,8 @@ fn parse_string(input: &str) -> IResult<&str, Literal> {
     map(
         delimited(char('"'), take_until("\""), char('"')),
         |text: &str| Literal::String(text.to_string()),
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_object(input: &str) -> IResult<&str, Object> {
@@ -103,7 +110,8 @@ fn parse_object(input: &str) -> IResult<&str, Object> {
 
             Object { children }
         },
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_array(input: &str) -> IResult<&str, Array> {
@@ -117,7 +125,8 @@ fn parse_array(input: &str) -> IResult<&str, Array> {
             char(']'),
         ),
         |children| Array { children },
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_conditional(input: &str) -> IResult<&str, Conditional> {
@@ -146,7 +155,8 @@ fn parse_conditional(input: &str) -> IResult<&str, Conditional> {
             success: Box::new(success),
             failure: Box::new(failure),
         },
-    ).parse(input)
+    )
+    .parse(input)
 }
 
 fn parse_op(input: &str) -> IResult<&str, Operator> {
@@ -157,7 +167,8 @@ fn parse_op(input: &str) -> IResult<&str, Operator> {
         map(tag("<="), |_| Operator::LessOrEqual),
         map(tag(">"), |_| Operator::Greater),
         map(tag("<"), |_| Operator::Less),
-    )).parse(input)
+    ))
+    .parse(input)
 }
 
 #[cfg(test)]

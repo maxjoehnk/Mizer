@@ -13,7 +13,7 @@ enum-iterator = "2.0"
 num_enum = "0.7"
 mizer-wgpu = { path = "../../../wgpu" }
 image = "0.25"
-ffmpeg-the-third = "2.0"
+ffmpeg-the-third = "3.0"
 profiling = "1"
 bytemuck = "1.15"
 cgmath = "0.18"

@@ -20,7 +20,7 @@ async-walkdir = "2.0"
 resvg = "0.44"
 fontdb = "0.22"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
-ffmpeg-the-third = "2.0"
+ffmpeg-the-third = "3.0"
 dashmap = "6.0"
 mizer-console = { path = "../../components/console" }
 mizer-module = { path = "../../runtime/module" }

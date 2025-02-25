@@ -26,4 +26,4 @@ mizer-api = { path = "../../api" }
 lazy_static = "1.4"
 parking_lot = "0.12"
 bitflags = "2.5"
-ffmpeg-the-third = "2.0"
+ffmpeg-the-third = "3.0"

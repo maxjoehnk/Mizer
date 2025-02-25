@@ -4722,9 +4722,9 @@ checksum = "9374ef4228402d4b7e403e5838cb880d9ee663314b0a900d5a6aabf0c213552e"
 
 [[package]]
 name = "log"
-version = "0.4.22"
+version = "0.4.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a7a70ba024b9dc04c27ea2f0c0548feb474ec5c54bba33a7f72f873a39d07b24"
+checksum = "30bde2b3dc3671ae49d8e2e9f044c7c005836e7a023ee57cffa25ab82764bb9e"
 
 [[package]]
 name = "loom"
@@ -5883,7 +5883,7 @@ dependencies = [
  "serde_json",
  "simd-json",
  "tracing",
- "ureq 3.0.3",
+ "ureq 3.0.6",
 ]
 
 [[package]]
@@ -6242,7 +6242,7 @@ dependencies = [
  "serde_derive",
  "temp-dir",
  "tracing",
- "ureq 3.0.3",
+ "ureq 3.0.6",
  "zip",
 ]
 
@@ -8867,9 +8867,9 @@ dependencies = [
 
 [[package]]
 name = "rustls"
-version = "0.23.19"
+version = "0.23.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "934b404430bb06b3fae2cba809eb45a1ab1aecd64491213d7c3301b88393f8d1"
+checksum = "47796c98c480fce5406ef69d1c76378375492c3b0a0de587be0c1d9feb12f395"
 dependencies = [
  "log",
  "once_cell",
@@ -8892,9 +8892,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-pki-types"
-version = "1.10.0"
+version = "1.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "16f1201b3c9a7ee8039bcadc17b7e605e2945b27eee7631788c1bd2b0643674b"
+checksum = "917ce264624a4b4db1c364dcc35bfca9ded014d0a958cd47ad3e960e988ea51c"
 
 [[package]]
 name = "rustls-webpki"
@@ -10740,12 +10740,11 @@ dependencies = [
 
 [[package]]
 name = "ureq"
-version = "3.0.3"
+version = "3.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "217751151c53226090391713e533d9a5e904ba2570dabaaace29032687589c3e"
+checksum = "ca2e2dbdf4e95780e5d41804fab88b928a24585721018409eb429b1d29356bde"
 dependencies = [
  "base64 0.22.1",
- "cc",
  "flate2",
  "log",
  "percent-encoding",

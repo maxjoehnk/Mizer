@@ -9,5 +9,5 @@ anyhow = "1"
 mizer-node = { path = "../../../node" }
 mizer-clock = { path = "../../../../clock" }
 serde = { version = "1", features = ["derive"] }
-cron = "0.14"
+cron = "0.15"
 chrono = "0.4"

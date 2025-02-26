@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use ffmpeg::error::EAGAIN;
+use libc::EAGAIN;
 use ffmpeg_the_third as ffmpeg;
 use image::DynamicImage;
 

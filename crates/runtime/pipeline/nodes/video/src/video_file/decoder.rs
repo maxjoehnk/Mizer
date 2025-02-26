@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use crate::background_thread_decoder::*;
 use ffmpeg_the_third as ffmpeg;
-use ffmpeg_the_third::error::EAGAIN;
+use libc::EAGAIN;
 
 pub type VideoDecodeThread = BackgroundDecoderThread<VideoFileDecoder>;
 pub type VideoDecodeThreadHandle = BackgroundDecoderThreadHandle<VideoFileDecoder>;

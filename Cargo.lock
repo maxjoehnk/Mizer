@@ -1252,6 +1252,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "clang"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84c044c781163c001b913cd018fc95a628c50d0d2dfea8bca77dad71edb16e37"
+dependencies = [
+ "clang-sys",
+ "libc",
+]
+
+[[package]]
 name = "clang-sys"
 version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2826,12 +2836,13 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-sys-the-third"
-version = "2.0.0+ffmpeg-7.0"
+version = "3.0.0+ffmpeg-7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a82bfdb0a7925996707f0a7dc37b2f3251ff5a15d26e78c586adb60c240dedc5"
+checksum = "b8ac7541c97a452897b3b85648e2e6fcd862c272ea0085ee3cbd7c7e2cfed95b"
 dependencies = [
  "bindgen 0.69.4",
  "cc",
+ "clang",
  "libc",
  "pkg-config",
  "vcpkg",
@@ -2839,9 +2850,9 @@ dependencies = [
 
 [[package]]
 name = "ffmpeg-the-third"
-version = "2.0.1+ffmpeg-7.0"
+version = "3.0.1+ffmpeg-7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4aa99eb55979d5c1db3b0b7a807a5e50dda07f5f6c2dbc6e9b50c205f611646"
+checksum = "79adca4fd8d80989bd449a19afdf31235849384ea5a6ef64489f155794e3be7f"
 dependencies = [
  "bitflags 2.8.0",
  "ffmpeg-sys-the-third",
@@ -5659,6 +5670,7 @@ dependencies = [
  "id3",
  "image 0.25.5",
  "infer",
+ "libc",
  "mime_guess",
  "mizer-commander",
  "mizer-console",
@@ -6691,6 +6703,7 @@ dependencies = [
  "ffmpeg-the-third",
  "flume",
  "image 0.25.5",
+ "libc",
  "mizer-media",
  "mizer-node",
  "mizer-wgpu",
@@ -10571,7 +10584,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "69fff37da548239c3bf9e64a12193d261e8b22b660991c6fd2df057c168f435f"
 dependencies = [
  "cc",
- "windows-targets 0.48.5",
+ "windows-targets 0.52.6",
 ]
 
 [[package]]

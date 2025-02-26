@@ -110,7 +110,14 @@ impl EguiDebugUi {
         let context = Context::default();
         let viewport_id = ViewportId::default();
 
-        let mut painter = futures::executor::block_on(Painter::new(context.clone(), WgpuConfiguration::default(), 1, None, false, false));
+        let mut painter = futures::executor::block_on(Painter::new(
+            context.clone(),
+            WgpuConfiguration::default(),
+            1,
+            None,
+            false,
+            false,
+        ));
         futures::executor::block_on(
             painter.set_window(viewport_id, Some(Arc::clone(&window_ref.window))),
         )?;

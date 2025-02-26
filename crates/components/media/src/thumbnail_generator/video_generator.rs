@@ -1,8 +1,8 @@
 use std::path::Path;
 
-use libc::EAGAIN;
 use ffmpeg_the_third as ffmpeg;
 use image::DynamicImage;
+use libc::EAGAIN;
 
 use super::{IThumbnailGenerator, THUMBNAIL_SIZE};
 use crate::documents::{MediaDocument, MediaType};

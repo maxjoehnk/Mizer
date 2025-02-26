@@ -63,15 +63,15 @@ impl FixturePriority {
     pub const HIGH: Self = Self::LTP(LTPPriority::High);
     pub const LOW: Self = Self::LTP(LTPPriority::Low);
     pub const LOWEST: Self = Self::LTP(LTPPriority::Lowest);
-    
+
     pub fn is_programmer(&self) -> bool {
         matches!(self, Self::Programmer)
     }
-    
+
     pub fn is_ltp(&self) -> bool {
         matches!(self, Self::LTP(_))
     }
-    
+
     pub fn is_htp(&self) -> bool {
         matches!(self, Self::HTP)
     }

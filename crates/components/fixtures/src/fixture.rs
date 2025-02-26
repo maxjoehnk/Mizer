@@ -57,12 +57,30 @@ impl ChannelValue {
             "ChannelValue::get",
             &format!("values: {}", self.values.len())
         );
-        // TODO: find highest htp value before ltp values
-        self.values
+        
+        if let Some((_, value)) = self.values.iter().find(|(priority, _)| priority.is_programmer()) {
+            return Some(*value);
+        }
+        
+        let ltp_highest = self.values
             .iter()
+            .filter(|(priority, _)| priority.is_ltp())
             .max_by_key(|(priority, _)| *priority)
             .map(|(_, value)| *value)
+            .map(|value| value.clamp(0., 1.));
+        let htp_highest = self.values
+            .iter()
+            .filter(|(priority, _)| priority.is_htp())
+            .map(|(_, value)| *value)
             .map(|value| value.clamp(0., 1.))
+            .max_by(|a, b| a.partial_cmp(b).unwrap());
+        
+        match (ltp_highest, htp_highest) {
+            (None, Some(value)) => Some(value),
+            (Some(value), None) => Some(value),
+            (Some(ltp), Some(htp)) => Some(ltp.max(htp)),
+            (None, None) => None,
+        }
     }
 
     pub fn clear(&mut self) {
@@ -598,7 +616,7 @@ mod tests {
 
     use crate::definition::FixtureFaderControl;
     use crate::fixture::{ChannelLimit, FixtureConfiguration};
-    use crate::LTPPriority;
+    use crate::{FixturePriority, LTPPriority};
 
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
 
@@ -725,6 +743,18 @@ mod tests {
         let mut channel_value = super::ChannelValue::default();
         channel_value.insert(value_a, level_a.into());
         channel_value.insert(value_b, level_b.into());
+
+        let result = channel_value.get();
+
+        assert_eq!(expected, result.unwrap());
+    }
+    
+    #[test_case(0.5, 1.0, 1.0)]
+    #[test_case(1.0, 0.5, 1.0)]
+    fn channel_value_should_return_highest_value_when_htp_is_used(value_ltp: f64, value_htp: f64, expected: f64) {
+        let mut channel_value = super::ChannelValue::default();
+        channel_value.insert(value_ltp, LTPPriority::Low.into());
+        channel_value.insert(value_htp, FixturePriority::HTP);
 
         let result = channel_value.get();
 

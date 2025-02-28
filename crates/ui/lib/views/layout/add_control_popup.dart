@@ -60,6 +60,7 @@ class AddControlPopup extends StatelessWidget {
     var shutterPresets = presets.shutters;
 
     return PopupMenu<dynamic>(
+        showDescription: false,
         categories: [
           PopupCategory(label: "New".i18n, items: [
             PopupItem(ControlType.BUTTON, "Button".i18n),

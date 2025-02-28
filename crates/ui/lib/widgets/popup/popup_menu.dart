@@ -34,8 +34,9 @@ class PopupCategory<T> extends PopupEntry<T> {
 class PopupMenu<T> extends StatefulWidget {
   final List<PopupEntry<T>> categories;
   final Function(T) onSelect;
+  final bool showDescription;
 
-  PopupMenu({required this.categories, required this.onSelect});
+  PopupMenu({required this.categories, required this.onSelect, this.showDescription = true });
 
   @override
   State<PopupMenu<T>> createState() =>
@@ -87,7 +88,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: widget.showDescription ? 150 : 200),
             child: SingleChildScrollView(
               child: Column(
                   children: widget.categories
@@ -96,7 +97,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
             ),
           ),
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: widget.showDescription ? 150 : 250),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,19 +123,20 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
               ),
             ),
           ),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: hovered?.description != null
-                        ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
-                        : []),
+          if (widget.showDescription)
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: hovered?.description != null
+                          ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
+                          : []),
+                ),
               ),
             ),
-          ),
         ]);
   }
 
@@ -146,7 +148,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: 150),
+          constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: widget.showDescription ? 300 : 450),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,19 +156,20 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
             ),
           ),
         ),
-        ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 300, minWidth: 300, maxWidth: 300),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: hovered?.description != null
-                      ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
-                      : []),
+        if (widget.showDescription)
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 300, minWidth: 300, maxWidth: 150),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: hovered?.description != null
+                        ? [Text(hovered!.description!, style: TextStyle(color: Colors.white70))]
+                        : []),
+              ),
             ),
           ),
-        ),
       ],
     );
   }

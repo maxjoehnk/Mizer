@@ -202,7 +202,7 @@ jobs:
       - name: Remove ndi libs from cache
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
       - name: Remove linked flutter libs and frameworks from cache
-        run: rm -rf target/release/lib target/release/*.framework
+        run: rm -rf target/release/lib target/release/*.framework target/release/deps/*.framework
       - name: Build
         run: make build-release
         env:
@@ -258,7 +258,7 @@ jobs:
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
         shell: bash
       - name: Remove linked flutter libs from cache
-        run: rm -rf target/release/file_selector_windows_plugin.* target/release/battery_plus_plugin.*
+        run: rm -rf target/release/file_selector_windows_plugin.* target/release/battery_plus_plugin.* target/release/flutter_windows.*
         shell: bash
       - name: Build
         env:

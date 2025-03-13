@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 
 import 'timecode_details.dart';
@@ -36,6 +37,7 @@ class _TimecodeViewState extends State<TimecodeView> {
     return BlocBuilder<TimecodeBloc, TimecodeState>(
       builder: (context, state) {
         return Column(
+          spacing: PANEL_GAP_SIZE,
           children: [
             Flexible(
                 flex: 1,

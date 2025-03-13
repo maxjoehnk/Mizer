@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
-final Color BACKGROUND = Colors.grey.shade900;
-final Color ACTION_COLOR = Colors.grey.shade800;
-final Color BORDER_COLOR = Colors.grey.shade700;
+final Color BACKGROUND = Grey800;
+final Color ACTION_COLOR = Grey800;
 
 class PopupContainer extends StatelessWidget {
   final String title;
@@ -19,8 +19,7 @@ class PopupContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: BACKGROUND,
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: BORDER_COLOR, width: 4),
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
             BoxShadow(
               blurRadius: 2,
@@ -39,7 +38,6 @@ class PopupContainer extends StatelessWidget {
           children: [
             Container(
                 padding: const EdgeInsets.all(8.0),
-                color: BORDER_COLOR,
                 child: Text(title, textAlign: TextAlign.center)),
             _child,
             if (actions != null) Container(
@@ -70,7 +68,7 @@ class PopupContainer extends StatelessWidget {
       onTap: action.onClick,
       builder: (hover) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 1),
-          color: hover ? BORDER_COLOR : ACTION_COLOR,
+          color: hover ? Grey700 : null,
           padding: const EdgeInsets.all(8),
           child: Text(action.text)),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
 class PopupSelect extends StatelessWidget {
@@ -18,7 +19,7 @@ class PopupSelect extends StatelessWidget {
             children: items
                 .map((item) => ListTile(
                       title: Text(item.title),
-                      hoverColor: Colors.white24,
+                      hoverColor: Grey700,
                       onTap: item.onTap,
                     ))
                 .toList()));

@@ -95,9 +95,9 @@ class _PanelState extends State<Panel> {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Colors.grey.shade800, width: 2)),
-      margin: const EdgeInsets.all(2),
+          color: Grey900,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
+          border: Border.all(color: Grey700, width: 2)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -126,7 +126,7 @@ class _PanelState extends State<Panel> {
     }
     TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-        color: Colors.grey.shade800,
+        color: Grey700,
         height: PANEL_HEADER_HEIGHT,
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +135,6 @@ class _PanelState extends State<Panel> {
               if (widget.label != null)
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
-                  color: Colors.grey.shade800,
                   child: Text(widget.label!, textAlign: TextAlign.start, style: textTheme.titleMedium),
                 ),
               if (widget.label != null) Container(width: 8),
@@ -256,7 +255,7 @@ class PanelAction extends StatelessWidget {
   final double height;
 
   const PanelAction(
-      {required this.action, this.hotkeys, this.width = PANEL_ACTION_SIZE, this.height = PANEL_ACTION_SIZE, super.key});
+      {required this.action, this.hotkeys, this.width = GRID_4_SIZE, this.height = PANEL_ACTION_SIZE, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -278,7 +277,10 @@ class PanelAction extends StatelessWidget {
           }
         } : null,
         builder: (hovered) => Container(
-          color: _getBackground(hovered),
+          decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: ActionBorder, width: 2)),
+            color: _getBackground(hovered),
+          ),
           height: height,
           width: width,
           child: Column(
@@ -318,12 +320,15 @@ class PanelAction extends StatelessWidget {
 
   Color _getBackground(bool hovered) {
     if (action.disabled == true) {
-      return Colors.black12;
+      return ActionDisabled;
     }
-    if (action.activated || hovered) {
-      return Colors.white10;
+    if (hovered) {
+      return ActionHover;
     }
-    return Colors.transparent;
+    if (action.activated) {
+      return ActionActive;
+    }
+    return ActionBackground;
   }
 
   Color _getColor() {

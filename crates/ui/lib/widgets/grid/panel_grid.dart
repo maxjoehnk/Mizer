@@ -8,7 +8,6 @@ class PanelGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
       padding: const EdgeInsets.all(1),
       child: Wrap(
         spacing: 1,

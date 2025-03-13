@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,9 @@ class _ConnectionsViewState extends State<ConnectionsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
+    return Row(
+        spacing: PANEL_GAP_SIZE,
+        children: [
       ConnectionCategoryList(
           selected: category,
           connections: connections,

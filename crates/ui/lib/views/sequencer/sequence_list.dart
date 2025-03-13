@@ -33,17 +33,13 @@ class SequenceList extends StatelessWidget {
   }
 
   Widget _list(BuildContext context, List<Sequence> sequences) {
-    return PanelSizing(
-      columns: 18,
-      rows: 3,
-      child: PanelGrid(
-        children: [
-          ...sequences
-              .search([(s) => s.name], searchQuery)
-              .map((sequence) => _sequence(context, sequence)),
-          ...List.filled((18 * 3) - sequences.length, PanelGridTile.empty())
-        ]
-      ),
+    return PanelGrid(
+      children: [
+        ...sequences
+            .search([(s) => s.name], searchQuery)
+            .map((sequence) => _sequence(context, sequence)),
+        ...List.filled((300) - sequences.length, PanelGridTile.empty())
+      ]
     );
   }
 

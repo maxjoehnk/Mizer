@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
 import 'package:mizer/views/surfaces/input_mapping.dart';
@@ -17,9 +18,10 @@ class SurfacesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SurfacesCubit, SurfacesState>(
-      builder: (context, state) => Row(children: [
+      builder: (context, state) => Row(spacing: PANEL_GAP_SIZE, children: [
         Flexible(
           child: Column(
+            spacing: PANEL_GAP_SIZE,
             children: [
               Expanded(
                 child: SurfaceList(),

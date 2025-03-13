@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
@@ -94,6 +95,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
       },
       child: BlocBuilder<SequencerBloc, SequencerState>(builder: (context, state) {
         return Column(
+          spacing: PANEL_GAP_SIZE,
           children: [
             Expanded(
               child: Panel(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -40,6 +41,7 @@ class _DmxMonitorState extends State<DmxMonitor> {
         var universes = snapshot.data?.keys.toList() ?? [];
         universes.sort();
         return Row(
+          spacing: PANEL_GAP_SIZE,
           children: [
             LimitedBox(
                 maxWidth: 144,

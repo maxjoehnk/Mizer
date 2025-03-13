@@ -21,23 +21,24 @@ class PanelGridTile extends StatelessWidget {
       onTap: onTap,
       onSecondaryTap: onSecondaryTap,
       builder: (hovered) => Container(
-        width: GRID_MAIN_SIZE,
-        height: GRID_MAIN_SIZE,
+        width: GRID_4_SIZE,
+        height: GRID_4_SIZE,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: selected ? White : TileBorder,
+              width: 2,
+            )
+          ),
           borderRadius: BorderRadius.circular(0),
-          color: empty ? Color(0xFF303030) : (hovered ? Colors.grey.shade800 : Colors.grey.shade900),
+          color: empty ? Grey800 : (selected ? Grey500 : (hovered ? Grey600 : Grey700)),
         ),
         child: Stack(children: [
-          if (selected) Container(
-              width: GRID_MAIN_SIZE,
-              height: GRID_MAIN_SIZE,
-              decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 2)),
-          ),
           if (active) Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: GRID_MAIN_SIZE,
+              width: GRID_4_SIZE,
               height: 4,
               color: Colors.deepOrange.shade700,
             ),

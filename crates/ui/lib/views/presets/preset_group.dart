@@ -110,7 +110,7 @@ class PresetList extends StatelessWidget {
       );
     }
     if (preset.hasFader()) {
-      return ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset, onTap: onSelect);
+      return ColorButton(color: Color.from(alpha: 1, red: preset.fader, green: preset.fader, blue: preset.fader), preset: preset, onTap: onSelect);
     }
     if (preset.hasPosition()) {
       return PositionButton(pan: preset.position.pan, tilt: preset.position.tilt, preset: preset, onTap: onSelect);

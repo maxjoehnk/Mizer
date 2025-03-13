@@ -47,11 +47,7 @@ class _GroupButtonState extends State<GroupButton>
         MenuItem(label: "Delete", action: () => _deleteGroup()),
       ]),
       child: PresetButton.group(
-        child: Container(
-          width: 48,
-          height: 48,
-          child: Center(child: Icon(MdiIcons.spotlightBeam)),
-        ),
+        child: Container(),
         group: widget.group,
         active: programmerState.activeGroups.contains(widget.group.id),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 
@@ -13,7 +14,8 @@ class PresetsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EffectsBloc, EffectState>(
         builder: (context, effects) => BlocBuilder<PresetsBloc, PresetsState>(
-            builder: (context, state) => ListView(children: [
+            builder: (context, state) {
+              var children = [
                   PresetGroup(
                       label: "Groups",
                       child: PresetButtonList(
@@ -48,6 +50,13 @@ class PresetsView extends StatelessWidget {
                         effects:
                             effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]),
                       ))
-                ])));
+                ];
+
+              return ListView.separated(
+                  itemBuilder: (context, index) => children[index],
+                  itemCount: children.length,
+                  separatorBuilder: (context, index) => SizedBox(height: PANEL_GAP_SIZE),
+              );
+            }));
   }
 }

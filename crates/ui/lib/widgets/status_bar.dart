@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:mizer/api/contracts/status.dart';
 import 'package:mizer/api/plugin/ffi/status.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/status_bar_bloc.dart';
 
@@ -17,7 +18,7 @@ class StatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 24,
-      color: Colors.grey.shade900,
+      color: Grey900,
       child: BlocBuilder<StatusBarCubit, StatusBarState>(
         builder: (context, state) => Row(
           children: [

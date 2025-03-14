@@ -5907,7 +5907,7 @@ dependencies = [
  "serde_json",
  "simd-json",
  "tracing",
- "ureq 3.0.6",
+ "ureq 3.0.9",
 ]
 
 [[package]]
@@ -6266,7 +6266,7 @@ dependencies = [
  "serde_derive",
  "temp-dir",
  "tracing",
- "ureq 3.0.6",
+ "ureq 3.0.9",
  "zip",
 ]
 
@@ -10775,9 +10775,9 @@ dependencies = [
 
 [[package]]
 name = "ureq"
-version = "3.0.6"
+version = "3.0.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ca2e2dbdf4e95780e5d41804fab88b928a24585721018409eb429b1d29356bde"
+checksum = "46ad884f92873b83ae777744da5d8d6216d7ccc18bb9add8d2825c28e5c8695b"
 dependencies = [
  "base64 0.22.1",
  "flate2",
@@ -10793,9 +10793,9 @@ dependencies = [
 
 [[package]]
 name = "ureq-proto"
-version = "0.3.0"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c51fe73e1d8c4e06bb2698286f7e7453c6fc90528d6d2e7fc36bb4e87fe09b1"
+checksum = "ae239d0a3341aebc94259414d1dc67cfce87d41cbebc816772c91b77902fafa4"
 dependencies = [
  "base64 0.22.1",
  "http",

@@ -7,11 +7,14 @@ class PanelGridTile extends StatelessWidget {
   final bool active;
   final bool selected;
   final bool empty;
+  final Color? color;
   final Function()? onTap;
+  final Function(TapDownDetails)? onTapDown;
+  final Function(TapUpDetails)? onTapUp;
   final Function()? onSecondaryTap;
   final Function(TapDownDetails)? onSecondaryTapDown;
 
-  const PanelGridTile({ required this.child, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key});
+  const PanelGridTile({ required this.child, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
 
@@ -19,6 +22,8 @@ class PanelGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hoverable(
       onTap: onTap,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
       onSecondaryTap: onSecondaryTap,
       builder: (hovered) => Container(
         width: GRID_4_SIZE,
@@ -32,7 +37,7 @@ class PanelGridTile extends StatelessWidget {
             )
           ),
           borderRadius: BorderRadius.circular(0),
-          color: empty ? Grey800 : (selected ? Grey500 : (hovered ? Grey600 : Grey700)),
+          color: color ?? (empty ? Grey800 : (selected ? Grey500 : (hovered ? Grey600 : Grey700))),
         ),
         child: Stack(children: [
           if (active) Align(

@@ -38,7 +38,7 @@ class PopupContainer extends StatelessWidget {
           children: [
             Container(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(title, textAlign: TextAlign.center)),
+                child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: 20))),
             _child,
             if (actions != null) Container(
               padding: const EdgeInsets.all(8),

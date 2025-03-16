@@ -19,23 +19,27 @@ class PresetsView extends StatelessWidget {
                   PresetGroup(
                       label: "Groups",
                       child: PresetButtonList(
+                        fill: true,
                           children:
                               state.groups.map((group) => GroupButton(group: group)).toList())),
                   PresetGroup(
                       label: "Dimmer",
                       child: PresetList(
+                        fill: true,
                         presets: state.presets.intensities,
                         effects: effects.getEffectsForControls([EffectControl.INTENSITY]),
                       )),
                   PresetGroup(
                       label: "Shutter",
                       child: PresetList(
+                        fill: true,
                         presets: state.presets.shutters,
                         effects: effects.getEffectsForControls([EffectControl.SHUTTER]),
                       )),
                   PresetGroup(
                       label: "Color",
                       child: PresetList(
+                          fill: true,
                           presets: state.presets.colors,
                           effects: effects.getEffectsForControls([
                             EffectControl.COLOR_MIXER_BLUE,
@@ -46,6 +50,7 @@ class PresetsView extends StatelessWidget {
                   PresetGroup(
                       label: "Position",
                       child: PresetList(
+                        fill: true,
                         presets: state.presets.positions,
                         effects:
                             effects.getEffectsForControls([EffectControl.PAN, EffectControl.TILT]),

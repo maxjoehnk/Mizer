@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 
 var HIGHLIGHT_CONTROL_COLOR = Colors.grey.shade900;
 var HOVER_CONTROL_COLOR = Colors.grey.shade700;
-var DEFAULT_CONTROL_COLOR = Colors.grey.shade800;
-var DEFAULT_CONTROL_BACKGROUND = Colors.grey.shade700;
+var DEFAULT_CONTROL_COLOR = Grey800;
+var DEFAULT_CONTROL_BACKGROUND = Grey700;
 
 ShapeDecoration ControlDecoration(
     {Color? color, Gradient? gradient, bool highlight = false, bool hover = false}) {

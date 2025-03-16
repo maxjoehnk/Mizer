@@ -5,6 +5,7 @@ class Hoverable extends StatefulWidget {
   final bool disabled;
   final void Function()? onTap;
   final void Function(TapDownDetails)? onTapDown;
+  final void Function(TapUpDetails)? onTapUp;
   final void Function()? onSecondaryTap;
   final void Function(TapDownDetails)? onSecondaryTapDown;
   final void Function()? onDoubleTap;
@@ -14,6 +15,7 @@ class Hoverable extends StatefulWidget {
       {this.disabled = false,
       this.onTap,
       this.onTapDown,
+      this.onTapUp,
       this.onSecondaryTap,
       this.onSecondaryTapDown,
       this.onDoubleTap,
@@ -47,9 +49,10 @@ class _HoverableState extends State<Hoverable> {
       onExit: (e) => setState(() => hovering = false),
       child: GestureDetector(
         onTap: _callWhenNotDisabled(widget.onTap),
-        onTapDown: _callDownWhenNotDisabled(widget.onTapDown),
+        onTapDown: _callDetailsWhenNotDisabled(widget.onTapDown),
+        onTapUp: _callDetailsWhenNotDisabled(widget.onTapUp),
         onSecondaryTap: _callWhenNotDisabled(widget.onSecondaryTap),
-        onSecondaryTapDown: _callDownWhenNotDisabled(widget.onSecondaryTapDown),
+        onSecondaryTapDown: _callDetailsWhenNotDisabled(widget.onSecondaryTapDown),
         onDoubleTap: _callWhenNotDisabled(widget.onDoubleTap),
         behavior: HitTestBehavior.opaque,
         child: widget.builder(hovering),
@@ -69,11 +72,11 @@ class _HoverableState extends State<Hoverable> {
     };
   }
 
-  void Function(TapDownDetails)? _callDownWhenNotDisabled(void Function(TapDownDetails)? function) {
+  void Function(T)? _callDetailsWhenNotDisabled<T>(void Function(T)? function) {
     if (function == null) {
       return null;
     }
-    return (TapDownDetails details) {
+    return (T details) {
       if (widget.disabled) {
         return;
       }

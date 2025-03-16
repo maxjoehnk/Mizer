@@ -4,6 +4,7 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/protos/layouts.pb.dart'
     show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
+import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:provider/provider.dart';
 
@@ -33,24 +34,18 @@ class SequencerControl extends StatelessWidget {
     return FutureBuilder<Sequence>(
         future: sequencerApi.getSequence(sequenceId),
         builder: (context, state) {
-          return Container(
-            decoration:
-                ControlDecoration(color: color, highlight: this.state[sequenceId]?.active ?? false),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.TOGGLE) {
-                    _sequenceToggle(sequencerApi);
-                  }
-                  if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.GO_FORWARD) {
-                    _sequenceGo(sequencerApi);
-                  }
-                },
-                child: state.hasData ? _cueView(state.data!, textTheme) : null,
-              ),
-            ),
+          return PanelGridTile(
+              color: color,
+            active: this.state[sequenceId]?.active ?? false,
+            onTap: () {
+              if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.TOGGLE) {
+                _sequenceToggle(sequencerApi);
+              }
+              if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.GO_FORWARD) {
+                _sequenceGo(sequencerApi);
+              }
+            },
+            child: state.hasData ? _cueView(state.data!, textTheme) : Container(),
           );
         });
   }

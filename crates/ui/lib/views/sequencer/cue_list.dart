@@ -92,7 +92,6 @@ class CueList extends StatelessWidget {
     context
         .read<SequencerBloc>()
         .add(UpdateCueTrigger(sequence: sequence.id, cue: cue.id, trigger: trigger));
-    Navigator.of(context).pop();
   }
 
   void _updateCueTriggerTime(BuildContext context, Cue cue, CueTime? value) {

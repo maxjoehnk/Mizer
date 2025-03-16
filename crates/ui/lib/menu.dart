@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:flutter/material.dart' hide View;
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,27 +35,36 @@ class ApplicationMenu extends StatelessWidget {
               const MenuBarTitle(),
               const MenuPlaceholder(),
               MenuButton.text("Project", popupBuilder: (context) => PopupSelect(
+                width: context.globalPaintBounds!.width,
                 title: "Project",
                 items: [
                   SelectItem(
                     title: "New Project",
-                    onTap: () {},
+                    onTap: () => _newProject(context),
                   ),
                   SelectItem(
                     title: "Open Project",
-                    onTap: () {},
+                    onTap: () => _openProject(context),
                   ),
                   SelectItem(
                     title: "Save Project",
-                    onTap: () {},
+                    onTap: () => ProjectFiles.saveProject(context),
                   ),
                   SelectItem(
                     title: "Save Project as",
-                    onTap: () {},
+                    onTap: () => ProjectFiles.saveProjectAs(context),
                   ),
                 ],
               )),
-              Expanded(child: MenuButton.text("Current Project")),
+              Expanded(child: MenuButton.text(state.hasProject() ? state.project : "New Project", popupBuilder: (context) => PopupSelect(
+                width: context.globalPaintBounds!.width,
+                title: "Open Recent",
+                items: state.projectHistory
+                    .map((history) => SelectItem(
+                        title: history.split(io.Platform.pathSeparator).last,
+                        onTap: () => _openProjectFromHistory(context, context.read(), history)))
+                    .toList(),
+              ))),
               const MenuPlaceholder(),
               MenuButton.icon(MdiIcons.undo, onTap: () async {
                 await context.read<SessionApi>().undo();
@@ -88,35 +99,6 @@ class ApplicationMenu extends StatelessWidget {
                     builder: (context) => PowerDialog(applicationApi: applicationApi));
               }),
             ],
-            // child: child,
-            // menu: Menu(items: [
-            //   SubMenu(title: "File".i18n, children: [
-            //     MenuItem(
-            //         label: "New Project".i18n,
-            //         action: () => _newProject(context),
-            //         shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
-            //     MenuItem(label: "Open Project".i18n, action: () => _openProject(context)),
-            //     SubMenu(
-            //       title: "Open Recent".i18n,
-            //       children: state.projectHistory
-            //           .map((history) => MenuItem(
-            //               label: history.split(io.Platform.pathSeparator).last,
-            //               action: () => _openProjectFromHistory(context, context.read(), history)))
-            //           .toList(),
-            //     ),
-            //     MenuItem(
-            //         disabled: state.filePath.isEmpty,
-            //         label: 'Save Project'.i18n,
-            //         action: () => ProjectFiles.saveProject(context)),
-            //     MenuItem(
-            //         label: 'Save Project as'.i18n, action: () => ProjectFiles.saveProjectAs(context)),
-            //     MenuDivider(),
-            //     MenuItem(
-            //         label: "Exit".i18n,
-            //         action: () => context.read<ApplicationPluginApi>().exit(),
-            //         shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyQ))
-            //   ]),
-            // ])
           ),
     );
   }
@@ -210,8 +192,10 @@ class MenuButton extends StatelessWidget {
       onTap: onTap,
       onTapDown: popupBuilder == null
           ? null
-          : (details) => Navigator.of(context).push(
-              MizerPopupRoute(position: details.globalPosition, child: popupBuilder!(context))),
+          : (details) {
+            Navigator.of(context).push(
+              MizerPopupRoute(position: context.globalPaintBounds!.bottomLeft, child: popupBuilder!(context)));
+          },
       builder: (hovered) =>
           Container(
             height: GRID_2_SIZE,
@@ -250,5 +234,18 @@ class ErrorDialog extends StatelessWidget {
     return ActionDialog(
         title: title,
         content: SizedBox(height: 768, child: SingleChildScrollView(child: Text(text))));
+  }
+}
+
+extension GlobalPaintBounds on BuildContext {
+  Rect? get globalPaintBounds {
+    final renderObject = findRenderObject();
+    final translation = renderObject?.getTransformTo(null).getTranslation();
+    if (translation != null && renderObject?.paintBounds != null) {
+      final offset = Offset(translation.x, translation.y);
+      return renderObject!.paintBounds.shift(offset);
+    } else {
+      return null;
+    }
   }
 }

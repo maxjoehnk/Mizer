@@ -113,16 +113,10 @@ Widget invertedAxisField(
       popup: PopupSelect(title: title, items: [
         SelectItem(
             title: "Normal",
-            onTap: () {
-              onUpdate(false);
-              Navigator.of(context).pop();
-            }),
+            onTap: () => onUpdate(false)),
         SelectItem(
             title: "Inverted",
-            onTap: () {
-              onUpdate(true);
-              Navigator.of(context).pop();
-            })
+            onTap: () => onUpdate(true))
       ]));
 }
 
@@ -134,15 +128,9 @@ Widget reversePixelField(
       popup: PopupSelect(title: title, items: [
         SelectItem(
             title: "Normal",
-            onTap: () {
-              onUpdate(false);
-              Navigator.of(context).pop();
-            }),
+            onTap: () => onUpdate(false)),
         SelectItem(
             title: "Reversed",
-            onTap: () {
-              onUpdate(true);
-              Navigator.of(context).pop();
-            })
+            onTap: () => onUpdate(true))
       ]));
 }

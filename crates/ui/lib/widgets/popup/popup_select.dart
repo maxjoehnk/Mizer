@@ -5,14 +5,15 @@ import 'package:mizer/widgets/popup/popup_container.dart';
 class PopupSelect extends StatelessWidget {
   final String title;
   final List<SelectItem> items;
+  final double width;
 
-  const PopupSelect({required this.title, required this.items, Key? key}) : super(key: key);
+  const PopupSelect({required this.title, required this.items, this.width = 150, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
         title: title,
-        width: 150,
+        width: width,
         height: 204,
         child: ListView(
             shrinkWrap: true,
@@ -20,7 +21,10 @@ class PopupSelect extends StatelessWidget {
                 .map((item) => ListTile(
                       title: Text(item.title),
                       hoverColor: Grey700,
-                      onTap: item.onTap,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        item.onTap();
+                      },
                     ))
                 .toList()));
   }

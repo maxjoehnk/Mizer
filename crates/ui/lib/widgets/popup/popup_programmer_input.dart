@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 import 'package:mizer/views/presets/preset_group.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -218,9 +219,9 @@ class Pad extends StatelessWidget {
 
   Color _color(bool hovered) {
     if (selected) {
-      return Colors.white12;
+      return Grey500;
     }
-    return hovered ? Colors.white38 : Colors.white24;
+    return hovered ? Grey600 : Grey700;
   }
 }
 

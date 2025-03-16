@@ -10,6 +10,7 @@ import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/layout_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
@@ -29,7 +30,7 @@ import 'add_control_popup.dart';
 import 'control.dart';
 import 'dialogs/name_layout_dialog.dart';
 
-const double MULTIPLIER = 75;
+const double MULTIPLIER = GRID_4_SIZE;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
 const String ResizingNodeIndicatorLayoutId = "ResizingNodeIndicator";
 

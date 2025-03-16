@@ -62,7 +62,7 @@ class NavigationBarItem extends StatelessWidget {
                   size: 24,
                 ),
                 SizedBox(height: 12),
-                HighContrastText(label, textAlign: TextAlign.center, fontSize: 14),
+                HighContrastText(label, textAlign: TextAlign.center),
               ],
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

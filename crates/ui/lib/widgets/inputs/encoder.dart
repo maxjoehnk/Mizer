@@ -5,15 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/popup/popup_programmer_input.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:provider/provider.dart';
 
 import 'decoration.dart';
 
-const double EncoderSize = 40;
-const double EncoderBorderWidth = 4;
+const double EncoderSize = 30;
+const double EncoderBorderWidth = 3;
 
 class EncoderInput extends StatefulWidget {
   final Function(double)? onValue;
@@ -99,20 +101,23 @@ class _EncoderInputState extends State<EncoderInput> {
                 ),
               ))),
           child: Container(
-            decoration: ControlDecoration(highlight: widget.highlight),
+            decoration: BoxDecoration(
+              color: Grey700
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (widget.label != null)
                   Container(
-                      height: 32,
+                      height: 30,
                       color: widget.highlight == true
                           ? HIGHLIGHT_CONTROL_COLOR
                           : DEFAULT_CONTROL_COLOR,
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                      child: Text(widget.label ?? "",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall)),
+                      child: Center(
+                        child: HighContrastText(widget.label ?? "",
+                            textAlign: TextAlign.center,
+                            ),
+                      )),
                 Expanded(
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,

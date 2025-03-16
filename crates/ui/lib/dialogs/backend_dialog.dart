@@ -19,7 +19,7 @@ class BackendDialog extends StatelessWidget {
 
   Widget _buildElement(BuildContext context, DialogElement element) {
     if (element.hasText()) {
-      return Text(element.text);
+      return Text(element.text, style: TextStyle(fontSize: 16));
     } else {
       print("Unsupported dialog element: $element");
       return Container();

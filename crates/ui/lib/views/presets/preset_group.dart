@@ -69,14 +69,16 @@ class PresetGroup extends StatelessWidget {
 
 class PresetButtonList extends StatelessWidget {
   final List<Widget> children;
+  final bool fill;
 
-  const PresetButtonList({super.key, required this.children});
+  const PresetButtonList({super.key, required this.children, this.fill = false});
 
   @override
   Widget build(BuildContext context) {
     return PanelGrid(children: [
       ...children,
-      ...List.filled(40, PanelGridTile.empty()),
+      if (fill)
+        ...List.filled(40, PanelGridTile.empty()),
     ]);
   }
 }
@@ -85,12 +87,13 @@ class PresetList extends StatelessWidget {
   final List<Preset>? presets;
   final List<Effect>? effects;
   final void Function()? onSelect;
+  final bool fill;
 
-  const PresetList({super.key, this.effects, this.presets, this.onSelect});
+  const PresetList({super.key, this.effects, this.presets, this.onSelect, this.fill = false});
 
   @override
   Widget build(BuildContext context) {
-    return PresetButtonList(children: children);
+    return PresetButtonList(children: children, fill: fill);
   }
 
   List<Widget> get children {

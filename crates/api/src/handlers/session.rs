@@ -21,6 +21,7 @@ impl<R: RuntimeApi> SessionHandler<R> {
             .into_stream()
             .map(|state| Session {
                 file_path: state.project_path,
+                project: state.project_name,
                 project_history: state.project_history,
                 devices: vec![SessionDevice {
                     name: "max-arch".into(),

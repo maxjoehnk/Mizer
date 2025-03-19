@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
@@ -26,8 +27,8 @@ class Minimap extends StatelessWidget {
         height: 150,
         width: 200,
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(color: Colors.grey.shade900, borderRadius: BorderRadius.circular(4)),
-        foregroundDecoration: BoxDecoration(border: Border.all(color: Colors.grey.shade800, width: 2), borderRadius: BorderRadius.circular(4)),
+        decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(BORDER_RADIUS)),
+        foregroundDecoration: BoxDecoration(border: Border.all(color: Grey700, width: 2), borderRadius: BorderRadius.circular(BORDER_RADIUS)),
         child: Stack(
           children: [
             SizedBox.expand(child: CustomPaint(painter: NodesPreviewPainter(nodes, model.channels))),

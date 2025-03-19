@@ -5,7 +5,7 @@ import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/protos/layouts.pb.dart'
     show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
 import 'package:mizer/widgets/grid/grid_tile.dart';
-import 'package:mizer/widgets/inputs/decoration.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:provider/provider.dart';
 
 class SequencerControl extends StatelessWidget {
@@ -36,6 +36,8 @@ class SequencerControl extends StatelessWidget {
         builder: (context, state) {
           return PanelGridTile(
               color: color,
+            width: size.width.toInt(),
+            height: size.height.toInt(),
             active: this.state[sequenceId]?.active ?? false,
             onTap: () {
               if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.TOGGLE) {
@@ -129,11 +131,12 @@ class SequencerControl extends StatelessWidget {
         color: active ? Colors.black45 : null,
       ),
       padding: const EdgeInsets.all(6),
-      child: Text(sequence.name,
-          textAlign: TextAlign.center,
-          style: textTheme.bodySmall,
-          overflow: TextOverflow.clip,
-          maxLines: 2),
+      child: Center(
+        child: HighContrastText(sequence.name,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.clip,
+            maxLines: 2),
+      ),
     );
   }
 }

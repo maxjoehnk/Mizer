@@ -47,7 +47,7 @@ class _DialControlState extends State<DialControl> with SingleTickerProviderStat
 
     return EncoderInput(
       label: widget.control.label,
-      // color: widget.color,
+      color: widget.color,
       value: value,
       onValue: (value) =>
           apiClient.writeControlValue(path: widget.control.node.path, port: "Input", value: value),

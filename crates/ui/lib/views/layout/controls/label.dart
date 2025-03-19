@@ -43,6 +43,7 @@ class _LabelControlState extends State<LabelControl> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return PanelGridTile(
+      interactive: false,
       child: Center(child: HighContrastText(value, textAlign: TextAlign.center, autoSize: AutoSize(
         minFontSize: 10,
         wrapWords: false,

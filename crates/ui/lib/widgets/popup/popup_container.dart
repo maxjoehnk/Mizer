@@ -12,23 +12,22 @@ class PopupContainer extends StatelessWidget {
   final double? height;
   final List<PopupAction>? actions;
 
-  const PopupContainer({required this.title, this.child, this.width, this.height, this.actions, Key? key}) : super(key: key);
+  const PopupContainer(
+      {required this.title, this.child, this.width, this.height, this.actions, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: BACKGROUND,
+          border: Border.all(color: Grey600, width: 2),
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 2,
-              color: Colors.black26
-              // offset: Offset(2, 2),
-            )
-          ]
-      ),
+            BoxShadow(blurRadius: 2, spreadRadius: 2, color: Colors.black26
+                // offset: Offset(2, 2),
+                )
+          ]),
       width: this.width,
       height: this.height,
       child: IntrinsicWidth(
@@ -37,15 +36,16 @@ class PopupContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+                color: Grey600,
                 padding: const EdgeInsets.all(8.0),
                 child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: 20))),
             _child,
-            if (actions != null) Container(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: actions!.map(_action).toList()),
-            )
+            if (actions != null)
+              Container(
+                padding: const EdgeInsets.all(8),
+                child:
+                    Row(mainAxisSize: MainAxisSize.min, children: actions!.map(_action).toList()),
+              )
           ],
         ),
       ),
@@ -64,7 +64,7 @@ class PopupContainer extends StatelessWidget {
   }
 
   Widget _action(PopupAction action) {
-    return  Hoverable(
+    return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 1),
@@ -74,7 +74,6 @@ class PopupContainer extends StatelessWidget {
     );
   }
 }
-
 
 class PopupAction {
   final String text;

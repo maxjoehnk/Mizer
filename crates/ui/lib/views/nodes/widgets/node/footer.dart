@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -26,7 +27,7 @@ class NodeFooter extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade800,
+        color: Grey700,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(INNER_RADIUS)),
       ),
       height: 24,
@@ -50,7 +51,7 @@ class NodeFooter extends StatelessWidget {
       builder: (hovered) {
         var color = selected ? Colors.white : Colors.white54;
         var background =
-            selected ? Colors.black26 : (hovered ? Colors.black12 : Colors.transparent);
+            selected ? Grey500 : (hovered ? Grey600 : Colors.transparent);
 
         return Container(
             padding: const EdgeInsets.all(4),

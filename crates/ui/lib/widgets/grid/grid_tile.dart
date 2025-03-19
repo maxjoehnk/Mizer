@@ -4,17 +4,20 @@ import 'package:mizer/widgets/hoverable.dart';
 
 class PanelGridTile extends StatelessWidget {
   final Widget child;
+  final bool interactive;
   final bool active;
   final bool selected;
   final bool empty;
   final Color? color;
+  final int width;
+  final int height;
   final Function()? onTap;
   final Function(TapDownDetails)? onTapDown;
   final Function(TapUpDetails)? onTapUp;
   final Function()? onSecondaryTap;
   final Function(TapDownDetails)? onSecondaryTapDown;
 
-  const PanelGridTile({ required this.child, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
+  const PanelGridTile({ required this.child, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
 
@@ -26,14 +29,16 @@ class PanelGridTile extends StatelessWidget {
       onTapUp: onTapUp,
       onSecondaryTap: onSecondaryTap,
       builder: (hovered) => Container(
-        width: GRID_4_SIZE,
-        height: GRID_4_SIZE,
+        width: GRID_4_SIZE * width + ((width - 1) * 2),
+        height: GRID_4_SIZE * height + ((height - 1) * 2),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: selected ? White : TileBorder,
-              width: 2,
+            color: active
+                ? Colors.deepOrange.shade700
+                : (selected ? White : (interactive ? TileBorder : Colors.transparent)),
+            width: 2,
             )
           ),
           borderRadius: BorderRadius.circular(0),
@@ -43,8 +48,8 @@ class PanelGridTile extends StatelessWidget {
           if (active) Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: GRID_4_SIZE,
-              height: 4,
+              width: GRID_4_SIZE * width + ((width - 1) * 2),
+              height: 2,
               color: Colors.deepOrange.shade700,
             ),
           ),

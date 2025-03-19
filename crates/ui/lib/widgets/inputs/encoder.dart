@@ -21,6 +21,7 @@ class EncoderInput extends StatefulWidget {
   final Function(double)? onValue;
   final double value;
   final String? label;
+  final Color? color;
   final bool highlight;
   final List<Preset>? globalPresets;
   final List<ControlPreset>? controlPresets;
@@ -29,6 +30,7 @@ class EncoderInput extends StatefulWidget {
       {this.onValue,
       required this.value,
       this.label,
+      this.color,
       this.highlight = false,
       this.globalPresets,
       this.controlPresets});

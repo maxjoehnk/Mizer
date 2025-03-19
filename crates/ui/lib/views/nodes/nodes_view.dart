@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
@@ -24,11 +25,10 @@ import 'widgets/editor_layers/canvas_drop_layer.dart';
 import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
-import 'widgets/hidden_node_list.dart';
 import 'widgets/node/preview.dart';
 import 'widgets/properties/properties_pane.dart';
 
-const double SidebarWidth = 550;
+const double SidebarWidth = 302;
 const double PathBreadcrumbHeight = 32;
 const bool EnableScreenshot = !kReleaseMode;
 
@@ -80,6 +80,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         "align_nodes": () => _alignNodes(context),
       },
       child: Row(
+        spacing: PANEL_GAP_SIZE,
         children: [
           Expanded(
             child: Panel(
@@ -175,36 +176,16 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           Container(
             width: SidebarWidth,
             child: Column(
+              spacing: PANEL_GAP_SIZE,
               children: [
                 Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Panel(
-                          padding: false,
-                          label: "Properties".i18n,
-                          child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Panel(
-                                padding: false,
-                                label: "Hidden".i18n,
-                                onSearch: (search) => setState(() => nodeSearch = search),
-                                child: HiddenNodeList(nodes: model.hidden, search: nodeSearch)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Panel(
+                    padding: false,
+                    label: "Properties".i18n,
+                    child: NodePropertiesPane(node: model.selectedNode?.node, onUpdate: _refresh)),
                 ),
                 SizedBox(
-                  height: 240,
+                  height: 180,
                   child: Panel(
                     label: "Preview".i18n,
                     child: model.selectedNode == null

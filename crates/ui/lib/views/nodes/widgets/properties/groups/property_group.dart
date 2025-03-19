@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 
 class PropertyGroup extends StatelessWidget {
   final String title;
@@ -10,17 +11,20 @@ class PropertyGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(2),
-      decoration:
-          BoxDecoration(color: Colors.grey.shade800, borderRadius: BorderRadius.circular(4)),
+      decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(BORDER_RADIUS)),
       clipBehavior: Clip.antiAlias,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Container(padding: EdgeInsets.all(4), color: Colors.grey.shade700, child: Text(this.title)),
-        SizedBox(height: 2),
+        Container(
+            padding: const EdgeInsets.all(12),
+            alignment: Alignment.centerLeft,
+            height: GRID_2_SIZE,
+            color: Grey600,
+            child: Text(this.title)),
+        SizedBox(height: PANEL_GAP_SIZE),
         ...children
-            .map((w) =>
-                Padding(padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2), child: w))
+            .map((w) => Padding(padding: const EdgeInsets.all(PANEL_GAP_SIZE), child: w))
             .toList(),
-        SizedBox(height: 2),
+        SizedBox(height: PANEL_GAP_SIZE),
       ]),
     );
   }

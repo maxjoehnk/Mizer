@@ -6,8 +6,10 @@ class HighContrastText extends StatelessWidget {
   final TextAlign? textAlign;
   final double? fontSize;
   final AutoSize? autoSize;
+  final TextOverflow overflow;
+  final int? maxLines;
 
-  const HighContrastText(this.text, {this.textAlign, this.fontSize = 15, this.autoSize, super.key});
+  const HighContrastText(this.text, {this.textAlign, this.fontSize = 15, this.autoSize, this.overflow = TextOverflow.clip, this.maxLines, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class HighContrastText extends StatelessWidget {
                 ..strokeWidth = 3
                 ..style = PaintingStyle.stroke,
             ),
-            overflow: TextOverflow.clip,
+            overflow: overflow,
             textAlign: textAlign,
             maxLines: 2),
         AutoSizeText(text,
@@ -34,7 +36,7 @@ class HighContrastText extends StatelessWidget {
             style: textTheme.bodySmall!.copyWith(
               fontSize: fontSize,
             ),
-            overflow: TextOverflow.clip,
+            overflow: overflow,
             textAlign: textAlign,
             maxLines: 2),
       ],
@@ -48,11 +50,3 @@ class AutoSize {
 
   const AutoSize({this.minFontSize, this.wrapWords = false});
 }
-
-// AutoSizeText(value,
-//                 minFontSize: 10,
-//                 wrapWords: false,
-//                 textAlign: TextAlign.center,
-//                 style: Theme.of(context)
-//                     .textTheme
-//                     .bodySmall!.copyWith(fontSize: 15))

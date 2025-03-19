@@ -96,7 +96,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
           ]),
       ]),
       child: Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(1.0),
         child: RepaintBoundary(child: _getControl(node, nodesApi)),
       ),
     );

@@ -320,53 +320,56 @@ class _ControlsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SequencerStateFetcher(builder: (context, sequencerState) {
-      return CustomMultiChildLayout(
-          delegate: ControlsLayoutDelegate(
-              layout, movingNode?.id, movingNodePosition, resizingNode?.id, resizingNodeSize),
-          children: [
-            if (movingNode != null)
-              LayoutId(
-                  id: MovingNodeIndicatorLayoutId,
-                  child: Container(
-                      decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.deepOrange.withAlpha(128),
-                        width: 4,
-                        style: BorderStyle.solid,
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: SequencerStateFetcher(builder: (context, sequencerState) {
+        return CustomMultiChildLayout(
+            delegate: ControlsLayoutDelegate(
+                layout, movingNode?.id, movingNodePosition, resizingNode?.id, resizingNodeSize),
+            children: [
+              if (movingNode != null)
+                LayoutId(
+                    id: MovingNodeIndicatorLayoutId,
+                    child: Container(
+                        decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.deepOrange.withAlpha(128),
+                          width: 4,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: Colors.deepOrange.shade100.withAlpha(10),
+                      color: Colors.deepOrange.shade100.withAlpha(10),
+                    ))),
+              ...layout.controls.map((c) => LayoutId(
+                  id: c.id,
+                  child: LayoutControlView(
+                    pointer,
+                    layout.id,
+                    c,
+                    sequencerState,
+                    onMove: () => startMove(c),
+                    onResize: () => startResize(c),
                   ))),
-            ...layout.controls.map((c) => LayoutId(
-                id: c.id,
-                child: LayoutControlView(
-                  pointer,
-                  layout.id,
-                  c,
-                  sequencerState,
-                  onMove: () => startMove(c),
-                  onResize: () => startResize(c),
-                ))),
-            if (resizingNode != null)
-              LayoutId(
-                  id: ResizingNodeIndicatorLayoutId,
-                  child: Container(
-                      decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.deepOrange.withAlpha(128),
-                        width: 4,
-                        style: BorderStyle.solid,
+              if (resizingNode != null)
+                LayoutId(
+                    id: ResizingNodeIndicatorLayoutId,
+                    child: Container(
+                        decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.deepOrange.withAlpha(128),
+                          width: 4,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: Colors.deepOrange.shade100.withAlpha(10),
-                  ))),
-          ]);
-    });
+                      color: Colors.deepOrange.shade100.withAlpha(10),
+                    ))),
+            ]);
+      }),
+    );
   }
 }
 

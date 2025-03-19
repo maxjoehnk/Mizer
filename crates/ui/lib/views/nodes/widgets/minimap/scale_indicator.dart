@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 
 class ScaleIndicator extends StatefulWidget {
@@ -59,13 +60,13 @@ class ScaleIndicatorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), Paint()..color = Colors.grey.shade800);
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), Paint()..color = Grey700);
     var width = size.width * 0.1;
     var handle = Rect.fromLTWH(0, 0, width, size.height);
     var offset = Offset(((size.width - width) * scale - (width / 2)).clamp(0, size.width - width), 0);
     handle = handle.shift(offset);
-    canvas.drawRect(handle, Paint()..color = Colors.grey.shade700);
-    canvas.drawLine(Offset(0, size.height), Offset(size.width, size.height), Paint()..color = Colors.grey.shade800);
+    canvas.drawRect(handle, Paint()..color = Grey600);
+    canvas.drawLine(Offset(0, size.height), Offset(size.width, size.height), Paint()..color = Grey700);
   }
 
   @override

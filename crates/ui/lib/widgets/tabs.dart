@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/widgets/controls/button.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 import 'panel.dart';
 
@@ -51,7 +51,7 @@ class _TabsState extends State<Tabs> {
       children: [
         Container(
           color: Colors.grey.shade800,
-          height: 32,
+          height: GRID_2_SIZE,
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             ...this
                 .widget
@@ -124,14 +124,15 @@ class TabHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MizerButton(
-      active: selected,
-      onClick: onSelect,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Text(this.label),
-      ),
-    );
+    return Hoverable(
+        onTap: onSelect,
+        builder: (hovered) => Container(
+              height: GRID_2_SIZE,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
+              child: Text(label),
+            ));
   }
 }
 
@@ -142,10 +143,15 @@ class AddTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MizerIconButton(
-      icon: Icons.add,
-      onClick: this.onClick,
-      label: "Add Tab",
-    );
+    return Hoverable(
+        onTap: onClick,
+        builder: (hovered) => Container(
+          height: GRID_2_SIZE,
+          width: GRID_2_SIZE,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          color: hovered ? Grey700 : Grey800,
+          child: Icon(Icons.add),
+        ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 
 const double TABLE_ROW_HEIGHT = 36;
@@ -25,7 +26,7 @@ class _MizerTableState extends State<MizerTable> {
     return Table(
       children: [if (header != null) header, ...widget.rows.map(_mapRow)],
       columnWidths: widget.columnWidths,
-      border: TableBorder.all(color: Colors.black12),
+      border: TableBorder.all(color: Grey900),
     );
   }
 
@@ -56,9 +57,9 @@ class _MizerTableState extends State<MizerTable> {
         alignment: row.alignment,
         height: TABLE_ROW_HEIGHT,
         color: row.selected
-            ? Colors.white24
+            ? Grey800
             : (_hoveredRow == row
-                ? Colors.white10
+                ? Grey700
                 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
         padding: row.padding,
         child: cell);

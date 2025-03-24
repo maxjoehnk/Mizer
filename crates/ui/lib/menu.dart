@@ -39,19 +39,19 @@ class ApplicationMenu extends StatelessWidget {
                 title: "Project",
                 items: [
                   SelectItem(
-                    title: "New Project",
+                    title: "New",
                     onTap: () => _newProject(context),
                   ),
                   SelectItem(
-                    title: "Open Project",
+                    title: "Open",
                     onTap: () => _openProject(context),
                   ),
                   SelectItem(
-                    title: "Save Project",
+                    title: "Save",
                     onTap: () => ProjectFiles.saveProject(context),
                   ),
                   SelectItem(
-                    title: "Save Project as",
+                    title: "Save as",
                     onTap: () => ProjectFiles.saveProjectAs(context),
                   ),
                 ],

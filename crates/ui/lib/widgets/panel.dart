@@ -140,11 +140,10 @@ class _PanelState extends State<Panel> {
             children: [
               if (widget.label != null)
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
+                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
                   child:
                       Text(widget.label!, textAlign: TextAlign.start, style: textTheme.titleMedium),
                 ),
-              if (widget.label != null) Container(width: 8),
               ...(this.widget.tabs ?? []).mapEnumerated((e, i) => Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -353,11 +352,11 @@ class PanelAction extends StatelessWidget {
     if (action.disabled == true) {
       return ActionDisabled;
     }
-    if (hovered) {
-      return ActionHover;
-    }
     if (action.activated) {
       return ActionActive;
+    }
+    if (hovered) {
+      return ActionHover;
     }
     return ActionBackground;
   }

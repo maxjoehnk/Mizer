@@ -3,12 +3,12 @@ import 'package:flutter/material.dart' hide Tab;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
-import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 
@@ -52,6 +52,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
           "export_patch": () => _exportPatch(context),
         },
         child: Column(
+          spacing: PANEL_GAP_SIZE,
           children: [
             Expanded(
               flex: 2,

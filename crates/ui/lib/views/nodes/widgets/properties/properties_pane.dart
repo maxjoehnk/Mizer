@@ -106,8 +106,10 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
                         hoveredSetting = setting?.id;
                       }));
             }),
-      NodeInputsPane(node: node),
-      NodeOutputsPane(node: node),
+      if (node.inputs.isNotEmpty)
+        NodeInputsPane(node: node),
+      if (node.outputs.isNotEmpty)
+        NodeOutputsPane(node: node),
       HelpGroup(nodeType: node.type, hoveredSetting: hoveredSetting)
     ];
     return widgets;

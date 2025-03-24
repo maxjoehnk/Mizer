@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
-final Color BACKGROUND = Grey800;
+final Color BACKGROUND = Grey900;
 final Color ACTION_COLOR = Grey800;
 
 class PopupContainer extends StatelessWidget {
   final String title;
   final Widget? child;
+  final double titleFontSize;
   final double? width;
   final double? height;
   final List<PopupAction>? actions;
 
   const PopupContainer(
-      {required this.title, this.child, this.width, this.height, this.actions, Key? key})
+      {required this.title, this.titleFontSize = 20, this.child, this.width, this.height, this.actions, Key? key})
       : super(key: key);
 
   @override
@@ -38,13 +39,13 @@ class PopupContainer extends StatelessWidget {
             Container(
                 color: Grey600,
                 padding: const EdgeInsets.all(8.0),
-                child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: 20))),
+                child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: titleFontSize))),
             _child,
             if (actions != null)
               Container(
                 padding: const EdgeInsets.all(8),
                 child:
-                    Row(mainAxisSize: MainAxisSize.min, children: actions!.map(_action).toList()),
+                    Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, children: actions!.map(_action).toList()),
               )
           ],
         ),
@@ -68,7 +69,7 @@ class PopupContainer extends StatelessWidget {
       onTap: action.onClick,
       builder: (hover) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 1),
-          color: hover ? Grey700 : null,
+          color: hover ? Grey700 : Grey800,
           padding: const EdgeInsets.all(8),
           child: Text(action.text)),
     );

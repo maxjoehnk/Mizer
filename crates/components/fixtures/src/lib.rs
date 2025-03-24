@@ -34,6 +34,15 @@ pub enum FixtureId {
     SubFixture(u32, u32),
 }
 
+impl Display for FixtureId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FixtureId::Fixture(id) => write!(f, "F.{id}"),
+            FixtureId::SubFixture(pid, cid) => write!(f, "F.{pid}.{cid}"),
+        }
+    }
+}
+
 impl From<u32> for FixtureId {
     fn from(id: u32) -> Self {
         Self::Fixture(id)
@@ -72,7 +81,7 @@ impl GroupId {
 
 impl Display for GroupId {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Group({})", self.0)
+        write!(f, "G.{}", self.0)
     }
 }
 

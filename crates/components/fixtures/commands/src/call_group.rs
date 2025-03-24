@@ -14,7 +14,7 @@ impl<'a> Command<'a> for CallGroupCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        "Call Group".to_string()
+        format!("Call {}", self.group_id)
     }
 
     fn apply(

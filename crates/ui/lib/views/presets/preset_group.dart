@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_sizing.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
+import 'package:mizer/widgets/tile.dart';
 
 import 'preset_button.dart';
 
@@ -75,11 +77,19 @@ class PresetButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PanelGrid(children: [
-      ...children,
-      if (fill)
-        ...List.filled(40, PanelGridTile.empty()),
-    ]);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        var itemsPerRow = constraints.maxWidth / (GRID_4_SIZE + GRID_GAP_SIZE);
+        var totalItems = itemsPerRow * 3;
+        var emptyItems = totalItems - children.length;
+
+        return PanelGrid(children: [
+          ...children,
+          if (fill)
+            ...List.filled(emptyItems.toInt(), PanelGridTile.empty()),
+        ]);
+      }
+    );
   }
 }
 

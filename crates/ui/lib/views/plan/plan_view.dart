@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
@@ -12,9 +13,9 @@ import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 import 'package:mizer/views/plan/dialogs/delete_plan_dialog.dart';
-import 'package:mizer/widgets/controls/button.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
+import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
@@ -206,78 +207,75 @@ class AlignToolbar extends StatefulWidget {
 }
 
 class _AlignToolbarState extends State<AlignToolbar> {
-  final TextEditingController groupsController = TextEditingController(text: "1");
-  final TextEditingController rowGapController = TextEditingController(text: "0");
-  final TextEditingController columnGapController = TextEditingController(text: "0");
-  final TextEditingController rotationController = TextEditingController(text: "0");
+  int groups = 1;
+  int rowGap = 0;
+  int columnGap = 0;
+  int rotation = 0;
 
   AlignFixturesRequest_AlignDirection direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 64,
-      color: Colors.grey.shade800,
+      height: GRID_2_SIZE,
+      color: Grey800,
       child: Row(children: [
+        PanelToolbarButton.icon(
+            icon: MdiIcons.alignHorizontalLeft,
+            onTap: () =>
+                setState(() => direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT)),
+        PanelHeaderDivider(),
+        PanelToolbarButton.icon(
+            icon: MdiIcons.alignVerticalTop,
+            onTap: () =>
+                setState(() => direction = AlignFixturesRequest_AlignDirection.TOP_TO_BOTTOM)),
+        PanelHeaderDivider(),
         SizedBox(
-            width: 48,
-            child: MizerIconButton(
-                icon: MdiIcons.alignHorizontalLeft,
-                label: "Left to Right",
-                onClick: () =>
-                    setState(() => direction = AlignFixturesRequest_AlignDirection.LEFT_TO_RIGHT))),
-        SizedBox(
-            width: 48,
-            child: MizerIconButton(
-                icon: MdiIcons.alignVerticalTop,
-                label: "Top to Bottom",
-                onClick: () =>
-                    setState(() => direction = AlignFixturesRequest_AlignDirection.TOP_TO_BOTTOM))),
-        SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: groupsController,
-            decoration: InputDecoration(label: Text("Groups"), filled: true),
+          width: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: NumberField(label: "Groups", bar: false, value: groups, onUpdate: (v) => groups = v.toInt()),
           ),
         ),
-        Container(width: 8),
+        PanelHeaderDivider(),
         SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: rowGapController,
-            decoration: InputDecoration(label: Text("Row Gap"), filled: true),
+          width: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: NumberField(label: "Row Gap", bar: false, value: rowGap, onUpdate: (v) => rowGap = v.toInt()),
           ),
         ),
-        Container(width: 8),
+        PanelHeaderDivider(),
         SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: columnGapController,
-            decoration: InputDecoration(label: Text("Column Gap"), filled: true),
+          width: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: NumberField(label: "Column Gap", bar: false, value: columnGap, onUpdate: (v) => columnGap = v.toInt()),
           ),
         ),
-        MizerButton(child: Text("Apply"), onClick: () => _align()),
-        Spacer(),
+        PanelHeaderDivider(),
+        PanelToolbarButton(child: Text("Apply"), onTap: () => _align()),
+        PanelToolbarSectionDivider(),
         SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: rotationController,
-            decoration: InputDecoration(label: Text("Rotation"), filled: true),
+          width: 300,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: NumberField(label: "Rotation", bar: false, value: rotation, onUpdate: (v) => rotation = v.toInt()),
           ),
         ),
-        MizerButton(child: Text("Transform"), onClick: () => _transform()),
-        Spacer(),
-        MizerButton(child: Text("Square"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
-        MizerButton(child: Text("Triangle"), onClick: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
+        PanelHeaderDivider(),
+        PanelToolbarButton.text("Transform", onTap: () => _transform()),
+        PanelToolbarSectionDivider(),
+        PanelToolbarButton.text("Square", onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
+        PanelHeaderDivider(),
+        PanelToolbarButton.text("Triangle", onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
+        PanelHeaderDivider(),
       ]),
     );
   }
 
   _align() {
     PlansBloc bloc = context.read();
-    int groups = int.parse(groupsController.text);
-    int rowGap = int.parse(rowGapController.text);
-    int columnGap = int.parse(columnGapController.text);
 
     bloc.add(
         AlignFixtures(direction: direction, groups: groups, rowGap: rowGap, columnGap: columnGap));
@@ -285,7 +283,6 @@ class _AlignToolbarState extends State<AlignToolbar> {
 
   _transform() {
     PlansBloc bloc = context.read();
-    int rotation = int.parse(rotationController.text);
 
     bloc.add(TransformFixtures(rotation: rotation));
   }
@@ -293,5 +290,66 @@ class _AlignToolbarState extends State<AlignToolbar> {
   _spread(SpreadFixturesRequest_SpreadGeometry geometry) {
     PlansBloc bloc = context.read();
     bloc.add(SpreadFixtures(geometry: geometry));
+  }
+}
+
+class PanelToolbarButton extends StatelessWidget {
+  final Function() onTap;
+  final Widget child;
+  final bool selected;
+  final double? width;
+
+  const PanelToolbarButton({super.key, required this.child, required this.onTap, this.selected = false, this.width});
+
+  factory PanelToolbarButton.icon({required IconData icon, required Function() onTap, bool selected = false}) {
+    return PanelToolbarButton(
+      width: GRID_2_SIZE,
+      onTap: onTap,
+      selected: selected,
+      child: Icon(icon),
+    );
+  }
+
+  factory PanelToolbarButton.text(String text, {required Function() onTap, bool selected = false}) {
+    return PanelToolbarButton(
+      onTap: onTap,
+      selected: selected,
+      child: Text(text),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Hoverable(
+        onTap: onTap,
+        builder: (hovered) => Container(
+          height: GRID_2_SIZE,
+          width: width,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
+          child: child,
+        ));
+  }
+}
+
+class PanelToolbarSectionDivider extends StatelessWidget {
+  const PanelToolbarSectionDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        PanelHeaderDivider(),
+        Container(
+          height: GRID_2_SIZE,
+          width: 4,
+          alignment: Alignment.center,
+          color: Grey800,
+        ),
+        PanelHeaderDivider(),
+      ],
+    );
   }
 }

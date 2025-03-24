@@ -28,6 +28,7 @@ class PanelGridTile extends StatelessWidget {
       onTapDown: onTapDown,
       onTapUp: onTapUp,
       onSecondaryTap: onSecondaryTap,
+      onSecondaryTapDown: onSecondaryTapDown,
       builder: (hovered) => Container(
         width: GRID_4_SIZE * width + ((width - 1) * 2),
         height: GRID_4_SIZE * height + ((height - 1) * 2),

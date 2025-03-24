@@ -68,10 +68,13 @@ class ConsoleMessageItem extends StatelessWidget {
           ),
         ),
         SizedBox(width: 2),
-        Text(
-          message.message,
-          style: TextStyle(
-            color: Colors.white.withOpacity(0.8),
+        Expanded(
+          child: Text(
+            message.message,
+            softWrap: true,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+            ),
           ),
         ),
         Expanded(child: Container()),

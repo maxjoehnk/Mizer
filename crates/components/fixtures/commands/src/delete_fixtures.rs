@@ -28,7 +28,7 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
             .map(|id| id.to_string())
             .collect::<Vec<_>>();
 
-        format!("Delete Fixtures ({})", fixture_ids.join(", "))
+        format!("Delete {}", fixture_ids.join(", "))
     }
 
     fn apply(

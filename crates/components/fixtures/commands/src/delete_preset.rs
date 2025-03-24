@@ -21,7 +21,7 @@ impl<'a> Command<'a> for DeletePresetCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Delete Preset {}", self.id)
+        format!("Delete {}", self.id)
     }
 
     fn apply(

@@ -23,7 +23,7 @@ impl<'a> Command<'a> for DeleteGroupCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Delete Group {}", self.id)
+        format!("Delete {}", self.id)
     }
 
     fn apply(

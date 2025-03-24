@@ -15,7 +15,7 @@ impl<'a> Command<'a> for UpdateSequenceStopOnLastCueCommand {
 
     fn label(&self) -> String {
         format!(
-            "Set Stop on last Cue of Sequence '{}' to {}",
+            "Set Sequence {} Stop on last Cue = {}",
             self.sequence_id, self.stop_on_last_cue
         )
     }

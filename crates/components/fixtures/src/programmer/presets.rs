@@ -262,10 +262,10 @@ impl PresetId {
 impl Display for PresetId {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Intensity(id) => write!(f, "P.I.{}", id),
-            Self::Shutter(id) => write!(f, "P.S.{}", id),
-            Self::Color(id) => write!(f, "P.C.{}", id),
-            Self::Position(id) => write!(f, "P.P.{}", id),
+            Self::Intensity(id) => write!(f, "Preset I.{}", id),
+            Self::Shutter(id) => write!(f, "Preset S.{}", id),
+            Self::Color(id) => write!(f, "Preset C.{}", id),
+            Self::Position(id) => write!(f, "Preset P.{}", id),
         }
     }
 }

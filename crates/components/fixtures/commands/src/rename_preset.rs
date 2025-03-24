@@ -16,7 +16,7 @@ impl<'a> Command<'a> for RenamePresetCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Rename {} to '{}'", self.id, self.label)
+        format!("Name {} {}", self.id, self.label)
     }
 
     fn apply(

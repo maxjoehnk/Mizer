@@ -18,7 +18,7 @@ impl<'a> Command<'a> for UpdateCueEffectOffsetCommand {
 
     fn label(&self) -> String {
         format!(
-            "Update Cue Effect Offset '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Effect Offset = {:?}",
             self.sequence_id, self.cue_id, self.time
         )
     }

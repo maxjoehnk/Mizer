@@ -20,7 +20,7 @@ impl<'a> Command<'a> for DeleteSequenceCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Delete Sequence '{}'", self.sequence_id)
+        format!("Delete Sequence {}", self.sequence_id)
     }
 
     fn apply(

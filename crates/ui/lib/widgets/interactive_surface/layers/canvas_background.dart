@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
-const double GRID_SIZE = 50;
+const double GRID_SIZE = GRID_2_SIZE;
 
 final Paint _gridPaint = Paint()
   ..style = PaintingStyle.stroke

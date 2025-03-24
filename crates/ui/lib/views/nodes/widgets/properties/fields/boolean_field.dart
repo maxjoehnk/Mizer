@@ -16,6 +16,7 @@ class BooleanField extends StatelessWidget {
         label: label,
         child: Container(
           height: 24,
+          alignment: Alignment.centerRight,
           child: ToggleSwitch(
             labels: ['On', 'Off'],
             totalSwitches: 2,

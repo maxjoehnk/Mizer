@@ -15,7 +15,7 @@ class NavigationBar extends StatelessWidget {
     return Container(
         width: NAVIGATION_BAR_SIZE,
         child: ListView.separated(
-          itemCount: 12,
+          itemCount: 15,
           itemBuilder: (context, index) {
             if (index >= children.length) {
               return PanelGridTile.empty();
@@ -61,8 +61,9 @@ class NavigationBarItem extends StatelessWidget {
                   color: color,
                   size: 24,
                 ),
-                SizedBox(height: 12),
-                HighContrastText(label, textAlign: TextAlign.center),
+                HighContrastText(label, textAlign: TextAlign.center, autoSize: AutoSize(
+                  minFontSize: 12
+                )),
               ],
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

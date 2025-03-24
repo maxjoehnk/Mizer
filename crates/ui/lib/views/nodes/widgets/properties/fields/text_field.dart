@@ -92,11 +92,8 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
     return Field(
       label: this.widget.label,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
-          color: Colors.grey.shade700,
-        ),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           hasValue ? controller.text : widget.placeholder ?? "",
           style: hasValue ? textStyle : placeholderStyle,
@@ -114,11 +111,8 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
       children: [
         Text(widget.label),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            color: Colors.grey.shade700,
-          ),
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.all(8),
           child: Text(
             controller.text,
             style: textStyle,

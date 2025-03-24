@@ -62,33 +62,33 @@ class _FaderInputState extends State<FaderInput> {
             _onScroll(event.scrollDelta.direction, delta);
           }
         },
-        child: GestureDetector(
-          onVerticalDragStart: (update) => setState(() => _interacting = true),
-          onVerticalDragEnd: (update) => setState(() => _interacting = false),
-          onVerticalDragCancel: () => setState(() => _interacting = false),
-          onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
-          onTapDown: (update) => _onInput(constraints, update.localPosition),
-          child: Container(
-            decoration: BoxDecoration(color: Grey700),
-            // decoration: ControlDecoration(
-            //     gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (widget.label != null)
-                  Container(
-                      height: 30,
-                      color: widget.highlight == true
-                          ? HIGHLIGHT_CONTROL_COLOR
-                          : DEFAULT_CONTROL_COLOR,
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                      child: Center(
-                        child: HighContrastText(
-                          widget.label ?? "",
-                          textAlign: TextAlign.center,
-                        ),
-                      )),
-                Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (widget.label != null)
+              Container(
+                  height: 30,
+                  color: widget.highlight == true
+                      ? HIGHLIGHT_CONTROL_COLOR
+                      : Grey400,
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                  child: Center(
+                    child: HighContrastText(
+                      widget.label ?? "",
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+            Expanded(
+              child: GestureDetector(
+                onVerticalDragStart: (update) => setState(() => _interacting = true),
+                onVerticalDragEnd: (update) => setState(() => _interacting = false),
+                onVerticalDragCancel: () => setState(() => _interacting = false),
+                onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
+                onTapDown: (update) => _onInput(constraints, update.localPosition),
+                child: Container(
+                  decoration: BoxDecoration(color: Grey700),
+                  // decoration: ControlDecoration(
+                  //     gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Align(
@@ -102,9 +102,9 @@ class _FaderInputState extends State<FaderInput> {
                             child: Text("$percentage%", textAlign: TextAlign.center))),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

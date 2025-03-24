@@ -128,7 +128,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       left: 0,
                       height: PathBreadcrumbHeight,
                       child: Container(
-                          color: Colors.grey.shade800,
+                          color: Grey800,
                           child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                             MizerButton(
                                 child: Padding(

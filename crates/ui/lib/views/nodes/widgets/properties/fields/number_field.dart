@@ -4,6 +4,7 @@ import 'dart:math' hide log;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 
 import 'field.dart';
@@ -226,13 +227,17 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 2),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(BORDER_RADIUS),
+            bottomRight: Radius.circular(BORDER_RADIUS),
+          ),
           gradient: LinearGradient(colors: [
             Colors.deepOrange.shade500,
             Colors.deepOrange.shade500,
-            Colors.grey.shade700,
-            Colors.grey.shade700,
+            Grey600,
+            Grey600,
           ], stops: [
             0,
             this.value,

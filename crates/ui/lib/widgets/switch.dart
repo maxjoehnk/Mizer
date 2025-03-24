@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class MizerSwitch extends StatelessWidget {
@@ -17,7 +18,7 @@ class MizerSwitch extends StatelessWidget {
         labels: [onText!, offText!],
         totalSwitches: 2,
         activeBgColors: [[Colors.green.shade700], [Colors.red.shade800]],
-        inactiveBgColor: Colors.grey.shade700,
+        inactiveBgColor: Grey800,
         initialLabelIndex: value ? 0 : 1,
         onToggle: (index) => onChanged(index == 0),
         changeOnTap: true,

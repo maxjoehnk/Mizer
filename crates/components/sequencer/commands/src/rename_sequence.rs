@@ -14,7 +14,7 @@ impl<'a> Command<'a> for RenameSequenceCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Rename Sequence '{}' to '{}'", self.sequence_id, self.name)
+        format!("Name Sequence {} {}", self.sequence_id, self.name)
     }
 
     fn apply(&self, sequencer: &Sequencer) -> anyhow::Result<(Self::Result, Self::State)> {

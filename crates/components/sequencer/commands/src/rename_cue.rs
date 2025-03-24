@@ -17,7 +17,7 @@ impl<'a> Command<'a> for RenameCueCommand {
 
     fn label(&self) -> String {
         format!(
-            "Rename Cue '{}.{}' to '{}'",
+            "Name Cue {}.{} {}",
             self.sequence_id, self.cue_id, self.name
         )
     }

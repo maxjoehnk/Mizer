@@ -18,7 +18,7 @@ impl<'a> Command<'a> for UpdateCueValueCommand {
 
     fn label(&self) -> String {
         format!(
-            "Change Cue Value of '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Value = {:?}",
             self.sequence_id, self.cue_id, self.value
         )
     }

@@ -19,7 +19,7 @@ impl<'a> Command<'a> for AssignFixturesToGroupCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Add Fixtures to Group {}", self.group_id)
+        format!("Store {}", self.group_id)
     }
 
     fn apply(

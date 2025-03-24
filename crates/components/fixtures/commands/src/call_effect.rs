@@ -13,7 +13,7 @@ impl<'a> Command<'a> for CallEffectCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Call E.{}", self.effect_id)
+        format!("Call Effect {}", self.effect_id)
     }
 
     fn apply(

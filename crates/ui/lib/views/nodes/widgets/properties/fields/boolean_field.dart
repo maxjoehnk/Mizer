@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import 'field.dart';
@@ -15,8 +16,9 @@ class BooleanField extends StatelessWidget {
     return Field(
         label: label,
         child: Container(
-          height: 24,
+          height: INPUT_FIELD_HEIGHT,
           alignment: Alignment.centerRight,
+          padding: const EdgeInsets.all(2),
           child: ToggleSwitch(
             labels: ['On', 'Off'],
             totalSwitches: 2,
@@ -25,12 +27,12 @@ class BooleanField extends StatelessWidget {
               [Colors.grey.shade700]
             ],
             minWidth: 50,
-            inactiveBgColor: Colors.grey.shade800,
+            inactiveBgColor: Colors.grey.shade900,
             initialLabelIndex: value ? 0 : 1,
             onToggle: (index) => onUpdate(index == 0),
             changeOnTap: true,
             radiusStyle: true,
-            cornerRadius: 2,
+            cornerRadius: BORDER_RADIUS,
           ),
         ));
   }

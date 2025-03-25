@@ -8,11 +8,17 @@ const double GRID_2_SIZE = _GRID_BASE_SIZE * 2;
 const double GRID_3_SIZE = _GRID_BASE_SIZE * 3;
 const double GRID_4_SIZE = _GRID_BASE_SIZE * 4;
 const double GRID_5_SIZE = _GRID_BASE_SIZE * 5;
+const double GRID_6_SIZE = _GRID_BASE_SIZE * 6;
 
 const double NAVIGATION_BAR_SIZE = GRID_4_SIZE;
 const double PANEL_ACTION_SIZE = GRID_2_SIZE;
 const double TRANSPORT_CONTROLS_HEIGHT = GRID_2_SIZE;
 const double PANEL_HEADER_HEIGHT = GRID_2_SIZE;
+
+const double MAX_TILE_DIALOG_WIDTH = GRID_4_SIZE * 6 + 5 * GRID_GAP_SIZE + 2;
+const double MAX_DIALOG_HEIGHT = 512;
+
+const double DIALOG_TILE_SIZE = GRID_5_SIZE;
 
 const double INPUT_FIELD_HEIGHT = _GRID_BASE_SIZE * 1.5;
 

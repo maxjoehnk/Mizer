@@ -15,7 +15,14 @@ class PopupContainer extends StatelessWidget {
   final bool padding;
 
   const PopupContainer(
-      {required this.title, this.titleFontSize = 20, this.child, this.width, this.height, this.actions, this.padding = true, Key? key})
+      {required this.title,
+      this.titleFontSize = 20,
+      this.child,
+      this.width,
+      this.height,
+      this.actions,
+      this.padding = true,
+      Key? key})
       : super(key: key);
 
   @override
@@ -26,9 +33,12 @@ class PopupContainer extends StatelessWidget {
           border: Border.all(color: Grey600, width: 2),
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
-            BoxShadow(blurRadius: 4, spreadRadius: 2, color: Colors.black26,
-                offset: Offset(2, 2),
-                )
+            BoxShadow(
+              blurRadius: 4,
+              spreadRadius: 2,
+              color: Colors.black26,
+              offset: Offset(2, 2),
+            )
           ]),
       width: this.width,
       height: this.height,
@@ -40,13 +50,17 @@ class PopupContainer extends StatelessWidget {
             Container(
                 color: Grey600,
                 padding: const EdgeInsets.all(8.0),
-                child: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: titleFontSize))),
+                child: Text(title,
+                    textAlign: TextAlign.center, style: TextStyle(fontSize: titleFontSize))),
             _child,
             if (actions != null)
               Container(
-                padding: const EdgeInsets.all(8),
-                child:
-                    Row(spacing: PANEL_GAP_SIZE, mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, children: actions!.map(_action).toList()),
+                padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                child: Row(
+                    spacing: PANEL_GAP_SIZE,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: actions!.map(_action).toList()),
               )
           ],
         ),

@@ -9,7 +9,6 @@ import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:provider/provider.dart';
 
-const double MAX_DIALOG_WIDTH = GRID_4_SIZE * 6 + 5 * GRID_GAP_SIZE + 2;
 const double MAX_DIALOG_HEIGHT = 512;
 
 class AssignFixturesToGroupDialog extends StatefulWidget {
@@ -60,7 +59,7 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
       onConfirm: _creating ? null : () => _newGroup(context),
       padding: false,
       content: Container(
-          width: MAX_DIALOG_WIDTH,
+          width: MAX_TILE_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
           child: PanelGrid(
               children: widget.bloc.state.groups

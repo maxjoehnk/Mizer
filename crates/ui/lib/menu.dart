@@ -58,6 +58,7 @@ class ApplicationMenu extends StatelessWidget {
               )),
               Expanded(child: MenuButton.text(state.hasProject() ? state.project : "New Project", popupBuilder: (context) => PopupSelect(
                 width: context.globalPaintBounds!.width,
+                height: 48 * 6,
                 title: "Open Recent",
                 items: state.projectHistory
                     .map((history) => SelectItem(

@@ -1,3 +1,5 @@
+import 'dart:math' as Math;
+
 import 'package:flutter/material.dart' hide View;
 import 'package:mizer/actions/actions.dart';
 import 'package:mizer/consts.dart';
@@ -14,15 +16,20 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: NAVIGATION_BAR_SIZE,
-        child: ListView.separated(
-          itemCount: 15,
-          itemBuilder: (context, index) {
-            if (index >= children.length) {
-              return PanelGridTile.empty();
-            }
-            return children[index];
-          },
-          separatorBuilder: (context, index) => SizedBox(height: 1),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            var items = (constraints.maxHeight / (GRID_4_SIZE + 1)).ceil();
+            return ListView.separated(
+              itemCount: Math.max(children.length, items),
+              itemBuilder: (context, index) {
+                if (index >= children.length) {
+                  return PanelGridTile.empty();
+                }
+                return children[index];
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 1),
+            );
+          }
         ));
   }
 }

@@ -38,6 +38,21 @@ class PanelGridTile extends StatelessWidget {
     );
   }
 
+  factory PanelGridTile.media({ required Widget child, required String text, Function()? onTap}) {
+    return PanelGridTile(
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: child,
+          ),
+          Align(child: HighContrastText(text, textAlign: TextAlign.center), alignment: Alignment.bottomCenter),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Hoverable(

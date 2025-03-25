@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 
-import 'hoverable.dart';
+import '../hoverable.dart';
 
-const double TILE_SIZE = GRID_4_SIZE;
-
-class Tile extends StatelessWidget {
+class DialogTile extends StatelessWidget {
   final String? title;
   final Widget child;
   final Function()? onClick;
 
-  const Tile({this.title, required this.child, this.onClick, Key? key}) : super(key: key);
+  const DialogTile({this.title, required this.child, this.onClick, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +20,8 @@ class Tile extends StatelessWidget {
                 border: Border.all(color: Grey700, width: 2),
                 borderRadius: BorderRadius.circular(BORDER_RADIUS),
                 color: hovered ? Grey700 : Grey800),
-            width: TILE_SIZE,
-            height: TILE_SIZE,
+            width: DIALOG_TILE_SIZE,
+            height: DIALOG_TILE_SIZE,
             child: IntrinsicWidth(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

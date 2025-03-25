@@ -158,7 +158,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
         ),
         if (widget.showDescription)
           ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 300, minWidth: 300, maxWidth: 150),
+            constraints: BoxConstraints(maxHeight: 300, maxWidth: 150),
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),

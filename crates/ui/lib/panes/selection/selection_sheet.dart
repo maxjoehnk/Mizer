@@ -98,6 +98,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                       child: NumberField(
                           label: "Block Size",
                           value: widget.state.blockSize,
+                          bar: false,
                           min: 0,
                           maxHint: 10,
                           onUpdate: (v) {
@@ -109,6 +110,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                       child: NumberField(
                           label: "Groups",
                           value: widget.state.groups,
+                          bar: false,
                           min: 0,
                           maxHint: 10,
                           onUpdate: (v) {
@@ -120,6 +122,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                       child: NumberField(
                           label: "Wings",
                           value: widget.state.wings,
+                          bar: false,
                           min: 0,
                           maxHint: 10,
                           onUpdate: (v) {

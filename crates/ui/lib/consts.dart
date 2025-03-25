@@ -15,7 +15,7 @@ const double PANEL_ACTION_SIZE = GRID_2_SIZE;
 const double TRANSPORT_CONTROLS_HEIGHT = GRID_2_SIZE;
 const double PANEL_HEADER_HEIGHT = GRID_2_SIZE;
 
-const double MAX_TILE_DIALOG_WIDTH = GRID_4_SIZE * 6 + 5 * GRID_GAP_SIZE + 2;
+const double MAX_TILE_DIALOG_WIDTH = GRID_4_SIZE * 6 + 7 * GRID_GAP_SIZE;
 const double MAX_DIALOG_HEIGHT = 512;
 
 const double DIALOG_TILE_SIZE = GRID_5_SIZE;
@@ -23,7 +23,7 @@ const double DIALOG_TILE_SIZE = GRID_5_SIZE;
 const double INPUT_FIELD_HEIGHT = _GRID_BASE_SIZE * 1.5;
 
 const double PANEL_GAP_SIZE = 2;
-const double GRID_GAP_SIZE = 1;
+const double GRID_GAP_SIZE = 2;
 const double BORDER_RADIUS = 2;
 
 const Color Black = Color(0xFF000000);

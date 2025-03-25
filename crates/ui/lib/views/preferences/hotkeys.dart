@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/views/preferences/settings_button.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 
@@ -14,20 +16,24 @@ class HotkeySettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
-      return SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _category(context, settings, "Global".i18n, (hotkeys) => hotkeys.global),
-            _category(context, settings, "Layouts".i18n, (hotkeys) => hotkeys.layouts),
-            _category(context, settings, "Plan".i18n, (hotkeys) => hotkeys.plan),
-            _category(context, settings, "Nodes".i18n, (hotkeys) => hotkeys.nodes),
-            _category(context, settings, "Sequencer".i18n, (hotkeys) => hotkeys.sequencer),
-            _category(context, settings, "Effects".i18n, (hotkeys) => hotkeys.effects),
-            _category(context, settings, "Media".i18n, (hotkeys) => hotkeys.media),
-            _category(context, settings, "Patch".i18n, (hotkeys) => hotkeys.patch),
-            _category(context, settings, "Programmer".i18n, (hotkeys) => hotkeys.programmer),
-          ],
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 4,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _category(context, settings, "Global".i18n, (hotkeys) => hotkeys.global),
+              _category(context, settings, "Layouts".i18n, (hotkeys) => hotkeys.layouts),
+              _category(context, settings, "Plan".i18n, (hotkeys) => hotkeys.plan),
+              _category(context, settings, "Nodes".i18n, (hotkeys) => hotkeys.nodes),
+              _category(context, settings, "Sequencer".i18n, (hotkeys) => hotkeys.sequencer),
+              _category(context, settings, "Effects".i18n, (hotkeys) => hotkeys.effects),
+              _category(context, settings, "Media".i18n, (hotkeys) => hotkeys.media),
+              _category(context, settings, "Patch".i18n, (hotkeys) => hotkeys.patch),
+              _category(context, settings, "Programmer".i18n, (hotkeys) => hotkeys.programmer),
+            ],
+          ),
         ),
       );
     });
@@ -58,14 +64,19 @@ class HotkeySetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsRow(label, [
-      Text(formatHotkey(combination)),
-      SizedBox(width: 8),
-      SettingsButton(
-        symmetric: true,
-        child: Center(child: Icon(Icons.clear, size: 12)),
-        onTap: () => this.update(null),
-      )
-    ]);
+    return TextPropertyField(
+      label: label,
+      value: formatHotkey(combination),
+      readOnly: true,
+      onUpdate: (_) {},
+      actions: [
+        FieldAction(
+            child: Icon(
+              Icons.clear,
+              size: 15,
+            ),
+            onTap: () => this.update(null))
+      ]
+    );
   }
 }

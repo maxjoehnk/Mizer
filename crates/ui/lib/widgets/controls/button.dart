@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/consts.dart';
 
 class MizerButton extends StatefulWidget {
   final Function()? onClick;
@@ -53,10 +54,10 @@ class _MizerButtonState extends State<MizerButton> {
 
   Color? get _backgroundColor {
     if (hovering || focused) {
-      return Colors.grey.shade600;
+      return Grey600;
     }
     if (widget.active) {
-      return Colors.grey.shade700;
+      return Grey700;
     }
 
     return null;

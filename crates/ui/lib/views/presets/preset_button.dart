@@ -251,19 +251,22 @@ class PresetButton extends StatelessWidget {
     return PanelGridTile(
       onTap: () => this.onTap(context),
       active: active ?? false,
-      child: Stack(
-        children: [
-          Container(
-            alignment: Alignment.center,
-            child: Container(width: GRID_3_SIZE, height: GRID_3_SIZE, child: child),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: HighContrastText(label, textAlign: TextAlign.center),
-          ),
-          if (id != null)
-            Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Stack(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: Container(width: GRID_3_SIZE, height: GRID_3_SIZE, child: child),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: HighContrastText(label, textAlign: TextAlign.center),
+            ),
+            if (id != null)
+              Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/table/table.dart';
 
@@ -244,86 +246,80 @@ class PatchSettings extends StatefulWidget {
 }
 
 class _PatchSettingsState extends State<PatchSettings> {
-  final TextEditingController _nameController;
-  final TextEditingController _universeController;
-  final TextEditingController _channelController;
-  final TextEditingController _idController;
-  final TextEditingController _countController;
+  String name;
+  int universe;
+  int channel;
+  int id;
+  int count;
 
   _PatchSettingsState(
-      {required String name,
-      required int channel,
-      required int universe,
-      required int id,
-      required int count})
-      : _nameController = TextEditingController(text: name),
-        _universeController = TextEditingController(text: universe.toString()),
-        _channelController = TextEditingController(text: channel.toString()),
-        _idController = TextEditingController(text: id.toString()),
-        _countController = TextEditingController(text: count.toString()) {
-    this._nameController.addListener(() => this._emitUpdate());
-    this._universeController.addListener(() => this._emitUpdate());
-    this._channelController.addListener(() => this._emitUpdate());
-    this._idController.addListener(() => this._emitUpdate());
-    this._countController.addListener(() => this._emitUpdate());
-  }
+      {required this.name,
+      required this.channel,
+      required this.universe,
+      required this.id,
+      required this.count});
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      PatchField(
-        child: TextField(
+    return SizedBox(
+      width: 512,
+      child: Column(spacing: 2, mainAxisSize: MainAxisSize.min, children: [
+        TextPropertyField(
           autofocus: true,
-          decoration: InputDecoration(labelText: "Name"),
-          controller: _nameController,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.next,
+          label: "Name",
+          value: name,
+          onUpdate: (value) {
+            name = value;
+            _emitUpdate();
+          },
         ),
-      ),
-      PatchField(
-        child: TextField(
-          decoration: InputDecoration(labelText: "Universe"),
-          controller: _universeController,
-          keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-          textInputAction: TextInputAction.next,
+        NumberField(
+          label: "Universe",
+          value: universe,
+          onUpdate: (value) {
+            universe = value.toInt();
+            _emitUpdate();
+          },
+          bar: false,
+          min: 1,
+          max: 524288,
         ),
-      ),
-      PatchField(
-        child: TextField(
-          decoration: InputDecoration(labelText: "Channel"),
-          controller: _channelController,
-          keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-          textInputAction: TextInputAction.next,
+        NumberField(
+          label: "Channel",
+          value: channel,
+          onUpdate: (value) {
+            channel = value.toInt();
+            _emitUpdate();
+          },
+          bar: false,
+          min: 1,
+          max: 512,
         ),
-      ),
-      PatchField(
-        child: TextField(
-          decoration: InputDecoration(labelText: "Start ID"),
-          controller: _idController,
-          keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-          textInputAction: TextInputAction.next,
+        NumberField(
+          label: "Start ID",
+          value: id,
+          onUpdate: (value) {
+            id = value.toInt();
+            _emitUpdate();
+          },
+          bar: false,
         ),
-      ),
-      PatchField(
-        child: TextField(
-          decoration: InputDecoration(labelText: "Count"),
-          controller: _countController,
-          keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-          textInputAction: TextInputAction.done,
-          onSubmitted: (_) => widget.onConfirm(),
+        NumberField(
+          label: "Count",
+          value: count,
+          onUpdate: (value) {
+            count = value.toInt();
+            _emitUpdate();
+          },
+          bar: false,
+          min: 1,
         ),
-      ),
-    ]);
+      ]),
+    );
   }
 
   _emitUpdate() {
-    String name = _nameController.text;
-    int id = int.parse(_idController.text);
-    int universe = int.parse(_universeController.text);
-    int channel = int.parse(_channelController.text);
-    int count = int.parse(_countController.text);
-    var event =
-        PatchSettingsEvent(id: id, name: name, universe: universe, channel: channel, count: count);
+    var event = PatchSettingsEvent(id: id, name: name, universe: universe, channel: channel, count: count);
     this.widget.onChange(event);
   }
 }

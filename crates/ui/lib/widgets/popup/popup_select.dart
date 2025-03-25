@@ -6,8 +6,9 @@ class PopupSelect extends StatelessWidget {
   final String title;
   final List<SelectItem> items;
   final double width;
+  final double height;
 
-  const PopupSelect({required this.title, required this.items, this.width = 150, Key? key}) : super(key: key);
+  const PopupSelect({required this.title, required this.items, this.height = 192, this.width = 150, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class PopupSelect extends StatelessWidget {
         title: title,
         titleFontSize: 15,
         width: width,
-        height: 204,
+        height: height,
         child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.zero,

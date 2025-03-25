@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
-
-const double MAX_DIALOG_WIDTH = 512;
-const double MAX_DIALOG_HEIGHT = 512;
-const double TILE_SIZE = 96;
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 
 class SelectCueDialog extends StatelessWidget {
   final Sequence sequence;
@@ -17,17 +15,14 @@ class SelectCueDialog extends StatelessWidget {
     return ActionDialog(
       title: "Select Cue",
       content: Container(
-        width: MAX_DIALOG_WIDTH,
+        width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
-        child: GridView.count(
-            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
+        child: PanelGrid(
             children: sequence.cues
-                .map((cue) => Tile(
-                    title: cue.id.toString(),
-                    child: Center(child: Text(cue.name)),
-                    onClick: () => Navigator.of(context).pop(cue)))
+                .map((cue) => PanelGridTile.idWithText(
+                    id: cue.id.toString(),
+                    text: cue.name,
+                    onTap: () => Navigator.of(context).pop(cue)))
                 .toList()),
       ),
       actions: [

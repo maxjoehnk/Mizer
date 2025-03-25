@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
-
-const double MAX_DIALOG_WIDTH = 512;
-const double MAX_DIALOG_HEIGHT = 512;
-const double TILE_SIZE = 96;
 
 class SelectSequenceDialog extends StatelessWidget {
   final SequencerApi api;
@@ -20,7 +17,7 @@ class SelectSequenceDialog extends StatelessWidget {
       onConfirm: () => _newSequence(context),
       padding: false,
       content: Container(
-        width: MAX_DIALOG_WIDTH,
+        width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
         child: FutureBuilder(
             future: api.getSequences(),

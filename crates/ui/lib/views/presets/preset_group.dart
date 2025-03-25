@@ -7,7 +7,6 @@ import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_sizing.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
-import 'package:mizer/widgets/tile.dart';
 
 import 'preset_button.dart';
 

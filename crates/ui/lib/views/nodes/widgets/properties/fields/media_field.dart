@@ -8,8 +8,9 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/views/media/media_list.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/widgets/tile.dart';
 
 import 'field.dart';
 
@@ -130,45 +131,37 @@ class _MediaDialogState extends State<MediaDialog> {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Wrap(
-                direction: Axis.horizontal,
-                runSpacing: 4.0,
-                spacing: 4.0,
-                children: widget.tags
-                    .map((e) => FilterChip(
-                        label: Text(e.name),
-                        selectedColor: Colors.blueGrey.shade500,
-                        selected: _selectedTags.contains(e),
-                        onSelected: (selected) => setState(() {
-                              if (selected) {
-                                _selectedTags.add(e);
-                              } else {
-                                _selectedTags.remove(e);
-                              }
-                            })))
-                    .toList()),
-          ),
+          if (widget.tags.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Wrap(
+                  direction: Axis.horizontal,
+                  runSpacing: 4.0,
+                  spacing: 4.0,
+                  children: widget.tags
+                      .map((e) => FilterChip(
+                          label: Text(e.name),
+                          selectedColor: Colors.blueGrey.shade500,
+                          selected: _selectedTags.contains(e),
+                          onSelected: (selected) => setState(() {
+                                if (selected) {
+                                  _selectedTags.add(e);
+                                } else {
+                                  _selectedTags.remove(e);
+                                }
+                              })))
+                      .toList()),
+            ),
           Container(
             width: MAX_DIALOG_WIDTH,
             height: MAX_DIALOG_HEIGHT,
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              itemCount: _files.length,
-              itemBuilder: (context, index) {
-                MediaFile file = _files[index];
-                return Tile(
-                  child: MediaTile(file: file),
-                  onClick: () {
-                    Navigator.of(context).pop(file);
-                  },
-                );
-              },
+            child: PanelGrid(
+              children: _files
+                  .map((file) => PanelGridTile.media(
+                      text: file.name,
+                      child: MediaThumbnail(file),
+                      onTap: () => Navigator.of(context).pop(file)))
+                  .toList(),
             ),
           ),
         ],
@@ -183,33 +176,5 @@ class _MediaDialogState extends State<MediaDialog> {
       }
       return _selectedTags.every((tag) => element.metadata.tags.contains(tag));
     }).toList();
-  }
-}
-
-class MediaTile extends StatelessWidget {
-  final MediaFile file;
-
-  const MediaTile({required this.file, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Flexible(
-        flex: 2,
-        child: Container(
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: MediaThumbnail(file)),
-      ),
-      Flexible(
-          flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Text(file.name),
-          )),
-    ]);
   }
 }

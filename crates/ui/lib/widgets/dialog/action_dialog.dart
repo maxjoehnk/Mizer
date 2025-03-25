@@ -9,8 +9,9 @@ class ActionDialog extends StatefulWidget {
   final Widget? content;
   final List<PopupAction>? actions;
   final Function()? onConfirm;
+  final double? width;
 
-  const ActionDialog({this.actions, required this.title, this.content, this.onConfirm, this.padding = true, Key? key}) : super(key: key);
+  const ActionDialog({this.actions, required this.title, this.content, this.onConfirm, this.padding = true, this.width, Key? key}) : super(key: key);
 
   @override
   State<ActionDialog> createState() => _ActionDialogState();
@@ -37,6 +38,7 @@ class _ActionDialogState extends State<ActionDialog> {
           child: widget.content,
           actions: widget.actions,
           padding: widget.padding,
+          width: widget.width,
         ),
       )
     );

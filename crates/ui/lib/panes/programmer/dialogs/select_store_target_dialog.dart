@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
+import 'package:mizer/widgets/dialog/dialog_tile.dart';
+import 'package:mizer/widgets/dialog/grid_dialog.dart';
 
 enum StoreTarget {
   Group,
@@ -53,10 +54,8 @@ class _SelectStoreTargetDialogState extends State<SelectStoreTargetDialog> {
             _select(context, target);
           },
           focusNode: _focusNode,
-          child: Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              direction: Axis.horizontal,
+          child: DialogTileGrid(
+              columns: 3,
               children: StoreTarget.values
                   .map((target) =>
                       StoreTargetTile(target: target, onSelect: () => _select(context, target)))
@@ -81,7 +80,7 @@ class StoreTargetTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var name = storeTargetNames[target]!;
-    return Tile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
+    return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
   }
 
   InlineSpan _highlightHotkey(String text) {
@@ -90,11 +89,9 @@ class StoreTargetTile extends StatelessWidget {
         TextSpan(
           text: text[0],
           style: TextStyle(
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.bold,
-          ),
+              decoration: TextDecoration.underline, fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        TextSpan(text: text.substring(1)),
+        TextSpan(text: text.substring(1), style: TextStyle(fontSize: 16)),
       ],
     );
   }

@@ -12,9 +12,10 @@ class PopupContainer extends StatelessWidget {
   final double? width;
   final double? height;
   final List<PopupAction>? actions;
+  final bool padding;
 
   const PopupContainer(
-      {required this.title, this.titleFontSize = 20, this.child, this.width, this.height, this.actions, Key? key})
+      {required this.title, this.titleFontSize = 20, this.child, this.width, this.height, this.actions, this.padding = true, Key? key})
       : super(key: key);
 
   @override
@@ -25,8 +26,8 @@ class PopupContainer extends StatelessWidget {
           border: Border.all(color: Grey600, width: 2),
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
-            BoxShadow(blurRadius: 2, spreadRadius: 2, color: Colors.black26
-                // offset: Offset(2, 2),
+            BoxShadow(blurRadius: 4, spreadRadius: 2, color: Colors.black26,
+                offset: Offset(2, 2),
                 )
           ]),
       width: this.width,
@@ -45,7 +46,7 @@ class PopupContainer extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 child:
-                    Row(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, children: actions!.map(_action).toList()),
+                    Row(spacing: PANEL_GAP_SIZE, mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, children: actions!.map(_action).toList()),
               )
           ],
         ),
@@ -55,8 +56,8 @@ class PopupContainer extends StatelessWidget {
 
   Widget get _child {
     var innerChild = Container(
-      padding: const EdgeInsets.all(8.0),
       child: child,
+      padding: padding ? const EdgeInsets.all(8) : null,
     );
     if (height != null) {
       return Expanded(child: innerChild);
@@ -68,7 +69,6 @@ class PopupContainer extends StatelessWidget {
     return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 1),
           color: hover ? Grey700 : Grey800,
           padding: const EdgeInsets.all(8),
           child: Text(action.text)),

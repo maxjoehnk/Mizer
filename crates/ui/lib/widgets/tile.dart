@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 
 import 'hoverable.dart';
 
-const double TILE_SIZE = 96;
+const double TILE_SIZE = GRID_4_SIZE;
 
 class Tile extends StatelessWidget {
   final String? title;
@@ -18,9 +19,9 @@ class Tile extends StatelessWidget {
           return Container(
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade800, width: 2),
-                borderRadius: BorderRadius.circular(4),
-                color: hovered ? Colors.grey.shade700 : Colors.grey.shade900),
+                border: Border.all(color: Grey700, width: 2),
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
+                color: hovered ? Grey700 : Grey800),
             width: TILE_SIZE,
             height: TILE_SIZE,
             child: IntrinsicWidth(

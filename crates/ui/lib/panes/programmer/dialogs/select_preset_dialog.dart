@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 
 import 'select_preset_type_dialog.dart';
 
@@ -20,19 +21,17 @@ class SelectPresetDialog extends StatelessWidget {
     return ActionDialog(
       title: "Select Preset",
       onConfirm: () => _newPreset(context),
+      padding: false,
       content: Container(
         width: MAX_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
-        child: GridView.count(
-            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
+        child: PanelGrid(
             children: state
                 .getByPresetType(presetType)
-                .map((preset) => Tile(
-                    title: preset.id.id.toString(),
-                    child: Center(child: Text(preset.label ?? "")),
-                    onClick: () => Navigator.of(context).pop(preset.id)))
+                .map((preset) => PanelGridTile.idWithText(
+                    id: preset.id.id.toString(),
+                    text: preset.label ?? "",
+                    onTap: () => Navigator.of(context).pop(preset.id)))
                 .toList()),
       ),
       actions: [

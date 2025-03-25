@@ -52,6 +52,10 @@ class _GroupButtonState extends State<GroupButton>
         child: Container(),
         group: widget.group,
         active: programmerState.activeGroups.contains(widget.group.id),
+        onTap: (BuildContext context) {
+          var programmerApi = context.read<ProgrammerApi>();
+          programmerApi.selectGroup(widget.group.id);
+        },
       ),
     );
   }
@@ -77,7 +81,8 @@ class ColorButton extends StatelessWidget {
   final Preset preset;
   final void Function()? onTap;
 
-  const ColorButton({required this.color, required this.preset, Key? key, this.onTap}) : super(key: key);
+  const ColorButton({required this.color, required this.preset, Key? key, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +92,13 @@ class ColorButton extends StatelessWidget {
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
-          child: Container(
-            width: GRID_3_SIZE,
-            height: GRID_3_SIZE,
-            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(GRID_3_SIZE)),
-          ),
-          preset: preset,
-          onTap: onTap,
+        child: Container(
+          width: GRID_3_SIZE,
+          height: GRID_3_SIZE,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(GRID_3_SIZE)),
+        ),
+        preset: preset,
+        onTap: onTap,
       ),
     );
   }
@@ -120,7 +125,8 @@ class PositionButton extends StatelessWidget {
   final double? tilt;
   final void Function()? onTap;
 
-  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
+  const PositionButton(
+      {required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
       : super(key: key);
 
   @override
@@ -131,17 +137,17 @@ class PositionButton extends StatelessWidget {
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
-          child: Container(
-            margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
-            width: pan == null ? 24 : 48,
-            height: tilt == null ? 24 : 48,
-            padding: const EdgeInsets.all(4),
-            decoration:
-                BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
-            child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
-          ),
-          preset: preset,
-          onTap: onTap,
+        child: Container(
+          margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
+          width: pan == null ? 24 : 48,
+          height: tilt == null ? 24 : 48,
+          padding: const EdgeInsets.all(4),
+          decoration:
+          BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
+          child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
+        ),
+        preset: preset,
+        onTap: onTap,
       ),
     );
   }
@@ -195,12 +201,11 @@ class PresetButton extends StatelessWidget {
   final Effect? effect;
   late final void Function(BuildContext context) onTap;
 
-  PresetButton(
-      {required this.child,
-      required this.label,
-      required void Function() onTap,
-      this.active,
-      Key? key})
+  PresetButton({required this.child,
+    required this.label,
+    required void Function() onTap,
+    this.active,
+    Key? key})
       : effect = null,
         group = null,
         preset = null,
@@ -208,7 +213,8 @@ class PresetButton extends StatelessWidget {
     this.onTap = (context) => onTap();
   }
 
-  PresetButton.preset({required this.child, required this.preset, this.active, void Function()? onTap, Key? key})
+  PresetButton.preset(
+      {required this.child, required this.preset, this.active, void Function()? onTap, Key? key})
       : label = preset!.label,
         effect = null,
         group = null {
@@ -229,19 +235,18 @@ class PresetButton extends StatelessWidget {
     };
   }
 
-  PresetButton.group({required this.child, required this.group, this.active, Key? key})
+  PresetButton.group(
+      {required this.child, required this.group, required this.onTap, this.active, Key? key})
       : label = group!.name,
         preset = null,
         effect = null {
-    this.onTap = (BuildContext context) {
-      var programmerApi = context.read<ProgrammerApi>();
-      programmerApi.selectGroup(group!.id);
-    };
   }
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
+    var textTheme = Theme
+        .of(context)
+        .textTheme;
 
     return PanelGridTile(
       onTap: () => this.onTap(context),

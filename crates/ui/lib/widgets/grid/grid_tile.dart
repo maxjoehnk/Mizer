@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 class PanelGridTile extends StatelessWidget {
@@ -20,6 +21,22 @@ class PanelGridTile extends StatelessWidget {
   const PanelGridTile({ required this.child, this.width = 1, this.height = 1, this.interactive = true, this.onTap, this.onSecondaryTap, this.onSecondaryTapDown, this.active = false, this.selected = false, this.empty = false, super.key, this.color, this.onTapDown, this.onTapUp});
 
   PanelGridTile.empty() : this(child: Container(), empty: true);
+
+  factory PanelGridTile.idWithText({String? id, required String text, required Function() onTap}) {
+    return PanelGridTile(
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: HighContrastText(text, textAlign: TextAlign.center),
+          ),
+          if (id != null)
+            Align(child: Text(id, style: TextStyle(fontSize: 12, color: Colors.white70)), alignment: Alignment.topLeft),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -70,7 +70,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget? _currentWidget;
-  bool _showProgrammer = true;
+  bool _showProgrammer = false;
   bool _showSelection = false;
   bool _showConsole = false;
 

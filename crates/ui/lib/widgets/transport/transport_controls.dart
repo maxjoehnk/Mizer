@@ -6,7 +6,6 @@ import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'command_line.dart';
@@ -145,11 +144,10 @@ class PlaybackBarButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(label,
-                    textAlign: TextAlign.center,
-                    style: textTheme.titleSmall!.copyWith(fontSize: 11)),
+                    textAlign: TextAlign.center),
                 if (hotkey != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
+                    padding: const EdgeInsets.only(top: 4.0),
                     child: Text(formatHotkey(hotkey),
                         style: textTheme.bodySmall!.copyWith(color: Colors.white54, fontSize: 10)),
                   ),

@@ -20,6 +20,7 @@ class PreferencesView extends StatelessWidget {
         Expanded(
           child: Panel(
             label: "Preferences".i18n,
+            padding: false,
             tabs: [
               Tab(label: "General".i18n, child: GeneralSettings()),
               Tab(label: "File Paths".i18n, child: PathSettings()),
@@ -42,15 +43,21 @@ class PreferencesCategory extends StatelessWidget {
   final bool subcategory;
   final List<Widget> children;
 
-  const PreferencesCategory({required this.label, required this.children, this.subcategory = false, Key? key})
+  const PreferencesCategory(
+      {required this.label, required this.children, this.subcategory = false, Key? key})
       : super(key: key);
 
-  factory PreferencesCategory.hotkeys(String label, Map<String, String> hotkeys, Function(String, String?) update) {
+  factory PreferencesCategory.hotkeys(
+      String label, Map<String, String> hotkeys, Function(String, String?) update) {
     return PreferencesCategory(
         label: label,
         children: hotkeys.entries
             .sortedBy((e) => e.key)
-            .map((e) => HotkeySetting(label: _title(e.key), combination: e.value, update: (combination) => update(e.key, combination),))
+            .map((e) => HotkeySetting(
+                  label: _title(e.key),
+                  combination: e.value,
+                  update: (combination) => update(e.key, combination),
+                ))
             .toList());
   }
 
@@ -58,12 +65,16 @@ class PreferencesCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return Column(
+        spacing: 4,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(label, style: subcategory ? textTheme.titleSmall : textTheme.titleLarge),
-        ), ...children]);
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Text(label, style: subcategory ? textTheme.titleSmall : textTheme.titleLarge),
+          ),
+          ...children
+        ]);
   }
 }
 

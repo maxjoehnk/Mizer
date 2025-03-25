@@ -25,15 +25,18 @@ class PanelGridTile extends StatelessWidget {
   factory PanelGridTile.idWithText({String? id, required String text, required Function() onTap}) {
     return PanelGridTile(
       onTap: onTap,
-      child: Stack(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: HighContrastText(text, textAlign: TextAlign.center),
-          ),
-          if (id != null)
-            Align(child: Text(id, style: TextStyle(fontSize: 12, color: Colors.white70)), alignment: Alignment.topLeft),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: HighContrastText(text, textAlign: TextAlign.center),
+            ),
+            if (id != null)
+              Align(child: Text(id, style: TextStyle(fontSize: 12, color: Colors.white70)), alignment: Alignment.topLeft),
+          ],
+        ),
       ),
     );
   }
@@ -67,13 +70,12 @@ class PanelGridTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
+              top: BorderSide(
             color: active
                 ? Colors.deepOrange.shade700
                 : (selected ? White : (interactive ? TileBorder : Colors.transparent)),
             width: 2,
-            )
-          ),
+          )),
           borderRadius: BorderRadius.circular(0),
           color: color ?? (empty ? Grey800 : (selected ? Grey500 : (hovered ? Grey600 : Grey700))),
         ),
@@ -86,10 +88,7 @@ class PanelGridTile extends StatelessWidget {
               color: Colors.deepOrange.shade700,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: child,
-          )
+          child
         ]),
       ),
     );

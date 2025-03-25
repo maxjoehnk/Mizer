@@ -22,7 +22,7 @@ class SequencerSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       SequenceSetting(
-          label: "WrapAround",
+          label: "Wrap Around",
           child: Switch(
               value: sequence.wrapAround,
               onChanged: (wrapAround) => _updateWrapAround(context, wrapAround))),

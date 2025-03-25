@@ -9,18 +9,16 @@ class HighContrastText extends StatelessWidget {
   final TextOverflow overflow;
   final int? maxLines;
 
-  const HighContrastText(this.text, {this.textAlign, this.fontSize = 15, this.autoSize, this.overflow = TextOverflow.clip, this.maxLines, super.key});
+  const HighContrastText(this.text, {this.textAlign, this.fontSize = 15, this.autoSize, this.overflow = TextOverflow.clip, this.maxLines = 2, super.key});
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme.of(context).textTheme;
-
     return Stack(
       children: [
         AutoSizeText(text,
             minFontSize: this.autoSize?.minFontSize ?? 12,
             wrapWords: this.autoSize?.wrapWords ?? true,
-            style: textTheme.bodySmall!.copyWith(
+            style: TextStyle(
               fontSize: fontSize,
               foreground: Paint()
                 ..color = Colors.black
@@ -29,16 +27,17 @@ class HighContrastText extends StatelessWidget {
             ),
             overflow: overflow,
             textAlign: textAlign,
-            maxLines: 2),
+            maxLines: maxLines),
         AutoSizeText(text,
             minFontSize: this.autoSize?.minFontSize ?? 12,
             wrapWords: this.autoSize?.wrapWords ?? true,
-            style: textTheme.bodySmall!.copyWith(
+            style: TextStyle(
               fontSize: fontSize,
+              color: Colors.white,
             ),
             overflow: overflow,
             textAlign: textAlign,
-            maxLines: 2),
+            maxLines: maxLines),
       ],
     );
   }

@@ -157,7 +157,8 @@ class _NumberFieldState extends State<NumberField> {
             child: widget.bar
                 ? _Bar(value: this._valueHint, child: inner)
                 : Container(
-                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.centerRight,
                     child: inner,
                   ),
           ),
@@ -176,7 +177,7 @@ class _NumberFieldState extends State<NumberField> {
         cursorColor: Colors.black87,
         backgroundCursorColor: Colors.black12,
         style: textStyle,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.end,
         selectionColor: Colors.black38,
         keyboardType: TextInputType.number,
         autofocus: true,
@@ -196,7 +197,8 @@ class _NumberFieldState extends State<NumberField> {
                 child: inner,
               )
             : Container(
-                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.centerRight,
                 child: inner,
               ));
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 class SettingsButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class SettingsButton extends StatelessWidget {
         builder: (hover) => Container(
           padding: !symmetric ? const EdgeInsets.symmetric(vertical: 2, horizontal: 4) : const EdgeInsets.all(4),
           decoration: BoxDecoration(
-            color: hover ? Colors.grey.shade700 : Colors.grey.shade800,
+            color: hover ? Grey600 : Grey700,
             borderRadius: BorderRadius.circular(4),
           ),
           child: child,

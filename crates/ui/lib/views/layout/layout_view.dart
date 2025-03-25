@@ -321,7 +321,7 @@ class _ControlsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(1.0),
+      padding: const EdgeInsets.all(2.0),
       child: SequencerStateFetcher(builder: (context, sequencerState) {
         return CustomMultiChildLayout(
             delegate: ControlsLayoutDelegate(
@@ -387,11 +387,13 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     for (var control in layout.controls) {
       var controlSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER;
+          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER + (Offset(control.size.width.toDouble() - 1, control.size.height.toDouble() - 1) * GRID_GAP_SIZE);
       layoutChild(control.id, BoxConstraints.tight(controlSize));
       var controlOffset = movingControlId == control.id
           ? movingControlPosition!
           : Offset(control.position.x.toDouble(), control.position.y.toDouble()) * MULTIPLIER;
+
+      controlOffset += Offset(control.position.x.toDouble(), control.position.y.toDouble()) * GRID_GAP_SIZE;
       positionChild(control.id, controlOffset);
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));

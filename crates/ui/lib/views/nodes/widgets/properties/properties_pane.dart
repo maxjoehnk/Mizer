@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/help_group.dart';
@@ -68,7 +69,7 @@ class _NodePropertiesPaneState extends State<NodePropertiesPane> {
     var nodesApi = context.read<NodesApi>();
 
     return Container(
-        padding: EdgeInsets.all(2),
+        padding: EdgeInsets.all(PANEL_GAP_SIZE),
         child: ListView(
           children: _getPropertyPanes(node, nodesApi),
         ));

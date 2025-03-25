@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/surfaces.pb.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
@@ -16,23 +17,26 @@ class SectionSettings extends StatelessWidget {
       builder: (context, state) {
         return Panel(
           label: 'Settings (${state.selectedSection?.name ?? ""})'.i18n,
-          child: Column(
-            children: state.selectedSection == null
-                ? []
-                : [
-                    MappingSettings(
-                        title: "Input",
-                        transform: state.selectedSection!.input,
-                        onChange: (transform) {
-                          context.read<SurfacesCubit>().changeInputTransform(transform);
-                        }),
-                    MappingSettings(
-                        title: "Output",
-                        transform: state.selectedSection!.output,
-                        onChange: (transform) {
-                          context.read<SurfacesCubit>().changeOutputTransform(transform);
-                        }),
-                  ],
+          child: Padding(
+            padding: const EdgeInsets.all(PANEL_GAP_SIZE),
+            child: Column(
+              children: state.selectedSection == null
+                  ? []
+                  : [
+                      MappingSettings(
+                          title: "Input",
+                          transform: state.selectedSection!.input,
+                          onChange: (transform) {
+                            context.read<SurfacesCubit>().changeInputTransform(transform);
+                          }),
+                      MappingSettings(
+                          title: "Output",
+                          transform: state.selectedSection!.output,
+                          onChange: (transform) {
+                            context.read<SurfacesCubit>().changeOutputTransform(transform);
+                          }),
+                    ],
+            ),
           ),
         );
       },
@@ -117,6 +121,7 @@ class Point extends StatelessWidget {
     double y = point.y * height;
     y = double.parse(y.toStringAsFixed(1));
     return Row(
+      spacing: PANEL_GAP_SIZE,
       children: [
         Expanded(
           child: NumberField(

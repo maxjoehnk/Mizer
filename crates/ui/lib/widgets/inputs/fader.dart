@@ -70,7 +70,7 @@ class _FaderInputState extends State<FaderInput> {
                   height: 30,
                   color: widget.highlight == true
                       ? HIGHLIGHT_CONTROL_COLOR
-                      : Grey400,
+                      : Grey800,
                   padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                   child: Center(
                     child: HighContrastText(

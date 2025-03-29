@@ -83,99 +83,48 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
   }
 
   Widget _readView(BuildContext context) {
-    if (widget.readOnly) {
-      return widget.multiline ? _readMultilineView(context) : _readSinglelineView(context);
-    }
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => setState(() => this.isEditing = true),
-        child: widget.multiline ? _readMultilineView(context) : _readSinglelineView(context),
-      ),
-    );
-  }
-
-  Widget _readSinglelineView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     TextStyle placeholderStyle = textStyle.copyWith(color: Colors.grey.shade400);
     bool hasValue = controller.text.isNotEmpty;
-    return Field(
+
+    var field = Field(
       label: this.widget.label,
       actions: widget.actions,
+      vertical: widget.multiline,
       child: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Text(
           hasValue ? controller.text : widget.placeholder ?? "",
           style: hasValue ? textStyle : placeholderStyle,
-          textAlign: TextAlign.end,
+          textAlign: widget.multiline ? TextAlign.start : TextAlign.end,
         ),
+      ),
+    );
+
+    if (widget.readOnly) {
+      return field;
+    }
+
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => setState(() => this.isEditing = true),
+        child: field,
       ),
     );
   }
 
-  Widget _readMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(widget.label),
-        Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            controller.text,
-            style: textStyle,
-            maxLines: 10,
-            textAlign: TextAlign.start,
-          ),
-        )
-      ],
-    );
-  }
-
   Widget _editView(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
+
     return MouseRegion(
-        cursor: SystemMouseCursors.text,
-        child: widget.multiline ? _editMultilineView(context) : _editSinglelineView(context));
-  }
-
-  Widget _editSinglelineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-
-    return Field(
-        label: this.widget.label,
-        actions: widget.actions,
-        child: Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: TextFieldFocus(
-            child: EditableText(
-              focusNode: focusNode,
-              controller: controller,
-              cursorColor: Colors.black87,
-              backgroundCursorColor: Colors.black12,
-              style: textStyle,
-              textAlign: TextAlign.end,
-              selectionColor: Colors.black38,
-              keyboardType: TextInputType.text,
-              autofocus: true,
-              inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-            ),
-          ),
-        ));
-  }
-
-  Widget _editMultilineView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(widget.label),
-          Container(
+      cursor: SystemMouseCursors.text,
+      child: Field(
+          label: this.widget.label,
+          actions: widget.actions,
+          vertical: widget.multiline,
+          child: Container(
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextFieldFocus(
@@ -185,15 +134,16 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
                 cursorColor: Colors.black87,
                 backgroundCursorColor: Colors.black12,
                 style: textStyle,
-                textAlign: TextAlign.start,
+                textAlign: widget.multiline ? TextAlign.start : TextAlign.end,
                 selectionColor: Colors.black38,
-                keyboardType: TextInputType.multiline,
+                keyboardType: widget.multiline ? TextInputType.multiline : TextInputType.text,
                 autofocus: true,
-                maxLines: null,
+                inputFormatters: widget.multiline ? null : [FilteringTextInputFormatter.singleLineFormatter],
+                maxLines: widget.multiline ? null : 1,
               ),
             ),
-          )
-        ]);
+          )),
+    );
   }
 
   void _setValue(String value) {

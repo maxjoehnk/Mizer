@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -45,10 +46,11 @@ class MediaLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
+    return Row(spacing: PANEL_GAP_SIZE, children: [
       Flexible(child: list, flex: 2),
       Flexible(
           child: Column(
+            spacing: PANEL_GAP_SIZE,
             children: [Flexible(child: preview, flex: 1), Flexible(child: metadata, flex: 2)],
           ),
           flex: 1)

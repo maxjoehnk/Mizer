@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/boolean_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
 import 'preferences.dart';
@@ -13,30 +15,33 @@ class GeneralSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
-      return Column(mainAxisSize: MainAxisSize.min, children: [
-        LanguageSetting(
-            label: "Language".i18n,
-            locale: settings.general.language,
-            update: (language) {
-              SettingsBloc bloc = context.read();
-              bloc.add(UpdateSettings((settings) {
-                settings.general.language = language;
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(spacing: 4, mainAxisSize: MainAxisSize.min, children: [
+          LanguageSetting(
+              label: "Language".i18n,
+              locale: settings.general.language,
+              update: (language) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.general.language = language;
 
-                return settings;
-              }));
-            }),
-        BoolSetting(
-            label: "Auto load last project".i18n,
-            value: settings.general.autoLoadLastProject,
-            update: (value) {
-              SettingsBloc bloc = context.read();
-              bloc.add(UpdateSettings((settings) {
-                settings.general.autoLoadLastProject = value;
+                  return settings;
+                }));
+              }),
+          BooleanField(
+              label: "Auto load last project".i18n,
+              value: settings.general.autoLoadLastProject,
+              onUpdate: (value) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.general.autoLoadLastProject = value;
 
-                return settings;
-              }));
-            })
-      ]);
+                  return settings;
+                }));
+              })
+        ]),
+      );
     });
   }
 }
@@ -51,18 +56,15 @@ class LanguageSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsRow(label, [
-      Expanded(
-        flex: 1,
-        child: MizerSelect<String>(
-            value: locale,
-            options: [
-              SelectOption(value: "de", label: "Deutsch"),
-              SelectOption(value: "en", label: "English"),
-            ],
-            onChanged: update),
-      )
-    ]);
+    return EnumField(
+      label: label,
+      initialValue: locale,
+      items: [
+        SelectOption(value: "de", label: "Deutsch"),
+        SelectOption(value: "en", label: "English"),
+      ],
+      onUpdate: update,
+    );
   }
 }
 

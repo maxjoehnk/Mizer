@@ -16,7 +16,7 @@ impl<'a> Command<'a> for RenameGroupCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Rename Group {} to '{}'", self.id, self.name)
+        format!("Name {} {}", self.id, self.name)
     }
 
     fn apply(

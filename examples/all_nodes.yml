@@ -9,8 +9,8 @@ nodes:
       file: ""
     designer:
       position:
-        x: 9.194962739832912
-        y: 1.1576784477157653
+        x: 4.0
+        y: 4.0
       scale: 1.0
       hidden: false
       color: ~
@@ -20,8 +20,8 @@ nodes:
       path: ""
     designer:
       position:
-        x: 3.257929391625741
-        y: -4.656833560433779
+        x: -1.0
+        y: -3.3333333333333335
       scale: 1.0
       hidden: false
       color: ~
@@ -34,8 +34,8 @@ nodes:
         blue: 1.0
     designer:
       position:
-        x: 4.096720570716549
-        y: 3.1092165187006655
+        x: -1.0
+        y: 4.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -46,8 +46,8 @@ nodes:
       control: LeftStickX
     designer:
       position:
-        x: -1.737705013017012
-        y: -4.389518573998117
+        x: -6.0
+        y: -3.3333333333333335
       scale: 1.0
       hidden: false
       color: ~
@@ -56,8 +56,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 7.242928695397107
-        y: -13.947909347519326
+        x: 4.0
+        y: -12.0
       scale: 1.0
       hidden: false
       color: ~
@@ -70,8 +70,8 @@ nodes:
       control: volume
     designer:
       position:
-        x: -1.4871059407119507
-        y: -2.685449606930791
+        x: -6.0
+        y: -1.6666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -81,8 +81,8 @@ nodes:
       mode: latest
     designer:
       position:
-        x: -9.0111027385811
-        y: -9.55951391604162
+        x: -11.0
+        y: -9.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -90,13 +90,13 @@ nodes:
     type: osc-output
     config:
       connection: osc-0
-      path: ""
+      path: /output
       argument_type: float
       only_emit_changes: false
     designer:
       position:
-        x: -0.5715566008274315
-        y: 5.431329879636948
+        x: -6.0
+        y: 7.0
       scale: 1.0
       hidden: false
       color: ~
@@ -105,8 +105,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 8.68499541724211
-        y: -5.3052628650119065
+        x: 4.0
+        y: -2.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -116,19 +116,18 @@ nodes:
       device_id: ""
     designer:
       position:
-        x: 24.199457567742748
-        y: 10.617582365171986
+        x: 14.0
+        y: 10.333333333333334
       scale: 1.0
       hidden: false
       color: ~
   - path: /clock-0
     type: clock
-    config:
-      speed: 90.0
+    config: {}
     designer:
       position:
-        x: -16.1045592001733
-        y: -9.808131100656214
+        x: -16.0
+        y: -10.0
       scale: 1.0
       hidden: false
       color: ~
@@ -139,8 +138,8 @@ nodes:
       key: G1
     designer:
       position:
-        x: -2.2134060594302083
-        y: -8.285736668429994
+        x: -6.0
+        y: -7.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -149,10 +148,11 @@ nodes:
     config:
       start_value: 0.0
       end_value: 1.0
+      default_value: 0.0
     designer:
       position:
-        x: 3.3290009872155313
-        y: -8.20847132129639
+        x: -1.0
+        y: -7.0
       scale: 1.0
       hidden: false
       color: ~
@@ -162,8 +162,8 @@ nodes:
       mode: Add
     designer:
       position:
-        x: 23.853365296240995
-        y: -2.5109187667291994
+        x: 14.0
+        y: -3.0
       scale: 1.0
       hidden: false
       color: ~
@@ -173,8 +173,8 @@ nodes:
       device: ""
     designer:
       position:
-        x: -1.5338331359827861
-        y: -6.926590821535153
+        x: -6.0
+        y: -6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -221,8 +221,8 @@ nodes:
           c1b: 0.5
     designer:
       position:
-        x: -7.829325320542045
-        y: -3.581110507138169
+        x: -11.0
+        y: -4.0
       scale: 1.0
       hidden: false
       color: ~
@@ -233,8 +233,8 @@ nodes:
       channel: 0
     designer:
       position:
-        x: -2.485235228809176
-        y: -9.984668977048544
+        x: -6.0
+        y: -9.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -246,8 +246,8 @@ nodes:
       low_value: 0.0
     designer:
       position:
-        x: 2.7731051130078233
-        y: -10.290260584975472
+        x: -1.0
+        y: -9.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -258,8 +258,8 @@ nodes:
       port_type: Single
     designer:
       position:
-        x: 14.25553252913254
-        y: -1.0894919597820112
+        x: 9.0
+        y: -1.0
       scale: 1.0
       hidden: false
       color: ~
@@ -275,8 +275,8 @@ nodes:
       ratio: 0.5
     designer:
       position:
-        x: -8.107390595374763
-        y: -5.944665343216278
+        x: -11.0
+        y: -6.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -289,8 +289,8 @@ nodes:
       send_zero: true
     designer:
       position:
-        x: 12.888594261885936
-        y: -10.307524810257249
+        x: 9.0
+        y: -10.333333333333334
       scale: 0.0
       hidden: false
       color: ~
@@ -303,8 +303,8 @@ nodes:
       height: 100
     designer:
       position:
-        x: 13.272489008572707
-        y: -14.033031440284322
+        x: 9.0
+        y: -14.0
       scale: 1.0
       hidden: false
       color: ~
@@ -320,8 +320,8 @@ nodes:
       align: Start
     designer:
       position:
-        x: 23.503800586688982
-        y: -12.160913250979146
+        x: 14.0
+        y: -12.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -331,8 +331,8 @@ nodes:
       device_id: 0
     designer:
       position:
-        x: 13.934028287718316
-        y: -6.0359226167834485
+        x: 9.0
+        y: -6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -343,8 +343,8 @@ nodes:
       playback_mode: OneShot
     designer:
       position:
-        x: 7.783824891528053
-        y: -11.385162058218333
+        x: 4.0
+        y: -9.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -353,8 +353,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 4.128178073579787
-        y: 1.0654799243739217
+        x: -1.0
+        y: 2.3333333333333335
       scale: 1.0
       hidden: false
       color: ~
@@ -367,8 +367,8 @@ nodes:
       inactive_value: 0.0
     designer:
       position:
-        x: -7.330616466136668
-        y: 2.120521152474662
+        x: -11.0
+        y: 2.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -378,8 +378,8 @@ nodes:
       name: Mizer
     designer:
       position:
-        x: 23.540358703035867
-        y: -13.665351960719654
+        x: 14.0
+        y: -14.0
       scale: 1.0
       hidden: false
       color: ~
@@ -392,8 +392,8 @@ nodes:
       pixels_per_universe: 170
     designer:
       position:
-        x: 10.414606876705335
-        y: 4.619920592459888
+        x: 4.0
+        y: 7.0
       scale: 1.0
       hidden: false
       color: ~
@@ -402,8 +402,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 8.12707605153401
-        y: -8.999534591107984
+        x: 4.0
+        y: -6.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -416,8 +416,8 @@ nodes:
       send_zero: true
     designer:
       position:
-        x: 13.70408177002284
-        y: -8.450025486167634
+        x: 9.0
+        y: -8.666666666666666
       scale: 0.0
       hidden: false
       color: ~
@@ -427,8 +427,8 @@ nodes:
       nodes: []
     designer:
       position:
-        x: -15.096534797563068
-        y: -4.732033853422214
+        x: -16.0
+        y: -6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -437,8 +437,8 @@ nodes:
     config: {}
     designer:
       position:
-        x: 8.702374496919155
-        y: -2.941708028933798
+        x: 4.0
+        y: -0.3333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -448,8 +448,8 @@ nodes:
       text: Test
     designer:
       position:
-        x: 3.393148592112963
-        y: -6.215689150855979
+        x: -1.0
+        y: -5.0
       scale: 1.0
       hidden: false
       color: ~
@@ -459,8 +459,8 @@ nodes:
       control_id: 1
     designer:
       position:
-        x: -2.485235228809176
-        y: -12.091345039735545
+        x: -6.0
+        y: -11.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -482,8 +482,8 @@ nodes:
       value: 1.0
     designer:
       position:
-        x: 23.853365296240995
-        y: -5.025338583484654
+        x: 14.0
+        y: -5.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -492,8 +492,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 4.101511653363398
-        y: 4.693964505701591
+        x: -1.0
+        y: 6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -503,8 +503,8 @@ nodes:
       template: "2"
     designer:
       position:
-        x: 3.8312627249590743
-        y: -2.910166893767112
+        x: -1.0
+        y: -1.6666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -517,8 +517,8 @@ nodes:
       render_when_stopped: false
     designer:
       position:
-        x: 23.713438413061454
-        y: -7.258563865859926
+        x: 14.0
+        y: -7.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -530,8 +530,8 @@ nodes:
       blue: 1.0
     designer:
       position:
-        x: 24.05723717327522
-        y: 1.1587750198868707
+        x: 14.0
+        y: 1.0
       scale: 1.0
       hidden: false
       color: ~
@@ -540,8 +540,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 2.7731051130078233
-        y: -12.002761622503959
+        x: -1.0
+        y: -11.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -558,8 +558,8 @@ nodes:
       scale_y: 1.0
     designer:
       position:
-        x: 24.12028857805172
-        y: 6.291137251564781
+        x: 14.0
+        y: 6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -569,8 +569,8 @@ nodes:
       value: "{ \"test\": true }"
     designer:
       position:
-        x: 3.733147950629187
-        y: -0.6116517589813035
+        x: -1.0
+        y: 0.6666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -584,8 +584,8 @@ nodes:
       left_border: true
     designer:
       position:
-        x: 23.51987496048212
-        y: -9.83243526026206
+        x: 14.0
+        y: -10.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -595,8 +595,8 @@ nodes:
       device: ""
     designer:
       position:
-        x: 9.594681572404943
-        y: 2.669658379618673
+        x: 4.0
+        y: 5.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -607,8 +607,8 @@ nodes:
       hold: false
     designer:
       position:
-        x: -14.556350040834905
-        y: -0.5251460578190184
+        x: -16.0
+        y: 0.3333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -618,8 +618,8 @@ nodes:
       buffer_size: 0
     designer:
       position:
-        x: -14.731574124345125
-        y: -2.2642045392818364
+        x: -16.0
+        y: -2.0
       scale: 1.0
       hidden: false
       color: ~
@@ -634,8 +634,8 @@ nodes:
       on_step: ~
     designer:
       position:
-        x: -1.3402148592578031
-        y: -1.0885403175981523
+        x: -6.0
+        y: 0.0
       scale: 1.0
       hidden: false
       color: ~
@@ -643,12 +643,12 @@ nodes:
     type: osc-input
     config:
       connection: osc-0
-      path: ""
+      path: /input
       argument_type: float
     designer:
       position:
-        x: -0.7105892382437924
-        y: 3.9541081070881305
+        x: -6.0
+        y: 5.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -661,8 +661,8 @@ nodes:
       release: 1.0
     designer:
       position:
-        x: -14.452075562772634
-        y: 1.6472389018115974
+        x: -16.0
+        y: 3.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -672,8 +672,8 @@ nodes:
       timecode_id: 1
     designer:
       position:
-        x: -2.642247845453582
-        y: -14.014291888488241
+        x: -6.0
+        y: -13.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -683,8 +683,8 @@ nodes:
       value: 0.0
     designer:
       position:
-        x: -15.53101178948919
-        y: -6.452562741449662
+        x: -16.0
+        y: -8.0
       scale: 1.0
       hidden: false
       color: ~
@@ -694,8 +694,8 @@ nodes:
       source: Master
     designer:
       position:
-        x: 14.02092368610354
-        y: -3.0988581513628577
+        x: 9.0
+        y: -3.0
       scale: 1.0
       hidden: false
       color: ~
@@ -714,8 +714,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 8.842903820886495
-        y: -7.491476866409814
+        x: 4.0
+        y: -5.0
       scale: 1.0
       hidden: false
       color: ~
@@ -724,8 +724,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 8.997394718810813
-        y: -1.3349750834104437
+        x: 4.0
+        y: 1.6666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -734,8 +734,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 23.93277039713867
-        y: 3.766609794280422
+        x: 14.0
+        y: 3.3333333333333335
       scale: 1.0
       hidden: false
       color: ~
@@ -747,8 +747,8 @@ nodes:
       retain: false
     designer:
       position:
-        x: -0.8644003086885005
-        y: 2.439336008126732
+        x: -6.0
+        y: 3.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -759,8 +759,8 @@ nodes:
       connection: mqtt-0
     designer:
       position:
-        x: -1.2293609819064446
-        y: 0.7361861997763299
+        x: -6.0
+        y: 2.0
       scale: 1.0
       hidden: false
       color: ~
@@ -770,8 +770,8 @@ nodes:
       mode: Addition
     designer:
       position:
-        x: -14.469454642449678
-        y: 3.593695825640628
+        x: -16.0
+        y: 6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -796,10 +796,11 @@ nodes:
         - false
         - false
       bar_count: 1
+      output_width_mode: Pulse
     designer:
       position:
-        x: -7.267275498228227
-        y: 4.041082022801385
+        x: -11.0
+        y: 4.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -809,8 +810,8 @@ nodes:
       port_type: Single
     designer:
       position:
-        x: -7.168557856449803
-        y: -0.1443816256416585
+        x: -11.0
+        y: 0.3333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -820,8 +821,8 @@ nodes:
       pattern: rgb-iterate
     designer:
       position:
-        x: 13.336562278697253
-        y: -12.400054099697709
+        x: 9.0
+        y: -12.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -831,8 +832,8 @@ nodes:
       script: ""
     designer:
       position:
-        x: -7.444064669451844
-        y: -1.4581964985920908
+        x: -11.0
+        y: -1.6666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -844,8 +845,8 @@ nodes:
       window_name: ""
     designer:
       position:
-        x: 23.98927988093048
-        y: -0.4495475656053577
+        x: 14.0
+        y: -0.6666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -854,8 +855,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 2.448320433476559
-        y: -14.099099099478481
+        x: -1.0
+        y: -13.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -866,8 +867,8 @@ nodes:
       fade: true
     designer:
       position:
-        x: -8.541867587300887
-        y: -7.630436071889635
+        x: -11.0
+        y: -8.0
       scale: 1.0
       hidden: false
       color: ~
@@ -882,8 +883,8 @@ nodes:
       write_intensity: true
     designer:
       position:
-        x: 14.551407056718727
-        y: 1.6596925002716185
+        x: 9.0
+        y: 1.6666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -894,8 +895,8 @@ nodes:
       y_offset: 5.0
     designer:
       position:
-        x: 24.391537200557675
-        y: 12.645261235350667
+        x: 14.0
+        y: 12.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -904,8 +905,8 @@ nodes:
     config: {}
     designer:
       position:
-        x: 29.45337142752922
-        y: -13.379633466447128
+        x: 19.0
+        y: -14.0
       scale: 1.0
       hidden: false
       color: ~
@@ -914,8 +915,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 29.707403720834257
-        y: -10.847632039400041
+        x: 19.0
+        y: -11.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -925,8 +926,8 @@ nodes:
       file: ""
     designer:
       position:
-        x: 30.115147474902653
-        y: -7.902816037794552
+        x: 19.0
+        y: -9.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -935,8 +936,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 30.273714490373713
-        y: -6.13592643683126
+        x: 19.0
+        y: -7.666666666666667
       scale: 1.0
       hidden: false
       color: ~
@@ -946,8 +947,8 @@ nodes:
       threshold: 0.1
     designer:
       position:
-        x: 30.205757198028973
-        y: -4.029250374144258
+        x: 19.0
+        y: -5.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -956,8 +957,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 30.386976644281628
-        y: -1.8093121575493645
+        x: 19.0
+        y: -3.0
       scale: 1.0
       hidden: false
       color: ~
@@ -967,8 +968,8 @@ nodes:
       opacity: 1.0
     designer:
       position:
-        x: 30.364324213500065
-        y: 0.7957173823325563
+        x: 19.0
+        y: -0.3333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -982,8 +983,8 @@ nodes:
       control: Intensity
     designer:
       position:
-        x: -8.579900056369045
-        y: -13.841413168987117
+        x: -11.0
+        y: -13.666666666666666
       scale: 1.0
       hidden: false
       color: ~
@@ -996,10 +997,12 @@ nodes:
       send_zero: true
       control: Intensity
       phase: 0
+      fan: 0.0
+      asymmetrical: false
     designer:
       position:
-        x: -8.656869949416189
-        y: -11.53231637757275
+        x: -11.0
+        y: -12.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1011,8 +1014,8 @@ nodes:
       channel: 1
     designer:
       position:
-        x: -15.881406436991789
-        y: -11.924483073587714
+        x: -16.0
+        y: -12.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1022,8 +1025,8 @@ nodes:
       media_id: ~
     designer:
       position:
-        x: 37.141283208922225
-        y: -13.001170127487672
+        x: 24.0
+        y: -14.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1032,8 +1035,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 37.28734557967987
-        y: -11.254499147117137
+        x: 24.0
+        y: -12.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1042,10 +1045,11 @@ nodes:
     config:
       start_value: 0.0
       end_value: 1.0
+      default_value: 0.0
     designer:
       position:
-        x: 37.177519129776556
-        y: -9.194235870027303
+        x: 24.0
+        y: -10.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1058,8 +1062,8 @@ nodes:
         delimiter: ","
     designer:
       position:
-        x: 4.197111217374501
-        y: -15.808032980482189
+        x: 4.0
+        y: -14.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1069,8 +1073,8 @@ nodes:
       surface_id: cc42596a-da0e-4196-9f75-efeece301199
     designer:
       position:
-        x: 30.66359365210647
-        y: 3.76445730866571
+        x: 19.0
+        y: 2.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -1080,8 +1084,8 @@ nodes:
       device_id: ""
     designer:
       position:
-        x: 30.601086729557757
-        y: 6.352281058578379
+        x: 19.0
+        y: 5.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -1096,8 +1100,8 @@ nodes:
       y: 0
     designer:
       position:
-        x: -0.7110867075404235
-        y: 7.778852526199952
+        x: -6.0
+        y: 9.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1114,8 +1118,8 @@ nodes:
       on_step: ~
     designer:
       position:
-        x: -0.7284657872174723
-        y: 9.586276812612624
+        x: -6.0
+        y: 11.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1127,8 +1131,8 @@ nodes:
       columns: 4
     designer:
       position:
-        x: 4.1225467233818165
-        y: 7.926021759437589
+        x: -1.0
+        y: 9.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1139,8 +1143,8 @@ nodes:
       element: ""
     designer:
       position:
-        x: 37.1251643646797
-        y: -5.9954546069966606
+        x: 24.0
+        y: -8.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1151,8 +1155,8 @@ nodes:
       element: ""
     designer:
       position:
-        x: 37.61190349652159
-        y: -3.9304815180097874
+        x: 24.0
+        y: -6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1161,8 +1165,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 14.779907970104626
-        y: 3.7436465797313168
+        x: 9.0
+        y: 3.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -1171,8 +1175,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 15.018767796172172
-        y: 6.585517339958742
+        x: 9.0
+        y: 6.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1181,8 +1185,8 @@ nodes:
     config: ~
     designer:
       position:
-        x: 14.864517100714432
-        y: 8.877667331474585
+        x: 9.0
+        y: 8.333333333333334
       scale: 1.0
       hidden: false
       color: ~
@@ -1194,8 +1198,8 @@ nodes:
       hours: 12
     designer:
       position:
-        x: 37.824488309491386
-        y: -1.427411542594356
+        x: 24.0
+        y: -3.6666666666666665
       scale: 1.0
       hidden: false
       color: ~
@@ -1204,8 +1208,8 @@ nodes:
     config: {}
     designer:
       position:
-        x: 38.050416345292966
-        y: 0.3800127438183161
+        x: 24.0
+        y: -1.3333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -1217,8 +1221,8 @@ nodes:
       hours: 0
     designer:
       position:
-        x: 37.980900026584784
-        y: 3.351835368592996
+        x: 24.0
+        y: 2.0
       scale: 1.0
       hidden: false
       color: ~
@@ -1229,8 +1233,8 @@ nodes:
       text: ""
     designer:
       position:
-        x: 38.306050423956414
-        y: 6.099520881766363
+        x: 24.0
+        y: 5.333333333333333
       scale: 1.0
       hidden: false
       color: ~
@@ -1268,7 +1272,7 @@ connections:
     username: ~
     password: ~
   - id: osc-0
-    name: ""
+    name: osc-0
     type: osc
     protocol: udp
     output_host: 192.168.1.13
@@ -1300,33 +1304,49 @@ fixtures:
 groups:
   - id: 1
     name: Dimmers
-    fixtures:
-      - 1
-      - 2
+    selection:
+      fixtures:
+        - 1
+        - 2
+      block_size: ~
+      groups: ~
+      wings: ~
 presets:
   intensity:
-    - id: 3
-      label: 50%
-      value: 0.5
-    - id: 4
-      label: 75%
-      value: 0.75
-    - id: 1
-      label: 0%
-      value: 0.0
     - id: 2
       label: 25%
       value: 0.25
+    - id: 4
+      label: 75%
+      value: 0.75
     - id: 5
       label: 100%
       value: 1.0
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 1
+      label: 0%
+      value: 0.0
   shutter: []
   color:
-    - id: 6
-      label: Purple
+    - id: 2
+      label: Red
       value:
         - 1.0
         - 0.0
+        - 0.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
         - 1.0
     - id: 4
       label: Blue
@@ -1334,36 +1354,24 @@ presets:
         - 0.0
         - 0.0
         - 1.0
-    - id: 2
-      label: Red
-      value:
-        - 1.0
-        - 0.0
-        - 0.0
     - id: 1
       label: White
       value:
         - 1.0
         - 1.0
         - 1.0
-    - id: 7
-      label: Turquoise
-      value:
-        - 0.0
-        - 1.0
-        - 1.0
-    - id: 3
-      label: Green
-      value:
-        - 0.0
-        - 1.0
-        - 0.0
     - id: 5
       label: Yellow
       value:
         - 1.0
         - 1.0
         - 0.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
   position: []
 sequences:
   - id: 1
@@ -1501,6 +1509,72 @@ surfaces:
     sections:
       - id:
           surface_id: cc42596a-da0e-4196-9f75-efeece301199
+          index: 0
+        name: Section 1
+        input:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0
+        output:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0
+  - id: 6bd79c0d-338a-46a1-9819-fe91b9eedbcc
+    name: Surface
+    sections:
+      - id:
+          surface_id: 6bd79c0d-338a-46a1-9819-fe91b9eedbcc
+          index: 0
+        name: Section 1
+        input:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0
+        output:
+          top_left:
+            x: 0.0
+            y: 0.0
+          top_right:
+            x: 1.0
+            y: 0.0
+          bottom_left:
+            x: 0.0
+            y: 1.0
+          bottom_right:
+            x: 1.0
+            y: 1.0
+  - id: 312888df-10ac-437c-a5cd-1c1d08b0e2e2
+    name: Surface
+    sections:
+      - id:
+          surface_id: 312888df-10ac-437c-a5cd-1c1d08b0e2e2
           index: 0
         name: Section 1
         input:

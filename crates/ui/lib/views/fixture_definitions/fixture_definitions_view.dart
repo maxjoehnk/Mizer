@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Tab;
 import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
@@ -21,6 +22,7 @@ class _FixtureDefinitionsViewState extends State<FixtureDefinitionsView> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: PANEL_GAP_SIZE,
       children: [
         Expanded(
           flex: 1,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import '../../consts.dart';
@@ -33,7 +34,7 @@ class NodeContainer extends StatelessWidget {
         ),
         child: Container(
           decoration: ShapeDecoration(
-              color: designer.hasColor() ? DESIGNER_COLORS[designer.color] : Colors.grey.shade900,
+              color: designer.hasColor() ? DESIGNER_COLORS[designer.color] : Grey800,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
               )),

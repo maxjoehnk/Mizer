@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
-final Color BACKGROUND = Colors.grey.shade900;
-final Color ACTION_COLOR = Colors.grey.shade800;
-final Color BORDER_COLOR = Colors.grey.shade700;
+final Color BACKGROUND = Grey900;
+final Color ACTION_COLOR = Grey800;
 
 class PopupContainer extends StatelessWidget {
   final String title;
   final Widget? child;
+  final double titleFontSize;
   final double? width;
   final double? height;
   final List<PopupAction>? actions;
+  final bool padding;
 
-  const PopupContainer({required this.title, this.child, this.width, this.height, this.actions, Key? key}) : super(key: key);
+  const PopupContainer(
+      {required this.title,
+      this.titleFontSize = 20,
+      this.child,
+      this.width,
+      this.height,
+      this.actions,
+      this.padding = true,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           color: BACKGROUND,
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: BORDER_COLOR, width: 4),
+          border: Border.all(color: Grey600, width: 2),
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
             BoxShadow(
-              blurRadius: 2,
+              blurRadius: 4,
               spreadRadius: 2,
-              color: Colors.black26
-              // offset: Offset(2, 2),
+              color: Colors.black26,
+              offset: Offset(2, 2),
             )
-          ]
-      ),
+          ]),
       width: this.width,
       height: this.height,
       child: IntrinsicWidth(
@@ -38,16 +48,20 @@ class PopupContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
+                color: Grey600,
                 padding: const EdgeInsets.all(8.0),
-                color: BORDER_COLOR,
-                child: Text(title, textAlign: TextAlign.center)),
+                child: Text(title,
+                    textAlign: TextAlign.center, style: TextStyle(fontSize: titleFontSize))),
             _child,
-            if (actions != null) Container(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: actions!.map(_action).toList()),
-            )
+            if (actions != null)
+              Container(
+                padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                child: Row(
+                    spacing: PANEL_GAP_SIZE,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: actions!.map(_action).toList()),
+              )
           ],
         ),
       ),
@@ -56,8 +70,8 @@ class PopupContainer extends StatelessWidget {
 
   Widget get _child {
     var innerChild = Container(
-      padding: const EdgeInsets.all(8.0),
       child: child,
+      padding: padding ? const EdgeInsets.all(8) : null,
     );
     if (height != null) {
       return Expanded(child: innerChild);
@@ -66,17 +80,15 @@ class PopupContainer extends StatelessWidget {
   }
 
   Widget _action(PopupAction action) {
-    return  Hoverable(
+    return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 1),
-          color: hover ? BORDER_COLOR : ACTION_COLOR,
+          color: hover ? Grey700 : Grey800,
           padding: const EdgeInsets.all(8),
           child: Text(action.text)),
     );
   }
 }
-
 
 class PopupAction {
   final String text;

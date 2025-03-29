@@ -1,7 +1,11 @@
+import 'dart:math' as Math;
+
 import 'package:flutter/material.dart' hide View;
-import 'package:mizer/extensions/string_extensions.dart';
-import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/actions/actions.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/extensions/string_extensions.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 
 class NavigationBar extends StatelessWidget {
   final List<Widget> children;
@@ -11,9 +15,22 @@ class NavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.grey.shade800,
-        width: 64,
-        child: ListView(children: children));
+        width: NAVIGATION_BAR_SIZE,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            var items = (constraints.maxHeight / (GRID_4_SIZE + 1)).ceil();
+            return ListView.separated(
+              itemCount: Math.max(children.length, items),
+              itemBuilder: (context, index) {
+                if (index >= children.length) {
+                  return PanelGridTile.empty();
+                }
+                return children[index];
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 1),
+            );
+          }
+        ));
   }
 }
 
@@ -24,7 +41,13 @@ class NavigationBarItem extends StatelessWidget {
   final String label;
   final String? hotkeyLabel;
 
-  const NavigationBarItem({super.key, required this.onSelect, required this.icon, required this.label, this.hotkeyLabel, this.selected = false});
+  const NavigationBarItem(
+      {super.key,
+      required this.onSelect,
+      required this.icon,
+      required this.label,
+      this.hotkeyLabel,
+      this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,47 +55,35 @@ class NavigationBarItem extends StatelessWidget {
     var textTheme = theme.textTheme;
     var color = selected ? theme.colorScheme.secondary : theme.hintColor;
 
-    return Hoverable(
-        onTap: onSelect,
-        builder: (hovering) => Container(
-          height: 56,
-          color: getBackgroundColor(hovering),
-          child: Stack(
-            children: [
-              Center(
-                child: Column(
-                  children: [
-                    Icon(
-                      icon,
-                      color: color,
-                      size: 24,
-                    ),
-                    Text(label, textAlign: TextAlign.center,
-                        style: textTheme.titleSmall!.copyWith(color: color, fontSize: 10)),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return PanelGridTile(
+      onTap: onSelect,
+      selected: selected,
+      child: Stack(
+        children: [
+          Center(
+            child: Column(
+              children: [
+                Icon(
+                  icon,
+                  color: color,
+                  size: 24,
                 ),
-              ),
-              if (hotkeyLabel != null)
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Text(hotkeyLabel!.toCapitalCase(),
-                        style: textTheme.bodySmall!.copyWith(fontSize: 9))),
-            ],
+                HighContrastText(label, textAlign: TextAlign.center, autoSize: AutoSize(
+                  minFontSize: 12
+                )),
+              ],
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
           ),
-        )
+          if (hotkeyLabel != null)
+            Align(
+                alignment: Alignment.topRight,
+                child: Text(hotkeyLabel!.toCapitalCase(),
+                    style: textTheme.bodySmall!.copyWith(fontSize: 12))),
+        ],
+      ),
     );
-  }
-
-  Color? getBackgroundColor(bool hovering) {
-    if (selected) {
-      return Colors.black26;
-    }
-    if (hovering) {
-      return Colors.black12;
-    }
-    return null;
   }
 }
 
@@ -81,8 +92,9 @@ class Route {
   final IconData icon;
   final String label;
   final View viewKey;
+  final bool show;
 
-  Route(this.view, this.icon, this.label, this.viewKey);
+  Route(this.view, this.icon, this.label, this.viewKey, {this.show = true});
 }
 
 typedef WidgetFunction = Widget Function();
@@ -97,7 +109,12 @@ class NavigationRouteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBarItem(onSelect: onSelect, icon: route.icon, label: route.label, selected: selected, hotkeyLabel: hotkeyLabel);
+    return NavigationBarItem(
+        onSelect: onSelect,
+        icon: route.icon,
+        label: route.label,
+        selected: selected,
+        hotkeyLabel: hotkeyLabel);
   }
 
   String? get hotkeyLabel {

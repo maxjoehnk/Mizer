@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 
 import 'decoration.dart';
 
@@ -60,29 +62,33 @@ class _FaderInputState extends State<FaderInput> {
             _onScroll(event.scrollDelta.direction, delta);
           }
         },
-        child: GestureDetector(
-          onVerticalDragStart: (update) => setState(() => _interacting = true),
-          onVerticalDragEnd: (update) => setState(() => _interacting = false),
-          onVerticalDragCancel: () => setState(() => _interacting = false),
-          onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
-          onTapDown: (update) => _onInput(constraints, update.localPosition),
-          child: Container(
-            decoration: ControlDecoration(
-                gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (widget.label != null)
-                  Container(
-                      height: 32,
-                      color: widget.highlight == true
-                          ? HIGHLIGHT_CONTROL_COLOR
-                          : DEFAULT_CONTROL_COLOR,
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                      child: Text(widget.label ?? "",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall)),
-                Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (widget.label != null)
+              Container(
+                  height: 30,
+                  color: widget.highlight == true
+                      ? HIGHLIGHT_CONTROL_COLOR
+                      : Grey800,
+                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+                  child: Center(
+                    child: HighContrastText(
+                      widget.label ?? "",
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+            Expanded(
+              child: GestureDetector(
+                onVerticalDragStart: (update) => setState(() => _interacting = true),
+                onVerticalDragEnd: (update) => setState(() => _interacting = false),
+                onVerticalDragCancel: () => setState(() => _interacting = false),
+                onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
+                onTapDown: (update) => _onInput(constraints, update.localPosition),
+                child: Container(
+                  decoration: BoxDecoration(color: Grey700),
+                  // decoration: ControlDecoration(
+                  //     gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Align(
@@ -92,13 +98,13 @@ class _FaderInputState extends State<FaderInput> {
                                 ? HIGHLIGHT_CONTROL_COLOR
                                 : DEFAULT_CONTROL_COLOR,
                             alignment: AlignmentDirectional.center,
-                            constraints: BoxConstraints.expand(height: 32),
+                            constraints: BoxConstraints.expand(height: 30),
                             child: Text("$percentage%", textAlign: TextAlign.center))),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

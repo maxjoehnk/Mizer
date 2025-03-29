@@ -17,7 +17,7 @@ impl<'a> Command<'a> for UpdateSequencePriorityCommand {
 
     fn label(&self) -> String {
         format!(
-            "Set Priority of Sequence '{}' to {:?}",
+            "Set Sequence {} Priority = {:?}",
             self.sequence_id, self.priority
         )
     }

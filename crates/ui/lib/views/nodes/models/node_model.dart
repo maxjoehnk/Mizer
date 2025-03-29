@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
+
+import '../consts.dart';
 
 enum NodeTab {
   Ports,
@@ -37,11 +38,9 @@ class NodeModel extends ChangeNotifier {
 
   Offset align() {
     var current = getPosition();
-    print(current.dx);
     const ALIGNMENT = 3;
     var dx = (current.dx * ALIGNMENT).round() / ALIGNMENT;
     var dy = (current.dy * ALIGNMENT).round() / ALIGNMENT;
-    print(dx);
 
     var newOffset = Offset(dx.toDouble(), dy.toDouble());
     this.offset = newOffset * MULTIPLIER;

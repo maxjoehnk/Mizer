@@ -4,6 +4,8 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/protos/layouts.pb.dart' show ControlSize;
 import 'package:mizer/state/presets_bloc.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 
 class GroupControl extends StatefulWidget {
@@ -25,6 +27,12 @@ class _GroupControlState extends State<GroupControl>
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PresetsBloc, PresetsState>(builder: (context, state) {
+      return PanelGridTile(
+        onTap: () => _callGroup(),
+          active: programmerState.activeGroups.contains(_groupId),
+          child: Center(
+              child: HighContrastText(_getLabel(state), textAlign: TextAlign.center)
+      ));
       return Container(
         decoration: ControlDecoration(
             color: widget.color, highlight: programmerState.activeGroups.contains(_groupId)),

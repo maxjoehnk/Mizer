@@ -16,7 +16,7 @@ impl<'a> Command<'a> for DuplicateSequenceCommand {
     type Result = Sequence;
 
     fn label(&self) -> String {
-        "Add Sequence".to_string()
+        format!("Duplicate Sequence {}", self.sequence_id)
     }
 
     fn apply(

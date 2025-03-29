@@ -60,18 +60,21 @@ class PortField extends StatelessWidget {
   Widget build(BuildContext context) {
     if (connections.length == 1) {
       return Field(label: port, child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: EdgeInsets.only(right: 8),
+          alignment: Alignment.centerRight,
           child: Text(connections.first, style: TextStyle(color: Colors.grey.shade300))));
     }
 
     if (connections.isNotEmpty) {
       return Field(label: port, child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: EdgeInsets.only(right: 8),
+          alignment: Alignment.centerRight,
           child: Text("${connections.length} connections".i18n, style: TextStyle(color: Colors.grey.shade300))));
     }
 
     return Field(label: port, child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        padding: EdgeInsets.only(right: 8),
+        alignment: Alignment.centerRight,
         child: Text("None".i18n, style: TextStyle(color: Colors.grey.shade500))));
   }
 }

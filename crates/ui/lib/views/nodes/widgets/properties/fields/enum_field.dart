@@ -22,10 +22,7 @@ class EnumField<TValue> extends StatelessWidget {
     return Field(
       label: label,
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
-          color: Colors.grey.shade700,
-        ),
+        decoration: BoxDecoration(),
         clipBehavior: Clip.antiAlias,
         child: MizerSelect<TValue>(
           disabled: disabled,

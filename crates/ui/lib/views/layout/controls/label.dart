@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
-import 'package:mizer/widgets/inputs/decoration.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 
 class LabelControl extends StatefulWidget {
   final LayoutsRefPointer pointer;
@@ -42,15 +42,12 @@ class _LabelControlState extends State<LabelControl> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Center(
-            child: AutoSizeText(value,
-                minFontSize: 10,
-                wrapWords: false,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!.copyWith(fontSize: 15))),
-        decoration: ControlDecoration(color: widget.color ?? Colors.grey.shade900));
+    return PanelGridTile(
+      interactive: false,
+      child: Center(child: HighContrastText(value, textAlign: TextAlign.center, autoSize: AutoSize(
+        minFontSize: 10,
+        wrapWords: false,
+      ))),
+    );
   }
 }

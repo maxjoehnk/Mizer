@@ -10,6 +10,7 @@ import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/layout_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
@@ -29,7 +30,7 @@ import 'add_control_popup.dart';
 import 'control.dart';
 import 'dialogs/name_layout_dialog.dart';
 
-const double MULTIPLIER = 75;
+const double MULTIPLIER = GRID_4_SIZE;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
 const String ResizingNodeIndicatorLayoutId = "ResizingNodeIndicator";
 
@@ -319,53 +320,56 @@ class _ControlsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SequencerStateFetcher(builder: (context, sequencerState) {
-      return CustomMultiChildLayout(
-          delegate: ControlsLayoutDelegate(
-              layout, movingNode?.id, movingNodePosition, resizingNode?.id, resizingNodeSize),
-          children: [
-            if (movingNode != null)
-              LayoutId(
-                  id: MovingNodeIndicatorLayoutId,
-                  child: Container(
-                      decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.deepOrange.withAlpha(128),
-                        width: 4,
-                        style: BorderStyle.solid,
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: SequencerStateFetcher(builder: (context, sequencerState) {
+        return CustomMultiChildLayout(
+            delegate: ControlsLayoutDelegate(
+                layout, movingNode?.id, movingNodePosition, resizingNode?.id, resizingNodeSize),
+            children: [
+              if (movingNode != null)
+                LayoutId(
+                    id: MovingNodeIndicatorLayoutId,
+                    child: Container(
+                        decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.deepOrange.withAlpha(128),
+                          width: 4,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: Colors.deepOrange.shade100.withAlpha(10),
+                      color: Colors.deepOrange.shade100.withAlpha(10),
+                    ))),
+              ...layout.controls.map((c) => LayoutId(
+                  id: c.id,
+                  child: LayoutControlView(
+                    pointer,
+                    layout.id,
+                    c,
+                    sequencerState,
+                    onMove: () => startMove(c),
+                    onResize: () => startResize(c),
                   ))),
-            ...layout.controls.map((c) => LayoutId(
-                id: c.id,
-                child: LayoutControlView(
-                  pointer,
-                  layout.id,
-                  c,
-                  sequencerState,
-                  onMove: () => startMove(c),
-                  onResize: () => startResize(c),
-                ))),
-            if (resizingNode != null)
-              LayoutId(
-                  id: ResizingNodeIndicatorLayoutId,
-                  child: Container(
-                      decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.deepOrange.withAlpha(128),
-                        width: 4,
-                        style: BorderStyle.solid,
+              if (resizingNode != null)
+                LayoutId(
+                    id: ResizingNodeIndicatorLayoutId,
+                    child: Container(
+                        decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Colors.deepOrange.withAlpha(128),
+                          width: 4,
+                          style: BorderStyle.solid,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    color: Colors.deepOrange.shade100.withAlpha(10),
-                  ))),
-          ]);
-    });
+                      color: Colors.deepOrange.shade100.withAlpha(10),
+                    ))),
+            ]);
+      }),
+    );
   }
 }
 
@@ -383,11 +387,13 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     for (var control in layout.controls) {
       var controlSize =
-          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER;
+          Size(control.size.width.toDouble(), control.size.height.toDouble()) * MULTIPLIER + (Offset(control.size.width.toDouble() - 1, control.size.height.toDouble() - 1) * GRID_GAP_SIZE);
       layoutChild(control.id, BoxConstraints.tight(controlSize));
       var controlOffset = movingControlId == control.id
           ? movingControlPosition!
           : Offset(control.position.x.toDouble(), control.position.y.toDouble()) * MULTIPLIER;
+
+      controlOffset += Offset(control.position.x.toDouble(), control.position.y.toDouble()) * GRID_GAP_SIZE;
       positionChild(control.id, controlOffset);
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));

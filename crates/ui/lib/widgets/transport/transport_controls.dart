@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/transport.pb.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
 
 import 'command_line.dart';
 import 'fps_control.dart';
 import 'speed_control.dart';
 import 'time_control.dart';
-
-const double TRANSPORT_CONTROLS_HEIGHT = 40;
 
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;
@@ -49,64 +49,120 @@ class _TransportControlsState extends State<TransportControls> {
 
     return Container(
         height: TRANSPORT_CONTROLS_HEIGHT,
-        decoration: BoxDecoration(
-          color: Colors.black12,
-        ),
-        child: Row(children: [
-          Row(mainAxisSize: MainAxisSize.min, children: [
-            RepaintBoundary(
-                child: BeatIndicator(apiClient,
-                    beatStream: transportStream.map((event) => event.beat))),
-            _Divider(),
-            RepaintBoundary(
-                child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
-            _Divider(),
-            TransportButton(
-                child: SizedBox(width: 64, child: Center(child: Text("Tap"))),
-                onClick: () => apiClient.tap()),
-            _Divider(),
-            TransportButton(
-                child: SizedBox(width: 64, child: Center(child: Text("Resync"))),
-                onClick: () => apiClient.resync()),
-            _Divider(width: 4),
-            RepaintBoundary(child: TimeControl(apiClient, transportStream)),
-            _Divider(),
-            RepaintBoundary(
-                child: TransportControl(transportStream.map((event) => event.state).distinct())),
-            _Divider(width: 4),
-            RepaintBoundary(
-              child: FpsSelector(transportStream: transportStream),
+        child: Row(spacing: 2, children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Grey800,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(BORDER_RADIUS),
+                  bottomRight: Radius.circular(BORDER_RADIUS),
+                ),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                RepaintBoundary(
+                    child: BeatIndicator(apiClient,
+                        beatStream: transportStream.map((event) => event.beat))),
+                _Divider(),
+                RepaintBoundary(
+                    child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
+                _Divider(),
+                TransportButton(
+                    child: SizedBox(width: 64, child: Center(child: Text("Tap"))),
+                    onClick: () => apiClient.tap()),
+                _Divider(),
+                TransportButton(
+                    child: SizedBox(width: 64, child: Center(child: Text("Resync"))),
+                    onClick: () => apiClient.resync()),
+                _Divider(width: 4),
+                RepaintBoundary(child: TimeControl(apiClient, transportStream)),
+                _Divider(),
+                RepaintBoundary(
+                    child: TransportControl(transportStream.map((event) => event.state).distinct())),
+                _Divider(width: 4),
+                RepaintBoundary(
+                  child: FpsSelector(transportStream: transportStream),
+                ),
+                _Divider(width: 4),
+                SizedBox(width: 4),
+                Expanded(child: CommandLineInput()),
+                SizedBox(width: 4),
+              ]),
             ),
-            _Divider(width: 4),
-          ]),
-          SizedBox(width: 4),
-          Expanded(child: CommandLineInput()),
-          SizedBox(width: 4),
-          PanelAction(
-              width: 80,
-              action: PanelActionModel(
-                label: "Console",
-                hotkeyId: "console_pane",
-                onClick: widget.toggleConsole,
-                activated: widget.showConsole,
-              )),
-          PanelAction(
-              width: 80,
-              action: PanelActionModel(
-                label: "Selection",
-                hotkeyId: "selection_pane",
-                onClick: widget.toggleSelection,
-                activated: widget.showSelection,
-              )),
-          PanelAction(
-              width: 80,
-              action: PanelActionModel(
-                label: "Programmer",
-                hotkeyId: "programmer_pane",
-                onClick: widget.toggleProgrammer,
-                activated: widget.showProgrammer,
-              )),
+          ),
+          PlaybackBarButton(
+            label: "Console",
+            hotkeyId: "console_pane",
+            onTap: widget.toggleConsole,
+            active: widget.showConsole,
+          ),
+          PlaybackBarButton(
+            label: "Selection",
+            hotkeyId: "selection_pane",
+            onTap: widget.toggleSelection,
+            active: widget.showSelection,
+          ),
+          PlaybackBarButton(
+            label: "Programmer",
+            hotkeyId: "programmer_pane",
+            onTap: widget.toggleProgrammer,
+            active: widget.showProgrammer,
+          ),
         ]));
+  }
+}
+
+class PlaybackBarButton extends StatelessWidget {
+  final String label;
+  final String? hotkeyId;
+  final bool active;
+  final Function()? onTap;
+  final WidgetBuilder? popupBuilder;
+
+  const PlaybackBarButton(
+      { required this.label, this.hotkeyId, super.key, this.onTap, this.popupBuilder, this.active = false });
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    var hotkey = _getHotkey(context);
+
+    return Hoverable(
+      onTap: onTap,
+      builder: (hovered) =>
+          Container(
+            height: GRID_2_SIZE,
+            width: GRID_5_SIZE,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(BORDER_RADIUS),
+              color: active ? Grey600 : (hovered ? Grey700 : Grey800),
+            ),
+            alignment: Alignment.center,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(label,
+                    textAlign: TextAlign.center),
+                if (hotkey != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Text(formatHotkey(hotkey),
+                        style: textTheme.bodySmall!.copyWith(color: Colors.white54, fontSize: 10)),
+                  ),
+              ],
+            ),
+          ),
+    );
+  }
+
+  String? _getHotkey(BuildContext context) {
+    var hotkeys = context.read<HotkeyMapping?>();
+    if (hotkeys?.mappings == null) {
+      return null;
+    }
+    return hotkeys!.mappings[hotkeyId];
   }
 }
 
@@ -166,6 +222,6 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: 2, color: Colors.black26);
+    return Container(width: 2, color: Grey700);
   }
 }

@@ -17,7 +17,7 @@ impl<'a> Command<'a> for UpdateControlDelayTimeCommand {
 
     fn label(&self) -> String {
         format!(
-            "Update Cue Delay Time '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Delay Time = {:?}",
             self.sequence_id, self.cue_id, self.delay_time
         )
     }

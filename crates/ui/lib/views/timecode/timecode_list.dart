@@ -4,8 +4,9 @@ import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
-import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/transport/time_control.dart';
@@ -19,7 +20,12 @@ class TimecodeList extends StatelessWidget {
   final Timecode? selectedTimecode;
   final TimecodePointer? timecodePointer;
 
-  TimecodeList({required this.timecodes, required this.onSelect, this.selectedTimecode, Key? key, this.timecodePointer})
+  TimecodeList(
+      {required this.timecodes,
+      required this.onSelect,
+      this.selectedTimecode,
+      Key? key,
+      this.timecodePointer})
       : super(key: key);
 
   @override
@@ -33,15 +39,7 @@ class TimecodeList extends StatelessWidget {
               disabled: selectedTimecode == null,
               onClick: () => _deleteTimecode(context))
         ],
-        child: GridView(
-            padding: const EdgeInsets.all(4),
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 100,
-              mainAxisExtent: 100,
-              crossAxisSpacing: 4,
-              mainAxisSpacing: 4,
-              childAspectRatio: 1,
-            ),
+        child: PanelGrid(
             children: timecodes
                 .map((t) => TimecodePane(
                     timecode: t,
@@ -84,7 +82,8 @@ class TimecodePane extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var style = Theme.of(context).textTheme;
-    return GestureDetector(
+
+    return PanelGridTile(
       onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
           position: details.globalPosition,
           child: PopupInput(
@@ -92,29 +91,17 @@ class TimecodePane extends StatelessWidget {
             value: timecode.name,
             onChange: (name) => _renameTimecode(context, name),
           ))),
-      child: Hoverable(
-          onTap: onSelect,
-          builder: (hovered) => Container(
-                width: 100,
-                height: 100,
-                padding: const EdgeInsets.all(2),
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(2),
-                  color: hovered ? Colors.white10 : Colors.transparent,
-                  border:
-                      Border.all(color: selected ? Colors.deepOrange : Colors.white10, width: 4),
-                ),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                  Text(timecode.id.toString(), textAlign: TextAlign.start),
-                  AutoSizeText(timecode.name, textAlign: TextAlign.center, maxLines: 2),
-                  if (reader != null)
-                    FFITimeControl(
-                      pointer: reader!,
-                      textStyle: style.bodyMedium,
-                    ),
-                ]),
-              )),
+      onTap: onSelect,
+      selected: selected,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(timecode.id.toString(), textAlign: TextAlign.start),
+        AutoSizeText(timecode.name, textAlign: TextAlign.center, maxLines: 2),
+        if (reader != null)
+          FFITimeControl(
+            pointer: reader!,
+            textStyle: style.bodyMedium,
+          ),
+      ])
     );
   }
 

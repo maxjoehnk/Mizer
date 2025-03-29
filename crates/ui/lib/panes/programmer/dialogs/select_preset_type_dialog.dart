@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
+import 'package:mizer/widgets/dialog/dialog_tile.dart';
+import 'package:mizer/widgets/dialog/grid_dialog.dart';
 
 enum PresetType { Intensity, Shutter, Color, Position }
 
@@ -51,10 +52,8 @@ class _SelectPresetTypeDialogState extends State<SelectPresetTypeDialog> {
             _select(context, target);
           },
           focusNode: _focusNode,
-          child: Wrap(
-              spacing: 4,
-              runSpacing: 4,
-              direction: Axis.horizontal,
+          child: DialogTileGrid(
+              columns: 4,
               children: PresetType.values
                   .map((target) =>
                       PresetTypeTile(target: target, onSelect: () => _select(context, target)))
@@ -79,7 +78,7 @@ class PresetTypeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var name = storeTargetNames[target]!;
-    return Tile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
+    return DialogTile(child: Center(child: RichText(text: _highlightHotkey(name))), onClick: onSelect);
   }
 
   InlineSpan _highlightHotkey(String text) {

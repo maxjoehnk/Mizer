@@ -4,6 +4,7 @@ import 'dart:math' hide log;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 
 import 'field.dart';
@@ -23,6 +24,7 @@ class NumberField extends StatefulWidget {
   late final num minHint;
   late final num maxHint;
   final bool fractions;
+  final bool bar;
   final Function(num) onUpdate;
   final NumberFieldChangeDetection changeDetection;
 
@@ -37,6 +39,7 @@ class NumberField extends StatefulWidget {
       num? maxHint,
       this.fractions = false,
       num? step,
+      this.bar = true,
       required this.onUpdate,
       this.node,
       this.changeDetection = NumberFieldChangeDetection.Node}) {
@@ -125,6 +128,13 @@ class _NumberFieldState extends State<NumberField> {
 
   Widget _readView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
+
+    var inner = Text(
+      controller.text,
+      style: textStyle,
+      textAlign: TextAlign.center,
+    );
+
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
       child: Listener(
@@ -144,13 +154,13 @@ class _NumberFieldState extends State<NumberField> {
           onTap: () => setState(() => this.isEditing = true),
           child: Field(
             label: this.widget.label,
-            child: _Bar(
-                value: this._valueHint,
-                child: Text(
-                  controller.text,
-                  style: textStyle,
-                  textAlign: TextAlign.center,
-                )),
+            child: widget.bar
+                ? _Bar(value: this._valueHint, child: inner)
+                : Container(
+                    padding: const EdgeInsets.all(8),
+                    alignment: Alignment.centerRight,
+                    child: inner,
+                  ),
           ),
         ),
       ),
@@ -160,30 +170,37 @@ class _NumberFieldState extends State<NumberField> {
   Widget _editView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
 
-    return Field(
-      label: this.widget.label,
-      child: _Bar(
-        value: this._valueHint,
-        child: TextFieldFocus(
-          child: EditableText(
-            focusNode: focusNode,
-            controller: controller,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            style: textStyle,
-            textAlign: TextAlign.center,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.number,
-            autofocus: true,
-            inputFormatters: [
-              if (!widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
-              if (widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-.]')),
-              FilteringTextInputFormatter.singleLineFormatter,
-            ],
-          ),
-        ),
+    var inner = TextFieldFocus(
+      child: EditableText(
+        focusNode: focusNode,
+        controller: controller,
+        cursorColor: Colors.black87,
+        backgroundCursorColor: Colors.black12,
+        style: textStyle,
+        textAlign: TextAlign.end,
+        selectionColor: Colors.black38,
+        keyboardType: TextInputType.number,
+        autofocus: true,
+        inputFormatters: [
+          if (!widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-]')),
+          if (widget.fractions) FilteringTextInputFormatter.allow(RegExp(r'[0-9\-.]')),
+          FilteringTextInputFormatter.singleLineFormatter,
+        ],
       ),
     );
+
+    return Field(
+        label: this.widget.label,
+        child: widget.bar
+            ? _Bar(
+                value: this._valueHint,
+                child: inner,
+              )
+            : Container(
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.centerRight,
+                child: inner,
+              ));
   }
 
   void _dragValue(num value) {
@@ -226,13 +243,17 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 2),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(BORDER_RADIUS),
+            bottomRight: Radius.circular(BORDER_RADIUS),
+          ),
           gradient: LinearGradient(colors: [
             Colors.deepOrange.shade500,
             Colors.deepOrange.shade500,
-            Colors.grey.shade700,
-            Colors.grey.shade700,
+            Grey600,
+            Grey600,
           ], stops: [
             0,
             this.value,

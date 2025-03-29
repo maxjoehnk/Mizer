@@ -95,10 +95,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
             MenuItem(label: "Add MIDI Mapping", action: () => _addMappingForControl(context))
           ]),
       ]),
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: RepaintBoundary(child: _getControl(node, nodesApi)),
-      ),
+      child: RepaintBoundary(child: _getControl(node, nodesApi)),
     );
   }
 

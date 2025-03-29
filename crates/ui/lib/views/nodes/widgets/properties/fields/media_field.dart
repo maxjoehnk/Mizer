@@ -32,16 +32,10 @@ class MediaField extends StatefulWidget {
 class _MediaFieldState extends State<MediaField> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: _readView(context),
-    );
-  }
-
-  Widget _readView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     var bloc = context.read<MediaBloc>();
     var file = bloc.state.files.firstWhereOrNull((element) => element.id == widget.value.value);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -54,10 +48,12 @@ class _MediaFieldState extends State<MediaField> {
                     style: textStyle,
                     textAlign: TextAlign.center,
                   )),
-          suffix: Hoverable(
-            onTap: () => _selectMedia(context),
-            builder: (hovered) => _mediaSelector(context),
-          ),
+          actions: [
+            FieldAction(
+              onTap: () => _selectMedia(context),
+              child: Icon(Icons.perm_media_outlined, size: 16),
+            )
+          ],
         ),
         if (file != null)
           Container(
@@ -71,18 +67,6 @@ class _MediaFieldState extends State<MediaField> {
                     MediaThumbnail(file, width: constraints.maxWidth)),
           ),
       ],
-    );
-  }
-
-  Widget _mediaSelector(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2),
-        color: Colors.grey.shade700,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Icon(Icons.perm_media_outlined, size: 16),
     );
   }
 

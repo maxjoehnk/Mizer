@@ -58,15 +58,20 @@ class PanelGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var widthInPixel = GRID_4_SIZE * width + ((width - 1) * 2);
+    var heightInPixel = GRID_4_SIZE * height + ((height - 1) * 2);
+    var brightBackground = color != null && color!.computeLuminance() > 0.3;
+
     return Hoverable(
       onTap: onTap,
       onTapDown: onTapDown,
       onTapUp: onTapUp,
       onSecondaryTap: onSecondaryTap,
       onSecondaryTapDown: onSecondaryTapDown,
-      builder: (hovered) => Container(
-        width: GRID_4_SIZE * width + ((width - 1) * 2),
-        height: GRID_4_SIZE * height + ((height - 1) * 2),
+      builder: (hovered) {
+        return Container(
+        width: widthInPixel,
+        height: heightInPixel,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           border: Border(
@@ -77,20 +82,31 @@ class PanelGridTile extends StatelessWidget {
             width: 2,
           )),
           borderRadius: BorderRadius.circular(0),
-          color: color ?? (empty ? Grey800 : (selected ? Grey500 : (hovered ? Grey600 : Grey700))),
+          color: color ?? (empty ? Grey800 : (selected ? Grey500 : Grey700)),
         ),
         child: Stack(children: [
           if (active) Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: GRID_4_SIZE * width + ((width - 1) * 2),
+              width: widthInPixel,
               height: 2,
               color: Colors.deepOrange.shade700,
             ),
           ),
-          child
+          child,
+          if (hovered && brightBackground) Container(
+            width: widthInPixel,
+            height: heightInPixel,
+            color: Colors.black.withValues(alpha: 0.2),
+          ),
+          if (hovered && !brightBackground) Container(
+            width: widthInPixel,
+            height: heightInPixel,
+            color: Colors.white.withValues(alpha: 0.2),
+          ),
         ]),
-      ),
+      );
+      },
     );
   }
 }

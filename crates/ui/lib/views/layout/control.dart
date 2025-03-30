@@ -136,6 +136,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         control: widget.control,
         color: _color,
         image: _image,
+        size: widget.control.size,
       );
     } else if (node?.type == "label") {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);

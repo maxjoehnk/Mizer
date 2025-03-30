@@ -127,9 +127,6 @@ class SequencerControl extends StatelessWidget {
 
   Widget _sequenceHeader(Sequence sequence, TextTheme textTheme, bool active) {
     return Container(
-      decoration: BoxDecoration(
-        color: active ? Colors.black45 : null,
-      ),
       padding: const EdgeInsets.all(6),
       child: Center(
         child: HighContrastText(sequence.name,

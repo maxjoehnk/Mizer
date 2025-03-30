@@ -3,6 +3,8 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
+const double activeBarHeight = 2;
+
 class PanelGridTile extends StatelessWidget {
   final Widget child;
   final bool interactive;
@@ -85,24 +87,24 @@ class PanelGridTile extends StatelessWidget {
           color: color ?? (empty ? Grey800 : (selected ? Grey500 : Grey700)),
         ),
         child: Stack(children: [
-          if (active) Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              width: widthInPixel,
-              height: 2,
-              color: Colors.deepOrange.shade700,
-            ),
-          ),
           child,
           if (hovered && brightBackground) Container(
             width: widthInPixel,
-            height: heightInPixel,
+            height: heightInPixel - activeBarHeight,
             color: Colors.black.withValues(alpha: 0.2),
           ),
           if (hovered && !brightBackground) Container(
             width: widthInPixel,
-            height: heightInPixel,
+            height: heightInPixel - activeBarHeight,
             color: Colors.white.withValues(alpha: 0.2),
+          ),
+          if (active) Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              width: widthInPixel,
+              height: activeBarHeight,
+              color: Colors.deepOrange.shade700,
+            ),
           ),
         ]),
       );

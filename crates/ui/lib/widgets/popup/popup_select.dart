@@ -7,16 +7,17 @@ class PopupSelect extends StatelessWidget {
   final List<SelectItem> items;
   final double width;
   final double height;
+  final bool closeButton;
 
-  const PopupSelect({required this.title, required this.items, this.height = 192, this.width = 150, Key? key}) : super(key: key);
+  const PopupSelect({required this.title, required this.items, this.height = 192, this.width = 150, this.closeButton = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PopupContainer(
         title: title,
-        titleFontSize: 15,
         width: width,
         height: height,
+        closeButton: closeButton,
         child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.zero,
@@ -24,8 +25,8 @@ class PopupSelect extends StatelessWidget {
                 .map((item) => ListItem(
                       child: Text(item.title, style: TextStyle(fontSize: 15)),
                       onTap: () {
-                        Navigator.of(context).pop();
-                        item.onTap();
+                        Navigator.of(context).pop(item.value);
+                        item.onTap?.call();
                       },
                     ))
                 .toList()));
@@ -34,7 +35,8 @@ class PopupSelect extends StatelessWidget {
 
 class SelectItem {
   final String title;
-  final Function() onTap;
+  final Function()? onTap;
+  final dynamic value;
 
-  SelectItem({required this.title, required this.onTap});
+  SelectItem({required this.title, this.onTap, this.value = null});
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/tabs.dart';
 
 final Color BACKGROUND = Grey900;
 final Color ACTION_COLOR = Grey800;
@@ -8,29 +10,37 @@ final Color ACTION_COLOR = Grey800;
 class PopupContainer extends StatelessWidget {
   final String title;
   final Widget? child;
-  final double titleFontSize;
   final double? width;
   final double? height;
   final List<PopupAction>? actions;
   final bool padding;
+  final bool closeButton;
 
   const PopupContainer(
       {required this.title,
-      this.titleFontSize = 20,
       this.child,
       this.width,
       this.height,
       this.actions,
       this.padding = true,
+      this.closeButton = true,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const border = BorderSide(color: Grey600, width: 2);
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
           color: BACKGROUND,
-          border: Border.all(color: Grey600, width: 2),
+          border: Border(
+            left: border,
+            right: border,
+            bottom: border,
+          ),
           borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
             BoxShadow(
@@ -49,9 +59,21 @@ class PopupContainer extends StatelessWidget {
           children: [
             Container(
                 color: Grey600,
-                padding: const EdgeInsets.all(8.0),
-                child: Text(title,
-                    textAlign: TextAlign.center, style: TextStyle(fontSize: titleFontSize))),
+                height: PANEL_HEADER_HEIGHT,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+                      child: Text(title,
+                          textAlign: TextAlign.center, style: textTheme.titleMedium),
+                    ),
+                    Spacer(),
+                    if (closeButton) PanelHeaderDivider(),
+                    if (closeButton) PanelHeaderButton.icon(icon: Icons.close, onTap: () => Navigator.of(context).pop()),
+                  ],
+                )),
             _child,
             if (actions != null)
               Container(

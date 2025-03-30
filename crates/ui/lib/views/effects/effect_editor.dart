@@ -35,8 +35,8 @@ class EffectEditor extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 300,
-            height: 332,
+            width: GRID_4_SIZE * 5 - PANEL_HEADER_HEIGHT,
+            height: GRID_4_SIZE * 5,
             child: MovementEditor(effect: effect),
           ),
           Expanded(

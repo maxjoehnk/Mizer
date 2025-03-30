@@ -115,6 +115,17 @@ class Tab {
   }
 }
 
+class AddTabButton extends StatelessWidget {
+  final Function() onClick;
+
+  AddTabButton({required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return PanelHeaderButton.icon(icon: Icons.add, onTap: onClick);
+  }
+}
+
 class TabHeader extends StatelessWidget {
   final String label;
   final Function() onSelect;
@@ -136,22 +147,30 @@ class TabHeader extends StatelessWidget {
   }
 }
 
-class AddTabButton extends StatelessWidget {
-  final Function() onClick;
+class PanelHeaderButton extends StatelessWidget {
+  final Function() onTap;
+  final Widget? child;
 
-  AddTabButton({required this.onClick});
+  const PanelHeaderButton({required this.onTap, this.child, super.key});
+
+  factory PanelHeaderButton.icon({ required IconData icon, required Function() onTap }) {
+    return PanelHeaderButton(
+      child: Icon(icon),
+      onTap: onTap,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Hoverable(
-        onTap: onClick,
+        onTap: onTap,
         builder: (hovered) => Container(
           height: GRID_2_SIZE,
           width: GRID_2_SIZE,
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           color: hovered ? Grey700 : Grey800,
-          child: Icon(Icons.add),
+          child: child,
         ));
   }
 }

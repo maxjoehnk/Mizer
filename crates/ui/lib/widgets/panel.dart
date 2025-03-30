@@ -4,9 +4,9 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
+import 'package:mizer/widgets/tabs.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
 
@@ -159,40 +159,32 @@ class _PanelState extends State<Panel> {
               if (widget.canAdd) PanelHeaderDivider(),
               Spacer(),
               ...(widget.trailingHeader ?? []),
-              if (widget.onSearch != null)
+              if (widget.onSearch != null) SizedBox(width: PANEL_GAP_SIZE, child: PanelHeaderDivider()),
+              if (widget.onSearch != null && searchExpanded)
                 Expanded(
-                  child: Container(
-                    color: searchExpanded ? Colors.black12 : null,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (searchExpanded)
-                          Expanded(
-                              child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: 200),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: TextFieldFocus(
-                                      child: TextField(
-                                        controller: searchController,
-                                        autofocus: true,
-                                      ),
-                                    ),
-                                  ))),
-                        MizerIconButton(
-                            icon: Icons.search,
-                            label: "Search",
-                            onClick: () => setState(() {
-                                  this.searchExpanded = !this.searchExpanded;
-                                  if (!this.searchExpanded) {
-                                    this.searchController.clear();
-                                  }
-                                })),
-                      ],
-                    ),
-                  ),
-                )
+                    child: Container(
+                        color: Grey800,
+                        constraints: BoxConstraints(maxWidth: 200),
+                        padding: const EdgeInsets.only(left: 4.0),
+                        alignment: Alignment.centerLeft,
+                        child: TextFieldFocus(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                            controller: searchController,
+                            autofocus: true,
+                          ),
+                        ))),
+              if (widget.onSearch != null)
+                PanelHeaderButton.icon(
+                    icon: Icons.search,
+                    onTap: () => setState(() {
+                      this.searchExpanded = !this.searchExpanded;
+                      if (!this.searchExpanded) {
+                        this.searchController.clear();
+                      }
+                    })),
             ]));
   }
 

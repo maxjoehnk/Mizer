@@ -101,7 +101,8 @@ class _EffectsViewState extends State<EffectsView> {
               ),
             ),
             if (effect != null)
-              Expanded(
+              SizedBox(
+                height: GRID_4_SIZE * 5,
                   child: EffectEditor(
                 effect: effect!,
                 onUpdateStepValue: _onUpdateStepValue,

@@ -398,11 +398,12 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
       if (movingControlId != null && movingControlId == control.id) {
         layoutChild(MovingNodeIndicatorLayoutId, BoxConstraints.tight(controlSize));
         positionChild(MovingNodeIndicatorLayoutId,
-            screenToLayoutPosition(movingControlPosition!) * MULTIPLIER);
+            screenToLayoutPosition(movingControlPosition!) * MULTIPLIER + screenToLayoutPosition(movingControlPosition!) * GRID_GAP_SIZE);
       }
       if (resizingControlId != null && resizingControlId == control.id) {
+        var size = screenToLayoutSize(resizingControlSize!);
         layoutChild(ResizingNodeIndicatorLayoutId,
-            BoxConstraints.tight(screenToLayoutSize(resizingControlSize!) * MULTIPLIER));
+            BoxConstraints.tight(size * MULTIPLIER + (Offset(size.width.toDouble() - 1, size.height.toDouble() - 1) * GRID_GAP_SIZE)));
         positionChild(ResizingNodeIndicatorLayoutId, controlOffset);
       }
     }

@@ -266,9 +266,9 @@ class _AlignToolbarState extends State<AlignToolbar> {
         PanelHeaderDivider(),
         PanelToolbarButton.text("Transform", onTap: () => _transform()),
         PanelToolbarSectionDivider(),
-        PanelToolbarButton.text("Square", onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
+        PanelToolbarButton.icon(icon: Icons.square_outlined, onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
         PanelHeaderDivider(),
-        PanelToolbarButton.text("Triangle", onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
+        PanelToolbarButton.icon(icon: MdiIcons.triangleOutline, onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
         PanelHeaderDivider(),
       ]),
     );

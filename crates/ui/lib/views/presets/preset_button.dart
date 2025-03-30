@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
@@ -20,13 +19,7 @@ class EffectButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PresetButton.effect(
-        child: Container(
-          width: GRID_3_SIZE,
-          height: GRID_3_SIZE,
-          child: Center(child: Icon(MdiIcons.sineWave, size: 32)),
-        ),
-        effect: effect);
+    return PresetButton.effect(child: Container(), effect: effect);
   }
 }
 
@@ -142,8 +135,7 @@ class PositionButton extends StatelessWidget {
           width: pan == null ? 24 : 48,
           height: tilt == null ? 24 : 48,
           padding: const EdgeInsets.all(4),
-          decoration:
-          BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
           child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
         ),
         preset: preset,
@@ -201,11 +193,12 @@ class PresetButton extends StatelessWidget {
   final Effect? effect;
   late final void Function(BuildContext context) onTap;
 
-  PresetButton({required this.child,
-    required this.label,
-    required void Function() onTap,
-    this.active,
-    Key? key})
+  PresetButton(
+      {required this.child,
+      required this.label,
+      required void Function() onTap,
+      this.active,
+      Key? key})
       : effect = null,
         group = null,
         preset = null,
@@ -239,14 +232,11 @@ class PresetButton extends StatelessWidget {
       {required this.child, required this.group, required this.onTap, this.active, Key? key})
       : label = group!.name,
         preset = null,
-        effect = null {
-  }
+        effect = null {}
 
   @override
   Widget build(BuildContext context) {
-    var textTheme = Theme
-        .of(context)
-        .textTheme;
+    var textTheme = Theme.of(context).textTheme;
 
     return PanelGridTile(
       onTap: () => this.onTap(context),

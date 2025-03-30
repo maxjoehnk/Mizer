@@ -5,7 +5,6 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
-import 'package:mizer/views/preferences/settings_button.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 
 import 'preferences.dart';
@@ -66,9 +65,9 @@ class HotkeySetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextPropertyField(
       label: label,
+      labelWidth: 200,
       value: formatHotkey(combination),
       readOnly: true,
-      onUpdate: (_) {},
       actions: [
         FieldAction(
             child: Icon(

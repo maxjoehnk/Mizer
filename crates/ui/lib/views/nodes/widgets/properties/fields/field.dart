@@ -7,30 +7,32 @@ const double _textSize = 13;
 
 class Field extends StatelessWidget {
   final String? label;
+  final double labelWidth;
   final bool vertical;
   final Widget child;
   final Widget? suffix;
   final List<Widget> actions;
 
-  Field({this.label, required this.child, this.suffix, this.vertical = false, this.actions = const []});
+  Field({this.label, double? labelWidth, required this.child, this.suffix, this.vertical = false, this.actions = const []}) : labelWidth = labelWidth ?? 100;
 
   @override
   Widget build(BuildContext context) {
     if (vertical) {
       return VerticalField(label: label, child: child);
     } else {
-      return HorizontalField(label: label, child: child, suffix: suffix, actions: actions);
+      return HorizontalField(label: label, labelWidth: labelWidth, child: child, suffix: suffix, actions: actions);
     }
   }
 }
 
 class HorizontalField extends StatelessWidget {
   final String? label;
+  final double labelWidth;
   final Widget child;
   final Widget? suffix;
   final List<Widget> actions;
 
-  const HorizontalField({this.label, required this.child, this.suffix, this.actions = const []});
+  const HorizontalField({this.label, this.labelWidth = 100, required this.child, this.suffix, this.actions = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class HorizontalField extends StatelessWidget {
         children: [
           if (label != null)
             SizedBox(
-                width: 100,
+                width: labelWidth,
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -106,18 +108,17 @@ class VerticalField extends StatelessWidget {
                   color: Grey700,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(BORDER_RADIUS),
-                      bottomLeft: Radius.circular(BORDER_RADIUS)),
+                      topRight: Radius.circular(BORDER_RADIUS)),
                 ),
                 child: Text(label!, textAlign: TextAlign.center, style: TextStyle(fontSize: _textSize)),
               )),
         Container(
-            padding: EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
               color: Grey600,
               borderRadius: label == null
                   ? BorderRadius.circular(BORDER_RADIUS)
                   : BorderRadius.only(
-                  topRight: Radius.circular(BORDER_RADIUS),
+                  bottomLeft: Radius.circular(BORDER_RADIUS),
                   bottomRight: Radius.circular(BORDER_RADIUS)),
             ),
             child: child),

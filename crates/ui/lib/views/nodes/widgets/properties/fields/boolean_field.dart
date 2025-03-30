@@ -6,18 +6,22 @@ import 'field.dart';
 
 class BooleanField extends StatelessWidget {
   final String label;
+  final double? labelWidth;
   final bool value;
+  final bool vertical;
   final Function(bool) onUpdate;
 
-  BooleanField({required this.label, required this.value, required this.onUpdate});
+  BooleanField({required this.label, this.labelWidth, required this.value, this.vertical = false, required this.onUpdate});
 
   @override
   Widget build(BuildContext context) {
     return Field(
         label: label,
+        labelWidth: labelWidth,
+        vertical: vertical,
         child: Container(
           height: INPUT_FIELD_HEIGHT,
-          alignment: Alignment.centerRight,
+          alignment: vertical ? Alignment.center : Alignment.centerRight,
           padding: const EdgeInsets.all(2),
           child: ToggleSwitch(
             labels: ['On', 'Off'],

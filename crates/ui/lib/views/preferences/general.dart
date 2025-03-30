@@ -31,6 +31,7 @@ class GeneralSettings extends StatelessWidget {
               }),
           BooleanField(
               label: "Auto load last project".i18n,
+              labelWidth: 200,
               value: settings.general.autoLoadLastProject,
               onUpdate: (value) {
                 SettingsBloc bloc = context.read();
@@ -58,6 +59,7 @@ class LanguageSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return EnumField(
       label: label,
+      labelWidth: 200,
       initialValue: locale,
       items: [
         SelectOption(value: "de", label: "Deutsch"),

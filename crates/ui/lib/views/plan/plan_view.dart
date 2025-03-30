@@ -231,7 +231,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
                 setState(() => direction = AlignFixturesRequest_AlignDirection.TOP_TO_BOTTOM)),
         PanelHeaderDivider(),
         SizedBox(
-          width: 300,
+          width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: NumberField(label: "Groups", bar: false, value: groups, onUpdate: (v) => groups = v.toInt()),
@@ -239,7 +239,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
         ),
         PanelHeaderDivider(),
         SizedBox(
-          width: 300,
+          width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: NumberField(label: "Row Gap", bar: false, value: rowGap, onUpdate: (v) => rowGap = v.toInt()),
@@ -247,7 +247,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
         ),
         PanelHeaderDivider(),
         SizedBox(
-          width: 300,
+          width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: NumberField(label: "Column Gap", bar: false, value: columnGap, onUpdate: (v) => columnGap = v.toInt()),
@@ -257,7 +257,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
         PanelToolbarButton(child: Text("Apply"), onTap: () => _align()),
         PanelToolbarSectionDivider(),
         SizedBox(
-          width: 300,
+          width: 200,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: NumberField(label: "Rotation", bar: false, value: rotation, onUpdate: (v) => rotation = v.toInt()),
@@ -269,7 +269,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
         PanelToolbarButton.icon(icon: Icons.square_outlined, onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.SQUARE)),
         PanelHeaderDivider(),
         PanelToolbarButton.icon(icon: MdiIcons.triangleOutline, onTap: () => _spread(SpreadFixturesRequest_SpreadGeometry.TRIANGLE)),
-        PanelHeaderDivider(),
+        PanelToolbarSectionDivider(),
       ]),
     );
   }

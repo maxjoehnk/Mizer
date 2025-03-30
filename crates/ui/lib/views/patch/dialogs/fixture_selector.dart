@@ -5,6 +5,8 @@ import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/list_item.dart';
 
+import '../../nodes/widgets/properties/fields/text_field.dart';
+
 class FixtureSelector extends StatefulWidget {
   final FixtureDefinition? definition;
   final FixtureMode? mode;
@@ -44,13 +46,10 @@ class _FixtureSelectorState extends State<FixtureSelector> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          child: TextField(
+          child: TextPropertyField(
             autofocus: true,
-            decoration: InputDecoration(
-              labelText: "Search",
-              hintText: "Search",
-              prefixIcon: Icon(Icons.search),
-            ),
+            label: "Search",
+            value: search ?? "",
             onChanged: (value) {
               setState(() {
                 search = value;

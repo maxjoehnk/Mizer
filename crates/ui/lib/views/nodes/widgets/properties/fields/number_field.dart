@@ -17,6 +17,7 @@ enum NumberFieldChangeDetection {
 class NumberField extends StatefulWidget {
   final String? node;
   final String label;
+  final double? labelWidth;
   final num value;
   final num? min;
   final num? max;
@@ -33,6 +34,7 @@ class NumberField extends StatefulWidget {
   NumberField(
       {required this.label,
       required this.value,
+      this.labelWidth,
       this.min,
       this.max,
       num? minHint,
@@ -154,6 +156,7 @@ class _NumberFieldState extends State<NumberField> {
           onTap: () => setState(() => this.isEditing = true),
           child: Field(
             label: this.widget.label,
+            labelWidth: this.widget.labelWidth,
             child: widget.bar
                 ? _Bar(value: this._valueHint, child: inner)
                 : Container(
@@ -191,6 +194,7 @@ class _NumberFieldState extends State<NumberField> {
 
     return Field(
         label: this.widget.label,
+        labelWidth: this.widget.labelWidth,
         child: widget.bar
             ? _Bar(
                 value: this._valueHint,

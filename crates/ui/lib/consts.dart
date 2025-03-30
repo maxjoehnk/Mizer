@@ -9,6 +9,8 @@ const double GRID_3_SIZE = _GRID_BASE_SIZE * 3;
 const double GRID_4_SIZE = _GRID_BASE_SIZE * 4;
 const double GRID_5_SIZE = _GRID_BASE_SIZE * 5;
 const double GRID_6_SIZE = _GRID_BASE_SIZE * 6;
+const double GRID_7_SIZE = _GRID_BASE_SIZE * 7;
+const double GRID_8_SIZE = _GRID_BASE_SIZE * 8;
 
 const double NAVIGATION_BAR_SIZE = GRID_4_SIZE;
 const double PANEL_ACTION_SIZE = GRID_2_SIZE;

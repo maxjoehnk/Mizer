@@ -43,7 +43,7 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
               child: label == null
                   ? Container()
                   : Padding(
-                      padding: const EdgeInsets.all(2.0),
+                      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4),
                       child: Text(label!,
                           style: TextStyle(color: widget.disabled ? Colors.white70 : null)),
                     )),

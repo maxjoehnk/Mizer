@@ -8,9 +8,9 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/path_field.dart';
+import 'package:mizer/widgets/controls/button.dart';
 
 import 'preferences.dart';
-import 'settings_button.dart';
 
 class PathSettings extends StatelessWidget {
   const PathSettings({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class PathSettings extends StatelessWidget {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return Padding(
         padding: const EdgeInsets.all(4.0),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
+        child: ListView(shrinkWrap: true, children: [
           PreferencesCategory(label: "Media", children: [
             PathField(label: "Storage".i18n, value: settings.paths.mediaStorage, onUpdate: (path) {
                   SettingsBloc bloc = context.read();
@@ -130,9 +130,9 @@ class PathsSetting extends StatelessWidget {
                   })
             ]);
       }),
-      SettingsButton(
+      MizerButton(
           child: Text("Add Path"),
-          onTap: () async {
+          onClick: () async {
             final path = await getDirectoryPath();
             if (path == null) {
               return;

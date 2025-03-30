@@ -126,6 +126,7 @@ class Point extends StatelessWidget {
         Expanded(
           child: NumberField(
               label: "X",
+              labelWidth: 40,
               value: x,
               min: 0.0,
               max: width,
@@ -137,6 +138,7 @@ class Point extends StatelessWidget {
         Expanded(
           child: NumberField(
               label: "Y",
+              labelWidth: 40,
               value: y,
               min: 0.0,
               max: height,

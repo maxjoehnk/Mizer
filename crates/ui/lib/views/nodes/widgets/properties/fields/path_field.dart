@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 
-import 'field.dart';
+import 'package:mizer/widgets/field/field.dart';
 
 class PathField extends StatefulWidget {
   final String? label;

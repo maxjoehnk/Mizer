@@ -23,9 +23,12 @@ const double MAX_DIALOG_HEIGHT = 512;
 const double DIALOG_TILE_SIZE = GRID_5_SIZE;
 
 const double INPUT_FIELD_HEIGHT = _GRID_BASE_SIZE * 1.5;
+const double BIG_INPUT_FIELD_HEIGHT = GRID_2_SIZE;
 
 const double PANEL_GAP_SIZE = 2;
 const double GRID_GAP_SIZE = 2;
+const double FORM_GAP_SIZE = 2;
+
 const double BORDER_RADIUS = 2;
 
 const Color Black = Color(0xFF000000);
@@ -49,8 +52,8 @@ const Color TileSelected = Grey500;
 const Color TileSelectedBorder = White;
 const Color TileHover = Grey600;
 
-const Color ActionBorder = Grey600;
-const Color ActionDisabled = Grey900;
-const Color ActionBackground = Grey800;
-const Color ActionHover = Grey700;
-const Color ActionActive = Grey600;
+const Color ActionBorder = Grey400;
+const Color ActionDisabled = Grey800;
+const Color ActionBackground = Grey700;
+const Color ActionHover = Grey600;
+const Color ActionActive = Grey500;

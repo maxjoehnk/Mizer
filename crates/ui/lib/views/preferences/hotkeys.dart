@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
-import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
+import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 

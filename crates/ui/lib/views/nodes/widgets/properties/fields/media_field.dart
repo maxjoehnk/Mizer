@@ -11,8 +11,7 @@ import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/hoverable.dart';
-
-import 'field.dart';
+import 'package:mizer/widgets/field/field.dart';
 
 const double MAX_DIALOG_WIDTH = 1280;
 const double MAX_DIALOG_HEIGHT = 512;

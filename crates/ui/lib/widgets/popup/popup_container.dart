@@ -66,12 +66,13 @@ class PopupContainer extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
-                      child: Text(title,
-                          textAlign: TextAlign.center, style: textTheme.titleMedium),
+                      child: Text(title, textAlign: TextAlign.center, style: textTheme.titleMedium),
                     ),
                     Spacer(),
                     if (closeButton) PanelHeaderDivider(),
-                    if (closeButton) PanelHeaderButton.icon(icon: Icons.close, onTap: () => Navigator.of(context).pop()),
+                    if (closeButton)
+                      PanelHeaderButton.icon(
+                          icon: Icons.close, onTap: () => Navigator.of(context).pop()),
                   ],
                 )),
             _child,
@@ -105,8 +106,10 @@ class PopupContainer extends StatelessWidget {
     return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
-          color: hover ? Grey700 : Grey800,
-          padding: const EdgeInsets.all(8),
+          height: GRID_2_SIZE,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          color: hover ? Grey500 : Grey600,
+          alignment: Alignment.center,
           child: Text(action.text)),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
@@ -63,15 +64,13 @@ class SequenceList extends StatelessWidget {
 
     return PanelGridTile(
         onTap: onTap,
-        // active: active,
+        active: active,
         selected: selected,
-        onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
-            position: details.globalPosition,
-            child: PopupInput(
-              title: "Name",
-              value: sequence.name,
-              onChange: (name) => _updateSequenceName(context, sequence, name),
-            ))),
+        onSecondaryTapDown: (details) => context.showRenameDialog(name: sequence.name).then((name) {
+          if (name != null) {
+            _updateSequenceName(context, sequence, name);
+          }
+        }),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           SizedBox(
             height: 11,

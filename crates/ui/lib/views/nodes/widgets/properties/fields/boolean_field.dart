@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
-import 'field.dart';
+import 'package:mizer/widgets/field/field.dart';
 
 class BooleanField extends StatelessWidget {
   final String label;

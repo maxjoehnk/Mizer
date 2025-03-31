@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -8,7 +8,6 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
-import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';

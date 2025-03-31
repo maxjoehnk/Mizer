@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
+import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 
 class ConfigureOscConnectionDialog extends StatefulWidget {
   final OscConnection? config;
@@ -14,7 +17,6 @@ class ConfigureOscConnectionDialog extends StatefulWidget {
 }
 
 class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDialog> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController;
   final TextEditingController _hostController;
   final TextEditingController _outputPortController;
@@ -41,61 +43,39 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
   Widget build(BuildContext context) {
     return ActionDialog(
       title: widget.config != null ? "Configure OSC Connection".i18n : "Add OSC Connection".i18n,
-      content: Form(
-        key: _formKey,
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Name is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Name".i18n),
+      content: Column(spacing: FORM_GAP_SIZE, mainAxisSize: MainAxisSize.min, children: [
+        Field(
+          label: "Name".i18n,
+          big: true,
+          child: TextInput(
             controller: _nameController,
-            keyboardType: TextInputType.name,
             autofocus: true,
-            textInputAction: TextInputAction.next,
           ),
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Host is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Output Host".i18n),
+        ),
+        Field(
+          label: "Output Host".i18n,
+          big: true,
+          child: TextInput(
             controller: _hostController,
-            keyboardType: TextInputType.name,
-            textInputAction: TextInputAction.next,
           ),
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Output Port is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Output Port".i18n),
+        ),
+        Field(
+          label: "Output Port".i18n,
+          big: true,
+          child: TextInput(
             controller: _outputPortController,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.next,
           ),
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Input Port is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Input Port".i18n),
+        ),
+        Field(
+          label: "Input Port".i18n,
+          big: true,
+          child: TextInput(
             controller: _inputPortController,
-            keyboardType: TextInputType.number,
             textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => _onConfirm(),
+            onSubmitted: (_) => _onConfirm(),
           ),
-        ]),
-      ),
+        ),
+      ]),
       actions: [
         PopupAction("Cancel".i18n, () => Navigator.of(context).pop()),
         PopupAction("Save".i18n, _onConfirm)
@@ -104,7 +84,7 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
   }
 
   _onConfirm() {
-    if (!_formKey.currentState!.validate()) {
+    if (!_validate()) {
       return;
     }
     Navigator.of(context).pop(OscConnection(
@@ -113,5 +93,27 @@ class _ConfigureOscConnectionDialogState extends State<ConfigureOscConnectionDia
       outputPort: int.tryParse(_outputPortController.text.trimToMaybeNull()!)!,
       inputPort: int.tryParse(_inputPortController.text.trimToMaybeNull()!)!,
     ));
+  }
+
+  bool _validate() {
+    if (_nameController.text.isEmpty) {
+      return false;
+    }
+    if (_hostController.text.isEmpty) {
+      return false;
+    }
+    if (_outputPortController.text.isEmpty) {
+      return false;
+    }
+    if (int.tryParse(_outputPortController.text) == null) {
+      return false;
+    }
+    if (_inputPortController.text.isEmpty) {
+      return false;
+    }
+    if (int.tryParse(_inputPortController.text) == null) {
+      return false;
+    }
+    return true;
   }
 }

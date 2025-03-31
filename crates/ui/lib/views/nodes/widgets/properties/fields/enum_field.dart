@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/controls/select.dart';
-
-import 'field.dart';
+import 'package:mizer/widgets/field/field.dart';
 
 class EnumField<TValue> extends StatelessWidget {
   final String label;

@@ -47,6 +47,7 @@ class _FixtureSelectorState extends State<FixtureSelector> {
       children: [
         SizedBox(
           child: TextPropertyField(
+            big: true,
             autofocus: true,
             label: "Search",
             value: search ?? "",

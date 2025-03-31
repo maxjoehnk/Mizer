@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
-import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 const double _textSize = 13;
+const double _bigTextSize = 15;
 
 class Field extends StatelessWidget {
   final String? label;
@@ -11,16 +11,17 @@ class Field extends StatelessWidget {
   final bool vertical;
   final Widget child;
   final Widget? suffix;
+  final bool big;
   final List<Widget> actions;
 
-  Field({this.label, double? labelWidth, required this.child, this.suffix, this.vertical = false, this.actions = const []}) : labelWidth = labelWidth ?? 100;
+  Field({this.label, double? labelWidth, required this.child, this.suffix, this.vertical = false, this.big = false, this.actions = const []}) : labelWidth = labelWidth ?? 100;
 
   @override
   Widget build(BuildContext context) {
     if (vertical) {
       return VerticalField(label: label, child: child);
     } else {
-      return HorizontalField(label: label, labelWidth: labelWidth, child: child, suffix: suffix, actions: actions);
+      return HorizontalField(label: label, labelWidth: labelWidth, big: big, child: child, suffix: suffix, actions: actions);
     }
   }
 }
@@ -31,13 +32,15 @@ class HorizontalField extends StatelessWidget {
   final Widget child;
   final Widget? suffix;
   final List<Widget> actions;
+  final bool big;
 
-  const HorizontalField({this.label, this.labelWidth = 100, required this.child, this.suffix, this.actions = const []});
+  const HorizontalField({this.label, this.labelWidth = 100, this.big = false, required this.child, this.suffix, this.actions = const []});
 
   @override
   Widget build(BuildContext context) {
+    var height = big ? BIG_INPUT_FIELD_HEIGHT : INPUT_FIELD_HEIGHT;
     return SizedBox(
-      height: INPUT_FIELD_HEIGHT,
+      height: height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,7 +56,7 @@ class HorizontalField extends StatelessWidget {
                         topLeft: Radius.circular(BORDER_RADIUS),
                         bottomLeft: Radius.circular(BORDER_RADIUS)),
                   ),
-                  child: Text(label!, textAlign: TextAlign.center, style: TextStyle(fontSize: _textSize)),
+                  child: Text(label!, textAlign: TextAlign.center, style: TextStyle(fontSize: big ? _bigTextSize : _textSize)),
                 )),
           Flexible(
               flex: 2,
@@ -69,15 +72,15 @@ class HorizontalField extends StatelessWidget {
                   ),
                   child: child)),
           if (suffix != null) suffix!,
-          ...actions.mapEnumerated((a, i) => Container(
+          ...actions.map((action) => Container(
             decoration: BoxDecoration(
               color: Grey700,
               borderRadius: BorderRadius.circular(BORDER_RADIUS),
             ),
             margin: EdgeInsets.only(left: 2),
             clipBehavior: Clip.antiAlias,
-            width: INPUT_FIELD_HEIGHT,
-            child: a,
+            width: height,
+            child: action,
           )),
         ],
       ),

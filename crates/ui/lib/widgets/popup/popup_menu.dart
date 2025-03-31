@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 
 const MAX_ROWS = 10;
 const double COLUMN_WIDTH = 175;
@@ -60,15 +62,17 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
       child: Container(
           constraints: BoxConstraints(maxHeight: 300, maxWidth: 450),
           decoration: BoxDecoration(
-              color: Colors.grey.shade800,
+              color: Grey700,
               borderRadius: BorderRadius.all(Radius.circular(2)),
               boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
           child: Column(
             children: [
               Container(
                 height: 40,
-                child: TextField(
+                child: TextInput(
+                  placeholder: "Search",
                   controller: _searchController,
+                  textAlign: TextAlign.start,
                   autofocus: true,
                 ),
               ),

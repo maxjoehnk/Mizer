@@ -266,6 +266,7 @@ class _PatchSettingsState extends State<PatchSettings> {
       child: Column(spacing: 2, mainAxisSize: MainAxisSize.min, children: [
         TextPropertyField(
           autofocus: true,
+          big: true,
           label: "Name",
           value: name,
           onUpdate: (value) {
@@ -275,6 +276,7 @@ class _PatchSettingsState extends State<PatchSettings> {
         ),
         NumberField(
           label: "Universe",
+          big: true,
           value: universe,
           onUpdate: (value) {
             universe = value.toInt();
@@ -286,6 +288,7 @@ class _PatchSettingsState extends State<PatchSettings> {
         ),
         NumberField(
           label: "Channel",
+          big: true,
           value: channel,
           onUpdate: (value) {
             channel = value.toInt();
@@ -297,6 +300,7 @@ class _PatchSettingsState extends State<PatchSettings> {
         ),
         NumberField(
           label: "Start ID",
+          big: true,
           value: id,
           onUpdate: (value) {
             id = value.toInt();
@@ -306,6 +310,7 @@ class _PatchSettingsState extends State<PatchSettings> {
         ),
         NumberField(
           label: "Count",
+          big: true,
           value: count,
           onUpdate: (value) {
             count = value.toInt();

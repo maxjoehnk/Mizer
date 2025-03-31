@@ -7,9 +7,9 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/tabs.dart';
-import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
 
+import 'field/text_input.dart';
 import 'hoverable.dart';
 
 class Panel extends StatefulWidget {
@@ -167,14 +167,10 @@ class _PanelState extends State<Panel> {
                         constraints: BoxConstraints(maxWidth: 200),
                         padding: const EdgeInsets.only(left: 4.0),
                         alignment: Alignment.centerLeft,
-                        child: TextFieldFocus(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            controller: searchController,
-                            autofocus: true,
-                          ),
+                        child: TextInput(
+                          controller: searchController,
+                          textAlign: TextAlign.start,
+                          autofocus: true,
                         ))),
               if (widget.onSearch != null)
                 PanelHeaderButton.icon(
@@ -255,8 +251,9 @@ class PanelActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.grey.shade800,
+        padding: const EdgeInsets.all(GRID_GAP_SIZE),
         child: Column(
+          spacing: GRID_GAP_SIZE,
           children: actions.map((a) => PanelAction(action: a)).toList(),
         ),
       ),

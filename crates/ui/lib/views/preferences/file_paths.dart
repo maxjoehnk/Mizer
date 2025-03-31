@@ -6,7 +6,7 @@ import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
-import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
+import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/path_field.dart';
 import 'package:mizer/widgets/controls/button.dart';
 

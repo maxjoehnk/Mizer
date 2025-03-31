@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mizer/widgets/text_field_focus.dart';
-
-import 'field.dart';
+import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 
 class TextPropertyField extends StatefulWidget {
   final bool autofocus;
   final String label;
   final double? labelWidth;
+  final bool big;
   final String value;
   final String? placeholder;
   final Function(String)? onChanged;
@@ -22,6 +19,7 @@ class TextPropertyField extends StatefulWidget {
       {required this.label,
       this.labelWidth,
       required this.value,
+      this.big = false,
       this.autofocus = false,
       this.placeholder,
       this.readOnly = false,
@@ -51,36 +49,20 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
     return Field(
         label: this.widget.label,
         labelWidth: this.widget.labelWidth,
+        big: widget.big,
         actions: widget.actions,
         vertical: widget.multiline,
-        child: Container(
-          alignment: Alignment.centerRight,
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: widget.multiline ? 8 : 0),
-          child: TextFieldFocus(
-            child: TextField(
-              readOnly: widget.readOnly,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: widget.placeholder,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                isDense: true
-              ),
-              controller: controller,
-              cursorColor: Colors.black87,
-              onChanged: widget.onChanged,
-              style: textStyle,
-              textAlign: widget.multiline ? TextAlign.start : TextAlign.end,
-              keyboardType: widget.multiline ? TextInputType.multiline : TextInputType.text,
-              autofocus: widget.autofocus,
-              inputFormatters: widget.multiline ? null : [FilteringTextInputFormatter.singleLineFormatter],
-              maxLines: widget.multiline ? null : 1,
-              textInputAction: TextInputAction.next,
-            ),
-          ),
+        child: TextInput(
+          readOnly: widget.readOnly,
+          placeholder: widget.placeholder,
+          controller: controller,
+          onChanged: widget.onChanged,
+          autofocus: widget.autofocus,
+          multiline: widget.multiline,
+          textInputAction: TextInputAction.next,
         ));
   }
 }

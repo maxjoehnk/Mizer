@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
+import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/property_group.dart';
 
 class NodeInputsPane extends StatelessWidget {

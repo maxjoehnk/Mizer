@@ -2,17 +2,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
-import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/transport/time_control.dart';
 import 'package:provider/provider.dart';
-
-import 'dialogs/add_timecode_dialog.dart';
 
 class TimecodeList extends StatelessWidget {
   final List<Timecode> timecodes;
@@ -50,8 +48,7 @@ class TimecodeList extends StatelessWidget {
   }
 
   Future<void> _addTimecode(BuildContext context) async {
-    String? name =
-        await showDialog(context: context, builder: (context) => new AddTimecodeDialog());
+    String? name = await context.showRenameDialog();
     if (name == null) {
       return;
     }
@@ -84,13 +81,11 @@ class TimecodePane extends StatelessWidget {
     var style = Theme.of(context).textTheme;
 
     return PanelGridTile(
-      onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
-          position: details.globalPosition,
-          child: PopupInput(
-            title: "Name",
-            value: timecode.name,
-            onChange: (name) => _renameTimecode(context, name),
-          ))),
+      onSecondaryTapDown: (details) => context.showRenameDialog(name: timecode.name).then((name) {
+        if (name != null) {
+          _renameTimecode(context, name);
+        }
+      }),
       onTap: onSelect,
       selected: selected,
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

@@ -5,9 +5,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 
-import 'field.dart';
 
 enum NumberFieldChangeDetection {
   Node,
@@ -18,6 +18,7 @@ class NumberField extends StatefulWidget {
   final String? node;
   final String label;
   final double? labelWidth;
+  final bool big;
   final num value;
   final num? min;
   final num? max;
@@ -35,6 +36,7 @@ class NumberField extends StatefulWidget {
       {required this.label,
       required this.value,
       this.labelWidth,
+      this.big = false,
       this.min,
       this.max,
       num? minHint,
@@ -155,6 +157,7 @@ class _NumberFieldState extends State<NumberField> {
           },
           onTap: () => setState(() => this.isEditing = true),
           child: Field(
+            big: widget.big,
             label: this.widget.label,
             labelWidth: this.widget.labelWidth,
             child: widget.bar
@@ -195,6 +198,7 @@ class _NumberFieldState extends State<NumberField> {
     return Field(
         label: this.widget.label,
         labelWidth: this.widget.labelWidth,
+        big: widget.big,
         child: widget.bar
             ? _Bar(
                 value: this._valueHint,

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/layouts.dart';
@@ -11,6 +11,7 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/extensions/layout_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
@@ -28,7 +29,6 @@ import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'add_control_popup.dart';
 import 'control.dart';
-import 'dialogs/name_layout_dialog.dart';
 
 const double MULTIPLIER = GRID_4_SIZE;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
@@ -117,7 +117,7 @@ class LayoutView extends StatelessWidget {
     return showDialog(
       context: context,
       useRootNavigator: false,
-      builder: (_) => NameLayoutDialog(),
+      builder: (_) => NameDialog(),
     ).then((name) => layoutsBloc.add(AddLayout(name: name)));
   }
 
@@ -131,7 +131,7 @@ class LayoutView extends StatelessWidget {
 
   void _onRename(BuildContext context, Layout layout, LayoutsBloc bloc) async {
     String? result =
-        await showDialog(context: context, builder: (context) => NameLayoutDialog(name: layout.id));
+        await showDialog(context: context, builder: (context) => NameDialog(name: layout.id));
     if (result != null) {
       bloc.add(RenameLayout(id: layout.id, name: result));
     }

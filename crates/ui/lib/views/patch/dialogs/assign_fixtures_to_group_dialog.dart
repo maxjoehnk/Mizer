@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
 import 'package:mizer/views/patch/dialogs/group_store_mode_dialog.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
@@ -78,7 +78,7 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
 
   _newGroup(BuildContext context) async {
     setState(() => _creating = true);
-    String? name = await showDialog(context: context, builder: (context) => GroupNameDialog());
+    String? name = await context.showRenameDialog();
     setState(() => _creating = false);
     if (name == null) {
       return;

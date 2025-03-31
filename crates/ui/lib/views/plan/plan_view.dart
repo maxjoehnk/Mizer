@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
@@ -20,7 +21,6 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
-import 'dialogs/name_plan_dialog.dart';
 import 'plan_layout.dart';
 
 const double fieldSize = 24;
@@ -121,7 +121,7 @@ class _PlanViewState extends State<PlanView>
     return showDialog(
       context: context,
       useRootNavigator: false,
-      builder: (_) => NamePlanDialog(),
+      builder: (_) => NameDialog(),
     ).then((name) => plansBloc.add(AddPlan(name: name)));
   }
 
@@ -135,7 +135,7 @@ class _PlanViewState extends State<PlanView>
 
   void _onRename(BuildContext context, Plan plan, PlansBloc bloc) async {
     String? result =
-        await showDialog(context: context, builder: (context) => NamePlanDialog(name: plan.name));
+        await showDialog(context: context, builder: (context) => NameDialog(name: plan.name));
     if (result != null) {
       bloc.add(RenamePlan(id: plan.name, name: result));
     }

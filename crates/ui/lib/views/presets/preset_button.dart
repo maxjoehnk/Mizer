@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
-import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
@@ -54,8 +53,7 @@ class _GroupButtonState extends State<GroupButton>
   }
 
   void _renameGroup() async {
-    var name = await showDialog(
-        context: context, builder: (context) => GroupNameDialog(name: widget.group.name));
+    var name = await context.showRenameDialog(name: widget.group.name);
     if (name == null) {
       return;
     }
@@ -98,7 +96,7 @@ class ColorButton extends StatelessWidget {
 
   void _renamePreset(BuildContext context) async {
     var name = await showDialog(
-        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+        context: context, builder: (context) => NameDialog(name: preset.label));
     if (name == null) {
       return;
     }
@@ -146,7 +144,7 @@ class PositionButton extends StatelessWidget {
 
   void _renamePreset(BuildContext context) async {
     var name = await showDialog(
-        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+        context: context, builder: (context) => NameDialog(name: preset.label));
     if (name == null) {
       return;
     }

@@ -116,10 +116,6 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
   }
 }
 
-Offset _convertFromScreenPosition(Offset offset) {
-  return offset / fieldSize;
-}
-
 class ImagePlacer extends StatefulWidget {
   final Uint8List image;
   final Function(Offset, Size) onPlaced;

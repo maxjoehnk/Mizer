@@ -17,7 +17,7 @@ impl<'a> Command<'a> for UpdateControlFadeTimeCommand {
 
     fn label(&self) -> String {
         format!(
-            "Update Cue Fade Time '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Fade Time = {:?}",
             self.sequence_id, self.cue_id, self.fade_time
         )
     }

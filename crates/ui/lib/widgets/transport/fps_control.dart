@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:provider/provider.dart';
-
-import 'transport_controls.dart';
 
 class FpsSelector extends StatelessWidget {
   final Stream<Transport> transportStream;

@@ -5,7 +5,8 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/protos/layouts.pb.dart' show ControlSize;
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/widgets/inputs/decoration.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 
 class PresetControl extends StatefulWidget {
   final String? label;
@@ -26,18 +27,10 @@ class _PresetControlState extends State<PresetControl>
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PresetsBloc, PresetsState>(builder: (context, state) {
-      return Container(
-        decoration: ControlDecoration(color: widget.color),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => _callPreset(),
-            child: Center(
-                child: Text(_getLabel(state),
-                    textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
-          ),
-        ),
+      return PanelGridTile(
+        onTap: () => _callPreset(),
+        child: Center(
+            child: HighContrastText(_getLabel(state), textAlign: TextAlign.center))
       );
     });
   }

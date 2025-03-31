@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
+import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 
 class ConfigureArtnetInputConnectionDialog extends StatefulWidget {
   final ArtnetInputConfig? config;
@@ -15,7 +18,6 @@ class ConfigureArtnetInputConnectionDialog extends StatefulWidget {
 
 class _ConfigureArtnetInputConnectionDialogState
     extends State<ConfigureArtnetInputConnectionDialog> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController;
   final TextEditingController _hostController;
   final TextEditingController _portController;
@@ -41,49 +43,31 @@ class _ConfigureArtnetInputConnectionDialogState
       title: widget.config != null
           ? "Configure Artnet Input Connection".i18n
           : "Add Artnet Input Connection".i18n,
-      content: Form(
-        key: _formKey,
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Name is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Name".i18n),
-            controller: _nameController,
-            keyboardType: TextInputType.name,
+      content: Column(spacing: FORM_GAP_SIZE, mainAxisSize: MainAxisSize.min, children: [
+        Field(
+          label: "Name",
+          big: true,
+          child: TextInput(
             autofocus: true,
-            textInputAction: TextInputAction.next,
-          ),
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Host is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Host".i18n),
-            controller: _hostController,
-            keyboardType: TextInputType.name,
-            textInputAction: TextInputAction.next,
-          ),
-          TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Port is required'.i18n;
-              }
-              return null;
-            },
-            decoration: InputDecoration(labelText: "Port".i18n),
-            controller: _portController,
-            keyboardType: TextInputType.number,
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (_) => _onCreate(),
-          ),
-        ]),
-      ),
+            controller: _nameController,
+          )
+        ),
+        Field(
+            label: "Host",
+            big: true,
+            child: TextInput(
+              controller: _hostController,
+            )
+        ),
+        Field(
+            label: "Port",
+            big: true,
+            child: TextInput(
+              controller: _portController,
+              textInputAction: TextInputAction.done,
+            )
+        ),
+      ]),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
         PopupAction("Create", _onCreate)
@@ -92,12 +76,28 @@ class _ConfigureArtnetInputConnectionDialogState
   }
 
   _onCreate() {
-    if (!_formKey.currentState!.validate()) {
+    if (!_validate()) {
       return;
     }
     Navigator.of(context).pop(ArtnetInputConfig(
         name: _nameController.text,
         host: _hostController.text,
         port: int.parse(_portController.text)));
+  }
+
+  bool _validate() {
+    if (_nameController.text.isEmpty) {
+      return false;
+    }
+    if (_hostController.text.isEmpty) {
+      return false;
+    }
+    if (_portController.text.isEmpty) {
+      return false;
+    }
+    if (int.tryParse(_portController.text) == null) {
+      return false;
+    }
+    return true;
   }
 }

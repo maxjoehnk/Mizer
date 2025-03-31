@@ -7,6 +7,7 @@ mod discovery;
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct SessionState {
     pub project_path: Option<String>,
+    pub project_name: Option<String>,
     pub project_history: Vec<String>,
 }
 

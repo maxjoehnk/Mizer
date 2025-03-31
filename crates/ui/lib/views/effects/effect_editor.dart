@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/consts.dart';
 
 import 'frame_editor.dart';
 import 'movement_editor.dart';
@@ -29,12 +30,13 @@ class EffectEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+        spacing: PANEL_GAP_SIZE,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 300,
-            height: 332,
+            width: GRID_4_SIZE * 5 - PANEL_HEADER_HEIGHT,
+            height: GRID_4_SIZE * 5,
             child: MovementEditor(effect: effect),
           ),
           Expanded(

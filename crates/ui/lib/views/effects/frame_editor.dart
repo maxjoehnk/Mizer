@@ -7,8 +7,8 @@ import 'package:mizer/extensions/effect_control_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
-import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/popup/popup_select.dart';
 
 import 'frame_painter.dart';
 
@@ -111,18 +111,16 @@ class FrameEditor extends StatelessWidget {
   _addChannel(BuildContext context) async {
     EffectControl? control = await showDialog(
         context: context,
-        builder: (context) => ActionDialog(
+        builder: (context) => PopupSelect(
             title: "Add Channel",
-            content: Column(
-                children: effectControls
-                    .whereNot((faderControl) =>
-                        effect.channels.any((channel) => faderControl == channel.control))
-                    .sortedBy((effectControl) => effectControl.toDisplay())
-                    .map((effectControl) => ListTile(
-                        title: Text(effectControl.toDisplay()),
-                        onTap: () => Navigator.of(context).pop(effectControl)))
-                    .toList()),
-            actions: [PopupAction("Cancel", () => Navigator.of(context).pop())]));
+            closeButton: true,
+            items: effectControls
+                .whereNot((faderControl) =>
+                    effect.channels.any((channel) => faderControl == channel.control))
+                .sortedBy((effectControl) => effectControl.toDisplay())
+                .map((effectControl) =>
+                    SelectItem(title: effectControl.toDisplay(), value: effectControl))
+                .toList()));
     if (control == null) {
       return;
     }

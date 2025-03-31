@@ -15,16 +15,19 @@ class HelpGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
     return PropertyGroup(title: "Help", children: [
-      BlocBuilder<NodesBloc, PipelineState>(
-        builder: (context, state) {
-          var node = state.availableNodes.firstWhereOrNull((n) => n.type == nodeType);
-          var text = node?.description;
-          if (hoveredSetting != null) {
-            String settingId = hoveredSetting!.toSnakeCase();
-            text = node?.settings.firstWhereOrNull((element) => element.name == settingId)?.description ?? text;
-          }
-          return Text(text ?? "", style: textTheme.bodySmall);
-        },
+      Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: BlocBuilder<NodesBloc, PipelineState>(
+          builder: (context, state) {
+            var node = state.availableNodes.firstWhereOrNull((n) => n.type == nodeType);
+            var text = node?.description;
+            if (hoveredSetting != null) {
+              String settingId = hoveredSetting!.toSnakeCase();
+              text = node?.settings.firstWhereOrNull((element) => element.name == settingId)?.description ?? text;
+            }
+            return Text(text ?? "", style: textTheme.bodySmall);
+          },
+        ),
       )
     ]);
   }

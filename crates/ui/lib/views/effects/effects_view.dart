@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
@@ -59,6 +60,7 @@ class _EffectsViewState extends State<EffectsView> {
       },
       child: BlocBuilder<EffectsBloc, EffectState>(builder: (context, effects) {
         return Column(
+          spacing: PANEL_GAP_SIZE,
           children: [
             Expanded(
               child: Panel(
@@ -99,7 +101,8 @@ class _EffectsViewState extends State<EffectsView> {
               ),
             ),
             if (effect != null)
-              Expanded(
+              SizedBox(
+                height: GRID_4_SIZE * 5,
                   child: EffectEditor(
                 effect: effect!,
                 onUpdateStepValue: _onUpdateStepValue,

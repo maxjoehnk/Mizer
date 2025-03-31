@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' show LogicalKeyboardKey;
+import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/widgets/field/text_input.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
-import 'package:mizer/widgets/text_field_focus.dart';
 
 class PopupInput extends StatefulWidget {
   final String title;
@@ -28,8 +29,9 @@ class _PopupInputState extends State<PopupInput> {
       },
       child: PopupContainer(
           title: widget.title,
-          child: TextFieldFocus(
-            child: TextField(
+          child: Field(
+            big: true,
+            child: TextInput(
               controller: _controller,
               autofocus: true,
               textInputAction: TextInputAction.done,

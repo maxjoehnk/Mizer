@@ -16,7 +16,7 @@ impl<'a> Command<'a> for StoreInPresetCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Store in Preset {}", self.id)
+        format!("Store {}", self.id)
     }
 
     fn apply(

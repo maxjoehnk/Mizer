@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/views/nodes/widgets/properties/fields/field.dart';
+import 'package:mizer/widgets/field/field.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/property_group.dart';
 
 class NodeInputsPane extends StatelessWidget {
@@ -60,18 +60,21 @@ class PortField extends StatelessWidget {
   Widget build(BuildContext context) {
     if (connections.length == 1) {
       return Field(label: port, child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: EdgeInsets.only(right: 8),
+          alignment: Alignment.centerRight,
           child: Text(connections.first, style: TextStyle(color: Colors.grey.shade300))));
     }
 
     if (connections.isNotEmpty) {
       return Field(label: port, child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          padding: EdgeInsets.only(right: 8),
+          alignment: Alignment.centerRight,
           child: Text("${connections.length} connections".i18n, style: TextStyle(color: Colors.grey.shade300))));
     }
 
     return Field(label: port, child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+        padding: EdgeInsets.only(right: 8),
+        alignment: Alignment.centerRight,
         child: Text("None".i18n, style: TextStyle(color: Colors.grey.shade500))));
   }
 }

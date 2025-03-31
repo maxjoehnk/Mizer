@@ -43,16 +43,18 @@ const Session$json = const {
   '1': 'Session',
   '2': const [
     const {'1': 'file_path', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'filePath', '17': true},
-    const {'1': 'devices', '3': 2, '4': 3, '5': 11, '6': '.mizer.session.SessionDevice', '10': 'devices'},
-    const {'1': 'project_history', '3': 3, '4': 3, '5': 9, '10': 'projectHistory'},
+    const {'1': 'project', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'project', '17': true},
+    const {'1': 'devices', '3': 3, '4': 3, '5': 11, '6': '.mizer.session.SessionDevice', '10': 'devices'},
+    const {'1': 'project_history', '3': 4, '4': 3, '5': 9, '10': 'projectHistory'},
   ],
   '8': const [
     const {'1': '_file_path'},
+    const {'1': '_project'},
   ],
 };
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEiAKCWZpbGVfcGF0aBgBIAEoCUgAUghmaWxlUGF0aIgBARI2CgdkZXZpY2VzGAIgAygLMhwubWl6ZXIuc2Vzc2lvbi5TZXNzaW9uRGV2aWNlUgdkZXZpY2VzEicKD3Byb2plY3RfaGlzdG9yeRgDIAMoCVIOcHJvamVjdEhpc3RvcnlCDAoKX2ZpbGVfcGF0aA==');
+final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEiAKCWZpbGVfcGF0aBgBIAEoCUgAUghmaWxlUGF0aIgBARIdCgdwcm9qZWN0GAIgASgJSAFSB3Byb2plY3SIAQESNgoHZGV2aWNlcxgDIAMoCzIcLm1pemVyLnNlc3Npb24uU2Vzc2lvbkRldmljZVIHZGV2aWNlcxInCg9wcm9qZWN0X2hpc3RvcnkYBCADKAlSDnByb2plY3RIaXN0b3J5QgwKCl9maWxlX3BhdGhCCgoIX3Byb2plY3Q=');
 @$core.Deprecated('Use sessionDeviceDescriptor instead')
 const SessionDevice$json = const {
   '1': 'SessionDevice',

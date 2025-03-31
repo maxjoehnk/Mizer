@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/widgets/list_item.dart';
+
+import '../../nodes/widgets/properties/fields/text_field.dart';
 
 class FixtureSelector extends StatefulWidget {
   final FixtureDefinition? definition;
@@ -43,13 +46,11 @@ class _FixtureSelectorState extends State<FixtureSelector> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          child: TextField(
+          child: TextPropertyField(
+            big: true,
             autofocus: true,
-            decoration: InputDecoration(
-              labelText: "Search",
-              hintText: "Search",
-              prefixIcon: Icon(Icons.search),
-            ),
+            label: "Search",
+            value: search ?? "",
             onChanged: (value) {
               setState(() {
                 search = value;
@@ -108,16 +109,14 @@ class _FixtureSelectorState extends State<FixtureSelector> {
   FixtureColumnEntry _manufacturerItem(_ManufacturerGroup manufacturer) {
     var text = manufacturer.name;
     var selected = manufacturer.name == this._manufacturerName;
-    var child = Container(
-      color: selected ? Colors.black26 : null,
-      child: ListTile(
-        title: Text(text),
-        subtitle: Text("${manufacturer.definitions.length} fixtures"),
-        onTap: () => setState(() {
-          _setManufacturer(manufacturer.name);
-          mode = null;
-        }),
-      ),
+    var child = ListItem.twoLines(
+      selected: selected,
+      title: text,
+      subtitle: "${manufacturer.definitions.length} fixtures",
+      onTap: () => setState(() {
+        _setManufacturer(manufacturer.name);
+        mode = null;
+      }),
     );
 
     return FixtureColumnEntry(child: child, text: text);
@@ -125,16 +124,14 @@ class _FixtureSelectorState extends State<FixtureSelector> {
 
   FixtureColumnEntry _definitionItem(FixtureDefinition definition) {
     var selected = definition.id == this.definition?.id;
-    var child = Container(
-      color: selected ? Colors.black26 : null,
-      child: ListTile(
-          onTap: () => setState(() {
-                this.definition = definition;
-                mode = null;
-              }),
-          title: Text(definition.name),
-          subtitle: Text(definition.provider)),
-    );
+    var child = ListItem.twoLines(
+        selected: selected,
+        title: definition.name,
+        subtitle: definition.provider,
+        onTap: () => setState(() {
+              this.definition = definition;
+              mode = null;
+            }));
 
     return FixtureColumnEntry(child: child, text: definition.name);
   }
@@ -142,15 +139,13 @@ class _FixtureSelectorState extends State<FixtureSelector> {
   FixtureColumnEntry _modeItem(FixtureMode mode) {
     var text = mode.name;
     var selected = this.mode?.name == mode.name;
-    var child = Container(
-      color: selected ? Colors.black26 : null,
-      child: ListTile(
-        title: Text(text),
-        onTap: () {
-          setState(() => this.mode = mode);
-          widget.onSelect(this.definition!, mode);
-        },
-      ),
+    var child = ListItem.text(
+      text,
+      selected: selected,
+      onTap: () {
+        setState(() => this.mode = mode);
+        widget.onSelect(this.definition!, mode);
+      },
     );
 
     return FixtureColumnEntry(child: child, text: text);

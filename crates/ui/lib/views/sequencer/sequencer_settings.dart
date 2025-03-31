@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/boolean_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
 Map<FixturePriority, String> PriorityLabels = {
@@ -20,28 +23,38 @@ class SequencerSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      SequenceSetting(
-          label: "WrapAround",
-          child: Switch(
-              value: sequence.wrapAround,
-              onChanged: (wrapAround) => _updateWrapAround(context, wrapAround))),
-      SequenceSetting(
+    return Row(crossAxisAlignment: CrossAxisAlignment.stretch, spacing: 8, children: [
+      SizedBox(
+        width: GRID_8_SIZE,
+        child: BooleanField(
+          label: "Wrap Around",
+          vertical: true,
+          value: sequence.wrapAround,
+          onUpdate: (wrapAround) => _updateWrapAround(context, wrapAround),
+        ),
+      ),
+      SizedBox(
+        width: GRID_8_SIZE,
+        child: BooleanField(
           label: "Stop on Last Cue",
-          child: Switch(
-              value: sequence.stopOnLastCue,
-              onChanged: (stopOnLastCue) => _updateStopOnLastCue(context, stopOnLastCue))),
-      SequenceSetting(
-          label: "Priority",
-          child: MizerSelect<FixturePriority>(
-              value: sequence.priority,
-              options: FixturePriority.values
+          vertical: true,
+          value: sequence.stopOnLastCue,
+          onUpdate: (stopOnLastCue) => _updateStopOnLastCue(context, stopOnLastCue),
+        ),
+      ),
+      SizedBox(
+          width: GRID_8_SIZE,
+          child: EnumField<FixturePriority>(
+              label: "Priority",
+              vertical: true,
+              initialValue: sequence.priority,
+              items: FixturePriority.values
                   .map((p) => SelectOption(
                         label: PriorityLabels[p]!,
                         value: p,
                       ))
                   .toList(),
-              onChanged: (priority) => _updatePriority(context, priority)))
+              onUpdate: (priority) => _updatePriority(context, priority))),
     ]);
   }
 

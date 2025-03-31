@@ -14,7 +14,14 @@ impl<'a> Command<'a> for SelectFixturesCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Select Fixtures {:?}", self.fixtures)
+        format!(
+            "Select {}",
+            self.fixtures
+                .iter()
+                .map(|f| f.to_string())
+                .collect::<Vec<_>>()
+                .join(", ")
+        )
     }
 
     fn apply(

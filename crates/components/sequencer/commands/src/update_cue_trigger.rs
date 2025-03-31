@@ -17,7 +17,7 @@ impl<'a> Command<'a> for UpdateCueTriggerCommand {
 
     fn label(&self) -> String {
         format!(
-            "Update Cue Trigger '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Trigger = {:?}",
             self.sequence_id, self.cue_id, self.trigger
         )
     }

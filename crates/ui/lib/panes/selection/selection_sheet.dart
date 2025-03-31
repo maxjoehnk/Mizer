@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
-import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
@@ -70,15 +70,17 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       child: Panel(
           label: "Selection",
           child: Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(PANEL_GAP_SIZE),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: PANEL_GAP_SIZE,
               children: [
                 SizedBox(
-                  height: 48,
+                  height: GRID_2_SIZE,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
+                      spacing: PANEL_GAP_SIZE,
                         children: widget.fixtures
                             .map((f) => FixtureSelectionItem(
                                   fixture: f,
@@ -87,45 +89,48 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                             .toList()),
                   ),
                 ),
-                SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: NumberField(
-                      label: "Block Size",
-                      value: widget.state.blockSize,
-                      min: 0,
-                      maxHint: 10,
-                      onUpdate: (v) {
-                        var api = context.read<ProgrammerApi>();
-                        api.updateBlockSize(v.toInt());
-                      }),
-                ),
-                SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: NumberField(
-                      label: "Groups",
-                      value: widget.state.groups,
-                      min: 0,
-                      maxHint: 10,
-                      onUpdate: (v) {
-                        var api = context.read<ProgrammerApi>();
-                        api.updateGroups(v.toInt());
-                      }),
-                ),
-                SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: NumberField(
-                      label: "Wings",
-                      value: widget.state.wings,
-                      min: 0,
-                      maxHint: 10,
-                      onUpdate: (v) {
-                        var api = context.read<ProgrammerApi>();
-                        api.updateWings(v.toInt());
-                      }),
-                ),
+                Spacer(),
+                SizedBox(
+                  height: INPUT_FIELD_HEIGHT,
+                  child: Row(spacing: PANEL_GAP_SIZE, children: [
+                    Expanded(
+                      child: NumberField(
+                          label: "Block Size",
+                          value: widget.state.blockSize,
+                          bar: false,
+                          min: 0,
+                          maxHint: 10,
+                          onUpdate: (v) {
+                            var api = context.read<ProgrammerApi>();
+                            api.updateBlockSize(v.toInt());
+                          }),
+                    ),
+                    Expanded(
+                      child: NumberField(
+                          label: "Groups",
+                          value: widget.state.groups,
+                          bar: false,
+                          min: 0,
+                          maxHint: 10,
+                          onUpdate: (v) {
+                            var api = context.read<ProgrammerApi>();
+                            api.updateGroups(v.toInt());
+                          }),
+                    ),
+                    Expanded(
+                      child: NumberField(
+                          label: "Wings",
+                          value: widget.state.wings,
+                          bar: false,
+                          min: 0,
+                          maxHint: 10,
+                          onUpdate: (v) {
+                            var api = context.read<ProgrammerApi>();
+                            api.updateWings(v.toInt());
+                          }),
+                    ),
+                  ]),
+                )
               ],
             ),
           ),
@@ -232,15 +237,14 @@ class _FixtureSelectionItemState extends State<FixtureSelectionItem>
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 48,
-        height: 48,
-        padding: const EdgeInsets.all(2),
+        width: GRID_2_SIZE,
+        height: GRID_2_SIZE,
         child: Container(
             decoration: ShapeDecoration(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
+                borderRadius: BorderRadius.circular(BORDER_RADIUS),
                 side: BorderSide(
-                  color: Colors.grey.shade800,
+                  color: Grey700,
                   width: 2,
                   style: BorderStyle.solid,
                 ),

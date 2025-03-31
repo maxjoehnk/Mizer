@@ -18,7 +18,7 @@ impl<'a> Command<'a> for AssignProgrammerToGroupCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        format!("Add Fixtures to Group {}", self.group_id)
+        format!("Store {}", self.group_id)
     }
 
     fn apply(

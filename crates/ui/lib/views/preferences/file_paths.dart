@@ -1,15 +1,16 @@
 import 'package:collection/collection.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/widgets/field/field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/path_field.dart';
+import 'package:mizer/widgets/controls/button.dart';
 
 import 'preferences.dart';
-import 'settings_button.dart';
 
 class PathSettings extends StatelessWidget {
   const PathSettings({Key? key}) : super(key: key);
@@ -17,88 +18,88 @@ class PathSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
-      return Column(mainAxisSize: MainAxisSize.min, children: [
-        PreferencesCategory(label: "Media", children: [
-          PathSettingRow(
-              label: "Storage".i18n,
-              value: settings.paths.mediaStorage,
-              update: (path) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.mediaStorage = path;
+      return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: ListView(shrinkWrap: true, children: [
+          PreferencesCategory(label: "Media", children: [
+            PathField(label: "Storage".i18n, value: settings.paths.mediaStorage, onUpdate: (path) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.mediaStorage = path;
 
-                  return settings;
-                }));
-              }),
+                    return settings;
+                  }));
+                }),
+          ]),
+          PreferencesCategory(label: "Midi Device Profiles".i18n, children: [
+            PathsSetting(
+                paths: settings.paths.midiDeviceProfiles,
+                update: (paths) {
+                  SettingsBloc bloc = context.read();
+                  bloc.add(UpdateSettings((settings) {
+                    settings.paths.midiDeviceProfiles.clear();
+                    settings.paths.midiDeviceProfiles.addAll(paths);
+
+                    return settings;
+                  }));
+                }),
+          ]),
+          PreferencesCategory(label: "Fixture Libraries".i18n, children: [
+            PreferencesCategory(label: "Open Fixture Library".i18n, subcategory: true, children: [
+              PathsSetting(
+                  paths: settings.paths.openFixtureLibrary,
+                  update: (paths) {
+                    SettingsBloc bloc = context.read();
+                    bloc.add(UpdateSettings((settings) {
+                      settings.paths.openFixtureLibrary.clear();
+                      settings.paths.openFixtureLibrary.addAll(paths);
+
+                      return settings;
+                    }));
+                  }),
+            ]),
+            PreferencesCategory(label: "QLC+".i18n, subcategory: true, children: [
+              PathsSetting(
+                  paths: settings.paths.qlcplus,
+                  update: (paths) {
+                    SettingsBloc bloc = context.read();
+                    bloc.add(UpdateSettings((settings) {
+                      settings.paths.qlcplus.clear();
+                      settings.paths.qlcplus.addAll(paths);
+
+                      return settings;
+                    }));
+                  }),
+            ]),
+            PreferencesCategory(label: "GDTF".i18n, subcategory: true, children: [
+              PathsSetting(
+                  paths: settings.paths.gdtf,
+                  update: (paths) {
+                    SettingsBloc bloc = context.read();
+                    bloc.add(UpdateSettings((settings) {
+                      settings.paths.gdtf.clear();
+                      settings.paths.gdtf.addAll(paths);
+
+                      return settings;
+                    }));
+                  }),
+            ]),
+            PreferencesCategory(label: "Mizer".i18n, subcategory: true, children: [
+              PathsSetting(
+                  paths: settings.paths.mizer,
+                  update: (paths) {
+                    SettingsBloc bloc = context.read();
+                    bloc.add(UpdateSettings((settings) {
+                      settings.paths.mizer.clear();
+                      settings.paths.mizer.addAll(paths);
+
+                      return settings;
+                    }));
+                  }),
+            ]),
+          ]),
         ]),
-        PreferencesCategory(label: "Midi Device Profiles".i18n, children: [
-          PathsSetting(
-              paths: settings.paths.midiDeviceProfiles,
-              update: (paths) {
-                SettingsBloc bloc = context.read();
-                bloc.add(UpdateSettings((settings) {
-                  settings.paths.midiDeviceProfiles.clear();
-                  settings.paths.midiDeviceProfiles.addAll(paths);
-
-                  return settings;
-                }));
-              }),
-        ]),
-        PreferencesCategory(label: "Fixture Libraries".i18n, children: [
-          PreferencesCategory(label: "Open Fixture Library".i18n, subcategory: true, children: [
-            PathsSetting(
-                paths: settings.paths.openFixtureLibrary,
-                update: (paths) {
-                  SettingsBloc bloc = context.read();
-                  bloc.add(UpdateSettings((settings) {
-                    settings.paths.openFixtureLibrary.clear();
-                    settings.paths.openFixtureLibrary.addAll(paths);
-
-                    return settings;
-                  }));
-                }),
-          ]),
-          PreferencesCategory(label: "QLC+".i18n, subcategory: true, children: [
-            PathsSetting(
-                paths: settings.paths.qlcplus,
-                update: (paths) {
-                  SettingsBloc bloc = context.read();
-                  bloc.add(UpdateSettings((settings) {
-                    settings.paths.qlcplus.clear();
-                    settings.paths.qlcplus.addAll(paths);
-
-                    return settings;
-                  }));
-                }),
-          ]),
-          PreferencesCategory(label: "GDTF".i18n, subcategory: true, children: [
-            PathsSetting(
-                paths: settings.paths.gdtf,
-                update: (paths) {
-                  SettingsBloc bloc = context.read();
-                  bloc.add(UpdateSettings((settings) {
-                    settings.paths.gdtf.clear();
-                    settings.paths.gdtf.addAll(paths);
-
-                    return settings;
-                  }));
-                }),
-          ]),
-          PreferencesCategory(label: "Mizer".i18n, subcategory: true, children: [
-            PathsSetting(
-                paths: settings.paths.mizer,
-                update: (paths) {
-                  SettingsBloc bloc = context.read();
-                  bloc.add(UpdateSettings((settings) {
-                    settings.paths.mizer.clear();
-                    settings.paths.mizer.addAll(paths);
-
-                    return settings;
-                  }));
-                }),
-          ]),
-        ]),
-      ]);
+      );
     });
   }
 }
@@ -111,32 +112,27 @@ class PathsSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
+    return Column(spacing: 4, mainAxisSize: MainAxisSize.min, children: [
       ...paths.mapEnumerated((path, i) {
-        return Row(
-          children: [
-            Expanded(
-              child: PathSetting(
-                  value: path,
-                  update: (p) {
-                    update(paths.mapEnumerated((p, j) => i == j ? p : p).toList());
-                  }),
-            ),
-            SettingsButton(
-                symmetric: true,
-                child: Icon(
-                  Icons.close,
-                  size: 12,
-                ),
-                onTap: () {
-                  update(paths.whereIndexed((_, j) => i != j).toList());
-                })
-          ],
-        );
+        return PathField(
+            value: path,
+            onUpdate: (p) {
+              update(paths.mapEnumerated((p, j) => i == j ? p : p).toList());
+            },
+            actions: [
+              FieldAction(
+                  child: Icon(
+                    Icons.close,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    update(paths.whereIndexed((_, j) => i != j).toList());
+                  })
+            ]);
       }),
-      SettingsButton(
+      MizerButton(
           child: Text("Add Path"),
-          onTap: () async {
+          onClick: () async {
             final path = await getDirectoryPath();
             if (path == null) {
               return;
@@ -144,97 +140,5 @@ class PathsSetting extends StatelessWidget {
             update([...paths, path]);
           })
     ]);
-  }
-}
-
-class PathSettingRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final Function(String) update;
-
-  const PathSettingRow({required this.label, required this.value, required this.update, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: SettingsRow(label, [Expanded(child: PathSetting(value: value, update: update))]),
-    );
-  }
-}
-
-class PathSetting extends StatefulWidget {
-  final String value;
-  final Function(String) update;
-
-  const PathSetting({required this.value, required this.update, super.key});
-
-  @override
-  State<PathSetting> createState() => _PathSettingState();
-}
-
-class _PathSettingState extends State<PathSetting> {
-  final FocusNode focusNode = FocusNode(debugLabel: "PathSetting");
-  final TextEditingController controller = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    controller.text = widget.value;
-  }
-
-  @override
-  void didUpdateWidget(PathSetting oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.value == widget.value || widget.value == controller.text) {
-      return;
-    }
-    controller.text = widget.value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyMedium!;
-
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Row(children: [
-        Expanded(
-            flex: 2,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade800,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              padding: const EdgeInsets.all(2),
-              child: EditableText(
-                focusNode: focusNode,
-                controller: controller,
-                textAlign: TextAlign.start,
-                cursorColor: Colors.black87,
-                backgroundCursorColor: Colors.black12,
-                style: textStyle,
-                selectionColor: Colors.black38,
-                keyboardType: TextInputType.text,
-                autofocus: true,
-                inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
-                onChanged: (path) => widget.update(path),
-              ),
-            )),
-        Container(
-          width: 4,
-        ),
-        SettingsButton(
-            child: Text("..."),
-            onTap: () async {
-              final path = await getDirectoryPath(initialDirectory: widget.value);
-              if (path == null) {
-                return;
-              }
-              widget.update(path);
-            })
-      ]),
-    );
   }
 }

@@ -15,7 +15,7 @@ impl<'a> Command<'a> for UpdateSequenceWrapAroundCommand {
 
     fn label(&self) -> String {
         format!(
-            "Set Wrap Around of Sequence '{}' to {}",
+            "Set Sequence {} Wrap Around = {}",
             self.sequence_id, self.wrap_around
         )
     }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
-import 'package:mizer/views/presets/dialogs/preset_name_dialog.dart';
-import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/widgets/inputs/decoration.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/high_contrast_text.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -19,13 +18,7 @@ class EffectButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PresetButton.effect(
-        child: Container(
-          width: 48,
-          height: 48,
-          child: Center(child: Icon(MdiIcons.sineWave, size: 32)),
-        ),
-        effect: effect);
+    return PresetButton.effect(child: Container(), effect: effect);
   }
 }
 
@@ -48,20 +41,19 @@ class _GroupButtonState extends State<GroupButton>
         MenuItem(label: "Delete", action: () => _deleteGroup()),
       ]),
       child: PresetButton.group(
-        child: Container(
-          width: 48,
-          height: 48,
-          child: Center(child: Icon(MdiIcons.spotlightBeam)),
-        ),
+        child: Container(),
         group: widget.group,
         active: programmerState.activeGroups.contains(widget.group.id),
+        onTap: (BuildContext context) {
+          var programmerApi = context.read<ProgrammerApi>();
+          programmerApi.selectGroup(widget.group.id);
+        },
       ),
     );
   }
 
   void _renameGroup() async {
-    var name = await showDialog(
-        context: context, builder: (context) => GroupNameDialog(name: widget.group.name));
+    var name = await context.showRenameDialog(name: widget.group.name);
     if (name == null) {
       return;
     }
@@ -80,7 +72,8 @@ class ColorButton extends StatelessWidget {
   final Preset preset;
   final void Function()? onTap;
 
-  const ColorButton({required this.color, required this.preset, Key? key, this.onTap}) : super(key: key);
+  const ColorButton({required this.color, required this.preset, Key? key, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,20 +83,20 @@ class ColorButton extends StatelessWidget {
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
-          child: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(24)),
-          ),
-          preset: preset,
-          onTap: onTap,
+        child: Container(
+          width: GRID_3_SIZE,
+          height: GRID_3_SIZE,
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(GRID_3_SIZE)),
+        ),
+        preset: preset,
+        onTap: onTap,
       ),
     );
   }
 
   void _renamePreset(BuildContext context) async {
     var name = await showDialog(
-        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+        context: context, builder: (context) => NameDialog(name: preset.label));
     if (name == null) {
       return;
     }
@@ -123,7 +116,8 @@ class PositionButton extends StatelessWidget {
   final double? tilt;
   final void Function()? onTap;
 
-  const PositionButton({required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
+  const PositionButton(
+      {required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
       : super(key: key);
 
   @override
@@ -134,24 +128,23 @@ class PositionButton extends StatelessWidget {
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
-          child: Container(
-            margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
-            width: pan == null ? 24 : 48,
-            height: tilt == null ? 24 : 48,
-            padding: const EdgeInsets.all(4),
-            decoration:
-                BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
-            child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
-          ),
-          preset: preset,
-          onTap: onTap,
+        child: Container(
+          margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
+          width: pan == null ? 24 : 48,
+          height: tilt == null ? 24 : 48,
+          padding: const EdgeInsets.all(4),
+          decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
+          child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
+        ),
+        preset: preset,
+        onTap: onTap,
       ),
     );
   }
 
   void _renamePreset(BuildContext context) async {
     var name = await showDialog(
-        context: context, builder: (context) => PresetNameDialog(name: preset.label));
+        context: context, builder: (context) => NameDialog(name: preset.label));
     if (name == null) {
       return;
     }
@@ -211,7 +204,8 @@ class PresetButton extends StatelessWidget {
     this.onTap = (context) => onTap();
   }
 
-  PresetButton.preset({required this.child, required this.preset, this.active, void Function()? onTap, Key? key})
+  PresetButton.preset(
+      {required this.child, required this.preset, this.active, void Function()? onTap, Key? key})
       : label = preset!.label,
         effect = null,
         group = null {
@@ -232,74 +226,37 @@ class PresetButton extends StatelessWidget {
     };
   }
 
-  PresetButton.group({required this.child, required this.group, this.active, Key? key})
+  PresetButton.group(
+      {required this.child, required this.group, required this.onTap, this.active, Key? key})
       : label = group!.name,
         preset = null,
-        effect = null {
-    this.onTap = (BuildContext context) {
-      var programmerApi = context.read<ProgrammerApi>();
-      programmerApi.selectGroup(group!.id);
-    };
-  }
+        effect = null {}
 
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
 
-    return Hoverable(
-        onTap: () => this.onTap(context),
-        builder: (hovered) {
-          return Container(
-            width: 72,
-            height: 80,
-            decoration: ControlDecoration(
-                color: hovered ? Colors.grey.shade900 : Colors.black, hover: hovered),
-            child: Stack(
-              children: [
-                if (active == true)
-                  Align(
-                      child: Container(
-                        height: 30,
-                        width: 72,
-                        decoration: BoxDecoration(
-                          color: Colors.deepOrange.shade900,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                        margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 2),
-                      ),
-                      alignment: Alignment.bottomCenter),
-                Container(
-                  margin: const EdgeInsets.only(top: 4, left: 4, right: 4),
-                  alignment: Alignment.topCenter,
-                  child: Container(width: 48, height: 48, child: child),
-                ),
-                Align(
-                    child: Stack(
-                      children: [
-                        Text(label,
-                            style: textTheme.bodySmall!.copyWith(
-                              foreground: Paint()
-                                ..color = Colors.black
-                                ..strokeWidth = 3
-                                ..style = PaintingStyle.stroke,
-                            ),
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            maxLines: 2),
-                        Text(label,
-                            style: textTheme.bodySmall!,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            maxLines: 2),
-                      ],
-                    ),
-                    alignment: Alignment.bottomCenter),
-                if (id != null)
-                  Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
-              ],
+    return PanelGridTile(
+      onTap: () => this.onTap(context),
+      active: active ?? false,
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Stack(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: Container(width: GRID_3_SIZE, height: GRID_3_SIZE, child: child),
             ),
-          );
-        });
+            Align(
+              alignment: Alignment.center,
+              child: HighContrastText(label, textAlign: TextAlign.center),
+            ),
+            if (id != null)
+              Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+          ],
+        ),
+      ),
+    );
   }
 
   String? get id {

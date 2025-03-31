@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/widgets/text_field_focus.dart';
 import 'package:provider/provider.dart';
-
-import 'transport_controls.dart';
 
 class CommandLineInput extends StatefulWidget {
   const CommandLineInput({super.key});
@@ -26,9 +25,8 @@ class _CommandLineInputState extends State<CommandLineInput> {
     return Container(
       height: TRANSPORT_CONTROLS_HEIGHT - 8,
       decoration: BoxDecoration(
-        color: Colors.white10,
-        borderRadius: BorderRadius.circular(2),
-        border: Border.all(color: Colors.black26),
+        color: Grey700,
+        borderRadius: BorderRadius.circular(BORDER_RADIUS),
       ),
       margin: const EdgeInsets.all(4),
       padding: const EdgeInsets.all(4),

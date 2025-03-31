@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
-
-const double MAX_DIALOG_WIDTH = 512;
-const double MAX_DIALOG_HEIGHT = 512;
-const double TILE_SIZE = 96;
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 
 class SelectSequenceDialog extends StatelessWidget {
   final SequencerApi api;
@@ -17,8 +15,9 @@ class SelectSequenceDialog extends StatelessWidget {
     return ActionDialog(
       title: "Select Sequence",
       onConfirm: () => _newSequence(context),
+      padding: false,
       content: Container(
-        width: MAX_DIALOG_WIDTH,
+        width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
         child: FutureBuilder(
             future: api.getSequences(),
@@ -26,15 +25,11 @@ class SelectSequenceDialog extends StatelessWidget {
               List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
               sequences.sort((lhs, rhs) => lhs.id - rhs.id);
 
-              return GridView.count(
-                  crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  children: sequences
-                      .map((s) => Tile(
-                            title: s.id.toString(),
-                            child: Center(child: Text(s.name)),
-                            onClick: () => Navigator.of(context).pop(s),
+              return PanelGrid(children: sequences
+                      .map((s) => PanelGridTile.idWithText(
+                            id: s.id.toString(),
+                            text: s.name,
+                            onTap: () => Navigator.of(context).pop(s),
                           ))
                       .toList());
             }),

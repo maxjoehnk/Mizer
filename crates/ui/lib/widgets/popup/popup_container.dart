@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/consts.dart';
 import 'package:mizer/widgets/hoverable.dart';
+import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/tabs.dart';
 
-final Color BACKGROUND = Colors.grey.shade900;
-final Color ACTION_COLOR = Colors.grey.shade800;
-final Color BORDER_COLOR = Colors.grey.shade700;
+final Color BACKGROUND = Grey900;
+final Color ACTION_COLOR = Grey800;
 
 class PopupContainer extends StatelessWidget {
   final String title;
@@ -11,25 +13,43 @@ class PopupContainer extends StatelessWidget {
   final double? width;
   final double? height;
   final List<PopupAction>? actions;
+  final bool padding;
+  final bool closeButton;
 
-  const PopupContainer({required this.title, this.child, this.width, this.height, this.actions, Key? key}) : super(key: key);
+  const PopupContainer(
+      {required this.title,
+      this.child,
+      this.width,
+      this.height,
+      this.actions,
+      this.padding = true,
+      this.closeButton = true,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const border = BorderSide(color: Grey600, width: 2);
+    TextTheme textTheme = Theme.of(context).textTheme;
+
     return Container(
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
           color: BACKGROUND,
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: BORDER_COLOR, width: 4),
+          border: Border(
+            left: border,
+            right: border,
+            bottom: border,
+          ),
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
           boxShadow: [
             BoxShadow(
-              blurRadius: 2,
+              blurRadius: 4,
               spreadRadius: 2,
-              color: Colors.black26
-              // offset: Offset(2, 2),
+              color: Colors.black26,
+              offset: Offset(2, 2),
             )
-          ]
-      ),
+          ]),
       width: this.width,
       height: this.height,
       child: IntrinsicWidth(
@@ -38,16 +58,33 @@ class PopupContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-                padding: const EdgeInsets.all(8.0),
-                color: BORDER_COLOR,
-                child: Text(title, textAlign: TextAlign.center)),
+                color: Grey600,
+                height: PANEL_HEADER_HEIGHT,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+                      child: Text(title, textAlign: TextAlign.center, style: textTheme.titleMedium),
+                    ),
+                    Spacer(),
+                    if (closeButton) PanelHeaderDivider(),
+                    if (closeButton)
+                      PanelHeaderButton.icon(
+                          icon: Icons.close, onTap: () => Navigator.of(context).pop()),
+                  ],
+                )),
             _child,
-            if (actions != null) Container(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: actions!.map(_action).toList()),
-            )
+            if (actions != null)
+              Container(
+                padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                child: Row(
+                    spacing: PANEL_GAP_SIZE,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: actions!.map(_action).toList()),
+              )
           ],
         ),
       ),
@@ -56,8 +93,8 @@ class PopupContainer extends StatelessWidget {
 
   Widget get _child {
     var innerChild = Container(
-      padding: const EdgeInsets.all(8.0),
       child: child,
+      padding: padding ? const EdgeInsets.all(8) : null,
     );
     if (height != null) {
       return Expanded(child: innerChild);
@@ -66,17 +103,17 @@ class PopupContainer extends StatelessWidget {
   }
 
   Widget _action(PopupAction action) {
-    return  Hoverable(
+    return Hoverable(
       onTap: action.onClick,
       builder: (hover) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 1),
-          color: hover ? BORDER_COLOR : ACTION_COLOR,
-          padding: const EdgeInsets.all(8),
+          height: GRID_2_SIZE,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          color: hover ? Grey500 : Grey600,
+          alignment: Alignment.center,
           child: Text(action.text)),
     );
   }
 }
-
 
 class PopupAction {
   final String text;

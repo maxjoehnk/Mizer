@@ -268,6 +268,10 @@ impl Mizer {
                     .into_string()
                     .expect("Could not convert path to string")
             }),
+            project_name: self.project_path.as_ref().and_then(|path| {
+                path.file_stem()
+                    .and_then(|name| name.to_str().map(|name| name.to_string()))
+            }),
             project_history: history
                 .into_iter()
                 .map(|history| history.path.to_string_lossy().to_string())

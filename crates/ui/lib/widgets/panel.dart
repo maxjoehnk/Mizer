@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/ui.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
-import 'package:mizer/widgets/text_field_focus.dart';
+import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
+import 'field/text_input.dart';
 import 'hoverable.dart';
 
 class Panel extends StatefulWidget {
@@ -91,12 +93,17 @@ class _PanelState extends State<Panel> {
 
   @override
   Widget build(BuildContext context) {
+    const border = BorderSide(color: Grey700, width: 2);
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          border: Border.all(color: Colors.grey.shade800, width: 2)),
-      margin: const EdgeInsets.all(2),
+          color: Grey900,
+          borderRadius: BorderRadius.circular(BORDER_RADIUS),
+          border: Border(
+            left: border,
+            right: border,
+            bottom: border,
+          )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -123,66 +130,57 @@ class _PanelState extends State<Panel> {
     if (widget.label == null && widget.tabs == null) {
       return Container();
     }
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-        color: Colors.grey.shade800,
-        height: 32,
+        color: Grey700,
+        height: PANEL_HEADER_HEIGHT,
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               if (widget.label != null)
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
-                  color: Colors.grey.shade800,
-                  child: Text(widget.label!, textAlign: TextAlign.start),
+                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
+                  child:
+                      Text(widget.label!, textAlign: TextAlign.start, style: textTheme.titleMedium),
                 ),
-              if (widget.label != null) Container(width: 8),
-              ...(this.widget.tabs ?? [])
-                  .asMap()
-                  .map((i, e) => MapEntry(
-                      i,
-                      e.header(
+              ...(this.widget.tabs ?? []).mapEnumerated((e, i) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PanelHeaderDivider(),
+                  e.header(
                         this.activeIndex == i,
                         () => _onSelectTab(i),
-                      )))
-                  .values,
+                      ),
+                ],
+              )),
+              if (this.widget.tabs != null) PanelHeaderDivider(),
               if (widget.canAdd) tab.AddTabButton(onClick: widget.onAdd!),
+              if (widget.canAdd) PanelHeaderDivider(),
               Spacer(),
               ...(widget.trailingHeader ?? []),
-              if (widget.onSearch != null)
+              if (widget.onSearch != null) SizedBox(width: PANEL_GAP_SIZE, child: PanelHeaderDivider()),
+              if (widget.onSearch != null && searchExpanded)
                 Expanded(
-                  child: Container(
-                    color: searchExpanded ? Colors.black12 : null,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (searchExpanded)
-                          Expanded(
-                              child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: 200),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 4.0),
-                                    child: TextFieldFocus(
-                                      child: TextField(
-                                        controller: searchController,
-                                        autofocus: true,
-                                      ),
-                                    ),
-                                  ))),
-                        MizerIconButton(
-                            icon: Icons.search,
-                            label: "Search",
-                            onClick: () => setState(() {
-                                  this.searchExpanded = !this.searchExpanded;
-                                  if (!this.searchExpanded) {
-                                    this.searchController.clear();
-                                  }
-                                })),
-                      ],
-                    ),
-                  ),
-                )
+                    child: Container(
+                        color: Grey800,
+                        constraints: BoxConstraints(maxWidth: 200),
+                        padding: const EdgeInsets.only(left: 4.0),
+                        alignment: Alignment.centerLeft,
+                        child: TextInput(
+                          controller: searchController,
+                          textAlign: TextAlign.start,
+                          autofocus: true,
+                        ))),
+              if (widget.onSearch != null)
+                PanelHeaderButton.icon(
+                    icon: Icons.search,
+                    onTap: () => setState(() {
+                      this.searchExpanded = !this.searchExpanded;
+                      if (!this.searchExpanded) {
+                        this.searchController.clear();
+                      }
+                    })),
             ]));
   }
 
@@ -207,6 +205,21 @@ class _PanelState extends State<Panel> {
     setState(() {
       this.activeIndex = index;
     });
+  }
+}
+
+class PanelHeaderDivider extends StatelessWidget {
+  const PanelHeaderDivider({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: PANEL_GAP_SIZE,
+      height: GRID_2_SIZE,
+      color: Grey900,
+    );
   }
 }
 
@@ -238,8 +251,9 @@ class PanelActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.grey.shade800,
+        padding: const EdgeInsets.all(GRID_GAP_SIZE),
         child: Column(
+          spacing: GRID_GAP_SIZE,
           children: actions.map((a) => PanelAction(action: a)).toList(),
         ),
       ),
@@ -254,7 +268,11 @@ class PanelAction extends StatelessWidget {
   final double height;
 
   const PanelAction(
-      {required this.action, this.hotkeys, this.width = 64, this.height = 64, super.key});
+      {required this.action,
+      this.hotkeys,
+      this.width = GRID_4_SIZE,
+      this.height = PANEL_ACTION_SIZE,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -267,16 +285,21 @@ class PanelAction extends StatelessWidget {
       onLongPressEnd: (event) => _openActionMenu(context, event.globalPosition),
       child: Hoverable(
         disabled: action.disabled || !hasAction,
-        onTap: hasAction ? () {
-          if (action.onClick != null) {
-            action.onClick!();
-          }
-          if (action.command != null) {
-            context.read<UiApi>().commandLineExecute(action.command!);
-          }
-        } : null,
+        onTap: hasAction
+            ? () {
+                if (action.onClick != null) {
+                  action.onClick!();
+                }
+                if (action.command != null) {
+                  context.read<UiApi>().commandLineExecute(action.command!);
+                }
+              }
+            : null,
         builder: (hovered) => Container(
-          color: _getBackground(hovered),
+          decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: ActionBorder, width: 2)),
+            color: _getBackground(hovered),
+          ),
           height: height,
           width: width,
           child: Column(
@@ -316,12 +339,15 @@ class PanelAction extends StatelessWidget {
 
   Color _getBackground(bool hovered) {
     if (action.disabled == true) {
-      return Colors.black12;
+      return ActionDisabled;
     }
-    if (action.activated || hovered) {
-      return Colors.white10;
+    if (action.activated) {
+      return ActionActive;
     }
-    return Colors.transparent;
+    if (hovered) {
+      return ActionHover;
+    }
+    return ActionBackground;
   }
 
   Color _getColor() {

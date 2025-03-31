@@ -14,7 +14,7 @@ impl<'a> Command<'a> for CallPresetCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        "Call Preset".to_string()
+        format!("Call {}", self.preset_id)
     }
 
     fn apply(

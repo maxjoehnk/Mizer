@@ -17,7 +17,7 @@ impl<'a> Command<'a> for UpdateCueTriggerTimeCommand {
 
     fn label(&self) -> String {
         format!(
-            "Update Cue Trigger Time '{}.{}' to '{:?}'",
+            "Set Cue {}.{} Trigger Time = {:?}",
             self.sequence_id, self.cue_id, self.trigger_time
         )
     }

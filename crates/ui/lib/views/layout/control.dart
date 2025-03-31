@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
@@ -28,7 +29,6 @@ import 'controls/timecode.dart';
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
 import 'dialogs/edit_sequencer_control_behavior_dialog.dart';
-import 'dialogs/rename_control_dialog.dart';
 
 class LayoutControlView extends StatefulWidget {
   final LayoutsRefPointer pointer;
@@ -95,10 +95,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
             MenuItem(label: "Add MIDI Mapping", action: () => _addMappingForControl(context))
           ]),
       ]),
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: RepaintBoundary(child: _getControl(node, nodesApi)),
-      ),
+      child: RepaintBoundary(child: _getControl(node, nodesApi)),
     );
   }
 
@@ -139,6 +136,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
         control: widget.control,
         color: _color,
         image: _image,
+        size: widget.control.size,
       );
     } else if (node?.type == "label") {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
@@ -161,7 +159,7 @@ class _LayoutControlViewState extends State<LayoutControlView> {
   _renameControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
     String? result = await showDialog(
-        context: context, builder: (context) => RenameControlDialog(name: widget.control.label));
+        context: context, builder: (context) => NameDialog(name: widget.control.label));
     if (result != null) {
       bloc.add(
           RenameControl(layoutId: widget.layoutId, controlId: widget.control.id, name: result));

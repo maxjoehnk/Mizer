@@ -15,9 +15,10 @@ message ClientAnnouncement {
 
 message Session {
   optional string file_path = 1;
-  repeated SessionDevice devices = 2;
+  optional string project = 2;
+  repeated SessionDevice devices = 3;
   // protolint:disable:next REPEATED_FIELD_NAMES_PLURALIZED
-  repeated string project_history = 3;
+  repeated string project_history = 4;
 }
 
 message SessionDevice {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/views/patch/dialogs/group_name_dialog.dart';
 import 'package:mizer/views/patch/dialogs/group_store_mode_dialog.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
-import 'package:mizer/widgets/tile.dart';
+import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:provider/provider.dart';
 
-const double MAX_DIALOG_WIDTH = 512;
 const double MAX_DIALOG_HEIGHT = 512;
-const double TILE_SIZE = 96;
 
 class AssignFixturesToGroupDialog extends StatefulWidget {
   final PresetsBloc bloc;
@@ -57,21 +57,18 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
     return ActionDialog(
       title: "Select Group",
       onConfirm: _creating ? null : () => _newGroup(context),
+      padding: false,
       content: Container(
-          width: MAX_DIALOG_WIDTH,
+          width: MAX_TILE_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
-          child: GridView.count(
-            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-            mainAxisSpacing: 4,
-            crossAxisSpacing: 4,
-            children: widget.bloc.state.groups
-                .map((g) => Tile(
-                      title: g.id.toString(),
-                      child: Center(child: Text(g.name)),
-                      onClick: () => Navigator.of(context).pop(_InternalDialogResult(g)),
-                    ))
-                .toList(),
-          )),
+          child: PanelGrid(
+              children: widget.bloc.state.groups
+                  .map((g) => PanelGridTile.idWithText(
+                        id: "G${g.id}",
+                        text: g.name,
+                        onTap: () => Navigator.of(context).pop(_InternalDialogResult(g)),
+                      ))
+                  .toList())),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
         PopupAction("New Group", () => _newGroup(context))
@@ -81,7 +78,7 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
 
   _newGroup(BuildContext context) async {
     setState(() => _creating = true);
-    String? name = await showDialog(context: context, builder: (context) => GroupNameDialog());
+    String? name = await context.showRenameDialog();
     setState(() => _creating = false);
     if (name == null) {
       return;
@@ -96,7 +93,7 @@ class _InternalDialogResult {
   final Group group;
   final bool newGroup;
 
-  _InternalDialogResult(this.group, { this.newGroup = false });
+  _InternalDialogResult(this.group, {this.newGroup = false});
 }
 
 class AssignFixturesDialogResult {

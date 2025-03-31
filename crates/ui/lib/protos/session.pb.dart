@@ -154,20 +154,25 @@ class ClientAnnouncement extends $pb.GeneratedMessage {
 class Session extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Session', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.session'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath')
-    ..pc<SessionDevice>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'projectHistory')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'project')
+    ..pc<SessionDevice>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
+    ..pPS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'projectHistory')
     ..hasRequiredFields = false
   ;
 
   Session._() : super();
   factory Session({
     $core.String? filePath,
+    $core.String? project,
     $core.Iterable<SessionDevice>? devices,
     $core.Iterable<$core.String>? projectHistory,
   }) {
     final _result = create();
     if (filePath != null) {
       _result.filePath = filePath;
+    }
+    if (project != null) {
+      _result.project = project;
     }
     if (devices != null) {
       _result.devices.addAll(devices);
@@ -208,10 +213,19 @@ class Session extends $pb.GeneratedMessage {
   void clearFilePath() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<SessionDevice> get devices => $_getList(1);
+  $core.String get project => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set project($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProject() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProject() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$core.String> get projectHistory => $_getList(2);
+  $core.List<SessionDevice> get devices => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.String> get projectHistory => $_getList(3);
 }
 
 class SessionDevice extends $pb.GeneratedMessage {

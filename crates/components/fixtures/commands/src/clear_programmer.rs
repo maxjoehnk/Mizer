@@ -11,7 +11,7 @@ impl<'a> Command<'a> for ClearProgrammerCommand {
     type Result = ();
 
     fn label(&self) -> String {
-        "Clear Programmer".to_string()
+        "Clear".to_string()
     }
 
     fn apply(

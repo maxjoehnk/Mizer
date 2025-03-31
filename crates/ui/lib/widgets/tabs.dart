@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/widgets/controls/button.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 import 'panel.dart';
 
@@ -51,7 +51,7 @@ class _TabsState extends State<Tabs> {
       children: [
         Container(
           color: Colors.grey.shade800,
-          height: 32,
+          height: GRID_2_SIZE,
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             ...this
                 .widget
@@ -115,6 +115,17 @@ class Tab {
   }
 }
 
+class AddTabButton extends StatelessWidget {
+  final Function() onClick;
+
+  AddTabButton({required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return PanelHeaderButton.icon(icon: Icons.add, onTap: onClick);
+  }
+}
+
 class TabHeader extends StatelessWidget {
   final String label;
   final Function() onSelect;
@@ -124,28 +135,42 @@ class TabHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MizerButton(
-      active: selected,
-      onClick: onSelect,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Text(this.label),
-      ),
-    );
+    return Hoverable(
+        onTap: onSelect,
+        builder: (hovered) => Container(
+              height: GRID_2_SIZE,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              color: selected ? Grey500 : (hovered ? Grey700 : Grey800),
+              child: Text(label),
+            ));
   }
 }
 
-class AddTabButton extends StatelessWidget {
-  final Function() onClick;
+class PanelHeaderButton extends StatelessWidget {
+  final Function() onTap;
+  final Widget? child;
 
-  AddTabButton({required this.onClick});
+  const PanelHeaderButton({required this.onTap, this.child, super.key});
+
+  factory PanelHeaderButton.icon({ required IconData icon, required Function() onTap }) {
+    return PanelHeaderButton(
+      child: Icon(icon),
+      onTap: onTap,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MizerIconButton(
-      icon: Icons.add,
-      onClick: this.onClick,
-      label: "Add Tab",
-    );
+    return Hoverable(
+        onTap: onTap,
+        builder: (hovered) => Container(
+          height: GRID_2_SIZE,
+          width: GRID_2_SIZE,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          color: hovered ? Grey700 : Grey800,
+          child: child,
+        ));
   }
 }

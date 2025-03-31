@@ -133,6 +133,9 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
   }
 
   _store() async {
+    if (widget.isEmpty) {
+      return;
+    }
     var storeTarget = await selectStoreTarget(context);
     if (storeTarget == null) {
       return;

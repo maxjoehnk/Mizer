@@ -66,6 +66,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
               borderRadius: BorderRadius.all(Radius.circular(2)),
               boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: 40,
@@ -150,6 +151,7 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ConstrainedBox(
           constraints: BoxConstraints(maxHeight: 300, minWidth: 150, maxWidth: widget.showDescription ? 300 : 450),

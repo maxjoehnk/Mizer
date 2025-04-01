@@ -33,10 +33,22 @@ class TextPropertyField extends StatefulWidget {
 }
 
 class _TextPropertyFieldState extends State<TextPropertyField> {
+  final FocusNode focusNode = FocusNode(debugLabel: "TextPropertyField");
   final TextEditingController controller = TextEditingController();
 
   _TextPropertyFieldState(String value) {
     this.controller.text = value;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(() {
+      var value = controller.text;
+      if (widget.value != value) {
+        widget.onUpdate?.call(value);
+      }
+    });
   }
 
   @override
@@ -56,6 +68,7 @@ class _TextPropertyFieldState extends State<TextPropertyField> {
         actions: widget.actions,
         vertical: widget.multiline,
         child: TextInput(
+          focusNode: focusNode,
           readOnly: widget.readOnly,
           placeholder: widget.placeholder,
           controller: controller,

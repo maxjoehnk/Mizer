@@ -6,6 +6,7 @@ import 'package:mizer/widgets/text_field_focus.dart';
 
 class TextInput extends StatelessWidget {
   final bool autofocus;
+  final FocusNode? focusNode;
   final String? value;
   final TextEditingController? controller;
   final String? placeholder;
@@ -19,6 +20,7 @@ class TextInput extends StatelessWidget {
   const TextInput(
       {super.key,
       this.autofocus = false,
+      this.focusNode,
       this.value,
       this.controller,
       this.placeholder,
@@ -38,6 +40,7 @@ class TextInput extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: multiline ? 8 : 0),
       child: TextFieldFocus(
         child: TextField(
+          focusNode: focusNode,
           readOnly: readOnly,
           decoration: InputDecoration(
               border: InputBorder.none,

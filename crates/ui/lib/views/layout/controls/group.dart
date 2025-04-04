@@ -28,25 +28,12 @@ class _GroupControlState extends State<GroupControl>
   Widget build(BuildContext context) {
     return BlocBuilder<PresetsBloc, PresetsState>(builder: (context, state) {
       return PanelGridTile(
+        color: widget.color,
         onTap: () => _callGroup(),
           active: programmerState.activeGroups.contains(_groupId),
           child: Center(
               child: HighContrastText(_getLabel(state), textAlign: TextAlign.center)
       ));
-      return Container(
-        decoration: ControlDecoration(
-            color: widget.color, highlight: programmerState.activeGroups.contains(_groupId)),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => _callGroup(),
-            child: Center(
-                child: Text(_getLabel(state),
-                    textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
-          ),
-        ),
-      );
     });
   }
 

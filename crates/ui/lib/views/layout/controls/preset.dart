@@ -28,6 +28,7 @@ class _PresetControlState extends State<PresetControl>
   Widget build(BuildContext context) {
     return BlocBuilder<PresetsBloc, PresetsState>(builder: (context, state) {
       return PanelGridTile(
+        color: widget.color,
         onTap: () => _callPreset(),
         child: Center(
             child: HighContrastText(_getLabel(state), textAlign: TextAlign.center))

@@ -104,7 +104,7 @@ class _EncoderInputState extends State<EncoderInput> {
               ))),
           child: Container(
             decoration: BoxDecoration(
-              color: Grey700
+              color: widget.color ?? Grey700
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -28,7 +28,7 @@ indexmap = "2.2"
 tracing = "0.1"
 palette = "0.7"
 rand = "0.8"
-itertools = "0.13"
+itertools = "0.14"
 enum-iterator = "2.0"
 rayon = "1.10"
 

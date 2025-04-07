@@ -1,8 +1,8 @@
 use hard_xml::XmlRead;
-
+use serde_derive::Serialize;
 use crate::types::*;
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "GDTF")]
 pub struct GdtfFixtureDefinition {
     #[xml(attr = "DataVersion")]
@@ -11,7 +11,7 @@ pub struct GdtfFixtureDefinition {
     pub fixture_type: FixtureType,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "FixtureType")]
 pub struct FixtureType {
     #[xml(attr = "Name")]
@@ -40,7 +40,7 @@ pub struct FixtureType {
     pub dmx_modes: DmxModes,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "AttributeDefinitions")]
 pub struct AttributeDefinitions {
     #[xml(child = "ActivationGroups")]
@@ -51,28 +51,28 @@ pub struct AttributeDefinitions {
     pub attributes: Attributes,
 }
 
-#[derive(Default, Debug, Clone, XmlRead)]
+#[derive(Default, Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "ActivationGroups")]
 pub struct ActivationGroups {
     #[xml(child = "ActivationGroup")]
     pub groups: Vec<ActivationGroup>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "ActivationGroup")]
 pub struct ActivationGroup {
     #[xml(attr = "Name")]
     pub name: String,
 }
 
-#[derive(Default, Debug, Clone, XmlRead)]
+#[derive(Default, Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "FeatureGroups")]
 pub struct FeatureGroups {
     #[xml(child = "FeatureGroup")]
     pub groups: Vec<FeatureGroup>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "FeatureGroup")]
 pub struct FeatureGroup {
     #[xml(attr = "Name")]
@@ -83,21 +83,21 @@ pub struct FeatureGroup {
     pub features: Vec<Feature>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Feature")]
 pub struct Feature {
     #[xml(attr = "Name")]
     pub name: String,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Attributes")]
 pub struct Attributes {
     #[xml(child = "Attribute")]
     pub attributes: Vec<Attribute>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Attribute")]
 pub struct Attribute {
     #[xml(attr = "Name")]
@@ -114,14 +114,14 @@ pub struct Attribute {
     pub physical_unit: PhysicalUnit,
 }
 
-#[derive(Default, Debug, Clone, XmlRead)]
+#[derive(Default, Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Wheels")]
 pub struct Wheels {
     #[xml(child = "Wheel")]
     pub wheels: Vec<Wheel>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Wheel")]
 pub struct Wheel {
     #[xml(attr = "Name")]
@@ -130,7 +130,7 @@ pub struct Wheel {
     pub slots: Vec<WheelSlot>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "Slot")]
 pub struct WheelSlot {
     #[xml(attr = "Name")]
@@ -141,34 +141,36 @@ pub struct WheelSlot {
     pub media_file_name: Option<String>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "PhysicalDescriptions")]
 pub struct PhysicalDescriptions {}
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "DMXModes")]
 pub struct DmxModes {
     #[xml(child = "DMXMode")]
     pub modes: Vec<DmxMode>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "DMXMode")]
 pub struct DmxMode {
     #[xml(attr = "Name")]
     pub name: String,
     #[xml(child = "DMXChannels", default)]
     pub channels: DmxChannels,
+    #[xml(attr = "Geometry")]
+    pub geometry: String,
 }
 
-#[derive(Default, Debug, Clone, XmlRead)]
+#[derive(Default, Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "DMXChannels")]
 pub struct DmxChannels {
     #[xml(child = "DMXChannel")]
     pub channels: Vec<DmxChannel>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "DMXChannel")]
 pub struct DmxChannel {
     #[xml(attr = "DMXBreak")]
@@ -186,7 +188,7 @@ pub struct DmxChannel {
     pub logical_channel: LogicalChannel,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "LogicalChannel")]
 pub struct LogicalChannel {
     #[xml(attr = "Attribute")]

@@ -12,6 +12,7 @@ use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::find_path;
 
 pub use self::definition::GdtfFixtureDefinition;
+pub use self::types::*;
 
 mod conversion;
 mod definition;
@@ -105,12 +106,13 @@ impl FixtureLibraryProvider for GdtfProvider {
     }
 }
 
-struct GdtfArchive {
+#[derive(Debug, Clone)]
+pub struct GdtfArchive {
     definition: GdtfFixtureDefinition,
 }
 
 impl GdtfArchive {
-    fn read(path: &Path) -> anyhow::Result<Self> {
+    pub fn read(path: &Path) -> anyhow::Result<Self> {
         let file = std::fs::File::open(path)?;
         let mut reader = ZipArchive::new(file)?;
 
@@ -121,5 +123,11 @@ impl GdtfArchive {
         let definition = GdtfFixtureDefinition::from_str(&description)?;
 
         Ok(Self { definition })
+    }
+}
+
+impl From<GdtfArchive> for GdtfFixtureDefinition {
+    fn from(archive: GdtfArchive) -> Self {
+        archive.definition
     }
 }

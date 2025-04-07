@@ -1,6 +1,7 @@
 use std::str::FromStr;
+use serde_derive::Serialize;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub enum PhysicalUnit {
     None,
     Percent,

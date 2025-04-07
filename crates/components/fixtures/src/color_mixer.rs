@@ -1,10 +1,10 @@
 use palette::{FromColor, Hsv, Srgb};
-
+use serde::Serialize;
 use crate::definition::ColorGroup;
 use crate::fixture::{ChannelValue, IChannelType};
 use crate::FixturePriority;
 
-#[derive(Debug, Clone, Default, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize)]
 pub struct ColorMixer {
     red: ChannelValue,
     green: ChannelValue,

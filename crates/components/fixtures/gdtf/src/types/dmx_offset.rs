@@ -1,8 +1,9 @@
 use mizer_fixtures::definition::ChannelResolution;
 use std::num::ParseIntError;
 use std::str::FromStr;
+use serde_derive::Serialize;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct DmxChannelOffset(Option<Vec<u16>>);
 
 impl DmxChannelOffset {

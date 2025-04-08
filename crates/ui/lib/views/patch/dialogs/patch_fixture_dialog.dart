@@ -259,6 +259,16 @@ class _PatchSettingsState extends State<PatchSettings> {
       required this.id,
       required this.count});
 
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // Emit an initial update so confirming the pre-filled values works properly
+      this._emitUpdate();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -269,7 +279,7 @@ class _PatchSettingsState extends State<PatchSettings> {
           big: true,
           label: "Name",
           value: name,
-          onUpdate: (value) {
+          onChanged: (value) {
             name = value;
             _emitUpdate();
           },

@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use serde_derive::Serialize;
+use std::str::FromStr;
 
 #[derive(Debug, Clone, Serialize)]
 pub enum PhysicalUnit {

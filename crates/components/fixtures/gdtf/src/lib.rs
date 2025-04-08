@@ -1,10 +1,10 @@
+use anyhow::Context;
+use hard_xml::XmlRead;
+use rayon::prelude::*;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::io::Read;
 use std::path::Path;
-use anyhow::Context;
-use hard_xml::XmlRead;
-use rayon::prelude::*;
 use zip::ZipArchive;
 
 use mizer_fixtures::definition::*;
@@ -74,7 +74,7 @@ impl FixtureLibraryProvider for GdtfProvider {
                     Err(err) => {
                         tracing::error!("Error parsing gdtf definition {err:?}");
                         None
-                    },
+                    }
                 })
                 .collect::<HashMap<String, GdtfFixtureDefinition>>();
             self.definitions = definitions;

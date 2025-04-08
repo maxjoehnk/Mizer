@@ -1,6 +1,6 @@
 use mizer_fixtures::definition::ChannelResolution;
-use std::str::FromStr;
 use serde_derive::Serialize;
+use std::str::FromStr;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct DmxChannelOffset(pub Option<Vec<u16>>);
@@ -37,9 +37,7 @@ impl FromStr for DmxChannelOffset {
             .collect::<Result<Vec<_>, Self::Err>>();
 
         match offsets {
-            Err(err) => {
-                Err(err.context(format!("Parsing offset {s}")))
-            }
+            Err(err) => Err(err.context(format!("Parsing offset {s}"))),
             Ok(offsets) => Ok(Self(Some(offsets))),
         }
     }

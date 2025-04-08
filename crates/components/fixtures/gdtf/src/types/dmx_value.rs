@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use serde_derive::Serialize;
+use std::str::FromStr;
 
 #[derive(Default, Debug, Clone, Serialize)]
 pub struct DmxValue(Option<InnerValue>);

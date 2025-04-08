@@ -1,6 +1,6 @@
+use crate::types::*;
 use hard_xml::XmlRead;
 use serde_derive::Serialize;
-use crate::types::*;
 
 #[derive(Debug, Clone, XmlRead, Serialize)]
 #[xml(tag = "GDTF")]
@@ -202,7 +202,7 @@ impl DmxChannel {
             }
 
             DmxChannelOffset(Some(offsets))
-        }else {
+        } else {
             DmxChannelOffset(None)
         }
     }

@@ -1,9 +1,9 @@
 use eframe::egui::Context;
 use eframe::{egui, Frame};
 use egui_json_tree::JsonTree;
-use serde_derive::Serialize;
 use mizer_fixtures::definition::FixtureDefinition;
 use mizer_gdtf_provider::{GdtfArchive, GdtfFixtureDefinition, GeometryFeatures, IGeometry};
+use serde_derive::Serialize;
 
 fn main() {
     let path = std::env::args().nth(1).expect("No path provided");
@@ -25,14 +25,15 @@ fn main() {
     let app = GdtfDebuggerApp {
         gdtf_definition,
         mizer_definition,
-        geometry
+        geometry,
     };
 
     eframe::run_native(
         "GDTF Debugger",
         eframe::NativeOptions::default(),
         Box::new(|_cc| Ok(Box::new(app))),
-    ).unwrap();
+    )
+    .unwrap();
 }
 
 #[derive(Debug, Serialize)]

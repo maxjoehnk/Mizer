@@ -156,19 +156,26 @@ impl IGeometry for ResolvedGeometry {
 
     fn children(&self) -> Vec<&dyn IGeometry> {
         match &self.geometry {
-            ResolvedGeometryType::Geometry { children, .. } => children
-                .iter()
-                .map(|g| g as &dyn IGeometry)
-                .collect(),
-            ResolvedGeometryType::Beam { children, .. } => children.iter().map(|g| g as &dyn IGeometry).collect(),
-            ResolvedGeometryType::Axis { children, .. } => children.iter().map(|g| g as &dyn IGeometry).collect(),
-            ResolvedGeometryType::GeometryReference { geometry } => vec![geometry.as_ref() as &dyn IGeometry],
+            ResolvedGeometryType::Geometry { children, .. } => {
+                children.iter().map(|g| g as &dyn IGeometry).collect()
+            }
+            ResolvedGeometryType::Beam { children, .. } => {
+                children.iter().map(|g| g as &dyn IGeometry).collect()
+            }
+            ResolvedGeometryType::Axis { children, .. } => {
+                children.iter().map(|g| g as &dyn IGeometry).collect()
+            }
+            ResolvedGeometryType::GeometryReference { geometry } => {
+                vec![geometry.as_ref() as &dyn IGeometry]
+            }
         }
     }
 
     fn has_beams(&self) -> bool {
         match &self.geometry {
-            ResolvedGeometryType::Geometry { children, .. } => children.iter().any(|g| g.has_beams()),
+            ResolvedGeometryType::Geometry { children, .. } => {
+                children.iter().any(|g| g.has_beams())
+            }
             ResolvedGeometryType::Beam { .. } => true,
             ResolvedGeometryType::Axis { children, .. } => children.iter().any(|g| g.has_beams()),
             ResolvedGeometryType::GeometryReference { geometry } => geometry.has_beams(),
@@ -211,7 +218,10 @@ pub trait IGeometry {
         features
     }
 
-    fn lowest_parent(&self) -> Option<&dyn IGeometry> where Self: Sized {
+    fn lowest_parent(&self) -> Option<&dyn IGeometry>
+    where
+        Self: Sized,
+    {
         let mut root: &dyn IGeometry = self;
 
         let mut children = root.children();
@@ -273,9 +283,7 @@ impl GeometryType {
 
                 ResolvedGeometry {
                     name: geometry.name.clone(),
-                    geometry: ResolvedGeometryType::Geometry {
-                        children,
-                    },
+                    geometry: ResolvedGeometryType::Geometry { children },
                     dmx_breaks: Default::default(),
                 }
             }
@@ -288,9 +296,7 @@ impl GeometryType {
 
                 ResolvedGeometry {
                     name: beam.name.clone(),
-                    geometry: ResolvedGeometryType::Beam {
-                        children,
-                    },
+                    geometry: ResolvedGeometryType::Beam { children },
                     dmx_breaks: Default::default(),
                 }
             }
@@ -303,9 +309,7 @@ impl GeometryType {
 
                 ResolvedGeometry {
                     name: axis.name.clone(),
-                    geometry: ResolvedGeometryType::Axis {
-                        children,
-                    },
+                    geometry: ResolvedGeometryType::Axis { children },
                     dmx_breaks: Default::default(),
                 }
             }
@@ -318,7 +322,7 @@ impl GeometryType {
                 ResolvedGeometry {
                     name: reference.name.clone(),
                     geometry: ResolvedGeometryType::GeometryReference {
-                        geometry: Box::new(geometry)
+                        geometry: Box::new(geometry),
                     },
                     dmx_breaks: Default::default(),
                 }
@@ -335,16 +339,8 @@ impl Geometries {
 
 #[derive(Clone, Debug, Serialize)]
 pub enum ResolvedGeometryType {
-    Geometry {
-        children: Vec<ResolvedGeometry>,
-    },
-    Beam {
-        children: Vec<ResolvedGeometry>,
-    },
-    Axis {
-        children: Vec<ResolvedGeometry>,
-    },
-    GeometryReference {
-        geometry: Box<ResolvedGeometry>,
-    }
+    Geometry { children: Vec<ResolvedGeometry> },
+    Beam { children: Vec<ResolvedGeometry> },
+    Axis { children: Vec<ResolvedGeometry> },
+    GeometryReference { geometry: Box<ResolvedGeometry> },
 }

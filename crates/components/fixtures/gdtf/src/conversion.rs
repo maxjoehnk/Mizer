@@ -38,7 +38,14 @@ struct GeometryStateBuilder {
 }
 
 impl GeometryStateBuilder {
-    fn add_channel(&mut self, features: &GdtfFeatures, attributes: &GdtfAttributes, name: String, channel: &DmxChannel, dmx_breaks: &[ReferenceDmxBreak]) {
+    fn add_channel(
+        &mut self,
+        features: &GdtfFeatures,
+        attributes: &GdtfAttributes,
+        name: String,
+        channel: &DmxChannel,
+        dmx_breaks: &[ReferenceDmxBreak],
+    ) {
         if !channel.offset.is_virtual() {
             let channel_definition = FixtureChannelDefinition {
                 name: name.clone(),
@@ -180,14 +187,20 @@ impl GdtfState {
 
     fn build_fixture_mode(&self, mode: DmxMode) -> Option<FixtureMode> {
         let Some(mode_geometry) = self.geometries.get_root(&mode.geometry) else {
-            tracing::warn!("Geometry {} not found in fixture mode {}", mode.geometry, mode.name);
+            tracing::warn!(
+                "Geometry {} not found in fixture mode {}",
+                mode.geometry,
+                mode.name
+            );
             return None;
         };
 
         let mut channels_per_geometry: HashMap<String, Vec<DmxChannel>> = Default::default();
 
         for channel in mode.channels.channels.iter() {
-            let channel_geometry = channels_per_geometry.entry(channel.geometry.clone()).or_default();
+            let channel_geometry = channels_per_geometry
+                .entry(channel.geometry.clone())
+                .or_default();
             channel_geometry.push(channel.clone());
         }
 
@@ -196,7 +209,9 @@ impl GdtfState {
         let root_geometry = mode_geometry.root_features();
         let mut controls = Default::default();
         for geometry in root_geometry.features() {
-            let geometry_channels = channels_per_geometry.remove(&geometry.name).unwrap_or_default();
+            let geometry_channels = channels_per_geometry
+                .remove(&geometry.name)
+                .unwrap_or_default();
             let mut builder = GeometryStateBuilder::default();
             for channel in &geometry_channels {
                 builder.add_channel(
@@ -220,20 +235,30 @@ impl GdtfState {
             let children = self.visit_children(&parent_name, parent, &channels_per_geometry);
 
             for (i, (name, controls, dmx_channels)) in children.into_iter().enumerate() {
-                let sub_fixture = SubFixtureDefinition::new(
-                    i as u32 + 1,
-                    name,
-                    controls
-                );
+                let sub_fixture = SubFixtureDefinition::new(i as u32 + 1, name, controls);
                 sub_fixtures.push(sub_fixture);
                 channels.extend(dmx_channels);
             }
         }
 
-        Some(FixtureMode::new(mode.name, channels, controls, sub_fixtures))
+        Some(FixtureMode::new(
+            mode.name,
+            channels,
+            controls,
+            sub_fixtures,
+        ))
     }
 
-    fn visit_children(&self, prefix: &str, parent: &dyn IGeometry, channels_per_geometry: &HashMap<String, Vec<DmxChannel>>) -> Vec<(String, FixtureControls<SubFixtureControlChannel>, Vec<FixtureChannelDefinition>)> {
+    fn visit_children(
+        &self,
+        prefix: &str,
+        parent: &dyn IGeometry,
+        channels_per_geometry: &HashMap<String, Vec<DmxChannel>>,
+    ) -> Vec<(
+        String,
+        FixtureControls<SubFixtureControlChannel>,
+        Vec<FixtureChannelDefinition>,
+    )> {
         let mut sub_fixtures = Vec::default();
         for child in parent.children() {
             if let Some(child_definition) = self.visit_child(prefix, child, channels_per_geometry) {
@@ -252,7 +277,16 @@ impl GdtfState {
         sub_fixtures
     }
 
-    fn visit_child(&self, prefix: &str, child: &dyn IGeometry, channels_per_geometry: &HashMap<String, Vec<DmxChannel>>) -> Option<(String, FixtureControls<SubFixtureControlChannel>, Vec<FixtureChannelDefinition>)> {
+    fn visit_child(
+        &self,
+        prefix: &str,
+        child: &dyn IGeometry,
+        channels_per_geometry: &HashMap<String, Vec<DmxChannel>>,
+    ) -> Option<(
+        String,
+        FixtureControls<SubFixtureControlChannel>,
+        Vec<FixtureChannelDefinition>,
+    )> {
         tracing::trace!("Visiting child: {}", child.name());
         let geometry = channels_per_geometry.get(child.name())?;
         if geometry.is_empty() {
@@ -263,7 +297,10 @@ impl GdtfState {
             builder.add_channel(
                 &self.features,
                 &self.attributes,
-                format!("{prefix}{}_{}", channel.geometry, channel.logical_channel.attribute),
+                format!(
+                    "{prefix}{}_{}",
+                    channel.geometry, channel.logical_channel.attribute
+                ),
                 channel,
                 &child.feature().dmx_breaks,
             );
@@ -274,7 +311,7 @@ impl GdtfState {
         Some((
             format!("{}{}", prefix, child.name()),
             sub_fixture_controls,
-            geometry_channels.channels
+            geometry_channels.channels,
         ))
     }
 }

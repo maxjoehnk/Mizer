@@ -100,6 +100,29 @@ message SequenceNameRequest {
   string name = 2;
 }
 
+message AssignSequencePortRequest {
+  uint32 sequence = 1;
+  uint32 port = 2;
+}
+
+message RemoveSequencePortRequest {
+  uint32 sequence = 1;
+  uint32 port = 2;
+}
+
+message SetSequencePortValueRequest {
+  uint32 sequence = 1;
+  uint32 port = 2;
+  uint32 cue = 3;
+  double value = 4;
+}
+
+message ClearSequencePortValueRequest {
+  uint32 sequence = 1;
+  uint32 port = 2;
+  uint32 cue = 3;
+}
+
 message Sequences {
   repeated Sequence sequences = 1;
 }
@@ -109,9 +132,10 @@ message Sequence {
   string name = 2;
   repeated Cue cues = 3;
   repeated mizer.fixtures.FixtureId fixtures = 4;
-  bool wrap_around = 5;
-  bool stop_on_last_cue = 6;
-  FixturePriority priority = 7;
+  repeated uint32 ports = 5;
+  bool wrap_around = 6;
+  bool stop_on_last_cue = 7;
+  FixturePriority priority = 8;
 }
 
 message Cue {
@@ -124,6 +148,7 @@ message Cue {
   CueTimings position_timings = 7;
   CueTimings color_timings = 8;
   repeated CueEffect effects = 9;
+  repeated CuePort ports = 10;
 }
 
 message CueEffect {
@@ -131,6 +156,11 @@ message CueEffect {
   repeated mizer.fixtures.FixtureId fixtures = 2;
   optional double effect_offsets = 3;
   optional double effect_rate = 4;
+}
+
+message CuePort {
+  uint32 port_id = 1;
+  double value = 2;
 }
 
 message CueTimings {

@@ -8,7 +8,8 @@ use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::Runtime;
+use mizer_module::{Inject, Runtime};
+use mizer_node_ports::NodePortState;
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
@@ -90,6 +91,8 @@ impl Mizer {
         osc_manager.new_project();
         let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
         surface_registry.new_project();
+        let ports_state = injector.inject::<NodePortState>();
+        ports_state.new_project();
         self.runtime.new_project();
         self.send_session_update();
         self.runtime
@@ -142,6 +145,8 @@ impl Mizer {
                 surface_registry
                     .load(&project)
                     .context("loading surfaces")?;
+                let ports_state = injector.inject::<NodePortState>();
+                ports_state.load(&project).context("loading ports")?;
             }
             self.media_server_api
                 .load(&project)
@@ -212,6 +217,8 @@ impl Mizer {
             effects_engine.save(&mut project);
             let surface_registry = injector.get::<SurfaceRegistry>().unwrap();
             surface_registry.save(&mut project);
+            let ports_state = injector.inject::<NodePortState>();
+            ports_state.save(&mut project);
             self.media_server_api.save(&mut project);
             project.save_file(path)?;
             tracing::info!("Saving project...Done");

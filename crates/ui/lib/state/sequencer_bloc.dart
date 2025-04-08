@@ -12,6 +12,12 @@ class FetchSequences extends SequencerCommand {}
 
 class AddSequence extends SequencerCommand {}
 
+class AddCue extends SequencerCommand {
+  final int sequence;
+
+  AddCue(this.sequence);
+}
+
 class DeleteSequence extends SequencerCommand {
   final int id;
 
@@ -112,6 +118,30 @@ class SelectCue extends SequencerCommand {
   SelectCue({required this.cue});
 }
 
+class AddPort extends SequencerCommand {
+  final int sequenceId;
+  final int portId;
+
+  AddPort({ required this.sequenceId, required this.portId });
+}
+
+class SetPortValue extends SequencerCommand {
+  final int sequenceId;
+  final int cueId;
+  final int portId;
+  final double value;
+
+  SetPortValue({ required this.sequenceId, required this.cueId, required this.portId, required this.value });
+}
+
+class ClearPortValue extends SequencerCommand {
+  final int sequenceId;
+  final int cueId;
+  final int portId;
+
+  ClearPortValue({ required this.sequenceId, required this.cueId, required this.portId });
+}
+
 @immutable
 class SequencerState {
   final List<Sequence> sequences;
@@ -150,6 +180,7 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   SequencerBloc(this.api) : super(SequencerState(sequences: [])) {
     on<FetchSequences>((event, emit) async => emit(await _fetchSequences()));
     on<AddSequence>((event, emit) async => emit(await _addSequence(event)));
+    on<AddCue>((event, emit) async => emit(await _addCue(event)));
     on<DeleteSequence>((event, emit) async => emit(await _deleteSequence(event)));
     on<UpdateCueTrigger>((event, emit) async => emit(await _updateCueTrigger(event)));
     on<UpdateCueTriggerTime>((event, emit) async => emit(await _updateCueTriggerTime(event)));
@@ -168,6 +199,9 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     on<SelectSequence>((event, emit) => emit(_selectSequence(event)));
     on<SelectCue>((event, emit) => emit(_selectCue(event)));
     on<DuplicateSequence>((event, emit) async => emit(await _duplicateSequence(event)));
+    on<AddPort>((event, emit) async => emit(await _addPort(event)));
+    on<SetPortValue>((event, emit) async => emit(await _setPortValue(event)));
+    on<ClearPortValue>((event, emit) async => emit(await _clearPortValue(event)));
     this.add(FetchSequences());
   }
 
@@ -182,7 +216,15 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
 
   Future<SequencerState> _addSequence(AddSequence event) async {
     log("adding sequence", name: "SequencerBloc");
-    await api.addSequence();
+    var sequence = await api.addSequence();
+    await api.addCue(sequence.id);
+
+    return await _fetchSequences();
+  }
+
+  Future<SequencerState> _addCue(AddCue event) async {
+    log("adding cue to sequence ${event.sequence}", name: "SequencerBloc");
+    await api.addCue(event.sequence);
 
     return await _fetchSequences();
   }
@@ -293,6 +335,27 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
 
   SequencerState _selectCue(SelectCue event) {
     return state.copyWith(selectedCueId: event.cue);
+  }
+
+  Future<SequencerState> _addPort(AddPort event) async {
+    log("adding port ${event.portId} to sequence ${event.sequenceId}", name: "SequencerBloc");
+    await api.addPort(sequenceId: event.sequenceId, portId: event.portId);
+
+    return await _fetchSequences();
+  }
+  
+  Future<SequencerState> _setPortValue(SetPortValue event) async {
+    log("setting port ${event.portId} value ${event.value} for cue ${event.cueId} in sequence ${event.sequenceId}", name: "SequencerBloc");
+    await api.setPortValue(sequenceId: event.sequenceId, cueId: event.cueId, portId: event.portId, value: event.value);
+
+    return await _fetchSequences();
+  }
+
+  Future<SequencerState> _clearPortValue(ClearPortValue event) async {
+    log("clearing port ${event.portId} for cue ${event.cueId} in sequence ${event.sequenceId}", name: "SequencerBloc");
+    await api.clearPortValue(sequenceId: event.sequenceId, cueId: event.cueId, portId: event.portId);
+
+    return await _fetchSequences();
   }
 
   void _sortSequences(Sequences sequences) {

@@ -53,7 +53,7 @@ class _GroupButtonState extends State<GroupButton>
   }
 
   void _renameGroup() async {
-    var name = await context.showRenameDialog(name: widget.group.name);
+    var name = await context.showNameDialog(name: widget.group.name);
     if (name == null) {
       return;
     }

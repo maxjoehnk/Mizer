@@ -14,6 +14,7 @@ import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
+import 'package:nativeshell/nativeshell.dart' show Window;
 
 import 'actions/actions.dart';
 import 'api/contracts/session.dart';
@@ -74,6 +75,10 @@ class ApplicationMenu extends StatelessWidget {
               MenuButton.icon(MdiIcons.redo, onTap: () async {
                 await context.read<SessionApi>().redo();
                 _refreshViews(context);
+              }),
+              const MenuPlaceholder(),
+              MenuButton.icon(Icons.monitor, onTap: () async {
+                Window.create({});
               }),
               const MenuPlaceholder(),
               MenuButton.text("Patch", active: activeView == View.FixturePatch,

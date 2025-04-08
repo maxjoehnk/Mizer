@@ -197,7 +197,7 @@ impl DmxChannel {
                 }
                 let index = reference_break.dmx_break - self.dmx_break;
                 if let Some(offset) = offsets.get_mut(index as usize) {
-                    *offset += reference_break.offset;
+                    *offset += reference_break.offset.saturating_sub(1);
                 }
             }
 

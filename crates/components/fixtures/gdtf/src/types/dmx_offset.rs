@@ -1,10 +1,9 @@
 use mizer_fixtures::definition::ChannelResolution;
-use std::num::ParseIntError;
 use std::str::FromStr;
 use serde_derive::Serialize;
 
 #[derive(Debug, Clone, Serialize)]
-pub struct DmxChannelOffset(Option<Vec<u16>>);
+pub struct DmxChannelOffset(pub Option<Vec<u16>>);
 
 impl DmxChannelOffset {
     pub fn is_virtual(&self) -> bool {
@@ -13,7 +12,7 @@ impl DmxChannelOffset {
 }
 
 impl FromStr for DmxChannelOffset {
-    type Err = ParseIntError;
+    type Err = anyhow::Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s.is_empty() {
@@ -23,6 +22,9 @@ impl FromStr for DmxChannelOffset {
             .split(',')
             .map(|offset_str| {
                 let offset = u16::from_str(offset_str)?;
+                if offset == 0 {
+                    anyhow::bail!("Offset cannot be 0");
+                }
                 let offset = offset - 1;
                 if offset > 511 {
                     // Parse again so we throw the proper error
@@ -36,8 +38,7 @@ impl FromStr for DmxChannelOffset {
 
         match offsets {
             Err(err) => {
-                eprintln!("{err:?} for input {s}");
-                Err(err)
+                Err(err.context(format!("Parsing offset {s}")))
             }
             Ok(offsets) => Ok(Self(Some(offsets))),
         }

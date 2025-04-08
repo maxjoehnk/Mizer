@@ -183,9 +183,29 @@ pub struct DmxChannel {
     pub highlight: DmxValue,
     #[xml(attr = "Geometry")]
     pub geometry: String,
-    // This is documented as a list of channels but I haven't found a file where this is the case
+    // This is documented as a list of channels, but I haven't found a file where this is the case
     #[xml(child = "LogicalChannel")]
     pub logical_channel: LogicalChannel,
+}
+
+impl DmxChannel {
+    pub fn with_offsets(&self, breaks: &[ReferenceDmxBreak]) -> DmxChannelOffset {
+        if let Some(mut offsets) = self.offset.clone().0 {
+            for reference_break in breaks {
+                if reference_break.dmx_break < self.dmx_break {
+                    continue;
+                }
+                let index = reference_break.dmx_break - self.dmx_break;
+                if let Some(offset) = offsets.get_mut(index as usize) {
+                    *offset += reference_break.offset;
+                }
+            }
+
+            DmxChannelOffset(Some(offsets))
+        }else {
+            DmxChannelOffset(None)
+        }
+    }
 }
 
 #[derive(Debug, Clone, XmlRead, Serialize)]

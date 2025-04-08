@@ -1,4 +1,3 @@
-use crate::types::DmxChannelOffset;
 use hard_xml::XmlRead;
 use serde_derive::Serialize;
 use std::collections::HashMap;
@@ -46,7 +45,7 @@ pub struct ReferenceDmxBreak {
     #[xml(attr = "DMXBreak")]
     pub dmx_break: u64,
     #[xml(attr = "DMXOffset")]
-    pub offset: DmxChannelOffset,
+    pub offset: u16,
 }
 
 impl GeometryType {
@@ -57,61 +56,6 @@ impl GeometryType {
             GeometryType::Axis(axis) => &axis.name,
             GeometryType::GeometryReference(reference) => &reference.name,
         }
-    }
-
-    fn find(&self, name: &str) -> Option<&GeometryType> {
-        if self.name() == name {
-            return Some(&self);
-        }
-        match self {
-            GeometryType::Geometry(geometry) => {
-                geometry.children.iter().filter_map(|g| g.find(name)).next()
-            }
-            GeometryType::Beam(geometry) => {
-                geometry.children.iter().filter_map(|g| g.find(name)).next()
-            }
-            GeometryType::Axis(axis) => axis.children.iter().filter_map(|g| g.find(name)).next(),
-            GeometryType::GeometryReference(_) => None,
-        }
-    }
-
-    fn first_beam(&self) -> Option<&Beam> {
-        match self {
-            GeometryType::Geometry(geometry) => {
-                geometry.children.iter().find_map(|g| g.first_beam())
-            }
-            GeometryType::Beam(beam) => Some(beam),
-            GeometryType::Axis(axis) => axis.children.iter().find_map(|g| g.first_beam()),
-            GeometryType::GeometryReference(_) => None,
-        }
-    }
-
-    pub fn count_beams(&self, should_include: &impl Fn(&str) -> bool) -> usize {
-        let mut beams = 0;
-
-        match self {
-            GeometryType::Geometry(geometry) => {
-                for child in geometry.children.iter() {
-                    beams += child.count_beams(should_include);
-                }
-            }
-            GeometryType::Beam(beam) => {
-                if should_include(&beam.name) {
-                    beams += 1;
-                }
-                for child in beam.children.iter() {
-                    beams += child.count_beams(should_include);
-                }
-            }
-            GeometryType::Axis(axis) => {
-                for child in axis.children.iter() {
-                    beams += child.count_beams(should_include);
-                }
-            }
-            GeometryType::GeometryReference(_) => {}
-        }
-
-        beams
     }
 }
 
@@ -159,102 +103,6 @@ pub struct Axis {
     pub children: Vec<GeometryType>,
 }
 
-impl Axis {
-    pub fn child_beams(&self) -> Vec<&Beam> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => vec![vec![beam], beam.child_beams()].concat(),
-                GeometryType::Geometry(geometry) => geometry.child_beams(),
-                GeometryType::Axis(axis) => axis.child_beams(),
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-
-    pub fn child_names(&self) -> Vec<&str> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => {
-                    vec![vec![beam.name.as_str()], beam.child_names()].concat()
-                }
-                GeometryType::Geometry(geometry) => {
-                    vec![vec![geometry.name.as_str()], geometry.child_names()].concat()
-                }
-                GeometryType::Axis(axis) => {
-                    vec![vec![axis.name.as_str()], axis.child_names()].concat()
-                }
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-}
-
-impl Beam {
-    pub fn child_beams(&self) -> Vec<&Beam> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => vec![vec![beam], beam.child_beams()].concat(),
-                GeometryType::Geometry(geometry) => geometry.child_beams(),
-                GeometryType::Axis(axis) => axis.child_beams(),
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-
-    pub fn child_names(&self) -> Vec<&str> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => {
-                    vec![vec![beam.name.as_str()], beam.child_names()].concat()
-                }
-                GeometryType::Geometry(geometry) => {
-                    vec![vec![geometry.name.as_str()], geometry.child_names()].concat()
-                }
-                GeometryType::Axis(axis) => {
-                    vec![vec![axis.name.as_str()], axis.child_names()].concat()
-                }
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-}
-
-impl Geometry {
-    fn child_beams(&self) -> Vec<&Beam> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => vec![vec![beam], beam.child_beams()].concat(),
-                GeometryType::Geometry(geometry) => geometry.child_beams(),
-                GeometryType::Axis(axis) => axis.child_beams(),
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-
-    fn child_names(&self) -> Vec<&str> {
-        self.children
-            .iter()
-            .flat_map(|g| match g {
-                GeometryType::Beam(beam) => {
-                    vec![vec![beam.name.as_str()], beam.child_names()].concat()
-                }
-                GeometryType::Geometry(geometry) => {
-                    vec![vec![geometry.name.as_str()], geometry.child_names()].concat()
-                }
-                GeometryType::Axis(axis) => {
-                    vec![vec![axis.name.as_str()], axis.child_names()].concat()
-                }
-                GeometryType::GeometryReference(_) => vec![],
-            })
-            .collect()
-    }
-}
-
 impl Geometries {
     pub fn get_root(&self, name: &str) -> Option<DmxModeGeometry> {
         let root = self.children.iter().find(|g| g.name() == name)?;
@@ -280,23 +128,6 @@ impl DmxModeGeometry {
         Self {
             root: ResolvedGeometry::resolve(root, geometries),
         }
-    }
-
-    // instead of first beam there should be a way to get the "parent" fixture attributes
-    // everything below should then be mapped to sub fixtures
-    //
-    // Example for Otos W3
-    // Base Yoke and Head are parent attributes
-    // Every beam in the plate is a sub fixture
-    // Every beam in the ring is a sub fixture
-    pub fn root_beam(&self) -> Option<&Beam> {
-        None
-        // self.root.first_beam()
-    }
-
-    pub fn count_beams(&self, should_include: impl Fn(&str) -> bool) -> usize {
-        0
-        // self.root.count_beams(&should_include)
     }
 }
 
@@ -344,15 +175,6 @@ impl IGeometry for ResolvedGeometry {
         }
     }
 
-    fn feature(&self) -> GeometryFeature {
-        GeometryFeature {
-            name: self.name.clone(),
-            dmx_breaks: self.dmx_breaks.clone(),
-        }
-    }
-}
-
-impl GeometryReference {
     fn feature(&self) -> GeometryFeature {
         GeometryFeature {
             name: self.name.clone(),

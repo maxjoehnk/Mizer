@@ -5,6 +5,7 @@ use mizer_node::*;
 use mizer_sequencer::Sequencer;
 
 const GO_FORWARD: &str = "Go+";
+const GO_BACKWARD: &str = "Go-";
 const PLAYBACK: &str = "Playback";
 const TOGGLE_PLAYBACK: &str = "Playback Toggle";
 const STOP: &str = "Stop";
@@ -32,7 +33,13 @@ impl ConfigurableNode for SequencerNode {
             })
             .collect();
 
-        vec![setting!(id SEQUENCE_SETTING, self.sequence_id, sequences).disabled()]
+        vec![setting!(id SEQUENCE_SETTING, self.sequence_id, sequences)]
+    }
+
+    fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
+        update!(id setting, SEQUENCE_SETTING, self.sequence_id);
+
+        update_fallback!(setting)
     }
 }
 
@@ -41,7 +48,7 @@ impl PipelineNode for SequencerNode {
         NodeDetails {
             node_type_name: "Sequencer".into(),
             preview_type: PreviewType::None,
-            category: NodeCategory::None,
+            category: NodeCategory::Fixtures,
         }
     }
 
@@ -59,6 +66,7 @@ impl PipelineNode for SequencerNode {
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(GO_FORWARD, PortType::Single),
+            input_port!(GO_BACKWARD, PortType::Single),
             input_port!(PLAYBACK, PortType::Single),
             input_port!(TOGGLE_PLAYBACK, PortType::Single),
             input_port!(STOP, PortType::Single),
@@ -92,6 +100,11 @@ impl ProcessingNode for SequencerNode {
             if let Some(value) = context.read_port(GO_FORWARD) {
                 if let Some(true) = state.go_forward.update(value) {
                     sequencer.sequence_go_forward(self.sequence_id);
+                }
+            }
+            if let Some(value) = context.read_port(GO_BACKWARD) {
+                if let Some(true) = state.go_backward.update(value) {
+                    sequencer.sequence_go_backward(self.sequence_id);
                 }
             }
             if let Some(value) = context.read_port(STOP) {
@@ -141,6 +154,7 @@ impl ProcessingNode for SequencerNode {
 pub struct SequencerState {
     playback: f64,
     go_forward: Edge,
+    go_backward: Edge,
     stop: Edge,
     playback_toggle: Edge,
 }

@@ -240,14 +240,13 @@ const NON_DUPLICATABLE_NODE_TYPES = [
   "programmer",
   "transport",
   "fixture",
-  "sequencer",
   "group",
   "container"
 ];
 
 const NON_RENAMEABLE_NODE_TYPES = ["programmer", "transport"];
 
-const UNDELETABLE_NODE_TYPES = ["programmer", "transport", "fixture", "sequencer", "group"];
+const UNDELETABLE_NODE_TYPES = ["programmer", "transport", "fixture", "group"];
 
 extension NodeOptionExtensions on Node {
   bool get canRename {

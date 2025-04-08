@@ -125,9 +125,7 @@ class PathsSetting extends StatelessWidget {
                     Icons.close,
                     size: 15,
                   ),
-                  onTap: () {
-                    update(paths.whereIndexed((_, j) => i != j).toList());
-                  })
+                  onTap: () => update(paths.whereIndexed((j, _) => i != j).toList()))
             ]);
       }),
       MizerButton(

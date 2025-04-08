@@ -6,6 +6,7 @@ mod layouts;
 mod media;
 pub(crate) mod nodes;
 mod plans;
+mod ports;
 mod programmer;
 mod sequencer;
 mod settings;

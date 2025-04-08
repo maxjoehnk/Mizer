@@ -9,6 +9,7 @@ import 'package:mizer/api/contracts/mappings.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/plans.dart';
+import 'package:mizer/api/contracts/ports.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
@@ -33,6 +34,7 @@ import 'media.dart';
 import 'nodes.dart';
 import 'plans.dart';
 import 'programmer.dart';
+import 'ports.dart';
 import 'sequencer.dart';
 import 'session.dart';
 import 'surfaces.dart';
@@ -72,6 +74,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<SurfacesApi>(create: (_) => SurfacesPluginApi()),
         RepositoryProvider<ConsoleApi>(create: (_) => ConsolePluginApi()),
         RepositoryProvider<UiApi>(create: (_) => UiPluginApi()),
+        RepositoryProvider<PortsApi>(create: (_) => PortsPluginApi()),
       ],
     );
   }

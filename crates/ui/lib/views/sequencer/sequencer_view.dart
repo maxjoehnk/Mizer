@@ -10,11 +10,13 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/ports/dialogs/select_port_dialog.dart';
 import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'cue_list.dart';
+import 'ports_sheet.dart';
 import 'sequence_list.dart';
 import 'track_sheet.dart';
 
@@ -91,7 +93,8 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           if (bloc.state.selectedSequenceId != null) {
             _sequenceStop(bloc.state.selectedSequenceId!);
           }
-        }
+        },
+        "add_sequence": () => _addSequence(),
       },
       child: BlocBuilder<SequencerBloc, SequencerState>(builder: (context, state) {
         return Column(
@@ -141,6 +144,11 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                       label: "Duplicate",
                       onClick: () => _duplicateSequence(state.selectedSequenceId!),
                       disabled: state.selectedSequenceId == null),
+                  PanelActionModel(
+                    hotkeyId: "add_sequence",
+                    label: "Add",
+                    onClick: () => _addSequence(),
+                  )
                 ],
                 onSearch: (query) => setState(() => this.searchQuery = query),
               ),
@@ -158,6 +166,29 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                     tabs.Tab(
                         label: "Track Sheet",
                         child: TrackSheet(
+                            sequence: state.selectedSequence!,
+                            activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
+                    tabs.Tab(
+                        label: "Ports",
+                        actions: [
+                          PanelActionModel(
+                            label: "Add Cue",
+                            onClick: () => context
+                                .read<SequencerBloc>()
+                                .add(AddCue(state.selectedSequenceId!)),
+                          ),
+                          PanelActionModel(
+                            label: "Add Port",
+                            onClick: () async {
+                              var port = await SelectPortDialog.open(context);
+                              if (port == null) {
+                                return;
+                              }
+                              context.read<SequencerBloc>().add(AddPort(sequenceId: state.selectedSequenceId!, portId: port.id));
+                            },
+                          )
+                        ],
+                        child: PortsSheet(
                             sequence: state.selectedSequence!,
                             activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
                     tabs.Tab(
@@ -184,6 +215,10 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
         MappingRequest(sequencerStop: SequencerStopAction(sequencerId: state.selectedSequenceId!));
     addMidiMapping(
         context, "Add MIDI Mapping for Sequence Stop ${state.selectedSequence!.name}", request);
+  }
+
+  _addSequence() {
+    context.read<SequencerBloc>().add(AddSequence());
   }
 
   _deleteSequence(int sequenceId) {

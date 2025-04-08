@@ -66,7 +66,7 @@ class SequenceList extends StatelessWidget {
         onTap: onTap,
         active: active,
         selected: selected,
-        onSecondaryTapDown: (details) => context.showRenameDialog(name: sequence.name).then((name) {
+        onSecondaryTapDown: (details) => context.showNameDialog(name: sequence.name).then((name) {
           if (name != null) {
             _updateSequenceName(context, sequence, name);
           }

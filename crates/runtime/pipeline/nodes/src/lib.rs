@@ -43,6 +43,7 @@ pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_plan_nodes::PlanScreenNode;
+pub use mizer_port_nodes::PortOutputNode;
 pub use mizer_port_operation_nodes::{
     CombineNode, ComparisonNode, ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode,
     RampNode, SelectNode, ThresholdNode,
@@ -336,4 +337,5 @@ node_impl! {
     VectorFile(VectorFileNode),
     Comparison(ComparisonNode),
     Dialog(DialogNode),
+    PortOutput(PortOutputNode),
 }

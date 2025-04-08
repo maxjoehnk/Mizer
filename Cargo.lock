@@ -5339,6 +5339,7 @@ dependencies = [
  "mizer-message-bus",
  "mizer-module",
  "mizer-node",
+ "mizer-node-ports",
  "mizer-nodes",
  "mizer-open-fixture-library-provider",
  "mizer-pipeline",
@@ -5405,6 +5406,7 @@ dependencies = [
  "mizer-message-bus",
  "mizer-module",
  "mizer-node",
+ "mizer-node-ports",
  "mizer-node-templates",
  "mizer-nodes",
  "mizer-plan",
@@ -5493,6 +5495,7 @@ dependencies = [
  "mizer-media",
  "mizer-module",
  "mizer-node",
+ "mizer-node-ports",
  "mizer-node-templates",
  "mizer-plan",
  "mizer-processing",
@@ -6130,6 +6133,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-node-ports"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-module",
+ "mizer-util",
+ "profiling",
+ "serde",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-node-templates"
 version = "0.1.0"
 dependencies = [
@@ -6174,6 +6190,7 @@ dependencies = [
  "mizer-oscillator-nodes",
  "mizer-pixel-nodes",
  "mizer-plan-nodes",
+ "mizer-port-nodes",
  "mizer-port-operation-nodes",
  "mizer-pro-dj-link-nodes",
  "mizer-screen-capture-nodes",
@@ -6346,6 +6363,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-port-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "mizer-node-ports",
+ "serde",
+ "tracing",
+]
+
+[[package]]
 name = "mizer-port-operation-nodes"
 version = "0.1.0"
 dependencies = [
@@ -6417,6 +6445,7 @@ dependencies = [
  "mizer-layouts",
  "mizer-media",
  "mizer-node",
+ "mizer-node-ports",
  "mizer-nodes",
  "mizer-pixel-nodes",
  "mizer-plan",
@@ -6664,6 +6693,7 @@ dependencies = [
  "itertools 0.13.0",
  "mizer-fixtures",
  "mizer-module",
+ "mizer-node-ports",
  "mizer-util",
  "mockall",
  "mockall_double",
@@ -6687,6 +6717,7 @@ dependencies = [
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-node",
+ "mizer-node-ports",
  "mizer-nodes",
  "mizer-runtime",
  "mizer-sequencer",

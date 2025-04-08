@@ -16,6 +16,7 @@ pub use mizer_sequencer_queries::*;
 pub use mizer_timecode::queries::*;
 
 use mizer_module::Inject;
+use mizer_node_ports::queries::ListPortsQuery;
 
 mod get_history;
 
@@ -69,6 +70,7 @@ query_impl! {
     GetNodeQuery,
     ListLinksQuery,
     ListAvailableNodesQuery,
+    ListPortsQuery,
 }
 
 impl QueryImpl {

@@ -3,14 +3,14 @@ use std::ops::Deref;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::programmer::Presets;
-use mizer_fixtures::{FixtureId, FixturePriority};
-use mizer_module::ClockFrame;
-
 use crate::contracts::*;
 use crate::cue::*;
 use crate::state::SequenceState;
 use crate::EffectEngine;
+use mizer_fixtures::programmer::Presets;
+use mizer_fixtures::{FixtureId, FixturePriority};
+use mizer_module::ClockFrame;
+use mizer_node_ports::{NodePortId, NodePortState};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -18,6 +18,8 @@ pub struct Sequence {
     pub name: String,
     pub fixtures: Vec<FixtureId>,
     pub cues: Vec<Cue>,
+    #[serde(default)]
+    pub ports: Vec<NodePortId>,
     /// Go to first cue after last cue
     #[serde(default)]
     pub wrap_around: bool,
@@ -41,6 +43,7 @@ impl Sequence {
             id,
             name: format!("Sequence {}", id),
             cues: Vec::new(),
+            ports: Vec::new(),
             fixtures: Default::default(),
             wrap_around: false,
             stop_on_last_cue: false,
@@ -55,6 +58,7 @@ impl Sequence {
         fixture_controller: &impl FixtureController,
         effect_engine: &EffectEngine,
         presets: &Presets,
+        ports_state: &NodePortState,
         frame: ClockFrame,
     ) {
         profiling::scope!("Sequence::run", &self.name);
@@ -90,6 +94,11 @@ impl Sequence {
                 }
             }
         }
+        for port in &cue.ports {
+            if let Some(value) = port.value() {
+                ports_state.write_value(port.port_id, value);
+            }
+        }
         for preset in &cue.presets {
             for (fixture_id, control, value) in preset.values(cue, state, presets) {
                 fixture_controller.write(fixture_id, control.clone(), value, self.priority);
@@ -121,20 +130,42 @@ impl Sequence {
     /// Returns cue id
     pub fn add_cue(&mut self) -> u32 {
         let id = self.cues.len() as u32 + 1;
-        let cue = Cue {
-            id,
-            name: format!("Cue {}", id),
-            controls: Vec::new(),
-            effects: Vec::new(),
-            presets: Vec::new(),
-            trigger: CueTrigger::Go,
-            trigger_time: None,
-            cue_fade: None,
-            cue_delay: None,
-        };
+        let cue = Cue::new(id, format!("Cue {}", id), Default::default());
+
         self.cues.push(cue);
 
         id
+    }
+
+    pub fn delete_cue(&mut self, cue_id: u32) -> anyhow::Result<()> {
+        let index = self
+            .cues
+            .iter()
+            .position(|cue| cue.id == cue_id)
+            .ok_or_else(|| anyhow::anyhow!("Unknown Cue {}", cue_id))?;
+
+        self.cues.remove(index);
+
+        Ok(())
+    }
+
+    pub fn add_port(&mut self, port_id: NodePortId) {
+        self.ports.push(port_id);
+    }
+
+    pub fn remove_port(&mut self, port_id: NodePortId) -> anyhow::Result<()> {
+        let index = self
+            .ports
+            .iter()
+            .position(|port| *port == port_id)
+            .ok_or_else(|| anyhow::anyhow!("Unknown Port {}", port_id))?;
+
+        self.ports.remove(index);
+        self.cues.iter_mut().for_each(|cue| {
+            cue.ports.retain(|port| port.port_id != port_id);
+        });
+
+        Ok(())
     }
 }
 

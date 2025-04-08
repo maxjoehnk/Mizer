@@ -10,6 +10,7 @@ use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::selection::{BackwardsCompatibleFixtureSelection, FixtureSelection};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
+use mizer_node_ports::NodePortId;
 use mizer_util::LerpExt;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
@@ -33,6 +34,8 @@ pub struct Cue {
     #[serde(default)]
     pub presets: Vec<CuePreset>,
     #[serde(default)]
+    pub ports: Vec<CuePort>,
+    #[serde(default)]
     pub cue_fade: Option<SequencerValue<SequencerTime>>,
     #[serde(default)]
     pub cue_delay: Option<SequencerValue<SequencerTime>>,
@@ -55,6 +58,7 @@ impl Cue {
             effects: Default::default(),
             presets: Default::default(),
             trigger: Default::default(),
+            ports: Default::default(),
             trigger_time: Default::default(),
             cue_fade: None,
             cue_delay: None,
@@ -486,6 +490,20 @@ impl CueControl {
                 _ => unreachable!("Invalid combo of beats and seconds"),
             }
         }
+    }
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+pub struct CuePort {
+    pub port_id: NodePortId,
+    pub value: f64,
+}
+
+impl CuePort {
+    pub fn value(&self) -> Option<f64> {
+        // TODO: implement delay and fading
+
+        Some(self.value)
     }
 }
 

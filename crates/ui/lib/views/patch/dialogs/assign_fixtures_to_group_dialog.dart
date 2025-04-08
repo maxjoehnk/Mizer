@@ -78,7 +78,7 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
 
   _newGroup(BuildContext context) async {
     setState(() => _creating = true);
-    String? name = await context.showRenameDialog();
+    String? name = await context.showNameDialog();
     setState(() => _creating = false);
     if (name == null) {
       return;

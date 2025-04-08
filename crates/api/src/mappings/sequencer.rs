@@ -7,6 +7,7 @@ impl From<mizer_sequencer::Sequence> for Sequence {
             id: sequence.id,
             name: sequence.name,
             cues: sequence.cues.into_iter().map(Cue::from).collect(),
+            ports: sequence.ports.into_iter().map(Into::into).collect(),
             fixtures: sequence.fixtures.into_iter().map(FixtureId::from).collect(),
             wrap_around: sequence.wrap_around,
             stop_on_last_cue: sequence.stop_on_last_cue,
@@ -27,6 +28,7 @@ impl From<mizer_sequencer::Cue> for Cue {
             }),
             controls: cue.controls.into_iter().map(CueControl::from).collect(),
             effects: cue.effects.into_iter().map(CueEffect::from).collect(),
+            ports: cue.ports.into_iter().map(CuePort::from).collect(),
             cue_timings: Some(CueTimings {
                 fade: Some(CueTimer::from(cue.cue_fade)),
                 delay: Some(CueTimer::from(cue.cue_delay)),
@@ -241,6 +243,15 @@ impl From<mizer_sequencer::CueEffect> for CueEffect {
                 .map(FixtureId::from)
                 .collect(),
             effect_rate: None,
+        }
+    }
+}
+
+impl From<mizer_sequencer::CuePort> for CuePort {
+    fn from(cue_port: mizer_sequencer::CuePort) -> Self {
+        Self {
+            port_id: cue_port.port_id.0,
+            value: cue_port.value,
         }
     }
 }

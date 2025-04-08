@@ -16,6 +16,7 @@ use mizer_layouts::LayoutsModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
+use mizer_node_ports::PortsModule;
 use mizer_plan::PlansModule;
 use mizer_processing::Inject;
 use mizer_project_files::history::ProjectHistory;
@@ -43,6 +44,7 @@ use crate::Mizer;
 fn load_modules(context: &mut SetupContext, flags: &Flags) {
     ConsoleModule.try_load(context);
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
+    PortsModule.try_load(context);
     SequencerModule.try_load(context);
     EffectsModule.try_load(context);
     TimecodeModule.try_load(context);

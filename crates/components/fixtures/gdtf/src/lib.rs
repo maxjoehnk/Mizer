@@ -1,10 +1,10 @@
+use anyhow::Context;
+use hard_xml::XmlRead;
+use rayon::prelude::*;
 use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 use std::io::Read;
 use std::path::Path;
-
-use hard_xml::XmlRead;
-use rayon::prelude::*;
 use zip::ZipArchive;
 
 use mizer_fixtures::definition::*;
@@ -12,6 +12,7 @@ use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::find_path;
 
 pub use self::definition::GdtfFixtureDefinition;
+pub use self::types::*;
 
 mod conversion;
 mod definition;
@@ -55,7 +56,8 @@ impl FixtureLibraryProvider for GdtfProvider {
                             .ends_with(".gdtf")
                     {
                         tracing::trace!("Loading GDTF Fixture from '{:?}'...", file);
-                        let gdtf_archive = GdtfArchive::read(&file.path())?;
+                        let gdtf_archive = GdtfArchive::read(&file.path())
+                            .context(format!("Reading {:?}", file.path()))?;
                         tracing::debug!("Loaded GDTF Fixture from '{:?}'.", file);
 
                         Ok(Some(gdtf_archive))
@@ -64,15 +66,11 @@ impl FixtureLibraryProvider for GdtfProvider {
                     }
                 })
                 .filter_map(|archive: anyhow::Result<_>| match archive {
-                    Ok(Some(archive)) => Some(Ok((
+                    Ok(Some(archive)) => Some((
                         archive.definition.fixture_type.fixture_type_id.clone(),
                         archive.definition,
-                    ))),
+                    )),
                     Ok(None) => None,
-                    Err(err) => Some(Err(err)),
-                })
-                .filter_map(|archive| match archive {
-                    Ok(archive) => Some(archive),
                     Err(err) => {
                         tracing::error!("Error parsing gdtf definition {err:?}");
                         None
@@ -105,12 +103,13 @@ impl FixtureLibraryProvider for GdtfProvider {
     }
 }
 
-struct GdtfArchive {
+#[derive(Debug, Clone)]
+pub struct GdtfArchive {
     definition: GdtfFixtureDefinition,
 }
 
 impl GdtfArchive {
-    fn read(path: &Path) -> anyhow::Result<Self> {
+    pub fn read(path: &Path) -> anyhow::Result<Self> {
         let file = std::fs::File::open(path)?;
         let mut reader = ZipArchive::new(file)?;
 
@@ -121,5 +120,11 @@ impl GdtfArchive {
         let definition = GdtfFixtureDefinition::from_str(&description)?;
 
         Ok(Self { definition })
+    }
+}
+
+impl From<GdtfArchive> for GdtfFixtureDefinition {
+    fn from(archive: GdtfArchive) -> Self {
+        archive.definition
     }
 }

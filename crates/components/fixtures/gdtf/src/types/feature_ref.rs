@@ -1,6 +1,7 @@
+use serde_derive::Serialize;
 use std::str::FromStr;
 
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize)]
 pub struct FeatureRef {
     pub group: String,
     pub feature: String,

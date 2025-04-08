@@ -34,7 +34,7 @@ pub(crate) struct ChannelValues {
     values: HashMap<String, ChannelValue>,
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub(crate) struct ChannelValue {
     values: Vec<(FixturePriority, f64)>,
 }

@@ -19,7 +19,7 @@ impl From<GdtfFixtureDefinition> for FixtureDefinition {
                 .dmx_modes
                 .modes
                 .into_iter()
-                .map(|mode| state.build_fixture_mode(mode))
+                .filter_map(|mode| state.build_fixture_mode(mode))
                 .collect(),
             physical: PhysicalFixtureData::default(),
             provider: "GDTF",
@@ -29,27 +29,119 @@ impl From<GdtfFixtureDefinition> for FixtureDefinition {
 
 type GdtfAttributes = HashMap<String, Attribute>;
 type GdtfFeatures = HashMap<FeatureRef, Feature>;
-type GdtfGeometries = HashMap<String, Geometry>;
 
 #[derive(Default)]
 struct GeometryStateBuilder {
     controls: FixtureControls<FixtureControlChannel>,
     color_builder: ColorGroupBuilder<FixtureControlChannel>,
+    channels: Vec<FixtureChannelDefinition>,
 }
 
 impl GeometryStateBuilder {
+    fn add_channel(
+        &mut self,
+        features: &GdtfFeatures,
+        attributes: &GdtfAttributes,
+        name: String,
+        channel: &DmxChannel,
+        dmx_breaks: &[ReferenceDmxBreak],
+    ) {
+        if !channel.offset.is_virtual() {
+            let channel_definition = FixtureChannelDefinition {
+                name: name.clone(),
+                resolution: channel.with_offsets(dmx_breaks).into(),
+            };
+            self.channels.push(channel_definition);
+        }
+
+        if let Some(attribute) = attributes.get(&channel.logical_channel.attribute) {
+            // FIXME: This is a hack so the SGM G-1 Beam profile works properly
+            // I need to investigate how to handle this case better
+            if attribute.name == "Macro" {
+                return;
+            }
+            if let Some(feature) = features.get(&attribute.feature) {
+                let channel = if channel.offset.is_virtual() {
+                    // TODO: add FixtureControlChannel::Virtual which delegates to other channels
+                    return;
+                } else {
+                    FixtureControlChannel::Channel(name)
+                };
+                match feature.name.as_str() {
+                    "Dimmer" => self.controls.intensity = Some(channel),
+                    "Focus" => self.controls.focus = Some(channel),
+                    "RGB" => match attribute.name.as_str() {
+                        "ColorAdd_R" => self.color_builder.red(channel),
+                        "ColorAdd_G" => self.color_builder.green(channel),
+                        "ColorAdd_B" => self.color_builder.blue(channel),
+                        "ColorAdd_GY" => self.color_builder.lime(channel),
+                        "ColorAdd_RY" => self.color_builder.amber(channel),
+                        "ColorAdd_W" => self.color_builder.white(channel),
+                        _ => {}
+                    },
+                    "Color" => {
+                        self.controls.color_wheel = Some(ColorWheelGroup {
+                            channel,
+                            colors: Default::default(),
+                        })
+                    }
+                    "PanTilt" => match attribute.name.as_str() {
+                        "Pan" => {
+                            self.controls.pan = Some(AxisGroup {
+                                channel,
+                                angle: None,
+                            })
+                        }
+                        "Tilt" => {
+                            self.controls.tilt = Some(AxisGroup {
+                                channel,
+                                angle: None,
+                            })
+                        }
+                        _ => {}
+                    },
+                    "Control" => {
+                        self.controls.generic.push(GenericControl {
+                            channel,
+                            label: attribute.pretty.clone(),
+                        });
+                    }
+                    "Beam" => match attribute.name.as_str() {
+                        "Shutter1" => self.controls.shutter = Some(channel),
+                        "Iris1" => self.controls.iris = Some(channel),
+                        "Frost1" => self.controls.frost = Some(channel),
+                        "Prism1" => self.controls.prism = Some(channel),
+                        "Zoom1" => self.controls.zoom = Some(channel),
+                        _ => {}
+                    },
+                    "Gobo" => {
+                        if attribute.name.as_str() == "Gobo1" {
+                            self.controls.gobo = Some(GoboGroup {
+                                channel,
+                                gobos: vec![], // TODO: read gobo wheel variants
+                            })
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+
     fn build(mut self) -> GeometryState {
         self.controls.color_mixer = self.color_builder.build();
 
         GeometryState {
             controls: self.controls,
+            channels: self.channels,
         }
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 struct GeometryState {
     controls: FixtureControls<FixtureControlChannel>,
+    channels: Vec<FixtureChannelDefinition>,
 }
 
 struct GdtfState {
@@ -93,145 +185,133 @@ impl GdtfState {
         }
     }
 
-    fn build_fixture_mode(&self, mode: DmxMode) -> FixtureMode {
-        let mut geometries: HashMap<String, GeometryStateBuilder> = Default::default();
+    fn build_fixture_mode(&self, mode: DmxMode) -> Option<FixtureMode> {
+        let Some(mode_geometry) = self.geometries.get_root(&mode.geometry) else {
+            tracing::warn!(
+                "Geometry {} not found in fixture mode {}",
+                mode.geometry,
+                mode.name
+            );
+            return None;
+        };
+
+        let mut channels_per_geometry: HashMap<String, Vec<DmxChannel>> = Default::default();
 
         for channel in mode.channels.channels.iter() {
-            let geometry = geometries.entry(channel.geometry.clone()).or_default();
-            if let Some(attribute) = self.attributes.get(&channel.logical_channel.attribute) {
-                // FIXME: This is a hack so the SGM G-1 Beam profile works properly
-                // I need to investigate how to handle this case better
-                if attribute.name == "Macro" {
-                    continue;
-                }
-                if let Some(feature) = self.features.get(&attribute.feature) {
-                    let channel = if channel.offset.is_virtual() {
-                        // TODO: add FixtureControlChannel::Virtual which delegates to other channels
-                        continue;
-                    } else {
-                        FixtureControlChannel::Channel(format!(
-                            "{}_{}",
-                            channel.geometry, attribute.name
-                        ))
-                    };
-                    match feature.name.as_str() {
-                        "Dimmer" => geometry.controls.intensity = Some(channel),
-                        "Focus" => geometry.controls.focus = Some(channel),
-                        "RGB" => match attribute.name.as_str() {
-                            "ColorAdd_R" => geometry.color_builder.red(channel),
-                            "ColorAdd_G" => geometry.color_builder.green(channel),
-                            "ColorAdd_B" => geometry.color_builder.blue(channel),
-                            "ColorAdd_RY" => geometry.color_builder.amber(channel),
-                            "ColorAdd_W" => geometry.color_builder.white(channel),
-                            _ => {}
-                        },
-                        "Color" => {
-                            geometry.controls.color_wheel = Some(ColorWheelGroup {
-                                channel,
-                                colors: Default::default(),
-                            })
-                        }
-                        "PanTilt" => match attribute.name.as_str() {
-                            "Pan" => {
-                                geometry.controls.pan = Some(AxisGroup {
-                                    channel,
-                                    angle: None,
-                                })
-                            }
-                            "Tilt" => {
-                                geometry.controls.tilt = Some(AxisGroup {
-                                    channel,
-                                    angle: None,
-                                })
-                            }
-                            _ => {}
-                        },
-                        "Control" => {
-                            geometry.controls.generic.push(GenericControl {
-                                channel,
-                                label: attribute.pretty.clone(),
-                            });
-                        }
-                        "Beam" => match attribute.name.as_str() {
-                            "Shutter1" => geometry.controls.shutter = Some(channel),
-                            "Iris1" => geometry.controls.iris = Some(channel),
-                            "Frost1" => geometry.controls.frost = Some(channel),
-                            "Prism1" => geometry.controls.prism = Some(channel),
-                            "Zoom1" => geometry.controls.zoom = Some(channel),
-                            _ => {}
-                        },
-                        "Gobo" => {
-                            if attribute.name.as_str() == "Gobo1" {
-                                geometry.controls.gobo = Some(GoboGroup {
-                                    channel,
-                                    gobos: vec![], // TODO: read gobo wheel variants
-                                })
-                            }
-                        }
-                        _ => {}
-                    }
-                }
+            let channel_geometry = channels_per_geometry
+                .entry(channel.geometry.clone())
+                .or_default();
+            channel_geometry.push(channel.clone());
+        }
+
+        let mut channels = Vec::default();
+
+        let root_geometry = mode_geometry.root_features();
+        let mut controls = Default::default();
+        for geometry in root_geometry.features() {
+            let geometry_channels = channels_per_geometry
+                .remove(&geometry.name)
+                .unwrap_or_default();
+            let mut builder = GeometryStateBuilder::default();
+            for channel in &geometry_channels {
+                builder.add_channel(
+                    &self.features,
+                    &self.attributes,
+                    format!("{}_{}", channel.geometry, channel.logical_channel.attribute),
+                    channel,
+                    &geometry.dmx_breaks,
+                );
+            }
+            let geometry_definition = builder.build();
+            controls += geometry_definition.controls;
+            channels.extend(geometry_definition.channels);
+        }
+
+        let mut sub_fixtures = Vec::default();
+
+        if let Some(parent) = mode_geometry.lowest_parent() {
+            let parent_name = String::default();
+
+            let children = self.visit_children(&parent_name, parent, &channels_per_geometry);
+
+            for (i, (name, controls, dmx_channels)) in children.into_iter().enumerate() {
+                let sub_fixture = SubFixtureDefinition::new(i as u32 + 1, name, controls);
+                sub_fixtures.push(sub_fixture);
+                channels.extend(dmx_channels);
             }
         }
 
-        let channels = mode
-            .channels
-            .channels
-            .into_iter()
-            .filter(|channel| !channel.offset.is_virtual())
-            .map(|channel| FixtureChannelDefinition {
-                name: format!("{}_{}", channel.geometry, channel.logical_channel.attribute),
-                resolution: channel.offset.into(),
-            })
-            .collect();
+        Some(FixtureMode::new(
+            mode.name,
+            channels,
+            controls,
+            sub_fixtures,
+        ))
+    }
 
-        let mut geometries: HashMap<_, _> = geometries
-            .into_iter()
-            .map(|(name, geometry)| (name, geometry.build()))
-            .collect();
-
-        let beam_count = self
-            .geometries
-            .count_beams(|name| geometries.contains_key(name));
-
-        let (controls, sub_fixtures) = if beam_count > 1 {
-            // TODO: this fails when a fixture has no "primary" beam as might be the case for the Roxx Blinders
-            let parent_beam = self.geometries.first_beam().unwrap();
-            let child_beams = parent_beam.child_beams();
-
-            let mut parent_controls = Default::default();
-            let parent_geometry = geometries.remove(&parent_beam.name).unwrap_or_default();
-            parent_controls += parent_geometry.controls;
-
-            let sub_fixtures = child_beams
-                .into_iter()
-                .enumerate()
-                .map(|(i, beam)| {
-                    let mut controls = Default::default();
-                    let geometry = geometries.remove(&beam.name).unwrap_or_default();
-                    controls += geometry.controls.into();
-                    for geometry in beam
-                        .child_names()
-                        .into_iter()
-                        .map(|name| geometries.remove(name).unwrap_or_default())
-                    {
-                        controls += geometry.controls.into();
-                    }
-
-                    SubFixtureDefinition::new(i as u32 + 1, beam.name.clone(), controls)
-                })
-                .collect();
-
-            (parent_controls, sub_fixtures)
-        } else {
-            let mut controls = Default::default();
-            for (_, geometry) in geometries {
-                controls += geometry.controls;
+    fn visit_children(
+        &self,
+        prefix: &str,
+        parent: &dyn IGeometry,
+        channels_per_geometry: &HashMap<String, Vec<DmxChannel>>,
+    ) -> Vec<(
+        String,
+        FixtureControls<SubFixtureControlChannel>,
+        Vec<FixtureChannelDefinition>,
+    )> {
+        let mut sub_fixtures = Vec::default();
+        for child in parent.children() {
+            if let Some(child_definition) = self.visit_child(prefix, child, channels_per_geometry) {
+                sub_fixtures.push(child_definition);
             }
 
-            (controls, Default::default())
-        };
+            let grand_children = self.visit_children(
+                &format!("{prefix}{}_", child.name()),
+                child,
+                channels_per_geometry,
+            );
 
-        FixtureMode::new(mode.name, channels, controls, sub_fixtures)
+            sub_fixtures.extend(grand_children);
+        }
+
+        sub_fixtures
+    }
+
+    fn visit_child(
+        &self,
+        prefix: &str,
+        child: &dyn IGeometry,
+        channels_per_geometry: &HashMap<String, Vec<DmxChannel>>,
+    ) -> Option<(
+        String,
+        FixtureControls<SubFixtureControlChannel>,
+        Vec<FixtureChannelDefinition>,
+    )> {
+        tracing::trace!("Visiting child: {}", child.name());
+        let geometry = channels_per_geometry.get(child.name())?;
+        if geometry.is_empty() {
+            return None;
+        }
+        let mut builder = GeometryStateBuilder::default();
+        for channel in geometry {
+            builder.add_channel(
+                &self.features,
+                &self.attributes,
+                format!(
+                    "{prefix}{}_{}",
+                    channel.geometry, channel.logical_channel.attribute
+                ),
+                channel,
+                &child.feature().dmx_breaks,
+            );
+        }
+        let geometry_channels = builder.build();
+        let sub_fixture_controls = geometry_channels.controls.into();
+
+        Some((
+            format!("{}{}", prefix, child.name()),
+            sub_fixture_controls,
+            geometry_channels.channels,
+        ))
     }
 }

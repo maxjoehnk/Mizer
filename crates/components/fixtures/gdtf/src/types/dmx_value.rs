@@ -1,9 +1,10 @@
+use serde_derive::Serialize;
 use std::str::FromStr;
 
-#[derive(Default, Debug, Clone)]
+#[derive(Default, Debug, Clone, Serialize)]
 pub struct DmxValue(Option<InnerValue>);
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct InnerValue {
     pub value: u32,
     pub byte_count: u8,

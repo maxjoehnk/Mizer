@@ -36,7 +36,7 @@ pub(crate) struct ChannelValues {
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub(crate) struct ChannelValue {
-    values: Vec<(FixturePriority, f64)>,
+    pub(crate) values: Vec<(FixturePriority, f64)>,
 }
 
 impl Default for ChannelValue {
@@ -57,6 +57,14 @@ impl ChannelValue {
             "ChannelValue::get",
             &format!("values: {}", self.values.len())
         );
+
+        if let Some((_, value)) = self
+            .values
+            .iter()
+            .find(|(priority, _)| priority.is_highlight())
+        {
+            return Some(*value);
+        }
 
         if let Some((_, value)) = self
             .values
@@ -121,6 +129,10 @@ impl ChannelValues {
         for value in self.values.values_mut() {
             value.clear();
         }
+    }
+
+    pub(crate) fn get_priorities(&self, channel: &str) -> Option<&ChannelValue> {
+        self.values.get(channel)
     }
 
     pub(crate) fn write(&mut self, name: &String, value: f64) {
@@ -507,21 +519,21 @@ pub trait IFixtureMut: IFixture {
     );
 
     fn highlight(&mut self) {
-        self.write_fader_control(FixtureFaderControl::Intensity, 1f64, FixturePriority::HTP);
+        self.write_fader_control(FixtureFaderControl::Intensity, 1f64, FixturePriority::Highlight);
         self.write_fader_control(
             FixtureFaderControl::ColorMixer(ColorChannel::Red),
             1f64,
-            FixturePriority::HTP,
+            FixturePriority::Highlight,
         );
         self.write_fader_control(
             FixtureFaderControl::ColorMixer(ColorChannel::Green),
             1f64,
-            FixturePriority::HTP,
+            FixturePriority::Highlight,
         );
         self.write_fader_control(
             FixtureFaderControl::ColorMixer(ColorChannel::Blue),
             1f64,
-            FixturePriority::HTP,
+            FixturePriority::Highlight,
         );
     }
 }

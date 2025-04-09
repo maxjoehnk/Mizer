@@ -6,9 +6,9 @@ use serde::Serialize;
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
 pub struct ColorMixer {
-    red: ChannelValue,
-    green: ChannelValue,
-    blue: ChannelValue,
+    pub(crate) red: ChannelValue,
+    pub(crate) green: ChannelValue,
+    pub(crate) blue: ChannelValue,
     virtual_dimmer: Option<ChannelValue>,
 }
 

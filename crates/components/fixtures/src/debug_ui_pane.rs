@@ -33,7 +33,36 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     columns[0].label("Channel");
                     columns[1].label(fixture.channel.to_string());
                 });
-                ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |_ui| {});
+                ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |ui| {
+                    if let Some(ref color_mixer) = fixture.current_mode.color_mixer {
+                        ui.collapsing_header("Color Mixer", |ui| {
+                            ui.collapsing_header(format!("Red: {}", color_mixer.rgb().red), |ui| {
+                                ui.columns(2, |columns| {
+                                    for (priority, value) in &color_mixer.red.values {
+                                        columns[0].label(value.to_string());
+                                        columns[1].label(priority.to_string());
+                                    }
+                                });
+                            });
+                            ui.collapsing_header(format!("Green: {}", color_mixer.rgb().green), |ui| {
+                                ui.columns(2, |columns| {
+                                    for (priority, value) in &color_mixer.green.values {
+                                        columns[0].label(value.to_string());
+                                        columns[1].label(priority.to_string());
+                                    }
+                                });
+                            });
+                            ui.collapsing_header(format!("Blue: {}", color_mixer.rgb().blue), |ui| {
+                                ui.columns(2, |columns| {
+                                    for (priority, value) in &color_mixer.blue.values {
+                                        columns[0].label(value.to_string());
+                                        columns[1].label(priority.to_string());
+                                    }
+                                });
+                            });
+                        });
+                    }
+                });
                 ui.collapsing_header("Configuration", |ui| {
                     ui.columns(2, |columns| {
                         columns[0].label("Invert Pan");
@@ -89,12 +118,17 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     });
                 });
                 ui.collapsing_header("Channel Values", |ui| {
-                    ui.columns(2, |columns| {
-                        for (channel, value) in fixture.channel_values.iter() {
-                            columns[0].label(channel);
-                            columns[1].label(value.to_string());
-                        }
-                    });
+                    for (channel, value) in fixture.channel_values.iter() {
+                        ui.collapsing_header(format!("{channel}: {value}"), |ui| {
+                            ui.columns(2, |columns| {
+                                let values = fixture.channel_values.get_priorities(channel).unwrap();
+                                for (priority, value) in &values.values {
+                                    columns[0].label(value.to_string());
+                                    columns[1].label(priority.to_string());
+                                }
+                            });
+                        });
+                    }
                 });
                 ui.collapsing_header("Faders", |ui| {
                     ui.columns(3, |columns| {

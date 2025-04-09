@@ -8,6 +8,10 @@ use serde::{Deserialize, Serialize};
 #[repr(u8)]
 pub enum FixturePriority {
     /**
+     * Highlight overrides programmer
+     */
+    Highlight = 11,
+    /**
      * Programmer always overrides everything else
      */
     Programmer = 10,
@@ -27,6 +31,7 @@ impl Sequence for FixturePriority {
 
     fn next(&self) -> Option<Self> {
         match self {
+            Self::Highlight => None,
             Self::Programmer => None,
             Self::HTP => Some(Self::LTP(LTPPriority::Highest)),
             Self::LTP(LTPPriority::Highest) => Some(Self::LTP(LTPPriority::High)),
@@ -39,6 +44,7 @@ impl Sequence for FixturePriority {
 
     fn previous(&self) -> Option<Self> {
         match self {
+            Self::Highlight => None,
             Self::Programmer => None,
             Self::HTP => None,
             Self::LTP(LTPPriority::Highest) => Some(Self::HTP),
@@ -63,6 +69,10 @@ impl FixturePriority {
     pub const HIGH: Self = Self::LTP(LTPPriority::High);
     pub const LOW: Self = Self::LTP(LTPPriority::Low);
     pub const LOWEST: Self = Self::LTP(LTPPriority::Lowest);
+
+    pub fn is_highlight(&self) -> bool {
+        matches!(self, Self::Highlight)
+    }
 
     pub fn is_programmer(&self) -> bool {
         matches!(self, Self::Programmer)
@@ -116,6 +126,7 @@ impl From<LTPPriority> for FixturePriority {
 impl From<FixturePriority> for u8 {
     fn from(value: FixturePriority) -> Self {
         match value {
+            FixturePriority::Highlight => 11,
             FixturePriority::Programmer => 10,
             FixturePriority::HTP => 5,
             FixturePriority::LTP(LTPPriority::Highest) => 4,
@@ -132,6 +143,7 @@ impl TryFrom<u8> for FixturePriority {
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {
         match value {
+            11 => Ok(Self::Highlight),
             10 => Ok(Self::Programmer),
             5 => Ok(Self::HTP),
             4 => Ok(Self::LTP(LTPPriority::Highest)),
@@ -158,6 +170,7 @@ impl Error for InvalidFixturePriorityError {}
 impl Display for FixturePriority {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            Self::Highlight => write!(f, "Highlight"),
             Self::Programmer => write!(f, "Programmer"),
             Self::HTP => write!(f, "HTP"),
             Self::LTP(level) => write!(f, "LTP {:?}", level),

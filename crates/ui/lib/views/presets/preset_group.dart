@@ -4,11 +4,12 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
+import 'package:mizer/widgets/grid/panel_grid.dart';
 import 'package:mizer/widgets/grid/panel_sizing.dart';
 import 'package:mizer/widgets/panel.dart';
-import 'package:mizer/widgets/grid/panel_grid.dart';
 
 import 'preset_button.dart';
+import 'preset_indicator.dart';
 
 class PresetGroup extends StatelessWidget {
   final String label;
@@ -76,19 +77,16 @@ class PresetButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        var itemsPerRow = constraints.maxWidth / (GRID_4_SIZE + GRID_GAP_SIZE);
-        var totalItems = itemsPerRow * 3;
-        var emptyItems = totalItems - children.length;
+    return LayoutBuilder(builder: (context, constraints) {
+      var itemsPerRow = constraints.maxWidth / (GRID_4_SIZE + GRID_GAP_SIZE);
+      var totalItems = itemsPerRow * 3;
+      var emptyItems = totalItems - children.length;
 
-        return PanelGrid(children: [
-          ...children,
-          if (fill)
-            ...List.filled(emptyItems.toInt(), PanelGridTile.empty()),
-        ]);
-      }
-    );
+      return PanelGrid(children: [
+        ...children,
+        if (fill) ...List.filled(emptyItems.toInt(), PanelGridTile.empty()),
+      ]);
+    });
   }
 }
 
@@ -107,28 +105,10 @@ class PresetList extends StatelessWidget {
 
   List<Widget> get children {
     return [
-      ...(presets ?? []).map((preset) => _presetButton(preset)),
+      ...(presets ?? []).map((preset) => CallPresetButton(
+          child: PresetValueIndicator(preset: preset), preset: preset, onTap: onSelect)),
       ...(effects ?? []).map((effect) => EffectButton(effect: effect)),
     ];
-  }
-
-  Widget _presetButton(Preset preset) {
-    if (preset.hasColor()) {
-      return ColorButton(
-          color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
-              (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
-          preset: preset,
-        onTap: onSelect,
-      );
-    }
-    if (preset.hasFader()) {
-      return ColorButton(color: Color.from(alpha: 1, red: preset.fader, green: preset.fader, blue: preset.fader), preset: preset, onTap: onSelect);
-    }
-    if (preset.hasPosition()) {
-      return PositionButton(pan: preset.position.pan, tilt: preset.position.tilt, preset: preset, onTap: onSelect);
-    }
-
-    return Container();
   }
 }
 

@@ -1,11 +1,14 @@
+use std::collections::HashMap;
 use std::fmt::{Display, Formatter};
 
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
 
 use crate::definition::FixtureControlValue;
+use crate::FixtureId;
 
 pub type Color = (f64, f64, f64);
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy, PartialEq)]
 pub enum Position {
     Pan(f64),
@@ -71,6 +74,12 @@ impl Display for PresetType {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{self:?}")
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Deserialize, Serialize)]
+pub enum PresetTarget {
+    Universal,
+    Selective,
 }
 
 impl Presets {
@@ -153,50 +162,26 @@ impl Presets {
         self.position.clear();
     }
 
-    pub fn get_preset_values(&self, id: PresetId) -> Vec<FixtureControlValue> {
+    pub fn get_values(&self, id: PresetId, fixtures: &[FixtureId]) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
         match id {
             PresetId::Intensity(id) => self
                 .intensity
                 .get(&id)
-                .map(|value| vec![FixtureControlValue::Intensity(value.value)])
+                .map(|preset| convert_value(&preset.value, fixtures, |value| vec![FixtureControlValue::Intensity(value)]))
                 .unwrap_or_default(),
             PresetId::Shutter(id) => self
                 .shutter
                 .get(&id)
-                .map(|value| vec![FixtureControlValue::Shutter(value.value)])
+                .map(|preset| convert_value(&preset.value, fixtures, |value| vec![FixtureControlValue::Shutter(value)]))
                 .unwrap_or_default(),
-            PresetId::Color(id) => Self::color_value(&self.color, id),
-            PresetId::Position(id) => Self::position_value(&self.position, id),
-        }
-    }
-
-    fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<FixtureControlValue> {
-        if let Some(preset) = presets.get(&id) {
-            vec![FixtureControlValue::ColorMixer(
-                preset.value.0,
-                preset.value.1,
-                preset.value.2,
-            )]
-        } else {
-            Default::default()
-        }
-    }
-
-    fn position_value(
-        presets: &DashMap<u32, Preset<Position>>,
-        id: u32,
-    ) -> Vec<FixtureControlValue> {
-        if let Some(preset) = presets.get(&id) {
-            match preset.value {
-                Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
-                Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
-                Position::PanTilt(pan, tilt) => vec![
-                    FixtureControlValue::Pan(pan),
-                    FixtureControlValue::Tilt(tilt),
-                ],
-            }
-        } else {
-            Default::default()
+            PresetId::Color(id) => self.color
+                .get(&id)
+                .map(|preset| convert_value(&preset.value, fixtures, color_value))
+                .unwrap_or_default(),
+            PresetId::Position(id) => self.position
+                .get(&id)
+                .map(|preset| convert_value(&preset.value, fixtures, position_value))
+                .unwrap_or_default(),
         }
     }
 
@@ -216,12 +201,41 @@ fn highest_preset_id<TValue>(map: &DashMap<u32, TValue>) -> u32 {
     map.iter().map(|e| *e.key()).max().unwrap_or_default()
 }
 
+fn convert_value<TValue: Copy>(preset: &PresetValue<TValue>, fixtures: &[FixtureId], mapper: impl Fn(TValue) -> Vec<FixtureControlValue>) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
+    match preset {
+        PresetValue::Universal(value) => vec![(fixtures.to_vec(), mapper(*value))],
+        PresetValue::Selective(values) => fixtures.iter().filter_map(|fixture_id| {
+            let value = values.get(fixture_id).copied()?;
+            Some((vec![*fixture_id], mapper(value)))
+        }).collect(),
+    }
+}
+
+fn color_value(value: Color) -> Vec<FixtureControlValue> {
+    vec![FixtureControlValue::ColorMixer(value.0, value.1, value.2)]
+}
+
+fn position_value(value: Position) -> Vec<FixtureControlValue> {
+    match value {
+        Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
+        Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
+        Position::PanTilt(pan, tilt) => vec![FixtureControlValue::Pan(pan), FixtureControlValue::Tilt(tilt)],
+    }
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct Preset<TValue> {
     pub id: u32,
     #[serde(default)]
     pub label: Option<String>,
-    pub value: TValue,
+    pub value: PresetValue<TValue>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(untagged)]
+pub enum PresetValue<TValue> {
+    Universal(TValue),
+    Selective(HashMap<FixtureId, TValue>),
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
@@ -294,6 +308,27 @@ impl GenericPreset {
             GenericPreset::Shutter(preset) => preset.label.as_ref(),
             GenericPreset::Color(preset) => preset.label.as_ref(),
             GenericPreset::Position(preset) => preset.label.as_ref(),
+        }
+    }
+
+    pub fn target(&self) -> PresetTarget {
+        match self {
+            GenericPreset::Intensity(preset) => match preset.value {
+                PresetValue::Universal(_) => PresetTarget::Universal,
+                PresetValue::Selective(_) => PresetTarget::Selective,
+            }
+            GenericPreset::Shutter(preset) => match preset.value {
+                PresetValue::Universal(_) => PresetTarget::Universal,
+                PresetValue::Selective(_) => PresetTarget::Selective,
+            }
+            GenericPreset::Color(preset) => match preset.value {
+                PresetValue::Universal(_) => PresetTarget::Universal,
+                PresetValue::Selective(_) => PresetTarget::Selective,
+            }
+            GenericPreset::Position(preset) => match preset.value {
+                PresetValue::Universal(_) => PresetTarget::Universal,
+                PresetValue::Selective(_) => PresetTarget::Selective,
+            }
         }
     }
 }

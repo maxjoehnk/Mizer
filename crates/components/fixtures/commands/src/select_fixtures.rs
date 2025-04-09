@@ -28,7 +28,7 @@ impl<'a> Command<'a> for SelectFixturesCommand {
         &self,
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         let previous = programmer.active_selection();
         programmer.select_fixtures(self.fixtures.clone());
 
@@ -40,7 +40,7 @@ impl<'a> Command<'a> for SelectFixturesCommand {
         fixture_manager: &FixtureManager,
         previous_selection: Self::State,
     ) -> anyhow::Result<()> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         programmer.set_selection(previous_selection);
 
         Ok(())

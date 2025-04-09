@@ -8,6 +8,17 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use presetTargetDescriptor instead')
+const PresetTarget$json = const {
+  '1': 'PresetTarget',
+  '2': const [
+    const {'1': 'PRESET_TARGET_UNIVERSAL', '2': 0},
+    const {'1': 'PRESET_TARGET_SELECTIVE', '2': 1},
+  ],
+};
+
+/// Descriptor for `PresetTarget`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List presetTargetDescriptor = $convert.base64Decode('CgxQcmVzZXRUYXJnZXQSGwoXUFJFU0VUX1RBUkdFVF9VTklWRVJTQUwQABIbChdQUkVTRVRfVEFSR0VUX1NFTEVDVElWRRAB');
 @$core.Deprecated('Use storeGroupModeDescriptor instead')
 const StoreGroupMode$json = const {
   '1': 'StoreGroupMode',
@@ -259,15 +270,17 @@ const StorePresetRequest_NewPreset$json = const {
   '1': 'NewPreset',
   '2': const [
     const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.programmer.PresetId.PresetType', '10': 'type'},
-    const {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'label', '17': true},
+    const {'1': 'target', '3': 2, '4': 1, '5': 14, '6': '.mizer.programmer.PresetTarget', '9': 0, '10': 'target', '17': true},
+    const {'1': 'label', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
   ],
   '8': const [
+    const {'1': '_target'},
     const {'1': '_label'},
   ],
 };
 
 /// Descriptor for `StorePresetRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storePresetRequestDescriptor = $convert.base64Decode('ChJTdG9yZVByZXNldFJlcXVlc3QSOAoIZXhpc3RpbmcYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkSABSCGV4aXN0aW5nEk8KCm5ld19wcmVzZXQYAiABKAsyLi5taXplci5wcm9ncmFtbWVyLlN0b3JlUHJlc2V0UmVxdWVzdC5OZXdQcmVzZXRIAFIJbmV3UHJlc2V0GmsKCU5ld1ByZXNldBI5CgR0eXBlGAEgASgOMiUubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRJZC5QcmVzZXRUeXBlUgR0eXBlEhkKBWxhYmVsGAIgASgJSABSBWxhYmVsiAEBQggKBl9sYWJlbEIICgZ0YXJnZXQ=');
+final $typed_data.Uint8List storePresetRequestDescriptor = $convert.base64Decode('ChJTdG9yZVByZXNldFJlcXVlc3QSOAoIZXhpc3RpbmcYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkSABSCGV4aXN0aW5nEk8KCm5ld19wcmVzZXQYAiABKAsyLi5taXplci5wcm9ncmFtbWVyLlN0b3JlUHJlc2V0UmVxdWVzdC5OZXdQcmVzZXRIAFIJbmV3UHJlc2V0GrMBCglOZXdQcmVzZXQSOQoEdHlwZRgBIAEoDjIlLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWQuUHJlc2V0VHlwZVIEdHlwZRI7CgZ0YXJnZXQYAiABKA4yHi5taXplci5wcm9ncmFtbWVyLlByZXNldFRhcmdldEgAUgZ0YXJnZXSIAQESGQoFbGFiZWwYAyABKAlIAVIFbGFiZWyIAQFCCQoHX3RhcmdldEIICgZfbGFiZWxCCAoGdGFyZ2V0');
 @$core.Deprecated('Use renamePresetRequestDescriptor instead')
 const RenamePresetRequest$json = const {
   '1': 'RenamePresetRequest',
@@ -327,10 +340,11 @@ const Preset$json = const {
   '1': 'Preset',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'id'},
-    const {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
-    const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Color', '9': 0, '10': 'color'},
-    const {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Position', '9': 0, '10': 'position'},
+    const {'1': 'target', '3': 2, '4': 1, '5': 14, '6': '.mizer.programmer.PresetTarget', '10': 'target'},
+    const {'1': 'label', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
+    const {'1': 'fader', '3': 4, '4': 1, '5': 1, '9': 0, '10': 'fader'},
+    const {'1': 'color', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Color', '9': 0, '10': 'color'},
+    const {'1': 'position', '3': 6, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Position', '9': 0, '10': 'position'},
   ],
   '3': const [Preset_Color$json, Preset_Position$json],
   '8': const [
@@ -363,7 +377,7 @@ const Preset_Position$json = const {
 };
 
 /// Descriptor for `Preset`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARIWCgVmYWRlchgDIAEoAUgAUgVmYWRlchI2CgVjb2xvchgEIAEoCzIeLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0LkNvbG9ySABSBWNvbG9yEj8KCHBvc2l0aW9uGAUgASgLMiEubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuUG9zaXRpb25IAFIIcG9zaXRpb24aQwoFQ29sb3ISEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWUaSwoIUG9zaXRpb24SFwoEdGlsdBgBIAEoAUgAUgR0aWx0iAEBEhUKA3BhbhgCIAEoAUgBUgNwYW6IAQFCBwoFX3RpbHRCBgoEX3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
+final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBI2CgZ0YXJnZXQYAiABKA4yHi5taXplci5wcm9ncmFtbWVyLlByZXNldFRhcmdldFIGdGFyZ2V0EhkKBWxhYmVsGAMgASgJSAFSBWxhYmVsiAEBEhYKBWZhZGVyGAQgASgBSABSBWZhZGVyEjYKBWNvbG9yGAUgASgLMh4ubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuQ29sb3JIAFIFY29sb3ISPwoIcG9zaXRpb24YBiABKAsyIS5taXplci5wcm9ncmFtbWVyLlByZXNldC5Qb3NpdGlvbkgAUghwb3NpdGlvbhpDCgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZRpLCghQb3NpdGlvbhIXCgR0aWx0GAEgASgBSABSBHRpbHSIAQESFQoDcGFuGAIgASgBSAFSA3BhbogBAUIHCgVfdGlsdEIGCgRfcGFuQgcKBXZhbHVlQggKBl9sYWJlbA==');
 @$core.Deprecated('Use callPresetResponseDescriptor instead')
 const CallPresetResponse$json = const {
   '1': 'CallPresetResponse',

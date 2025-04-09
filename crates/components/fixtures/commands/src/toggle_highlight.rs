@@ -18,14 +18,14 @@ impl<'a> Command<'a> for ToggleHighlightCommand {
         &self,
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         programmer.toggle_highlight();
 
         Ok(((), ()))
     }
 
     fn revert(&self, fixture_manager: &FixtureManager, _: Self::State) -> anyhow::Result<()> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         programmer.toggle_highlight();
 
         Ok(())

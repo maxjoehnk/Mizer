@@ -4,7 +4,7 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pbenum.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/views/presets/preset_button.dart';
+import 'package:mizer/views/presets/preset_indicator.dart';
 import 'package:provider/provider.dart';
 
 class PositionIndicator extends StatelessWidget {

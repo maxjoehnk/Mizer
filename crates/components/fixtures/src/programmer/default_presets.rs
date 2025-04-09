@@ -1,4 +1,4 @@
-use crate::programmer::{Preset, Presets};
+use crate::programmer::{Preset, Presets, PresetValue};
 use dashmap::DashMap;
 
 impl Presets {
@@ -33,5 +33,5 @@ fn add_preset<TValue>(
 ) {
     let label = Some(label.into());
 
-    presets.insert(id, Preset { id, label, value });
+    presets.insert(id, Preset { id, label, value: PresetValue::Universal(value) });
 }

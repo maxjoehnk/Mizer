@@ -9,6 +9,21 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class PresetTarget extends $pb.ProtobufEnum {
+  static const PresetTarget PRESET_TARGET_UNIVERSAL = PresetTarget._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRESET_TARGET_UNIVERSAL');
+  static const PresetTarget PRESET_TARGET_SELECTIVE = PresetTarget._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRESET_TARGET_SELECTIVE');
+
+  static const $core.List<PresetTarget> values = <PresetTarget> [
+    PRESET_TARGET_UNIVERSAL,
+    PRESET_TARGET_SELECTIVE,
+  ];
+
+  static final $core.Map<$core.int, PresetTarget> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PresetTarget? valueOf($core.int value) => _byValue[value];
+
+  const PresetTarget._($core.int v, $core.String n) : super(v, n);
+}
+
 class StoreGroupMode extends $pb.ProtobufEnum {
   static const StoreGroupMode STORE_GROUP_MODE_OVERWRITE = StoreGroupMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STORE_GROUP_MODE_OVERWRITE');
   static const StoreGroupMode STORE_GROUP_MODE_MERGE = StoreGroupMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STORE_GROUP_MODE_MERGE');

@@ -265,15 +265,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn store_preset(&self, req: StorePresetRequest) -> anyhow::Result<()> {
         tracing::trace!("ProgrammerChannel::store_preset({req:?})");
-        match req.target {
-            Some(store_preset_request::Target::Existing(preset_id)) => {
-                self.handler.store_programmer_to_preset(preset_id)?;
-            }
-            Some(store_preset_request::Target::NewPreset(preset)) => {
-                self.handler.add_preset(preset.r#type(), preset.label)?;
-            }
-            _ => unimplemented!(),
-        }
+        self.handler.store_preset(req)?;
 
         Ok(())
     }

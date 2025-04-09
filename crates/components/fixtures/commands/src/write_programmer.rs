@@ -23,7 +23,7 @@ impl<'a> Command<'a> for WriteProgrammerCommand {
         &self,
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
 
         programmer.write_control(self.value.clone());
 

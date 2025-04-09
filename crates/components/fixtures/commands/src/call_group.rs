@@ -22,7 +22,7 @@ impl<'a> Command<'a> for CallGroupCommand {
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
         if let Some(group) = fixture_manager.get_group(self.group_id) {
-            let mut programmer = fixture_manager.get_programmer();
+            let mut programmer = fixture_manager.get_programmer_mut();
             programmer.select_group(&group);
         }
 

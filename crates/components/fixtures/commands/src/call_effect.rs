@@ -20,7 +20,7 @@ impl<'a> Command<'a> for CallEffectCommand {
         &self,
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         programmer.call_effect(self.effect_id);
 
         Ok(((), ()))

@@ -67,13 +67,12 @@ class _GroupButtonState extends State<GroupButton>
   }
 }
 
-class ColorButton extends StatelessWidget {
-  final Color color;
+class CallPresetButton extends StatelessWidget {
+  final Widget child;
   final Preset preset;
   final void Function()? onTap;
 
-  const ColorButton({required this.color, required this.preset, Key? key, this.onTap})
-      : super(key: key);
+  const CallPresetButton({ required this.preset, required this.child, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,11 +82,7 @@ class ColorButton extends StatelessWidget {
         MenuItem(label: "Delete", action: () => _deletePreset(context)),
       ]),
       child: PresetButton.preset(
-        child: Container(
-          width: GRID_3_SIZE,
-          height: GRID_3_SIZE,
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(GRID_3_SIZE)),
-        ),
+        child: child,
         preset: preset,
         onTap: onTap,
       ),
@@ -107,78 +102,6 @@ class ColorButton extends StatelessWidget {
   void _deletePreset(BuildContext context) async {
     PresetsBloc state = context.read();
     state.add(DeletePreset(preset.id));
-  }
-}
-
-class PositionButton extends StatelessWidget {
-  final Preset preset;
-  final double? pan;
-  final double? tilt;
-  final void Function()? onTap;
-
-  const PositionButton(
-      {required this.pan, required this.tilt, required this.preset, Key? key, this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ContextMenu(
-      menu: Menu(items: [
-        MenuItem(label: "Rename", action: () => _renamePreset(context)),
-        MenuItem(label: "Delete", action: () => _deletePreset(context)),
-      ]),
-      child: PresetButton.preset(
-        child: Container(
-          margin: tilt == null ? EdgeInsets.symmetric(vertical: 12) : EdgeInsets.all(0),
-          width: pan == null ? 24 : 48,
-          height: tilt == null ? 24 : 48,
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(color: Grey800, borderRadius: BorderRadius.circular(8)),
-          child: CustomPaint(painter: PositionPainter(pan: pan, tilt: tilt)),
-        ),
-        preset: preset,
-        onTap: onTap,
-      ),
-    );
-  }
-
-  void _renamePreset(BuildContext context) async {
-    var name = await showDialog(
-        context: context, builder: (context) => NameDialog(name: preset.label));
-    if (name == null) {
-      return;
-    }
-    PresetsBloc state = context.read();
-    state.add(RenamePreset(preset.id, name));
-  }
-
-  void _deletePreset(BuildContext context) async {
-    PresetsBloc state = context.read();
-    state.add(DeletePreset(preset.id));
-  }
-}
-
-class PositionPainter extends CustomPainter {
-  final double? pan;
-  final double? tilt;
-
-  PositionPainter({required this.pan, required this.tilt});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var x = size.width * (pan ?? 0.5);
-    var y = size.height * (tilt ?? 0.5);
-
-    var paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(Offset(x, y), 4, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant PositionPainter oldDelegate) {
-    return pan != oldDelegate.pan || tilt != oldDelegate.tilt;
   }
 }
 
@@ -252,11 +175,30 @@ class PresetButton extends StatelessWidget {
               child: HighContrastText(label, textAlign: TextAlign.center),
             ),
             if (id != null)
-              Align(child: Text(id!, style: textTheme.bodySmall), alignment: Alignment.topLeft),
+              Align(child: Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: Text(id!, style: textTheme.bodySmall),
+                  ), alignment: Alignment.topLeft),
+                if (target != null)
+                  Align(child: Padding(
+                    padding: const EdgeInsets.only(right: 2.0),
+                    child: Text(target!, style: textTheme.bodySmall),
+                  ), alignment: Alignment.topRight),
           ],
         ),
       ),
     );
+  }
+
+  String? get target {
+    if (preset?.target == PresetTarget.PRESET_TARGET_UNIVERSAL) {
+      return "U";
+    }
+    if (preset?.target == PresetTarget.PRESET_TARGET_SELECTIVE) {
+      return "S";
+    }
+
+    return null;
   }
 
   String? get id {

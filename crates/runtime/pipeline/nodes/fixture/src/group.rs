@@ -140,7 +140,7 @@ impl GroupNode {
         state: &mut Edge,
         fixture_manager: &FixtureManager,
     ) {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         if let Some(group) = fixture_manager.groups.get(&self.id) {
             if let Some(value) = context.read_port(CALL_PORT) {
                 if let Some(true) = state.update(value) {

@@ -18,7 +18,7 @@ impl<'a> Command<'a> for ClearProgrammerCommand {
         &self,
         fixture_manager: &FixtureManager,
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let mut programmer = fixture_manager.get_programmer();
+        let mut programmer = fixture_manager.get_programmer_mut();
         programmer.clear();
 
         Ok(((), ()))

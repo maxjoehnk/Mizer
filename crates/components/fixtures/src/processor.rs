@@ -67,7 +67,7 @@ impl Processor for FixtureProcessor {
             fixture_manager.states.write(state);
         }
         fixture_manager
-            .get_programmer()
+            .get_programmer_mut()
             .emit_state(fixture_manager.get_groups());
     }
 }

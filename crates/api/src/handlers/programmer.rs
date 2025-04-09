@@ -4,9 +4,8 @@ use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use itertools::Itertools;
 use mizer_command_executor::*;
-use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::{ProgrammerControlValue, ProgrammerView};
+use mizer_fixtures::programmer::ProgrammerView;
 use mizer_fixtures::GroupId;
 use mizer_sequencer::Sequencer;
 
@@ -34,7 +33,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn write_control(&self, request: WriteControlRequest) {
-        let mut programmer = self.fixture_manager.get_programmer();
+        let mut programmer = self.fixture_manager.get_programmer_mut();
         let control = request.as_controls();
         programmer.write_control(control);
     }
@@ -54,7 +53,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[profiling::function]
     pub fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         tracing::debug!("unselect_fixtures {:?}", fixture_ids);
-        let mut programmer = self.fixture_manager.get_programmer();
+        let mut programmer = self.fixture_manager.get_programmer_mut();
         programmer.unselect_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
     }
 
@@ -80,7 +79,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn highlight(&self, highlight: bool) {
-        let mut programmer = self.fixture_manager.get_programmer();
+        let mut programmer = self.fixture_manager.get_programmer_mut();
         programmer.set_highlight(highlight);
     }
 
@@ -248,63 +247,63 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[profiling::function]
     pub fn update_block_size(&self, block_size: usize) {
         self.fixture_manager
-            .get_programmer()
+            .get_programmer_mut()
             .set_block_size(block_size);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn update_groups(&self, groups: usize) {
-        self.fixture_manager.get_programmer().set_groups(groups);
+        self.fixture_manager.get_programmer_mut().set_groups(groups);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn update_wings(&self, wings: usize) {
-        self.fixture_manager.get_programmer().set_wings(wings);
+        self.fixture_manager.get_programmer_mut().set_wings(wings);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn next(&self) {
-        self.fixture_manager.get_programmer().next();
+        self.fixture_manager.get_programmer_mut().next();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn prev(&self) {
-        self.fixture_manager.get_programmer().prev();
+        self.fixture_manager.get_programmer_mut().prev();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn set(&self) {
-        self.fixture_manager.get_programmer().set();
+        self.fixture_manager.get_programmer_mut().set();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn shuffle(&self) {
-        self.fixture_manager.get_programmer().shuffle();
+        self.fixture_manager.get_programmer_mut().shuffle();
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn mark_offline(&self) {
-        self.fixture_manager.get_programmer().set_offline(true);
+        self.fixture_manager.get_programmer_mut().set_offline(true);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn mark_online(&self) {
-        self.fixture_manager.get_programmer().set_offline(false);
+        self.fixture_manager.get_programmer_mut().set_offline(false);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn write_effect_rate(&self, request: WriteEffectRateRequest) {
         self.fixture_manager
-            .get_programmer()
+            .get_programmer_mut()
             .write_rate(request.effect_id, request.effect_rate);
     }
 
@@ -312,77 +311,27 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[profiling::function]
     pub fn write_effect_offset(&self, request: WriteEffectOffsetRequest) {
         self.fixture_manager
-            .get_programmer()
+            .get_programmer_mut()
             .write_offset(request.effect_id, request.effect_offset);
     }
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn add_preset(
-        &self,
-        preset_type: preset_id::PresetType,
-        name: Option<String>,
+    pub fn store_preset(
+        &self, req: StorePresetRequest
     ) -> anyhow::Result<()> {
-        self.runtime.run_command(AddPresetCommand {
-            preset_type: preset_type.into(),
-            name,
-            values: self.get_programmer_values_for_preset_type(preset_type.into()),
-        })?;
+        let command = match req.target {
+            Some(store_preset_request::Target::Existing(preset_id)) => StorePresetCommand::Existing { preset_id: preset_id.into() },
+            Some(store_preset_request::Target::NewPreset(preset)) => StorePresetCommand::New {
+                preset_type: preset.r#type().into(),
+                preset_target: preset.target.map(|_| preset.target().into()),
+name: preset.label,
+            },
+            None => anyhow::bail!("No target specified for store preset"),
+        };
+        self.runtime.run_command(command)?;
 
         Ok(())
-    }
-
-    #[tracing::instrument(skip(self))]
-    #[profiling::function]
-    pub fn store_programmer_to_preset(&self, preset_id: PresetId) -> anyhow::Result<()> {
-        let values = self.get_programmer_values_for_preset_type(preset_id.r#type().into());
-        let preset_values = self.get_preset_values_for_preset_type(preset_id.r#type().into());
-
-        let values = values.into_iter().chain(preset_values).collect();
-
-        self.runtime.run_command(StoreInPresetCommand {
-            id: preset_id.into(),
-            values,
-        })?;
-
-        Ok(())
-    }
-
-    fn get_programmer_values_for_preset_type(
-        &self,
-        preset_type: mizer_fixtures::programmer::PresetType,
-    ) -> Vec<FixtureControlValue> {
-        self.fixture_manager
-            .get_programmer()
-            .get_channels()
-            .into_iter()
-            .map(|control| control.value)
-            .filter_map(|value| {
-                if let ProgrammerControlValue::Control(value) = value {
-                    Some(value)
-                } else {
-                    None
-                }
-            })
-            .filter(|value| preset_type.contains_control(value))
-            .collect()
-    }
-
-    fn get_preset_values_for_preset_type(
-        &self,
-        preset_type: mizer_fixtures::programmer::PresetType,
-    ) -> Vec<FixtureControlValue> {
-        self.fixture_manager
-            .get_programmer()
-            .active_presets()
-            .into_iter()
-            .flat_map(|preset| {
-                self.fixture_manager
-                    .presets
-                    .get_preset_values(preset.preset_id)
-            })
-            .filter(|value| preset_type.contains_control(value))
-            .collect()
     }
 
     #[tracing::instrument(skip(self))]

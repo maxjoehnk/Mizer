@@ -1,6 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/api/plugin/ffi/plans.dart';
+import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -19,6 +21,7 @@ class FixturesTable extends StatelessWidget {
   final List<FixtureId> trackedIds;
   final List<int> expandedIds;
   final ProgrammerState? state;
+  final Map<FixtureId, FixtureValues> fixtureValues;
   final Function(FixtureId, bool) onSelect;
   final Function(int) onExpand;
   final Function(Fixture) onSelectSimilar;
@@ -30,6 +33,7 @@ class FixturesTable extends StatelessWidget {
       required this.trackedIds,
       required this.expandedIds,
       this.state,
+      required this.fixtureValues,
       required this.onSelect,
       required this.onExpand,
       required this.onSelectSimilar,
@@ -143,14 +147,14 @@ class FixturesTable extends StatelessWidget {
         Text(id.toDisplay(), style: textStyle),
         Text(name, style: textStyle),
         IntensityIndicator(
-            fixtureState: fixtureState,
+          value: fixtureValues[id]?.intensity,
             child: Text(_faderState(context, fixtureState, FixtureControl.INTENSITY), style: textStyle)),
         Text(_faderState(context, fixtureState, FixtureControl.SHUTTER), style: textStyle),
-        ColorIndicator(fixtureState: fixtureState),
+        ColorIndicator(color: fixtureValues[id]?.color?.asFlutterColor),
         Text(_colorState(context, fixtureState, (color) => color.red), style: textStyle),
         Text(_colorState(context, fixtureState, (color) => color.green), style: textStyle),
         Text(_colorState(context, fixtureState, (color) => color.blue), style: textStyle),
-        PositionIndicator(fixtureState: fixtureState),
+        PositionIndicator(pan: fixtureValues[id]?.pan, tilt: fixtureValues[id]?.tilt),
         Text(_faderState(context, fixtureState, FixtureControl.PAN), style: textStyle),
         Text(_faderState(context, fixtureState, FixtureControl.TILT, presetControl: FixtureControl.PAN), style: textStyle),
         Text(_faderState(context, fixtureState, FixtureControl.GOBO), style: textStyle),

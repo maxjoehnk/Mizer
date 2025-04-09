@@ -147,6 +147,8 @@ impl FixtureStates {
 pub struct FixtureState {
     pub brightness: Option<f64>,
     pub color: Option<Color>,
+    pub pan: Option<f64>,
+    pub tilt: Option<f64>,
 }
 
 #[derive(Debug, Clone, Copy, Default)]

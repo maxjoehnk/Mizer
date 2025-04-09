@@ -27,6 +27,15 @@ message ProgrammerState {
   uint32 wings = 9;
   repeated EffectProgrammerState effects = 10;
   bool offline = 11;
+  repeated FixtureValue fixture_values = 12;
+}
+
+message FixtureValue {
+  mizer.fixtures.FixtureId fixture = 1;
+  optional double intensity = 2;
+  optional mizer.fixtures.ColorMixerChannel color = 3;
+  optional double pan = 4;
+  optional double tilt = 5;
 }
 
 message FixtureSelection {

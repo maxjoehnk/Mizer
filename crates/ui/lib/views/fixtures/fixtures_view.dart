@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/mixins/fixture_values_mixin.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -26,7 +27,7 @@ class FixturesView extends StatefulWidget {
 }
 
 class _FixturesViewState extends State<FixturesView>
-    with SingleTickerProviderStateMixin, ProgrammerStateMixin {
+    with TickerProviderStateMixin, ProgrammerStateMixin, FixtureValuesMixin {
   List<int> expandedIds = [];
   String? searchQuery;
 
@@ -53,6 +54,7 @@ class _FixturesViewState extends State<FixturesView>
           child: FixturesTable(
               fixtures: _getFixtures(fixtures),
               state: programmerState,
+              fixtureValues: fixtureValues,
               selectedIds: selectedIds,
               trackedIds: trackedIds,
               expandedIds: expandedIds,

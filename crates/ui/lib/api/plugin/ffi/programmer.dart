@@ -54,13 +54,7 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
   List<FixtureId> _readFixtureSelection(Array_FFIFixtureId result) {
     var fixtures = new List.generate(result.len, (index) => result.array.elementAt(index).ref);
 
-    return fixtures.map((id) {
-      if (id.sub_fixture_id != 0) {
-        return FixtureId(
-            subFixture: SubFixtureId(fixtureId: id.fixture_id, childId: id.sub_fixture_id));
-      }
-      return FixtureId(fixture: id.fixture_id);
-    }).toList();
+    return fixtures.map((id) => id.toFixtureId()).toList();
   }
 
   List<int> _readGroupSelection(Array_u32 result) {
@@ -140,5 +134,15 @@ class ProgrammerStatePointer extends FFIPointer<Programmer> {
   @override
   void disposePointer(ffi.Pointer<Programmer> _ptr) {
     this._bindings.drop_programmer_pointer(_ptr);
+  }
+}
+
+extension FFI on FFIFixtureId {
+  FixtureId toFixtureId() {
+    if (this.sub_fixture_id != 0) {
+      return FixtureId(
+          subFixture: SubFixtureId(fixtureId: this.fixture_id, childId: this.sub_fixture_id));
+    }
+    return FixtureId(fixture: this.fixture_id);
   }
 }

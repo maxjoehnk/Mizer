@@ -1,6 +1,7 @@
 import 'dart:ffi' as ffi;
 
 import 'package:flutter/widgets.dart' as widgets;
+import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 
@@ -29,6 +30,21 @@ class FixtureState {
   }
 }
 
+class FixturesState {
+  final Map<FixtureId, FixtureValues> fixtureStates;
+
+  FixturesState({this.fixtureStates = const {}});
+}
+
+class FixtureValues {
+  final double? intensity;
+  final Color? color;
+  final double? pan;
+  final double? tilt;
+
+  FixtureValues({this.intensity, this.color, this.pan, this.tilt});
+}
+
 class FixturesRefPointer extends FFIPointer<FixturesRef> {
   final FFIBindings _bindings;
 
@@ -50,6 +66,26 @@ class FixturesRefPointer extends FFIPointer<FixturesRef> {
           ? Color(red: state.color_red, green: state.color_green, blue: state.color_blue)
           : null,
     );
+  }
+
+  FixturesState readStates() {
+    FFIFixtureStates states = this._bindings.read_fixture_states(ptr);
+    var fixtures = new List.generate(states.fixture_values.len, (index) => states.fixture_values.array.elementAt(index).ref);
+
+    Map<FixtureId, FixtureValues> fixtureStates = {};
+
+    fixtures.forEach((fixture) {
+      fixtureStates[fixture.fixture_id.toFixtureId()] = FixtureValues(
+        intensity: fixture.has_intensity == 1 ? fixture.intensity : null,
+        color: fixture.has_color == 1
+            ? Color(red: fixture.color.red, green: fixture.color.green, blue: fixture.color.blue)
+            : null,
+        pan: fixture.has_pan == 1 ? fixture.pan : null,
+        tilt: fixture.has_tilt == 1 ? fixture.tilt : null
+      );
+    });
+
+    return FixturesState(fixtureStates: fixtureStates);
   }
 
   @override

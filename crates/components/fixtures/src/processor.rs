@@ -75,9 +75,12 @@ impl Processor for FixtureProcessor {
 fn get_state(fixture: &impl IFixture) -> FixtureState {
     let mut fixture_state = FixtureState::default();
     fixture_state.brightness = fixture.read_control(FixtureFaderControl::Intensity);
+    fixture_state.pan = fixture.read_control(FixtureFaderControl::Pan);
+    fixture_state.tilt = fixture.read_control(FixtureFaderControl::Tilt);
     let red = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Red));
     let green = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Green));
     let blue = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue));
+
     fixture_state.color = red
         .zip(green)
         .zip(blue)

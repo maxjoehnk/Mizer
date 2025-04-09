@@ -66,6 +66,7 @@ impl From<spread_fixtures_request::SpreadGeometry> for SpreadFixturesGeometry {
         match geometry {
             SpreadGeometry::Square => Self::Square,
             SpreadGeometry::Triangle => Self::Triangle,
+            SpreadGeometry::Circle => Self::Circle,
         }
     }
 }

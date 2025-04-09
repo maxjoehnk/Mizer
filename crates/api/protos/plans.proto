@@ -48,6 +48,7 @@ message SpreadFixturesRequest {
   enum SpreadGeometry {
     SQUARE = 0;
     TRIANGLE = 1;
+    CIRCLE = 2;
   }
 }
 

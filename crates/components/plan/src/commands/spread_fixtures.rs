@@ -19,6 +19,7 @@ pub struct SpreadFixturesInPlanCommand {
 pub enum SpreadFixturesGeometry {
     Square,
     Triangle,
+    Circle,
 }
 
 impl<'a> Command<'a> for SpreadFixturesInPlanCommand {
@@ -97,6 +98,7 @@ impl SpreadFixturesGeometry {
         match self {
             SpreadFixturesGeometry::Square => Self::spread_square(origin, fixtures),
             SpreadFixturesGeometry::Triangle => Self::spread_triangle(origin, fixtures),
+            SpreadFixturesGeometry::Circle => Self::spread_circle(origin, fixtures),
         }
     }
 
@@ -166,6 +168,24 @@ impl SpreadFixturesGeometry {
                     hashmap.insert(fixture.fixture, (x, y));
                 });
             });
+
+        hashmap
+    }
+
+    fn spread_circle(
+        origin: (f64, f64),
+        fixtures: &[FixturePosition],
+    ) -> HashMap<FixtureId, (f64, f64)> {
+        let mut hashmap = HashMap::with_capacity(fixtures.len());
+        let radius = fixtures.len() as f64 / (2.0 * std::f64::consts::PI);
+        let angle_increment = 2.0 * std::f64::consts::PI / fixtures.len() as f64;
+
+        for (i, fixture) in fixtures.iter().enumerate() {
+            let angle = i as f64 * angle_increment;
+            let x = origin.0 + radius * angle.cos();
+            let y = origin.1 + radius * angle.sin();
+            hashmap.insert(fixture.fixture, (x, y));
+        }
 
         hashmap
     }

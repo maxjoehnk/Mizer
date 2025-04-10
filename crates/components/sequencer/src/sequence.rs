@@ -137,6 +137,24 @@ impl Sequence {
         id
     }
 
+    /// Returns cue id
+    pub fn insert_cue(&mut self, position: usize) -> u32 {
+        let id = position as u32 + 1;
+        let cue = Cue::new(id, format!("Cue {}", id), Default::default());
+
+        for i in position..self.cues.len() {
+            let c = &mut self.cues[i];
+            if c.name == format!("Cue {}", c.id) {
+                c.name = format!("Cue {}", c.id + 1);
+            }
+            c.id += 1;
+        }
+
+        self.cues.insert(position, cue);
+
+        id
+    }
+
     pub fn delete_cue(&mut self, cue_id: u32) -> anyhow::Result<()> {
         let index = self
             .cues

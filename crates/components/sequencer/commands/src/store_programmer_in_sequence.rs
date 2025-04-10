@@ -66,7 +66,8 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                 .collect();
             match self.store_mode {
                 StoreMode::Merge => {
-                    cue.merge(cue_channels);
+                    cue.merge_controls(cue_channels);
+                    cue.merge_presets(&self.presets);
                     // TODO: this can cause the same effect to run multiple times
                     for effect in &self.effects {
                         cue.effects.push(CueEffect {

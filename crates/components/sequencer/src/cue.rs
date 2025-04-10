@@ -15,6 +15,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
+use mizer_fixtures::programmer::ProgrammedPreset;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -60,7 +61,7 @@ impl Cue {
         }
     }
 
-    pub fn merge(&mut self, controls: Vec<CueControl>) {
+    pub fn merge_controls(&mut self, controls: Vec<CueControl>) {
         for control in controls {
             if let Some(target) = self
                 .controls
@@ -84,6 +85,21 @@ impl Cue {
             }
         }
         self.controls.retain(|c| !c.fixtures.is_empty());
+    }
+
+    pub fn merge_presets(&mut self, presets: &[ProgrammedPreset]) {
+        for new_preset in presets {
+            for existing in self.presets.iter_mut() {
+                if existing.preset_id.preset_type() == new_preset.preset_id.preset_type() {
+                    existing.fixtures.retain(
+                        |fixture_id| !new_preset.fixtures.contains(fixture_id),
+                    )
+                }
+            }
+        }
+        self.presets.retain(|preset| !preset.fixtures.is_empty());
+        let new_presets = presets.into_iter().cloned().map(Into::into);
+        self.presets.extend(new_presets);
     }
 
     pub(crate) fn is_done(&self, state: &SequenceState) -> bool {
@@ -494,7 +510,7 @@ mod tests {
         let mut cue = Cue::new(1, "", vec![old_control.clone()]);
         let controls = vec![new_control.clone()];
 
-        cue.merge(controls);
+        cue.merge_controls(controls);
 
         assert_eq!(vec![old_control, new_control], cue.controls);
     }
@@ -521,7 +537,7 @@ mod tests {
             control: FixtureFaderControl::Intensity,
         }];
 
-        cue.merge(controls);
+        cue.merge_controls(controls);
 
         assert_eq!(vec![expected], cue.controls);
     }
@@ -550,7 +566,7 @@ mod tests {
             }],
         );
 
-        cue.merge(expected.clone());
+        cue.merge_controls(expected.clone());
 
         assert_eq!(expected, cue.controls);
     }

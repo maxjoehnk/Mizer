@@ -12,6 +12,7 @@ mod off_sequence;
 mod select_fixtures;
 mod store_group;
 mod write_programmer;
+mod delete_cue;
 
 #[cfg(test)]
 mod tests {

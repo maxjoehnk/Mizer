@@ -2,6 +2,7 @@ pub use add_cue::*;
 pub use add_port::*;
 pub use add_sequence::*;
 pub use clear_port_value::*;
+pub use delete_cue::*;
 pub use delete_sequence::*;
 pub use duplicate_sequence::*;
 pub use effects::*;
@@ -46,6 +47,7 @@ mod update_cue_value;
 mod update_priority;
 mod update_stop_on_last_cue;
 mod update_wrap_around;
+mod delete_cue;
 
 fn get_cue(sequence: &mut Sequence, cue_id: u32) -> anyhow::Result<&mut Cue> {
     sequence

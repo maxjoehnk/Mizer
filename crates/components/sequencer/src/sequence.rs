@@ -155,16 +155,16 @@ impl Sequence {
         id
     }
 
-    pub fn delete_cue(&mut self, cue_id: u32) -> anyhow::Result<()> {
+    pub fn delete_cue(&mut self, cue_id: u32) -> anyhow::Result<Cue> {
         let index = self
             .cues
             .iter()
             .position(|cue| cue.id == cue_id)
             .ok_or_else(|| anyhow::anyhow!("Unknown Cue {}", cue_id))?;
 
-        self.cues.remove(index);
+        let cue = self.cues.remove(index);
 
-        Ok(())
+        Ok(cue)
     }
 
     pub fn add_port(&mut self, port_id: NodePortId) {

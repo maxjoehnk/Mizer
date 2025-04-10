@@ -140,6 +140,7 @@ command_impl! {
     RenameSequenceCommand,
     DuplicateSequenceCommand,
     RenameCueCommand,
+    DeleteCueCommand,
     UpdateControlDelayTimeCommand,
     UpdateControlFadeTimeCommand,UpdateCueEffectOffsetCommand,
     UpdateCueTriggerCommand,

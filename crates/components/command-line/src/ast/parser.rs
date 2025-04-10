@@ -44,6 +44,13 @@ pub fn parse<TContext: CommandLineContext>(
             }
             .boxed())
         }
+        [Token::Action(Action::Delete), Token::Keyword(Keyword::Cue), Token::Value(ref value)] => {
+            Ok(ast::Delete {
+                target_type: ast::Cues,
+                target_entity: ast::Single { id: value.as_id()? },
+            }
+            .boxed())
+        }
         [Token::Action(Action::Off), Token::Keyword(Keyword::Sequence), Token::Value(ref value)] => {
             Ok(ast::Off {
                 target_type: ast::Sequences,

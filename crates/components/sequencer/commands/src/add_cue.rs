@@ -29,7 +29,11 @@ impl<'a> Command<'a> for AddCueCommand {
     }
 
     fn revert(&self, sequencer: &Sequencer, cue_id: Self::State) -> anyhow::Result<()> {
-        sequencer.update_sequence(self.sequence_id, |s| s.delete_cue(cue_id))?;
+        sequencer.update_sequence(self.sequence_id, |s| {
+            s.delete_cue(cue_id)?;
+
+            Ok(())
+        })?;
 
         Ok(())
     }

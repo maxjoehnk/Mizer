@@ -51,6 +51,7 @@ pub fn lexer<'src>() -> impl Parser<'src, &'src str, Tokens, extra::Err<Rich<'sr
             "sequences" => Ok(Keyword::Sequence),
             "sequence" => Ok(Keyword::Sequence),
             "seq" => Ok(Keyword::Sequence),
+            "cue" => Ok(Keyword::Cue),
             "groups" => Ok(Keyword::Group),
             "group" => Ok(Keyword::Group),
             _ => Err(Rich::custom(span, "Unknown keyword")),

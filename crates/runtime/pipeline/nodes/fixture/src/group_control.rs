@@ -15,6 +15,8 @@ const PHASE_SETTING: &str = "Phase";
 const FAN_SETTING: &str = "Fan";
 const ASYMMETRICAL_SETTING: &str = "Asymmetrical";
 
+const INPUT_OUTPUT_PORT: &str = "Output";
+
 const INPUT_VALUE_PORT: &str = "Value";
 const INPUT_PHASE_PORT: &str = "Phase";
 const INPUT_FAN_PORT: &str = "Fan";
@@ -148,6 +150,7 @@ impl PipelineNode for GroupControlNode {
 
         vec![
             value_port,
+            input_port!(INPUT_OUTPUT_PORT, PortType::Single),
             input_port!(INPUT_PHASE_PORT, PortType::Single),
             input_port!(INPUT_FAN_PORT, PortType::Single),
         ]
@@ -186,6 +189,10 @@ impl ProcessingNode for GroupControlNode {
             .read()
             .unwrap_or(self.fan);
 
+        let output = context.single_input(INPUT_OUTPUT_PORT)
+            .is_high()
+            .unwrap_or(true);
+
         if self.control.is_color() {
             if !matches!(&buffer, ControlBuffer::Color(_)) {
                 *buffer = ControlBuffer::color();
@@ -199,27 +206,29 @@ impl ProcessingNode for GroupControlNode {
             } else {
                 buffer.clear();
             }
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.red),
-                FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.green),
-                FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.blue),
-                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                phase,
-                fan,
-            );
+            if output {
+                self.write(
+                    manager,
+                    buffer.iter().map(|c| c.red),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                    phase,
+                    fan,
+                );
+                self.write(
+                    manager,
+                    buffer.iter().map(|c| c.green),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                    phase,
+                    fan,
+                );
+                self.write(
+                    manager,
+                    buffer.iter().map(|c| c.blue),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                    phase,
+                    fan,
+                );
+            }
         } else {
             if !matches!(&buffer, ControlBuffer::Single(_)) {
                 *buffer = ControlBuffer::single();
@@ -234,8 +243,10 @@ impl ProcessingNode for GroupControlNode {
             } else {
                 buffer.clear();
             }
-            for fader_control in self.control.clone().faders() {
-                self.write(manager, buffer.iter().copied(), fader_control, phase, fan);
+            if output {
+                for fader_control in self.control.clone().faders() {
+                    self.write(manager, buffer.iter().copied(), fader_control, phase, fan);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ use mizer_module::{Inject, Runtime};
 use mizer_node_ports::NodePortState;
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
+use mizer_protocol_midi::MidiConnectionManager;
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
@@ -68,12 +69,12 @@ impl Mizer {
     }
 
     #[profiling::function]
-    pub fn new_project(&mut self) {
+    pub fn new_project(&mut self) -> anyhow::Result<()> {
         tracing::info!("Creating new project...");
         mizer_util::message!("New Project", 0);
         self.runtime
             .add_status_message("Creating new project...", None);
-        self.close_project();
+        self.close_project()?;
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
         fixture_manager.new_project();
@@ -99,11 +100,13 @@ impl Mizer {
             .add_status_message("Created new project", Some(Duration::from_secs(10)));
         self.status_bus.send_current_project(ProjectStatus::New);
         mizer_console::info(ConsoleCategory::Projects, "New project created");
+
+        Ok(())
     }
 
     #[profiling::function]
     pub fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
-        self.close_project();
+        self.close_project()?;
         self.project_path = Some(path);
         self.load_project()?;
 
@@ -232,14 +235,18 @@ impl Mizer {
                 path.display()
             );
         }
+
         Ok(())
     }
 
     #[profiling::function]
-    pub fn close_project(&mut self) {
+    pub fn close_project(&mut self) -> anyhow::Result<()> {
+        tracing::info!("Closing project...");
         mizer_util::message!("Closing Project", 0);
         self.runtime.clear();
         let injector = self.runtime.injector_mut();
+        let midi_manager = injector.get::<MidiConnectionManager>().unwrap();
+        midi_manager.clear()?;
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
         fixture_manager.clear();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
@@ -248,7 +255,7 @@ impl Mizer {
         mqtt_manager.clear();
         let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
         osc_manager.clear();
-        let sequencer = injector.get::<Sequencer>().unwrap();
+        let sequencer = injector.inject::<Sequencer>();
         sequencer.clear();
         let timecode_manager = injector.get::<TimecodeManager>().unwrap();
         timecode_manager.clear();
@@ -258,6 +265,8 @@ impl Mizer {
         effects_engine.clear();
         self.send_session_update();
         self.status_bus.send_current_project(ProjectStatus::None);
+
+        Ok(())
     }
 
     #[profiling::function]

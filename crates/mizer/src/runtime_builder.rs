@@ -144,6 +144,7 @@ fn load_settings() -> anyhow::Result<Arc<NonEmptyPinboard<SettingsManager>>> {
 }
 
 fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
+    mizer.close_project()?;
     if let Some(project_file) = mizer.project_path.clone() {
         mizer
             .load_project()
@@ -160,10 +161,10 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
                 );
             }
         } else {
-            mizer.new_project();
+            mizer.new_project()?;
         }
     } else {
-        mizer.new_project();
+        mizer.new_project()?;
     }
 
     Ok(())

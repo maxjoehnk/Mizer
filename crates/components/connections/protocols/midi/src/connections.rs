@@ -79,4 +79,14 @@ impl MidiConnectionManager {
     pub fn list_available_devices(&self) -> Vec<MidiDeviceIdentifier> {
         self.provider.list_devices().unwrap_or_default()
     }
+
+    pub fn clear(&self) -> anyhow::Result<()> {
+        // TODO: this will only clear previously connected devices
+        tracing::info!("Clearing all {} MIDI device outputs", self.devices.len());
+        for mut device in self.devices.iter_mut() {
+            device.value_mut().clear_outputs()?;
+        }
+
+        Ok(())
+    }
 }

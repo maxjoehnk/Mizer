@@ -25,13 +25,15 @@ class SelectSequenceDialog extends StatelessWidget {
               List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
               sequences.sort((lhs, rhs) => lhs.id - rhs.id);
 
-              return PanelGrid(children: sequences
-                      .map((s) => PanelGridTile.idWithText(
-                            id: s.id.toString(),
-                            text: s.name,
-                            onTap: () => Navigator.of(context).pop(s),
-                          ))
-                      .toList());
+              return SingleChildScrollView(
+                child: PanelGrid(children: sequences
+                        .map((s) => PanelGridTile.idWithText(
+                              id: s.id.toString(),
+                              text: s.name,
+                              onTap: () => Navigator.of(context).pop(s),
+                            ))
+                        .toList()),
+              );
             }),
       ),
       actions: [

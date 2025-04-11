@@ -61,14 +61,17 @@ class _AssignFixturesToGroupDialogState extends State<AssignFixturesToGroupDialo
       content: Container(
           width: MAX_TILE_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
-          child: PanelGrid(
-              children: widget.bloc.state.groups
-                  .map((g) => PanelGridTile.idWithText(
-                        id: "G${g.id}",
-                        text: g.name,
-                        onTap: () => Navigator.of(context).pop(_InternalDialogResult(g)),
-                      ))
-                  .toList())),
+          margin: const EdgeInsets.only(bottom: GRID_GAP_SIZE),
+          child: SingleChildScrollView(
+            child: PanelGrid(
+                children: widget.bloc.state.groups
+                    .map((g) => PanelGridTile.idWithText(
+                          id: "G${g.id}",
+                          text: g.name,
+                          onTap: () => Navigator.of(context).pop(_InternalDialogResult(g)),
+                        ))
+                    .toList()),
+          )),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
         PopupAction("New Group", () => _newGroup(context))

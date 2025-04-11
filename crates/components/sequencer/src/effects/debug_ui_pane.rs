@@ -18,7 +18,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for EffectsDebugUiPane {
         let engine = injector.inject::<EffectEngine>();
         let instances = engine.instances.lock().unwrap();
         for effect in engine.effects() {
-            ui.collapsing_header(effect.name.clone(), |ui| {
+            ui.collapsing_header(effect.name.clone(), None, |ui| {
                 ui.columns(2, |columns| {
                     columns[0].label("ID");
                     columns[1].label(effect.id.to_string());
@@ -27,9 +27,9 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for EffectsDebugUiPane {
                     columns[1].label(effect.name);
                 });
 
-                ui.collapsing_header("Channels", |ui| {
+                ui.collapsing_header("Channels", None, |ui| {
                     for channel in effect.channels {
-                        ui.collapsing_header(format!("{:?}", channel.control), |ui| {
+                        ui.collapsing_header(format!("{:?}", channel.control), None, |ui| {
                             for step in channel.steps {
                                 ui.horizontal(|ui| {
                                     ui.label(format!("{:?}", step.control_point));
@@ -39,7 +39,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for EffectsDebugUiPane {
                         });
                     }
                 });
-                ui.collapsing_header("Instances", |ui| {
+                ui.collapsing_header("Instances", None, |ui| {
                     let instances = instances
                         .iter()
                         .filter(|(_, instance)| instance.effect_id == effect.id);

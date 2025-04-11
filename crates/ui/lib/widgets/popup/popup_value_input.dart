@@ -8,7 +8,7 @@ import 'ast.dart';
 
 class PopupValueInput extends StatefulWidget {
   final CueValue? value;
-  final void Function(CueValue)? onEnter;
+  final void Function(CueValue?)? onEnter;
   final bool allowRange;
 
   const PopupValueInput({this.value, this.onEnter, this.allowRange = false, Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
     super.initState();
     if (widget.value != null) {
       if (widget.value!.hasDirect()) {
-        _ast.push(Value(widget.value!.direct.toInt()));
+        _ast.push(Value((widget.value!.direct  * 100).toInt()));
       }
     }
   }
@@ -125,7 +125,7 @@ class _PopupValueInputState extends State<PopupValueInput> {
   _build(BuildContext context) {
     CueValue? value = _ast.build();
     Navigator.of(context).pop(value);
-    if (widget.onEnter != null && value != null) {
+    if (widget.onEnter != null) {
       widget.onEnter!(value);
     }
   }

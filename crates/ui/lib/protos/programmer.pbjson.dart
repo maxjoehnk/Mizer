@@ -46,11 +46,32 @@ const ProgrammerState$json = const {
     const {'1': 'wings', '3': 9, '4': 1, '5': 13, '10': 'wings'},
     const {'1': 'effects', '3': 10, '4': 3, '5': 11, '6': '.mizer.programmer.EffectProgrammerState', '10': 'effects'},
     const {'1': 'offline', '3': 11, '4': 1, '5': 8, '10': 'offline'},
+    const {'1': 'fixture_values', '3': 12, '4': 3, '5': 11, '6': '.mizer.programmer.FixtureValue', '10': 'fixtureValues'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSIwoNYWN0aXZlX2dyb3VwcxgDIAMoDVIMYWN0aXZlR3JvdXBzEkAKCXNlbGVjdGlvbhgEIAEoCzIiLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVNlbGVjdGlvblIJc2VsZWN0aW9uEj8KCGNvbnRyb2xzGAUgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHMSHAoJaGlnaGxpZ2h0GAYgASgIUgloaWdobGlnaHQSHQoKYmxvY2tfc2l6ZRgHIAEoDVIJYmxvY2tTaXplEhYKBmdyb3VwcxgIIAEoDVIGZ3JvdXBzEhQKBXdpbmdzGAkgASgNUgV3aW5ncxJBCgdlZmZlY3RzGAogAygLMicubWl6ZXIucHJvZ3JhbW1lci5FZmZlY3RQcm9ncmFtbWVyU3RhdGVSB2VmZmVjdHMSGAoHb2ZmbGluZRgLIAEoCFIHb2ZmbGluZQ==');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSIwoNYWN0aXZlX2dyb3VwcxgDIAMoDVIMYWN0aXZlR3JvdXBzEkAKCXNlbGVjdGlvbhgEIAEoCzIiLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVNlbGVjdGlvblIJc2VsZWN0aW9uEj8KCGNvbnRyb2xzGAUgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHMSHAoJaGlnaGxpZ2h0GAYgASgIUgloaWdobGlnaHQSHQoKYmxvY2tfc2l6ZRgHIAEoDVIJYmxvY2tTaXplEhYKBmdyb3VwcxgIIAEoDVIGZ3JvdXBzEhQKBXdpbmdzGAkgASgNUgV3aW5ncxJBCgdlZmZlY3RzGAogAygLMicubWl6ZXIucHJvZ3JhbW1lci5FZmZlY3RQcm9ncmFtbWVyU3RhdGVSB2VmZmVjdHMSGAoHb2ZmbGluZRgLIAEoCFIHb2ZmbGluZRJFCg5maXh0dXJlX3ZhbHVlcxgMIAMoCzIeLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVZhbHVlUg1maXh0dXJlVmFsdWVz');
+@$core.Deprecated('Use fixtureValueDescriptor instead')
+const FixtureValue$json = const {
+  '1': 'FixtureValue',
+  '2': const [
+    const {'1': 'fixture', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixture'},
+    const {'1': 'intensity', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'intensity', '17': true},
+    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 1, '10': 'color', '17': true},
+    const {'1': 'pan', '3': 4, '4': 1, '5': 1, '9': 2, '10': 'pan', '17': true},
+    const {'1': 'tilt', '3': 5, '4': 1, '5': 1, '9': 3, '10': 'tilt', '17': true},
+  ],
+  '8': const [
+    const {'1': '_intensity'},
+    const {'1': '_color'},
+    const {'1': '_pan'},
+    const {'1': '_tilt'},
+  ],
+};
+
+/// Descriptor for `FixtureValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureValueDescriptor = $convert.base64Decode('CgxGaXh0dXJlVmFsdWUSMwoHZml4dHVyZRgBIAEoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIHZml4dHVyZRIhCglpbnRlbnNpdHkYAiABKAFIAFIJaW50ZW5zaXR5iAEBEjwKBWNvbG9yGAMgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAVIFY29sb3KIAQESFQoDcGFuGAQgASgBSAJSA3BhbogBARIXCgR0aWx0GAUgASgBSANSBHRpbHSIAQFCDAoKX2ludGVuc2l0eUIICgZfY29sb3JCBgoEX3BhbkIHCgVfdGlsdA==');
 @$core.Deprecated('Use fixtureSelectionDescriptor instead')
 const FixtureSelection$json = const {
   '1': 'FixtureSelection',
@@ -240,11 +261,12 @@ const StoreRequest_Mode$json = const {
     const {'1': 'OVERWRITE', '2': 0},
     const {'1': 'MERGE', '2': 1},
     const {'1': 'ADD_CUE', '2': 2},
+    const {'1': 'INSERT_CUE', '2': 3},
   ],
 };
 
 /// Descriptor for `StoreRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storeRequestDescriptor = $convert.base64Decode('CgxTdG9yZVJlcXVlc3QSHwoLc2VxdWVuY2VfaWQYASABKA1SCnNlcXVlbmNlSWQSQgoKc3RvcmVfbW9kZRgCIAEoDjIjLm1pemVyLnByb2dyYW1tZXIuU3RvcmVSZXF1ZXN0Lk1vZGVSCXN0b3JlTW9kZRIaCgZjdWVfaWQYAyABKA1IAFIFY3VlSWSIAQEiLQoETW9kZRINCglPVkVSV1JJVEUQABIJCgVNRVJHRRABEgsKB0FERF9DVUUQAkIJCgdfY3VlX2lk');
+final $typed_data.Uint8List storeRequestDescriptor = $convert.base64Decode('CgxTdG9yZVJlcXVlc3QSHwoLc2VxdWVuY2VfaWQYASABKA1SCnNlcXVlbmNlSWQSQgoKc3RvcmVfbW9kZRgCIAEoDjIjLm1pemVyLnByb2dyYW1tZXIuU3RvcmVSZXF1ZXN0Lk1vZGVSCXN0b3JlTW9kZRIaCgZjdWVfaWQYAyABKA1IAFIFY3VlSWSIAQEiPQoETW9kZRINCglPVkVSV1JJVEUQABIJCgVNRVJHRRABEgsKB0FERF9DVUUQAhIOCgpJTlNFUlRfQ1VFEANCCQoHX2N1ZV9pZA==');
 @$core.Deprecated('Use storeResponseDescriptor instead')
 const StoreResponse$json = const {
   '1': 'StoreResponse',

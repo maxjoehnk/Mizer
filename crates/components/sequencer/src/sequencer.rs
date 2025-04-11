@@ -11,6 +11,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_fixtures::manager::FixtureManager;
 use mizer_module::ClockFrame;
+use mizer_node_ports::NodePortState;
 use mizer_util::ThreadPinned;
 
 use crate::contracts::StdClock;
@@ -72,6 +73,7 @@ impl Sequencer {
         &self,
         fixture_manager: &FixtureManager,
         effect_engine: &EffectEngine,
+        ports_state: &NodePortState,
         frame: ClockFrame,
     ) {
         let mut states = self.sequence_states.deref().deref().borrow_mut();
@@ -81,6 +83,7 @@ impl Sequencer {
             &mut states,
             fixture_manager,
             effect_engine,
+            ports_state,
             frame,
         );
         self.update_views(&self.sequences, &states);
@@ -171,6 +174,7 @@ impl Sequencer {
         states: &mut HashMap<u32, SequenceState>,
         fixture_manager: &FixtureManager,
         effect_engine: &EffectEngine,
+        ports_state: &NodePortState,
         frame: ClockFrame,
     ) {
         profiling::scope!("Sequencer::handle_sequences");
@@ -184,6 +188,7 @@ impl Sequencer {
                     fixture_manager,
                     effect_engine,
                     &fixture_manager.presets,
+                    ports_state,
                     frame,
                 );
             }

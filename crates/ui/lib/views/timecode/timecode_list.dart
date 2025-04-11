@@ -48,7 +48,7 @@ class TimecodeList extends StatelessWidget {
   }
 
   Future<void> _addTimecode(BuildContext context) async {
-    String? name = await context.showRenameDialog();
+    String? name = await context.showNameDialog();
     if (name == null) {
       return;
     }
@@ -81,7 +81,7 @@ class TimecodePane extends StatelessWidget {
     var style = Theme.of(context).textTheme;
 
     return PanelGridTile(
-      onSecondaryTapDown: (details) => context.showRenameDialog(name: timecode.name).then((name) {
+      onSecondaryTapDown: (details) => context.showNameDialog(name: timecode.name).then((name) {
         if (name != null) {
           _renameTimecode(context, name);
         }

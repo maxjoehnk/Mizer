@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package mizer.ports;
+
+message NodePorts {
+  repeated NodePort ports = 1;
+}
+
+message NodePort {
+  uint32 id = 1;
+  string name = 2;
+}

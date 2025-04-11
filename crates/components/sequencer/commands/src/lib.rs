@@ -1,4 +1,8 @@
+pub use add_cue::*;
+pub use add_port::*;
 pub use add_sequence::*;
+pub use clear_port_value::*;
+pub use delete_cue::*;
 pub use delete_sequence::*;
 pub use duplicate_sequence::*;
 pub use effects::*;
@@ -7,6 +11,7 @@ pub use rename_cue::*;
 pub use rename_sequence::*;
 pub use sequence_go_backward::*;
 pub use sequence_go_forward::*;
+pub use set_port_value::*;
 pub use stop_sequence::*;
 pub use store_programmer_in_sequence::*;
 pub use update_control_delay_time::*;
@@ -19,7 +24,10 @@ pub use update_priority::*;
 pub use update_stop_on_last_cue::*;
 pub use update_wrap_around::*;
 
+mod add_cue;
+mod add_port;
 mod add_sequence;
+mod clear_port_value;
 mod delete_sequence;
 mod duplicate_sequence;
 mod effects;
@@ -27,6 +35,7 @@ mod rename_cue;
 mod rename_sequence;
 mod sequence_go_backward;
 mod sequence_go_forward;
+mod set_port_value;
 mod stop_sequence;
 mod store_programmer_in_sequence;
 mod update_control_delay_time;
@@ -38,6 +47,7 @@ mod update_cue_value;
 mod update_priority;
 mod update_stop_on_last_cue;
 mod update_wrap_around;
+mod delete_cue;
 
 fn get_cue(sequence: &mut Sequence, cue_id: u32) -> anyhow::Result<&mut Cue> {
     sequence

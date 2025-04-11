@@ -163,6 +163,37 @@ impl DeviceProfile {
             }
         }
     }
+
+    pub fn clear_messages(&self) -> Vec<MidiMessage> {
+        let mut messages = vec![];
+        for page in &self.pages {
+            for control in page.all_controls() {
+                match &control.output {
+                    Some(DeviceControl::MidiNote(control)) => {
+                        messages.push(MidiMessage::NoteOff(
+                            control.channel,
+                            control.note,
+                            0,
+                        ));
+                    }
+                    Some(DeviceControl::MidiCC(control)) => {
+                        messages.push(MidiMessage::ControlChange(
+                            control.channel,
+                            control.note,
+                            0,
+                        ));
+                    }
+                    Some(DeviceControl::RGBSysEx(_)) => {
+                        if let Some(msg) = self.write_rgb(control, (0.0, 0.0, 0.0)) {
+                            messages.push(msg);
+                        }
+                    }
+                    _ => {}
+                }
+            }
+        }
+        messages
+    }
 }
 
 impl std::fmt::Debug for DeviceProfile {

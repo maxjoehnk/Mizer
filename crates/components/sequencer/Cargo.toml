@@ -12,6 +12,7 @@ anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-module = { path = "../../runtime/module" }
 mizer-fixtures = { path = "../fixtures" }
+mizer-node-ports = { path = "../ports" }
 mizer-util = { path = "../../util" }
 pinboard = "2.2"
 profiling = "1"

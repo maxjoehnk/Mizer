@@ -127,14 +127,14 @@ impl ProcessingNode for ImageFileNode {
     }
 
     fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
-        ui.collapsing_header("Settings", |ui| {
+        ui.collapsing_header("Settings", None, |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("File");
                 columns[1].label(&self.file);
             });
         });
 
-        ui.collapsing_header("State", |ui| {
+        ui.collapsing_header("State", None, |ui| {
             if let Some(state) = state.as_ref() {
                 state.texture.debug_ui(ui);
             }

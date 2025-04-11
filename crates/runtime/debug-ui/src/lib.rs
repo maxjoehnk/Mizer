@@ -50,6 +50,7 @@ pub trait DebugUiDrawHandle<'a> {
     fn collapsing_header(
         &mut self,
         title: impl Into<String>,
+        key: Option<&'_ str>,
         add_content: impl FnOnce(&mut Self::DrawHandle<'_>),
     );
 

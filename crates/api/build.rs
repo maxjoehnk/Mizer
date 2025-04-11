@@ -10,6 +10,7 @@ fn main() {
                 "protos/layouts.proto",
                 "protos/media.proto",
                 "protos/nodes.proto",
+                "protos/ports.proto",
                 "protos/session.proto",
                 "protos/sequencer.proto",
                 "protos/effects.proto",

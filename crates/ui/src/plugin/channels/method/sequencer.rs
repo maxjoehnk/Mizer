@@ -137,6 +137,47 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
             },
+            "addCue" => match call.args {
+                Value::I64(sequence) => {
+                    let sequence = self.handler.add_cue(sequence as u32);
+                    resp.respond_msg(sequence);
+                }
+                _ => resp.respond_error(anyhow::anyhow!("Invalid sequence ID")),
+            },
+            "addPort" => {
+                let result = call
+                    .arguments::<AssignSequencePortRequest>()
+                    .and_then(|req| self.handler.add_port(req.sequence, req.port.into()));
+
+                resp.respond_unit_result(result);
+            }
+            "setPortValue" => {
+                let result = call
+                    .arguments::<SetSequencePortValueRequest>()
+                    .and_then(|req| {
+                        self.handler.set_port_value(
+                            req.sequence,
+                            req.cue,
+                            req.port.into(),
+                            req.value,
+                        )
+                    });
+
+                resp.respond_unit_result(result);
+            }
+            "clearPortValue" => {
+                let result = call
+                    .arguments::<ClearSequencePortValueRequest>()
+                    .and_then(|req| {
+                        self.handler.clear_port_value(
+                            req.sequence,
+                            req.cue,
+                            req.port.into(),
+                        )
+                    });
+
+                resp.respond_unit_result(result);
+            }
             _ => resp.not_implemented(),
         }
     }

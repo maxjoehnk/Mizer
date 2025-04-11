@@ -2,12 +2,13 @@ use crate::color_mixer::{update_color_mixer, ColorMixer};
 use crate::definition::{
     ColorChannel, FixtureFaderControl, SubFixtureControlChannel, SubFixtureDefinition,
 };
-use crate::fixture::{ChannelValues, IFixture, IFixtureMut};
+use crate::fixture::{ChannelsWithValues, IFixture, IFixtureMut};
 use crate::FixturePriority;
+use crate::manager::{FadeTimings, FixtureValueSource};
 
 #[derive(Debug)]
 pub struct SubFixtureMut<'a> {
-    pub(crate) channel_values: &'a mut ChannelValues,
+    pub(crate) channel_values: &'a mut ChannelsWithValues,
     pub(crate) definition: &'a mut SubFixtureDefinition,
 }
 
@@ -28,16 +29,18 @@ impl<'a> SubFixtureMut<'a> {
 
 #[derive(Debug)]
 pub struct SubFixture<'a> {
-    pub(crate) channel_values: &'a ChannelValues,
+    pub(crate) channel_values: &'a ChannelsWithValues,
     pub(crate) definition: &'a SubFixtureDefinition,
 }
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
-    fn write_fader_control(
+    fn write_fader_control_with_timings(
         &mut self,
         control: FixtureFaderControl,
         value: f64,
         priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
     ) {
         profiling::scope!("SubFixtureMut::write_fader_control");
         if let Some(channel) = self.definition.controls.get_channel(&control) {
@@ -47,13 +50,13 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                         let color_mixer = self.color_mixer_mut();
                         if let Some(color_mixer) = color_mixer {
                             match color_channel {
-                                ColorChannel::Red => color_mixer.set_red(value, priority),
-                                ColorChannel::Green => color_mixer.set_green(value, priority),
-                                ColorChannel::Blue => color_mixer.set_blue(value, priority),
+                                ColorChannel::Red => color_mixer.set_red(value, priority, source, fade_timings),
+                                ColorChannel::Green => color_mixer.set_green(value, priority, source, fade_timings),
+                                ColorChannel::Blue => color_mixer.set_blue(value, priority, source, fade_timings),
                             }
                         }
                     } else {
-                        self.channel_values.write_priority(channel, value, priority)
+                        self.channel_values.write_priority_with_timings(channel, value, priority, source, fade_timings)
                     }
                 }
                 SubFixtureControlChannel::VirtualDimmer => {
@@ -63,7 +66,7 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                     );
                     let color_mixer = self.color_mixer_mut();
                     if let Some(color_mixer) = color_mixer {
-                        color_mixer.set_virtual_dimmer(value, priority);
+                        color_mixer.set_virtual_dimmer(value, priority, source, fade_timings);
                     }
                 }
             }
@@ -86,7 +89,7 @@ impl<'a> IFixture for SubFixture<'a> {
 }
 
 fn read_control(
-    channel_values: &ChannelValues,
+    channel_values: &ChannelsWithValues,
     definition: &SubFixtureDefinition,
     control: FixtureFaderControl,
 ) -> Option<f64> {

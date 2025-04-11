@@ -1,0 +1,14 @@
+[package]
+name = "mizer-node-ports"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+mizer-module = { path = "../../runtime/module" }
+mizer-util = { path = "../../util" }
+mizer-commander = { path = "../../runtime/commander" }
+profiling = "1"
+tracing = "0.1"

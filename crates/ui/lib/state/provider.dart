@@ -4,6 +4,7 @@ import 'package:mizer/state/console_bloc.dart';
 import 'package:mizer/state/midi_profiles_bloc.dart';
 import 'package:mizer/state/nodes_view.dart';
 import 'package:mizer/state/plans_bloc.dart';
+import 'package:mizer/state/ports_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/status_bar_bloc.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
@@ -43,6 +44,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => StatusBarCubit(context.read())),
         BlocProvider(create: (context) => SurfacesCubit(context.read())),
         BlocProvider(create: (context) => ConsoleCubit(context.read())),
+        BlocProvider(create: (context) => PortsBloc(context.read())),
       ],
     );
   }

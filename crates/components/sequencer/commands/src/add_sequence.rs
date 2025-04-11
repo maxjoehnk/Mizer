@@ -6,7 +6,7 @@ use mizer_sequencer::{Sequence, Sequencer};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize)]
-pub struct AddSequenceCommand {}
+pub struct AddSequenceCommand;
 
 impl<'a> Command<'a> for AddSequenceCommand {
     type Dependencies = (Ref<Sequencer>, SubCommand<AddNodeCommand>);

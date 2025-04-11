@@ -16,6 +16,9 @@ pub struct Fixtures;
 pub struct Sequences;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Cues;
+
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Groups;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -26,6 +29,8 @@ pub trait Type {}
 impl Type for Fixtures {}
 
 impl Type for Sequences {}
+
+impl Type for Cues {}
 
 impl Type for Groups {}
 

@@ -159,6 +159,31 @@ class SequencerPluginApi implements SequencerApi {
     await channel.invokeMethod("updateSequencePriority", request.writeToBuffer());
   }
 
+  @override
+  Future<void> addCue(int sequence) {
+    return channel.invokeMethod("addCue", sequence);
+  }
+
+  @override
+  Future<void> addPort({required int sequenceId, required int portId}) {
+    var request = AssignSequencePortRequest(sequence: sequenceId, port: portId);
+    return channel.invokeMethod("addPort", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> setPortValue({required int sequenceId, required int cueId, required int portId, required double value}) {
+    var request = SetSequencePortValueRequest(
+        sequence: sequenceId, cue: cueId, port: portId, value: value);
+    return channel.invokeMethod("setPortValue", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> clearPortValue({required int sequenceId, required int cueId, required int portId}) {
+    var request = ClearSequencePortValueRequest(
+        sequence: sequenceId, cue: cueId, port: portId);
+    return channel.invokeMethod("clearPortValue", request.writeToBuffer());
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

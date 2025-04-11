@@ -1119,6 +1119,292 @@ class SequenceNameRequest extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 }
 
+class AssignSequencePortRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AssignSequencePortRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  AssignSequencePortRequest._() : super();
+  factory AssignSequencePortRequest({
+    $core.int? sequence,
+    $core.int? port,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    return _result;
+  }
+  factory AssignSequencePortRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AssignSequencePortRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AssignSequencePortRequest clone() => AssignSequencePortRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AssignSequencePortRequest copyWith(void Function(AssignSequencePortRequest) updates) => super.copyWith((message) => updates(message as AssignSequencePortRequest)) as AssignSequencePortRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AssignSequencePortRequest create() => AssignSequencePortRequest._();
+  AssignSequencePortRequest createEmptyInstance() => create();
+  static $pb.PbList<AssignSequencePortRequest> createRepeated() => $pb.PbList<AssignSequencePortRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AssignSequencePortRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AssignSequencePortRequest>(create);
+  static AssignSequencePortRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get port => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set port($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPort() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPort() => clearField(2);
+}
+
+class RemoveSequencePortRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveSequencePortRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  RemoveSequencePortRequest._() : super();
+  factory RemoveSequencePortRequest({
+    $core.int? sequence,
+    $core.int? port,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    return _result;
+  }
+  factory RemoveSequencePortRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RemoveSequencePortRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RemoveSequencePortRequest clone() => RemoveSequencePortRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RemoveSequencePortRequest copyWith(void Function(RemoveSequencePortRequest) updates) => super.copyWith((message) => updates(message as RemoveSequencePortRequest)) as RemoveSequencePortRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RemoveSequencePortRequest create() => RemoveSequencePortRequest._();
+  RemoveSequencePortRequest createEmptyInstance() => create();
+  static $pb.PbList<RemoveSequencePortRequest> createRepeated() => $pb.PbList<RemoveSequencePortRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveSequencePortRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveSequencePortRequest>(create);
+  static RemoveSequencePortRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get port => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set port($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPort() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPort() => clearField(2);
+}
+
+class SetSequencePortValueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetSequencePortValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  SetSequencePortValueRequest._() : super();
+  factory SetSequencePortValueRequest({
+    $core.int? sequence,
+    $core.int? port,
+    $core.int? cue,
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    if (cue != null) {
+      _result.cue = cue;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory SetSequencePortValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetSequencePortValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetSequencePortValueRequest clone() => SetSequencePortValueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetSequencePortValueRequest copyWith(void Function(SetSequencePortValueRequest) updates) => super.copyWith((message) => updates(message as SetSequencePortValueRequest)) as SetSequencePortValueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SetSequencePortValueRequest create() => SetSequencePortValueRequest._();
+  SetSequencePortValueRequest createEmptyInstance() => create();
+  static $pb.PbList<SetSequencePortValueRequest> createRepeated() => $pb.PbList<SetSequencePortValueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SetSequencePortValueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetSequencePortValueRequest>(create);
+  static SetSequencePortValueRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get port => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set port($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPort() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPort() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get cue => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set cue($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get value => $_getN(3);
+  @$pb.TagNumber(4)
+  set value($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearValue() => clearField(4);
+}
+
+class ClearSequencePortValueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearSequencePortValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  ClearSequencePortValueRequest._() : super();
+  factory ClearSequencePortValueRequest({
+    $core.int? sequence,
+    $core.int? port,
+    $core.int? cue,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    if (cue != null) {
+      _result.cue = cue;
+    }
+    return _result;
+  }
+  factory ClearSequencePortValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ClearSequencePortValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ClearSequencePortValueRequest clone() => ClearSequencePortValueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ClearSequencePortValueRequest copyWith(void Function(ClearSequencePortValueRequest) updates) => super.copyWith((message) => updates(message as ClearSequencePortValueRequest)) as ClearSequencePortValueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ClearSequencePortValueRequest create() => ClearSequencePortValueRequest._();
+  ClearSequencePortValueRequest createEmptyInstance() => create();
+  static $pb.PbList<ClearSequencePortValueRequest> createRepeated() => $pb.PbList<ClearSequencePortValueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ClearSequencePortValueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClearSequencePortValueRequest>(create);
+  static ClearSequencePortValueRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get port => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set port($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPort() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPort() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get cue => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set cue($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCue() => clearField(3);
+}
+
 class Sequences extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Sequences', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..pc<Sequence>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequences', $pb.PbFieldType.PM, subBuilder: Sequence.create)
@@ -1166,9 +1452,10 @@ class Sequence extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
     ..pc<$0.FixtureId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
-    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
-    ..e<FixturePriority>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
+    ..p<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ports', $pb.PbFieldType.KU3)
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround')
+    ..aOB(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue')
+    ..e<FixturePriority>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'priority', $pb.PbFieldType.OE, defaultOrMaker: FixturePriority.PRIORITY_HTP, valueOf: FixturePriority.valueOf, enumValues: FixturePriority.values)
     ..hasRequiredFields = false
   ;
 
@@ -1178,6 +1465,7 @@ class Sequence extends $pb.GeneratedMessage {
     $core.String? name,
     $core.Iterable<Cue>? cues,
     $core.Iterable<$0.FixtureId>? fixtures,
+    $core.Iterable<$core.int>? ports,
     $core.bool? wrapAround,
     $core.bool? stopOnLastCue,
     FixturePriority? priority,
@@ -1194,6 +1482,9 @@ class Sequence extends $pb.GeneratedMessage {
     }
     if (fixtures != null) {
       _result.fixtures.addAll(fixtures);
+    }
+    if (ports != null) {
+      _result.ports.addAll(ports);
     }
     if (wrapAround != null) {
       _result.wrapAround = wrapAround;
@@ -1252,31 +1543,34 @@ class Sequence extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get fixtures => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.bool get wrapAround => $_getBF(4);
-  @$pb.TagNumber(5)
-  set wrapAround($core.bool v) { $_setBool(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasWrapAround() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearWrapAround() => clearField(5);
+  $core.List<$core.int> get ports => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.bool get stopOnLastCue => $_getBF(5);
+  $core.bool get wrapAround => $_getBF(5);
   @$pb.TagNumber(6)
-  set stopOnLastCue($core.bool v) { $_setBool(5, v); }
+  set wrapAround($core.bool v) { $_setBool(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasStopOnLastCue() => $_has(5);
+  $core.bool hasWrapAround() => $_has(5);
   @$pb.TagNumber(6)
-  void clearStopOnLastCue() => clearField(6);
+  void clearWrapAround() => clearField(6);
 
   @$pb.TagNumber(7)
-  FixturePriority get priority => $_getN(6);
+  $core.bool get stopOnLastCue => $_getBF(6);
   @$pb.TagNumber(7)
-  set priority(FixturePriority v) { setField(7, v); }
+  set stopOnLastCue($core.bool v) { $_setBool(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasPriority() => $_has(6);
+  $core.bool hasStopOnLastCue() => $_has(6);
   @$pb.TagNumber(7)
-  void clearPriority() => clearField(7);
+  void clearStopOnLastCue() => clearField(7);
+
+  @$pb.TagNumber(8)
+  FixturePriority get priority => $_getN(7);
+  @$pb.TagNumber(8)
+  set priority(FixturePriority v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasPriority() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPriority() => clearField(8);
 }
 
 class Cue extends $pb.GeneratedMessage {
@@ -1290,6 +1584,7 @@ class Cue extends $pb.GeneratedMessage {
     ..aOM<CueTimings>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positionTimings', subBuilder: CueTimings.create)
     ..aOM<CueTimings>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorTimings', subBuilder: CueTimings.create)
     ..pc<CueEffect>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: CueEffect.create)
+    ..pc<CuePort>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ports', $pb.PbFieldType.PM, subBuilder: CuePort.create)
     ..hasRequiredFields = false
   ;
 
@@ -1304,6 +1599,7 @@ class Cue extends $pb.GeneratedMessage {
     CueTimings? positionTimings,
     CueTimings? colorTimings,
     $core.Iterable<CueEffect>? effects,
+    $core.Iterable<CuePort>? ports,
   }) {
     final _result = create();
     if (id != null) {
@@ -1332,6 +1628,9 @@ class Cue extends $pb.GeneratedMessage {
     }
     if (effects != null) {
       _result.effects.addAll(effects);
+    }
+    if (ports != null) {
+      _result.ports.addAll(ports);
     }
     return _result;
   }
@@ -1434,6 +1733,9 @@ class Cue extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(9)
   $core.List<CueEffect> get effects => $_getList(8);
+
+  @$pb.TagNumber(10)
+  $core.List<CuePort> get ports => $_getList(9);
 }
 
 class CueEffect extends $pb.GeneratedMessage {
@@ -1517,6 +1819,67 @@ class CueEffect extends $pb.GeneratedMessage {
   $core.bool hasEffectRate() => $_has(3);
   @$pb.TagNumber(4)
   void clearEffectRate() => clearField(4);
+}
+
+class CuePort extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CuePort', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'portId', $pb.PbFieldType.OU3)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  CuePort._() : super();
+  factory CuePort({
+    $core.int? portId,
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (portId != null) {
+      _result.portId = portId;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory CuePort.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CuePort.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CuePort clone() => CuePort()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CuePort copyWith(void Function(CuePort) updates) => super.copyWith((message) => updates(message as CuePort)) as CuePort; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CuePort create() => CuePort._();
+  CuePort createEmptyInstance() => create();
+  static $pb.PbList<CuePort> createRepeated() => $pb.PbList<CuePort>();
+  @$core.pragma('dart2js:noInline')
+  static CuePort getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CuePort>(create);
+  static CuePort? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get portId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set portId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPortId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPortId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
 }
 
 class CueTimings extends $pb.GeneratedMessage {

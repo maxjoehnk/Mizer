@@ -13,6 +13,7 @@ use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_node_ports::NodePort;
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
@@ -29,6 +30,7 @@ mod effects;
 mod fixtures;
 pub mod history;
 mod media;
+mod ports;
 mod sequencer;
 mod surfaces;
 mod timecode;
@@ -75,6 +77,8 @@ pub struct Project {
     pub timecodes: Timecodes,
     #[serde(default)]
     pub surfaces: Vec<Surface>,
+    #[serde(default)]
+    pub ports: Vec<NodePort>,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]

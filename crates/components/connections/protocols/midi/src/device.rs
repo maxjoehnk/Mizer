@@ -79,4 +79,19 @@ impl MidiDevice {
         }
         Ok(())
     }
+
+    pub fn clear_outputs(&mut self) -> anyhow::Result<()> {
+        let messages = if let Some(device_profile) = self.profile.as_ref() {
+            tracing::debug!("Clearing outputs for device {}", self.name);
+            device_profile.clear_messages()
+        }else {
+            tracing::debug!("Unable to clear outputs for device {}: no device profile found", self.name);
+            Default::default()
+        };
+        for message in messages {
+            self.write(message)?;
+        }
+
+        Ok(())
+    }
 }

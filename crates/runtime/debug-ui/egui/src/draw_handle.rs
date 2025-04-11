@@ -74,10 +74,15 @@ impl<'a> DebugUiDrawHandle<'a> for EguiDrawHandle<'a> {
     fn collapsing_header(
         &mut self,
         title: impl Into<String>,
+        key: Option<&'_ str>,
         add_content: impl FnOnce(&mut Self::DrawHandle<'_>),
     ) {
         let title = title.into();
-        CollapsingHeader::new(title).show(self.ui, |ui| {
+        let mut header = CollapsingHeader::new(title);
+        if let Some(key) = key {
+            header = header.id_salt(key);
+        }
+        header.show(self.ui, |ui| {
             let mut handle = EguiDrawHandle::new(ui, Rc::clone(&self.state));
 
             add_content(&mut handle);

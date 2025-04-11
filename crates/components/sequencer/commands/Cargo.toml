@@ -13,3 +13,4 @@ mizer-runtime = { path = "../../../runtime" }
 mizer-layouts = { path = "../../../runtime/layouts" }
 mizer-sequencer = { path = ".." }
 mizer-fixtures = { path = "../../fixtures" }
+mizer-node-ports = { path = "../../ports" }

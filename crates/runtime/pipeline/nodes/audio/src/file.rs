@@ -247,7 +247,7 @@ impl ProcessingNode for AudioFileNode {
         (node_state, decode_state): &Self::State,
     ) {
         if let Some(decode_state) = decode_state {
-            ui.collapsing_header("Audio File", |ui| {
+            ui.collapsing_header("Audio File", None, |ui| {
                 ui.label(format!("File: {:?}", decode_state.path));
                 ui.label(format!("Playing: {:?}", node_state.playing));
                 ui.label(format!("Paused: {:?}", node_state.paused));

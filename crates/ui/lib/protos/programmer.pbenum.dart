@@ -62,11 +62,13 @@ class StoreRequest_Mode extends $pb.ProtobufEnum {
   static const StoreRequest_Mode OVERWRITE = StoreRequest_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OVERWRITE');
   static const StoreRequest_Mode MERGE = StoreRequest_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MERGE');
   static const StoreRequest_Mode ADD_CUE = StoreRequest_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_CUE');
+  static const StoreRequest_Mode INSERT_CUE = StoreRequest_Mode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INSERT_CUE');
 
   static const $core.List<StoreRequest_Mode> values = <StoreRequest_Mode> [
     OVERWRITE,
     MERGE,
     ADD_CUE,
+    INSERT_CUE,
   ];
 
   static final $core.Map<$core.int, StoreRequest_Mode> _byValue = $pb.ProtobufEnum.initByValue(values);

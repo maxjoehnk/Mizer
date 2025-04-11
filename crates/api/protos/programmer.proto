@@ -124,6 +124,7 @@ message StoreRequest {
     OVERWRITE = 0;
     MERGE = 1;
     ADD_CUE = 2;
+    INSERT_CUE = 3;
   }
 }
 message StoreResponse {

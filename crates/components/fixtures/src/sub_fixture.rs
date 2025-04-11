@@ -15,6 +15,9 @@ pub struct SubFixtureMut<'a> {
 impl<'a> SubFixtureMut<'a> {
     pub(crate) fn update_color_mixer(&mut self) {
         profiling::scope!("SubFixture::update_color_mixer");
+        if let Some(color_mixer) = self.definition.color_mixer.as_mut() {
+            color_mixer.flush();
+        }
         update_color_mixer(
             self.definition.color_mixer.as_ref(),
             self.definition.controls.color_mixer.as_ref(),

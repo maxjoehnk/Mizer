@@ -1,4 +1,4 @@
-use crate::fixture::{ChannelValue, IFixture};
+use crate::fixture::{ChannelValue, ChannelValues, IFixture};
 use crate::manager::FixtureManager;
 use mizer_module::*;
 use mizer_node::Inject;
@@ -38,65 +38,17 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         ui.collapsing_header("Color Mixer", None, |ui| {
                             ui.collapsing_header(format!("Red: {}", color_mixer.rgb().red), Some("red"), |ui| {
                                 ui.columns(4, |columns| {
-                                    for ChannelValue { value, priority, source, fade_timings } in &color_mixer.red.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                        #[cfg(debug_assertions)]
-                                        {
-                                            if let Some(source) = source {
-                                                columns[2].label(&source.label);
-                                            } else {
-                                                columns[2].label("None");
-                                            }
-                                        }
-                                        #[cfg(not(debug_assertions))]
-                                        {
-                                            columns[2].label(format!("{source:?}"));
-                                        }
-                                        columns[3].label(format!("{fade_timings:?}"));
-                                    }
+                                    debug_channel_values(columns, &color_mixer.red);
                                 });
                             });
                             ui.collapsing_header(format!("Green: {}", color_mixer.rgb().green), Some("green"), |ui| {
                                 ui.columns(4, |columns| {
-                                    for ChannelValue { value, priority, source, fade_timings } in &color_mixer.green.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                        #[cfg(debug_assertions)]
-                                        {
-                                            if let Some(source) = source {
-                                                columns[2].label(&source.label);
-                                            } else {
-                                                columns[2].label("None");
-                                            }
-                                        }
-                                        #[cfg(not(debug_assertions))]
-                                        {
-                                            columns[2].label(format!("{source:?}"));
-                                        }
-                                        columns[3].label(format!("{fade_timings:?}"));
-                                    }
+                                    debug_channel_values(columns, &color_mixer.green);
                                 });
                             });
                             ui.collapsing_header(format!("Blue: {}", color_mixer.rgb().blue), Some("blue"), |ui| {
                                 ui.columns(4, |columns| {
-                                    for ChannelValue { value, priority, source, fade_timings } in &color_mixer.blue.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                        #[cfg(debug_assertions)]
-                                        {
-                                            if let Some(source) = source {
-                                                columns[2].label(&source.label);
-                                            } else {
-                                                columns[2].label("None");
-                                            }
-                                        }
-                                        #[cfg(not(debug_assertions))]
-                                        {
-                                            columns[2].label(format!("{source:?}"));
-                                        }
-                                        columns[3].label(format!("{fade_timings:?}"));
-                                    }
+                                    debug_channel_values(columns, &color_mixer.blue);
                                 });
                             });
                         });
@@ -161,23 +113,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         ui.collapsing_header(format!("{channel}: {value}"), Some(channel), |ui| {
                             ui.columns(4, |columns| {
                                 let values = fixture.channel_values.get_priorities(channel).unwrap();
-                                for ChannelValue { value, priority, source, fade_timings } in &values.values {
-                                    columns[0].label(value.to_string());
-                                    columns[1].label(priority.to_string());
-                                    #[cfg(debug_assertions)]
-                                    {
-                                        if let Some(source) = source {
-                                            columns[2].label(&source.label);
-                                        } else {
-                                            columns[2].label("None");
-                                        }
-                                    }
-                                    #[cfg(not(debug_assertions))]
-                                    {
-                                        columns[2].label(format!("{source:?}"));
-                                    }
-                                    columns[3].label(format!("{fade_timings:?}"));
-                                }
+                                debug_channel_values(columns, values);
                             });
                         });
                     }
@@ -233,4 +169,46 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
             });
         }
     }
+}
+
+fn debug_channel_values<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_values: &ChannelValues) {
+    for value in &channel_values.values {
+        debug_channel_value(columns, value);
+    }
+
+    if !channel_values.previous_values.is_empty() {
+        columns[0].label("Previous");
+        columns[1].label("");
+        columns[2].label("");
+        columns[3].label("");
+        for previous in &channel_values.previous_values {
+            debug_channel_value(columns, previous);
+        }
+    }
+
+    if let Some(active_fade) = &channel_values.active_fade {
+        columns[0].label("Active Fade");
+        columns[1].label(format!("Remaining: {:?}", active_fade.remaining()));
+        columns[2].label("");
+        columns[3].label("");
+
+    }
+}
+
+fn debug_channel_value<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_value: &ChannelValue) {
+    columns[0].label(format!("Value: {}", channel_value.value));
+    columns[1].label(format!("Priority: {}", channel_value.priority));
+    #[cfg(debug_assertions)]
+    {
+        if let Some(source) = &channel_value.source {
+            columns[2].label(format!("Source: {}", source.label));
+        } else {
+            columns[2].label("Source: None");
+        }
+    }
+    #[cfg(not(debug_assertions))]
+    {
+        columns[2].label(format!("Source: {:?}", channel_value.source));
+    }
+    columns[3].label(format!("{:?}", channel_value.fade_timings));
 }

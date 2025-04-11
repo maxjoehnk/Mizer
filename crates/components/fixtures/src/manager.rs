@@ -365,7 +365,7 @@ pub struct FixtureValueSource {
     // TODO: this should be an Arc<String> in the future so we can also show this in the ui without significant performance costs
     #[cfg(debug_assertions)]
     pub label: String,
-    id: u64,
+    pub(crate) id: u64,
 }
 
 impl FixtureValueSource {

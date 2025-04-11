@@ -26,6 +26,15 @@ impl ColorMixer {
         }
     }
 
+    pub(crate) fn flush(&mut self) {
+        self.red.flush();
+        self.green.flush();
+        self.blue.flush();
+        if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
+            virtual_dimmer.flush();
+        }
+    }
+
     pub fn clear(&mut self) {
         self.red.clear();
         self.green.clear();

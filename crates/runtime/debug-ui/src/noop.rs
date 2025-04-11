@@ -41,6 +41,7 @@ impl DebugUiDrawHandle<'_> for () {
     fn collapsing_header(
         &mut self,
         _title: impl Into<String>,
+        _key: Option<&'_ str>,
         _add_content: impl FnOnce(&mut Self::DrawHandle<'_>),
     ) {
     }

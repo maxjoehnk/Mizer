@@ -264,7 +264,7 @@ impl GroupControlNode {
         if phase == 0 && fan == 0. {
             if let Some(value) = buffer.last() {
                 if value.is_high() || self.send_zero {
-                    manager.write_group_control(self.group_id, control, value, self.priority);
+                    manager.write_group_control(self.group_id, control, value, self.priority, None, Default::default());
                 }
             }
         } else if fan.is_normal() && phase == 0 {
@@ -358,7 +358,7 @@ impl GroupControlNode {
                         );
                     }
                     for id in middle {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                        manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
                     }
                 } else {
                     if self.asymmetrical {
@@ -382,7 +382,7 @@ impl GroupControlNode {
                                 control.clone(),
                                 value,
                                 self.priority,
-                            );
+                                None, Default::default());
                         }
                     } else {
                         self.write_fanned(
@@ -404,8 +404,8 @@ impl GroupControlNode {
                                 *id,
                                 control.clone(),
                                 value - fan,
-                                self.priority,
-                            );
+                                self.priority
+                                , None, Default::default());
                         }
                     }
                 };
@@ -441,7 +441,7 @@ impl GroupControlNode {
             if value.is_high() || self.send_zero {
                 for fixtures in group {
                     for id in fixtures {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                        manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
                     }
                 }
             }
@@ -460,7 +460,7 @@ impl GroupControlNode {
         for (i, group) in groups.enumerate() {
             let value = value - (step_size * i as f64);
             for id in group {
-                manager.write_fixture_control(*id, control.clone(), value, self.priority);
+                manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
             }
         }
     }

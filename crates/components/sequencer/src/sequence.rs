@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 use std::ops::Deref;
-
+use std::time::Duration;
 use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::programmer::Presets;
@@ -10,7 +10,8 @@ use mizer_module::ClockFrame;
 use crate::contracts::*;
 use crate::cue::*;
 use crate::state::SequenceState;
-use crate::EffectEngine;
+use crate::{EffectEngine, SequencerTime, SequencerValue};
+use mizer_fixtures::manager::{FadeTimings, FixtureValueSource};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -27,6 +28,9 @@ pub struct Sequence {
     #[serde(default)]
     pub priority: FixturePriority,
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct SequenceId(pub u32);
 
 #[cfg(test)]
 impl Default for Sequence {
@@ -85,6 +89,8 @@ impl Sequence {
                         control.control.clone(),
                         value,
                         self.priority,
+                        cue.cue_fade.into(),
+                        FixtureValueSource::new(SequenceId(self.id), &self.name),
                     );
                     state.set_fixture_value(fixture_id, control.control.clone(), value);
                 }
@@ -92,7 +98,14 @@ impl Sequence {
         }
         for preset in &cue.presets {
             for (fixture_id, control, value) in preset.values(cue, state, presets) {
-                fixture_controller.write(fixture_id, control.clone(), value, self.priority);
+                fixture_controller.write(
+                    fixture_id,
+                    control.clone(),
+                    value,
+                    self.priority,
+                    cue.cue_fade.into(),
+                    FixtureValueSource::new(SequenceId(self.id), &self.name),
+                );
                 state.set_fixture_value(fixture_id, control, value);
             }
         }
@@ -141,5 +154,17 @@ impl Sequence {
 impl PartialOrd for Sequence {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         self.id.partial_cmp(&other.id)
+    }
+}
+
+impl Into<FadeTimings> for SequencerValue<SequencerTime> {
+    fn into(self) -> FadeTimings {
+        let fade_time = match self {
+            SequencerValue::Direct(SequencerTime::Seconds(seconds)) => Some(Duration::from_secs_f64(seconds)),
+            _ => None,
+        };
+        FadeTimings {
+            fade_out: fade_time,
+        }
     }
 }

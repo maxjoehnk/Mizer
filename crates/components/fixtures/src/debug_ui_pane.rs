@@ -1,4 +1,4 @@
-use crate::fixture::IFixture;
+use crate::fixture::{ChannelValue, ChannelValues, IFixture};
 use crate::manager::FixtureManager;
 use mizer_module::*;
 use mizer_node::Inject;
@@ -22,7 +22,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
         let fixture_manager = injector.inject::<FixtureManager>();
         let fixtures = fixture_manager.get_fixtures();
         for fixture in fixtures {
-            ui.collapsing_header(fixture.name.as_str(), |ui| {
+            ui.collapsing_header(fixture.name.as_str(), None, |ui| {
                 ui.columns(2, |columns| {
                     columns[0].label("Id");
                     columns[1].label(fixture.id.to_string());
@@ -33,37 +33,28 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     columns[0].label("Channel");
                     columns[1].label(fixture.channel.to_string());
                 });
-                ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), |ui| {
+                ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), None, |ui| {
                     if let Some(ref color_mixer) = fixture.current_mode.color_mixer {
-                        ui.collapsing_header("Color Mixer", |ui| {
-                            ui.collapsing_header(format!("Red: {}", color_mixer.rgb().red), |ui| {
-                                ui.columns(2, |columns| {
-                                    for (priority, value) in &color_mixer.red.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                    }
+                        ui.collapsing_header("Color Mixer", None, |ui| {
+                            ui.collapsing_header(format!("Red: {}", color_mixer.rgb().red), Some("red"), |ui| {
+                                ui.columns(4, |columns| {
+                                    debug_channel_values(columns, &color_mixer.red);
                                 });
                             });
-                            ui.collapsing_header(format!("Green: {}", color_mixer.rgb().green), |ui| {
-                                ui.columns(2, |columns| {
-                                    for (priority, value) in &color_mixer.green.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                    }
+                            ui.collapsing_header(format!("Green: {}", color_mixer.rgb().green), Some("green"), |ui| {
+                                ui.columns(4, |columns| {
+                                    debug_channel_values(columns, &color_mixer.green);
                                 });
                             });
-                            ui.collapsing_header(format!("Blue: {}", color_mixer.rgb().blue), |ui| {
-                                ui.columns(2, |columns| {
-                                    for (priority, value) in &color_mixer.blue.values {
-                                        columns[0].label(value.to_string());
-                                        columns[1].label(priority.to_string());
-                                    }
+                            ui.collapsing_header(format!("Blue: {}", color_mixer.rgb().blue), Some("blue"), |ui| {
+                                ui.columns(4, |columns| {
+                                    debug_channel_values(columns, &color_mixer.blue);
                                 });
                             });
                         });
                     }
                 });
-                ui.collapsing_header("Configuration", |ui| {
+                ui.collapsing_header("Configuration", None, |ui| {
                     ui.columns(2, |columns| {
                         columns[0].label("Invert Pan");
                         columns[1].label(fixture.configuration.invert_pan.to_string());
@@ -75,7 +66,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         columns[1].label(fixture.configuration.reverse_pixel_order.to_string());
                     });
                 });
-                ui.collapsing_header("Definition", |ui| {
+                ui.collapsing_header("Definition", None, |ui| {
                     ui.columns(2, |columns| {
                         columns[0].label("ID");
                         columns[1].label(&fixture.definition.id);
@@ -89,10 +80,10 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         columns[0].label("Name");
                         columns[1].label(&fixture.definition.name);
                     });
-                    ui.collapsing_header("Modes", |ui| {
+                    ui.collapsing_header("Modes", None, |ui| {
                         for mode in &fixture.definition.modes {
-                            ui.collapsing_header(&mode.name, |ui| {
-                                ui.collapsing_header("Channels", |ui| {
+                            ui.collapsing_header(&mode.name, None, |ui| {
+                                ui.collapsing_header("Channels", None, |ui| {
                                     ui.columns(2, |columns| {
                                         for channel in mode.get_channels() {
                                             columns[0].label(&channel.name);
@@ -117,20 +108,17 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         }
                     });
                 });
-                ui.collapsing_header("Channel Values", |ui| {
+                ui.collapsing_header("Channel Values", None, |ui| {
                     for (channel, value) in fixture.channel_values.iter() {
-                        ui.collapsing_header(format!("{channel}: {value}"), |ui| {
-                            ui.columns(2, |columns| {
+                        ui.collapsing_header(format!("{channel}: {value}"), Some(channel), |ui| {
+                            ui.columns(4, |columns| {
                                 let values = fixture.channel_values.get_priorities(channel).unwrap();
-                                for (priority, value) in &values.values {
-                                    columns[0].label(value.to_string());
-                                    columns[1].label(priority.to_string());
-                                }
+                                debug_channel_values(columns, values);
                             });
                         });
                     }
                 });
-                ui.collapsing_header("Faders", |ui| {
+                ui.collapsing_header("Faders", None, |ui| {
                     ui.columns(3, |columns| {
                         for (control, _control_type) in
                             fixture.current_mode.controls.controls().into_iter()
@@ -148,9 +136,9 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                         }
                     });
                 });
-                ui.collapsing_header("Sub Fixtures", |ui| {
+                ui.collapsing_header("Sub Fixtures", None, |ui| {
                     for sub_fixture in &fixture.current_mode.sub_fixtures {
-                        ui.collapsing_header(&sub_fixture.name, |ui| {
+                        ui.collapsing_header(&sub_fixture.name, None, |ui| {
                             ui.columns(3, |columns| {
                                 if let Some(sub_fixture) = fixture.sub_fixture(sub_fixture.id) {
                                     for (control, _control_type) in
@@ -181,4 +169,46 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
             });
         }
     }
+}
+
+fn debug_channel_values<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_values: &ChannelValues) {
+    for value in &channel_values.values {
+        debug_channel_value(columns, value);
+    }
+
+    if !channel_values.previous_values.is_empty() {
+        columns[0].label("Previous");
+        columns[1].label("");
+        columns[2].label("");
+        columns[3].label("");
+        for previous in &channel_values.previous_values {
+            debug_channel_value(columns, previous);
+        }
+    }
+
+    if let Some(active_fade) = &channel_values.active_fade {
+        columns[0].label("Active Fade");
+        columns[1].label(format!("Remaining: {:?}", active_fade.remaining()));
+        columns[2].label("");
+        columns[3].label("");
+
+    }
+}
+
+fn debug_channel_value<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_value: &ChannelValue) {
+    columns[0].label(format!("Value: {}", channel_value.value));
+    columns[1].label(format!("Priority: {}", channel_value.priority));
+    #[cfg(debug_assertions)]
+    {
+        if let Some(source) = &channel_value.source {
+            columns[2].label(format!("Source: {}", source.label));
+        } else {
+            columns[2].label("Source: None");
+        }
+    }
+    #[cfg(not(debug_assertions))]
+    {
+        columns[2].label(format!("Source: {:?}", channel_value.source));
+    }
+    columns[3].label(format!("{:?}", channel_value.fade_timings));
 }

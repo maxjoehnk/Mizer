@@ -1,23 +1,24 @@
 use crate::definition::ColorGroup;
-use crate::fixture::{ChannelValue, IChannelType};
+use crate::fixture::{ChannelValues, IChannelType};
 use crate::FixturePriority;
 use palette::{FromColor, Hsv, Srgb};
 use serde::Serialize;
+use crate::manager::{FadeTimings, FixtureValueSource};
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize)]
 pub struct ColorMixer {
-    pub(crate) red: ChannelValue,
-    pub(crate) green: ChannelValue,
-    pub(crate) blue: ChannelValue,
-    virtual_dimmer: Option<ChannelValue>,
+    pub(crate) red: ChannelValues,
+    pub(crate) green: ChannelValues,
+    pub(crate) blue: ChannelValues,
+    virtual_dimmer: Option<ChannelValues>,
 }
 
 impl ColorMixer {
     pub fn new(virtual_dimmer: bool) -> Self {
         Self {
             virtual_dimmer: virtual_dimmer.then(|| {
-                let mut value = ChannelValue::default();
-                value.insert(0.0, FixturePriority::LOWEST);
+                let mut value = ChannelValues::default();
+                value.insert(0.0, FixturePriority::LOWEST, Default::default(), Default::default());
 
                 value
             }),
@@ -31,25 +32,25 @@ impl ColorMixer {
         self.blue.clear();
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             virtual_dimmer.clear();
-            virtual_dimmer.insert(0.0, FixturePriority::LOWEST);
+            virtual_dimmer.insert(0.0, FixturePriority::LOWEST, None, Default::default());
         }
     }
 
-    pub fn set_red(&mut self, red: f64, priority: FixturePriority) {
-        self.red.insert(red, priority);
+    pub fn set_red(&mut self, red: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+        self.red.insert(red, priority, source, fade_timings);
     }
 
-    pub fn set_green(&mut self, green: f64, priority: FixturePriority) {
-        self.green.insert(green, priority);
+    pub fn set_green(&mut self, green: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+        self.green.insert(green, priority, source, fade_timings);
     }
 
-    pub fn set_blue(&mut self, blue: f64, priority: FixturePriority) {
-        self.blue.insert(blue, priority);
+    pub fn set_blue(&mut self, blue: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+        self.blue.insert(blue, priority, source, fade_timings);
     }
 
-    pub fn set_virtual_dimmer(&mut self, value: f64, priority: FixturePriority) {
+    pub fn set_virtual_dimmer(&mut self, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
         if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
-            virtual_dimmer.insert(value, priority);
+            virtual_dimmer.insert(value, priority, source, fade_timings);
         }
     }
 
@@ -208,9 +209,9 @@ mod tests {
     #[test_case(1f64, 1f64, 0f64)]
     fn rgb_should_return_rgb_values(red: f64, green: f64, blue: f64) {
         let mut mixer = ColorMixer::new(false);
-        mixer.set_red(red, Default::default());
-        mixer.set_green(green, Default::default());
-        mixer.set_blue(blue, Default::default());
+        mixer.set_red(red, Default::default(), Default::default(), Default::default());
+        mixer.set_green(green, Default::default(), Default::default(), Default::default());
+        mixer.set_blue(blue, Default::default(), Default::default(), Default::default());
 
         let result = mixer.rgb();
 
@@ -237,9 +238,9 @@ mod tests {
         w: f64,
     ) {
         let mut mixer = ColorMixer::new(false);
-        mixer.set_red(red, Default::default());
-        mixer.set_green(green, Default::default());
-        mixer.set_blue(blue, Default::default());
+        mixer.set_red(red, Default::default(), Default::default(), Default::default());
+        mixer.set_green(green, Default::default(), Default::default(), Default::default());
+        mixer.set_blue(blue, Default::default(), Default::default(), Default::default());
 
         let result = mixer.rgbw();
 
@@ -266,10 +267,10 @@ mod tests {
         b: f64,
     ) {
         let mut mixer = ColorMixer::new(true);
-        mixer.set_red(red, Default::default());
-        mixer.set_green(green, Default::default());
-        mixer.set_blue(blue, Default::default());
-        mixer.set_virtual_dimmer(dimmer, Default::default());
+        mixer.set_red(red, Default::default(), Default::default(), Default::default());
+        mixer.set_green(green, Default::default(), Default::default(), Default::default());
+        mixer.set_blue(blue, Default::default(), Default::default(), Default::default());
+        mixer.set_virtual_dimmer(dimmer, Default::default(), Default::default(), Default::default());
 
         let result = mixer.rgb();
 
@@ -297,10 +298,10 @@ mod tests {
         w: f64,
     ) {
         let mut mixer = ColorMixer::new(true);
-        mixer.set_red(red, Default::default());
-        mixer.set_green(green, Default::default());
-        mixer.set_blue(blue, Default::default());
-        mixer.set_virtual_dimmer(dimmer, Default::default());
+        mixer.set_red(red, Default::default(), Default::default(), Default::default());
+        mixer.set_green(green, Default::default(), Default::default(), Default::default());
+        mixer.set_blue(blue, Default::default(), Default::default(), Default::default());
+        mixer.set_virtual_dimmer(dimmer, Default::default(), Default::default(), Default::default());
 
         let result = mixer.rgbw();
 

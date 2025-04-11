@@ -1,11 +1,12 @@
+use std::hash::{DefaultHasher, Hash, Hasher};
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex, MutexGuard};
-
+use std::time::Duration;
 use dashmap::DashMap;
 use itertools::Itertools;
 use mizer_protocol_dmx::DmxConnectionManager;
 use rayon::prelude::*;
-
+use serde::Serialize;
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureDefinition, FixtureFaderControl,
 };
@@ -187,16 +188,35 @@ impl FixtureManager {
         priority: FixturePriority,
     ) {
         profiling::scope!("FixtureManager::write_fixture_control");
+        self.write_fixture_control_with_timings(
+            fixture_id,
+            control,
+            value,
+            priority,
+            None,
+            FadeTimings::default(),
+        )
+    }
+
+    pub fn write_fixture_control_with_timings(
+        &self,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
-                    fixture.write_fader_control(control, value, priority);
+                    fixture.write_fader_control_with_timings(control, value, priority, source, fade_timings);
                 }
             }
             FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
-                        sub_fixture.write_fader_control(control, value, priority);
+                        sub_fixture.write_fader_control_with_timings(control, value, priority, source, fade_timings);
                     }
                 }
             }
@@ -260,6 +280,22 @@ impl FixtureManager {
         }
     }
 
+    pub fn write_group_control_with_timings(
+        &self,
+        group_id: GroupId,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
+        if let Some(group) = self.groups.get(&group_id) {
+            for fixture_id in group.fixtures().into_iter().flatten() {
+                self.write_fixture_control_with_timings(fixture_id, control.clone(), value, priority, source.clone(), fade_timings);
+            }
+        }
+    }
+
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         profiling::scope!("FixtureManager::write_outputs");
         let writer = dmx_manager.get_writer();
@@ -307,6 +343,50 @@ impl FixtureManager {
         }
     }
 }
+
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+pub struct FadeTimings {
+    // TODO: support bpm based fade duration
+    // TODO: support fade in as well? might be better than doing it in the sequencer, node etc as we have access to the previous value
+    pub fade_out: Option<Duration>,
+}
+
+impl<T: Into<FadeTimings>> From<Option<T>> for FadeTimings {
+    fn from(value: Option<T>) -> Self {
+        match value {
+            None => Self::default(),
+            Some(value) => value.into(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct FixtureValueSource {
+    // TODO: this should be an Arc<String> in the future so we can also show this in the ui without significant performance costs
+    #[cfg(debug_assertions)]
+    pub label: String,
+    id: u64,
+}
+
+impl FixtureValueSource {
+    pub fn new(id: impl Hash, label: &str) -> Self {
+        let mut hasher = DefaultHasher::new();
+        id.hash(&mut hasher);
+        let id = hasher.finish();
+
+        #[cfg(debug_assertions)]
+        {
+            let label = label.to_string();
+
+            Self { id, label }
+        }
+        #[cfg(not(debug_assertions))]
+        {
+            Self { id }
+        }
+    }
+}
+
 
 struct MutexLogWrapper<'a, T>(MutexGuard<'a, T>);
 

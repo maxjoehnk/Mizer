@@ -8,6 +8,7 @@ use mizer_util::LerpExt;
 
 use crate::color_mixer::update_color_mixer;
 use crate::definition::*;
+use crate::manager::{FadeTimings, FixtureValueSource};
 pub use crate::priority::*;
 pub use crate::sub_fixture::*;
 
@@ -25,31 +26,44 @@ pub struct Fixture {
     pub universe: u16,
     pub channel: u16,
     /// Contains values for all dmx channels including sub-fixtures
-    pub(crate) channel_values: ChannelValues,
+    pub(crate) channel_values: ChannelsWithValues,
     pub configuration: FixtureConfiguration,
 }
 
 #[derive(Debug, Default, Clone)]
+pub(crate) struct ChannelsWithValues {
+    values: HashMap<String, ChannelValues>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub(crate) struct ChannelValues {
-    values: HashMap<String, ChannelValue>,
+    pub(crate) values: Vec<ChannelValue>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub(crate) struct ChannelValue {
-    pub(crate) values: Vec<(FixturePriority, f64)>,
+    pub priority: FixturePriority,
+    pub value: f64,
+    pub source: Option<FixtureValueSource>,
+    pub fade_timings: FadeTimings
 }
 
-impl Default for ChannelValue {
+impl Default for ChannelValues {
     fn default() -> Self {
-        ChannelValue {
+        ChannelValues {
             values: Vec::with_capacity(10),
         }
     }
 }
 
-impl ChannelValue {
-    pub fn insert(&mut self, value: f64, priority: FixturePriority) {
-        self.values.push((priority, value));
+impl ChannelValues {
+    pub fn insert(&mut self, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+        self.values.push(ChannelValue {
+            priority,
+            value,
+            source,
+            fade_timings,
+        });
     }
 
     pub fn get(&self) -> Option<f64> {
@@ -58,18 +72,18 @@ impl ChannelValue {
             &format!("values: {}", self.values.len())
         );
 
-        if let Some((_, value)) = self
+        if let Some(ChannelValue { value, .. }) = self
             .values
             .iter()
-            .find(|(priority, _)| priority.is_highlight())
+            .find(|value| value.priority.is_highlight())
         {
             return Some(*value);
         }
 
-        if let Some((_, value)) = self
+        if let Some(ChannelValue { value, .. }) = self
             .values
             .iter()
-            .find(|(priority, _)| priority.is_programmer())
+            .find(|value| value.priority.is_programmer())
         {
             return Some(*value);
         }
@@ -77,15 +91,15 @@ impl ChannelValue {
         let ltp_highest = self
             .values
             .iter()
-            .filter(|(priority, _)| priority.is_ltp())
-            .max_by_key(|(priority, _)| *priority)
-            .map(|(_, value)| *value)
+            .filter(|value| value.priority.is_ltp())
+            .max_by_key(|value| value.priority)
+            .map(|ChannelValue { value, .. }| *value)
             .map(|value| value.clamp(0., 1.));
         let htp_highest = self
             .values
             .iter()
-            .filter(|(priority, _)| priority.is_htp())
-            .map(|(_, value)| *value)
+            .filter(|ChannelValue { priority, .. }| priority.is_htp())
+            .map(|ChannelValue { value, .. }| *value)
             .map(|value| value.clamp(0., 1.))
             .max_by(|a, b| a.partial_cmp(b).unwrap());
 
@@ -102,15 +116,15 @@ impl ChannelValue {
     }
 }
 
-impl ChannelValues {
-    pub fn insert(&mut self, channel: &String, value: f64, priority: FixturePriority) {
+impl ChannelsWithValues {
+    pub fn insert(&mut self, channel: &String, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
         // TODO: this should be actually measured
         // perf: we don't use entry here to avoid cloning the key when it's already in the map
         if let Some(values) = self.values.get_mut(channel) {
-            values.insert(value, priority);
+            values.insert(value, priority, source, fade_timings);
         } else {
-            let mut values = ChannelValue::default();
-            values.insert(value, priority);
+            let mut values = ChannelValues::default();
+            values.insert(value, priority, source, fade_timings);
             self.values.insert(channel.clone(), values);
         }
     }
@@ -131,7 +145,7 @@ impl ChannelValues {
         }
     }
 
-    pub(crate) fn get_priorities(&self, channel: &str) -> Option<&ChannelValue> {
+    pub(crate) fn get_priorities(&self, channel: &str) -> Option<&ChannelValues> {
         self.values.get(channel)
     }
 
@@ -141,7 +155,12 @@ impl ChannelValues {
 
     pub(crate) fn write_priority(&mut self, name: &String, value: f64, priority: FixturePriority) {
         tracing::trace!("write {name} -> {value} ({priority:?})");
-        self.insert(name, value, priority);
+        self.write_priority_with_timings(name, value, priority, Default::default(), Default::default());
+    }
+
+    pub(crate) fn write_priority_with_timings(&mut self, name: &String, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+        tracing::trace!("write {name} -> {value} ({priority:?}, {source:?}, {fade_timings:?})");
+        self.insert(name, value, priority, source, fade_timings);
     }
 }
 
@@ -311,22 +330,24 @@ impl Fixture {
     }
 
     pub(crate) fn set_to_default(&mut self) {
+        // TODO: keep track of previous values to initiate fading
         self.channel_values.clear();
+        // TODO: FixtureMode should contain default values
         for channel in self.current_mode.get_channels() {
             self.channel_values
-                .insert(&channel.name, 0f64, FixturePriority::LOWEST);
+                .insert(&channel.name, 0f64, FixturePriority::LOWEST, Default::default(), Default::default());
         }
         if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
             mixer.clear();
             if mixer.virtual_dimmer().is_some() {
-                mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST);
+                mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST, Default::default(), Default::default());
             }
         }
         for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
             if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
                 mixer.clear();
                 if mixer.virtual_dimmer().is_some() {
-                    mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST);
+                    mixer.set_virtual_dimmer(0f64, FixturePriority::LOWEST, Default::default(), Default::default());
                 }
             }
         }
@@ -428,12 +449,7 @@ impl Fixture {
 }
 
 impl IFixtureMut for Fixture {
-    fn write_fader_control(
-        &mut self,
-        control: FixtureFaderControl,
-        value: f64,
-        priority: FixturePriority,
-    ) {
+    fn write_fader_control_with_timings(&mut self, control: FixtureFaderControl, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
         profiling::scope!("Fixture::write_fader_control");
         let value = self.configuration.adapt_write(&control, value);
         match self.current_mode.controls.get_channel(&control) {
@@ -441,13 +457,13 @@ impl IFixtureMut for Fixture {
                 if let FixtureFaderControl::ColorMixer(color_channel) = control {
                     if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
                         match color_channel {
-                            ColorChannel::Red => color_mixer.set_red(value, priority),
-                            ColorChannel::Green => color_mixer.set_green(value, priority),
-                            ColorChannel::Blue => color_mixer.set_blue(value, priority),
+                            ColorChannel::Red => color_mixer.set_red(value, priority, source, fade_timings),
+                            ColorChannel::Green => color_mixer.set_green(value, priority, source, fade_timings),
+                            ColorChannel::Blue => color_mixer.set_blue(value, priority, source, fade_timings),
                         }
                     }
                 } else {
-                    self.channel_values.write_priority(channel, value, priority)
+                    self.channel_values.write_priority_with_timings(channel, value, priority, source, fade_timings)
                 }
             }
             Some(FixtureControlChannel::Delegate) => {
@@ -456,7 +472,7 @@ impl IFixtureMut for Fixture {
                         channel_values: &mut self.channel_values,
                         definition,
                     };
-                    fixture.write_fader_control(control.clone(), value, priority);
+                    fixture.write_fader_control_with_timings(control.clone(), value, priority, source.clone(), fade_timings);
                 }
             }
             Some(FixtureControlChannel::VirtualDimmer) => {
@@ -465,7 +481,7 @@ impl IFixtureMut for Fixture {
                     "Trying to write non intensity channel to virtual dimmer"
                 );
                 if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
-                    color_mixer.set_virtual_dimmer(value, priority);
+                    color_mixer.set_virtual_dimmer(value, priority, source, fade_timings);
                 }
             }
             None => {}
@@ -516,6 +532,22 @@ pub trait IFixtureMut: IFixture {
         control: FixtureFaderControl,
         value: f64,
         priority: FixturePriority,
+    ) {
+        self.write_fader_control_with_timings(
+            control,
+            value,
+            priority,
+            None,
+            FadeTimings::default(),
+        );
+    }
+    fn write_fader_control_with_timings(
+        &mut self,
+        control: FixtureFaderControl,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
     );
 
     fn highlight(&mut self) {
@@ -758,9 +790,9 @@ mod tests {
         value_b: f64,
         expected: f64,
     ) {
-        let mut channel_value = super::ChannelValue::default();
-        channel_value.insert(value_a, level_a.into());
-        channel_value.insert(value_b, level_b.into());
+        let mut channel_value = super::ChannelValues::default();
+        channel_value.insert(value_a, level_a.into(), Default::default(), Default::default());
+        channel_value.insert(value_b, level_b.into(), Default::default(), Default::default());
 
         let result = channel_value.get();
 
@@ -774,9 +806,9 @@ mod tests {
         value_htp: f64,
         expected: f64,
     ) {
-        let mut channel_value = super::ChannelValue::default();
-        channel_value.insert(value_ltp, LTPPriority::Low.into());
-        channel_value.insert(value_htp, FixturePriority::HTP);
+        let mut channel_value = super::ChannelValues::default();
+        channel_value.insert(value_ltp, LTPPriority::Low.into(), Default::default(), Default::default());
+        channel_value.insert(value_htp, FixturePriority::HTP, Default::default(), Default::default());
 
         let result = channel_value.get();
 

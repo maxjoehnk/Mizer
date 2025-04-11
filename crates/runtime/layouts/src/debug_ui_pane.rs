@@ -19,9 +19,9 @@ impl<S: DebugUi> DebugUiPane<S> for LayoutsDebugUiPane {
         let layouts = injector.inject::<LayoutStorage>();
         let layouts = layouts.read();
         for layout in layouts {
-            ui.collapsing_header(layout.id, |ui| {
+            ui.collapsing_header(layout.id, None, |ui| {
                 for control in layout.controls {
-                    ui.collapsing_header(control.id.to_string(), |ui| {
+                    ui.collapsing_header(control.id.to_string(), None, |ui| {
                         ui.columns(2, |columns| {
                             columns[0].label("Label");
                             columns[1].label(control.label.unwrap_or_default());
@@ -33,7 +33,7 @@ impl<S: DebugUi> DebugUiPane<S> for LayoutsDebugUiPane {
                             columns[1].label(format!("{:?}", control.size));
                         });
 
-                        ui.collapsing_header("Decoration", |ui| {
+                        ui.collapsing_header("Decoration", None, |ui| {
                             ui.columns(2, |columns| {
                                 columns[0].label("Color");
                                 columns[1].label(format!("{:?}", control.decoration.color));
@@ -50,7 +50,7 @@ impl<S: DebugUi> DebugUiPane<S> for LayoutsDebugUiPane {
                             });
                         });
 
-                        ui.collapsing_header("Behavior", |ui| {
+                        ui.collapsing_header("Behavior", None, |ui| {
                             ui.columns(2, |columns| {
                                 columns[0].label("Sequencer Behavior");
                                 columns[1].label(format!("{:?}", control.behavior.sequencer));

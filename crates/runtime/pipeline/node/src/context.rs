@@ -7,7 +7,7 @@ use mizer_ports::port_types;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
 
-use crate::{PortMetadata, PreviewContext};
+use crate::{NodePath, PortMetadata, PreviewContext};
 
 pub const SINGLE_HIGH: f64 = 1.0;
 pub const SINGLE_LOW: f64 = 0.0;
@@ -20,6 +20,8 @@ pub trait NodeContext: PreviewContext + Sized + Inject {
     fn resync_clock(&self);
     fn clock_state(&self) -> ClockState;
     fn fps(&self) -> f64;
+
+    fn path(&self) -> &NodePath;
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V);
     fn clear_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P);

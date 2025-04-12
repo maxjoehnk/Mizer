@@ -1,9 +1,10 @@
+use std::time::Duration;
 use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
 use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
 use serde::{Deserialize, Serialize};
 
 use crate::contracts::FixtureController;
-use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::manager::{FadeTimings, FixtureManager, FixtureValueSource};
 use mizer_fixtures::{FixtureId, FixturePriority, GroupId};
 use mizer_node::*;
 
@@ -14,6 +15,9 @@ const SEND_ZERO_SETTING: &str = "Send Zero";
 const PHASE_SETTING: &str = "Phase";
 const FAN_SETTING: &str = "Fan";
 const ASYMMETRICAL_SETTING: &str = "Asymmetrical";
+const FADE_OUT_DURATION_SETTING: &str = "Fade Out";
+
+const INPUT_OUTPUT_PORT: &str = "Output";
 
 const INPUT_VALUE_PORT: &str = "Value";
 const INPUT_PHASE_PORT: &str = "Phase";
@@ -34,6 +38,8 @@ pub struct GroupControlNode {
     pub fan: f64,
     #[serde(default)]
     pub asymmetrical: bool,
+    #[serde(default)]
+    pub fade_out_seconds: f64,
 }
 
 impl Default for GroupControlNode {
@@ -46,6 +52,7 @@ impl Default for GroupControlNode {
             phase: Default::default(),
             fan: Default::default(),
             asymmetrical: false,
+            fade_out_seconds: Default::default(),
         }
     }
 }
@@ -99,6 +106,10 @@ impl ConfigurableNode for GroupControlNode {
                 .min_hint(-100f64)
                 .max_hint(100f64),
             setting!(ASYMMETRICAL_SETTING, self.asymmetrical).category("Spread"),
+            setting!(FADE_OUT_DURATION_SETTING, self.fade_out_seconds)
+                .category("Fade Timings")
+                .min_hint(0f64)
+                .max_hint(10f64),
         ]
     }
 
@@ -110,6 +121,7 @@ impl ConfigurableNode for GroupControlNode {
         update!(int setting, PHASE_SETTING, self.phase);
         update!(float setting, FAN_SETTING, self.fan);
         update!(bool setting, ASYMMETRICAL_SETTING, self.asymmetrical);
+        update!(float setting, FADE_OUT_DURATION_SETTING, self.fade_out_seconds);
 
         update_fallback!(setting)
     }
@@ -148,6 +160,7 @@ impl PipelineNode for GroupControlNode {
 
         vec![
             value_port,
+            input_port!(INPUT_OUTPUT_PORT, PortType::Single),
             input_port!(INPUT_PHASE_PORT, PortType::Single),
             input_port!(INPUT_FAN_PORT, PortType::Single),
         ]
@@ -186,6 +199,11 @@ impl ProcessingNode for GroupControlNode {
             .read()
             .unwrap_or(self.fan);
 
+        let output = context
+            .single_input(INPUT_OUTPUT_PORT)
+            .is_high()
+            .unwrap_or(true);
+
         if self.control.is_color() {
             if !matches!(&buffer, ControlBuffer::Color(_)) {
                 *buffer = ControlBuffer::color();
@@ -199,27 +217,32 @@ impl ProcessingNode for GroupControlNode {
             } else {
                 buffer.clear();
             }
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.red),
-                FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.green),
-                FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                phase,
-                fan,
-            );
-            self.write(
-                manager,
-                buffer.iter().map(|c| c.blue),
-                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                phase,
-                fan,
-            );
+            if output {
+                self.write(
+                    context,
+                    manager,
+                    buffer.iter().map(|c| c.red),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                    phase,
+                    fan,
+                );
+                self.write(
+                    context,
+                    manager,
+                    buffer.iter().map(|c| c.green),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                    phase,
+                    fan,
+                );
+                self.write(
+                    context,
+                    manager,
+                    buffer.iter().map(|c| c.blue),
+                    FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                    phase,
+                    fan,
+                );
+            }
         } else {
             if !matches!(&buffer, ControlBuffer::Single(_)) {
                 *buffer = ControlBuffer::single();
@@ -234,8 +257,10 @@ impl ProcessingNode for GroupControlNode {
             } else {
                 buffer.clear();
             }
-            for fader_control in self.control.clone().faders() {
-                self.write(manager, buffer.iter().copied(), fader_control, phase, fan);
+            if output {
+                for fader_control in self.control.clone().faders() {
+                    self.write(context, manager, buffer.iter().copied(), fader_control, phase, fan);
+                }
             }
         }
 
@@ -254,6 +279,7 @@ impl ProcessingNode for GroupControlNode {
 impl GroupControlNode {
     fn write(
         &self,
+        context: &impl NodeContext,
         manager: &impl FixtureController,
         buffer: impl DoubleEndedIterator<Item = f64>,
         control: FixtureFaderControl,
@@ -261,10 +287,21 @@ impl GroupControlNode {
         fan: f64,
     ) {
         profiling::scope!("GroupControlNode::write");
+        let source = FixtureValueSource::new(context.path(), &context.path().0);
+        let fade_timings = FadeTimings {
+            fade_out: if self.fade_out_seconds == 0. { None } else { Some(Duration::from_secs_f64(self.fade_out_seconds)) },
+        };
         if phase == 0 && fan == 0. {
             if let Some(value) = buffer.last() {
                 if value.is_high() || self.send_zero {
-                    manager.write_group_control(self.group_id, control, value, self.priority, None, Default::default());
+                    manager.write_group_control(
+                        self.group_id,
+                        control,
+                        value,
+                        self.priority,
+                        Some(source),
+                        fade_timings,
+                    );
                 }
             }
         } else if fan.is_normal() && phase == 0 {
@@ -288,8 +325,10 @@ impl GroupControlNode {
                             value,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings,
                         );
-                        self.write_fanned(manager, second.iter(), value, step, control.clone());
+                        self.write_fanned(manager, second.iter(), value, step, control.clone(), source.clone(), fade_timings);
                     } else {
                         self.write_fanned(
                             manager,
@@ -297,8 +336,10 @@ impl GroupControlNode {
                             value,
                             step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings,
                         );
-                        self.write_fanned(manager, second.iter(), value, step, control.clone());
+                        self.write_fanned(manager, second.iter(), value, step, control.clone(), source.clone(), fade_timings);
                     }
                 } else {
                     if self.asymmetrical {
@@ -308,16 +349,20 @@ impl GroupControlNode {
                             value,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
-                        self.write_fanned(manager, second.iter(), value, step, control.clone());
+                        self.write_fanned(manager, second.iter(), value, step, control.clone(), source.clone(), fade_timings);
                     } else {
-                        self.write_fanned(manager, first.iter(), value, -step, control.clone());
+                        self.write_fanned(manager, first.iter(), value, -step, control.clone(), source.clone(), fade_timings);
                         self.write_fanned(
                             manager,
                             second.iter().rev(),
                             value,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                     }
                 };
@@ -333,6 +378,8 @@ impl GroupControlNode {
                             value + step,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         self.write_fanned(
                             manager,
@@ -340,6 +387,8 @@ impl GroupControlNode {
                             value - step,
                             step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                     } else {
                         self.write_fanned(
@@ -348,6 +397,8 @@ impl GroupControlNode {
                             value - step,
                             step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         self.write_fanned(
                             manager,
@@ -355,10 +406,19 @@ impl GroupControlNode {
                             value - step,
                             step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                     }
                     for id in middle {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
+                        manager.write_fixture_control(
+                            *id,
+                            control.clone(),
+                            value,
+                            self.priority,
+                            Some(source.clone()),
+                            fade_timings
+                        );
                     }
                 } else {
                     if self.asymmetrical {
@@ -368,6 +428,8 @@ impl GroupControlNode {
                             value + step,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         self.write_fanned(
                             manager,
@@ -375,6 +437,8 @@ impl GroupControlNode {
                             value - step,
                             step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         for id in middle {
                             manager.write_fixture_control(
@@ -382,7 +446,11 @@ impl GroupControlNode {
                                 control.clone(),
                                 value,
                                 self.priority,
-                                None, Default::default());
+                                Some(source.clone()),
+
+                                fade_timings
+,
+                            );
                         }
                     } else {
                         self.write_fanned(
@@ -391,6 +459,8 @@ impl GroupControlNode {
                             value + step,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         self.write_fanned(
                             manager,
@@ -398,14 +468,18 @@ impl GroupControlNode {
                             value + step,
                             -step,
                             control.clone(),
+                            source.clone(),
+                            fade_timings
                         );
                         for id in middle {
                             manager.write_fixture_control(
                                 *id,
                                 control.clone(),
                                 value - fan,
-                                self.priority
-                                , None, Default::default());
+                                self.priority,
+                                Some(source.clone()),
+                                fade_timings
+                            );
                         }
                     }
                 };
@@ -422,9 +496,9 @@ impl GroupControlNode {
             let skip_values = skip_values.floor() as usize;
             let buffer = buffer.rev().step_by(skip_values);
             if phase > 0 {
-                self.write_phased(manager, fixtures, buffer, control);
+                self.write_phased(manager, fixtures, buffer, control, source, fade_timings);
             } else {
-                self.write_phased(manager, fixtures.rev(), buffer, control);
+                self.write_phased(manager, fixtures.rev(), buffer, control, source, fade_timings);
             }
         }
     }
@@ -435,13 +509,22 @@ impl GroupControlNode {
         fixtures: impl Iterator<Item = &'a [Vec<FixtureId>]>,
         buffer: impl Iterator<Item = f64>,
         control: FixtureFaderControl,
+        source: FixtureValueSource,
+        fade_timings: FadeTimings
     ) {
         profiling::scope!("GroupControlNode::write_phased");
         for (group, value) in fixtures.zip(buffer) {
             if value.is_high() || self.send_zero {
                 for fixtures in group {
                     for id in fixtures {
-                        manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
+                        manager.write_fixture_control(
+                            *id,
+                            control.clone(),
+                            value,
+                            self.priority,
+                            Some(source.clone()),
+                            fade_timings,
+                        );
                     }
                 }
             }
@@ -455,12 +538,21 @@ impl GroupControlNode {
         value: f64,
         step_size: f64,
         control: FixtureFaderControl,
+        source: FixtureValueSource,
+        fade_timings: FadeTimings
     ) {
         profiling::scope!("GroupControlNode::write_fanned");
         for (i, group) in groups.enumerate() {
             let value = value - (step_size * i as f64);
             for id in group {
-                manager.write_fixture_control(*id, control.clone(), value, self.priority, None, Default::default());
+                manager.write_fixture_control(
+                    *id,
+                    control.clone(),
+                    value,
+                    self.priority,
+                    Some(source.clone()),
+                    fade_timings,
+                );
             }
         }
     }

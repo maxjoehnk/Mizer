@@ -458,13 +458,14 @@ impl PipelineWorker {
 
     fn get_context<'a>(
         &'a mut self,
-        path: &NodePath,
+        path: &'a NodePath,
         processing_context: &'a impl ProcessingContext,
         clock: &'a mut dyn Clock,
         node_metadata: &'a mut HashMap<NodePath, NodeRuntimeMetadata>,
     ) -> (PipelineContext<'a>, &'a mut Box<dyn Any>) {
         profiling::scope!("PipelineWorker::get_context");
         let context = PipelineContext {
+            node_path: path,
             processing_context: RefCell::new(processing_context),
             preview: self
                 .previews

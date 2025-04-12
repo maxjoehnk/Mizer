@@ -36,13 +36,13 @@ class _NameDialogState extends State<NameDialog> {
           ),
         ),
         actions: [
-          PopupAction("Rename", () => Navigator.of(context).pop(controller.text)),
+          PopupAction("Name", () => Navigator.of(context).pop(controller.text)),
         ]);
   }
 }
 
 extension RenameDialog on BuildContext {
-  Future<String?> showRenameDialog({String? name}) async {
+  Future<String?> showNameDialog({String? name}) async {
     return await showDialog(
         context: this, builder: (context) => NameDialog(name: name));
   }

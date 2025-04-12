@@ -49,6 +49,7 @@ mizer-session = { path = "../runtime/session" }
 mizer-connections = { path = "../components/connections" }
 mizer-devices = { path = "../components/connections/devices" }
 mizer-sequencer = { path = "../components/sequencer" }
+mizer-node-ports = { path = "../components/ports" }
 mizer-timecode = { path = "../components/timecode" }
 mizer-runtime = { path = "../runtime" }
 mizer-node = { path = "../runtime/pipeline/node" }

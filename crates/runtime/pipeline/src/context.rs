@@ -17,6 +17,7 @@ use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 
 /// Context for execution of a single node
 pub struct PipelineContext<'a> {
+    pub(crate) node_path: &'a NodePath,
     pub(crate) processing_context: RefCell<&'a dyn ProcessingContext>,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
@@ -28,6 +29,7 @@ pub struct PipelineContext<'a> {
 impl<'a> Debug for PipelineContext<'a> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("PipelineContext")
+            .field("node_path", &self.node_path)
             .field("processing_context", &self.processing_context)
             .field("senders", &self.senders)
             .field("receivers", &self.receivers)
@@ -131,6 +133,10 @@ impl<'a> NodeContext for PipelineContext<'a> {
 
     fn fps(&self) -> f64 {
         self.processing_context.borrow().fps()
+    }
+
+    fn path(&self) -> &NodePath {
+        self.node_path
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {

@@ -31,7 +31,13 @@ abstract class SequencerApi {
   Future<Sequences> updateSequenceName(int sequence, String name);
   Future<void> updatePriority(int sequence, FixturePriority priority);
 
+  Future<void> addCue(int sequence);
+
   Future<SequencerPointer?> getSequencerPointer();
+
+  Future<void> addPort({required int sequenceId, required int portId});
+  Future<void> setPortValue({ required int sequenceId, required int cueId, required int portId, required double value });
+  Future<void> clearPortValue({ required int sequenceId, required int cueId, required int portId });
 }
 
 abstract class SequencerRemoteApi {

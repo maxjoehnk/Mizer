@@ -18,7 +18,7 @@ impl<S: DebugUi> DebugUiPane<S> for PlanDebugUiPane {
         let plans = injector.inject::<PlanStorage>();
         let plans = plans.read();
         for plan in plans {
-            ui.collapsing_header(plan.name, |_ui| {});
+            ui.collapsing_header(plan.name, None, |_ui| {});
         }
     }
 }

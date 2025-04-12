@@ -24,7 +24,7 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for NodesDebugUiPane {
             let state = state_access.get(path);
             let state = state.unwrap();
             let node = node.downcast();
-            ui.collapsing_header(path.as_str(), |ui| node.debug_ui(ui, state));
+            ui.collapsing_header(path.as_str(), None, |ui| node.debug_ui(ui, state));
         }
     }
 }

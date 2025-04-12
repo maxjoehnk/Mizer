@@ -103,7 +103,7 @@ impl ProcessingNode for DialNode {
     }
 
     fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
-        ui.collapsing_header("State", |ui| {
+        ui.collapsing_header("State", None, |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Value");
                 columns[1].label(self.value(state).to_string());

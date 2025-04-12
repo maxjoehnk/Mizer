@@ -17,6 +17,7 @@ pub struct StoreProgrammerInSequenceCommand {
 pub enum StoreMode {
     Overwrite,
     Merge,
+    InsertCue,
     AddCue,
 }
 
@@ -48,6 +49,16 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
             let cue = if self.store_mode == StoreMode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
                 sequence.cues.iter_mut().find(|c| c.id == cue_id)
+            } else if self.store_mode == StoreMode::InsertCue {
+                if let Some(cue_id) = self.cue_id {
+                    let Some(position) = sequence.cues.iter().position(|c| c.id == cue_id) else {
+                        anyhow::bail!("Invalid cue id: {cue_id}");
+                    };
+                    let cue_id = sequence.insert_cue(position);
+                    sequence.cues.iter_mut().find(|c| c.id == cue_id)
+                }else {
+                    anyhow::bail!("Missing cue id for insert");
+                }
             } else if let Some(cue_id) = self.cue_id {
                 sequence.cues.iter_mut().find(|c| c.id == cue_id)
             } else {
@@ -77,7 +88,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                         });
                     }
                 }
-                StoreMode::Overwrite | StoreMode::AddCue => {
+                StoreMode::Overwrite | StoreMode::AddCue | StoreMode::InsertCue => {
                     cue.controls = cue_channels;
                     cue.effects = self
                         .effects

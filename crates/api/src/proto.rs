@@ -49,3 +49,6 @@ pub mod surfaces {
 pub mod ui {
     tonic::include_proto!("mizer.ui");
 }
+pub mod ports {
+    tonic::include_proto!("mizer.ports");
+}

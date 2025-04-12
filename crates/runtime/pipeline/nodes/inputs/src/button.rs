@@ -148,7 +148,7 @@ impl ProcessingNode for ButtonNode {
             ..
         }: &Self::State,
     ) {
-        ui.collapsing_header("Config", |ui| {
+        ui.collapsing_header("Config", None, |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Toggle");
                 columns[1].label(self.toggle.to_string());
@@ -160,7 +160,7 @@ impl ProcessingNode for ButtonNode {
                 columns[1].label(self.low_value.to_string());
             });
         });
-        ui.collapsing_header("State", |ui| {
+        ui.collapsing_header("State", None, |ui| {
             ui.columns(2, |columns| {
                 columns[0].label("Value");
                 columns[1].label(state.to_string());

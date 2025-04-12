@@ -107,9 +107,10 @@ class Tab {
   final String? label;
   final Widget child;
   final bool padding = true;
+  final List<PanelActionModel> actions;
   late Widget Function(bool, Function()) header;
 
-  Tab({this.label, required this.child, Widget Function(bool, Function())? header}) {
+  Tab({this.label, required this.child, this.actions = const [], Widget Function(bool, Function())? header}) {
     this.header =
         header ?? (active, setActive) => TabHeader(label!, selected: active, onSelect: setActive);
   }

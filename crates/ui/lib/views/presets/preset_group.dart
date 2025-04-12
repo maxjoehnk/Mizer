@@ -60,7 +60,7 @@ class PresetGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PanelSizing(
-      rows: 2.6,
+      rows: 3,
       child: Panel(
         label: label,
         child: child,

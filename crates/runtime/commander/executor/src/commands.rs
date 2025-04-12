@@ -5,6 +5,7 @@ use derive_more::From;
 use mizer_commander::Command;
 pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
+pub use mizer_node_ports::commands::*;
 pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
 use mizer_processing::Injector;
@@ -131,13 +132,17 @@ command_impl! {
     UpdateLayoutControlBehaviorCommand,
     AddSequenceCommand,
     DeleteSequenceCommand,
+    AddCueCommand,
+    AddPortToSequenceCommand,
+    SetPortValueInSequenceCommand,
+    ClearPortValueInSequenceCommand,
     StoreProgrammerInSequenceCommand,
     RenameSequenceCommand,
     DuplicateSequenceCommand,
     RenameCueCommand,
+    DeleteCueCommand,
     UpdateControlDelayTimeCommand,
-    UpdateControlFadeTimeCommand,
-    UpdateCueEffectOffsetCommand,
+    UpdateControlFadeTimeCommand,UpdateCueEffectOffsetCommand,
     UpdateCueTriggerCommand,
     UpdateCueTriggerTimeCommand,
     UpdateCueValueCommand,
@@ -177,6 +182,8 @@ command_impl! {
     DeleteTimecodeControlCommand,
     UpdateSurfaceSectionCommand,
     ChangeMidiDeviceProfileCommand,
+    AddPortCommand,
+    DeletePortCommand,
 }
 
 impl CommandImpl {

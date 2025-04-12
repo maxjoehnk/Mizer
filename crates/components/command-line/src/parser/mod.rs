@@ -64,6 +64,7 @@ pub enum Keyword {
     Fixture,
     Sequence,
     Group,
+    Cue,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

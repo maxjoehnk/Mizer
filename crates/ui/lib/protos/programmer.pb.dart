@@ -29,6 +29,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
     ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
     ..pc<EffectProgrammerState>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', $pb.PbFieldType.PM, subBuilder: EffectProgrammerState.create)
     ..aOB(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'offline')
+    ..pc<FixtureValue>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureValues', $pb.PbFieldType.PM, subBuilder: FixtureValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -45,6 +46,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
     $core.int? wings,
     $core.Iterable<EffectProgrammerState>? effects,
     $core.bool? offline,
+    $core.Iterable<FixtureValue>? fixtureValues,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -79,6 +81,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     }
     if (offline != null) {
       _result.offline = offline;
+    }
+    if (fixtureValues != null) {
+      _result.fixtureValues.addAll(fixtureValues);
     }
     return _result;
   }
@@ -173,6 +178,116 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.bool hasOffline() => $_has(10);
   @$pb.TagNumber(11)
   void clearOffline() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.List<FixtureValue> get fixtureValues => $_getList(11);
+}
+
+class FixtureValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..aOM<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixture', subBuilder: $0.FixtureId.create)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'intensity', $pb.PbFieldType.OD)
+    ..aOM<$0.ColorMixerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureValue._() : super();
+  factory FixtureValue({
+    $0.FixtureId? fixture,
+    $core.double? intensity,
+    $0.ColorMixerChannel? color,
+    $core.double? pan,
+    $core.double? tilt,
+  }) {
+    final _result = create();
+    if (fixture != null) {
+      _result.fixture = fixture;
+    }
+    if (intensity != null) {
+      _result.intensity = intensity;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    if (pan != null) {
+      _result.pan = pan;
+    }
+    if (tilt != null) {
+      _result.tilt = tilt;
+    }
+    return _result;
+  }
+  factory FixtureValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureValue clone() => FixtureValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureValue copyWith(void Function(FixtureValue) updates) => super.copyWith((message) => updates(message as FixtureValue)) as FixtureValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureValue create() => FixtureValue._();
+  FixtureValue createEmptyInstance() => create();
+  static $pb.PbList<FixtureValue> createRepeated() => $pb.PbList<FixtureValue>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureValue>(create);
+  static FixtureValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $0.FixtureId get fixture => $_getN(0);
+  @$pb.TagNumber(1)
+  set fixture($0.FixtureId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFixture() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFixture() => clearField(1);
+  @$pb.TagNumber(1)
+  $0.FixtureId ensureFixture() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.double get intensity => $_getN(1);
+  @$pb.TagNumber(2)
+  set intensity($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasIntensity() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIntensity() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $0.ColorMixerChannel get color => $_getN(2);
+  @$pb.TagNumber(3)
+  set color($0.ColorMixerChannel v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasColor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearColor() => clearField(3);
+  @$pb.TagNumber(3)
+  $0.ColorMixerChannel ensureColor() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.double get pan => $_getN(3);
+  @$pb.TagNumber(4)
+  set pan($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPan() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPan() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get tilt => $_getN(4);
+  @$pb.TagNumber(5)
+  set tilt($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasTilt() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearTilt() => clearField(5);
 }
 
 class FixtureSelection_GroupedFixtureList extends $pb.GeneratedMessage {

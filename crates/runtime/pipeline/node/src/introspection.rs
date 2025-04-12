@@ -176,6 +176,7 @@ node_type_name! {
         VectorFile,
         Comparison,
         Dialog,
+        PortOutput,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

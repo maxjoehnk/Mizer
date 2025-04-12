@@ -329,6 +329,7 @@ impl From<store_request::Mode> for mizer_command_executor::StoreMode {
             store_request::Mode::Merge => Self::Merge,
             store_request::Mode::AddCue => Self::AddCue,
             store_request::Mode::Overwrite => Self::Overwrite,
+            store_request::Mode::InsertCue => Self::InsertCue,
         }
     }
 }

@@ -16,6 +16,7 @@ use mizer_layouts::LayoutsModule;
 use mizer_media::MediaModule;
 use mizer_message_bus::MessageBus;
 use mizer_module::{ApiInjector, Module, ModuleContext, Runtime};
+use mizer_node_ports::PortsModule;
 use mizer_plan::PlansModule;
 use mizer_processing::Inject;
 use mizer_project_files::history::ProjectHistory;
@@ -43,6 +44,7 @@ use crate::Mizer;
 fn load_modules(context: &mut SetupContext, flags: &Flags) {
     ConsoleModule.try_load(context);
     FixtureModule::<MizerFixtureLoader>::default().try_load(context);
+    PortsModule.try_load(context);
     SequencerModule.try_load(context);
     EffectsModule.try_load(context);
     TimecodeModule.try_load(context);
@@ -142,6 +144,7 @@ fn load_settings() -> anyhow::Result<Arc<NonEmptyPinboard<SettingsManager>>> {
 }
 
 fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
+    mizer.close_project()?;
     if let Some(project_file) = mizer.project_path.clone() {
         mizer
             .load_project()
@@ -158,10 +161,10 @@ fn open_project(mizer: &mut Mizer, settings: Settings) -> anyhow::Result<()> {
                 );
             }
         } else {
-            mizer.new_project();
+            mizer.new_project()?;
         }
     } else {
-        mizer.new_project();
+        mizer.new_project()?;
     }
 
     Ok(())

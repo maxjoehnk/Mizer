@@ -117,13 +117,25 @@ class _PanelState extends State<Panel> {
                         decoration: BoxDecoration(),
                         clipBehavior: Clip.antiAlias,
                         child: widget.child ?? _activeTab)),
-                if (widget.actions != null) PanelActions(actions: widget.actions!)
+                if (actions.isNotEmpty) PanelActions(actions: actions)
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  List<PanelActionModel> get actions {
+    List<PanelActionModel> panelActions = [];
+    if (widget.actions != null) {
+      panelActions.addAll(widget.actions!);
+    }
+    if (_activeTabModel != null) {
+      panelActions.addAll(_activeTabModel!.actions);
+    }
+
+    return panelActions;
   }
 
   Widget _header(BuildContext context) {
@@ -184,16 +196,23 @@ class _PanelState extends State<Panel> {
             ]));
   }
 
-  Widget? get _activeTab {
+  tab.Tab? get _activeTabModel {
     if (widget.tabs?.isEmpty ?? true) {
       return null;
     }
     if (activeIndex >= widget.tabs!.length) {
       return null;
     }
+    return widget.tabs![activeIndex];
+  }
+
+  Widget? get _activeTab {
+    if (_activeTabModel == null) {
+      return null;
+    }
     return Padding(
       padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
-      child: widget.tabs![activeIndex].child,
+      child: _activeTabModel!.child,
     );
   }
 

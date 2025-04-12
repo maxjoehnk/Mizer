@@ -1,4 +1,5 @@
 use mizer_command_executor::*;
+use mizer_node_ports::NodePortId;
 use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue, SequencerView};
 
 use crate::proto::sequencer::*;
@@ -37,7 +38,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     #[tracing::instrument(skip(self))]
     #[profiling::function]
     pub fn add_sequence(&self) -> Sequence {
-        let sequence = self.runtime.run_command(AddSequenceCommand {}).unwrap();
+        let sequence = self.runtime.run_command(AddSequenceCommand).unwrap();
 
         sequence.into()
     }
@@ -227,6 +228,62 @@ impl<R: RuntimeApi> SequencerHandler<R> {
                 priority: request.priority().into(),
             })
             .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_cue(&self, sequence_id: u32) {
+        self.runtime
+            .run_command(AddCueCommand { sequence_id })
+            .unwrap();
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn add_port(&self, sequence_id: u32, port_id: NodePortId) -> anyhow::Result<()> {
+        let port_id = port_id.into();
+        self.runtime.run_command(AddPortToSequenceCommand {
+            sequence_id,
+            port_id,
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn set_port_value(
+        &self,
+        sequence_id: u32,
+        cue_id: u32,
+        port_id: NodePortId,
+        value: f64,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(SetPortValueInSequenceCommand {
+            sequence_id,
+            cue_id,
+            port_id,
+            value,
+        })?;
+
+        Ok(())
+    }
+
+    #[tracing::instrument(skip(self))]
+    #[profiling::function]
+    pub fn clear_port_value(
+        &self,
+        sequence_id: u32,
+        cue_id: u32,
+        port_id: NodePortId,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(ClearPortValueInSequenceCommand {
+            sequence_id,
+            cue_id,
+            port_id,
+        })?;
+
+        Ok(())
     }
 
     #[tracing::instrument(skip(self))]

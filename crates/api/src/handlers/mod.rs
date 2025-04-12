@@ -18,6 +18,7 @@ pub use self::mappings::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::plans::*;
+pub use self::ports::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::session::*;
@@ -37,6 +38,7 @@ mod mappings;
 mod media;
 mod nodes;
 mod plans;
+mod ports;
 mod programmer;
 mod sequencer;
 mod session;
@@ -67,6 +69,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub status: StatusHandler,
     pub surfaces: SurfacesHandler<R>,
     pub ui: UiHandler<R>,
+    pub ports: PortsHandler<R>,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -98,7 +101,8 @@ impl<R: RuntimeApi> Handlers<R> {
             timecode: TimecodeHandler::new(timecode_manager, runtime.clone()),
             status: StatusHandler::new(status_bus),
             surfaces: SurfacesHandler::new(runtime.clone(), surface_registry_api),
-            ui: UiHandler::new(runtime, ui_api),
+            ui: UiHandler::new(runtime.clone(), ui_api),
+            ports: PortsHandler::new(runtime),
         }
     }
 }

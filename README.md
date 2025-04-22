@@ -14,7 +14,7 @@ You need to have the following tools installed:
 
 - Rust (stable)
 - cbindgen
-- Flutter SDK (v3.19.6)
+- Flutter SDK
 - protoc
 - LLVM
 - lld (only on linux)

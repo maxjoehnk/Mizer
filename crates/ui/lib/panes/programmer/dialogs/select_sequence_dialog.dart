@@ -19,20 +19,22 @@ class SelectSequenceDialog extends StatelessWidget {
       content: Container(
         width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
-        child: FutureBuilder(
-            future: api.getSequences(),
-            builder: (context, AsyncSnapshot<Sequences> data) {
-              List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
-              sequences.sort((lhs, rhs) => lhs.id - rhs.id);
+        child: SingleChildScrollView(
+          child: FutureBuilder(
+              future: api.getSequences(),
+              builder: (context, AsyncSnapshot<Sequences> data) {
+                List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
+                sequences.sort((lhs, rhs) => lhs.id - rhs.id);
 
-              return PanelGrid(children: sequences
-                      .map((s) => PanelGridTile.idWithText(
-                            id: s.id.toString(),
-                            text: s.name,
-                            onTap: () => Navigator.of(context).pop(s),
-                          ))
-                      .toList());
-            }),
+                return PanelGrid(children: sequences
+                        .map((s) => PanelGridTile.idWithText(
+                              id: s.id.toString(),
+                              text: s.name,
+                              onTap: () => Navigator.of(context).pop(s),
+                            ))
+                        .toList());
+              }),
+        ),
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),

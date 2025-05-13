@@ -22,14 +22,16 @@ class SelectPresetDialog extends StatelessWidget {
       content: Container(
         width: MAX_TILE_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
-        child: PanelGrid(
-            children: state
-                .getByPresetType(presetType)
-                .map((preset) => PanelGridTile.idWithText(
-                    id: preset.id.id.toString(),
-                    text: preset.label ?? "",
-                    onTap: () => Navigator.of(context).pop(preset.id)))
-                .toList()),
+        child: SingleChildScrollView(
+          child: PanelGrid(
+              children: state
+                  .getByPresetType(presetType)
+                  .map((preset) => PanelGridTile.idWithText(
+                      id: preset.id.id.toString(),
+                      text: preset.label ?? "",
+                      onTap: () => Navigator.of(context).pop(preset.id)))
+                  .toList()),
+        ),
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),

@@ -178,6 +178,7 @@ message NodeSetting {
     MediaValue media_value = 14;
     UintValue uint_value = 15;
     StepSequencerValue step_sequencer_value = 16;
+    ColorValue color_value = 17;
   }
 
   message TextValue {
@@ -278,6 +279,12 @@ message NodeSetting {
 
   message StepSequencerValue {
     repeated bool steps = 1;
+  }
+
+  message ColorValue {
+    double red = 1;
+    double green = 2;
+    double blue = 3;
   }
 }
 

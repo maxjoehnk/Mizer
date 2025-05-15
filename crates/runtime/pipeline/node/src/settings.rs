@@ -5,7 +5,7 @@ use std::sync::Arc;
 
 use enum_iterator::{all, Sequence};
 use serde::{Deserialize, Serialize};
-
+use mizer_ports::Color;
 use mizer_util::Spline;
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize, Hash)]
@@ -229,6 +229,7 @@ pub enum NodeSettingValue {
         content_types: Vec<MediaContentType>,
     },
     Steps(Vec<bool>),
+    Color(Color),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
@@ -309,6 +310,10 @@ impl Hash for NodeSettingValue {
             Self::Steps(steps) => {
                 state.write_u8(8);
                 steps.hash(state);
+            }
+            Self::Color(color) => {
+                state.write_u8(9);
+                color.hash(state);
             }
         }
     }

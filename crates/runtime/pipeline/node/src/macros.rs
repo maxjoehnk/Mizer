@@ -70,6 +70,9 @@ macro_rules! setting {
             $crate::NodeSettingValue::media($value.into(), $content_types)
         )
     };
+    (color $name:expr, $value:expr) => {
+        $crate::setting!($name, $crate::NodeSettingValue::Color($value))
+    };
 }
 
 #[macro_export]

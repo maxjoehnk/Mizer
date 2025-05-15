@@ -6,6 +6,7 @@ import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
 
 import '../fields/boolean_field.dart';
+import '../fields/color_field.dart';
 import '../fields/enum_field.dart';
 import '../fields/media_field.dart';
 import '../fields/number_field.dart';
@@ -201,6 +202,16 @@ class NodeSettingsPane extends StatelessWidget {
           onUpdate: (v) {
             var updated = setting.deepCopy();
             updated.stepSequencerValue = v;
+            onUpdate(updated);
+          });
+    }
+    if (setting.hasColorValue()) {
+      child = ColorField(
+          label: label,
+          value: setting.colorValue,
+          onUpdate: (v) {
+            var updated = setting.deepCopy();
+            updated.colorValue = v;
             onUpdate(updated);
           });
     }

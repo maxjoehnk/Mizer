@@ -243,6 +243,11 @@ impl From<mizer_node::NodeSettingValue> for node_setting::Value {
                     .map(|variant| variant as i32)
                     .collect(),
             }),
+            Color(color) => Self::ColorValue(node_setting::ColorValue {
+                red: color.red,
+                green: color.green,
+                blue: color.blue,
+            }),
         }
     }
 }
@@ -315,6 +320,7 @@ impl From<node_setting::Value> for mizer_node::NodeSettingValue {
                     .collect(),
                 value: value.value,
             },
+            Value::ColorValue(value) => Self::Color(mizer_node::Color::rgb(value.red, value.green, value.blue)),
         }
     }
 }

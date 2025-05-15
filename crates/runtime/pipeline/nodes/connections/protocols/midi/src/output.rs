@@ -25,15 +25,17 @@ const PAGE_SETTING: &str = "Page";
 const CONTROL_SETTING: &str = "Control";
 const OFF_STEP_SETTING: &str = "Value Off";
 const ON_STEP_SETTING: &str = "Value On";
+const OFF_COLOR_SETTING: &str = "Color Off";
+const ON_COLOR_SETTING: &str = "Color On";
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
 pub struct MidiOutputNode {
     pub device: String,
     #[serde(flatten)]
     pub config: MidiOutputConfig,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MidiOutputConfig {
     Note {
@@ -50,7 +52,11 @@ pub enum MidiOutputConfig {
         #[serde(default)]
         off_step: Option<u8>,
         #[serde(default)]
+        off_color: Option<Color>,
+        #[serde(default)]
         on_step: Option<u8>,
+        #[serde(default)]
+        on_color: Option<Color>,
     },
 }
 
@@ -116,6 +122,8 @@ impl ConfigurableNode for MidiOutputNode {
                 control,
                 off_step,
                 on_step,
+                off_color,
+                on_color,
             } => {
                 let (pages, controls, mut steps) =
                     get_pages_and_controls(injector, &self.device, &page, &control, false);
@@ -141,6 +149,14 @@ impl ConfigurableNode for MidiOutputNode {
                         .push(setting!(select OFF_STEP_SETTING, selected_off_step, steps.clone()));
                     settings.push(setting!(select ON_STEP_SETTING, selected_on_step, steps));
                 }
+                settings.push(setting!(
+                        color OFF_COLOR_SETTING,
+                        off_color.unwrap_or_default()
+                    ));
+                settings.push(setting!(
+                        color ON_COLOR_SETTING,
+                        on_color.unwrap_or_default()
+                    ));
 
                 settings
             }
@@ -168,6 +184,8 @@ impl ConfigurableNode for MidiOutputNode {
                 control,
                 on_step,
                 off_step,
+                on_color,
+                off_color,
             } => {
                 update!(select setting, PAGE_SETTING, *page);
                 update!(select setting, CONTROL_SETTING, *control);
@@ -270,6 +288,8 @@ impl ProcessingNode for MidiOutputNode {
                     control,
                     on_step,
                     off_step,
+                    on_color,
+                    off_color,
                 } => {
                     if let Some((profile, control)) = device.profile.as_ref().and_then(|profile| {
                         profile
@@ -340,6 +360,8 @@ impl Sequence for MidiOutputConfig {
             page: Default::default(),
             off_step: Default::default(),
             on_step: Default::default(),
+            off_color: Default::default(),
+            on_color: Default::default(),
         })
     }
 }

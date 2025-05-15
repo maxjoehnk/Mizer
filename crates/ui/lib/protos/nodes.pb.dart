@@ -2708,6 +2708,81 @@ class NodeSetting_StepSequencerValue extends $pb.GeneratedMessage {
   $core.List<$core.bool> get steps => $_getList(0);
 }
 
+class NodeSetting_ColorValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting.ColorValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  NodeSetting_ColorValue._() : super();
+  factory NodeSetting_ColorValue({
+    $core.double? red,
+    $core.double? green,
+    $core.double? blue,
+  }) {
+    final _result = create();
+    if (red != null) {
+      _result.red = red;
+    }
+    if (green != null) {
+      _result.green = green;
+    }
+    if (blue != null) {
+      _result.blue = blue;
+    }
+    return _result;
+  }
+  factory NodeSetting_ColorValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodeSetting_ColorValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodeSetting_ColorValue clone() => NodeSetting_ColorValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodeSetting_ColorValue copyWith(void Function(NodeSetting_ColorValue) updates) => super.copyWith((message) => updates(message as NodeSetting_ColorValue)) as NodeSetting_ColorValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_ColorValue create() => NodeSetting_ColorValue._();
+  NodeSetting_ColorValue createEmptyInstance() => create();
+  static $pb.PbList<NodeSetting_ColorValue> createRepeated() => $pb.PbList<NodeSetting_ColorValue>();
+  @$core.pragma('dart2js:noInline')
+  static NodeSetting_ColorValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeSetting_ColorValue>(create);
+  static NodeSetting_ColorValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get red => $_getN(0);
+  @$pb.TagNumber(1)
+  set red($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRed() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRed() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get green => $_getN(1);
+  @$pb.TagNumber(2)
+  set green($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGreen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGreen() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get blue => $_getN(2);
+  @$pb.TagNumber(3)
+  set blue($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlue() => clearField(3);
+}
+
 enum NodeSetting_Value {
   textValue, 
   floatValue, 
@@ -2720,6 +2795,7 @@ enum NodeSetting_Value {
   mediaValue, 
   uintValue, 
   stepSequencerValue, 
+  colorValue, 
   notSet
 }
 
@@ -2736,10 +2812,11 @@ class NodeSetting extends $pb.GeneratedMessage {
     14 : NodeSetting_Value.mediaValue,
     15 : NodeSetting_Value.uintValue,
     16 : NodeSetting_Value.stepSequencerValue,
+    17 : NodeSetting_Value.colorValue,
     0 : NodeSetting_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeSetting', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+    ..oo(0, [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category')
@@ -2756,6 +2833,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     ..aOM<NodeSetting_MediaValue>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mediaValue', subBuilder: NodeSetting_MediaValue.create)
     ..aOM<NodeSetting_UintValue>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uintValue', subBuilder: NodeSetting_UintValue.create)
     ..aOM<NodeSetting_StepSequencerValue>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepSequencerValue', subBuilder: NodeSetting_StepSequencerValue.create)
+    ..aOM<NodeSetting_ColorValue>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorValue', subBuilder: NodeSetting_ColorValue.create)
     ..hasRequiredFields = false
   ;
 
@@ -2777,6 +2855,7 @@ class NodeSetting extends $pb.GeneratedMessage {
     NodeSetting_MediaValue? mediaValue,
     NodeSetting_UintValue? uintValue,
     NodeSetting_StepSequencerValue? stepSequencerValue,
+    NodeSetting_ColorValue? colorValue,
   }) {
     final _result = create();
     if (id != null) {
@@ -2826,6 +2905,9 @@ class NodeSetting extends $pb.GeneratedMessage {
     }
     if (stepSequencerValue != null) {
       _result.stepSequencerValue = stepSequencerValue;
+    }
+    if (colorValue != null) {
+      _result.colorValue = colorValue;
     }
     return _result;
   }
@@ -3018,6 +3100,17 @@ class NodeSetting extends $pb.GeneratedMessage {
   void clearStepSequencerValue() => clearField(16);
   @$pb.TagNumber(16)
   NodeSetting_StepSequencerValue ensureStepSequencerValue() => $_ensure(15);
+
+  @$pb.TagNumber(17)
+  NodeSetting_ColorValue get colorValue => $_getN(16);
+  @$pb.TagNumber(17)
+  set colorValue(NodeSetting_ColorValue v) { setField(17, v); }
+  @$pb.TagNumber(17)
+  $core.bool hasColorValue() => $_has(16);
+  @$pb.TagNumber(17)
+  void clearColorValue() => clearField(17);
+  @$pb.TagNumber(17)
+  NodeSetting_ColorValue ensureColorValue() => $_ensure(16);
 }
 
 class MidiNodeConfig_NoteBinding extends $pb.GeneratedMessage {

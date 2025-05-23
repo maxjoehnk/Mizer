@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-use crate::AudioContext;
+use crate::{AudioContext, CHANNEL_COUNT, OUTPUT_BUFFER_SIZE};
 
 const AUDIO_INPUT: &str = "Stereo";
 
@@ -87,7 +87,7 @@ impl AudioOutputNodeState {
     fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio output device");
         if let Some(device) = cpal::default_host().default_output_device() {
-            let buffer = SpscRb::new(audio_context.transfer_size() * 8);
+            let buffer = SpscRb::new(audio_context.transfer_size_per_channel() * CHANNEL_COUNT * OUTPUT_BUFFER_SIZE);
 
             let config = device.supported_output_configs()?;
             let configs = config.collect::<Vec<_>>();
@@ -137,6 +137,7 @@ impl AudioOutputNodeState {
 
     fn write(&self, buffer: Vec<f64>) -> anyhow::Result<()> {
         tracing::trace!("Received {} frames", buffer.len());
+        // TODO: count dropped frames
         self.buffer
             .producer()
             .write(

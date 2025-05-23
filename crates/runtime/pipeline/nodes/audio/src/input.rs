@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-use crate::AudioContext;
+use crate::{AudioContext, CHANNEL_COUNT, INPUT_BUFFER_SIZE};
 
 const AUDIO_OUTPUT: &str = "Stereo";
 
@@ -41,9 +41,9 @@ impl ProcessingNode for AudioInputNode {
             *state = AudioInputNodeState::new(context).context("Creating audio input state")?;
         }
         if let Some(state) = state {
-            let buffer = state.read(context)?;
-
-            context.write_port(AUDIO_OUTPUT, buffer);
+            if let Some(buffer) = state.read(context)? {
+                context.write_port(AUDIO_OUTPUT, buffer);
+            }
         }
 
         Ok(())
@@ -64,11 +64,12 @@ impl AudioInputNodeState {
     fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio input device");
         if let Some(device) = cpal::default_host().default_input_device() {
-            let buffer = SpscRb::new(audio_context.transfer_size() * 2);
+            let buffer = SpscRb::new(audio_context.transfer_size_per_channel() * CHANNEL_COUNT * INPUT_BUFFER_SIZE);
 
             let config = device.supported_input_configs()?;
             let configs = config.collect::<Vec<_>>();
             tracing::trace!("Supported Input Configs: {configs:?}");
+            // TODO: find device with lowest buffer size
             if let Some(config) = configs.into_iter().find(|c| {
                 c.channels() == 2
                     && c.sample_format() == SampleFormat::F32
@@ -112,14 +113,17 @@ impl AudioInputNodeState {
         }
     }
 
-    fn read(&mut self, audio_context: &impl AudioContext) -> anyhow::Result<Vec<f64>> {
-        let mut buffer = vec![0.; audio_context.transfer_size()];
-        let count = self
-            .buffer
-            .consumer()
-            .read(&mut buffer)
-            .map_err(|err| anyhow::anyhow!("Unable to read from Ringbuffer: {err:?}"))?;
+    fn read(&mut self, audio_context: &impl AudioContext) -> anyhow::Result<Option<Vec<f64>>> {
+        let mut buffer = vec![0.; audio_context.transfer_size_per_channel() * CHANNEL_COUNT];
+        let consumer = self.buffer.consumer();
+        let count = consumer.get(&mut buffer).unwrap_or(0);
+        if count < buffer.len() {
+            return Ok(None);
+        }
 
-        Ok(buffer[0..count].iter().map(|f| *f as f64).collect())
+        consumer.skip(count)
+            .map_err(|err| anyhow::anyhow!("Unable to skip from Ringbuffer: {err:?}"))?;
+
+        Ok(Some(buffer.into_iter().map(|f| f as f64).collect()))
     }
 }

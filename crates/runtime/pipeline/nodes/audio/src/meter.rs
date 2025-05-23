@@ -9,8 +9,8 @@ use crate::AudioContext;
 
 const AUDIO_INPUT: &str = "Stereo";
 const VOLUME_OUTPUT: &str = "Volume";
-const VOLUME_L_OUTPUT: &str = "Volume (L)";
-const VOLUME_R_OUTPUT: &str = "Volume (R)";
+const VOLUME_L_OUTPUT: &str = "Volume L";
+const VOLUME_R_OUTPUT: &str = "Volume R";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct AudioMeterNode;
@@ -45,7 +45,7 @@ impl ProcessingNode for AudioMeterNode {
 
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(signal) = context.input_signal(AUDIO_INPUT) {
-            let buffer = Fixed::from(vec![[0.0; 2]; context.transfer_size()]);
+            let buffer = Fixed::from(vec![[0.0; 2]; context.transfer_size_per_channel()]);
             let rms = signal.rms(buffer).until_exhausted().last().unwrap();
             let stereo_rms = rms.into_iter().sum::<f64>() / 2.0;
             context.write_port(VOLUME_OUTPUT, stereo_rms);

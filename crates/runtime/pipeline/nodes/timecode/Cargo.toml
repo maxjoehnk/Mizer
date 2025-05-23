@@ -9,4 +9,7 @@ anyhow = "1"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../node" }
+mizer-audio-nodes = { path = "../audio" }
 mizer-timecode = { path = "../../../../components/timecode" }
+mizer-clock = { path = "../../../clock" }
+ltc = "0.2"

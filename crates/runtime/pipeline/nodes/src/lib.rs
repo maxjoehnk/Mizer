@@ -54,7 +54,7 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_step_sequencer_nodes::StepSequencerNode;
 pub use mizer_surface_nodes::SurfaceMappingNode;
 pub use mizer_text_nodes::VideoTextNode;
-pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode, TimecodeRecorderNode};
+pub use mizer_timecode_nodes::{TimecodeControlNode, TimecodeOutputNode, TimecodeRecorderNode, LtcDecoderNode};
 pub use mizer_timing_nodes::{CountdownNode, DelayNode, TimeTriggerNode};
 pub use mizer_traktor_kontrol_nodes::{TraktorKontrolX1InputNode, TraktorKontrolX1OutputNode};
 pub use mizer_transport_nodes::{BeatsNode, TransportNode};
@@ -320,6 +320,7 @@ node_impl! {
     TimecodeControl(TimecodeControlNode),
     TimecodeOutput(TimecodeOutputNode),
     TimecodeRecorder(TimecodeRecorderNode),
+    LtcDecoder(LtcDecoderNode),
     AudioFile(AudioFileNode),
     AudioOutput(AudioOutputNode),
     AudioVolume(AudioVolumeNode),

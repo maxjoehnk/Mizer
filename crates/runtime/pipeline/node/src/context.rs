@@ -7,7 +7,7 @@ use mizer_ports::port_types;
 pub use mizer_ports::{PortId, PortValue};
 use mizer_wgpu::TextureView;
 
-use crate::{NodePath, PortMetadata, PreviewContext};
+use crate::{NodePath, PortMetadata, PreviewContext, WorkerPortId};
 
 pub const SINGLE_HIGH: f64 = 1.0;
 pub const SINGLE_LOW: f64 = 0.0;
@@ -73,6 +73,8 @@ pub trait NodeContext: PreviewContext + Sized + Inject {
             context: self,
         }
     }
+    
+    fn audio_output<P: Into<PortId>>(&self, port: P, worker_port: WorkerPortId);
 }
 
 pub struct PortReader<'a, V: PortValue + 'static, C: NodeContext> {

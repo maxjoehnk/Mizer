@@ -78,9 +78,9 @@ pub enum PortType {
     #[default]
     Single,
     /// Multiple float values
-    ///
-    /// e.g. Audio
     Multi,
+    /// Audio Data
+    Audio,
     /// RGBA Colors
     Color,
     /// 2D Image and Video

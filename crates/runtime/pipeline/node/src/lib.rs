@@ -6,7 +6,7 @@ use downcast::*;
 pub use mizer_debug_ui::DebugUiDrawHandle;
 pub use mizer_injector::Injector;
 pub use mizer_ports::{port_types, Color, PortId, PortType};
-
+pub use self::worker::*;
 pub use self::context::*;
 pub use self::introspection::*;
 pub use self::path::*;
@@ -21,6 +21,7 @@ mod ports;
 mod introspection;
 mod preview;
 mod settings;
+mod worker;
 
 pub mod edge;
 mod macros;
@@ -79,6 +80,14 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
 
     fn get_template(name: &str) -> Option<NodeTemplate<Self>> {
         Self::templates().into_iter().find(|t| t.name == name)
+    }
+
+    fn worker_nodes(&self) -> &[&WorkerNodeDefinition] {
+        &[]
+    }
+
+    fn create_audio_worker(&self, context: &impl CreateAudioWorkerContext, definition: &WorkerNodeDefinition) -> anyhow::Result<Box<dyn AudioWorkerNode>> {
+        unimplemented!()
     }
 
     #[allow(unused_variables)]

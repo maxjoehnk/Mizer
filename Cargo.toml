@@ -52,6 +52,7 @@ members = [
     "crates/runtime/module",
     "crates/runtime/session",
     "crates/runtime/pipeline",
+    "crates/runtime/pipeline/audio",
     "crates/runtime/pipeline/node",
     "crates/runtime/pipeline/nodes",
     "crates/runtime/pipeline/nodes/audio",

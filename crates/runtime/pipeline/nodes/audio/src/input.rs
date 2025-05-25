@@ -25,7 +25,7 @@ impl PipelineNode for AudioInputNode {
     }
 
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
-        vec![output_port!(AUDIO_OUTPUT, PortType::Multi)]
+        vec![output_port!(AUDIO_OUTPUT, PortType::Audio)]
     }
 
     fn node_type(&self) -> NodeType {
@@ -33,18 +33,30 @@ impl PipelineNode for AudioInputNode {
     }
 }
 
-impl ProcessingNode for AudioInputNode {
-    type State = Option<AudioInputNodeState>;
+const OUTPUT_WORKER_DEFINITION: WorkerNodeDefinition = WorkerNodeDefinition::builder()
+    .audio()
+    .build();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if state.is_none() {
-            *state = AudioInputNodeState::new(context).context("Creating audio input state")?;
+impl ProcessingNode for AudioInputNode {
+    type State = ();
+
+    fn worker_nodes(&self) -> &[&WorkerNodeDefinition] {
+        &[&OUTPUT_WORKER_DEFINITION]
+    }
+
+    fn create_audio_worker(&self, context: &impl CreateAudioWorkerContext, definition: &WorkerNodeDefinition) -> anyhow::Result<Box<dyn AudioWorkerNode>> {
+        if definition == &OUTPUT_WORKER_DEFINITION {
+            let output_buffer = context.get_buffer();
+            let worker = AudioInputWorker::new(output_buffer, context.sample_rate())?;
+
+            Ok(Box::new(worker))
+        }else {
+            anyhow::bail!("Unknown worker definition")
         }
-        if let Some(state) = state {
-            if let Some(buffer) = state.read(context)? {
-                context.write_port(AUDIO_OUTPUT, buffer);
-            }
-        }
+    }
+
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
+        context.audio_output(AUDIO_OUTPUT, OUTPUT_WORKER_PORT);
 
         Ok(())
     }
@@ -61,58 +73,6 @@ pub struct AudioInputNodeState {
 }
 
 impl AudioInputNodeState {
-    fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
-        tracing::trace!("Opening audio input device");
-        if let Some(device) = cpal::default_host().default_input_device() {
-            let buffer = SpscRb::new(audio_context.transfer_size_per_channel() * CHANNEL_COUNT * INPUT_BUFFER_SIZE);
-
-            let config = device.supported_input_configs()?;
-            let configs = config.collect::<Vec<_>>();
-            tracing::trace!("Supported Input Configs: {configs:?}");
-            // TODO: find device with lowest buffer size
-            if let Some(config) = configs.into_iter().find(|c| {
-                c.channels() == 2
-                    && c.sample_format() == SampleFormat::F32
-                    && c.min_sample_rate() <= SampleRate(audio_context.sample_rate())
-                    && c.max_sample_rate() >= SampleRate(audio_context.sample_rate())
-            }) {
-                let config = config.with_sample_rate(SampleRate(audio_context.sample_rate()));
-
-                tracing::debug!("Selected stream config: {config:?}");
-
-                let producer = buffer.producer();
-
-                tracing::trace!("Building input stream");
-                let stream = device.build_input_stream(
-                    &config.config(),
-                    move |data: &[f32], _: &cpal::InputCallbackInfo| {
-                        tracing::trace!("Writing {} frames", data.len());
-                        if let Err(err) = producer.write(data) {
-                            tracing::error!("Unable to write to ring buffer: {err:?}");
-                        }
-                    },
-                    move |err| tracing::error!("Playback error: {err:?}"),
-                    None,
-                )?;
-
-                tracing::trace!("Starting input stream");
-                stream.play()?;
-
-                Ok(Some(Self {
-                    buffer,
-                    device,
-                    stream,
-                }))
-            } else {
-                tracing::warn!("Unable to find supported stream config for Audio Input");
-
-                Ok(None)
-            }
-        } else {
-            Ok(None)
-        }
-    }
-
     fn read(&mut self, audio_context: &impl AudioContext) -> anyhow::Result<Option<Vec<f64>>> {
         let mut buffer = vec![0.; audio_context.transfer_size_per_channel() * CHANNEL_COUNT];
         let consumer = self.buffer.consumer();
@@ -125,5 +85,83 @@ impl AudioInputNodeState {
             .map_err(|err| anyhow::anyhow!("Unable to skip from Ringbuffer: {err:?}"))?;
 
         Ok(Some(buffer.into_iter().map(|f| f as f64).collect()))
+    }
+}
+
+const OUTPUT_WORKER_PORT: WorkerPortId = WorkerPortId("output");
+
+pub struct AudioInputWorker {
+    buffer: AudioBufferRef,
+    device: Device,
+    stream: Stream,
+}
+
+impl AudioWorkerNode for AudioInputWorker {
+    fn process(&mut self, context: &mut dyn AudioWorkerNodeContext) {
+        context.write_output(OUTPUT_WORKER_PORT, &|buffer| {
+            self.buffer.read(buffer);
+        });
+    }
+}
+
+impl AudioInputWorker {
+    fn new(buffer: AudioBufferRef, sample_rate: u32) -> anyhow::Result<Self> {
+        let Some(device) = Self::find_audio_device()? else {
+            anyhow::bail!("Unable to find audio device");
+        };
+        let Some(stream) = Self::open_stream(&device, sample_rate, buffer.clone())? else {
+            anyhow::bail!("Unable to open audio stream");
+        };
+
+        Ok(Self {
+            buffer,
+            device,
+            stream,
+        })
+    }
+
+    fn find_audio_device() -> anyhow::Result<Option<Device>> {
+        tracing::trace!("Opening audio input device");
+        let device = cpal::default_host().default_input_device();
+
+        Ok(device)
+    }
+
+    fn open_stream(device: &Device, sample_rate: u32, mut buffer: AudioBufferRef) -> anyhow::Result<Option<Stream>> {
+        let sample_rate = SampleRate(sample_rate);
+        let config = device.supported_input_configs()?;
+        let configs = config.collect::<Vec<_>>();
+        tracing::trace!("Supported Input Configs: {configs:?}");
+        // TODO: find device with lowest buffer size
+        if let Some(config) = configs.into_iter().find(|c| {
+            c.channels() == 2
+                && c.sample_format() == SampleFormat::F32
+                && c.min_sample_rate() <= sample_rate
+                && c.max_sample_rate() >= sample_rate
+        }) {
+            let config = config.with_sample_rate(sample_rate);
+
+            tracing::debug!("Selected stream config: {config:?}");
+
+            tracing::trace!("Building input stream");
+            let stream = device.build_input_stream(
+                &config.config(),
+                move |data: &[f32], _: &cpal::InputCallbackInfo| {
+                    tracing::trace!("Writing {} frames", data.len());
+                    buffer.write(data)
+                },
+                move |err| tracing::error!("Playback error: {err:?}"),
+                None,
+            )?;
+
+            tracing::trace!("Starting input stream");
+            stream.play()?;
+
+            Ok(Some(stream))
+        } else {
+            tracing::warn!("Unable to find supported stream config for Audio Input");
+
+            Ok(None)
+        }
     }
 }

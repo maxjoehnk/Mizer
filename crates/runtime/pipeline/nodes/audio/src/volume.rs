@@ -1,10 +1,7 @@
-use dasp::frame::Stereo;
 use dasp::Signal;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-
-use crate::AudioContext;
 
 const VOLUME_INPUT: &str = "Volume";
 const AUDIO_INPUT: &str = "Stereo";
@@ -27,8 +24,8 @@ impl PipelineNode for AudioVolumeNode {
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(VOLUME_INPUT, PortType::Single),
-            input_port!(AUDIO_INPUT, PortType::Multi),
-            output_port!(AUDIO_OUTPUT, PortType::Multi),
+            input_port!(AUDIO_INPUT, PortType::Audio),
+            output_port!(AUDIO_OUTPUT, PortType::Audio),
         ]
     }
 
@@ -37,13 +34,38 @@ impl PipelineNode for AudioVolumeNode {
     }
 }
 
+const VOLUME_PORT: WorkerPortId = WorkerPortId("volume");
+const INPUT_PORT: WorkerPortId = WorkerPortId("input");
+const OUTPUT_PORT: WorkerPortId = WorkerPortId("output");
+
+const VOLUME_WORKER: WorkerNodeDefinition = WorkerNodeDefinition::builder()
+    .name("Audio Volume")
+    .audio()
+    .build();
+
 impl ProcessingNode for AudioVolumeNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(output) = self.process(context) {
-            context.output_signal(AUDIO_OUTPUT, output);
+    fn worker_nodes(&self) -> &[&WorkerNodeDefinition] {
+        &[&VOLUME_WORKER]
+    }
+
+    fn create_audio_worker(&self, context: &impl CreateAudioWorkerContext, definition: &WorkerNodeDefinition) -> anyhow::Result<Box<dyn AudioWorkerNode>> {
+        match definition {
+            VOLUME_WORKER => {
+                Ok(Box::new(AudioVolumeWorkerNode))
+            }
+            _ => anyhow::bail!("Unknown worker definition")
         }
+    }
+
+
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
+        let volume = context.read_port::<_, f64>(VOLUME_INPUT)?;
+
+        context.write_worker_data(VOLUME_PORT, volume);
+        context.audio_input(AUDIO_INPUT, INPUT_PORT);
+        context.audio_output(AUDIO_OUTPUT, OUTPUT_PORT);
 
         Ok(())
     }
@@ -53,11 +75,13 @@ impl ProcessingNode for AudioVolumeNode {
     }
 }
 
-impl AudioVolumeNode {
-    fn process(&self, context: &impl NodeContext) -> Option<impl Signal<Frame = Stereo<f64>>> {
-        let volume = context.read_port::<_, f64>(VOLUME_INPUT)?;
-        let input = context.input_signal(AUDIO_INPUT)?;
+struct AudioVolumeWorkerNode;
 
-        Some(input.scale_amp(volume))
+impl AudioWorkerNode for AudioVolumeWorkerNode {
+    fn process(&mut self, context: &mut dyn AudioWorkerNodeContext) {
+        let volume = context.read_data::<f64>(VOLUME_PORT).unwrap() as f32;
+        let input = context.input_signal(INPUT_PORT).unwrap();
+
+        context.output_signal(OUTPUT_PORT, input.scale_amp(volume))
     }
 }

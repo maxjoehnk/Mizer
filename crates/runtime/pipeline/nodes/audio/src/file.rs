@@ -127,6 +127,10 @@ impl PipelineNode for AudioFileNode {
     }
 }
 
+const PLAYING_VALUE: f64 = 1;
+const PAUSED_VALUE: f64 = 0.5;
+const STOPPED_VALUE: f64 = 0;
+
 impl ProcessingNode for AudioFileNode {
     type State = (AudioFileNodeState, Option<AudioFileDecodeState>);
 
@@ -183,7 +187,7 @@ impl ProcessingNode for AudioFileNode {
 
         let playback_value = if node_state.paused {
             context.output_signal(AUDIO_OUTPUT, equilibrium());
-            0.5
+            PAUSED_VALUE
         } else if let Some(state) = decode_state.as_mut() {
             match state.recv.try_recv() {
                 Ok(mut player) => {
@@ -221,15 +225,15 @@ impl ProcessingNode for AudioFileNode {
                 }
 
                 if player.playing {
-                    1.0
+                    PLAYING_VALUE
                 } else {
-                    0.0
+                    STOPPED_VALUE
                 }
             } else {
-                0.0
+                STOPPED_VALUE
             }
         } else {
-            0.0
+            STOPPED_VALUE
         };
 
         context.write_port::<_, f64>(PLAYBACK_OUTPUT, playback_value);

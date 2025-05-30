@@ -4,6 +4,8 @@ use uuid::Uuid;
 use daggy::{Dag, NodeIndex, Walker};
 use daggy::petgraph::{Direction, EdgeDirection};
 use daggy::petgraph::visit::{VisitMap, Visitable};
+use dasp::frame::Stereo;
+use dasp::Signal;
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 #[repr(transparent)]
@@ -17,6 +19,7 @@ struct AudioPipelineThread {
     graph: Dag<WorkerId, WorkerPortId>,
     workers: HashMap<WorkerId, Box<dyn AudioWorkerNode>>,
     definitions: HashMap<WorkerId, WorkerNodeDefinition>,
+    sample_rate: u32,
 }
 
 impl AudioPipelineThread {
@@ -32,19 +35,30 @@ impl AudioPipelineThread {
             while let Some((edge_index, node_index)) = walker.walk_next(&self.graph) {
                 let node = &self.graph[node_index];
                 
-                let worker = &mut self.workers[node];
-                let context;
+                let worker = self.workers.get_mut(node).unwrap();
+                let mut context = TestContext {};
                 worker.process(&mut context);
             }
         }
+    }
+}
 
+struct TestContext {}
 
-        let mut walker = daggy::walker::Chain::new(self.graph.)
-        let mut walker = self.graph.recursive_walk(
-            NodeIndex::default(),
-            daggy::walker::Chain,
-        );
-        self.graph.graph().externals(Direction::Outgoing)
-        walker.walk_next(&self.graph);
+impl AudioWorkerNodeContext for TestContext {
+    fn input_signal(&self, port: WorkerPortId) -> Option<Box<impl Signal<Frame=Stereo<f32>>>> {
+        todo!()
+    }
+
+    fn output_signal(&mut self, port: WorkerPortId, signal: impl Signal<Frame=Stereo<f32>>) {
+        todo!()
+    }
+
+    fn read_data<T>(&self, port: WorkerPortId) -> Option<T> {
+        todo!()
+    }
+
+    fn write_data<T>(&mut self, port: WorkerPortId, data: T) {
+        todo!()
     }
 }

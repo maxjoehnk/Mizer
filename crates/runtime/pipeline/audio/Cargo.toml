@@ -9,3 +9,5 @@ anyhow = "1"
 uuid = { version = "1.16", features = ["v4"] }
 mizer-node = { path = "../node" }
 daggy = "0.9"
+dasp = "0.11"
+dasp_ring_buffer = "0.11"

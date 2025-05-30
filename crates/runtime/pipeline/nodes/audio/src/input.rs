@@ -33,7 +33,8 @@ impl PipelineNode for AudioInputNode {
     }
 }
 
-const OUTPUT_WORKER_DEFINITION: WorkerNodeDefinition = WorkerNodeDefinition::builder()
+const INPUT_WORKER_DEFINITION: WorkerNodeDefinition = WorkerNodeDefinition::builder()
+    .name("AudioInput")
     .audio()
     .build();
 
@@ -41,17 +42,18 @@ impl ProcessingNode for AudioInputNode {
     type State = ();
 
     fn worker_nodes(&self) -> &[&WorkerNodeDefinition] {
-        &[&OUTPUT_WORKER_DEFINITION]
+        &[&INPUT_WORKER_DEFINITION]
     }
 
     fn create_audio_worker(&self, context: &impl CreateAudioWorkerContext, definition: &WorkerNodeDefinition) -> anyhow::Result<Box<dyn AudioWorkerNode>> {
-        if definition == &OUTPUT_WORKER_DEFINITION {
-            let output_buffer = context.get_buffer();
-            let worker = AudioInputWorker::new(output_buffer, context.sample_rate())?;
+        match definition {
+            &INPUT_WORKER_DEFINITION => {
+                let (write_buffer, read_buffer) = context.create_buffer();
+                let worker = AudioInputWorker::new(write_buffer, read_buffer, context.sample_rate())?;
 
-            Ok(Box::new(worker))
-        }else {
-            anyhow::bail!("Unknown worker definition")
+                Ok(Box::new(worker))
+            }
+            _ => anyhow::bail!("Unknown worker definition")
         }
     }
 
@@ -91,30 +93,28 @@ impl AudioInputNodeState {
 const OUTPUT_WORKER_PORT: WorkerPortId = WorkerPortId("output");
 
 pub struct AudioInputWorker {
-    buffer: AudioBufferRef,
+    read_buffer: Box<dyn AudioBufferRef>,
     device: Device,
     stream: Stream,
 }
 
 impl AudioWorkerNode for AudioInputWorker {
     fn process(&mut self, context: &mut dyn AudioWorkerNodeContext) {
-        context.write_output(OUTPUT_WORKER_PORT, &|buffer| {
-            self.buffer.read(buffer);
-        });
+        context.output_signal(OUTPUT_WORKER_PORT, self.read_buffer.signal());
     }
 }
 
 impl AudioInputWorker {
-    fn new(buffer: AudioBufferRef, sample_rate: u32) -> anyhow::Result<Self> {
+    fn new(write_buffer: Box<dyn AudioBufferRefMut>, read_buffer: Box<dyn AudioBufferRef>, sample_rate: u32) -> anyhow::Result<Self> {
         let Some(device) = Self::find_audio_device()? else {
             anyhow::bail!("Unable to find audio device");
         };
-        let Some(stream) = Self::open_stream(&device, sample_rate, buffer.clone())? else {
+        let Some(stream) = Self::open_stream(&device, sample_rate, write_buffer)? else {
             anyhow::bail!("Unable to open audio stream");
         };
 
         Ok(Self {
-            buffer,
+            read_buffer,
             device,
             stream,
         })
@@ -127,7 +127,7 @@ impl AudioInputWorker {
         Ok(device)
     }
 
-    fn open_stream(device: &Device, sample_rate: u32, mut buffer: AudioBufferRef) -> anyhow::Result<Option<Stream>> {
+    fn open_stream(device: &Device, sample_rate: u32, mut buffer: Box<dyn AudioBufferRefMut>) -> anyhow::Result<Option<Stream>> {
         let sample_rate = SampleRate(sample_rate);
         let config = device.supported_input_configs()?;
         let configs = config.collect::<Vec<_>>();
@@ -148,7 +148,7 @@ impl AudioInputWorker {
                 &config.config(),
                 move |data: &[f32], _: &cpal::InputCallbackInfo| {
                     tracing::trace!("Writing {} frames", data.len());
-                    buffer.write(data)
+                    buffer.write_frames(data);
                 },
                 move |err| tracing::error!("Playback error: {err:?}"),
                 None,

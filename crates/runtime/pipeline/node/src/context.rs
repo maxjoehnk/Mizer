@@ -73,8 +73,12 @@ pub trait NodeContext: PreviewContext + Sized + Inject {
             context: self,
         }
     }
-    
+
+    fn audio_input<P: Into<PortId>>(&self, port: P, worker_port: WorkerPortId);
     fn audio_output<P: Into<PortId>>(&self, port: P, worker_port: WorkerPortId);
+    
+    fn write_worker_data<T>(&self, worker_port: WorkerPortId, data: T);
+    fn read_worker_data<T>(&self, worker_port: WorkerPortId) -> Option<T>;
 }
 
 pub struct PortReader<'a, V: PortValue + 'static, C: NodeContext> {

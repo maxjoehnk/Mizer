@@ -58,3 +58,11 @@ impl ProcessingNode for AudioMixNode {
         Default::default()
     }
 }
+
+struct AudioMixWorkerNode;
+
+impl AudioWorkerNode for AudioMixWorkerNode {
+    fn process(&mut self, context: &mut impl AudioWorkerNodeContext) {
+        todo!()
+    }
+}

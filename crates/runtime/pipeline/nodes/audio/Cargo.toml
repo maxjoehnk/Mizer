@@ -15,5 +15,5 @@ rb = "0.4"
 enum-iterator = "2.0"
 num_enum = "0.7"
 mizer-media = { path = "../../../../components/media" }
-dasp = { version = "0.11", features = ["signal", "signal-rms", "interpolate", "interpolate-sinc", "ring_buffer"] }
+dasp = { version = "0.11", features = ["signal", "signal-rms", "interpolate", "interpolate-sinc", "ring_buffer", "signal-boxed"] }
 flume = "0.11"

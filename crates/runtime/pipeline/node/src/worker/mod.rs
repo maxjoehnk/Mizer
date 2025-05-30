@@ -16,6 +16,7 @@ pub enum WorkerNodeType {
 #[derive(bon::Builder, PartialEq, Eq, Hash)]
 #[builder(const)]
 pub struct WorkerNodeDefinition {
+    name: &'static str,
     // #[builder(field)]
     // pub graph_ports: Vec<WorkerGraphPort>,
     // #[builder(field)]

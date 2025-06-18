@@ -3,8 +3,8 @@ use crate::definition::{
     ColorChannel, FixtureFaderControl, SubFixtureControlChannel, SubFixtureDefinition,
 };
 use crate::fixture::{ChannelsWithValues, IFixture, IFixtureMut};
-use crate::FixturePriority;
 use crate::manager::{FadeTimings, FixtureValueSource};
+use crate::FixturePriority;
 
 #[derive(Debug)]
 pub struct SubFixtureMut<'a> {
@@ -53,13 +53,25 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
                         let color_mixer = self.color_mixer_mut();
                         if let Some(color_mixer) = color_mixer {
                             match color_channel {
-                                ColorChannel::Red => color_mixer.set_red(value, priority, source, fade_timings),
-                                ColorChannel::Green => color_mixer.set_green(value, priority, source, fade_timings),
-                                ColorChannel::Blue => color_mixer.set_blue(value, priority, source, fade_timings),
+                                ColorChannel::Red => {
+                                    color_mixer.set_red(value, priority, source, fade_timings)
+                                }
+                                ColorChannel::Green => {
+                                    color_mixer.set_green(value, priority, source, fade_timings)
+                                }
+                                ColorChannel::Blue => {
+                                    color_mixer.set_blue(value, priority, source, fade_timings)
+                                }
                             }
                         }
                     } else {
-                        self.channel_values.write_priority_with_timings(channel, value, priority, source, fade_timings)
+                        self.channel_values.write_priority_with_timings(
+                            channel,
+                            value,
+                            priority,
+                            source,
+                            fade_timings,
+                        )
                     }
                 }
                 SubFixtureControlChannel::VirtualDimmer => {

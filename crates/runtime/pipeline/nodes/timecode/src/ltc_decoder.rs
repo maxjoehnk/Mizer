@@ -1,8 +1,8 @@
 use ltc::LTCDecoder;
-use serde::{Deserialize, Serialize};
 use mizer_audio_nodes::{AudioContext, Signal};
 use mizer_clock::Timecode;
 use mizer_node::*;
+use serde::{Deserialize, Serialize};
 
 const AUDIO_INPUT: &str = "LTC";
 const TIMECODE_OUTPUT: &str = "Clock";
@@ -18,17 +18,13 @@ pub struct LtcDecoderNode {
 
 impl Default for LtcDecoderNode {
     fn default() -> Self {
-        Self {
-            fps: 30.0,
-        }
+        Self { fps: 30.0 }
     }
 }
 
 impl ConfigurableNode for LtcDecoderNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![
-            setting!(FPS_SETTING, self.fps),
-        ]
+        vec![setting!(FPS_SETTING, self.fps)]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
@@ -73,12 +69,13 @@ impl ProcessingNode for LtcDecoderNode {
 
         let frames = context.transfer_size_per_channel();
 
-        let frames = (0..frames).map(|_| {
-            let [mono, _] = signal.next();
-            
-            mono as f32
-        }).collect::<Vec<_>>();
-        
+        let frames = (0..frames)
+            .map(|_| {
+                let [mono, _] = signal.next();
+
+                mono as f32
+            })
+            .collect::<Vec<_>>();
 
         let mut timecode_frame = None;
         if state.write_samples(&frames) {
@@ -93,7 +90,7 @@ impl ProcessingNode for LtcDecoderNode {
                 minutes: frame.minute as u64,
                 seconds: frame.second as u64,
                 frames: frame.frame as u64,
-                negative: false
+                negative: false,
             };
             context.write_timecode_preview(timecode);
             let timestamp = timecode.to_duration(context.fps());

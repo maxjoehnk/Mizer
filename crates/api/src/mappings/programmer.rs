@@ -205,8 +205,8 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
 }
 
 fn map_preset<TValue>(
-    id: mizer_fixtures::programmer::PresetId, preset:
-    mizer_fixtures::programmer::Preset<TValue>,
+    id: mizer_fixtures::programmer::PresetId,
+    preset: mizer_fixtures::programmer::Preset<TValue>,
     map: impl FnOnce(TValue) -> preset::Value,
 ) -> Preset {
     match preset.value {
@@ -221,7 +221,7 @@ fn map_preset<TValue>(
             value: None,
             label: preset.label,
             target: PresetTarget::Selective as i32,
-        }
+        },
     }
 }
 

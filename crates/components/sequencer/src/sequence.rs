@@ -1,7 +1,7 @@
+use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::ops::Deref;
 use std::time::Duration;
-use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::programmer::Presets;
 use mizer_fixtures::{FixtureId, FixturePriority};
@@ -160,7 +160,9 @@ impl PartialOrd for Sequence {
 impl Into<FadeTimings> for SequencerValue<SequencerTime> {
     fn into(self) -> FadeTimings {
         let fade_time = match self {
-            SequencerValue::Direct(SequencerTime::Seconds(seconds)) => Some(Duration::from_secs_f64(seconds)),
+            SequencerValue::Direct(SequencerTime::Seconds(seconds)) => {
+                Some(Duration::from_secs_f64(seconds))
+            }
             _ => None,
         };
         FadeTimings {

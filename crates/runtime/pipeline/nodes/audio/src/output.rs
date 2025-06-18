@@ -87,7 +87,9 @@ impl AudioOutputNodeState {
     fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio output device");
         if let Some(device) = cpal::default_host().default_output_device() {
-            let buffer = SpscRb::new(audio_context.transfer_size_per_channel() * CHANNEL_COUNT * OUTPUT_BUFFER_SIZE);
+            let buffer = SpscRb::new(
+                audio_context.transfer_size_per_channel() * CHANNEL_COUNT * OUTPUT_BUFFER_SIZE,
+            );
 
             let config = device.supported_output_configs()?;
             let configs = config.collect::<Vec<_>>();

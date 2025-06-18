@@ -41,6 +41,13 @@ impl FixtureController for FixtureManager {
         fade_timings: FadeTimings,
         source: FixtureValueSource,
     ) {
-        self.write_fixture_control_with_timings(fixture_id, control, value, priority, Some(source), fade_timings);
+        self.write_fixture_control_with_timings(
+            fixture_id,
+            control,
+            value,
+            priority,
+            Some(source),
+            fade_timings,
+        );
     }
 }

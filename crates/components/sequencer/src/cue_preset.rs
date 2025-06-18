@@ -28,10 +28,12 @@ impl CuePreset {
         _state: &SequenceState,
         presets: &Presets,
     ) -> Vec<(FixtureId, FixtureFaderControl, f64)> {
-        let fixture_ids = self.fixtures.get_fixtures()
-                .into_iter()
-                .flatten()
-                .collect::<Vec<_>>();
+        let fixture_ids = self
+            .fixtures
+            .get_fixtures()
+            .into_iter()
+            .flatten()
+            .collect::<Vec<_>>();
         presets
             .get_values(self.preset_id, &fixture_ids)
             .into_iter()
@@ -41,7 +43,8 @@ impl CuePreset {
                     .map(move |(fixture_id)| (fixture_id, fader_controls.clone()))
             })
             .flat_map(|(fixture, controls)| {
-                controls.into_iter()
+                controls
+                    .into_iter()
                     .flat_map(|control| control.into_fader_values())
                     .map(move |(control, value)| (fixture, control, value))
             })

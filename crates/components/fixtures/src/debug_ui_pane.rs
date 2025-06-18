@@ -36,21 +36,33 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                 ui.collapsing_header(format!("Mode: {}", fixture.current_mode.name), None, |ui| {
                     if let Some(ref color_mixer) = fixture.current_mode.color_mixer {
                         ui.collapsing_header("Color Mixer", None, |ui| {
-                            ui.collapsing_header(format!("Red: {}", color_mixer.rgb().red), Some("red"), |ui| {
-                                ui.columns(4, |columns| {
-                                    debug_channel_values(columns, &color_mixer.red);
-                                });
-                            });
-                            ui.collapsing_header(format!("Green: {}", color_mixer.rgb().green), Some("green"), |ui| {
-                                ui.columns(4, |columns| {
-                                    debug_channel_values(columns, &color_mixer.green);
-                                });
-                            });
-                            ui.collapsing_header(format!("Blue: {}", color_mixer.rgb().blue), Some("blue"), |ui| {
-                                ui.columns(4, |columns| {
-                                    debug_channel_values(columns, &color_mixer.blue);
-                                });
-                            });
+                            ui.collapsing_header(
+                                format!("Red: {}", color_mixer.rgb().red),
+                                Some("red"),
+                                |ui| {
+                                    ui.columns(4, |columns| {
+                                        debug_channel_values(columns, &color_mixer.red);
+                                    });
+                                },
+                            );
+                            ui.collapsing_header(
+                                format!("Green: {}", color_mixer.rgb().green),
+                                Some("green"),
+                                |ui| {
+                                    ui.columns(4, |columns| {
+                                        debug_channel_values(columns, &color_mixer.green);
+                                    });
+                                },
+                            );
+                            ui.collapsing_header(
+                                format!("Blue: {}", color_mixer.rgb().blue),
+                                Some("blue"),
+                                |ui| {
+                                    ui.columns(4, |columns| {
+                                        debug_channel_values(columns, &color_mixer.blue);
+                                    });
+                                },
+                            );
                         });
                     }
                 });
@@ -112,7 +124,8 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
                     for (channel, value) in fixture.channel_values.iter() {
                         ui.collapsing_header(format!("{channel}: {value}"), Some(channel), |ui| {
                             ui.columns(4, |columns| {
-                                let values = fixture.channel_values.get_priorities(channel).unwrap();
+                                let values =
+                                    fixture.channel_values.get_priorities(channel).unwrap();
                                 debug_channel_values(columns, values);
                             });
                         });
@@ -171,7 +184,10 @@ impl<TUi: DebugUi> DebugUiPane<TUi> for FixturesDebugUiPane {
     }
 }
 
-fn debug_channel_values<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_values: &ChannelValues) {
+fn debug_channel_values<'a>(
+    columns: &mut [impl DebugUiDrawHandle<'a>],
+    channel_values: &ChannelValues,
+) {
     for value in &channel_values.values {
         debug_channel_value(columns, value);
     }
@@ -191,11 +207,13 @@ fn debug_channel_values<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_
         columns[1].label(format!("Remaining: {:?}", active_fade.remaining()));
         columns[2].label("");
         columns[3].label("");
-
     }
 }
 
-fn debug_channel_value<'a>(columns: &mut [impl DebugUiDrawHandle<'a>], channel_value: &ChannelValue) {
+fn debug_channel_value<'a>(
+    columns: &mut [impl DebugUiDrawHandle<'a>],
+    channel_value: &ChannelValue,
+) {
     columns[0].label(format!("Value: {}", channel_value.value));
     columns[1].label(format!("Priority: {}", channel_value.priority));
     #[cfg(debug_assertions)]

@@ -7,6 +7,7 @@ use crate::state::{
 use crate::value::*;
 use crate::Sequence;
 use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::programmer::ProgrammedPreset;
 use mizer_fixtures::selection::{BackwardsCompatibleFixtureSelection, FixtureSelection};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
@@ -15,7 +16,6 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::Duration;
-use mizer_fixtures::programmer::ProgrammedPreset;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -91,9 +91,9 @@ impl Cue {
         for new_preset in presets {
             for existing in self.presets.iter_mut() {
                 if existing.preset_id.preset_type() == new_preset.preset_id.preset_type() {
-                    existing.fixtures.retain(
-                        |fixture_id| !new_preset.fixtures.contains(fixture_id),
-                    )
+                    existing
+                        .fixtures
+                        .retain(|fixture_id| !new_preset.fixtures.contains(fixture_id))
                 }
             }
         }

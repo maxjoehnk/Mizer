@@ -241,13 +241,13 @@ impl Timecode {
         let frames = frames.round() as u64;
         Self::build(frames, false, fps as u64)
     }
-    
+
     pub fn to_duration(&self, fps: f64) -> Duration {
         let frames = self.frames as f64 / fps;
         let seconds = self.seconds as f64;
         let minutes = self.minutes as f64 * 60f64;
         let hours = self.hours as f64 * 3600f64;
-        
+
         Duration::from_secs_f64(hours + minutes + seconds + frames)
     }
 

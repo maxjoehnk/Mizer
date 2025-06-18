@@ -36,7 +36,14 @@ impl FixtureController for FixtureManager {
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
     ) {
-        self.write_group_control_with_timings(group_id, control, value, priority, source, fade_timings);
+        self.write_group_control_with_timings(
+            group_id,
+            control,
+            value,
+            priority,
+            source,
+            fade_timings,
+        );
     }
 
     fn write_fixture_control(
@@ -48,7 +55,14 @@ impl FixtureController for FixtureManager {
         source: Option<FixtureValueSource>,
         fade_timings: FadeTimings,
     ) {
-        self.write_fixture_control_with_timings(fixture_id, control, value, priority, source, fade_timings);
+        self.write_fixture_control_with_timings(
+            fixture_id,
+            control,
+            value,
+            priority,
+            source,
+            fade_timings,
+        );
     }
 
     fn get_group_fixture_ids(&self, group_id: GroupId) -> Vec<Vec<FixtureId>> {

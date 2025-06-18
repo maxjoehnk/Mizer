@@ -162,23 +162,37 @@ impl Presets {
         self.position.clear();
     }
 
-    pub fn get_values(&self, id: PresetId, fixtures: &[FixtureId]) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
+    pub fn get_values(
+        &self,
+        id: PresetId,
+        fixtures: &[FixtureId],
+    ) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
         match id {
             PresetId::Intensity(id) => self
                 .intensity
                 .get(&id)
-                .map(|preset| convert_value(&preset.value, fixtures, |value| vec![FixtureControlValue::Intensity(value)]))
+                .map(|preset| {
+                    convert_value(&preset.value, fixtures, |value| {
+                        vec![FixtureControlValue::Intensity(value)]
+                    })
+                })
                 .unwrap_or_default(),
             PresetId::Shutter(id) => self
                 .shutter
                 .get(&id)
-                .map(|preset| convert_value(&preset.value, fixtures, |value| vec![FixtureControlValue::Shutter(value)]))
+                .map(|preset| {
+                    convert_value(&preset.value, fixtures, |value| {
+                        vec![FixtureControlValue::Shutter(value)]
+                    })
+                })
                 .unwrap_or_default(),
-            PresetId::Color(id) => self.color
+            PresetId::Color(id) => self
+                .color
                 .get(&id)
                 .map(|preset| convert_value(&preset.value, fixtures, color_value))
                 .unwrap_or_default(),
-            PresetId::Position(id) => self.position
+            PresetId::Position(id) => self
+                .position
                 .get(&id)
                 .map(|preset| convert_value(&preset.value, fixtures, position_value))
                 .unwrap_or_default(),
@@ -201,13 +215,20 @@ fn highest_preset_id<TValue>(map: &DashMap<u32, TValue>) -> u32 {
     map.iter().map(|e| *e.key()).max().unwrap_or_default()
 }
 
-fn convert_value<TValue: Copy>(preset: &PresetValue<TValue>, fixtures: &[FixtureId], mapper: impl Fn(TValue) -> Vec<FixtureControlValue>) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
+fn convert_value<TValue: Copy>(
+    preset: &PresetValue<TValue>,
+    fixtures: &[FixtureId],
+    mapper: impl Fn(TValue) -> Vec<FixtureControlValue>,
+) -> Vec<(Vec<FixtureId>, Vec<FixtureControlValue>)> {
     match preset {
         PresetValue::Universal(value) => vec![(fixtures.to_vec(), mapper(*value))],
-        PresetValue::Selective(values) => fixtures.iter().filter_map(|fixture_id| {
-            let value = values.get(fixture_id).copied()?;
-            Some((vec![*fixture_id], mapper(value)))
-        }).collect(),
+        PresetValue::Selective(values) => fixtures
+            .iter()
+            .filter_map(|fixture_id| {
+                let value = values.get(fixture_id).copied()?;
+                Some((vec![*fixture_id], mapper(value)))
+            })
+            .collect(),
     }
 }
 
@@ -219,7 +240,10 @@ fn position_value(value: Position) -> Vec<FixtureControlValue> {
     match value {
         Position::Pan(pan) => vec![FixtureControlValue::Pan(pan)],
         Position::Tilt(tilt) => vec![FixtureControlValue::Tilt(tilt)],
-        Position::PanTilt(pan, tilt) => vec![FixtureControlValue::Pan(pan), FixtureControlValue::Tilt(tilt)],
+        Position::PanTilt(pan, tilt) => vec![
+            FixtureControlValue::Pan(pan),
+            FixtureControlValue::Tilt(tilt),
+        ],
     }
 }
 
@@ -316,19 +340,19 @@ impl GenericPreset {
             GenericPreset::Intensity(preset) => match preset.value {
                 PresetValue::Universal(_) => PresetTarget::Universal,
                 PresetValue::Selective(_) => PresetTarget::Selective,
-            }
+            },
             GenericPreset::Shutter(preset) => match preset.value {
                 PresetValue::Universal(_) => PresetTarget::Universal,
                 PresetValue::Selective(_) => PresetTarget::Selective,
-            }
+            },
             GenericPreset::Color(preset) => match preset.value {
                 PresetValue::Universal(_) => PresetTarget::Universal,
                 PresetValue::Selective(_) => PresetTarget::Selective,
-            }
+            },
             GenericPreset::Position(preset) => match preset.value {
                 PresetValue::Universal(_) => PresetTarget::Universal,
                 PresetValue::Selective(_) => PresetTarget::Selective,
-            }
+            },
         }
     }
 }

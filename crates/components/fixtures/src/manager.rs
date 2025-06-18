@@ -1,19 +1,22 @@
-use std::hash::{DefaultHasher, Hash, Hasher};
-use std::ops::{Deref, DerefMut};
-use std::sync::{Arc, Mutex, MutexGuard};
-use std::time::Duration;
-use dashmap::DashMap;
-use itertools::Itertools;
-use mizer_protocol_dmx::DmxConnectionManager;
-use rayon::prelude::*;
-use serde::Serialize;
 use crate::definition::{
     FixtureControl, FixtureControlType, FixtureDefinition, FixtureFaderControl,
 };
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
-use crate::programmer::{GenericPreset, Group, Preset, PresetId, PresetType, Presets, Programmer, PresetValue, Color, Position};
+use crate::programmer::{
+    Color, GenericPreset, Group, Position, Preset, PresetId, PresetType, PresetValue, Presets,
+    Programmer,
+};
 use crate::{FixtureId, FixturePriority, FixtureStates, GroupId};
+use dashmap::DashMap;
+use itertools::Itertools;
+use mizer_protocol_dmx::DmxConnectionManager;
+use rayon::prelude::*;
+use serde::Serialize;
+use std::hash::{DefaultHasher, Hash, Hasher};
+use std::ops::{Deref, DerefMut};
+use std::sync::{Arc, Mutex, MutexGuard};
+use std::time::Duration;
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -88,7 +91,11 @@ impl FixtureManager {
         self.groups.remove(&group_id).map(|(_, group)| group)
     }
 
-    pub fn add_intensity_preset(&self, label: Option<String>, value: PresetValue<f64>) -> anyhow::Result<PresetId> {
+    pub fn add_intensity_preset(
+        &self,
+        label: Option<String>,
+        value: PresetValue<f64>,
+    ) -> anyhow::Result<PresetId> {
         let preset_type = PresetType::Intensity;
         let preset_id = self.presets.next_id(preset_type);
         let preset = Preset {
@@ -101,7 +108,11 @@ impl FixtureManager {
         Ok(PresetId::Intensity(preset_id))
     }
 
-    pub fn add_shutter_preset(&self, label: Option<String>, value: PresetValue<f64>) -> anyhow::Result<PresetId> {
+    pub fn add_shutter_preset(
+        &self,
+        label: Option<String>,
+        value: PresetValue<f64>,
+    ) -> anyhow::Result<PresetId> {
         let preset_type = PresetType::Shutter;
         let preset_id = self.presets.next_id(preset_type);
         let preset = Preset {
@@ -114,7 +125,11 @@ impl FixtureManager {
         Ok(PresetId::Shutter(preset_id))
     }
 
-    pub fn add_color_preset(&self, label: Option<String>, value: PresetValue<Color>) -> anyhow::Result<PresetId> {
+    pub fn add_color_preset(
+        &self,
+        label: Option<String>,
+        value: PresetValue<Color>,
+    ) -> anyhow::Result<PresetId> {
         let preset_type = PresetType::Color;
         let preset_id = self.presets.next_id(preset_type);
         let preset = Preset {
@@ -127,7 +142,11 @@ impl FixtureManager {
         Ok(PresetId::Color(preset_id))
     }
 
-    pub fn add_position_preset(&self, label: Option<String>, value: PresetValue<Position>) -> anyhow::Result<PresetId> {
+    pub fn add_position_preset(
+        &self,
+        label: Option<String>,
+        value: PresetValue<Position>,
+    ) -> anyhow::Result<PresetId> {
         let preset_type = PresetType::Position;
         let preset_id = self.presets.next_id(preset_type);
         let preset = Preset {
@@ -210,13 +229,25 @@ impl FixtureManager {
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
-                    fixture.write_fader_control_with_timings(control, value, priority, source, fade_timings);
+                    fixture.write_fader_control_with_timings(
+                        control,
+                        value,
+                        priority,
+                        source,
+                        fade_timings,
+                    );
                 }
             }
             FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
-                        sub_fixture.write_fader_control_with_timings(control, value, priority, source, fade_timings);
+                        sub_fixture.write_fader_control_with_timings(
+                            control,
+                            value,
+                            priority,
+                            source,
+                            fade_timings,
+                        );
                     }
                 }
             }
@@ -291,7 +322,14 @@ impl FixtureManager {
     ) {
         if let Some(group) = self.groups.get(&group_id) {
             for fixture_id in group.fixtures().into_iter().flatten() {
-                self.write_fixture_control_with_timings(fixture_id, control.clone(), value, priority, source.clone(), fade_timings);
+                self.write_fixture_control_with_timings(
+                    fixture_id,
+                    control.clone(),
+                    value,
+                    priority,
+                    source.clone(),
+                    fade_timings,
+                );
             }
         }
     }
@@ -386,7 +424,6 @@ impl FixtureValueSource {
         }
     }
 }
-
 
 struct MutexLogWrapper<'a, T>(MutexGuard<'a, T>);
 

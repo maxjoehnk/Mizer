@@ -64,7 +64,9 @@ impl AudioInputNodeState {
     fn new(audio_context: &impl AudioContext) -> anyhow::Result<Option<Self>> {
         tracing::trace!("Opening audio input device");
         if let Some(device) = cpal::default_host().default_input_device() {
-            let buffer = SpscRb::new(audio_context.transfer_size_per_channel() * CHANNEL_COUNT * INPUT_BUFFER_SIZE);
+            let buffer = SpscRb::new(
+                audio_context.transfer_size_per_channel() * CHANNEL_COUNT * INPUT_BUFFER_SIZE,
+            );
 
             let config = device.supported_input_configs()?;
             let configs = config.collect::<Vec<_>>();
@@ -121,7 +123,8 @@ impl AudioInputNodeState {
             return Ok(None);
         }
 
-        consumer.skip(count)
+        consumer
+            .skip(count)
             .map_err(|err| anyhow::anyhow!("Unable to skip from Ringbuffer: {err:?}"))?;
 
         Ok(Some(buffer.into_iter().map(|f| f as f64).collect()))

@@ -1,8 +1,8 @@
+use crate::manager::{FadeTimings, FixtureValueSource};
+use crate::FixturePriority;
+use serde::Serialize;
 use std::collections::{HashMap, HashSet};
 use std::time::{Duration, Instant};
-use serde::Serialize;
-use crate::FixturePriority;
-use crate::manager::{FadeTimings, FixtureValueSource};
 
 #[derive(Debug, Default, Clone)]
 pub(crate) struct ChannelsWithValues {
@@ -68,7 +68,7 @@ pub(crate) struct ChannelValue {
     pub priority: FixturePriority,
     pub value: f64,
     pub source: Option<FixtureValueSource>,
-    pub fade_timings: FadeTimings
+    pub fade_timings: FadeTimings,
 }
 
 impl Default for ChannelValues {
@@ -84,7 +84,13 @@ impl Default for ChannelValues {
 }
 
 impl ChannelValues {
-    pub fn insert(&mut self, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+    pub fn insert(
+        &mut self,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
         self.is_flushed = false;
         self.values.push(ChannelValue {
             priority,
@@ -102,9 +108,15 @@ impl ChannelValues {
 
         let active_value = self.get_value().map(|v| v.value);
 
-        let current_sources = self.values.iter().filter_map(|v| v.source.as_ref().map(|s| s.id)).collect::<HashSet<_>>();
+        let current_sources = self
+            .values
+            .iter()
+            .filter_map(|v| v.source.as_ref().map(|s| s.id))
+            .collect::<HashSet<_>>();
 
-        let next_fade = self.previous_values.iter()
+        let next_fade = self
+            .previous_values
+            .iter()
             .filter(|v| v.priority.is_htp() || v.priority.is_ltp())
             .filter_map(|v| {
                 let Some(source) = v.source.as_ref() else {
@@ -126,7 +138,7 @@ impl ChannelValues {
         if let Some(active_fade) = &mut self.active_fade {
             if let Some(value) = active_fade.fade(active_value.unwrap_or(0.)) {
                 self.value = Some(value);
-            }else {
+            } else {
                 tracing::debug!("Fade finished {active_fade:?}");
                 self.active_fade = None;
                 self.value = active_value;
@@ -212,7 +224,14 @@ impl ChannelsWithValues {
         }
     }
 
-    pub fn insert(&mut self, channel: &String, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+    pub fn insert(
+        &mut self,
+        channel: &String,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
         // TODO: this should be actually measured
         // perf: we don't use entry here to avoid cloning the key when it's already in the map
         if let Some(values) = self.values.get_mut(channel) {
@@ -250,10 +269,23 @@ impl ChannelsWithValues {
 
     pub(crate) fn write_priority(&mut self, name: &String, value: f64, priority: FixturePriority) {
         tracing::trace!("write {name} -> {value} ({priority:?})");
-        self.write_priority_with_timings(name, value, priority, Default::default(), Default::default());
+        self.write_priority_with_timings(
+            name,
+            value,
+            priority,
+            Default::default(),
+            Default::default(),
+        );
     }
 
-    pub(crate) fn write_priority_with_timings(&mut self, name: &String, value: f64, priority: FixturePriority, source: Option<FixtureValueSource>, fade_timings: FadeTimings) {
+    pub(crate) fn write_priority_with_timings(
+        &mut self,
+        name: &String,
+        value: f64,
+        priority: FixturePriority,
+        source: Option<FixtureValueSource>,
+        fade_timings: FadeTimings,
+    ) {
         tracing::trace!("write {name} -> {value} ({priority:?}, {source:?}, {fade_timings:?})");
         self.insert(name, value, priority, source, fade_timings);
     }

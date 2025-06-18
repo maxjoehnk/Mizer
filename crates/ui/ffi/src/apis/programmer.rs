@@ -1,6 +1,9 @@
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::programmer::{Color, PresetId, ProgrammedEffect, ProgrammerChannel, ProgrammerControlValue, ProgrammerState, ProgrammerView};
+use mizer_fixtures::programmer::{
+    Color, PresetId, ProgrammedEffect, ProgrammerChannel, ProgrammerControlValue, ProgrammerState,
+    ProgrammerView,
+};
 use mizer_fixtures::FixtureId;
 use parking_lot::Mutex;
 use std::collections::HashMap;
@@ -285,11 +288,7 @@ pub struct FFIColorValue {
 
 impl From<Color> for FFIColorValue {
     fn from((red, green, blue): Color) -> Self {
-        Self {
-            red,
-            green,
-            blue
-        }
+        Self { red, green, blue }
     }
 }
 

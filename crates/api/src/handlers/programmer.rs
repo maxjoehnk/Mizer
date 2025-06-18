@@ -317,15 +317,17 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     #[profiling::function]
-    pub fn store_preset(
-        &self, req: StorePresetRequest
-    ) -> anyhow::Result<()> {
+    pub fn store_preset(&self, req: StorePresetRequest) -> anyhow::Result<()> {
         let command = match req.target {
-            Some(store_preset_request::Target::Existing(preset_id)) => StorePresetCommand::Existing { preset_id: preset_id.into() },
+            Some(store_preset_request::Target::Existing(preset_id)) => {
+                StorePresetCommand::Existing {
+                    preset_id: preset_id.into(),
+                }
+            }
             Some(store_preset_request::Target::NewPreset(preset)) => StorePresetCommand::New {
                 preset_type: preset.r#type().into(),
                 preset_target: preset.target.map(|_| preset.target().into()),
-name: preset.label,
+                name: preset.label,
             },
             None => anyhow::bail!("No target specified for store preset"),
         };

@@ -340,13 +340,28 @@ impl Programmer {
         let mut values = HashMap::new();
         for (selection, state) in self.get_selections().into_iter() {
             tracing::trace!("{:?} => {:?}", selection, state);
-            let fixture_ids = selection.get_fixtures().into_iter().flatten().collect::<Vec<_>>();
+            let fixture_ids = selection
+                .get_fixtures()
+                .into_iter()
+                .flatten()
+                .collect::<Vec<_>>();
             for preset in &state.presets {
                 let preset_values = presets
-                        .get_values(*preset, &fixture_ids)
+                    .get_values(*preset, &fixture_ids)
                     .into_iter()
-                    .flat_map(|(fixture_ids, control_values)| fixture_ids.into_iter().map(move |fixture_id| (fixture_id, control_values.clone())))
-                    .flat_map(|(fixture_id, controls)| controls.into_iter().flat_map(move |control| control.into_fader_values().into_iter().map(move |(fader, value)| (fixture_id, fader, value))))
+                    .flat_map(|(fixture_ids, control_values)| {
+                        fixture_ids
+                            .into_iter()
+                            .map(move |fixture_id| (fixture_id, control_values.clone()))
+                    })
+                    .flat_map(|(fixture_id, controls)| {
+                        controls.into_iter().flat_map(move |control| {
+                            control
+                                .into_fader_values()
+                                .into_iter()
+                                .map(move |(fader, value)| (fixture_id, fader, value))
+                        })
+                    })
                     .collect::<Vec<_>>();
                 for (fixture_id, control, value) in preset_values {
                     values.insert((fixture_id, control), value);

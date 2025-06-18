@@ -628,6 +628,7 @@ mod tests {
     use mizer_fixtures::definition::FixtureFaderControl;
     use mizer_fixtures::FixturePriority;
     use mizer_fixtures::{FixtureId, GroupId};
+    use mizer_node::mocks::NodeContextMock;
     use mizer_node::*;
     use predicates::prelude::*;
     use ringbuffer::{ConstGenericRingBuffer, RingBuffer};
@@ -647,6 +648,7 @@ mod tests {
             ..Default::default()
         };
         let mut controller = MockFixtureController::new();
+        let context = NodeContextMock::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(value);
         controller
@@ -657,10 +659,13 @@ mod tests {
                 predicate::eq(FixtureFaderControl::Intensity),
                 predicate::eq(value),
                 predicate::eq(priority),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -678,6 +683,7 @@ mod tests {
         values: Vec<f64>,
     ) {
         let node = GroupControlNode::default();
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
@@ -691,10 +697,13 @@ mod tests {
                 predicate::always(),
                 predicate::eq(expected),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -708,11 +717,13 @@ mod tests {
     #[test]
     fn write_should_write_nothing_when_buffer_is_empty() {
         let node = GroupControlNode::default();
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         controller.expect_write_group_control().never();
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -729,12 +740,14 @@ mod tests {
             send_zero: false,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(0f64);
         controller.expect_write_group_control().never();
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -763,6 +776,7 @@ mod tests {
             phase: 1,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
@@ -781,11 +795,14 @@ mod tests {
                     predicate::always(),
                     predicate::eq(value),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -814,6 +831,7 @@ mod tests {
             phase: -1,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
@@ -832,11 +850,14 @@ mod tests {
                     predicate::always(),
                     predicate::eq(value),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -863,6 +884,7 @@ mod tests {
             phase,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
@@ -881,11 +903,14 @@ mod tests {
                     predicate::always(),
                     predicate::eq(value),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -913,6 +938,7 @@ mod tests {
             phase,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         for v in values {
@@ -931,11 +957,14 @@ mod tests {
                     predicate::always(),
                     predicate::eq(value),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -955,6 +984,7 @@ mod tests {
             ..Default::default()
         };
         let fixtures = vec![vec![FixtureId::Fixture(1)], vec![FixtureId::Fixture(2)]];
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
@@ -970,10 +1000,13 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::always(),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             control,
@@ -994,6 +1027,7 @@ mod tests {
             ..Default::default()
         };
         let fixtures = vec![vec![FixtureId::Fixture(1)], vec![FixtureId::Fixture(2)]];
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
@@ -1009,10 +1043,13 @@ mod tests {
                 predicate::always(),
                 predicate::always(),
                 predicate::eq(priority),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -1031,6 +1068,7 @@ mod tests {
             phase: 1,
             ..Default::default()
         };
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(0f64);
@@ -1040,6 +1078,7 @@ mod tests {
         controller.expect_write_group_control().never();
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,
@@ -1060,6 +1099,7 @@ mod tests {
             vec![FixtureId::Fixture(1), FixtureId::Fixture(2)],
             vec![FixtureId::Fixture(3), FixtureId::Fixture(4)],
         ];
+        let context = NodeContextMock::new();
         let mut controller = MockFixtureController::new();
         let mut buffer = ConstGenericRingBuffer::<port_types::SINGLE, 1024>::new();
         buffer.push(1f64);
@@ -1075,6 +1115,8 @@ mod tests {
                 predicate::always(),
                 predicate::eq(2.),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         controller
@@ -1084,6 +1126,8 @@ mod tests {
                 predicate::eq(FixtureId::Fixture(2)),
                 predicate::always(),
                 predicate::eq(2.),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .return_const(());
@@ -1095,6 +1139,8 @@ mod tests {
                 predicate::always(),
                 predicate::eq(1.),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         controller
@@ -1105,10 +1151,13 @@ mod tests {
                 predicate::always(),
                 predicate::eq(1.),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
 
         node.write(
+            &context,
             &controller,
             buffer.iter().copied(),
             FixtureFaderControl::Intensity,

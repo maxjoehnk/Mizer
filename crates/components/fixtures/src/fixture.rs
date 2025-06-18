@@ -739,21 +739,22 @@ mod tests {
         value_b: f64,
         expected: f64,
     ) {
-        let mut channel_value = super::ChannelValues::default();
-        channel_value.insert(
+        let mut channel_values = super::ChannelValues::default();
+        channel_values.insert(
             value_a,
             level_a.into(),
             Default::default(),
             Default::default(),
         );
-        channel_value.insert(
+        channel_values.insert(
             value_b,
             level_b.into(),
             Default::default(),
             Default::default(),
         );
+        channel_values.flush();
 
-        let result = channel_value.get();
+        let result = channel_values.get();
 
         assert_eq!(expected, result.unwrap());
     }
@@ -765,21 +766,22 @@ mod tests {
         value_htp: f64,
         expected: f64,
     ) {
-        let mut channel_value = super::ChannelValues::default();
-        channel_value.insert(
+        let mut channel_values = super::ChannelValues::default();
+        channel_values.insert(
             value_ltp,
             LTPPriority::Low.into(),
             Default::default(),
             Default::default(),
         );
-        channel_value.insert(
+        channel_values.insert(
             value_htp,
             FixturePriority::HTP,
             Default::default(),
             Default::default(),
         );
+        channel_values.flush();
 
-        let result = channel_value.get();
+        let result = channel_values.get();
 
         assert_eq!(expected, result.unwrap());
     }

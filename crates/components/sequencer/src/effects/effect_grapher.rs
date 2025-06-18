@@ -14,6 +14,7 @@ use mizer_fixtures::definition::{
 use mizer_fixtures::fixture::IFixture;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureId;
+use mizer_protocol_dmx::DmxWriter;
 use mizer_util::clock::{Clock, TestClock};
 
 use super::instance::EffectInstance;
@@ -232,7 +233,8 @@ fn collect_fixture_frames(
     fixture_manager: &FixtureManager,
     frames: &mut HashMap<(u32, FixtureFaderControl), Vec<f64>>,
 ) {
-    for fixture in fixture_manager.get_fixtures() {
+    let writer = MockWriter {};
+    for mut fixture in fixture_manager.get_fixtures_mut() {
         for control in fixture
             .current_mode
             .controls
@@ -240,9 +242,18 @@ fn collect_fixture_frames(
             .into_iter()
             .flat_map(|(controls, _)| controls.faders())
         {
+            fixture.flush(&writer);
             if let Some(value) = fixture.read_control(control.clone()) {
                 frames.entry((fixture.id, control)).or_default().push(value);
             }
         }
     }
+}
+
+struct MockWriter {}
+
+impl DmxWriter for MockWriter {
+    fn write_single(&self, universe: u16, channel: u16, value: u8) {}
+
+    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {}
 }

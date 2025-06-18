@@ -265,6 +265,7 @@ mod tests {
             Default::default(),
             Default::default(),
         );
+        mixer.flush();
 
         let result = mixer.rgb();
 
@@ -309,6 +310,7 @@ mod tests {
             Default::default(),
             Default::default(),
         );
+        mixer.flush();
 
         let result = mixer.rgbw();
 
@@ -359,6 +361,7 @@ mod tests {
             Default::default(),
             Default::default(),
         );
+        mixer.flush();
 
         let result = mixer.rgb();
 
@@ -410,6 +413,7 @@ mod tests {
             Default::default(),
             Default::default(),
         );
+        mixer.flush();
 
         let result = mixer.rgbw();
 

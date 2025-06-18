@@ -6684,6 +6684,7 @@ dependencies = [
  "itertools 0.13.0",
  "mizer-fixtures",
  "mizer-module",
+ "mizer-protocol-dmx",
  "mizer-util",
  "mockall",
  "mockall_double",

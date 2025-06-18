@@ -51,6 +51,8 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::eq(value),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         let sequence = Sequence {
@@ -93,6 +95,8 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::eq(1f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .once()
             .return_const(());
@@ -103,6 +107,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(control.clone()),
                 predicate::eq(0.5f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .once()
@@ -175,6 +181,8 @@ mod tests {
                     predicate::eq(control.clone()),
                     predicate::eq(value),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
@@ -216,6 +224,8 @@ mod tests {
             .with(
                 predicate::eq(fixture_id),
                 predicate::eq(control.clone()),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
                 predicate::always(),
             )
@@ -267,6 +277,8 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::always(),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         let sequence = Sequence {
@@ -316,6 +328,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(control.clone()),
                 predicate::eq(1f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .return_const(());
@@ -375,6 +389,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(control.clone()),
                 predicate::eq(1f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .return_const(());
@@ -453,6 +469,8 @@ mod tests {
                         predicate::eq(control.clone()),
                         predicate::eq(value),
                         predicate::always(),
+                        predicate::always(),
+                        predicate::always(),
                     )
                     .return_const(());
             } else {
@@ -462,6 +480,8 @@ mod tests {
                     .never()
                     .with(
                         predicate::eq(FixtureId::Fixture(i as u32)),
+                        predicate::always(),
+                        predicate::always(),
                         predicate::always(),
                         predicate::always(),
                         predicate::always(),
@@ -531,6 +551,8 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::eq(0f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         let sequence = Sequence {
@@ -587,6 +609,8 @@ mod tests {
                 predicate::eq(control.clone()),
                 predicate::eq(0f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .return_const(());
         context
@@ -597,6 +621,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(control.clone()),
                 predicate::eq(expected),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .return_const(());
@@ -710,6 +736,8 @@ mod tests {
                     predicate::eq(control.clone()),
                     predicate::eq(expected),
                     predicate::always(),
+                    predicate::always(),
+                    predicate::always(),
                 )
                 .return_const(());
         }
@@ -771,6 +799,8 @@ mod tests {
                 predicate::eq(FixtureId::Fixture(1)),
                 predicate::eq(control),
                 predicate::eq(0f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .return_const(());
@@ -866,12 +896,16 @@ mod tests {
                             predicate::eq(control.clone()),
                             predicate::eq(value),
                             predicate::always(),
+                            predicate::always(),
+                            predicate::always(),
                         )
                         .return_const(());
                 } else {
                     expectation.never().with(
                         predicate::eq(FixtureId::Fixture(i as u32)),
                         predicate::eq(control.clone()),
+                        predicate::always(),
+                        predicate::always(),
                         predicate::always(),
                         predicate::always(),
                     );
@@ -906,6 +940,8 @@ mod tests {
                 predicate::eq(FixtureFaderControl::Intensity),
                 predicate::float::is_close(1f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .times(3)
             .return_const(());
@@ -917,6 +953,8 @@ mod tests {
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Blue)),
                 predicate::float::is_close(0f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .times(3)
             .return_const(());
@@ -928,6 +966,8 @@ mod tests {
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(1f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .once()
             .return_const(())
@@ -940,6 +980,8 @@ mod tests {
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(0.5f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .once()
             .return_const(())
@@ -952,6 +994,8 @@ mod tests {
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(0f64),
                 predicate::always(),
+                predicate::always(),
+                predicate::always(),
             )
             .once()
             .return_const(())
@@ -963,6 +1007,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(0f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .once()
@@ -975,6 +1021,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(0.5f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .once()
@@ -987,6 +1035,8 @@ mod tests {
                 predicate::eq(fixture_id),
                 predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(1f64),
+                predicate::always(),
+                predicate::always(),
                 predicate::always(),
             )
             .once()

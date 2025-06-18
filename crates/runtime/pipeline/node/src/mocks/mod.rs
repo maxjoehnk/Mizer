@@ -1,12 +1,11 @@
 use std::cell::RefCell;
 
+use crate::{ClockFrame, NodeContext, NodePath, PortId, PortMetadata, PreviewContext};
 use mizer_clock::{ClockState, Timecode};
 use mizer_injector::Inject;
 use mizer_ports::{Color, PortValue};
 use mizer_util::StructuredData;
 use mizer_wgpu::TextureView;
-
-use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
 
 use self::clock::ClockFunction;
 use self::read_port::ReadPortFunction;
@@ -16,17 +15,23 @@ mod clock;
 mod read_port;
 mod write_port;
 
-#[derive(Default)]
 pub struct NodeContextMock {
     write_port_fn: WritePortFunction,
     read_port_fn: ReadPortFunction,
     clock_fn: ClockFunction,
     pub history: RefCell<Vec<f64>>,
+    pub path: NodePath,
 }
 
 impl NodeContextMock {
     pub fn new() -> Self {
-        Self::default()
+        Self {
+            write_port_fn: Default::default(),
+            read_port_fn: Default::default(),
+            clock_fn: Default::default(),
+            history: Default::default(),
+            path: NodePath(Default::default()),
+        }
     }
 }
 
@@ -57,6 +62,10 @@ impl NodeContext for NodeContextMock {
 
     fn fps(&self) -> f64 {
         todo!()
+    }
+
+    fn path(&self) -> &NodePath {
+        &self.path
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {

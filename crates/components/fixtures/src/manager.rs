@@ -258,6 +258,10 @@ impl FixtureManager {
         self.fixtures.iter().collect()
     }
 
+    pub fn get_fixtures_mut(&self) -> Vec<impl DerefMut<Target = Fixture> + '_> {
+        self.fixtures.iter_mut().collect()
+    }
+
     pub fn get_group(&self, group_id: GroupId) -> Option<impl Deref<Target = Group> + '_> {
         self.groups.get(&group_id)
     }

@@ -42,21 +42,19 @@ class ProgrammerFixtureList extends StatelessWidget {
               disabled: programmerState.fixtures.isEmpty && programmerState.activeFixtures.isEmpty,
               onClick: _clear),
         ],
-        child: SingleChildScrollView(
-          child: MizerTable(
-            columns: [Text("ID"), Text("Name"), ...channels.map((c) => Text(NAMES[c]!))],
-            rows: fixtures
-                .map((f) => MizerTableRow(cells: [
-                      Text(f.id.toDisplay()),
-                      Text(f.name),
-                      ...channels
-                          .map((control) => programmerState.controls.firstWhereOrNull(
-                              (c) => control == c.control && c.fixtures.contains(f.id)))
-                          .map((control) =>
-                              control == null ? Text("") : Text(control.toDisplayValue()))
-                    ], selected: programmerState.activeFixtures.contains(f.id)))
-                .toList(),
-          ),
+        child: MizerTable(
+          columns: [Text("ID"), Text("Name"), ...channels.map((c) => Text(NAMES[c]!))],
+          rows: fixtures
+              .map((f) => MizerTableRow(cells: [
+                    Text(f.id.toDisplay()),
+                    Text(f.name),
+                    ...channels
+                        .map((control) => programmerState.controls.firstWhereOrNull(
+                            (c) => control == c.control && c.fixtures.contains(f.id)))
+                        .map((control) =>
+                            control == null ? Text("") : Text(control.toDisplayValue()))
+                  ], selected: programmerState.activeFixtures.contains(f.id)))
+              .toList(),
         ),
       ),
     );

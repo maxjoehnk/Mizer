@@ -27,18 +27,11 @@ final LABELS = {
   CueControl_Type.GENERIC: 'Generic',
 };
 
-class TrackSheet extends StatefulWidget {
+class TrackSheet extends StatelessWidget {
   final Sequence sequence;
   final int? activeCue;
 
   const TrackSheet({required this.sequence, this.activeCue, Key? key}) : super(key: key);
-
-  @override
-  State<TrackSheet> createState() => _TrackSheetState();
-}
-
-class _TrackSheetState extends State<TrackSheet> {
-  final _horizontalScroll = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,32 +44,24 @@ class _TrackSheetState extends State<TrackSheet> {
     for (var i = 1; i <= _effectIds.length; i++) {
       columnWidths[_controls.length + i] = FixedColumnWidth(100);
     }
-    return Scrollbar(
-      controller: _horizontalScroll,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScroll,
-        scrollDirection: Axis.horizontal,
-        child: MizerTable(
-            columnWidths: columnWidths,
-            columns: [
-              Text("Cue"),
-              ..._controls.map((c) => Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
-              ..._effectIds.map((c) => Column(
-                  mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets")])),
-            ],
-            rows: _buildRows(context)),
-      ),
-    );
+    return MizerTable(
+        columnWidths: columnWidths,
+        columns: [
+          Text("Cue"),
+          ..._controls.map((c) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [Text(c.fixtureId.toDisplay()), Text(LABELS[c.control]!)])),
+          ..._effectIds.map((c) => Column(
+              mainAxisSize: MainAxisSize.min, children: [Text(c.toString()), Text("Offsets")])),
+        ],
+        rows: _buildRows(context));
   }
 
   Iterable<FixtureControl> get _controls {
     var controls =
-        widget.sequence.cues.expand((e) => e.controls).map((control) => control.type).toSet();
+        sequence.cues.expand((e) => e.controls).map((control) => control.type).toSet();
 
-    return widget.sequence.fixtures
+    return sequence.fixtures
         .expand((f) => controls.map((c) => FixtureControl(f, c)))
         .sorted((lhs, rhs) {
       var fixtureId = lhs.fixtureId.compareTo(rhs.fixtureId);
@@ -88,14 +73,14 @@ class _TrackSheetState extends State<TrackSheet> {
   }
 
   Iterable<int> get _effectIds {
-    var effectIds = widget.sequence.cues.expand((e) => e.effects).map((e) => e.effectId).toSet();
+    var effectIds = sequence.cues.expand((e) => e.effects).map((e) => e.effectId).toSet();
     effectIds.sorted((lhs, rhs) => lhs - rhs);
 
     return effectIds;
   }
 
   List<MizerTableRow> _buildRows(BuildContext context) {
-    return widget.sequence.cues.map((cue) {
+    return sequence.cues.map((cue) {
       return MizerTableRow(cells: [
         Text(cue.id.toString()),
         ..._controls.map((c) => Center(
@@ -120,13 +105,13 @@ class _TrackSheetState extends State<TrackSheet> {
                       context, cue, effect, value?.hasBeats() == true ? value!.beats : null)),
               child: Text(effect.hasEffectOffsets() ? "${effect.effectOffsets} Beats" : ""));
         })
-      ], highlight: widget.activeCue == cue.id);
+      ], highlight: activeCue == cue.id);
     }).toList();
   }
 
   void _updateCueEffectOffsetTime(BuildContext context, Cue cue, CueEffect effect, double? value) {
     context.read<SequencerBloc>().add(UpdateCueEffectOffsetTime(
-        sequence: widget.sequence.id, cue: cue.id, effect: effect.effectId, time: value));
+        sequence: sequence.id, cue: cue.id, effect: effect.effectId, time: value));
   }
 }
 

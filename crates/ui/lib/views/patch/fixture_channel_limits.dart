@@ -49,10 +49,7 @@ class FixtureChannelLimits extends StatelessWidget {
         ];
       }).toList();
 
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: _table(faderControls, selectedFixtures),
-      );
+      return _table(faderControls, selectedFixtures);
     });
   }
 

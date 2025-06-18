@@ -64,58 +64,56 @@ class _MizerDataTableState extends State<MizerDataTable> {
           return Container();
         }
 
-        return SingleChildScrollView(
-          child: MizerTable(
-              columnWidths: {
-                0: FixedColumnWidth(40),
-              },
-              columns: [
-                Container(),
-                ...state.requireData.columns.map((e) => Text(e))
-              ],
-              rows: state.requireData.rows
-                  .where(this.matchRow)
-                  .map((r) {
-                    var expanded = r.id == expandedId;
-                    List<MizerTableRow> children = [];
-                    if (expanded) {
-                      children = r.children
-                          .map((c) => MizerTableRow(
-                                padding: const EdgeInsets.symmetric(horizontal: 4),
-                                cells: [Container(), ...c.cells.map((c) => Text(c))],
-                                onTap: widget.onTapChild == null
-                                    ? null
-                                    : () => widget.onTapChild!(r.id, c.id),
-                              ))
-                          .toList();
-                    }
-                    return [
-                      MizerTableRow(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          selected: r.id == widget.selectedId,
-                          cells: [
-                            if (r.children.isNotEmpty)
-                              MizerIconButton(
-                                onClick: () => setState(() {
-                                  if (expanded) {
-                                    expandedId = null;
-                                  }else {
-                                    expandedId = r.id;
-                                  }
-                                }),
-                                icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
-                                label: "Expand".i18n,
-                              ),
-                            if (r.children.isEmpty) Container(),
-                            ...r.cells.map((c) => Text(c))
-                          ],
-                          onTap: widget.onTap == null ? null : () => widget.onTap!(r.id)),
-                      ...children,
-                    ];
-                  })
-                  .flattened
-                  .toList()),
-        );
+        return MizerTable(
+            columnWidths: {
+              0: FixedColumnWidth(40),
+            },
+            columns: [
+              Container(),
+              ...state.requireData.columns.map((e) => Text(e))
+            ],
+            rows: state.requireData.rows
+                .where(this.matchRow)
+                .map((r) {
+                  var expanded = r.id == expandedId;
+                  List<MizerTableRow> children = [];
+                  if (expanded) {
+                    children = r.children
+                        .map((c) => MizerTableRow(
+                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                              cells: [Container(), ...c.cells.map((c) => Text(c))],
+                              onTap: widget.onTapChild == null
+                                  ? null
+                                  : () => widget.onTapChild!(r.id, c.id),
+                            ))
+                        .toList();
+                  }
+                  return [
+                    MizerTableRow(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        selected: r.id == widget.selectedId,
+                        cells: [
+                          if (r.children.isNotEmpty)
+                            MizerIconButton(
+                              onClick: () => setState(() {
+                                if (expanded) {
+                                  expandedId = null;
+                                }else {
+                                  expandedId = r.id;
+                                }
+                              }),
+                              icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
+                              label: "Expand".i18n,
+                            ),
+                          if (r.children.isEmpty) Container(),
+                          ...r.cells.map((c) => Text(c))
+                        ],
+                        onTap: widget.onTap == null ? null : () => widget.onTap!(r.id)),
+                    ...children,
+                  ];
+                })
+                .flattened
+                .toList());
       },
     );
   }

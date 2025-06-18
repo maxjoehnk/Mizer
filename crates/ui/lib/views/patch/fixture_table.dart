@@ -25,21 +25,19 @@ class FixtureTable extends StatelessWidget {
   Widget build(BuildContext context) {
     List<MizerTableRow> rows = _getRows(context);
 
-    return SingleChildScrollView(
-      child: MizerTable(columnWidths: {
-        0: FixedColumnWidth(64),
-      }, columns: const [
-        Text("Id"),
-        Text("Name"),
-        Text("Address"),
-        Text("Manufacturer"),
-        Text("Model"),
-        Text("Mode"),
-        Text("Invert Pan"),
-        Text("Invert Tilt"),
-        Text("Reverse Pixel Order"),
-      ], rows: rows),
-    );
+    return MizerTable(columnWidths: {
+      0: FixedColumnWidth(64),
+    }, columns: const [
+      Text("Id"),
+      Text("Name"),
+      Text("Address"),
+      Text("Manufacturer"),
+      Text("Model"),
+      Text("Mode"),
+      Text("Invert Pan"),
+      Text("Invert Tilt"),
+      Text("Reverse Pixel Order"),
+    ], rows: rows);
   }
 
   List<MizerTableRow> _getRows(BuildContext context) {

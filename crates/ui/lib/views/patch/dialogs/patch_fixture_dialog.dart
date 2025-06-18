@@ -361,28 +361,26 @@ class FixturePatchPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: MizerTable(
-        columnWidths: {
-          0: FixedColumnWidth(64),
-          2: FixedColumnWidth(128),
-        },
-        columns: [
-          Text("Id"),
-          Text("Name"),
-          Text("Address"),
-        ],
-        rows: fixtures.fixtures.sorted((lhs, rhs) => lhs.id.compareTo(rhs.id)).map((f) {
-          var startAddress = f.channel;
-          var endAddress = f.channel + f.channelCount - 1;
+    return MizerTable(
+      columnWidths: {
+        0: FixedColumnWidth(64),
+        2: FixedColumnWidth(128),
+      },
+      columns: [
+        Text("Id"),
+        Text("Name"),
+        Text("Address"),
+      ],
+      rows: fixtures.fixtures.sorted((lhs, rhs) => lhs.id.compareTo(rhs.id)).map((f) {
+        var startAddress = f.channel;
+        var endAddress = f.channel + f.channelCount - 1;
 
-          return MizerTableRow(cells: [
-            Text(f.id.toString()),
-            Text(f.name),
-            Text("${f.universe}:$startAddress - ${f.universe}:$endAddress"),
-          ]);
-        }).toList(),
-      ),
+        return MizerTableRow(cells: [
+          Text(f.id.toString()),
+          Text(f.name),
+          Text("${f.universe}:$startAddress - ${f.universe}:$endAddress"),
+        ]);
+      }).toList(),
     );
   }
 }

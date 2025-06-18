@@ -25,10 +25,10 @@ class MidiProfilesTable extends StatelessWidget {
           Text("File Path", style: titleTheme),
         ],
         columnWidths: {
-          0: FlexColumnWidth(2),
-          1: FlexColumnWidth(2),
-          2: FlexColumnWidth(0.5),
-          3: FlexColumnWidth(4),
+          0: FlexColumnWidth(1),
+          1: FlexColumnWidth(1),
+          2: FixedColumnWidth(100),
+          3: FlexColumnWidth(2),
         },
         rows: this.profiles.map((profile) => MizerTableRow(cells: [
           Text(profile.manufacturer),

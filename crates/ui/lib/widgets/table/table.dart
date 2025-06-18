@@ -1,66 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
+import 'package:mizer/extensions/list_extensions.dart';
+import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 
 const double TABLE_ROW_HEIGHT = 36;
 
 class MizerTable extends StatefulWidget {
   final List<Widget>? columns;
-  final List<MizerTableRow> rows;
   final Map<int, TableColumnWidth>? columnWidths;
   final AlignmentDirectional headerAlignment;
+  final SliverChildDelegate childrenDelegate;
 
-  const MizerTable({this.columns, required this.rows, this.headerAlignment = AlignmentDirectional.centerStart, this.columnWidths, Key? key})
-      : super(key: key);
+  MizerTable(
+      {this.columns,
+      required List<MizerTableRow> rows,
+      this.headerAlignment = AlignmentDirectional.centerStart,
+      this.columnWidths,
+      Key? key})
+      : childrenDelegate = SliverTableRowListDelegate(rows, columnWidths),
+        super(key: key);
+
+  MizerTable.builder(
+      {required MizerTableRow Function(BuildContext context, int index) itemBuilder,
+      required this.columns,
+      this.columnWidths,
+      this.headerAlignment = AlignmentDirectional.centerStart,
+      Key? key})
+      : childrenDelegate = SliverTableRowChildBuilderDelegate(itemBuilder, columnWidths),
+        super();
 
   @override
   State<MizerTable> createState() => _MizerTableState();
 }
 
-class _MizerTableState extends State<MizerTable> {
-  MizerTableRow? _hoveredRow;
+class SliverTableRowListDelegate extends SliverChildListDelegate {
+  SliverTableRowListDelegate(List<MizerTableRow> rows, Map<int, TableColumnWidth>? columnWidths)
+      : super(rows.map((r) => _MizerTableRow(r, columnWidths)).toList());
+}
 
+class SliverTableRowChildBuilderDelegate extends SliverChildBuilderDelegate {
+  SliverTableRowChildBuilderDelegate(MizerTableRow Function(BuildContext, int) itemBuilder,
+      Map<int, TableColumnWidth>? columnWidths)
+      : super((context, int) => _MizerTableRow(itemBuilder(context, int), columnWidths));
+}
+
+class _MizerTableState extends State<MizerTable> {
   @override
   Widget build(BuildContext context) {
     var header = _header();
-    return Table(
-      children: [if (header != null) header, ...widget.rows.map(_mapRow)],
-      columnWidths: widget.columnWidths,
-      border: TableBorder.all(color: Grey900),
-    );
+
+    var listView =
+        ListView.custom(childrenDelegate: widget.childrenDelegate, itemExtent: TABLE_ROW_HEIGHT, );
+
+    if (header == null) {
+      return listView;
+    }
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      header,
+      Expanded(child: listView),
+    ]);
   }
 
-  TableRow? _header() {
+  Widget? _header() {
     if (widget.columns == null) {
       return null;
     }
-    return TableRow(
-      children: widget.columns!.map(_wrapHeader).toList(),
+
+    return Row(
+      spacing: 1,
+      children: widget.columns!.mapEnumerated(_wrapHeader).toList(),
     );
   }
 
-  Widget _wrapHeader(Widget header) {
-    return Container(
+  Widget _wrapHeader(Widget header, int i) {
+    var cell = Container(
       padding: const EdgeInsets.all(16),
       child: Align(child: header, alignment: widget.headerAlignment),
     );
-  }
 
-  TableRow _mapRow(MizerTableRow row) {
-    return TableRow(
-        children: row.cells.map((cell) => _wrapCell(cell, row)).toList(),
+    return _tableCell(cell, widget.columnWidths?[i]);
+  }
+}
+
+class _MizerTableRow extends StatelessWidget {
+  final MizerTableRow row;
+  final Map<int, TableColumnWidth>? columnWidths;
+
+  _MizerTableRow(this.row, this.columnWidths);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: TABLE_ROW_HEIGHT,
+      child: Hoverable(
+        onTap: row.onTap,
+        onDoubleTap: row.onDoubleTap,
+        onSecondaryTap: row.onSecondaryTap,
+        builder: (hovered) => Row(
+            spacing: 1,
+            children: row.cells
+                .mapEnumerated(
+                    (cell, index) => _tableCell(_wrapCell(cell, row, isHovered: hovered), columnWidths?[index]))
+                .toList()),
+      ),
     );
   }
 
-  Widget _wrapCell(Widget cell, MizerTableRow row) {
+  Widget _wrapCell(Widget cell, MizerTableRow row, {bool isHovered = false}) {
     Widget cellContent = Container(
         alignment: row.alignment,
-        height: TABLE_ROW_HEIGHT,
         color: row.selected
             ? Grey800
-            : (_hoveredRow == row
-                ? Grey700
-                : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
+            : (isHovered ? Grey700 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
         padding: row.padding,
         child: cell);
 
@@ -69,21 +122,15 @@ class _MizerTableState extends State<MizerTable> {
       // We use the Listener as well as the GestureDetector because the onTap event
       // of the GestureDetector has a delay when used with onDoubleTap
       cellContent = Listener(
-        onPointerUp: (_) => row.onTap!(),
-        behavior: HitTestBehavior.opaque,
-        child: GestureDetector(
-          onDoubleTap: row.onDoubleTap,
-          onSecondaryTap: row.onSecondaryTap,
-          behavior: HitTestBehavior.opaque,
-          child: cellContent,
-        ),
-      );
+                onPointerUp: (_) => row.onTap!(),
+                behavior: HitTestBehavior.opaque,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  child: cellContent,
+                ),
+              );
     }
-    return MouseRegion(
-        cursor: row.onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
-        onHover: row.onTap != null ? (_) => setState(() => _hoveredRow = row) : null,
-        onExit: row.onTap != null ? (_) => setState(() => _hoveredRow = null) : null,
-        child: cellContent);
+    return cellContent;
   }
 }
 
@@ -107,8 +154,7 @@ class MizerTableRow {
       this.onDoubleTap,
       this.onSecondaryTap,
       this.alignment = Alignment.centerLeft,
-      this.padding = const EdgeInsets.symmetric(horizontal: 16)
-      });
+      this.padding = const EdgeInsets.symmetric(horizontal: 16)});
 }
 
 class PopupTableCell extends StatelessWidget {
@@ -132,4 +178,16 @@ class PopupTableCell extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _tableCell(Widget child, TableColumnWidth? width) {
+  if (width is FlexColumnWidth) {
+    return Flexible(child: child, flex: width.value.toInt(), fit: FlexFit.tight);
+  }
+
+  if (width is FixedColumnWidth) {
+    return SizedBox(width: width.value, child: child);
+  }
+
+  return Flexible(child: child, flex: 1, fit: FlexFit.tight);
 }

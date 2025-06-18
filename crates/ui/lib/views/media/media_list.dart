@@ -80,8 +80,7 @@ class _MediaListState extends State<MediaList> {
                       .toList()),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                  child: MizerTable(
+              child: MizerTable(
                 columns: [
                   Container(),
                   Text("Name"),
@@ -100,7 +99,7 @@ class _MediaListState extends State<MediaList> {
                   4: FlexColumnWidth(1),
                   5: FlexColumnWidth(2),
                 },
-              )),
+              ),
             ),
           ],
         ),
@@ -166,8 +165,14 @@ class _MediaListState extends State<MediaList> {
           ...vectorGroup.extensions ?? [],
           ...dataGroup.extensions ?? [],
         ].distinct().toList());
-    var files = await openFiles(
-        acceptedTypeGroups: [allSupportedGroup, videoGroup, imageGroup, audioGroup, vectorGroup, dataGroup]);
+    var files = await openFiles(acceptedTypeGroups: [
+      allSupportedGroup,
+      videoGroup,
+      imageGroup,
+      audioGroup,
+      vectorGroup,
+      dataGroup
+    ]);
     if (files.isEmpty) {
       return;
     }
@@ -189,8 +194,8 @@ class _MediaListState extends State<MediaList> {
           label: 'Images'.i18n, extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp']);
     }
     if (widget.selectedFile!.type == MediaType.VIDEO) {
-      typeGroup = XTypeGroup(
-          label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv']);
+      typeGroup =
+          XTypeGroup(label: 'Videos'.i18n, extensions: ['mp4', 'mov', 'avi', 'webm', 'wmv', 'mkv']);
     }
     if (widget.selectedFile!.type == MediaType.VECTOR) {
       typeGroup = XTypeGroup(label: 'Vector Files'.i18n, extensions: ['svg']);

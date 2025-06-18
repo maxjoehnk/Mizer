@@ -45,45 +45,39 @@ class FixturesTable extends StatelessWidget {
   Widget build(BuildContext context) {
     List<MizerTableRow> rows = _getRows(context);
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: MizerTable(
-            columnWidths: {
-              0: FixedColumnWidth(40),
-              1: FixedColumnWidth(50),
-              2: FixedColumnWidth(150),
-              3: FixedColumnWidth(128),
-              4: FixedColumnWidth(128),
-              5: FixedColumnWidth(40),
-              6: FixedColumnWidth(128),
-              7: FixedColumnWidth(128),
-              8: FixedColumnWidth(128),
-              9: FixedColumnWidth(40),
-              10: FixedColumnWidth(128),
-              11: FixedColumnWidth(128),
-              12: FixedColumnWidth(128),
-            },
-            headerAlignment: AlignmentDirectional.center,
-            columns: [
-              Text(""),
-              Text("Id".i18n),
-              Text("Name".i18n),
-              Text("Intensity".i18n),
-              Text("Shutter".i18n),
-              Container(),
-              Text("Red".i18n),
-              Text("Green".i18n),
-              Text("Blue".i18n),
-              Container(),
-              Text("Pan".i18n),
-              Text("Tilt".i18n),
-              Text("Gobo".i18n),
-            ],
-            rows: rows),
-      ),
-    );
+    return MizerTable(
+        columnWidths: {
+          0: FixedColumnWidth(40),
+          1: FixedColumnWidth(50),
+          2: FixedColumnWidth(150),
+          3: FixedColumnWidth(128),
+          4: FixedColumnWidth(128),
+          5: FixedColumnWidth(40),
+          6: FixedColumnWidth(128),
+          7: FixedColumnWidth(128),
+          8: FixedColumnWidth(128),
+          9: FixedColumnWidth(40),
+          10: FixedColumnWidth(128),
+          11: FixedColumnWidth(128),
+          12: FixedColumnWidth(128),
+        },
+        headerAlignment: AlignmentDirectional.center,
+        columns: [
+          Text(""),
+          Text("Id".i18n),
+          Text("Name".i18n),
+          Text("Intensity".i18n),
+          Text("Shutter".i18n),
+          Container(),
+          Text("Red".i18n),
+          Text("Green".i18n),
+          Text("Blue".i18n),
+          Container(),
+          Text("Pan".i18n),
+          Text("Tilt".i18n),
+          Text("Gobo".i18n),
+        ],
+        rows: rows);
   }
 
   List<MizerTableRow> _getRows(BuildContext context) {

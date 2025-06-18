@@ -29,25 +29,23 @@ class _HistoryViewState extends State<HistoryView> {
 
             return Panel(
               label: "History",
-              child: SingleChildScrollView(
-                child: MizerTable(
-                  columns: [Text("Label"), Text("Timestamp")],
-                  rows: (state.data?.items ?? [])
-                      .mapEnumerated((item, i) {
-                        var inactive = (i + 1) > pointer;
+              child: MizerTable(
+                columns: [Text("Label"), Text("Timestamp")],
+                rows: (state.data?.items ?? [])
+                    .mapEnumerated((item, i) {
+                      var inactive = (i + 1) > pointer;
 
-                        var textStyle = inactive ? TextStyle(color: Colors.white24) : null;
-                        return MizerTableRow(cells: [
-                          Text(item.label, style: textStyle),
-                          Text(
-                              DateTime.fromMillisecondsSinceEpoch(item.timestamp.toInt())
-                                  .toString(),
-                              style: textStyle)
-                        ]);
-                      })
-                      .reversed
-                      .toList(),
-                ),
+                      var textStyle = inactive ? TextStyle(color: Colors.white24) : null;
+                      return MizerTableRow(cells: [
+                        Text(item.label, style: textStyle),
+                        Text(
+                            DateTime.fromMillisecondsSinceEpoch(item.timestamp.toInt())
+                                .toString(),
+                            style: textStyle)
+                      ]);
+                    })
+                    .reversed
+                    .toList(),
               ),
               actions: [
                 PanelActionModel(

@@ -58,34 +58,32 @@ class _MidiMonitorState extends State<MidiMonitor> {
   Widget build(BuildContext context) {
     return Panel(
         label: "Midi Messages".i18n,
-        child: SingleChildScrollView(
-          child: MizerTable(
-            columnWidths: {
-              0: FixedColumnWidth(128),
-              1: FixedColumnWidth(128),
-              2: FixedColumnWidth(128),
-              3: FixedColumnWidth(128),
-              4: FixedColumnWidth(128),
-            },
-            columns: [
-              Text("Timestamp".i18n),
-              Text("Event".i18n),
-              Text("Channel".i18n),
-              Text("Note".i18n),
-              Text("Value".i18n),
-              Text("Data".i18n),
-            ],
-            rows: events.reversed
-                .map((event) => MizerTableRow(cells: [
-                      Text(event.timestamp.toInt().toString()),
-                      Text(_getEventType(event)),
-                      Text(_getChannel(event)),
-                      Text(_getNote(event)),
-                      Text(_getValue(event)),
-                      Text(_getData(event)),
-                    ]))
-                .toList(),
-          ),
+        child: MizerTable(
+          columnWidths: {
+            0: FixedColumnWidth(128),
+            1: FixedColumnWidth(128),
+            2: FixedColumnWidth(128),
+            3: FixedColumnWidth(128),
+            4: FixedColumnWidth(128),
+          },
+          columns: [
+            Text("Timestamp".i18n),
+            Text("Event".i18n),
+            Text("Channel".i18n),
+            Text("Note".i18n),
+            Text("Value".i18n),
+            Text("Data".i18n),
+          ],
+          rows: events.reversed
+              .map((event) => MizerTableRow(cells: [
+                    Text(event.timestamp.toInt().toString()),
+                    Text(_getEventType(event)),
+                    Text(_getChannel(event)),
+                    Text(_getNote(event)),
+                    Text(_getValue(event)),
+                    Text(_getData(event)),
+                  ]))
+              .toList(),
         ));
   }
 

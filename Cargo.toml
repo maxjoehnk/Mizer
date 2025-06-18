@@ -120,7 +120,5 @@ opt-level = 3
 [patch.crates-io]
 # https://github.com/nannou-org/citp/pull/5
 citp = { git = "https://github.com/maxjoehnk/citp.git", branch = "master" }
-# Until vello with wgpu 24 support is released
-vello = { git = "https://github.com/linebender/vello", branch = "main" }
 # https://github.com/grievouz/egui_tracing/pull/37
 egui_tracing = { git = "https://github.com/maxjoehnk/egui_tracing.git", rev = "38245ee" }

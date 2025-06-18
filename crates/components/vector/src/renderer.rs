@@ -20,6 +20,7 @@ impl VectorWgpuRenderer {
                 antialiasing_support: AaSupport::all(),
                 use_cpu: false,
                 num_init_threads: Some(NonZeroUsize::new(1).unwrap()),
+                pipeline_cache: None,
             },
         )
         .map_err(|err| anyhow::anyhow!("{err:?}"))?;

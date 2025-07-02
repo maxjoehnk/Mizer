@@ -14,6 +14,7 @@ migrations! {
     ReworkLayoutControlsToNotUseNodes,
     MigratePositionPresets,
     AdaptFaderConfig,
+    DmxOutputChannel,
 }
 
 impl Migrations {

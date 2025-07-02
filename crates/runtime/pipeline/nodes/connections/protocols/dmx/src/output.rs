@@ -19,7 +19,7 @@ impl Default for DmxOutputNode {
     fn default() -> Self {
         Self {
             universe: default_universe(),
-            channel: 0,
+            channel: 1,
         }
     }
 }
@@ -70,6 +70,15 @@ impl ProcessingNode for DmxOutputNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
+        if self.channel > 512 {
+            anyhow::bail!("Channel out of range");
+        }
+        if self.universe > 32768 {
+            anyhow::bail!("Universe out of range");
+        }
+        
+        let channel = self.channel.saturating_sub(1);
+
         let value = context.read_port::<_, f64>(INPUT_PORT);
         let dmx_connections = context.try_inject::<DmxConnectionManager>();
         if dmx_connections.is_none() {
@@ -82,7 +91,7 @@ impl ProcessingNode for DmxOutputNode {
             context.push_history_value(value);
             let value = (value * u8::MAX as f64).min(255.).max(0.).floor() as u8;
 
-            writer.write_single(self.universe, self.channel, value);
+            writer.write_single(self.universe, channel, value);
         }
 
         Ok(())

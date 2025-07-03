@@ -107,6 +107,9 @@ jobs:
             libwavpack-dev \
             libzimg-dev \
             yasm
+      - uses: hecrj/setup-rust-action@v2
+        with:
+          rust-version: stable
       - uses: taiki-e/install-action@protoc
       - name: Install cbindgen
         run: cargo install --force cbindgen
@@ -191,6 +194,9 @@ jobs:
     steps:
       - name: Install build dependencies
         run: brew install protobuf ffmpeg yasm cbindgen create-dmg
+      - uses: hecrj/setup-rust-action@v2
+        with:
+          rust-version: stable
       - uses: actions/checkout@v4
         with:
           submodules: recursive
@@ -233,6 +239,9 @@ jobs:
       - name: Install build dependencies
         run: choco install protoc make wget yasm ffmpeg yq imagemagick
         shell: bash
+      - uses: hecrj/setup-rust-action@v2
+        with:
+          rust-version: stable
       - uses: actions/checkout@v4
         with:
           submodules: recursive

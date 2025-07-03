@@ -188,7 +188,7 @@ jobs:
         run: nm mizer | grep ff_mpeg
 
   build-macos:
-    runs-on: macos-14
+    runs-on: macos-15
     env:
       SENTRY_KEY: ${{ secrets.SENTRY_KEY }}
     steps:

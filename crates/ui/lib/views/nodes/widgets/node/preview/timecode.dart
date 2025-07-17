@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/plugin/nodes.dart';
-import 'package:mizer/widgets/transport/time_control.dart';
+import 'package:mizer/shell/transport/time_control.dart';
 
 class TimecodeRenderer extends StatefulWidget {
   final NodesPluginApi pluginApi;

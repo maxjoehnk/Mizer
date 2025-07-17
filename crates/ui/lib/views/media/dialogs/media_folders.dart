@@ -1,7 +1,6 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
@@ -20,11 +19,11 @@ class MediaFoldersDialog extends StatelessWidget {
         content: Container(
           width: MAX_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
-          child: BlocBuilder<MediaBloc, MediaFiles>(
+          child: BlocBuilder<MediaBloc, MediaState>(
             bloc: bloc,
             builder: (context, state) {
               return ListView(
-                children: state.folders.paths
+                children: state.folders
                     .map((path) => ListTile(
                           title: Text(path),
                           trailing: IconButton(

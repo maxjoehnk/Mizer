@@ -9,7 +9,8 @@ class UiPluginApi implements UiApi {
 
   @override
   Stream<ShowDialog> dialogRequests() {
-    return showDialogEvents.receiveBroadcastStream()
+    return showDialogEvents
+        .receiveBroadcastStream()
         .map((buffer) => ShowDialog.fromBuffer(_convertBuffer(buffer)));
   }
 
@@ -27,5 +28,12 @@ class UiPluginApi implements UiApi {
   @override
   Future<void> commandLineExecute(String command) {
     return this.channel.invokeMethod("commandLineExecute", command);
+  }
+
+  @override
+  Future<List<View>> getViews() async {
+    var response = await this.channel.invokeListMethod("getViews");
+
+    return response!.map((b) => View.fromBuffer(_convertBuffer(b))).toList();
   }
 }

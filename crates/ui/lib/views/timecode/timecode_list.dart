@@ -4,12 +4,11 @@ import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/dialogs/name_dialog.dart';
 import 'package:mizer/protos/timecode.pb.dart';
+import 'package:mizer/shell/transport/time_control.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
-import 'package:mizer/widgets/popup/popup_input.dart';
-import 'package:mizer/widgets/transport/time_control.dart';
 import 'package:provider/provider.dart';
 
 class TimecodeList extends StatelessWidget {

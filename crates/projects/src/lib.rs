@@ -19,7 +19,7 @@ use mizer_protocol_osc::OscAddress;
 use mizer_sequencer::{Effect, Sequence};
 use mizer_surfaces::Surface;
 use mizer_timecode::{TimecodeControl, TimecodeTrack};
-
+use mizer_ui_api::view::View;
 use crate::fixtures::PresetsStore;
 use crate::media::Media;
 use crate::versioning::{migrate, Migrations};
@@ -33,6 +33,7 @@ mod sequencer;
 mod surfaces;
 mod timecode;
 mod versioning;
+mod views;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -75,6 +76,8 @@ pub struct Project {
     pub timecodes: Timecodes,
     #[serde(default)]
     pub surfaces: Vec<Surface>,
+    #[serde(default)]
+    pub views: Vec<View>,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]

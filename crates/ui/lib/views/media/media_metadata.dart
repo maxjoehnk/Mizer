@@ -8,10 +8,10 @@ import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-class MediaMetadataPanel extends StatelessWidget {
+class MediaMetadata extends StatelessWidget {
   final MediaFile file;
 
-  const MediaMetadataPanel({Key? key, required this.file}) : super(key: key);
+  const MediaMetadata({Key? key, required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

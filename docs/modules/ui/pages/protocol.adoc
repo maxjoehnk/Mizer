@@ -1,0 +1,178 @@
+= UI Protocol
+
+== Messages
+
+[source,protobuf]
+....
+syntax = "proto3";
+
+package mizer.ui;
+
+message PanelData {
+  string title = 1;
+  oneof type {
+  	PanelTabs tabs = 3;
+    PanelContent content = 4;
+  }
+}
+
+message PanelTabs {
+  repeated PanelTab tabs = 2;
+}
+
+message PanelTab {
+  string title = 1;
+  PanelContent content = 2;
+  bool canRename = 3;
+  bool canClose = 4;
+}
+
+message PanelContent {
+  bool hasSearch = 1;
+  repeated PanelAction actions = 2;
+  oneof contentType {
+    TabularData table = 3;
+    GridData grid = 4;
+    LayoutData layout = 5;
+  }
+}
+
+message PanelAction {
+}
+
+message TabularData {
+  repeated string columns = 1;
+  repeated RowItem rows = 2;
+}
+
+message RowItem {
+
+}
+
+message GridData {
+
+}
+
+message GridItem {
+
+}
+
+message Field {
+
+}
+
+message LayoutData {
+
+}
+
+message Tile {
+  bool selected = 1;
+  bool active = 2;
+
+  optional Actions actions = 3;
+}
+
+message Actions {
+  optional ActionHandler clickHandler = 1;
+  repeated MenuAction menuActions = 2;
+}
+
+message MenuAction {
+  string title = 1;
+  ActionHandler handler = 2;
+}
+
+message ActionHandler {
+  oneof action {
+    CommandAction command = 1;
+    CallbackAction callback = 2;
+  }
+}
+
+message CommandAction {
+  string command = 1;
+}
+
+message CallbackAction {
+  string callbackId = 1;
+}
+....
+
+== Existing Views
+
+=== Layout
+
+[source,json]
+....
+{
+  "title": "Layout",
+  "content": {
+    "type": "tabs",
+    "tabs": [
+      {
+        "title": "Default",
+        "canRename": true,
+        "canClose": true,
+        "content": {
+          "hasSearch": false,
+          "actions": [],
+          "layout": {
+            "items": []
+          }
+        }
+      }
+    ]
+  }
+}
+....
+
+=== Sequencer
+
+[source,json]
+....
+{
+  "title": "Sequences",
+  "content": {
+    "type": "content",
+    "hasSearch": true,
+    "actions": [
+      {
+        "label": "Go+",
+        "enabled": true,
+        "hotkey": [
+          {
+            "meta": true,
+            "key": "G"
+          }
+        ],
+        "action": {
+          "type": "command",
+          "command": "go"
+        }
+      },
+      {
+        "label": "Go-",
+        "enabled": true,
+        "hotkey": [
+          {
+            "meta": true,
+            "shift": true,
+            "key": "G"
+          }
+        ],
+        "action": {
+          "type": "command",
+          "command": "back"
+        }
+      }
+    ],
+    "grid": {
+      "tiles": [
+        {
+
+        }
+      ]
+    }
+  }
+}
+....

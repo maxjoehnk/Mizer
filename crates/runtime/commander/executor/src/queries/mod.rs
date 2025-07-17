@@ -14,6 +14,7 @@ pub use mizer_plan::queries::*;
 pub use mizer_runtime::queries::*;
 pub use mizer_sequencer_queries::*;
 pub use mizer_timecode::queries::*;
+pub use mizer_ui_api::queries::*;
 
 use mizer_module::Inject;
 
@@ -69,6 +70,7 @@ query_impl! {
     GetNodeQuery,
     ListLinksQuery,
     ListAvailableNodesQuery,
+    ListViewsQuery,
 }
 
 impl QueryImpl {

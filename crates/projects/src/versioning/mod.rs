@@ -15,6 +15,7 @@ migrations! {
     MigratePositionPresets,
     AdaptFaderConfig,
     DmxOutputChannel,
+    AddViews,
 }
 
 impl Migrations {

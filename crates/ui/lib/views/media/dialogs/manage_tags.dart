@@ -20,7 +20,7 @@ class ManageTagsDialog extends StatelessWidget {
         content: Container(
           width: MAX_DIALOG_WIDTH,
           height: MAX_DIALOG_HEIGHT,
-          child: BlocBuilder<MediaBloc, MediaFiles>(
+          child: BlocBuilder<MediaBloc, MediaState>(
             bloc: bloc,
             builder: (context, state) {
               return ListView(

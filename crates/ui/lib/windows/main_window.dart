@@ -2,9 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:mizer/dialogs/backend_dialog_controller.dart';
 import 'package:mizer/session/window_title_updater.dart';
 import 'package:mizer/widgets/global_hotkeys.dart';
-import 'package:nativeshell/nativeshell.dart';
+import 'package:nativeshell/nativeshell.dart' hide Shell;
 
-import '../home.dart';
+import '../shell/shell.dart';
 import 'base_window_state.dart';
 
 const double WIDTH = 800;
@@ -19,7 +19,7 @@ class MainWindowState extends WindowState {
           child: GlobalHotkeyConfiguration(
             child: BackendDialogController(
               child: WindowTitleUpdater(
-                child: Home(),
+                child: Shell(),
               ),
             ),
           ),

@@ -23,3 +23,53 @@ message Row {
   repeated string cells = 2;
   repeated Row children = 3;
 }
+
+message View {
+  string title = 1;
+  string icon = 2;
+  ViewChild child = 3;
+}
+
+message ViewChild {
+  oneof child {
+    PanelGroup group = 1;
+    Panel panel = 2;
+  }
+  optional Size width = 3;
+  optional Size height = 4;
+}
+
+message PanelGroup {
+  Direction direction = 1;
+  repeated ViewChild children = 2;
+
+  enum Direction {
+    DIRECTION_HORIZONTAL = 0;
+    DIRECTION_VERTICAL = 1;
+  }
+}
+
+message Size {
+  oneof size {
+    Fill fill = 1;
+    Flex flex = 2;
+    GridItems gridItems = 3;
+    Pixels pixels = 4;
+  }
+}
+
+message Fill {}
+message Flex {
+  uint32 flex = 1;
+}
+message GridItems {
+  float count = 1;
+}
+message Pixels {
+  uint32 pixels = 1;
+}
+
+message Panel {
+  string panelType = 1;
+}
+

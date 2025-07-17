@@ -73,6 +73,20 @@ impl<R: RuntimeApi + 'static> AsyncMethodCallHandler for UiChannel<R> {
                     "Invalid arguments",
                 )),
             },
+            "getViews" => {
+                let views = self.handler.get_views();
+                
+                match views {
+                    Ok(views) => {
+                        let views: Vec<_> = views.into_iter().map(|view| view.into_value()).collect();
+                        Ok(Value::List(views))
+                    }
+                    Err(e) => Err(MethodCallError::from_code_message(
+                        &format!("{e}"),
+                        &format!("{e:?}"),
+                    )),
+                }
+            }
             _ => Err(MethodCallError::from_code_message(
                 "not-implemented",
                 "Not implemented",

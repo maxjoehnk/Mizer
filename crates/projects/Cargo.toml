@@ -25,6 +25,7 @@ mizer-protocol-dmx = { path = "../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path = "../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../components/connections/protocols/osc" }
 mizer-surfaces = { path = "../components/surfaces" }
+mizer-ui-api = { path = "../components/ui" }
 directories-next = "2.0"
 fs2 = "0.4"
 indexmap = { version = "2.2", features = ["serde"] }

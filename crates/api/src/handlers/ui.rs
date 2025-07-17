@@ -3,7 +3,8 @@ use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 use itertools::Itertools;
 use mizer_command_executor::{
-    GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery, SendableCommand, SendableQuery,
+    GetFixtureDefinitionQuery, ListFixtureDefinitionsQuery, ListViewsQuery, SendableCommand,
+    SendableQuery,
 };
 use mizer_command_line::CommandLineContext;
 use mizer_fixtures::ui_handlers::*;
@@ -154,6 +155,13 @@ impl<R: RuntimeApi + 'static> UiHandler<R> {
         mizer_command_line::try_execute(self, &command).await?;
 
         Ok(())
+    }
+
+    pub fn get_views(&self) -> anyhow::Result<Vec<View>> {
+        let views = self.execute_query(ListViewsQuery)?;
+        let views = views.into_iter().map(View::from).collect();
+
+        Ok(views)
     }
 }
 

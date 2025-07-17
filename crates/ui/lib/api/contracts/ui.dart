@@ -6,4 +6,6 @@ abstract class UiApi {
   Future<TabularData> showTable(String table, List<String> arguments);
 
   Future<void> commandLineExecute(String command);
+
+  Future<List<View>> getViews();
 }

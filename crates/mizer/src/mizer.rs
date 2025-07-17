@@ -8,7 +8,7 @@ use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
-use mizer_module::Runtime;
+use mizer_module::{Inject, Runtime};
 use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
@@ -19,7 +19,7 @@ use mizer_session::SessionState;
 use mizer_status_bus::{ProjectStatus, StatusBus};
 use mizer_surfaces::SurfaceRegistry;
 use mizer_timecode::TimecodeManager;
-
+use mizer_ui_api::view::ViewRegistry;
 use crate::api::*;
 use crate::flags::Flags;
 
@@ -90,6 +90,8 @@ impl Mizer {
         osc_manager.new_project();
         let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
         surface_registry.new_project();
+        let view_registry = injector.inject::<ViewRegistry>();
+        view_registry.new_project();
         self.runtime.new_project();
         self.send_session_update();
         self.runtime
@@ -142,6 +144,9 @@ impl Mizer {
                 surface_registry
                     .load(&project)
                     .context("loading surfaces")?;
+                let view_registry = injector.inject::<ViewRegistry>();
+                view_registry.load(&project)
+                    .context("loading views")?;
             }
             self.media_server_api
                 .load(&project)
@@ -213,6 +218,8 @@ impl Mizer {
             let surface_registry = injector.get::<SurfaceRegistry>().unwrap();
             surface_registry.save(&mut project);
             self.media_server_api.save(&mut project);
+            let view_registry = injector.inject::<ViewRegistry>();
+            view_registry.save(&mut project);
             project.save_file(path)?;
             tracing::info!("Saving project...Done");
             self.runtime.add_status_message(
@@ -245,6 +252,10 @@ impl Mizer {
         sequencer.clear();
         let timecode_manager = injector.get::<TimecodeManager>().unwrap();
         timecode_manager.clear();
+        let surface_registry = injector.get_mut::<SurfaceRegistry>().unwrap();
+        surface_registry.clear();
+        let view_registry = injector.inject::<ViewRegistry>();
+        view_registry.clear();
         self.project_path = None;
         self.media_server_api.clear();
         let effects_engine = injector.get_mut::<EffectEngine>().unwrap();

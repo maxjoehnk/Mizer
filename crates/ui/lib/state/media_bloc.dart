@@ -77,10 +77,29 @@ class MediaChanged extends MediaEvent {
   MediaChanged({required this.files, required this.tags});
 }
 
-class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
+class SelectMedia extends MediaEvent {
+  final MediaFile file;
+
+  SelectMedia(this.file);
+}
+
+class MediaState {
+  final List<MediaFile> files;
+  final List<MediaTag> tags;
+  final List<String> folders;
+  final MediaFile? selectedFile;
+
+  MediaState({required this.files, required this.tags, required this.folders, this.selectedFile});
+
+  factory MediaState.empty() {
+    return MediaState(files: [], tags: [], folders: [], selectedFile: null);
+  }
+}
+
+class MediaBloc extends Bloc<MediaEvent, MediaState> {
   final MediaApi api;
 
-  MediaBloc(this.api) : super(MediaFiles()) {
+  MediaBloc(this.api) : super(MediaState.empty()) {
     on<FetchMedia>((event, emit) async {
       emit(await _fetch());
     });
@@ -111,7 +130,12 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
       await api.removeTagFromMedia(event.mediaId, event.tagId);
     });
     on<MediaChanged>((event, emit) async {
-      emit(MediaFiles(files: event.files, tags: event.tags, folders: state.folders));
+      emit(MediaState(
+        files: event.files,
+        tags: event.tags,
+        folders: state.folders,
+        selectedFile: state.selectedFile,
+      ));
     });
     on<RelinkMedia>((event, emit) async {
       await api.relinkMedia(event.mediaId, event.path);
@@ -123,7 +147,14 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
     this.add(FetchMedia());
   }
 
-  Future<MediaFiles> _fetch() async {
-    return await api.getMedia();
+  Future<MediaState> _fetch() async {
+    var mediaFiles = await api.getMedia();
+
+    return MediaState(
+      files: mediaFiles.files,
+      tags: mediaFiles.tags,
+      folders: mediaFiles.folders.paths,
+      selectedFile: state.selectedFile,
+    );
   }
 }

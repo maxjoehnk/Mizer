@@ -6,8 +6,8 @@ import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/hoverable.dart';
-import 'package:mizer/widgets/transport/beat_indicator.dart';
 
+import 'beat_indicator.dart';
 import 'command_line.dart';
 import 'fps_control.dart';
 import 'speed_control.dart';

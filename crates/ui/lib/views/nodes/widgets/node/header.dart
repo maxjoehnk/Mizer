@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/available_nodes.dart';
+import 'package:mizer/node_categories.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import '../../consts.dart';

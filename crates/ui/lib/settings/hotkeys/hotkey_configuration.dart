@@ -13,8 +13,7 @@ class HotkeyConfiguration extends StatefulWidget {
   HotkeyConfiguration(
       {required this.hotkeySelector,
       required this.child,
-      required this.hotkeyMap,
-      bool? global = false});
+      required this.hotkeyMap});
 
   @override
   State<HotkeyConfiguration> createState() => _HotkeyConfigurationState();
@@ -34,7 +33,7 @@ class _HotkeyConfigurationState extends State<HotkeyConfiguration> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = context.read<SettingsBloc>();
+    var bloc = context.watch<SettingsBloc>();
     var hotkeys = HotkeyMapping(widget.hotkeySelector(bloc.state.hotkeys));
 
     return Provider.value(value: hotkeys, child: widget.child);

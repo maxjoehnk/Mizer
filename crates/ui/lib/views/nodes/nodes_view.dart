@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart' hide Tab;
 import 'package:mizer/api/contracts/nodes.dart';
-import 'package:mizer/available_nodes.dart';
+import 'package:mizer/node_categories.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';

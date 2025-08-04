@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
-import 'ffi/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 
 class SequencerPluginApi implements SequencerApi {
   final FFIBindings bindings;

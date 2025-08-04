@@ -1,7 +1,7 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
-import '../contracts/fixtures.dart';
+import 'package:mizer/api/contracts/fixtures.dart';
 
 class FixturesMobileApi implements FixturesApi {
   final FixturesApiClient _client;

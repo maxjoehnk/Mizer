@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:provider/provider.dart';
 
-import 'nodes_bloc.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 
 class NodesViewState extends StatefulWidget {
   final Widget child;

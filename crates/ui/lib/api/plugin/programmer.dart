@@ -5,8 +5,8 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
 
 export 'ffi/programmer.dart' show ProgrammerStatePointer;
 

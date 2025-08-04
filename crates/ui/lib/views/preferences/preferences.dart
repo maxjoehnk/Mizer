@@ -6,9 +6,9 @@ import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 
-import 'file_paths.dart';
-import 'general.dart';
-import 'hotkeys.dart';
+import 'package:mizer/views/preferences/file_paths.dart';
+import 'package:mizer/views/preferences/general.dart';
+import 'package:mizer/views/preferences/hotkeys.dart';
 
 class PreferencesView extends StatelessWidget {
   const PreferencesView({Key? key}) : super(key: key);

@@ -26,11 +26,11 @@ import 'package:mizer/widgets/status_bar.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:provider/provider.dart';
 
-import 'actions/actions.dart';
-import 'consts.dart';
-import 'panes/programmer/programmer_view.dart';
-import 'panes/selection/selection_pane.dart';
-import 'views/dmx_output/dmx_output.dart';
+import 'package:mizer/actions/actions.dart';
+import 'package:mizer/consts.dart';
+import 'package:mizer/panes/programmer/programmer_view.dart';
+import 'package:mizer/panes/selection/selection_pane.dart';
+import 'package:mizer/views/dmx_output/dmx_output.dart';
 
 const double SHEET_SIZE = 150;
 const double SHEET_PADDING = 0;

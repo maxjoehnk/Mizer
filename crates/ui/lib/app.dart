@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 
 class MizerApp extends StatelessWidget {
@@ -13,14 +12,11 @@ class MizerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mizer',
       darkTheme: theme,
-      home: I18n(initialLocale: Locale('en'), child: child),
+      home: child,
       themeMode: ThemeMode.dark,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [const Locale('en'), const Locale('de')],
+      locale: I18n.locale,
+      supportedLocales: I18n.supportedLocales,
+      localizationsDelegates: I18n.localizationsDelegates,
     );
   }
 

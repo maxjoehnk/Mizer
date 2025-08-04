@@ -5,7 +5,7 @@ import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/inputs/color.dart';
 
-import 'fixture_group_control.dart';
+import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 
 const CONTROLS = [
   FixtureControl.COLOR_MIXER,

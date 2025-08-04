@@ -15,7 +15,7 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:protobuf/protobuf.dart';
 
-import 'effect_editor.dart';
+import 'package:mizer/views/effects/effect_editor.dart';
 
 class EffectsView extends StatefulWidget {
   const EffectsView({Key? key}) : super(key: key);

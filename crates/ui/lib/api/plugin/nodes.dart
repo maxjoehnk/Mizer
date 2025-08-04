@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
-import 'ffi/history.dart';
-import 'ffi/nodes.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/history.dart';
+import 'package:mizer/api/plugin/ffi/nodes.dart';
 
 export 'ffi/history.dart' show NodeHistoryPointer;
 

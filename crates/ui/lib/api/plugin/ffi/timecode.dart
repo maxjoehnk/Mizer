@@ -1,8 +1,8 @@
 import 'dart:ffi' as ffi;
 
-import 'bindings.dart';
-import 'ffi_pointer.dart';
-import 'transport.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 
 class TimecodePointer extends FFIPointer<TimecodeApi> {
   final FFIBindings _bindings;

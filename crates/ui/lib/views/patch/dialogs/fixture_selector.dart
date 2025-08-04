@@ -5,7 +5,7 @@ import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/list_item.dart';
 
-import '../../nodes/widgets/properties/fields/text_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 
 class FixtureSelector extends StatefulWidget {
   final FixtureDefinition? definition;

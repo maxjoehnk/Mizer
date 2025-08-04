@@ -8,10 +8,10 @@ import 'package:mizer/widgets/hotkey_formatter.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/transport/beat_indicator.dart';
 
-import 'command_line.dart';
-import 'fps_control.dart';
-import 'speed_control.dart';
-import 'time_control.dart';
+import 'package:mizer/widgets/transport/command_line.dart';
+import 'package:mizer/widgets/transport/fps_control.dart';
+import 'package:mizer/widgets/transport/speed_control.dart';
+import 'package:mizer/widgets/transport/time_control.dart';
 
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;

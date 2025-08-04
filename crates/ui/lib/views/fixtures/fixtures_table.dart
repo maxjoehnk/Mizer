@@ -12,8 +12,8 @@ import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-import 'color_indicator.dart';
-import 'fader_indicator.dart';
+import 'package:mizer/views/fixtures/color_indicator.dart';
+import 'package:mizer/views/fixtures/fader_indicator.dart';
 
 class FixturesTable extends StatelessWidget {
   final List<Fixture> fixtures;

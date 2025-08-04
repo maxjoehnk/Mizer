@@ -15,14 +15,14 @@ import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
-import '../../consts.dart';
-import '../../models/node_model.dart';
-import 'container.dart';
-import 'footer.dart';
-import 'header.dart';
+import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
+import 'package:mizer/views/nodes/widgets/node/container.dart';
+import 'package:mizer/views/nodes/widgets/node/footer.dart';
+import 'package:mizer/views/nodes/widgets/node/header.dart';
 import 'ports.dart';
 import 'preview.dart';
-import 'tabs.dart';
+import 'package:mizer/views/nodes/widgets/node/tabs.dart';
 
 class BaseNode extends StatefulWidget {
   final NodeModel nodeModel;

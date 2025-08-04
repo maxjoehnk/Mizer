@@ -4,9 +4,9 @@ import 'package:ffi/ffi.dart';
 import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/widgets/inputs/color.dart';
 
-import 'api.dart';
-import 'bindings.dart';
-import 'ffi_pointer.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
 class NodeHistoryPointer extends FFIPointer<NodeHistory> implements TimecodeReader {
   final FFIBindings _bindings;

@@ -19,14 +19,14 @@ import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:provider/provider.dart';
 
-import 'models/node_editor_model.dart';
-import 'models/node_model.dart';
-import 'widgets/editor_layers/canvas_drop_layer.dart';
-import 'widgets/editor_layers/drag_selection_layer.dart';
-import 'widgets/editor_layers/graph_paint_layer.dart';
-import 'widgets/editor_layers/nodes_layer.dart';
-import 'widgets/node/preview.dart';
-import 'widgets/properties/properties_pane.dart';
+import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/canvas_drop_layer.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/drag_selection_layer.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/graph_paint_layer.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/nodes_layer.dart';
+import 'package:mizer/views/nodes/widgets/node/preview.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties_pane.dart';
 
 const double SidebarWidth = 302;
 const double PathBreadcrumbHeight = 32;

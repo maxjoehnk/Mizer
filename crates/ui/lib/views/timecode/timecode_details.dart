@@ -9,10 +9,10 @@ import 'package:mizer/widgets/splines/point_state.dart';
 import 'package:mizer/widgets/splines/spline_editor.dart';
 import 'package:provider/provider.dart';
 
-import 'consts.dart';
+import 'package:mizer/views/timecode/consts.dart';
 import 'dialogs/add_timecode_control_dialog.dart';
-import 'editor/timecode_playback_handle.dart';
-import 'editor/timecode_strip.dart';
+import 'package:mizer/views/timecode/editor/timecode_playback_handle.dart';
+import 'package:mizer/views/timecode/editor/timecode_strip.dart';
 
 class TimecodeDetail extends StatelessWidget {
   final Timecode timecode;

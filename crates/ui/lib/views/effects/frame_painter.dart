@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 
-import 'frame_editor.dart';
+import 'package:mizer/views/effects/frame_editor.dart';
 
 const HANDLE_SIZE = 0.04;
 

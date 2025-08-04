@@ -4,7 +4,7 @@ import 'package:mizer/api/plugin/ffi/api.dart';
 import 'package:mizer/api/plugin/ffi/bindings.dart' as ffi;
 import 'package:mizer/api/plugin/ffi/transport.dart';
 
-import '../consts.dart';
+import 'package:mizer/views/timecode/consts.dart';
 
 class TimecodePlaybackIndicator extends StatefulWidget {
   final TimecodeReader? reader;

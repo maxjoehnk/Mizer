@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:mizer/widgets/tabs.dart';
 
-import 'fader.dart';
+import 'package:mizer/widgets/inputs/fader.dart';
 
 enum ColorMode {
   Rgb,

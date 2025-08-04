@@ -4,7 +4,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
-import '../fields/text_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'property_group.dart';
 
 class NodeProperties extends StatelessWidget {

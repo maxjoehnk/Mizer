@@ -6,7 +6,7 @@ import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'keymap.dart';
+import 'package:mizer/settings/hotkeys/keymap.dart';
 
 const List<LogicalKeyboardKey> _modifierKeys = [
   LogicalKeyboardKey.control,

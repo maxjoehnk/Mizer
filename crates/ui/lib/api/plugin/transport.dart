@@ -2,9 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart' show FFIBindings;
-import 'ffi/transport.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart' show FFIBindings;
+import 'package:mizer/api/plugin/ffi/transport.dart';
 
 class TransportPluginApi implements TransportApi {
   final FFIBindings bindings;

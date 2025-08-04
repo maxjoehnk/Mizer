@@ -1,6 +1,6 @@
 import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
-import '../contracts/fixtures.dart';
+import 'package:mizer/api/contracts/fixtures.dart';
 
 class FixturesDemoApi implements FixturesApi {
   @override

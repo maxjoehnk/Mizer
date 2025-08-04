@@ -4,7 +4,7 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
-import 'ast.dart';
+import 'package:mizer/widgets/popup/ast.dart';
 
 class PopupValueInput extends StatefulWidget {
   final CueValue? value;

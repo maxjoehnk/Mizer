@@ -8,15 +8,15 @@ import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/status_bar_bloc.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
 
-import 'effects_bloc.dart';
-import 'fixtures_bloc.dart';
-import 'layouts_bloc.dart';
-import 'media_bloc.dart';
-import 'nodes_bloc.dart';
+import 'package:mizer/state/effects_bloc.dart';
+import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/state/layouts_bloc.dart';
+import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'presets_bloc.dart';
-import 'session_bloc.dart';
-import 'settings_bloc.dart';
-import 'timecode_bloc.dart';
+import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/state/settings_bloc.dart';
+import 'package:mizer/state/timecode_bloc.dart';
 
 class StateProvider extends StatelessWidget {
   final Widget child;

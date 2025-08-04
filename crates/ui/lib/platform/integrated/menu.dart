@@ -1,6 +1,6 @@
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
-import '../platform.dart';
+import 'package:mizer/platform/platform.dart';
 
 extension NativeShellMenu on Menu {
   nativeshell.Menu toNative() {

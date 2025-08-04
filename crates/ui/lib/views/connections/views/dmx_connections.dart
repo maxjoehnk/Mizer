@@ -7,10 +7,10 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-import '../dialogs/add_artnet_input_connection.dart';
-import '../dialogs/add_artnet_output_connection.dart';
-import '../dialogs/add_sacn_connection.dart';
-import '../dialogs/delete_connection.dart';
+import 'package:mizer/views/connections/dialogs/add_artnet_input_connection.dart';
+import 'package:mizer/views/connections/dialogs/add_artnet_output_connection.dart';
+import 'package:mizer/views/connections/dialogs/add_sacn_connection.dart';
+import 'package:mizer/views/connections/dialogs/delete_connection.dart';
 
 class DmxConnectionsView extends StatefulWidget {
   final List<Connection> connections;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../consts.dart';
+import 'package:mizer/views/timecode/consts.dart';
 
 class TimecodeStrip extends StatelessWidget {
   const TimecodeStrip({Key? key}) : super(key: key);

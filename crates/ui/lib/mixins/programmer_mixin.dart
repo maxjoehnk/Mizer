@@ -1,12 +1,11 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/api/plugin/programmer.dart';
 import 'package:provider/provider.dart';
 
 @optionalTypeArgs
 mixin ProgrammerStateMixin<T extends StatefulWidget> on State<T>, TickerProvider {
-  ProgrammerStatePointer? _programmerPointer;
+  IProgrammerStatePointer? _programmerPointer;
   Ticker? _programmerTicker;
   ProgrammerState _programmerState = ProgrammerState();
 

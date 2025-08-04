@@ -5,8 +5,8 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
-import '../../consts.dart';
-import 'tabs.dart';
+import 'package:mizer/views/nodes/consts.dart';
+import 'package:mizer/views/nodes/widgets/node/tabs.dart';
 
 class NodeFooter extends StatelessWidget {
   final Function(NodeTab) onSelectTab;

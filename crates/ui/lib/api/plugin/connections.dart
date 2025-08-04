@@ -2,9 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
-import 'ffi/connections.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/connections.dart';
 
 class ConnectionsPluginApi implements ConnectionsApi {
   final FFIBindings bindings;

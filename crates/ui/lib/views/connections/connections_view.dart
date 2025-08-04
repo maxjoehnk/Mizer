@@ -6,17 +6,17 @@ import 'package:mizer/consts.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:provider/provider.dart';
 
-import 'connection_categories.dart';
-import 'views/citp_connections.dart';
-import 'views/dmx_connections.dart';
-import 'views/gamepad_connections.dart';
-import 'views/hid_connections.dart';
-import 'views/laser_connections.dart';
-import 'views/midi_connections.dart';
-import 'views/mqtt_connections.dart';
-import 'views/osc_connections.dart';
-import 'views/prodjlink_connections.dart';
-import 'views/video_connections.dart';
+import 'package:mizer/views/connections/connection_categories.dart';
+import 'package:mizer/views/connections/views/citp_connections.dart';
+import 'package:mizer/views/connections/views/dmx_connections.dart';
+import 'package:mizer/views/connections/views/gamepad_connections.dart';
+import 'package:mizer/views/connections/views/hid_connections.dart';
+import 'package:mizer/views/connections/views/laser_connections.dart';
+import 'package:mizer/views/connections/views/midi_connections.dart';
+import 'package:mizer/views/connections/views/mqtt_connections.dart';
+import 'package:mizer/views/connections/views/osc_connections.dart';
+import 'package:mizer/views/connections/views/prodjlink_connections.dart';
+import 'package:mizer/views/connections/views/video_connections.dart';
 
 class ConnectionsView extends StatefulWidget {
   @override

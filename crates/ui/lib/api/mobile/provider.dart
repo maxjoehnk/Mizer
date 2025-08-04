@@ -5,12 +5,12 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 
-import '../demo/fixtures.dart';
-import '../demo/programmer.dart';
-import '../demo/sequencer.dart';
-import 'fixtures.dart';
+import 'package:mizer/api/demo/fixtures.dart';
+import 'package:mizer/api/demo/programmer.dart';
+import 'package:mizer/api/demo/sequencer.dart';
+import 'package:mizer/api/mobile/fixtures.dart';
 import 'programmer.dart';
-import 'sequencer.dart';
+import 'package:mizer/api/mobile/sequencer.dart';
 
 class MobileApiProvider extends StatelessWidget {
   final Widget child;

@@ -9,8 +9,8 @@ import 'package:mizer/views/surfaces/settings.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 
-import 'section_list.dart';
-import 'surface_list.dart';
+import 'package:mizer/views/surfaces/section_list.dart';
+import 'package:mizer/views/surfaces/surface_list.dart';
 
 class SurfacesView extends StatelessWidget {
   const SurfacesView({super.key});

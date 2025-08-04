@@ -10,7 +10,7 @@ import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 
-import 'frame_painter.dart';
+import 'package:mizer/views/effects/frame_painter.dart';
 
 const double FRAME_EDITOR_CHANNEL_HEIGHT = 80;
 

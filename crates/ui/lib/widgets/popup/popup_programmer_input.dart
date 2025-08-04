@@ -10,7 +10,7 @@ import 'package:mizer/widgets/hoverable.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 import 'package:mizer/widgets/tabs.dart';
 
-import 'ast.dart';
+import 'package:mizer/widgets/popup/ast.dart';
 
 class PopupProgrammerInput extends StatefulWidget {
   final CueValue? value;

@@ -9,8 +9,8 @@ import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
-import 'field/text_input.dart';
-import 'hoverable.dart';
+import 'package:mizer/widgets/field/text_input.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 class Panel extends StatefulWidget {
   final String? label;

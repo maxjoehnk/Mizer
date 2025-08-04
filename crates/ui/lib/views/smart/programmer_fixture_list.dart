@@ -7,7 +7,7 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 
-import 'smart_view.dart';
+import 'package:mizer/views/smart/smart_view.dart';
 
 class ProgrammerFixtureList extends StatelessWidget {
   final ProgrammerState programmerState;

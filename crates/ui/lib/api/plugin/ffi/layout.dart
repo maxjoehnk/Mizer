@@ -3,8 +3,8 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 
-import 'bindings.dart';
-import 'ffi_pointer.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
 class LayoutsRefPointer extends FFIPointer<LayoutRef> {
   final FFIBindings _bindings;

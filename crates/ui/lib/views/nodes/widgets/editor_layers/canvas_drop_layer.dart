@@ -3,7 +3,7 @@ import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/node_editor_model.dart';
 
 class CanvasDropLayer extends StatelessWidget {
   @override

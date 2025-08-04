@@ -5,9 +5,9 @@ import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import 'media_list.dart';
-import 'media_metadata.dart';
-import 'media_preview.dart';
+import 'package:mizer/views/media/media_list.dart';
+import 'package:mizer/views/media/media_metadata.dart';
+import 'package:mizer/views/media/media_preview.dart';
 
 class MediaView extends StatefulWidget {
   @override

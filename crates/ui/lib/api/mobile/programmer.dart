@@ -1,9 +1,8 @@
 import 'package:grpc/grpc.dart';
-import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pbgrpc.dart';
 
-import '../contracts/programmer.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 
 class ProgrammerMobileApi extends ProgrammerApi {
   final ProgrammerApiClient _client;
@@ -70,7 +69,7 @@ class ProgrammerMobileApi extends ProgrammerApi {
   }
 
   @override
-  Future<ProgrammerStatePointer?> getProgrammerPointer() {
+  Future<IProgrammerStatePointer?> getProgrammerPointer() {
     // TODO: implement getProgrammerPointer
     throw UnimplementedError();
   }

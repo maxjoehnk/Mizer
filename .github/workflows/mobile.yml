@@ -27,13 +27,6 @@ jobs:
         with:
           channel: stable
           flutter-version-file: "crates/ui/pubspec.yaml"
-      # Generate bindings.dart
-      # This shouldn't be necessary as the ffi code isn't used for the mobile app
-      - name: Install cbindgen
-        run: cargo install --force cbindgen
-      - name: Generate Bindings
-        run: make generate_bindings
-        working-directory: crates/ui
       # Build android release bundle
       - name: Decode keystore
         env:

@@ -1,4 +1,4 @@
-import 'selection_state.dart';
+import 'package:mizer/widgets/interactive_surface/layers/drag_selection/selection_state.dart';
 import 'package:flutter/material.dart';
 
 class SelectionIndicator extends StatelessWidget {

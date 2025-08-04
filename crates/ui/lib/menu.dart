@@ -16,9 +16,9 @@ import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
-import 'actions/actions.dart';
-import 'api/contracts/session.dart';
-import 'api/plugin/app.dart';
+import 'package:mizer/actions/actions.dart';
+import 'package:mizer/api/contracts/session.dart';
+import 'package:mizer/api/plugin/app.dart';
 import 'dialogs/power_dialog.dart';
 
 class ApplicationMenu extends StatelessWidget {

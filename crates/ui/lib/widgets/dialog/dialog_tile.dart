@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/consts.dart';
 
-import '../hoverable.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 class DialogTile extends StatelessWidget {
   final String? title;

@@ -15,8 +15,8 @@ import 'package:mizer/widgets/tabs.dart';
 import 'dialogs/assign_fixtures_to_group_dialog.dart';
 import 'dialogs/delete_fixture_dialog.dart';
 import 'dialogs/patch_fixture_dialog.dart';
-import 'fixture_channel_limits.dart';
-import 'fixture_table.dart';
+import 'package:mizer/views/patch/fixture_channel_limits.dart';
+import 'package:mizer/views/patch/fixture_table.dart';
 
 class FixturePatchView extends StatefulWidget {
   @override

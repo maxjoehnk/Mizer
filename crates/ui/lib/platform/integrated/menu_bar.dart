@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide MenuItem;
 import 'package:mizer/platform/integrated/menu.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
-import '../platform.dart';
+import 'package:mizer/platform/platform.dart';
 
 class IntegratedMenuBar extends StatelessWidget {
   final Widget child;

@@ -3,7 +3,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 
-import '../consts.dart';
+import 'package:mizer/views/nodes/consts.dart';
 
 enum NodeTab {
   Ports,

@@ -1,7 +1,7 @@
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 
-import '../plugin/ffi/layout.dart';
+import 'package:mizer/api/plugin/ffi/layout.dart';
 
 abstract class LayoutsApi {
   Future<Layouts> getLayouts();

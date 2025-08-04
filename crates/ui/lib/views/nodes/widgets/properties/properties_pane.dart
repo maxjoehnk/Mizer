@@ -6,9 +6,9 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/groups/help_group.dart';
 
-import 'groups/node_group.dart';
-import 'groups/port_group.dart';
-import 'groups/settings_group.dart';
+import 'package:mizer/views/nodes/widgets/properties/groups/node_group.dart';
+import 'package:mizer/views/nodes/widgets/properties/groups/port_group.dart';
+import 'package:mizer/views/nodes/widgets/properties/groups/settings_group.dart';
 
 class NodePropertiesPane extends StatefulWidget {
   final Node? node;

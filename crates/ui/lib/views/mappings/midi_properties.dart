@@ -11,8 +11,8 @@ import 'package:mizer/views/nodes/widgets/properties/groups/property_group.dart'
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:provider/provider.dart';
 
-import '../nodes/widgets/properties/fields/enum_field.dart';
-import '../nodes/widgets/properties/fields/number_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
 
 class MidiProperties extends StatefulWidget {
   final MidiNodeConfig config;

@@ -3,7 +3,7 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import 'items/cdj_view.dart';
+import 'package:mizer/views/connections/views/items/cdj_view.dart';
 
 class ProDJLinkConnectionsView extends StatelessWidget {
   final List<Connection> connections;

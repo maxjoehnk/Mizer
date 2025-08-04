@@ -5,7 +5,7 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import 'movement_painter.dart';
+import 'package:mizer/views/effects/movement_painter.dart';
 
 class MovementEditor extends StatelessWidget {
   final Effect effect;

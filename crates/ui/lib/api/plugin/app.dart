@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import '../contracts/settings.dart';
+import 'package:mizer/api/contracts/settings.dart';
 
 class ApplicationPluginApi implements SettingsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/application");

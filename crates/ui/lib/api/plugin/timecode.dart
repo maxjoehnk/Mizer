@@ -4,7 +4,7 @@ import 'package:mizer/api/plugin/ffi/api.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/protos/timecode.pb.dart';
 
-import 'ffi/bindings.dart' show FFIBindings;
+import 'package:mizer/api/plugin/ffi/bindings.dart' show FFIBindings;
 
 class TimecodePluginApi implements TimecodeApi {
   final FFIBindings bindings;

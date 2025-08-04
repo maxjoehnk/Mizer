@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'area_selection.dart';
-import 'selection_state.dart';
+import 'package:mizer/widgets/interactive_surface/layers/drag_selection/area_selection.dart';
+import 'package:mizer/widgets/interactive_surface/layers/drag_selection/selection_state.dart';
 
 abstract class DragSelectionLayer extends StatelessWidget {
   final Matrix4 transformation;

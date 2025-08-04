@@ -14,7 +14,7 @@ import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import 'fixtures_table.dart';
+import 'package:mizer/views/fixtures/fixtures_table.dart';
 
 const double SHEET_SIZE = 320;
 const double SHEET_PADDING = 16;

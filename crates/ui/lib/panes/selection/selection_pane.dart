@@ -5,7 +5,7 @@ import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 
-import 'selection_sheet.dart';
+import 'package:mizer/panes/selection/selection_sheet.dart';
 
 class SelectionPane extends StatefulWidget {
   const SelectionPane({Key? key}) : super(key: key);

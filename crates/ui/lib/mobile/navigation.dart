@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/navigation_bar/navigation_bar.dart';
+import 'package:mizer/widgets/navigation_bar/navigation_bar.dart';
 
 class MobileTab {
   final Widget child;

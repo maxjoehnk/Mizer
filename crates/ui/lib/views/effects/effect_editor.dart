@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/consts.dart';
 
-import 'frame_editor.dart';
-import 'movement_editor.dart';
+import 'package:mizer/views/effects/frame_editor.dart';
+import 'package:mizer/views/effects/movement_editor.dart';
 
 class EffectEditor extends StatelessWidget {
   final Effect effect;

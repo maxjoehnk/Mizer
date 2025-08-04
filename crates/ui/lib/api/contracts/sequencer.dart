@@ -1,6 +1,6 @@
 import 'package:mizer/protos/sequencer.pb.dart';
 
-import '../plugin/ffi/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 
 export 'package:mizer/protos/sequencer.pb.dart' hide SequenceState, SequencerState;
 

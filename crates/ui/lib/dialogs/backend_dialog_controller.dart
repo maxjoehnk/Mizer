@@ -5,7 +5,7 @@ import 'package:mizer/api/contracts/ui.dart';
 import 'package:mizer/protos/ui.pb.dart';
 import 'package:provider/provider.dart';
 
-import 'backend_dialog.dart';
+import 'package:mizer/dialogs/backend_dialog.dart';
 
 class BackendDialogController extends StatefulWidget {
   final Widget child;

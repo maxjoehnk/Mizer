@@ -4,8 +4,8 @@ import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
 
 export 'ffi/layout.dart' show LayoutsRefPointer;
 

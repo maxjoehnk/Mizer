@@ -1,8 +1,6 @@
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
-import '../plugin/ffi/programmer.dart';
-
 export 'package:mizer/protos/programmer.pb.dart';
 
 abstract class ProgrammerApi {
@@ -43,7 +41,7 @@ abstract class ProgrammerApi {
 
   Future<void> assignFixtureSelectionToGroup(Group group, StoreGroupMode mode);
 
-  Future<ProgrammerStatePointer?> getProgrammerPointer();
+  Future<IProgrammerStatePointer?> getProgrammerPointer();
 
   Future<void> updateBlockSize(int blockSize);
   Future<void> updateGroups(int groups);
@@ -58,4 +56,9 @@ abstract class ProgrammerApi {
   Future<void> writeEffectOffset(int effectId, double? effectOffset);
 
   Future<void> setOffline(bool offline);
+}
+
+abstract class IProgrammerStatePointer {
+  ProgrammerState readState();
+  void dispose();
 }

@@ -3,7 +3,7 @@ import 'dart:ffi' as ffi;
 import 'package:flutter/foundation.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
-import 'bindings.dart' as bindings;
+import 'package:mizer/api/plugin/ffi/bindings.dart' as bindings;
 
 class SequencerPointer extends FFIPointer<bindings.Sequencer> {
   final bindings.FFIBindings _bindings;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
-import '../session_selector.dart';
+import 'package:mizer/mobile/session_selector.dart';
 
 const int defaultPort = 50000;
 

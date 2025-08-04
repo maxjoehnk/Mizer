@@ -4,7 +4,7 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
-import 'fixture_group_control.dart';
+import 'package:mizer/panes/programmer/sheets/fixture_group_control.dart';
 
 const CONTROLS = [
   FixtureControl.PAN,

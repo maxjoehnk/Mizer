@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'spline_editor.dart';
+import 'package:mizer/widgets/splines/spline_editor.dart';
 
 abstract class HandleState<T> {
   T data;

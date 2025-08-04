@@ -7,8 +7,8 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 import 'package:provider/provider.dart';
 
-import '../dialogs/add_mqtt_connection.dart';
-import '../dialogs/delete_connection.dart';
+import 'package:mizer/views/connections/dialogs/add_mqtt_connection.dart';
+import 'package:mizer/views/connections/dialogs/delete_connection.dart';
 
 class MqttConnectionsView extends StatefulWidget {
   final List<Connection> connections;

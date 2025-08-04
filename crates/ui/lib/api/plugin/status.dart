@@ -2,8 +2,8 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/status.dart';
 import 'package:mizer/api/plugin/ffi/status.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart' show FFIBindings;
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart' show FFIBindings;
 
 class StatusPluginApi implements StatusApi {
   final FFIBindings bindings;

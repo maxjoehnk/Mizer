@@ -4,7 +4,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
-import 'node_model.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
 
 /// State Object for the Nodes view
 class NodeEditorModel extends ChangeNotifier {

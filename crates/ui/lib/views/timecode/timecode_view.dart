@@ -5,8 +5,8 @@ import 'package:mizer/api/plugin/ffi/timecode.dart';
 import 'package:mizer/consts.dart';
 import 'package:mizer/state/timecode_bloc.dart';
 
-import 'timecode_details.dart';
-import 'timecode_list.dart';
+import 'package:mizer/views/timecode/timecode_details.dart';
+import 'package:mizer/views/timecode/timecode_list.dart';
 
 class TimecodeView extends StatefulWidget {
   TimecodeView({Key? key}) : super(key: key);

@@ -3,7 +3,7 @@ import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart';
 import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
-import 'bindings.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
 
 class NodesPointer extends FFIPointer<NodesRef> {
   final FFIBindings _bindings;

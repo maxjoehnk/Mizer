@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/protos/ui.pb.dart';
 
-import '../contracts/ui.dart';
+import 'package:mizer/api/contracts/ui.dart';
 
 class UiPluginApi implements UiApi {
   final MethodChannel channel = const MethodChannel("mizer.live/ui");

@@ -1,11 +1,12 @@
 import 'dart:ffi' as ffi;
 
 import 'package:ffi/ffi.dart';
+import 'package:mizer/api/contracts/programmer.dart' show IProgrammerStatePointer;
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
-import 'bindings.dart';
-import 'ffi_pointer.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/ffi_pointer.dart';
 
 Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Intensity: FixtureControl.INTENSITY,
@@ -22,7 +23,7 @@ Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Gobo: FixtureControl.GOBO,
 };
 
-class ProgrammerStatePointer extends FFIPointer<Programmer> {
+class ProgrammerStatePointer extends FFIPointer<Programmer> implements IProgrammerStatePointer {
   final FFIBindings _bindings;
 
   ProgrammerStatePointer(this._bindings, ffi.Pointer<Programmer> ptr) : super(ptr);

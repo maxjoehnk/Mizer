@@ -10,7 +10,7 @@ import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/table/table.dart';
 
-import 'fixture_selector.dart';
+import 'package:mizer/views/patch/dialogs/fixture_selector.dart';
 
 class PatchFixtureDialog extends StatelessWidget {
   final FixturesApi apiClient;

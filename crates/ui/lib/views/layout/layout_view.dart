@@ -27,8 +27,8 @@ import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
-import 'add_control_popup.dart';
-import 'control.dart';
+import 'package:mizer/views/layout/add_control_popup.dart';
+import 'package:mizer/views/layout/control.dart';
 
 const double MULTIPLIER = GRID_4_SIZE;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";

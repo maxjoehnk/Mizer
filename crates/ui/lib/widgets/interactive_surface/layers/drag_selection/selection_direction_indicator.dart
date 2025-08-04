@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'selection_state.dart';
+import 'package:mizer/widgets/interactive_surface/layers/drag_selection/selection_state.dart';
 
 class SelectionDirectionIndicator extends StatelessWidget {
   final SelectionDirection direction;

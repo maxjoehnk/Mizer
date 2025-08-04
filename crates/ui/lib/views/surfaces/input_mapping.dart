@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/state/surfaces_bloc.dart';
 
-import 'mapping.dart';
+import 'package:mizer/views/surfaces/mapping.dart';
 
 class InputMapping extends StatelessWidget {
   const InputMapping({super.key});

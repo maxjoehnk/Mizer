@@ -4,10 +4,10 @@ import 'package:mizer/api/mobile/provider.dart';
 import 'package:mizer/app.dart';
 import 'package:mizer/i18n.dart';
 
-import 'fixture_list.dart';
-import 'navigation.dart';
-import 'sequence_list.dart';
-import 'session_selector.dart';
+import 'package:mizer/mobile/fixture_list.dart';
+import 'package:mizer/mobile/navigation.dart';
+import 'package:mizer/mobile/sequence_list.dart';
+import 'package:mizer/mobile/session_selector.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

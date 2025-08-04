@@ -5,15 +5,15 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:protobuf/protobuf.dart';
 
-import '../fields/boolean_field.dart';
-import '../fields/enum_field.dart';
-import '../fields/media_field.dart';
-import '../fields/number_field.dart';
-import '../fields/sequencer_field.dart';
-import '../fields/spline_field.dart';
-import '../fields/text_field.dart';
-import '../previews/envelope_preview.dart';
-import '../previews/surface_mapping_preview.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/boolean_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/enum_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/media_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/number_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/sequencer_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/spline_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/fields/text_field.dart';
+import 'package:mizer/views/nodes/widgets/properties/previews/envelope_preview.dart';
+import 'package:mizer/views/nodes/widgets/properties/previews/surface_mapping_preview.dart';
 import 'property_group.dart';
 
 class NodeSettingsPane extends StatelessWidget {

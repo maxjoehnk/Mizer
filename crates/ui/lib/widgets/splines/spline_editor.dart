@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'handle_state.dart';
+import 'package:mizer/widgets/splines/handle_state.dart';
 import 'point_state.dart';
 
 class SplineEditor<TData, TPoint extends PointState<TData>, THandle extends HandleState<TData>>

@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:mizer/state/console_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import '../../protos/console.pb.dart';
+import 'package:mizer/protos/console.pb.dart';
 
 final Map<ConsoleLevel, Color> levelColors = {
   ConsoleLevel.DEBUG: Colors.white30,

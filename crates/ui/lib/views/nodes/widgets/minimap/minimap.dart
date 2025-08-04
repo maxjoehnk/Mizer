@@ -6,8 +6,8 @@ import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:provider/provider.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
-import '../node_preview.dart';
-import 'scale_indicator.dart';
+import 'package:mizer/views/nodes/widgets/node_preview.dart';
+import 'package:mizer/views/nodes/widgets/minimap/scale_indicator.dart';
 
 class Minimap extends StatelessWidget {
   final TransformationController transformationController;

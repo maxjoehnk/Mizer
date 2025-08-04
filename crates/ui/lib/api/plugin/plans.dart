@@ -2,9 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/protos/plans.pb.dart';
 
-import 'ffi/api.dart';
-import 'ffi/bindings.dart';
-import 'ffi/plans.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/plans.dart';
 
 class PlansPluginApi implements PlansApi {
   final FFIBindings bindings;

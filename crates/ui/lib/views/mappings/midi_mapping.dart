@@ -6,7 +6,7 @@ import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 
-import 'midi_properties.dart';
+import 'package:mizer/views/mappings/midi_properties.dart';
 
 class MidiMappingDialog extends StatefulWidget {
   final String title;

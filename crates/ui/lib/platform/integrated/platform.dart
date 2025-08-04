@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
-import '../platform.dart';
-import 'menu.dart';
+import 'package:mizer/platform/platform.dart';
+import 'package:mizer/platform/integrated/menu.dart';
 
 class IntegratedPlatform extends Platform {
   @override

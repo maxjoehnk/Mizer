@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/node_editor_model.dart';
-import '../../models/node_model.dart';
-import 'base_node.dart';
+import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
+import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 
 class NodeControl extends StatefulWidget {
   final NodeModel nodeModel;

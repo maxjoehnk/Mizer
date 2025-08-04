@@ -5,7 +5,7 @@ import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/grid/grid_tile.dart';
 import 'package:mizer/widgets/grid/panel_grid.dart';
 
-import 'select_preset_type_dialog.dart';
+import 'package:mizer/panes/programmer/dialogs/select_preset_type_dialog.dart';
 
 class SelectPresetDialog extends StatelessWidget {
   final PresetType presetType;

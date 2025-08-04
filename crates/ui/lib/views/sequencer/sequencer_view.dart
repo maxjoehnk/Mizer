@@ -14,9 +14,9 @@ import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
-import 'cue_list.dart';
-import 'sequence_list.dart';
-import 'track_sheet.dart';
+import 'package:mizer/views/sequencer/cue_list.dart';
+import 'package:mizer/views/sequencer/sequence_list.dart';
+import 'package:mizer/views/sequencer/track_sheet.dart';
 
 class SequencerView extends StatefulWidget {
   const SequencerView({Key? key}) : super(key: key);

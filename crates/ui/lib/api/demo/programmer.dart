@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
-import '../contracts/programmer.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 
 class ProgrammerDemoApi extends ProgrammerApi {
   StreamController<ProgrammerState> _controller = StreamController.broadcast();

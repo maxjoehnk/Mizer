@@ -20,13 +20,13 @@ import 'dialogs/select_cue_dialog.dart';
 import 'dialogs/select_preset_dialog.dart';
 import 'dialogs/select_sequence_dialog.dart';
 import 'dialogs/store_mode_dialog.dart';
-import 'sheets/beam_sheet.dart';
-import 'sheets/channel_sheet.dart';
-import 'sheets/color_sheet.dart';
-import 'sheets/dimmer_sheet.dart';
-import 'sheets/effects_sheet.dart';
-import 'sheets/gobo_sheet.dart';
-import 'sheets/position_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/beam_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/channel_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/color_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/dimmer_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/effects_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/gobo_sheet.dart';
+import 'package:mizer/panes/programmer/sheets/position_sheet.dart';
 
 class ProgrammerSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;

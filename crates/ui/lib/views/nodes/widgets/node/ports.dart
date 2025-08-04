@@ -5,7 +5,7 @@ import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../consts.dart';
+import 'package:mizer/views/nodes/consts.dart';
 
 class NodePortList extends StatelessWidget {
   final Node node;

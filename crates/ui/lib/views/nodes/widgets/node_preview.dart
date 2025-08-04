@@ -5,7 +5,7 @@ import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:provider/provider.dart';
 
-import '../consts.dart';
+import 'package:mizer/views/nodes/consts.dart';
 
 const double NODE_PREVIEW_WIDTH = 10;
 const double NODE_PREVIEW_HEIGHT = 5;

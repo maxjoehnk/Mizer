@@ -4,15 +4,15 @@ import 'dart:io' as io;
 import 'package:mizer/api/plugin/ffi/status.dart';
 import 'package:mizer/api/plugin/ffi/timecode.dart';
 
-import 'bindings.dart';
-import 'connections.dart';
-import 'history.dart';
-import 'layout.dart';
-import 'nodes.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
+import 'package:mizer/api/plugin/ffi/connections.dart';
+import 'package:mizer/api/plugin/ffi/history.dart';
+import 'package:mizer/api/plugin/ffi/layout.dart';
+import 'package:mizer/api/plugin/ffi/nodes.dart';
 import 'plans.dart';
 import 'programmer.dart';
-import 'sequencer.dart';
-import 'transport.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 
 extension DoubleArray on Array_f64 {
   List<double> toList() {

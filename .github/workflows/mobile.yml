@@ -53,6 +53,8 @@ jobs:
         working-directory: crates/ui/android
       - name: Build
         run: make android_bundle
+        env:
+          GRADLE_OPTS: "-Xmx4g"
         working-directory: crates/ui
       # Upload to play store
       - name: Decode service account file

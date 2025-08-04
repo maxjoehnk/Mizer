@@ -1,7 +1,7 @@
 use std::fs;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
-
+use anyhow::Context;
 use uuid::Uuid;
 
 const DEFAULT_MEDIA_PATH: &str = "media";
@@ -17,10 +17,15 @@ pub struct FileStorage {
 
 impl FileStorage {
     pub fn new(base_path: PathBuf) -> anyhow::Result<FileStorage> {
-        let base_path = PathBuf::from(shellexpand::full(base_path.to_str().unwrap())?.into_owned());
+        let base_path = PathBuf::from(shellexpand::full(base_path.to_str().unwrap()).context("Expanding shell placeholders in media path")?.into_owned());
         let media_path = base_path.join(DEFAULT_MEDIA_PATH);
         let thumbnail_path = base_path.join(DEFAULT_THUMBNAIL_PATH);
         let temp_path = base_path.join(DEFAULT_TMP_PATH);
+
+        tracing::debug!("Media Path: {media_path:?}");
+        tracing::debug!("Thumbnail Path: {thumbnail_path:?}");
+        tracing::debug!("Temp Path: {temp_path:?}");
+
         fs::create_dir_all(&media_path)?;
         fs::create_dir_all(&thumbnail_path)?;
         fs::create_dir_all(&temp_path)?;

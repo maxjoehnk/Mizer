@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
-
+use anyhow::Context;
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_settings::Settings;
 use mizer_status_bus::StatusHandle;
@@ -83,7 +83,8 @@ pub struct MediaServer {
 impl MediaServer {
     pub fn new(status_bus: StatusHandle, settings: Settings) -> anyhow::Result<Self> {
         let db = DataAccess::new()?;
-        let storage = FileStorage::new(settings.paths.media_storage)?;
+        let storage = FileStorage::new(settings.paths.media_storage)
+            .context("Creating media storage")?;
         let import_paths = ImportPaths::new();
 
         Ok(Self {

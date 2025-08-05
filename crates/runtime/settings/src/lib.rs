@@ -104,14 +104,8 @@ pub struct FixtureLibraryPaths {
 }
 
 impl Settings {
-    pub fn load() -> anyhow::Result<Self> {
-        let mut buffer = String::new();
-        if Path::new("settings.toml").exists() {
-            let mut file = std::fs::File::open("settings.toml")?;
-            file.read_to_string(&mut buffer)?;
-        } else {
-            buffer = [DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat();
-        }
+    pub fn load_defaults() -> anyhow::Result<Self> {
+        let buffer = [DEFAULT_SETTINGS, DEFAULT_HOTKEYS].concat();
         let settings = toml::from_str(&buffer)?;
 
         Ok(settings)
@@ -140,6 +134,10 @@ impl SettingsManager {
 
     pub fn load(&mut self) -> anyhow::Result<()> {
         let mut paths = vec![PathBuf::from("settings.toml")];
+        if let Some(path) = Self::get_config_path() {
+            paths.push(path);
+        }
+        #[cfg(any(target_os = "linux", target_os = "windows"))]
         if let Some(path) = std::env::current_exe()
             .ok()
             .and_then(|executable| executable.parent().map(|path| path.to_path_buf()))
@@ -147,11 +145,18 @@ impl SettingsManager {
         {
             paths.push(path);
         }
-        if let Some(path) = Self::get_config_path() {
+        #[cfg(target_os = "macos")]
+        if let Some(path) = dbg!(std::env::current_exe())
+            .ok()
+            .and_then(|executable| executable.parent().map(|path| path.to_path_buf()))
+            .and_then(|path| path.parent().map(|path| path.to_path_buf()))
+            .map(|executable| executable.join("Resources/settings.toml"))
+        {
             paths.push(path);
         }
+        tracing::trace!("Settings paths: {:?}", paths);
         if let Some(path) = paths.iter().find(|path| path.exists()) {
-            tracing::trace!("Loading settings from {path:?}");
+            tracing::debug!("Loading settings from {path:?}");
             let mut file = std::fs::File::open(path)?;
             let mut buffer = String::new();
             file.read_to_string(&mut buffer)?;

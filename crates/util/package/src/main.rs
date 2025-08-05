@@ -393,7 +393,7 @@ impl Artifact {
         editor: F,
     ) -> anyhow::Result<()> {
         let to = self.artifact_dir.join(to);
-        let mut settings = Settings::load()?;
+        let mut settings = Settings::load_defaults()?;
         editor(&mut settings);
         settings.save_to(to)?;
 

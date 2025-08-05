@@ -32,6 +32,7 @@ clean:
 	rm -rf artifact
 	rm -f mizer.zip
 	rm -f mizer.flatpak
+	rm -f Mizer_unsigned.dmg
 
 artifact:
 	rm -rf artifact || true

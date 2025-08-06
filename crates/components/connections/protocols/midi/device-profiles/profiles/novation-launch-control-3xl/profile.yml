@@ -1,0 +1,7 @@
+id: novation-launch-control-3xl
+manufacturer: Novation
+name: Launch Control 3XL
+keyword: LCXL3
+scripts:
+  pages: pages.rhai
+  outputs: outputs.rhai

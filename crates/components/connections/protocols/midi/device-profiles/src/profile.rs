@@ -125,6 +125,14 @@ impl<'a> GridRef<'a> {
 }
 
 impl DeviceProfile {
+    pub fn init(&self) -> anyhow::Result<Vec<MidiMessage>> {
+        if let Some(output_script) = self.output_script.as_ref() {
+            output_script.try_init(&self.engine)
+        }else {
+            Ok(Vec::new())
+        }
+    }
+
     pub fn matches(&self, name: &str) -> bool {
         if let Some(keyword) = &self.keyword {
             name.contains(keyword)

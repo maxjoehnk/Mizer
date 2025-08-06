@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use anyhow::Context;
-use rhai::{Blob, Engine, Scope, AST};
+use rhai::{Blob, Dynamic, Engine, Scope, AST};
 
 use mizer_midi_messages::MidiMessage;
 
@@ -32,6 +32,9 @@ impl Default for OutputEngine {
             .register_get("name", |control: &mut Control| control.name.to_string())
             .register_fn("sysex", |p1: i64, p2: i64, p3: i64, p4: i64, data: Blob| {
                 MidiMessage::Sysex((p1 as u8, p2 as u8, p3 as u8), p4 as u8, data)
+            })
+            .register_fn("cc", |channel: i64, number: i64, value: i64| {
+                MidiMessage::ControlChange((channel as u8).try_into().unwrap(), number as u8, value as u8)
             });
 
         Self(engine.into())
@@ -101,5 +104,20 @@ impl OutputScript {
             .context(format!("Calling '{method}' for control {control:?}"))?;
 
         Ok(message)
+    }
+
+    pub fn try_init(&self, engine: &OutputEngine) -> anyhow::Result<Vec<MidiMessage>> {
+        if !self.ast.iter_functions().any(|func| func.name == "init") {
+            return Ok(vec![]);
+        }
+
+        let mut scope = Scope::new();
+        let messages: Dynamic = engine
+            .call_fn(&mut scope, &self.ast, "init", ())
+            .context("Initializing midi device profile")?;
+        let messages = messages.into_typed_array::<MidiMessage>()
+            .map_err(|msg| anyhow::format_err!("Invalid init function output: {msg}"))?;
+
+        Ok(messages)
     }
 }

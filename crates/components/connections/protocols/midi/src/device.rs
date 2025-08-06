@@ -60,7 +60,27 @@ impl MidiDevice {
             device.output = Some(connection);
         }
 
+        device.init()?;
+
         Ok(device)
+    }
+
+    fn init(&mut self) -> anyhow::Result<()> {
+        if self.output.is_some() {
+            let messages;
+            if let Some(profile) = self.profile.as_ref() {
+                messages = profile.init()?;
+            }else {
+                return Ok(());
+            }
+
+            tracing::info!("initializing device with midi messages: {messages:?}");
+            for msg in messages {
+                self.write(msg)?;
+            }
+        }
+
+        Ok(())
     }
 
     pub fn events(&self) -> Subscriber<MidiEvent> {

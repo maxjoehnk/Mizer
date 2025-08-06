@@ -203,6 +203,8 @@ jobs:
         run: rm -rf target/release/deps/libndi* target/release/build/ndi-*
       - name: Remove linked flutter libs and frameworks from cache
         run: rm -rf target/release/lib target/release/*.framework target/release/deps/*.framework
+      - name: Remove flutter native assets from cache
+        run: rm -rf target/release/native_assets
       - name: Build
         run: make build-release
         env:

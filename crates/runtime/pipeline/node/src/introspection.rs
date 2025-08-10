@@ -131,6 +131,7 @@ node_type_name! {
         ColorBrightness,
         ColorRgb,
         ColorHsv,
+        ColorToRgb,
         ColorToHsv,
         Container,
         Math,

@@ -1,4 +1,5 @@
 pub use self::brightness::ColorBrightnessNode;
+pub use self::color2rgb::ColorToRgbNode;
 pub use self::color2hsv::ColorToHsvNode;
 pub use self::constant::ConstantColorNode;
 pub use self::hsv::HsvColorNode;
@@ -9,3 +10,4 @@ mod color2hsv;
 mod constant;
 mod hsv;
 mod rgb;
+mod color2rgb;

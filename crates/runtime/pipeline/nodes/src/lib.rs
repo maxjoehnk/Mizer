@@ -9,7 +9,7 @@ pub use mizer_audio_nodes::{
 };
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{
-    ColorBrightnessNode, ColorToHsvNode, ConstantColorNode, HsvColorNode, RgbColorNode,
+    ColorBrightnessNode, ColorToRgbNode, ColorToHsvNode, ConstantColorNode, HsvColorNode, RgbColorNode,
 };
 pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{
@@ -292,6 +292,7 @@ node_impl! {
     ColorBrightness(ColorBrightnessNode),
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
+    ColorToRgb(ColorToRgbNode),
     ColorToHsv(ColorToHsvNode),
     Container(ContainerNode),
     Math(MathNode),

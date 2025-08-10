@@ -137,7 +137,7 @@ impl ProcessingNode for OscOutputNode {
                     red: color.red.to_8bit(),
                     green: color.green.to_8bit(),
                     blue: color.blue.to_8bit(),
-                    alpha: color.alpha as u8,
+                    alpha: color.alpha.to_8bit(),
                 };
                 output.write(OscMessage {
                     addr: self.path.clone(),

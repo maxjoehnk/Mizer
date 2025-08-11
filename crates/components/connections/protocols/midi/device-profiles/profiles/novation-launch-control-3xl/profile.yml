@@ -4,4 +4,3 @@ name: Launch Control 3XL
 keyword: LCXL3
 scripts:
   pages: pages.rhai
-  outputs: outputs.rhai

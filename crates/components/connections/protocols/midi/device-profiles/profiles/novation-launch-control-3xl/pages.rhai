@@ -4,11 +4,12 @@ fn fader(id) {
         .input()
         .channel(16)
         .cc(4 + id)
+        .resolution_14_bit()
 }
 
 fn faders() {
     let group = create_group("Faders");
-    for fader_index in range(1, 8) {
+    for fader_index in range(1, 9) {
         group.add(fader(fader_index));
     }
 
@@ -21,14 +22,12 @@ fn knob(base, id) {
         .input()
         .cc(4 + base + id)
         .channel(16)
-        //.resolution_14_bit()
-        .output()
-        .rgb("write_rgb")
+        .resolution_14_bit()
 }
 
 fn knobs(row_index) {
     let group = create_group("Knobs Row " + row_index);
-    for idx in range(1, 8) {
+    for idx in range(1, 9) {
         group.add(knob(row_index * 8, idx));
     }
 
@@ -39,13 +38,13 @@ fn button(name, note) {
     control(name)
         .id("button-" + note)
         .input()
-        .cc(note)
+        .note(note)
+        .channel(16)
         .output()
 }
 
 fn channel_button(base, id) {
     button("Button " + id, (base + id))
-        .rgb("write_rgb")
 }
 
 fn buttons(base, row_index) {
@@ -81,9 +80,9 @@ fn generate_page() {
     page += knobs(1);
     page += knobs(2);
     page += knobs(3);
-    page += buttons(36, 1);
-    page += buttons(44, 2);
-    page += playback_toolbar();
+    page += buttons(59, 1);
+    page += buttons(71, 2);
+    // page += playback_toolbar();
     // page += buttons(59, 1);
     // page += buttons(71, 2);
 

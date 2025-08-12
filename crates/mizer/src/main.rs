@@ -6,10 +6,9 @@ use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
 
-use crate::logger::LoggingGuard;
+use mizer::logger::{self, LoggingGuard};
 
 mod async_runtime;
-mod logger;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {

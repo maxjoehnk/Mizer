@@ -103,7 +103,7 @@ members = [
     "crates/util/bus",
     "crates/util/package",
     "crates/mizer",
-    "docs",
+    "docs", "crates/scripts",
 ]
 default-members = ["crates/mizer"]
 resolver = "2"

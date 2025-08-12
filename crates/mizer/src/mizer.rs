@@ -4,6 +4,7 @@ use std::time::Duration;
 use anyhow::Context;
 
 use mizer_api::handlers::Handlers;
+use mizer_command_executor::{ICommandExecutor, SendableCommand, SendableQuery};
 use mizer_console::ConsoleCategory;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::{MediaDiscovery, MediaServer};
@@ -43,8 +44,7 @@ impl Mizer {
         loop {
             let frame_delay = Duration::from_secs_f64(1f64 / self.runtime.fps());
             let before = std::time::Instant::now();
-            api_handler.handle(self);
-            self.runtime.process();
+            self.process(api_handler);
             let last_frame_duration = before - last_start;
             self.status_bus
                 .send_fps(1f64 / last_frame_duration.as_secs_f64());
@@ -64,6 +64,11 @@ impl Mizer {
             }
             profiling::finish_frame!();
         }
+    }
+
+    pub fn process(&mut self, api_handler: &ApiHandler) {
+        api_handler.handle(self);
+        self.runtime.process();
     }
 
     #[profiling::function]

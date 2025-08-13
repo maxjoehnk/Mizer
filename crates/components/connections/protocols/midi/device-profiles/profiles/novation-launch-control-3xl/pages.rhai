@@ -49,7 +49,7 @@ fn channel_button(base, id) {
 
 fn buttons(base, row_index) {
     let group = create_group("Buttons Row " + row_index);
-    for idx in range(1, 8) {
+    for idx in range(1, 9) {
         group.add(channel_button(base, idx));
     }
 

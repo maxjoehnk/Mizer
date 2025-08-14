@@ -7,28 +7,29 @@ use mizer_node::*;
 const INPUT_VALUE_PORT: &str = "Input";
 const OUTPUT_VALUE_PORT: &str = "Output";
 
+const BUFFER_SIZE_INPUT: &str = "Delay";
 const BUFFER_SIZE_SETTING: &str = "Buffer Size";
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct DelayNode {
-    pub buffer_size: usize,
+    pub buffer_size: f64,
 }
 
 impl Default for DelayNode {
     fn default() -> Self {
-        Self { buffer_size: 1 }
+        Self { buffer_size: 1. }
     }
 }
 
 impl ConfigurableNode for DelayNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
-        vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size as u32)
-            .min(0u32)
-            .max_hint(300u32)]
+        vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size).label("Delay (Beats)")
+            .min(0.)
+            .max_hint(4.)]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
-        update!(uint setting, BUFFER_SIZE_SETTING, self.buffer_size);
+        update!(float  setting, BUFFER_SIZE_SETTING, self.buffer_size);
 
         update_fallback!(setting)
     }
@@ -46,6 +47,7 @@ impl PipelineNode for DelayNode {
     fn list_ports(&self, _injector: &Injector) -> Vec<(PortId, PortMetadata)> {
         vec![
             input_port!(INPUT_VALUE_PORT, PortType::Single),
+            input_port!(BUFFER_SIZE_INPUT, PortType::Single),
             output_port!(OUTPUT_VALUE_PORT, PortType::Single),
         ]
     }
@@ -59,7 +61,14 @@ impl ProcessingNode for DelayNode {
     type State = DelayBuffer;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        state.check_size(self.buffer_size);
+        let delay_in_beats = context.read_port(BUFFER_SIZE_INPUT)
+            .unwrap_or(self.buffer_size);
+        let bpm = context.clock().speed;
+        let fps = context.fps();
+
+        let buffer_size = ((bpm * delay_in_beats * fps) / 60.).round() as usize;
+
+        state.check_size(buffer_size);
         if let Some(value) = context.read_port(INPUT_VALUE_PORT) {
             state.push_value(value);
         } else {
@@ -75,28 +84,31 @@ impl ProcessingNode for DelayNode {
     }
 
     fn create_state(&self) -> Self::State {
-        DelayBuffer::new(self.buffer_size)
+        DelayBuffer::default()
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct DelayBuffer {
     buffer: VecDeque<f64>,
 }
 
-impl DelayBuffer {
-    fn new(size: usize) -> Self {
-        let buffer = vec![0f64; size];
+impl Default for DelayBuffer {
+    fn default() -> Self {
+        let buffer = Vec::with_capacity(6000);
 
         Self {
             buffer: VecDeque::from(buffer),
         }
     }
+}
 
+impl DelayBuffer {
     fn check_size(&mut self, size: usize) {
         if self.buffer.len() == size {
             return;
         }
+        // FIXME: we should probably keep popped values in storage so we can fill the deque when the size has increased
         self.buffer.resize(size, 0f64);
     }
 

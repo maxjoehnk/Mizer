@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_util::*;
+use mizer_util::LerpExt;
 
 const VALUE_INPUT: &str = "Input";
 const VALUE_OUTPUT: &str = "Output";
@@ -104,8 +104,7 @@ impl ProcessingNode for EnvelopeNode {
                 if adsr.attack == 0. {
                     to
                 } else {
-                    let progress = state.beat.linear_extrapolate((0., adsr.attack), (0., 1.));
-                    progress.linear_extrapolate((0., 1.), (from, to))
+                    state.beat.linear_extrapolate((0., adsr.attack), (from, to))
                 }
             }
             EnvelopePhase::Release { from } => {
@@ -142,6 +141,7 @@ impl ProcessingNode for EnvelopeNode {
 
     fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
         ui.label(format!("Beat: {}", state.beat));
+        ui.label(format!("Phase Start: {}", state.phase_start));
         ui.label(format!("Phase: {:?}", state.phase));
         ui.label(format!("Previous value: {}", state.previous_value));
         ui.label(format!("Previous target: {}", state.previous_target));
@@ -185,6 +185,7 @@ pub struct EnvelopeState {
     beat: f64,
     phase: EnvelopePhase,
     previous_value: f64,
+    phase_start: f64,
     previous_target: f64,
 }
 
@@ -194,27 +195,30 @@ impl EnvelopeState {
             self.beat = delta;
         }
         self.previous_target = value;
-        let phase = if value == 0. {
-            EnvelopePhase::Release {
-                from: self.previous_value,
-            }
-        } else if self.beat <= adsr.attack {
+        let is_high = value > 0.;
+        let phase = if self.beat <= adsr.attack && is_high {
             EnvelopePhase::Attack {
                 from: self.previous_value,
                 to: value,
             }
-        } else if self.beat <= adsr.attack + adsr.decay {
+        } else if matches!(self.phase, EnvelopePhase::Attack { .. } | EnvelopePhase::Decay { .. }) && self.beat <= self.phase_start + adsr.decay {
             EnvelopePhase::Decay {
                 from: self.previous_value,
             }
-        } else {
+        } else if is_high {
             EnvelopePhase::Sustain
+        } else {
+            EnvelopePhase::Release {
+                from: self.previous_value,
+            }
         };
         if !self.phase.is_same_phase(&phase) {
+            tracing::debug!("Envelope phase changed from {:?} to {:?} at {}", self.phase, phase, self.beat);
             self.phase = phase;
+            self.phase_start = self.beat;
             if let EnvelopePhase::Release { .. } = phase {
                 // TODO: this is dangerous as it may discard frames which can cause drifting over time
-                self.beat = delta;
+                // self.beat = delta;
             }
         }
     }
@@ -236,6 +240,7 @@ impl EnvelopePhase {
             }
             (EnvelopePhase::Decay { .. }, EnvelopePhase::Decay { .. }) => true,
             (EnvelopePhase::Release { .. }, EnvelopePhase::Release { .. }) => true,
+            (EnvelopePhase::Sustain, EnvelopePhase::Sustain) => true,
             _ => false,
         }
     }
@@ -356,7 +361,7 @@ mod tests {
         node.process(&context, &mut state)?;
 
         // TODO: this should probably be 0.75 as it should start at the previous value which was 0.25
-        context.expect_write_port(VALUE_OUTPUT, 0.5);
+        context.expect_write_port(VALUE_OUTPUT, 0.625);
         Ok(())
     }
 

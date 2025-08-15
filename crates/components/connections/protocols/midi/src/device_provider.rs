@@ -26,14 +26,22 @@ impl MidiDeviceIdentifier {
     pub fn connect(self) -> anyhow::Result<MidiDevice> {
         MidiDevice::new(self)
     }
+
+    pub fn has_input(&self) -> bool {
+        self.input.is_some()
+    }
+
+    pub fn has_output(&self) -> bool {
+        self.output.is_some()
+    }
 }
 
 impl std::fmt::Debug for MidiDeviceIdentifier {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("MidiDeviceIdentifier")
             .field("name", &self.name)
-            .field("has_input", &self.input.is_some())
-            .field("has_output", &self.output.is_some())
+            .field("has_input", &self.has_input())
+            .field("has_output", &self.has_output())
             .finish()
     }
 }

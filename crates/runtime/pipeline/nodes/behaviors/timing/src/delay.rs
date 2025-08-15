@@ -25,7 +25,8 @@ impl ConfigurableNode for DelayNode {
     fn settings(&self, _injector: &Injector) -> Vec<NodeSetting> {
         vec![setting!(BUFFER_SIZE_SETTING, self.buffer_size).label("Delay (Beats)")
             .min(0.)
-            .max_hint(4.)]
+            .max_hint(4.)
+            .step_size(1.)]
     }
 
     fn update_setting(&mut self, setting: NodeSetting) -> anyhow::Result<()> {
@@ -66,7 +67,7 @@ impl ProcessingNode for DelayNode {
         let bpm = context.clock().speed;
         let fps = context.fps();
 
-        let buffer_size = ((bpm * delay_in_beats * fps) / 60.).round() as usize;
+        let buffer_size = ((delay_in_beats * fps * 60.) / bpm).round() as usize;
 
         state.check_size(buffer_size);
         if let Some(value) = context.read_port(INPUT_VALUE_PORT) {
@@ -85,6 +86,10 @@ impl ProcessingNode for DelayNode {
 
     fn create_state(&self) -> Self::State {
         DelayBuffer::default()
+    }
+
+    fn debug_ui<'a>(&self, ui: &mut impl DebugUiDrawHandle<'a>, state: &Self::State) {
+        ui.label(format!("Delay Buffer Size: {}", state.buffer.len()));
     }
 }
 

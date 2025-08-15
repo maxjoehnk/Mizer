@@ -9,7 +9,7 @@ use mizer_node::*;
 use mizer_protocol_midi::*;
 use mizer_util::LerpExt;
 
-use crate::{get_devices, get_pages_and_controls, NoteMode};
+use crate::{get_pages_and_controls, NoteMode};
 
 const INPUT_PORT: &str = "Input";
 const COLOR_PORT: &str = "Color";
@@ -84,7 +84,13 @@ fn default_midi_range() -> (u8, u8) {
 
 impl ConfigurableNode for MidiOutputNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let devices = get_devices(injector);
+        let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+        let devices = connection_manager.list_available_devices();
+        let devices = devices
+            .into_iter()
+            .filter(|device| device.has_output())
+            .map(|device| SelectVariant::from(device.name))
+            .collect();
         let device_setting = setting!(select DEVICE_SETTING, &self.device, devices);
         let binding_setting = setting!(enum BINDING_SETTING, self.config.clone());
 

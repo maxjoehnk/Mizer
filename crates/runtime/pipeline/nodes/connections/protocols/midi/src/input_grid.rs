@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_protocol_midi::*;
 
-use crate::{get_devices, get_pages_and_grid};
+use crate::get_pages_and_grid;
 
 const OUTPUT_PORT: &str = "Output";
 
@@ -26,7 +26,14 @@ pub struct MidiInputGridNode {
 
 impl ConfigurableNode for MidiInputGridNode {
     fn settings(&self, injector: &Injector) -> Vec<NodeSetting> {
-        let devices = get_devices(injector);
+        let connection_manager = injector.get::<MidiConnectionManager>().unwrap();
+        let devices = connection_manager.list_available_devices();
+        let devices = devices
+            .into_iter()
+            .filter(|device| device.has_input())
+            .filter(|device| device.profile.is_some())
+            .map(|device| SelectVariant::from(device.name))
+            .collect();
         let (pages, grid_size, _) = get_pages_and_grid(injector, &self.device, &self.page);
         let (max_rows, max_cols) = grid_size.unwrap_or((u32::MAX, u32::MAX));
 

@@ -7,11 +7,30 @@ use mizer_node::NodePath;
 use mizer_ports::Color;
 use pinboard::NonEmptyPinboard;
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct Dial {
+    pub value: f64,
+    pub min: f64,
+    pub max: f64,
+    pub percentage: bool,
+}
+
+impl Default for Dial {
+    fn default() -> Self {
+        Self {
+            value: 0.0,
+            min: 0.0,
+            max: 1.0,
+            percentage: true,
+        }
+    }
+}
+
 #[derive(Clone)]
 pub struct LayoutsView {
     faders: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
     buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
-    dials: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
+    dials: Arc<NonEmptyPinboard<HashMap<NodePath, Dial>>>,
     labels: Arc<NonEmptyPinboard<HashMap<NodePath, Arc<String>>>>,
     colors: Arc<NonEmptyPinboard<HashMap<NodePath, Color>>>,
     clocks: Arc<NonEmptyPinboard<HashMap<NodePath, Timecode>>>,
@@ -41,13 +60,13 @@ impl LayoutsView {
         self.faders.set(values);
     }
 
-    pub fn get_dial_value(&self, path: &NodePath) -> Option<f64> {
+    pub fn get_dial_value(&self, path: &NodePath) -> Option<Dial> {
         let values = self.dials.read();
 
         values.get(path).copied()
     }
 
-    pub(crate) fn write_dial_values(&self, values: HashMap<NodePath, f64>) {
+    pub(crate) fn write_dial_values(&self, values: HashMap<NodePath, Dial>) {
         self.dials.set(values);
     }
 

@@ -23,6 +23,8 @@ class EncoderInput extends StatefulWidget {
   final String? label;
   final Color? color;
   final bool highlight;
+  final bool percentage;
+  final double maxValue;
   final List<Preset>? globalPresets;
   final List<ControlPreset>? controlPresets;
 
@@ -32,6 +34,8 @@ class EncoderInput extends StatefulWidget {
       this.label,
       this.color,
       this.highlight = false,
+      this.percentage = true,
+      this.maxValue = 1,
       this.globalPresets,
       this.controlPresets});
 
@@ -92,12 +96,16 @@ class _EncoderInputState extends State<EncoderInput> {
                 value: programmerApi,
                 child: PopupProgrammerInput(
                   allowRange: false,
-                  value: CueValue(direct: value * 100),
+                  value: CueValue(direct: widget.percentage ? value * 100 : value),
                   controlPresets: widget.controlPresets,
                   globalPresets: widget.globalPresets,
                   onEnter: (event) {
                     if (event.hasDirect()) {
-                      _emitUpdate(event.direct);
+                      if (widget.percentage) {
+                        _emitUpdate(event.direct / 100);
+                      }else {
+                        _emitUpdate(event.direct / widget.maxValue);
+                      }
                     }
                   },
                 ),
@@ -145,12 +153,12 @@ class _EncoderInputState extends State<EncoderInput> {
                                 shape: BoxShape.circle,
                                 gradient: SweepGradient(
                                     colors: [Colors.deepOrange, DEFAULT_CONTROL_COLOR],
-                                    stops: [value, value],
+                                    stops: [correctedValue, correctedValue],
                                     transform: GradientRotation(-1 * pi))),
                             alignment: AlignmentDirectional.center),
                         Expanded(
                             child: Text(
-                          "$percentage%",
+                          widget.percentage ? "$percentage%" : value.toStringAsFixed(2),
                           textAlign: TextAlign.center,
                           style: textTheme.titleMedium,
                         ))
@@ -166,18 +174,22 @@ class _EncoderInputState extends State<EncoderInput> {
     );
   }
 
+  double get correctedValue {
+    return widget.percentage ? value : (value / widget.maxValue);
+  }
+
   void _onScroll(double direction, double delta) {
-    double _value = value;
+    double _value = correctedValue;
     if (direction < 0) {
       _value += delta;
     } else {
       _value -= delta;
     }
-    _value = _value.clamp(0.0, 1.0);
     _emitUpdate(_value);
   }
 
   void _emitUpdate(double value) {
+    value = value.clamp(0.0, 1.0);
     setState(() {
       this.value = value;
     });

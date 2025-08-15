@@ -9,6 +9,7 @@ const OUTPUT_PORT: &str = "Output";
 const START_VALUE_SETTING: &str = "Start Value";
 const END_VALUE_SETTING: &str = "End Value";
 const DEFAULT_VALUE_SETTING: &str = "Default Value";
+const SHOW_PERCENTAGE_SETTING: &str = "Show Percentage";
 
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq)]
 pub struct DialNode {
@@ -18,6 +19,8 @@ pub struct DialNode {
     pub end_value: f64,
     #[serde(default)]
     pub default_value: f64,
+    #[serde(default = "default_show_percentage")]
+    pub show_percentage: bool,
 }
 
 impl Default for DialNode {
@@ -26,6 +29,7 @@ impl Default for DialNode {
             start_value: default_start_value(),
             end_value: default_end_value(),
             default_value: Default::default(),
+            show_percentage: default_show_percentage(),
         }
     }
 }
@@ -36,6 +40,10 @@ fn default_start_value() -> f64 {
 
 fn default_end_value() -> f64 {
     1f64
+}
+
+fn default_show_percentage() -> bool {
+    true
 }
 
 impl ConfigurableNode for DialNode {
@@ -50,6 +58,8 @@ impl ConfigurableNode for DialNode {
             setting!(END_VALUE_SETTING, self.end_value)
                 .min_hint(0f64)
                 .max_hint(1f64),
+            setting!(SHOW_PERCENTAGE_SETTING, self.show_percentage)
+                .category("Layout")
         ]
     }
 
@@ -57,6 +67,7 @@ impl ConfigurableNode for DialNode {
         update!(float setting, DEFAULT_VALUE_SETTING, self.default_value);
         update!(float setting, START_VALUE_SETTING, self.start_value);
         update!(float setting, END_VALUE_SETTING, self.end_value);
+        update!(bool setting, SHOW_PERCENTAGE_SETTING, self.show_percentage);
 
         update_fallback!(setting)
     }
@@ -114,6 +125,18 @@ impl ProcessingNode for DialNode {
 
 impl DialNode {
     pub fn value(&self, state: &<DialNode as ProcessingNode>::State) -> f64 {
-        state.unwrap_or(self.default_value)
+        if self.show_percentage {
+            state.unwrap_or(self.default_value)
+        }else {
+            state.unwrap_or(self.default_value).linear_extrapolate((0., 1.), (self.start_value, self.end_value))
+        }
+    }
+
+    pub fn range(&self) -> (f64, f64) {
+        (self.start_value, self.end_value)
+    }
+
+    pub fn percentage(&self) -> bool {
+        self.show_percentage
     }
 }

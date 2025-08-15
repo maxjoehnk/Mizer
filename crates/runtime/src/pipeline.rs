@@ -532,7 +532,6 @@ impl Pipeline {
                 map
             },
         );
-        // TODO: this doesn't actually guarantee execution order, but it's the same algorithm as before
         // Because two nodes don't have to relate to each other just using sort_by doesn't work for our use case
         self.nodes.sort_by(|left, _, right, _| {
             let deps = dependencies.get(left).zip(dependencies.get(right));
@@ -542,10 +541,10 @@ impl Pipeline {
                 } else if right_deps.contains(left) {
                     Ordering::Greater
                 } else {
-                    Ordering::Equal
+                    left.cmp(right)
                 }
             } else {
-                Ordering::Equal
+                left.cmp(right)
             }
         });
         tracing::debug!(
